@@ -1,95 +1,79 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: git-pull --tags with no merge candidates case gives confusing error message
-Date: Tue, 12 May 2015 13:59:04 +0800
-Message-ID: <CACRoPnQvNvBv1_wBzWQH6A8XRvWZ+HURvtkqtgYpwjjNXuCERg@mail.gmail.com>
+From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+Subject: Re: [PATCH v6 3/7] setup: sanity check file size in read_gitfile_gently
+Date: Tue, 12 May 2015 08:46:08 +0200
+Message-ID: <CAMpP7NYEqTeVm3ybPmV7TvRkj5MjRYvD0J76ezXi9_jQsFterg@mail.gmail.com>
+References: <1431288041-21077-1-git-send-email-erik.elfstrom@gmail.com>
+	<1431288041-21077-4-git-send-email-erik.elfstrom@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 12 07:59:15 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Erik_Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 12 08:46:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ys3Dj-0003VS-FL
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 07:59:11 +0200
+	id 1Ys3xH-0004qh-Te
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 08:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701AbbELF7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 01:59:07 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:33491 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752574AbbELF7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 01:59:05 -0400
-Received: by layy10 with SMTP id y10so109059731lay.0
-        for <git@vger.kernel.org>; Mon, 11 May 2015 22:59:04 -0700 (PDT)
+	id S1752633AbbELGqL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2015 02:46:11 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:37726 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752354AbbELGqJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2015 02:46:09 -0400
+Received: by widdi4 with SMTP id di4so926598wid.0
+        for <git@vger.kernel.org>; Mon, 11 May 2015 23:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=VNSCMA3pd9DYpKYWSmQdRgCVTtdLcqQiuXFWF4Ctpxc=;
-        b=a6f/C53MpPDwpj/wSatDR77nPQNHkpdal8x23nDxP9FiZ71/mYq8MWOArXj5HYIDY7
-         KacSC4PoU8naRxXeiwOoBCJNdOlz9feKVvO97M4w6dXHa9G9VQ+ioYdhjLG8mpFSCfJL
-         ASmmK8mCo2QxfK3nZFRux0jmJSZw2L6/khbdR917jdmI09rRZ0O4wXu8cNY43G2dBary
-         jsxPAu2jazYsiPknC2QfysXpWywRMrlLfzsy2Y0v7QMQhs5F4NjubuFurVEhUdQS4Ypp
-         yMd6G74ls7C/kh9FsDyN/WQqld0Rh5T0mmGhsRIQalv4MCScD2R2VC4DkJX2ydEuNQU0
-         wB1Q==
-X-Received: by 10.112.142.232 with SMTP id rz8mr10324395lbb.74.1431410344082;
- Mon, 11 May 2015 22:59:04 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Mon, 11 May 2015 22:59:04 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4E6ZR7vaEmURIovpVzIvAsWP8SBmBHIRY2Kw6KsvTmw=;
+        b=B8K3L/fqVXJCFEYG6RLUsFrkHMBPk2wfQGIZyp7JVq1F6cEonZC7uo6vkJ2AtFfnP6
+         K5KGxYW2QhgBxxqOa/GkCF8GQ88CCFLUDYH0lSPdVnYgiCvZokywRC5zpkScbmePuLQS
+         2CAD2VRMy7BhJrYZZQZuHVQv1l2VMC+GPddPQxeeY3N0z5coVaE4MyGfN+kTB+Xs1WFK
+         dznTYLkhm0Qhny/DBokrReWu1RCp0WX/kS1vpOPXQPrF10Ib6GAdn9klLMo1LKInhxTv
+         LW6jcTQPhmAlHvcq2ejviLyokLuSZ+lg/tSu9Ru+BfteNpsdwHRoTa9duc1c1d2QhSCP
+         sXZg==
+X-Received: by 10.180.108.100 with SMTP id hj4mr2361234wib.22.1431413168218;
+ Mon, 11 May 2015 23:46:08 -0700 (PDT)
+Received: by 10.28.49.66 with HTTP; Mon, 11 May 2015 23:46:08 -0700 (PDT)
+In-Reply-To: <1431288041-21077-4-git-send-email-erik.elfstrom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268845>
 
-Hi all,
+On Sun, May 10, 2015 at 10:00 PM, Erik Elfstr=C3=B6m <erik.elfstrom@gma=
+il.com> wrote:
+> @@ -404,6 +405,11 @@ const char *read_gitfile_gently(const char *path=
+, int *return_error_code)
+>                 error_code =3D READ_GITFILE_ERR_OPEN_FAILED;
+>                 goto cleanup_return;
+>         }
+> +       if (st.st_size > one_MB) {
+> +               close(fd);
+> +               error_code =3D READ_GITFILE_ERR_TOO_LARGE;
+> +               goto cleanup_return;
+> +       }
 
-Calling git-pull --tags, and hitting the no merge candidates case,
-currently gives the following error message:
+Hmm... The order should probably be changed here. It would make more
+sense to check the size before opening the file. That way the error
+handling in clean would be more consistent if we can't open a large
+=2Egit file.
 
-    It doesn't make sense to pull all tags; you probably meant:
-        git fetch --tags
+Right now we would treat any file that we can't open as a potential
+repository and avoid cleaning but if we can open it and it turns out
+that it is larger than 1MB we will ignore it and clean. By switching
+the order here we would always ignore files larger than 1MB regardless
+of if we can open them or not and I think that would make more sense.
+It would also remove the need to close the file when erroring out due
+to size so it makes more sense from a pure structural point of view as
+well.
 
-This error message comes from the following code block in git-pull.sh:
+Sorry for not thinking of this earlier.
 
-    for opt
-    do
-        case "$opt" in
-        -t|--t|--ta|--tag|--tags)
-            echo "It doesn't make sense to pull all tags; you probably meant:"
-            echo "  git fetch --tags"
-            exit 1
-        esac
-    done
-
-This behavior was introduced in 441ed41 ("git pull --tags": error out
-with a better message., 2007-12-28), which stated that:
-
-    In the longer term, it would be a better approach to change the
-    semantics of --tags option to make "git fetch" and "git pull"
-    to:
-
-     (1) behave as if no --tags was given (so an explicit refspec on
-         the command line overrides configured ones, or no explicit
-         refspecs on the command line takes configured ones); but
-
-     (2) no auto-following of tags is made even when using
-         configured refspecs; and
-
-     (3) fetch all tags as not-for-merge entries".
-
-    Then we would not need to have this separate error message, as
-    the ordinary merge will happen even with the --tags option.
-
-Given that as of c5a84e9 (fetch --tags: fetch tags *in addition to*
-other stuff, 2013-10-30), git-pull --tags will fetch tags in addition
-to the configured refspecs, so if there are no merge candidates, it
-would not be because --tags was specified on the command line.
-
-As such, I wonder if the error message should be removed, since it
-conceals the actual reason of why there are no merge candidates.
-Unless there is a reason why this special error message was kept?
-
-Thanks,
-Paul
+/Erik
