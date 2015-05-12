@@ -1,122 +1,133 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Remote End Hung Up Error
-Date: Tue, 12 May 2015 23:24:35 +0000
-Message-ID: <20150512232435.GA425227@vauxhall.crustytoothpaste.net>
-References: <8FF1A22F7C52194BA8546AEBBC84EF5D1A9B4E1F@ims-exch1vc-wat.imscorp.intellimec.com>
+From: Trevor Saunders <tbsaunde@tbsaunde.org>
+Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
+Date: Tue, 12 May 2015 19:40:14 -0400
+Message-ID: <20150512234014.GE31257@tsaunders-iceball.corp.tor1.mozilla.com>
+References: <20150509040704.GA31428@peff.net>
+ <20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
+ <20150511011009.GA21830@peff.net>
+ <xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
+ <xmqqfv73f420.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD3LzM3uuUzWYS-o6mhtH-x5+-kyGhDvYnv6ZPRTC18C6w@mail.gmail.com>
+ <xmqq7fsd201d.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD0k-=ESEu-7jhf8Y5wz+5A=MHsjtMnC7YJv_DRi30TmDw@mail.gmail.com>
+ <CAGZ79kZG=9BkEGB_GOsg7F-2mN5iTjmTFK+vUohj_7wJLfPtig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stephen Scott <sscott@intellimec.com>
-X-From: git-owner@vger.kernel.org Wed May 13 01:24:45 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 13 01:40:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsJXY-0005VX-BK
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 01:24:44 +0200
+	id 1YsJml-0002z4-J8
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 01:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964962AbbELXYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 19:24:40 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:37348 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964961AbbELXYj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 May 2015 19:24:39 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:307e:6849:ffff:3e6f])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E46212808F;
-	Tue, 12 May 2015 23:24:38 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Stephen Scott <sscott@intellimec.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+	id S933851AbbELXkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 19:40:23 -0400
+Received: from tbsaunde.org ([66.228.47.254]:44907 "EHLO
+	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754067AbbELXkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 19:40:22 -0400
+Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
+	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 930EBC072;
+	Tue, 12 May 2015 23:40:21 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <8FF1A22F7C52194BA8546AEBBC84EF5D1A9B4E1F@ims-exch1vc-wat.imscorp.intellimec.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.0.0-trunk-amd64)
+In-Reply-To: <CAGZ79kZG=9BkEGB_GOsg7F-2mN5iTjmTFK+vUohj_7wJLfPtig@mail.gmail.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268907>
 
+On Tue, May 12, 2015 at 01:58:56PM -0700, Stefan Beller wrote:
+> On Tue, May 12, 2015 at 1:43 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+> > On Tue, May 12, 2015 at 7:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> Christian Couder <christian.couder@gmail.com> writes:
+> >>
+> >>> On Mon, May 11, 2015 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >>>
+> >>>> To be bluntly honest, I think the current one is sufficient as a
+> >>>> good-enough default.  The first thing I would do after seeing that
+> >>>> message is to either "git checkout <commit-object-name>" or "git
+> >>>> show <commit-object-name>", and the current full 40-hex output gives
+> >>>> me an easier mouse-double-click target than the proposed abbreviated
+> >>>> one, so in that sense the original proposal may even be a usability
+> >>>> regression.
+> >>>
+> >>> Yeah, it might also be a regression if some users have scripts that
+> >>> depend on the current behavior.
+> >>> ...
+> >>>> It is tempting to say that the output can be eliminated by always
+> >>>> checking out the first-bad-commit (i.e. only when the last answer
+> >>>> that led to the first-bad decision was "good", do a "git checkout"
+> >>>> of that bad commit), but in a project where a branch switching is
+> >>>> not instantaneous, that might be problematic (unless the first step
+> >>>> the user would have done is to check it out anyway, of course).
+> >>>
+> >>> Yeah, and speaking of regressions, elimiting the output might be a
+> >>> more serious regression.
+> >>
+> >> I am getting somewhat annoyed by this line of thought.
+> >>
+> >> Who said bisect output is meant to be parseable and be read by
+> >> scripts in the first place?  If that were the case, we wouldn't be
+> >> having this discussion thread in the first place.
+> >
+> > Well "git bisect run" is all about automating bisecting and we know
+> > that some people have been using it for a long time.
+> >
+> > See for example this message from 2007:
+> >
+> > http://lkml.iu.edu/hypermail/linux/kernel/0711.1/1443.html
+> >
+> > where there is:
+> >
+> > "Today we can autonomouly
+> > bisect build bugs via a simple shell command around "git-bisect run",
+> > without any human interaction!"
+> >
+> > So it is reasonnable to wonder if some scripts might be parsing
+> > the output.
+> 
+> This reasoning sounds to me, that the lack of a plumbing counterpart
+> to bisect(porcelain) made it a de facto plumbing command,
+> which is unfortunate for discussing changes like these.
+> 
+> So how to proceed here?
+> * one way would be to ignore the scripts out there, "because it's
+>   porcelain, so nobody sane would have written a script using it anyway"
+>   but this attitude is not well perceived in the community I'd assume.
 
---AhhlLboLdkugWU4S
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+honestly in this case I'd be inclined to go that route since the output
+isn't really great for parsing so I do find it hard to believe there is
+a reasonable number of scripts that use git bisect, and depend on its
+output.
 
-On Mon, May 11, 2015 at 06:14:53PM +0000, Stephen Scott wrote:
-> Greetings;
->=20
-> I am getting this error when trying to retrieve a repo from git. Has
-> anyone seen this issue before, and if you have how did you resolve it.
->=20
-> Cloning into 'xxxxxxxxx'...
-> remote: Counting objects: 187683, done
-> remote: Finding sources: 100% (187683/187683)
-> remote: Getting sizes: 100% (98684/98684)
-> remote: Compressing objects: 89% (8667/9643)
-> efrror: RPC failed; result=3D56, HTTP code =3D 200 MiB | 42.00 KiB/s
-> fatal: The remote end hung up unexpectedly
-> atal: early EOF
-> fatal: index-pack failed
->=20
-> Cloning into 'xxxxxxxxx'...
-> remote: Counting objects: 187683, done
-> remote: Finding sources: 100% (187683/187683)
-> efrror: RPC failed; result=3D56, HTTP code =3D 200
-> atal: The remote end hung up unexpectedly
-> fatal: protocol error: bad pack header
+> * declare the current bisect command a plumbing layer command and
+>   introduce a new porcelain command, how about "git find" which can address
+>   a variety of issues such as also having the capability to find a fix
+> instead of
+>   just regressions (make good/bad markers less confusing)
 
-CURL error code 56 is CURLE_RECV_ERROR, so the problem is a network
-connection.  Commonly these types of errors occur over HTTP because of a
-broken proxy.  Are you using such a proxy?  If so, can you try over
-HTTPS (without MITM), the Git protocol, or SSH?
+Solving that issue would be nice, but I think git find is much less
+intuitive to new people than bisect, but I'm not really a good judge of
+that.
 
-Also, what version of Git are you using, what version of libcurl is it
-linked against, and what type of HTTP authentication are you using, if
-any?  I seem to remember that older versions of Git were broken with
-Kerberos in some cases, but that was quite some time ago.
+>   Depending on the implementation this may be a lot of work
+>   -> copy/paste is fast and involves less work now, but more in the future
+>   -> or having a new plumbing-bisect header making calls from the porcelain
+>       to the plumbing bisect tool.
 
-> This e-mail message is confidential, may be privileged and is intended
-> for the exclusive use of the addressee. Any other person is strictly
-> prohibited from disclosing, distributing or reproducing it. If the
-> addressee cannot be reached or is unknown to you, please inform us
-> immediately and delete this e-mail message and destroy all copies.
-> Thank you.
+my sense is that the division between git-bisect.sh and bisect--helper.c
+isn't really great and could already use refactoring so I suspect it'd
+be a fair amount of work.
 
-Please don't send this material to the list.  See
-http://www.goldmark.org/jeff/stupid-disclaimers/ for why it's a bad
-idea.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---AhhlLboLdkugWU4S
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJVUoulAAoJEL9TXYEfUvaLpioP/Ap4oueIqYoZuOESutFWuNyh
-SqJWiQksF+BiBfA6DhVLNfbKyyVLSv1ZCLHmOZ0fAJn0m96UwppdpZZIwhTKoGYq
-dmM6rJFxt0uera8X8DH37CMQj/833PuTXXvZm5rzuh8us7JAwofQNy+UfCpt8Hzb
-A/edf6v6dy0E0YtqkMJLAESceX/D+Th3lRwg4+BVf3nKr/zQ5pgMmPd+dlB3w9th
-cWhED/Lhrou1KICUkOe7HaW6gIHGPKRd8Gvt0NHfOKb8CxCPWuoicqcvdg8ILhC+
-/qYNovxAzyis1hGq1AGJazl1Z4xDvEUukc3hu3G6qtnHav7tfUbJYruQf5zYsl5E
-iDlpd8/sY7984pt0Lwexz/cROZzNKCr//aceJWgJ0Prkdg5ZfrQKKZMweh2faSIM
-yxG1PXEmzoqqQQZaplFRl6A3CZf7bKkH3Gx4qy+Tw9KtjWQLFJJRe78qYeM4ZXWl
-VSe0PxcCUb9VyadsbDjKuSLoo5QefKN3cyCFDMqcijkgCk5eYnwM0/NUHb86T1n5
-Q4NEIZXlJsUtFl/Xn8TlXcOLXcMBgOTlrq1fBQNbcPC0/jL+iC6mKI1ZugFzqB8+
-+nNfO41wZgrcfhtgG1fr4wDDAM8dIugs/BK/BV9tbZwxm4X4aQKuGwXCml9pImsu
-PwHJv929z3V4mgEkiS3g
-=Bcrg
------END PGP SIGNATURE-----
-
---AhhlLboLdkugWU4S--
+Trev
