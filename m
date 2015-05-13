@@ -1,42 +1,38 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/8] asciidoc fixups
-Date: Wed, 13 May 2015 22:41:31 +0000
-Message-ID: <20150513224131.GC425227@vauxhall.crustytoothpaste.net>
-References: <1431451400-1447-1-git-send-email-jn.avila@free.fr>
- <xmqqfv71zlaz.fsf@gitster.dls.corp.google.com>
- <20150513021556.GA4160@peff.net>
- <20150513045650.GA6070@peff.net>
+Subject: Re: [Q] do we have your name correctly?
+Date: Wed, 13 May 2015 22:53:37 +0000
+Message-ID: <20150513225337.GD425227@vauxhall.crustytoothpaste.net>
+References: <xmqqa8x89k0x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OBd5C1Lgu00Gd/Tn"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jean-Noel Avila <jn.avila@free.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 14 00:41:44 2015
+	protocol="application/pgp-signature"; boundary="NklN7DEeGtkPCoo3"
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 00:53:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsfLT-00065O-Bi
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 00:41:43 +0200
+	id 1YsfX9-00029Z-TD
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 00:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965445AbbEMWli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 18:41:38 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:38323 "EHLO
+	id S965520AbbEMWxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 18:53:43 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:38331 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965319AbbEMWlh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 May 2015 18:41:37 -0400
+	by vger.kernel.org with ESMTP id S934657AbbEMWxm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2015 18:53:42 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:307e:6849:ffff:3e6f])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4E3782808F;
-	Wed, 13 May 2015 22:41:35 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id AED972808F;
+	Wed, 13 May 2015 22:53:40 +0000 (UTC)
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jean-Noel Avila <jn.avila@free.fr>, git@vger.kernel.org
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>
 Content-Disposition: inline
-In-Reply-To: <20150513045650.GA6070@peff.net>
+In-Reply-To: <xmqqa8x89k0x.fsf@gitster.dls.corp.google.com>
 X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
  4.0.0-trunk-amd64)
 User-Agent: Mutt/1.5.23 (2014-03-12)
@@ -45,113 +41,68 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269014>
 
 
---OBd5C1Lgu00Gd/Tn
+--NklN7DEeGtkPCoo3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 13, 2015 at 12:56:51AM -0400, Jeff King wrote:
-> On Tue, May 12, 2015 at 10:15:56PM -0400, Jeff King wrote:
+On Wed, May 13, 2015 at 03:42:38PM -0700, Junio C Hamano wrote:
+> Before cdb6b5ac (.mailmap: Combine more (name, email) to individual
+> persons, 2013-08-12), we used to have this entry in .mailmap:
 >=20
-> > You can build with asciidoctor on the command-line. I don't know if it
-> > would be feasible to diff the asciidoc and asciidoctor output to look
-> > for gratuitous differences (or if the output is so different due to
-> > trivial stuff that the diff is unreadable).
+>     Brian M. Carlson <sandals <at> crustytoothpaste.ath.cx>
 >=20
-> So...it kind of works. I had to do unspeakable things with sed, and even
-> then ended up with an 18,000-line "--color-words" diff.
+> but then it was replaced with two entries with that commit to
 >=20
-> Below are some fixes. The early ones are actual bugs in our sources. The
-> latter ones are changes we could do to make asciidoctor happier. Each
-> patch is independent, so we can take or leave whatever we want.
-
-I've been in contact with Dan Allen, the lead on the Asciidoctor
-project.  There are a few things that he pointed out.
-
-> After this series, the remaining problems are:
+>     brian m. carlson <sandals <at> crustytoothpaste.ath.cx> \
+>     	Brian M. Carlson <sandals <at> crustytoothpaste.ath.cx>
+>     brian m. carlson <sandals <at> crustytoothpaste.ath.cx> \
+>         <sandals@crustytoothpaste.net>
 >=20
->   - asciidoctor does not render {litdd}, which is our invention; locally
->     this may be because I did not have the right incantation, but it is
->     also broken on git-scm.com. I think the right fix is to define that
->     attribute for the site renderer (so not a bug in our sources, and
->     not an asciidoctor bug)
-
-I passed this as a command-line argument when using asciidoctor to
-generate the docs: -a litdd=3D--.  For the site, I would recommend just
-defining it there, as you suggested.
-
->   - in the '[verse]' section of the SYNOPSIS of each man page, AsciiDoc
->     renders 'git add' in the usual way (with emphasis). Whereas
->     AsciiDoctor renders it normally, with the literal quotes included.
+> (they are two lines; backslashes are just for this e-mail).
 >=20
->     In the same [verse] section, AsciiDoctor does not convert literal
->     "..." into a fancy ellipsis. So perhaps it treats [verse] as a
->     section in which markup is not expanded? This may be related to the
->     [verseblock] stuff we have in our config file.
-
-What you want here is [verse,subs=3Dnormal].  As of Asciidoctor 1.5.0,
-this allows substitutions and markup within verse blocks.  I believe old
-versions of AsciiDoc did not render substitutions and markup in verse
-blocks, despite claiming to, and Asciidoctor picked up that behavior.
-
-The set of patches I put in for Asciidoctor require at least 1.5.1
-anyway in order to build man pages properly.
-
->   - We use "{attr? foo}" to display "foo" only when "attr" is set.
->     AsciiDoctor does not seem to understand this and renders the whole
->     string.
-
-Yes, currently Asciidoctor doesn't support this.  Outside of
-asciidoc.conf, which Asciidoctor doesn't read, it looks like there's
-exactly two uses in diff-options.txt.  We could probably rewrite those
-using an attribute.
-
->   - Lots of places where we backslash-escape some syntax for AsciiDoc
->     ends up rendered by AsciiDoctor with the backslashes included. In
->     some cases the quoting is unnecessary and we can drop it (see
->     patches 6 and 7 below). But in others it really is necessary, and
->     AsciiDoc generates bad output without the backslashes. The major
->     ones are "--" surrounded by spaces (which becomes an emdash), and
->     things like @\{HEAD}, which needs quoted to tell AsciiDoc that HEAD
->     isn't an attribute.
+> Because the RHS is searched in the committer and author fields and
+> replaced to the LHS when .mailmap is used, this forces your name
+> to lowercase, which is against the normal convention on this list.
 >=20
->     I'm not sure of the solution (is AsciiDoctor just broken, or
->     is there some other syntax we could use that would work in both
->     places, or what?).
+> I *think* the motivation behind the original .mailmap entry before
+> that commit was to upcase the name so it does not stand out oddly
+> among other peoples' names, and I am suspecting that cdb6b5ac did
+> it in an opposite way by mistake.
 
-This is an under-defined area.  AsciiDoc and Asciidoctor both use
-regexes instead of real parsers, and apparently there's some
-disagreement on how these should be interpreted.  (The real solution is
-to use a grammar and parser.) I think in some cases it might be
-sufficient to use backticks, as those prevent further interpretation.
+I write my name in lower case (and have for some years), and I strongly
+prefer it that way.  I'm not completely clear on the format of .mailmap
+files, but the way it should appear is "brian m. carlson
+<sandals@crustytoothpaste.net>".  From what I can tell, it looks like
+it's correct already.
 --=20
 brian m. carlson / brian with sandals: Houston, Texas, US
 +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
 OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
---OBd5C1Lgu00Gd/Tn
+--NklN7DEeGtkPCoo3
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCgAGBQJVU9MbAAoJEL9TXYEfUvaLVqIP/i+s2eZOqQZEBHABD6Vcyor0
-8jxSHENsi+R42Co4Jg3nnBaOd0rzus3ed6fyeCLGCL4b9H6//4iG9sNto1f2+7nS
-189DNjrslKl5sT3C5ahZw4r/I3siyX25/ol1y6rCNbJp1rULtjGe6jldLnIchtJ7
-nPbrDahmiAiTu5PK80SOINka2lkfwgX2/KcbI5wEX5cUZcoHBw34Ny2bXx91W0OZ
-s4Cai4KYsdoY/DiuioVM/vZ0qMAJGu2Mp9e2fPfp/I8JVBbEVMuZeGt9uOJacBi2
-yRiQ8P1q99HJYOLJvG5kc/nH0QEpqadbw6tD0kM8y8JlsmXthiJuZ9N5aypMaZko
-51UK8TMf8zEjHTh8gm0WyITuwfVWdIrDoeYjZgjcjr72LSoYPqO55OktmqWEQR89
-kd/1XrUk1FfdOqVJLXwIXobzAKdd1MF0ksi9B8pbRJEgHH3Wx106IhBbpIZirqQJ
-r1LwveTGHl6n2H5d2wlrp40SZnwqRbz/x2vl1zlwhFpHcpftxVLlQWbXTOQTwBtR
-Lhe8XsZVtL2SrtvfzlQUrmRtBLQZltIwZgXqxFy/7N0WMu3hokJT7efLKfA2Y11h
-ySoMw8YCI1hBFG7NhOd2XKqYfIK+3UaClTgSB8WShqzHvEIuIL4iRM/qf7HU3/Gl
-nuIYylhM8kx7fzrYpA6o
-=Gill
+iQIcBAEBCgAGBQJVU9XwAAoJEL9TXYEfUvaLxvMP/2GA+aWaX6ULfvNrrVH+c2+4
+DSCcvt+vxU3MM0fTXpB0i060Kwz27Bg1w2bWAdbb/m5LISYn9bKAer8++/mDkyrM
+tPF0S+cU5haORl1TJYh35+2/GgX/c4moMlpTP2Pey3sBgGFf74iSFGRFKykwKI48
+6BRBkzingtoJ9fHGxF6rB/fHKHl9jPWpwfOGUUpIDum0ZfJAo2xCNWyLb4duZ9qM
+E5Aq9T1lB0Gz6KBi0xkFj9WvEv34OljV+JF3tago/o84wur8GkuuffsB66w6MGSl
+btUWH54WP/UgnKuXHEp+ph6zCAaDcOjb/pWLFLO3Asg+OJbw/FVCJ2k7yoULRcuI
+S0htunIRQs9JZEvcW4QOU7A3uAFu7oCdNoGc73rszbSiVIGEw176fIZ3x2ng9eQi
+VeOwKayljDGFarR+xNDGg9TLP5LzJ3Ta8lwFMgDLLihvpgkEdfFUiwLupSLFrE4d
+qO6fOUJKVo2aG858BfICgDstc7xLkYw4heFfX+nH1edBpWl7oOWGS/EWscgTzH5h
+VkDNsCGYsp5/+YvbRNA6JRCTLb8q1pjaxcIWvQzwG5KE+1Z2CM2ONLd+25xVXJR+
+PeTS2kkgVjHAtyeJ5D9hK5y6h5HMldtn4xnMd33EHS4RjsyVb3bxKrt/ERtzfMHJ
+W83tPX/bHQzapWlzojKb
+=8H33
 -----END PGP SIGNATURE-----
 
---OBd5C1Lgu00Gd/Tn--
+--NklN7DEeGtkPCoo3--
