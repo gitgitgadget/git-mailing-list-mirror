@@ -1,91 +1,86 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v2] mergetools: add winmerge as a builtin tool
-Date: Wed, 13 May 2015 22:00:03 +0200
-Message-ID: <5553AD43.9010807@gmail.com>
-References: <1431482407-63642-1-git-send-email-davvid@gmail.com>	<55534F4E.60402@gmail.com>	<3d7e3b09b89c46c39befca7564f5c1d6@www.dscho.org> <CAHGBnuPDSdCyVNM+Gagang1Cf9yw0Tyios45i6pnZSSzaJJC2Q@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] pull: handle --log=<n>
+Date: Wed, 13 May 2015 22:03:22 +0200
+Message-ID: <vpq3830kzxx.fsf@anie.imag.fr>
+References: <1431508661-21729-1-git-send-email-pyokagan@gmail.com>
+	<1431508661-21729-3-git-send-email-pyokagan@gmail.com>
+	<vpqlhgszujc.fsf@anie.imag.fr>
+	<c8dc145fcc56d38e04fc0e07ceb34999@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>, Phil Susi <phillsusi@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 13 22:00:28 2015
+X-From: git-owner@vger.kernel.org Wed May 13 22:03:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YscpP-00007R-QE
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 22:00:28 +0200
+	id 1Yscsb-0001Vz-9b
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 22:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965563AbbEMUAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 16:00:21 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:35326 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965515AbbEMUAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 16:00:19 -0400
-Received: by widdi4 with SMTP id di4so213335895wid.0
-        for <git@vger.kernel.org>; Wed, 13 May 2015 13:00:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=7y62HxzLgH0FW9KNvzHJnhrT1tYLB0pGi8GhIAFY4q0=;
-        b=oGiT9rwukPnO17RCVrUiaVUZPHaDiKK1Xz8BwOFsT95X7k8RT+rXB8TwRYexulWd4y
-         f7XNoGvyFKE3qX+l5ib5PujSmnxn4dMWTfWUJUIExv/IuIPY3TO7eDgLPG6+R6s+34zi
-         VKnrUvW5t7AxW4Nhp+1qRvcValJBzcQxDLumX/bdGINQk/97hneIxWh931ygHaRBSB0t
-         L2tJPemI5D3G1sMB7OJNTut3yC/pYyCQ+yay7geIHVfKrVkjQThorGXrk1e3XkNPV2mI
-         AY7b4O0r+JW/edi415rT0thh4TfbQjUPANNrto5+xptVa+Zmz53JFegzgNZL1MnAITcA
-         ie6w==
-X-Received: by 10.180.90.236 with SMTP id bz12mr41668456wib.33.1431547218258;
-        Wed, 13 May 2015 13:00:18 -0700 (PDT)
-Received: from [192.168.188.20] (p4FF45E49.dip0.t-ipconnect.de. [79.244.94.73])
-        by mx.google.com with ESMTPSA id u9sm30070055wju.44.2015.05.13.13.00.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 May 2015 13:00:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <CAHGBnuPDSdCyVNM+Gagang1Cf9yw0Tyios45i6pnZSSzaJJC2Q@mail.gmail.com>
+	id S1752850AbbEMUDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 16:03:36 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57972 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934442AbbEMUD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 16:03:29 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4DK3Jw3011555
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 13 May 2015 22:03:19 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4DK3Mkk001938;
+	Wed, 13 May 2015 22:03:22 +0200
+In-Reply-To: <c8dc145fcc56d38e04fc0e07ceb34999@www.dscho.org> (Johannes
+	Schindelin's message of "Wed, 13 May 2015 14:23:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 May 2015 22:03:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4DK3Jw3011555
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1432152202.40762@IIyDu5309YxBtP5I2Azjxw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269005>
 
-On 13.05.2015 17:33, Sebastian Schuberth wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
->> In my tests, "$PROGRAMFILES(X86)" did *not* work:
->>
->>      $ echo "$PROGRAMFILES(X86)"
->>      bash: syntax error near unexpected token `('
-> 
-> Interesting. In both MSYS1/2 Git Bashes I get on Windows 7 64-bit:
-> 
-> $ echo "$PROGRAMFILES(X86)"
-> C:\Program Files (x86)(X86)
-> 
-> So it seems to resolve only the $PROGRAMFILES part and appending the
-> literal "(X86)". Not sure how to tell Bash that "(X86)" is part of the
-> variable name.
-> 
->> Exactly. In my tests, "$ProgramW6432" worked, while "$PROGRAMW6432" did not.
-> 
-> Very odd indeed that for me it's the exact opposite.
+> Hi Matthieu,
+>
+> On 2015-05-13 11:38, Matthieu Moy wrote:
+>> Paul Tan <pyokagan@gmail.com> writes:
+>> 
+>>> -	--log|--no-log)
+>>> -		log_arg=$1 ;;
+>>> +	--log|--log=*|--no-log)
+>>> +		log_arg="$1" ;;
+>> 
+>> I think you actually don't need the double quotes here (var=$value works
+>> even if $value has spaces IIRC), but they don't harm and I prefer having
+>> them.
+>
+> I am far from a shell expert, but IIRC "$1" converts all whitespace to
+> single spaces.
 
-So how about something like this which hopefully covers all cases (including case-sensitivity issues regarding environment variable names and the problem of querying a variable that contains parentheses as part of its name):
+In most places, $1 is split before being interpreted, but there are
+exceptions and actually the RHS of assignment is one of them. Just for
+curiosity, I digged a reference:
 
-for directory in "$(env | sed -nr 's/^PROGRAM(FILES(\(X86\))?|W6432)=//pI')"
-do
-    test -n "$directory" &&
-    test -x "$directory/$winmerge_exe" &&
-    echo "$directory/$winmerge_exe" &&
-    break
-done
+https://www.gnu.org/software/autoconf/manual/autoconf-2.67/html_node/Shell-Substitutions.html
+http://unix.stackexchange.com/questions/68694/when-is-double-quoting-necessary
 
-sed's "I" seems to be a GNU extension that's not available with OS X' BSD sed. This shouldn't be an issue as WinMerge is Windows only anyway. If it still turns out to be an issue we probably should come up with an equivalent Perl expression.
+> In general, you therefore want to quote arguments, just in case.
+
+Yes, and one benefit of quoting anyway is to avoid having to have the
+discussion we're having ;-).
 
 -- 
-Sebastian Schuberth
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
