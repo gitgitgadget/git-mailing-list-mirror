@@ -1,512 +1,167 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 3/3] cat-file: add --follow-symlinks to --batch
-Date: Wed, 13 May 2015 14:23:54 -0400
-Message-ID: <1431541434-21884-4-git-send-email-dturner@twitter.com>
-References: <1431541434-21884-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 13 20:24:27 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] log: do not shorten decoration names too early
+Date: Wed, 13 May 2015 12:40:35 -0700
+Message-ID: <xmqqoalo9sgc.fsf_-_@gitster.dls.corp.google.com>
+References: <55534D95.60609@alum.mit.edu>
+	<xmqqwq0c9zc1.fsf@gitster.dls.corp.google.com>
+	<xmqqsib09z8y.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 13 21:40:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsbKQ-0001hE-M5
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 20:24:23 +0200
+	id 1YscWJ-0000FR-K6
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 21:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754619AbbEMSYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 14:24:17 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:33353 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754522AbbEMSYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 14:24:13 -0400
-Received: by pdbnk13 with SMTP id nk13so59295597pdb.0
-        for <git@vger.kernel.org>; Wed, 13 May 2015 11:24:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=sPukawl1RgN0Z+flMbTp9XYPPnF7Sjp6mdAkgopaAOQ=;
-        b=gCggt3cT6H3+LjmqstL2ZvvH2FHzHa/P2H1Ij/RWL2ooscpAuHsSNXe6Og0Cz9IpuN
-         rmcKhXgunteXbOv/KxKk9h7J9oNLqv7frDqSx1qGzuuGjFaCAQbCE9uYnhS6G/UpcCfn
-         8riNzolfewc+xTP2tZFRoBhZXR7XbdQjo09C14Jo9K/74AptsouolaznZEOC3Aypwbg7
-         oAUsE/srv5BCe0vVd8qnBWQb6oFMQAVF7CKWoRh8TF3B39UY4sFnRMeorD8Weya/8S9c
-         iqxC66lfy32s49vbL82zTHobr8i+Eq5MOLUc/TipJxU3EX0BlvllhvCNT5gC6rYDrHBs
-         8Q5Q==
-X-Gm-Message-State: ALoCoQk8UuRii+ZkjftTqkpz9FmyZLorkhXWhkXAsI7PMdj3L3zbQRzERHEK0Ixiy9TnUna/T8GN
-X-Received: by 10.68.131.196 with SMTP id oo4mr293968pbb.119.1431541452988;
-        Wed, 13 May 2015 11:24:12 -0700 (PDT)
-Received: from ubuntu.twitter.corp ([8.25.196.26])
-        by mx.google.com with ESMTPSA id nt15sm20023104pdb.14.2015.05.13.11.24.10
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 May 2015 11:24:11 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
-In-Reply-To: <1431541434-21884-1-git-send-email-dturner@twitter.com>
+	id S965133AbbEMTki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 15:40:38 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:32874 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964982AbbEMTkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 15:40:37 -0400
+Received: by igbpi8 with SMTP id pi8so120986012igb.0
+        for <git@vger.kernel.org>; Wed, 13 May 2015 12:40:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=QtB2+8wdTzJJ0FLY/XCklChO4aWTkKrAIzKliW/cRjE=;
+        b=D1lKbD+Q+FkGX3Lb5vh4XumsVOCKp8gS6caQIca5jZGMDowDAfh3Riq3oHEIrMW/09
+         HNJUlQUUdkgKwRW9k3gpifw7AXz+if0cnW5pVIYTkgFRVoiYSeCaZo25ymPzJi3xt1aA
+         fhPTixzqlVyvkqfroAKjGQjt2Nlyq6RW9+yX39Io9It2AAHb5KLt0tqn0iUMtbt6N9hX
+         gxlLZrcW2jjm8ZbRSe1AHn1VMNnJl3WgaXLyiaOyBHNFuYI3veg3pAbB9U30icJdorMK
+         YjTt8GF7pk0xUmNKdLT6SLEtcmqHrwPGM/j4cTFJ1CaB6DnBMRkwkmNte4WQ7ewrTe+G
+         j2MA==
+X-Received: by 10.42.20.14 with SMTP id e14mr11037027icb.76.1431546037207;
+        Wed, 13 May 2015 12:40:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3cfa:54ee:8e48:89ad])
+        by mx.google.com with ESMTPSA id qs10sm4267291igb.14.2015.05.13.12.40.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 13 May 2015 12:40:36 -0700 (PDT)
+In-Reply-To: <xmqqsib09z8y.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 13 May 2015 10:13:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269003>
 
-This wires the in-repo-symlink following code through to the cat-file
-builtin.  In the event of an out-of-repo link, cat-file will print
-the link in a new format.
+The DECORATE_SHORT_REFS option given to load_ref_decorations()
+affects the way a copy of the refname is stored for each decorated
+commit, and this forces later steps like current_pointed_by_HEAD()
+to adjust their behaviour based on this initial settings.
 
-Signed-off-by: David Turner <dturner@twitter.com>
+Instead, we can always store the full refname and then shorten them
+when producing the output.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-cat-file.txt | 102 +++++++++++++++++++-
- builtin/cat-file.c             |  50 +++++++++-
- t/t1006-cat-file.sh            | 205 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 351 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index f6a16f4..3763ea2 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <object>
--'git cat-file' (--batch | --batch-check) < <list-of-objects>
-+'git cat-file' (--batch | --batch-check) [--follow-symlinks] < <list-of-objects>
+ * [1/2] is just the earlier "this should fix it" patch, with
+   adjustments to the existing tests.
+
+   I suspect that it may be a good idea to lose the decoration_flags
+   from load_ref_decorations() and instead make that a new parameter
+   to format_decorations().  That way, the caller could decide which
+   ones to use.  It is not unconceivable to extend "log --format=%d"
+   that shows the decoration in the style given by --decorate arg
+   and let the callers specify two additional formats (i.e. decorate
+   always short, decorate always in full), and for that kind of
+   work, this patch will become a prerequisite.
+
+ log-tree.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 92259bc..c931615 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -94,6 +94,8 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
+ 	struct object *obj;
+ 	enum decoration_type type = DECORATION_NONE;
  
- DESCRIPTION
- -----------
-@@ -69,6 +69,65 @@ OPTIONS
- 	not be combined with any other options or arguments.  See the
- 	section `BATCH OUTPUT` below for details.
++	assert(cb_data == NULL);
++
+ 	if (starts_with(refname, "refs/replace/")) {
+ 		unsigned char original_sha1[20];
+ 		if (!check_replace_refs)
+@@ -123,8 +125,6 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
+ 	else if (!strcmp(refname, "HEAD"))
+ 		type = DECORATION_REF_HEAD;
  
-+--follow-symlinks::
-+	With --batch or --batch-check, follow symlinks inside the
-+	repository when requesting objects with extended SHA-1
-+	expressions of the form tree-ish:path-in-tree.  Instead of
-+	providing output about the link itself, provide output about
-+	the linked-to object.  If a symlink points outside the
-+	tree-ish (e.g. a link to /foo or a root-level link to ../foo),
-+	the portion of the link which is outside the tree will be
-+	printed.
-+[normal]
-+	This option does not (currently) work correctly when an
-+	object in the index is specified (e.g. `:link` instead of
-+	`HEAD:link`) rather than one in the tree.
-+[normal]
-+	This option cannot be used unless `--batch` or `--batch-check`
-+	is used, because it would be impossible to distinguish between
-+	the output for an out-of-repo symlink, and the contents of a
-+	blob.
-+[normal]
-+	For example, consider a git repository containing:
-++
-+--
-+	f: a file containing "hello\n"
-+	link: a symlink to f
-+	dir/link: a symlink to ../f
-+	plink: a symlink to ../f
-+	alink: a symlink to /etc/passwd
-+--
-+[normal]
-+	For a regular file `f`, `echo HEAD:f | git cat-file --batch` would
-+	print
-++
-+--
-+	ce013625030ba8dba906f756967f9e9ca394464a blob 6
-+--
-+[normal]
-+	And `echo HEAD:link | git cat-file --batch --follow-symlinks`
-+	would print the same thing, as would `HEAD:dir/link`, as they
-+	both point at `HEAD:f`.
-+[normal]
-+	Without `--follow-symlinks`, these would print data about the
-+	symlink itself.  In the case of `HEAD:link`, you would see
-++
-+--
-+	4d1ae35ba2c8ec712fa2a379db44ad639ca277bd blob 1
-+--
-+[normal]
-+	Both `plink` and `alink` point outside the tree, so they would
-+	respectively print:
-++
-+--
-+	symlink 4
-+	../f
-+
-+	symlink 11
-+	/etc/passwd
-+--
-+
-+
- OUTPUT
- ------
- If '-t' is specified, one of the <type>.
-@@ -148,6 +207,47 @@ the repository, then `cat-file` will ignore any custom format and print:
- <object> SP missing LF
- ------------
- 
-+If --follow-symlinks is used, and a symlink in the repository points
-+outside the repository, then `cat-file` will ignore any custom format
-+and print:
-+
-+------------
-+symlink SP <size> LF
-+<symlink> LF
-+------------
-+
-+The symlink will either be absolute (beginning with a /), or relative
-+to the tree root.  For instance, if dir/link points to ../../foo, then
-+<symlink> will be ../foo.  <size> is the size of the symlink in bytes.
-+
-+If --follow-symlinks is used, the following error messages will be
-+displayed:
-+
-+------------
-+<object> SP missing LF
-+------------
-+is printed when the initial symlink requested does not exist.
-+
-+------------
-+dangling SP <size> LF
-+<object> LF
-+------------
-+is printed when the initial symlink exists, but something that
-+it (transitive-of) points to does not.
-+
-+------------
-+loop SP <size> LF
-+<object> LF
-+------------
-+is printed for symlink loops (or any symlinks that
-+require more than 40 link resolutions to resolve).
-+
-+------------
-+notdir SP <size> LF
-+<object> LF
-+------------
-+is printed when, during symlink resolution, a file is used as a
-+directory name.
- 
- CAVEATS
- -------
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index df99df4..095554b 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -8,6 +8,7 @@
- #include "parse-options.h"
- #include "userdiff.h"
- #include "streaming.h"
-+#include "tree-walk.h"
- 
- static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
- {
-@@ -224,6 +225,7 @@ static void print_object_or_die(int fd, struct expand_data *data)
- 
- struct batch_options {
- 	int enabled;
-+	int follow_symlinks;
- 	int print_contents;
- 	const char *format;
- };
-@@ -232,12 +234,44 @@ static int batch_one_object(const char *obj_name, struct batch_options *opt,
- 			    struct expand_data *data)
- {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct object_context ctx;
-+	int flags = opt->follow_symlinks ? GET_SHA1_FOLLOW_SYMLINKS : 0;
-+	enum follow_symlinks_result result;
- 
- 	if (!obj_name)
- 	   return 1;
- 
--	if (get_sha1(obj_name, data->sha1)) {
--		printf("%s missing\n", obj_name);
-+	result = get_sha1_with_context(obj_name, flags, data->sha1, &ctx);
-+	if (result != FOUND) {
-+		switch(result) {
-+		case MISSING_OBJECT:
-+			printf("%s missing\n", obj_name);
-+			break;
-+		case DANGLING_SYMLINK:
-+			printf("dangling %"PRIuMAX"\n%s\n",
-+			       (uintmax_t)strlen(obj_name), obj_name);
-+			break;
-+		case SYMLINK_LOOP:
-+			printf("loop %"PRIuMAX"\n%s\n",
-+			       (uintmax_t)strlen(obj_name), obj_name);
-+			break;
-+		case NOT_DIR:
-+			printf("notdir %"PRIuMAX"\n%s\n",
-+			       (uintmax_t)strlen(obj_name), obj_name);
-+			break;
-+		default:
-+			die("BUG: unknown get_sha1_with_context result %d\n",
-+			       result);
-+			break;
-+		}
-+		fflush(stdout);
-+		return 0;
-+	}
-+
-+	if (ctx.mode == 0) {
-+		printf("symlink %"PRIuMAX"\n%s\n",
-+		       (uintmax_t)ctx.symlink_path.len,
-+		       ctx.symlink_path.buf);
- 		fflush(stdout);
- 		return 0;
+-	if (!cb_data || *(int *)cb_data == DECORATE_SHORT_REFS)
+-		refname = prettify_refname(refname);
+ 	add_name_decoration(type, refname, obj);
+ 	while (obj->type == OBJ_TAG) {
+ 		obj = ((struct tag *)obj)->tagged;
+@@ -151,8 +151,8 @@ void load_ref_decorations(int flags)
+ 	if (!decoration_loaded) {
+ 		decoration_loaded = 1;
+ 		decoration_flags = flags;
+-		for_each_ref(add_ref_decoration, &flags);
+-		head_ref(add_ref_decoration, &flags);
++		for_each_ref(add_ref_decoration, NULL);
++		head_ref(add_ref_decoration, NULL);
+ 		for_each_commit_graft(add_graft_decoration, NULL);
  	}
-@@ -342,9 +376,8 @@ static int batch_option_callback(const struct option *opt,
- {
- 	struct batch_options *bo = opt->value;
+ }
+@@ -199,18 +199,8 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
+ 	if (!(rru_flags & REF_ISSYMREF))
+ 		return NULL;
  
--	if (unset) {
--		memset(bo, 0, sizeof(*bo));
--		return 0;
-+	if (bo->enabled) {
-+		return 1;
- 	}
+-	if ((decoration_flags == DECORATE_SHORT_REFS)) {
+-		if (!skip_prefix(branch_name, "refs/heads/", &branch_name))
+-			return NULL;
+-	} else {
+-		/*
+-		 * Each decoration has a refname in full; keep
+-		 * branch_name also in full, but still make sure
+-		 * HEAD is a reasonable ref.
+-		 */
+-		if (!starts_with(branch_name, "refs/"))
+-			return NULL;
+-	}
++	if (!starts_with(branch_name, "refs/"))
++		return NULL;
  
- 	bo->enabled = 1;
-@@ -369,6 +402,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
- 		OPT_SET_INT(0, "textconv", &opt,
- 			    N_("for blob objects, run textconv on object's content"), 'c'),
-+		OPT_SET_INT(0, "follow-symlinks", &batch.follow_symlinks,
-+			N_("follow in-repo symlinks; report out-of-repo symlinks (requires --batch or --batch-check)"),
-+			    1),
- 		{ OPTION_CALLBACK, 0, "batch", &batch, "format",
- 			N_("show info and content of objects fed from the standard input"),
- 			PARSE_OPT_OPTARG, batch_option_callback },
-@@ -402,6 +438,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		usage_with_options(cat_file_usage, options);
- 	}
+ 	/* OK, do we have that ref in the list? */
+ 	for (list = decoration; list; list = list->next)
+@@ -222,6 +212,14 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
+ 	return NULL;
+ }
  
-+	if (batch.follow_symlinks && !batch.enabled) {
-+		usage_with_options(cat_file_usage, options);
-+	}
++static void show_name(struct strbuf *sb, const struct name_decoration *decoration)
++{
++	if (decoration_flags == DECORATE_SHORT_REFS)
++		strbuf_addstr(sb, prettify_refname(decoration->name));
++	else
++		strbuf_addstr(sb, decoration->name);
++}
 +
- 	if (batch.enabled)
- 		return batch_objects(&batch);
+ /*
+  * The caller makes sure there is no funny color before calling.
+  * format_decorations_extended makes sure the same after return.
+@@ -259,7 +257,7 @@ void format_decorations_extended(struct strbuf *sb,
+ 			if (decoration->type == DECORATION_REF_TAG)
+ 				strbuf_addstr(sb, "tag: ");
  
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index ab36b1e..a494013 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -189,6 +189,13 @@ do
-     '
- done
+-			strbuf_addstr(sb, decoration->name);
++			show_name(sb, decoration);
  
-+for opt in t s e p
-+do
-+    test_expect_success "Passing -$opt with --follow-symlinks fails" '
-+	    test_must_fail git cat-file --follow-symlinks -$opt $hello_sha1
-+	'
-+done
-+
- test_expect_success "--batch-check for a non-existent named object" '
-     test "foobar42 missing
- foobar84 missing" = \
-@@ -296,4 +303,202 @@ test_expect_success '%(deltabase) reports packed delta bases' '
- 	}
- '
+ 			if (current_and_HEAD &&
+ 			    decoration->type == DECORATION_REF_HEAD) {
+@@ -268,7 +266,7 @@ void format_decorations_extended(struct strbuf *sb,
+ 				strbuf_addstr(sb, " -> ");
+ 				strbuf_addstr(sb, color_reset);
+ 				strbuf_addstr(sb, decorate_get_color(use_color, current_and_HEAD->type));
+-				strbuf_addstr(sb, current_and_HEAD->name);
++				show_name(sb, current_and_HEAD);
+ 			}
+ 			strbuf_addstr(sb, color_reset);
  
-+# Tests for git cat-file --follow-symlinks
-+test_expect_success 'prep for symlink tests' '
-+	echo_without_newline "$hello_content" >morx &&
-+	test_ln_s_add morx same-dir-link &&
-+	test_ln_s_add dir link-to-dir &&
-+	test_ln_s_add ../fleem out-of-repo-link &&
-+	test_ln_s_add .. out-of-repo-link-dir &&
-+	test_ln_s_add same-dir-link link-to-link &&
-+	test_ln_s_add nope broken-same-dir-link &&
-+	mkdir dir &&
-+	test_ln_s_add ../morx dir/parent-dir-link &&
-+	test_ln_s_add .. dir/link-dir &&
-+	test_ln_s_add ../../escape dir/out-of-repo-link &&
-+	test_ln_s_add ../.. dir/out-of-repo-link-dir &&
-+	test_ln_s_add nope dir/broken-link-in-dir &&
-+	mkdir dir/subdir &&
-+	test_ln_s_add ../../morx dir/subdir/grandparent-dir-link &&
-+	test_ln_s_add ../../../great-escape dir/subdir/out-of-repo-link &&
-+	test_ln_s_add ../../.. dir/subdir/out-of-repo-link-dir &&
-+	test_ln_s_add ../../../ dir/subdir/out-of-repo-link-dir-trailing &&
-+	test_ln_s_add ../parent-dir-link dir/subdir/parent-dir-link-to-link &&
-+	echo_without_newline "$hello_content" >dir/subdir/ind2 &&
-+	echo_without_newline "$hello_content" >dir/ind1 &&
-+	test_ln_s_add dir dirlink &&
-+	test_ln_s_add dir/subdir subdirlink &&
-+	test_ln_s_add subdir/ind2 dir/link-to-child &&
-+	test_ln_s_add dir/link-to-child link-to-down-link &&
-+	test_ln_s_add dir/.. up-down &&
-+	test_ln_s_add dir/../ up-down-trailing &&
-+	test_ln_s_add dir/../morx up-down-file &&
-+	test_ln_s_add dir/../../morx up-up-down-file &&
-+	test_ln_s_add subdirlink/../../morx up-two-down-file &&
-+	test_ln_s_add loop1 loop2 &&
-+	test_ln_s_add loop2 loop1 &&
-+	git add morx dir/subdir/ind2 dir/ind1 &&
-+	git commit -am "test" &&
-+	echo $hello_sha1 blob $hello_size >found
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for non-links' '
-+	echo HEAD:morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:nope missing >expect &&
-+	echo HEAD:nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for in-repo, same-dir links' '
-+	echo HEAD:same-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for in-repo, links to dirs' '
-+	echo HEAD:link-to-dir/ind1 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for broken in-repo, same-dir links' '
-+	echo dangling 25 >expect &&
-+	echo HEAD:broken-same-dir-link >>expect &&
-+	echo HEAD:broken-same-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for same-dir links-to-links' '
-+	echo HEAD:link-to-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for parent-dir links' '
-+	echo HEAD:dir/parent-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo notdir 29 >expect &&
-+	echo HEAD:dir/parent-dir-link/nope >>expect &&
-+	echo HEAD:dir/parent-dir-link/nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for .. links' '
-+	echo dangling 22 >expect &&
-+	echo HEAD:dir/link-dir/nope >>expect &&
-+	echo HEAD:dir/link-dir/nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/link-dir/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo dangling 27 >expect &&
-+	echo HEAD:dir/broken-link-in-dir >>expect &&
-+	echo HEAD:dir/broken-link-in-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for ../.. links' '
-+	echo notdir 41 >expect &&
-+	echo HEAD:dir/subdir/grandparent-dir-link/nope >>expect &&
-+	echo HEAD:dir/subdir/grandparent-dir-link/nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/subdir/grandparent-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/subdir/parent-dir-link-to-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/ links' '
-+	echo dangling 17 >expect &&
-+	echo HEAD:dirlink/morx >>expect &&
-+	echo HEAD:dirlink/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo $hello_sha1 blob $hello_size >expect &&
-+	echo HEAD:dirlink/ind1 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/subdir links' '
-+	echo dangling 20 >expect &&
-+	echo HEAD:subdirlink/morx >>expect &&
-+	echo HEAD:subdirlink/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:subdirlink/ind2 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir ->subdir links' '
-+	echo notdir 27 >expect &&
-+	echo HEAD:dir/link-to-child/morx >>expect &&
-+	echo HEAD:dir/link-to-child/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/link-to-child | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:link-to-down-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks' '
-+	echo symlink 8 >expect &&
-+	echo ../fleem >>expect &&
-+	echo HEAD:out-of-repo-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 >expect &&
-+	echo .. >>expect &&
-+	echo HEAD:out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in dirs' '
-+	echo symlink 9 >expect &&
-+	echo ../escape >>expect &&
-+	echo HEAD:dir/out-of-repo-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 >expect &&
-+	echo .. >>expect &&
-+	echo HEAD:dir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in subdirs' '
-+	echo symlink 15 >expect &&
-+	echo ../great-escape >>expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 >expect &&
-+	echo .. >>expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 3 >expect &&
-+	echo ../ >>expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link-dir-trailing | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for symlinks with internal ..' '
-+	echo HEAD: | git cat-file --batch-check >expect &&
-+	echo HEAD:up-down | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-down-trailing | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-down-file | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo symlink 7 >expect &&
-+	echo ../morx >>expect &&
-+	echo HEAD:up-up-down-file | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-two-down-file | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlink breaks loops' '
-+	echo loop 10 >expect &&
-+	echo HEAD:loop1 >>expect &&
-+	echo HEAD:loop1 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch --follow-symlink returns correct sha and mode' '
-+	echo HEAD:morx | git cat-file --batch >expect &&
-+	echo HEAD:morx | git cat-file --batch --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
- test_done
--- 
-2.0.4.315.gad8727a-twtrsrc
