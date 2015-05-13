@@ -1,67 +1,80 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: automatic git installation
-Date: Wed, 13 May 2015 10:43:32 +0200
-Organization: gmx
-Message-ID: <b70c62b621a8288039627d4911da5af9@www.dscho.org>
-References: <AM3PR01MB3742DD43DFAE5196C50A572E6DA0@AM3PR01MB374.eurprd01.prod.exchangelabs.com>
- <CAEcj5uXSTu+eqX3O0ecb1JnQQfjEYb38TfYhF9tUOmNV8hZCTw@mail.gmail.com>
+From: Christian Halstrick <christian.halstrick@gmail.com>
+Subject: git pack protocol question: sideband responses in case of errors?
+Date: Wed, 13 May 2015 11:03:51 +0200
+Message-ID: <CAENte7j9De5Bqu2jDcmXQAxZheSGo+EntzsYUaen0N7cnuiCDQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Knobbe, Fabian" <Fabian.Knobbe@landisgyr.com>, git@vger.kernel.org
-To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 10:43:45 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>, Shawn Pearce <sop@google.com>
+X-From: git-owner@vger.kernel.org Wed May 13 11:04:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsSGV-0001Pj-Hv
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 10:43:43 +0200
+	id 1YsSaR-0001H2-Nk
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 11:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753973AbbEMIni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 04:43:38 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64429 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753866AbbEMInf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 04:43:35 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M4Gyx-1Z9Qwx3YDj-00rsU1; Wed, 13 May 2015 10:43:32
- +0200
-In-Reply-To: <CAEcj5uXSTu+eqX3O0ecb1JnQQfjEYb38TfYhF9tUOmNV8hZCTw@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:cBXhs7Yzfxiv0SSOdWiABplwp6Z/TWegAgD3RfgKsGaQiWL0g03
- 5pMoO0zIVAAKiQOBzHlkrsvWFKrCLpQPw6D31sypmZ6LxFh6n6DaHLFz5d0n/ihNh7v3rU2
- vB8nbyzzbudfqU/u+zjCdZL9BjbbDTg+pXb6/VtFNzxPs69RfF3u/gQNMJwGhCgkAkDFCqn
- Tpq2JsZE34/dM/w3+2QQg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S932597AbbEMJEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 05:04:14 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:34849 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932187AbbEMJEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 05:04:12 -0400
+Received: by widdi4 with SMTP id di4so188987038wid.0
+        for <git@vger.kernel.org>; Wed, 13 May 2015 02:04:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=8mYfZVeyS7xUmtvbFLXbyFriR5rVFPieeAi9l06camM=;
+        b=DsRHQlQar9sYXLaPRb6B8QvtPkYegVUZMT96JCkRBo4WITZXWPVLfbs3t9CuJ7CcTj
+         wNpKmqUpVC5fO3IKAL7uLHKPSumbHo4XqiNEJ2YEcilagcEXwGTQq4Dyp8Q5ulLgx/WC
+         WR+YgpY4rzV3NGmkvNO2ghG9relcghI1lI0Evq0PLOs5oc578QhZuTwSmnPycpVwB3bt
+         wMtuvQyPEZhstwbcxs3xCT3e6rhj/xQcw08pUAP3CuOoASrAZpNL2JEqqtMlbRImy130
+         zKkUpmAXFxyoWw1LjC/rpi8ZV7wG91/C1aea8Cqp7R1XBJ8H3gANd3a0e47VAnDyRuAA
+         aI6A==
+X-Received: by 10.180.82.135 with SMTP id i7mr38349547wiy.68.1431507851554;
+ Wed, 13 May 2015 02:04:11 -0700 (PDT)
+Received: by 10.194.23.42 with HTTP; Wed, 13 May 2015 02:03:51 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268949>
 
-Hi Thomas,
+Hi,
 
-On 2015-05-12 21:30, Thomas Ferris Nicolaisen wrote:
-> On Tue, May 12, 2015 at 10:50 AM, Knobbe, Fabian
-> <Fabian.Knobbe@landisgyr.com> wrote:
->>
->> Hallo,
->>
->> I would like to automatically install git with a script. I already found some command line arguments to pass my settings to the setup routine, but I still don't know how to set "Adjust your PATH environment" to "Use Git from the Windows Command Prompt" without userinteraction.
->>
->> Thanks for any hints!
-> 
-> Have you looked at Chocolatey? It's a Windows-based package manager
-> that lets you install software like Git in one command [1].
-> 
-> [1] https://chocolatey.org/packages?q=git
+since a long time I am hitting very seldom errors when pushing with a
+jgit client leading to "invalid channel 101" errors on client side. I
+was always wondering why it was always the channel "101". Now I found
+out with wireshark and it leads me to a question regarding the git
+pack protocol [1] and the sideband capability [2] which I couldn't
+answer from the technical docs.
 
-Good point. Please note that Chocolatey essentially takes our portable Git and repackages it.
+This is what happened: A client wants to push over http to a git
+server. In the beginning they negotiated to use side-band-64k and
+report-status capabilities. Everything works fine, Packfile data
+transmission starts and sideband communication is ok. Now the server
+hits a severe problem persisting the packfile and wants to stop the
+transport. The git server hit's quotas on the filesystem usage and is
+not allowed to persist that big file. My git server (I use a modified
+gerrit server) intends to send back a packet line "0013error: ...".
+But the client when reading that respond still thinks we should use
+sideband communication and interpretes the "e" from "error" as
+channel. The ascii code of "e" is the solution why it was always
+"invalid channel 101"
 
-As for proper package management, the Git SDK is based on MSys2 which sports the Pacman package manager ported from Arch Linux. Git for Windows is also available via a "Pacman" repository, and our installer essentially takes the contents of up-to-date packages and bundles them in an installer.
+Here is my question:
+- When exactly should sideband communication during a http based push
+start and when should it end? Especially in case of an error on the
+server side. Is the server allowed to switch to non-sideband
+communication under special conditions? E.g. when the server responds
+not with 200OK but with 413 (entity too large).
+- Is responding with status code 200 mandatory when talking git pack
+protocol? Am I allowed as git server to respond with status code 413
+and fill the body of the response with the status report?
 
-Ciao,
-Dscho
+Ciao
+  Chris
+
+[1] https://raw.githubusercontent.com/git/git/master/Documentation/technical/pack-protocol.txt
+[2] https://raw.githubusercontent.com/git/git/master/Documentation/technical/protocol-capabilities.txt
