@@ -1,65 +1,73 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] pull: handle =?UTF-8?Q?--log=3D=3Cn=3E?=
-Date: Wed, 13 May 2015 14:23:21 +0200
-Organization: gmx
-Message-ID: <c8dc145fcc56d38e04fc0e07ceb34999@www.dscho.org>
-References: <1431508661-21729-1-git-send-email-pyokagan@gmail.com>
- <1431508661-21729-3-git-send-email-pyokagan@gmail.com>
- <vpqlhgszujc.fsf@anie.imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: "HEAD -> branch" decoration doesn't work with "--decorate=full"
+Date: Wed, 13 May 2015 15:11:49 +0200
+Message-ID: <55534D95.60609@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed May 13 14:23:41 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 13 15:12:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsVhM-0007CS-Py
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 14:23:41 +0200
+	id 1YsWSK-0002oo-6S
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 15:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934382AbbEMMX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 08:23:27 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64146 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754509AbbEMMXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 08:23:25 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MeQ43-1YYwlh1k2p-00Q9uM; Wed, 13 May 2015 14:23:22
- +0200
-In-Reply-To: <vpqlhgszujc.fsf@anie.imag.fr>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:VoZLL7zdA6Mu7dQXoH0/PNFt3ei0UdU+uOLPMbvYy9okQ8hb8gA
- O4BN62oUQQ2VN0zOVOrUddEE3QycijcP/ZBW4/j5MYYmOLQ9MYNmXSb+YiQJvDnQQ/RvteQ
- nJTqo7QLYHWcBDdfQ+4jWhn3b6QpDH8aTLUzLarROdD6fyO8raeYDFXsoCsq+eZF9Fgzx//
- eOgN1BYxmni1IwgF4VF7w==
-X-UI-Out-Filterresults: notjunk:1;
+	id S934227AbbEMNMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 09:12:08 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63616 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933335AbbEMNMG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2015 09:12:06 -0400
+X-AuditID: 12074413-f79f26d0000030e7-cf-55534d9775db
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id C2.07.12519.79D43555; Wed, 13 May 2015 09:11:51 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB1DB8.dip0.t-ipconnect.de [93.219.29.184])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4DDBnnf000716
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 13 May 2015 09:11:51 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsUixO6iqDvdNzjU4Nl2NYuuK91MFg29V5gd
+	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE74+73yWwFa1gqVp2bwtLAeIK5i5GTQ0LAROL+
+	v5VQtpjEhXvr2boYuTiEBC4zSqy/1MMKkhASOM8k8eySfRcjBwevgKZEX1soSJhFQFVi4uml
+	jCA2m4CuxKKeZiYQW1QgSKL12lSwOK+AoMTJmU9YQGwRATWJiW2HWEDGMAPVP3yTCBIWFvCQ
+	mHrhCNgmZgF1iT/zLjFD2PISzVtnM09g5JuFZNIsJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqs
+	W5ycmJeXWqRrrpebWaKXmlK6iREScsI7GHedlDvEKMDBqMTDq7AhKFSINbGsuDL3EKMkB5OS
+	KK+ZfXCoEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHechegHG9KYmVValE+TEqag0VJnFdtibqf
+	kEB6YklqdmpqQWoRTFaGg0NJgjfYB6hRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQj
+	HhR18cXAuANJ8QDttQFp5y0uSMwFikK0nmLU5bgz5f8iJiGWvPy8VClx3miQIgGQoozSPLgV
+	sATzilEc6GNh3ssgVTzA5AQ36RXQEiagJY5xASBLShIRUlINjNHHnNgel7WtDPprLc/W5cDB
+	d/vIbqEC9Y0Lnz7LcH4YxtckXFHC1FSlczLtqdTjnYtuJu7Q+zz5ceCeBo5MT+Urv1IUPuv2
+	zdq3v0Ql8NeamxusQ7PmCxc8Zr+dNvnlJa2sALZznOreS1UWrmHo2BW3omfB1R+y 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268980>
 
-Hi Matthieu,
+Hi,
 
-On 2015-05-13 11:38, Matthieu Moy wrote:
-> Paul Tan <pyokagan@gmail.com> writes:
+The new-style "HEAD -> branch" style decoration doesn't work when
+"--decorate=full" is used:
+
+> $ bin-wrappers/git show --oneline --decorate
+> c518059 (HEAD -> master, gitster/master) Merge branch 'maint'
 > 
->> -	--log|--no-log)
->> -		log_arg=$1 ;;
->> +	--log|--log=*|--no-log)
->> +		log_arg="$1" ;;
-> 
-> I think you actually don't need the double quotes here (var=$value works
-> even if $value has spaces IIRC), but they don't harm and I prefer having
-> them.
+> $ bin-wrappers/git show --oneline --decorate=full
+> c518059 (HEAD, refs/remotes/gitster/master, refs/heads/master) Merge branch 'maint'
 
-I am far from a shell expert, but IIRC "$1" converts all whitespace to single spaces. In general, you therefore want to quote arguments, just in case.
+I would have expected the second invocation to show "HEAD ->
+refs/heads/master".
 
-Ciao,
-Dscho
+Was that an oversight or a conscious decision?
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
