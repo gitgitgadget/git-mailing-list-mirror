@@ -1,477 +1,97 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 6/8] doc: convert \--option to --option
-Date: Wed, 13 May 2015 10:48:42 +0100
-Message-ID: <20150513094841.GA10518@serenity.lan>
-References: <20150513045650.GA6070@peff.net>
- <20150513050137.GF6821@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jean-Noel Avila <jn.avila@free.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 13 11:54:34 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: [PATCH] pull: remove --tags error in no merge candidates case
+Date: Wed, 13 May 2015 18:06:47 +0800
+Message-ID: <1431511607-18251-1-git-send-email-pyokagan@gmail.com>
+References: <xmqq38311zi0.fsf@gitster.dls.corp.google.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>, mhagger@alum.mit.edu,
+	Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 12:07:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsTN2-0004r5-RW
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 11:54:33 +0200
+	id 1YsTZL-0001Bm-TF
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 12:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933630AbbEMJy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 05:54:28 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:40030 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933159AbbEMJyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 05:54:25 -0400
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 May 2015 05:54:25 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 3A4F7201E7;
-	Wed, 13 May 2015 10:49:21 +0100 (BST)
-X-Quarantine-ID: <L8EzxoNH1MuG>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id L8EzxoNH1MuG; Wed, 13 May 2015 10:49:18 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id AA0E322FDC;
-	Wed, 13 May 2015 10:49:11 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20150513050137.GF6821@peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S932707AbbEMKHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 06:07:10 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:33425 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933242AbbEMKHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 06:07:08 -0400
+Received: by pdbnk13 with SMTP id nk13so46875405pdb.0
+        for <git@vger.kernel.org>; Wed, 13 May 2015 03:07:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=yFgLjieuwojs8asJIPDmazwx6cx461Dqt4SutQI+cXU=;
+        b=GLuz1+fRwU0yz1+LlAFFjLsgtgZU3VvcC23z1DAW8GZKs3wqfO9aVssjP1dRzKlcKx
+         +MWlkW/by/Du7omgp8BbQXAKeNEVhEmVNq+HX8Pps9aE9mA+/F0dV4xSNk9mBUPXckPF
+         r/2iT5/q12eGkzb3iZQ/X3O4JgPcmPmXoTGwMbD1oChlILkbTt33jOB+6PFxYxBaDhs1
+         ZlaJ2mRobF2WwyHBfcd4l1hTzIz9J63FvssMfZZDNOtSfM1+vDtjnXcz3LUSzRh8fQ43
+         +m8H/h315IynEkpqeNJptn7WEzxi8oMBa5UlD5iWt4OL9V2b4iD2cNUlDYIkpm6B6lYO
+         vCNw==
+X-Received: by 10.66.139.138 with SMTP id qy10mr36715612pab.30.1431511628220;
+        Wed, 13 May 2015 03:07:08 -0700 (PDT)
+Received: from yoshi.pyokagan.tan ([116.86.132.138])
+        by mx.google.com with ESMTPSA id k3sm18834105pde.18.2015.05.13.03.07.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 13 May 2015 03:07:06 -0700 (PDT)
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <xmqq38311zi0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268976>
 
-On Wed, May 13, 2015 at 01:01:38AM -0400, Jeff King wrote:
-> Older versions of AsciiDoc would convert the "--" in
-> "--option" into an emdash. According to 565e135
-> (Documentation: quote double-dash for AsciiDoc, 2011-06-29),
-> this is fixed in AsciiDoc 8.3.0. According to bf17126, we
-> don't support anything older than 8.4.1 anyway, so we no
-> longer need to worry about quoting.
-> 
-> Even though this does not change the output at all, there
-> are a few good reasons to drop the quoting:
-> 
->   1. It makes the source prettier to read.
-> 
->   2. We don't quote consistently, which may be confusing when
->      reading the source.
-> 
->   3. Asciidoctor does not like the quoting, and renders a
->      literal backslash.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> So this is the first of the more questionable patches, simply because we
-> are appeasing Asciidoctor, but not fixing the root problem (i.e., there
-> are still lots of places where the backslash quoting is messed up, like
-> HEAD@\{yesterday}). So I suspect we need to figure that problem out, and
-> then the asciidoctor issues will just go away. However, I think this may
-> be worth doing just to prettify the source.
+Since 441ed41 ("git pull --tags": error out with a better message.,
+2007-12-28), git pull --tags would print a different error message if
+git-fetch did not return any merge candidates:
 
-If we're changing all of these files anyway, it would be nice to wrap
-literal options in backticks as suggested in
-Documentation/CodingGuidelines.
+   It doesn't make sense to pull all tags; you probably meant:
+        git fetch --tags
 
->  Documentation/config.txt           | 10 ++--
->  Documentation/git-fast-export.txt  |  6 +--
->  Documentation/git-fast-import.txt  | 28 +++++------
->  Documentation/git-fetch-pack.txt   |  2 +-
->  Documentation/git-pack-objects.txt |  2 +-
->  Documentation/git-push.txt         |  4 +-
->  Documentation/git-rev-list.txt     | 96 +++++++++++++++++++-------------------
->  Documentation/git-rev-parse.txt    |  2 +-
->  Documentation/git-send-pack.txt    |  2 +-
->  Documentation/git-show.txt         |  2 +-
->  Documentation/gitdiffcore.txt      |  6 +--
->  11 files changed, 80 insertions(+), 80 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 948b8b0..e5d2ace 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2279,18 +2279,18 @@ remote.<name>.skipFetchAll::
->  
->  remote.<name>.receivepack::
->  	The default program to execute on the remote side when pushing.  See
-> -	option \--receive-pack of linkgit:git-push[1].
-> +	option --receive-pack of linkgit:git-push[1].
->  
->  remote.<name>.uploadpack::
->  	The default program to execute on the remote side when fetching.  See
-> -	option \--upload-pack of linkgit:git-fetch-pack[1].
-> +	option --upload-pack of linkgit:git-fetch-pack[1].
->  
->  remote.<name>.tagOpt::
-> -	Setting this value to \--no-tags disables automatic tag following when
-> -	fetching from remote <name>. Setting it to \--tags will fetch every
-> +	Setting this value to --no-tags disables automatic tag following when
-> +	fetching from remote <name>. Setting it to --tags will fetch every
->  	tag from remote <name>, even if they are not reachable from remote
->  	branch heads. Passing these flags directly to linkgit:git-fetch[1] can
-> -	override this setting. See options \--tags and \--no-tags of
-> +	override this setting. See options --tags and --no-tags of
->  	linkgit:git-fetch[1].
->  
->  remote.<name>.vcs::
-> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-> index 929e496..ed57c68 100644
-> --- a/Documentation/git-fast-export.txt
-> +++ b/Documentation/git-fast-export.txt
-> @@ -67,17 +67,17 @@ produced incorrect results if you gave these options.
->  	have been completed, or to save the marks table across
->  	incremental runs.  As <file> is only opened and truncated
->  	at completion, the same path can also be safely given to
-> -	\--import-marks.
-> +	--import-marks.
->  	The file will not be written if no new object has been
->  	marked/exported.
->  
->  --import-marks=<file>::
->  	Before processing any input, load the marks specified in
->  	<file>.  The input file must exist, must be readable, and
-> -	must use the same format as produced by \--export-marks.
-> +	must use the same format as produced by --export-marks.
->  +
->  Any commits that have already been marked will not be exported again.
-> -If the backend uses a similar \--import-marks file, this allows for
-> +If the backend uses a similar --import-marks file, this allows for
->  incremental bidirectional exporting of the repository by keeping the
->  marks the same across runs.
->  
-> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-> index bf7fbd4..fd32895 100644
-> --- a/Documentation/git-fast-import.txt
-> +++ b/Documentation/git-fast-import.txt
-> @@ -42,13 +42,13 @@ OPTIONS
->  --quiet::
->  	Disable all non-fatal output, making fast-import silent when it
->  	is successful.  This option disables the output shown by
-> -	\--stats.
-> +	--stats.
->  
->  --stats::
->  	Display some basic statistics about the objects fast-import has
->  	created, the packfiles they were stored into, and the
->  	memory used by fast-import during this run.  Showing this output
-> -	is currently the default, but can be disabled with \--quiet.
-> +	is currently the default, but can be disabled with --quiet.
->  
->  Options for Frontends
->  ~~~~~~~~~~~~~~~~~~~~~
-> @@ -81,12 +81,12 @@ Locations of Marks Files
->  	have been completed, or to save the marks table across
->  	incremental runs.  As <file> is only opened and truncated
->  	at checkpoint (or completion) the same path can also be
-> -	safely given to \--import-marks.
-> +	safely given to --import-marks.
->  
->  --import-marks=<file>::
->  	Before processing any input, load the marks specified in
->  	<file>.  The input file must exist, must be readable, and
-> -	must use the same format as produced by \--export-marks.
-> +	must use the same format as produced by --export-marks.
->  	Multiple options may be supplied to import more than one
->  	set of marks.  If a mark is defined to different values,
->  	the last file wins.
-> @@ -179,8 +179,8 @@ fast-forward update, fast-import will skip updating that ref and instead
->  prints a warning message.  fast-import will always attempt to update all
->  branch refs, and does not stop on the first failure.
->  
-> -Branch updates can be forced with \--force, but it's recommended that
-> -this only be used on an otherwise quiet repository.  Using \--force
-> +Branch updates can be forced with --force, but it's recommended that
-> +this only be used on an otherwise quiet repository.  Using --force
->  is not necessary for an initial import into an empty repository.
->  
->  
-> @@ -231,11 +231,11 @@ Date Formats
->  ~~~~~~~~~~~~
->  The following date formats are supported.  A frontend should select
->  the format it will use for this import by passing the format name
-> -in the \--date-format=<fmt> command-line option.
-> +in the --date-format=<fmt> command-line option.
->  
->  `raw`::
->  	This is the Git native format and is `<time> SP <offutc>`.
-> -	It is also fast-import's default format, if \--date-format was
-> +	It is also fast-import's default format, if --date-format was
->  	not specified.
->  +
->  The time of the event is specified by `<time>` as the number of
-> @@ -437,7 +437,7 @@ the email address from the other fields in the line.  Note that
->  of bytes, except `LT`, `GT` and `LF`.  `<name>` is typically UTF-8 encoded.
->  
->  The time of the change is specified by `<when>` using the date format
-> -that was selected by the \--date-format=<fmt> command-line option.
-> +that was selected by the --date-format=<fmt> command-line option.
->  See ``Date Formats'' above for the set of supported formats, and
->  their syntax.
->  
-> @@ -888,7 +888,7 @@ save out all current branch refs, tags and marks.
->  ....
->  
->  Note that fast-import automatically switches packfiles when the current
-> -packfile reaches \--max-pack-size, or 4 GiB, whichever limit is
-> +packfile reaches --max-pack-size, or 4 GiB, whichever limit is
->  smaller.  During an automatic packfile switch fast-import does not update
->  the branch refs, tags or marks.
->  
-> @@ -1226,7 +1226,7 @@ users of fast-import, and are offered here as suggestions.
->  Use One Mark Per Commit
->  ~~~~~~~~~~~~~~~~~~~~~~~
->  When doing a repository conversion, use a unique mark per commit
-> -(`mark :<n>`) and supply the \--export-marks option on the command
-> +(`mark :<n>`) and supply the --export-marks option on the command
->  line.  fast-import will dump a file which lists every mark and the Git
->  object SHA-1 that corresponds to it.  If the frontend can tie
->  the marks back to the source repository, it is easy to verify the
-> @@ -1291,7 +1291,7 @@ even for considerably large projects (100,000+ commits).
->  
->  However repacking the repository is necessary to improve data
->  locality and access performance.  It can also take hours on extremely
-> -large projects (especially if -f and a large \--window parameter is
-> +large projects (especially if -f and a large --window parameter is
->  used).  Since repacking is safe to run alongside readers and writers,
->  run the repack in the background and let it finish when it finishes.
->  There is no reason to wait to explore your new Git project!
-> @@ -1305,7 +1305,7 @@ Repacking Historical Data
->  ~~~~~~~~~~~~~~~~~~~~~~~~~
->  If you are repacking very old imported data (e.g. older than the
->  last year), consider expending some extra CPU time and supplying
-> -\--window=50 (or higher) when you run 'git repack'.
-> +--window=50 (or higher) when you run 'git repack'.
->  This will take longer, but will also produce a smaller packfile.
->  You only need to expend the effort once, and everyone using your
->  project will benefit from the smaller repository.
-> @@ -1407,7 +1407,7 @@ branch, their in-memory storage size can grow to a considerable size
->  fast-import automatically moves active branches to inactive status based on
->  a simple least-recently-used algorithm.  The LRU chain is updated on
->  each `commit` command.  The maximum number of active branches can be
-> -increased or decreased on the command line with \--active-branches=.
-> +increased or decreased on the command line with --active-branches=.
->  
->  per active tree
->  ~~~~~~~~~~~~~~~
-> diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-> index 93b5067..8680f45 100644
-> --- a/Documentation/git-fetch-pack.txt
-> +++ b/Documentation/git-fetch-pack.txt
-> @@ -80,7 +80,7 @@ be in a separate packet, and the list must end with a flush packet.
->  	the things up in .bash_profile).
->  
->  --exec=<git-upload-pack>::
-> -	Same as \--upload-pack=<git-upload-pack>.
-> +	Same as --upload-pack=<git-upload-pack>.
->  
->  --depth=<n>::
->  	Limit fetching to ancestor-chains not longer than n.
-> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-> index c2f76fb..bbea529 100644
-> --- a/Documentation/git-pack-objects.txt
-> +++ b/Documentation/git-pack-objects.txt
-> @@ -192,7 +192,7 @@ self-contained. Use `git index-pack --fix-thin`
->  
->  --shallow::
->  	Optimize a pack that will be provided to a client with a shallow
-> -	repository.  This option, combined with \--thin, can result in a
-> +	repository.  This option, combined with --thin, can result in a
->  	smaller pack at the cost of speed.
->  
->  --delta-base-offset::
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index 863c30c..135d810 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -265,8 +265,8 @@ origin +master` to force a push to the `master` branch). See the
->  
->  --[no-]verify::
->  	Toggle the pre-push hook (see linkgit:githooks[5]).  The
-> -	default is \--verify, giving the hook a chance to prevent the
-> -	push.  With \--no-verify, the hook is bypassed completely.
-> +	default is --verify, giving the hook a chance to prevent the
-> +	push.  With --no-verify, the hook is bypassed completely.
->  
->  
->  include::urls-remotes.txt[]
-> diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-> index 5b11922..b10ea60 100644
-> --- a/Documentation/git-rev-list.txt
-> +++ b/Documentation/git-rev-list.txt
-> @@ -9,54 +9,54 @@ git-rev-list - Lists commit objects in reverse chronological order
->  SYNOPSIS
->  --------
->  [verse]
-> -'git rev-list' [ \--max-count=<number> ]
-> -	     [ \--skip=<number> ]
-> -	     [ \--max-age=<timestamp> ]
-> -	     [ \--min-age=<timestamp> ]
-> -	     [ \--sparse ]
-> -	     [ \--merges ]
-> -	     [ \--no-merges ]
-> -	     [ \--min-parents=<number> ]
-> -	     [ \--no-min-parents ]
-> -	     [ \--max-parents=<number> ]
-> -	     [ \--no-max-parents ]
-> -	     [ \--first-parent ]
-> -	     [ \--remove-empty ]
-> -	     [ \--full-history ]
-> -	     [ \--not ]
-> -	     [ \--all ]
-> -	     [ \--branches[=<pattern>] ]
-> -	     [ \--tags[=<pattern>] ]
-> -	     [ \--remotes[=<pattern>] ]
-> -	     [ \--glob=<glob-pattern> ]
-> -	     [ \--ignore-missing ]
-> -	     [ \--stdin ]
-> -	     [ \--quiet ]
-> -	     [ \--topo-order ]
-> -	     [ \--parents ]
-> -	     [ \--timestamp ]
-> -	     [ \--left-right ]
-> -	     [ \--left-only ]
-> -	     [ \--right-only ]
-> -	     [ \--cherry-mark ]
-> -	     [ \--cherry-pick ]
-> -	     [ \--encoding=<encoding> ]
-> -	     [ \--(author|committer|grep)=<pattern> ]
-> -	     [ \--regexp-ignore-case | -i ]
-> -	     [ \--extended-regexp | -E ]
-> -	     [ \--fixed-strings | -F ]
-> -	     [ \--date=(local|relative|default|iso|iso-strict|rfc|short) ]
-> -	     [ [ \--objects | \--objects-edge | \--objects-edge-aggressive ]
-> -	       [ \--unpacked ] ]
-> -	     [ \--pretty | \--header ]
-> -	     [ \--bisect ]
-> -	     [ \--bisect-vars ]
-> -	     [ \--bisect-all ]
-> -	     [ \--merge ]
-> -	     [ \--reverse ]
-> -	     [ \--walk-reflogs ]
-> -	     [ \--no-walk ] [ \--do-walk ]
-> -	     [ \--use-bitmap-index ]
-> +'git rev-list' [ --max-count=<number> ]
-> +	     [ --skip=<number> ]
-> +	     [ --max-age=<timestamp> ]
-> +	     [ --min-age=<timestamp> ]
-> +	     [ --sparse ]
-> +	     [ --merges ]
-> +	     [ --no-merges ]
-> +	     [ --min-parents=<number> ]
-> +	     [ --no-min-parents ]
-> +	     [ --max-parents=<number> ]
-> +	     [ --no-max-parents ]
-> +	     [ --first-parent ]
-> +	     [ --remove-empty ]
-> +	     [ --full-history ]
-> +	     [ --not ]
-> +	     [ --all ]
-> +	     [ --branches[=<pattern>] ]
-> +	     [ --tags[=<pattern>] ]
-> +	     [ --remotes[=<pattern>] ]
-> +	     [ --glob=<glob-pattern> ]
-> +	     [ --ignore-missing ]
-> +	     [ --stdin ]
-> +	     [ --quiet ]
-> +	     [ --topo-order ]
-> +	     [ --parents ]
-> +	     [ --timestamp ]
-> +	     [ --left-right ]
-> +	     [ --left-only ]
-> +	     [ --right-only ]
-> +	     [ --cherry-mark ]
-> +	     [ --cherry-pick ]
-> +	     [ --encoding=<encoding> ]
-> +	     [ --(author|committer|grep)=<pattern> ]
-> +	     [ --regexp-ignore-case | -i ]
-> +	     [ --extended-regexp | -E ]
-> +	     [ --fixed-strings | -F ]
-> +	     [ --date=(local|relative|default|iso|iso-strict|rfc|short) ]
-> +	     [ [ --objects | --objects-edge | --objects-edge-aggressive ]
-> +	       [ --unpacked ] ]
-> +	     [ --pretty | --header ]
-> +	     [ --bisect ]
-> +	     [ --bisect-vars ]
-> +	     [ --bisect-all ]
-> +	     [ --merge ]
-> +	     [ --reverse ]
-> +	     [ --walk-reflogs ]
-> +	     [ --no-walk ] [ --do-walk ]
-> +	     [ --use-bitmap-index ]
->  	     <commit>... [ \-- <paths>... ]
->  
->  DESCRIPTION
-> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-> index 52e6826..c483100 100644
-> --- a/Documentation/git-rev-parse.txt
-> +++ b/Documentation/git-rev-parse.txt
-> @@ -147,7 +147,7 @@ can be used.
->  	form as close to the original input as possible.
->  
->  --symbolic-full-name::
-> -	This is similar to \--symbolic, but it omits input that
-> +	This is similar to --symbolic, but it omits input that
->  	are not refs (i.e. branch or tag names; or more
->  	explicitly disambiguating "heads/master" form, when you
->  	want to name the "master" branch when there is an
-> diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-> index 45c7725..b5d09f7 100644
-> --- a/Documentation/git-send-pack.txt
-> +++ b/Documentation/git-send-pack.txt
-> @@ -29,7 +29,7 @@ OPTIONS
->  	a directory on the default $PATH.
->  
->  --exec=<git-receive-pack>::
-> -	Same as \--receive-pack=<git-receive-pack>.
-> +	Same as --receive-pack=<git-receive-pack>.
->  
->  --all::
->  	Instead of explicitly specifying which refs to update,
-> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-> index 4e617e6..82a4125 100644
-> --- a/Documentation/git-show.txt
-> +++ b/Documentation/git-show.txt
-> @@ -22,7 +22,7 @@ presents the merge commit in a special format as produced by
->  For tags, it shows the tag message and the referenced objects.
->  
->  For trees, it shows the names (equivalent to 'git ls-tree'
-> -with \--name-only).
-> +with --name-only).
->  
->  For plain blobs, it shows the plain contents.
->  
-> diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
-> index c8b3e51..c579593 100644
-> --- a/Documentation/gitdiffcore.txt
-> +++ b/Documentation/gitdiffcore.txt
-> @@ -28,8 +28,8 @@ The 'git diff-{asterisk}' family works by first comparing two sets of
->  files:
->  
->   - 'git diff-index' compares contents of a "tree" object and the
-> -   working directory (when '\--cached' flag is not used) or a
-> -   "tree" object and the index file (when '\--cached' flag is
-> +   working directory (when '--cached' flag is not used) or a
-> +   "tree" object and the index file (when '--cached' flag is
->     used);
->  
->   - 'git diff-files' compares contents of the index file and the
-> @@ -142,7 +142,7 @@ merges these filepairs and creates:
->  
->  When the "-C" option is used, the original contents of modified files,
->  and deleted files (and also unmodified files, if the
-> -"\--find-copies-harder" option is used) are considered as candidates
-> +"--find-copies-harder" option is used) are considered as candidates
->  of the source files in rename/copy operation.  If the input were like
->  these filepairs, that talk about a modified file fileY and a newly
->  created file file0:
+This is because at that time, git-fetch --tags would override any
+configured refspecs, and thus there would be no merge candidates. The
+error message was thus introduced to prevent confusion.
+
+However, since c5a84e9 (fetch --tags: fetch tags *in addition to*
+other stuff, 2013-10-30), git fetch --tags would fetch tags in addition
+to any configured refspecs. Hence, if any no merge candidates situation
+occurs, it is not because --tags was set. As such, this special error
+message is now irrelevant.
+
+To prevent confusion, remove this error message.
+
+Signed-off-by: Paul Tan <pyokagan@gmail.com>
+---
+ git-pull.sh | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/git-pull.sh b/git-pull.sh
+index 9ed01fd..9005171 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -190,15 +190,6 @@ esac
+ 
+ error_on_no_merge_candidates () {
+ 	exec >&2
+-	for opt
+-	do
+-		case "$opt" in
+-		-t|--t|--ta|--tag|--tags)
+-			echo "It doesn't make sense to pull all tags; you probably meant:"
+-			echo "  git fetch --tags"
+-			exit 1
+-		esac
+-	done
+ 
+ 	if test true = "$rebase"
+ 	then
+-- 
+2.1.4
