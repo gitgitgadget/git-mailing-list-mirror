@@ -1,132 +1,144 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git pack protocol question: sideband responses in case of errors?
-Date: Wed, 13 May 2015 08:45:43 -0700
-Message-ID: <CAJo=hJtcM-kV+L_yUX43UPe2Z-4LnaXTBpmFaWaFReG-Jbsisw@mail.gmail.com>
-References: <CAENte7j9De5Bqu2jDcmXQAxZheSGo+EntzsYUaen0N7cnuiCDQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "HEAD -> branch" decoration doesn't work with "--decorate=full"
+Date: Wed, 13 May 2015 10:11:58 -0700
+Message-ID: <xmqqwq0c9zc1.fsf@gitster.dls.corp.google.com>
+References: <55534D95.60609@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>, Shawn Pearce <sop@google.com>
-To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 17:46:21 2015
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 13 19:12:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsYrT-00086b-NM
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 17:46:20 +0200
+	id 1YsaCW-0004cd-S1
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 19:12:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965564AbbEMPqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 11:46:09 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:37485 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964839AbbEMPqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 11:46:05 -0400
-Received: by widdi4 with SMTP id di4so61251315wid.0
-        for <git@vger.kernel.org>; Wed, 13 May 2015 08:46:04 -0700 (PDT)
+	id S933423AbbEMRME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 13:12:04 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:38010 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932687AbbEMRMC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 13:12:02 -0400
+Received: by igbhj9 with SMTP id hj9so50979102igb.1
+        for <git@vger.kernel.org>; Wed, 13 May 2015 10:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=76L8j7dpHOzdfZz3F7Lx4tEIVK1QRLnURWn2TlQCQXI=;
-        b=LPXSWepHL6oJKHFpK7RdNMnPYYHS3FcULs15gvxwOIP/Ur2hUE1W+d12muadSICA3A
-         hpNaqXMOgCFVsC9A4k1dsw2lmwofntApFufHZqm9jwlznQ+MvR8e6AJt70z90TZMQ0m4
-         faxder1Zb/CwHBI0gWqXxwEheE398Q8LJHALg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=76L8j7dpHOzdfZz3F7Lx4tEIVK1QRLnURWn2TlQCQXI=;
-        b=eGSuFiiFUMN0QBl495utJYCziD8VbWXL+Xf2f7vmdAoGmfwSC3LTkD7l0XadIGKCO1
-         rXyDFxR+Jcf62HuVp8uCXI8Hs/7pE5se6I7IIz/k5T+v+Of2xHocUjqfMBSAcjZ6lVvs
-         0gIU7Cqn1viBlPpBQzq0ziM/lHf7vwEtYrEUxHwudiIzZpt7mj50Hf1wWToplPKuVJC8
-         HA8rbVjg+xjv2GNW8LSO9sV2wbYajHEM3zUXzy/NGIcwi/AV+gfjyVEEcs4St7W0ohSr
-         CNoiGSlsOb+YXGh9d9XFC65NY9REJSOnGdbJhzE5JkjUS4OrsRFr+S1miu78aQMU3a+H
-         /4+A==
-X-Gm-Message-State: ALoCoQkJ7kLLBz0L/or1zq8lv9ZFzLNLBlp2TZzbyszY10rJUbvamkIOkhJ3Neb9DAoIEgDYLFFI
-X-Received: by 10.180.92.198 with SMTP id co6mr7142830wib.34.1431531963936;
- Wed, 13 May 2015 08:46:03 -0700 (PDT)
-Received: by 10.28.147.18 with HTTP; Wed, 13 May 2015 08:45:43 -0700 (PDT)
-In-Reply-To: <CAENte7j9De5Bqu2jDcmXQAxZheSGo+EntzsYUaen0N7cnuiCDQ@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=300y4j+ns7AZ4uBq0G+ASBnrLu094FkXr3x1DuGY8Uo=;
+        b=NTlzmxQa9/mHZEahZ9rOHZFirpr1VTai69m6xjg1Y7R4tfydJamsaysgm/quYCT4ey
+         w/2TfafO87dCOzdLb/HoCCeE3L6ObgVgUpGEpF2Ndda/sc5FaO5xM2bLO1sgQDalhVt6
+         EiCmarkMa5VTlOY68Ck6xxuxTObJxAGa3OVFSid3+ODf4/XDbpXtKojBF3fQFWsG9zs/
+         me/E0Yt4sdFeZKWkeWkBVXrR5dfuS0voOaYElBZzJ7youTwsitoMJJc3hpwYBoIbTBfu
+         cFtYjOcq4P27+vygcyV075Pi1fLBHihOCzdzzdvLXupOJyTMqCSVcsBVLxJTyJ7Fqu01
+         AmKA==
+X-Received: by 10.107.133.132 with SMTP id p4mr14475764ioi.40.1431537121821;
+        Wed, 13 May 2015 10:12:01 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3cfa:54ee:8e48:89ad])
+        by mx.google.com with ESMTPSA id r4sm4005457igh.9.2015.05.13.10.11.59
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 13 May 2015 10:12:00 -0700 (PDT)
+In-Reply-To: <55534D95.60609@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 13 May 2015 15:11:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268992>
 
-On Wed, May 13, 2015 at 2:03 AM, Christian Halstrick
-<christian.halstrick@gmail.com> wrote:
-> since a long time I am hitting very seldom errors when pushing with a
-> jgit client leading to "invalid channel 101" errors on client side. I
-> was always wondering why it was always the channel "101". Now I found
-> out with wireshark and it leads me to a question regarding the git
-> pack protocol [1] and the sideband capability [2] which I couldn't
-> answer from the technical docs.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> The new-style "HEAD -> branch" style decoration doesn't work when
+> "--decorate=full" is used:
 >
-> This is what happened: A client wants to push over http to a git
-> server. In the beginning they negotiated to use side-band-64k and
-> report-status capabilities. Everything works fine, Packfile data
-> transmission starts and sideband communication is ok. Now the server
-> hits a severe problem persisting the packfile and wants to stop the
-> transport. The git server hit's quotas on the filesystem usage and is
-> not allowed to persist that big file. My git server (I use a modified
-> gerrit server) intends to send back a packet line "0013error: ...".
-> But the client when reading that respond still thinks we should use
-> sideband communication and interpretes the "e" from "error" as
-> channel. The ascii code of "e" is the solution why it was always
-> "invalid channel 101"
+>> $ bin-wrappers/git show --oneline --decorate
+>> c518059 (HEAD -> master, gitster/master) Merge branch 'maint'
+>> 
+>> $ bin-wrappers/git show --oneline --decorate=full
+>> c518059 (HEAD, refs/remotes/gitster/master, refs/heads/master) Merge branch 'maint'
 >
-> Here is my question:
-> - When exactly should sideband communication during a http based push
-> start and when should it end?
+> I would have expected the second invocation to show "HEAD ->
+> refs/heads/master".
+>
+> Was that an oversight or a conscious decision?
 
-If the client asked side-band-64k and report-status capabilities the
-server must use side-band to respond to the client. Its (obviously)
-assuming this.
+I actually think this ultimately comes from a poor design of the
+name-decorations infrastructure.  The program is expected to call
+load_ref_decorations() only once and make the choice between the
+full/short at that point, which is passed to add_ref_decoration() to
+record either 'refs/heads/master' or 'master' in the singleton
+name_decoration decoration.  But it does not store which one was
+chosen by the caller of load_ref_decorations() anywhere in the
+subsystem.
 
-The bug here is JGit's ReceivePack/BaseReceivePack code not setting up
-the side-band-64k early enough for this failure report to be wrapped
-in it.
+When current_pointed_by_HEAD() wants to see if decorations on an
+object, e.g. 'master', matches what 'HEAD' resolves to, it cannot
+tell if the original set-up was done for the full decoration, and
+the current code just assumes (without even realizing that it is
+making that assumption) the decoration must have been set up for the
+short ones.
 
-> Especially in case of an error on the
-> server side. Is the server allowed to switch to non-sideband
-> communication under special conditions?
+Perhaps something like this, but I am not committing it without
+tests or a proper log messge.
 
-No. The protocol has negotiated to use side-band-64k. That is what the
-client expects to see.
-
-In side-band-64k channel 2 is the "error" channel. Send a single
-packet on channel 2 carrying a single short text message and the
-entire stream is aborted at the client side after receiving this
-message. This is maybe what JGit should do in this case.
-
-> E.g. when the server responds
-> not with 200OK but with 413 (entity too large).
-
-No, you cannot use 413.
-
-> - Is responding with status code 200 mandatory when talking git pack
-> protocol? Am I allowed as git server to respond with status code 413
-> and fill the body of the response with the status report?
-
-This was hashed out a long time ago. For the purposes of Git the HTTP
-200 status code means the HTTP system successfully transported opaque
-data for Git, e.g. its like having no socket error from a socket
-routine.
-
-Any other HTTP status like 413 means the HTTP transport is busted. Its
-like getting EHOSTUNREACH or some other such errno from a socket
-function.
-
-I realize there are other interpretations for how applications should
-use HTTP status codes, and REST APIs often use them, but Git does not
-take that approach.
-
-FWIW I am glad you found this. I have been chasing this bug for years
-but couldn't really pin it down to anything. If its the "pack won't
-fit on local disk due to disk full" condition that narrows down the
-offending section of JGit considerably.
+I moved "static loaded" outside as it is in the same category as the
+global name-decoration and decoration-flags, i.e. to be initialised
+once at the beginning to a fixed setting and then be used with that
+setting.
 
 
-> [1] https://raw.githubusercontent.com/git/git/master/Documentation/technical/pack-protocol.txt
-> [2] https://raw.githubusercontent.com/git/git/master/Documentation/technical/protocol-capabilities.txt
+ log-tree.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 2c1ed0f..92259bc 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -13,6 +13,8 @@
+ #include "line-log.h"
+ 
+ static struct decoration name_decoration = { "object names" };
++static int decoration_loaded;
++static int decoration_flags;
+ 
+ static char decoration_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+@@ -146,9 +148,9 @@ static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
+ 
+ void load_ref_decorations(int flags)
+ {
+-	static int loaded;
+-	if (!loaded) {
+-		loaded = 1;
++	if (!decoration_loaded) {
++		decoration_loaded = 1;
++		decoration_flags = flags;
+ 		for_each_ref(add_ref_decoration, &flags);
+ 		head_ref(add_ref_decoration, &flags);
+ 		for_each_commit_graft(add_graft_decoration, NULL);
+@@ -196,8 +198,19 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
+ 	branch_name = resolve_ref_unsafe("HEAD", 0, unused, &rru_flags);
+ 	if (!(rru_flags & REF_ISSYMREF))
+ 		return NULL;
+-	if (!skip_prefix(branch_name, "refs/heads/", &branch_name))
+-		return NULL;
++
++	if ((decoration_flags == DECORATE_SHORT_REFS)) {
++		if (!skip_prefix(branch_name, "refs/heads/", &branch_name))
++			return NULL;
++	} else {
++		/*
++		 * Each decoration has a refname in full; keep
++		 * branch_name also in full, but still make sure
++		 * HEAD is a reasonable ref.
++		 */
++		if (!starts_with(branch_name, "refs/"))
++			return NULL;
++	}
+ 
+ 	/* OK, do we have that ref in the list? */
+ 	for (list = decoration; list; list = list->next)
