@@ -1,167 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] log: do not shorten decoration names too early
-Date: Wed, 13 May 2015 12:40:35 -0700
-Message-ID: <xmqqoalo9sgc.fsf_-_@gitster.dls.corp.google.com>
-References: <55534D95.60609@alum.mit.edu>
-	<xmqqwq0c9zc1.fsf@gitster.dls.corp.google.com>
-	<xmqqsib09z8y.fsf@gitster.dls.corp.google.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v2] mergetools: add winmerge as a builtin tool
+Date: Wed, 13 May 2015 22:00:03 +0200
+Message-ID: <5553AD43.9010807@gmail.com>
+References: <1431482407-63642-1-git-send-email-davvid@gmail.com>	<55534F4E.60402@gmail.com>	<3d7e3b09b89c46c39befca7564f5c1d6@www.dscho.org> <CAHGBnuPDSdCyVNM+Gagang1Cf9yw0Tyios45i6pnZSSzaJJC2Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git discussion list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed May 13 21:40:44 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: David Aguilar <davvid@gmail.com>, Phil Susi <phillsusi@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 13 22:00:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YscWJ-0000FR-K6
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 21:40:43 +0200
+	id 1YscpP-00007R-QE
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 22:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965133AbbEMTki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 15:40:38 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:32874 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964982AbbEMTkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 15:40:37 -0400
-Received: by igbpi8 with SMTP id pi8so120986012igb.0
-        for <git@vger.kernel.org>; Wed, 13 May 2015 12:40:37 -0700 (PDT)
+	id S965563AbbEMUAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 16:00:21 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:35326 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965515AbbEMUAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 16:00:19 -0400
+Received: by widdi4 with SMTP id di4so213335895wid.0
+        for <git@vger.kernel.org>; Wed, 13 May 2015 13:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=QtB2+8wdTzJJ0FLY/XCklChO4aWTkKrAIzKliW/cRjE=;
-        b=D1lKbD+Q+FkGX3Lb5vh4XumsVOCKp8gS6caQIca5jZGMDowDAfh3Riq3oHEIrMW/09
-         HNJUlQUUdkgKwRW9k3gpifw7AXz+if0cnW5pVIYTkgFRVoiYSeCaZo25ymPzJi3xt1aA
-         fhPTixzqlVyvkqfroAKjGQjt2Nlyq6RW9+yX39Io9It2AAHb5KLt0tqn0iUMtbt6N9hX
-         gxlLZrcW2jjm8ZbRSe1AHn1VMNnJl3WgaXLyiaOyBHNFuYI3veg3pAbB9U30icJdorMK
-         YjTt8GF7pk0xUmNKdLT6SLEtcmqHrwPGM/j4cTFJ1CaB6DnBMRkwkmNte4WQ7ewrTe+G
-         j2MA==
-X-Received: by 10.42.20.14 with SMTP id e14mr11037027icb.76.1431546037207;
-        Wed, 13 May 2015 12:40:37 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3cfa:54ee:8e48:89ad])
-        by mx.google.com with ESMTPSA id qs10sm4267291igb.14.2015.05.13.12.40.36
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 13 May 2015 12:40:36 -0700 (PDT)
-In-Reply-To: <xmqqsib09z8y.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 13 May 2015 10:13:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=7y62HxzLgH0FW9KNvzHJnhrT1tYLB0pGi8GhIAFY4q0=;
+        b=oGiT9rwukPnO17RCVrUiaVUZPHaDiKK1Xz8BwOFsT95X7k8RT+rXB8TwRYexulWd4y
+         f7XNoGvyFKE3qX+l5ib5PujSmnxn4dMWTfWUJUIExv/IuIPY3TO7eDgLPG6+R6s+34zi
+         VKnrUvW5t7AxW4Nhp+1qRvcValJBzcQxDLumX/bdGINQk/97hneIxWh931ygHaRBSB0t
+         L2tJPemI5D3G1sMB7OJNTut3yC/pYyCQ+yay7geIHVfKrVkjQThorGXrk1e3XkNPV2mI
+         AY7b4O0r+JW/edi415rT0thh4TfbQjUPANNrto5+xptVa+Zmz53JFegzgNZL1MnAITcA
+         ie6w==
+X-Received: by 10.180.90.236 with SMTP id bz12mr41668456wib.33.1431547218258;
+        Wed, 13 May 2015 13:00:18 -0700 (PDT)
+Received: from [192.168.188.20] (p4FF45E49.dip0.t-ipconnect.de. [79.244.94.73])
+        by mx.google.com with ESMTPSA id u9sm30070055wju.44.2015.05.13.13.00.16
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 May 2015 13:00:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAHGBnuPDSdCyVNM+Gagang1Cf9yw0Tyios45i6pnZSSzaJJC2Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269004>
 
-The DECORATE_SHORT_REFS option given to load_ref_decorations()
-affects the way a copy of the refname is stored for each decorated
-commit, and this forces later steps like current_pointed_by_HEAD()
-to adjust their behaviour based on this initial settings.
+On 13.05.2015 17:33, Sebastian Schuberth wrote:
 
-Instead, we can always store the full refname and then shorten them
-when producing the output.
+>> In my tests, "$PROGRAMFILES(X86)" did *not* work:
+>>
+>>      $ echo "$PROGRAMFILES(X86)"
+>>      bash: syntax error near unexpected token `('
+> 
+> Interesting. In both MSYS1/2 Git Bashes I get on Windows 7 64-bit:
+> 
+> $ echo "$PROGRAMFILES(X86)"
+> C:\Program Files (x86)(X86)
+> 
+> So it seems to resolve only the $PROGRAMFILES part and appending the
+> literal "(X86)". Not sure how to tell Bash that "(X86)" is part of the
+> variable name.
+> 
+>> Exactly. In my tests, "$ProgramW6432" worked, while "$PROGRAMW6432" did not.
+> 
+> Very odd indeed that for me it's the exact opposite.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+So how about something like this which hopefully covers all cases (including case-sensitivity issues regarding environment variable names and the problem of querying a variable that contains parentheses as part of its name):
 
- * [1/2] is just the earlier "this should fix it" patch, with
-   adjustments to the existing tests.
+for directory in "$(env | sed -nr 's/^PROGRAM(FILES(\(X86\))?|W6432)=//pI')"
+do
+    test -n "$directory" &&
+    test -x "$directory/$winmerge_exe" &&
+    echo "$directory/$winmerge_exe" &&
+    break
+done
 
-   I suspect that it may be a good idea to lose the decoration_flags
-   from load_ref_decorations() and instead make that a new parameter
-   to format_decorations().  That way, the caller could decide which
-   ones to use.  It is not unconceivable to extend "log --format=%d"
-   that shows the decoration in the style given by --decorate arg
-   and let the callers specify two additional formats (i.e. decorate
-   always short, decorate always in full), and for that kind of
-   work, this patch will become a prerequisite.
+sed's "I" seems to be a GNU extension that's not available with OS X' BSD sed. This shouldn't be an issue as WinMerge is Windows only anyway. If it still turns out to be an issue we probably should come up with an equivalent Perl expression.
 
- log-tree.c | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 92259bc..c931615 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -94,6 +94,8 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
- 	struct object *obj;
- 	enum decoration_type type = DECORATION_NONE;
- 
-+	assert(cb_data == NULL);
-+
- 	if (starts_with(refname, "refs/replace/")) {
- 		unsigned char original_sha1[20];
- 		if (!check_replace_refs)
-@@ -123,8 +125,6 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
- 	else if (!strcmp(refname, "HEAD"))
- 		type = DECORATION_REF_HEAD;
- 
--	if (!cb_data || *(int *)cb_data == DECORATE_SHORT_REFS)
--		refname = prettify_refname(refname);
- 	add_name_decoration(type, refname, obj);
- 	while (obj->type == OBJ_TAG) {
- 		obj = ((struct tag *)obj)->tagged;
-@@ -151,8 +151,8 @@ void load_ref_decorations(int flags)
- 	if (!decoration_loaded) {
- 		decoration_loaded = 1;
- 		decoration_flags = flags;
--		for_each_ref(add_ref_decoration, &flags);
--		head_ref(add_ref_decoration, &flags);
-+		for_each_ref(add_ref_decoration, NULL);
-+		head_ref(add_ref_decoration, NULL);
- 		for_each_commit_graft(add_graft_decoration, NULL);
- 	}
- }
-@@ -199,18 +199,8 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
- 	if (!(rru_flags & REF_ISSYMREF))
- 		return NULL;
- 
--	if ((decoration_flags == DECORATE_SHORT_REFS)) {
--		if (!skip_prefix(branch_name, "refs/heads/", &branch_name))
--			return NULL;
--	} else {
--		/*
--		 * Each decoration has a refname in full; keep
--		 * branch_name also in full, but still make sure
--		 * HEAD is a reasonable ref.
--		 */
--		if (!starts_with(branch_name, "refs/"))
--			return NULL;
--	}
-+	if (!starts_with(branch_name, "refs/"))
-+		return NULL;
- 
- 	/* OK, do we have that ref in the list? */
- 	for (list = decoration; list; list = list->next)
-@@ -222,6 +212,14 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
- 	return NULL;
- }
- 
-+static void show_name(struct strbuf *sb, const struct name_decoration *decoration)
-+{
-+	if (decoration_flags == DECORATE_SHORT_REFS)
-+		strbuf_addstr(sb, prettify_refname(decoration->name));
-+	else
-+		strbuf_addstr(sb, decoration->name);
-+}
-+
- /*
-  * The caller makes sure there is no funny color before calling.
-  * format_decorations_extended makes sure the same after return.
-@@ -259,7 +257,7 @@ void format_decorations_extended(struct strbuf *sb,
- 			if (decoration->type == DECORATION_REF_TAG)
- 				strbuf_addstr(sb, "tag: ");
- 
--			strbuf_addstr(sb, decoration->name);
-+			show_name(sb, decoration);
- 
- 			if (current_and_HEAD &&
- 			    decoration->type == DECORATION_REF_HEAD) {
-@@ -268,7 +266,7 @@ void format_decorations_extended(struct strbuf *sb,
- 				strbuf_addstr(sb, " -> ");
- 				strbuf_addstr(sb, color_reset);
- 				strbuf_addstr(sb, decorate_get_color(use_color, current_and_HEAD->type));
--				strbuf_addstr(sb, current_and_HEAD->name);
-+				show_name(sb, current_and_HEAD);
- 			}
- 			strbuf_addstr(sb, color_reset);
- 
+-- 
+Sebastian Schuberth
