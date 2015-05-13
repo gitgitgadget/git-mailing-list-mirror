@@ -1,58 +1,75 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] add: check return value of =?UTF-8?Q?launch=5Feditor?=
-Date: Wed, 13 May 2015 10:12:31 +0200
-Organization: gmx
-Message-ID: <4de553a1564152cc951be8675214f7f7@www.dscho.org>
-References: <CAA8EjDS9HePk6ZFa0kOy7GDa9_c_TsJ7uv7t+N9RL-3z=ZrQFQ@mail.gmail.com>
- <20150513012158.GA3066@peff.net>
+From: Michael Darling <darlingm@gmail.com>
+Subject: [PATCH] Documentation: Alternate name for docbook2x-texi binary
+Date: Wed, 13 May 2015 04:28:30 -0400
+Message-ID: <CABRuA+icJWgbpFaV=6t1zOaLfrG3i_vSpm1rwOOyp=+0eBL4zg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Russ Cox <rsc@golang.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 13 10:12:56 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 10:28:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsRmg-0006pQ-A1
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 10:12:54 +0200
+	id 1YsS1u-00045c-EQ
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 10:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933344AbbEMIMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 04:12:49 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54777 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932505AbbEMIMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 04:12:41 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MRjd7-1YlgOO0BgH-00SzCL; Wed, 13 May 2015 10:12:33
- +0200
-In-Reply-To: <20150513012158.GA3066@peff.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:iqi9Q6lmo+W/3sey/kJ+z2PKv1T1gcUTiO66QEvf+X5vAEJjkqE
- 8nqrrP3dIr1VrCPjDS99ZRQMOP9PZAiHeIgaDzF/GS4axbmkP3rUTOYSnViPy+2yOJim8gB
- fy3Ig8JW+DXpBPck8IQKMYohONh9p/wgz1OwR8QMgzpVevoFjLW+u6UmlS6Ts+kY+tjh4TM
- GV2hzmjOfzfyUzzrlV7pw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S933434AbbEMI2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 04:28:34 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:34610 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932274AbbEMI2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 04:28:32 -0400
+Received: by wicmc15 with SMTP id mc15so72579256wic.1
+        for <git@vger.kernel.org>; Wed, 13 May 2015 01:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=HNiTOsVG9ef099LpIQDxm2rjSfBVRXBu8WKXgAQLFCM=;
+        b=s+4rWyFTrMG/d8oFsrJh7dsUQx68dyTybYRepPGYoPnoUxO7x6oK3A0wd2mXOm6xDb
+         kfap7vqtSiYLwjXEXtGD6tOZmq7IyKmuQx7/S4/wNMtDepQzFzIOIX24NgtK7yT7UFFs
+         g+LmrbOrP5wjt5qXp95+b0zdx6u+bNnr5FMVuAG53XPApC3X6F07MiXLs/i2muJG9uXO
+         sapHF2nRwDRnVyCE6o9qDjdvi06RDQ6cRhcrcjK/QnQKzxwJbFM8/jjYJuM5Y7+ax+iO
+         XowF0czx5rcsxfCzDDeAkJ75cwANIDBzpLPZh+Lal/FrFekcmnd9CDk8I5pys5aW9cwS
+         IPKg==
+X-Received: by 10.180.102.74 with SMTP id fm10mr3481333wib.25.1431505710880;
+ Wed, 13 May 2015 01:28:30 -0700 (PDT)
+Received: by 10.28.167.2 with HTTP; Wed, 13 May 2015 01:28:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268947>
 
-Hi Peff,
+In Fedora 21, docbook2x-texi binary is named db2x_docbook2texi.
+If binary docbook2-texi is not found, looks for db2x_docbook2texi.
+Also gives an error if neither is found.
 
-On 2015-05-13 03:21, Jeff King wrote:
-> On Tue, May 12, 2015 at 08:31:26PM -0400, Russ Cox wrote:
-> 
->> The root cause seems to be that builtin/add.c's edit_patch does not
->> check the result of  the launch_editor call. It probably should.
-> 
-> Yes, definitely. Patch is below.
+Signed-off by: Michael Darling <darlingm@gmail.com>
+---
+ Documentation/Makefile | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-Thanks for cleaning up my mess!
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3e39e28..f5f9ad5 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -116,7 +116,15 @@ HTML_REPO = ../../git-htmldocs
 
-Ciao,
-Dscho
+ MAKEINFO = makeinfo
+ INSTALL_INFO = install-info
+-DOCBOOK2X_TEXI = docbook2x-texi
++
++DOCBOOK2X_TEXI = $(shell which docbook2x-texi)
++ifeq (, $(DOCBOOK2X_TEXI))
++DOCBOOK2X_TEXI = $(shell which db2x_docbook2texi)
++ifeq (, $(DOCBOOK2X_TEXI))
++$(error Did not find docbook2x-texi or db2x_docbook2texi, required)
++endif
++endif
++
+ DBLATEX = dblatex
+ ASCIIDOC_DBLATEX_DIR = /etc/asciidoc/dblatex
+ ifndef PERL_PATH
+-- 
+2.4.0.53.g8440f74
