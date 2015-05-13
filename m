@@ -1,53 +1,65 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: cmd_struct
-Date: Wed, 13 May 2015 20:10:47 -0300
-Message-ID: <CACnwZYe5i3p0f7cvprya=VdhFnnMW_H=K18BFqjq_Qn86cjXeA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: cmd_struct
+Date: Wed, 13 May 2015 16:23:49 -0700
+Message-ID: <20150513232348.GD5586@google.com>
+References: <CACnwZYe5i3p0f7cvprya=VdhFnnMW_H=K18BFqjq_Qn86cjXeA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 14 01:10:55 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 14 01:23:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ysfnh-0008KD-Lk
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 01:10:54 +0200
+	id 1Ysg0L-0004YB-2O
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 01:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934672AbbEMXKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 19:10:49 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:35706 "EHLO
-	mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934661AbbEMXKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 19:10:48 -0400
-Received: by oign205 with SMTP id n205so43441308oig.2
-        for <git@vger.kernel.org>; Wed, 13 May 2015 16:10:48 -0700 (PDT)
+	id S965456AbbEMXXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 19:23:52 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:35629 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965006AbbEMXXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 19:23:52 -0400
+Received: by iebpz10 with SMTP id pz10so46610636ieb.2
+        for <git@vger.kernel.org>; Wed, 13 May 2015 16:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=tbwX+FbJwfyCuScKRMX1uW0dpaf6idQp+YaVohlo5ww=;
-        b=uyoatHAw+7idANZpE8Gw8j44wTYF73lU4rcxnGpV5PuCLGMVHUhvq51SNHiXxbZTSD
-         jvMyr00U4uoe8m+peLI+47l8l7fGtr2QvRzWbc0VJOkAYZ4BE5gYyaeagCAy4i7gnlnN
-         POaBBIngYbmzQIIJipEGY/eTAlFsWnmHRzh3XeY8ZT+gKd6JIA8yRGCyvUMZZOSQ6lnM
-         2tgJhZ5DTvEkyL98udjuNbSGneX9ZNYxhPxsWjpS1+ZD3ume36Xt/y7VHcUev4+AkbQf
-         kHVYhSQ3dmq1amjWZuBJnY3Xfc/uiShVSmE55ytgLPoGvXDttM+VBWKokANpW8aPD3Go
-         8dag==
-X-Received: by 10.182.78.103 with SMTP id a7mr1038647obx.79.1431558647916;
- Wed, 13 May 2015 16:10:47 -0700 (PDT)
-Received: by 10.202.80.136 with HTTP; Wed, 13 May 2015 16:10:47 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=BvpH8yoKS8ppgvnkDO7w2xeeUtQaDPyx1Xi+uEwe0zA=;
+        b=emDQoAIYZJAj8vgvxzU2iqOI1mf7dEFDpqJ0dq+XzLR0FdlNto4LPxPKmznJU20/Cw
+         aUWyJzZLQqiuorf7FjI6nsSHN0e2ZSoufCb9jD+r2FiiYtSiN4s38/hwP4ps5RNvcOIB
+         9utQxWq523n/FFvOgPqpRYU5mSChdUPtAIaiJzJsqtRhzcS8qu6RzJvY4CYN8o9zBgJ7
+         OYrkufeBDyNbHg/AF6T9bVUdShYS2Yx8YVAsegX6sEhmM+jhAl8iC0oagAtrIbphHkNc
+         NVyjNyOlmmJ79o3AaYY2TcP1BIn7jJc5ISCAe9o3xUxCxDShbN6IxugGEhr6TpZd5KJH
+         kYQA==
+X-Received: by 10.43.178.195 with SMTP id ox3mr11871474icc.10.1431559431650;
+        Wed, 13 May 2015 16:23:51 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b941:a00f:6e0d:bb19])
+        by mx.google.com with ESMTPSA id o15sm4652319igw.11.2015.05.13.16.23.50
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 13 May 2015 16:23:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACnwZYe5i3p0f7cvprya=VdhFnnMW_H=K18BFqjq_Qn86cjXeA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269017>
 
 Hi,
 
-Would be too churn/noise (at this point) to rename cmd_struct to builtin_cmd?
+Thiago Farina wrote:
 
-I know "Why" question could come, but I prefer to not answer it if I can.
+> Would be too churn/noise (at this point) to rename cmd_struct to builtin_cmd?
+>
+> I know "Why" question could come, but I prefer to not answer it if I can.
 
-Regards,
+The answer depends on the "why".  (Not "why do you ask?", but "why
+rename --- what benefit would it bring?")
 
--- 
-Thiago Farina
+Thanks and hope that helps,
+Jonathan
