@@ -1,83 +1,90 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v2] mergetools: add winmerge as a builtin tool
-Date: Wed, 13 May 2015 17:33:53 +0200
-Message-ID: <CAHGBnuPDSdCyVNM+Gagang1Cf9yw0Tyios45i6pnZSSzaJJC2Q@mail.gmail.com>
-References: <1431482407-63642-1-git-send-email-davvid@gmail.com>
-	<55534F4E.60402@gmail.com>
-	<3d7e3b09b89c46c39befca7564f5c1d6@www.dscho.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7 1/3] tree-walk: learn get_tree_entry_follow_symlinks
+Date: Wed, 13 May 2015 11:39:45 -0400
+Message-ID: <20150513153944.GA17418@peff.net>
+References: <1431481799-23560-1-git-send-email-dturner@twopensource.com>
+ <1431481799-23560-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Aguilar <davvid@gmail.com>, Phil Susi <phillsusi@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 13 17:34:00 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Wed May 13 17:39:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsYfX-0002d2-E8
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 17:33:59 +0200
+	id 1YsYlF-0005Cr-Kp
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 17:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934512AbbEMPdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 11:33:55 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:36714 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933546AbbEMPdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 11:33:54 -0400
-Received: by igbpi8 with SMTP id pi8so142312711igb.1
-        for <git@vger.kernel.org>; Wed, 13 May 2015 08:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ZK6SjidsyeJtMU5B+ifoOxVG1reca9ae25+m02aZVrE=;
-        b=BgbfQ6hAHZSuIZVG4Sbmkjb9EylfbYmLP4iMIVjyR/r7s7tk6eJFb3Lg4naP4wbB+u
-         elznUSs3hBYiVQG07xjry2H7YNQwsj0vBuE7TpI69I+TwhJq3DmhVKV/S1jIJZdg2gVa
-         dd/HppLG7ynCtuDpTbHcF7SVMmDx1sppgS3AR1Qzh2HzZeWry2qwBKVTnl4iRA/JTqq9
-         Dwgds/zB7A0C2tEl/QXbn+ZuCvRgQ0ocFxU5iL7nuunuhy/hfLUezyXtAS9bel24c8F+
-         RH6Cmqy4HCivpBgwbsXwZHsvFlfPpmLOPhSdgeOZSbOktMN7oi8Y8vsdjEyGaF5+tIuL
-         vMjw==
-X-Received: by 10.42.126.10 with SMTP id c10mr9909351ics.66.1431531233690;
- Wed, 13 May 2015 08:33:53 -0700 (PDT)
-Received: by 10.107.29.149 with HTTP; Wed, 13 May 2015 08:33:53 -0700 (PDT)
-In-Reply-To: <3d7e3b09b89c46c39befca7564f5c1d6@www.dscho.org>
+	id S965181AbbEMPjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 11:39:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57946 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965165AbbEMPjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 11:39:48 -0400
+Received: (qmail 1828 invoked by uid 102); 13 May 2015 15:39:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 13 May 2015 10:39:48 -0500
+Received: (qmail 12558 invoked by uid 107); 13 May 2015 15:39:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 13 May 2015 11:39:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 May 2015 11:39:45 -0400
+Content-Disposition: inline
+In-Reply-To: <1431481799-23560-2-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268990>
 
-On Wed, May 13, 2015 at 5:22 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
+On Tue, May 12, 2015 at 09:49:57PM -0400, dturner@twopensource.com wrote:
 
-> In my tests, "$PROGRAMFILES(X86)" did *not* work:
->
->     $ echo "$PROGRAMFILES(X86)"
->     bash: syntax error near unexpected token `('
+> +		} else if (S_ISLNK(*mode)) {
+> +			/* Follow a symlink */
+> +			unsigned long link_len;
+> +			size_t len;
+> +			char *contents, *contents_start;
+> [...]
+> +			contents = read_sha1_file(current_tree_sha1, &type,
+> +						  &link_len);
 
-Interesting. In both MSYS1/2 Git Bashes I get on Windows 7 64-bit:
+Here we have potentially allocated a buffer for contents...
 
-$ echo "$PROGRAMFILES(X86)"
-C:\Program Files (x86)(X86)
+> +
+> +			if (!contents)
+> +				goto done;
 
-So it seems to resolve only the $PROGRAMFILES part and appending the
-literal "(X86)". Not sure how to tell Bash that "(X86)" is part of the
-variable name.
+No need to free here, it's NULL...
 
-> Exactly. In my tests, "$ProgramW6432" worked, while "$PROGRAMW6432" did not.
+> +
+> +			if (contents[0] == '/') {
+> +				strbuf_addstr(result_path, contents);
+> +				*mode = 0;
+> +				retval = FOUND;
+> +				goto done;
+> +			}
 
-Very odd indeed that for me it's the exact opposite.
+But here we leak it on "goto done".
 
-> FWIW I think that the idea to test for a WinMerge executable of another bitness makes sense, because we can execute an executable of another bitness (unlike a .dll of another bitness).
+> +			if (remainder)
+> +				len = first_slash - namebuf.buf;
+> +			else
+> +				len = namebuf.len;
+> +
+> +			contents_start = contents;
+> +
+> +			parent = &parents[parents_nr - 1];
+> +			init_tree_desc(&t, parent->tree, parent->size);
+> +			strbuf_splice(&namebuf, 0, len,
+> +				      contents_start, link_len);
+> +			if (remainder)
+> +				namebuf.buf[link_len] = '/';
+> +			free(contents);
+> +		}
 
-I agree it makes sense to check for both 64-bit and 32-bit WinMerge
-installations. But IMO it does not make sense to mix in the bitness of
-the process requesting the environment as part of running the
-mergetools/winmerge script, which is what we do by querying
-"$ProgramW6432" / "$PROGRAMW6432" .
+And this code path calls free(), so it is good.
 
--- 
-Sebastian Schuberth
+So I think you just need a free() in the conditional above.
+
+-Peff
