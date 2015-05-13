@@ -1,106 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] bisect: improve output when bad commit is found
-Date: Tue, 12 May 2015 18:13:48 -0700
-Message-ID: <xmqqoalpcm9f.fsf@gitster.dls.corp.google.com>
-References: <1431472751-20974-1-git-send-email-tbsaunde@tbsaunde.org>
-	<xmqqwq0dcrcf.fsf@gitster.dls.corp.google.com>
-	<20150513005432.GF31257@tsaunders-iceball.corp.tor1.mozilla.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] add: check return value of launch_editor
+Date: Tue, 12 May 2015 21:21:58 -0400
+Message-ID: <20150513012158.GA3066@peff.net>
+References: <CAA8EjDS9HePk6ZFa0kOy7GDa9_c_TsJ7uv7t+N9RL-3z=ZrQFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: Trevor Saunders <tbsaunde@tbsaunde.org>
-X-From: git-owner@vger.kernel.org Wed May 13 03:13:58 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Russ Cox <rsc@golang.org>
+X-From: git-owner@vger.kernel.org Wed May 13 03:22:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsLFE-0007j8-UC
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 03:13:57 +0200
+	id 1YsLN8-0001ln-VZ
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 03:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbbEMBNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 21:13:51 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:38069 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964896AbbEMBNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 21:13:51 -0400
-Received: by igbhj9 with SMTP id hj9so31626068igb.1
-        for <git@vger.kernel.org>; Tue, 12 May 2015 18:13:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=+OS0oJ17yJ1OaQP+jceepiqFmTdj1p42dGjxuMWRJz4=;
-        b=jP9LrI7zUs2U1wbk/4Yfqkzt0Ck2ye3xtMNHgY502uWEYpp+oBgx32xsQsjsOKfiVv
-         I+v4XmbUOIyUtf+JS314r+laPFWjZO7+ooeWYpCB5Cek4+7qmPI/pWpu1kGK3IUZSD1I
-         OjXg3tr4y4nwPgaUlGGWyrtRAbcOkFuZGPyfHHRP2srTKDiJQZqJH3i7yq8f6EGRgDzL
-         tDLsTiYqpy5VqS1wReFcS3UuCBzKxR2XBOb0t6rl5RYXhKcV+Eedyqt5tSTU+CaAWFSI
-         oNu4LCcdy4NfHYAHh/k3bgpCvvQJnuvDekav6oBpyKnnIvU7aX1eTFTlaW22I+bWFsmU
-         XBUA==
-X-Received: by 10.50.61.200 with SMTP id s8mr25085963igr.7.1431479630442;
-        Tue, 12 May 2015 18:13:50 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3cfa:54ee:8e48:89ad])
-        by mx.google.com with ESMTPSA id k74sm13142294iok.30.2015.05.12.18.13.49
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 12 May 2015 18:13:49 -0700 (PDT)
-In-Reply-To: <20150513005432.GF31257@tsaunders-iceball.corp.tor1.mozilla.com>
-	(Trevor Saunders's message of "Tue, 12 May 2015 20:54:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S965086AbbEMBWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 21:22:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57512 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964912AbbEMBWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 21:22:01 -0400
+Received: (qmail 22653 invoked by uid 102); 13 May 2015 01:22:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 May 2015 20:22:01 -0500
+Received: (qmail 5534 invoked by uid 107); 13 May 2015 01:21:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 May 2015 21:21:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 May 2015 21:21:58 -0400
+Content-Disposition: inline
+In-Reply-To: <CAA8EjDS9HePk6ZFa0kOy7GDa9_c_TsJ7uv7t+N9RL-3z=ZrQFQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268911>
 
-Trevor Saunders <tbsaunde@tbsaunde.org> writes:
+On Tue, May 12, 2015 at 08:31:26PM -0400, Russ Cox wrote:
 
-> On Tue, May 12, 2015 at 04:24:00PM -0700, Junio C Hamano wrote:
->> Trevor Saunders <tbsaunde@tbsaunde.org> writes:
->> 
->> > When the first bad commit has been found git bisect prints something
->> > like this:
->> >
->> > 	<40 char sha1> is the first bad commit
->> > 	Commit <40 char sha1>
->> > 	...
->> >
->> > 	:100644 100644 10f5e57... a46cfeb... M  bisect.c
->> > 	:100755 100755 ae3fec2... 65a19fa... M  git-bisect.sh
->> >
->> > The raw diff output is not really useful, and its kind of silly to print
->> > the sha1 twice.  Instead lets print something like this:
->> >
->> > 	The first bad commit is
->> > 	Commit <sha1>
->> > 	...
->> 
->> According to +CCouder, this change will break existing people's use
->> cases.
->> 
->> See $gmane/268881
->
-> Well, technically he just said it might be that people are parsing the
-> output and could be broken, but if you'd rather not take that risk then
-> I guess we just have to leave things the way they are.
+> The root cause seems to be that builtin/add.c's edit_patch does not
+> check the result of  the launch_editor call. It probably should.
 
-FWIW.
+Yes, definitely. Patch is below.
 
- - I personally do not agree that those who scripted around "git
-   bisect" (as opposed to those who wrote scripts to be driven by
-   the "bisect run" interface) are worth worrying about.  But I am
-   not the whole of the Git world ;-)
+> The call to launch_editor in builtin/config.c should probably also be
+> checked, although there it's not as big a deal, provided the editor
+> did not modify the file; reapplying the same file should be a no-op.
+> This is different from git add -e.
 
- - I personally do not find two same 40-hex on two lines is silly at
-   all.
+This one is trickier. Certainly we could propagate the return value and
+say "hey, editing did not work". But we otherwise have no operation to
+abort. This is because "git config --edit" does not actually take our
+normal dot-lock, but rather edits the file in place.
 
- - I _do_ think diff-tree --raw output without recursive is silly.
-   It is not useful for humans (it doesn't even give paths fully),
-   and it is insufficient for scripts, which can grok more through
-   information out of the 40-hex.
+IMHO this is questionable, as proper locking seems like half of the
+purpose of "config --edit" (the other half being that you do not have to
+type the location of the config file yourself). But I wonder if
+switching it would make people unhappy, as it would probably break
+editor rules to do syntax highlighting (e.g., if they are looking for
+"*/.gitconfig" in the path).
 
-So perhaps if we keep
+-- >8 --
+Subject: add: check return value of launch_editor
 
-	<40 char sha1> is the first bad commit
+When running "add -e", if launching the editor fails, we do
+not notice and continue as if the output is what the user
+asked for. The likely case is that the editor did not touch
+the contents at all, and we end up adding everything.
 
-and then replace the diff-tree output with "show -s", then the
-result would be good enough, I would say.
+Reported-by: Russ Cox <rsc@golang.org>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/add.c       | 3 ++-
+ t/t3702-add-edit.sh | 7 +++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index 3390933..4bd98b7 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -208,7 +208,8 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	if (run_diff_files(&rev, 0))
+ 		die(_("Could not write patch"));
+ 
+-	launch_editor(file, NULL, NULL);
++	if (launch_editor(file, NULL, NULL))
++		die(_("editing patch failed"));
+ 
+ 	if (stat(file, &st))
+ 		die_errno(_("Could not stat '%s'"), file);
+diff --git a/t/t3702-add-edit.sh b/t/t3702-add-edit.sh
+index 4ee47cc..3cb74ca 100755
+--- a/t/t3702-add-edit.sh
++++ b/t/t3702-add-edit.sh
+@@ -118,4 +118,11 @@ test_expect_success 'add -e' '
+ 
+ '
+ 
++test_expect_success 'add -e notices editor failure' '
++	git reset --hard &&
++	echo change >>file &&
++	test_must_fail env GIT_EDITOR=false git add -e &&
++	test_expect_code 1 git diff --exit-code
++'
++
+ test_done
+-- 
+2.4.0.192.g5f8138b
