@@ -1,76 +1,97 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v3 2/9] t5520: ensure origin refs are updated
-Date: Wed, 13 May 2015 17:08:49 +0800
-Message-ID: <1431508136-15313-3-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v3 7/9] t5520: test --rebase failure on unborn branch with index
+Date: Wed, 13 May 2015 17:08:54 +0800
+Message-ID: <1431508136-15313-8-git-send-email-pyokagan@gmail.com>
 References: <1431508136-15313-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Paul Tan <pyokagan@gmail.com>, Elijah Newren <newren@gmail.com>
+	Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 13 11:09:45 2015
+X-From: git-owner@vger.kernel.org Wed May 13 11:09:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsSfa-0003HM-DT
-	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 11:09:38 +0200
+	id 1YsSfm-0003Ls-AH
+	for gcvg-git-2@plane.gmane.org; Wed, 13 May 2015 11:09:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501AbbEMJJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2015 05:09:31 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:34671 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753389AbbEMJJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2015 05:09:28 -0400
-Received: by pacyx8 with SMTP id yx8so44495341pac.1
-        for <git@vger.kernel.org>; Wed, 13 May 2015 02:09:27 -0700 (PDT)
+	id S933130AbbEMJJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2015 05:09:47 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:34473 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932638AbbEMJJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2015 05:09:44 -0400
+Received: by pdbqa5 with SMTP id qa5so45430561pdb.1
+        for <git@vger.kernel.org>; Wed, 13 May 2015 02:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YxqXeqK8+3ZrZyyv7iCraseLlI4H23hWZ+2C5X+2spY=;
-        b=yToxW3wFLNSojb9GWL6yJHA6ensz6rXmf31CIwEs4pE5kzSO/LH/hnJq+AWCnoWWXv
-         F0ZGJIQ6f5zc3uapemehKTtIEPHhMffQbQxX1CY1u3QVUkNDzDIIg4Qw0/T+VQGZfR5G
-         GXu96np9aFPlZ2+SDOU9kErf3QFA2bfx5DGx3ndzUy005SeKxhh+IQXhOaLecDklPMJR
-         HKnm9arhBUMTEbRPYjc8NeajDYUcMC3DXEOeH/+6UeeAlezCYEYCNz2T3Z4X3JTiJOt/
-         rYjsc9Uy6EkOnlokZR0c33Kj6W8yMMCHu/RuBH2TbQ8wyxuoZNUOsGfYsomz8c9TAJRR
-         29WQ==
-X-Received: by 10.70.108.137 with SMTP id hk9mr35637772pdb.105.1431508167755;
-        Wed, 13 May 2015 02:09:27 -0700 (PDT)
+        bh=oS0c0qbuPV6zILgn50Ud3Qo+Mon9zaC6c7hNcXaDVj0=;
+        b=DkVujcu15vKZgiAUGeGKQ3eFySMHs+j0lDctGOw3IZeM1Yx3FCY3PMwM3pZhWEXWKM
+         t2jaLX3r/kJXLGGTo/k4NxNbYAeu4Dvi5RDUfJx0q0eDc+WHW72rqXtk1cqz498cwduw
+         D4YHp6A0iA7o/2egfDIBZDniWpMePOBGXNHYZqZ+kgqctm4lzYxI5A/ogFVNgtRFfkxE
+         pK6t7SMKMGkoFjAdUwCvmMDaqFnSVnYajpAubZeZgUhQt9DSQXze7mkeMuKQQ9NEy8AN
+         dg46M5NSUHdPPJPwcEKGi7aSpehbIBufoQ4MyU8M6e761Muu1p5WhG59ZOVJWAZa3+VB
+         rX8A==
+X-Received: by 10.68.131.196 with SMTP id oo4mr35235532pbb.119.1431508183668;
+        Wed, 13 May 2015 02:09:43 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id df7sm18645685pdb.32.2015.05.13.02.09.24
+        by mx.google.com with ESMTPSA id df7sm18645685pdb.32.2015.05.13.02.09.40
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 May 2015 02:09:26 -0700 (PDT)
+        Wed, 13 May 2015 02:09:42 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431508136-15313-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268956>
 
-Should all of the tests before "setup for avoiding reapplying old
-patches" fail or be skipped, the repo "dst" will not have fetched the
-updated refs from origin. To be resilient against such failures, run
-"git fetch origin".
+Commit 19a7fcb (allow pull --rebase on branch yet to be born,
+2009-08-11) special cases git-pull on an unborn branch in a different
+code path such that git-pull --rebase is still valid even though there
+is no HEAD yet.
+
+This code path still ensures that there is no index in order not to lose
+any staged changes. Implement a test to ensure that this check is
+triggered.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
-* Hmm, no reviews the last round?
 
- t/t5520-pull.sh | 1 +
- 1 file changed, 1 insertion(+)
+* Renamed "out" to "err"
+
+* Quoted command substitution and file content comparisons.
+
+ t/t5520-pull.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 20ad373..14a9280 100755
+index e957368..96d2e7c 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -339,6 +339,7 @@ test_expect_success 'git pull --rebase detects upstreamed changes' '
- test_expect_success 'setup for avoiding reapplying old patches' '
- 	(cd dst &&
- 	 test_might_fail git rebase --abort &&
-+	 git fetch origin &&
- 	 git reset --hard origin/master
- 	) &&
- 	git clone --bare src src-replace.git &&
+@@ -413,6 +413,21 @@ test_expect_success 'pull --rebase works on branch yet to be born' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
++	test_when_finished "rm -rf empty_repo2" &&
++	git init empty_repo2 &&
++	(
++		cd empty_repo2 &&
++		echo staged-file >staged-file &&
++		git add staged-file &&
++		verbose test "$(git ls-files)" = staged-file &&
++		test_must_fail git pull --rebase .. master 2>../err &&
++		verbose test "$(git ls-files)" = staged-file &&
++		verbose test "$(git show :staged-file)" = staged-file
++	) &&
++	test_i18ngrep "unborn branch with changes added to the index" err
++'
++
+ test_expect_success 'setup for detecting upstreamed changes' '
+ 	mkdir src &&
+ 	(cd src &&
 -- 
 2.1.4
