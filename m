@@ -1,74 +1,59 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Problem with rerere forget
-Date: Thu, 14 May 2015 11:57:03 -0700
-Message-ID: <CAGZ79kZC-Kn4FbHgkifeDew7_qpGJSFDaqO=F=bok1FUzm=1Ew@mail.gmail.com>
-References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
-	<CAGZ79kZ8Cy1Pp9cf7vExntbfe-YW5KjYx6Fogr3O94wDfwuOXg@mail.gmail.com>
-	<CAPt1q6d3euApCKLUBjssyfBmeVw0TVYOqDmTZL79gN1TvtxdsA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 0/2] fix handling of multi-word P4EDITOR
+Date: Thu, 14 May 2015 12:09:07 -0700
+Message-ID: <xmqqzj57j7sc.fsf@gitster.dls.corp.google.com>
+References: <1431502575-2176-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Alex Coppens <alex@nativetouch.com>
-X-From: git-owner@vger.kernel.org Thu May 14 20:57:11 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Chris Lasell <chrisl@pixar.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Thu May 14 21:09:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsyJi-0006Hp-0i
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 20:57:10 +0200
+	id 1YsyVQ-0003cr-BI
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 21:09:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964792AbbENS5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 14:57:05 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:34469 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753360AbbENS5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 14:57:03 -0400
-Received: by iecmd7 with SMTP id md7so68772334iec.1
-        for <git@vger.kernel.org>; Thu, 14 May 2015 11:57:03 -0700 (PDT)
+	id S964843AbbENTJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 15:09:11 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:37159 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964795AbbENTJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 15:09:09 -0400
+Received: by igbsb11 with SMTP id sb11so81418153igb.0
+        for <git@vger.kernel.org>; Thu, 14 May 2015 12:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8vgpsTIvCuraPstQAmKqAxIAeByvxtgRxrFR1MX8a1A=;
-        b=UstZxg5KVCzQ+jGJH7YjDE5UFFOV8lXTdq1+2MvUDT+dU5XwN2gsrKycEk5C9Bcl+o
-         zcS3qHPnOb/oKK08XyN5Yi0G93aPsBqq6myjZsvXvucXg/GdHxbKroEjL/EHDcZW55EM
-         qfVKEhhgB9QMfzoneB+dzptb1CZY2IEyYUp65SGcESCwG4cvTP8hWs/VDxA9l7/vSRwC
-         wT/2pJ6NXvWqrJYhnCfjnMFmK1N1FfGDLL5TLQjixCIuc56wUl0kDoqd1+aVPjW8Qghp
-         rLkPEcyF+XpVmeprA3gmT3HvXx9xp9b85gpvjeYD2uoacR5H/k13FDOGa1Gl1oG2u8qW
-         H0PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=8vgpsTIvCuraPstQAmKqAxIAeByvxtgRxrFR1MX8a1A=;
-        b=M3/tJ+s5+7oegOx0O9ZJ1qnAsayz1lzw+U0k3nH/+qRdZ8ZCM+tGpOWq/uoAOhpmRX
-         hHrRHw17qs8DLcy1O0KwglxLNowjOqjX6xcdmzauTuGXAVq8hoAvErs/E6u+q6CHeZZx
-         Egi8o84cy+HEjT2cNgaZH8ErM5GY17RyCr7nMcRn2DYsRDkvrZUUEQ8GqZhIxzx29nEo
-         fQpsZKk+ZnqW8deqg3CKpNTT9X5SwlN7kedeeATWfv7SulDlVFhukjTC5RKsdvIQtiAb
-         u7SE5sY3QUUbmWB2keNxJDlFzjCSQPYEAby3QuUGfmT/Lr3IEIMOzfX6AjIetHsdjoZZ
-         rwDg==
-X-Gm-Message-State: ALoCoQkVOjDQZxV2Yt3MuBYnROLQSGmTxk7eKiOJIoS+ZxfTF1WxMcrsaOa/S8aEWUaJT9raiwJ/
-X-Received: by 10.42.213.136 with SMTP id gw8mr16179726icb.95.1431629823363;
- Thu, 14 May 2015 11:57:03 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Thu, 14 May 2015 11:57:03 -0700 (PDT)
-In-Reply-To: <CAPt1q6d3euApCKLUBjssyfBmeVw0TVYOqDmTZL79gN1TvtxdsA@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=eqONINZaagsgL60tCrf3tvkkCrrH5EmfxqAVlmOclqQ=;
+        b=Rnz0SSqLu/MnJ8m2XtQoGjChFcfXG/l/TyD1uhXguBfAKCtHZiw6dM0l9xIbcVJ/2R
+         q+XhSTbnZBGg1QUbOoEMFiA5tgZcHpqctk+CxZ3qB9sfVIYShQYGcmLt5lT+phXHZI86
+         I1GjaangdEHMWaxyjgxlliE58qRFLPPyVM0fXR7M/oabShkcrqyRHW3nhccpK1AzEjGf
+         xdmzlCqrKoImWe2DlQQTwHBWdbG6pu2FCBbAahmndXdCGi7CxxMbjGzG/ztMWytIqOTg
+         vlXSjdQ00pvfyuDf3Dw8yvqwLPEwWsALuaeD9LWM2JNPeSp+2pUxfSXD1VdE2D8sycNd
+         PVAg==
+X-Received: by 10.42.176.8 with SMTP id bc8mr5423152icb.22.1431630549055;
+        Thu, 14 May 2015 12:09:09 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
+        by mx.google.com with ESMTPSA id b8sm17087568ioe.23.2015.05.14.12.09.08
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 14 May 2015 12:09:08 -0700 (PDT)
+In-Reply-To: <1431502575-2176-1-git-send-email-luke@diamand.org> (Luke
+	Diamand's message of "Wed, 13 May 2015 08:36:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269069>
 
-On Thu, May 14, 2015 at 11:40 AM, Alex Coppens <alex@nativetouch.com> wrote:
-> I use git version 2.2.1. I cannot provide an example repository that
-> reproduces the error.
->
-> What does git bisect do?
+Thanks, will replace.
 
-git bisect looks at the git history and performs a binary search on it to find
-the commit which introduced a bug.
-http://git-scm.com/docs/git-bisect
+But with a couple of minor tweaks.
 
-To find the bug that way, you'd need to get the source code of git and
-compile it
-yourself though (multiple times until the bug is found)
+ - s/touch/: >/ in the test added by 1/2
+ - s/fixes t9850/adjusts t9805/ in the log message of 2/2
