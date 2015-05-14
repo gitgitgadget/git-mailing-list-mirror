@@ -1,109 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rerere: exit silently on "forget" when rerere is disabled
-Date: Thu, 14 May 2015 12:33:02 -0700
-Message-ID: <xmqqmw17j6oh.fsf@gitster.dls.corp.google.com>
-References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
-	<xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
-	<20150514191637.GA9329@peff.net>
-	<xmqqr3qjj7b6.fsf@gitster.dls.corp.google.com>
-	<20150514192052.GB9329@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] http: add support for specifying an SSL cipher list
+Date: Thu, 14 May 2015 15:39:20 -0400
+Message-ID: <CAPig+cSuMpQjJRPeaeRdeqWkzJ5Jqde0RuU+OwY=npLwHLP_Aw@mail.gmail.com>
+References: <1431008210-673-1-git-send-email-lars@redhat.com>
+	<1431091335-16455-1-git-send-email-lars@redhat.com>
+	<20150514192552.GB6475@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Alex Coppens <alex@nativetouch.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 14 21:33:11 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Lars Kellogg-Stedman <lars@redhat.com>
+X-From: git-owner@vger.kernel.org Thu May 14 21:39:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsysX-0004us-RC
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 21:33:10 +0200
+	id 1Ysyyd-0007UC-Bb
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 21:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965174AbbENTdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 15:33:05 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:36202 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965045AbbENTdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 15:33:04 -0400
-Received: by igbpi8 with SMTP id pi8so176196749igb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2015 12:33:03 -0700 (PDT)
+	id S965397AbbENTjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 15:39:23 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:36789 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965255AbbENTjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 15:39:21 -0400
+Received: by iepk2 with SMTP id k2so68437202iep.3
+        for <git@vger.kernel.org>; Thu, 14 May 2015 12:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=nHx1h3SaC9S5dbjY/mrCw1biVkdEuhIDkSjm9ExDlEM=;
-        b=hNcGNOLH9sdvJEk1ZD4b4UNCuIvrkOotS9+zDBvclbFEsXXdXDnkdJsnGjI9wh8oXK
-         o869PCJEOZnaeEwyZMqAc8RE07WDt4wLziM9QjRRIShg6RP/68dsaL+Vx2081SEud5Kg
-         mY7lfWhmyeD3c23mHYxCJ2hASe1zO6LiEbBqlcFCab23C4sQ4/Jo10OYYaqOOLdRXqop
-         sQQiiNSTZpL5iwGYpsLS+7lrksH2owK9tban0ZtNKk3NXlhPDwW123yXDSK2KG4em276
-         T5LhSrwG1YK9mn2GTRgdSGRD0Voh7UNb9eTHWt8w2JdenQ3h7xnLMzIldUNFS71LrREn
-         zrfg==
-X-Received: by 10.42.240.82 with SMTP id kz18mr3105961icb.92.1431631983758;
-        Thu, 14 May 2015 12:33:03 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
-        by mx.google.com with ESMTPSA id f126sm17136289ioe.21.2015.05.14.12.33.03
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 14 May 2015 12:33:03 -0700 (PDT)
-In-Reply-To: <20150514192052.GB9329@peff.net> (Jeff King's message of "Thu, 14
-	May 2015 15:20:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=GLJdjdBk4QWajbOH49ZUzR0GN3RmE5rFd0bKOWAc9V8=;
+        b=fNuZx4B2wvsZMC7SrcWjE5BS92e+py5ylvFD3yrlLxbylHCV6LLy/l8sHRkaUp/H0o
+         wcETZk4G099MPysEi+Zo+ZnueUg53J4gIpdBcU3fqbzeAucpDHsT87PaNl20RS+Peedl
+         C1oU3nWZoLea6WcUYUd4MuOrhURgbzOrkt7GXX783A27thV+442C3lAw50Kfvv63MaNX
+         CXrry4SUA3hcZ2UPav8nZyyPTrONCQQHCx1ogLKsE5np3H/w+aULd+av/9D7cOVPHJG7
+         Xk4hdM9JT5Fg3XPSF/CL3MFl3l1XkAVNucrws+X8O1JuHuJgMiX5qoeiSWSqvCYcMWWx
+         0Yuw==
+X-Received: by 10.50.61.200 with SMTP id s8mr37415559igr.7.1431632360972; Thu,
+ 14 May 2015 12:39:20 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 14 May 2015 12:39:20 -0700 (PDT)
+In-Reply-To: <20150514192552.GB6475@redhat.com>
+X-Google-Sender-Auth: FsjES70C2tX2EgcuBh_V845qqzc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269076>
 
-Jeff King <peff@peff.net> writes:
+On Thu, May 14, 2015 at 3:25 PM, Lars Kellogg-Stedman <lars@redhat.com> wrote:
+> On Fri, May 08, 2015 at 09:22:15AM -0400, Lars Kellogg-Stedman wrote:
+>> Teach git about a new option, "http.sslCipherList", which permits one to
+>> specify a list of ciphers to use when negotiating SSL connections.  The
+>> setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
+>> variable.
+>
+> I just wanted to follow up and see if folks were happy with the latest
+> version of the patch.
 
-> On Thu, May 14, 2015 at 12:19:25PM -0700, Junio C Hamano wrote:
->
->> > It looks like we need to pay more attention to the return value of
->> > setup_rerere, which is what is supposed to take the lock.
->> 
->> Good spotting.  The normal rerere does check, but rerere-forget
->> codepath seems to forget it.
->
-> Here's a patch.
+Here's what Junio's latest "What's Cooking"[1] says:
 
-Thanks.  This is obviously correct to fix your "init -q" one.
+    * ls/http-ssl-cipher-list (2015-05-08) 1 commit
+     - http: add support for specifying an SSL cipher list
 
-I am still puzzled by the original, though.  I assumed that rerere
-was enabled and working correctly (in the sense that it correctly
-replayed a mistaken resolution recorded earlier, which Alex wanted
-to correct by forgetting).
+     Introduce http.<url>.SSLCipherList configuration variable to tweak
+     the list of cipher suite to be used with libcURL when talking with
+     https:// sites.
 
->
-> -- >8 --
-> Subject: rerere: exit silently on "forget" when rerere is disabled
->
-> If you run "git rerere forget foo" in a repository that does
-> not have rerere enabled, git hits an internal error:
->
->   $ git init -q
->   $ git rerere forget foo
->   fatal: BUG: attempt to commit unlocked object
->
-> The problem is that setup_rerere() will not actually take
-> the lock if the rerere system is disabled. We should notice
-> this and return early. We can return with a success code
-> here, because we know there is nothing to forget.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  rerere.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/rerere.c b/rerere.c
-> index 31644de..94aea9a 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -659,6 +659,8 @@ int rerere_forget(struct pathspec *pathspec)
->  		return error("Could not read index");
->  
->  	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
-> +	if (fd < 0)
-> +		return 0;
->  
->  	unmerge_cache(pathspec);
->  	find_conflict(&conflict);
+     Will merge to 'next'.
+
+The "Will merge to 'next'" is explained in [2].
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/268680/
+[2]: http://article.gmane.org/gmane.comp.version-control.git/268100/
