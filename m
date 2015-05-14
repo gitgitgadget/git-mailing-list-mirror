@@ -1,83 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Clone hangs when done over http with --reference
-Date: Thu, 14 May 2015 15:52:26 -0400
-Message-ID: <20150514195226.GA10205@peff.net>
-References: <20150513210436.GA7407@gmail.com>
- <20150514004724.GA3059@peff.net>
- <5554D69E.20307@linuxfoundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 3/3] cat-file: add --follow-symlinks to --batch
+Date: Thu, 14 May 2015 13:06:39 -0700
+Message-ID: <xmqqiobukjow.fsf@gitster.dls.corp.google.com>
+References: <1431384645-17276-1-git-send-email-dturner@twopensource.com>
+	<1431384645-17276-4-git-send-email-dturner@twopensource.com>
+	<xmqqoalpzn3s.fsf@gitster.dls.corp.google.com>
+	<1431455779.16652.20.camel@ubuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-X-From: git-owner@vger.kernel.org Thu May 14 21:52:35 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu May 14 22:06:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YszBK-00051U-Dc
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 21:52:34 +0200
+	id 1YszP6-0002cq-9w
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 22:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965152AbbENTwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 15:52:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58767 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964932AbbENTw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 15:52:29 -0400
-Received: (qmail 22593 invoked by uid 102); 14 May 2015 19:52:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 14:52:28 -0500
-Received: (qmail 26916 invoked by uid 107); 14 May 2015 19:52:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 15:52:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2015 15:52:26 -0400
-Content-Disposition: inline
-In-Reply-To: <5554D69E.20307@linuxfoundation.org>
+	id S965239AbbENUGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 16:06:43 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:36017 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965023AbbENUGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 16:06:42 -0400
+Received: by igbpi8 with SMTP id pi8so176967794igb.1
+        for <git@vger.kernel.org>; Thu, 14 May 2015 13:06:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=w14jFkF0ed+e6tMOmaxq4cEjum02GMf3FvlgZhpg5aM=;
+        b=EHEgcWiK0l2pSwTB+GnfkCCD9/qcUs6y9p9jxpKmDgy1i5kyEfOL4pt6gKKI936kqo
+         ysJtrpotc7cY46Z+oj6wjCL45YuM+3dZVZvoVjYvIRk8+Y0Itm0BuDeRDHiGysLrh61s
+         wfc7pKA5Pc2DygPyDepFWl8+9XbseqE2NpvU4gJ8Nn2/IqGhHkgn1e8cZgWdo1Uy/sll
+         Pn/WYUevSh2PKQEhXNi3G2jqsQx48bCfsA3t2V2ywTTXmRh2KZEvTjWFXplBUmIEvbba
+         AHZA13xuxcQlzXEh/aLM0ChU5wCchanqmQXqoxijWCHlaEY36NyTviFTs2RFNGnCGgQk
+         +uOw==
+X-Received: by 10.50.79.228 with SMTP id m4mr16435412igx.42.1431634001854;
+        Thu, 14 May 2015 13:06:41 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
+        by mx.google.com with ESMTPSA id 71sm46720ioe.16.2015.05.14.13.06.40
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 14 May 2015 13:06:40 -0700 (PDT)
+In-Reply-To: <1431455779.16652.20.camel@ubuntu> (David Turner's message of
+	"Tue, 12 May 2015 14:36:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269078>
 
-On Thu, May 14, 2015 at 01:08:46PM -0400, Konstantin Ryabitsev wrote:
+David Turner <dturner@twopensource.com> writes:
 
-> Two questions:
-> 
-> 1. Does this mean there are potential problems with other git operations
-> that involve ref negotiation, not just when doing git clone --reference?
-> Is there a chance to run in to this deadlock by doing an operation like
-> "git remote update"?
+> On Tue, 2015-05-12 at 11:07 -0700, Junio C Hamano wrote:
+>
+>>  * Is it fundamental that this is only for --batch family, or is it
+>>    just lack of need by the current implementor and implementation?
+>>    "git cat-file --follow-symlinks blob :RelNotes" does not sound
+>>    a nonsense request to me.
+>
+> The reason that --follow-symlinks doesn't work for non-batch requests is
+> that it is impossible to distinguish out-of-tree symlinks from valid
+> output in non-batch output. I will add text explaining this. 
 
-Yes. From the server's perspective, a "clone --reference" is really no
-different than a fetch in which the client happened to have all of those
-refs already. I didn't try it, but you should be able to reproduce the
-problem with:
+Actually, I do not think that is a valid reason not to consider
+supporting "git cat-file --follow-symlinks blob :RelNotes" in future
+versions of Git.  "--batch" and "--batch-check" needs to continue,
+so it needs to give diagnosis in-line in its output and let the
+driving script continue talking with it, but a single-shot request
+"git cat-file --follow-symlinks blob :RelNotes" can signal that
+the link does not resolve in-tree (or in-index) by erroring out.
 
-  cd first-repo.git
-  git fetch https://.../second-repo.git refs/*:refs/remotes/foo/*
+So I still view it as "we currently do not need it outside --batch;
+if somebody wants to, feel free to add it to non-batch mode".  It
+does not have to be called a bug but I would say it is a missing
+feature.  And not handling an in-index path e.g. :RelNotes falls
+into the same category, I would say.
 
-which should have to do the exact same ref negotiation ("I have these
-commits, I want these other commits").
-
-> 2. If we configure the webserver to serve some files directly, without
-> passing them to http-backend, e.g. doing the recommended apache magic:
-> 
-> > AliasMatch ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$          /var/lib/git/$1
-> > AliasMatch ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /var/lib/git/$1
-> > AliasMatch ^/git/(.*/refs/heads/.*)$                             /var/lib/git/$1
-> 
-> Will that make the spooling less of a problem, since it won't involve
-> the super-huge files?
-
-No, that won't help. Once git is doing the smart protocol, it will never
-ask for arbitrary files. So you would have to disable smart-http
-entirely, which I don't recommend.
-
-Besides which, it's not the size of the objects or packs that is an
-issue here. It's the relationship of the tips in the second repo to the
-tips in the first. That is, the "big" data here is the client and server
-finding the common commits between the two (and it's not even _that_
-big; it's just big by "stuffing into a pipe buffer" standards; as you
-noticed, the git protocol handles it just fine).
-
--Peff
+Just to avoid misunderstanding, I still think this series (at its
+9th iteration) is good from the point of new feature without filling
+these two missing features.
