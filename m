@@ -1,58 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 0/3]
-Date: Thu, 14 May 2015 12:16:17 -0700
-Message-ID: <xmqqvbfvj7ge.fsf@gitster.dls.corp.google.com>
-References: <1431541434-21884-1-git-send-email-dturner@twitter.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Problem with rerere forget
+Date: Thu, 14 May 2015 15:16:38 -0400
+Message-ID: <20150514191637.GA9329@peff.net>
+References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
+ <xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu May 14 21:16:25 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Coppens <alex@nativetouch.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 21:16:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsycK-0006dd-Rb
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 21:16:25 +0200
+	id 1Ysycg-0006m9-2e
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 21:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964840AbbENTQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 15:16:20 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36651 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933403AbbENTQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 15:16:19 -0400
-Received: by igbpi8 with SMTP id pi8so175809410igb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2015 12:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ydufBamZHlIgOrL+R0jil7w9GZK9UZmTufkVnrK8En4=;
-        b=KhpkOjtKBUvULmppDCzRIWaiIRGJXVmM4Y2/YGzsifmbsHmiy901h6iKH5qNiFGT/X
-         Yq0PB/uJKi9//VPo1yXjQxTuibywc4SBLoh/a8TdKvjxvxhlKX1KMWsw/O9jPamP8Dmj
-         OAYl6+NlYTLSykcSGz7MPANk1A59cxJxpQNXW3cENqjyTSTOzYe67VV+7bLhYQrY+GxJ
-         /xHhSNjocrTMqJydGCm1T7GQ7NYAMaFXxC37zs23FzRiOdV8Ka+Ix6yV74q6+vr2ejNn
-         X8KtLr2lqcgtCQgyLDmMERI40s+RkpK2PTIDJR8M4wB01jjitTowG5t+zjXGvZWx9xui
-         FkLA==
-X-Received: by 10.107.167.73 with SMTP id q70mr7374357ioe.82.1431630978927;
-        Thu, 14 May 2015 12:16:18 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
-        by mx.google.com with ESMTPSA id l6sm4275209igx.10.2015.05.14.12.16.18
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 14 May 2015 12:16:18 -0700 (PDT)
-In-Reply-To: <1431541434-21884-1-git-send-email-dturner@twitter.com> (David
-	Turner's message of "Wed, 13 May 2015 14:23:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1030205AbbENTQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 15:16:41 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58736 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933407AbbENTQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 15:16:40 -0400
+Received: (qmail 20852 invoked by uid 102); 14 May 2015 19:16:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 14:16:40 -0500
+Received: (qmail 26533 invoked by uid 107); 14 May 2015 19:16:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 15:16:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2015 15:16:38 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269071>
 
-David Turner <dturner@twopensource.com> writes:
+On Thu, May 14, 2015 at 11:49:12AM -0700, Junio C Hamano wrote:
 
-> Oops, forgot to ammend commit before patch v8.  This patch *really*
-> includes the switch and type casting fixes.
+> Alex Coppens <alex@nativetouch.com> writes:
+> 
+> > git rerere forget path_to_file/file.js
+> >
+> > fatal: BUG: attempt to commit unlocked object
+> 
+> That comes from commit_lock_file(); I think rerere.c:write_rr()
+> has a call to that function and I suspect that is the call that is
+> giving the above message.
+> 
+> Is there any other process that is mucking with your .git/index file
+> while you are running the command?
 
-Thanks. Will replace.
+This seems much easier to reproduce:
+
+  $ git init -q
+  $ git rerere forget foo
+  fatal: BUG: attempt to commit unlocked object
+
+It looks like we need to pay more attention to the return value of
+setup_rerere, which is what is supposed to take the lock.
+
+-Peff
