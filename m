@@ -1,66 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] rerere: exit silently on "forget" when rerere is disabled
-Date: Thu, 14 May 2015 16:56:17 -0400
-Message-ID: <20150514205617.GA14836@peff.net>
-References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
- <xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
- <20150514191637.GA9329@peff.net>
- <xmqqr3qjj7b6.fsf@gitster.dls.corp.google.com>
- <20150514192052.GB9329@peff.net>
- <xmqqmw17j6oh.fsf@gitster.dls.corp.google.com>
- <20150514202207.GA13541@peff.net>
- <CAPt1q6dhZarACvYQM5HFTGg3xA=LjnhF7DP8B6K+Fa1=m2Of9w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] generate-cmdlist: parse common group commands
+Date: Thu, 14 May 2015 13:58:26 -0700
+Message-ID: <xmqq617ukhal.fsf@gitster.dls.corp.google.com>
+References: <1431608351-9413-1-git-send-email-sebastien.guimmara@gmail.com>
+	<1431608351-9413-4-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Coppens <alex@nativetouch.com>
-X-From: git-owner@vger.kernel.org Thu May 14 22:56:26 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: =?utf-8?Q?S=C3=A9bastien?= Guimmara <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 14 22:58:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yt0B7-0007gC-H0
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 22:56:25 +0200
+	id 1Yt0DB-0000D7-5q
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 22:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933912AbbENU4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 16:56:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58836 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933403AbbENU4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 16:56:20 -0400
-Received: (qmail 26105 invoked by uid 102); 14 May 2015 20:56:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 15:56:20 -0500
-Received: (qmail 27745 invoked by uid 107); 14 May 2015 20:56:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 16:56:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2015 16:56:17 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPt1q6dhZarACvYQM5HFTGg3xA=LjnhF7DP8B6K+Fa1=m2Of9w@mail.gmail.com>
+	id S934135AbbENU63 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2015 16:58:29 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:35234 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933583AbbENU62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 16:58:28 -0400
+Received: by igbyr2 with SMTP id yr2so178159275igb.0
+        for <git@vger.kernel.org>; Thu, 14 May 2015 13:58:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=Bb5QfqnWj6d40AIME/0cmx2Dg9m7Lqs7cQ9+fezzq9I=;
+        b=g6577uj81h1xpbpw295WdcztyeYTSHrkLccDXKu4NGFbbkWv/PkCwzLm2QyilIiDvE
+         sHAhQYOdEF1V3iUkH9jO7o088Rl0LoaWWh+sgA3CCPul9pUVnV6yG7zV3gYapUQNgiZV
+         wV/QzR7wkZxRu888WeqQMSAcQaXZdF48llDAobYw4cPIhksk2EB7Ob9nfG42MB65kmep
+         G/TeMtVFQtOStS2+KCVcHSUe+D54bFP6AQlSzlp/olAlh2HlJ6GLg4g7w9EA70ejDdwV
+         eYJfAKL4IRCiDM79C5UZ0mRSfmgqO7mPlhWn1fxyJesdZ3Yce5AbQKAC40rovDNh4s4K
+         9D3w==
+X-Received: by 10.50.64.147 with SMTP id o19mr8249165igs.33.1431637107854;
+        Thu, 14 May 2015 13:58:27 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
+        by mx.google.com with ESMTPSA id q11sm54236igr.3.2015.05.14.13.58.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 14 May 2015 13:58:27 -0700 (PDT)
+In-Reply-To: <1431608351-9413-4-git-send-email-sebastien.guimmara@gmail.com>
+	(=?utf-8?Q?=22S=C3=A9bastien?= Guimmara"'s message of "Thu, 14 May 2015
+ 14:59:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269093>
 
-On Thu, May 14, 2015 at 04:51:25PM -0400, Alex Coppens wrote:
+S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
 
-> Here are the outputs I have:
-> 
-> $ ls -d .git/rr-cache
-> ls: .git/rr-cache: No such file or directory
-> 
-> $ git config rerere.enabled
-> $
-> 
-> My repository is a ruby on rails project, I am currently on the
-> development branch. It's a private repository hosted on Github. Not
-> sure what other information you want.
+> From: Eric Sunshine <sunshine@sunshineco.com>
+>
+> Parse the [common] block to create the array of group descriptions:
+>
+> static char *common_cmd_groups[] =3D {
+>     N_("starting a working area"),
+>     N_("working on the current change"),
+>     N_("working with others"),
+>     N_("examining the history and state"),
+>     N_("growing, marking and tweaking your history"),
+> };
+>
+> then map each element of common_cmds[] to a group via its index:
+>
+> static struct cmdname_help common_cmds[] =3D {
+>     {"add", N_("Add file contents to the index"), 1},
+>     {"branch", N_("List, create, or delete branches"), 4},
+>     {"checkout", N_("Checkout a branch or paths to the ..."), 4},
+>     {"clone", N_("Clone a repository into a new directory"), 0},
+>     {"commit", N_("Record changes to the repository"), 4},
+>     ...
+> };
+>
+> so that 'git help' can print those commands grouped by theme.
+>
+> Only commands tagged with an attribute from [common] are emitted to
+> common_cmds[].
+>
+> [commit message by S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.=
+com>]
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+> ---
 
-OK, so it looks like rerere is not enabled (and my patch will fix the
-case you saw). But then I am puzzled why you were running "rerere
-forget" in the first place. Just experimenting, or did you expect it to
-do something?
-
--Peff
+I seem to be getting an empty common_cmds[] list after this step
+(with GNU Awk 4.0.1, ICIM).
