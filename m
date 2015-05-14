@@ -1,84 +1,109 @@
-From: Alex Coppens <alex@nativetouch.com>
-Subject: Re: [PATCH] rerere: exit silently on "forget" when rerere is disabled
-Date: Thu, 14 May 2015 16:59:39 -0400
-Message-ID: <CAPt1q6fNtTvjtXFs+BO1Kgpkn9pkdJkqN7uwJUK=zE4=atrOnA@mail.gmail.com>
-References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
-	<xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
-	<20150514191637.GA9329@peff.net>
-	<xmqqr3qjj7b6.fsf@gitster.dls.corp.google.com>
-	<20150514192052.GB9329@peff.net>
-	<xmqqmw17j6oh.fsf@gitster.dls.corp.google.com>
-	<20150514202207.GA13541@peff.net>
-	<CAPt1q6dhZarACvYQM5HFTGg3xA=LjnhF7DP8B6K+Fa1=m2Of9w@mail.gmail.com>
-	<20150514205617.GA14836@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/5] generate-cmdlist: parse common group commands
+Date: Thu, 14 May 2015 17:05:26 -0400
+Message-ID: <CAPig+cTrDd3eYXo1WPoWRk5XSuLyH_m_VU1JsnP8pjkM=n6O2Q@mail.gmail.com>
+References: <1431608351-9413-1-git-send-email-sebastien.guimmara@gmail.com>
+	<1431608351-9413-4-git-send-email-sebastien.guimmara@gmail.com>
+	<xmqq617ukhal.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 14 22:59:47 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 23:05:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yt0EL-0000jO-2n
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 22:59:45 +0200
+	id 1Yt0Jy-0003ND-At
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 23:05:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933803AbbENU7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 16:59:41 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:34655 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933583AbbENU7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 16:59:40 -0400
-Received: by pdbqa5 with SMTP id qa5so103625299pdb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2015 13:59:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vkUdo6gt0r3hIq1uJrJcpCCqkjDEtamjo+4h45j6zlI=;
-        b=N8ur4960rz/3ORK2o6riY4D0FEQ1NyuklPMH8Bw0I+GXaPqwRmhA44erUt5rpDXn3k
-         Y1+s1Sky/01HHfhWI3pBhG9bGSWXkabznP9ON44jbnJRSnYlmrAVG71aQ30MVUzZHS5f
-         PiJEr7+ZctJL5G5GV8MnIta8sgJJ2eS3s2v8e6hh9rFCDu/ovZOngEOY54VaTFwO9wiN
-         MLTXFPULRPfdZBLBpox+rpKcp0vkh2EeaW3e+IlZ4CqIIG59748xPl2BpqNGNLpFDEDm
-         FFF1hUSjJEWRifb7DHMG+uH6PmpuoTwHAeG6kPvKzvmHtNCVhewofCtHNjtWxI2WYKXx
-         vR8Q==
-X-Gm-Message-State: ALoCoQndqsNyXWyhNEIN1CMgBbm1GRRn9PocNLRDU/kuD8lIu32N1J2hrCMhNwR9cI+Wtl8LVuv3
-X-Received: by 10.68.135.73 with SMTP id pq9mr11638228pbb.46.1431637179499;
- Thu, 14 May 2015 13:59:39 -0700 (PDT)
-Received: by 10.70.45.135 with HTTP; Thu, 14 May 2015 13:59:39 -0700 (PDT)
-In-Reply-To: <20150514205617.GA14836@peff.net>
+	id S934115AbbENVF3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2015 17:05:29 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:33102 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933970AbbENVF1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2015 17:05:27 -0400
+Received: by igbpi8 with SMTP id pi8so19177431igb.0
+        for <git@vger.kernel.org>; Thu, 14 May 2015 14:05:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=qneIfibJmsMKE83OUrzrJEt1GlNvRTtvpSzYj3JS9RE=;
+        b=MM21L4IdK7T81n+KA6sMx2MPoQliC7sjYKssSjBr4zu0oXb3Opul4OrEtbZ+U3Yvqg
+         uPO0jkMw38UiK8sdcN6FIO3XFVy9aJ+mbqrAzq5OGkLuvgcNHNxG6djrVX3OugTCByr9
+         ZNUuPV+HoO92nPYOejfnUrnu/YbhAOy288T/9ByOZ/vd1C33QSNSaIgdtt25BKE7ULeH
+         VdF/4Q2KDdsDTsChFwPjBWtPDQuhqQJRAhj2QURWEtP+JznTrJJzBAA6z2zhAIXATVQz
+         khstv6ZMMpdZ34GnCysc7q/lu+AXOPG+X+JsOjHz2KosEAQnKpQ1mfd7dPNuezf6WFHD
+         K+yw==
+X-Received: by 10.42.67.80 with SMTP id s16mr2641180ici.25.1431637526577; Thu,
+ 14 May 2015 14:05:26 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 14 May 2015 14:05:26 -0700 (PDT)
+In-Reply-To: <xmqq617ukhal.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: SDLxhv1-p9NZ4ChGmHLbmTiBxKg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269095>
 
-I really thought my boss setup rerere on my project a while ago.
-I had a merge without conflicts that went wrong (the whole app
-breaking because of a missing comma) so I assumed a conflict was
-automatically resolved.
+On Thu, May 14, 2015 at 4:58 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
+>> From: Eric Sunshine <sunshine@sunshineco.com>
+>>
+>> Parse the [common] block to create the array of group descriptions:
+>>
+>> static char *common_cmd_groups[] =3D {
+>>     N_("starting a working area"),
+>>     N_("working on the current change"),
+>>     N_("working with others"),
+>>     N_("examining the history and state"),
+>>     N_("growing, marking and tweaking your history"),
+>> };
+>>
+>> then map each element of common_cmds[] to a group via its index:
+>>
+>> static struct cmdname_help common_cmds[] =3D {
+>>     {"add", N_("Add file contents to the index"), 1},
+>>     {"branch", N_("List, create, or delete branches"), 4},
+>>     {"checkout", N_("Checkout a branch or paths to the ..."), 4},
+>>     {"clone", N_("Clone a repository into a new directory"), 0},
+>>     {"commit", N_("Record changes to the repository"), 4},
+>>     ...
+>> };
+>>
+>> so that 'git help' can print those commands grouped by theme.
+>>
+>> Only commands tagged with an attribute from [common] are emitted to
+>> common_cmds[].
+>>
+>> [commit message by S=C3=A9bastien Guimmara <sebastien.guimmara@gmail=
+=2Ecom>]
+>>
+>> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com=
+>
+>> ---
+>
+> I seem to be getting an empty common_cmds[] list after this step
+> (with GNU Awk 4.0.1, ICIM).
 
-Alex
+Indeed. I haven't had a chance to look at this version of the series
+yet, but a quick glance shows that this is because patch 2/5 uses
+"common-" as a prefix rather than as a standalone tag. That is, lines
+in patch 2/5 like this:
 
-On Thu, May 14, 2015 at 4:56 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, May 14, 2015 at 04:51:25PM -0400, Alex Coppens wrote:
->
->> Here are the outputs I have:
->>
->> $ ls -d .git/rr-cache
->> ls: .git/rr-cache: No such file or directory
->>
->> $ git config rerere.enabled
->> $
->>
->> My repository is a ruby on rails project, I am currently on the
->> development branch. It's a private repository hosted on Github. Not
->> sure what other information you want.
->
-> OK, so it looks like rerere is not enabled (and my patch will fix the
-> case you saw). But then I am puzzled why you were running "rerere
-> forget" in the first place. Just experimenting, or did you expect it to
-> do something?
->
-> -Peff
+    git-add  mainporcelain  common-worktree
+
+should be:
+
+    git-add  mainporcelain  common worktree
+
+as proposed here[1]. And, then patch 4/5 should drop the standalone
+"common" tag rather than the "common-" prefix.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/268756
