@@ -1,321 +1,105 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 1/3] tree-walk: learn get_tree_entry_follow_symlinks
-Date: Thu, 14 May 2015 16:38:06 -0400
-Message-ID: <1431635888-11538-2-git-send-email-dturner@twitter.com>
-References: <1431635888-11538-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 14 22:38:40 2015
+From: Alex Coppens <alex@nativetouch.com>
+Subject: Re: [PATCH] rerere: exit silently on "forget" when rerere is disabled
+Date: Thu, 14 May 2015 16:51:25 -0400
+Message-ID: <CAPt1q6dhZarACvYQM5HFTGg3xA=LjnhF7DP8B6K+Fa1=m2Of9w@mail.gmail.com>
+References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
+	<xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
+	<20150514191637.GA9329@peff.net>
+	<xmqqr3qjj7b6.fsf@gitster.dls.corp.google.com>
+	<20150514192052.GB9329@peff.net>
+	<xmqqmw17j6oh.fsf@gitster.dls.corp.google.com>
+	<20150514202207.GA13541@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 14 22:51:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ysztt-0007ya-Rn
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 22:38:38 +0200
+	id 1Yt06N-0005Ny-HQ
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 22:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934031AbbENUiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 16:38:25 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:36169 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933703AbbENUiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 16:38:15 -0400
-Received: by qkgw4 with SMTP id w4so17484951qkg.3
-        for <git@vger.kernel.org>; Thu, 14 May 2015 13:38:14 -0700 (PDT)
+	id S933731AbbENUv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 16:51:26 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36786 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933271AbbENUvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 16:51:25 -0400
+Received: by pabsx10 with SMTP id sx10so101962839pab.3
+        for <git@vger.kernel.org>; Thu, 14 May 2015 13:51:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=pCw0gI9uj3eEVJWOmNNADbq2YF5v7LVOX39YIdpdv98=;
-        b=Q/OUg5rfQDzKvGU2dx+urgcDz6aXYlzuKBNHHs/ZQp20WAl0gbADjHlUUCJ43xo2/G
-         wRyBOB7Wv2tBOyOFZbj5QyETq9clShmwnoo5VHS0CjQhXVHXG7U1PBG1YpSc9oHOLAU5
-         RIXoHh9VjfOQgTMcN42LcfNV4IVc4k1KZhoW7pbvp1vCs22HGEVPQXEk3EWAjtfqqCTj
-         rfO5aoV8GNJkwS5wetY3ojxkrVl273QWKOfk1deDYpmbmeps3840v9h3Mot/WVmIOM5X
-         9vgQLqnfYPzSH7Z7zi2iZaVi0KglxwwgrgGouRBPwXo3BqEsCVgwbI4Wv+CSHD35aFiO
-         QZuQ==
-X-Gm-Message-State: ALoCoQmxgOM7aWhilgkiDqhr3P73YuIPf9hFFv+pmhGtnHCGouqRpUzgolB0qzsIps9j7iN4zNI2
-X-Received: by 10.55.18.104 with SMTP id c101mr5657549qkh.25.1431635894492;
-        Thu, 14 May 2015 13:38:14 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by mx.google.com with ESMTPSA id r33sm107494qkh.12.2015.05.14.13.38.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 May 2015 13:38:13 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
-In-Reply-To: <1431635888-11538-1-git-send-email-dturner@twitter.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=RwoLcT1CFyhOe4J7tsvyQOwTQa7tqJRziyNhSkDgD5U=;
+        b=XsPlWLeowZxa9jFk/S2shPhiopN8FUpG1rzrFmck1qoZkArlmTMPsKYSlV7cRxSXQW
+         sT4ES9f61CVVaJnd/hOu3rpCF9mSBOMkNC4O2WVoeOjI6BhhrFQ5qBlCaPkhpuD3Mpjy
+         nUu0AvbVp/dPqimZhq5IuSjfnagLQAMXNcMPUyeQ1KIIWSC9U944FQ8HWHJn/bbHJepv
+         /7MUbPnIqkMS72ej7usA0BSZ1wU6CGuExMcKBQUbBYBLFalsM5QcfHOT7sfblcoxAhht
+         WRH7OM2MBOjEjkpW2/uSgN2yk9QwO2uVdbsM2V7ruYXdiEfXX/2sXcTYO2aT7og69Gzt
+         5Afw==
+X-Gm-Message-State: ALoCoQkRqtUm2nzrLl7g6v0ZMfaNDI5MAjPa/r41bV/YcnG1fUe6n3O0c/13XjomhpjsLL9LuMBh
+X-Received: by 10.66.188.107 with SMTP id fz11mr11583478pac.85.1431636685079;
+ Thu, 14 May 2015 13:51:25 -0700 (PDT)
+Received: by 10.70.45.135 with HTTP; Thu, 14 May 2015 13:51:25 -0700 (PDT)
+In-Reply-To: <20150514202207.GA13541@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269090>
 
-Add a new function, get_tree_entry_follow_symlinks, to tree-walk.[ch].
-The function is not yet used.  It will be used to implement git
-cat-file --batch --follow-symlinks.
+Here are the outputs I have:
 
-The function locates an object by path, following symlinks in the
-repository.  If the symlinks lead outside the repository, the function
-reports this to the caller.
+$ ls -d .git/rr-cache
+ls: .git/rr-cache: No such file or directory
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- tree-walk.c | 207 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- tree-walk.h |  18 ++++++
- 2 files changed, 225 insertions(+)
+$ git config rerere.enabled
+$
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 5dd9a71..8031f3a 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -415,6 +415,12 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
- 	return error;
- }
- 
-+struct dir_state {
-+	void *tree;
-+	unsigned long size;
-+	unsigned char sha1[20];
-+};
-+
- static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char *result, unsigned *mode)
- {
- 	int namelen = strlen(name);
-@@ -478,6 +484,207 @@ int get_tree_entry(const unsigned char *tree_sha1, const char *name, unsigned ch
- 	return retval;
- }
- 
-+/*
-+ * This is Linux's built-in max for the number of symlinks to follow.
-+ * That limit, of course, does not affect git, but it's a reasonable
-+ * choice.
-+ */
-+#define GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS 40
-+
-+/**
-+ * Find a tree entry by following symlinks in tree_sha (which is
-+ * assumed to be the root of the repository).  In the event that a
-+ * symlink points outside the repository (e.g. a link to /foo or a
-+ * root-level link to ../foo), the portion of the link which is
-+ * outside the repository will be returned in result_path, and *mode
-+ * will be set to 0.  It is assumed that result_path is uninitialized.
-+ * If there are no symlinks, or the end result of the symlink chain
-+ * points to an object inside the repository, result will be filled in
-+ * with the sha1 of the found object, and *mode will hold the mode of
-+ * the object.
-+ *
-+ * See the code for enum follow_symlink_result for a description of
-+ * the return values.
-+ */
-+enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode)
-+{
-+	int retval = MISSING_OBJECT;
-+	struct dir_state *parents = NULL;
-+	size_t parents_alloc = 0;
-+	ssize_t parents_nr = 0;
-+	unsigned char current_tree_sha1[20];
-+	struct strbuf namebuf = STRBUF_INIT;
-+	struct tree_desc t = {0};
-+	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
-+	int i;
-+
-+	result_path->buf = 0;
-+	result_path->alloc = 0;
-+	result_path->len = 0;
-+	strbuf_addstr(&namebuf, name);
-+	hashcpy(current_tree_sha1, tree_sha1);
-+
-+	while (1) {
-+		int find_result;
-+		char *first_slash;
-+		char *remainder = NULL;
-+
-+		if (!t.buffer) {
-+			void *tree;
-+			unsigned char root[20];
-+			unsigned long size;
-+			tree = read_object_with_reference(current_tree_sha1,
-+							  tree_type, &size,
-+							  root);
-+			if (!tree)
-+				goto done;
-+
-+			ALLOC_GROW(parents, parents_nr + 1, parents_alloc);
-+			parents[parents_nr].tree = tree;
-+			parents[parents_nr].size = size;
-+			hashcpy(parents[parents_nr].sha1, root);
-+			parents_nr++;
-+
-+			if (namebuf.buf[0] == '\0') {
-+				hashcpy(result, root);
-+				retval = FOUND;
-+				goto done;
-+			}
-+
-+			if (!size)
-+				goto done;
-+
-+			/* descend */
-+			init_tree_desc(&t, tree, size);
-+		}
-+
-+		/* Handle symlinks to e.g. a//b by removing leading slashes */
-+		while (namebuf.buf[0] == '/') {
-+			strbuf_remove(&namebuf, 0, 1);
-+		}
-+
-+		/* Split namebuf into a first component and a remainder */
-+		if ((first_slash = strchr(namebuf.buf, '/'))) {
-+			*first_slash = 0;
-+			remainder = first_slash + 1;
-+		}
-+
-+		if (!strcmp(namebuf.buf, "..")) {
-+			struct dir_state *parent;
-+			/*
-+			 * We could end up with .. in the namebuf if it
-+			 * appears in a symlink.
-+			 */
-+
-+			if (parents_nr == 1) {
-+				if (remainder)
-+					*first_slash = '/';
-+				strbuf_add(result_path, namebuf.buf,
-+					   namebuf.len);
-+				*mode = 0;
-+				retval = FOUND;
-+				goto done;
-+			}
-+			parent = &parents[parents_nr - 1];
-+			free(parent->tree);
-+			parents_nr--;
-+			parent = &parents[parents_nr - 1];
-+			init_tree_desc(&t, parent->tree, parent->size);
-+			strbuf_remove(&namebuf, 0, remainder ? 3 : 2);
-+			continue;
-+		}
-+
-+		/* We could end up here via a symlink to dir/.. */
-+		if (namebuf.buf[0] == '\0') {
-+			hashcpy(result, parents[parents_nr - 1].sha1);
-+			retval = FOUND;
-+			goto done;
-+		}
-+
-+		/* Look up the first (or only) path component in the tree. */
-+		find_result = find_tree_entry(&t, namebuf.buf,
-+					      current_tree_sha1, mode);
-+		if (find_result) {
-+			goto done;
-+		}
-+
-+		if (S_ISDIR(*mode)) {
-+			if (!remainder) {
-+				hashcpy(result, current_tree_sha1);
-+				retval = FOUND;
-+				goto done;
-+			}
-+			/* Descend the tree */
-+			t.buffer = NULL;
-+			strbuf_remove(&namebuf, 0,
-+				      1 + first_slash - namebuf.buf);
-+		} else if (S_ISREG(*mode)) {
-+			if (!remainder) {
-+				hashcpy(result, current_tree_sha1);
-+				retval = FOUND;
-+			} else {
-+				retval = NOT_DIR;
-+			}
-+			goto done;
-+		} else if (S_ISLNK(*mode)) {
-+			/* Follow a symlink */
-+			unsigned long link_len;
-+			size_t len;
-+			char *contents, *contents_start;
-+			struct dir_state *parent;
-+			enum object_type type;
-+
-+			if (follows_remaining-- == 0) {
-+				/* Too many symlinks followed */
-+				retval = SYMLINK_LOOP;
-+				goto done;
-+			}
-+
-+			/*
-+			 * At this point, we have followed at a least
-+			 * one symlink, so on error we need to report this.
-+			 */
-+			retval = DANGLING_SYMLINK;
-+
-+			contents = read_sha1_file(current_tree_sha1, &type,
-+						  &link_len);
-+
-+			if (!contents)
-+				goto done;
-+
-+			if (contents[0] == '/') {
-+				strbuf_addstr(result_path, contents);
-+				free(contents);
-+				*mode = 0;
-+				retval = FOUND;
-+				goto done;
-+			}
-+
-+			if (remainder)
-+				len = first_slash - namebuf.buf;
-+			else
-+				len = namebuf.len;
-+
-+			contents_start = contents;
-+
-+			parent = &parents[parents_nr - 1];
-+			init_tree_desc(&t, parent->tree, parent->size);
-+			strbuf_splice(&namebuf, 0, len,
-+				      contents_start, link_len);
-+			if (remainder)
-+				namebuf.buf[link_len] = '/';
-+			free(contents);
-+		}
-+	}
-+done:
-+	for (i = 0; i < parents_nr; i++)
-+		free(parents[i].tree);
-+	free(parents);
-+
-+	strbuf_release(&namebuf);
-+	return retval;
-+}
-+
- static int match_entry(const struct pathspec_item *item,
- 		       const struct name_entry *entry, int pathlen,
- 		       const char *match, int matchlen,
-diff --git a/tree-walk.h b/tree-walk.h
-index ae7fb3a..3b2f7bf 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -40,6 +40,24 @@ struct traverse_info;
- typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
- int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info);
- 
-+enum follow_symlinks_result {
-+	FOUND = 0, /* This includes out-of-tree links */
-+	MISSING_OBJECT = -1, /* The initial symlink is missing */
-+	DANGLING_SYMLINK = -2, /*
-+				* The initial symlink is there, but
-+				* (transitively) points to a missing
-+				* in-tree file
-+				*/
-+	SYMLINK_LOOP = -3,
-+	NOT_DIR = -4, /*
-+		       * Somewhere along the symlink chain, a path is
-+		       * requested which contains a file as a
-+		       * non-final element.
-+		       */
-+};
-+
-+enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode);
-+
- struct traverse_info {
- 	struct traverse_info *prev;
- 	struct name_entry name;
--- 
-2.0.4.315.gad8727a-twtrsrc
+My repository is a ruby on rails project, I am currently on the
+development branch. It's a private repository hosted on Github. Not
+sure what other information you want.
+
+Alex
+
+
+
+
+On Thu, May 14, 2015 at 4:22 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, May 14, 2015 at 12:33:02PM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > On Thu, May 14, 2015 at 12:19:25PM -0700, Junio C Hamano wrote:
+>> >
+>> >> > It looks like we need to pay more attention to the return value of
+>> >> > setup_rerere, which is what is supposed to take the lock.
+>> >>
+>> >> Good spotting.  The normal rerere does check, but rerere-forget
+>> >> codepath seems to forget it.
+>> >
+>> > Here's a patch.
+>>
+>> Thanks.  This is obviously correct to fix your "init -q" one.
+>>
+>> I am still puzzled by the original, though.  I assumed that rerere
+>> was enabled and working correctly (in the sense that it correctly
+>> replayed a mistaken resolution recorded earlier, which Alex wanted
+>> to correct by forgetting).
+>
+> Yeah, agreed. I don't see any other code paths that could end up trying
+> to commit a lock we haven't taken, though.
+>
+> Alex, can you tell us more about your repository? And possibly show us
+> the output of:
+>
+>   ls -d .git/rr-cache
+>   git config rerere.enabled
+>
+> in the repository?
+>
+> -Peff
