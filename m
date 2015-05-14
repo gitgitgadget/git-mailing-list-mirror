@@ -1,66 +1,74 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Git Completion after colon in push command
-Date: Thu, 14 May 2015 13:52:38 -0500
-Message-ID: <CAHd499Bn_bwbjFLJpcDFF5wE0Y6EgCYqJAQOZV=H-1XWmjb69A@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Problem with rerere forget
+Date: Thu, 14 May 2015 11:57:03 -0700
+Message-ID: <CAGZ79kZC-Kn4FbHgkifeDew7_qpGJSFDaqO=F=bok1FUzm=1Ew@mail.gmail.com>
+References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
+	<CAGZ79kZ8Cy1Pp9cf7vExntbfe-YW5KjYx6Fogr3O94wDfwuOXg@mail.gmail.com>
+	<CAPt1q6d3euApCKLUBjssyfBmeVw0TVYOqDmTZL79gN1TvtxdsA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 14 20:52:44 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Alex Coppens <alex@nativetouch.com>
+X-From: git-owner@vger.kernel.org Thu May 14 20:57:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsyFQ-0004TK-2X
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 20:52:44 +0200
+	id 1YsyJi-0006Hp-0i
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 20:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933285AbbENSwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 14:52:39 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:36586 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932807AbbENSwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 14:52:38 -0400
-Received: by iepk2 with SMTP id k2so67307455iep.3
-        for <git@vger.kernel.org>; Thu, 14 May 2015 11:52:38 -0700 (PDT)
+	id S964792AbbENS5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 14:57:05 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:34469 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753360AbbENS5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 14:57:03 -0400
+Received: by iecmd7 with SMTP id md7so68772334iec.1
+        for <git@vger.kernel.org>; Thu, 14 May 2015 11:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=4gwdFgFxhmwDaLgbKokgCknTQkHRIWazqvjZ5KG4RUU=;
-        b=gawiGIOQ7HQ7evysjllLjw93ZRbyd+/Bnp+AzzQ2Ypx6GHZeDJm62mF3PigJL0ARwd
-         99aM75kJ+gr3bmgfACG1N3pt5AGjPlbZwKcckF35TwbcwQpVpWsS4hd39RaAKFR2JfQU
-         cZJu+bNIAi7qWz8h8YjzS3gWSO/Tno6cUY17Gpg1XWjx+k8EFQ1baq85cZPSmQ8g90UU
-         v1vFEbWdxixEQnWoZkZBS9mR+vpk+Eguf5q4G53T92+TOwsM5+gj8AI6Li5HiaQPGOl/
-         RqlCzC0aRZ7ZA8hrxyxuHGoix4c0TTudpdtxlODx0ZjGlW2AICfFMAFIIfc0t3eezT7t
-         nDMw==
-X-Received: by 10.43.162.136 with SMTP id mk8mr16018565icc.28.1431629558147;
- Thu, 14 May 2015 11:52:38 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.86.148 with HTTP; Thu, 14 May 2015 11:52:38 -0700 (PDT)
-X-Google-Sender-Auth: eQ8s2uszpNzWU21_K190n8HcIdM
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8vgpsTIvCuraPstQAmKqAxIAeByvxtgRxrFR1MX8a1A=;
+        b=UstZxg5KVCzQ+jGJH7YjDE5UFFOV8lXTdq1+2MvUDT+dU5XwN2gsrKycEk5C9Bcl+o
+         zcS3qHPnOb/oKK08XyN5Yi0G93aPsBqq6myjZsvXvucXg/GdHxbKroEjL/EHDcZW55EM
+         qfVKEhhgB9QMfzoneB+dzptb1CZY2IEyYUp65SGcESCwG4cvTP8hWs/VDxA9l7/vSRwC
+         wT/2pJ6NXvWqrJYhnCfjnMFmK1N1FfGDLL5TLQjixCIuc56wUl0kDoqd1+aVPjW8Qghp
+         rLkPEcyF+XpVmeprA3gmT3HvXx9xp9b85gpvjeYD2uoacR5H/k13FDOGa1Gl1oG2u8qW
+         H0PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=8vgpsTIvCuraPstQAmKqAxIAeByvxtgRxrFR1MX8a1A=;
+        b=M3/tJ+s5+7oegOx0O9ZJ1qnAsayz1lzw+U0k3nH/+qRdZ8ZCM+tGpOWq/uoAOhpmRX
+         hHrRHw17qs8DLcy1O0KwglxLNowjOqjX6xcdmzauTuGXAVq8hoAvErs/E6u+q6CHeZZx
+         Egi8o84cy+HEjT2cNgaZH8ErM5GY17RyCr7nMcRn2DYsRDkvrZUUEQ8GqZhIxzx29nEo
+         fQpsZKk+ZnqW8deqg3CKpNTT9X5SwlN7kedeeATWfv7SulDlVFhukjTC5RKsdvIQtiAb
+         u7SE5sY3QUUbmWB2keNxJDlFzjCSQPYEAby3QuUGfmT/Lr3IEIMOzfX6AjIetHsdjoZZ
+         rwDg==
+X-Gm-Message-State: ALoCoQkVOjDQZxV2Yt3MuBYnROLQSGmTxk7eKiOJIoS+ZxfTF1WxMcrsaOa/S8aEWUaJT9raiwJ/
+X-Received: by 10.42.213.136 with SMTP id gw8mr16179726icb.95.1431629823363;
+ Thu, 14 May 2015 11:57:03 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Thu, 14 May 2015 11:57:03 -0700 (PDT)
+In-Reply-To: <CAPt1q6d3euApCKLUBjssyfBmeVw0TVYOqDmTZL79gN1TvtxdsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269068>
 
-I Googled around for an answer to this but I'm concerned maybe it's an
-issue with my environment. Perhaps you guys can help me out.
+On Thu, May 14, 2015 at 11:40 AM, Alex Coppens <alex@nativetouch.com> wrote:
+> I use git version 2.2.1. I cannot provide an example repository that
+> reproduces the error.
+>
+> What does git bisect do?
 
-I'm using Git 2.4.1 on Windows through mintty terminal. I grabbed the
-latest git completion shell script from here:
-https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+git bisect looks at the git history and performs a binary search on it to find
+the commit which introduced a bug.
+http://git-scm.com/docs/git-bisect
 
-I source it manually in my .bashrc file.
-
-Tab completion works for ref names everywhere except for push. Suppose
-I have a branch named "releases/1.2.3"
-
-When I do this:
-
-$ git push origin :rele
-
-Right at the end of that, I press TAB expecting it to complete the ref
-I'm pushing to delete. But it does nothing. Any reason for this? I
-recall this used to work a few months ago before I upgraded.
-
-Thanks in advance.
+To find the bug that way, you'd need to get the source code of git and
+compile it
+yourself though (multiple times until the bug is found)
