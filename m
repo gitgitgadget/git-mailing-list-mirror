@@ -1,64 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problem with rerere forget
-Date: Thu, 14 May 2015 11:49:12 -0700
-Message-ID: <xmqq7fsbkn9z.fsf@gitster.dls.corp.google.com>
-References: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Git Completion after colon in push command
+Date: Thu, 14 May 2015 13:52:38 -0500
+Message-ID: <CAHd499Bn_bwbjFLJpcDFF5wE0Y6EgCYqJAQOZV=H-1XWmjb69A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Alex Coppens <alex@nativetouch.com>
-X-From: git-owner@vger.kernel.org Thu May 14 20:49:20 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 14 20:52:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsyC8-00036a-4f
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 20:49:20 +0200
+	id 1YsyFQ-0004TK-2X
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 20:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933129AbbENStP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 14:49:15 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:32956 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751829AbbENStP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 14:49:15 -0400
-Received: by iebgx4 with SMTP id gx4so68366922ieb.0
-        for <git@vger.kernel.org>; Thu, 14 May 2015 11:49:14 -0700 (PDT)
+	id S933285AbbENSwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 14:52:39 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:36586 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932807AbbENSwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 14:52:38 -0400
+Received: by iepk2 with SMTP id k2so67307455iep.3
+        for <git@vger.kernel.org>; Thu, 14 May 2015 11:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=F4fO2Ycizy1Bn9C1KjAlkv8r3fWPsOg0Juqy2Vktzy8=;
-        b=KX8Oun6zzgLgoligluRo1ZLuQHpIcX4ABonsP0b1ysV19/dJUj1wphvD8jPlt6mjqY
-         P5RFvzEVHgFurbBzsAhmAw0wdQiX7yyYZG3zx8ObFljnQCZrXocaRwAwHqM6WCrMrHt8
-         6rWQU7vJEXgNPH9rIpqtUe4dZjGjM0X8nKoCvaqZREvXhMJQLclMgIfYoGX51YTKILHN
-         5f161pmc6lrlU+1z01fUGDuaep0hwFrr8mF6Au4V0NZ8QkurCmdIfbNPR2btgHGJZX3b
-         2UAq36aegRDuHw5BZ0b3vG0MX8wCeA4SWQ7MTikMqjeN/ww9EOUjKbvfHZLQ6efV5UJw
-         oVng==
-X-Received: by 10.107.128.149 with SMTP id k21mr7179346ioi.7.1431629354453;
-        Thu, 14 May 2015 11:49:14 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
-        by mx.google.com with ESMTPSA id f7sm6420792igq.7.2015.05.14.11.49.13
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 14 May 2015 11:49:13 -0700 (PDT)
-In-Reply-To: <CAPt1q6fMMz61aZEJB9b+K6+kHFwkm+bMYXoKBj78GNJU+dWioA@mail.gmail.com>
-	(Alex Coppens's message of "Thu, 14 May 2015 14:05:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=4gwdFgFxhmwDaLgbKokgCknTQkHRIWazqvjZ5KG4RUU=;
+        b=gawiGIOQ7HQ7evysjllLjw93ZRbyd+/Bnp+AzzQ2Ypx6GHZeDJm62mF3PigJL0ARwd
+         99aM75kJ+gr3bmgfACG1N3pt5AGjPlbZwKcckF35TwbcwQpVpWsS4hd39RaAKFR2JfQU
+         cZJu+bNIAi7qWz8h8YjzS3gWSO/Tno6cUY17Gpg1XWjx+k8EFQ1baq85cZPSmQ8g90UU
+         v1vFEbWdxixEQnWoZkZBS9mR+vpk+Eguf5q4G53T92+TOwsM5+gj8AI6Li5HiaQPGOl/
+         RqlCzC0aRZ7ZA8hrxyxuHGoix4c0TTudpdtxlODx0ZjGlW2AICfFMAFIIfc0t3eezT7t
+         nDMw==
+X-Received: by 10.43.162.136 with SMTP id mk8mr16018565icc.28.1431629558147;
+ Thu, 14 May 2015 11:52:38 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.36.86.148 with HTTP; Thu, 14 May 2015 11:52:38 -0700 (PDT)
+X-Google-Sender-Auth: eQ8s2uszpNzWU21_K190n8HcIdM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269067>
 
-Alex Coppens <alex@nativetouch.com> writes:
+I Googled around for an answer to this but I'm concerned maybe it's an
+issue with my environment. Perhaps you guys can help me out.
 
-> git rerere forget path_to_file/file.js
->
-> fatal: BUG: attempt to commit unlocked object
+I'm using Git 2.4.1 on Windows through mintty terminal. I grabbed the
+latest git completion shell script from here:
+https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 
-That comes from commit_lock_file(); I think rerere.c:write_rr()
-has a call to that function and I suspect that is the call that is
-giving the above message.
+I source it manually in my .bashrc file.
 
-Is there any other process that is mucking with your .git/index file
-while you are running the command?
+Tab completion works for ref names everywhere except for push. Suppose
+I have a branch named "releases/1.2.3"
+
+When I do this:
+
+$ git push origin :rele
+
+Right at the end of that, I press TAB expecting it to complete the ref
+I'm pushing to delete. But it does nothing. Any reason for this? I
+recall this used to work a few months ago before I upgraded.
+
+Thanks in advance.
