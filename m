@@ -1,123 +1,81 @@
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: Clone hangs when done over http with --reference
-Date: Thu, 14 May 2015 13:08:46 -0400
-Organization: Linux Foundation
-Message-ID: <5554D69E.20307@linuxfoundation.org>
-References: <20150513210436.GA7407@gmail.com> <20150514004724.GA3059@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] teach git pull to handle --log=<n>
+Date: Thu, 14 May 2015 10:11:37 -0700
+Message-ID: <xmqqd22384om.fsf@gitster.dls.corp.google.com>
+References: <1431508661-21729-1-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="4qFXg9O7OgnQokubdGOkc58Ie1vVKqqRD"
-Cc: git@vger.kernel.org
-To: peff@peff.net
-X-From: git-owner@vger.kernel.org Thu May 14 19:08:58 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 14 19:12:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yswd0-0003ZL-5p
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 19:08:58 +0200
+	id 1YswgA-0004zN-48
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 19:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933244AbbENRIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 13:08:54 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33197 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933011AbbENRIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 13:08:52 -0400
-Received: by igbpi8 with SMTP id pi8so15633037igb.0
-        for <git@vger.kernel.org>; Thu, 14 May 2015 10:08:52 -0700 (PDT)
+	id S1030343AbbENRLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 13:11:41 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:33855 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030324AbbENRLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 13:11:39 -0400
+Received: by iecmd7 with SMTP id md7so66157571iec.1
+        for <git@vger.kernel.org>; Thu, 14 May 2015 10:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=message-id:date:from:organization:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type;
-        bh=o9/aQhth20pQft6VPCWMHl8NIZc7zxLCEVT/g29BCSs=;
-        b=Sb2taGuuDtwD13fE1wKrBc4J4p8sPeXcgPmpgzalgK2NgCMYzODgUzi34DzRmzKU1q
-         6mcf7Va+yswAlTnEppCsjEZz0HpdqeJ66iMsf2yqXLF4s7a9k/2m57HD/+jOOB5W/7Ui
-         WEnymS/e3w3ahPBNl7c2/wYXRLq9rLu/2IlWI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:organization:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type;
-        bh=o9/aQhth20pQft6VPCWMHl8NIZc7zxLCEVT/g29BCSs=;
-        b=X94Zdc0usjVfyulYk6KOhlcFtTBipnYTRPOOkB1qUDxjAr3UF5vlBFyUdVFfaalSb3
-         YeoL53eooQ1I22x7MntpAqzlCXeTLq3UwIDGXHdrKDpJrbdqSYuLhiG8dE35RcyBlTWm
-         mk+C1xqFs7WQFN5RdM6zBb1yrP9aPv3mbGCO9RFGlDUMD84hXBJBHkeao2RD5QLxmw7U
-         ISdAfBUsF1Jh6IB6amzsheBjKCuery1x1VnaJ6WnapxTucAxeTEMbpBx1mrYudgHIXtZ
-         bYN+9GpKqNJce65cu/KzC6NZHP/OsSaK+jAzwsmAq9EYeyzqzWjBKx2boSLRauteYY5E
-         d+hA==
-X-Gm-Message-State: ALoCoQmQ4w9aonpFbBDAda6LF+AkDNJKFOIEeVFonB/CpxV56m3gyV+iKdU5ZmWiO0yejsBY38DG
-X-Received: by 10.50.43.194 with SMTP id y2mr14386050igl.35.1431623332283;
-        Thu, 14 May 2015 10:08:52 -0700 (PDT)
-Received: from ada.mricon.com (198-84-251-213.cpe.teksavvy.com. [198.84.251.213])
-        by mx.google.com with ESMTPSA id v14sm6237297igd.12.2015.05.14.10.08.51
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 May 2015 10:08:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <20150514004724.GA3059@peff.net>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=APJMef+xeZWS3KuBy+mvW+IK4QzdAsIOrKMzrbHbuSk=;
+        b=NSW2uuvujTxVcViRIj8Y2v9iECMpSbXMKd05YJ9lnCS66eHpC1sHcRDrUlYoHbB7mf
+         tWLJH+faWZ/Iqc1w42ZLAKKURO2IHfEJEvi0JSWPYhhSy5mnm8MbJX1Se1FJoKMoJZMN
+         rLnPyn1Qd3PVFeOyxK6POYD7ggNXALSluRrSOeUVPzLCqX6rGQSoxtLXflckni4BpOI8
+         MPHVCD199yGE9dP2049szeqgcINrqGywjKFL2PMRSmrBllmJQKNidfqYDDNXkfLnrbYU
+         oj11JgafTO8nF395DlrAQFav0pSnTD/vowb54cBEVq7PTRuXYYKJoGuu+MD3uQLc8pjc
+         b7cg==
+X-Received: by 10.42.128.84 with SMTP id l20mr16255625ics.21.1431623498894;
+        Thu, 14 May 2015 10:11:38 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:74eb:19e4:cd06:a6b6])
+        by mx.google.com with ESMTPSA id fs5sm1468459igb.0.2015.05.14.10.11.38
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 14 May 2015 10:11:38 -0700 (PDT)
+In-Reply-To: <1431508661-21729-1-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Wed, 13 May 2015 17:17:39 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269048>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---4qFXg9O7OgnQokubdGOkc58Ie1vVKqqRD
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Paul Tan <pyokagan@gmail.com> writes:
 
-On 13/05/15 08:47 PM, Jeff King wrote:
-> I don't know if there's a way to convince Apache to be more interactive=
-=2E
-> As a hacky workaround, we could basically spool all of the input into
-> memory (or a tempfile) and work from that. Or the output. Either way
-> would break the pipe deadlock. But we'd have to be sensitive to the typ=
-e
-> of request (it's probably OK to spool ref negotiation, but not OK to
-> spool packfiles, which can be arbitrarily big).
+> Since efb779f (merge, pull: add '--(no-)log' command line option,
+> 2008-04-06) git-pull supported the (--no-)log switch and would pass it
+> to git-merge.
+>
+> 96e9420 (merge: Make '--log' an integer option for number of shortlog
+> entries, 2010-09-08) implemented support for the --log=<n> switch, which
+> would explicitly set the number of shortlog entries. However, git-pull
+> does not recognize this option, and will instead pass it to git-fetch,
+> leading to "unknown option" errors.
+>
+> This patch series implements a failing test that demonstrates the above,
+> and teaches git-pull to handle the switch --log=<n>.
 
-Thanks for looking into this, Jeff.
+Looks good.
 
-Two questions:
+One advice; for a small patch like this one (and the "pull.ff vs
+merge.ff" one, too), it is not necessary or even desirable to do a
+two-step "first add a failure test and then another patch to fix and
+flip the expectation" series.  Just do the fix and add a test to
+expect success.
 
-1. Does this mean there are potential problems with other git operations
-that involve ref negotiation, not just when doing git clone --reference?
-Is there a chance to run in to this deadlock by doing an operation like
-"git remote update"?
+After all, the primary reason why we add test is *not* for you to
+demonstrate that what you did works as expected.  It is to catch
+other people breaking what you did in the future.
 
-2. If we configure the webserver to serve some files directly, without
-passing them to http-backend, e.g. doing the recommended apache magic:
-
-> AliasMatch ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$          /var/l=
-ib/git/$1
-> AliasMatch ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /var/l=
-ib/git/$1
-> AliasMatch ^/git/(.*/refs/heads/.*)$                             /var/l=
-ib/git/$1
-
-Will that make the spooling less of a problem, since it won't involve
-the super-huge files?
-
-Best,
--Konstantin
-
-
---4qFXg9O7OgnQokubdGOkc58Ie1vVKqqRD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBCAAGBQJVVNaeAAoJEDZgaZyZ4FVXvYEIAMP6JtrjeccZFuOHKPeFbS09
-/qG9YlSSWxkoXg9/V5viabDUkxLeE4Z3ciCvZxAy13vCPKmg2xOOX33P0+5EBqwb
-SYH0LcM3pJJBi1Rh8YXog03MR4xnSgPwXbCe3cgv4ZvW2+Bf26F8b06u95SIDzCF
-dP6/3DI8Vd4Yv7jmmndXOgPVQ68tkafhglDx/WwjYtix/0+U6zeb9zclE/Kipez6
-psTwo7vex9ZhO7pucKyuxSoBEMeEV0G6ox3Z9ilMn1LQAESx3f5DOxeXltQ+XkPV
-0evgfttnCanfdsGkmmF3jV8k1YdRzn1ZlRhpk7GLE35w1fk1vgiBtdJnAYF8ucY=
-=Rtls
------END PGP SIGNATURE-----
-
---4qFXg9O7OgnQokubdGOkc58Ie1vVKqqRD--
+Thanks.
