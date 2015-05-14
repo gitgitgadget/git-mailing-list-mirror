@@ -1,81 +1,77 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH] builtin/clean.c: Handle disappearing files
-Date: Thu, 14 May 2015 17:16:40 -0400
-Message-ID: <1431638200-20449-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 14 23:16:55 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/8] asciidoc fixups
+Date: Thu, 14 May 2015 17:17:27 -0400
+Message-ID: <20150514211727.GA15528@peff.net>
+References: <1431451400-1447-1-git-send-email-jn.avila@free.fr>
+ <xmqqfv71zlaz.fsf@gitster.dls.corp.google.com>
+ <20150513021556.GA4160@peff.net>
+ <20150513045650.GA6070@peff.net>
+ <20150513224131.GC425227@vauxhall.crustytoothpaste.net>
+ <20150514042544.GA9351@peff.net>
+ <9350a00074264bb847210410a6f6c340@www.dscho.org>
+ <20150514173828.GA7966@peff.net>
+ <c2fd3e038c821ec340c085a825baabc7@www.dscho.org>
+ <xmqqwq0aj25e.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jean-Noel Avila <jn.avila@free.fr>, git@vger.kernel.org,
+	David Turner <dturner@twitter.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 23:17:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yt0Uw-000082-Mt
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 23:16:55 +0200
+	id 1Yt0Vb-0000QK-E2
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 23:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965352AbbENVQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 17:16:50 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:36655 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964836AbbENVQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 17:16:49 -0400
-Received: by qkgw4 with SMTP id w4so18197424qkg.3
-        for <git@vger.kernel.org>; Thu, 14 May 2015 14:16:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=oO1BX9rP1YnNwUr0r3/0wlXXw1RnPvzb6lsRD1hYlH4=;
-        b=RRerTTp/hidfFuU8tuD0tvw+e/uNniw/2CRtror0xc4mGBupkuJDOw4UHwYL29kuk0
-         NspZhSCEGWFALosqNlTCAXjWTxG98e6EpvakPQKvgym1+pf3WhjOiESIQ3MsclUz7Qol
-         xHlOrCikuHpsai287+0g2ZSyojGBOFtLL26kcgBeA5+B6o+Krc1mR1nEwC4MqA61O8eI
-         v/7veh8V8QBs3vl5fjpcfKQnaQ7VF4Ct+jaHY0vYXGAjqKARSHbPEM+uYKUidjxaRZeB
-         Pu6ostuXvHmMYQ0x0KMfQWtLgOUEVs6s1/qTJQL4Rz5aK/250THiYeEL+TpSc9J90UAi
-         Vhzg==
-X-Gm-Message-State: ALoCoQkTbdfy8pE4ON6r8gPTbxY9Q324BlWAejfVwHi04urPP5xQKQW+MQcmfQn4iIW/TAN5KEz/
-X-Received: by 10.140.151.15 with SMTP id 15mr8314613qhx.104.1431638208571;
-        Thu, 14 May 2015 14:16:48 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by mx.google.com with ESMTPSA id c2sm176981qkh.14.2015.05.14.14.16.47
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 May 2015 14:16:47 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
+	id S965362AbbENVRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 17:17:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58863 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965116AbbENVRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 17:17:30 -0400
+Received: (qmail 27155 invoked by uid 102); 14 May 2015 21:17:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 16:17:29 -0500
+Received: (qmail 28142 invoked by uid 107); 14 May 2015 21:17:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 17:17:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2015 17:17:27 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwq0aj25e.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269099>
 
-During a git clean, some other process might be deleting files as
-well.  If this happens, make git clean no longer die.
+On Thu, May 14, 2015 at 02:10:53PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- builtin/clean.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> >> My asciidoctor just comes from the Debian package. Looks like it's over
+> >> a year old at this point. I should probably be testing with something
+> >> more recent.
+> >
+> > We installed asciidoctor via `gem` and have version 1.5.2.
+> 
+> What I'll be pushing out today will have some "interesting" mark-up
+> in Documentation/git-cat-file.txt (on 'jch' or 'pu') from David's
+> '--follow-symlinks' topic.  I think AsciiDoc formatting looks OK,
+> but can you check it with both older (peff) and newer (dscho)
+> asciidoctor to see how well it shows?  Look for --follow-symlinks
+> in the output.
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 98c103f..3ae44c2 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -941,8 +941,16 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		if (!cache_name_is_other(ent->name, ent->len))
- 			continue;
- 
--		if (lstat(ent->name, &st))
--			die_errno("Cannot lstat '%s'", ent->name);
-+		/*
-+		 * Some concurrent process might have already removed
-+		 * ent->name.
-+		 */
-+		if (lstat(ent->name, &st)) {
-+			if (errno == ENOENT || errno == ENOTDIR)
-+				continue;
-+			else
-+				die_errno("Cannot lstat '%s'", ent->name);
-+		}
- 
- 		if (pathspec.nr)
- 			matches = dir_path_match(ent, &pathspec, 0, NULL);
--- 
-2.0.4.315.gad8727a-twtrsrc
+What's in 366bc15e9 (your SQUASH) looks terrible with older asciidoctor.
+The "[normal]" bumps us out of the list item, left-aligning all of the
+other paragraphs, and then the "+" continuation is treated literally
+(probably because we are not inside a block).
+
+I don't see any reason we cannot use normal "+" continuation here (but
+the hanging paragraphs need to be left-aligned, then).
+
+-Peff
