@@ -1,71 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/8] asciidoc fixups
-Date: Thu, 14 May 2015 00:29:47 -0400
-Message-ID: <20150514042947.GB9351@peff.net>
-References: <1431451400-1447-1-git-send-email-jn.avila@free.fr>
- <xmqqfv71zlaz.fsf@gitster.dls.corp.google.com>
- <20150513021556.GA4160@peff.net>
- <20150513045650.GA6070@peff.net>
- <xmqqzj59aw4c.fsf@gitster.dls.corp.google.com>
- <20150513053706.GA7783@peff.net>
- <b7b8419e6210f7d3eeb748dc31809d86@www.dscho.org>
+Subject: Re: [PATCH 6/8] doc: convert \--option to --option
+Date: Thu, 14 May 2015 00:32:59 -0400
+Message-ID: <20150514043259.GC9351@peff.net>
+References: <20150513045650.GA6070@peff.net>
+ <20150513050137.GF6821@peff.net>
+ <20150513094841.GA10518@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jean-Noel Avila <jn.avila@free.fr>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 14 06:29:57 2015
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu May 14 06:33:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YskmT-0001g1-B5
-	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 06:29:57 +0200
+	id 1YskpZ-0002xg-0S
+	for gcvg-git-2@plane.gmane.org; Thu, 14 May 2015 06:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750828AbbENE3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2015 00:29:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58405 "HELO cloud.peff.net"
+	id S933439AbbENEdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2015 00:33:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58410 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750713AbbENE3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2015 00:29:50 -0400
-Received: (qmail 7402 invoked by uid 102); 14 May 2015 04:29:50 -0000
+	id S933305AbbENEdC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2015 00:33:02 -0400
+Received: (qmail 7545 invoked by uid 102); 14 May 2015 04:33:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 13 May 2015 23:29:50 -0500
-Received: (qmail 19674 invoked by uid 107); 14 May 2015 04:29:49 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 13 May 2015 23:33:02 -0500
+Received: (qmail 19700 invoked by uid 107); 14 May 2015 04:33:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 00:29:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2015 00:29:47 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 May 2015 00:33:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2015 00:32:59 -0400
 Content-Disposition: inline
-In-Reply-To: <b7b8419e6210f7d3eeb748dc31809d86@www.dscho.org>
+In-Reply-To: <20150513094841.GA10518@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269024>
 
-On Wed, May 13, 2015 at 09:43:54AM +0200, Johannes Schindelin wrote:
+On Wed, May 13, 2015 at 10:48:42AM +0100, John Keeping wrote:
 
-> I would like to believe that I am included in said group, because we
-> recently switched to use AsciiDoctor in Git for Windows 2.x. In
-> msysGit times, we could not even run AsciiDoc (and neither
-> AsciiDoctor), instead we relied on Junio publishing the artifacts in
-> the git-htmldocs repository.
-
-Thanks, I didn't know that. I have a vague feeling that AsciiDoctor is
-the future of AsciiDoc (certainly the AsciiDoctor folks feel that way),
-so the more we can keep compatibility, the better. Knowing that you guys
-are actively using it makes me feel even better about spending time on
-it.
-
-> By the way, we have two patches in our fork that are needed here to
-> use Asciidoctor successfully:
-> https://github.com/git-for-windows/git/compare/893292c41%5E...893292c41%5E2
+> On Wed, May 13, 2015 at 01:01:38AM -0400, Jeff King wrote:
+> > Older versions of AsciiDoc would convert the "--" in
+> > "--option" into an emdash. According to 565e135
+> > (Documentation: quote double-dash for AsciiDoc, 2011-06-29),
+> > this is fixed in AsciiDoc 8.3.0. According to bf17126, we
+> > don't support anything older than 8.4.1 anyway, so we no
+> > longer need to worry about quoting.
+> > 
+> > Even though this does not change the output at all, there
+> > are a few good reasons to drop the quoting:
+> > 
+> >   1. It makes the source prettier to read.
+> > 
+> >   2. We don't quote consistently, which may be confusing when
+> >      reading the source.
+> > 
+> >   3. Asciidoctor does not like the quoting, and renders a
+> >      literal backslash.
 > 
-> I would like to put them on top of this patch series. Objections?
+> If we're changing all of these files anyway, it would be nice to wrap
+> literal options in backticks as suggested in
+> Documentation/CodingGuidelines.
 
-The first one looks like straight fixes. The second looks rather nasty,
-and makes the AsciiDoc output worse. I don't have a better solution
-offhand, though. :(
+I considered it, and I do prefer backticks. But I stopped short because
+my goal here was to make source changes that didn't have any actual
+output changes. So I'm not opposed to the output change, but it doesn't
+belong in this patch.
+
+I'm also a little hesitant just because it semes there are quite a lot
+of outliers. I'm not sure if I'm helping anything to produce a patch
+that changes a small subset of them (i.e., if we do it, we should really
+do it thoroughly).
+
+I dunno. If you want to do a patch on top, I'd be happy to look at it.
 
 -Peff
