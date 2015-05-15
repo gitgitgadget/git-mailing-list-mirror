@@ -1,104 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/5] command-list.txt: prepare with [commands] header
-Date: Fri, 15 May 2015 15:26:52 -0700
-Message-ID: <xmqqegmhfpeb.fsf@gitster.dls.corp.google.com>
-References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431714904-16599-2-git-send-email-sebastien.guimmara@gmail.com>
-	<xmqqr3qhfuz3.fsf@gitster.dls.corp.google.com>
-	<5556582C.3010409@gmail.com>
-	<xmqqmw15fu5m.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSjHyh5eO6KWYMo_OxUmDQWP9TnnuaBvnBGWVDh7pesOQ@mail.gmail.com>
+From: Jim Hill <gjthill@gmail.com>
+Subject: Re: [PATCH v2] sha1_file: pass empty buffer to index empty file
+Date: Fri, 15 May 2015 16:31:53 -0700
+Message-ID: <20150515233153.GA4157@gadabout.domain.actdsltmp>
+References: <xmqqbnhnknio.fsf@gitster.dls.corp.google.com>
+ <1431645434-11790-1-git-send-email-gjthill@gmail.com>
+ <xmqqlhgphg8x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?S=C3=A9bastien?= Guimmara 
-	<sebastien.guimmara@gmail.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat May 16 00:27:00 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 16 01:32:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtO4J-0003nc-KA
-	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 00:26:59 +0200
+	id 1YtP5j-0004fA-33
+	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 01:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946184AbbEOW0z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 18:26:55 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:36295 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422923AbbEOW0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2015 18:26:54 -0400
-Received: by iepk2 with SMTP id k2so132708721iep.3
-        for <git@vger.kernel.org>; Fri, 15 May 2015 15:26:54 -0700 (PDT)
+	id S2992710AbbEOXcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2015 19:32:24 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:38536 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993493AbbEOXcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2015 19:32:04 -0400
+Received: by igcau1 with SMTP id au1so9974314igc.1
+        for <git@vger.kernel.org>; Fri, 15 May 2015 16:32:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=ekhKQhaXFQZRNHFsTu60WLr8ISqY+oyQd2IztNjYDtA=;
-        b=LBf1o5vogBzqULbFeSacmOFIcXco85c6Ls+knm7TDgHjNdEZ20GrFa+ya8kCXj5Uk5
-         /wo6D1Hxeos96o8LgU5NNNEDfxDWRaIbds20QBdALVOoYyVY9sG96nFF8n1Rxu9iGznz
-         UONWKK4x/tj8QmIxXgJf8CJYOpXo0XCshv6F3hhQuIcpg8OIGlsOVRr5rRab4aFrwGnl
-         AOCzPaSEiyR5iZvjidRqHgH7QYfFbWCMiXHSiu6T2axYlhFBQ6TUaNRfbVis2ZHgcZ+g
-         4TIe3G2rXLWnQB8yqUF6gJRiS0jIh+L/2FJO19eLnF+FoECLcvm8YDRcQIieiRaVDbb4
-         1N6Q==
-X-Received: by 10.107.154.70 with SMTP id c67mr15803992ioe.22.1431728814075;
-        Fri, 15 May 2015 15:26:54 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:c15a:d232:e950:b701])
-        by mx.google.com with ESMTPSA id p74sm2107320ioe.27.2015.05.15.15.26.53
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 15 May 2015 15:26:53 -0700 (PDT)
-In-Reply-To: <CAPig+cSjHyh5eO6KWYMo_OxUmDQWP9TnnuaBvnBGWVDh7pesOQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 15 May 2015 16:52:19 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Qb1qWbOeOH1tVby3PknY4MhWJvfdxlIxQZEPPPBdX4Q=;
+        b=Ycx1fSUZ3DPCJHK0yNEMPtOB8a5GXqHqPVQ7sipFRuHz017DsZe1HorT5pggrmpOa4
+         MH7CeGELRMCAcOrgcAHHTqUoAKAfISUf4ZsxCN/c9rtX5jiNYEZTgUk0GtbA+J10IYY4
+         qDEraME6SqyXoueRYzlf/BExZo0gLsOhK4c0zI6HIBaZfRLMLbT2co9S/ZUWSpJC6l/S
+         WGMTDZ6hqrrHmgZmbdBIPy2reC8RuLUTBD8Sz/c2SBgz6kYAiGp5byfxR1FR3pA9zf54
+         YfO6Mn0ChIIb411MWNra8+zC90k8RRJBo3EU6H9n8/ALIvxbpM1MIwMihe8Gdz60NLWn
+         UdEA==
+X-Received: by 10.50.79.232 with SMTP id m8mr1400067igx.6.1431732724210;
+        Fri, 15 May 2015 16:32:04 -0700 (PDT)
+Received: from gadabout.domain.actdsltmp (pool-71-119-14-52.lsanca.dsl-w.verizon.net. [71.119.14.52])
+        by mx.google.com with ESMTPSA id y124sm2235066iod.13.2015.05.15.16.32.01
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 May 2015 16:32:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqlhgphg8x.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269191>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Fri, May 15, 2015 at 11:01:34AM -0700, Junio C Hamano wrote:
+> That would mean that you found _another_ bug, wouldn't it?  If
+> copy-fd failed to read input to feed the external filter with, it
+> must have returned an error to its caller, and somebody in the
+> callchain is not paying attention to that error and pretending
+> as if everything went well.  That's a separate issue, though.
 
-> On Fri, May 15, 2015 at 4:44 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
->>>> You could for example have used the existing "# List of known git
->>>> commands" as such a signal to tell that all the no comment lines
->>>> below are commands.
->>>
->>> I tend to think that relying on comments as marks for parsers is br=
-ittle,
->>> but indeed square brackets get in the way of sed regexes. I'll thin=
-k of
->>> something better. Thanks.
->>
->> Heh, we, and more importantly our users, already rely on a marker in
->> comments when writing their commit log messages ;-)
->>
->> I would not be opposed to a new header that is outside comment, but
->> I do not think the marker line that is also a comment is "brittle"
->> and would not be opposed to that, either.
->>
->>     # do not molest the next line
->>     ### command list
->>     # name category
->>     git-add mainporcelain
->>     ...
->>
->> would be perfectly acceptable.
->>
->> I was just pointing out that you did not even have to have patch
->> 1/5.
->
-> Is that entirely accurate? The machinery (Makefiles, cmd-list.perl)
-> does have to be updated at some point to skip the "common" block whic=
-h
-> get added in patch 2/5.
+as you say, separate ... I think I stumbled over more than one:
 
-That is true, but if "# List of known git commands" instead of
-[commands] were used as the separator line, 1/5 wouldn't have needed
-any change to the Makefile.
+setup:
+	~/sandbox/40$ git grl
+	core.autocrlf false
+	core.whitespace cr-at-eof
+	core.repositoryformatversion 0
+	core.filemode true
+	core.bare false
+	core.logallrefupdates true
+	filter.cat.smudge cat
+	filter.cat.clean echo Kilroy was here && cat
+	filter.cat.required true
+	~/sandbox/40$ git rm --cached -f --ignore-unmatch emptyfile
+	rm 'emptyfile'
 
-Of course, if you need to add lines that would appear as junk to the
-old parser (e.g. the grouping info), at that point you would of
-course need to tell the parser to skip them.
+with required filter:
+	~/sandbox/40$ cat emptyfile
+	~/sandbox/40$ git add emptyfile
+	~/sandbox/40$ git show :emptyfile
+	Kilroy was here
+	~/sandbox/40$ git config --unset filter.cat.required
+
+then with not-required filter:
+	~/sandbox/40$ git rm --cached -f --ignore-unmatch emptyfile
+	error: copy-fd: read returned Bad file descriptor
+	error: cannot feed the input to external filter echo Kilroy was here && cat
+	error: external filter echo Kilroy was here && cat failed
+	rm 'emptyfile'
+	~/sandbox/40$ git show :emptyfile
+	fatal: Path 'emptyfile' exists on disk, but not in the index.
+	~/sandbox/40$ git add emptyfile
+	error: copy-fd: read returned Bad file descriptor
+	error: cannot feed the input to external filter echo Kilroy was here && cat
+	error: external filter echo Kilroy was here && cat failed
+	~/sandbox/40$ git show :emptyfile
+	~/sandbox/40$ git rm --cached emptyfile
+	rm 'emptyfile'
+	~/sandbox/40$ git add emptyfile
+	error: copy-fd: read returned Bad file descriptor
+	error: cannot feed the input to external filter echo Kilroy was here && cat
+	error: external filter echo Kilroy was here && cat failed
+	~/sandbox/40$ git rm --cached -f --ignore-unmatch emptyfile
+	rm 'emptyfile'
+	~/sandbox/40$ 
+
+===
+
+I don't understand rm's choices of when to run the filter, and the
+apparently entirely separate code path for required filters is just
+bothersome.
+
+>  * A failure to run the filter with the right contents can be caught
+>    by examining the outcome.
+
+agreed. That's better anyway -- my few git greps didn't find any
+empty-file filter tests anyway.
+
+>  * There is no need to create an extra commit; an uncommitted
+>    .gitattributes from the working tree would work just fine.
+
+Done.
+
+>  * The "grep" is gone, with use of -i (questionable why it is
+>    needed), 
+
+Yah, I was bad-thinking strerror results might be a bit unpredictable, I
+should have checked for a string under git's control instead.  I'd just
+assumed the 0 return was because non-required filters are allowed to
+fail, got the above transcript while checking the assumption.
+
+=== 
+
+So, so long as we're testing empty-file filters, I figured I'd add real
+empty-file filter tests, I think that covers it.
+
+So is this better instead?
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 5986bb0..fc2c644 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -216,15 +216,33 @@ test_expect_success EXPENSIVE 'filter large file' '
+ 	! test -s err
+ '
+ 
+-test_expect_success "filtering empty file should not produce complaints" '
+-	echo "emptyfile filter=cat" >>.gitattributes &&
+-	git config filter.cat.clean cat &&
+-	git config filter.cat.smudge cat &&
+-	git add . &&
+-	git commit -m "cat filter for emptyfile" &&
+-	> emptyfile &&
+-	git add emptyfile 2>err &&
+-	! grep -Fiqs "bad file descriptor" err
++test_expect_success "filter: clean empty file" '
++	header=---in-repo-header--- &&
++	git config filter.in-repo-header.clean  "echo $header && cat" &&
++	git config filter.in-repo-header.smudge "sed 1d" &&
++
++	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
++	> empty-in-worktree &&
++
++	echo $header              > expected &&
++	git add empty-in-worktree            &&
++	git show :empty-in-worktree > actual &&
++	test_cmp expected actual
++'
++
++test_expect_success "filter: smudge empty file" '
++	git config filter.empty-in-repo.smudge "echo smudge added line && cat" &&
++	git config filter.empty-in-repo.clean   true &&
++
++	echo "empty-in-repo      filter=empty-in-repo"  >>.gitattributes &&
++
++	echo dead data walking > empty-in-repo &&
++	git add empty-in-repo &&
++
++	:			> expected &&
++	git show :empty-in-repo	> actual &&
++	test_cmp expected actual
+ '
+ 
+ test_done
++
