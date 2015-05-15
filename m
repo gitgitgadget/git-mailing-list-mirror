@@ -1,84 +1,114 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7 2/5] command-list.txt: add a [common] block
-Date: Fri, 15 May 2015 17:31:45 -0400
-Message-ID: <CAPig+cSJJroxRF2He4ZvmgijZVw9ULOnUCEWyxGry=--L851YA@mail.gmail.com>
+Subject: Re: [PATCH v7 3/5] generate-cmdlist: parse common group commands
+Date: Fri, 15 May 2015 17:34:06 -0400
+Message-ID: <CAPig+cS+u18AvrFY2Xf+XH9Rma3A-F_bY4frYEx2DZ=MNeFQsQ@mail.gmail.com>
 References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431714904-16599-3-git-send-email-sebastien.guimmara@gmail.com>
+	<1431714904-16599-4-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 15 23:31:52 2015
+X-From: git-owner@vger.kernel.org Fri May 15 23:34:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtNCw-0000vN-VQ
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 23:31:51 +0200
+	id 1YtNFH-0002AV-Rb
+	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 23:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946186AbbEOVbq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 17:31:46 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:36685 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946138AbbEOVbp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 May 2015 17:31:45 -0400
-Received: by igbpi8 with SMTP id pi8so7107014igb.1
-        for <git@vger.kernel.org>; Fri, 15 May 2015 14:31:45 -0700 (PDT)
+	id S1946242AbbEOVeK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 17:34:10 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:35359 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946184AbbEOVeH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2015 17:34:07 -0400
+Received: by igbyr2 with SMTP id yr2so7133797igb.0
+        for <git@vger.kernel.org>; Fri, 15 May 2015 14:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=nw5O8X3Geu9LXY/RaYgzz/AJpho3itk8+5n4040gKP0=;
-        b=Kkpy1HqiFFgvXq0791mSp2ZHcUeuLW3RSkPlt1o0gNy45ynVZ4Q0QBc1Ze+j85uPRh
-         PfZ28Kys1BoqR9+E0AefpcmCTrVpYxh4BaebV//YD4/mqA1W15+ZgRCIeXQ5TYwnyksz
-         7nBnF9jR9SB+wAbyvzHLuvUahEx8X6HvJR6gptTLiHNsTPNcVH8bXDsWgVq3gbKtr248
-         YVaTwk4cboBoJ/1r70LZ/620W/hwq+45RS9iRPq8mUkLCOHCp/Yn/8Aw3uJPk6wf1sdF
-         wL+p0Jc33F38oE/Bm7AQGK3wvZBOocDha6zu9T2eRQjgBJi1GYonce0hvvQ+Ml0KG9Tn
-         bUkA==
-X-Received: by 10.50.61.200 with SMTP id s8mr857751igr.7.1431725505145; Fri,
- 15 May 2015 14:31:45 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 15 May 2015 14:31:45 -0700 (PDT)
-In-Reply-To: <1431714904-16599-3-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: iC-o4JuYw7PcyEIn1NbyT5wLYmY
+        bh=d6iTP3zPNnAr5WuDQeBU+g2HhDPCmiLBCYfuAxRp9Ko=;
+        b=dMhSC4JoEBseN4u27coTxq2fRjLMRpdGb89rOKHpnX5KxTzOj5txIGIMkJAIvxtSLB
+         urMbUyYOY0np2AGX2usxoyAXOmyIRd/Joy2ekdiAT4IDVVG28wER4Bb7HeCCevjkMH44
+         IbebOt/llTvT3MnPGT2LflsOXSYdlpYbMfcax5XBMUpEFiMRchHM84tXnSroX3lTW/Cm
+         4xA9AJ8MJZroKQdyVp/3lF1+qQV11cn3JwuGBVhypI7D66lZL4ndxpFP32/9ryngenY6
+         3SLYeRIdpNx/KnVdLD8Qh/zyH1GPb6SR9oTFboRG1P7e80x9Ho1xKn2+fmMqjYKshRYi
+         aUbQ==
+X-Received: by 10.107.31.134 with SMTP id f128mr15906065iof.19.1431725646820;
+ Fri, 15 May 2015 14:34:06 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 15 May 2015 14:34:06 -0700 (PDT)
+In-Reply-To: <1431714904-16599-4-git-send-email-sebastien.guimmara@gmail.com>
+X-Google-Sender-Auth: mM5soV72sgd2RS3pXLjB_OZI7r8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269187>
 
 On Fri, May 15, 2015 at 2:35 PM, S=C3=A9bastien Guimmara
 <sebastien.guimmara@gmail.com> wrote:
-> Add a [common] block at the beginning of command-list.txt:
-
-Without benefit of the explanation in the cover letter, the reason for
-this change is a bit mysterious. Even a single sentence preceding this
-one could help clarify. Perhaps the above could be rewritten something
-like this:
-
-    The ultimate goal is for "git help" to display common commands in
-    groups rather than alphabetically. As a first step, define the
-    groups in a new [common] block, and then assign a group to each
-    common command.
-
->     [common]
->     init         start a working area (see also: git help tutorial)
->     worktree     work on the current change (see also:[...]
->     info         examine the history and state (see also: git [...]
->     history      grow, mark and tweak your history
->     remote       collaborate (see also: git help workflows)
+> From: Eric Sunshine <sunshine@sunshineco.com>
 >
-> storing information about common commands group, then map each common
-> command to a group:
->
->     git-add          mainporcelain        common worktree
-
-With the above rewritten explanation, the rest of the commit message
-(the above examples) becomes pretty much unnecessary and merely
-repeats what the patch itself already says.
-
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by:  Emma Jane Hogbin Westby <emma.westby@gmail.com>
+> Parse the [common] block to create the array of group descriptions:
+> [...]
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 > Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+> ---
+> diff --git a/generate-cmdlist.awk b/generate-cmdlist.awk
+> new file mode 100644
+> index 0000000..b5cc789
+> --- /dev/null
+> +++ b/generate-cmdlist.awk
+> @@ -0,0 +1,39 @@
+> +BEGIN {
+> +       print "/* Automatically generated by generate-cmdlist.awk */\=
+n"
+> +       print "struct cmdname_help {"
+> +       print "\tchar name[16];"
+> +       print "\tchar help[80];"
+> +       print "\tunsigned char group;"
+> +       print "};\n"
+> +       print "static char *common_cmd_groups[] =3D {"
+> +}
+> +/^#/ || /^[    ]*$/ { next }
+> +state =3D=3D 2 {
+> +       for (i =3D 2; i <=3D NF; i++)
+> +               if (grp[$i]) {
+> +                       f =3D "Documentation/"$1".txt"
+> +                       while (getline s <f > 0)
+> +                               if (match(s, $1" - ")) {
+> +                                       t =3D substr(s, length($1" - =
+") + 1)
+> +                                       break
+> +                               }
+> +                       close(f)
+> +                       printf "\t{\"%s\", N_(\"%s\"), %s},\n",
+> +                               substr($1, length("git-") + 1), t, gr=
+p[$i] - 1
+> +                       break
+> +               }
+> +}
+> +/\[commands\]/ {
+> +       print "};\n\nstatic struct cmdname_help common_cmds[] =3D {"
+> +       state =3D 2
+> +}
+> +state =3D=3D 1 {
+> +       grp[$1] =3D ++n
+> +       sub($1"[        ][      ]*", "")
+> +       printf "\tN_(\"%s\"),\n", $0
+> +       next
+
+It probably would be best to drop this unnecessary and potentially
+confusing "next" line[1].
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/268348/focu=
+s=3D268599
+
+> +}
+> +/\[common\]/ {
+> +       state =3D 1
+> +}
+> +END { print "};" }
