@@ -1,66 +1,86 @@
-From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Subject: Re: git log --raw abbreviates SHA1s, despite what manual says
-Date: Fri, 15 May 2015 17:42:51 +0200 (CEST)
-Message-ID: <297757279.1883703.1431704571028.JavaMail.zimbra@imag.fr>
-References: <loom.20150515T164345-901@post.gmane.org> <vpqfv6xc1zd.fsf@anie.imag.fr> <loom.20150515T171548-204@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ed Avis <eda@waniasset.com>
-X-From: git-owner@vger.kernel.org Fri May 15 17:43:26 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Documentation/log: clarify what --raw means
+Date: Fri, 15 May 2015 17:44:34 +0200
+Message-ID: <1431704674-18595-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <297757279.1883703.1431704571028.JavaMail.zimbra@imag.fr>
+Cc: git@vger.kernel.org, eda@waniasset.com,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri May 15 17:44:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtHlf-00044k-6b
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 17:43:19 +0200
+	id 1YtHn6-0004y9-1h
+	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 17:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946176AbbEOPnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2015 11:43:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33760 "EHLO rominette.imag.fr"
+	id S934787AbbEOPon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2015 11:44:43 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:55298 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423113AbbEOPmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2015 11:42:53 -0400
+	id S934569AbbEOPom (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2015 11:44:42 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4FFgn3x017907
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4FFiYT6004050
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 15 May 2015 17:42:49 +0200
-Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4FFgpn9009929;
-	Fri, 15 May 2015 17:42:51 +0200
-In-Reply-To: <loom.20150515T171548-204@post.gmane.org>
-X-Originating-IP: [129.88.6.115]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF31 (Linux)/8.0.6_GA_5922)
-Thread-Topic: git log --raw abbreviates SHA1s, despite what manual says
-Thread-Index: C3WwKfd4lMBVOJTac/iI6un7kj20gA==
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 15 May 2015 17:42:49 +0200 (CEST)
+	Fri, 15 May 2015 17:44:34 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4FFianc009972;
+	Fri, 15 May 2015 17:44:36 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1YtHmt-0004tW-VC; Fri, 15 May 2015 17:44:35 +0200
+X-Mailer: git-send-email 2.3.5.2.ge515092.dirty
+In-Reply-To: <297757279.1883703.1431704571028.JavaMail.zimbra@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 15 May 2015 17:44:34 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4FFgn3x017907
+X-MailScanner-ID: t4FFiYT6004050
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1432309369.20369@VoxANMZ2FFJj9fr1RZKXEQ
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1432309477.29768@8KndyMY/Od9LFV0GZbKWLA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269154>
 
------ Original Message -----
-> Thanks for the explanation.  Plain 'git log' does not print any diffs.
-> Does that mean that the --raw flag is a no-op in that case?
+There are several "raw formats", and describing --raw as "Generate the
+raw format" in the documentation for git-log seems to imply that it
+generates the raw *log* format.
 
-No, it displays the patch, in raw format. But you're right that the doc is unclear.
+Clarify the wording by saying "raw diff format" explicitely, and make a
+special-case for "git log": "git log --raw" does not just change the
+format, it shows something which is not shown by default.
 
-> Perhaps running 'git log --raw' should print a warning
-> 
->     --raw given for raw-format diffs, but the output format you have chosen
->     does not include diffs.  Did you mean 'git log --format=raw'?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/diff-options.txt | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-I'd rather fix the doc. Patch follows.
-
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index ccd4998..163163b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -41,8 +41,17 @@ endif::git-format-patch[]
+ 
+ ifndef::git-format-patch[]
+ --raw::
+-	Generate the raw format.
++ifndef::git-log[]
++	Generate the raw diff format.
+ 	{git-diff-core? This is the default.}
++endif::git-log[]
++ifdef::git-log[]
++	For each commit, show a summary of changes using the raw diff
++	format. See the "RAW OUTPUT FORMAT" section of
++	linkgit:git-diff[1]. This is different from showing the log
++	itself in raw format, which you can achieve with
++	`--format=raw`.
++endif::git-log[]
+ endif::git-format-patch[]
+ 
+ ifndef::git-format-patch[]
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.3.5.2.ge515092.dirty
