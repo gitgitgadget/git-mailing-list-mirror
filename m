@@ -1,111 +1,102 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH v7 1/5] command-list.txt: prepare with [commands] header
-Date: Fri, 15 May 2015 22:33:48 +0200
-Message-ID: <5556582C.3010409@gmail.com>
-References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>	<1431714904-16599-2-git-send-email-sebastien.guimmara@gmail.com> <xmqqr3qhfuz3.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 0/5] git help: group common commands by theme
+Date: Fri, 15 May 2015 16:41:04 -0400
+Message-ID: <CAPig+cTAMrQEfK81WWn3honj5yL5RjYvt13P63kZoZ+pQ1f98g@mail.gmail.com>
+References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 15 22:33:58 2015
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 15 22:41:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtMIv-0004nj-4H
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 22:33:57 +0200
+	id 1YtMQC-0008Ts-QJ
+	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 22:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934547AbbEOUdw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 16:33:52 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:36409 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934285AbbEOUdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2015 16:33:52 -0400
-Received: by wizk4 with SMTP id k4so3454465wiz.1
-        for <git@vger.kernel.org>; Fri, 15 May 2015 13:33:51 -0700 (PDT)
+	id S934813AbbEOUlG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 16:41:06 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:36820 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934627AbbEOUlF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2015 16:41:05 -0400
+Received: by iepk2 with SMTP id k2so129769852iep.3
+        for <git@vger.kernel.org>; Fri, 15 May 2015 13:41:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=t0y8b47cshxgyq8rvqbnpn5xAn4Y3uYg6hTZLhi2q9g=;
-        b=YeFl66lkixSTpFvmfmq7HpwKVOfXhHVZesjZL13kj6jGRMSCP2lnmtL15OqcFFbBwm
-         HXSxCboq8EjJYpJlMUVuGRD50TY1hHZ9pt3EM+54zkfywsmvzzYeXqm5G0XOzdmKmNuD
-         s4Afwk5smCTRRFYgXOsgnn/PNvgehrX9/9bZD+PYUCVrljI7C3RBneb7KPEE5OohvoJa
-         MBkOcaz1ItpwixPCCVKOGe06mFUct7lTz+Nu47MnZniVTbx7KPEn+cCCD5FT94i+ERgG
-         gzN8xKvAzt3bBjdJ9g88zn5iHYST/JC1vTzRAAPvwPN5K4s1BSVLTdlXkEN2EVZjHfW8
-         LxBg==
-X-Received: by 10.194.63.80 with SMTP id e16mr22129792wjs.56.1431722031023;
-        Fri, 15 May 2015 13:33:51 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id yz3sm4129985wjc.19.2015.05.15.13.33.49
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 May 2015 13:33:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqqr3qhfuz3.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=F4GWfrtn4A0DPYHnEhjhmNhYwdj/89ZRzQOvHTlRv6k=;
+        b=pGnuAyUvVBy4smcY1URy1IKghOETh44kX2BIbPawKCAdtg4rwEtBgSRrSGjIKLKOgX
+         jXoYceaFkE1ZxO8acQLTTVZKUlB+zuyu7OGwLEXawqIUUDRajycsVLO33IfoaHNnyIpN
+         sbSDSpzXPJxi63i7uneV37nwszkQPWmwGJdJlZq3VbNmVYdt9HP8kNNOvxT9CG3Y77Ne
+         JNRaBAk5W+yopXQTGQ+1g2k9ypLbIwkvaPjS6mwTCapasPciCu+pwFG7qmbSSrCnlJ35
+         RlMkba96w7QbL2ZTvYu9Zmp0DIu5PGWzk5UEtY1is6vAi1QphPvVmAWHyuK+zrrXJp73
+         B2rQ==
+X-Received: by 10.107.151.75 with SMTP id z72mr11697275iod.46.1431722465027;
+ Fri, 15 May 2015 13:41:05 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 15 May 2015 13:41:04 -0700 (PDT)
+In-Reply-To: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
+X-Google-Sender-Auth: PAIiEhS7M4ZXHhUOKhZlYKeQkYQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269180>
 
-On 05/15/2015 10:26 PM, Junio C Hamano wrote:
-> S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
+On Fri, May 15, 2015 at 2:34 PM, S=C3=A9bastien Guimmara
+<sebastien.guimmara@gmail.com> wrote:
+> This v7 is very similar in content to the v5 [1], except minor format=
+ting
+> adjustments in 'git help' output and recommendations from Eric.
 >
->> diff --git a/Makefile b/Makefile
->> index 25a453b..0cb2045 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -2454,7 +2454,7 @@ check-docs::
->>   		esac ; \
->>   		test -f "Documentation/$$v.txt" || \
->>   		echo "no doc: $$v"; \
->> -		sed -e '/^#/d' command-list.txt | \
->> +		sed -e '1,/^\[commands\]/d' -e '/^#/d' <command-list.txt | \
->>   		grep -q "^$$v[ 	]" || \
->>   		case "$$v" in \
->>   		git) ;; \
->> @@ -2463,6 +2463,7 @@ check-docs::
->>   	done; \
->>   	( \
->>   		sed -e '/^#/d' \
->> +		    -e '1,/^\[commands\]/d' \
->>   		    -e 's/[ 	].*//' \
->>   		    -e 's/^/listed /' command-list.txt; \
->>   		$(MAKE) -C Documentation print-man1 | \
->> diff --git a/command-list.txt b/command-list.txt
->> index 54d8d21..caed872 100644
->> --- a/command-list.txt
->> +++ b/command-list.txt
->> @@ -1,5 +1,6 @@
->>   # List of known git commands.
->>   # command name                          category [deprecated] [com=
-mon]
->> +[commands]
->>   git-add                                 mainporcelain common
->>   git-am                                  mainporcelain
->>   git-annotate                            ancillaryinterrogators
->
-> This is largely just a "taste" thing, but with all these backslashes
-> in the supporting infrastructure you had to add in Makefiles and
-> scripts, don't you think the choice of the way you designed the
-> format to use '[commands]' was a rather poor one?  After all, all
-> you need is a clear separator line for a block of commands and
-> another block of groups, and there wasn't a reason why you needed to
-> use square brackets for that, and the sed scripts are suffering from
-> that poor choice.
->
-> You could for example have used the existing "# List of known git
-> commands" as such a signal to tell that all the no comment lines
-> below are commands.
->
+> rebased on 'next' (a2776d4)
 
-I tend to think that relying on comments as marks for parsers is brittl=
-e,
-but indeed square brackets get in the way of sed regexes. I'll think of
-something better. Thanks.
+Something to keep in mind for the future: It's usually easier to
+manage preparatory cleanup patches by incorporating them into the
+series which needs/wants them rather than posting them as separate
+topics. That way, your patch series isn't held hostage by those
+separate topics. For instance, if your "whitespace fix" cleanup patch,
+bf990a2 (command-list.txt: fix whitespace inconsistency, 2015-05-08),
+which is already in 'next', had been an early patch in the current
+series (say patch 1/6), then you wouldn't have had to base this series
+on 'next'.
+
+> The major change is in the patch series itself. Commits have been
+> reordered and adjusted so that each 'apply' doesn't break the build, =
+and
+> preserve bisectability.
+
+Thanks, the patch organization of this version (v7) looks much better
+than that of v5.
+
+> Summary: make 'git help' outputs a more usable and friendlier
+> list of commands, grouped by theme according to the typical Git workf=
+low:
+>
+> The typical Git workflow includes:
+>
+> start a working area (see also: git help tutorial):
+>    clone      Clone a repository into a new directory
+>    init       Create an empty Git repository or reinitialize an exist=
+ing one
+>
+> work on the current change (see also: git help everyday):
+>    add        Add file contents to the index
+>    mv         Move or rename a file, a directory, or a symlink
+>    reset      Reset current HEAD to the specified state
+>    rm         Remove files from the working tree and from the index
+
+Nice. This looks better with the extra indentation dropped[1], and it
+once again fits my 80-column terminal window.
+
+One minor bike-shedding observation: The colon ":" at the end of the
+group headings seems unnecessary and a bit redundant with the colon at
+the end of "The typical Git workflow includes:". I think the group
+headings would read just as well (or a bit better) without the
+trailing colon, but I don't care strongly.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/268759
