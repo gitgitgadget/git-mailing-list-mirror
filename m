@@ -1,148 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7 5/5] help.c: output the typical Git workflow
-Date: Fri, 15 May 2015 17:45:07 -0400
-Message-ID: <CAPig+cRpi=pQoEkqvnjn1KJqi7r_N4y-=o-ut4MJ_27CRiftOQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/5] command-list.txt: prepare with [commands] header
+Date: Fri, 15 May 2015 15:26:52 -0700
+Message-ID: <xmqqegmhfpeb.fsf@gitster.dls.corp.google.com>
 References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431714904-16599-6-git-send-email-sebastien.guimmara@gmail.com>
+	<1431714904-16599-2-git-send-email-sebastien.guimmara@gmail.com>
+	<xmqqr3qhfuz3.fsf@gitster.dls.corp.google.com>
+	<5556582C.3010409@gmail.com>
+	<xmqqmw15fu5m.fsf@gitster.dls.corp.google.com>
+	<CAPig+cSjHyh5eO6KWYMo_OxUmDQWP9TnnuaBvnBGWVDh7pesOQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 15 23:45:16 2015
+Cc: =?utf-8?Q?S=C3=A9bastien?= Guimmara 
+	<sebastien.guimmara@gmail.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat May 16 00:27:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtNPv-0007Vs-JM
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 23:45:15 +0200
+	id 1YtO4J-0003nc-KA
+	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 00:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946248AbbEOVpJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 17:45:09 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:36740 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946159AbbEOVpH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 May 2015 17:45:07 -0400
-Received: by iepk2 with SMTP id k2so131711653iep.3
-        for <git@vger.kernel.org>; Fri, 15 May 2015 14:45:07 -0700 (PDT)
+	id S1946184AbbEOW0z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 18:26:55 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:36295 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422923AbbEOW0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2015 18:26:54 -0400
+Received: by iepk2 with SMTP id k2so132708721iep.3
+        for <git@vger.kernel.org>; Fri, 15 May 2015 15:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=a2BdFT+nIVbaF0FN+ZyIzoxvehnyFfx8ub7qM73aBxc=;
-        b=WId8KS6xQDyqZK9hzWSp056nuFXZxl/SXQXuQ0DdXWYI1AB0ZvkYYSOTYay1ihDRRD
-         mflYtjOu/lIQBeiWHrCwiz7S2+zRYlXqSxJJtyODsI0f0BS66p7ZjovuacEKVYkqSg+u
-         l6vsD7KN5/cq8O9q+NHFjeRSUfrSa9s0KrvYoQD+0X0r5mV730nTBWV/JcpLFFIx0HKN
-         wV426M7frEKHC+AWfAIF1WjSATXsuLuBuDk99cJt21+DyvcOHTxtLa6AEw7lTBPDBZnf
-         bd/UFOGPriIVkTUyxBFlzr8G3kXPo789wq9d5iBo21O0wF6q28GZbWvKik7lb0biosqM
-         Vj4A==
-X-Received: by 10.107.151.75 with SMTP id z72mr12013982iod.46.1431726307242;
- Fri, 15 May 2015 14:45:07 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 15 May 2015 14:45:07 -0700 (PDT)
-In-Reply-To: <1431714904-16599-6-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: EN_aKdr49eCy_hat-BRcwHXyTbg
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=ekhKQhaXFQZRNHFsTu60WLr8ISqY+oyQd2IztNjYDtA=;
+        b=LBf1o5vogBzqULbFeSacmOFIcXco85c6Ls+knm7TDgHjNdEZ20GrFa+ya8kCXj5Uk5
+         /wo6D1Hxeos96o8LgU5NNNEDfxDWRaIbds20QBdALVOoYyVY9sG96nFF8n1Rxu9iGznz
+         UONWKK4x/tj8QmIxXgJf8CJYOpXo0XCshv6F3hhQuIcpg8OIGlsOVRr5rRab4aFrwGnl
+         AOCzPaSEiyR5iZvjidRqHgH7QYfFbWCMiXHSiu6T2axYlhFBQ6TUaNRfbVis2ZHgcZ+g
+         4TIe3G2rXLWnQB8yqUF6gJRiS0jIh+L/2FJO19eLnF+FoECLcvm8YDRcQIieiRaVDbb4
+         1N6Q==
+X-Received: by 10.107.154.70 with SMTP id c67mr15803992ioe.22.1431728814075;
+        Fri, 15 May 2015 15:26:54 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:c15a:d232:e950:b701])
+        by mx.google.com with ESMTPSA id p74sm2107320ioe.27.2015.05.15.15.26.53
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 15 May 2015 15:26:53 -0700 (PDT)
+In-Reply-To: <CAPig+cSjHyh5eO6KWYMo_OxUmDQWP9TnnuaBvnBGWVDh7pesOQ@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 15 May 2015 16:52:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269190>
 
-On Fri, May 15, 2015 at 2:35 PM, S=C3=A9bastien Guimmara
-<sebastien.guimmara@gmail.com> wrote:
-> Subject: help.c: output the typical Git workflow
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-A more meaningful summary might be:
+> On Fri, May 15, 2015 at 4:44 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
+>>>> You could for example have used the existing "# List of known git
+>>>> commands" as such a signal to tell that all the no comment lines
+>>>> below are commands.
+>>>
+>>> I tend to think that relying on comments as marks for parsers is br=
+ittle,
+>>> but indeed square brackets get in the way of sed regexes. I'll thin=
+k of
+>>> something better. Thanks.
+>>
+>> Heh, we, and more importantly our users, already rely on a marker in
+>> comments when writing their commit log messages ;-)
+>>
+>> I would not be opposed to a new header that is outside comment, but
+>> I do not think the marker line that is also a comment is "brittle"
+>> and would not be opposed to that, either.
+>>
+>>     # do not molest the next line
+>>     ### command list
+>>     # name category
+>>     git-add mainporcelain
+>>     ...
+>>
+>> would be perfectly acceptable.
+>>
+>> I was just pointing out that you did not even have to have patch
+>> 1/5.
+>
+> Is that entirely accurate? The machinery (Makefiles, cmd-list.perl)
+> does have to be updated at some point to skip the "common" block whic=
+h
+> get added in patch 2/5.
 
-    help: respect new common command grouping
+That is true, but if "# List of known git commands" instead of
+[commands] were used as the separator line, 1/5 wouldn't have needed
+any change to the Makefile.
 
-or something.
-
-> 'git help' shows common commands in alphabetical order:
->
-> The most commonly used git commands are:
->    add        Add file contents to the index
->    bisect     Find by binary search the change that introduced a bug
->    branch     List, create, or delete branches
->    checkout   Checkout a branch or paths to the working tree
->    clone      Clone a repository into a new directory
->    commit     Record changes to the repository
->    [...]
->
-> without any indication of how commands relate to high-level
-> concepts or each other. Revise the output to explain their relationsh=
-ip
-> with the typical Git workflow:
->
-> The typical Git workflow includes:
->
-> start a working area (see also: git help tutorial):
->    clone      Clone a repository into a new directory
->    init       Create an empty Git repository or reinitialize [...]
->
-> work on the current change (see also: git help everyday):
->    add        Add file contents to the index
->    reset      Reset current HEAD to the specified state
->
-> examine the history and state (see also: git help revisions):
->    log        Show commit logs
->    status     Show the working tree status
-
-The remainder of the commit message makes sense, and the patch itself
-looks good. Thanks.
-
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
-> ---
->  help.c | 24 +++++++++++++++++++++++-
->  1 file changed, 23 insertions(+), 1 deletion(-)
->
-> diff --git a/help.c b/help.c
-> index 2072a87..bdb69d1 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -218,17 +218,39 @@ void list_commands(unsigned int colopts,
->         }
->  }
->
-> +int cmd_group_cmp(const void *elem1, const void *elem2)
-> +{
-> +       const struct cmdname_help *e1 =3D elem1;
-> +       const struct cmdname_help *e2 =3D elem2;
-> +
-> +       if (e1->group < e2->group)
-> +               return -1;
-> +       if (e1->group > e2->group)
-> +               return 1;
-> +       return strcmp(e1->name, e2->name);
-> +}
-> +
->  void list_common_cmds_help(void)
->  {
->         int i, longest =3D 0;
-> +       int current_grp =3D -1;
->
->         for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
->                 if (longest < strlen(common_cmds[i].name))
->                         longest =3D strlen(common_cmds[i].name);
->         }
->
-> -       puts(_("The most commonly used git commands are:"));
-> +       qsort(common_cmds, ARRAY_SIZE(common_cmds),
-> +               sizeof(common_cmds[0]), cmd_group_cmp);
-> +
-> +       puts(_("The typical Git workflow includes:"));
-> +
->         for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
-> +               if (common_cmds[i].group !=3D current_grp) {
-> +                       printf("\n%s:\n", _(common_cmd_groups[common_=
-cmds[i].group]));
-> +                       current_grp =3D common_cmds[i].group;
-> +               }
-> +
->                 printf("   %s   ", common_cmds[i].name);
->                 mput_char(' ', longest - strlen(common_cmds[i].name))=
-;
->                 puts(_(common_cmds[i].help));
-> --
-> 2.4.0
+Of course, if you need to add lines that would appear as junk to the
+old parser (e.g. the grouping info), at that point you would of
+course need to tell the parser to skip them.
