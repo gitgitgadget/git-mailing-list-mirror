@@ -1,138 +1,133 @@
-From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-Subject: [PATCH v7 5/5] help.c: output the typical Git workflow
-Date: Fri, 15 May 2015 20:35:04 +0200
-Message-ID: <1431714904-16599-6-git-send-email-sebastien.guimmara@gmail.com>
-References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/9] t5520: fixup file contents comparisons
+Date: Fri, 15 May 2015 11:37:55 -0700
+Message-ID: <xmqq7fs9hekc.fsf@gitster.dls.corp.google.com>
+References: <1431508136-15313-1-git-send-email-pyokagan@gmail.com>
+	<1431508136-15313-2-git-send-email-pyokagan@gmail.com>
+	<xmqqk2wcbmq5.fsf@gitster.dls.corp.google.com>
+	<xmqqa8x8bkuc.fsf@gitster.dls.corp.google.com>
+	<CAO2U3QgD0-tAwGnMeeMR5aqbUuqDsdWy0Sw8dQBPUpUNwJZpHg@mail.gmail.com>
+	<xmqq4mnf8358.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSbekLANNiGOyxN70TCUd1c=wcrU_6Gfew5pp5EBpSEsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Fri May 15 20:35:44 2015
+Content-Type: text/plain
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 15 20:38:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtKSS-0002xr-2q
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 20:35:40 +0200
+	id 1YtKUq-0004JJ-5S
+	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 20:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169AbbEOSf3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 14:35:29 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:34906 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933945AbbEOSfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2015 14:35:24 -0400
-Received: by wicmx19 with SMTP id mx19so73891723wic.0
-        for <git@vger.kernel.org>; Fri, 15 May 2015 11:35:22 -0700 (PDT)
+	id S1946051AbbEOSiC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2015 14:38:02 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:36342 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946047AbbEOSh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2015 14:37:58 -0400
+Received: by iepk2 with SMTP id k2so124007283iep.3
+        for <git@vger.kernel.org>; Fri, 15 May 2015 11:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=4sq5xo5weR79cXNyfoe5sU2TxPYXTkx2SO0CExEUT+g=;
-        b=kSY52nHFljRI1qFTZqrFYbtmUkGtwBiBI9FoNpSf5GItJjLGCj0xOAbzrRNnd0thfN
-         P5ggf9dphD37jDPvhaAEgf28iMNj5ib6BLliC1V8C857DLsrcBYGky/LMMwmhV/kGPmk
-         uhHp+SgAdJbfizgM/X7fpWah5vc59zojzIydo5ljdPNNVUXdYXu9UEdjvsuXDH1yFv+0
-         nKAwYvm73xdnKYkod7OVDI2IWvDg9wgcpkgPbEtw3gqRdgYFsCow7MRDkVVh0QDOz9SK
-         e+7StB+tBS4nkBWURldnlFJFQKwFSAFqKiKW/Pe8XWcecPhPDxon2ZDt7ZZGo9gbQAA2
-         vU5w==
-X-Received: by 10.180.12.104 with SMTP id x8mr20044790wib.85.1431714922440;
-        Fri, 15 May 2015 11:35:22 -0700 (PDT)
-Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id j12sm3674972wjn.48.2015.05.15.11.35.21
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 15 May 2015 11:35:21 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0
-In-Reply-To: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=3M6LcHwTnRWU8ku76PLAxjqFwzg4Z4tEqrAWgoL/IBo=;
+        b=JcVZuuf/yejTj9IyiNgk+2u79fqD78hha6xPi4kI13gh2c3o51laSrH+Q4/s+mnBm/
+         RPiVt/CQxdZN3gf6biLII9yixAGZM83tqVykhazQ6QWEpnTpFY0U/TaUk5v11xwnDhtV
+         mQf/todCCWJrl01UZKs/JgbUgBpoK/5Ufn6Vn3nJiMplQFqZHUTL7CjnGbt9FGIg8PmT
+         oZ54nuLW3+TpjiDwTPSETgT08kWVWziudihccUQVfUjFmuOPLXqDMSvtPv1rCPCnyrzU
+         EFHuUeFc3d1013za26SM2VHAYl3yy7AMQi/pAXjls3IOL+5DFHJ3TIgeHh5oqe0/oxl8
+         xo+A==
+X-Received: by 10.50.143.97 with SMTP id sd1mr9591553igb.10.1431715077450;
+        Fri, 15 May 2015 11:37:57 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1148:d596:44de:a92d])
+        by mx.google.com with ESMTPSA id a139sm1672477ioa.14.2015.05.15.11.37.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 15 May 2015 11:37:56 -0700 (PDT)
+In-Reply-To: <CACRoPnSbekLANNiGOyxN70TCUd1c=wcrU_6Gfew5pp5EBpSEsA@mail.gmail.com>
+	(Paul Tan's message of "Fri, 15 May 2015 19:41:39 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269172>
 
-'git help' shows common commands in alphabetical order:
+Paul Tan <pyokagan@gmail.com> writes:
 
-The most commonly used git commands are:
-   add        Add file contents to the index
-   bisect     Find by binary search the change that introduced a bug
-   branch     List, create, or delete branches
-   checkout   Checkout a branch or paths to the working tree
-   clone      Clone a repository into a new directory
-   commit     Record changes to the repository
-   [...]
+> Hi Junio,
+>
+> On Fri, May 15, 2015 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Change that 'verbose test' line to
+>>
+>>         verbose test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
+>>
+>> i.e. losing the double-quotes around $().
+>
+> Noted and fixed. Interesting quirk though :-).
+>
+>> By the way, thanks for a fine demonstration that the 'verbose test'
+>> is not very useful.
+>>
+>> This output
+>>
+>>> command failed:  'test' '1' '=' '       1'
+>
+> Personally, I find that the quoting provided by "verbose" helps make
+> it clear that it's a whitespace issue, which might be a bit harder to
+> spot with the output of set -x I think.
 
-without any indication of how commands relate to high-level
-concepts or each other. Revise the output to explain their relationship
-with the typical Git workflow:
+To be fair, yes, because of the leading SP in the RHS, I immediately
+knew that this was a "wc -l" from that without running the test one
+more time with "-i -v -x".  The "rev-parse --sq-quote" did help.
+Without the --sq-quote trick, i.e. "command failed: test 1 = 1",
+would actually make the debugger suspect that there would be a
+quoting issue anyway, so it is not a very big deal, though.
 
-The typical Git workflow includes:
+In any case, that "test 1 = 1" (with or without quoting) helped only
+because I had to deal with "wc -l" issues in the past.  Without
+telling how that ' 1' ended up compared with '1' by showing "wc -l"
+on that 'command failed:' line, it wouldn't have helped much if the
+debugger were not me.
 
-start a working area (see also: git help tutorial):
-   clone      Clone a repository into a new directory
-   init       Create an empty Git repository or reinitialize [...]
+> Other than that, I'm also convinced that "verbose" doesn't really
+> offer much. Will remove in the re-roll.
 
-work on the current change (see also: git help everyday):
-   add        Add file contents to the index
-   reset      Reset current HEAD to the specified state
+Just to avoid misunderstanding, please do not remove 'verbose '
+blindly without thinking while doing so, as you already did 1/3 of
+the necessary job to make things better.
 
-examine the history and state (see also: git help revisions):
-   log        Show commit logs
-   status     Show the working tree status
+You might have noticed, while adding them, there were something
+common that we currently do with a bare 'test' only because we
+haven't identified common needs.  As I already said, it may be that
+we often try to see a file has a known single line content (I didn't
+check if that were the case; I am just giving you an example) and
+only because there is no ready-made test_file_contents helper to be
+used, the current tests say
 
-   [...]
+	test expected_string = "$(cat file)"
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
----
- help.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+And if that were the case, it is a good thing to have a new helper
+like this
 
-diff --git a/help.c b/help.c
-index 2072a87..bdb69d1 100644
---- a/help.c
-+++ b/help.c
-@@ -218,17 +218,39 @@ void list_commands(unsigned int colopts,
- 	}
- }
-=20
-+int cmd_group_cmp(const void *elem1, const void *elem2)
-+{
-+	const struct cmdname_help *e1 =3D elem1;
-+	const struct cmdname_help *e2 =3D elem2;
-+
-+	if (e1->group < e2->group)
-+		return -1;
-+	if (e1->group > e2->group)
-+		return 1;
-+	return strcmp(e1->name, e2->name);
-+}
-+
- void list_common_cmds_help(void)
- {
- 	int i, longest =3D 0;
-+	int current_grp =3D -1;
-=20
- 	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
- 		if (longest < strlen(common_cmds[i].name))
- 			longest =3D strlen(common_cmds[i].name);
- 	}
-=20
--	puts(_("The most commonly used git commands are:"));
-+	qsort(common_cmds, ARRAY_SIZE(common_cmds),
-+		sizeof(common_cmds[0]), cmd_group_cmp);
-+
-+	puts(_("The typical Git workflow includes:"));
-+
- 	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
-+		if (common_cmds[i].group !=3D current_grp) {
-+			printf("\n%s:\n", _(common_cmd_groups[common_cmds[i].group]));
-+			current_grp =3D common_cmds[i].group;
-+		}
-+
- 		printf("   %s   ", common_cmds[i].name);
- 		mput_char(' ', longest - strlen(common_cmds[i].name));
- 		puts(_(common_cmds[i].help));
---=20
-2.4.0
+	test_file_contents () {
+		if test "$(cat "$1")" != "$2"
+		then
+			echo "Contents of file '$1' is not '$2'"
+                        false
+		fi
+	}
+
+in t/test-lib-functions.sh and convert them to say
+
+	test_file_contents file expected_string
+
+That would be an improvement (and that is the remaining 2/3 ;-).
+
+Thanks.
