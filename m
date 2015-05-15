@@ -1,77 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] fix http deadlock on giant ref negotiations
-Date: Fri, 15 May 2015 04:53:55 -0400
-Message-ID: <20150515085355.GA18890@peff.net>
-References: <20150513210436.GA7407@gmail.com>
- <20150514004724.GA3059@peff.net>
- <20150515062901.GA30768@peff.net>
- <1431675680.14042.39.camel@kaarsemaker.net>
- <20150515083843.GA16910@peff.net>
- <1431679490.14042.42.camel@kaarsemaker.net>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] mergetools: add winmerge as a builtin tool
+Date: Fri, 15 May 2015 11:01:17 +0200
+Message-ID: <20150515110117.Horde.HyhfKlrEun2r-3mHUG3GSA1@webmail.informatik.kit.edu>
+References: <5553B61D.7050204@gmail.com>
+ <1431640110-8484-1-git-send-email-szeder@ira.uka.de>
+ <CAHGBnuN-sw8Q_boB2SSNKTQP6M4jifiketFWJ23bknAdCVw_Uw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	git@vger.kernel.org
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Fri May 15 10:54:05 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Aguilar <davvid@gmail.com>, Phil Susi <phillsusi@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 15 11:01:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtBNc-0004dv-EK
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 10:54:04 +0200
+	id 1YtBUs-0008Fl-DI
+	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 11:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934176AbbEOIyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2015 04:54:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59110 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932092AbbEOIx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2015 04:53:58 -0400
-Received: (qmail 30354 invoked by uid 102); 15 May 2015 08:53:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 May 2015 03:53:58 -0500
-Received: (qmail 32743 invoked by uid 107); 15 May 2015 08:53:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 May 2015 04:53:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 May 2015 04:53:55 -0400
+	id S1751932AbbEOJBa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2015 05:01:30 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:44067 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751749AbbEOJB2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2015 05:01:28 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1YtBUh-0000b6-CY; Fri, 15 May 2015 11:01:23 +0200
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1YtBUb-0007il-Fo; Fri, 15 May 2015 11:01:17 +0200
+Received: from x590d8b91.dyn.telefonica.de (x590d8b91.dyn.telefonica.de
+ [89.13.139.145]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Fri, 15 May 2015 11:01:17 +0200
+In-Reply-To: <CAHGBnuN-sw8Q_boB2SSNKTQP6M4jifiketFWJ23bknAdCVw_Uw@mail.gmail.com>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
 Content-Disposition: inline
-In-Reply-To: <1431679490.14042.42.camel@kaarsemaker.net>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1431680483.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269136>
 
-On Fri, May 15, 2015 at 10:44:50AM +0200, Dennis Kaarsemaker wrote:
 
-> > I applied the test from your patch, but couldn't get it to fail even
-> > with stock git.  The test above it shrunk a bit, but I was able to tweak
-> > yours to generate tags from 2001..100000, which I thought would have
-> > worked.  I suspect it's something silly like the size not being quite
-> > big enough for the pipe buffer on my system, or something like that.
-> > Though I couldn't get it to fail even with 200,000 tags, so perhaps it's
-> > something else.
-> 
-> The shrinkage in the test above it will actually work around the issue,
-> as there are now fewer already-fetched tags to negotiate. Either
-> reverting that shrinkage or executing the new test twice should do the
-> trick.
+Quoting Sebastian Schuberth <sschuberth@gmail.com>:
 
-Ah, right, that makes sense. I was creating the right number of tags,
-but not with half of them already in the repo when I did the critical
-fetch. I got it to fail by adding and fetching another 48,000, and then
-adding and fetching another 50,000 on top of that.
+> On Thu, May 14, 2015 at 11:48 PM, SZEDER G=C3=A1bor <szeder@ira.uka.d=
+e> wrote:
+>
+>>> for directory in "$(env | grep -E
+>>> '^PROGRAM(FILES(\(X86\))?|W6432)=3D' | cut -d '=3D' -f 2 | sort -u)=
+"
+>>> do
+>>>     test -n "$directory" &&
+>>>     test -x "$directory/$winmerge_exe" &&
+>>>     echo "$directory/$winmerge_exe" &&
+>>>     break
+>>> done
+>>
+>> This ain't gonna work, because the output of the pipe won't be split
+>> because of the quotes around the command substitution, so $directory=
+ will
+>> hold everything.  Simply loosing those quotes is not good either, be=
+cause
+>
+> That's what I thought at first, too, but simply trying it out proved
+> me wrong (again, in both MSYS1/2):
+>
+> $ for d in "$(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=3D' | c=
+ut
+> -d '=3D' -f 2- | sort -u)"; do echo "$d"; done
+> C:\Program Files
+> C:\Program Files (x86)
+>
+> Note that the path, although they are containing spaces, are on
+> separate lines.
 
-Interestingly, with my patch the _first_ fetch fails, that otherwise
-succeeds with stock git. My patch sets a maximum size on the spool
-buffer, and we exceed it. I guess 1MB isn't enough for pathological
-cases. I'm hesitant to let it expand indefinitely for security reasons,
-but we could probably bump it to 10MB or something.
+Yeah, exactly the behavior I described in the part you quoted.
+Although it looks good, it's not what you want.
+Putting 'echo "** $d **"' in the loop gives me:
 
-I dunno. I'm not excited about introducing new size restrictions that
-were not there before.
+** C:\Program Files
+C:\Program Files (x86) **
 
-Maybe it's time to implement git-over-websockets. ;)
+(1.9.5 MSysGit)
 
--Peff
+
+G=C3=A1bor
