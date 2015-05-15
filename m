@@ -1,59 +1,66 @@
-From: Ed Avis <eda@waniasset.com>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Subject: Re: git log --raw abbreviates SHA1s, despite what manual says
-Date: Fri, 15 May 2015 15:33:27 +0000 (UTC)
-Message-ID: <loom.20150515T173020-388@post.gmane.org>
+Date: Fri, 15 May 2015 17:42:51 +0200 (CEST)
+Message-ID: <297757279.1883703.1431704571028.JavaMail.zimbra@imag.fr>
 References: <loom.20150515T164345-901@post.gmane.org> <vpqfv6xc1zd.fsf@anie.imag.fr> <loom.20150515T171548-204@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 15 17:33:43 2015
+Cc: git@vger.kernel.org
+To: Ed Avis <eda@waniasset.com>
+X-From: git-owner@vger.kernel.org Fri May 15 17:43:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtHcN-0007PE-0T
-	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 17:33:43 +0200
+	id 1YtHlf-00044k-6b
+	for gcvg-git-2@plane.gmane.org; Fri, 15 May 2015 17:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934694AbbEOPdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2015 11:33:38 -0400
-Received: from plane.gmane.org ([80.91.229.3]:39485 "EHLO plane.gmane.org"
+	id S1946176AbbEOPnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2015 11:43:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33760 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934665AbbEOPdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2015 11:33:37 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YtHcF-0007MS-DD
-	for git@vger.kernel.org; Fri, 15 May 2015 17:33:35 +0200
-Received: from 80.169.169.174 ([80.169.169.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 May 2015 17:33:35 +0200
-Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 May 2015 17:33:35 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:38.0) Gecko/20100101 Firefox/38.0 Cyberfox/38.0)
+	id S1423113AbbEOPmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2015 11:42:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4FFgn3x017907
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 15 May 2015 17:42:49 +0200
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4FFgpn9009929;
+	Fri, 15 May 2015 17:42:51 +0200
+In-Reply-To: <loom.20150515T171548-204@post.gmane.org>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF31 (Linux)/8.0.6_GA_5922)
+Thread-Topic: git log --raw abbreviates SHA1s, despite what manual says
+Thread-Index: C3WwKfd4lMBVOJTac/iI6un7kj20gA==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 15 May 2015 17:42:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4FFgn3x017907
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1432309369.20369@VoxANMZ2FFJj9fr1RZKXEQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269153>
 
-Ah, I see that --raw not only specifies the raw format should be used for
-diffs, but also enables printing diffs even if they wouldn't be otherwise.
+----- Original Message -----
+> Thanks for the explanation.  Plain 'git log' does not print any diffs.
+> Does that mean that the --raw flag is a no-op in that case?
 
-Note that --format=raw still prints abbreviated SHA-1s in the diff:
+No, it displays the patch, in raw format. But you're right that the doc is unclear.
 
-    % git log --format=raw --raw
-    ...
-    :100644 100644 c30ec14... b87bb8b... M  myfilename
+> Perhaps running 'git log --raw' should print a warning
+> 
+>     --raw given for raw-format diffs, but the output format you have chosen
+>     does not include diffs.  Did you mean 'git log --format=raw'?
 
-Possibly --format=raw should imply --no-abbrev?
+I'd rather fix the doc. Patch follows.
 
 -- 
-Ed Avis <eda@waniasset.com>
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
