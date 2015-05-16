@@ -1,164 +1,71 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH v7 1/5] command-list.txt: prepare with [commands] header
-Date: Sat, 16 May 2015 11:44:02 +0200
-Message-ID: <55571162.2040803@gmail.com>
-References: <1431714904-16599-1-git-send-email-sebastien.guimmara@gmail.com> <1431714904-16599-2-git-send-email-sebastien.guimmara@gmail.com> <CF195F7BDDED481EA064C0C30098017C@PhilipOakley>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: sh -x -i -v with continuous integration, was Re: [PATCH 1/4]
+ t7601: test for pull.ff=true overrides merge.ff=false
+Date: Sat, 16 May 2015 20:33:28 +0800
+Message-ID: <CACRoPnTQCKJbuFcoTBAvJS8X+b7Yv35MKgo+HhAhfOvuyMWJ-w@mail.gmail.com>
+References: <1431510740-9710-1-git-send-email-pyokagan@gmail.com>
+	<1431510740-9710-2-git-send-email-pyokagan@gmail.com>
+	<2a5e49ff1cc3a0275e09328a3ad07866@www.dscho.org>
+	<xmqqy4kr85wg.fsf@gitster.dls.corp.google.com>
+	<81926313e0a131cd7224f0f6f8984dd2@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Philip Oakley <philipoakley@iee.org>,
-	Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 16 11:44:18 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	David Aguilar <davvid@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 16 14:34:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtYdh-0001wf-MA
-	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 11:44:14 +0200
+	id 1YtbId-0001sB-71
+	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 14:34:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991AbbEPJoI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 May 2015 05:44:08 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:35087 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752912AbbEPJoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2015 05:44:06 -0400
-Received: by wicmx19 with SMTP id mx19so19470696wic.0
-        for <git@vger.kernel.org>; Sat, 16 May 2015 02:44:04 -0700 (PDT)
+	id S1755238AbbEPMdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2015 08:33:32 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:33833 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755224AbbEPMda convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 May 2015 08:33:30 -0400
+Received: by laat2 with SMTP id t2so158721184laa.1
+        for <git@vger.kernel.org>; Sat, 16 May 2015 05:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=kwvDpugKqwYntprWBb0j33kOip5OZjoMamtjQM0DE3A=;
-        b=bn192Z5YpNzx25PSxnpFKBq8S1+/TbdLj+pnNEqTRZZgSkPHXsPGRWh7Y6c88+K2hS
-         6awXIVjaQP0NnMopfMyweV0y5eccsNq1ggKVVSaGHWqVsnYxYkFyB8s7E+gy7CnC+/7f
-         I2YjpPZVPiyv8jGA8KByGUbk5ixLXbf5xs6oxwAvIGP3j2jL2aL5C45uCXniqcc5I9TZ
-         cK8AtrTXEG2r3pbwXhQDezwIwgu8UV3dZ8RH0CqAP1jMNDbQkSH8L9UEMRRMgdbijHfw
-         PhtlKykOa2c30YyzUzJHXPqPmp/trTnwykEBs3AhNVfpsgS7NalDY/3tNNkVb5SqooCa
-         XdAg==
-X-Received: by 10.195.17.232 with SMTP id gh8mr25608271wjd.145.1431769444774;
-        Sat, 16 May 2015 02:44:04 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id u6sm6541740wjy.13.2015.05.16.02.44.03
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 16 May 2015 02:44:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CF195F7BDDED481EA064C0C30098017C@PhilipOakley>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=cRYZxlY7dkdV91tU/NEidzltd1rojPYyhaeMFFHwm6c=;
+        b=qYWSyT/t7gBZIhrGS6UjAnhhG2uMD8rubMpnlx7DZ6tNrYk3c6+I4060zfCc6lRWoN
+         sp63PFJcaPHCBsfrxK8Lkd2FE+xmySYCE2to797uuElfz8SwMKSYRJhroFfI818AesNX
+         I0E5iR2EX5X0JJI/oPYGd6kMa+qnhQlyTQohIDNJKTKOxz88suNL9EMsbpU95evb7TOJ
+         xw93Vf0togWeDwHm1CNzPEFbE48DDhPFSrxucYLFyTzyYhjMUMzmPU5kny2BNGRS83rX
+         IaXVi1SQtREC/+43lqZdhGcHi70MheH5kDGUFVshacFdK6xCVisOV0sxi7Ril3KQ+x/+
+         tNbg==
+X-Received: by 10.152.4.72 with SMTP id i8mr10962380lai.32.1431779608821; Sat,
+ 16 May 2015 05:33:28 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Sat, 16 May 2015 05:33:28 -0700 (PDT)
+In-Reply-To: <81926313e0a131cd7224f0f6f8984dd2@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269195>
 
+Hi Johannes,
 
+On Fri, May 15, 2015 at 12:53 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Asketh and ye shall be given: without running the tests in parallel, our Jenkins would take *even longer* than the three hours per test suite run (which is really painful, still, by the way). And as you know, running the tests with "-v -x" is awfully useless if you run the test suite in parallel.
 
-On 05/16/2015 11:44 AM, Philip Oakley wrote:
-> From: "S=C3=A9bastien Guimmara" <sebastien.guimmara@gmail.com>
->> Add a [commands] header before the actual command list, then make th=
-e
->> following files ignore this header in their parsing:
->>
->> * cmd-list.perl
->> * Makefile (check-docks target)
->
-> s/docks/docs/
-> or even fuller as "(the check-docs target)"?
-> I'd misunderstood this as (verb) check the doumentation targets withi=
-n the Makefile, rather than the (definite article) 'check-docs' target =
-within the Makefile ~#L2554.
-> --
-> Philip
->
+Would the --tee option work for this case?
 
-That's right, thanks for pointing that out.
+    --tee::
+        In addition to printing the test output to the terminal,
+        write it to files named 't/test-results/$TEST_NAME.out'.
+        As the names depend on the tests' file names, it is safe to
+        run the tests with this option in parallel.
 
->>
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com=
->
->> ---
->> Documentation/cmd-list.perl         | 4 ++++
->> Documentation/howto/new-command.txt | 4 +++-
->> Makefile                            | 3 ++-
->> command-list.txt                    | 1 +
->> 4 files changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.pe=
-rl
->> index 04f9977..06a5fd6 100755
->> --- a/Documentation/cmd-list.perl
->> +++ b/Documentation/cmd-list.perl
->> @@ -38,6 +38,10 @@ sub format_one {
->>  }
->> }
->>
->> +while (<>) {
->> + last if /^\[commands\]/;
->> +}
->> +
->> my %cmds =3D ();
->> for (sort <>) {
->>  next if /^#/;
->> diff --git a/Documentation/howto/new-command.txt b/Documentation/how=
-to/new-command.txt
->> index d7de5a3..6d772bd 100644
->> --- a/Documentation/howto/new-command.txt
->> +++ b/Documentation/howto/new-command.txt
->> @@ -95,7 +95,9 @@ your language, document it in the INSTALL file.
->> that categorizes commands by type, so they can be listed in appropri=
-ate
->> subsections in the documentation's summary command list.  Add an ent=
-ry
->> for yours.  To understand the categories, look at git-commands.txt
->> -in the main directory.
->> +in the main directory.  If the new command is part of the typical G=
-it
->> +workflow and you believe it common enough to be mentioned in 'git h=
-elp',
->> +map this command to a common group in the column [common].
->>
->> 7. Give the maintainer one paragraph to include in the RelNotes file
->> to describe the new feature; a good place to do so is in the cover
->> diff --git a/Makefile b/Makefile
->> index 25a453b..0cb2045 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -2454,7 +2454,7 @@ check-docs::
->>  esac ; \
->>  test -f "Documentation/$$v.txt" || \
->>  echo "no doc: $$v"; \
->> - sed -e '/^#/d' command-list.txt | \
->> + sed -e '1,/^\[commands\]/d' -e '/^#/d' <command-list.txt | \
->>  grep -q "^$$v[ ]" || \
->>  case "$$v" in \
->>  git) ;; \
->> @@ -2463,6 +2463,7 @@ check-docs::
->>  done; \
->>  ( \
->>  sed -e '/^#/d' \
->> +     -e '1,/^\[commands\]/d' \
->>      -e 's/[ ].*//' \
->>      -e 's/^/listed /' command-list.txt; \
->>  $(MAKE) -C Documentation print-man1 | \
->> diff --git a/command-list.txt b/command-list.txt
->> index 54d8d21..caed872 100644
->> --- a/command-list.txt
->> +++ b/command-list.txt
->> @@ -1,5 +1,6 @@
->> # List of known git commands.
->> # command name                          category [deprecated] [commo=
-n]
->> +[commands]
->> git-add                                 mainporcelain common
->> git-am                                  mainporcelain
->> git-annotate                            ancillaryinterrogators
->> --
->> 2.4.0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Thanks,
+Paul
