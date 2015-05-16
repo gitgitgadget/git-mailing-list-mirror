@@ -1,153 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
-Date: Sat, 16 May 2015 16:22:41 -0700
-Message-ID: <xmqqsiawds5a.fsf@gitster.dls.corp.google.com>
-References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
-	<1431806796-28902-1-git-send-email-gjthill@gmail.com>
+Subject: Re: [PATCH v3 1/9] t5520: fixup file contents comparisons
+Date: Sat, 16 May 2015 16:32:38 -0700
+Message-ID: <xmqqoalkdrop.fsf@gitster.dls.corp.google.com>
+References: <1431508136-15313-1-git-send-email-pyokagan@gmail.com>
+	<1431508136-15313-2-git-send-email-pyokagan@gmail.com>
+	<xmqqk2wcbmq5.fsf@gitster.dls.corp.google.com>
+	<xmqqa8x8bkuc.fsf@gitster.dls.corp.google.com>
+	<CAO2U3QgD0-tAwGnMeeMR5aqbUuqDsdWy0Sw8dQBPUpUNwJZpHg@mail.gmail.com>
+	<xmqq4mnf8358.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSbekLANNiGOyxN70TCUd1c=wcrU_6Gfew5pp5EBpSEsA@mail.gmail.com>
+	<xmqq7fs9hekc.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSP9xfyW47ZqU7QO5o4tyzROh4hGRPqG9g9OB5cquS+uw@mail.gmail.com>
+	<xmqq617sfj05.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jim Hill <gjthill@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 17 01:22:49 2015
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 17 01:32:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtlPt-0000yY-89
-	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 01:22:49 +0200
+	id 1YtlZV-0006Fg-1Y
+	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 01:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbbEPXWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2015 19:22:44 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:34382 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750762AbbEPXWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2015 19:22:43 -0400
-Received: by igblo3 with SMTP id lo3so62658492igb.1
-        for <git@vger.kernel.org>; Sat, 16 May 2015 16:22:43 -0700 (PDT)
+	id S1751288AbbEPXck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2015 19:32:40 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:37299 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736AbbEPXck (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2015 19:32:40 -0400
+Received: by igbsb11 with SMTP id sb11so23792476igb.0
+        for <git@vger.kernel.org>; Sat, 16 May 2015 16:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=Xxqdlt5KhSWcRFNM4vmuWtq4vUdh/TYGS0pPnRYnlOQ=;
-        b=g2quaE8J8FY7NrUPmNEoo+Dfv7Sj708uGfQI49mBl2U7kLe6APlnJH/pJbaF3TN6Sx
-         euOYDZHY8iFg51wbidd6L5S5D38aRFqOCAXRacZRwg8qH8BBMEbfM6fvEAlH0GVAcYKt
-         cBVmgwmqImc/M0w9d1WH468w5ReXhOiOobDqZ2tmqulHbVjgTpicxgMnRHbHR2omXRoc
-         6PA4pU7nZ5ttId2NufxLVRjEqvHCATQ+mg6o8xWS0djgFaJZSzeH2+R3fdkeJ/V9Yxk9
-         YSEPjRHaZH3L3ZyR1AkhaCRo5mjGFp/op06hwOfAa+AGXeznKssD/TdGY3IHgU2s45Wo
-         3oUQ==
-X-Received: by 10.42.200.8 with SMTP id eu8mr28302405icb.65.1431818563041;
-        Sat, 16 May 2015 16:22:43 -0700 (PDT)
+        bh=Y43Q0dbmzv+qCUvSbpkzcOru3+90qlCvWW/w6H/2fSs=;
+        b=QtD6Tld+diTbWxWRkLSW7ArucdBIhuKsLiBfeM0j4XSCQiiuruANlOpx43E0ELa/gZ
+         xUsSant1NNVOjB4QjQa+6r7yiQVqPW0YFfwv/cNm9Q2wlQZxwmAsr845QvKNUmolBY58
+         ft4IP/bnrTkl49WQOLaoHeyEgHaKXsXeO+SmCqIeflovwJNvF/VowBVDxL61Vyy1P3yJ
+         CtNgZpzeKJRYrj/I+zFzm8yZCZFN/sVl2rCc4jMbX90DJAxrBoxOepKdZ6ljXALeogtD
+         w4qRk+yxTKqVcskuwFtvHnT3JvTfHyUUs7hTRVHZ/6WTtu5DTSk1+K0kje2JGKStWAJ+
+         KsxA==
+X-Received: by 10.50.61.234 with SMTP id t10mr6431066igr.19.1431819159575;
+        Sat, 16 May 2015 16:32:39 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:c1b0:922b:6b11:b020])
-        by mx.google.com with ESMTPSA id l6sm2330085igx.10.2015.05.16.16.22.42
+        by mx.google.com with ESMTPSA id j4sm2356357igo.0.2015.05.16.16.32.38
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 16 May 2015 16:22:42 -0700 (PDT)
-In-Reply-To: <1431806796-28902-1-git-send-email-gjthill@gmail.com> (Jim Hill's
-	message of "Sat, 16 May 2015 13:06:36 -0700")
+        Sat, 16 May 2015 16:32:38 -0700 (PDT)
+In-Reply-To: <xmqq617sfj05.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 16 May 2015 11:57:14 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269204>
 
-Jim Hill <gjthill@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> `git add` of an empty file with a filter pops complaints from
-> `copy_fd` about a bad file descriptor.
+> Paul Tan <pyokagan@gmail.com> writes:
 >
-> This traces back to these lines in sha1_file.c:index_core:
+>> So the first example would be:
+>>
+>>     test_output "git show HEAD:file2" new
 >
-> 	if (!size) {
-> 		ret = index_mem(sha1, NULL, size, type, path, flags);
+> Simple things like that look fine, but when a variable is involved,
+> use of eval combined with the fact that the test body is inside sq,
+> makes the callers unnecessarily ugly.
 >
-> The problem here is that content to be added to the index can be
-> supplied from an fd, or from a memory buffer, or from a pathname. This
-> call is supplying a NULL buffer pointer and a zero size.
+> 	test_expect_success 'some title' '
+> 		var=$(...) &&
+> 		test_output "git show \$var:file2 | sed -e \"s/$old/$new/\"" new
+> 	'
 >
-> Downstream logic takes the complete absence of a buffer to mean the
-> data is to be found elsewhere -- for instance, these, from convert.c:
+> Which is the concern this shares with the other one I sent about
+> counting the number of lines in the output from a command that made
+> me hesitate to suggest it.
 >
-> 	if (params->src) {
-> 		write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
-> 	} else {
-> 		write_err = copy_fd(params->fd, child_process.in);
-> 	}
->
-> ~If there's a buffer, write from that, otherwise the data must be coming
-> from an open fd.~
->
-> Perfectly reasonable logic in a routine that's going to write from
-> either a buffer or an fd.
->
-> So change `index_core` to supply an empty buffer when indexing an empty
-> file.
->
-> There's a patch out there that instead changes the logic quoted above to
-> take a `-1` fd to mean "use the buffer", but it seems to me that the
-> distinction between a missing buffer and an empty one carries intrinsic
-> semantics, where the logic change is adapting the code to handle
-> incorrect arguments.
->
-> Signed-off-by: Jim Hill <gjthill@gmail.com>
-> ---
-> I promise to pay more attention to test quality in the future, thanks for the
-> patience.
+> So I dunno.
 
-It's us who should thank you ;-).  Thanks for spending time to
-polish essentially a one-liner this long.
+I actually think that "test" that compares output from command and a
+constant string, and "test" that compares outputs from two commands
+are lazyily written forms of these:
 
+        echo constant string >expect &&
+	command >actual &&
+        test_cmp expect actual
+
+	command1 >expect &&
+        command2 >actual &&
+        test_cmp expect actual
+
+The examples you gave in the earlier message were
 
 >
->  sha1_file.c           |  2 +-
->  t/t0021-conversion.sh | 26 ++++++++++++++++++++++++++
->  2 files changed, 27 insertions(+), 1 deletion(-)
+>      test new = "$(git show HEAD:file2)"
 >
-> diff --git a/sha1_file.c b/sha1_file.c
-> index f860d67..61e2735 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -3186,7 +3186,7 @@ static int index_core(unsigned char *sha1, int fd, size_t size,
->  	int ret;
->  
->  	if (!size) {
-> -		ret = index_mem(sha1, NULL, size, type, path, flags);
-> +		ret = index_mem(sha1, "", size, type, path, flags);
->  	} else if (size <= SMALL_FILE_SIZE) {
->  		char *buf = xmalloc(size);
->  		if (size == read_in_full(fd, buf, size))
-> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> index ca7d2a6..bf87e9b 100755
-> --- a/t/t0021-conversion.sh
-> +++ b/t/t0021-conversion.sh
-> @@ -216,4 +216,30 @@ test_expect_success EXPENSIVE 'filter large file' '
->  	! test -s err
->  '
->  
-> +test_expect_success "filter: clean empty file" '
-> +	git config filter.in-repo-header.clean  "echo cleaned && cat" &&
-> +	git config filter.in-repo-header.smudge "sed 1d" &&
-> +
-> +	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
-> +	>empty-in-worktree &&
-> +
-> +	echo cleaned >expected &&
-> +	git add empty-in-worktree &&
-> +	git show :empty-in-worktree >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success "filter: smudge empty file" '
-> +	git config filter.empty-in-repo.clean true &&
-> +	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
-> +
-> +	echo "empty-in-repo filter=empty-in-repo"  >>.gitattributes &&
-> +	echo dead data walking >empty-in-repo &&
-> +	git add empty-in-repo &&
-> +
-> +	echo smudged >expected &&
-> +	git checkout-index --prefix=filtered- empty-in-repo &&
-> +	test_cmp expected filtered-empty-in-repo
-> +'
-> +
->  test_done
+> or these:
+>
+>      test $(git rev-parse HEAD^2) = $(git rev-parse keep-merge)
+>
+
+and I suspect they match my observation.
+
+My earlier test_output_count was probably in the same "lazy"
+category.  "test $(command | wc -l) = 20" is better written
+as
+
+	command >output &&
+        test_line_count = 20 output
+
+instead of using the hypothetical
+
+	test_output_count = 20 "command"
+
+that evals the command argument, not only because the quoting of
+'command part will become complex for real world uses, but because
+the output itself would be the first thing we would want to inspect
+once the command fails.  For that reason, I'd rather not to add the
+test_output_count I suggested earlier, so that we would encourage
+the more straight-forward form, i.e.
+
+	command >output &&
+        test_line_count = 20 output
+
+to be used.
