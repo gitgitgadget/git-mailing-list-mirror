@@ -1,123 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] sha1_file: pass empty buffer to index empty file
-Date: Sat, 16 May 2015 11:48:14 -0700
-Message-ID: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
-References: <xmqqbnhnknio.fsf@gitster.dls.corp.google.com>
-	<1431645434-11790-1-git-send-email-gjthill@gmail.com>
-	<xmqqlhgphg8x.fsf@gitster.dls.corp.google.com>
-	<20150515233153.GA4157@gadabout.domain.actdsltmp>
+Subject: Re: [PATCH v3 1/9] t5520: fixup file contents comparisons
+Date: Sat, 16 May 2015 11:57:14 -0700
+Message-ID: <xmqq617sfj05.fsf@gitster.dls.corp.google.com>
+References: <1431508136-15313-1-git-send-email-pyokagan@gmail.com>
+	<1431508136-15313-2-git-send-email-pyokagan@gmail.com>
+	<xmqqk2wcbmq5.fsf@gitster.dls.corp.google.com>
+	<xmqqa8x8bkuc.fsf@gitster.dls.corp.google.com>
+	<CAO2U3QgD0-tAwGnMeeMR5aqbUuqDsdWy0Sw8dQBPUpUNwJZpHg@mail.gmail.com>
+	<xmqq4mnf8358.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSbekLANNiGOyxN70TCUd1c=wcrU_6Gfew5pp5EBpSEsA@mail.gmail.com>
+	<xmqq7fs9hekc.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSP9xfyW47ZqU7QO5o4tyzROh4hGRPqG9g9OB5cquS+uw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jim Hill <gjthill@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 16 20:48:22 2015
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 16 20:57:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yth8H-0003cm-NR
-	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 20:48:22 +0200
+	id 1YthHB-0000SE-SN
+	for gcvg-git-2@plane.gmane.org; Sat, 16 May 2015 20:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751970AbbEPSsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2015 14:48:17 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:33061 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbbEPSsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2015 14:48:16 -0400
-Received: by igbpi8 with SMTP id pi8so60416476igb.0
-        for <git@vger.kernel.org>; Sat, 16 May 2015 11:48:16 -0700 (PDT)
+	id S1752179AbbEPS5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2015 14:57:19 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:33299 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751281AbbEPS5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2015 14:57:16 -0400
+Received: by iebgx4 with SMTP id gx4so144850771ieb.0
+        for <git@vger.kernel.org>; Sat, 16 May 2015 11:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=i6d10NqmbdvXdVkPkkn52kE+nq/mzP1+U4zaS+N7jdw=;
-        b=SFe2KOILnhefLUty6xukMbg9DhcL9FHEJB9rPlW9R4MSpfyW6T/0MHgjonqe5PMZdU
-         Gz8t4+mYE8ub5E6a46ExT9qkE2JH1kbdRZjC84uDCJhaTag//mVQ+TVQRyVcc3WD+h80
-         8ZWq1GuOPfsDDy0cK6EJX7cvXdRccHlqXeGLopIIakO61m3VKJMRmAX85XKx4l31jqBc
-         RDE3GhlXzhW6iXc3j6hIureqYKhEG1djJywYXsOtHjCDiVyQLgOYrTHsHYO8l+HTAtiY
-         u7FpjFmwGEr7fk8SQud/Z2dnRAzT4ndZqICqNg5GGclyaOVBxM8t+jChTyjkj+kWSKng
-         7uzw==
-X-Received: by 10.107.3.234 with SMTP id e103mr5011620ioi.74.1431802095937;
-        Sat, 16 May 2015 11:48:15 -0700 (PDT)
+        bh=szfPiQw5ZZR0mcPR4roXpUMth62CmHkvHpyM9+AfdsU=;
+        b=PGhL2ePosGz5CwF93d+KL/UdnlHn8JChqSxv2GsotuEb6gTaIhyIA7pDcyUcgefAZz
+         +JQE9+VmCU6CyAQNkCfaNDUrDL6d9GopW6+qluIlfPUonh7dVO5s/nTBjnUitbyxs9ss
+         H9oRHKV5/jpdBE49TP09ftcd9G4Dsvh7JLEb/uLL11QbT4z+HgfL7N3Up10+7WohzIZ6
+         +hry/Y7bhdwmIGj3CIth0z5XsyvrtrVSzuPN6JLFPZlAIAZCackSEMeYnawYFNAHbQOQ
+         9GA+2hdgdIJM6G9PmmoG+AeTRIQt8a8jQaktKQcWBpQKvDsS1Rz7Efak2uar3GCWZlvQ
+         pmxw==
+X-Received: by 10.42.90.138 with SMTP id k10mr26816015icm.50.1431802635801;
+        Sat, 16 May 2015 11:57:15 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:c15a:d232:e950:b701])
-        by mx.google.com with ESMTPSA id c10sm540088ioe.25.2015.05.16.11.48.14
+        by mx.google.com with ESMTPSA id 16sm3984679ion.20.2015.05.16.11.57.15
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 16 May 2015 11:48:15 -0700 (PDT)
-In-Reply-To: <20150515233153.GA4157@gadabout.domain.actdsltmp> (Jim Hill's
-	message of "Fri, 15 May 2015 16:31:53 -0700")
+        Sat, 16 May 2015 11:57:15 -0700 (PDT)
+In-Reply-To: <CACRoPnSP9xfyW47ZqU7QO5o4tyzROh4hGRPqG9g9OB5cquS+uw@mail.gmail.com>
+	(Paul Tan's message of "Sat, 16 May 2015 21:49:52 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269199>
 
-Jim Hill <gjthill@gmail.com> writes:
+Paul Tan <pyokagan@gmail.com> writes:
 
-> So, so long as we're testing empty-file filters, I figured I'd add real
-> empty-file filter tests, I think that covers it.
+> Hi Junio,
 >
-> So is this better instead?
-
-I wouldn't use "---in-repo-header--" as that extra string.  Feeding
-anything that begins with '-' to 'echo' gives me portability worries
-for one thing.  A single word "Extra" would suffice.
-
-Be careful and consistent wrt redirection operator and its file; we
-do not write SP there but some of yours do and some others don't.
-
-Do not attempt to align && with excess SPs; other tests don't.
-
-Other than that, yeah, I think that is an improvement.
-
-Thanks.
-
+> On Sat, May 16, 2015 at 2:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Just to avoid misunderstanding, please do not remove 'verbose '
+>> blindly without thinking while doing so, as you already did 1/3 of
+>> the necessary job to make things better.
 >
-> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> index 5986bb0..fc2c644 100755
-> --- a/t/t0021-conversion.sh
-> +++ b/t/t0021-conversion.sh
-> @@ -216,15 +216,33 @@ test_expect_success EXPENSIVE 'filter large file' '
->  	! test -s err
->  '
->  
-> -test_expect_success "filtering empty file should not produce complaints" '
-> -	echo "emptyfile filter=cat" >>.gitattributes &&
-> -	git config filter.cat.clean cat &&
-> -	git config filter.cat.smudge cat &&
-> -	git add . &&
-> -	git commit -m "cat filter for emptyfile" &&
-> -	> emptyfile &&
-> -	git add emptyfile 2>err &&
-> -	! grep -Fiqs "bad file descriptor" err
-> +test_expect_success "filter: clean empty file" '
-> +	header=---in-repo-header--- &&
-> +	git config filter.in-repo-header.clean  "echo $header && cat" &&
-> +	git config filter.in-repo-header.smudge "sed 1d" &&
-> +
-> +	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
-> +	> empty-in-worktree &&
-> +
-> +	echo $header              > expected &&
-> +	git add empty-in-worktree            &&
-> +	git show :empty-in-worktree > actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success "filter: smudge empty file" '
-> +	git config filter.empty-in-repo.smudge "echo smudge added line && cat" &&
-> +	git config filter.empty-in-repo.clean   true &&
-> +
-> +	echo "empty-in-repo      filter=empty-in-repo"  >>.gitattributes &&
-> +
-> +	echo dead data walking > empty-in-repo &&
-> +	git add empty-in-repo &&
-> +
-> +	:			> expected &&
-> +	git show :empty-in-repo	> actual &&
-> +	test_cmp expected actual
->  '
->  
->  test_done
-> +
+> Eh? I thought we established that using "verbose" does not provide
+> anything more than what "set -x" already provides. So at the very
+> least, its use should be removed completely.
+
+I did not mean "do not remove and keep them".  I meant "do not
+remove without thinking; instead, take mental notes on patterns
+these silent ones may have while removing them".
+
+>> You might have noticed, while adding them, there were something
+>> common that we currently do with a bare 'test' only because we
+>> haven't identified common needs.  As I already said,...
+>> ...
+>> That would be an improvement (and that is the remaining 2/3 ;-).
+>
+> Yeah, this kind of comparison with file contents is something that is
+> done often in t5520, so I agree with adding it.
+>
+> However, what about these kind of tests:
+>
+>      test new = "$(git show HEAD:file2)"
+>
+> or these:
+>
+>      test $(git rev-parse HEAD^2) = $(git rev-parse keep-merge)
+>
+> So, perhaps we could introduce a generic function like:
+
+It all depends on how common they are.
+
+> So the first example would be:
+>
+>     test_output "git show HEAD:file2" new
+
+Simple things like that look fine, but when a variable is involved,
+use of eval combined with the fact that the test body is inside sq,
+makes the callers unnecessarily ugly.
+
+	test_expect_success 'some title' '
+		var=$(...) &&
+		test_output "git show \$var:file2 | sed -e \"s/$old/$new/\"" new
+	'
+
+Which is the concern this shares with the other one I sent about
+counting the number of lines in the output from a command that made
+me hesitate to suggest it.
+
+So I dunno.
