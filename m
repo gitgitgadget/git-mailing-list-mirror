@@ -1,87 +1,173 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
-Date: Sun, 17 May 2015 12:10:49 -0700
-Message-ID: <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
-References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
-	<1431806796-28902-1-git-send-email-gjthill@gmail.com>
-	<xmqqegmfds1n.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] daemon: add systemd support
+Date: Sun, 17 May 2015 15:58:11 -0400
+Message-ID: <CAPig+cSOc8Qde1oxq2V+1m4gjnMHaa_mKXO4n21V6zQox9=6qg@mail.gmail.com>
+References: <1431830650-111684-1-git-send-email-shawn@churchofgit.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jim Hill <gjthill@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 17 21:10:59 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Shawn Landden <shawn@churchofgit.com>
+X-From: git-owner@vger.kernel.org Sun May 17 21:58:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yu3xh-0004Nd-2J
-	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 21:10:57 +0200
+	id 1Yu4hW-0000uK-OQ
+	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 21:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751412AbbEQTKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 May 2015 15:10:52 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34934 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbbEQTKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 May 2015 15:10:51 -0400
-Received: by iesa3 with SMTP id a3so68651494ies.2
-        for <git@vger.kernel.org>; Sun, 17 May 2015 12:10:51 -0700 (PDT)
+	id S1751435AbbEQT6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 May 2015 15:58:13 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:34938 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbbEQT6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 May 2015 15:58:12 -0400
+Received: by igbyr2 with SMTP id yr2so32864758igb.0
+        for <git@vger.kernel.org>; Sun, 17 May 2015 12:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ujriMmSyEqo5nhunrgMDxsBNDMqllx88388QaKUrApA=;
-        b=PVj7ML2PV7cdqyhjMRj5gGyKjeuni1ebW0dPTbOIr0vEyMjmkKVBnCIwqWYZIcuZwh
-         USLJI2YWjDBALLn6mqaOG8gi6Uzl2LWW0QNB3sB1MRXoHmWfZVaBHl89sqRqWi/J6ZBo
-         eC5WeD7WIgzheakAnYzqbUHxpXwYlHb9ltA4G1V/F8YOspscuNHVp1ZKHOZnsJGtWk9v
-         xSPaPnKlXP5+M44YDt9KMi8c9fbbyqG4uTtyLW+1a2kGp3YJATJulcOGDvu+iZFqeAcR
-         5zoxyHWLvc3gYLWus7o3StNaR88MAdx5Y6NEdsghT2HkjnELKEqdAtGuKqFvz2/AEw5s
-         QClQ==
-X-Received: by 10.42.203.4 with SMTP id fg4mr30913963icb.52.1431889850964;
-        Sun, 17 May 2015 12:10:50 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:c1b0:922b:6b11:b020])
-        by mx.google.com with ESMTPSA id i185sm6093274ioi.24.2015.05.17.12.10.49
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 17 May 2015 12:10:50 -0700 (PDT)
-In-Reply-To: <xmqqegmfds1n.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 17 May 2015 10:37:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=83FzI11G/QJKHxHQ25lfvjIZjhP7WV5Fg/kgga4YoAY=;
+        b=m+781T9BYxb7MvHsLtFY2VqgWmJlZn0aDo2Z5I3xPh3V2mNWlbgCPG9dNRiqQRe2a8
+         QsCPE76GFKU+C4wRQbUBNYTnINmZ7Uga6aex/WvUBA5v6duAoJ4Zcav8LJwCqlnSjlCm
+         /rrdlogncNy2vSroDHeCwENUX1i/ZYDULPMIvLmPKRfHtjVe+tzYYxhtmEj2AEbmosxv
+         vJlSspoQ9H7SGbZ0UAcESUwfa3lUXy0CnifN9iBl5HEiYmuLpl5+pF41fKpk0kNT6wcJ
+         qjeNUDDGCv9sPToDa7kgmYP6c4xrjHAmYzi4qjg3UkfVjC414u4FVcdbM750zIFSrAPL
+         yaQg==
+X-Received: by 10.107.151.75 with SMTP id z72mr21467528iod.46.1431892691478;
+ Sun, 17 May 2015 12:58:11 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 17 May 2015 12:58:11 -0700 (PDT)
+In-Reply-To: <1431830650-111684-1-git-send-email-shawn@churchofgit.com>
+X-Google-Sender-Auth: ntGSowavfcL4JKXCCcPfEVJemTo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269222>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> If the contents to be cleaned is small enough (i.e. the one-liner
-> file used in this test) to fit in the pipe buffer and we feed the
-> pipe before 'true' exits, we won't see any problem.  Otherwise we
-> may get SIGPIPE when we attempt to write to the 'true' (non-)filter,
-> but because we explicitly ignore SIGPIPE, 'true' still is a "black
-> hole" filter.
+On Sat, May 16, 2015 at 10:44 PM, Shawn Landden <shawn@churchofgit.com> wrote:
+> daemon: add systemd support
 >
-> "cat >/dev/null" may have been a more naive and straight-forward way
-> to write this "black hole" filter, but what you did is fine.
+> git-daemon's --systemd mode allows git-daemon to be connect-activated
+> on one or more addresses or ports. Unlike --inetd[1], git-daemon is
+> not spawned for every connection.
+>
+> [1]which systemd is compatible with using its Accept=yes mode
+>
+> Signed-off-by: Shawn Landden <shawn@churchofgit.com>
+> ---
 
-I spoke too fast X-<.  "while sh t0021-*.sh; do :; done" dies after
-a few iterations and with this squashed in it doesn't.
+For convenience of other reviewers, this is v8. Links to all versions:
 
- t/t0021-conversion.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v8 (2015-05-17): http://thread.gmane.org/gmane.comp.version-control.git/269205
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 42e6423..b778faf 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -218,7 +218,7 @@ test_expect_success "filter: clean empty file" '
- '
- 
- test_expect_success "filter: smudge empty file" '
--	git config filter.empty-in-repo.clean true &&
-+	git config filter.empty-in-repo.clean "cat >/dev/null" &&
- 	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
- 
- 	echo "empty-in-repo filter=empty-in-repo" >>.gitattributes &&
--- 
-2.4.1-374-g090bfc9
+v7.1 (2015-04-08):
+http://thread.gmane.org/gmane.comp.version-control.git/266632/focus=266969
+
+v7 (2015-04-07): http://thread.gmane.org/gmane.comp.version-control.git/266926
+
+v6 (2015-04-07): http://thread.gmane.org/gmane.comp.version-control.git/266895
+
+v5 (2015-04-04): http://thread.gmane.org/gmane.comp.version-control.git/266759
+
+v4 (2015-04-03):
+http://git.661346.n2.nabble.com/RFCv4-PATCH-daemon-add-systemd-support-td7628351.html
+
+v3 (2015-04-03):
+http://git.661346.n2.nabble.com/v3RFC-systemd-socket-activation-support-td7628336.html
+
+v2 (2015-04-02): http://thread.gmane.org/gmane.comp.version-control.git/266646
+
+v1.1 (2015-04-02): http://thread.gmane.org/gmane.comp.version-control.git/266632
+
+v1 (2015-04-02): http://thread.gmane.org/gmane.comp.version-control.git/266628
+
+Below are some additional comments beyond what Junio already mentioned
+in his review...
+
+> diff --git a/Makefile b/Makefile
+> index 36655d5..54986a0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -997,6 +1000,13 @@ ifeq ($(uname_S),Darwin)
+>         PTHREAD_LIBS =
+>  endif
+>
+> +ifndef NO_SYSTEMD
+> +       ifeq ($(shell echo "\#include <systemd/sd-daemon.h>" | $(CC) -E - -o /dev/null 2>/dev/null && echo y),y)
+
+It is highly unusual to place such an expensive check directly in
+Makefile (or even config.mak.uname) where it will penalize everyone
+(who hasn't disabled systemd) each time 'make' is invoked. This sort
+of expensive detection is typically only done by the configure script.
+
+> +               BASIC_CFLAGS += -DHAVE_SYSTEMD
+> +               EXTLIBS += -lsystemd
+> +       endif
+> +endif
+> diff --git a/daemon.c b/daemon.c
+> index d3d3e43..42e1441 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -1166,12 +1174,40 @@ static struct credentials *prepare_credentials(const char *user_name,
+>  }
+>  #endif
+>
+> +#ifdef HAVE_SYSTEMD
+> +static int enumerate_sockets(struct socketlist *socklist, struct string_list *listen_addr, int listen_port, int systemd_mode)
+> +{
+> +       if (systemd_mode) {
+> +               int i, n;
+> +
+> +               n = sd_listen_fds(0);
+> +               if (n <= 0)
+> +                       die("--systemd mode specified and no file descriptors recieved");
+> +               ALLOC_GROW(socklist->list, socklist->nr + n, socklist->alloc);
+> +               for (i = 0; i < n; i++)
+> +                       socklist->list[socklist->nr++] = SD_LISTEN_FDS_START + i;
+> +       }
+> +
+> +       if (listen_addr->nr > 0 || !systemd_mode)
+> +               socksetup(listen_addr, listen_port, socklist);
+> +
+> +       return 0;
+
+What is the significance of the return value of enumerate_sockets()?
+It's unconditionally 0, even if socksetup() was never invoked, and
+isn't checked by the caller.
+
+> +}
+> +#else
+> +static int enumerate_sockets(struct socketlist *socklist, struct string_list *listen_addr, int listen_port, int systemd_mode)
+> +{
+> +       socksetup(listen_addr, listen_port, socklist);
+> +
+> +       return 0;
+> +}
+> +#endif
+> @@ -1340,8 +1382,16 @@ int main(int argc, char **argv)
+>                 /* avoid splitting a message in the middle */
+>                 setvbuf(stderr, NULL, _IOFBF, 4096);
+>
+> -       if (inetd_mode && (detach || group_name || user_name))
+> -               die("--detach, --user and --group are incompatible with --inetd");
+> +       if ((inetd_mode || systemd_mode) && (detach || group_name || user_name))
+> +               die("--detach, --user and --group are incompatible with --inetd and --systemd");
+> +
+> +#ifdef HAVE_SYSTEMD
+
+This #if is unnecessary since 'systemd_mode' will never become true
+(1) when HAVE_SYSTEMD is not defined, thus neither of the two
+following 'if' conditionals will trigger anyhow.
+
+> +       if (systemd_mode && inetd_mode)
+> +               die("--inetd is incompatible with --systemd");
+> +
+> +       if (systemd_mode && !sd_booted())
+> +               die("--systemd passed and not invoked from systemd");
+> +#endif
+>         if (inetd_mode && (listen_port || (listen_addr.nr > 0)))
+>                 die("--listen= and --port= are incompatible with --inetd");
+> --
+> 2.2.1.209.g41e5f3a
