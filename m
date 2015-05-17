@@ -1,83 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/8] doc: convert \--option to --option
-Date: Sun, 17 May 2015 11:34:19 -0700
-Message-ID: <xmqqzj53catw.fsf@gitster.dls.corp.google.com>
-References: <20150513045650.GA6070@peff.net> <20150513050137.GF6821@peff.net>
-	<20150513094841.GA10518@serenity.lan> <20150514043259.GC9351@peff.net>
+Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
+Date: Sun, 17 May 2015 12:10:49 -0700
+Message-ID: <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
+References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
+	<1431806796-28902-1-git-send-email-gjthill@gmail.com>
+	<xmqqegmfds1n.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Jean-Noel Avila <jn.avila@free.fr>,
-	git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun May 17 20:34:33 2015
+Cc: git@vger.kernel.org
+To: Jim Hill <gjthill@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 17 21:10:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yu3OS-0003qV-Mu
-	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 20:34:33 +0200
+	id 1Yu3xh-0004Nd-2J
+	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 21:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858AbbEQSeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 May 2015 14:34:22 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33634 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750764AbbEQSeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 May 2015 14:34:21 -0400
-Received: by igbpi8 with SMTP id pi8so70503161igb.0
-        for <git@vger.kernel.org>; Sun, 17 May 2015 11:34:20 -0700 (PDT)
+	id S1751412AbbEQTKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 May 2015 15:10:52 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:34934 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbbEQTKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 May 2015 15:10:51 -0400
+Received: by iesa3 with SMTP id a3so68651494ies.2
+        for <git@vger.kernel.org>; Sun, 17 May 2015 12:10:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=mjFQ88kM6lXQQFbyTruc+BT966jRM8UjSeZMflq7Uro=;
-        b=qHjaQxURKofufSTRwzzxlOeFoDvGCIqXbNoOJv8GwAgp4ISjneoD4DJxiZoNcYIewn
-         a5VgIMVRkn1BxKlABoMGpsfBjlFFY3/kFweYqH/K6rPCq85CDUNCg4ByqU+9pqtiYwHP
-         YAMVZM2x+1dyrLCesyy1Af98TnbKm8V2Zu0eIxjztqNpKYRX51uTMTsuNsyB0Z2eXUd7
-         gTQLUNV6RfLQ+9/7Sr1ROGHSaS5ACAJdyIC687qYgGxTnRQM6uGxW71xV+bRfi0O38bv
-         V3XkYVB81+ZRnyFrJ8RJ8vikZx37c3KD7ShMmTlhjY7ambIppWqWESMpI38rKu3Xgv09
-         tCdw==
-X-Received: by 10.107.12.93 with SMTP id w90mr12527532ioi.10.1431887660761;
-        Sun, 17 May 2015 11:34:20 -0700 (PDT)
+        bh=ujriMmSyEqo5nhunrgMDxsBNDMqllx88388QaKUrApA=;
+        b=PVj7ML2PV7cdqyhjMRj5gGyKjeuni1ebW0dPTbOIr0vEyMjmkKVBnCIwqWYZIcuZwh
+         USLJI2YWjDBALLn6mqaOG8gi6Uzl2LWW0QNB3sB1MRXoHmWfZVaBHl89sqRqWi/J6ZBo
+         eC5WeD7WIgzheakAnYzqbUHxpXwYlHb9ltA4G1V/F8YOspscuNHVp1ZKHOZnsJGtWk9v
+         xSPaPnKlXP5+M44YDt9KMi8c9fbbyqG4uTtyLW+1a2kGp3YJATJulcOGDvu+iZFqeAcR
+         5zoxyHWLvc3gYLWus7o3StNaR88MAdx5Y6NEdsghT2HkjnELKEqdAtGuKqFvz2/AEw5s
+         QClQ==
+X-Received: by 10.42.203.4 with SMTP id fg4mr30913963icb.52.1431889850964;
+        Sun, 17 May 2015 12:10:50 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:c1b0:922b:6b11:b020])
-        by mx.google.com with ESMTPSA id if2sm3013552igb.15.2015.05.17.11.34.19
+        by mx.google.com with ESMTPSA id i185sm6093274ioi.24.2015.05.17.12.10.49
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 17 May 2015 11:34:20 -0700 (PDT)
-In-Reply-To: <20150514043259.GC9351@peff.net> (Jeff King's message of "Thu, 14
-	May 2015 00:32:59 -0400")
+        Sun, 17 May 2015 12:10:50 -0700 (PDT)
+In-Reply-To: <xmqqegmfds1n.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Sun, 17 May 2015 10:37:08 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269221>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, May 13, 2015 at 10:48:42AM +0100, John Keeping wrote:
+> If the contents to be cleaned is small enough (i.e. the one-liner
+> file used in this test) to fit in the pipe buffer and we feed the
+> pipe before 'true' exits, we won't see any problem.  Otherwise we
+> may get SIGPIPE when we attempt to write to the 'true' (non-)filter,
+> but because we explicitly ignore SIGPIPE, 'true' still is a "black
+> hole" filter.
 >
->> If we're changing all of these files anyway, it would be nice to wrap
->> literal options in backticks as suggested in
->> Documentation/CodingGuidelines.
->
-> I considered it, and I do prefer backticks. But I stopped short because
-> my goal here was to make source changes that didn't have any actual
-> output changes. So I'm not opposed to the output change, but it doesn't
-> belong in this patch.
->
-> I'm also a little hesitant just because it semes there are quite a lot
-> of outliers. I'm not sure if I'm helping anything to produce a patch
-> that changes a small subset of them (i.e., if we do it, we should really
-> do it thoroughly).
->
-> I dunno. If you want to do a patch on top, I'd be happy to look at it.
+> "cat >/dev/null" may have been a more naive and straight-forward way
+> to write this "black hole" filter, but what you did is fine.
 
-FWIW I agree 100% with what Peff said. `--options` is a good thing
-to do, it does not belong to this patch, and we should aim to do so
-for the entirety of the documentation, not just a small part.
+I spoke too fast X-<.  "while sh t0021-*.sh; do :; done" dies after
+a few iterations and with this squashed in it doesn't.
 
-The last one makes the execution of such a clean-up somewhat a
-tricky affair.  We'd need to avoid conflicting with other topics in
-flight (i.e. clean up quiet part of the documentation only), make
-sure topics in flight do not add new breakages, and come back to
-documentation other topics have changed once they stabilized.
+ t/t0021-conversion.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 42e6423..b778faf 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -218,7 +218,7 @@ test_expect_success "filter: clean empty file" '
+ '
+ 
+ test_expect_success "filter: smudge empty file" '
+-	git config filter.empty-in-repo.clean true &&
++	git config filter.empty-in-repo.clean "cat >/dev/null" &&
+ 	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
+ 
+ 	echo "empty-in-repo filter=empty-in-repo" >>.gitattributes &&
+-- 
+2.4.1-374-g090bfc9
