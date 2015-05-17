@@ -1,68 +1,87 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 3/3] pack-protocol.txt: fix insconsistent spelling of "packfile"
-Date: Sun, 17 May 2015 08:56:54 +0200
-Message-ID: <1431845814-2541-3-git-send-email-ps@pks.im>
-References: <1431845814-2541-1-git-send-email-ps@pks.im>
-Cc: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 17 08:57:38 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v3 1/9] t5520: fixup file contents comparisons
+Date: Sun, 17 May 2015 15:47:51 +0800
+Message-ID: <CACRoPnTLaJ+4Vc0Dg2rZxO2P3WUxF8++OUi24An00xNSbvTk6A@mail.gmail.com>
+References: <1431508136-15313-1-git-send-email-pyokagan@gmail.com>
+	<1431508136-15313-2-git-send-email-pyokagan@gmail.com>
+	<xmqqk2wcbmq5.fsf@gitster.dls.corp.google.com>
+	<xmqqa8x8bkuc.fsf@gitster.dls.corp.google.com>
+	<CAO2U3QgD0-tAwGnMeeMR5aqbUuqDsdWy0Sw8dQBPUpUNwJZpHg@mail.gmail.com>
+	<xmqq4mnf8358.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSbekLANNiGOyxN70TCUd1c=wcrU_6Gfew5pp5EBpSEsA@mail.gmail.com>
+	<xmqq7fs9hekc.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSP9xfyW47ZqU7QO5o4tyzROh4hGRPqG9g9OB5cquS+uw@mail.gmail.com>
+	<xmqq617sfj05.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 17 09:47:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YtsW1-000695-Iz
-	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 08:57:37 +0200
+	id 1YttIj-0003yA-FJ
+	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 09:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbbEQG5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 May 2015 02:57:33 -0400
-Received: from sender1.zohomail.com ([74.201.84.152]:25354 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751208AbbEQG5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 May 2015 02:57:32 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=from:to:cc:subject:date:message-id:in-reply-to:references; 
-  b=3czgUf1Q78e5q1mWT2CNDvcwva392YE5am0Bg6HspIbuFHF5J3ipXv2HpdDvhStVcTdGljV3Mcj6
-    OzukGvccfruvgYEiY5rcoi05YxIVatqOI/GQy7c31wCv7TG69jK9cKdcnY4Wyg41XD9UG0uI1xPI
-    Uw9WrM+WZi/Hjyt2qZw=  
-Received: from localhost (f052128250.adsl.alicedsl.de [78.52.128.250]) by mx.zohomail.com
-	with SMTPS id 1431845851100226.64134811417705; Sat, 16 May 2015 23:57:31 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0
-In-Reply-To: <1431845814-2541-1-git-send-email-ps@pks.im>
-X-ZohoMail: Ss  SS_10 UW1 iCHF_KNW_WHT_EXT  SGR3_0_16045_3
-X-ZohoMail-Owner: <1431845814-2541-3-git-send-email-ps@pks.im>+zmo_0_<ps@pks.im>
-X-ZohoMail-Sender: 78.52.128.250
-X-Zoho-Virus-Status: 2
+	id S1752160AbbEQHry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 May 2015 03:47:54 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:34105 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032AbbEQHrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 May 2015 03:47:52 -0400
+Received: by laat2 with SMTP id t2so177962652laa.1
+        for <git@vger.kernel.org>; Sun, 17 May 2015 00:47:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dHh8H9NZtpfe8DJZUhHZ19wN7Xqanr0NVtOxQPn/5L0=;
+        b=EkcklBLQiKJHEpqIYHAd6sks2Obiy8sDV6SkQkjLMfZvEjJFiN0ZgSzi9uusJM7+6m
+         3Bcgf5iWfYrzb3uCMhKej/xMxypUCQ87MjNRKM7X2CfuV5GkTFSQNpxr0MszT7NxZtrM
+         erwabNDFdmD0L0wLXufuKKhOYoUYddsXEJLdE1TFE6n0wFViwZnSh1LSdmKqKQ+Q2Ch4
+         lzbIK2Q/5ZlTNBvM9L7c20a6zu1AtVBI4rP/QJTZKGnWuolA0bOXsvcfmV2rXy92KYQr
+         3iiQIWYM4sskzOs0gbF8QVB2g9ExBA86+zKYtFvMBS69HfInsb12dw+lL+VYP6CHmzWi
+         bDPg==
+X-Received: by 10.152.6.105 with SMTP id z9mr12764435laz.98.1431848871156;
+ Sun, 17 May 2015 00:47:51 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Sun, 17 May 2015 00:47:51 -0700 (PDT)
+In-Reply-To: <xmqq617sfj05.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269217>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/technical/pack-protocol.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Hi Junio,
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 462e206..812d857 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -502,11 +502,11 @@ MUST NOT send a push-cert command.  When a push-cert command is
- sent, command-list MUST NOT be sent; the commands recorded in the
- push certificate is used instead.
- 
--The pack-file MUST NOT be sent if the only command used is 'delete'.
-+The packfile MUST NOT be sent if the only command used is 'delete'.
- 
--A pack-file MUST be sent if either create or update command is used,
-+A packfile MUST be sent if either create or update command is used,
- even if the server already has all the necessary objects.  In this
--case the client MUST send an empty pack-file.   The only time this
-+case the client MUST send an empty packfile.   The only time this
- is likely to happen is if the client is creating
- a new branch or a tag that points to an existing obj-id.
- 
--- 
-2.4.0
+On Sun, May 17, 2015 at 2:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> Hi Junio,
+>>
+>> On Sat, May 16, 2015 at 2:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Just to avoid misunderstanding, please do not remove 'verbose '
+>>> blindly without thinking while doing so, as you already did 1/3 of
+>>> the necessary job to make things better.
+>>
+>> Eh? I thought we established that using "verbose" does not provide
+>> anything more than what "set -x" already provides. So at the very
+>> least, its use should be removed completely.
+>
+> I did not mean "do not remove and keep them".  I meant "do not
+> remove without thinking; instead, take mental notes on patterns
+> these silent ones may have while removing them".
+
+Okay. Just to keep things moving, for now I will send a re-roll to
+remove "verbose" and to fix other issues like [1] and [2].
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/268950/focus=269052
+[2] http://thread.gmane.org/gmane.comp.version-control.git/268950/focus=269132
+
+Thanks,
+Paul
