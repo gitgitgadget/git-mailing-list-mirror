@@ -1,354 +1,301 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH 04/14] pull: pass git-fetch's options to git-fetch
-Date: Mon, 18 May 2015 23:06:01 +0800
-Message-ID: <1431961571-20370-5-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH 05/14] pull: error on no merge candidates
+Date: Mon, 18 May 2015 23:06:02 +0800
+Message-ID: <1431961571-20370-6-git-send-email-pyokagan@gmail.com>
 References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stephen Robin <stephen.robin@gmail.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 17:07:53 2015
+X-From: git-owner@vger.kernel.org Mon May 18 17:07:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuMdy-0004Ni-Vt
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 17:07:51 +0200
+	id 1YuMdz-0004Ni-QS
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 17:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753675AbbERPHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753704AbbERPHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 11:07:47 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:33485 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753676AbbERPHm (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 18 May 2015 11:07:42 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33274 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753123AbbERPHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 11:07:39 -0400
-Received: by padbw4 with SMTP id bw4so155735778pad.0
-        for <git@vger.kernel.org>; Mon, 18 May 2015 08:07:39 -0700 (PDT)
+Received: by pdbqa5 with SMTP id qa5so153144793pdb.0
+        for <git@vger.kernel.org>; Mon, 18 May 2015 08:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=187bB8RGY2M01nSfbc5HFQ8eJUVIAM6IDj2B9MpO4lo=;
-        b=kj4Q0Ys5QEFrqcRJr8kI31K+IwuxiKL9K8J47Kc9NfYMjAMFsHJqyrTPzYMpYWAhZ0
-         4zWTrPHO2Wb+qFqClvclvlw31NhP5D7uwiQpaoPp5FZzxz6UaL8xHif5Yn4b3ESnIiHA
-         conmiEmXMfifwDJqiGN8O88kAaFMdjB/UzHIvk3bIA/SecmX/ZjaQhpiwOQZxJIzpZNi
-         wRcpcQ+kU7u2KdAMg9vJOcPxlvxo0D9qB+8KzDrsz2vQQbgSedSSJ6CcElE/f9Wn5e8Y
-         oxKL3eNZfpE5hFRk3da/TRskrDI3uijrx/F9ORFBd8S7k18SB3iRUjPxcr9Pz/ZvjJzh
-         UBrw==
-X-Received: by 10.70.49.198 with SMTP id w6mr44233322pdn.121.1431961659427;
-        Mon, 18 May 2015 08:07:39 -0700 (PDT)
+        bh=m9rDHBAIH+98fJZj0AQ21/Rw61z2F3Gh0Mty0fHb0aI=;
+        b=fthYGFBUm7ORM1oKtQTxPhh/yUSngf4Q/Mg6MgP76ofTokxfkDG9akuayiFuVZqm/M
+         GzxFMAi54MOFCfmSHQYFuoUXdBO+ON2tBmo8zy2H3g/7duTDK33gzuHljCEfaFVWXnjf
+         X9KlDApA1b70OpU5bjkSL0Iotza6sX0/lIxyEajp0FncsT25kOa7vH8bc7uvqkCD0mSn
+         zymsyiWWstqBc3J7N/Wb7R9ViCrox/5sZc6T8eHOaxU4A3vfKg4oPBBXvRoUxymrM8YH
+         64ktGr7WWbJ/ZItwb95MsmRej1uZE4f8A6FL/NEjJlk5SMogg+XJY/gHsxDrLRJXYiVe
+         eHLQ==
+X-Received: by 10.68.221.70 with SMTP id qc6mr44668711pbc.76.1431961662443;
+        Mon, 18 May 2015 08:07:42 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id i9sm10370062pdj.27.2015.05.18.08.07.36
+        by mx.google.com with ESMTPSA id i9sm10370062pdj.27.2015.05.18.08.07.39
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 May 2015 08:07:37 -0700 (PDT)
+        Mon, 18 May 2015 08:07:41 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269264>
 
-git-pull.sh passed all unknown options to git-fetch, thus supporting
-git-fetch's options.
+Commit a8c9bef (pull: improve advice for unconfigured error case,
+2009-10-05) fully established the current advices given by git-pull for
+the different cases where git-fetch will not have anything marked for
+merge:
 
-However, this led to problems as git-pull was not aware of the specifics
-of the options passed to git-fetch. For example, running
+1. We fetched from a specific remote, and a refspec was given, but it
+   ended up not fetching anything. This is usually because the user
+   provided a wildcard refspec which had no matches on the remote end.
 
-	git-pull --all --dry-run
+2. We fetched from a non-default remote, but didn't specify a branch to
+   merge. We can't use the configured one because it applies to the
+   default remote, and thus the user must specify the branches to merge.
 
-would pass the --dry-fetch option to git-fetch, but would still run
-git-merge. This is because git-pull.sh is not aware of the --dry-run
-option.
+3. We fetched from the branch's or repo's default remote, but:
 
-Fix this by parsing all of git-fetch's options at git-pull. The options
-are:
+   a. We are not on a branch, so there will never be a configured branch
+      to merge with.
 
-* --all
+   b. We are on a branch, but there is no configured branch to merge
+      with.
 
-* -a, --append
+4. We fetched from the branch's or repo's default remote, but the
+   configured branch to merge didn't get fetched (either it doesn't
+   exist, or wasn't part of the configured fetch refspec)
 
-* --upload-pack
-
-* -f, --force
-
-* -t, --tags
-
-* -p, --prune
-
-* --recurse-submodules
-
-* --dry-run
-
-* -k, --keep
-
-* --depth
-
-* --unshallow
-
-* --update-shallow
-
-* --refmap
-
-Since 29609e6 (pull: do nothing on --dry-run, 2010-05-25) git-pull
-supported the --dry-run option, exiting after git-fetch if --dry-run is
-set. Re-implement this behavior.
+Re-implement the above behavior by implementing get_merge_heads() to
+parse the heads in FETCH_HEAD for merging, and implementing
+die_no_merge_candidates(), which will be called when FETCH_HEAD has no
+heads for merging.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/pull.c            | 95 +++++++++++++++++++++++++++++++++++++++++++++++
- t/t5500-fetch-pack.sh     | 10 ++---
- t/t5521-pull-options.sh   |  6 +--
- t/t7403-submodule-sync.sh |  8 ++--
- 4 files changed, 107 insertions(+), 12 deletions(-)
+ builtin/pull.c  | 132 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t5520-pull.sh |  10 ++---
+ 2 files changed, 137 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index 573e4f6..07ad783 100644
+index 07ad783..8982fdf 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -56,6 +56,21 @@ static struct string_list opt_strategies = STRING_LIST_INIT_NODUP;
- static struct string_list opt_strategy_opts = STRING_LIST_INIT_NODUP;
- static char *opt_gpg_sign;
- 
-+/* Options passed to git-fetch */
-+static char *opt_all;
-+static char *opt_append;
-+static char *opt_upload_pack;
-+static int opt_force;
-+static char *opt_tags;
-+static char *opt_prune;
-+static char *opt_recurse_submodules;
-+static int opt_dry_run;
-+static char *opt_keep;
-+static char *opt_depth;
-+static char *opt_unshallow;
-+static char *opt_update_shallow;
-+static char *opt_refmap;
-+
- static struct option pull_options[] = {
- 	/* Shared options */
- 	OPT__VERBOSITY(&opt_verbosity),
-@@ -104,6 +119,46 @@ static struct option pull_options[] = {
- 	  N_("GPG sign commit"),
- 	  PARSE_OPT_OPTARG, parse_opt_passthru, (intptr_t) "gpg-sign" },
- 
-+	/* Options passed to git-fetch */
-+	OPT_GROUP(N_("Options related to fetching")),
-+	{ OPTION_CALLBACK, 0, "all", &opt_all, 0,
-+	  N_("fetch from all remotes"),
-+	  PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "all" },
-+	{ OPTION_CALLBACK, 'a', "append", &opt_append, 0,
-+	  N_("append to .git/FETCH_HEAD instead of overwriting"),
-+	  PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "append" },
-+	{ OPTION_CALLBACK, 0, "upload-pack", &opt_upload_pack, N_("path"),
-+	  N_("path to upload pack on remote end"),
-+	  0, parse_opt_passthru, (intptr_t) "upload-pack" },
-+	OPT__FORCE(&opt_force, N_("force overwrite of local branch")),
-+	{ OPTION_CALLBACK, 't', "tags", &opt_tags, 0,
-+	  N_("fetch all tags and associated objects"),
-+	  PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "tags" },
-+	{ OPTION_CALLBACK, 'p', "prune", &opt_prune, 0,
-+	  N_("prune remote-tracking branches no longer on remote"),
-+	  PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "prune" },
-+	{ OPTION_CALLBACK, 0, "recurse-submodules", &opt_recurse_submodules,
-+	  N_("on-demand"),
-+	  N_("control recursive fetching of submodules"),
-+	  PARSE_OPT_OPTARG, parse_opt_passthru, (intptr_t) "recurse-submodules" },
-+	OPT_BOOL(0, "dry-run", &opt_dry_run,
-+		N_("dry run")),
-+	{ OPTION_CALLBACK, 'k', "keep", &opt_keep, 0,
-+	  N_("keep downloaded pack"),
-+	  PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "keep" },
-+	{ OPTION_CALLBACK, 0, "depth", &opt_depth, N_("depth"),
-+	  N_("deepen history of shallow clone"),
-+	  0, parse_opt_passthru, (intptr_t) "depth" },
-+	{ OPTION_CALLBACK, 0, "unshallow", &opt_unshallow, 0,
-+	  N_("convert to a complete repository"),
-+	  PARSE_OPT_NONEG | PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "unshallow" },
-+	{ OPTION_CALLBACK, 0, "update-shallow", &opt_update_shallow, 0,
-+	  N_("accept refs that update .git/shallow"),
-+	  PARSE_OPT_NOARG, parse_opt_passthru, (intptr_t) "update-shallow" },
-+	{ OPTION_CALLBACK, 0, "refmap", &opt_refmap, N_("refmap"),
-+	  N_("specify fetch refmap"),
-+	  PARSE_OPT_NONEG, parse_opt_passthru, (intptr_t) "refmap" },
-+
- 	OPT_END()
- };
- 
-@@ -143,6 +198,16 @@ static void argv_push_strategy_opts(struct argv_array *arr)
- }
+@@ -10,6 +10,8 @@
+ #include "parse-options.h"
+ #include "argv-array.h"
+ #include "run-command.h"
++#include "sha1-array.h"
++#include "remote.h"
  
  /**
-+ * Pushes "-f" switches into arr to match the opt_force level.
+  * Given an option opt, where opt->value points to a char* and opt->defval is a
+@@ -207,6 +209,130 @@ static void argv_push_force(struct argv_array *arr)
+ 		argv_array_push(arr, "-f");
+ }
+ 
++struct known_remote {
++	struct known_remote *next;
++	struct remote *remote;
++};
++
++/**
++ * Use this callback with for_each_remote() to get the configured remotes as
++ * a singly linked known_remote list. cb_data must be a pointer to a
++ * struct known_remote*, which must be initialized to NULL. For example,
++ * For example:
++ *
++ *     struct known_remote *list = NULL;
++ *     for_each_remote(add_known_remote, &list);
 + */
-+static void argv_push_force(struct argv_array *arr)
++static int add_known_remote(struct remote *remote, void *cb_data)
 +{
-+	int force = opt_force;
-+	while (force-- > 0)
-+		argv_array_push(arr, "-f");
++	struct known_remote **list = cb_data;
++	struct known_remote *item;
++
++	item = xmalloc(sizeof(*item));
++	item->remote = remote;
++	item->next = *list;
++	*list = item;
++	return 0;
 +}
 +
 +/**
++ * Appends merge candidates from FETCH_HEAD that are not marked not-for-merge
++ * into merge_heads.
++ */
++static void get_merge_heads(struct sha1_array *merge_heads)
++{
++	const char *filename = git_path("FETCH_HEAD");
++	FILE *fp;
++	struct strbuf sb = STRBUF_INIT;
++	unsigned char sha1[GIT_SHA1_RAWSZ];
++
++	if (!(fp = fopen(filename, "r")))
++		die_errno(_("could not open '%s' for reading"), filename);
++	while(strbuf_getline(&sb, fp, '\n') != EOF) {
++		if (get_sha1_hex(sb.buf, sha1))
++			continue;  /* invalid line: does not start with SHA1 */
++		if (starts_with(sb.buf + GIT_SHA1_HEXSZ, "\tnot-for-merge"))
++			continue;  /* ref is not-for-merge */
++		sha1_array_append(merge_heads, sha1);
++	}
++	fclose(fp);
++	strbuf_release(&sb);
++}
++
++/**
++ * Dies with the appropriate reason for why there are no merge candidates:
++ *
++ * 1. We fetched from a specific remote, and a refspec was given, but it ended
++ *    up not fetching anything. This is usually because the user provided a
++ *    wildcard refspec which had no matches on the remote end.
++ *
++ * 2. We fetched from a non-default remote, but didn't specify a branch to
++ *    merge. We can't use the configured one because it applies to the default
++ *    remote, thus the user must specify the branches to merge.
++ *
++ * 3. We fetched from the branch's or repo's default remote, but:
++ *
++ *    a. We are not on a branch, so there will never be a configured branch to
++ *       merge with.
++ *
++ *    b. We are on a branch, but there is no configured branch to merge with.
++ *
++ * 4. We fetched from the branch's or repo's default remote, but the configured
++ *    branch to merge didn't get fetched. (Either it doesn't exist, or wasn't
++ *    part of the configured fetch refspec.)
++ */
++static void NORETURN die_no_merge_candidates(const char *repo, const char **refspecs)
++{
++	struct branch *curr_branch = branch_get("HEAD");
++	const char *remote = curr_branch ? curr_branch->remote_name : NULL;
++
++	if (*refspecs) {
++		fprintf(stderr,
++			_("There are no candidates for merging among the refs that you just fetched.\n"
++			"Generally this means that you provided a wildcard refspec which had no\n"
++			"matches on the remote end.\n"));
++	} else if (repo && curr_branch && (!remote || strcmp(repo, remote))) {
++		fprintf(stderr,
++			_("You asked to pull from the remote '%s', but did not specify\n"
++			"a branch. Because this is not the default configured remote\n"
++			"for your current branch, you must specify a branch on the command line.\n"),
++			repo);
++	} else if (!curr_branch) {
++		fprintf(stderr,
++			_("You are not currently on a branch. Please specify which\n"
++			"branch you want to merge with. See git-pull(1) for details.\n"
++			"\n"
++			"    git pull <remote> <branch>\n"
++			"\n"));
++	} else if (!curr_branch->merge_nr) {
++		struct known_remote *remotes = NULL;
++		const char *remote_name = "<remote>";
++
++		for_each_remote(add_known_remote, &remotes);
++		if (remotes && !remotes->next)
++			remote_name = remotes->remote->name;
++
++		fprintf(stderr,
++			_("There is no tracking information for the current branch.\n"
++			"Please specify which branch you want to merge with.\n"
++			"See git-pull(1) for details.\n"
++			"\n"
++			"    git pull <remote> <branch>\n"
++			"\n"
++			"If you wish to set tracking information for this branch you can do so with:\n"
++			"\n"
++			"    git branch --set-upstream-to=%s/<branch> %s\n"
++			"\n"),
++			remote_name, curr_branch->name);
++	} else
++		fprintf(stderr,
++			_("Your configuration specifies to merge with the ref '%s'\n"
++			"from the remote, but no such ref was fetched.\n"
++			"\n"),
++			*curr_branch->merge_name);
++	exit(1);
++}
++
+ /**
   * Parses argv into [<repo> [<refspecs>...]], returning their values in `repo`
   * as a string and `refspecs` as a null-terminated array of strings. If `repo`
-  * is not provided in argv, it is set to NULL.
-@@ -173,6 +238,33 @@ static int run_fetch(const char *repo, const char **refspecs)
- 	if (opt_progress)
- 		argv_array_push(&args, opt_progress);
+@@ -318,6 +444,7 @@ static int run_merge(void)
+ int cmd_pull(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *repo, **refspecs;
++	struct sha1_array merge_heads = SHA1_ARRAY_INIT;
  
-+	/* Options passed to git-fetch */
-+	if (opt_all)
-+		argv_array_push(&args, opt_all);
-+	if (opt_append)
-+		argv_array_push(&args, opt_append);
-+	if (opt_upload_pack)
-+		argv_array_push(&args, opt_upload_pack);
-+	argv_push_force(&args);
-+	if (opt_tags)
-+		argv_array_push(&args, opt_tags);
-+	if (opt_prune)
-+		argv_array_push(&args, opt_prune);
-+	if (opt_recurse_submodules)
-+		argv_array_push(&args, opt_recurse_submodules);
-+	if (opt_dry_run)
-+		argv_array_push(&args, "--dry-run");
-+	if (opt_keep)
-+		argv_array_push(&args, opt_keep);
-+	if (opt_depth)
-+		argv_array_push(&args, opt_depth);
-+	if (opt_unshallow)
-+		argv_array_push(&args, opt_unshallow);
-+	if (opt_update_shallow)
-+		argv_array_push(&args, opt_update_shallow);
-+	if (opt_refmap)
-+		argv_array_push(&args, opt_refmap);
+ 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
+ 	parse_repo_refspecs(argc, argv, &repo, &refspecs);
+@@ -328,5 +455,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (opt_dry_run)
+ 		return 0;
+ 
++	get_merge_heads(&merge_heads);
 +
- 	if (repo)
- 		argv_array_push(&args, repo);
- 	while (*refspecs)
-@@ -233,5 +325,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (run_fetch(repo, refspecs))
- 		return 1;
- 
-+	if (opt_dry_run)
-+		return 0;
++	if (!merge_heads.nr)
++		die_no_merge_candidates(repo, refspecs);
 +
  	return run_merge();
  }
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 213b231..3a9b775 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -226,14 +226,14 @@ test_expect_success 'add two more (part 2)' '
- 	add B69 $B68
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index f32b8cb..0ff5df3 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -116,7 +116,7 @@ test_expect_failure 'the default remote . should not break explicit pull' '
+ 	test_cmp reflog.expected reflog.fuzzy
  '
  
--test_expect_failure 'deepening pull in shallow repo' '
-+test_expect_success 'deepening pull in shallow repo' '
- 	(
- 		cd shallow &&
- 		git pull --depth 4 .. B
- 	)
+-test_expect_failure 'fail if wildcard spec does not match any refs' '
++test_expect_success 'fail if wildcard spec does not match any refs' '
+ 	git checkout -b test copy^ &&
+ 	test_when_finished "git checkout -f copy && git branch -D test" &&
+ 	test "$(cat file)" = file &&
+@@ -125,7 +125,7 @@ test_expect_failure 'fail if wildcard spec does not match any refs' '
+ 	test "$(cat file)" = file
  '
  
--test_expect_failure 'clone shallow object count' '
-+test_expect_success 'clone shallow object count' '
- 	(
- 		cd shallow &&
- 		git count-objects -v
-@@ -248,7 +248,7 @@ test_expect_success 'deepening fetch in shallow repo' '
- 	)
+-test_expect_failure 'fail if no branches specified with non-default remote' '
++test_expect_success 'fail if no branches specified with non-default remote' '
+ 	git remote add test_remote . &&
+ 	test_when_finished "git remote remove test_remote" &&
+ 	git checkout -b test copy^ &&
+@@ -137,7 +137,7 @@ test_expect_failure 'fail if no branches specified with non-default remote' '
+ 	test "$(cat file)" = file
  '
  
--test_expect_failure 'clone shallow object count' '
-+test_expect_success 'clone shallow object count' '
- 	(
- 		cd shallow &&
- 		git count-objects -v
-@@ -272,11 +272,11 @@ test_expect_success 'additional simple shallow deepenings' '
- 	)
+-test_expect_failure 'fail if not on a branch' '
++test_expect_success 'fail if not on a branch' '
+ 	git remote add origin . &&
+ 	test_when_finished "git remote remove origin" &&
+ 	git checkout HEAD^ &&
+@@ -148,7 +148,7 @@ test_expect_failure 'fail if not on a branch' '
+ 	test "$(cat file)" = file
  '
  
--test_expect_failure 'clone shallow depth count' '
-+test_expect_success 'clone shallow depth count' '
- 	test "`git --git-dir=shallow/.git rev-list --count HEAD`" = 11
+-test_expect_failure 'fail if no configuration for current branch' '
++test_expect_success 'fail if no configuration for current branch' '
+ 	git remote add test_remote . &&
+ 	test_when_finished "git remote remove test_remote" &&
+ 	git checkout -b test copy^ &&
+@@ -160,7 +160,7 @@ test_expect_failure 'fail if no configuration for current branch' '
+ 	test "$(cat file)" = file
  '
  
--test_expect_failure 'clone shallow object count' '
-+test_expect_success 'clone shallow object count' '
- 	(
- 		cd shallow &&
- 		git count-objects -v
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 89e2104..4176e11 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -78,7 +78,7 @@ test_expect_success 'git pull -q -v' '
- 	test -s err)
- '
- 
--test_expect_failure 'git pull --force' '
-+test_expect_success 'git pull --force' '
- 	mkdir clonedoldstyle &&
- 	(cd clonedoldstyle && git init &&
- 	cat >>.git/config <<-\EOF &&
-@@ -99,7 +99,7 @@ test_expect_failure 'git pull --force' '
- 	)
- '
- 
--test_expect_failure 'git pull --all' '
-+test_expect_success 'git pull --all' '
- 	mkdir clonedmulti &&
- 	(cd clonedmulti && git init &&
- 	cat >>.git/config <<-\EOF &&
-@@ -117,7 +117,7 @@ test_expect_failure 'git pull --all' '
- 	)
- '
- 
--test_expect_failure 'git pull --dry-run' '
-+test_expect_success 'git pull --dry-run' '
- 	test_when_finished "rm -rf clonedry" &&
- 	git init clonedry &&
- 	(
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index b448562..79bc135 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -96,7 +96,7 @@ test_expect_success 'change submodule url' '
- 	)
- '
- 
--test_expect_failure '"git submodule sync" should update submodule URLs' '
-+test_expect_success '"git submodule sync" should update submodule URLs' '
- 	(
- 		cd super-clone &&
- 		git pull --no-recurse-submodules &&
-@@ -121,7 +121,7 @@ test_expect_failure '"git submodule sync" should update submodule URLs' '
- 	)
- '
- 
--test_expect_failure '"git submodule sync --recursive" should update all submodule URLs' '
-+test_expect_success '"git submodule sync --recursive" should update all submodule URLs' '
- 	(
- 		cd super-clone &&
- 		(
-@@ -149,7 +149,7 @@ test_expect_success 'reset submodule URLs' '
- 	reset_submodule_urls super-clone
- '
- 
--test_expect_failure '"git submodule sync" should update submodule URLs - subdirectory' '
-+test_expect_success '"git submodule sync" should update submodule URLs - subdirectory' '
- 	(
- 		cd super-clone &&
- 		git pull --no-recurse-submodules &&
-@@ -177,7 +177,7 @@ test_expect_failure '"git submodule sync" should update submodule URLs - subdire
- 	)
- '
- 
--test_expect_failure '"git submodule sync --recursive" should update all submodule URLs - subdirectory' '
-+test_expect_success '"git submodule sync --recursive" should update all submodule URLs - subdirectory' '
- 	(
- 		cd super-clone &&
- 		(
+-test_expect_failure 'fail if upstream branch does not exist' '
++test_expect_success 'fail if upstream branch does not exist' '
+ 	git checkout -b test copy^ &&
+ 	test_when_finished "git checkout -f copy && git branch -D test" &&
+ 	test_config branch.test.remote . &&
 -- 
 2.1.4
