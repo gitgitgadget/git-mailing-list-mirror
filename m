@@ -1,118 +1,102 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: sh -x -i -v with continuous integration, was Re: [PATCH 1/4]
- t7601: test for pull.ff=true overrides merge.ff=false
-Date: Mon, 18 May 2015 14:45:29 -0400
-Message-ID: <20150518184528.GA11463@peff.net>
-References: <1431510740-9710-1-git-send-email-pyokagan@gmail.com>
- <1431510740-9710-2-git-send-email-pyokagan@gmail.com>
- <2a5e49ff1cc3a0275e09328a3ad07866@www.dscho.org>
- <xmqqy4kr85wg.fsf@gitster.dls.corp.google.com>
- <81926313e0a131cd7224f0f6f8984dd2@www.dscho.org>
- <xmqqh9rf84we.fsf@gitster.dls.corp.google.com>
- <20150516152858.GA19269@peff.net>
- <xmqq1tigfij8.fsf@gitster.dls.corp.google.com>
+Subject: debugging git tests, was: Re: [PATCH v4 2/8] t5520: test no merge
+ candidates cases
+Date: Mon, 18 May 2015 14:55:54 -0400
+Message-ID: <20150518185554.GB11463@peff.net>
+References: <1431955978-17890-1-git-send-email-pyokagan@gmail.com>
+ <1431955978-17890-3-git-send-email-pyokagan@gmail.com>
+ <e89b333476cbb1e546371a07b357cd42@www.dscho.org>
+ <xmqqoalhdbhx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	David Aguilar <davvid@gmail.com>
+	Stefan Beller <sbeller@google.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 18 20:45:39 2015
+X-From: git-owner@vger.kernel.org Mon May 18 20:56:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuQ2k-00033x-2n
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 20:45:39 +0200
+	id 1YuQCo-0007eI-B3
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 20:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932298AbbERSpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 14:45:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60305 "HELO cloud.peff.net"
+	id S1754522AbbERSz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 14:55:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60317 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932233AbbERSpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 14:45:32 -0400
-Received: (qmail 1098 invoked by uid 102); 18 May 2015 18:45:32 -0000
+	id S1754502AbbERSz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 14:55:57 -0400
+Received: (qmail 1641 invoked by uid 102); 18 May 2015 18:55:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 May 2015 13:45:32 -0500
-Received: (qmail 26764 invoked by uid 107); 18 May 2015 18:45:32 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 May 2015 13:55:56 -0500
+Received: (qmail 26864 invoked by uid 107); 18 May 2015 18:55:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 May 2015 14:45:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 May 2015 14:45:29 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 May 2015 14:55:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 May 2015 14:55:54 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqq1tigfij8.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqoalhdbhx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269298>
 
-On Sat, May 16, 2015 at 12:07:23PM -0700, Junio C Hamano wrote:
+On Mon, May 18, 2015 at 10:46:50AM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > Do we object to having to sprinkle the "verbose" throughout the test
-> > scripts?
+> >> +test_expect_success 'fail if wildcard spec does not match any refs' '
+> >> +	git checkout -b test copy^ &&
+> >> +	test_when_finished "git checkout -f copy && git branch -D test" &&
+> >
+> > When I read this line, I immediately asked myself whether the
+> > branch would be deleted even if the test case failed. I then
+> > tested this theory by editing the first test case ("setup") like
+> > this:
+> > ...
+> > and indeed, the file "file" was gone, even if the test case
+> > failed. I therefore believe that this "test_when_finished" cleanup
+> > might make debugging substantially harder. Maybe we can drop these
+> > lines from this patch?
 > 
-> Yes.  
+> The test framework is aware of the fact that it needs to help the
+> people who are debugging the scripts.  The support is limited to the
+> case in which you run it under the -i option, i.e.
 > 
-> An unconstrained "verbose" that applies to anything would make
-> people less careful to come up with more useful abstractions,
-> e.g. test_line_count, which I view as a bigger problem.
+> 	$ cd t
+>         $ sh ./t5520-pull.sh -i -v
+> 
+> will refrain from running test_when_finished scripts when the test
+> piece fails.  Even though this is only limited to -i, I found it
+> often sufficient for debugging.
 
-I don't think that is true at all. They serve two different purposes.
+If you don't use "-i", you are pretty much screwed anyway, because the
+subsequent tests will stomp all over the state of the test directory.
+Many a head-scratching session has been caused by looking at the wrong
+state, and these days my go-to options for debugging a test are "-v -i".
+But since we are talking about it in a related thread, I will advertise
+the new "-x" here, too.  :)
 
-We need "test_line_count" because of portability considerations. But we
-do not need "test_eq" for that; the only reason to add it is for
-debuggable output. We _could_ add a bunch of little helpers to cover
-each situation, but empirically we have not[1], because it's annoying to
-do so. Instead we just write a bare "test". I had hoped that "verbose"
-would make it sufficiently easy to improve upon the status quo that
-people would actually use it[2].
+As a side note, I've also considered better support for running the
+debugger on git commands inside a test (right now, I usually stick a
+"gdb --args" in the pipeline, but you have to remember to run with "-v",
+and to redirect stdin appropriately). Do other people have this
+annoyance, too?
 
-So I don't really buy the argument that "verbose" makes things worse. I
-think I _do_ buy the argument that it is not worth the extra effort
-given that I implemented "-x" around the same time. I think the
-"verbose" output is a little nicer, as I said earlier, but having the
-test-writer do literally zero work may be worth it.
+I'm vaguely thinking of something like putting debug support into
+bin-wrappers/git, but activating it only for certain tests (so you could
+say "t5520-pull.sh --gdb=10", and git would start under the debugger
+only for test 10). I think we'd also have to use gdbserver for I/O
+sanity, and maybe provide short script to do:
+
+   gdb -ex "target remote localhost:$some_port" "$TEST_DIRECTORY"/../git
+
+That still doesn't cover all cases (when git spawns an external command,
+you probably want to run the debugger on that; likewise, I have a
+git-remote-debug hack for debugging remote-curl). I suspect with clever
+use of gdb options that you could convince the original gdb invocation
+to end up tracing the process you care about, though.
 
 -Peff
-
-[1] The exception, AFAIK, is test_path_is_*.
-
-[2] For the most part, actually, I think the status quo is using
-    test_cmp, and most of the uses of "test" are old. Using test_cmp is
-    more verbose, but it does have the advantage of checking the exit
-    code of the sub-programs (and also its output is much saner for
-    multi-line comparisons, but that isn't relevant to Paul's patches).
-
-    I'd be in favor of helpers that made it shorter to use test_cmp.
-    E.g.:
-
-      # "actual" contains "foo\n"; we save one line of "echo"
-      git foo >actual &&
-      test_cmp_str foo actual
-
-      # same, but take multiline input on stdin. Saves one line of "cat"
-      git foo >actual &&
-      test_cmp_str - actual <<-\EOF
-      foo
-      EOF
-
-      # similar, but it runs the command for us and compares its
-      # stdout, saving another line. Note that we take stdout as-is,
-      # so you get no opportunity to post-process it (but you
-      # can still do it the "long" way as above if you need to).
-      test_cmp_cmd foo git foo
-
-      # same, with stdin; obviously this doesn't work if you need to
-      # send something over stdin to the command, but again, you can
-      # fallback to the old way.
-      test_cmp_cmd - git foo <<-\EOF
-      foo
-      EOF
-
-   These also go in the direction of "verbose", by providing generic
-   solutions rather than specific ones. So by the argument you made
-   above, this is a bad thing.
