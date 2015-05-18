@@ -1,84 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] subdirectory tests: code cleanup, uncomment test
-Date: Mon, 18 May 2015 15:03:19 -0700
-Message-ID: <20150518220318.GE5586@google.com>
-References: <xmqqlhglbt4k.fsf@gitster.dls.corp.google.com>
- <1431983426-4346-1-git-send-email-sbeller@google.com>
- <xmqqvbfpa8ff.fsf@gitster.dls.corp.google.com>
- <CAGZ79kZ9h=Oev_mymFBRNyAGokAe8-vWh_D12VZYHTUv20Djvg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] Documentation/log: clarify sha1 non-abbreviation in log --raw
+Date: Mon, 18 May 2015 15:29:15 -0700
+Message-ID: <xmqqegmda5ac.fsf@gitster.dls.corp.google.com>
+References: <xmqqtwvdhhb2.fsf@gitster.dls.corp.google.com>
+	<1431971758-979-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1431971758-979-2-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqq4mn9bobv.fsf@gitster.dls.corp.google.com>
+	<vpqd21xpocl.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 19 00:03:28 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue May 19 00:29:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuT8B-0005n9-Tc
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 00:03:28 +0200
+	id 1YuTXG-0005fS-UW
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 00:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbbERWDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 18:03:23 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37499 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750858AbbERWDW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 18:03:22 -0400
-Received: by igbsb11 with SMTP id sb11so48462igb.0
-        for <git@vger.kernel.org>; Mon, 18 May 2015 15:03:22 -0700 (PDT)
+	id S1754568AbbERW3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 18:29:18 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:33104 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754283AbbERW3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 18:29:17 -0400
+Received: by igbpi8 with SMTP id pi8so91863159igb.0
+        for <git@vger.kernel.org>; Mon, 18 May 2015 15:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=qma4RkmxgwVVQ5SdAipYKmSjYtb58M8uaH9VHJHgqBk=;
-        b=SqQz0b58NyI2VrlUbPOGuKcDPIERCTa930ty2PHvpFpNPp2wR6p5b1A1W3q5D7XUGs
-         YZ60bFyd+w4N1lYQi5zhkCNfrftmvzH3M2jlfRnC3muAQOZYvE+wgLG6qIYkxhvecCbs
-         PjnQ+NGbRJ9FvY8Y0ahBkGITCKB5XYPKED1MKb4YuHemPq03tIfsbBLZCpQ7/ikg6BGP
-         d/6ue8LvlUh0ohDpBmz/KRLVjBHLGZTxZPLzJhi+R9Ng9f3MmrLr/7OwJMq//5uKqo1C
-         zAtrv+VIJoVIfkm8W6wapSpZtWeU3IG8YuM9V37ob463vB32OS81+N6xIdlrt+jArSZN
-         liTA==
-X-Received: by 10.43.135.5 with SMTP id ie5mr18851720icc.78.1431986602295;
-        Mon, 18 May 2015 15:03:22 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:fc3a:4b70:52a9:16b0])
-        by mx.google.com with ESMTPSA id j20sm6440420igt.16.2015.05.18.15.03.20
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=9eX9onAk5J1n9lpwGayiO8YKLvbIhztJ2DSzqA6DN50=;
+        b=ucAAdFiS9+RZX1tQmXfrF9CMFym0MlE2LauZG7tXAh8aqM3FgMUsxwcl3EJPArbLoC
+         K17QtLBut7DOQ7rp1tmXVJQ5UGI1KdIIFe/Sy6UlB7lGEzWE0ZxZNEhfHHTgANnP+1J9
+         hSm/mOrskUgc3WMUMj+FoojYsDDJoDIpvrVfRKlhYXAk5bzBX/LOwZWUW1kVYwb8tpIp
+         LfyeA3chM+9EARBFOHMY+YsnF6dbcNrxATL2xdY2jvGFCkIlV4QN0BLwbVwhDplMjvL8
+         /Jnx+056czByYinJPsFJEdWB0Sc6W5SbkkiKnSV6xcg3UD1VYxnn3RiZASnahNGiSOeH
+         mniQ==
+X-Received: by 10.50.57.112 with SMTP id h16mr17318214igq.35.1431988156971;
+        Mon, 18 May 2015 15:29:16 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
+        by mx.google.com with ESMTPSA id i4sm6797786igm.2.2015.05.18.15.29.16
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 18 May 2015 15:03:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZ9h=Oev_mymFBRNyAGokAe8-vWh_D12VZYHTUv20Djvg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Mon, 18 May 2015 15:29:16 -0700 (PDT)
+In-Reply-To: <vpqd21xpocl.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	18 May 2015 23:28:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269327>
 
-Stefan Beller wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> I am not happy with (historic) either, maybe "(explicit GIT_DIR)"
-> is describing the test better without giving the reader the thoughts
-> as you raised here?
+>>> +`git log --raw`. To get unabbreviated commits in a raw diff format,
+>>> +use `--no-abbrev`.
+>>
+>> s/commits in a raw/object names in a raw/?
+>
+> Yes, that is better. Let me know if you want me to resend.
+>
+>> I wondered what "this format" was, and had to read the patch with
+>> "show -U60" to realize that this is about "--pretty=<format>".
+>> Perhaps the introductory text of the first paratraph in the section
+>> is not clear enough that not just --pretty=raw but --pretty=anything
+>> is about how the commit object is shown and has nothing to do with
+>> how patches are shown, and that is why this new text is necessary?
+>
+> I would say no, since other formats do not have this "raw log format" Vs
+> "raw diff format" confusion.
 
-The general principle I use is to try to briefly describe what
-hypothesis the code is trying to test, so that if it fails someone knows
-what that means.
+I think we are in agrement, then.
 
-In this case, I could do
+I have this queued with the usual "SQUASH" label on top, so there is
+no need to resend.
 
-	test_expect_success 'no file/rev ambiguity with explicit GIT_DIR=.' '
+Thanks.
 
-[...]
->>>               cd foo.git &&
->>> +             # older Git needed help by exporting GIT_DIR=.
->>> +             # to realize that it is inside a bare repository.
->>> +             # We keep this test around for regression testing.
->>>               GIT_DIR=. git show -s HEAD
-
-I don't think this comment is needed, since it doesn't make it clearer
-what the test is about.
-
-Thanks,
-Jonathan
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 998c7b8..2393f17 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -81,7 +81,7 @@ displayed in full, regardless of whether --abbrev or
+ true parent commits, without taking grafts or history
+ simplification into account. Note that this format affects the way
+ commits are displayed, but not the way the diff is shown e.g. with
+-`git log --raw`. To get unabbreviated commits in a raw diff format,
++`git log --raw`. To get full object names in a raw diff format,
+ use `--no-abbrev`.
+ 
+ * 'format:<string>'
+-- 
+2.4.1-379-g2a6df60
