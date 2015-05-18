@@ -1,173 +1,144 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] daemon: add systemd support
-Date: Sun, 17 May 2015 15:58:11 -0400
-Message-ID: <CAPig+cSOc8Qde1oxq2V+1m4gjnMHaa_mKXO4n21V6zQox9=6qg@mail.gmail.com>
-References: <1431830650-111684-1-git-send-email-shawn@churchofgit.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Shawn Landden <shawn@churchofgit.com>
-X-From: git-owner@vger.kernel.org Sun May 17 21:58:19 2015
+From: Jim Hill <gjthill@gmail.com>
+Subject: [PATCH v4] sha1_file: pass empty buffer to index empty file
+Date: Sun, 17 May 2015 17:41:45 -0700
+Message-ID: <1431909705-29090-1-git-send-email-gjthill@gmail.com>
+References: <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 18 02:45:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yu4hW-0000uK-OQ
-	for gcvg-git-2@plane.gmane.org; Sun, 17 May 2015 21:58:19 +0200
+	id 1Yu9Bh-0003sD-Sg
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 02:45:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbbEQT6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 May 2015 15:58:13 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:34938 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865AbbEQT6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 May 2015 15:58:12 -0400
-Received: by igbyr2 with SMTP id yr2so32864758igb.0
-        for <git@vger.kernel.org>; Sun, 17 May 2015 12:58:11 -0700 (PDT)
+	id S1752460AbbERAmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 May 2015 20:42:21 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:34327 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752297AbbERAlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 May 2015 20:41:52 -0400
+Received: by igbhj9 with SMTP id hj9so559056igb.1
+        for <git@vger.kernel.org>; Sun, 17 May 2015 17:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=83FzI11G/QJKHxHQ25lfvjIZjhP7WV5Fg/kgga4YoAY=;
-        b=m+781T9BYxb7MvHsLtFY2VqgWmJlZn0aDo2Z5I3xPh3V2mNWlbgCPG9dNRiqQRe2a8
-         QsCPE76GFKU+C4wRQbUBNYTnINmZ7Uga6aex/WvUBA5v6duAoJ4Zcav8LJwCqlnSjlCm
-         /rrdlogncNy2vSroDHeCwENUX1i/ZYDULPMIvLmPKRfHtjVe+tzYYxhtmEj2AEbmosxv
-         vJlSspoQ9H7SGbZ0UAcESUwfa3lUXy0CnifN9iBl5HEiYmuLpl5+pF41fKpk0kNT6wcJ
-         qjeNUDDGCv9sPToDa7kgmYP6c4xrjHAmYzi4qjg3UkfVjC414u4FVcdbM750zIFSrAPL
-         yaQg==
-X-Received: by 10.107.151.75 with SMTP id z72mr21467528iod.46.1431892691478;
- Sun, 17 May 2015 12:58:11 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 17 May 2015 12:58:11 -0700 (PDT)
-In-Reply-To: <1431830650-111684-1-git-send-email-shawn@churchofgit.com>
-X-Google-Sender-Auth: ntGSowavfcL4JKXCCcPfEVJemTo
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=NPYSS4PqJOfv3vqokH3aNdMR+vOE/wJ5hgHSDo05TBw=;
+        b=dpTsXlAsV3br2MF7670wBERiMiz1q/bl972a5nNg8n/FANzAfti9HGw4f3g8wtTgjj
+         U/axHOUnNeT4lxMlrLzVrH0ObRxfDEPm7mQoLXf2Swbyuh2us1iL7Sc25rFAl4LKOITt
+         9ynLSU5ebKpp0gx9BMDx71VWbqIOrj0gHSDr59eDDmJNeItkUaWAqGUdFaaS4LBoJX/d
+         LnEWwLSFNqAbR8rVJxr64evwJUCdkaLQMVHgYGmChfJGlG4UQGRxHQtdKuMRQnSnx1bC
+         WchbysilxPCye2p9JXMSKp95xFcnLO1/4EUOpMap3yz0VZ8BRObZWbHVLYiUdHDayFL3
+         EEpg==
+X-Received: by 10.50.114.70 with SMTP id je6mr11120146igb.43.1431909711291;
+        Sun, 17 May 2015 17:41:51 -0700 (PDT)
+Received: from gadabout.domain.actdsltmp (pool-71-119-14-52.lsanca.dsl-w.verizon.net. [71.119.14.52])
+        by mx.google.com with ESMTPSA id d15sm4508100igo.8.2015.05.17.17.41.49
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 17 May 2015 17:41:50 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.4.g08cda19
+In-Reply-To: <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269223>
 
-On Sat, May 16, 2015 at 10:44 PM, Shawn Landden <shawn@churchofgit.com> wrote:
-> daemon: add systemd support
->
-> git-daemon's --systemd mode allows git-daemon to be connect-activated
-> on one or more addresses or ports. Unlike --inetd[1], git-daemon is
-> not spawned for every connection.
->
-> [1]which systemd is compatible with using its Accept=yes mode
->
-> Signed-off-by: Shawn Landden <shawn@churchofgit.com>
-> ---
+`git add` of an empty file with a filter pops complaints from
+`copy_fd` about a bad file descriptor.
 
-For convenience of other reviewers, this is v8. Links to all versions:
+This traces back to these lines in sha1_file.c:index_core:
 
-v8 (2015-05-17): http://thread.gmane.org/gmane.comp.version-control.git/269205
+	if (!size) {
+		ret = index_mem(sha1, NULL, size, type, path, flags);
 
-v7.1 (2015-04-08):
-http://thread.gmane.org/gmane.comp.version-control.git/266632/focus=266969
+The problem here is that content to be added to the index can be
+supplied from an fd, or from a memory buffer, or from a pathname. This
+call is supplying a NULL buffer pointer and a zero size.
 
-v7 (2015-04-07): http://thread.gmane.org/gmane.comp.version-control.git/266926
+Downstream logic takes the complete absence of a buffer to mean the
+data is to be found elsewhere -- for instance, these, from convert.c:
 
-v6 (2015-04-07): http://thread.gmane.org/gmane.comp.version-control.git/266895
+	if (params->src) {
+		write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
+	} else {
+		write_err = copy_fd(params->fd, child_process.in);
+	}
 
-v5 (2015-04-04): http://thread.gmane.org/gmane.comp.version-control.git/266759
+~If there's a buffer, write from that, otherwise the data must be coming
+from an open fd.~
 
-v4 (2015-04-03):
-http://git.661346.n2.nabble.com/RFCv4-PATCH-daemon-add-systemd-support-td7628351.html
+Perfectly reasonable logic in a routine that's going to write from
+either a buffer or an fd.
 
-v3 (2015-04-03):
-http://git.661346.n2.nabble.com/v3RFC-systemd-socket-activation-support-td7628336.html
+So change `index_core` to supply an empty buffer when indexing an empty
+file.
 
-v2 (2015-04-02): http://thread.gmane.org/gmane.comp.version-control.git/266646
+There's a patch out there that instead changes the logic quoted above to
+take a `-1` fd to mean "use the buffer", but it seems to me that the
+distinction between a missing buffer and an empty one carries intrinsic
+semantics, where the logic change is adapting the code to handle
+incorrect arguments.
 
-v1.1 (2015-04-02): http://thread.gmane.org/gmane.comp.version-control.git/266632
+Signed-off-by: Jim Hill <gjthill@gmail.com>
+---
+Okay, that's it: I'm officially laughably rusty, 'cause I'm laughing. This
+applies your fix, _thank you_ for the caution. I get it: `true` can have
+already exited by the time the write hits.
 
-v1 (2015-04-02): http://thread.gmane.org/gmane.comp.version-control.git/266628
+ sha1_file.c           |  2 +-
+ t/t0021-conversion.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-Below are some additional comments beyond what Junio already mentioned
-in his review...
-
-> diff --git a/Makefile b/Makefile
-> index 36655d5..54986a0 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -997,6 +1000,13 @@ ifeq ($(uname_S),Darwin)
->         PTHREAD_LIBS =
->  endif
->
-> +ifndef NO_SYSTEMD
-> +       ifeq ($(shell echo "\#include <systemd/sd-daemon.h>" | $(CC) -E - -o /dev/null 2>/dev/null && echo y),y)
-
-It is highly unusual to place such an expensive check directly in
-Makefile (or even config.mak.uname) where it will penalize everyone
-(who hasn't disabled systemd) each time 'make' is invoked. This sort
-of expensive detection is typically only done by the configure script.
-
-> +               BASIC_CFLAGS += -DHAVE_SYSTEMD
-> +               EXTLIBS += -lsystemd
-> +       endif
-> +endif
-> diff --git a/daemon.c b/daemon.c
-> index d3d3e43..42e1441 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1166,12 +1174,40 @@ static struct credentials *prepare_credentials(const char *user_name,
->  }
->  #endif
->
-> +#ifdef HAVE_SYSTEMD
-> +static int enumerate_sockets(struct socketlist *socklist, struct string_list *listen_addr, int listen_port, int systemd_mode)
-> +{
-> +       if (systemd_mode) {
-> +               int i, n;
-> +
-> +               n = sd_listen_fds(0);
-> +               if (n <= 0)
-> +                       die("--systemd mode specified and no file descriptors recieved");
-> +               ALLOC_GROW(socklist->list, socklist->nr + n, socklist->alloc);
-> +               for (i = 0; i < n; i++)
-> +                       socklist->list[socklist->nr++] = SD_LISTEN_FDS_START + i;
-> +       }
-> +
-> +       if (listen_addr->nr > 0 || !systemd_mode)
-> +               socksetup(listen_addr, listen_port, socklist);
-> +
-> +       return 0;
-
-What is the significance of the return value of enumerate_sockets()?
-It's unconditionally 0, even if socksetup() was never invoked, and
-isn't checked by the caller.
-
-> +}
-> +#else
-> +static int enumerate_sockets(struct socketlist *socklist, struct string_list *listen_addr, int listen_port, int systemd_mode)
-> +{
-> +       socksetup(listen_addr, listen_port, socklist);
-> +
-> +       return 0;
-> +}
-> +#endif
-> @@ -1340,8 +1382,16 @@ int main(int argc, char **argv)
->                 /* avoid splitting a message in the middle */
->                 setvbuf(stderr, NULL, _IOFBF, 4096);
->
-> -       if (inetd_mode && (detach || group_name || user_name))
-> -               die("--detach, --user and --group are incompatible with --inetd");
-> +       if ((inetd_mode || systemd_mode) && (detach || group_name || user_name))
-> +               die("--detach, --user and --group are incompatible with --inetd and --systemd");
-> +
-> +#ifdef HAVE_SYSTEMD
-
-This #if is unnecessary since 'systemd_mode' will never become true
-(1) when HAVE_SYSTEMD is not defined, thus neither of the two
-following 'if' conditionals will trigger anyhow.
-
-> +       if (systemd_mode && inetd_mode)
-> +               die("--inetd is incompatible with --systemd");
-> +
-> +       if (systemd_mode && !sd_booted())
-> +               die("--systemd passed and not invoked from systemd");
-> +#endif
->         if (inetd_mode && (listen_port || (listen_addr.nr > 0)))
->                 die("--listen= and --port= are incompatible with --inetd");
-> --
-> 2.2.1.209.g41e5f3a
+diff --git a/sha1_file.c b/sha1_file.c
+index f860d67..61e2735 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3186,7 +3186,7 @@ static int index_core(unsigned char *sha1, int fd, size_t size,
+ 	int ret;
+ 
+ 	if (!size) {
+-		ret = index_mem(sha1, NULL, size, type, path, flags);
++		ret = index_mem(sha1, "", size, type, path, flags);
+ 	} else if (size <= SMALL_FILE_SIZE) {
+ 		char *buf = xmalloc(size);
+ 		if (size == read_in_full(fd, buf, size))
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index ca7d2a6..eee4761 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -216,4 +216,30 @@ test_expect_success EXPENSIVE 'filter large file' '
+ 	! test -s err
+ '
+ 
++test_expect_success "filter: clean empty file" '
++	git config filter.in-repo-header.clean  "echo cleaned && cat" &&
++	git config filter.in-repo-header.smudge "sed 1d" &&
++
++	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
++	>empty-in-worktree &&
++
++	echo cleaned >expected &&
++	git add empty-in-worktree &&
++	git show :empty-in-worktree >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success "filter: smudge empty file" '
++	git config filter.empty-in-repo.clean "cat >/dev/null" &&
++	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
++
++	echo "empty-in-repo filter=empty-in-repo"  >>.gitattributes &&
++	echo dead data walking >empty-in-repo &&
++	git add empty-in-repo &&
++
++	echo smudged >expected &&
++	git checkout-index --prefix=filtered- empty-in-repo &&
++	test_cmp expected filtered-empty-in-repo
++'
++
+ test_done
+-- 
+2.4.1.4.g08cda19
