@@ -1,81 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/8] t5520: test no merge candidates cases
-Date: Mon, 18 May 2015 10:46:50 -0700
-Message-ID: <xmqqoalhdbhx.fsf@gitster.dls.corp.google.com>
-References: <1431955978-17890-1-git-send-email-pyokagan@gmail.com>
-	<1431955978-17890-3-git-send-email-pyokagan@gmail.com>
-	<e89b333476cbb1e546371a07b357cd42@www.dscho.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Documentation/log: clarify what --raw means
+Date: Mon, 18 May 2015 19:51:35 +0200
+Message-ID: <vpqmw11vkns.fsf@anie.imag.fr>
+References: <297757279.1883703.1431704571028.JavaMail.zimbra@imag.fr>
+	<1431704674-18595-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqtwvdhhb2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 18 19:47:01 2015
+Cc: git@vger.kernel.org, eda@waniasset.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 18 19:51:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuP7y-0001F1-3f
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 19:46:58 +0200
+	id 1YuPCd-0003hA-WE
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 19:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbbERRqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 13:46:53 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:33707 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751207AbbERRqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 13:46:52 -0400
-Received: by igbpi8 with SMTP id pi8so87671131igb.0
-        for <git@vger.kernel.org>; Mon, 18 May 2015 10:46:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=2OPbz9lmSdH02mAmUWBPejwoCi7NhBkP0fDwq3MQT74=;
-        b=gk1MU1MK8q95ICoaOMnBo8clSW+d7tS7at6CLCajrxYF0YRAF1MRN/Uob2wWmNQAZY
-         HCO7Z2aPmaOkrn3IJLMB7BI3ysXf95SJZHikhdkOaRlZjwXKt3yh+Y5pabEvdgeD+SIo
-         QPaPhhAv/XQT8PKdgg/3QBHWT8JKBAGKgA17GP6P6aXtMX6dHiifzvU5PGy5Fea3GoXr
-         M0KmWzmxhVBqed+kIw//pxIup1PABfJDTBHKmO0AkfyUdDk0z5p20gHsIxZHnyB7JJBc
-         z72QWSI9Jidb2wh3MAKpq1D513aPxUYK/ZJexyEIjXTsoOY2GA1KlhcIcK1AmyVpeXqO
-         yl7Q==
-X-Received: by 10.107.160.141 with SMTP id j135mr31073431ioe.43.1431971212307;
-        Mon, 18 May 2015 10:46:52 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2120:a5f3:f7b6:7da9])
-        by mx.google.com with ESMTPSA id 16sm8129789ion.20.2015.05.18.10.46.51
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 18 May 2015 10:46:51 -0700 (PDT)
-In-Reply-To: <e89b333476cbb1e546371a07b357cd42@www.dscho.org> (Johannes
-	Schindelin's message of "Mon, 18 May 2015 17:08:38 +0200")
+	id S1752756AbbERRvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 13:51:43 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41245 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752057AbbERRvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 13:51:42 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4IHpX7X014680
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 18 May 2015 19:51:33 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4IHpZkq001141;
+	Mon, 18 May 2015 19:51:35 +0200
+In-Reply-To: <xmqqtwvdhhb2.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 15 May 2015 10:38:41 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 18 May 2015 19:51:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4IHpX7X014680
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1432576294.10519@Vu84Ke1pP0algmY7Y0CGww
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269284>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> +test_expect_success 'fail if wildcard spec does not match any refs' '
->> +	git checkout -b test copy^ &&
->> +	test_when_finished "git checkout -f copy && git branch -D test" &&
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> When I read this line, I immediately asked myself whether the
-> branch would be deleted even if the test case failed. I then
-> tested this theory by editing the first test case ("setup") like
-> this:
-> ...
-> and indeed, the file "file" was gone, even if the test case
-> failed. I therefore believe that this "test_when_finished" cleanup
-> might make debugging substantially harder. Maybe we can drop these
-> lines from this patch?
+>> There are several "raw formats", and describing --raw as "Generate the
+>> raw format" in the documentation for git-log seems to imply that it
+>> generates the raw *log* format.
+>>
+>> Clarify the wording by saying "raw diff format" explicitely, and make a
+>> special-case for "git log": "git log --raw" does not just change the
+>> format, it shows something which is not shown by default.
+>
+> Being a pedant, I find "generate the raw diff format" somewhat a
+> strange wording.  Aren't we generating a diff in the raw format (as
+> opposed to in other format like the textual patch format),
+> generating a diff using the raw format, etc.?
 
-The test framework is aware of the fact that it needs to help the
-people who are debugging the scripts.  The support is limited to the
-case in which you run it under the -i option, i.e.
+I think I chose this wording because I didn't want to say "raw format"
+for git-log(1), but then I added more special-cases for git-log.
 
-	$ cd t
-        $ sh ./t5520-pull.sh -i -v
+I changed it to
 
-will refrain from running test_when_finished scripts when the test
-piece fails.  Even though this is only limited to -i, I found it
-often sufficient for debugging.
+ifndef::git-log[]
+	Generate the diff in raw format.
+	{git-diff-core? This is the default.}
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
