@@ -1,80 +1,83 @@
-From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Subject: Ensimag students contributing to git
-Date: Tue, 19 May 2015 01:23:08 +0200 (CEST)
-Message-ID: <388720318.919104.1431991388837.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <722582475.919095.1431991277969.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] pack-bitmaps: plug memory leak, fix allocation size for recent_bitmaps
+Date: Tue, 19 May 2015 01:24:09 +0200
+Message-ID: <555A7499.7090900@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	galanalr@ensimag.grenoble-inp.fr, lespiner@ensimag.grenoble-inp.fr,
-	pagesg@ensimag.grenoble-inp.fr, matthieu.moy@grenoble-inp.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 19 01:21:29 2015
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <stefanbeller@gmail.com>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 19 01:24:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuULa-0004cj-Ae
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 01:21:22 +0200
+	id 1YuUOk-0005cy-DS
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 01:24:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755165AbbERXVR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2015 19:21:17 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:46480 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755038AbbERXVR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 19:21:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id DB2C026D5;
-	Tue, 19 May 2015 01:21:14 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 04p72XjpCsu2; Tue, 19 May 2015 01:21:14 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id C79D526CD;
-	Tue, 19 May 2015 01:21:14 +0200 (CEST)
-In-Reply-To: <722582475.919095.1431991277969.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - GC42 (Win)/8.0.9_GA_6191)
-Thread-Topic: Ensimag students contributing to git
-Thread-Index: BpUOCmQ5/WZPxcQrX3LJoqvAl+wTVQ==
+	id S1754965AbbERXYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 19:24:33 -0400
+Received: from mout.web.de ([212.227.17.11]:54001 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754866AbbERXYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 19:24:32 -0400
+Received: from [192.168.178.27] ([79.253.146.148]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MZlZK-1YbB7j2guc-00LXDa; Tue, 19 May 2015 01:24:29
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+X-Provags-ID: V03:K0:5knSsxaOCGGan+UV5m10xG/eAPSpuZ220Hq6eXkkcPW39C73hso
+ Eya3NBJqcyAp76jKT2WsBsa9Db51FYx14XG1JP6ku0jOZpEdE+SER1ZTPmCshhIKlZ6akdg
+ CN/IK8wMrKdPFQ6ZphUGcDsdXuwdXmoFlubcD0cwjv7G6TuRjVT29vi/78MBJgM9Crpe/e8
+ bW4oNIE2hMw+2kxB1FHWw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269330>
 
-Hello Git community,=20
+Use an automatic variable for recent_bitmaps, an array of pointers.
+This way we don't allocate too much and don't have to free the memory
+at the end.  The old code over-allocated because it reserved enough
+memory to store all of the structs it is only pointing to and never
+freed it.  160 64-bit pointers take up 1280 bytes, which is not too
+much to be placed on the stack.
 
+MAX_XOR_OFFSET is turned into a preprocessor constant to make it
+constant enough for use in an non-variable array declaration.
 
-We are a team of five students from the ENSIMAG (a french school of eng=
-ineering and computer science) who are going to contribute to git durin=
-g a month at least and after if we have the opportunity. We will work u=
-nder the supervision of Mr. Moy.=20
+Noticed-by: Stefan Beller <stefanbeller@gmail.com>
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+This seems to have fallen through the cracks, or did I just miss it?
 
+ pack-bitmap.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-We are glad to contribute to git and we are looking forward to getting =
-advices and reviews from the git community. It will be a great experien=
-ce for us as young programmers.=20
-
-
-We planned to work on =C2=AB git pull =E2=80=93setupstream =C2=BB for t=
-he first days if nobody is currently working on it and then we thought =
-of finishing the work of elder contributors from the ensimag on : =C2=AB=
- git bisect fix/unfixed =C2=BB.=20
-
-
-We are open to any suggestions on the choice of the subjects or of any =
-kind.=20
-
-
-Thanks,=20
-
-
-Antoine Delaite=20
-R=C3=A9mi Lespinet=20
-R=C3=A9mi Galan-Alfonso=20
-Louis Stuber=20
-Guillaume Pag=C3=A8s=20
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 62a98cc..e5abb8a 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -209,14 +209,12 @@ static inline uint8_t read_u8(const unsigned char *buffer, size_t *pos)
+ 	return buffer[(*pos)++];
+ }
+ 
++#define MAX_XOR_OFFSET 160
++
+ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ {
+-	static const size_t MAX_XOR_OFFSET = 160;
+-
+ 	uint32_t i;
+-	struct stored_bitmap **recent_bitmaps;
+-
+-	recent_bitmaps = xcalloc(MAX_XOR_OFFSET, sizeof(struct stored_bitmap));
++	struct stored_bitmap *recent_bitmaps[MAX_XOR_OFFSET] = { NULL };
+ 
+ 	for (i = 0; i < index->entry_count; ++i) {
+ 		int xor_offset, flags;
+-- 
+2.4.1
