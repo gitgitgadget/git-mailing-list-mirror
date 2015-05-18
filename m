@@ -1,131 +1,81 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 02/14] pull: pass verbosity, --progress flags to fetch
- and merge
-Date: Mon, 18 May 2015 19:41:19 +0200
-Organization: gmx
-Message-ID: <4213f4fa8fb52fb020c2e9b5d78fbf7b@www.dscho.org>
-References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
- <1431961571-20370-3-git-send-email-pyokagan@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/8] t5520: test no merge candidates cases
+Date: Mon, 18 May 2015 10:46:50 -0700
+Message-ID: <xmqqoalhdbhx.fsf@gitster.dls.corp.google.com>
+References: <1431955978-17890-1-git-send-email-pyokagan@gmail.com>
+	<1431955978-17890-3-git-send-email-pyokagan@gmail.com>
+	<e89b333476cbb1e546371a07b357cd42@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 18 19:41:31 2015
+Content-Type: text/plain
+Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 18 19:47:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuP2g-0006yY-0O
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 19:41:30 +0200
+	id 1YuP7y-0001F1-3f
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 19:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754251AbbERRlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 13:41:25 -0400
-Received: from mout.gmx.net ([212.227.15.15]:65303 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754227AbbERRlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 13:41:24 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MLeoF-1Yu8Bv2uDD-000wsT; Mon, 18 May 2015 19:41:20
- +0200
-In-Reply-To: <1431961571-20370-3-git-send-email-pyokagan@gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:9iX4lpJUBfYeFja91cNdv1gxPAD1qMu4TYQ+zhKOq26OwScG9i4
- Rs1fPddk1BunE79Kbj4bpweC4QFX282Ru8ZUUwulzWth0SzcyoKSdZMm44AtTiMF3nRPOcg
- Xas5kLRkBAcDlVNzBa5ug2A2v/7HpIIC7oYInBVLGGALbMz80U6ITd9UpROX8XFjiNdnixx
- +P2OV8M2e14rGpAnjHafA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751904AbbERRqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 13:46:53 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:33707 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751207AbbERRqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 13:46:52 -0400
+Received: by igbpi8 with SMTP id pi8so87671131igb.0
+        for <git@vger.kernel.org>; Mon, 18 May 2015 10:46:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=2OPbz9lmSdH02mAmUWBPejwoCi7NhBkP0fDwq3MQT74=;
+        b=gk1MU1MK8q95ICoaOMnBo8clSW+d7tS7at6CLCajrxYF0YRAF1MRN/Uob2wWmNQAZY
+         HCO7Z2aPmaOkrn3IJLMB7BI3ysXf95SJZHikhdkOaRlZjwXKt3yh+Y5pabEvdgeD+SIo
+         QPaPhhAv/XQT8PKdgg/3QBHWT8JKBAGKgA17GP6P6aXtMX6dHiifzvU5PGy5Fea3GoXr
+         M0KmWzmxhVBqed+kIw//pxIup1PABfJDTBHKmO0AkfyUdDk0z5p20gHsIxZHnyB7JJBc
+         z72QWSI9Jidb2wh3MAKpq1D513aPxUYK/ZJexyEIjXTsoOY2GA1KlhcIcK1AmyVpeXqO
+         yl7Q==
+X-Received: by 10.107.160.141 with SMTP id j135mr31073431ioe.43.1431971212307;
+        Mon, 18 May 2015 10:46:52 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2120:a5f3:f7b6:7da9])
+        by mx.google.com with ESMTPSA id 16sm8129789ion.20.2015.05.18.10.46.51
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 18 May 2015 10:46:51 -0700 (PDT)
+In-Reply-To: <e89b333476cbb1e546371a07b357cd42@www.dscho.org> (Johannes
+	Schindelin's message of "Mon, 18 May 2015 17:08:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269283>
 
-Hi Paul,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-On 2015-05-18 17:05, Paul Tan wrote:
+>> +test_expect_success 'fail if wildcard spec does not match any refs' '
+>> +	git checkout -b test copy^ &&
+>> +	test_when_finished "git checkout -f copy && git branch -D test" &&
+>
+> When I read this line, I immediately asked myself whether the
+> branch would be deleted even if the test case failed. I then
+> tested this theory by editing the first test case ("setup") like
+> this:
+> ...
+> and indeed, the file "file" was gone, even if the test case
+> failed. I therefore believe that this "test_when_finished" cleanup
+> might make debugging substantially harder. Maybe we can drop these
+> lines from this patch?
 
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 0b771b9..a4d9c92 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -11,16 +11,64 @@
->  #include "argv-array.h"
->  #include "run-command.h"
->  
-> +/**
-> + * Given an option opt, where opt->value points to a char* and opt->defval is a
-> + * string, sets opt->value to the evaluation of "--$defval=$arg". If `arg` is
-> + * NULL, then opt->value is set to "--$defval". If unset is true, then
-> + * opt->value is set to "--no-$defval".
-> + */
-> +static int parse_opt_passthru(const struct option *opt, const char
-> *arg, int unset)
+The test framework is aware of the fact that it needs to help the
+people who are debugging the scripts.  The support is limited to the
+case in which you run it under the -i option, i.e.
 
-How about adding this to parse-options-cb.c in a separate patch? I guess the description could say something like:
+	$ cd t
+        $ sh ./t5520-pull.sh -i -v
 
-/**
- * Given an option opt, recreate the command-line option, as strbuf. This is useful
- * when a command needs to parse a command-line option in order to pass it to yet
- * another command. This callback can be used in conjunction with the
- * PARSE_OPT_(OPTARG|NOARG|NONEG) options, but not with PARSE_OPT_LASTARG_DEFAULT
- * because it expects `defval` to be the name of the command-line option to
- * reconstruct.
- *
- * The result will be stored in opt->value, which is expected to be a pointer to an
- * strbuf.
- */
-
-Implied by my suggested description, I also propose to put the re-recreated command-line option into a strbuf instead of a char *, to make memory management easier (read: avoid memory leaks).
-
-You might also want to verify that arg is `NULL` when `unset != 0`. Something like this:
-
-int parse_opt_passthru(const struct option *opt, const char *arg, int unset)
-{
-	struct strbuf *buf = opt->value;
-
-	assert(opt->defval);
-	strbuf_reset(buf);
-	if (unset) {
-		assert(!arg);
-		strbuf_addf(buf, "--no-%s", opt->defval);
-	}
-	else {
-		strbuf_addf(buf, "--%s", opt->defval);
-		if (arg)
-			strbuf_addf(buf, "=%s", arg);
-	}
-
-	return 0;
-}
-
->  static struct option pull_options[] = {
-> +	/* Shared options */
-> +	OPT__VERBOSITY(&opt_verbosity),
-> +	{ OPTION_CALLBACK, 0, "progress", &opt_progress, NULL,
-> +	  N_("force progress reporting"),
-> +	  PARSE_OPT_NOARG, parse_opt_passthru},
-
-I *think* there is a '(intptr_t) "progress"' missing...
-
->  /**
-> + * Pushes "-q" or "-v" switches into arr to match the opt_verbosity level.
-> + */
-> +static void argv_push_verbosity(struct argv_array *arr)
-> +{
-> +	int verbosity;
-> +
-> +	for (verbosity = opt_verbosity; verbosity > 0; verbosity--)
-> +		argv_array_push(arr, "-v");
-> +
-> +	for (verbosity = opt_verbosity; verbosity < 0; verbosity++)
-> +		argv_array_push(arr, "-q");
-> +}
-
-Hmm... I guess this is *really* nit-picky, but I'd rather use "i" instead of "verbosity" because the second loop is about quietness instead of verbosity ;-)
-
-Ciao,
-Dscho
+will refrain from running test_when_finished scripts when the test
+piece fails.  Even though this is only limited to -i, I found it
+often sufficient for debugging.
