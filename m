@@ -1,90 +1,250 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Git Server Repository Security?
-Date: Mon, 18 May 2015 13:57:49 +0200
-Message-ID: <20150518115749.GA16841@book.hvoigt.net>
-References: <CABQ4iYiWu17H1XhPYebmP27x=R11SKW0P91AW2y9S=r-2c0B1A@mail.gmail.com>
- <20150518102633.GA15186@book.hvoigt.net>
- <CABQ4iYgjtdw46Psow_e7uGLqx0ZiFt+TQOgXvCmP1-W10LGEmg@mail.gmail.com>
+Subject: Re: Diffing submodule does not yield complete logs for merge commits
+Date: Mon, 18 May 2015 14:30:36 +0200
+Message-ID: <20150518123036.GB16841@book.hvoigt.net>
+References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
+ <20150501175757.GA10569@book.hvoigt.net>
+ <CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
+ <5547C961.7070909@web.de>
+ <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
+ <37f399418bbebb3b53a50bf8daffcdc0@www.dscho.org>
+ <CAHd499Do2aB5E_=aDzkoDssEbgz181rH36X28Oe7Zcok2f=zBQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John McIntyre <joh98.mac@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 18 13:58:04 2015
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 18 14:31:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuJgJ-0005zO-QZ
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 13:58:04 +0200
+	id 1YuKCR-0004Ko-Bi
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 14:31:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355AbbERL57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 07:57:59 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.94]:33436 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbbERL56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 07:57:58 -0400
+	id S1754320AbbERMbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 08:31:12 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:59024 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754249AbbERMal (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 08:30:41 -0400
 Received: from [195.71.20.144] (helo=book.hvoigt.net)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
 	(Exim 4.84)
 	(envelope-from <hvoigt@hvoigt.net>)
-	id 1YuJgA-0004ci-Qg; Mon, 18 May 2015 13:57:54 +0200
+	id 1YuKBq-0004yi-7E; Mon, 18 May 2015 14:30:38 +0200
 Content-Disposition: inline
-In-Reply-To: <CABQ4iYgjtdw46Psow_e7uGLqx0ZiFt+TQOgXvCmP1-W10LGEmg@mail.gmail.com>
+In-Reply-To: <CAHd499Do2aB5E_=aDzkoDssEbgz181rH36X28Oe7Zcok2f=zBQ@mail.gmail.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269229>
 
-On Mon, May 18, 2015 at 11:58:03AM +0100, John McIntyre wrote:
-> 2015-05-18 11:26 GMT+01:00 Heiko Voigt <hvoigt@hvoigt.net>:
-> > Hi,
+Hi,
+
+On Fri, May 15, 2015 at 03:33:07PM -0500, Robert Dailey wrote:
+> On Tue, May 5, 2015 at 12:49 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > Hi Robert,
 > >
-> > On Mon, May 18, 2015 at 11:07:02AM +0100, John McIntyre wrote:
-> >> Hi,
-> >> I've been asked to set up a git repository for a few projects.  So I
-> >> have a Linux CentOS server running git.   I place the repositories
-> >> under /opt and I use the .ssh/authorized_keys of the git user, to
-> >> grant access. The user sends me his private key, and I paste it into
-> >> the end of the file.
-> >>
-> >> And now, I realise that there's a problem.  If I have /opt/repo1.git
-> >> and /opt/repo2.git, then all users can access both repositories.
-> >>
-> >> Is there a way to prevent this?
+> > On 2015-05-04 22:21, Robert Dailey wrote:
 > >
-> > If you want a simple tool using ssh-keys have a look at gitolite[1].
-> > It quite simple to setup and with it you can specify all kinds of access
-> > rights.
+> >> Since I am not a linux user, I have implemented this feature against
+> >> the Git for Windows fork of git. I am not able to verify changes if I
+> >> make them directly against the Git repository.
+> >
+> > That is why I worked so hard on support of Vagrant: https://github.com/msysgit/msysgit/wiki/Vagrant -- in short, it makes it dead easy for you to set up a *minimal* Linux VM inside your Git SDK and interact with it via ssh.
+> >
+> > With the Vagrant solution, you can easily test Linux Git even on Windows.
+> >
+> > Ciao,
+> > Johannes
 > 
-> That's adding a separate level of complexity.
+> At the moment I have a "half-ass" patch attached. This implements the
+> feature itself. I'm able to test this and it seems to be working.
+> Please note I'm a C++ developer and straight C / Bash are not my
+> strong suits. I apologize in advance for any mistakes. I am open to
+> taking recommendations for corrections.
 
-Yes its a little more complex but not much.
+Please inline the patch, so people can easily comment. Have a look at
+Documentation/SubmittingPatches and patches on this list for an example.
+I have inlined your patch below for comments.
 
-> I looked into filesystem-level permissions.  I don't see any means of
-> doing so, because everyone accesses the repositories using the 'git'
-> user.  So even if I add a group like 'devClient1' and then change the
-> group ownership of a repo to that user, they'll still be able to
-> access all repos..?
+> I'm not sure how I can verify the feature in a unit test. In addition
+> to learning bash scripting well enough to write the test, I am not
+> sure how to use git to check for the additional commits. Plus the repo
+> for the test will need to handle a submodule change to a merge commit
+> as well. Any advice on setting up a good test case for this? What
+> conditions should I check for, as far as log output goes?
 
-No the repositories are only accessible by the defined groups/users.
+The testsuite can be found in t/ the README there describes most of it.
+Have a look at t4041-diff-submodule-option.sh and imitate the tests for
+the existing log option. What they basically do is: Write a file with
+the expected output of the diff and then compare the actual output with
+it. That should also be possible for your option.
 
-The access control is done by the gitolite layer. It uses the command
-option in the authorized_keys file to restrict access. The access rights
-and groups and so on are configured in its own gitolite.conf file which
-is itself stored in a git repository in which you commit and push to
-change them (or add more ssh-keys).
+As for the merge commit: If there is no merge commit in the submodule
+that is used for testing you can simply add a sequence of git commands
+that manufactures the situation in the test repository as you need it.
 
-It only uses ssh to authenticate the authorisation is then handled by
-the gitolite tool.
+'test_pause' is a helpful command to interactively debug/develop tests.
+Run the test with the -v -i switches (maybe -d) when developing.
 
-In my experience this is a setup simpler to handle then groups and users
-directly on the server. It also allows to give a unique url for
-accessing one repository. With multiple system users you would have one
-url per user per repository which is not nice when sharing these and
-breaks (or needs extra complexity) when using submodules.
+Comments for your patch please see below.
+
+Cheers Heiko
+
+> From: Robert Dailey <rcdailey@gmail.com>
+> Subject: [PATCH] Add 'full-log' option to diff.submodule
+> 
+> Like the 'log' option to `diff --submodule`, 'full-log' provides
+> logs without the `--first-parent` option.
+> ---
+>  diff.c      | 16 ++++++++++++----
+>  diff.h      |  1 +
+>  submodule.c |  9 +++++----
+>  submodule.h |  3 ++-
+>  4 files changed, 20 insertions(+), 9 deletions(-)
+> 
+> diff --git a/diff.c b/diff.c
+> index 7500c55..58c4872 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -128,10 +128,18 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+>  
+>  static int parse_submodule_params(struct diff_options *options, const char *value)
+>  {
+> -	if (!strcmp(value, "log"))
+> +	if (!strcmp(value, "log")) {
+>  		DIFF_OPT_SET(options, SUBMODULE_LOG);
+> -	else if (!strcmp(value, "short"))
+> +		DIFF_OPT_CLR(options, SUBMODULE_FULL_LOG);
+> +	}
+> +	else if (!strcmp(value, "full-log")) {
+> +		DIFF_OPT_SET(options, SUBMODULE_FULL_LOG);
+> +		DIFF_OPT_CLR(options, SUBMODULE_LOG);
+> +	}
+> +	else if (!strcmp(value, "short")) {
+>  		DIFF_OPT_CLR(options, SUBMODULE_LOG);
+> +		DIFF_OPT_CLR(options, SUBMODULE_FULL_LOG);
+> +	}
+
+Here I think clearing the bits first and then setting them would be
+simpler and less error prone for further extensions. E.g. in the
+beginning of the function:
+
+	DIFF_OPT_CLR(options, SUBMODULE_LOG);
+	DIFF_OPT_CLR(options, SUBMODULE_FULL_LOG);
+
+and then
+
+	if (!strcmp(value, "log"))
+		DIFF_OPT_SET(options, SUBMODULE_LOG);
+	else if (...
+
+
+>  	else
+>  		return -1;
+>  	return 0;
+> @@ -2240,7 +2248,7 @@ static void builtin_diff(const char *name_a,
+>  	struct strbuf header = STRBUF_INIT;
+>  	const char *line_prefix = diff_line_prefix(o);
+>  
+> -	if (DIFF_OPT_TST(o, SUBMODULE_LOG) &&
+> +	if ((DIFF_OPT_TST(o, SUBMODULE_LOG) || DIFF_OPT_TST(o, SUBMODULE_FULL_LOG)) &&
+
+Try to keep your line length less than 80 characters.
+(Documentation/CodingGuidelines)
+
+>  			(!one->mode || S_ISGITLINK(one->mode)) &&
+>  			(!two->mode || S_ISGITLINK(two->mode))) {
+>  		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
+> @@ -2248,7 +2256,7 @@ static void builtin_diff(const char *name_a,
+>  		show_submodule_summary(o->file, one->path ? one->path : two->path,
+>  				line_prefix,
+>  				one->sha1, two->sha1, two->dirty_submodule,
+> -				meta, del, add, reset);
+> +				meta, del, add, reset, DIFF_OPT_TST(o, SUBMODULE_FULL_LOG));
+
+Same as above.
+
+>  		return;
+>  	}
+>  
+> diff --git a/diff.h b/diff.h
+> index b4a624d..95f319c 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -90,6 +90,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+>  #define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
+>  #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
+>  #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
+> +#define DIFF_OPT_SUBMODULE_FULL_LOG  (1 << 31)
+>  
+>  #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+>  #define DIFF_OPT_TOUCHED(opts, flag)    ((opts)->touched_flags & DIFF_OPT_##flag)
+> diff --git a/submodule.c b/submodule.c
+> index d37d400..f98173e 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -290,14 +290,14 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+>  
+>  static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+>  		struct commit *left, struct commit *right,
+> -		int *fast_forward, int *fast_backward)
+> +		int *fast_forward, int *fast_backward, unsigned full_log)
+>  {
+>  	struct commit_list *merge_bases, *list;
+>  
+>  	init_revisions(rev, NULL);
+>  	setup_revisions(0, NULL, rev, NULL);
+>  	rev->left_right = 1;
+> -	rev->first_parent_only = 1;
+> +	rev->first_parent_only = full_log ? 0 : 1;
+>  	left->object.flags |= SYMMETRIC_LEFT;
+>  	add_pending_object(rev, &left->object, path);
+>  	add_pending_object(rev, &right->object, path);
+> @@ -363,7 +363,8 @@ void show_submodule_summary(FILE *f, const char *path,
+>  		const char *line_prefix,
+>  		unsigned char one[20], unsigned char two[20],
+>  		unsigned dirty_submodule, const char *meta,
+> -		const char *del, const char *add, const char *reset)
+> +		const char *del, const char *add, const char *reset,
+> +		unsigned full_log)
+>  {
+>  	struct rev_info rev;
+>  	struct commit *left = NULL, *right = NULL;
+> @@ -381,7 +382,7 @@ void show_submodule_summary(FILE *f, const char *path,
+>  		 !(right = lookup_commit_reference(two)))
+>  		message = "(commits not present)";
+>  	else if (prepare_submodule_summary(&rev, path, left, right,
+> -					   &fast_forward, &fast_backward))
+> +					   &fast_forward, &fast_backward, full_log))
+
+Line length.
+
+>  		message = "(revision walker failed)";
+>  
+>  	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+> diff --git a/submodule.h b/submodule.h
+> index 7beec48..301358b 100644
+> --- a/submodule.h
+> +++ b/submodule.h
+> @@ -26,7 +26,8 @@ void show_submodule_summary(FILE *f, const char *path,
+>  		const char *line_prefix,
+>  		unsigned char one[20], unsigned char two[20],
+>  		unsigned dirty_submodule, const char *meta,
+> -		const char *del, const char *add, const char *reset);
+> +		const char *del, const char *add, const char *reset,
+> +		unsigned full_log);
+>  void set_config_fetch_recurse_submodules(int value);
+>  void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+>  int fetch_populated_submodules(const struct argv_array *options,
+
+Apart from the comments above, your patch looks good to me.
 
 Cheers Heiko
