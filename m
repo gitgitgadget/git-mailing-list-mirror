@@ -1,98 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/14] pull: set reflog message
-Date: Mon, 18 May 2015 14:53:07 -0700
-Message-ID: <xmqqmw11a6yk.fsf@gitster.dls.corp.google.com>
-References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
-	<1431961571-20370-11-git-send-email-pyokagan@gmail.com>
-	<390e789e8f84122d52185f22e6e798f2@www.dscho.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] subdirectory tests: code cleanup, uncomment test
+Date: Mon, 18 May 2015 15:03:19 -0700
+Message-ID: <20150518220318.GE5586@google.com>
+References: <xmqqlhglbt4k.fsf@gitster.dls.corp.google.com>
+ <1431983426-4346-1-git-send-email-sbeller@google.com>
+ <xmqqvbfpa8ff.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kZ9h=Oev_mymFBRNyAGokAe8-vWh_D12VZYHTUv20Djvg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 18 23:53:16 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 19 00:03:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuSyJ-0002OE-QP
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 23:53:16 +0200
+	id 1YuT8B-0005n9-Tc
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 00:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753307AbbERVxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 17:53:11 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:32796 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbbERVxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 17:53:09 -0400
-Received: by iebgx4 with SMTP id gx4so182093890ieb.0
-        for <git@vger.kernel.org>; Mon, 18 May 2015 14:53:09 -0700 (PDT)
+	id S1752501AbbERWDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 18:03:23 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:37499 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750858AbbERWDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 18:03:22 -0400
+Received: by igbsb11 with SMTP id sb11so48462igb.0
+        for <git@vger.kernel.org>; Mon, 18 May 2015 15:03:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=gxwN0car21eBb8JfCBSBDz3yLBGCYw+rY2d7d/rzOdE=;
-        b=s673z6ckZdQfKXAqy6oy1M5uTuawc7fqkpqUESpdA3Dt3laqOQU1Z5VW6ojl7ogSPV
-         SRkSZZfXPpMocg5FimN8RqNDEQazOEamDWo6CyDZMvH4TRDSuf2ItwkbXA3TZ/kAGZzY
-         b1ihjMgY/6Oz4IOMk620fkQvv1mvtROcWnCw0rLVY8JcSIz1VX6C3/AQzzBMxzjaSxeZ
-         uFQLdNyydco+71UvLKt/ZMmfx6sanfm4Lh9SNEPQ7fJAIkQ9YUpqRp1h+fLMBwDmSwVS
-         F3I5H6o4gimmeC9V1GRLL4Q6YlDlgsjeubjxHw7Qy2AAxcwS24toLstjJsmUGV+9xQVJ
-         k9Qg==
-X-Received: by 10.50.114.70 with SMTP id je6mr17238810igb.43.1431985989224;
-        Mon, 18 May 2015 14:53:09 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
-        by mx.google.com with ESMTPSA id r4sm6423016igw.12.2015.05.18.14.53.08
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qma4RkmxgwVVQ5SdAipYKmSjYtb58M8uaH9VHJHgqBk=;
+        b=SqQz0b58NyI2VrlUbPOGuKcDPIERCTa930ty2PHvpFpNPp2wR6p5b1A1W3q5D7XUGs
+         YZ60bFyd+w4N1lYQi5zhkCNfrftmvzH3M2jlfRnC3muAQOZYvE+wgLG6qIYkxhvecCbs
+         PjnQ+NGbRJ9FvY8Y0ahBkGITCKB5XYPKED1MKb4YuHemPq03tIfsbBLZCpQ7/ikg6BGP
+         d/6ue8LvlUh0ohDpBmz/KRLVjBHLGZTxZPLzJhi+R9Ng9f3MmrLr/7OwJMq//5uKqo1C
+         zAtrv+VIJoVIfkm8W6wapSpZtWeU3IG8YuM9V37ob463vB32OS81+N6xIdlrt+jArSZN
+         liTA==
+X-Received: by 10.43.135.5 with SMTP id ie5mr18851720icc.78.1431986602295;
+        Mon, 18 May 2015 15:03:22 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:fc3a:4b70:52a9:16b0])
+        by mx.google.com with ESMTPSA id j20sm6440420igt.16.2015.05.18.15.03.20
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 18 May 2015 14:53:08 -0700 (PDT)
-In-Reply-To: <390e789e8f84122d52185f22e6e798f2@www.dscho.org> (Johannes
-	Schindelin's message of "Mon, 18 May 2015 21:27:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        Mon, 18 May 2015 15:03:21 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZ9h=Oev_mymFBRNyAGokAe8-vWh_D12VZYHTUv20Djvg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269326>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Stefan Beller wrote:
 
->>  /**
->> + * Sets the GIT_REFLOG_ACTION environment variable to the concatenation of argv
->> + */
->> +static void set_reflog_message(int argc, const char **argv)
->> +{
->> +	int i;
->> +	struct strbuf msg = STRBUF_INIT;
->> +
->> +	for (i = 0; i < argc; i++) {
->> +		strbuf_addstr(&msg, argv[i]);
->> +		strbuf_addch(&msg, ' ');
->> +	}
->> +
->> +	strbuf_rtrim(&msg);
->
-> Since this is not performance critical code, I would be slightly in
-> favor of simplifying thusly:
->
-> /* Join the argument list, separated by spaces */
-> for (i = 0; i < argc; i++)
-> 	strbuf_addf(&msg, "%s%s", i ? " " : "", argv[i]);
+> I am not happy with (historic) either, maybe "(explicit GIT_DIR)"
+> is describing the test better without giving the reader the thoughts
+> as you raised here?
 
-Yeah, either that, or "insert separator only before adding to
-something else" pattern, i.e.
+The general principle I use is to try to briefly describe what
+hypothesis the code is trying to test, so that if it fails someone knows
+what that means.
 
-	for (i = 0; i < argc; i++) {
-        	if (i)
-                	addch(&msg, ' ');
-		addstr(&msg, argv[i]);
-	}
+In this case, I could do
 
-Both are easier to read than "always append SP and trim at the end".
-Besides, trimming at the end makes readers wonder if there are cases
-where argv[argc-1] ends with whitespaces and the code on purpose
-removes them.
+	test_expect_success 'no file/rev ambiguity with explicit GIT_DIR=.' '
 
+[...]
+>>>               cd foo.git &&
+>>> +             # older Git needed help by exporting GIT_DIR=.
+>>> +             # to realize that it is inside a bare repository.
+>>> +             # We keep this test around for regression testing.
+>>>               GIT_DIR=. git show -s HEAD
 
+I don't think this comment is needed, since it doesn't make it clearer
+what the test is about.
 
-
-                        	
+Thanks,
+Jonathan
