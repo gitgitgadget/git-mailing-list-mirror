@@ -1,183 +1,197 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH 12/14] pull: configure --rebase via branch.<name>.rebase or pull.rebase
-Date: Mon, 18 May 2015 23:06:09 +0800
-Message-ID: <1431961571-20370-13-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH 13/14] pull --rebase: exit early when the working directory is dirty
+Date: Mon, 18 May 2015 23:06:10 +0800
+Message-ID: <1431961571-20370-14-git-send-email-pyokagan@gmail.com>
 References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stephen Robin <stephen.robin@gmail.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 17:08:30 2015
+X-From: git-owner@vger.kernel.org Mon May 18 17:09:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuMea-0004kO-Nd
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 17:08:29 +0200
+	id 1YuMf7-00051Z-AN
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 17:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866AbbERPIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 11:08:14 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:33119 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752646AbbERPIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 11:08:06 -0400
-Received: by pdbqa5 with SMTP id qa5so153156402pdb.0
-        for <git@vger.kernel.org>; Mon, 18 May 2015 08:08:04 -0700 (PDT)
+	id S1753449AbbERPIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 11:08:53 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:34776 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753702AbbERPII (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 11:08:08 -0400
+Received: by pdbnk13 with SMTP id nk13so57698676pdb.1
+        for <git@vger.kernel.org>; Mon, 18 May 2015 08:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sMfeG6Ct8wQo2js5e+jY6vCv3ws7UzkNDv89t9lCCL8=;
-        b=a4rlDc+R1kO+fFICh+tQqQRUhjMz50LISj7rD6Y8lWj4ptKHfRrJFfS2fIG/8q4X52
-         rTkDCQmbiGohQ6y8PGBW/F9AHletV/8qAKcIIdbEi2hKEDx4xlqq4gklRZAFVyGeBIBX
-         fPerhMGgvP5/00YWv43/ITIy+PcAHQR2wPb2WP4LJVkBTScRiWdhuToMzP/ULtLmLzEe
-         l4xWuQ9ZDc52wmIiBlL+YjTiDAuE8GCNRiVgsetoFJnqCTVz3697M19KiT1Vu/nygExB
-         Jqva6w9SLtApg4aygYky5Vl3HOyzHylL0DU1kre/aNZd7G2PzVuJ+S4yAwJp/gFYC+5F
-         ON7A==
-X-Received: by 10.70.45.16 with SMTP id i16mr45027296pdm.51.1431961684651;
-        Mon, 18 May 2015 08:08:04 -0700 (PDT)
+        bh=vjVmZ23qR+IrABgoBTjrZJfx9kRVYMGy0zavK3YrT4w=;
+        b=u0B22a4PVYPGcGTma6X62d1Sf1Vmx8pPXWUFJtfxSNKJuqi7ji00BXAUsBc/hVtFkP
+         FqV2HiPnIQq7R48BXZ9d4FtBam4rRoTNxWL6BfIrCwj1oHOK2rbL2wrDbVFkESemrn9U
+         vVe4f0bIH0121WPavodujLpuEhz/URlXG0UtOoS5Fo9SYTZgC9MEsvrjhqf0v1EC96YD
+         10E9ngpFqprQP7GSe2xGIWu/BV2IDVN2u+XaTRAsjuT/R1XqZ1sqnKCQ/JSFGmNMmt33
+         RQKK6fOxruISDm3wOQs0QeEQO8vb6/Ua7SJ63CDzUttSxSKvg/Zgf4xUmZj/4y8lF4fe
+         r04A==
+X-Received: by 10.70.93.36 with SMTP id cr4mr44226954pdb.68.1431961687732;
+        Mon, 18 May 2015 08:08:07 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id i9sm10370062pdj.27.2015.05.18.08.08.01
+        by mx.google.com with ESMTPSA id i9sm10370062pdj.27.2015.05.18.08.08.04
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 May 2015 08:08:03 -0700 (PDT)
+        Mon, 18 May 2015 08:08:06 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269272>
 
-Since cd67e4d (Teach 'git pull' about --rebase, 2007-11-28),
-fetch+rebase could be set by default by defining the config variable
-branch.<name>.rebase. This setting can be overriden on the command line
-by --rebase and --no-rebase.
-
-Since 6b37dff (pull: introduce a pull.rebase option to enable --rebase,
-2011-11-06), git-pull --rebase can also be configured via the
-pull.rebase configuration option.
-
-Re-implement support for these two configuration settings by introducing
-config_get_rebase() which is called before parse_options() to set the
-default value of opt_rebase.
+Re-implement the behavior introduced by f9189cf (pull --rebase: exit
+early when the working directory is dirty, 2008-05-21).
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/pull.c  | 35 +++++++++++++++++++++++++++++++++++
- t/t5520-pull.sh | 12 ++++++------
- 2 files changed, 41 insertions(+), 6 deletions(-)
+ builtin/pull.c  | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ t/t5520-pull.sh |  6 ++---
+ 2 files changed, 79 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index f18a21c..a0958a7 100644
+index a0958a7..c8d673d 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -294,6 +294,39 @@ static const char *config_get_ff(void)
- 	die(_("Invalid value for pull.ff: %s"), value);
+@@ -14,6 +14,8 @@
+ #include "remote.h"
+ #include "dir.h"
+ #include "refs.h"
++#include "revision.h"
++#include "lockfile.h"
+ 
+ /**
+  * Given an option opt, where opt->value points to a char* and opt->defval is a
+@@ -327,6 +329,73 @@ static int config_get_rebase(void)
+ 	return value;
  }
  
 +/**
-+ * Returns the default configured value for --rebase. It first looks for the
-+ * value of "branch.$curr_branch.rebase", where $curr_branch is the current
-+ * branch, and if HEAD is detached or the configuration key does not exist,
-+ * looks for the value of "pull.rebase". If both configuration keys do not
-+ * exist, returns REBASE_FALSE.
++ * Returns 1 if there are unstaged changes, 0 otherwise.
 + */
-+static int config_get_rebase(void)
++static int has_unstaged_changes(const char *prefix)
 +{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct branch *curr_branch = branch_get("HEAD");
-+	const char *key, *str;
-+	int ret = -1, value;
++	struct rev_info rev_info;
++	int result;
 +
-+	if (curr_branch) {
-+		strbuf_addf(&sb, "branch.%s.rebase", curr_branch->name);
-+		key = sb.buf;
-+		ret = git_config_get_value(sb.buf, &str);
++	init_revisions(&rev_info, prefix);
++	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++	diff_setup_done(&rev_info.diffopt);
++	result = run_diff_files(&rev_info, 0);
++	return diff_result_code(&rev_info.diffopt, result);
++}
++
++/**
++ * Returns 1 if there are uncommitted changes, 0 otherwise.
++ */
++static int has_uncommitted_changes(const char *prefix)
++{
++	struct rev_info rev_info;
++	int result;
++
++	if (is_cache_unborn())
++		return 0;
++
++	init_revisions(&rev_info, prefix);
++	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++	add_head_to_pending(&rev_info);
++	diff_setup_done(&rev_info.diffopt);
++	result = run_diff_index(&rev_info, 1);
++	return diff_result_code(&rev_info.diffopt, result);
++}
++
++/**
++ * If the work tree has unstaged or uncommitted changes, dies with the
++ * appropriate message.
++ */
++static void die_on_unclean_work_tree(const char *prefix)
++{
++	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
++	int do_die = 0;
++
++	hold_locked_index(lock_file, 0);
++	refresh_cache(REFRESH_QUIET);
++	update_index_if_able(&the_index, lock_file);
++	rollback_lock_file(lock_file);
++
++	if (has_unstaged_changes(prefix)) {
++		error(_("Cannot pull with rebase: You have unstaged changes."));
++		do_die = 1;
 +	}
-+	if (ret) {
-+		key = "pull.rebase";
-+		ret = git_config_get_value(key, &str);
++
++	if (has_uncommitted_changes(prefix)) {
++		if (do_die)
++			error(_("Additionally, your index contains uncommitted changes."));
++		else
++			error(_("Cannot pull with rebase: Your index contains uncommitted changes."));
++		do_die = 1;
 +	}
-+	if (ret) {
-+		strbuf_release(&sb);
-+		return REBASE_FALSE;
-+	}
-+	if ((value = parse_config_rebase(str)) < 0)
-+		die(_("Invalid value for %s: %s"), key, str);
-+	strbuf_release(&sb);
-+	return value;
++
++	if (do_die)
++		exit(1);
 +}
 +
  struct known_remote {
  	struct known_remote *next;
  	struct remote *remote;
-@@ -730,6 +763,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (!getenv("GIT_REFLOG_ACTION"))
- 		set_reflog_message(argc, argv);
+@@ -782,9 +851,15 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1("HEAD", orig_head))
+ 		hashclr(orig_head);
  
-+	opt_rebase = config_get_rebase();
+-	if (opt_rebase)
++	if (opt_rebase) {
++		if (is_null_sha1(orig_head) && !is_cache_unborn())
++			die(_("Updating an unborn branch with changes added to the index."));
 +
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
- 	parse_repo_refspecs(argc, argv, &repo, &refspecs);
++		die_on_unclean_work_tree(prefix);
++
+ 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+ 			hashclr(rebase_fork_point);
++	}
  
+ 	if (run_fetch(repo, refspecs))
+ 		return 1;
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 3798b96..17254ee 100755
+index 17254ee..62dbfb5 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -234,7 +234,7 @@ test_expect_success '--rebase fails with multiple branches' '
- 	test modified = "$(git show HEAD:file)"
+@@ -390,7 +390,7 @@ test_expect_success 'rebased upstream + fetch + pull --rebase' '
+ 
  '
  
--test_expect_failure 'pull.rebase' '
-+test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config pull.rebase true &&
- 	git pull . copy &&
-@@ -242,7 +242,7 @@ test_expect_failure 'pull.rebase' '
- 	test new = "$(git show HEAD:file2)"
+-test_expect_failure 'pull --rebase dies early with dirty working directory' '
++test_expect_success 'pull --rebase dies early with dirty working directory' '
+ 
+ 	git checkout to-rebase &&
+ 	git update-ref refs/remotes/me/copy copy^ &&
+@@ -420,7 +420,7 @@ test_expect_success 'pull --rebase works on branch yet to be born' '
+ 	test_cmp expect actual
  '
  
--test_expect_failure 'branch.to-rebase.rebase' '
-+test_expect_success 'branch.to-rebase.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config branch.to-rebase.rebase true &&
- 	git pull . copy &&
-@@ -280,7 +280,7 @@ test_expect_success 'pull.rebase=false create a new merge commit' '
- 	test file3 = "$(git show HEAD:file3.t)"
+-test_expect_failure 'pull --rebase fails on unborn branch with staged changes' '
++test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
+ 	test_when_finished "rm -rf empty_repo2" &&
+ 	git init empty_repo2 &&
+ 	(
+@@ -492,7 +492,7 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
+ 	)
  '
  
--test_expect_failure 'pull.rebase=true flattens keep-merge' '
-+test_expect_success 'pull.rebase=true flattens keep-merge' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase true &&
- 	git pull . copy &&
-@@ -288,7 +288,7 @@ test_expect_failure 'pull.rebase=true flattens keep-merge' '
- 	test file3 = "$(git show HEAD:file3.t)"
- '
- 
--test_expect_failure 'pull.rebase=1 is treated as true and flattens keep-merge' '
-+test_expect_success 'pull.rebase=1 is treated as true and flattens keep-merge' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase 1 &&
- 	git pull . copy &&
-@@ -296,7 +296,7 @@ test_expect_failure 'pull.rebase=1 is treated as true and flattens keep-merge' '
- 	test file3 = "$(git show HEAD:file3.t)"
- '
- 
--test_expect_failure 'pull.rebase=preserve rebases and merges keep-merge' '
-+test_expect_success 'pull.rebase=preserve rebases and merges keep-merge' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase preserve &&
- 	git pull . copy &&
-@@ -304,7 +304,7 @@ test_expect_failure 'pull.rebase=preserve rebases and merges keep-merge' '
- 	test "$(git rev-parse HEAD^2)" = "$(git rev-parse keep-merge)"
- '
- 
--test_expect_failure 'pull.rebase=invalid fails' '
-+test_expect_success 'pull.rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase invalid &&
- 	! git pull . copy
+-test_expect_failure 'git pull --rebase against local branch' '
++test_expect_success 'git pull --rebase against local branch' '
+ 	git checkout -b copy2 to-rebase-orig &&
+ 	git pull --rebase . to-rebase &&
+ 	test "conflicting modification" = "$(cat file)" &&
 -- 
 2.1.4
