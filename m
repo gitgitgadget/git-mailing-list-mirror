@@ -1,255 +1,56 @@
-From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-Subject: [PATCH v8 4/5] command-list.txt: drop the "common" tag
-Date: Mon, 18 May 2015 21:18:16 +0200
-Message-ID: <1431976697-26288-5-git-send-email-sebastien.guimmara@gmail.com>
-References: <1431976697-26288-1-git-send-email-sebastien.guimmara@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 08/14] pull: fast-forward working tree if head is updated
+Date: Mon, 18 May 2015 21:18:32 +0200
+Organization: gmx
+Message-ID: <4148931c0c9476093184fd252f8428d9@www.dscho.org>
+References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
+ <1431961571-20370-9-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: sunshine@sunshineco.com,
-	=?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 21:18:41 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 18 21:18:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuQYi-0000zF-5C
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 21:18:40 +0200
+	id 1YuQYq-00015h-12
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 21:18:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155AbbERTSf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2015 15:18:35 -0400
-Received: from mail-wg0-f54.google.com ([74.125.82.54]:33116 "EHLO
-	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754673AbbERTS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 15:18:28 -0400
-Received: by wgjc11 with SMTP id c11so38205074wgj.0
-        for <git@vger.kernel.org>; Mon, 18 May 2015 12:18:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=dfm/SvOwamlP8hvyUt1LWzJk0Xivr8uQXiZAkQltiks=;
-        b=XX7FopzP0csBavUID/ESfb3/JFNomB38ucti0nkXiw/mYzRH+7f8ZiALmwE5Q6rOlo
-         m9qYy8YbUpT89tEzBi5iJp6DgKX8VI2gnlm+ozaSvJb1c4aVhTbvZuFHpJfYLFCdNYai
-         +J1NiiLk62PUjBAbWBrCr8QTnM38EmOUhgmhDItS9yTv2Hjpz3yRtvE7IsnGD+4EDn8f
-         8LOFAOMYeRqrQYM2xdypsZ+t0N9FUS+J3JJICsO77yFDjhIo9UrKLg8eQxUlgf9hs3NR
-         yQMtLYZbZvZJdq7ife4YsATjGdOYgXyxNcLRH/QVWRtvez+evG2eTErfZ7RMf9NFFhHp
-         +CZQ==
-X-Received: by 10.180.105.74 with SMTP id gk10mr24884261wib.29.1431976706813;
-        Mon, 18 May 2015 12:18:26 -0700 (PDT)
-Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id z12sm18259450wjq.12.2015.05.18.12.18.25
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 May 2015 12:18:26 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0.GIT
-In-Reply-To: <1431976697-26288-1-git-send-email-sebastien.guimmara@gmail.com>
+	id S932229AbbERTSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 15:18:40 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63510 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932168AbbERTSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 15:18:37 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MfVYB-1YVzgg0A4x-00P9LT; Mon, 18 May 2015 21:18:33
+ +0200
+In-Reply-To: <1431961571-20370-9-git-send-email-pyokagan@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:E7vI7I0KoN5V4NjzIdOX1h75jTDwUDq2FAozrq8wXJTW7kfgCE2
+ gvRKVL6j2RvxCD/cL6MlUOgTtP9o2Eo37r6r3ipOCCJi6BKaF/9T2vISgvnlWufLaTLxmfz
+ TKmDdbAiJnz1KqTmS929zXlxWoKiNG2AUd/3Zb9qHELbjvtcNiaLxx7xf/mEJ4hEoPlOUZE
+ c+S6QZnb74yoG4PNyV3Ow==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269310>
 
-command-list.sh, retired in the previous patch, was the only
-consumer of the "common" tag, so drop this now-unnecessary
-attribute.
+Hi Paul,
 
-before:
-    git-add          mainporcelain        common worktree
+On 2015-05-18 17:06, Paul Tan wrote:
+> Since b10ac50 (Fix pulling into the same branch., 2005-08-25), git-pull,
+> upon detecting that git-fetch updated the current head, will
+> fast-forward the working tree to the updated head commit.
 
-after:
-    git-add          mainporcelain        worktree
+This is just a quick note about something I noticed while reviewing: I was surprised that this code path would only trigger when `orig_head` is different from the null SHA-1, because in my mind, it is safe to update when we are on an unborn branch. However, I verified that the shell script does the same thing, so your transcription is faithful.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
----
- command-list.txt | 42 +++++++++++++++++++++---------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
-
-diff --git a/command-list.txt b/command-list.txt
-index c2bbdc1..080d6d9 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -11,30 +11,30 @@ remote       collaborate (see also: git help workfl=
-ows)
- # do not molest the next line
- ### command list
- # command name                          category [deprecated] [common]
--git-add                                 mainporcelain common
-+git-add                                 mainporcelain           worktr=
-ee
- git-am                                  mainporcelain
- git-annotate                            ancillaryinterrogators
- git-apply                               plumbingmanipulators
- git-archimport                          foreignscminterface
- git-archive                             mainporcelain
--git-bisect                              mainporcelain           common=
- info
-+git-bisect                              mainporcelain           info
- git-blame                               ancillaryinterrogators
--git-branch                              mainporcelain           common=
- history
-+git-branch                              mainporcelain           histor=
-y
- git-bundle                              mainporcelain
- git-cat-file                            plumbinginterrogators
- git-check-attr                          purehelpers
- git-check-ignore                        purehelpers
- git-check-mailmap                       purehelpers
--git-checkout                            mainporcelain           common=
- history
-+git-checkout                            mainporcelain           histor=
-y
- git-checkout-index                      plumbingmanipulators
- git-check-ref-format                    purehelpers
- git-cherry                              ancillaryinterrogators
- git-cherry-pick                         mainporcelain
- git-citool                              mainporcelain
- git-clean                               mainporcelain
--git-clone                               mainporcelain           common=
- init
-+git-clone                               mainporcelain           init
- git-column                              purehelpers
--git-commit                              mainporcelain           common=
- history
-+git-commit                              mainporcelain           histor=
-y
- git-commit-tree                         plumbingmanipulators
- git-config                              ancillarymanipulators
- git-count-objects                       ancillaryinterrogators
-@@ -46,14 +46,14 @@ git-cvsimport                           foreignscmi=
-nterface
- git-cvsserver                           foreignscminterface
- git-daemon                              synchingrepositories
- git-describe                            mainporcelain
--git-diff                                mainporcelain           common=
- history
-+git-diff                                mainporcelain           histor=
-y
- git-diff-files                          plumbinginterrogators
- git-diff-index                          plumbinginterrogators
- git-diff-tree                           plumbinginterrogators
- git-difftool                            ancillaryinterrogators
- git-fast-export                         ancillarymanipulators
- git-fast-import                         ancillarymanipulators
--git-fetch                               mainporcelain           common=
- remote
-+git-fetch                               mainporcelain           remote
- git-fetch-pack                          synchingrepositories
- git-filter-branch                       ancillarymanipulators
- git-fmt-merge-msg                       purehelpers
-@@ -62,7 +62,7 @@ git-format-patch                        mainporcelain
- git-fsck                                ancillaryinterrogators
- git-gc                                  mainporcelain
- git-get-tar-commit-id                   ancillaryinterrogators
--git-grep                                mainporcelain           common=
- info
-+git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
- git-help                                ancillaryinterrogators
-@@ -71,17 +71,17 @@ git-http-fetch                          synchelpers
- git-http-push                           synchelpers
- git-imap-send                           foreignscminterface
- git-index-pack                          plumbingmanipulators
--git-init                                mainporcelain           common=
- init
-+git-init                                mainporcelain           init
- git-instaweb                            ancillaryinterrogators
- git-interpret-trailers                  purehelpers
- gitk                                    mainporcelain
--git-log                                 mainporcelain           common=
- info
-+git-log                                 mainporcelain           info
- git-ls-files                            plumbinginterrogators
- git-ls-remote                           plumbinginterrogators
- git-ls-tree                             plumbinginterrogators
- git-mailinfo                            purehelpers
- git-mailsplit                           purehelpers
--git-merge                               mainporcelain           common=
- history
-+git-merge                               mainporcelain           histor=
-y
- git-merge-base                          plumbinginterrogators
- git-merge-file                          plumbingmanipulators
- git-merge-index                         plumbingmanipulators
-@@ -90,7 +90,7 @@ git-mergetool                           ancillarymani=
-pulators
- git-merge-tree                          ancillaryinterrogators
- git-mktag                               plumbingmanipulators
- git-mktree                              plumbingmanipulators
--git-mv                                  mainporcelain           common=
- worktree
-+git-mv                                  mainporcelain           worktr=
-ee
- git-name-rev                            plumbinginterrogators
- git-notes                               mainporcelain
- git-p4                                  foreignscminterface
-@@ -101,11 +101,11 @@ git-parse-remote                        synchelpe=
-rs
- git-patch-id                            purehelpers
- git-prune                               ancillarymanipulators
- git-prune-packed                        plumbingmanipulators
--git-pull                                mainporcelain           common=
- remote
--git-push                                mainporcelain           common=
- remote
-+git-pull                                mainporcelain           remote
-+git-push                                mainporcelain           remote
- git-quiltimport                         foreignscminterface
- git-read-tree                           plumbingmanipulators
--git-rebase                              mainporcelain           common=
- history
-+git-rebase                              mainporcelain           histor=
-y
- git-receive-pack                        synchelpers
- git-reflog                              ancillarymanipulators
- git-relink                              ancillarymanipulators
-@@ -114,28 +114,28 @@ git-repack                              ancillary=
-manipulators
- git-replace                             ancillarymanipulators
- git-request-pull                        foreignscminterface
- git-rerere                              ancillaryinterrogators
--git-reset                               mainporcelain           common=
- worktree
-+git-reset                               mainporcelain           worktr=
-ee
- git-revert                              mainporcelain
- git-rev-list                            plumbinginterrogators
- git-rev-parse                           ancillaryinterrogators
--git-rm                                  mainporcelain           common=
- worktree
-+git-rm                                  mainporcelain           worktr=
-ee
- git-send-email                          foreignscminterface
- git-send-pack                           synchingrepositories
- git-shell                               synchelpers
- git-shortlog                            mainporcelain
--git-show                                mainporcelain           common=
- info
-+git-show                                mainporcelain           info
- git-show-branch                         ancillaryinterrogators
- git-show-index                          plumbinginterrogators
- git-show-ref                            plumbinginterrogators
- git-sh-i18n                             purehelpers
- git-sh-setup                            purehelpers
- git-stash                               mainporcelain
--git-status                              mainporcelain           common=
- info
-+git-status                              mainporcelain           info
- git-stripspace                          purehelpers
- git-submodule                           mainporcelain
- git-svn                                 foreignscminterface
- git-symbolic-ref                        plumbingmanipulators
--git-tag                                 mainporcelain           common=
- history
-+git-tag                                 mainporcelain           histor=
-y
- git-unpack-file                         plumbinginterrogators
- git-unpack-objects                      plumbingmanipulators
- git-update-index                        plumbingmanipulators
---=20
-2.4.0.GIT
+Ciao,
+Dscho
