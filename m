@@ -1,81 +1,72 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v2 2/2] pull: parse pull.ff as a bool or string
-Date: Mon, 18 May 2015 21:45:42 +0800
-Message-ID: <1431956742-25992-3-git-send-email-pyokagan@gmail.com>
-References: <1431956742-25992-1-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH 0/2] Improve git-pull's option parsing
+Date: Mon, 18 May 2015 21:54:54 +0800
+Message-ID: <1431957296-31534-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Paul Tan <pyokagan@gmail.com>, David Aguilar <davvid@gmail.com>
+	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 15:46:17 2015
+X-From: git-owner@vger.kernel.org Mon May 18 15:55:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuLN2-0006os-SX
-	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 15:46:17 +0200
+	id 1YuLVh-0002gJ-70
+	for gcvg-git-2@plane.gmane.org; Mon, 18 May 2015 15:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752576AbbERNqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2015 09:46:09 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36436 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752502AbbERNqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 09:46:06 -0400
-Received: by pabts4 with SMTP id ts4so153101557pab.3
-        for <git@vger.kernel.org>; Mon, 18 May 2015 06:46:06 -0700 (PDT)
+	id S1752454AbbERNzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2015 09:55:09 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:33899 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750835AbbERNzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2015 09:55:07 -0400
+Received: by pabru16 with SMTP id ru16so153491633pab.1
+        for <git@vger.kernel.org>; Mon, 18 May 2015 06:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9hD8oSQOoHjo9YerjSWPJU2pj8sekaxU2PcC0tGEeeM=;
-        b=dTsRbKn4oR4BSX1P9x2aSpDxQE6pIfCFdHVTmQ6JXRt6VdVhG5DAkf/b+OHqQQWS4H
-         +uVWf8bzVzxC97pZMslZZ+JMyTq1BDwMIfgiV/YjSYIV8Mcnf734nehbW59+nQLdTVL3
-         Te9d0+mgFWSaCFUAMyqVtMHSxFZT/HQ2Iuy9nig0Sw3CpIFJiU7eW3uw077qUbujbJZI
-         DIDwnWaSQdipRLJGBZcbSQc7/T3faDdP9fHL5Z+DVoNbx6vUGypJakQdTlV9GShgcls0
-         1fpLCuukrQlxPnNybsudTaR77+D9uQqUvK0ezEcIot7lYKIcQZC4TdRVJwiW84Ktvw7Q
-         AN/Q==
-X-Received: by 10.70.54.164 with SMTP id k4mr44754651pdp.61.1431956765958;
-        Mon, 18 May 2015 06:46:05 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=HO2InmGJpPe9RypS0AekSgs7DkztNQ9r0LKpxAo/kC0=;
+        b=uTxlTYzgVgzHYMLC2gf+reZa1pfR3vWp1caDz4/CVLUndT/WtWsNZsrbfnvH1t+iXz
+         JJURYiQkCDVAQ9o4KrHCj+1Z4/uHv5M/vEsXSgqKVW7JjigtjzXX8iH2k0OWeaZJ2Iag
+         Y8XTCmP9KzkPJgoohy1okrVHXYHfgJje6zvVQ2bMhlrcjDtSOF0D6v2S0TA7eXXGvZ7h
+         qmGwF9DBFCaZCNn0qjI/IuTiBCcLt5nWci+crK8FYb0eW5qwj/fwsTLB+RD15hHQOfDD
+         hepr5JIRHTOYT+VGl7k2VocB+JOWn6vHfyzxMkI8vuYlrtxPkpXcPsd8mc9nKqFYr9PK
+         BGAw==
+X-Received: by 10.70.124.131 with SMTP id mi3mr44593437pdb.28.1431957306877;
+        Mon, 18 May 2015 06:55:06 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id x4sm10175713pdl.55.2015.05.18.06.46.03
+        by mx.google.com with ESMTPSA id v2sm10185365pdn.90.2015.05.18.06.55.04
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 May 2015 06:46:04 -0700 (PDT)
+        Mon, 18 May 2015 06:55:05 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1431956742-25992-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269249>
 
-Since b814da8 (pull: add pull.ff configuration, 2014-01-15) git-pull
-supported setting --(no-)ff via the pull.ff configuration value.
-However, as it only matches the string values of "true" and "false", it
-does not support other boolean aliases such as "on", "off", "1", "0".
-This is inconsistent with the merge.ff setting, which supports these
-aliases.
+While parsing the command-line arguments, git-pull stops parsing at the
+first unrecognized option, assuming that any subsequent options are for
+git-fetch, and can thus be kept in the shell's positional parameters
+list, so that it can be passed to git-fetch via the expansion of "$@".
 
-Fix this by using the bool_or_string_config function to retrieve the
-value of pull.ff.
+However, certain functions in git-pull assume that the positional
+parameters do not contain any options. Fix this by making git-pull handle
+git-fetch's options as well at the option parsing stage.
 
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
+With this change in place, we can move on to migrate git-pull to use
+git-rev-parse --parseopt such that its option parsing is consistent with the
+other git commands.
 
- git-pull.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Paul Tan (2):
+  pull: handle git-fetch's options as well
+  pull: use git-rev-parse --parseopt for option parsing
 
-diff --git a/git-pull.sh b/git-pull.sh
-index e51dd37..09bc678 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -54,7 +54,7 @@ then
- fi
- 
- # Setup default fast-forward options via `pull.ff`
--pull_ff=$(git config pull.ff)
-+pull_ff=$(bool_or_string_config pull.ff)
- case "$pull_ff" in
- true)
- 	no_ff=--ff
+ git-pull.sh             | 137 ++++++++++++++++++++++++++++++++++--------------
+ t/t5520-pull.sh         |  20 +++++++
+ t/t5521-pull-options.sh |  14 +++++
+ 3 files changed, 132 insertions(+), 39 deletions(-)
+
 -- 
 2.1.4
