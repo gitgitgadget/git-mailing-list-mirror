@@ -1,69 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/14] pull --rebase: error on no merge candidate cases
-Date: Tue, 19 May 2015 09:27:01 -0700
-Message-ID: <xmqqoalg8re2.fsf@gitster.dls.corp.google.com>
-References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
-	<1431961571-20370-15-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kbhA2+AJ1Vtz6khX5uEBCCUBUuXhpBezZApZsC_txhewA@mail.gmail.com>
-	<5fcd2fa185fab4c64939ad09eb10e6d5@www.dscho.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v8 5/5] help: respect new common command grouping
+Date: Tue, 19 May 2015 12:35:58 -0400
+Message-ID: <CAPig+cS15yzwbcdb-yLH5QiMoxa0utmaJaDDz=W9WfWd+PL37A@mail.gmail.com>
+References: <1431976697-26288-1-git-send-email-sebastien.guimmara@gmail.com>
+	<1431976697-26288-6-git-send-email-sebastien.guimmara@gmail.com>
+	<xmqqr3qda7kx.fsf@gitster.dls.corp.google.com>
+	<20150519004356.GA12854@flurp.local>
+	<xmqq1tica6rk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Paul Tan <pyokagan@gmail.com>,
-	git@vger.kernel.org, Stephen Robin <stephen.robin@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 19 18:27:42 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 19 18:36:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YukMG-0007qA-Tk
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 18:27:09 +0200
+	id 1YukUv-0003Ef-15
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 18:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbbESQ1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 12:27:05 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36243 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751528AbbESQ1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 12:27:03 -0400
-Received: by igbpi8 with SMTP id pi8so80137375igb.1
-        for <git@vger.kernel.org>; Tue, 19 May 2015 09:27:02 -0700 (PDT)
+	id S1756155AbbESQgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 12:36:00 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:34531 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756147AbbESQf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 12:35:58 -0400
+Received: by ieczm2 with SMTP id zm2so18238303iec.1
+        for <git@vger.kernel.org>; Tue, 19 May 2015 09:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=irfdWkrnQXS/WNYsPJQ1A7JtQuYoyWe4HAkGgSenHw0=;
-        b=EeNGpUQ6//yBmkjT+kIlYngc/SHeh0NstzNUFdo1mRburPm2lz6r/v/o4SOZtifhjW
-         fFDD8kvREU9oLL3ILatpp3nyu52Qg0FYNMFd0XPYsTcui3AiC8001oePBQKY2LsqskMR
-         YEgrsmTFdgZj4lONNwx8vTIUIkm+0UY43tKxeqFCDDx6C4V39VyW9db3pzXF9k+9setS
-         kR4huWtuLcmo3oFh1AQsY151JbTaJ346NB9fXlqJ5Nc6WfO6c4Q/r5E6rQsH2ZfzIzlf
-         ZTTrp0MuqjxWiYgB2cu+0Nj1+BWt+lnS6cA51WuEINBSobaMTrcXKbhOtTppP/R0oOJ3
-         LnRA==
-X-Received: by 10.43.39.208 with SMTP id tn16mr40742094icb.27.1432052822851;
-        Tue, 19 May 2015 09:27:02 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
-        by mx.google.com with ESMTPSA id pg7sm8178728igb.6.2015.05.19.09.27.02
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 19 May 2015 09:27:02 -0700 (PDT)
-In-Reply-To: <5fcd2fa185fab4c64939ad09eb10e6d5@www.dscho.org> (Johannes
-	Schindelin's message of "Tue, 19 May 2015 15:10:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=I/hOBbSE+CKzwuMleCAylgL9N3/hvIdc7Rkebuzl8do=;
+        b=RFIADUbchoqdITa+pnwxI1w+aIy9Y/0iJvkmx9Mn6vxWGgSXx0hvUCBOQuGihtNIlY
+         NguCKhtLWGf4mQxjmotRLizd0m/u+tveba/yDVxJNBb3Mo3pM/OBDB6ghAdXaBGnKxiB
+         oQJYNIWECCgTTtz2Cx1UGt+7yLOqHo4zd38p4z5NuF/qJcCDT01Z9UleqCrq5rE1PUBw
+         0hpbYfd+uH93wx0ejpoybG8LmG54fkolk27Lw/hEQkM0VhvaSOzW0Z8Ms7gO6WUb+7ij
+         0HJ//p2X3fV4tDJdCW3FyqA6Q4SYtZNNEjWKrl+SjGJmykVAZ3SAR87EQyyWQoCmurFh
+         /NRA==
+X-Received: by 10.42.67.80 with SMTP id s16mr27012572ici.25.1432053358312;
+ Tue, 19 May 2015 09:35:58 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Tue, 19 May 2015 09:35:58 -0700 (PDT)
+In-Reply-To: <xmqq1tica6rk.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: YPzJULtbhaMAzp4ToLBciZhkhwY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269371>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Tue, May 19, 2015 at 12:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> The awk script restricts itself to POSIX, and I did test it on Linux,
+>> Mac OS X, and FreeBSD, so it seems pretty portable.
+>
+> I was worried more about some people only having gawk while others
+> with mawk and yet others nawk, etc., without having one of them
+> under the canonical name "awk".  It's nothing what
+>
+>     $ make AWK=mawk
+>
+> or its config.mak equivalent cannot fix, but still bothers me a bit.
 
->>> -               fprintf(stderr,
->>> -                       _("There are no candidates for merging among the refs that you just fetched.\n"
->>> -                       "Generally this means that you provided a wildcard refspec which had no\n"
->>> -                       "matches on the remote end.\n"));
->>> +               if (opt_rebase)
->>> +                       fputs(_("There is no candidate for rebasing against among the refs that you just fetched."), stderr);
->> 
->     The puts() function appends a <newline> while fputs() does not.
-
-Yup, so this update makes the command spew unterminated lines, which
-not something intended...
+In that case, perhaps we should go with the Perl version, which, given
+that more people (these days) are familiar with Perl than awk, is less
+likely to be a maintenance burden.
