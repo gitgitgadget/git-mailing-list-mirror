@@ -1,95 +1,69 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/3] l10: de.po: grammar fix
-Date: Tue, 19 May 2015 14:46:07 -0700
-Message-ID: <CAGZ79kYPhTK=tymEcB_YsYdNZvt0=sA4-Hon1SLwujV39W7fmA@mail.gmail.com>
-References: <cover.1432025365.git.git@drmicha.warpmail.net>
-	<2b4460dbf6abb15c4cd94d4c5c335cc9e8059ee7.1432025365.git.git@drmicha.warpmail.net>
+From: Philippe De Muyter <phdm@macq.eu>
+Subject: Re: identical hashes on two branches, but holes in git log
+Date: Tue, 19 May 2015 23:47:20 +0200
+Message-ID: <20150519214719.GA12732@frolo.macqel>
+References: <20150519132958.GA21130@frolo.macqel> <xmqq617oa75l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 19 23:46:30 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 19 23:47:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YupLI-0001YN-Jo
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 23:46:28 +0200
+	id 1YupMH-0001wL-M2
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 23:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbbESVqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 17:46:24 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:35734 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425AbbESVqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 17:46:08 -0400
-Received: by qceb3 with SMTP id b3so13294893qce.2
-        for <git@vger.kernel.org>; Tue, 19 May 2015 14:46:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=AeuCfgkul8dPo26JcX16S8K/pffjK67iPSjMhvRp72o=;
-        b=Lo2yEFyVyTAKfwH6WqeVEuhNvcILB93XAcfjvUbcNH4PSijuyklhrjZZATzrqCniz5
-         31G3yOCqRe4fUyjYWBdHE04UvSUI6q9e3FdZEuoJt1VvPeca8hyQqyl7hNdlNwKE/KOz
-         hrSJRHNdSJ1dX9d1TP7Vhkz6XRT7DSfwjB0+Un10NlXVJOu3HthVaN/Ynb92ticDiSab
-         NrjZ21QZq8VH5sYdsj6wJZNFI800OvuJBOh2uhGY2XB/7cPhK6h+UUmqZ2mOvvOb4jX8
-         goVsn100kymCaP6g89kUsKd7/AVTcxNCS+KO1QzBDzqy/nKh/kgsXa+o0Qh4e1c4CEgS
-         8pUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=AeuCfgkul8dPo26JcX16S8K/pffjK67iPSjMhvRp72o=;
-        b=f9uPBTjMln9Vxn7u8Uf1rJMSqboXT7mAEeMX0t0ULSu0hQhQ4ctWQBPaex5/S2iWSN
-         YT7Cx1YaQJkwKDbOXqh+D98zqSh+qG0uHULkqi+fLDuBSxhZeT24joo8IebgAYLxGU5M
-         VcLCAbUMB0pQzDIE/qfUn1WllnpjOKuEw1PhtMfqVV+DZlkro5U8K+D0IVBh2lkgGgsq
-         OFbpQ0QYX/8Q4b7urztHOwdcvSzB2vH0LSnegDHzK59hGg8SuJ6c5tQIPG6M6BabOGCV
-         lWixHzM/5YDmTLE/28WHc8LDF4At5ir3s/coSrlMPdwna/Lwau2eXwp0YxfiSjhPus9U
-         6vwA==
-X-Gm-Message-State: ALoCoQn2ygDNLrGUQk+cGRrGwMEYc18hFjKr+jA26XQQxjWnC+wM6XeBon8fydKPWAK6TuwJAryp
-X-Received: by 10.140.96.202 with SMTP id k68mr23660125qge.102.1432071967817;
- Tue, 19 May 2015 14:46:07 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Tue, 19 May 2015 14:46:07 -0700 (PDT)
-In-Reply-To: <2b4460dbf6abb15c4cd94d4c5c335cc9e8059ee7.1432025365.git.git@drmicha.warpmail.net>
+	id S1752153AbbESVr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 17:47:26 -0400
+Received: from smtp2.macqel.be ([109.135.2.61]:52062 "EHLO smtp2.macqel.be"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751353AbbESVrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 17:47:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by smtp2.macqel.be (Postfix) with ESMTP id CEFB0130D37;
+	Tue, 19 May 2015 23:47:21 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at macqel.be
+Received: from smtp2.macqel.be ([127.0.0.1])
+	by localhost (mail.macqel.be [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id a9vgUlweyL2G; Tue, 19 May 2015 23:47:20 +0200 (CEST)
+Received: from frolo.macqel.be (frolo.macqel [10.1.40.73])
+	by smtp2.macqel.be (Postfix) with ESMTP id 3D87D130D12;
+	Tue, 19 May 2015 23:47:20 +0200 (CEST)
+Received: by frolo.macqel.be (Postfix, from userid 1000)
+	id 22914DF06BC; Tue, 19 May 2015 23:47:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <xmqq617oa75l.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269411>
 
-On Tue, May 19, 2015 at 1:51 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->  po/de.po | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/po/de.po b/po/de.po
-> index 2feaec1..25258e3 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -10478,7 +10478,7 @@ msgstr ""
->  #: git-am.sh:142
->  msgid "Using index info to reconstruct a base tree..."
->  msgstr ""
-> -"Verwende Informationen aus der Staging-Area, um einen Basisverzeichnis "
-> +"Verwende Informationen aus der Staging-Area, um ein Basisverzeichnis "
->  "nachzustellen"
+On Tue, May 19, 2015 at 09:01:10AM -0700, Junio C Hamano wrote:
+> Philippe De Muyter <phdm@macq.eu> writes:
+> 
+> > Trying to understand, I have eventually done "git log" on my branch and
+> > on v3.15 with the following commands :
+> >
+> > git log v3.15 --full-history --decorate=short | grep '^commit' > /tmp/3.15.commits
+> > git log --full-history --decorate=short | grep '^commit' > /tmp/mybranch.commits
+> 
+> Either
+> 
+>     git log --oneline v3.15..HEAD ;# show what I have not in theirs
+> 
+> or
+> 
+>     gitk v3.15...HEAD ;# show our differences graphically
 
-Waere es sinnvoll Staging-Area in Staging-Bereich umzubenennen?
-"Staging" ist wohl ein eher fester Term mit dem man den index/staging area
-assoziert, aber "Area" 'doesn't ring a bell for me'.
+This shows the commits in my branch starting from the most recent common point,
+thus my commits, but I see differences in the files not explained by my commits,
+but by the fact that many older commits (between v3.13 and v3.14) are missing on
+my branch, but still in both branches I have a commit called v3.14 with the
+same hash.  Is that normal ?
 
-
-
->
->  #: git-am.sh:157
-> --
-> 2.4.0.rc3.332.g886447c
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Philippe
