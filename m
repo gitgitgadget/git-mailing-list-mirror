@@ -1,61 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log --follow for directories
-Date: Tue, 19 May 2015 09:16:17 -0700
-Message-ID: <xmqqsias8rvy.fsf@gitster.dls.corp.google.com>
-References: <CAOMwXhP-BRd356xpfdLgZ0zKYTMVryt8jtmi3T2jhVh91hY04Q@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH 0/3] l10: de.po: fixes around rebase
+Date: Tue, 19 May 2015 18:26:43 +0200
+Message-ID: <CAN0XMOKq853gzzMp15GGOd9kONs2aGfU3pz_VA7Xm7zBVFzXBA@mail.gmail.com>
+References: <cover.1432025365.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Laszlo Papp <lpapp@kde.org>
-X-From: git-owner@vger.kernel.org Tue May 19 18:16:25 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Ralf Thielow <ralf.thielow@googlemail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue May 19 18:27:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YukBs-00031z-RK
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 18:16:25 +0200
+	id 1YukLx-0007dl-Jb
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 18:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755918AbbESQQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 12:16:20 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:34019 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752783AbbESQQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 12:16:19 -0400
-Received: by igbhj9 with SMTP id hj9so37792648igb.1
-        for <git@vger.kernel.org>; Tue, 19 May 2015 09:16:19 -0700 (PDT)
+	id S1751448AbbESQ0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 12:26:45 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:37002 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751241AbbESQ0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 12:26:44 -0400
+Received: by wibt6 with SMTP id t6so29271765wib.0
+        for <git@vger.kernel.org>; Tue, 19 May 2015 09:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=jOJlb5dyfZvm/bqT65dsh0wlNCz2+kYpGB2SvvUobh0=;
-        b=UUISAtygYHEIzwESW8UcCQ7dWK8T6kF/HH1dRjxNR8mxYSQL1TnbNllDsbR7KgrTOR
-         PFEr/B2eCjbe1hSXNpoHQ5NKWguGlV8IvtPez0Q6jD+Scou9BsN5f0LULoYciUfmZf2E
-         z/ODg0PjnmZfzt45FD6Q8jbOIIxni4usHpIxy8ybO+/Tr+8c66Bmx7ousuzYL8k6QVc7
-         jpDYNX/8zK+d/nk+GenrZjXPcR4RE7zoc5pAj7k9YU5gOd5OM0R2Fm7Y7Zhf4S83Pyxl
-         FP0EAckI7GBMDh7pzio/VStue4iHxAI0iBBbAiogSpttdxFwSpFQySFeOYO+rY/578R7
-         ltWg==
-X-Received: by 10.107.154.70 with SMTP id c67mr36634931ioe.22.1432052179058;
-        Tue, 19 May 2015 09:16:19 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
-        by mx.google.com with ESMTPSA id f126sm10303574ioe.21.2015.05.19.09.16.18
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 19 May 2015 09:16:18 -0700 (PDT)
-In-Reply-To: <CAOMwXhP-BRd356xpfdLgZ0zKYTMVryt8jtmi3T2jhVh91hY04Q@mail.gmail.com>
-	(Laszlo Papp's message of "Tue, 19 May 2015 14:56:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iIZa2tjIf8H3Qreb2QSpIlylkeBHrOPmwuTrsFwngPk=;
+        b=uz/UgfHCfCxytYuU0k0w03/FOKxdlzsx8TGs/VTFBxpIDDFYgvVQrx/REaCd+jK2p6
+         phIiS/qynBEB0nQOg53O+uo/baqfgylHEpUesNkAehf9tQa3nkmoAVnUKGwTjpzBuSUr
+         TQ3s0PnDyQyG1FN3WgYPhqZ1WYJxTOo3iscI6yNWr8Suw2ktiaJxFsdaL7ZMxuibEDl+
+         ZGZ7G6WWp9c1R27gfnMALTqJpqzmJJrCpEpY8ayjWhpCpO9zgi1Qh4l+m+HSrFydD6VJ
+         ZDYW8YfcZS+jQ8Qva+uUTHQKxhG+b0wIYRdn/QMk5s4yBDKKmKstpNUbZuYMKngVq6O3
+         eK9A==
+X-Received: by 10.180.188.170 with SMTP id gb10mr33702275wic.39.1432052803386;
+ Tue, 19 May 2015 09:26:43 -0700 (PDT)
+Received: by 10.194.72.6 with HTTP; Tue, 19 May 2015 09:26:43 -0700 (PDT)
+In-Reply-To: <cover.1432025365.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269369>
 
-Laszlo Papp <lpapp@kde.org> writes:
+2015-05-19 10:51 GMT+02:00 Michael J Gruber <git@drmicha.warpmail.net>:
+> Fixes to a few issues that I found while running rebase
+> in German locale.
+>
+> Michael J Gruber (3):
+>   l10: de.po: grammar fix
+>   l10: de.po: punctuation fixes
+>   l10: de.po: translation fix for fall-back to 3way merge
+>
 
-> Is there any benefit about having it like it is today or is it just
-> the usual "no one has implemented it yet"?
+Thanks!
 
-It actually is even more sketchy than that.  A single file following
-was done merely as a checkbox item that works majority of the time,
-and any mergy history that renames the file on one side of the side
-branch but not on the other may not truly follow it.
+>  po/de.po | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> --
+> 2.4.0.rc3.332.g886447c
+>
