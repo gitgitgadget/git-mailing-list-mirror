@@ -1,70 +1,63 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Hanging "git mv" on Windows bug report
-Date: Tue, 19 May 2015 15:41:26 +0200
-Organization: gmx
-Message-ID: <b4a67dd0e303e009a02055e2cb8785d5@www.dscho.org>
-References: <CANSw7Kw7A_kn6yue9TnvGSO9dFzvX8AUZkn0W98Euf384CbnFA@mail.gmail.com>
+From: Laszlo Papp <lpapp@kde.org>
+Subject: git log --follow for directories
+Date: Tue, 19 May 2015 14:56:48 +0100
+Message-ID: <CAOMwXhP-BRd356xpfdLgZ0zKYTMVryt8jtmi3T2jhVh91hY04Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Yuval Greenfield <ubershmekel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 15:41:35 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 19 15:56:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yuhm1-0000qA-PM
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:41:34 +0200
+	id 1Yui0u-0007ik-16
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754956AbbESNl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 09:41:29 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59045 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754476AbbESNl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 09:41:28 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MUZKF-1Yl7HZ3XGN-00RJ3k; Tue, 19 May 2015 15:41:26
- +0200
-In-Reply-To: <CANSw7Kw7A_kn6yue9TnvGSO9dFzvX8AUZkn0W98Euf384CbnFA@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:SFrDqAY8PHiinrvPR4s/CuJRcvY3dIbzO5YYwAwNtVHFeGSc8N/
- DGzU+y6P7bR6edwwtTMvDlvCc9NDlUi2baTEf+vMqO62ExdKy1/9JaA+UDHXBZ3fBCsmLTf
- 6nWiKy0boXY1wvQWSkQES6wqbPwIZONTflPBn8jHCus/a5O9Hyo/+wtrJ41rpLnKH/q+KSM
- mfjaNygfrJb/c6N08KNSw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S964860AbbESN4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 09:56:51 -0400
+Received: from mail-vn0-f44.google.com ([209.85.216.44]:37913 "EHLO
+	mail-vn0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932541AbbESN4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 09:56:49 -0400
+Received: by vnbf190 with SMTP id f190so1114131vnb.5
+        for <git@vger.kernel.org>; Tue, 19 May 2015 06:56:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to:content-type;
+        bh=m1YZuo9NCPf1w6agBHzoyzx0dlub5cBEXDoFcL9M49M=;
+        b=OsfPmm7CIBH9dQhtL72Rrfbh6xp7GCmsWudYkmporVQNMvhhL+eXWEaYDzmu9Xcjsa
+         u+XJVJ8JrYzIU4JAkFoj99d8Uwwu5BDb4c2w8WFhwyTQLU+9zGMrEbVFz79/0bPT5bvE
+         zRWKsbtHAzzVIxmQ2pvcwfP3Ug91ghpV9DBGyEgZ6wogsdnPelUdvTEwZ1fVup6EIZnf
+         RevVW3MaTqIx0KhM3JbVB7K6qki8Q0kqevR5rx9I/N7EazH/LBi5lEvz2e+E2eyvkJPi
+         VvSfjdptki46mol1j8LDRU0maqwfgxZwpHHkHHRogEI9NfT62ID7k3vX5BHe/2KrUX1V
+         fNFw==
+X-Gm-Message-State: ALoCoQltuaeVYKkvDXGd51zjyBNpZhc7QCbMBFjeXG24SdzGsTiE0SEcTv8oZNjvCqyydez9sYO9
+X-Received: by 10.52.153.20 with SMTP id vc20mr27562287vdb.64.1432043808467;
+ Tue, 19 May 2015 06:56:48 -0700 (PDT)
+Received: by 10.53.6.12 with HTTP; Tue, 19 May 2015 06:56:48 -0700 (PDT)
+X-Google-Sender-Auth: qwBrlIjNbJduBNAeo_S3Yj0ak44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269357>
 
-Hi Yuval,
+Hi,
 
-On 2015-05-18 08:50, Yuval Greenfield wrote:
+I have just realized that this would not work on directories
+triggering directory renames somewhat pointless for those who want to
+keep track of a group of files in directories.
 
-> Here is the command sequence that causes git to stop responding:
-> 
-> mkdir mynewthing
-> cd mynewthing
-> git init
-> mkdir abc
-> touch abc/myfile
-> git add abc/myfile
-> git commit -a -m "whatever"
-> git mv abc tmp
-> git mv tmp Abc
-> 
-> I wanted to change the case of a committed folder. Since windows is
-> case insensitive that's a bit harder. Perhaps with this version it's
-> impossible?
-> 
-> Here's my git bash banner - "Welcome to Git (version
-> 1.9.5-preview20141217)". I'm on Windows 8.1 Pro.
+It is unfortunate when you have a directory with many files and more
+often than not, you would like to look at the history of all rather
+than individually.
 
-I just tried this with Git for Windows 2.4.1.1 (developers' preview) from https://git-for-windows.github.io/ and it did not hang here (currently on a Windows 7 box). Could you try that and see whether it works for you?
+Is there any benefit about having it like it is today or is it just
+the usual "no one has implemented it yet"?
 
-Ciao,
-Johannes
+Cheers, L.
+
+PS.: I will not stand up for implement this though, but of course I
+will be very grateful if someone else decides to do so.
