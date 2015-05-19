@@ -1,77 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
-Date: Tue, 19 May 2015 18:14:50 -0400
-Message-ID: <20150519221450.GB779@peff.net>
-References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
- <1431806796-28902-1-git-send-email-gjthill@gmail.com>
- <xmqqegmfds1n.fsf@gitster.dls.corp.google.com>
- <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
- <20150519063716.GA22771@peff.net>
- <xmqqk2w48mjp.fsf@gitster.dls.corp.google.com>
- <xmqqd21w8mal.fsf@gitster.dls.corp.google.com>
- <xmqq1tic8lgj.fsf@gitster.dls.corp.google.com>
- <xmqqk2w473i2.fsf@gitster.dls.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] tree-walk.c: fix some sparse 'NULL pointer' warnings
+Date: Tue, 19 May 2015 23:16:19 +0100
+Message-ID: <555BB633.8030204@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jim Hill <gjthill@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 20 00:14:58 2015
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed May 20 00:16:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yupmr-0002hI-D9
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 00:14:57 +0200
+	id 1YupoP-0003EY-LT
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 00:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbbESWOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 18:14:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:32870 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751134AbbESWOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 18:14:52 -0400
-Received: (qmail 19322 invoked by uid 102); 19 May 2015 22:14:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 17:14:52 -0500
-Received: (qmail 17716 invoked by uid 107); 19 May 2015 22:14:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 18:14:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2015 18:14:50 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqk2w473i2.fsf@gitster.dls.corp.google.com>
+	id S1751293AbbESWQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 18:16:29 -0400
+Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:50361 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751104AbbESWQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 18:16:28 -0400
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 1208418CDB0;
+	Tue, 19 May 2015 23:16:26 +0100 (BST)
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id C94D018CAE1;
+	Tue, 19 May 2015 23:16:25 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
+	Tue, 19 May 2015 23:16:25 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+X-MDF-HostID: 18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269421>
 
-On Tue, May 19, 2015 at 12:48:21PM -0700, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Yuck; please discard the previous one.  write_in_full() side is also
-> > writing into that process, so we should do the same.
-> 
-> OK, without these two, and with the "true" filter that does not read
-> anything reinstated in the test script, t0021 used to die
-> 
->     i=0; while sh t0021-conversion.sh; do i=$(( $i + 1 )); done
-> 
-> after 150 iteration or so for me.  With these two, it seems to go on
-> without breaking (I bored after 1000 iterations), so I'd declare it
-> good enough ;-)
+Commit 811cd77b ("tree-walk: learn get_tree_entry_follow_symlinks",
+14-05-2015) introduced a new function to locate an object by path
+while following symlinks in the repository. However, sparse now
+issues some "Using plain integer as NULL pointer" warnings as
+follows:
 
-Your revised patch 2 looks good to me. I think you could test it more
-reliably by simply adding a larger file, like:
+      SP tree-walk.c
+  tree-walk.c:517:31: warning: Using plain integer as NULL pointer
+  tree-walk.c:521:28: warning: Using plain integer as NULL pointer
 
-  test-genrandom foo $((128 * 1024 + 1)) >big &&
-  echo 'big filter=epipe' >.gitattributes &&
-  git config filter.epipe.clean true &&
-  git add big
+The first warning relates to the use of an '{0}' initializer for
+the 'struct tree_desc' t. The first field of this structure has
+pointer type. A simple solution would replace the initializer
+expression with '{NULL}'. However, we choose to remove the
+initializer expression and make the initialization more explicit
+with a call to the 'init_tree_desc' function.
 
-The worst case if you get the size of the pipe buffer too small is that
-the test will erroneously pass, but that is OK. As long as one person
-has a reasonable-sized buffer, they will complain to the list
-eventually. :)
+The second warning relates to the '0' initializer for the buf
+field of the 'result_path' strbuf pointer. A simple solution
+would replace this initializer with 'NULL'. However, this would
+violate a strbuf invariant that the 'buf' field is never NULL.
+(see strbuf documentation in strbuf.h header.) Assuming the
+documentation of 'get_tree_entry_follow_symlinks' regarding the
+'result_path' parameter is observed by callers (ie that the
+parameter points to an _unitialized_ strbuf), a better solution
+is to simply call the 'strbuf_init' function.
 
--Peff
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi David,
+
+If you need to re-roll the patches in your 'dt/cat-file-follow-symlinks'
+branch, could you please squash this, or something like this, into the
+relevant patch (commit 811cd77b).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ tree-walk.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/tree-walk.c b/tree-walk.c
+index 8031f3a..6dccd2d 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -514,13 +514,12 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
+ 	ssize_t parents_nr = 0;
+ 	unsigned char current_tree_sha1[20];
+ 	struct strbuf namebuf = STRBUF_INIT;
+-	struct tree_desc t = {0};
++	struct tree_desc t;
+ 	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
+ 	int i;
+ 
+-	result_path->buf = 0;
+-	result_path->alloc = 0;
+-	result_path->len = 0;
++	init_tree_desc(&t, NULL, 0UL);
++	strbuf_init(result_path, 0);
+ 	strbuf_addstr(&namebuf, name);
+ 	hashcpy(current_tree_sha1, tree_sha1);
+ 
+-- 
+2.4.0
