@@ -1,69 +1,71 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: sh -x -i -v with continuous integration, was Re: [PATCH 1/4]
- t7601: test for =?UTF-8?Q?pull=2Eff=3Dtrue=20overrides=20merge=2Eff=3Dfal?=
- =?UTF-8?Q?se?=
-Date: Tue, 19 May 2015 15:22:49 +0200
+Subject: Re: debugging git tests, was: Re: [PATCH v4 2/8] t5520: test no
+ merge candidates cases
+Date: Tue, 19 May 2015 15:29:23 +0200
 Organization: gmx
-Message-ID: <dc9d4364b795ad0c9d128a9e0c06e681@www.dscho.org>
+Message-ID: <1254ff617c50077dc0c08321f168c4ce@www.dscho.org>
+References: <1431955978-17890-1-git-send-email-pyokagan@gmail.com>
+ <1431955978-17890-3-git-send-email-pyokagan@gmail.com>
+ <e89b333476cbb1e546371a07b357cd42@www.dscho.org>
+ <xmqqoalhdbhx.fsf@gitster.dls.corp.google.com>
+ <20150518185554.GB11463@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	David Aguilar <davvid@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 15:23:11 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Paul Tan <pyokagan@gmail.com>,
+	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 19 15:29:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuhUC-0008Un-R1
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:23:09 +0200
+	id 1Yuhah-0003GC-Dy
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:29:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693AbbESNXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 09:23:04 -0400
-Received: from mout.gmx.net ([212.227.17.20]:64334 "EHLO mout.gmx.net"
+	id S932245AbbESN3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 09:29:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50423 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753918AbbESNXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 09:23:02 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lm7MT-1ZTlBT1S4X-00Zj3l; Tue, 19 May 2015 15:22:50
+	id S1755862AbbESN3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 09:29:45 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Ln897-1ZOF2X1Lsz-00hJK9; Tue, 19 May 2015 15:29:24
  +0200
+In-Reply-To: <20150518185554.GB11463@peff.net>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:OSf75+xO5acwlwZRB89lgsofwN4V/fHhIGusJIQKUzHfCoupB2v
- s4LSnwncyfgVRrZu97lebOfO+iPe7Pokyyts5ownhip9m9y1Kt73Vfjn80gebXoMnR4EsdF
- ZvVJDq70G1mCIpwiG2V7c43igNb6m4CBT0Y9Nr69nvTNGLMkDdAnfXD0zF3FCyLYDnocb/e
- NtgNEmoQ8izzDHthbAOzg==
+X-Provags-ID: V03:K0:YSdfFFAkDqBh67Js/SRNaE7eUAhnU3odlskzWJ8VDbdMuwyKYGc
+ f68/dGVHuVw84gArjqSxqChMH1QheSM+9CsG3sDb3Ik0VEjeMyKINOjbswGbixLg4VaZX/D
+ dXvRahaw56oRLtMGHhqR8DK9S/vPtKAPM6ypMdCDC9KwPmUgcVtx7l+hM880VQyKcMjWgb+
+ +eAm+oBD2R82BR1UiUF9w==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269353>
 
-Hi Paul,
+Hi Peff,
 
-On 2015-05-16 14:33, Paul Tan wrote:
+On 2015-05-18 20:55, Jeff King wrote:
 
-> On Fri, May 15, 2015 at 12:53 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
->> Asketh and ye shall be given: without running the tests in parallel, our Jenkins would take *even longer* than the three hours per test suite run (which is really painful, still, by the way). And as you know, running the tests with "-v -x" is awfully useless if you run the test suite in parallel.
-> 
-> Would the --tee option work for this case?
-> 
->     --tee::
->         In addition to printing the test output to the terminal,
->         write it to files named 't/test-results/$TEST_NAME.out'.
->         As the names depend on the tests' file names, it is safe to
->         run the tests with this option in parallel.
+> As a side note, I've also considered better support for running the
+> debugger on git commands inside a test (right now, I usually stick a
+> "gdb --args" in the pipeline, but you have to remember to run with "-v",
+> and to redirect stdin appropriately). Do other people have this
+> annoyance, too?
 
-Thanks for pointing this out to me. This is such a useful option.
+Yes, I have that annoyance, and I usually want to debug one very specific Git call in that script. Therefore, I made this patch:
 
-Now, who made that patch... Oh, wow, oops [*1*]. Time for a coffee, I guess.
+https://github.com/git-for-windows/git/commit/0f50fd723beb5d27d2d799ef3a0cfc0b0bbd80a8
 
-Thank you!
+It really served me well during the past four months of Git for Windows 2.x work. Of course I also had to avoid the redirection:
+
+https://github.com/git-for-windows/git/commit/d27cb6e0572475582677724545a71755d171ea76
+
+So what I do these days is to run the failing test with `TEST_NO_REDIRECT=1` and with the Git call I want to debug prefixed with `TEST_GDB_GIT=1`.
+
+Ciao,
 Dscho
-
-Footnote *1*: https://github.com/git/git/commit/44138559e8b7c89768a2450220b831847059311c
