@@ -1,85 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 5/5] help: respect new common command grouping
-Date: Tue, 19 May 2015 11:20:03 -0700
-Message-ID: <xmqq617o8m5o.fsf@gitster.dls.corp.google.com>
-References: <1431976697-26288-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431976697-26288-6-git-send-email-sebastien.guimmara@gmail.com>
-	<xmqqr3qda7kx.fsf@gitster.dls.corp.google.com>
-	<20150519004356.GA12854@flurp.local>
-	<xmqq1tica6rk.fsf@gitster.dls.corp.google.com>
-	<CAPig+cS15yzwbcdb-yLH5QiMoxa0utmaJaDDz=W9WfWd+PL37A@mail.gmail.com>
+Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
+Date: Tue, 19 May 2015 11:35:08 -0700
+Message-ID: <xmqq1tic8lgj.fsf@gitster.dls.corp.google.com>
+References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
+	<1431806796-28902-1-git-send-email-gjthill@gmail.com>
+	<xmqqegmfds1n.fsf@gitster.dls.corp.google.com>
+	<xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
+	<20150519063716.GA22771@peff.net>
+	<xmqqk2w48mjp.fsf@gitster.dls.corp.google.com>
+	<xmqqd21w8mal.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: =?utf-8?Q?S=C3=A9bastien?= Guimmara 
-	<sebastien.guimmara@gmail.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 19 20:20:13 2015
+Cc: Jim Hill <gjthill@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 19 20:35:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yum7h-0001to-AU
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 20:20:13 +0200
+	id 1YumMk-0000Oi-Rk
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 20:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbbESSUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 14:20:08 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:36689 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751528AbbESSUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 14:20:06 -0400
-Received: by iepj10 with SMTP id j10so20560750iep.3
-        for <git@vger.kernel.org>; Tue, 19 May 2015 11:20:05 -0700 (PDT)
+	id S1754780AbbESSfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 14:35:12 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:36741 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbESSfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 14:35:10 -0400
+Received: by igbpi8 with SMTP id pi8so83225343igb.1
+        for <git@vger.kernel.org>; Tue, 19 May 2015 11:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=6nF0XULgoMTIq7MEM/OQx3JwaGsQZOoXlqkjezJQIqA=;
-        b=bezBjZbxombTxsYBjTV7ITmDefrg4TLG1RaCIvobrldGUFkkqKefjXJE8W+Ef/KTaH
-         eHMwjnpJTp3OidybrdRUo10YMEKAYMuY7pRmjK7WdCDEFZ8s2UFV2Dx4kdLJe7HbxRzg
-         xUxMvZGOLklE2rP/6OxViamOHSk0DGjvivXDJrF8xkb1PX4a6H1zMA9Pq+KS3FkNVXWE
-         ThSz/FSfgSbsFtlyrSULT15W0QARtFJ5CSLBCOMu0j9LC1suuakoZQnTTc+LfQ6OjpYV
-         NajS4Q8lyi64B2clIh4U0s0sRQeZV8L8H1H2ZalGWJdDS0Au74nxJJYvdUq1QmgZSmsV
-         ab6w==
-X-Received: by 10.107.135.35 with SMTP id j35mr37694138iod.91.1432059605627;
-        Tue, 19 May 2015 11:20:05 -0700 (PDT)
+        bh=4t9N4tO6xGan1MVsvvviTLBgBhnf//rLwIZfL2VC9Us=;
+        b=IqprANgxsQl3m+5QN/xO+kSS5PFbGtIYnetNO8TmjlVwQML+JR9egogKbFLeZRcGsZ
+         QKMfBbp27I7ZHALzAKPwNz3qOEtbfk5Wv5HPoZLyBmwtyOUDUqxFR6x/l7Mkz+jUbpy5
+         RwzbDScKWg/aFaACaLY+1gziClb75bIvfB7TgI0Hqx5tOTyf2A/pzuJvAPChDFxgUh6/
+         FLzLwUKS6tHWPA5XW+M04O3WstG+EjynIqcMCV39xQyULwED0xM6of5+snRKOfcYijLy
+         1Rjbg+j+kDk8u0TV4MXEJEavV9Ke3m4XwWignSF1C9/Cy/x/KOzRJafoFmNcJSLlQFuF
+         dxbQ==
+X-Received: by 10.42.128.84 with SMTP id l20mr43455922ics.21.1432060509930;
+        Tue, 19 May 2015 11:35:09 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
-        by mx.google.com with ESMTPSA id ot6sm8361576igb.11.2015.05.19.11.20.04
+        by mx.google.com with ESMTPSA id ot6sm8386815igb.11.2015.05.19.11.35.09
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 19 May 2015 11:20:04 -0700 (PDT)
-In-Reply-To: <CAPig+cS15yzwbcdb-yLH5QiMoxa0utmaJaDDz=W9WfWd+PL37A@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 19 May 2015 12:35:58 -0400")
+        Tue, 19 May 2015 11:35:09 -0700 (PDT)
+In-Reply-To: <xmqqd21w8mal.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 19 May 2015 11:17:06 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269385>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Tue, May 19, 2015 at 12:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>
->>> The awk script restricts itself to POSIX, and I did test it on Linux,
->>> Mac OS X, and FreeBSD, so it seems pretty portable.
->>
->> I was worried more about some people only having gawk while others
->> with mawk and yet others nawk, etc., without having one of them
->> under the canonical name "awk".  It's nothing what
->>
->>     $ make AWK=mawk
->>
->> or its config.mak equivalent cannot fix, but still bothers me a bit.
+> Subject: [PATCH 2/2] filter_buffer_or_fd(): ignore EPIPE
 >
-> In that case, perhaps we should go with the Perl version, which, given
-> that more people (these days) are familiar with Perl than awk, is less
-> likely to be a maintenance burden.
+> We are explicitly ignoring SIGPIPE, as we fully expect that the
+> filter program may not read our output fully.  Ignore EPIPE that
+> may come from writing to it as well.
 
-As long as we all can agree that the long-term direction we want to
-go in is to remove dependency on awk, that's fine by me.
+Yuck; please discard the previous one.  write_in_full() side is also
+writing into that process, so we should do the same.
 
-That means a small awk scriptlets in t/ and elsewhere need to be
-rethought, though.
+-- >8 --
+Subject: [PATCH v2 2/2] filter_buffer_or_fd(): ignore EPIPE
 
-Thanks.
+We are explicitly ignoring SIGPIPE, as we fully expect that the
+filter program may not read our output fully.  Ignore EPIPE that
+may come from writing to it as well.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ convert.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/convert.c b/convert.c
+index 9a5612e..f3bd3e9 100644
+--- a/convert.c
++++ b/convert.c
+@@ -356,9 +356,14 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+ 	if (params->src) {
+-		write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
++		write_err = (write_in_full(child_process.in,
++					   params->src, params->size) < 0);
++		if (errno == EPIPE)
++			write_err = 0;
+ 	} else {
+ 		write_err = copy_fd(params->fd, child_process.in);
++		if (write_err == COPY_WRITE_ERROR && errno == EPIPE)
++			write_err = 0;
+ 	}
+ 
+ 	if (close(child_process.in))
+-- 
+2.4.1-413-ga38dc94
