@@ -1,102 +1,86 @@
-From: Fredrik Medley <fredrik.medley@gmail.com>
-Subject: Re: [PATCH 2/3] upload-pack: Prepare to extend allow-tip-sha1-in-want
-Date: Tue, 19 May 2015 22:19:14 +0200
-Message-ID: <CABA5-zkLY9vnZnAffn7=NYOmaoXeK8LJiNBVmyvRmc803mfGVg@mail.gmail.com>
-References: <xmqqy4l1sblq.fsf@gitster.dls.corp.google.com> <1431465265-18486-1-git-send-email-fredrik.medley@gmail.com>
- <1431465265-18486-2-git-send-email-fredrik.medley@gmail.com> <xmqqmw19earu.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH] pack-bitmaps: plug memory leak, fix allocation size for
+ recent_bitmaps
+Date: Tue, 19 May 2015 22:29:18 +0200
+Message-ID: <555B9D1E.2050609@web.de>
+References: <555A7499.7090900@web.de> <CAGZ79kZeX_VqcvTt_kgGKyWH0SV2zsV_j1KuxNhwR18zWfp5LA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 19 22:19:42 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <stefanbeller@gmail.com>,
+	Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 19 22:29:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YunzJ-0005fQ-N6
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 22:19:42 +0200
+	id 1Yuo9G-0000TA-Ei
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 22:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbbESUTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 16:19:37 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:35513 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213AbbESUTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 16:19:36 -0400
-Received: by labbd9 with SMTP id bd9so42945142lab.2
-        for <git@vger.kernel.org>; Tue, 19 May 2015 13:19:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=o64eJdNOjZI1IVw/H01dbp7itd/cfPTaryy1Tvk2AB8=;
-        b=n/TSc3pr1LuCdLwiyMd7ocloi24uEvsgM/qHt9Bgtmc4ZWQ8FGqCD0OcEjFwxULlxS
-         IHpLwLPV4lZ/z26xNCc4jcay7EB7/4Bl2iCEhs8GiWlYUop3S3Lig6yCoM8snxuJzqtA
-         8i+2N/jRFA5Cc+cSWRQ0H2smz++9lORAbOSQuvWCQHMiRosAbXvrm23hdWvoUE/7JHcY
-         MRLJACFz1IXBXfF1Rt0zE+MsxR9jcnNeDm9rCdhetDLLAEfSWrdqmbH4DhtEabtY+KFm
-         yyyzNW8cssZ+/eiME8bhjaVroeWRMgII3FjzCbVf1rt6bxqAozPVzmcuHvjgrJ+GFt6d
-         3zRg==
-X-Received: by 10.112.17.68 with SMTP id m4mr23435445lbd.10.1432066775217;
- Tue, 19 May 2015 13:19:35 -0700 (PDT)
-Received: by 10.114.246.235 with HTTP; Tue, 19 May 2015 13:19:14 -0700 (PDT)
-In-Reply-To: <xmqqmw19earu.fsf@gitster.dls.corp.google.com>
+	id S1751354AbbESU3y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2015 16:29:54 -0400
+Received: from mout.web.de ([212.227.15.14]:52981 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750802AbbESU3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 16:29:53 -0400
+Received: from [192.168.178.27] ([79.253.161.1]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0M4Hqd-1ZBVyw1QQN-00rmBE; Tue, 19 May 2015 22:29:41
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAGZ79kZeX_VqcvTt_kgGKyWH0SV2zsV_j1KuxNhwR18zWfp5LA@mail.gmail.com>
+X-Provags-ID: V03:K0:4r6AasJy3+ctTeMzT7UFzboEeKBhi3D5KW08mxfuEvTvQDfBpGV
+ Bmtjs3I7scUNszokOUvlYIwV33S84OjRQnc00DQbQLiMy7cnJEWBOYx0oi9tnrUy9D8x5vt
+ IvqkgoyUOje+sxuJjOZD0Bx7uh4WtLEXbMhvPGbSgCRkMiTAXGVw2CyKuoVSBC1YqwbFubY
+ WupVgGh4F1BDCNRMCKOFQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269397>
 
-2015-05-12 23:39 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Fredrik Medley <fredrik.medley@gmail.com> writes:
->
->> Subject: Re: [PATCH 2/3] upload-pack: Prepare to extend allow-tip-sha1-in-want
+Am 19.05.2015 um 02:57 schrieb Stefan Beller:
+> On Mon, May 18, 2015 at 4:24 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
+>> diff --git a/pack-bitmap.c b/pack-bitmap.c
+>> index 62a98cc..e5abb8a 100644
+>> --- a/pack-bitmap.c
+>> +++ b/pack-bitmap.c
+>> @@ -209,14 +209,12 @@ static inline uint8_t read_u8(const unsigned c=
+har *buffer, size_t *pos)
+>>          return buffer[(*pos)++];
+>>   }
 >>
->> diff --git a/fetch-pack.c b/fetch-pack.c
->> index 48526aa..77174f9 100644
->> --- a/fetch-pack.c
->> +++ b/fetch-pack.c
->> @@ -43,7 +43,10 @@ static int marked;
->>  #define MAX_IN_VAIN 256
->>
->>  static struct prio_queue rev_list = { compare_commits_by_commit_date };
->> -static int non_common_revs, multi_ack, use_sideband, allow_tip_sha1_in_want;
->> +static int non_common_revs, multi_ack, use_sideband;
->> +/* Allow specifying sha1 if it is a ref tip. */
->> +#define ALLOW_TIP    01
->> +static int allow_request_with_bare_object_name;
+>> +#define MAX_XOR_OFFSET 160
+>> +
+>>   static int load_bitmap_entries_v1(struct bitmap_index *index)
+>>   {
+>> -       static const size_t MAX_XOR_OFFSET =3D 160;
 >
-> This side is OK, as "request" is by the end user giving the object
-> name from its command line.
->
->> diff --git a/upload-pack.c b/upload-pack.c
->> index aa84576..708a502 100644
->> --- a/upload-pack.c
->> +++ b/upload-pack.c
->> @@ -35,7 +35,9 @@ static int multi_ack;
->>  static int no_done;
->>  static int use_thin_pack, use_ofs_delta, use_include_tag;
->>  static int no_progress, daemon_mode;
->> -static int allow_tip_sha1_in_want;
->> +/* Allow specifying sha1 if it is a ref tip. */
->> +#define ALLOW_TIP    01
->> +static int allow_request_with_bare_object_name;
->
-> This side is not quite good, as the request coming over wire is
-> always 40-hex bare object name.  We are allowing requests against
-> what we did not advertise (either the tip of hidden refs, or
-> somewhere deep in the history from some tip that may or may not have
-> been advertised).
->
-> allow-unadvertised-object-request or something, perhaps?
->
+> Is there a reason why we prefer defines over a  static const size_t h=
+ere?
 
-My imagination is not any better, so I will stick with
-allow_unadvertised_object_request. I do think that that name
-fits okay in fetch-pack.c as well. The name will also allow for a
-possibly future option of requesting (unadvertised) hidden refs by
-name, but it would of course require larger changes of the protocol.
+Yes, see below.
+
+>> -
+>>          uint32_t i;
+>> -       struct stored_bitmap **recent_bitmaps;
+>> -
+>> -       recent_bitmaps =3D xcalloc(MAX_XOR_OFFSET, sizeof(struct sto=
+red_bitmap));
+>> +       struct stored_bitmap *recent_bitmaps[MAX_XOR_OFFSET] =3D { N=
+ULL };
+
+If MAX_XOR_OFFSET is a const then C89 does not allow this declaration.=20
+C99 gives you a variable-length array here.  VLAs can't be initialized=20
+at declaration time, so we'd need to add a memset() call (at least with=
+=20
+GCC 4.9).  Overall it's simpler and shorter to use a macro.
+
+We could also use an enum, but that's not exactly common.
+
+Ren=C3=A9
