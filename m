@@ -1,69 +1,100 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-bitmaps: plug memory leak, fix allocation size for
- recent_bitmaps
-Date: Mon, 18 May 2015 22:23:21 -0400
-Message-ID: <20150519022321.GA29026@peff.net>
-References: <555A7499.7090900@web.de>
+Subject: Re: [PATCH] progress: no progress in background
+Date: Tue, 19 May 2015 01:17:53 -0400
+Message-ID: <20150519051752.GA16173@peff.net>
+References: <20150415093418.GH23475@mewburn.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	Vicent Marti <tanoku@gmail.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Tue May 19 04:23:30 2015
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Luke Mewburn <luke@mewburn.net>
+X-From: git-owner@vger.kernel.org Tue May 19 07:18:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuXBq-0007Ai-0P
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 04:23:30 +0200
+	id 1YuZup-0005AG-Tu
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 07:18:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbbESCXY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2015 22:23:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60574 "HELO cloud.peff.net"
+	id S1751145AbbESFR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 01:17:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60594 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751560AbbESCXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2015 22:23:24 -0400
-Received: (qmail 25664 invoked by uid 102); 19 May 2015 02:23:24 -0000
+	id S1751027AbbESFR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 01:17:56 -0400
+Received: (qmail 9174 invoked by uid 102); 19 May 2015 05:17:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 May 2015 21:23:24 -0500
-Received: (qmail 3317 invoked by uid 107); 19 May 2015 02:23:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 00:17:56 -0500
+Received: (qmail 9923 invoked by uid 107); 19 May 2015 05:17:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 May 2015 22:23:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 May 2015 22:23:21 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 01:17:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2015 01:17:53 -0400
 Content-Disposition: inline
-In-Reply-To: <555A7499.7090900@web.de>
+In-Reply-To: <20150415093418.GH23475@mewburn.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269340>
 
-On Tue, May 19, 2015 at 01:24:09AM +0200, Ren=C3=A9 Scharfe wrote:
+On Wed, Apr 15, 2015 at 07:34:18PM +1000, Luke Mewburn wrote:
 
-> Use an automatic variable for recent_bitmaps, an array of pointers.
-> This way we don't allocate too much and don't have to free the memory
-> at the end.  The old code over-allocated because it reserved enough
-> memory to store all of the structs it is only pointing to and never
-> freed it.  160 64-bit pointers take up 1280 bytes, which is not too
-> much to be placed on the stack.
->=20
-> MAX_XOR_OFFSET is turned into a preprocessor constant to make it
-> constant enough for use in an non-variable array declaration.
->=20
-> Noticed-by: Stefan Beller <stefanbeller@gmail.com>
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> Disable the display of the progress if stderr is not the
+> current foreground process.
+> Still display the final result when done.
+> 
+> Signed-off-by: Luke Mewburn <luke@mewburn.net>
+> Acked-by: Nicolas Pitre <nico@fluxnic.net>
 > ---
-> This seems to have fallen through the cracks, or did I just miss it?
+> [...]
+> +static int is_foreground_fd(int fd)
+> +{
+> +	return getpgid(0) == tcgetpgrp(fd);
+> +}
 
-Thanks, this looks good.
+I've noticed that this patch causes a regression when we are
+transmitting progress over the sideband channel of the git protocol. You
+can see it pretty easily by cloning something large (like the kernel):
 
-I looked over the function one more time to make sure it is the functio=
-n
-that is wrong, and not my suggestion. :) The current code seems pretty
-obviously wrong.
+  git clone --no-local /path/to/linux.git
+
+The "counting objects" phase is generated by the server side and sent
+over the sideband, where we show it locally. So you'll get:
+
+  remote: Counting objects: 499771
+
+and so on, progressively, until we get to the final value. But with your
+patch, we get silence for tens of seconds, and then the final value.
+is_foreground_fd never returns true, and we print only once the "done"
+flag is set.
+
+The problem is that tcgetpgrp() returns -1 on the server side, because
+of course there is no terminal. I suspect this may also break other
+esoteric cases where "--progress" has been explicitly specified, but we
+don't actually have a terminal (e.g., even something as simple as "ssh
+host 'cd repo && git fsck --progress" exhibits the same behavior).
+
+One reasonable fix (I think) would be to treat an error return from
+tcgetpgrp() as "yes, we are the foreground", like:
+
+diff --git a/progress.c b/progress.c
+index 43d9228..2e31bec 100644
+--- a/progress.c
++++ b/progress.c
+@@ -74,7 +74,8 @@ static void clear_progress_signal(void)
+ 
+ static int is_foreground_fd(int fd)
+ {
+-	return getpgid(0) == tcgetpgrp(fd);
++	int tpgrp = tcgetpgrp(fd);
++	return tpgrp < 0 || tpgrp == getpgid(0);
+ }
+ 
+ static int display(struct progress *progress, unsigned n, const char *done)
+
+But I don't know if that messes up any other cases you were trying to
+hit. We could also check that errno == ENOTTY, but I'm not sure it's
+worth it. Whatever the reason, it probably makes sense to err on the
+side of printing the progress.
 
 -Peff
