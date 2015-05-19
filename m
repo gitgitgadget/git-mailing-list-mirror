@@ -1,88 +1,98 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: git-p4: test t9820-git-p4-editor-handling.sh failing
-Date: Tue, 19 May 2015 07:40:55 +0100
-Message-ID: <555ADAF7.5020001@diamand.org>
+From: FusionX86 <fusionx86@gmail.com>
+Subject: Re: git p4 clone - exclude file types
+Date: Tue, 19 May 2015 01:38:24 -0600
+Message-ID: <CAFcBi89XwW48Goaap=OCVQ_CJrNa_hj5+DWtOHGOsrm6jMs-mw@mail.gmail.com>
+References: <CAFcBi88K-HEn4JCVkONq3h4O9XS1FFX0OXch2d-VJ2bLEsPM0g@mail.gmail.com>
+	<555A52BD.1030802@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 19 08:41:40 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue May 19 09:38:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YubDe-0002pg-1x
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 08:41:38 +0200
+	id 1Yuc6i-0004R9-7H
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 09:38:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822AbbESGld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 02:41:33 -0400
-Received: from mail-wg0-f54.google.com ([74.125.82.54]:36241 "EHLO
-	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751008AbbESGlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 02:41:32 -0400
-Received: by wgbgq6 with SMTP id gq6so5706474wgb.3
-        for <git@vger.kernel.org>; Mon, 18 May 2015 23:41:31 -0700 (PDT)
+	id S1755271AbbESHi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 03:38:26 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:32884 "EHLO
+	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753852AbbESHiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 03:38:25 -0400
+Received: by qkgv12 with SMTP id v12so4135032qkg.0
+        for <git@vger.kernel.org>; Tue, 19 May 2015 00:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=9JE5uoqPBEo6UgfXBnvQT6t6qie96vH4EDr2/H365cY=;
-        b=HNm+pdsD1L+ZXSGpTrOsrKfn92sMJJCdGX6N+/5HZS9XN5DEyahyl51qmmdNEQ8Z5R
-         dXffmZohtmiJ0ob8/JtIkZiGAITwsCCCQK5UXaKpX0quVv0Kzx7RO5MF8SHn08jbughu
-         tMM5NsR408SgZQnT2d0Kebm/Y+j7g3JgiM1lk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=9JE5uoqPBEo6UgfXBnvQT6t6qie96vH4EDr2/H365cY=;
-        b=GY1x7tomAKLqy+nSjx4gmnt3Ov/idYS6NYCNrSn/N1ahRYpEUL6qCMtpaYLj68gRPV
-         nSbc0wb5n3fQZotyAVLDHFSnJ667anuvt27tzltBVw+mzFm69SGQcJu6lNwXR9oXU7C4
-         hFRUUc8MKlnmuJNeN+iRL+vpBrZ2DJFj5yTTIriD2QxcAr6ZaNFTyj5WFvSd9pAXiKHA
-         V5BH3Oq0R4PTGOp96QfL5QDHgWUo9+qC1ZtFVwnT4+sWz/zdLhPNn3iXrRo1wVfJiod5
-         ZQSmEtdPFOKKydheslxxMRHcpHkzeenBvJKzdaJuhNr9gFgcQ5R75ZRpNyDpt96QXumz
-         zEXA==
-X-Gm-Message-State: ALoCoQlVt2VxizowxOIKOmksHcZoupm6AbwW8HWVEv3Vjn/GSQM/J7SYctDKQCHyq50yt4jV5KHX
-X-Received: by 10.180.99.2 with SMTP id em2mr4307830wib.59.1432017691288;
-        Mon, 18 May 2015 23:41:31 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id fa8sm15755732wib.14.2015.05.18.23.41.29
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 May 2015 23:41:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=M8+nmmISh0wPMNlgVaTWBJoFO9pV6WYqYYpFOMhXkLM=;
+        b=T4ORbEoz24t8YXv6yxT62vdoNoFBhV9QgNfJBqGFeuAwRaUYrbU2oP+6+rYao6IBqk
+         FHcB091E958u7QAwHFVTMZnaFFi/skcb3lbe+txS+nuNbf72Znq9s0R9ZgwW0rEFf8qi
+         WsLb8XaLAeA8sWegB4eZ+BeNPG1qlG19iTKOaTidqTQVAYLJbgfPFhBJ0cLAD0h87+FA
+         y8wsx6fbscK7aoJfbdbVknnEKsmMyijc1Ej6KBQW4t9epbPH9lZCk69Rp3q73iWfUi+z
+         Be5h2lrUKhe/PE00jEA/OTPButmN2HcU85/f9IZVGePwdTNaISrYlRHw+TFRabkMwwqT
+         W6cw==
+X-Received: by 10.140.83.116 with SMTP id i107mr33333059qgd.97.1432021104999;
+ Tue, 19 May 2015 00:38:24 -0700 (PDT)
+Received: by 10.140.93.44 with HTTP; Tue, 19 May 2015 00:38:24 -0700 (PDT)
+In-Reply-To: <555A52BD.1030802@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269344>
 
-Hi!
+Thanks Luke, looks like this does work for excluding files when using
+git p4. Great!
 
-The test I put in recently for multi-word editor handling in git-p4, 
-t9820-git-p4-editor-handling.sh, has started failing.
+Unrelated question...
 
-It looks like the reason is the change to it that goes:
+While using git p4 I have noticed that most of the time the clone/sync
+operations hang and I have to keep retrying. The Perforce depot I'm
+currently working with is larger than I'd like and has a lot of binary
+files which might be the cause. The point it gets to in the clone/sync
+is always random and doesn't ever stop on the same files or file
+types. Sometimes it'll die soon after starting, but other times it
+almost completes and then dies. If I keep retrying, it will eventually
+complete. I haven't been able to narrow down the cause, but I do
+notice that the git-fast-import stops right as the clone/sync dies.
+I'm wondering if git is overwhelmed and terminates. Have you ever seen
+this? Any suggestions?
 
--	P4EDITOR="touch \"$git/touched\"" git p4 submit &&
-+	P4EDITOR=": >\"$git/touched\"" git p4 submit &&
+As always, thanks for the help while I work through this migration project.
 
-The problem is that git-p4 invokes $P4EDITOR passing it the name of the 
-submit template. After it returns, it checks that the editor has 
-actually updated the file's modification time.
-
-The first version (somewhat subtly) does this; the second doesn't.
-
-I put the extra check with "$git/touched" in just to check that P4EDITOR 
-was being invoked at all, but I guess it's not strictly necessary. I 
-wondered about doing this:
-
-+	P4EDITOR=": >\"$git/touched\" && touch" git p4 submit &&
-
-But it's possibly getting a bit obscure. I guess it could be OK with a 
-comment.
-
-Could it go back to the original version, or is there some other way to 
-achieve a similar effect?
-
-Thanks!
-Luke
+On Mon, May 18, 2015 at 2:59 PM, Luke Diamand <luke@diamand.org> wrote:
+> On 18/05/15 18:59, FusionX86 wrote:
+>>
+>> Hello,
+>>
+>> Anyone know of a way to 'git p4 clone' and exclude files by type or
+>> name? For example, I want to clone a depot, but not pull down any .exe
+>> files. Haven't been able to find an answer in docs or other searches.
+>
+>
+> I think you can use a client spec which excludes the files you want.
+>
+> First, create a client spec that excludes the files you don't want:
+>
+> Client: myclient
+> View:
+>     //depot/mystuff/...  //myclient/...
+>     -//depot/mystuff/...exe  //myclient/...exe
+>
+> Then clone with the --use-client-spec option:
+>
+> $ export P4CLIENT=myclient
+> $ git p4 clone --use-client-spec //depot/mystuff
+>
+> And later on, when you want to catch up:
+>
+> $ cd mystuff
+> $ git p4 sync --use-client-spec
+>
+> Luke
+>
