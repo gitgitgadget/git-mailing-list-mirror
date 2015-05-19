@@ -1,176 +1,207 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2] pull: handle --log=<n>
-Date: Tue, 19 May 2015 23:43:52 +0200
-Message-ID: <1432071832.14498.6.camel@kaarsemaker.net>
-References: <1431956396-21788-1-git-send-email-pyokagan@gmail.com>
-	 <5661061272076a1883cfde1087be4a42@www.dscho.org>
-	 <xmqq617pda0r.fsf@gitster.dls.corp.google.com>
-	 <6b905c01c9b57abc05fb49117c28c10e@www.dscho.org>
-	 <CAPc5daVze4+8aLGPpZgxDnvKSwvQiaR=kRdwfAHXFYA7HChmMg@mail.gmail.com>
-	 <1432070690.14498.4.camel@kaarsemaker.net>
-	 <CAGZ79kaw_6Cq5SaLvJHrXDm9bh3+ovAddv9CQJ78m65MYF=SqA@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] use file_exists() to check if a file exists in the worktree
+Date: Tue, 19 May 2015 23:44:23 +0200
+Message-ID: <555BAEB7.7000807@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Paul Tan <pyokagan@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 19 23:44:02 2015
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 19 23:44:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YupIv-0000eK-Tv
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 23:44:02 +0200
+	id 1YupJp-0000yk-3Z
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 23:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbbESVn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 17:43:57 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:34829 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751275AbbESVn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 17:43:56 -0400
-Received: by wicmx19 with SMTP id mx19so133436839wic.0
-        for <git@vger.kernel.org>; Tue, 19 May 2015 14:43:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=WZnttFD0CoMc8NfnVbzt02punPTjZ63gfjGYmIxyUDU=;
-        b=IqBlr1ypEZw3TfQFBset42EywAZ74SBrpyXCpdnRhrOfuvXrTJpdNOh/N96DfcW85r
-         RYEhCaz8yYkS+SHLBxYCfYf6FGTvPE3vGikS6MO3KMJzFW+Hi0zhUuYPlsenHFbRwhgJ
-         NCiu5uQH7tRaq6w3lYXyrn6plTKhVLkdLBmwIcqRCUlO0GdhSCF3x2euKdrY6DaAl+5T
-         CD25FbrBIFFj8ArWNnPcWKidhtU+6M4u25lK0Ol/BJHJJOZpPfBy0ECiBl6L2z857NSw
-         GvWvMJ/BleUVfksPkY1l8esoailYXb7SEw9GsKNo5XokZjAaOfPlrzaTfM2d0NylYzSK
-         2oqQ==
-X-Gm-Message-State: ALoCoQkdel3yfxt7RnImOSjUEm7MCZQocMrQZ2JrRymdG2K1oIWrpSGp2ZZpZ59O/O11AZGvKawE
-X-Received: by 10.194.92.2 with SMTP id ci2mr55390783wjb.34.1432071834836;
-        Tue, 19 May 2015 14:43:54 -0700 (PDT)
-Received: from spirit.home.kaarsemaker.net (82-171-80-33.ip.telfort.nl. [82.171.80.33])
-        by mx.google.com with ESMTPSA id j12sm23587357wjn.48.2015.05.19.14.43.53
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2015 14:43:54 -0700 (PDT)
-In-Reply-To: <CAGZ79kaw_6Cq5SaLvJHrXDm9bh3+ovAddv9CQJ78m65MYF=SqA@mail.gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1751789AbbESVox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 17:44:53 -0400
+Received: from mout.web.de ([212.227.17.12]:55418 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751322AbbESVov (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 17:44:51 -0400
+Received: from [192.168.178.27] ([79.253.161.1]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MfYn9-1YVsZy3ILL-00P1gu; Tue, 19 May 2015 23:44:46
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+X-Provags-ID: V03:K0:+2G8KH1YhwmGUbv0ryl0lhVtk610E6DXQzF9QpIPrevZ2PJwxZI
+ TDAQH0YMYg/qwSQkp7hCJp8pyRSGc8yYN02mjK5bY1qKCRKAsKQBJSL3U1k/0aqMEMtzhbW
+ Y67mcqM6gtNng2Ur57xYG5IGGpSGg/nWmHGgvKcUor4fXJ7GdcdgGUhQnPgEMj4zIX+4mn+
+ oxUj3r8sYjfdbTJNxG0oA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269408>
 
-On di, 2015-05-19 at 14:33 -0700, Stefan Beller wrote:
-> On Tue, May 19, 2015 at 2:24 PM, Dennis Kaarsemaker
-> <dennis@kaarsemaker.net> wrote:
-> > On di, 2015-05-19 at 06:57 -0700, Junio C Hamano wrote:
-> >> On Tue, May 19, 2015 at 6:35 AM, Johannes Schindelin
-> >> <johannes.schindelin@gmx.de> wrote:
-> >> >
-> >> > On 2015-05-18 20:18, Junio C Hamano wrote:
-> >> >>
-> >> >> So I dunno.  I really wish test_commit didn't create tags and either
-> >> >> left the tagging to the calling script.
-> >> >
-> >> > Or maybe just add a --tag flag to `test_commit` and use that in all cases where the tags were actually needed. Yeah, I think I like that option best.
-> >>
-> >> Thanks for inferring what I wanted to say but left unsaid due to my
-> >> stupidity and
-> >> lack of proofreading. I meant to follow "either left to the caller"
-> >> with "or with an
-> >> option" ;-)
-> >
-> > I took a stab at this, adding a --tag option to test_commit and adding
-> > the option to the test_commit calls that need it (or removing tests'
-> > reliance on these tags where appropriate, or removing tests' workarounds
-> > for dealing with these tags when they don't want them), and the result
-> > is 59 files changed, 280 insertions(+), 281 deletions(-)
-> 
-> I guess most of the line changes are just adding the --tag?
-> And I'd guess (281-280) that there is no huge code inside of test_commit
-> either, so I'd assume it doesn't add clutter, but rather cleans up....
+Call file_exists() instead of open-coding it.  That's shorter, simpler
+and the intent becomes clearer.
 
-Full stat:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/blame.c   | 15 +++------------
+ builtin/rm.c      |  3 +--
+ merge-recursive.c |  3 +--
+ sha1_name.c       |  7 +++----
+ submodule.c       |  3 +--
+ 5 files changed, 9 insertions(+), 22 deletions(-)
 
- t/t0100-previous.sh                        |  6 +++---
- t/t1011-read-tree-sparse-checkout.sh       |  2 +-
- t/t1403-show-ref.sh                        |  6 +++---
- t/t1430-bad-ref-name.sh                    |  2 +-
- t/t1450-fsck.sh                            |  4 ++--
- t/t2018-checkout-branch.sh                 |  4 ++--
- t/t2020-checkout-detach.sh                 |  8 ++++----
- t/t2030-unresolve-info.sh                  | 10 +++++-----
- t/t3200-branch.sh                          |  2 +-
- t/t3211-peel-ref.sh                        |  2 +-
- t/t3307-notes-man.sh                       |  4 ++--
- t/t3308-notes-merge.sh                     | 10 +++++-----
- t/t3309-notes-merge-auto-resolve.sh        | 30
-+++++++++++++++---------------
- t/t3310-notes-merge-manual-resolve.sh      | 10 +++++-----
- t/t3311-notes-merge-fanout.sh              |  2 +-
- t/t3400-rebase.sh                          |  6 +++---
- t/t3404-rebase-interactive.sh              | 22 +++++++++++-----------
- t/t3406-rebase-message.sh                  |  6 +++---
- t/t3410-rebase-preserve-dropped-merges.sh  | 14 +++++++-------
- t/t3411-rebase-preserve-around-merges.sh   | 14 +++++++-------
- t/t3414-rebase-preserve-onto.sh            | 14 +++++++-------
- t/t3416-rebase-onto-threedots.sh           | 12 ++++++------
- t/t3418-rebase-continue.sh                 |  4 ++--
- t/t3421-rebase-topology-linear.sh          | 22 +++++++++++-----------
- t/t3425-rebase-topology-merges.sh          | 20 ++++++++++----------
- t/t3507-cherry-pick-conflict.sh            |  8 ++++----
- t/t3508-cherry-pick-many-commits.sh        |  6 +++---
- t/t3510-cherry-pick-sequence.sh            | 16 ++++++++--------
- t/t3511-cherry-pick-x.sh                   |  2 +-
- t/t4131-apply-fake-ancestor.sh             |  8 ++++----
- t/t4152-am-subjects.sh                     |  2 +-
- t/t4202-log.sh                             | 14 +++++++-------
- t/t4207-log-decoration-colors.sh           |  8 +++-----
- t/t4300-merge-tree.sh                      | 62 +++++++++++++++++++++++++++++---------------------------------
- t/t5407-post-rewrite-hook.sh               | 12 ++++++------
- t/t5509-fetch-push-namespaces.sh           |  4 ++--
- t/t5510-fetch.sh                           |  4 ++--
- t/t5514-fetch-multiple.sh                  |  2 +-
- t/t5571-pre-push-hook.sh                   |  2 +-
- t/t5704-bundle.sh                          |  5 +----
- t/t6009-rev-list-parent.sh                 | 18 +++++++++---------
- t/t6010-merge-base.sh                      | 24 ++++++++++++------------
- t/t6016-rev-list-graph-simplify-history.sh | 22 +++++++++++-----------
- t/t6019-rev-list-ancestry-path.sh          | 18 +++++++++---------
- t/t6101-rev-parse-parents.sh               |  8 ++++----
- t/t6111-rev-list-treesame.sh               |  2 +-
- t/t6300-for-each-ref.sh                    |  1 -
- t/t7003-filter-branch.sh                   | 16 ++++++++--------
- t/t7007-show.sh                            |  8 ++++----
- t/t7012-skip-worktree-writing.sh           |  2 +-
- t/t7060-wtstatus.sh                        |  6 +++---
- t/t7111-reset-table.sh                     |  6 +++---
- t/t7407-submodule-foreach.sh               |  2 +-
- t/t7512-status-help.sh                     |  6 +++---
- t/t7606-merge-custom.sh                    |  8 ++++----
- t/t7607-merge-overwrite.sh                 |  6 +++---
- t/t7608-merge-messages.sh                  |  4 ++--
- t/t9502-gitweb-standalone-parse-output.sh  |  2 +-
- t/test-lib-functions.sh                    |  9 ++++++++-
- 59 files changed, 278 insertions(+), 281 deletions(-)
-
-> > A test run on master with GIT_TEST_LONG set causes 1138 calls to
-> > test_commit on my system, of which 255 now use the --tag option
-> > (measured with a really crude hack that INCR's some keys in redis at
-> > appropriate points in test_commit).
-> 
-> ... 255 out of 1138 is awesome IMHO! Do you see an improvement in time as
-> well (as in "time make test" is X% faster overall) ?
-
-I have not measured, but will.
-
-> > Is this interesting enough to turn into a proper patch series?
-> 
-> I'd think this is worth making a real patch, definitely!
-
-OK.
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 8d70623..ff97825 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -26,6 +26,7 @@
+ #include "userdiff.h"
+ #include "line-range.h"
+ #include "line-log.h"
++#include "dir.h"
+ 
+ static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] file");
+ 
+@@ -2151,16 +2152,6 @@ static void sanity_check_refcnt(struct scoreboard *sb)
+ 	}
+ }
+ 
+-/*
+- * Used for the command line parsing; check if the path exists
+- * in the working tree.
+- */
+-static int has_string_in_work_tree(const char *path)
+-{
+-	struct stat st;
+-	return !lstat(path, &st);
+-}
+-
+ static unsigned parse_score(const char *arg)
+ {
+ 	char *end;
+@@ -2656,14 +2647,14 @@ parse_done:
+ 		if (argc < 2)
+ 			usage_with_options(blame_opt_usage, options);
+ 		path = add_prefix(prefix, argv[argc - 1]);
+-		if (argc == 3 && !has_string_in_work_tree(path)) { /* (2b) */
++		if (argc == 3 && !file_exists(path)) { /* (2b) */
+ 			path = add_prefix(prefix, argv[1]);
+ 			argv[1] = argv[2];
+ 		}
+ 		argv[argc - 1] = "--";
+ 
+ 		setup_work_tree();
+-		if (!has_string_in_work_tree(path))
++		if (!file_exists(path))
+ 			die_errno("cannot stat path '%s'", path);
+ 	}
+ 
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 3304bff..80b972f 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -84,7 +84,6 @@ static int check_submodules_use_gitfiles(void)
+ 		const char *name = list.entry[i].name;
+ 		int pos;
+ 		const struct cache_entry *ce;
+-		struct stat st;
+ 
+ 		pos = cache_name_pos(name, strlen(name));
+ 		if (pos < 0) {
+@@ -95,7 +94,7 @@ static int check_submodules_use_gitfiles(void)
+ 		ce = active_cache[pos];
+ 
+ 		if (!S_ISGITLINK(ce->ce_mode) ||
+-		    (lstat(ce->name, &st) < 0) ||
++		    !file_exists(ce->name) ||
+ 		    is_empty_dir(name))
+ 			continue;
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1c9c30d..44d85be 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -611,7 +611,6 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
+ {
+ 	struct strbuf newpath = STRBUF_INIT;
+ 	int suffix = 0;
+-	struct stat st;
+ 	size_t base_len;
+ 
+ 	strbuf_addf(&newpath, "%s~", path);
+@@ -620,7 +619,7 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
+ 	base_len = newpath.len;
+ 	while (string_list_has_string(&o->current_file_set, newpath.buf) ||
+ 	       string_list_has_string(&o->current_directory_set, newpath.buf) ||
+-	       lstat(newpath.buf, &st) == 0) {
++	       file_exists(newpath.buf)) {
+ 		strbuf_setlen(&newpath, base_len);
+ 		strbuf_addf(&newpath, "_%d", suffix++);
+ 	}
+diff --git a/sha1_name.c b/sha1_name.c
+index 6d10f05..6de8c87 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -6,6 +6,7 @@
+ #include "tree-walk.h"
+ #include "refs.h"
+ #include "remote.h"
++#include "dir.h"
+ 
+ static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
+ 
+@@ -1237,14 +1238,13 @@ static void diagnose_invalid_sha1_path(const char *prefix,
+ 				       const char *object_name,
+ 				       int object_name_len)
+ {
+-	struct stat st;
+ 	unsigned char sha1[20];
+ 	unsigned mode;
+ 
+ 	if (!prefix)
+ 		prefix = "";
+ 
+-	if (!lstat(filename, &st))
++	if (file_exists(filename))
+ 		die("Path '%s' exists on disk, but not in '%.*s'.",
+ 		    filename, object_name_len, object_name);
+ 	if (errno == ENOENT || errno == ENOTDIR) {
+@@ -1271,7 +1271,6 @@ static void diagnose_invalid_index_path(int stage,
+ 					const char *prefix,
+ 					const char *filename)
+ {
+-	struct stat st;
+ 	const struct cache_entry *ce;
+ 	int pos;
+ 	unsigned namelen = strlen(filename);
+@@ -1314,7 +1313,7 @@ static void diagnose_invalid_index_path(int stage,
+ 			    ce_stage(ce), filename);
+ 	}
+ 
+-	if (!lstat(filename, &st))
++	if (file_exists(filename))
+ 		die("Path '%s' exists on disk, but not in the index.", filename);
+ 	if (errno == ENOENT || errno == ENOTDIR)
+ 		die("Path '%s' does not exist (neither on disk nor in the index).",
+diff --git a/submodule.c b/submodule.c
+index d491e6a..b8747f5 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -891,7 +891,6 @@ int submodule_uses_gitfile(const char *path)
+ 
+ int ok_to_remove_submodule(const char *path)
+ {
+-	struct stat st;
+ 	ssize_t len;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	const char *argv[] = {
+@@ -904,7 +903,7 @@ int ok_to_remove_submodule(const char *path)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ok_to_remove = 1;
+ 
+-	if ((lstat(path, &st) < 0) || is_empty_dir(path))
++	if (!file_exists(path) || is_empty_dir(path))
+ 		return 1;
+ 
+ 	if (!submodule_uses_gitfile(path))
 -- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+2.4.1
