@@ -1,80 +1,71 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Ensimag students contributing to git
-Date: Tue, 19 May 2015 17:47:15 +0200
-Message-ID: <CAP8UFD16vb_-rp7kiATd=XW5FK+P+qkME8hPMku571_PDCQywg@mail.gmail.com>
-References: <722582475.919095.1431991277969.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<388720318.919104.1431991388837.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<CAP8UFD2hCScvEZxxFCc4XWLJuHM-SyqZ_x4sdmwXj8WVHrW4tQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: identical hashes on two branches, but holes in git log
+Date: Tue, 19 May 2015 09:01:10 -0700
+Message-ID: <xmqq617oa75l.fsf@gitster.dls.corp.google.com>
+References: <20150519132958.GA21130@frolo.macqel>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>,
-	Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	galanalr@ensimag.grenoble-inp.fr, lespiner@ensimag.grenoble-inp.fr,
-	pagesg@ensimag.grenoble-inp.fr,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 19 17:47:24 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Philippe De Muyter <phdm@macq.eu>
+X-From: git-owner@vger.kernel.org Tue May 19 18:01:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yujjl-0008GH-Pc
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 17:47:22 +0200
+	id 1YujxH-0005f0-Ic
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 18:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933302AbbESPrR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2015 11:47:17 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:37440 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751733AbbESPrQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2015 11:47:16 -0400
-Received: by wibt6 with SMTP id t6so27927192wib.0
-        for <git@vger.kernel.org>; Tue, 19 May 2015 08:47:15 -0700 (PDT)
+	id S1755820AbbESQBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 12:01:15 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:38225 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754050AbbESQBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 12:01:12 -0400
+Received: by igcau1 with SMTP id au1so17722796igc.1
+        for <git@vger.kernel.org>; Tue, 19 May 2015 09:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rJNnUyujR/ShfOwkXLHLlQbGdSTaQrGc1XPFbbGXsOc=;
-        b=yw/USHBR4RyUve7ZzripFx9qFoGgKtwysrcNxPJT37IS7b4isjNQCkVIVIwsZcMKcD
-         6gSt2ZKAZDJIow31va0lTufb+XvwIc595yJhNI+j+ZpmXWLkaaQo9UK4BONZUSBIfpsp
-         nI4NqBKEH0CJz/XPMA5J8zM88Esk++yv6cwy1wwdvbQJCoIhye6i5FZKSRehwIVsYXt7
-         TG9UtrsRButBmzsmkbWJ6MLGA+aFmz4PEV7TjBWSOCQNahD3aNLC6agp+W8ldnT/P4jx
-         jnnfblDXTur+LqE8BhHHheS/z4cIpjEkth91up8gY6w4DH4QHMj1OVypIzvuSUGg76B6
-         lQSQ==
-X-Received: by 10.180.95.10 with SMTP id dg10mr33387577wib.41.1432050435252;
- Tue, 19 May 2015 08:47:15 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Tue, 19 May 2015 08:47:15 -0700 (PDT)
-In-Reply-To: <CAP8UFD2hCScvEZxxFCc4XWLJuHM-SyqZ_x4sdmwXj8WVHrW4tQ@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=dR8pukGwpLlqUDHL9R+i144PjwEh1yIPa6Meq8ipfko=;
+        b=0VOCC4oCFA9dhbIj+p/OECmHhrgZlnUiS0oo7TIIhaKKq6pWf3OgZN4MzOo5jyJKcj
+         pO3RBeweiuXvQ/mXjP9fhHwS4mblWpn4g+dW0K+EQCIhtyIuFEBtli0zlLnQK5u6WGDl
+         gurbYfMzl7+tZ8iECm4vCC7EtwSLI5Iv6fH2fPSBFpK0hrMycem9rKs/F7ei/yTXBhCK
+         uklyZGMzehtVO6I4BjFvdW0lDX5WIAwV1PfDrm9jvwaVmNA2qcXpdAZ8vFEjT2e62nDa
+         Gl8d3Zf4cjxx9P2i1pujiBdzjpxZgrLR3jc+S+tS5FFw0ZyjfrMqTOD0Gs4mOhjto+tg
+         K4MA==
+X-Received: by 10.43.39.1 with SMTP id tk1mr13742983icb.26.1432051272020;
+        Tue, 19 May 2015 09:01:12 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
+        by mx.google.com with ESMTPSA id j4sm8137487igo.0.2015.05.19.09.01.11
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 19 May 2015 09:01:11 -0700 (PDT)
+In-Reply-To: <20150519132958.GA21130@frolo.macqel> (Philippe De Muyter's
+	message of "Tue, 19 May 2015 15:29:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269365>
 
-On Tue, May 19, 2015 at 5:10 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Last Autumn I started to work a bit on =C2=AB git bisect fix/unfixed =
-=C2=BB (or
-> more accurately =C2=AB git bisect old/new =C2=BB) by applying and rew=
-orking a
-> bit what your Ensimag elders had done. It is not much but maybe it ca=
-n
-> help you a bit.
->
-> It is on this branch on my github repo:
->
-> https://github.com/chriscool/git/commits/boldnew1
->
-> There are only 3 original patches on this branch. The first one is
-> what your elders did and the other 2 are some small cleanups on top.
->
-> You will need to rebase and rework this, but it is a start.
+Philippe De Muyter <phdm@macq.eu> writes:
 
-Actually I rebased it on current master and it is available here:
+> Trying to understand, I have eventually done "git log" on my branch and
+> on v3.15 with the following commands :
+>
+> git log v3.15 --full-history --decorate=short | grep '^commit' > /tmp/3.15.commits
+> git log --full-history --decorate=short | grep '^commit' > /tmp/mybranch.commits
 
-https://github.com/chriscool/git/commits/boldnew2
+Either
 
-Best,
-Christian.
+    git log --oneline v3.15..HEAD ;# show what I have not in theirs
+
+or
+
+    gitk v3.15...HEAD ;# show our differences graphically
+
+may give you a better picture than what you did, which was to
+artificially flatten the topology and lose the crucial information
+as to which commit is the parents of which other commit.
