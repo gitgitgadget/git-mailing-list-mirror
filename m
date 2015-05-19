@@ -1,74 +1,95 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Ensimag students contributing to git
-Date: Tue, 19 May 2015 17:39:13 +0200
-Message-ID: <CAP8UFD2WbvHZN4vtRt3o+sYTcoBhPuW=7Dhta1XjHOoEGDxvgw@mail.gmail.com>
-References: <722582475.919095.1431991277969.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<388720318.919104.1431991388837.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<CAGZ79kZF2Ne8vLTof_hq+UL3_U2GPeExqk7qjEQ=yFb6eQkyqA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-p4: test t9820-git-p4-editor-handling.sh failing
+Date: Tue, 19 May 2015 08:44:53 -0700
+Message-ID: <xmqqa8x0a7wq.fsf@gitster.dls.corp.google.com>
+References: <555ADAF7.5020001@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Paul Tan <pyokagan@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	galanalr@ensimag.grenoble-inp.fr, lespiner@ensimag.grenoble-inp.fr,
-	pagesg@ensimag.grenoble-inp.fr,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 19 17:39:22 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue May 19 17:45:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yujc2-0004le-0m
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 17:39:22 +0200
+	id 1YujhU-000784-Kf
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 17:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbbESPjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 11:39:17 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:32883 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753852AbbESPjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 11:39:14 -0400
-Received: by wgjc11 with SMTP id c11so22747886wgj.0
-        for <git@vger.kernel.org>; Tue, 19 May 2015 08:39:13 -0700 (PDT)
+	id S933165AbbESPo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 11:44:56 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36553 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932761AbbESPoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 11:44:55 -0400
+Received: by igbpi8 with SMTP id pi8so79048017igb.1
+        for <git@vger.kernel.org>; Tue, 19 May 2015 08:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=uD8uH98ieBrYJljzEcASfZvkiR4prsY9gmmncxJZNHw=;
-        b=Csv/pdvh1INQmAWFcdRtA+ELbUdPT/VDtIoHMQXht4GBtrsj4YRsooapXKxxNZ75Ea
-         IU9ktlk8dZrz72WTrcXnywifEfHWMhpMoHZXKI7qX28MdPe0/AnnbuoH97kB8kW1JVG9
-         9/y2ciTMtbg3Z+5c27o5+D8DMDI4jKuvDdh2tPkI3TRNXrdH3HP0Jblh3vCj8b3M6wuc
-         2mMe8uoDQFQl8TR60riv7Qrx+ddiF8nNG+OvrzosStf5G/amIG6cpf5zhzESfTwpETbq
-         Fo+O3c35p7CNd1I+qqa3U2MEuhAwY3OscL0tWbk3KIGbpXH3nld3j6njV6KXrR1cNuAu
-         40ag==
-X-Received: by 10.180.105.38 with SMTP id gj6mr7150483wib.90.1432049953462;
- Tue, 19 May 2015 08:39:13 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Tue, 19 May 2015 08:39:13 -0700 (PDT)
-In-Reply-To: <CAGZ79kZF2Ne8vLTof_hq+UL3_U2GPeExqk7qjEQ=yFb6eQkyqA@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=5DFxaEFLoJi0l8W41OnIj+HNah5nY7eMXx8VBv3tjVA=;
+        b=BZfH1mdk2EVDQkgeIzWBmURKAU1DtICMaTQ/MJ5nG0R4TxOVQBD4SXtwrh4LQ9pLwK
+         nZm/tW2Us5f8j3nKY26E9iXFq6n98dMNca9K69hLGR9Nd+ByCLCDW9R2kLCm+UFLa29G
+         Tn6n2vJRN2aHxbmEt1jABJnD3UfdlzPW31jB0xfGPrS+D6E5m4rjzVG1j+v+AgOJdv+B
+         6LJk8gKlErswoEXxHWx1nqB+mZl5W8HYU4eUltAtgEYDvVvqLOhlzI07GeGeEk7jOV94
+         1SHncy4kkKkW08smg31yG+doFjOYIqlpS0uXd2LB/poZla6j40UNtPmQjMFAhC/4rpVd
+         8tmw==
+X-Received: by 10.43.63.76 with SMTP id xd12mr42128020icb.11.1432050295098;
+        Tue, 19 May 2015 08:44:55 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:799e:649b:b86b:7c03])
+        by mx.google.com with ESMTPSA id l30sm10249714iod.12.2015.05.19.08.44.54
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 19 May 2015 08:44:54 -0700 (PDT)
+In-Reply-To: <555ADAF7.5020001@diamand.org> (Luke Diamand's message of "Tue,
+	19 May 2015 07:40:55 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269363>
 
-On Tue, May 19, 2015 at 2:50 AM, Stefan Beller <sbeller@google.com> wrote:
+Luke Diamand <luke@diamand.org> writes:
+
+> The test I put in recently for multi-word editor handling in git-p4,
+> t9820-git-p4-editor-handling.sh, has started failing.
 >
-> git bisect fix/unfixed sounds interesting though (just
-> today I tried to find a fix and messed up, again). I am
-> not aware of the scope you're planning to contribute
-> to within the git bisect fix/unfixed topic, though I'd like
-> to share a result[2] of a discussion we had some time
-> ago, on how git bisect can be improved (nobody did it
-> yet though).
+> It looks like the reason is the change to it that goes:
 >
-> [2] https://docs.google.com/document/d/1hzF8fZbsQtKwUPH60dsEwVZM2wmESFq713SeAsg_hkc/edit?usp=sharing
+> -	P4EDITOR="touch \"$git/touched\"" git p4 submit &&
+> +	P4EDITOR=": >\"$git/touched\"" git p4 submit &&
+>
+> The problem is that git-p4 invokes $P4EDITOR passing it the name of
+> the submit template. After it returns, it checks that the editor has
+> actually updated the file's modification time.
 
-It's interesting, but the document doesn't really explain what is not
-optimal with the current algorithm and why the proposed algorithm is
-better.
+Sorry, that was an unwarranted and unnecessary amend.  Didn't
+realize that touch was trying to affect two files.
 
-Thanks,
-Christian.
+But "touch" is not quite right, either.
+
+Unlike human sitting in front of keyboard, our fake editor types
+very fast and wallclock time may not change between the time when
+"git p4" prepares the file to be edited and the fake editor returns.
+
+Is it really *only* the modification time that is checked?  If our
+fake editor adds one blank line and return very fast without
+changing the modification time, doesn't the caller notice that (and
+if not, shouldn't it be fixed to do so [*1*])?
+
+If you absolutely need to change the timestamp to work around the
+caller if it only checks the timestamp and does not notice the size
+or contents are different, then test-chmtime would be the right
+thing to use in the test suite to do this portably, something like.
+
+    P4EDITOR=": >\"$git/touched\" && test-chmtime +5"
+
+perhaps.
+
+Thanks.
+
+[Footnote]
+
+*1* Yeah, I just checked.  It does check only mtime and wants the
+    editor to spend at least one second to edit, which is silly X-<.
