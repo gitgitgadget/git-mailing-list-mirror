@@ -1,93 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 3/3] l10: de.po: translation fix for fall-back to 3way merge
-Date: Tue, 19 May 2015 10:51:34 +0200
-Message-ID: <d7f87b49a0d229a62f2f6c51a327c9fb98690b49.1432025365.git.git@drmicha.warpmail.net>
-References: <cover.1432025365.git.git@drmicha.warpmail.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Diffing submodule does not yield complete logs for merge commits
+Date: Tue, 19 May 2015 12:44:18 +0200
+Message-ID: <20150519104413.GA17458@book.hvoigt.net>
+References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
+ <20150501175757.GA10569@book.hvoigt.net>
+ <CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
+ <5547C961.7070909@web.de>
+ <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
+ <37f399418bbebb3b53a50bf8daffcdc0@www.dscho.org>
+ <CAHd499Do2aB5E_=aDzkoDssEbgz181rH36X28Oe7Zcok2f=zBQ@mail.gmail.com>
+ <20150518123036.GB16841@book.hvoigt.net>
+ <CAHd499CETM2jmZ2iJk=AoXtjLUCQ==u6q9Z5P-3EVGSY48FY_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 19 10:52:27 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 19 12:44:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YudG7-0007eU-Ku
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 10:52:19 +0200
+	id 1Yuf0i-00018j-8p
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 12:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463AbbESIvs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2015 04:51:48 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35310 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754198AbbESIvk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2015 04:51:40 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 708DE209BF
-	for <git@vger.kernel.org>; Tue, 19 May 2015 04:51:40 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Tue, 19 May 2015 04:51:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=rYcvAkRCAQ1L4OlQBWMt0o46XgU=; b=AJc78p
-	awzLKFjAB++g/K7yYtL71JuPi6KuP+wX4X/84c6TFl5jH71/PvT0sRaEbux7RSX3
-	orWgFWDonn0QHsa4R65RX1ZIkVOr5be0IMBJBvRjETeToUnawV+7ewNV+ODnoLAj
-	t7ZQiOve4r/g0sbdt1Mn82TpW8M6lMhuRUlqg=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=rYcvAkRCAQ1L4Ol
-	QBWMt0o46XgU=; b=W/QvPZcO6WcI/giPhqYgXhTGTfJn2y7xWhDWiDssBvNNQIB
-	2HUYdL8qYf91E/GYEDFq/E03gdLoglWIwFgDrqEZgzNTlbzneA36TgrRaJxlbkGH
-	67tTqWu/cgOeh6J/wbhoBxh7gxZh0Qlhi/uvdZ/DPopnvtn9C9DSZVRE2aWM=
-X-Sasl-enc: X5KKmOkkfDdBnNdyPzLPrwBH668peA1hD/ONWt2G3CEn 1432025500
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 0AEE0C00015;
-	Tue, 19 May 2015 04:51:39 -0400 (EDT)
-X-Mailer: git-send-email 2.4.0.rc3.332.g886447c
-In-Reply-To: <cover.1432025365.git.git@drmicha.warpmail.net>
+	id S1755342AbbESKo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 06:44:27 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.103]:42378 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755305AbbESKoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 06:44:25 -0400
+Received: from [77.7.20.108] (helo=book.hvoigt.net)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Yuf0Y-00008e-Hd; Tue, 19 May 2015 12:44:22 +0200
+Content-Disposition: inline
+In-Reply-To: <CAHd499CETM2jmZ2iJk=AoXtjLUCQ==u6q9Z5P-3EVGSY48FY_A@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269349>
 
-The English version is correct, but misleading: It is not the 3way merg=
-e
-that is being patched also, but that is being fallen back to also.
+On Mon, May 18, 2015 at 10:06:32AM -0500, Robert Dailey wrote:
+> Unfortunately I find it unintuitive and counter productive to perform
+> inline patches or do anything on a mailing list. Especially on
+> Windows, it's a pain to setup git to effectively do this. Also I read
+> mailing lists through Gmail which does not offer a proper monospace
+> font view or syntax coloring to effectively review patches and
+> comments pertaining to them.
 
-The German version translates the former meaning. Make it translate the
-latter.
+Are you sure you are not overestimating the effort it takes to send
+patches inline? Once you've got your user agent correctly setup its just
+a matter of copy and paste instead of attaching the patch. On Windows I
+would probably use Thunderbird which has a section in the format-patch
+documentation how to configure it. Compared to the effort you probably
+spent on writing your patch isn't this bit of extra effort neglectable?
+And your patch is almost done. It just needs some tests and maybe a few
+rounds on the mailinglist after that.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
+> Since I am not willing to properly follow your process, I will
+> withdraw my patch. However it is here if someone else wishes to take
+> it over. Really wish you guys used github's amazing features but I
+> understand that Linus has already made his decision in that matter.
 
-Notes:
-    Really, it would be clearer to say "mittels 3-Wege-Merge", and
-    also "using 3way merge" in the original (rather than "and").
-    But I tried to stay as close as possible to both the English versio=
-n
-    and the existing translation.
+It not just Linus decision it is also a matter of many people are used
+to this workflow. AFAIR there have been many discussions and tries about
+using other tools. Email has many advantages which a webinterface does
+not provide. It is simply less effort that one person adjusts to this
+workflow instead of changing many peoples working workflow.
 
- po/de.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> I'm sorry I couldn't be more agreeable on the matter. Thanks for the
+> time you spent reviewing my patch.
 
-diff --git a/po/de.po b/po/de.po
-index 6405f3e..b9eaa82 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -10491,7 +10491,7 @@ msgstr ""
-=20
- #: git-am.sh:166
- msgid "Falling back to patching base and 3-way merge..."
--msgstr "Falle zur=C3=BCck zum Patchen der Basis und des 3-Wege-Merges =
-=2E.."
-+msgstr "Falle zur=C3=BCck zum Patchen der Basis und zum 3-Wege-Merge .=
-=2E."
-=20
- #: git-am.sh:182
- msgid "Failed to merge in the changes."
---=20
-2.4.0.rc3.332.g886447c
+If you are really this fixed in your workflow that would be too bad.
+
+Cheers Heiko
