@@ -1,89 +1,71 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] progress: treat "no terminal" as being in the foreground
-Date: Tue, 19 May 2015 01:24:57 -0400
-Message-ID: <20150519052457.GA18772@peff.net>
-References: <20150415093418.GH23475@mewburn.net>
- <20150519051752.GA16173@peff.net>
+Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
+Date: Tue, 19 May 2015 02:37:16 -0400
+Message-ID: <20150519063716.GA22771@peff.net>
+References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
+ <1431806796-28902-1-git-send-email-gjthill@gmail.com>
+ <xmqqegmfds1n.fsf@gitster.dls.corp.google.com>
+ <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Luke Mewburn <luke@mewburn.net>
-X-From: git-owner@vger.kernel.org Tue May 19 07:25:08 2015
+Cc: Jim Hill <gjthill@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 19 08:37:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yua1a-0006vM-1J
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 07:25:06 +0200
+	id 1Yub9d-0001UL-A6
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 08:37:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbbESFZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 01:25:01 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60599 "HELO cloud.peff.net"
+	id S1754561AbbESGhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 02:37:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60607 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753172AbbESFZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 01:25:00 -0400
-Received: (qmail 10074 invoked by uid 102); 19 May 2015 05:25:00 -0000
+	id S1754555AbbESGhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 02:37:19 -0400
+Received: (qmail 17279 invoked by uid 102); 19 May 2015 06:37:19 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 00:25:00 -0500
-Received: (qmail 9960 invoked by uid 107); 19 May 2015 05:25:01 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 01:37:19 -0500
+Received: (qmail 10280 invoked by uid 107); 19 May 2015 06:37:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 01:25:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2015 01:24:57 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 02:37:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2015 02:37:16 -0400
 Content-Disposition: inline
-In-Reply-To: <20150519051752.GA16173@peff.net>
+In-Reply-To: <xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269342>
 
-On Tue, May 19, 2015 at 01:17:52AM -0400, Jeff King wrote:
+On Sun, May 17, 2015 at 12:10:49PM -0700, Junio C Hamano wrote:
 
-> One reasonable fix (I think) would be to treat an error return from
-> tcgetpgrp() as "yes, we are the foreground", like:
+> I spoke too fast X-<.  "while sh t0021-*.sh; do :; done" dies after
+> a few iterations and with this squashed in it doesn't.
+> 
+>  t/t0021-conversion.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index 42e6423..b778faf 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -218,7 +218,7 @@ test_expect_success "filter: clean empty file" '
+>  '
+>  
+>  test_expect_success "filter: smudge empty file" '
+> -	git config filter.empty-in-repo.clean true &&
+> +	git config filter.empty-in-repo.clean "cat >/dev/null" &&
 
-I think I convinced myself this is the right fix. So here it is, all
-wrapped up with a commit message. I'd love to hear confirmation, though.
-:)
+Hmm, I thought we turned off SIGPIPE when writing to filters these days.
+Looks like we still complain if we get EPIPE, though. I feel like it
+should be the filter's business whether it wants to consume all of the
+input or not[1], and we should only be checking its exit status.
 
--- >8 --
-progress: treat "no terminal" as being in the foreground
+-Peff
 
-Commit 85cb890 (progress: no progress in background,
-2015-04-13) avoids sending progress from background
-processes by checking that the process group id of the
-current process is the same as that of the controlling
-terminal.
-
-If we don't have a terminal, however, this check never
-succeeds, and we print no progress at all (until the final
-"done" message). This can be seen when cloning a large
-repository; instead of getting progress updates for
-"counting objects", it will appear to hang then print the
-final count.
-
-We can fix this by treating an error return from tcgetpgrp()
-as a signal to show the progress.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- progress.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/progress.c b/progress.c
-index 43d9228..2e31bec 100644
---- a/progress.c
-+++ b/progress.c
-@@ -74,7 +74,8 @@ static void clear_progress_signal(void)
- 
- static int is_foreground_fd(int fd)
- {
--	return getpgid(0) == tcgetpgrp(fd);
-+	int tpgrp = tcgetpgrp(fd);
-+	return tpgrp < 0 || tpgrp == getpgid(0);
- }
- 
- static int display(struct progress *progress, unsigned n, const char *done)
--- 
-2.4.1.396.g7ba6d7b
+[1] As a practical example, consider a file format that has a lot of
+    cruft at the end. The clean filter would want to read only to the
+    start of the cruft, and then stop for reasons of efficiency.
