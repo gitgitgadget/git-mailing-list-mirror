@@ -1,79 +1,122 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] pull: handle =?UTF-8?Q?--log=3D=3Cn=3E?=
-Date: Tue, 19 May 2015 15:35:05 +0200
-Organization: gmx
-Message-ID: <6b905c01c9b57abc05fb49117c28c10e@www.dscho.org>
-References: <1431956396-21788-1-git-send-email-pyokagan@gmail.com>
- <5661061272076a1883cfde1087be4a42@www.dscho.org>
- <xmqq617pda0r.fsf@gitster.dls.corp.google.com>
+From: Philippe De Muyter <phdm@macq.eu>
+Subject: identical hashes on two branches, but holes in git log
+Date: Tue, 19 May 2015 15:29:58 +0200
+Message-ID: <20150519132958.GA21130@frolo.macqel>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 19 15:35:19 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 19 15:38:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yuhfz-00066B-Cl
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:35:19 +0200
+	id 1Yuhiq-0007ek-Os
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755500AbbESNfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 09:35:12 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64730 "EHLO mout.gmx.net"
+	id S932644AbbESNhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 09:37:45 -0400
+Received: from smtp2.macqel.be ([109.135.2.61]:53718 "EHLO smtp2.macqel.be"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754482AbbESNfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 09:35:10 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MYbFe-1YgySG45Mg-00VNGH; Tue, 19 May 2015 15:35:07
- +0200
-In-Reply-To: <xmqq617pda0r.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:2UuzZdmzYSzdI/WHCcoA+Ir80yQbAnB2YVrV84nLZs8rE4+sOrF
- RQYZC1YvsZ0zK5ktCluiQGxieDWZsqhkezzrovwLyw2pqPlBWeX2tFP15VgYbUdtwl/Az7+
- 6E9NfALBoKe8lkrRY2K7QBoGFQsi+/MaLYMaTGTxPB3pory7SCAM7G2oIy3wrRIm7hX7WMq
- sh0Gxa170/f7K/rZnknAQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S932154AbbESNhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 09:37:43 -0400
+X-Greylist: delayed 461 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 May 2015 09:37:43 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by smtp2.macqel.be (Postfix) with ESMTP id 8C9FA130D26
+	for <git@vger.kernel.org>; Tue, 19 May 2015 15:30:00 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at macqel.be
+Received: from smtp2.macqel.be ([127.0.0.1])
+	by localhost (mail.macqel.be [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9qSAztgZFVYS for <git@vger.kernel.org>;
+	Tue, 19 May 2015 15:29:58 +0200 (CEST)
+Received: from frolo.macqel.be (frolo.macqel [10.1.40.73])
+	by smtp2.macqel.be (Postfix) with ESMTP id E799A130CF7
+	for <git@vger.kernel.org>; Tue, 19 May 2015 15:29:58 +0200 (CEST)
+Received: by frolo.macqel.be (Postfix, from userid 1000)
+	id CB0EADF06BC; Tue, 19 May 2015 15:29:58 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269355>
 
-Hi Junio,
+Hello,
 
-On 2015-05-18 20:18, Junio C Hamano wrote:
+I work on the linux kernel sources (with origin = linux-stable) and I
+have my local branch (the one with my local patches) supposedly based
+on v3.14.  But actually if I invoke "git diff v3.14", I get much more
+diffs than my own patches.
 
-> I have been in love-hate relation with test_commit for a long time.
-> It is very nice that it gives us ticks (i.e. reproducible object
-> names) automatically and reduces the chance for new tests to forget
-> to do so, but I found it extremely annoying that it wants to always
-> add a light-weight tag to every commit it creates.
-> 
-> I suspect that this design decision largely comes from the fact that
-> back then we did not exactly trust the syntax like "master~3" and
-> wanted to have a set of fixed points, but often these auto-generated
-> tags get in the way by either contaminating the refs namespaces (and
-> we are testing pull here, which worries me that test authors need to
-> be aware that these tags may be transferred to the destination) or
-> anchoring the objects in the object database (e.g. when writing
-> "reset --hard branch branch~3 && prune" tests, you need to remember
-> to kill these tags).
-> 
-> So I dunno.  I really wish test_commit didn't create tags and either
-> left the tagging to the calling script.
+Trying to understand, I have eventually done "git log" on my branch and
+on v3.15 with the following commands :
 
-Yeah, light-weight tags with `test_commit` can be very annoying. IIRC the reason was not because we did not trust master~3, but that it is really unreadable. You have to be a Git nerd to find those tests intuitive that refer to master~3 which later is master~17 and then after a `git reset HEAD~5^2~3` is master~1 instead. The idea was that you could refer to the commits in question by their commit message.
+git log v3.15 --full-history --decorate=short | grep '^commit' > /tmp/3.15.commits
+git log --full-history --decorate=short | grep '^commit' > /tmp/mybranch.commits
 
-I guess that I should clean up this mess and remove the tagging facility. We could use the :/<subject prefix> syntax instead, for example.
+I compare then the two histories with
 
-Or maybe just add a --tag flag to `test_commit` and use that in all cases where the tags were actually needed. Yeah, I think I like that option best.
+diff -u /tmp/3.15.commits /tmp/mybranch.commits
 
-Ciao,
-Dscho
+and I get (excerpt) :
+
+--- /tmp/3.15.commits      2015-05-19 13:19:59.665205514 +0200
++++ /tmp/mybranch.commits     2015-05-19 13:19:52.452081328 +0200
+@@ -1,3780 +1,84 @@
+-commit 1860e379875dfe7271c649058aeddffe5afd9d0d (tag: v3.15)
+-commit ...
+...
+-commit fad01e866afdbe01a1f3ec06a39c3a8b9e197014 (tag: v3.15-rc8)
+...
+...
+-commit c9eaa447e77efe77b7fa4c953bd62de8297fd6c5 (tag: v3.15-rc1)
+...
+-commit 57673c2b0baa900dddae3b9eb3d7748ebf550eb3
++commit a1fb433346cb5733945b5fc243f7334744bae4fd (HEAD, macq_boards-3.14.0)
++commit ...
+...
++commit 2be7b20bbb337e0031e0f0d39c9a4845b6bbf3b8
+ commit 455c6fdbd219161bd09b1165f11699d6d73de11c (tag: v3.14)	==== identical commit
+-commit c32fc9c803f8ed90a7548810de48ca33a3020168		==== commit missing in my branch
+ commit fedc1ed0f11be666de066b0c78443254736a942e		==== more identical commits
+ commit 01358e562a8b97f50ec04025c009c71508e6d373
+ commit 915ac4e26ef9c39a0f831e935509243732abedc0
+@@ -3784,4289 +88,252 @@
+ commit 0b1b901b5a98bb36943d10820efc796f7cd45ff3
+ commit 1d6a32acd70ab18499829c0a9a5dbe2bace72a13
+ commit 0818bf27c05b2de56c5b2bd08cfae2a939bd5f52
+-commit 877e1f1529a5c4fcc8460c1317c753ff8a6874c5		==== more missing commits
+-commit 57918dfadf717acf7d0488d5970c56a282d0aad1
+-commit 86ea5e6b793d45fa7d2aa504ac3aefc813f0fd55
+-commit a5dde0c72ccbb0f66b3491ee83f4c579aea0651d
+-commit c7f6ee264b511d8a35063e9821cf36ad18e4e4fd
+...
+-commit c99abc8b39d8281dad04d771bb7a2de36fec4d9f
+ commit b098d6726bbfb94c06d6e1097466187afddae61f (tag: v3.14-rc8) ==== more identical commits
+ commit 822316461b15e0207e50ff661f9cf830af116e9f
+ commit 56f1f4b24e8787d7ba794dbe2e949d504c054892
+...
+
+How is that possible (to have the same commit, with the same hash but
+different ancestors), and how can I recover from that situation ?
+
+I really would like to rebase my branch on v3.14, but it says it is already !
+
+I have also done a 'git fsck'.  It has shown only 
+
+Checking object directories: 100% (256/256), done.                                                                                         
+Checking objects: 100% (4566799/4566799), done.                                                                                            
+Checking connectivity: 4494119, done
+dangling tree ...
+dangling commit ...
+dangling blob ...
+
+This is with git version 1.7.10.4
+
+TIA
+
+Philippe
+
+-- 
+Philippe De Muyter +32 2 6101532 Macq SA rue de l'Aeronef 2 B-1140 Bruxelles
