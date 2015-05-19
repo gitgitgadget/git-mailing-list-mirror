@@ -1,169 +1,99 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCHv3 3/3] git-p4: tests: use test-chmtime in place of touch
-Date: Tue, 19 May 2015 23:36:32 +0100
-Message-ID: <555BBAF0.7070008@diamand.org>
-References: <xmqqa8x0a7wq.fsf@gitster.dls.corp.google.com> <1432074198-13806-1-git-send-email-luke@diamand.org> <1432074198-13806-4-git-send-email-luke@diamand.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] pull: handle --log=<n>
+Date: Tue, 19 May 2015 16:14:03 -0700
+Message-ID: <CAPc5daUF_yotXVf_=CFz_q1GBXVdq8pJxeuNuv=BAC54TJVT9w@mail.gmail.com>
+References: <1431956396-21788-1-git-send-email-pyokagan@gmail.com>
+ <5661061272076a1883cfde1087be4a42@www.dscho.org> <xmqq617pda0r.fsf@gitster.dls.corp.google.com>
+ <6b905c01c9b57abc05fb49117c28c10e@www.dscho.org> <CAPc5daVze4+8aLGPpZgxDnvKSwvQiaR=kRdwfAHXFYA7HChmMg@mail.gmail.com>
+ <1432070690.14498.4.camel@kaarsemaker.net> <xmqqfv6s6ygb.fsf@gitster.dls.corp.google.com>
+ <1432072167.14498.12.camel@kaarsemaker.net> <xmqqmw10p6ad.fsf@gitster.dls.corp.google.com>
+ <1432074626.14498.16.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 20 00:37:15 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Paul Tan <pyokagan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Wed May 20 01:14:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yuq8Q-00018u-LI
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 00:37:15 +0200
+	id 1YuqiU-00054Z-19
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 01:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbbESWhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 18:37:10 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:36533 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751391AbbESWhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 18:37:08 -0400
-Received: by wizk4 with SMTP id k4so134813464wiz.1
-        for <git@vger.kernel.org>; Tue, 19 May 2015 15:37:07 -0700 (PDT)
+	id S1752374AbbESXOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 19:14:25 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:34836 "EHLO
+	mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378AbbESXOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 19:14:24 -0400
+Received: by oign205 with SMTP id n205so23139710oig.2
+        for <git@vger.kernel.org>; Tue, 19 May 2015 16:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ZosU8itW0rLrwESx+zP21IPXPTP7tRqVR6il33xVxbE=;
-        b=M4qhDzYWj42gqkTIUKUvoBZBnAxK+UgxuZcD5PNoSP9ug6Wx/sS3xwbjUdYKEoijrF
-         Ob7jpL8n4Xwnqyr/ngL9KNvx7szyA97VhmpBcHleJqz00KxugkCsReso74Harz7oaBRN
-         bJh1fLtG5dO+RgXaubiYEw8HAaY5ItOr0wGLw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=ZosU8itW0rLrwESx+zP21IPXPTP7tRqVR6il33xVxbE=;
-        b=aF7uvIVxtmDC3UBCZ8ij6bViUCBW1j9yMyBjWn23ruHBq84chsETgGgl6/sUuXL4oF
-         pKWRCw/5D834dBxYCbx1wYhgJ55AYVT+k05rzp5G+DtpYpfIWCieHG1KWvp+lYsxvGo+
-         wUbAby4CeLV3Sxif90S2h3uBsEdEy7bAbYMwRyeIOs5H4UvYNx8roxu9HC6BJCJRfnUG
-         1XiZDo5wTU9loIZOKwDP4Zd+fZZFz47X0yUmyDl9kgN72x7iaTlbiw8bsHoGNPB1nF8f
-         Ep76zjwYBn17EBr0raoPkoDAqgr3cuxwG0FeDHw5qUG8BN4DexkEZfV77dqv/cwxZVq/
-         XXSA==
-X-Gm-Message-State: ALoCoQn2LsfEyBCya3mmo7d+ds7VTqWEkcM+Pqm3WRUq1tl6WFrLTWgS2QlTIcHejxsrfmqWtxZS
-X-Received: by 10.180.103.231 with SMTP id fz7mr35682641wib.35.1432075027259;
-        Tue, 19 May 2015 15:37:07 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id g14sm23750652wjs.47.2015.05.19.15.37.06
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2015 15:37:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <1432074198-13806-4-git-send-email-luke@diamand.org>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=lEeSKQLLJHsAr9RkGaFFsiOurwcjPWo464n5D8Teexc=;
+        b=a7XAeUHcJ4kijYq02ddHIAX9TW3s8JCTyUxJZHFlK5ejeo0Y4ZjNBMY1B9UTE1ZrHM
+         4h/FlOwJCQhr4tKFtdaOxKC+aYAI5x8k2gBelgi2A4XXn//LsqO7DuXvhDeTrkslhekr
+         PBFBJZ9g4p3wEmrXZowSWaSwqEPtjhwtaUNCS9WACqGIvDlnoFdPWWHVKgmOCk52R3ja
+         YjrgjbIUMJnuQg+G3EJsBWDKi9KRfnnlSzGjYxYg5RA6GkyRWDL+iBqkYn3FnpA9QX5w
+         OK6Pk0LcGm6MbnSI1+clOUIQjh2ZJwtyS48vvlfD5cTbTiVbr6VMZMtHG0tCwGpjg5ah
+         AIhw==
+X-Received: by 10.202.74.71 with SMTP id x68mr24290743oia.93.1432077263876;
+ Tue, 19 May 2015 16:14:23 -0700 (PDT)
+Received: by 10.202.197.18 with HTTP; Tue, 19 May 2015 16:14:03 -0700 (PDT)
+In-Reply-To: <1432074626.14498.16.camel@kaarsemaker.net>
+X-Google-Sender-Auth: LDnWXzd5dsNC1BxCWM257UQKh4Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269431>
 
-On 19/05/15 23:23, Luke Diamand wrote:
-> Using "touch" for P4EDITOR means that the tests can be a bit
-> racy, since git-p4 checks the timestamp has been updated and
-> fails if the timestamp is not updated.
-
-Junio - this one is incorrect where it changes t9805 around the test 
-called "no config, unedited, say yes" (it didn't need changing at all).
-
-I can resend all three, or just the last one. Please let me know which 
-is easier.
-
-Thanks
-Luke
-
-
+On Tue, May 19, 2015 at 3:30 PM, Dennis Kaarsemaker
+<dennis@kaarsemaker.net> wrote:
+> On di, 2015-05-19 at 15:10 -0700, Junio C Hamano wrote:
+>> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+>>
+>> > I've actually done it differently while implementing:
+>> >
+>> > 1) Make test_commit recognize --tags and stop creating tags unless
+>> >    specified
+>> > 2) while ! prove --state=save,failed {
+>> >        Find and fix tests that now need --tags
+>> >    }
+>>
+>> That was what I feared.  The result of that process is the hardest
+>> to reason about and review.
+>>
 >
-> Use test-chmtime instead, which is designed for this.
->
-> Signed-off-by: Luke Diamand <luke@diamand.org>
-> ---
->   t/t9803-git-p4-shell-metachars.sh  | 4 ++--
->   t/t9805-git-p4-skip-submit-edit.sh | 2 +-
->   t/t9813-git-p4-preserve-users.sh   | 7 ++++---
->   3 files changed, 7 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t9803-git-p4-shell-metachars.sh b/t/t9803-git-p4-shell-metachars.sh
-> index fbacff3..d950c7d 100755
-> --- a/t/t9803-git-p4-shell-metachars.sh
-> +++ b/t/t9803-git-p4-shell-metachars.sh
-> @@ -28,7 +28,7 @@ test_expect_success 'shell metachars in filenames' '
->   		echo f2 >"file with spaces" &&
->   		git add "file with spaces" &&
->   		git commit -m "add files" &&
-> -		P4EDITOR=touch git p4 submit
-> +		P4EDITOR="test-chmtime +5" git p4 submit
->   	) &&
->   	(
->   		cd "$cli" &&
-> @@ -47,7 +47,7 @@ test_expect_success 'deleting with shell metachars' '
->   		git rm foo\$bar &&
->   		git rm file\ with\ spaces &&
->   		git commit -m "remove files" &&
-> -		P4EDITOR=touch git p4 submit
-> +		P4EDITOR="test-chmtime +5" git p4 submit
->   	) &&
->   	(
->   		cd "$cli" &&
-> diff --git a/t/t9805-git-p4-skip-submit-edit.sh b/t/t9805-git-p4-skip-submit-edit.sh
-> index 5fbf904..dc8fc0c 100755
-> --- a/t/t9805-git-p4-skip-submit-edit.sh
-> +++ b/t/t9805-git-p4-skip-submit-edit.sh
-> @@ -17,7 +17,6 @@ test_expect_success 'init depot' '
->   	)
->   '
->
-> -# this works because P4EDITOR is set to true
+> I'm not quite sure I understand what you're trying to say. You seem to
+> be worried that there will be silent successes for tests that should
+> fail after N/N if I take the proposed approach. I have no idea how that
+> could happen though.
 
-The above line shouldn't be removed, but it's worth noting that it gets 
-set to true in lib-git-p4.sh.
+You are placing too much faith in the tests. We would want to see a
+conversion that
+is reasonable and indeed reasoned by eyeballing the change for correctness.
 
->   test_expect_success 'no config, unedited, say yes' '
->   	git p4 clone --dest="$git" //depot &&
->   	test_when_finished cleanup_git &&
-> @@ -25,6 +24,7 @@ test_expect_success 'no config, unedited, say yes' '
->   		cd "$git" &&
->   		echo line >>file1 &&
->   		git commit -a -m "change 2" &&
-> +		P4EDITOR="test-chmtime +5" &&
-
-The above line should not be added.
-
->   		echo y | git p4 submit &&
->   		p4 changes //depot/... >wc &&
->   		test_line_count = 2 wc
-> diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
-> index 166b840..fe65788 100755
-> --- a/t/t9813-git-p4-preserve-users.sh
-> +++ b/t/t9813-git-p4-preserve-users.sh
-> @@ -53,7 +53,8 @@ test_expect_success 'preserve users' '
->   		git commit --author "Alice <alice@example.com>" -m "a change by alice" file1 &&
->   		git commit --author "Bob <bob@example.com>" -m "a change by bob" file2 &&
->   		git config git-p4.skipSubmitEditCheck true &&
-> -		P4EDITOR=touch P4USER=alice P4PASSWD=secret git p4 commit --preserve-user &&
-> +		P4EDITOR="test-chmtime +5" P4USER=alice P4PASSWD=secret &&
-> +		git p4 commit --preserve-user &&
->   		p4_check_commit_author file1 alice &&
->   		p4_check_commit_author file2 bob
->   	)
-> @@ -69,7 +70,7 @@ test_expect_success 'refuse to preserve users without perms' '
->   		git config git-p4.skipSubmitEditCheck true &&
->   		echo "username-noperms: a change by alice" >>file1 &&
->   		git commit --author "Alice <alice@example.com>" -m "perms: a change by alice" file1 &&
-> -		P4EDITOR=touch P4USER=bob P4PASSWD=secret &&
-> +		P4EDITOR="test-chmtime +5" P4USER=bob P4PASSWD=secret &&
->   		export P4EDITOR P4USER P4PASSWD &&
->   		test_must_fail git p4 commit --preserve-user &&
->   		! git diff --exit-code HEAD..p4/master
-> @@ -87,7 +88,7 @@ test_expect_success 'preserve user where author is unknown to p4' '
->   		git commit --author "Bob <bob@example.com>" -m "preserve: a change by bob" file1 &&
->   		echo "username-unknown: a change by charlie" >>file1 &&
->   		git commit --author "Charlie <charlie@example.com>" -m "preserve: a change by charlie" file1 &&
-> -		P4EDITOR=touch P4USER=alice P4PASSWD=secret &&
-> +		P4EDITOR="test-chmtime +5" P4USER=alice P4PASSWD=secret &&
->   		export P4EDITOR P4USER P4PASSWD &&
->   		test_must_fail git p4 commit --preserve-user &&
->   		! git diff --exit-code HEAD..p4/master &&
->
+Besides, there are different build options and test configurations. Even if you
+run with EXPENSIVE defined, the only thing we can say without validating the
+changes is the test happened to have passed. There is no assurance that the
+result of your change will catch the same breakage, if inttroduced later to the
+code (not tests), as the current unmodified tests will. Two mistakes may happen
+to hide the breakage in tests. Taking to the extreme, if you replace
+all the test
+bodies in test_expect_success with "true", the result of such a
+rewrite will still
+pass all the existting tests, and the only way you can say "That's absurd" is
+because you compare what the existing tests do and a single "true" would do
+and realize that they do vastly different things. Your "while ! prove
+..." method
+does not give me much more faith than such a "rewrite everything to true without
+looking" method.
