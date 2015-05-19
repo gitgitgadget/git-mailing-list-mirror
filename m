@@ -1,82 +1,213 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Diffing submodule does not yield complete logs for merge commits
-Date: Tue, 19 May 2015 12:44:18 +0200
-Message-ID: <20150519104413.GA17458@book.hvoigt.net>
-References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
- <20150501175757.GA10569@book.hvoigt.net>
- <CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
- <5547C961.7070909@web.de>
- <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
- <37f399418bbebb3b53a50bf8daffcdc0@www.dscho.org>
- <CAHd499Do2aB5E_=aDzkoDssEbgz181rH36X28Oe7Zcok2f=zBQ@mail.gmail.com>
- <20150518123036.GB16841@book.hvoigt.net>
- <CAHd499CETM2jmZ2iJk=AoXtjLUCQ==u6q9Z5P-3EVGSY48FY_A@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 11/14] pull: teach git pull about --rebase
+Date: Tue, 19 May 2015 15:04:23 +0200
+Organization: gmx
+Message-ID: <ea07c7ecec761a0bb2d9f4936a8d2411@www.dscho.org>
+References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
+ <1431961571-20370-12-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 12:44:34 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 19 15:04:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yuf0i-00018j-8p
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 12:44:32 +0200
+	id 1YuhCB-0008Ga-O7
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 15:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755342AbbESKo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 06:44:27 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.103]:42378 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755305AbbESKoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 06:44:25 -0400
-Received: from [77.7.20.108] (helo=book.hvoigt.net)
-	by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Yuf0Y-00008e-Hd; Tue, 19 May 2015 12:44:22 +0200
-Content-Disposition: inline
-In-Reply-To: <CAHd499CETM2jmZ2iJk=AoXtjLUCQ==u6q9Z5P-3EVGSY48FY_A@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S932525AbbESNE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 09:04:27 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50931 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932385AbbESNE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 09:04:26 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M8m7Q-1Z2Mho0NO0-00CCD2; Tue, 19 May 2015 15:04:24
+ +0200
+In-Reply-To: <1431961571-20370-12-git-send-email-pyokagan@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:T5vqTN+XpV1WKWz1vOSVPXx3l8NxiEN3rsghP+dJdfedhPkrbN2
+ 9TFasRZ10Q+8X1gxwwKIUDRVffqBrTXY646Y65nkYnuPcw91JvZR+6Or4HksPg8BB+tNf5/
+ iihOgk/07Azr7vmP2OajLFDDsQ2hLcCEKuZTGzoC7Y0P9OckhkP2PbMb3F2I7pZxozcbXf1
+ JQZd/lLjthy/tayatxT6Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269350>
 
-On Mon, May 18, 2015 at 10:06:32AM -0500, Robert Dailey wrote:
-> Unfortunately I find it unintuitive and counter productive to perform
-> inline patches or do anything on a mailing list. Especially on
-> Windows, it's a pain to setup git to effectively do this. Also I read
-> mailing lists through Gmail which does not offer a proper monospace
-> font view or syntax coloring to effectively review patches and
-> comments pertaining to them.
+Hi Paul,
 
-Are you sure you are not overestimating the effort it takes to send
-patches inline? Once you've got your user agent correctly setup its just
-a matter of copy and paste instead of attaching the patch. On Windows I
-would probably use Thunderbird which has a section in the format-patch
-documentation how to configure it. Compared to the effort you probably
-spent on writing your patch isn't this bit of extra effort neglectable?
-And your patch is almost done. It just needs some tests and maybe a few
-rounds on the mailinglist after that.
+I would like to add more suggestions to Stefan's comments, please find them below.
 
-> Since I am not willing to properly follow your process, I will
-> withdraw my patch. However it is here if someone else wishes to take
-> it over. Really wish you guys used github's amazing features but I
-> understand that Linus has already made his decision in that matter.
+On 2015-05-18 17:06, Paul Tan wrote:
+> @@ -506,11 +547,185 @@ static int run_merge(void)
+>  	return ret;
+>  }
+>  
+> +/**
+> + * Returns the merge branch for the current branch. Returns NULL if repo is not
+> + * a valid remote, HEAD does not point to a branch, repo is not the branch's
+> + * configured remote or the branch does not have any configured merge branch.
+> + */
+> +static char *get_merge_branch_1(const char *repo)
 
-It not just Linus decision it is also a matter of many people are used
-to this workflow. AFAIR there have been many discussions and tries about
-using other tools. Email has many advantages which a webinterface does
-not provide. It is simply less effort that one person adjusts to this
-workflow instead of changing many peoples working workflow.
+A better name might be `get_upstream_branch(const char *repo)`, in line with the function in `sha1_name.c` that implements the `@{upstream}` functionality.
 
-> I'm sorry I couldn't be more agreeable on the matter. Thanks for the
-> time you spent reviewing my patch.
+> +{
+> +	struct remote *rm;
+> +	struct branch *curr_branch;
+> +
+> +	if (repo && !(rm = remote_get(repo)))
+> +		return NULL;
+> +	if (!(curr_branch = branch_get("HEAD")))
+> +		return NULL;
+> +	if (repo && curr_branch->remote != rm)
+> +		return NULL;
+> +	if (!curr_branch->merge_nr)
+> +		return NULL;
+> +	return xstrdup(curr_branch->merge[0]->dst);
+> +}
+> +
+> +/**
+> + * Given a refspec, returns the merge branch. Returns NULL if the refspec src
+> + * does not refer to a branch.
+> + *
+> + * FIXME: It should return the tracking branch. Currently only works with the
+> + * default mapping.
+> + */
+> +static char *get_merge_branch_2(const char *repo, const char *refspec)
+> +{
+> +	struct refspec *spec;
+> +	const char *remote;
+> +	char *merge_branch;
+> +
+> +	spec = parse_fetch_refspec(1, &refspec);
+> +	remote = spec->src;
+> +	if (!*remote || !strcmp(remote, "HEAD"))
+> +		remote = "HEAD";
+> +	else if (skip_prefix(remote, "heads/", &remote))
+> +		;
+> +	else if (skip_prefix(remote, "refs/heads/", &remote))
+> +		;
+> +	else if (starts_with(remote, "refs/") ||
+> +		starts_with(remote, "tags/") ||
+> +		starts_with(remote, "remotes/"))
+> +		remote = "";
+> +
+> +	if (*remote) {
+> +		if (!strcmp(repo, "."))
+> +			merge_branch = mkpathdup("refs/heads/%s", remote);
+> +		else
+> +			merge_branch = mkpathdup("refs/remotes/%s/%s", repo, remote);
+> +	} else
+> +		merge_branch = NULL;
+> +
+> +	free_refspec(1, spec);
+> +	return merge_branch;
+> +}
 
-If you are really this fixed in your workflow that would be too bad.
+I have to admit that it took me a substantial amount of time to deduce from the code what `get_merge_branch_2()` really does (judging from the description, I thought that it would be essentially the same as `get_merge_branch_1()` without the hard-coded "HEAD"). If the comment above the function would have said something like:
 
-Cheers Heiko
+/**
+ * Given a refspec, returns the name of the local tracking ref.
+ */
+
+I would have had an easier time. Also, I wonder if something like this would do the job:
+
+	spec = parse_fetch_refspec(1, &refspec);
+	if (spec->dst)
+		return spec->dst;
+	if (!(remote = get_remote(remote_name)))
+		return NULL;
+	if (remote_find_tracking(remote, spec))
+		return spec->dst;
+	return NULL;
+
+(I guess we'd have to `xstrdup()` the return values because the return value of `get_merge_branch_1()` needs to be `free()`d, but maybe we can avoid so much `malloc()/free()`ing.) Again, the function name should probably be changed to something clearer, maybe to `get_tracking_branch()`.
+
+One thing that is not clear at all to me is whether
+
+	git pull --rebase origin master next
+
+would error out as expected, or simply rebase to `origin/master`.
+
+> +/**
+> + * Sets fork_point to the point at which the current branch forked from its
+> + * remote merge branch. Returns 0 on success, -1 on failure.
+> + */
+> +static int get_rebase_fork_point(unsigned char fork_point[GIT_SHA1_RAWSZ],
+> +		const char *repo, const char *refspec)
+> +{
+> +	int ret;
+> +	struct branch *curr_branch;
+> +	char *remote_merge_branch;
+> +	struct argv_array args = ARGV_ARRAY_INIT;
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	if (!(curr_branch = branch_get("HEAD")))
+> +		return -1;
+> +
+> +	if (refspec)
+> +		remote_merge_branch = get_merge_branch_2(repo, refspec);
+> +	else
+> +		remote_merge_branch = get_merge_branch_1(repo);
+> +
+> +	if (!remote_merge_branch)
+> +		return -1;
+
+We should probably `return error(_"No tracking branch found for %s@, refspec ? refspec : "HEAD");` so that the user has a chance to understand that there has been a problem and how to solve it.
+
+> +	argv_array_pushl(&args, "merge-base", "--fork-point",
+> +			remote_merge_branch, curr_branch->name, NULL);
+> +	cp.argv = args.argv;
+
+Let's just use `cp.args` directly...
+
+> +	cp.no_stdin = 1;
+> +	cp.no_stderr = 1;
+> +	cp.git_cmd = 1;
+> +
+> +	if ((ret = capture_command(&cp, &sb, GIT_SHA1_HEXSZ)))
+> +		goto cleanup;
+> +
+> +	if ((ret = get_sha1_hex(sb.buf, fork_point)))
+> +		goto cleanup;
+> +
+> +cleanup:
+> +	free(remote_merge_branch);
+> +	strbuf_release(&sb);
+> +	return ret ? -1 : 0;
+> +}
+> +
+> +[...]
+> +/**
+> + * Given the current HEAD SHA1, the merge head returned from git-fetch and the
+> + * fork point calculated by get_rebase_fork_point(), runs git-rebase with the
+> + * appropriate arguments and returns its exit status.
+> + */
+> +static int run_rebase(unsigned char curr_head[GIT_SHA1_RAWSZ],
+> +		unsigned char merge_head[GIT_SHA1_RAWSZ],
+> +		unsigned char fork_point[GIT_SHA1_RAWSZ])
+> +{
+> +	int ret;
+> +	unsigned char oct_merge_base[GIT_SHA1_RAWSZ];
+> +	struct argv_array args = ARGV_ARRAY_INIT;
+> +
+> +	if (!get_octopus_merge_base(oct_merge_base, curr_head, merge_head,
+> fork_point))
+
+It might be my mail program only that mangled the diff here. But it could also be that this line is a little long (by my count, it is 81 columns wide).
+
+Otherwise, this looks really good to me.
+
+Ciao,
+Dscho
