@@ -1,80 +1,96 @@
-From: "McHenry, Matt" <mmchenry@carnegielearning.com>
-Subject: RE: recovering from "unordered stage entries in index" error
-Date: Tue, 19 May 2015 12:51:14 -0400
-Message-ID: <D377A9280DB18546A2471214D5CBB0E90859942B54@exchdb01>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CAPc5daUtrfWrVeKMdF5sAA5pt5owkyqoZ-b=BoO=Oms0rYF1ag@mail.gmail.com>
+From: Yuval Greenfield <ubershmekel@gmail.com>
+Subject: Re: Hanging "git mv" on Windows bug report
+Date: Tue, 19 May 2015 10:11:58 -0700
+Message-ID: <CANSw7KxvG29k28jp8Aq2ZeeNr2i=mWuirC6Ypno=_JXs7+TPqg@mail.gmail.com>
+References: <CANSw7Kw7A_kn6yue9TnvGSO9dFzvX8AUZkn0W98Euf384CbnFA@mail.gmail.com>
+ <b4a67dd0e303e009a02055e2cb8785d5@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 19 18:51:22 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 19 19:12:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yukjh-0000d7-1G
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 18:51:21 +0200
+	id 1Yul44-0000Vo-Qv
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 19:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbbESQvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 12:51:16 -0400
-Received: from mail3.carnegielearning.com ([204.80.87.3]:21360 "EHLO
-	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751325AbbESQvP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2015 12:51:15 -0400
-X-ASG-Debug-ID: 1432054274-0424f512db3c73160001-QuoKaX
-Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id 2wVI6FV75BjRXUQD (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Tue, 19 May 2015 12:51:14 -0400 (EDT)
-X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
-Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
- ([127.0.0.1]) with mapi; Tue, 19 May 2015 12:51:14 -0400
-Thread-Topic: recovering from "unordered stage entries in index" error
-X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
-Thread-Index: AdCSR0jWQhUM+zLYSxObYCj9A6Kk5QADDctw
-In-Reply-To: <CAPc5daUtrfWrVeKMdF5sAA5pt5owkyqoZ-b=BoO=Oms0rYF1ag@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
-X-Barracuda-Connect: UNKNOWN[10.1.10.4]
-X-Barracuda-Start-Time: 1432054274
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: https://10.1.10.29:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at carnegielearning.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0000
-X-Barracuda-Spam-Score: 0.50
-X-Barracuda-Spam-Status: No, SCORE=0.50 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_SC0_SA620b, MAILTO_TO_SPAM_ADDR
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19094
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.00 MAILTO_TO_SPAM_ADDR    URI: Includes a link to a likely spammer email
-	0.50 BSF_SC0_SA620b         Custom Rule SA620b
+	id S1751507AbbESRMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 13:12:20 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:34664 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752347AbbESRMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 13:12:19 -0400
+Received: by ieczm2 with SMTP id zm2so19077528iec.1
+        for <git@vger.kernel.org>; Tue, 19 May 2015 10:12:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3sBPxNAJT7QJusZivuKE/NrpGzwWqReViW8E0BNr2VU=;
+        b=Y7iCgNCRDcSbf8xMtGYyntpX6wLtkvX4YoCMeabrreqvNj1ayUCDkXADLGkzCUwqjK
+         j+rLzwoEsFyns5Cp3cXCPlocKOxbdN8WZ3yqtOTAY/4URVkKnqa3tM/b3FxO2lU4l6dw
+         +Pvd5WtALbzQgkmijapqewmkDA8i8pXNuXXV0bACKgS8wpdHSnbgKQkSXZa2LrSMuf+/
+         eUaTr7uIyhKUGLGQmxxIqCN7B53l15D9HmJtSKOO/7jzzgq6nNo9lPSjnwLQEACyjsOU
+         cG3CiLynfhYWS1cntZqvQ41jF7//al9aQZXI7uHG1OGPFDGpPIs9sXCnufV4y34aw9DG
+         UKiA==
+X-Received: by 10.42.100.15 with SMTP id y15mr41781547icn.16.1432055539117;
+ Tue, 19 May 2015 10:12:19 -0700 (PDT)
+Received: by 10.36.110.11 with HTTP; Tue, 19 May 2015 10:11:58 -0700 (PDT)
+In-Reply-To: <b4a67dd0e303e009a02055e2cb8785d5@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269373>
 
-DQoJSSBoYWQgbmV2ZXIgaGVhcmQgb2YgdGhhdC4gIEdvb2dsZSBsZWQgbWUgdG8gdGhlIG1hbiBw
-YWdlIGZvciAnZ2l0IHVwZGF0ZS1pbmRleCAtLXNwbGl0LWluZGV4JywgYW5kIGFmdGVyIHJlYWRp
-bmcgaXQsIEkgdGhpbmsgdGhpcyBkZW1vbnN0cmF0ZXMgdGhhdCBJJ20gbm90IHVzaW5nIHRoYXQg
-ZmVhdHVyZToNCg0KJCBscyAuZ2l0LyppbmRleCoNCi5naXQvaW5kZXgNCg0KPiAtLS0tLU9yaWdp
-bmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBqY2gyMzU1QGdtYWlsLmNvbSBbbWFpbHRvOmpjaDIz
-NTVAZ21haWwuY29tXSBPbiBCZWhhbGYgT2YgSnVuaW8gQw0KPiBIYW1hbm8NCj4gU2VudDogVHVl
-c2RheSwgTWF5IDE5LCAyMDE1IDExOjIwDQo+IFRvOiBNY0hlbnJ5LCBNYXR0DQo+IENjOiBnaXRA
-dmdlci5rZXJuZWwub3JnDQo+IFN1YmplY3Q6IFJlOiByZWNvdmVyaW5nIGZyb20gInVub3JkZXJl
-ZCBzdGFnZSBlbnRyaWVzIGluIGluZGV4IiBlcnJvcg0KPiANCj4gT24gVHVlLCBNYXkgMTksIDIw
-MTUgYXQgNjo0OCBBTSwgTWNIZW5yeSwgTWF0dA0KPiA8bW1jaGVucnlAY2FybmVnaWVsZWFybmlu
-Zy5jb20+IHdyb3RlOg0KPiA+DQo+ID4gICAgICAgICBJJ3ZlIGp1c3QgdXBncmFkZWQgbXkgZ2l0
-IGZyb20gMi4wLjUgdG8gMi4zLjYsIGFuZCBJJ20gbm93DQo+IHVuYWJsZSB0byBydW4gJ2dpdCBz
-dm4gZmV0Y2gnIGluIG9uZSBvZiBteSByZXBvc2l0b3JpZXM6DQo+ID4NCj4gPiAkIGdpdCBzdm4g
-ZmV0Y2gNCj4gPiBmYXRhbDogdW5vcmRlcmVkIHN0YWdlIGVudHJpZXMgaW4gaW5kZXgNCj4gPiB3
-cml0ZS10cmVlOiBjb21tYW5kIHJldHVybmVkIGVycm9yOiAxMjgNCj4gDQo+IEFyZSB5b3UgYnkg
-YW55IGNoYW5jZSB1c2luZyB0aGUgc3BsaXQtaW5kZXggbW9kZSAod2hpY2ggSSB0aGluayBpcw0K
-PiBicm9rZW4gaW4gMi4zLjYpPw0K
+> $ git mv tmp Abc
+> fatal: bad source, source=tmp/myfile, destination=Abc/myfile
+
+It works. Thanks.
+
+I'd say this page at https://git-scm.com/download/win should point to
+https://github.com/git-for-windows/git/releases but sadly I don't have
+time to give you guys a pull request.
+
+https://github.com/git/git-scm.com/issues/537
+
+Cheers and thanks,
+
+Yuval
+
+
+
+
+
+On Tue, May 19, 2015 at 6:41 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Yuval,
+>
+> On 2015-05-18 08:50, Yuval Greenfield wrote:
+>
+>> Here is the command sequence that causes git to stop responding:
+>>
+>> mkdir mynewthing
+>> cd mynewthing
+>> git init
+>> mkdir abc
+>> touch abc/myfile
+>> git add abc/myfile
+>> git commit -a -m "whatever"
+>> git mv abc tmp
+>> git mv tmp Abc
+>>
+>> I wanted to change the case of a committed folder. Since windows is
+>> case insensitive that's a bit harder. Perhaps with this version it's
+>> impossible?
+>>
+>> Here's my git bash banner - "Welcome to Git (version
+>> 1.9.5-preview20141217)". I'm on Windows 8.1 Pro.
+>
+> I just tried this with Git for Windows 2.4.1.1 (developers' preview) from https://git-for-windows.github.io/ and it did not hang here (currently on a Windows 7 box). Could you try that and see whether it works for you?
+>
+> Ciao,
+> Johannes
