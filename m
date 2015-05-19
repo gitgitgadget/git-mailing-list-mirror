@@ -1,89 +1,98 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: identical hashes on two branches, but holes in git log
-Date: Tue, 19 May 2015 19:39:25 -0400
-Message-ID: <20150519233925.GA22748@peff.net>
-References: <20150519132958.GA21130@frolo.macqel>
+Subject: Re: git log --follow for directories
+Date: Tue, 19 May 2015 19:55:52 -0400
+Message-ID: <20150519235552.GB22748@peff.net>
+References: <CAOMwXhP-BRd356xpfdLgZ0zKYTMVryt8jtmi3T2jhVh91hY04Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Philippe De Muyter <phdm@macq.eu>
-X-From: git-owner@vger.kernel.org Wed May 20 01:39:34 2015
+Cc: Git List <git@vger.kernel.org>
+To: Laszlo Papp <lpapp@kde.org>
+X-From: git-owner@vger.kernel.org Wed May 20 01:56:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yur6j-0003eP-G4
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 01:39:33 +0200
+	id 1YurMd-0008HJ-P8
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 01:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbbESXj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 19:39:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:32934 "HELO cloud.peff.net"
+	id S1751230AbbESXzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 19:55:55 -0400
+Received: from cloud.peff.net ([50.56.180.127]:32946 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751619AbbESXj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 19:39:28 -0400
-Received: (qmail 24191 invoked by uid 102); 19 May 2015 23:39:28 -0000
+	id S1751132AbbESXzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 19:55:54 -0400
+Received: (qmail 25297 invoked by uid 102); 19 May 2015 23:55:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 18:39:28 -0500
-Received: (qmail 18807 invoked by uid 107); 19 May 2015 23:39:29 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 18:55:54 -0500
+Received: (qmail 18947 invoked by uid 107); 19 May 2015 23:55:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 19:39:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2015 19:39:25 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 May 2015 19:55:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2015 19:55:52 -0400
 Content-Disposition: inline
-In-Reply-To: <20150519132958.GA21130@frolo.macqel>
+In-Reply-To: <CAOMwXhP-BRd356xpfdLgZ0zKYTMVryt8jtmi3T2jhVh91hY04Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269433>
 
-On Tue, May 19, 2015 at 03:29:58PM +0200, Philippe De Muyter wrote:
+On Tue, May 19, 2015 at 02:56:48PM +0100, Laszlo Papp wrote:
 
-> Trying to understand, I have eventually done "git log" on my branch and
-> on v3.15 with the following commands :
+> I have just realized that this would not work on directories
+> triggering directory renames somewhat pointless for those who want to
+> keep track of a group of files in directories.
 > 
-> git log v3.15 --full-history --decorate=short | grep '^commit' > /tmp/3.15.commits
-> git log --full-history --decorate=short | grep '^commit' > /tmp/mybranch.commits
+> It is unfortunate when you have a directory with many files and more
+> often than not, you would like to look at the history of all rather
+> than individually.
 > 
-> I compare then the two histories with
-> 
-> diff -u /tmp/3.15.commits /tmp/mybranch.commits
-> 
-> and I get (excerpt) :
-> 
-> --- /tmp/3.15.commits      2015-05-19 13:19:59.665205514 +0200
-> +++ /tmp/mybranch.commits     2015-05-19 13:19:52.452081328 +0200
-> @@ -1,3780 +1,84 @@
-> -commit 1860e379875dfe7271c649058aeddffe5afd9d0d (tag: v3.15)
-> -commit ...
-> ...
-> -commit fad01e866afdbe01a1f3ec06a39c3a8b9e197014 (tag: v3.15-rc8)
-> ...
-> ...
-> -commit c9eaa447e77efe77b7fa4c953bd62de8297fd6c5 (tag: v3.15-rc1)
-> ...
-> -commit 57673c2b0baa900dddae3b9eb3d7748ebf550eb3
-> +commit a1fb433346cb5733945b5fc243f7334744bae4fd (HEAD, macq_boards-3.14.0)
-> +commit ...
-> ...
-> +commit 2be7b20bbb337e0031e0f0d39c9a4845b6bbf3b8
+> Is there any benefit about having it like it is today or is it just
+> the usual "no one has implemented it yet"?
 
-It looks like v3.15 is ahead of your branch. And I _think_ your question
-is: since they both contain v3.14, shouldn't they also contain all of
-the ancestors of v3.14?
+I have fooled around with accepting a full pathspec for --follow, rather
+than a single file. In the single-file case, if we see a rename of "A"
+to "B" (and we are following "B"), we switch to following "A". With a
+pathspec, that is not right. If you are following "foo" and "foo/A" is
+renamed to "bar/A", you would want to start following "bar/A", but you
+would _not_ want to stop matching "foo" (because you want to still look
+at "foo/B").
 
-The answer is yes. But from your output here:
+The most correct thing would be to match ("!foo/A", "foo", "bar/A").
+That is, once we follow a rename, it is explicitly excluded from the
+pathspec. It is much simpler to just do ("foo", "bar/A").  I.e., just
+always add to the pathspec, but never take away. It is not correct, but
+it works OK in practice (and it always shows more than you might be
+interested in, not less).
 
->  commit 455c6fdbd219161bd09b1165f11699d6d73de11c (tag: v3.14)	==== identical commit
-> -commit c32fc9c803f8ed90a7548810de48ca33a3020168		==== commit missing in my branch
->  commit fedc1ed0f11be666de066b0c78443254736a942e		==== more identical commits
+Junio mentioned the other problem: our pathspec is global, but it
+actually should follow the graph itself. This is orthogonal to the
+question of whether we are matching one file or several, but in practice
+I suspect matching several files may make it worse (that is, the
+inaccuracies would surface more frequently).
 
-I think what you are saying is: c32fc9c803 comes after v3.14, so it
-should be an ancestor, right?
+The right way to do --follow is something like:
 
-And the answer is no. Git's traversal order does not necessarily reflect
-the true topology if you have multiple lines of development. And in this
-case, they do not have a direct ancestry relationship (i.e., they are on
-separate branches, and neither is an ancestor of the other).
+  1. Topo-sort the commits. Attach the initial pathspec to each of the
+     initial tip commits. Do our usual walk backwards (respecting the
+     topo-sort).
+
+  2. If there are no renames to follow in a commit, attach the pathspec to
+     its parents.
+
+  3. If there is a rename, make a new pathspec (as above) to attach to
+     the parents.
+
+  4. When we try to attach a pathspec to a commit that already has one,
+     we need to reconcile the two. I haven't thought hard about it, but
+     it's probably something like a union of the two pathspecs. E.g.,
+     consider a traversal starting at two tips, and we're interested in
+     path "B". One line of commits renamed "A" to "B", so we start
+     matching "A". The other created it from scratch. When we come to
+     the shared ancestor of the two branches, we are probably interested
+     in both "A" and "B".
+
+     But like I said, I haven't really thought hard about it. That's
+     just my intuition.
 
 -Peff
