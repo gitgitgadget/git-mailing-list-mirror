@@ -1,59 +1,83 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Apple git missing source code
-Date: Tue, 19 May 2015 14:57:42 -0400
-Organization: Twitter
-Message-ID: <1432061862.15896.5.camel@ubuntu>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] help.c: mark a file-local function static
+Date: Tue, 19 May 2015 20:15:55 +0100
+Message-ID: <555B8BEB.1050103@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 19 20:57:50 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: sebastien.guimmara@gmail.com
+X-From: git-owner@vger.kernel.org Tue May 19 21:16:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yumi5-0008Sz-KZ
-	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 20:57:49 +0200
+	id 1Yumzs-0007TT-FS
+	for gcvg-git-2@plane.gmane.org; Tue, 19 May 2015 21:16:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753792AbbESS5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2015 14:57:45 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:34099 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674AbbESS5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2015 14:57:44 -0400
-Received: by qgez61 with SMTP id z61so8533969qge.1
-        for <git@vger.kernel.org>; Tue, 19 May 2015 11:57:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:organization
-         :content-type:mime-version:content-transfer-encoding;
-        bh=Hs26+F8ZQHzLEyIRSVouTetDDiRX6g0zKxGPLw8TOw0=;
-        b=IrQKsANIw/SzDXygx+fxptiYHZQhlp6c63MPmRy7MH2m4NGJ00llW9rOL/KhC9ckOR
-         XWuCuxRrz7fo1xQG5lC1D/2mpeeB0MuNNRexXHQzK/vXBcSWaS+szQ/qOJWbhjc2Yej6
-         dwCjefQt/lCS2+/mpYwYcb4+Fwlz5SLtRMOK7UF6ysfohiKhTAL8H8RON7FA3bGre2oT
-         +tSxPws/0uXkVri6/VvirMwvl5y+7QKWC6JI/SAmVJgzD+gOExrr1Ca5eXA5CHsygaQv
-         D3mkDF2L+w46y49IezwRZns1ViqeXHDJIjtRKGvyeSwflNUfTHkIQJk3HYcCR1CSwm4s
-         NFyw==
-X-Gm-Message-State: ALoCoQmhP0WXag18rMR41cBSmRjkB6Iyzt1e6ZzIIcraWu5Ka2pbNMj5SyFHAJ1/IGCzZ7eXrMVm
-X-Received: by 10.229.193.7 with SMTP id ds7mr39288687qcb.8.1432061864011;
-        Tue, 19 May 2015 11:57:44 -0700 (PDT)
-Received: from [172.22.38.222] ([192.133.79.145])
-        by mx.google.com with ESMTPSA id c20sm9671014qka.21.2015.05.19.11.57.42
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2015 11:57:43 -0700 (PDT)
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S1751947AbbESTQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2015 15:16:08 -0400
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:56965 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750923AbbESTQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2015 15:16:06 -0400
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id C9175A0C08F;
+	Tue, 19 May 2015 20:16:01 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 75D42A0C08C;
+	Tue, 19 May 2015 20:16:01 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;
+	Tue, 19 May 2015 20:16:00 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269387>
 
-http://opensource.apple.com/tarballs/Git/ does not include git version 
-1.9.5 (Apple Git-50.3), from developer tools 6.2, nor 2.3.2 (Apple
-Git-55), from developer tools 6.3.1.  Indeed,
-http://opensource.apple.com/ does not seem to include any code for those
-versions of developer tools.
 
-I assume that some Apple developer is probably on this mailing list, and
-thus can fix the problem at least for git.
+Commit 4f671d74 ("help: respect new common command grouping",
+18-05-2015) adds the 'cmd_group_cmp' funtion as an external
+symbol.
+
+Noticed by sparse. ("'cmd_group_cmp' was not declared. Should it
+be static?")
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Sebastien,
+
+If you need to re-roll the patches in your 'sg/help-group' branch,
+could you please squash this into the relevant patch (commit 4f671d74).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/help.c b/help.c
+index 71027b7..7881ab7 100644
+--- a/help.c
++++ b/help.c
+@@ -218,7 +218,7 @@ void list_commands(unsigned int colopts,
+ 	}
+ }
+ 
+-int cmd_group_cmp(const void *elem1, const void *elem2)
++static int cmd_group_cmp(const void *elem1, const void *elem2)
+ {
+ 	const struct cmdname_help *e1 = elem1;
+ 	const struct cmdname_help *e2 = elem2;
+-- 
+2.4.0
