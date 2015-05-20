@@ -1,87 +1,81 @@
-From: Fredrik Medley <fredrik.medley@gmail.com>
-Subject: Re: [PATCH 2/3] upload-pack: prepare to extend allow-tip-sha1-in-want
-Date: Wed, 20 May 2015 21:31:32 +0200
-Message-ID: <CABA5-zm77sbEvBV2LyFh7hweTjKenZvWWYtwEVZ2XAkDdV3WNg@mail.gmail.com>
-References: <CAPig+cQe3=Y15+RBZCxry7-78kbNL6H0PfdYs=OV_DMifOWxaA@mail.gmail.com>
- <1432068269-14895-1-git-send-email-fredrik.medley@gmail.com>
- <1432068269-14895-2-git-send-email-fredrik.medley@gmail.com> <xmqqzj505isz.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v9 3/5] generate-cmdlist: parse common group commands
+Date: Wed, 20 May 2015 12:32:20 -0700
+Message-ID: <CAGZ79kYZJzM6Au2xCODFaReV=_LZ6HNi4=_24Gd5VWjpHjCB4Q@mail.gmail.com>
+References: <1432149781-24596-1-git-send-email-sebastien.guimmara@gmail.com>
+	<1432149781-24596-4-git-send-email-sebastien.guimmara@gmail.com>
+	<555CE01F.806@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 20 21:31:59 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 20 21:32:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv9ig-0007Dx-IO
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:31:58 +0200
+	id 1Yv9jA-0007W5-Fa
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752808AbbETTby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 15:31:54 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:34921 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752090AbbETTbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 15:31:53 -0400
-Received: by lbbuc2 with SMTP id uc2so2227221lbb.2
-        for <git@vger.kernel.org>; Wed, 20 May 2015 12:31:52 -0700 (PDT)
+	id S1753983AbbETTcX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2015 15:32:23 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:35158 "EHLO
+	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753955AbbETTcV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 May 2015 15:32:21 -0400
+Received: by qkdn188 with SMTP id n188so34056550qkd.2
+        for <git@vger.kernel.org>; Wed, 20 May 2015 12:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mXAucvOtPBO7DhNfz9d/1jyuPClgrhY9gBzM+Q9oVBM=;
-        b=UUASyzW/DBnLQLyev1IbWbWUaTBQTCtNTqj9ZmUhoCbihNve4m1Xv1rIZ+eKkuxf8J
-         te4lQAYgUcj0mFVmXZAysu0McfqppxKHSdr246ngIVkRRlPHn1TpQ9HvHihkz5TJBnYc
-         XXp3Ju1JxrSQXfr308p1jYQQY6558FRZaCBJtjK/LmgSO8JgriQW491UO5rJJMJ0WZDn
-         R+UfuckzT1oIQPtG5/4BP0v+tE5cjzzewAUskuCOm0q5ErFtmU89e0I0J5rUa6rBrJ7U
-         032+umk3ut41xjedBSSNwtwsVTcwCr/MnubAXrUn/aX8vtQAIYFYFeDWdady34Vq1JMM
-         2hHQ==
-X-Received: by 10.112.139.1 with SMTP id qu1mr27136858lbb.8.1432150312537;
- Wed, 20 May 2015 12:31:52 -0700 (PDT)
-Received: by 10.114.246.235 with HTTP; Wed, 20 May 2015 12:31:32 -0700 (PDT)
-In-Reply-To: <xmqqzj505isz.fsf@gitster.dls.corp.google.com>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XCI1NXml6V/eQ3tn4aZm6rJAxzofXlolO85+VvvKDOo=;
+        b=cyodZFfxhR50y6TrgNjAhtMsyMOCYQ9aZ1uC6pJiHYBSGuF/nOktAhHSpb2KWgjjOl
+         2SKD4FZzXiA9eQYht/OwkzeFe1C4CKR4QucsObHqN/z0MayJiQ3mo501Rl7RN+7DgvuA
+         awxDn0tdu6AStG00MmPL94BAwoTUJHPCvMgfoYAKd01nEHOilUM5QBTLzsSfTamCyWB5
+         n+QKkTvBBPRHMrKZ2MR+IHvJFtkIGtZHvlfRyoP6mZyYtfFpZhqkcC9g547MuZEEDGPw
+         agQT5ye7jKDyxi9ilZBFIyiqMhnyYcOLmU1L1gdvHzIXiEmtQY3UB8BhlOR6c267TbGJ
+         MYBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XCI1NXml6V/eQ3tn4aZm6rJAxzofXlolO85+VvvKDOo=;
+        b=Yt/4bOISCfHJviS6UopFIqle8TcgzS3RXENzvnq4iTmRwsMLMCgs9BIIZlE50XQJXT
+         Ck5qsJxpxyFobv1kw9erOsE5pVHdg/I7m5jzpFEITPg0Tkxe2ZeH0nNHt/YQSo/9W4yb
+         de5hfbZbOyUQO3QNsRHldKsHXmQXB7AUhL29el2EfQOELKmnQWBF0ZdjvB6RFUKBxTMN
+         xbBHV1oZWLdLeQonsIsWAd5NKPrjYzft3Ts7OQJMxY3MmPWvrYjtoPuv248OdsVGjBvv
+         hM+8kA+rRmBaFZi8jIHghv44bqBtQkbP0R6nh4khYKpS5xuWArHjt14chY+rLEGY1e6D
+         Hoqw==
+X-Gm-Message-State: ALoCoQk0jZ2XLinfmEBHq8437ABOSeKi4lm0buNs+mGhHUIicXq5P5n04J2hhiXaoRkLz4LvkJq+
+X-Received: by 10.55.51.141 with SMTP id z135mr75414389qkz.84.1432150340200;
+ Wed, 20 May 2015 12:32:20 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Wed, 20 May 2015 12:32:20 -0700 (PDT)
+In-Reply-To: <555CE01F.806@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269505>
 
-2015-05-20 0:00 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Fredrik Medley <fredrik.medley@gmail.com> writes:
+On Wed, May 20, 2015 at 12:27 PM, S=C3=A9bastien Guimmara
+<sebastien.guimmara@gmail.com> wrote:
+> On 05/20/2015 09:22 PM, S=C3=A9bastien Guimmara wrote:
+>>
+>> From: Eric Sunshine <sunshine@sunshineco.com>
+>>
 >
->>  static int upload_pack_config(const char *var, const char *value, void *unused)
->>  {
->> -     if (!strcmp("uploadpack.allowtipsha1inwant", var))
->> -             allow_tip_sha1_in_want = git_config_bool(var, value);
->> -     else if (!strcmp("uploadpack.keepalive", var)) {
->> +     if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
->> +             if (git_config_bool(var, value))
->> +                     allow_unadvertised_object_request |= ALLOW_TIP_SHA1;
+> It looks like 'git send-email' got confused with the CC field.
+> I'm sorry for that.
 >
-> Doesn't this change break the behaviour?
->
-> Shouldn't you be able to say
->
->         [uploadpack]
->                 allowTipSHA1InWant = false
->
-> in a higher-precedence configuration file to override the same
-> variable in other files in the configuration chain that may set it
-> to true?
 
-Of course, thought it work differently. Should I add tests with
-test_config_global
-to check that loading the config works as well?
+It's to keep authorship.
 
->
->> +     } else if (!strcmp("uploadpack.keepalive", var)) {
->>               keepalive = git_config_int(var, value);
->>               if (!keepalive)
->>                       keepalive = -1;
->
+When Junio picks it up, this will show as
+authored by Eric, signed off by both of you (Eric+S=C3=A9bastien)
+and committed by Junio.
