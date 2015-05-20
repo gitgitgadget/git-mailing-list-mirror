@@ -1,85 +1,95 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git p4 clone - exclude file types
-Date: Wed, 20 May 2015 07:49:01 +0100
-Message-ID: <555C2E5D.70502@diamand.org>
-References: <CAFcBi88K-HEn4JCVkONq3h4O9XS1FFX0OXch2d-VJ2bLEsPM0g@mail.gmail.com>	<555A52BD.1030802@diamand.org> <CAFcBi89XwW48Goaap=OCVQ_CJrNa_hj5+DWtOHGOsrm6jMs-mw@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v3] mergetools: add winmerge as a builtin tool
+Date: Wed, 20 May 2015 09:11:48 +0200
+Message-ID: <CAHGBnuOwf2cBMZf1A6HuSoVTPxCem7fH3TOCHnYg3tW-QkoOEg@mail.gmail.com>
+References: <1432095635-96710-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>
-To: FusionX86 <fusionx86@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 08:49:44 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Susi <phillsusi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 20 09:13:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yuxp0-00007A-S6
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 08:49:43 +0200
+	id 1YuyCQ-0000OV-C6
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 09:13:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163AbbETGti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 02:49:38 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:36762 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019AbbETGth (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 02:49:37 -0400
-Received: by wgbgq6 with SMTP id gq6so41922537wgb.3
-        for <git@vger.kernel.org>; Tue, 19 May 2015 23:49:36 -0700 (PDT)
+	id S1753143AbbETHNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 03:13:49 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:35180 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752045AbbETHLt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 03:11:49 -0400
+Received: by iesa3 with SMTP id a3so32499318ies.2
+        for <git@vger.kernel.org>; Wed, 20 May 2015 00:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=HLev7ZkpDviWvMb2nd9RZoOfP89eoqaFfEkMeee12S4=;
-        b=Cln1tYcNM/RpGYvQuZvvZ+WbTS2j8odFnUa3nSrI6ndhtTkm7YtrssMX17qxNxaQFw
-         MBMslTBy79DB9ztru9/Ttpqv39ieh1qfWmQDeBXYKNbA/HHIdpyzUHEPicr3e/VLsHkR
-         4b2o69mOVZ8D+3meqUeq4VPDDSA6ftoe2aviU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=HLev7ZkpDviWvMb2nd9RZoOfP89eoqaFfEkMeee12S4=;
-        b=jxiqI4KsnrFJg0QItrjvdTBE+MfMRQp8eQ5eOLAb52iWP1Kc1sPZg5cRcs+BdfhRZt
-         I8wzHfd5CLo1oY+v9D37Z2MNFguE8ZtoVxoZG/YW0Vz/DMmBSVlmKFAqSGhGvH97KF2+
-         92661sI78f4Zf/BX7fums2IOAH0UEPuO9K2a9EpNFPVk0m4gRofXkwt2c0CszeAwY5NV
-         B4yG5wZ8FpEHKBTXYxPUj/fpgymr1Nw44fMr2Cd8agzmzuAd2SGl6avPHRTKtzg6V7OB
-         Yxp/siqxr2YteuRUwZUCBGBR7EC424pDzu7eMFGpmGgSQRk9hhr/Chta39KYZlFIhPmz
-         Ry3A==
-X-Gm-Message-State: ALoCoQl2LRUFwPW0+haoJaTi+6os6mxSrym5ld8F4l0IMgtwyE0y5GQccOp6XKDI6zpm54HpueWY
-X-Received: by 10.194.61.208 with SMTP id s16mr62505443wjr.135.1432104575592;
-        Tue, 19 May 2015 23:49:35 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id l3sm1773330wik.16.2015.05.19.23.49.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2015 23:49:34 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <CAFcBi89XwW48Goaap=OCVQ_CJrNa_hj5+DWtOHGOsrm6jMs-mw@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8nShz0qnAB5MMJGAQOPkzuq4p0GsEPj/34xWJKykdg8=;
+        b=g5gfA/WO5OzYI1CrPKVIKfJtRz9K7pjmfpXS/5crszR9uS8zWqmqbORo7RXYZhmxwZ
+         s+5eoeQqDopT1ibNyk6X+Cw+G7VbLN0V+I9ylspKTJ94gns0YcBhWebNq4RgcuG+PvH0
+         bW5EGmpckqtNhmFV8wODylbNYsyxfkO8/HrHnm8DZ/cED+9CuXJ4PHi0fob8Ai0IWfuF
+         +1aR59CGUWK758JGCU6Qz8AnmyarAsFsJxvQe4j90Nqailjvo8HQw2xYNuR9R+PBpHEq
+         wUVhVKNUF6cyxpN6cnEJRHIp4bc+mOMidY0tNtBqSP9mqxSLu0fRPNW1pkjfPKoHPokc
+         6eUA==
+X-Received: by 10.42.105.3 with SMTP id t3mr44985089ico.47.1432105908548; Wed,
+ 20 May 2015 00:11:48 -0700 (PDT)
+Received: by 10.107.29.149 with HTTP; Wed, 20 May 2015 00:11:48 -0700 (PDT)
+In-Reply-To: <1432095635-96710-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269441>
 
-On 19/05/15 08:38, FusionX86 wrote:
-> Thanks Luke, looks like this does work for excluding files when using
-> git p4. Great!
->
-> Unrelated question...
->
-> While using git p4 I have noticed that most of the time the clone/sync
-> operations hang and I have to keep retrying. The Perforce depot I'm
-> currently working with is larger than I'd like and has a lot of binary
-> files which might be the cause. The point it gets to in the clone/sync
-> is always random and doesn't ever stop on the same files or file
-> types. Sometimes it'll die soon after starting, but other times it
-> almost completes and then dies. If I keep retrying, it will eventually
-> complete. I haven't been able to narrow down the cause, but I do
-> notice that the git-fast-import stops right as the clone/sync dies.
-> I'm wondering if git is overwhelmed and terminates. Have you ever seen
-> this? Any suggestions?
+On Wed, May 20, 2015 at 6:20 AM, David Aguilar <davvid@gmail.com> wrote:
 
-Running out of memory?
+> +translate_merge_tool_path() {
+> +       # Use WinMergeU.exe if it exists in $PATH
+> +       if type WinMergeU.exe >/dev/null 2>&1
 
-Is this on a 32bit or 64bit system? How much virtual memory do you have?
+Maybe "type -p" here?
 
-Luke
+> +       # Look for WinMergeU.exe in the typical locations
+> +       winmerge_exe="WinMerge/WinMergeU.exe"
+> +
+> +       if test -n "$PROGRAMFILES" && test -x "$PROGRAMFILES (x86)/$winmerge_exe"
+> +       then
+> +               printf '%s' "$PROGRAMFILES (x86)/$winmerge_exe"
+> +       elif test -n "$PROGRAMFILES" && test -x "$PROGRAMFILES/$winmerge_exe"
+> +       then
+> +               printf '%s' "$PROGRAMFILES/$winmerge_exe"
+> +       else
+> +               echo WinMergeU.exe
+> +       fi
+> +}
+
+This does not solve the problem reported by Dscho that some versions
+of Cygwin / MSYS 1 / MSYS 2 might export "$ProgramFiles" instead of
+"$PROGRAMFILES" (or similar for related variables).
+
+Also there is a bit too much string duplication for my taste. And why
+use "echo" in some places and "printf" in others?
+
+I still like a loop-based solution best:
+
+IFS=$'\n'
+for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=' |
+cut -d '=' -f 2- | sort -u)
+do
+    test -n "$directory" &&
+    test -x "$directory/$winmerge_exe" &&
+    echo "$directory/$winmerge_exe" &&
+    break
+done
+
+-- 
+Sebastian Schuberth
