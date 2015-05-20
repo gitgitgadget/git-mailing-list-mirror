@@ -1,82 +1,120 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v4] mergetools: add winmerge as a builtin tool
-Date: Wed, 20 May 2015 01:53:48 -0700
-Message-ID: <20150520085346.GA99001@gmail.com>
-References: <1432107722-98613-1-git-send-email-davvid@gmail.com>
- <CAHGBnuMCvzBYRYgLxz-5QJ5x8Quhw6byf+cGteRXQzpU65B+Jg@mail.gmail.com>
+Subject: [PATCH v5 2/2] mergetools: add winmerge as a builtin tool
+Date: Wed, 20 May 2015 02:02:42 -0700
+Message-ID: <1432112562-400-2-git-send-email-davvid@gmail.com>
+References: <1432112562-400-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Phil Susi <phillsusi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Philip Oakley <philipoakley@iee.org>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 10:53:58 2015
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Phil Susi <phillsusi@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 20 11:02:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuzlG-0005mA-8k
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 10:53:58 +0200
+	id 1Yuztv-0000t1-Le
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 11:02:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488AbbETIxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 04:53:54 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:33257 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751095AbbETIxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 04:53:52 -0400
-Received: by pdbqa5 with SMTP id qa5so61207071pdb.0
-        for <git@vger.kernel.org>; Wed, 20 May 2015 01:53:51 -0700 (PDT)
+	id S1753115AbbETJCv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2015 05:02:51 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:35922 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753038AbbETJCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 05:02:46 -0400
+Received: by pdfh10 with SMTP id h10so61383370pdf.3
+        for <git@vger.kernel.org>; Wed, 20 May 2015 02:02:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=RQ8sjk45LfhbNP1m7DQcZJmWaXbTgLRwIrj78/9tpIg=;
-        b=DhgETiZVN9hhAwyWdAaKegfdpTdFv3LEa+IVs1iaHB1bQydQigt52zgUXIv6jkRx5h
-         xRZgvBGtkb8NzxsFlKMXmaYmWZ3RDH4IN2GF9X/O65sk3NZ0fixO72LfVah6azRhFCPI
-         x45QAZPxsTT61HEjnEAXTgb1f8iU15OU8Em59rd9W3aOFH1zcns3O9dX0Hy/05XpF0S1
-         G1mP6bB139wbtVB4Ik3q/Qy5iM45q9uAL5A+LUD9ryZEUnQPtLNrw9T/7+nAwyxzSQjp
-         KHwCTgVDsvXmv9qcMQ+6SmxSfBlDBDmiMJNlccV9XgvPzTINWs04/4RPIuRnY0DhBL68
-         xdxw==
-X-Received: by 10.70.96.162 with SMTP id dt2mr61178876pdb.20.1432112031773;
-        Wed, 20 May 2015 01:53:51 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id c10sm8883305pbu.81.2015.05.20.01.53.50
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=MzB2w/ox3xNQRsrFnHdvOsrpnkuoBkb06rK6O1uGkAg=;
+        b=BQTIQTRs+hpBzmKo6fjmDxggPtPziOEa4JbvXNrHVP+FnEYNlGIadqy/lU/lFfJCXu
+         Dq5uaVtuPRy7vKYxHo1+9fFFBhcgtAlgSonfeY/Yx/6iEj4dfI6lHyBLHZDLxBKGmoiq
+         L8k4EiJ2+MBC5WhmSZoAuc0d/a8SLmo3xFZVU7TAQ0nFKVAM5kY5En6wr52wfdxA+rL/
+         qEawgk5ezjRSWRh94Yu6DjbcEhGDwvOJHfwE/D3cCjKwNKQaksB2fU4Z9g9LmX9Ndgiv
+         vGR/WjdwMyax+c8M3ZFwY39iI66iCCqD9Cf+s8EyNXtk1SoS4vc1kJ5/U0ulJEr9ewzP
+         Tgog==
+X-Received: by 10.70.127.171 with SMTP id nh11mr61053266pdb.142.1432112566087;
+        Wed, 20 May 2015 02:02:46 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id nm9sm4513219pdb.26.2015.05.20.02.02.44
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 20 May 2015 01:53:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAHGBnuMCvzBYRYgLxz-5QJ5x8Quhw6byf+cGteRXQzpU65B+Jg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Wed, 20 May 2015 02:02:45 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.218.gc09a0e5
+In-Reply-To: <1432112562-400-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269452>
 
-On Wed, May 20, 2015 at 09:47:56AM +0200, Sebastian Schuberth wrote:
-> On Wed, May 20, 2015 at 9:42 AM, David Aguilar <davvid@gmail.com> wrote:
-> 
-> > +       OIFS=$IFS
-> > +       IFS='
-> > +'
-> 
-> I guess this is just a formatting issue with the mail export as it should read
-> 
-> IFS=$'\n'
-> 
-> Otherwise looks good to me.
-> 
-> -- 
-> Sebastian Schuberth
+Add a winmerge scriptlet with the commands described in [1] so
+that users can use winmerge without needing to perform any
+additional configuration.
 
-Thanks for the review.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/268631
 
-That's actually a literal newline inside a single-quoted string.
+Helped-by: Philip Oakley <philipoakley@iee.org>
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Helped-by: Sebastian Schuberth <sschuberth@gmail.com>
+Helped-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+Changes since v4: we no longer need to worry about IFS since
+it's already been set by patch 1/2.
 
-I'm not sure how portable $'\n' is, but the '<literal-newline>'
-approach is used often in the git code.
--- 
-David
+ mergetools/winmerge | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+ create mode 100644 mergetools/winmerge
+
+diff --git a/mergetools/winmerge b/mergetools/winmerge
+new file mode 100644
+index 0000000..3e9f908
+--- /dev/null
++++ b/mergetools/winmerge
+@@ -0,0 +1,37 @@
++diff_cmd () {
++	"$merge_tool_path" -u -e "$LOCAL" "$REMOTE"
++	return 0
++}
++
++merge_cmd () {
++	# mergetool.winmerge.trustExitCode is implicitly false.
++	# touch $BACKUP so that we can check_unchanged.
++	touch "$BACKUP"
++	"$merge_tool_path" -u -e -dl Local -dr Remote \
++		"$LOCAL" "$REMOTE" "$MERGED"
++	check_unchanged
++}
++
++translate_merge_tool_path() {
++	# Use WinMergeU.exe if it exists in $PATH
++	if type -p WinMergeU.exe >/dev/null 2>&1
++	then
++		printf WinMergeU.exe
++		return
++	fi
++
++	# Look for WinMergeU.exe in the typical locations
++	winmerge_exe=3D"WinMerge/WinMergeU.exe"
++	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=3D=
+' |
++		cut -d '=3D' -f 2- | sort -u)
++	do
++		if test -n "$directory" && test -x "$directory/$winmerge_exe"
++		then
++			printf '%s' "$directory/$winmerge_exe"
++			return
++		fi
++	done
++
++	printf WinMergeU.exe
++}
+--=20
+2.4.1.218.gc09a0e5
