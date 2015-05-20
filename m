@@ -1,86 +1,121 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCHv3 1/3] git-p4: add failing test for P4EDITOR handling
-Date: Wed, 20 May 2015 22:43:43 +0100
-Message-ID: <555D000F.105@diamand.org>
-References: <xmqqa8x0a7wq.fsf@gitster.dls.corp.google.com>	<1432074198-13806-1-git-send-email-luke@diamand.org>	<1432074198-13806-2-git-send-email-luke@diamand.org>	<xmqq617nnhxk.fsf@gitster.dls.corp.google.com> <xmqqd21vm0hw.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PUB]corrupt repos does not return error with `git fsck`
+Date: Wed, 20 May 2015 17:55:47 -0400
+Message-ID: <20150520215547.GD8421@peff.net>
+References: <alpine.DEB.2.11.1505202142540.9343@orwell.homelinux.org>
+ <vpq382rkvzf.fsf@anie.imag.fr>
+ <d21002e0fa92b03c3d417c8996328563@www.dscho.org>
+ <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com>
+ <20150520182218.GD14561@peff.net>
+ <20150520183115.GB7142@peff.net>
+ <xmqqlhgjm19z.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Faheem Mitha <faheem@faheem.info>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 20 23:44:28 2015
+X-From: git-owner@vger.kernel.org Wed May 20 23:55:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvBmp-00041C-HP
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 23:44:23 +0200
+	id 1YvBy1-0002Cb-Bs
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 23:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753465AbbETVoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 17:44:19 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:33586 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752624AbbETVoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 17:44:18 -0400
-Received: by wicmx19 with SMTP id mx19so812079wic.0
-        for <git@vger.kernel.org>; Wed, 20 May 2015 14:44:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=g3fAQ0xwwVlsscN3sl0l2hgrEL42m6eUSQqRejcDb3c=;
-        b=jGD1iY/SKI4hUndUBcKnB5j7u3kFAIBmDzC020nqPPq39jheneXON2G9Hdk6T2Ep9O
-         dU5Qh4ApumsIzL2mOO9mWL0m5GmPYW7PzfXyqr5Z5vFd0RaQNRO5bxFiBpvk/YrIJ4aO
-         M29OqNK3isWTze6DYNAFLWGKzVNp1T3nAQ1Ok=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=g3fAQ0xwwVlsscN3sl0l2hgrEL42m6eUSQqRejcDb3c=;
-        b=dKMAnO97fw29Gus/yvuXB63k9QQLuT4xTJy+1CLJtC6K7CWuwPwgRix5PHScwKSToN
-         LPniXTwXMtZfoDYFtSvrB2gtoFDcgmbuQrO74b8uqR0ytAvDfRXCh4wetrEe/efOnItv
-         +LS2deJVJbVNOHAVMBUQ/tnb9//+KCFXQTPqeQs5XNRXhzgd7zupxALnTIdW91rURts6
-         WRqrmP03nHnEsHQUNqEGiEJB8/MlncZEqhtTlsp41JuD5BJkt37P3/3g6W0jmzKVW5J9
-         pc2OGtgT4fDqAha0QupxMw9T33mo8cIYy7g5hf7S0Z+aGn7XVjBiWY6ECb7avK/ZHc2a
-         2QAw==
-X-Gm-Message-State: ALoCoQm4c+JZahpkO3r+zQbSzdDS3W6Pf2uBXcPhttps9Vi5GDhE3Zoa93h1UhdHiMhq4WABx7qH
-X-Received: by 10.194.161.138 with SMTP id xs10mr70113455wjb.37.1432158257158;
-        Wed, 20 May 2015 14:44:17 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id v3sm5470998wix.8.2015.05.20.14.44.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 May 2015 14:44:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <xmqqd21vm0hw.fsf@gitster.dls.corp.google.com>
+	id S1753033AbbETVzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 17:55:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33507 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751075AbbETVzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 17:55:50 -0400
+Received: (qmail 4259 invoked by uid 102); 20 May 2015 21:55:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 16:55:49 -0500
+Received: (qmail 28533 invoked by uid 107); 20 May 2015 21:55:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 17:55:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 May 2015 17:55:47 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqlhgjm19z.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269532>
 
-On 20/05/15 21:56, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Luke Diamand <luke@diamand.org> writes:
->>
->>> +
->>> +test_expect_failure 'EDITOR has options' '
->>> +# Check that the P4EDITOR argument can be given command-line
->>> +# options, which git-p4 will then pass through to the shell.
->>> +test_expect_success 'EDITOR has options' '
->>> +	git p4 clone --dest="$git" //depot &&
->>
->> Oops?  I assume that the one before the comment should go and this
->> one is
->>
->> 	test_expect_failure 'Editor with an option' '
->>
->> or something.
->
-> I'll queue the three patches, each of them followed with its own
-> SQUASH commit.  Could you sanity check them?  If everything looks OK
-> then I'll just squash them and that way we can save back-and-forth.
+On Wed, May 20, 2015 at 01:39:36PM -0700, Junio C Hamano wrote:
 
-That would be great, thanks!
+> Yeah, "bad object" sounds as if we tried to parse something that
+> exists and it was corrupt.  So classifying "a file or a pack index
+> entry exists where a valid object with that name should reside in"
+> as "bad object" and "there is no such file or a pack index entry
+> that would house the named object" as "missing object" _might_ make
+> things better.
+> 
+> But let's think about it a bit more.  Would it have prevented the
+> original confusion if we said "missing object"?  I have a feeling
+> that it wouldn't have.  Faheem was so convinced that the object
+> named with the 40-hex *must* exist in the cloned repository, and if
+> we told "missing object" to such a person, it will just enforce the
+> (mis)conception that the repository is somehow corrupt, when it is
+> not.
+> 
+> So...
+
+I dunno. If it were phrased not as "missing object" but as "there is no
+such object in the repository", then it seems more clear to me that the
+error is in the request, not in the repository (and hopefully the user
+would examine their assumption that it should be).
+
+But "bad object" is just a horrible error message. It actively implies
+corruption. And I think if we do have corruption, then parse_object()
+already reports it. For example:
+
+  # helpers
+  objfile() {
+    printf '.git/objects/%s' $(echo $1 | sed 's,..,&/,')
+  }
+  blob=$(echo content | git hash-object -w --stdin)
+
+  # object with a sha1 mismatch
+  mismatch=1234567890123456789012345678901234567890
+  mkdir .git/objects/12
+  cp $(objfile $blob) $(objfile $mismatch)
+
+  # plain old missing object
+  missing=1234abcdef1234abcdef1234abcdef1234abcdef
+
+  # object with data corruption
+  corrupt=$blob
+  chmod +w $(objfile $corrupt)
+  dd if=/dev/zero of=$(objfile $corrupt) bs=1 count=1 conv=notrunc seek=10
+
+  # now show each
+  for bad in corrupt mismatch missing; do
+    echo "==> $bad"
+    git --no-pager show $(eval "echo \$$bad")
+  done
+
+produces:
+
+  ==> corrupt
+  error: inflate: data stream error (invalid distance too far back)
+  error: unable to unpack d95f3ad14dee633a758d2e331151e950dd13e4ed header
+  error: inflate: data stream error (invalid distance too far back)
+  fatal: loose object d95f3ad14dee633a758d2e331151e950dd13e4ed (stored in .git/objects/d9/5f3ad14dee633a758d2e331151e950dd13e4ed) is corrupt
+  ==> mismatch
+  error: sha1 mismatch 1234567890123456789012345678901234567890
+  fatal: bad object 1234567890123456789012345678901234567890
+  ==> missing
+  fatal: bad object 1234abcdef1234abcdef1234abcdef1234abcdef
+
+Note that the "missing" case is the only one that _doesn't_ give further
+clarification, and it is likely to be the most common (however just
+changing "bad object" to "no such object" would be a bad idea, as it
+makes the second case harder to understand).
+
+-Peff
