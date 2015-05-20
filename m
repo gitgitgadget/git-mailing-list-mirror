@@ -1,144 +1,85 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH v9 2/5] command-list.txt: add the common groups block
-Date: Wed, 20 May 2015 21:51:33 +0200
-Message-ID: <555CE5C5.8000209@gmail.com>
-References: <1432149781-24596-1-git-send-email-sebastien.guimmara@gmail.com>	<1432149781-24596-3-git-send-email-sebastien.guimmara@gmail.com> <CAPig+cTM4L7Vt1gYb5zvAgt8hsqGQdLWigN_yB-VsWukNbt=zw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 1/3] git-p4: add failing test for P4EDITOR handling
+Date: Wed, 20 May 2015 12:54:31 -0700
+Message-ID: <xmqq617nnhxk.fsf@gitster.dls.corp.google.com>
+References: <xmqqa8x0a7wq.fsf@gitster.dls.corp.google.com>
+	<1432074198-13806-1-git-send-email-luke@diamand.org>
+	<1432074198-13806-2-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 20 21:51:55 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed May 20 21:54:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvA1y-0001ZG-G7
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:51:54 +0200
+	id 1YvA4e-00037x-Vl
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754135AbbETTvi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2015 15:51:38 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:36518 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268AbbETTvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 15:51:36 -0400
-Received: by wizk4 with SMTP id k4so167220417wiz.1
-        for <git@vger.kernel.org>; Wed, 20 May 2015 12:51:35 -0700 (PDT)
+	id S1753714AbbETTyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 15:54:36 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:35911 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753082AbbETTye (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 15:54:34 -0400
+Received: by iepj10 with SMTP id j10so47656985iep.3
+        for <git@vger.kernel.org>; Wed, 20 May 2015 12:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=q1G2OpRmZEAOPF5Da9ZZ4iiBYtIx4+pDijFR6/5NZzM=;
-        b=ZgqTLUXY5ztrg9/WiqCzJu2r4EiBMKR6KBxwc4qJVz903epTWUxXCN6srty/xzoesN
-         Fn2TELbOOS3xKRsQ6F3+53su4dXwxPW1Apah8xuVpXl/VbCWWMBp7RKTxZa67g0yOam6
-         A0/K6L5WCGGfIaTwVknvTU9rmZ0DK86yqPDh6y04uXcar6BVmrQFRdgqWP9HdmHDSgYh
-         cRVay0PbpuI9peQdxtr268RSmF4mNJntu0eocXuybZDzNJoFLMf5ww6vq5sxM4HABtC2
-         kO97NwXoYBkqkmi9bPaCIcaHhZ4MWBj/RY2OWQKxK9EVLSruS4zrIiTGHDEM+/sBxxDU
-         GhTg==
-X-Received: by 10.180.206.211 with SMTP id lq19mr45074591wic.26.1432151495779;
-        Wed, 20 May 2015 12:51:35 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id r9sm28434824wjo.26.2015.05.20.12.51.34
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 May 2015 12:51:35 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <CAPig+cTM4L7Vt1gYb5zvAgt8hsqGQdLWigN_yB-VsWukNbt=zw@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Bubqc83eQntlOd09gBtUyzZ9XHjpeArpSTYeqpke5YI=;
+        b=W8ntGFKohDC3VASkzl1wHlV5rIcL0jH85h/+dbKG9dKV0lgn07zOXCjkHeJ6LNhPMB
+         /Tybvj+j7/M/by2slynj5HVo4aCRlPcLTf5WojfcCTiiO/Fz5svZuGzC4cBL7yhVFGDO
+         6EkiCRxMxBpanwNJw2Oz//xm27Yp9klWoqn4NASNGK0aFhFFR4Qw4jQxknQi5pldKVCJ
+         mPNM11eZPL250NwisD/c131usrdxmaf0ruZkSqVhGik/SHWe5fyIbveZakfuR1IyI+Yu
+         dA0M4g8PtI5klDGtb+GuN9TjOexZw7U13ijClkZMJZj2jUup9F7pCHvSB10MrAVDmOZA
+         CEiA==
+X-Received: by 10.107.13.11 with SMTP id 11mr46077217ion.70.1432151673416;
+        Wed, 20 May 2015 12:54:33 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6ddd:2b37:d23b:a593])
+        by mx.google.com with ESMTPSA id p74sm13083337ioe.27.2015.05.20.12.54.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 May 2015 12:54:32 -0700 (PDT)
+In-Reply-To: <1432074198-13806-2-git-send-email-luke@diamand.org> (Luke
+	Diamand's message of "Tue, 19 May 2015 23:23:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269512>
 
+Luke Diamand <luke@diamand.org> writes:
 
+> +
+> +test_expect_failure 'EDITOR has options' '
+> +# Check that the P4EDITOR argument can be given command-line
+> +# options, which git-p4 will then pass through to the shell.
+> +test_expect_success 'EDITOR has options' '
+> +	git p4 clone --dest="$git" //depot &&
 
-On 05/20/2015 09:48 PM, Eric Sunshine wrote:
-> On Wed, May 20, 2015 at 3:22 PM, S=C3=A9bastien Guimmara
-> <sebastien.guimmara@gmail.com> wrote:
->> The ultimate goal is for "git help" to display common commands in
->> groups rather than alphabetically. As a first step, define the
->> groups in a new block, and then assign a group to each
->> common command.
->>
->> Add a block at the beginning of command-list.txt:
->>
->>      init         start a working area (see also: git help tutorial)
->>      worktree     work on the current change (see also:[...]
->>      info         examine the history and state (see also: git [...]
->>      history      grow, mark and tweak your history
->>      remote       collaborate (see also: git help workflows)
->>
->> storing information about common commands group, then map each commo=
-n
->> command to a group:
->>
->>      git-add          mainporcelain        common worktree
->>
->> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com=
->
->> ---
->>   command-list.txt | 50 ++++++++++++++++++++++++++++++--------------=
-------
->>   1 file changed, 30 insertions(+), 20 deletions(-)
->
-> Hmm, did your update to Documentation/technical/new-command.txt get
-> lost? I don't see it any of the patches, but would have expected it t=
-o
-> be included in this patch which introduces the "common groups"
-> section.
->
+Oops?  I assume that the one before the comment should go and this
+one is
 
-Ah, you're right. A commit got lost in the process. Will fix that. Than=
-ks.
+	test_expect_failure 'Editor with an option' '
 
->> diff --git a/command-list.txt b/command-list.txt
->> index 609b344..c2bbdc1 100644
->> --- a/command-list.txt
->> +++ b/command-list.txt
->> @@ -1,3 +1,13 @@
->> +# common commands are grouped by themes output by 'git help'
->> +# map each common command in the command list to one of these group=
-s.
->
-> Discussed previously: It also would be a good idea to mention that th=
-e
-> order in which "git help" displays the groups themselves is the order
-> they are declared here. Maybe just add one more line between the two
-> you already have above:
->
->      # groups are output by 'git help' in the order declared here.
->
+or something.
 
-Indeed, I'll add the mention.
-
->> +### common groups
->
-> In the block below, the "### command list" line is protected by a "#
-> do not molest the next line" warning. Perhaps the same should be done
-> here? Alternately, make them more compact by incorporating the
-> warning:
->
->      ### common groups (do not change this line)
->      ...
->      ### command list (do not change this line)
->
-> ?
->
-
-Yes, it's better. I shall modify this.
-
->> +init         start a working area (see also: git help tutorial)
->> +worktree     work on the current change (see also: git help everyda=
-y)
->> +info         examine the history and state (see also: git help revi=
-sions)
->> +history      grow, mark and tweak your common history
->> +remote       collaborate (see also: git help workflows)
->> +
->> +# List of known git commands.
->>   # do not molest the next line
->>   ### command list
->>   # command name                          category [deprecated] [com=
-mon]
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		cd "$git" &&
+> +		echo change >file1 &&
+> +		git commit -m "change" file1 &&
+> +		P4EDITOR=": >\"$git/touched\" && test-chmtime +5" git p4 submit &&
+> +		test_path_is_file "$git/touched"
+> +	)
+> +'
+> +
+> +test_expect_success 'kill p4d' '
+> +	kill_p4d
+> +'
+> +
+> +test_done
