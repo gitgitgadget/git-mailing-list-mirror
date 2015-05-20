@@ -1,81 +1,75 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/4] ref-filter: add ref-filter API
-Date: Wed, 20 May 2015 15:07:32 -0400
-Message-ID: <CAPig+cTiYk_oGj98QttMMDjyJDFV256yOwu9b8_znOMnaMt7-A@mail.gmail.com>
-References: <555C88C2.8060902@gmail.com>
-	<1432127904-21070-2-git-send-email-karthik.188@gmail.com>
+From: Faheem Mitha <faheem@faheem.info>
+Subject: Re: [PUB]corrupt repos does not return error with `git fsck`
+Date: Thu, 21 May 2015 00:43:17 +0530 (IST)
+Message-ID: <alpine.DEB.2.11.1505210040570.9343@orwell.homelinux.org>
+References: <alpine.DEB.2.11.1505202142540.9343@orwell.homelinux.org> <vpq382rkvzf.fsf@anie.imag.fr> <d21002e0fa92b03c3d417c8996328563@www.dscho.org> <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com> <alpine.DEB.2.11.1505202341170.9343@orwell.homelinux.org>
+ <CAGZ79kb9xUZfa9923rrUP1x0T2=KzczmmNyYi5zD30mWKJ81KQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Christian Couder <christian.couder@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 21:07:40 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 20 21:14:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv9L9-00021w-FN
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:07:39 +0200
+	id 1Yv9RW-0005qw-Op
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303AbbETTHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 15:07:34 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:34476 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753216AbbETTHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 15:07:33 -0400
-Received: by ieczm2 with SMTP id zm2so46823600iec.1
-        for <git@vger.kernel.org>; Wed, 20 May 2015 12:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=XYdHltNjuN4ph07pdTRLGGka/vF5TufWB/1tyIjMkwc=;
-        b=U54ffnYAmKVBBHwu7TMzcvYTySlvyMj9l3OXwdj4rPQ1FOUBzXdLu3sxKdj74fNvDb
-         f9r8/hbwa+NThyA032/jY+VcLiQj9teeGBUyiUHbgGawqogNVExDiBTGCR03Grku+lm0
-         YjYWrpIjXdb6lZ2/ecCgqVcc6vVRCyRzl/FPmMQbTMPqeiKrxFB0lD5MQDgs6g/WXJVd
-         B1aBmWRvAYMaE8XStdNuAKBlTK0l6kMla9ODL1AR5EFRx+GacK0Ghr4nAUyRaiifiqOs
-         XmEgHjWzWiVW4Agfi224TwItPPCQJr0+1sA6bPxhpfV6YdNQgAw3TYmwvithXlsPX57v
-         x/5Q==
-X-Received: by 10.50.61.200 with SMTP id s8mr30349034igr.7.1432148852559; Wed,
- 20 May 2015 12:07:32 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Wed, 20 May 2015 12:07:32 -0700 (PDT)
-In-Reply-To: <1432127904-21070-2-git-send-email-karthik.188@gmail.com>
-X-Google-Sender-Auth: tTCLZHyTk9bkFQRWPVb743U_sPM
+	id S1752349AbbETTOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 15:14:11 -0400
+Received: from rs145.luxsci.com ([64.49.212.113]:53123 "EHLO rs145.luxsci.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751132AbbETTOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 15:14:09 -0400
+Received: from orwell.homelinux.org (triband-mum-59.183.37.231.mtnl.net.in [59.183.37.231])
+	(authenticated bits=0)
+	by rs145.luxsci.com (8.14.4/8.14.9) with ESMTP id t4KJE1ZY024187
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT);
+	Wed, 20 May 2015 15:14:04 -0400
+Received: from faheem (helo=localhost)
+	by orwell.homelinux.org with local-esmtp (Exim 4.84)
+	(envelope-from <faheem@faheem.info>)
+	id 1Yv9Qm-0004Bf-0c; Thu, 21 May 2015 00:43:28 +0530
+X-X-Sender: faheem@orwell.homelinux.org
+In-Reply-To: <CAGZ79kb9xUZfa9923rrUP1x0T2=KzczmmNyYi5zD30mWKJ81KQ@mail.gmail.com>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+X-Lux-Comment: Message t4KJE1ZY024187 sent by user #87163
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269494>
 
-On Wed, May 20, 2015 at 9:18 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> add a ref-filter API to provide functions to filter refs for listing.
-> This will act as a common library for commands like 'tag -l',
-> 'branch -l' and 'for-each-ref'. ref-filter will enable each of these
-> commands to benefit from the features of the others.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Makefile     |  1 +
->  ref-filter.c | 73 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  ref-filter.h | 47 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 121 insertions(+)
->  create mode 100644 ref-filter.c
->  create mode 100644 ref-filter.h
 
-A shortcoming of this approach is that it's not blame-friendly.
-Although those of us following this patch series know that much of the
-code in this patch was copied from for-each-ref.c, git-blame will not
-recognize this unless invoked in the very expensive "git blame -C -C
--C" fashion (if I understand correctly). The most blame-friendly way
-to perform this re-organization is to have the code relocation (line
-removals and line additions) occur in one patch.
+On Wed, 20 May 2015, Stefan Beller wrote:
 
-There are multiple ways you could arrange to do so. One would be to
-first have a patch which introduces just a skeleton of the intended
-API, with do-nothing function implementations. A subsequent patch
-would then relocate the code from for-each-ref.c to ref-filter.c, and
-update for-each-ref.c to call into the new (now fleshed-out) API.
+> On Wed, May 20, 2015 at 11:24 AM, Faheem Mitha <faheem@faheem.info> wrote:
+
+>> So, is the repos corrupt or not? Also, I don't understand why you say
+
+>>     There is no file 28/0c... however.
+
+>> Why would you expect there to be? I don't see it mentioned in that list.
+
+> Each object is stored at .git/objects/<xz>/<tail> with <xz> being the 
+> first 2 characters of the sha1 and the tail the remaining 38 characters 
+> of the sha1. I did not draw a conclusion yet, as I needed to run for a 
+> meeting.
+
+> So the object you're looking for is not there (stating this as a fact). 
+> But why would you expect it to be there? At the time of sending the 
+> previous email I tried to do a reverse search "Give me all objects, 
+> which reference objectX" but did not succeed yet.
+
+Ok. See my reply to Matthieu Moy for context. I make have been taking too 
+much for granted before posting to this list. Maybe I should have asked 
+here first.
+
+As I wrote to him, I can reconstruct the original setup if anyone thinks 
+it is worthwhile trying to investigate further.
+
+                                                    Regards, Faheem Mitha
