@@ -1,72 +1,140 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v6 2/2] mergetools: add winmerge as a builtin tool
-Date: Wed, 20 May 2015 23:20:26 +0200
-Message-ID: <CAHGBnuMt82oawQnoPGNiXefui6k5A3DW1ktGWvMy0m8iq78oPg@mail.gmail.com>
-References: <1432112843-973-1-git-send-email-davvid@gmail.com>
-	<1432112843-973-2-git-send-email-davvid@gmail.com>
-	<xmqqtwv7m2hw.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuPyhG4y5ooR7KH0KrEhRYFu9BB+HKnnn+XhU5xL2TnL=w@mail.gmail.com>
-	<xmqq8ucjm0bo.fsf@gitster.dls.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v9 5/5] help: respect new common command grouping
+Date: Wed, 20 May 2015 22:39:00 +0100
+Message-ID: <555CFEF4.5000002@ramsay1.demon.co.uk>
+References: <1432149781-24596-1-git-send-email-sebastien.guimmara@gmail.com> <1432149781-24596-6-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Aguilar <davvid@gmail.com>, Phil Susi <phillsusi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 20 23:24:26 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: sunshine@sunshineco.com, gitster@pobox.com
+To: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 20 23:39:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvBTU-0001bU-Tn
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 23:24:25 +0200
+	id 1YvBhn-0000yC-NN
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 23:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226AbbETVYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 17:24:20 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:34323 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753936AbbETVU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 17:20:26 -0400
-Received: by ieczm2 with SMTP id zm2so49478059iec.1
-        for <git@vger.kernel.org>; Wed, 20 May 2015 14:20:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TeF7i3uWRI3Vt6PuEbyMPqrSyuBL/tYswG0MhH4rn4I=;
-        b=dORfntkboasNPUeXUHhycCDDCSDyNGjh8xHassbfwdmqrLHL2GItQAhpgtWcCp/8B9
-         NcNIVkBaQiwFIRDO3gDm8LnbGOv/z2P9tzKNDeYXp0dXKXHYSr6YQgkm9VmzUZergINP
-         N7FmCgsL1bIJwdMXLKyA4HGre/NiMaeFLAIyFvqhKy8WYilqVqZqyJIyNrjMa9dRNspu
-         XDhBVgk70PExCgnrqKUSJ7nkp8fhgh3F1yAr4JumzqphL6zhXUhnzuLs8Ka1oh5HUq/V
-         Ux+o+YOsBdu/XpTO4TMsN2PIoz01Hw0/XA8bjVXrhDUX+VkFt2kLBC9g5Zbmg1F5SFoN
-         dm/w==
-X-Received: by 10.42.105.3 with SMTP id t3mr48748357ico.47.1432156826230; Wed,
- 20 May 2015 14:20:26 -0700 (PDT)
-Received: by 10.107.29.149 with HTTP; Wed, 20 May 2015 14:20:26 -0700 (PDT)
-In-Reply-To: <xmqq8ucjm0bo.fsf@gitster.dls.corp.google.com>
+	id S1754412AbbETVjH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2015 17:39:07 -0400
+Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:34720 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752222AbbETVjG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 17:39:06 -0400
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 3FB5B38408B;
+	Wed, 20 May 2015 22:38:57 +0100 (BST)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id EC820384089;
+	Wed, 20 May 2015 22:38:56 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
+	Wed, 20 May 2015 22:38:56 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <1432149781-24596-6-git-send-email-sebastien.guimmara@gmail.com>
+X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269529>
 
-On Wed, May 20, 2015 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On 20/05/15 20:23, S=C3=A9bastien Guimmara wrote:
+> 'git help' shows common commands in alphabetical order:
+>=20
+> The most commonly used git commands are:
+>    add        Add file contents to the index
+>    bisect     Find by binary search the change that introduced a bug
+>    branch     List, create, or delete branches
+>    checkout   Checkout a branch or paths to the working tree
+>    clone      Clone a repository into a new directory
+>    commit     Record changes to the repository
+>    [...]
+>=20
+> without any indication of how commands relate to high-level
+> concepts or each other. Revise the output to explain their relationsh=
+ip
+> with the typical Git workflow:
+>=20
+> These are common Git commands used in various situations:
+>=20
+> start a working area (see also: git help tutorial)
+>    clone      Clone a repository into a new directory
+>    init       Create an empty Git repository or reinitialize [...]
+>=20
+> work on the current change (see also: git help everyday)
+>    add        Add file contents to the index
+>    reset      Reset current HEAD to the specified state
+>=20
+> examine the history and state (see also: git help revisions)
+>    log        Show commit logs
+>    status     Show the working tree status
+>=20
+>    [...]
+>=20
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 
-> Yuck.  So even though %PROGRAMFILES% and %PROGRAMFILES(X86)% look as
-> if they are variables that can point at arbitrary places, they in
-> reality don't?  Otherwise %PROGRAMFILES% may point at D:\Program
+This should be (at most) 'Helped-by:' - my 'contribution' was
+so minor that even a 'Helped-by:' is generous! :-D
 
-Correct. In the vast majority of  WIndows installations these
-variables contain the default values.
+ATB,
+Ramsay Jones
 
-> But of course if I view this not as a "logic" but as a "heuristics"
-> that happens to do the right thing in common environments, it is
-> perfectly OK ;-).
-
-Exactly a heuristic is what it's supposed to be :-)
-
--- 
-Sebastian Schuberth
+> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+> ---
+>  help.c | 24 +++++++++++++++++++++++-
+>  1 file changed, 23 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/help.c b/help.c
+> index 2072a87..8f72051 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -218,17 +218,39 @@ void list_commands(unsigned int colopts,
+>  	}
+>  }
+> =20
+> +static int cmd_group_cmp(const void *elem1, const void *elem2)
+> +{
+> +	const struct cmdname_help *e1 =3D elem1;
+> +	const struct cmdname_help *e2 =3D elem2;
+> +
+> +	if (e1->group < e2->group)
+> +		return -1;
+> +	if (e1->group > e2->group)
+> +		return 1;
+> +	return strcmp(e1->name, e2->name);
+> +}
+> +
+>  void list_common_cmds_help(void)
+>  {
+>  	int i, longest =3D 0;
+> +	int current_grp =3D -1;
+> =20
+>  	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
+>  		if (longest < strlen(common_cmds[i].name))
+>  			longest =3D strlen(common_cmds[i].name);
+>  	}
+> =20
+> -	puts(_("The most commonly used git commands are:"));
+> +	qsort(common_cmds, ARRAY_SIZE(common_cmds),
+> +		sizeof(common_cmds[0]), cmd_group_cmp);
+> +
+> +	puts(_("These are common Git commands used in various situations:")=
+);
+> +
+>  	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
+> +		if (common_cmds[i].group !=3D current_grp) {
+> +			printf("\n%s\n", _(common_cmd_groups[common_cmds[i].group]));
+> +			current_grp =3D common_cmds[i].group;
+> +		}
+> +
+>  		printf("   %s   ", common_cmds[i].name);
+>  		mput_char(' ', longest - strlen(common_cmds[i].name));
+>  		puts(_(common_cmds[i].help));
+>=20
