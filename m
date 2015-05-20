@@ -1,74 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git-verify-pack.txt: fix inconsistent spelling of "packfile"
-Date: Wed, 20 May 2015 12:22:15 -0700
-Message-ID: <xmqqmw0znjfc.fsf@gitster.dls.corp.google.com>
-References: <1431845814-2541-1-git-send-email-ps@pks.im>
-	<xmqqwq04745w.fsf@gitster.dls.corp.google.com>
-	<20150519222427.GA994@peff.net>
+From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
+	<sebastien.guimmara@gmail.com>
+Subject: [PATCH v9 0/5] group common commands by theme
+Date: Wed, 20 May 2015 21:22:56 +0200
+Message-ID: <1432149781-24596-1-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 20 21:22:24 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: sunshine@sunshineco.com, gitster@pobox.com,
+	=?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
+	<sebastien.guimmara@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 20 21:23:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv9ZP-000217-F1
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:22:23 +0200
+	id 1Yv9aN-0002Tg-UL
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 21:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560AbbETTWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 15:22:18 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:36817 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbbETTWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 15:22:17 -0400
-Received: by igbpi8 with SMTP id pi8so110966016igb.1
-        for <git@vger.kernel.org>; Wed, 20 May 2015 12:22:16 -0700 (PDT)
+	id S1753262AbbETTXT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2015 15:23:19 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:34438 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555AbbETTXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 15:23:19 -0400
+Received: by wghq2 with SMTP id q2so63267825wgh.1
+        for <git@vger.kernel.org>; Wed, 20 May 2015 12:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=9F/f9VFL6crT+DENy9V8rr5w3AIOE2UKefRJZYZ0J68=;
-        b=cQtyJ2hQ9HsYvBbgUe87FG505HzGm5z2LUAJ3j0FsAkitX83KH4ONW4UXYzYH5QvC1
-         icBM7DtMwOrdL08dQH35UjStyyd/wfON+Y0fn0vMZVNOrULwDPDl/MZXk1D6cAkI8H1a
-         /KxQ45Jdbm8TumXFHOaEN5dDTW9ziA21s/+xBGkxGF+p34rgzhU1ezoYP47v5fECtJqo
-         uTQI4933Qp5rTlJ/QQYYgMS5FmxIriMWZgk+7tU7UiW+V/lEjqKrOZalxoqvwa8/15Ch
-         85hY3UIiiDVEu/6ck3zXKVq331Y6geJxe9p5sdh72UGL7eDxB8Zf4eQ9v5SLP0jnnbTb
-         M04A==
-X-Received: by 10.50.13.67 with SMTP id f3mr30164804igc.12.1432149736660;
-        Wed, 20 May 2015 12:22:16 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6ddd:2b37:d23b:a593])
-        by mx.google.com with ESMTPSA id a74sm13006665ioe.36.2015.05.20.12.22.15
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 20 May 2015 12:22:16 -0700 (PDT)
-In-Reply-To: <20150519222427.GA994@peff.net> (Jeff King's message of "Tue, 19
-	May 2015 18:24:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=LadkGEvZwzxpztFa+MVjTbg+9y+FFJZqd6koCNM2sQQ=;
+        b=fx6NuunqqhdGBsQAwjzx9F1/zla9S0ZrN6b+Q7ijXpi93QjikxTuoZdkzIOR6lL+1A
+         p1Fl9xnsZjlKT9g+PeWHq0S0ENVTg5cKr8BdEDu2tRDpxGthAvY9S7cZSBYk9tOOUebx
+         yaS5HmGPIHTArUsaireCssMauhsuiz/6pcowtmr1DIq23QApXE0MRJUJ/DHdqy69Uzs+
+         At94duqOoc71Q7rb4cPUWwYPKJIa20/8XIwzfwi+caBkEavobd8lskqXnYoy3FFUpTrI
+         KOoeKK9Xy/WMYRlcAnkVCBd0Qe2+GkPdRlRBQmJAM6CjxPbdzpSG2IYZcql16WVLvweW
+         0CIA==
+X-Received: by 10.194.121.38 with SMTP id lh6mr66753508wjb.2.1432149797670;
+        Wed, 20 May 2015 12:23:17 -0700 (PDT)
+Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id bm9sm28320276wjc.21.2015.05.20.12.23.15
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 20 May 2015 12:23:16 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269496>
 
-Jeff King <peff@peff.net> writes:
+The major modification of this reroll [1] is the use of the perl versio=
+n
+of generate-cmdlist instead of the awk one.
 
-> On Tue, May 19, 2015 at 12:34:03PM -0700, Junio C Hamano wrote:
->
->> A quick "git grep packfile" vs "git grep pack-file" inside
->> Documentation/ directory indicates that we seem to use 'packfile'
->> primarily in the lower-level technical documents that are not
->> end-user facing.  Almost half of them are in the release notes
->> that we won't bother "fixing", so it might make sense to go the
->> other way around, consistently using "pack-file" that may be more
->> familiar to end-users.
->> 
->> What do others think?
->
-> If I saw "pack-file" (outside of this discussion) I would think it was
-> wrong. That's just my opinion, of course.
+help.c:
+1. change the introductory message from:
+	"The typical Git workflow includes:"
+to:
+    "These are common Git commands used in various situations:"
 
-OK, then let's go with these three patches.
+2. include Ramsay's patch [2]
 
-Thanks for sanity checking.
+[1]: v8: http://thread.gmane.org/gmane.comp.version-control.git/269305
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/269387
+
+Eric Sunshine (2):
+  command-list: prepare machinery for upcoming "common groups" section
+  generate-cmdlist: parse common group commands
+
+S=C3=A9bastien Guimmara (3):
+  command-list.txt: add the common groups block
+  command-list.txt: drop the "common" tag
+  help: respect new common command grouping
+
+ Documentation/cmd-list.perl |  4 ++++
+ Makefile                    |  9 ++++----
+ command-list.txt            | 53 +++++++++++++++++++++++++++----------=
+--------
+ generate-cmdlist.perl       | 50 +++++++++++++++++++++++++++++++++++++=
++++++
+ generate-cmdlist.sh         | 23 --------------------
+ help.c                      | 24 +++++++++++++++++++-
+ 6 files changed, 114 insertions(+), 49 deletions(-)
+ create mode 100755 generate-cmdlist.perl
+ delete mode 100755 generate-cmdlist.sh
+
+--=20
+2.4.0.GIT
