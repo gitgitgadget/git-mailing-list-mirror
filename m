@@ -1,101 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/1] stash: recognize "--help" for subcommands
-Date: Wed, 20 May 2015 14:17:46 -0400
-Message-ID: <20150520181746.GC14561@peff.net>
-References: <CAEwRq=r=iMmnnzS2F_2rr9Tjem9khn1d=os3krjEjOg5iK5bww@mail.gmail.com>
- <20150520180132.GB14561@peff.net>
+Subject: Re: [PUB]corrupt repos does not return error with `git fsck`
+Date: Wed, 20 May 2015 14:22:19 -0400
+Message-ID: <20150520182218.GD14561@peff.net>
+References: <alpine.DEB.2.11.1505202142540.9343@orwell.homelinux.org>
+ <vpq382rkvzf.fsf@anie.imag.fr>
+ <d21002e0fa92b03c3d417c8996328563@www.dscho.org>
+ <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Vincent Legoll <vincent.legoll@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 20:18:04 2015
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Faheem Mitha <faheem@faheem.info>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 20 20:22:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv8Z5-0007ja-SX
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 20:18:00 +0200
+	id 1Yv8dO-0001oU-Sn
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 20:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754900AbbETSRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 14:17:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33269 "HELO cloud.peff.net"
+	id S1754030AbbETSWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 14:22:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33274 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754471AbbETSRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 14:17:49 -0400
-Received: (qmail 11188 invoked by uid 102); 20 May 2015 18:17:49 -0000
+	id S1753204AbbETSWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 14:22:21 -0400
+Received: (qmail 11849 invoked by uid 102); 20 May 2015 18:22:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 13:17:49 -0500
-Received: (qmail 25181 invoked by uid 107); 20 May 2015 18:17:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 13:22:21 -0500
+Received: (qmail 25214 invoked by uid 107); 20 May 2015 18:22:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 14:17:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 May 2015 14:17:46 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 14:22:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 May 2015 14:22:19 -0400
 Content-Disposition: inline
-In-Reply-To: <20150520180132.GB14561@peff.net>
+In-Reply-To: <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269487>
 
-On Wed, May 20, 2015 at 02:01:32PM -0400, Jeff King wrote:
+On Wed, May 20, 2015 at 11:02:14AM -0700, Stefan Beller wrote:
 
-> This takes away the immediate pain. We may also want to
-> teach "--help" to the option. I guess we cannot do better
-> than just having it run "git help stash" in all cases (i.e.,
-> we have no way to get the help for a specific subcommand).
+> $ git clone https://github.com/fmitha/SICL
+> cd SICL
+> $ git show 280c12ab49223c64c6f914944287a7d049cf4dd0
+> fatal: bad object 280c12ab49223c64c6f914944287a7d049cf4dd0
+> $ git show 12323213123 # just to be sure to have a different error
+> message for non existing objects.
+> fatal: ambiguous argument '12323213123': unknown revision or path not
+> in the working tree.
 
-That actually turns out to be pretty painless...
+Yeah, this is well-known. If you give a partial hash, the error comes
+from get_sha1(), which says "hey, this doesn't look like anything I know
+about". If you feed a whole hash, we skip all that and say "well, you
+_definitely_ meant this sha1", and then later code complains when it
+cannot be read.
 
--- >* --
-Subject: stash: recognize "--help" for subcommands
+We could add a has_sha1_file() check in get_sha1 for this case. I can't
+think offhand of any reason it would need to be called with a
+non-existent object, but there may be some lurking corner case (e.g.,
+"cat-file -e" or something).
 
-If you run "git stash --help", you get the help for stash
-(this magic is done by the git wrapper itself). But if you
-run "git stash drop --help", you get an error. We
-cannot show help specific to "stash drop", of course, but we
-can at least give the user the normal stash manpage.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-stash.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index c6f492c..1f5ea87 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -219,6 +219,9 @@ save_stash () {
- 		-a|--all)
- 			untracked=all
- 			;;
-+		--help)
-+			show_help
-+			;;
- 		--)
- 			shift
- 			break
-@@ -307,6 +310,11 @@ show_stash () {
- 	git diff ${FLAGS:---stat} $b_commit $w_commit
- }
- 
-+show_help () {
-+	exec git help stash
-+	exit 1
-+}
-+
- #
- # Parses the remaining options looking for flags and
- # at most one revision defaulting to ${ref_stash}@{0}
-@@ -373,6 +381,9 @@ parse_flags_and_rev()
- 			--index)
- 				INDEX_OPTION=--index
- 			;;
-+			--help)
-+				show_help
-+			;;
- 			-*)
- 				test "$ALLOW_UNKNOWN_FLAGS" = t ||
- 					die "$(eval_gettext "unknown option: \$opt")"
--- 
-2.4.1.396.g7ba6d7b
+-Peff
