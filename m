@@ -1,49 +1,55 @@
-From: Jeff King <peff@peff.net>
+From: Faheem Mitha <faheem@faheem.info>
 Subject: Re: [PUB]corrupt repos does not return error with `git fsck`
-Date: Wed, 20 May 2015 14:22:19 -0400
-Message-ID: <20150520182218.GD14561@peff.net>
-References: <alpine.DEB.2.11.1505202142540.9343@orwell.homelinux.org>
- <vpq382rkvzf.fsf@anie.imag.fr>
- <d21002e0fa92b03c3d417c8996328563@www.dscho.org>
- <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com>
+Date: Wed, 20 May 2015 23:54:01 +0530 (IST)
+Message-ID: <alpine.DEB.2.11.1505202341170.9343@orwell.homelinux.org>
+References: <alpine.DEB.2.11.1505202142540.9343@orwell.homelinux.org> <vpq382rkvzf.fsf@anie.imag.fr> <d21002e0fa92b03c3d417c8996328563@www.dscho.org> <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Faheem Mitha <faheem@faheem.info>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 20 20:22:29 2015
+X-From: git-owner@vger.kernel.org Wed May 20 20:24:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv8dO-0001oU-Sn
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 20:22:27 +0200
+	id 1Yv8fB-0002qw-Rh
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 20:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030AbbETSWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 14:22:23 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33274 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753204AbbETSWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 14:22:21 -0400
-Received: (qmail 11849 invoked by uid 102); 20 May 2015 18:22:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 13:22:21 -0500
-Received: (qmail 25214 invoked by uid 107); 20 May 2015 18:22:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 14:22:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 May 2015 14:22:19 -0400
-Content-Disposition: inline
+	id S1753795AbbETSYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 14:24:13 -0400
+Received: from rs145.luxsci.com ([64.49.212.113]:51056 "EHLO rs145.luxsci.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751609AbbETSYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 14:24:12 -0400
+Received: from orwell.homelinux.org (triband-mum-59.183.37.231.mtnl.net.in [59.183.37.231])
+	(authenticated bits=0)
+	by rs145.luxsci.com (8.14.4/8.14.9) with ESMTP id t4KIO9IX003695
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 20 May 2015 14:24:11 -0400
+Received: from faheem (helo=localhost)
+	by orwell.homelinux.org with local-esmtp (Exim 4.84)
+	(envelope-from <faheem@faheem.info>)
+	id 1Yv8f1-0001Yx-42; Wed, 20 May 2015 23:54:07 +0530
+X-X-Sender: faheem@orwell.homelinux.org
 In-Reply-To: <CAGZ79kZY68HFDipxLVas9Dg9+NfpOGmywpWfwFL31A0EpLmJFw@mail.gmail.com>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+X-Lux-Comment: Message t4KIO9IX003695 sent by user #87163
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269488>
 
-On Wed, May 20, 2015 at 11:02:14AM -0700, Stefan Beller wrote:
+
+Hi Stefan,
+
+Thank you for the reply, but I don't follow what conclusion you are 
+drawing, if any.
+
+On Wed, 20 May 2015, Stefan Beller wrote:
 
 > $ git clone https://github.com/fmitha/SICL
 > cd SICL
@@ -53,16 +59,33 @@ On Wed, May 20, 2015 at 11:02:14AM -0700, Stefan Beller wrote:
 > message for non existing objects.
 > fatal: ambiguous argument '12323213123': unknown revision or path not
 > in the working tree.
+>
+> $ mv .git/objects/pack/pack-d56da8c18f5aa915d7fe230efae7315a0101dc19.pack .
+> $ rm .git/objects/pack/pack-d56da8c18f5aa915d7fe230efae7315a0101dc19.idx
+> $ git unpack-objects < pack-d56da8c18f5aa915d7fe230efae7315a0101dc19.pack
+> $ git show 280c12ab49223c64c6f914944287a7d049cf4dd0
+> fatal: bad object 280c12ab49223c64c6f914944287a7d049cf4dd0
+> $ ls .git/objects/28/0*
+> .git/objects/28/01fef08b1dccf9725dde919a7373748a046cb7
+> .git/objects/28/03d8c1cb3275979ff2d8408450844f6a78a70d
+> .git/objects/28/0663a93d702a7fcb0dd36f461397f6b50ba01e
+> .git/objects/28/068e2656dd4bac61050e870712578032af9144
+> .git/objects/28/074e890d6ff2bb61eb7796bc500b6d8e344ad2
+> .git/objects/28/08596ac465cf8a819a9b13ad2f855e9a8a3235
+> .git/objects/28/098184d1ba97453227c18628cdf13087b6bce2
+> .git/objects/28/0ba19c68b26ee7c799ef8ca09d540a5ad7a5b2
+> .git/objects/28/0d66213173f0ae7aaae8684f3efcb1f8790792
+> .git/objects/28/0da35374c32303cbd726bef9847f18d7428d5e
+>
+> There is no file 28/0c... however.
 
-Yeah, this is well-known. If you give a partial hash, the error comes
-from get_sha1(), which says "hey, this doesn't look like anything I know
-about". If you feed a whole hash, we skip all that and say "well, you
-_definitely_ meant this sha1", and then later code complains when it
-cannot be read.
+So, is the repos corrupt or not? Also, I don't understand why you say
 
-We could add a has_sha1_file() check in get_sha1 for this case. I can't
-think offhand of any reason it would need to be called with a
-non-existent object, but there may be some lurking corner case (e.g.,
-"cat-file -e" or something).
+     There is no file 28/0c... however.
 
--Peff
+Why would you expect there to be? I don't see it mentioned in that list.
+
+I apologise for my ignorance. I don't really know anything about git. I 
+just happened to encounter this error.
+
+                                                   Regards, Faheem Mitha
