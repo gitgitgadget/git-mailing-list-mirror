@@ -1,122 +1,70 @@
-From: Philippe De Muyter <phdm@macq.eu>
-Subject: Re: identical hashes on two branches, but holes in git log
-Date: Wed, 20 May 2015 15:13:59 +0200
-Message-ID: <20150520131359.GA7043@frolo.macqel>
-References: <20150519132958.GA21130@frolo.macqel> <20150519233925.GA22748@peff.net>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: [WIP] [PATCH 0/4] Unifying git branch -l, git tag -l, and git for-each-ref
+Date: Wed, 20 May 2015 18:44:42 +0530
+Message-ID: <555C88C2.8060902@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 20 15:14:11 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <christian.couder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 20 15:14:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv3p3-00006H-PV
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 15:14:10 +0200
+	id 1Yv3pp-0000PC-07
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 15:14:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbbETNOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 09:14:05 -0400
-Received: from smtp2.macqel.be ([109.135.2.61]:50513 "EHLO smtp2.macqel.be"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752494AbbETNOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 09:14:04 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by smtp2.macqel.be (Postfix) with ESMTP id 07883130CDD;
-	Wed, 20 May 2015 15:14:01 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at macqel.be
-Received: from smtp2.macqel.be ([127.0.0.1])
-	by localhost (mail.macqel.be [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AStlf8zdpa4q; Wed, 20 May 2015 15:13:59 +0200 (CEST)
-Received: from frolo.macqel.be (frolo.macqel [10.1.40.73])
-	by smtp2.macqel.be (Postfix) with ESMTP id 63F80130CBF;
-	Wed, 20 May 2015 15:13:59 +0200 (CEST)
-Received: by frolo.macqel.be (Postfix, from userid 1000)
-	id 42C76DF06BF; Wed, 20 May 2015 15:13:58 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20150519233925.GA22748@peff.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753305AbbETNOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 09:14:51 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34070 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753184AbbETNOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 09:14:47 -0400
+Received: by pabru16 with SMTP id ru16so67016897pab.1
+        for <git@vger.kernel.org>; Wed, 20 May 2015 06:14:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=xK+444k2D3kBh4IRhZb6tU58wFNzi5ZAqfc14Moze0s=;
+        b=mgMJDuXnl4k1BOonEUXFiB3Bq0MgdCFROZxFAhLinzj4TBvfoNSs+zHg14a10Y6avQ
+         4YKBwxFbJSKrPiEG/yA7gxbAPMALVXh+pignq/4rru8kf/GVdZvAmEDu7StmoJbWEmti
+         5GqlFEK4cH+ReqOUJuLpy7GZ2tdgf0x9D6RrLZu6/f72bJlYi0k0G0DlTY+g47j69cr3
+         TZTq3YpB/cDu9KWO7Tq/GrqxUnwyP/aKul2EwyQVBxSqRBBYvnpZ5KAufqkzy7OVqa4j
+         1/EaPBzvf6STPsIezUxlTFEeAOqlkoMBzEtIEUTgsSVw5JIUvkiRQlwztQ4JH1KTxftl
+         /g2g==
+X-Received: by 10.66.159.68 with SMTP id xa4mr64742081pab.105.1432127686398;
+        Wed, 20 May 2015 06:14:46 -0700 (PDT)
+Received: from [192.168.0.110] ([106.51.128.148])
+        by mx.google.com with ESMTPSA id ss3sm16297954pab.43.2015.05.20.06.14.43
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 May 2015 06:14:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269461>
 
-Hi Jeff,
+Hello All,
 
-On Tue, May 19, 2015 at 07:39:25PM -0400, Jeff King wrote:
-> On Tue, May 19, 2015 at 03:29:58PM +0200, Philippe De Muyter wrote:
-> 
-> > Trying to understand, I have eventually done "git log" on my branch and
-> > on v3.15 with the following commands :
-> > 
-> > git log v3.15 --full-history --decorate=short | grep '^commit' > /tmp/3.15.commits
-> > git log --full-history --decorate=short | grep '^commit' > /tmp/mybranch.commits
-> > 
-> > I compare then the two histories with
-> > 
-> > diff -u /tmp/3.15.commits /tmp/mybranch.commits
-> > 
-> > and I get (excerpt) :
-> > 
-> > --- /tmp/3.15.commits      2015-05-19 13:19:59.665205514 +0200
-> > +++ /tmp/mybranch.commits     2015-05-19 13:19:52.452081328 +0200
-> > @@ -1,3780 +1,84 @@
-> > -commit 1860e379875dfe7271c649058aeddffe5afd9d0d (tag: v3.15)
-> > -commit ...
-> > ...
-> > -commit fad01e866afdbe01a1f3ec06a39c3a8b9e197014 (tag: v3.15-rc8)
-> > ...
-> > ...
-> > -commit c9eaa447e77efe77b7fa4c953bd62de8297fd6c5 (tag: v3.15-rc1)
-> > ...
-> > -commit 57673c2b0baa900dddae3b9eb3d7748ebf550eb3
-> > +commit a1fb433346cb5733945b5fc243f7334744bae4fd (HEAD, macq_boards-3.14.0)
-> > +commit ...
-> > ...
-> > +commit 2be7b20bbb337e0031e0f0d39c9a4845b6bbf3b8
-> 
-> It looks like v3.15 is ahead of your branch. And I _think_ your question
-> is: since they both contain v3.14, shouldn't they also contain all of
-> the ancestors of v3.14?
+Just updating on my progress for my GSoC project on "Unifying git 
+branch- l, git tag -l and git for-each-ref."
 
-Thanks for understanding and clarifying my question.
+I have been going through the code for the above commands, I started off 
+first with 'for-each-ref' because it seemed to be the most basic command 
+of the three, I have been building the common library
+'ref-filter' based on the requirements for 'for-each-ref', eventually
+I plan to merge 'tag -l' and 'branch -l' and extend its functionality.
 
-> 
-> The answer is yes. But from your output here:
-> 
-> >  commit 455c6fdbd219161bd09b1165f11699d6d73de11c (tag: v3.14)	==== identical commit
-> > -commit c32fc9c803f8ed90a7548810de48ca33a3020168		==== commit missing in my branch
-> >  commit fedc1ed0f11be666de066b0c78443254736a942e		==== more identical commits
-> 
-> I think what you are saying is: c32fc9c803 comes after v3.14, so it
-> should be an ancestor, right?
-> 
-> And the answer is no. Git's traversal order does not necessarily reflect
-> the true topology if you have multiple lines of development. And in this
-> case, they do not have a direct ancestry relationship (i.e., they are on
-> separate branches, and neither is an ancestor of the other).
+The '--format' and '--sort' option provided by for-each-ref seemed to be 
+the most fundamental and I plan on using this implementation and 
+extending the option to 'tag -l' and 'branch -l'. So this left me with 
+moving most of the code from 'for-each-ref' to 'ref-filter' and leaving 
+'for-each-ref' with nothing but the command call from the main git command.
 
-Thanks for the explanation.  Would that also be true (that unrelated commits
-could come in the output) with a simple 'git log' ?
-
-My initial problem (still unresolved/unanswered) is that some commits
-that appeared between v3.14-rc1 and v3.14-rc2 (specifically
-817c27a128e18aed840adc295f988e1656fed7d1) are present in v3.15, but not
-in my branch.
-
-I have just checked online the v3.14 version on 
-
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/arm/boot/dts/imx6qdl.dtsi 
-
-and I see also the same "problem": the commit removing 738 lines is in the log
-817c27a128e18aed840adc295f988e1656fed7d1
-"ARM: dts: imx6qdl: make pinctrl nodes board specific",
-but the v3.14 version of the file still contains the 738 removed line,
-and I see no commit restoring those lines.
-
-I do not understand why those 738 lines are still present in v3.14 although
-they were removed between v3.14-rc1 and v3.14-rc2 :(
-
-Philippe
+This is still a WIP and hope to get some suggestions/feedback on my 
+progress.
