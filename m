@@ -1,97 +1,62 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/3] l10: de.po: grammar fix
-Date: Wed, 20 May 2015 10:55:48 +0200
-Message-ID: <555C4C14.4040305@drmicha.warpmail.net>
-References: <cover.1432025365.git.git@drmicha.warpmail.net>	<2b4460dbf6abb15c4cd94d4c5c335cc9e8059ee7.1432025365.git.git@drmicha.warpmail.net> <CAGZ79kYPhTK=tymEcB_YsYdNZvt0=sA4-Hon1SLwujV39W7fmA@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v5 1/2] mergetool--lib: set IFS for difftool and mergetool
+Date: Wed, 20 May 2015 11:04:22 +0200
+Message-ID: <CAHGBnuM4CcT9FVKJapzvvtrvFV6SxaGJKgzRtqQDNRroptH_Rw@mail.gmail.com>
+References: <1432112562-400-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 20 11:03:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Susi <phillsusi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 20 11:04:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YuzuX-0001AW-Hi
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 11:03:33 +0200
+	id 1YuzvR-0001Y9-LE
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 11:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354AbbETJDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 05:03:20 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:37380 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752649AbbETJDP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 May 2015 05:03:15 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 May 2015 05:03:15 EDT
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id CD64020C12
-	for <git@vger.kernel.org>; Wed, 20 May 2015 04:55:49 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Wed, 20 May 2015 04:55:49 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=/3WsWkUD0nKr+DZNAuZ85Fe8WUs=; b=VKYusF
-	MJloueQmt5wCNpyPvVDgxxIFEdWCDKnKhfFILhLRjgE0+GllPmc7QyJB6mEtOTd0
-	Y3zFahPwbOZeB7sKnhnMmREoYvHhwxkFr96LuH5ArTLWR5OGi72q0zDWzOo6/YC3
-	sb4leoxOxp9xT6nQpw4uMDAa9rtD+OLWn+cPo=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=/3WsWkUD0nKr+DZ
-	NAuZ85Fe8WUs=; b=cgu505nCUFsyVGi3LBqwdp5lyUC8SE1CHzRFYK4hevxoAMw
-	e3TzbwVLiF+kwqAbuTaU4uGbXCU/Ulx0ffcHQ38shm4dDPAvcWhPd1Ej2NNWw6Xz
-	fuuTr0Trx0IkpL0LDdUnLJopj2uNTFYvRh3Xr0fUglhK6kxpbtw0iI1ov8ac=
-X-Sasl-enc: vE9hv1pme55qSA0EJTPbflz4ZVtmPNPlXn6HziwoaJev 1432112149
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 3EF5B68019D;
-	Wed, 20 May 2015 04:55:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <CAGZ79kYPhTK=tymEcB_YsYdNZvt0=sA4-Hon1SLwujV39W7fmA@mail.gmail.com>
+	id S1753407AbbETJE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 05:04:26 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:37355 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753167AbbETJEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 05:04:23 -0400
+Received: by igbsb11 with SMTP id sb11so34701511igb.0
+        for <git@vger.kernel.org>; Wed, 20 May 2015 02:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iU2zIunXLqmhr2X+0MdZg2PTNRdiYF3uDeILeqD8LJc=;
+        b=g35B+kL2dlsWgb5/aPR3jOkHXbM2cGxvHlYn283oN6NTSPfJcU2ZVnv1kfy5+kSMCq
+         qXGOtCc4Zd1jWAr+4VcXj899EugX2mVjNo4GWaFvlflTiHP004iu70Xqf2Zsdgxnq4RS
+         9jYTi5AuIaJ7ExARyasqDOQlNBNeg1yphivR8XeXWMAg5sRjqw+1hYquGLstyZtwtB/X
+         UZLEfz/89JNB/EgXtTnpPr4RLjbHHkhafrXRwiEAKWw/i9HNU0GzSZyKYSLa/vRZROGV
+         Kr3u7P+HGb0XLs1UmCLTJzATQdwoXirrkwa3PKLCdP8Ggedaxzb42pkEnkLVmXQAGyPr
+         DzWQ==
+X-Received: by 10.50.93.69 with SMTP id cs5mr5981510igb.4.1432112662430; Wed,
+ 20 May 2015 02:04:22 -0700 (PDT)
+Received: by 10.107.29.149 with HTTP; Wed, 20 May 2015 02:04:22 -0700 (PDT)
+In-Reply-To: <1432112562-400-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269455>
 
-Stefan Beller venit, vidit, dixit 19.05.2015 23:46:
-> On Tue, May 19, 2015 at 1:51 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->>  po/de.po | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/po/de.po b/po/de.po
->> index 2feaec1..25258e3 100644
->> --- a/po/de.po
->> +++ b/po/de.po
->> @@ -10478,7 +10478,7 @@ msgstr ""
->>  #: git-am.sh:142
->>  msgid "Using index info to reconstruct a base tree..."
->>  msgstr ""
->> -"Verwende Informationen aus der Staging-Area, um einen Basisverzeichnis "
->> +"Verwende Informationen aus der Staging-Area, um ein Basisverzeichnis "
->>  "nachzustellen"
-> 
-> Waere es sinnvoll Staging-Area in Staging-Bereich umzubenennen?
-> "Staging" ist wohl ein eher fester Term mit dem man den index/staging area
-> assoziert, aber "Area" 'doesn't ring a bell for me'.
+On Wed, May 20, 2015 at 11:02 AM, David Aguilar <davvid@gmail.com> wrote:
 
-Staging-Bereich would be Denglish - half German and halb Englisch.
+> git-sh-setup sets IFS but it is not used by git-difftool--helper.
+> Set IFS in git-mergetool--lib so that the mergetool scriptlets,
+> diftool, and mergetool do not need to do so.
 
-In any case, the term staging area is highly confusing in this context:
-It really is the index, and in this case the user has not "staged
-anything for commit" in the index. The index is used for storing
-information during the 3way merge. This is why we refused to replace
-"index/cache" by "staging area" in the original git documentation.
+s/diftool/difftool/
 
-The de l10n team decided to use "Staging-Area" as the translation for
-"index" (as far as I can see), and therefore I kept this term: It is
-important to translate the same concept in the same way consistently in
-all places. Changing the translation of "index" would be a major
-decision and a major patch. (I'd vote for "Index".)
-
-Michael
+-- 
+Sebastian Schuberth
