@@ -1,67 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/4] for-each-ref: rename refinfo members to match similar structures
-Date: Wed, 20 May 2015 18:57:45 +0200
-Message-ID: <vpqtwv7qj92.fsf@anie.imag.fr>
-References: <555C88C2.8060902@gmail.com>
-	<1432127904-21070-1-git-send-email-karthik.188@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] sha1_file: pass empty buffer to index empty file
+Date: Wed, 20 May 2015 10:03:45 -0700
+Message-ID: <xmqqvbfnnpu6.fsf@gitster.dls.corp.google.com>
+References: <xmqqa8x4fjf5.fsf@gitster.dls.corp.google.com>
+	<1431806796-28902-1-git-send-email-gjthill@gmail.com>
+	<xmqqegmfds1n.fsf@gitster.dls.corp.google.com>
+	<xmqqvbfrc952.fsf@gitster.dls.corp.google.com>
+	<20150519063716.GA22771@peff.net>
+	<xmqqk2w48mjp.fsf@gitster.dls.corp.google.com>
+	<xmqqd21w8mal.fsf@gitster.dls.corp.google.com>
+	<xmqq1tic8lgj.fsf@gitster.dls.corp.google.com>
+	<xmqqk2w473i2.fsf@gitster.dls.corp.google.com>
+	<20150519221450.GB779@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Jeff King <peff@peff.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 18:58:11 2015
+Cc: Jim Hill <gjthill@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 20 19:03:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yv7Jp-0005pX-N7
-	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 18:58:10 +0200
+	id 1Yv7PN-0000Pp-Dj
+	for gcvg-git-2@plane.gmane.org; Wed, 20 May 2015 19:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499AbbETQ6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 12:58:04 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35301 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754466AbbETQ6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 12:58:01 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4KGvi0a021593
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 20 May 2015 18:57:44 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4KGvjl2019759;
-	Wed, 20 May 2015 18:57:45 +0200
-In-Reply-To: <1432127904-21070-1-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Wed, 20 May 2015 18:48:21 +0530")
+	id S1754085AbbETRDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 13:03:49 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:38478 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753676AbbETRDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 13:03:48 -0400
+Received: by igcau1 with SMTP id au1so44761495igc.1
+        for <git@vger.kernel.org>; Wed, 20 May 2015 10:03:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=iYGpYL+OnPIqAgqpN5pxyCyEMmyeDPTG8Vnebq+who0=;
+        b=jnFCW8Qsou+vznMyMbNrbqv/M4GulQGMHCCK69TmSRcULd0P4umqANvzeT3jFUcspV
+         zmJmsZgbVIBjpmS4Ss9cBJwPLeCv/dtokt9o1n2vbw7SnxEPc1jWAd7fwLimicmu2Qso
+         qcS3DDmweIJeAMbPKvidw3WefCRw9XoYk8cxwb+tidAOvmUtpBuhZoo7/g2LRpwB5ycI
+         xxy67+zPFyG92pR3j7N2tVxZsV6mzhj/37IUPLE155H4febMnc47Bk1MthaZIzzwJb+R
+         7nSNDioQhvufq/oDAFJmisLGKO9E8TN4ak0V7NeoBU8YnI4QxIN/p0hLrA98fEW3km7y
+         iYWw==
+X-Received: by 10.42.37.5 with SMTP id w5mr47509718icd.39.1432141427747;
+        Wed, 20 May 2015 10:03:47 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6ddd:2b37:d23b:a593])
+        by mx.google.com with ESMTPSA id cy11sm1985023igc.14.2015.05.20.10.03.45
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 May 2015 10:03:46 -0700 (PDT)
+In-Reply-To: <20150519221450.GB779@peff.net> (Jeff King's message of "Tue, 19
+	May 2015 18:14:50 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 20 May 2015 18:57:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4KGvi0a021593
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1432745866.32217@wS+1AFQr726d3teQH743Dg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269472>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Jeff King <peff@peff.net>
+> Your revised patch 2 looks good to me. I think you could test it more
+> reliably by simply adding a larger file, like:
+>
+>   test-genrandom foo $((128 * 1024 + 1)) >big &&
+>   echo 'big filter=epipe' >.gitattributes &&
+>   git config filter.epipe.clean true &&
+>   git add big
+>
+> The worst case if you get the size of the pipe buffer too small is that
+> the test will erroneously pass, but that is OK. As long as one person
+> has a reasonable-sized buffer, they will complain to the list
+> eventually. :)
 
-This means that "git am" will consider Peff as the author ...
+Yeah, I like it.  It was lazy of me not to add a new test.
 
-> Written-by: Jeff King <peff@peff.net>
-
-... hence this is not needed: in the final history, it will appear as if
-Peff wrote this Written-by: himself, which would be weird.
-
-If it is the case, you should add in the commit message that there's no
-actual changs, and perhaps which renames were done. This makes the
-review straightforward.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
