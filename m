@@ -1,91 +1,96 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: recovering from "unordered stage entries in index" error
-Date: Thu, 21 May 2015 16:56:44 +0700
-Message-ID: <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 2/2] mergetools: add winmerge as a builtin tool
+Date: Thu, 21 May 2015 12:06:35 +0200
+Organization: gmx
+Message-ID: <86b89ca969ff967f600f955f1990cdca@www.dscho.org>
+References: <1432112843-973-1-git-send-email-davvid@gmail.com>
+ <1432112843-973-2-git-send-email-davvid@gmail.com>
+ <xmqqtwv7m2hw.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuPyhG4y5ooR7KH0KrEhRYFu9BB+HKnnn+XhU5xL2TnL=w@mail.gmail.com>
+ <xmqq8ucjm0bo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "McHenry, Matt" <mmchenry@carnegielearning.com>
-X-From: git-owner@vger.kernel.org Thu May 21 11:57:29 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Phil Susi <phillsusi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Philip Oakley <philipoakley@iee.org>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 21 12:06:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvNEF-0004il-I1
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 11:57:27 +0200
+	id 1YvNNP-00028t-5L
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 12:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132AbbEUJ5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 05:57:18 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:36278 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569AbbEUJ5P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 May 2015 05:57:15 -0400
-Received: by iepj10 with SMTP id j10so4289428iep.3
-        for <git@vger.kernel.org>; Thu, 21 May 2015 02:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=P45CqFS4udt2w3i1pD+LdMF4V3qcry4TUZvbZXDpb8E=;
-        b=KObFm3/NfXWtu6DkDsiEOin9UnHZMCWNHKbDE0BOCnw6SCjQugwCyS8ewSXjL14hgi
-         0tJSdLCAPsYsd4Y2hfn8iE2SmljpqxhI7/QaGf+tJKJDw/585HcRyt2hOUVGN+8Zft49
-         xlCFqmk6wcpFqyaPNsluauN5vBl9ZqQFhXW5cnHEKlPjp48QjF4oCgFGadqwyN6tk8Kt
-         hqJuwj6mzf+ZAZgpngMgUflIiPSDqxab/FwDa90fCF3SHYxcb69gp1GfMSDL5bAgDHSr
-         C35JTi4C1xsg0ni3cpTgOAH9up4u+vzfqv4ri2sEWCFSrYBLvXXM0+Ct7Rsbl/WwEWqv
-         Y3zQ==
-X-Received: by 10.50.176.134 with SMTP id ci6mr10635908igc.27.1432202234899;
- Thu, 21 May 2015 02:57:14 -0700 (PDT)
-Received: by 10.107.181.136 with HTTP; Thu, 21 May 2015 02:56:44 -0700 (PDT)
-In-Reply-To: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+	id S1753869AbbEUKGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 06:06:51 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52739 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753001AbbEUKGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 06:06:49 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Mcyxq-1YeOUA3wYs-00IC8b; Thu, 21 May 2015 12:06:37
+ +0200
+In-Reply-To: <xmqq8ucjm0bo.fsf@gitster.dls.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:CnHimmG+d8wDypXk3Jp6wVxUs6e7Ww+EaC01qFgJyBpFtoSeoT3
+ tVlrNlw2YkDTA35eTf4jrJ8x+6pquyOsULow3jGaOyRjJ6nWT2xszyr/JJSDqOdnyOZAyVF
+ yTo/Xt0cbdAEEVH97WgljzbAjRpBJKxJgbOnzqa7FntZcP4WVoCLKXU7iio1yLzAVI6xa9a
+ wSZtxYCEA9MmjkyT+/Pdw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269577>
 
-On Tue, May 19, 2015 at 8:48 PM, McHenry, Matt
-<mmchenry@carnegielearning.com> wrote:
->
->
->         I've just upgraded my git from 2.0.5 to 2.3.6, and I'm now unable to run 'git svn fetch' in one of my repositories:
->
-> $ git svn fetch
-> fatal: unordered stage entries in index
+Hi Junio,
 
-This message can be improved to show what entries have this problem.
-But then I don't see any way to recover the index manually. ls-files
-will die too. Perhaps we should be gentle in this case: show warnings
-instead of aborting the program and internally reorder the index. I
-think, unless you have multiple entries with the same stage, the
-recovered index should run well. The broken index could be renamed to
-index.broken or something for later analysis, or we forbid writing the
-reordered index to disk.
+On 2015-05-20 23:00, Junio C Hamano wrote:
+> Sebastian Schuberth <sschuberth@gmail.com> writes:
+> 
+>> On Wed, May 20, 2015 at 10:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>> David Aguilar <davvid@gmail.com> writes:
+>>>
+>>>> +     for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=' |
+>>>> +             cut -d '=' -f 2- | sort -u)
+>>>
+>>> Is the final "sort" really desired?  I am wondering if there are
+>>> fixed precedence/preference order among variants of %PROGRAMFILES%
+>>> environment variables that the users on the platform are expected
+>>> to stick to, but the "sort" is sorting by the absolute pathnames of
+>>> where these things are, which may not reflect that order.
+>>
+>> I did add the sort (and -u) by intention, to ensure that "C:\Program
+>> Files" (which is what %PROGRAMFILES% expands to by default) comes
+>> before "C:\Program Files (x86)" (which is what %PROGRAMFILES(X86)%
+>> expands to by default), so that programs of the OS-native bitness are
+>> preferred.
+> 
+> Yuck.  So even though %PROGRAMFILES% and %PROGRAMFILES(X86)% look as
+> if they are variables that can point at arbitrary places, they in
+> reality don't?  Otherwise %PROGRAMFILES% may point at D:\Program
+> while %PROGRAMFILES(X86)% may piont at C:\X86 and the latter would
+> sort before the former, which would defeat that "logic".
 
-Hmm?
+Well, you are correct, theoretically an administrator could set the registry values (which are the source of the environment variables in question) of the `ProgramFilesDir` key in both
 
-> write-tree: command returned error: 128
->
->         'git status' shows a few untracked files but is otherwise clean.
->
->         It looks like this check was introduced in 15999d0be8179fb7a2e6eafb931d25ed65df50aa, with the summary "read_index_from(): catch out of order entries when reading an index file" (first appearing in 2.2.0).
->
->         Mailing list discussion looked like it implicated third-party tools.  I don't recall running any other tools on this repo; it doesn't do much day-to-day other than a long series of 'git svn fetch'es.  (But it's been around for a couple of years, so who knows.)
->
->         At any rate, what can I do to recover from this situation?  I tried to locate a path with multiple index entries like this, but got no results:
->
-> $ git ls-files -s | cut -f 2-100 | sort | uniq -c | grep -v '^[ \t]*1 '
->
->         (I originally posted on SO at http://stackoverflow.com/questions/30264826/; I'll update that with any solutions that come up here, to ease future googling.)
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion
 
+and
 
+HKEY_LOCAL_MACHINE\Software\WOW64\Microsoft\Windows\CurrentVersion
 
+to wildly different locations as you outlined. However, it is not supported by Microsoft to change those locations via the registry:
 
--- 
-Duy
+https://support.microsoft.com/en-us/kb/933700
+
+Ciao,
+Dscho
