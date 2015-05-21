@@ -1,66 +1,88 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] submodule documentation: Reorder introductory paragraphs
-Date: Thu, 21 May 2015 15:04:30 +0200
-Message-ID: <20150521130429.GB22553@book.hvoigt.net>
-References: <1432163517-22785-1-git-send-email-sbeller@google.com>
+From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
+	<sebastien.guimmara@gmail.com>
+Subject: [PATCH v10 0/5] group common commands by theme
+Date: Thu, 21 May 2015 15:13:04 +0200
+Message-ID: <1432213989-3932-1-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org,
-	pasky@suse.cz
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 21 15:04:42 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
+	<sebastien.guimmara@gmail.com>, gitster@pobox.com,
+	sunshine@sunshineco.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 21 15:13:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvQ9Q-00056g-DN
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 15:04:40 +0200
+	id 1YvQHr-0001ZC-4C
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 15:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753730AbbEUNEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 09:04:36 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.30]:57680 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753081AbbEUNEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 09:04:35 -0400
-Received: from [80.135.94.69] (helo=book.hvoigt.net)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1YvQ8l-0002bp-Ci; Thu, 21 May 2015 15:03:59 +0200
-Content-Disposition: inline
-In-Reply-To: <1432163517-22785-1-git-send-email-sbeller@google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1755864AbbEUNNT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2015 09:13:19 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:36373 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753081AbbEUNNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 09:13:17 -0400
+Received: by wgbgq6 with SMTP id gq6so85313750wgb.3
+        for <git@vger.kernel.org>; Thu, 21 May 2015 06:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=dHqxO9X5Q9pVYjkdu8rKquUOGYkKjbEuzfMr1X+WNgc=;
+        b=g49TgSynbytYOuLbQ9MS2EvQCjPl84mfZE03RkdAYkYeyZOthLLZMnvafwySODsk9e
+         qn6z/F1ToXcQaiILmESLkscn5lrVao6f6Tjh2NpUkgQbJd3HWVEr6Ysny2T/uPSJ3hML
+         tsthrJPZllHLEkWBS0lwVKj9BbfkyOe1TMqgCyxKHy3xqITT3IMyjEdk4/eWte8RPK/e
+         fuWUJ2eZsaCPiS/AMT809dqnqk03cwF+Q3EaCGN3UB1+MGQzgFgpoHQfiRwex7JNrjBG
+         mQx6p+opBRkybKIgGzgN/fNges2rStWUkjj3U76iI9EmrR822nYBHQGfqQePxqTmIoAS
+         PafA==
+X-Received: by 10.180.85.231 with SMTP id k7mr51485256wiz.93.1432213996270;
+        Thu, 21 May 2015 06:13:16 -0700 (PDT)
+Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id fb3sm2816361wib.21.2015.05.21.06.13.14
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 21 May 2015 06:13:15 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269584>
 
-On Wed, May 20, 2015 at 04:11:57PM -0700, Stefan Beller wrote:
-> It's better to start the man page with a description of what submodules
-> actually are instead of saying what they are not.
-> 
-> Reorder the paragraphs such that
-> the first short paragraph introduces the submodule concept,
-> the second paragraph highlights the usage of the submodule command,
-> the third paragraph giving background information,
-> and finally the fourth paragraph discusing alternatives such
-> as subtrees and remotes, which we don't want to be confused with.
-> 
-> This ordering deepens the knowledge on submodules with each paragraph.
-> First the basic questions like "How/what" will be answered, while the
-> underlying concepts will be taught at a later time.
-> 
-> Making sure it is not confused with subtrees and remotes is not really
-> enhancing knowledge of submodules itself, but rather painting the big
-> picture of git concepts, so you could also argue to have it as the second
-> paragraph. Personally I think this may confuse readers, specially newcomers
-> though.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+Same as v9 [1], with:=20
 
-Looks good to me.
+* command-list.txt: reduce verbosity by squashing the two header lines
+  into one:
 
-Cheers Heiko
+    ### command list (do not change this line)
+
+* include a missing update to new-command.txt.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/269496
+
+Eric Sunshine (2):
+  command-list: prepare machinery for upcoming "common groups" section
+  generate-cmdlist: parse common group commands
+
+S=C3=A9bastien Guimmara (3):
+  command-list.txt: add the common groups block
+  command-list.txt: drop the "common" tag
+  help: respect new common command grouping
+
+ Documentation/cmd-list.perl         |  4 +++
+ Documentation/howto/new-command.txt |  4 ++-
+ Makefile                            |  9 ++++---
+ command-list.txt                    | 53 ++++++++++++++++++++++-------=
+--------
+ generate-cmdlist.perl               | 50 +++++++++++++++++++++++++++++=
++++++
+ generate-cmdlist.sh                 | 23 ----------------
+ help.c                              | 24 ++++++++++++++++-
+ 7 files changed, 117 insertions(+), 50 deletions(-)
+ create mode 100755 generate-cmdlist.perl
+ delete mode 100755 generate-cmdlist.sh
+
+--=20
+2.4.0.GIT
