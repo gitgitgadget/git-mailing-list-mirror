@@ -1,95 +1,87 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] rebase -i: demonstrate incorrect behavior of
- post-rewrite hook with exec
-Date: Thu, 21 May 2015 17:12:35 -0400
-Message-ID: <CAPig+cRFwruC8DwPhH_=Jb8YAZPB5J2e0F2NBob3zLPGoMLWgA@mail.gmail.com>
-References: <1432231982-31314-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1432231982-31314-2-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email.perl: Add sendmail aliases support
+Date: Thu, 21 May 2015 14:19:46 -0700
+Message-ID: <xmqq617liq6l.fsf@gitster.dls.corp.google.com>
+References: <3f1091c3de6e4e62037bc3c84c69026e33ee9707.1432229888.git.allenbh@gmail.com>
+	<xmqqioblisyk.fsf@gitster.dls.corp.google.com>
+	<CAJ80satMSCGydLRb5k=xpSqxXSBL=_T7nsHEz3jsuFV9MdmmtA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	antoine.delaite@ensimag.grenoble-inp.fr,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	remi.lespinet@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu May 21 23:12:41 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Allen Hubbe <allenbh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 23:19:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvXlg-0004FF-GW
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 23:12:40 +0200
+	id 1YvXsg-0000Ji-4N
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 23:19:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964844AbbEUVMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 17:12:36 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:34567 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964782AbbEUVMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 17:12:35 -0400
-Received: by ieczm2 with SMTP id zm2so18002624iec.1
-        for <git@vger.kernel.org>; Thu, 21 May 2015 14:12:35 -0700 (PDT)
+	id S1756564AbbEUVTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 17:19:50 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:36436 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756546AbbEUVTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 17:19:49 -0400
+Received: by iepj10 with SMTP id j10so18032886iep.3
+        for <git@vger.kernel.org>; Thu, 21 May 2015 14:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=CsB6emILXX7I5i0BXVLrm5ZNfsrCiTxhb0I+d4lMAHM=;
-        b=Y5LVm77iSug1IDqfTbSQ+os1PbmvXy2+bSqy6ztov3OhvcUYzOSr85Yc4miVOHSliI
-         lc5EDX68xBsm9ouYW5BG7eYvpzwTn30kknZgh5ihSOuJ7eRQIn1dB8FE6A0Tk1z9rf1v
-         8CLQuQ+h6rninm9puazh3njDJXb1sBs5mwUplIIbcoIetHDgRM65SJOzyUmFvd4F3YQ5
-         7cSDoBI6U5lDuw7fSiebUwuCK6IJWZHnSpJZsprp07NKGc3qevqDK+XJBo9ceamAyTAU
-         DZd54xc5FYUtKj+k19Byt31nGGp6drUXwYb6ifnfeYkAOtdCFFlcQxyEyzmn0ZljtHWt
-         iJpQ==
-X-Received: by 10.50.36.9 with SMTP id m9mr921451igj.15.1432242755217; Thu, 21
- May 2015 14:12:35 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 21 May 2015 14:12:35 -0700 (PDT)
-In-Reply-To: <1432231982-31314-2-git-send-email-Matthieu.Moy@imag.fr>
-X-Google-Sender-Auth: GsyYrLV_TvliSMmVBOgmIzRXFc8
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Htp0t42fK0HXa3i4HyOcuU7td2TMHcuR53iCrZw1CNE=;
+        b=0Lg0xTDFkWAmkASeuP20dti43RjaGrlC/6C1G+yREpMrNtFHiUJLa4LDqxR6qfpqeA
+         pCZOTWLfY532BcdUhORIQR99qc82ObGr5vvXYegxd5ThK4IEqBCoRnFx3IdxvyxQiORO
+         YN70hf4OmzGAGmAm9cjmb87SCXdQX82selor3IbpCW+Z7UcOZK7f+3jAtx60mXmvdj3J
+         22PJWYpbKXTrlZlEwzsUu0D0AcM3/cS2Fh6/ntwqFIqr4N6GoJkSlJobzQLLWLQt9iun
+         ifPgYyt2cXS5vMGcl8WXUW1jnjyIX8s5La5vg+wef++qcF8nquzzEwuMKKjQjJSSDMBX
+         cl/A==
+X-Received: by 10.42.132.6 with SMTP id b6mr877828ict.8.1432243188397;
+        Thu, 21 May 2015 14:19:48 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:19:f810:32d8:695f])
+        by mx.google.com with ESMTPSA id cy11sm2230383igc.14.2015.05.21.14.19.47
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 21 May 2015 14:19:47 -0700 (PDT)
+In-Reply-To: <CAJ80satMSCGydLRb5k=xpSqxXSBL=_T7nsHEz3jsuFV9MdmmtA@mail.gmail.com>
+	(Allen Hubbe's message of "Thu, 21 May 2015 16:48:15 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269663>
 
-On Thu, May 21, 2015 at 2:13 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> The 'exec' command is sending the current commit to stopped-sha, which is
-> supposed to contain the original commit (before rebase). As a result, if
-> an 'exec' command fails, the next 'git rebase --continue' will send the
-> current commit as <old-sha1> to the post-rewrite hook.
-> [...]
+Allen Hubbe <allenbh@gmail.com> writes:
+
+> The diff doesn't show enough context to include this comment:
 >
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-> index ea2e0d4..ecef820 100755
-> --- a/t/t5407-post-rewrite-hook.sh
-> +++ b/t/t5407-post-rewrite-hook.sh
-> @@ -212,4 +212,21 @@ EOF
->         verify_hook_input
->  '
+> my %parse_alias = (
+>         # multiline formats can be supported in the future
+> ...
 >
-> +test_expect_failure 'git rebase -i (exec)' '
-> +       git reset --hard D &&
-> +       clear_hook_input &&
-> +       FAKE_LINES="edit 1 exec_false 2" git rebase -i B
+> I can't be sure the author's intent, but my interpretation is such.
+> The parsers do not support multiline, even though the format might
+> allow it by definition.  Another interpretation could be, no multiline
+> formats allowed, or, the first person to add a multiline format should
+> remove this comment.
 
-Broken &&-chain.
+I think that comment were only meant to apply to the first one, mutt.
 
-> +       echo something >bar &&
-> +       git add bar &&
-> +       # Fail because of exec false
-> +       test_must_fail git rebase --continue &&
-> +       git rebase --continue &&
-> +       echo rebase >expected.args &&
-> +       cat >expected.data <<EOF &&
-> +$(git rev-parse C) $(git rev-parse HEAD^)
-> +$(git rev-parse D) $(git rev-parse HEAD)
-> +EOF
-> +       verify_hook_input
-> +'
-> +
->  test_done
-> --
-> 2.4.1.171.g060e6ae.dirty
+In any case, you should read it this way:
+
+    Some formats may support multi-line; this parser back when the
+    comment was written did not support an alias file that uses such
+    a feature, but it is OK to make it support them in the future. 
+
+After all, these subs are slurping from $fh and doing the parsing
+themselves, so they are free to do multi-line if they wanted to.
+It's not like there is a calling function that feeds input line by
+line after splitting a logically continued line into two (and if
+that were the case, supporting multi-line format may become harder
+or even impossible).
+
+And as I said, it is OK not to support ones that have folded lines.
+
+All I was saying was that we should not SILENTLY fail or do a wrong
+thing when we find something we do not support.
