@@ -1,140 +1,101 @@
-From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-Subject: [PATCH v10 5/5] help: respect new common command grouping
-Date: Thu, 21 May 2015 15:13:09 +0200
-Message-ID: <1432213989-3932-6-git-send-email-sebastien.guimmara@gmail.com>
-References: <1432213989-3932-1-git-send-email-sebastien.guimmara@gmail.com>
+From: "McHenry, Matt" <mmchenry@carnegielearning.com>
+Subject: RE: recovering from "unordered stage entries in index" error
+Date: Thu, 21 May 2015 09:19:11 -0400
+Message-ID: <D377A9280DB18546A2471214D5CBB0E908599F7E02@exchdb01>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+ <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>, gitster@pobox.com,
-	sunshine@sunshineco.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 21 15:13:36 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 15:19:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvQI1-0001fi-PI
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 15:13:34 +0200
+	id 1YvQNh-0004yr-1e
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 15:19:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644AbbEUNNb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2015 09:13:31 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:38222 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755892AbbEUNNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 09:13:25 -0400
-Received: by wichy4 with SMTP id hy4so13452739wic.1
-        for <git@vger.kernel.org>; Thu, 21 May 2015 06:13:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=nItNCoVF/lT71vJShqSMOC0MSOz1qE+sBZSgfLlTPGA=;
-        b=V9t6lE68y6v9VRXx3jEeW4sU06r9ihYhOuv6jZLlOL3KBESXcTHAWbykWSda4q7qFr
-         T2p6ZSTq4Up9aR6czRNapJgY7E3lzcR4JA0ojSV1TGQR7R1mN+26WrbfmbvcBXJ6tamZ
-         oumGMpBv+Z93l1dhiKEl5KOmKDArkNHFtzV2KfDe1Mzv0MYOzvmEsyF0umMGL4YWpuJZ
-         NDQq8m28Mvws1B2Wf6/5uXvDiOa1x7wJQvViy8LowK59Wq5cXHKOxSW3Lbc4Lu3Qd0P5
-         iGM6+YmVzEjYmAzaP52tL7JRQtmHnRKuW8B3ccO67ZhW1yQ3QjdktPCQbBdyIHL4tJgN
-         yI1A==
-X-Received: by 10.194.242.195 with SMTP id ws3mr5304548wjc.155.1432214004701;
-        Thu, 21 May 2015 06:13:24 -0700 (PDT)
-Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id fb3sm2816361wib.21.2015.05.21.06.13.22
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 21 May 2015 06:13:23 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0.GIT
-In-Reply-To: <1432213989-3932-1-git-send-email-sebastien.guimmara@gmail.com>
+	id S1754137AbbEUNTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 09:19:15 -0400
+Received: from mail3.carnegielearning.com ([204.80.87.3]:53345 "EHLO
+	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753908AbbEUNTO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 May 2015 09:19:14 -0400
+X-ASG-Debug-ID: 1432214352-07bc7c14083d84e30001-QuoKaX
+Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id sDGEDtHapdIkg5Gu (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Thu, 21 May 2015 09:19:12 -0400 (EDT)
+X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
+Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
+ ([127.0.0.1]) with mapi; Thu, 21 May 2015 09:19:12 -0400
+Thread-Topic: recovering from "unordered stage entries in index" error
+X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
+Thread-Index: AdCTrIVIek4UbbUnR0ad3hufiuU+WQAG2kGw
+In-Reply-To: <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+X-Barracuda-Connect: UNKNOWN[10.1.10.4]
+X-Barracuda-Start-Time: 1432214352
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: https://10.1.10.16:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at carnegielearning.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
+X-Barracuda-Spam-Score: 0.51
+X-Barracuda-Spam-Status: No, SCORE=0.51 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19166
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.50 BSF_RULE7568M          Custom Rule 7568M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269590>
 
-'git help' shows common commands in alphabetical order:
-
-The most commonly used git commands are:
-   add        Add file contents to the index
-   bisect     Find by binary search the change that introduced a bug
-   branch     List, create, or delete branches
-   checkout   Checkout a branch or paths to the working tree
-   clone      Clone a repository into a new directory
-   commit     Record changes to the repository
-   [...]
-
-without any indication of how commands relate to high-level
-concepts or each other. Revise the output to explain their relationship
-with the typical Git workflow:
-
-These are common Git commands used in various situations:
-
-start a working area (see also: git help tutorial)
-   clone      Clone a repository into a new directory
-   init       Create an empty Git repository or reinitialize [...]
-
-work on the current change (see also: git help everyday)
-   add        Add file contents to the index
-   reset      Reset current HEAD to the specified state
-
-examine the history and state (see also: git help revisions)
-   log        Show commit logs
-   status     Show the working tree status
-
-   [...]
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
----
- help.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
-
-diff --git a/help.c b/help.c
-index 2072a87..8f72051 100644
---- a/help.c
-+++ b/help.c
-@@ -218,17 +218,39 @@ void list_commands(unsigned int colopts,
- 	}
- }
-=20
-+static int cmd_group_cmp(const void *elem1, const void *elem2)
-+{
-+	const struct cmdname_help *e1 =3D elem1;
-+	const struct cmdname_help *e2 =3D elem2;
-+
-+	if (e1->group < e2->group)
-+		return -1;
-+	if (e1->group > e2->group)
-+		return 1;
-+	return strcmp(e1->name, e2->name);
-+}
-+
- void list_common_cmds_help(void)
- {
- 	int i, longest =3D 0;
-+	int current_grp =3D -1;
-=20
- 	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
- 		if (longest < strlen(common_cmds[i].name))
- 			longest =3D strlen(common_cmds[i].name);
- 	}
-=20
--	puts(_("The most commonly used git commands are:"));
-+	qsort(common_cmds, ARRAY_SIZE(common_cmds),
-+		sizeof(common_cmds[0]), cmd_group_cmp);
-+
-+	puts(_("These are common Git commands used in various situations:"));
-+
- 	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
-+		if (common_cmds[i].group !=3D current_grp) {
-+			printf("\n%s\n", _(common_cmd_groups[common_cmds[i].group]));
-+			current_grp =3D common_cmds[i].group;
-+		}
-+
- 		printf("   %s   ", common_cmds[i].name);
- 		mput_char(' ', longest - strlen(common_cmds[i].name));
- 		puts(_(common_cmds[i].help));
---=20
-2.4.0.GIT
+PiBUaGlzIG1lc3NhZ2UgY2FuIGJlIGltcHJvdmVkIHRvIHNob3cgd2hhdCBlbnRyaWVzIGhhdmUg
+dGhpcyBwcm9ibGVtLg0KDQoJWWVzLCB0aGF0IHdvdWxkIGRlZmluaXRlbHkgYmUgYSBzdGFydC4g
+IDopDQoNCj4gQnV0IHRoZW4gSSBkb24ndCBzZWUgYW55IHdheSB0byByZWNvdmVyIHRoZSBpbmRl
+eCBtYW51YWxseS4gbHMtZmlsZXMNCj4gd2lsbCBkaWUgdG9vLiBQZXJoYXBzIHdlIHNob3VsZCBi
+ZSBnZW50bGUgaW4gdGhpcyBjYXNlOiBzaG93IHdhcm5pbmdzDQoNCglBY3R1YWxseSwgbHMtZmls
+ZXMgc3VjY2VlZHMgb24gbXkgYnJva2VuIGluZGV4Og0KDQokIGdpdCBscy1maWxlcyA+IC9kZXYv
+bnVsbA0KJCBlY2hvICQ/DQowDQoNCglDb3VsZCBJIGRvIHNvbWV0aGluZyB3aXRoICdnaXQgcmVh
+ZC10cmVlJyB0byBmb3JjZSBjcmVhdGlvbiBvZiBhIG5ldyB2YWxpZCBpbmRleD8gIEkgZ3Vlc3Mg
+J2dpdCBjbG9uZScgd291bGQgd29yayB0b28sIGV4Y2VwdCB0aGF0IEkgaGF2ZSAnZ2l0IHN2bicg
+bWV0YWRhdGEgdGhhdCBJJ2QgbmVlZCB0byBwcmVzZXJ2ZS4NCg0KPiBpbnN0ZWFkIG9mIGFib3J0
+aW5nIHRoZSBwcm9ncmFtIGFuZCBpbnRlcm5hbGx5IHJlb3JkZXIgdGhlIGluZGV4LiBJDQo+IHRo
+aW5rLCB1bmxlc3MgeW91IGhhdmUgbXVsdGlwbGUgZW50cmllcyB3aXRoIHRoZSBzYW1lIHN0YWdl
+LCB0aGUNCj4gcmVjb3ZlcmVkIGluZGV4IHNob3VsZCBydW4gd2VsbC4gVGhlIGJyb2tlbiBpbmRl
+eCBjb3VsZCBiZSByZW5hbWVkIHRvDQo+IGluZGV4LmJyb2tlbiBvciBzb21ldGhpbmcgZm9yIGxh
+dGVyIGFuYWx5c2lzLCBvciB3ZSBmb3JiaWQgd3JpdGluZyB0aGUNCj4gcmVvcmRlcmVkIGluZGV4
+IHRvIGRpc2suDQo+IA0KPiBIbW0/DQo+IA0KPiA+IHdyaXRlLXRyZWU6IGNvbW1hbmQgcmV0dXJu
+ZWQgZXJyb3I6IDEyOA0KPiA+DQo+ID4gICAgICAgICAnZ2l0IHN0YXR1cycgc2hvd3MgYSBmZXcg
+dW50cmFja2VkIGZpbGVzIGJ1dCBpcyBvdGhlcndpc2UgY2xlYW4uDQo+ID4NCj4gPiAgICAgICAg
+IEl0IGxvb2tzIGxpa2UgdGhpcyBjaGVjayB3YXMgaW50cm9kdWNlZCBpbg0KPiAxNTk5OWQwYmU4
+MTc5ZmI3YTJlNmVhZmI5MzFkMjVlZDY1ZGY1MGFhLCB3aXRoIHRoZSBzdW1tYXJ5DQo+ICJyZWFk
+X2luZGV4X2Zyb20oKTogY2F0Y2ggb3V0IG9mIG9yZGVyIGVudHJpZXMgd2hlbiByZWFkaW5nIGFu
+IGluZGV4IGZpbGUiDQo+IChmaXJzdCBhcHBlYXJpbmcgaW4gMi4yLjApLg0KPiA+DQo+ID4gICAg
+ICAgICBNYWlsaW5nIGxpc3QgZGlzY3Vzc2lvbiBsb29rZWQgbGlrZSBpdCBpbXBsaWNhdGVkIHRo
+aXJkLXBhcnR5DQo+IHRvb2xzLiAgSSBkb24ndCByZWNhbGwgcnVubmluZyBhbnkgb3RoZXIgdG9v
+bHMgb24gdGhpcyByZXBvOyBpdCBkb2Vzbid0IGRvDQo+IG11Y2ggZGF5LXRvLWRheSBvdGhlciB0
+aGFuIGEgbG9uZyBzZXJpZXMgb2YgJ2dpdCBzdm4gZmV0Y2gnZXMuICAoQnV0IGl0J3MNCj4gYmVl
+biBhcm91bmQgZm9yIGEgY291cGxlIG9mIHllYXJzLCBzbyB3aG8ga25vd3MuKQ0KPiA+DQo+ID4g
+ICAgICAgICBBdCBhbnkgcmF0ZSwgd2hhdCBjYW4gSSBkbyB0byByZWNvdmVyIGZyb20gdGhpcyBz
+aXR1YXRpb24/ICBJDQo+IHRyaWVkIHRvIGxvY2F0ZSBhIHBhdGggd2l0aCBtdWx0aXBsZSBpbmRl
+eCBlbnRyaWVzIGxpa2UgdGhpcywgYnV0IGdvdCBubw0KPiByZXN1bHRzOg0KPiA+DQo+ID4gJCBn
+aXQgbHMtZmlsZXMgLXMgfCBjdXQgLWYgMi0xMDAgfCBzb3J0IHwgdW5pcSAtYyB8IGdyZXAgLXYg
+J15bIFx0XSoxICcNCj4gPg0KPiA+ICAgICAgICAgKEkgb3JpZ2luYWxseSBwb3N0ZWQgb24gU08g
+YXQNCj4gaHR0cDovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8zMDI2NDgyNi87IEknbGwg
+dXBkYXRlIHRoYXQgd2l0aCBhbnkNCj4gc29sdXRpb25zIHRoYXQgY29tZSB1cCBoZXJlLCB0byBl
+YXNlIGZ1dHVyZSBnb29nbGluZy4pDQo+ID4gLS0NCj4gPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRo
+aXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0KPiA+IHRoZSBib2R5
+IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnDQo+ID4gTW9yZSBtYWpv
+cmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1s
+DQo+IA0KPiANCj4gDQo+IA0KPiAtLQ0KPiBEdXkNCg==
