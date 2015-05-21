@@ -1,110 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] for-each-ref: convert to ref-filter
-Date: Wed, 20 May 2015 16:50:29 -0700
-Message-ID: <xmqqvbfmlsfu.fsf@gitster.dls.corp.google.com>
-References: <555C88C2.8060902@gmail.com>
-	<1432127904-21070-3-git-send-email-karthik.188@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] git-verify-pack.txt: fix inconsistent spelling of
+ "packfile"
+Date: Wed, 20 May 2015 22:04:03 -0400
+Message-ID: <20150521020402.GA11619@peff.net>
+References: <1431845814-2541-1-git-send-email-ps@pks.im>
+ <xmqqwq04745w.fsf@gitster.dls.corp.google.com>
+ <20150519222427.GA994@peff.net>
+ <xmqqmw0znjfc.fsf@gitster.dls.corp.google.com>
+ <xmqqd21vnid6.fsf@gitster.dls.corp.google.com>
+ <20150520194906.GA8421@peff.net>
+ <xmqqzj4ylvto.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, matthieu.moy@grenoble-inp.fr,
-	christian.couder@gmail.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 01:50:40 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 21 04:04:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvDl1-0006Wi-0F
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 01:50:39 +0200
+	id 1YvFqL-00063T-CM
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 04:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753123AbbETXue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 19:50:34 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:33518 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752759AbbETXud (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 19:50:33 -0400
-Received: by igbpi8 with SMTP id pi8so2763098igb.0
-        for <git@vger.kernel.org>; Wed, 20 May 2015 16:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=7lHYok0UvgmibBjB0MAG+wKC+LgrBzYfxQSAJCnKPbg=;
-        b=PXhFeNNfEgWlqmSmU8V/YGHWDtIagsfZu4Hv5QN0uT1U68FDUWtEZb8PJuZM6uf1FF
-         3jnmRnPU9K8F/m09JeMyBk1wKzGqszoAfqkoOgQpmkhIhd9FL+EUYhV7Vv/dOXBhTI0b
-         SGIMeIlearJXw1C8F4h2Zn9epE86Xhjv50807cTXeRYEBopJWNQHEPS64z9E5yuZQnDP
-         Q5yJYx21FmZAQJzw2PrhqciJaC60h3oP3kdjSmAugFDj+W2awLp2H/x0AF5Dnu47h1Th
-         FT22+lIwdBTs8Uth6ERjzxRzA1YWNAtw5Ok293qyTe8vHJjSMAJf+CJw0N74owt4amls
-         IxNg==
-X-Received: by 10.107.133.154 with SMTP id p26mr33339ioi.7.1432165832524;
-        Wed, 20 May 2015 16:50:32 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:c1e1:e830:c078:d79d])
-        by mx.google.com with ESMTPSA id j20sm2759578igt.5.2015.05.20.16.50.31
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 20 May 2015 16:50:31 -0700 (PDT)
-In-Reply-To: <1432127904-21070-3-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Wed, 20 May 2015 18:48:23 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754864AbbEUCEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2015 22:04:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33606 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753452AbbEUCEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2015 22:04:06 -0400
+Received: (qmail 21502 invoked by uid 102); 21 May 2015 02:04:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 21:04:06 -0500
+Received: (qmail 30222 invoked by uid 107); 21 May 2015 02:04:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 22:04:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 May 2015 22:04:03 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqzj4ylvto.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269536>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Wed, May 20, 2015 at 03:37:23PM -0700, Junio C Hamano wrote:
 
-> convert 'for-each-ref' to use the common API provided by 'ref-filter'.
+> In any case, even though I merged these three to 'next', I think we
+> need to either revert 3/3 or do s/pack-file/packfile/ throughout the
+> pack-protocol documentation.  The original has something like this:
+> 
+>     The pack-file MUST NOT be sent if the only command used is 'delete'.
+> 
+>     A pack-file MUST be sent if either create or update command is used,
+>     even if the server already has all the necessary objects.  In this
+>     case the client MUST send an empty pack-file.   The only time this
+>     is likely to happen is if the client is creating
+>     a new branch or a tag that points to an existing obj-id.
+> 
+> and these are explicitly referring to what EBNF defines as "pack-file".
+> Changing them to "packfile" is simply wrong.
 
-Start a sentence with capital?
+Yeah, I agree they should agree with the EBNF. And my inclination is for
+"packfile", as it is refering to the concept of the on-the-wire packfile
+data (there is no "file ending in .pack" in this context).
 
-More importantly, the above is misleading, as if you invented a new
-ref-filter API and made for-each-ref build on that new
-infrastructure.
+Which I guess argues for a further patch.
 
-This series is in a form that is very unfriendly to reviewers.  The
-previous step did not introduce any callers to ref-filter, so for
-the purpose of review, it needs to be read together with this step
-anyway.
-
-And when reading these patches that way, what this half is really
-doing is to move the code from for-each-ref to ref-filter, but it
-does unnecessary or unrelated renaming of a handful of symbols.  It
-makes it even harder to compare and contrast the original code that
-was in the original for-each-ref and moved code that ends up in the
-new ref-filter.  Don't do that.
-
-You would probably want to organize them in these two steps instead:
-
- * Rename symbols as necessary while all the code is still in
-   for-each-ref. Do not create ref-filter in this step. Justify it
-   along the lines of "some symbol names were fine while they were
-   file scope static implementation detail of for-each-ref, but we
-   will make the machinery available from other commands by moving
-   it to a library-ish place, so rename X to foo_X to clarify that
-   this is about foo (which is now necessary as it is not specific
-   to for-each-ref"...
-
- * If you want to do other tweaks like wrapping refs & num_refs into
-   a single structure, do so while the code is still in
-   for-each-ref.  You can do that in the same patch as the above
-   (i.e. it's just part of preparatory step for a move).
-
- * Create ref-filter by _moving_ code from for-each-ref. Do not
-   touch these moved lines in this step. You would need to add
-   include at the top of for-each-ref and ref-filter, of course.
-
-
-> -	for_each_rawref(grab_single_ref, &cbdata);
-> -	refs = cbdata.grab_array;
-> -	num_refs = cbdata.grab_cnt;
-> +	refs.name_patterns = argv;
-> +	for_each_rawref(ref_filter_add, &refs);
-
-I think ref_filter_add() may be misnamed as a public API function.
-grab_single_ref() was OK only because it was an implementation
-dtail, but if you are making it public, the name should make it
-clear that it is meant to be used as a for_each_*ref() callback
-function.  Otherwise people may be tempted to add random parameter
-to it in the future, but the signature of that function is dictated
-by for_each_*ref() API.
+-Peff
