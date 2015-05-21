@@ -1,70 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email.perl: Add sendmail aliases support
-Date: Thu, 21 May 2015 14:38:37 -0700
-Message-ID: <xmqqwq01haqq.fsf@gitster.dls.corp.google.com>
-References: <3f1091c3de6e4e62037bc3c84c69026e33ee9707.1432229888.git.allenbh@gmail.com>
-	<xmqqioblisyk.fsf@gitster.dls.corp.google.com>
-	<CAJ80satMSCGydLRb5k=xpSqxXSBL=_T7nsHEz3jsuFV9MdmmtA@mail.gmail.com>
-	<CAPig+cQFana40n=SCBOC0P2v4Ss7Via3eS6Ms2rU=M9_V_3Osg@mail.gmail.com>
-	<CAJ80savEBYGKLJx8pN+4xsDodi0PJcV2YHJLukDKztg3YV__FQ@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git p4 clone - exclude file types
+Date: Thu, 21 May 2015 22:49:56 +0100
+Message-ID: <555E5304.5030502@diamand.org>
+References: <CAFcBi88K-HEn4JCVkONq3h4O9XS1FFX0OXch2d-VJ2bLEsPM0g@mail.gmail.com>	<555A52BD.1030802@diamand.org>	<CAFcBi89XwW48Goaap=OCVQ_CJrNa_hj5+DWtOHGOsrm6jMs-mw@mail.gmail.com>	<555C2E5D.70502@diamand.org> <CAFcBi8-SShvWLS7sRy3L=vF=OmQqmroK5NpcuA9N=0J2x4DEXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 23:38:57 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Users <git@vger.kernel.org>
+To: FusionX86 <fusionx86@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 23:50:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvYB5-00045V-GD
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 23:38:55 +0200
+	id 1YvYMV-0003F4-Hv
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 23:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756574AbbEUVin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 17:38:43 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:35495 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756533AbbEUVij (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 17:38:39 -0400
-Received: by igbyr2 with SMTP id yr2so21254944igb.0
-        for <git@vger.kernel.org>; Thu, 21 May 2015 14:38:39 -0700 (PDT)
+	id S1756789AbbEUVug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 17:50:36 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:35375 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756008AbbEUVua (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 17:50:30 -0400
+Received: by wicmx19 with SMTP id mx19so29038781wic.0
+        for <git@vger.kernel.org>; Thu, 21 May 2015 14:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=4U4ZzDZxYoh22HnsI5MUYz1Cjg4K40SANDevb+Q9Cok=;
-        b=CmtrIGlU28XbFNsJwrNqnCVeJrMra1PoeaTwDyp4hmXmCB6QSQO3kuamx6gBT34x5l
-         PGPkFAH+b6Z5rbmz09m0yp5l/e9lJp/iJsPXs6fJEJiFV2iNIkWp9TW/E6Ho1HF6emNx
-         SpfYYWC/8MwdwicX9zN7Ied4GmuOwU1tWDum220KcemhTqNvJ2MJVbp4SpljqsSyAr9Y
-         aYjFgGfaR80BD/eUO97MHF32Hd+3xO7jhoh69i/QeWLotN6g8G0XeNCsbodl0IlQTWaq
-         NKDr5s3qPL19vouE4G0zJaXmwJLFuDYg5Qkcm725012K4hOLaK9lR2uDGanu7IqIRztL
-         87TQ==
-X-Received: by 10.50.61.200 with SMTP id s8mr1082458igr.7.1432244318929;
-        Thu, 21 May 2015 14:38:38 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:19:f810:32d8:695f])
-        by mx.google.com with ESMTPSA id c20sm73874ioc.40.2015.05.21.14.38.38
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 21 May 2015 14:38:38 -0700 (PDT)
-In-Reply-To: <CAJ80savEBYGKLJx8pN+4xsDodi0PJcV2YHJLukDKztg3YV__FQ@mail.gmail.com>
-	(Allen Hubbe's message of "Thu, 21 May 2015 17:30:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=qJLLJQsR3AE3d+nh6S1dmSPMtzrDUeBsoW5Xrsknv7Q=;
+        b=BDDO9ov24B9QUWmYA4swYojxIVA7V0WfSoOKsAv4FIZf0KIca0lwvWhpcqH8UqR0O2
+         n5nVyDVuiCOKCcS3EnPOj/GxE2wE7XvAbeNXY1pg6xABkU1DJM0YdnZyOjs+giVpVEi9
+         e1ah8tNBXhCBD/pvPuW/G0MODBz9lKKEFIUMY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=qJLLJQsR3AE3d+nh6S1dmSPMtzrDUeBsoW5Xrsknv7Q=;
+        b=OLq5+VGjCwH6LFnAaB0dOvp9lf+89GSyfq6lM33G3N3kLnqm5qIwsvysVWjNDVXnFj
+         sae9vF30JQllmLHeSUqWwWDwDxxcqI29LRZxpc7Mtlb08fEglZ3lF8Aba8kpuZfL3j6l
+         krs3S4lbRKWKJRKXXiCS79QLVnoj2BLFsOe4ZDVTBGl+NBb+r7QO4J0nX5fUYTsJC9TP
+         ZSwN8sGa66Xffp3YbqM8R5hX0xEaPVWqFcLidtnNBlrrI3s1OkuIL7EQJLAOwTp8LjWV
+         /jskSBMwgPu/GxglC1oBH0cKFxGRtW5fbyd1/fe09Aj9uoNl3AGkRLhtCceAdz8qhAYI
+         eAZg==
+X-Gm-Message-State: ALoCoQkvDZlDP+SqNB27B15qkjaiwEsv1NlGZ1qqRgL21XTRnUdxasLMuVHUX0Akn9/X9t160no+
+X-Received: by 10.194.81.234 with SMTP id d10mr9194523wjy.84.1432245029163;
+        Thu, 21 May 2015 14:50:29 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by mx.google.com with ESMTPSA id o5sm4835199wia.0.2015.05.21.14.50.27
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 May 2015 14:50:28 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <CAFcBi8-SShvWLS7sRy3L=vF=OmQqmroK5NpcuA9N=0J2x4DEXA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269667>
 
-Allen Hubbe <allenbh@gmail.com> writes:
+On 21/05/15 21:49, FusionX86 wrote:
+> I thought about that, but no. The box I'm running git-p4 on has the
+> following specs:
+>
+> CentOS 6.6 64bit
+> 1 CPU
+> 8GB RAM
+> 8GB Swap
 
-> Those are good points.  Maybe I shouldn't even mention sendmail at
-> all, not in the name of the format, and not in the commit message.
-> What name would be a good name for this format?
+Can you post the output, with "-v" added?
 
-"simple"?
+$ git-p4 clone //depot/some/dir -v
 
-And if you are going to define such a format, then I do not think
-you would even need to pretend that someday you might support
-line folding (hence there is no need for "eh, excuse me, you seem to
-have wanted to express a long folded line here, but I do not support
-it (yet)" warning messages).
+Also, what is your p4d server version?
+
+$ p4 info
+
+A quick test just cloning a repo with 4 files of 256MB each seems fine, 
+FWIW.
+
+>
+> It is also on the same physical network as the Perforce server. I
+> remember seeing someone else complain about this, but I can't find the
+> article/blog now.
+>
+>
+> On Wed, May 20, 2015 at 12:49 AM, Luke Diamand <luke@diamand.org> wrote:
+>> On 19/05/15 08:38, FusionX86 wrote:
+>>>
+>>> Thanks Luke, looks like this does work for excluding files when using
+>>> git p4. Great!
+>>>
+>>> Unrelated question...
+>>>
+>>> While using git p4 I have noticed that most of the time the clone/sync
+>>> operations hang and I have to keep retrying. The Perforce depot I'm
+>>> currently working with is larger than I'd like and has a lot of binary
+>>> files which might be the cause. The point it gets to in the clone/sync
+>>> is always random and doesn't ever stop on the same files or file
+>>> types. Sometimes it'll die soon after starting, but other times it
+>>> almost completes and then dies. If I keep retrying, it will eventually
+>>> complete. I haven't been able to narrow down the cause, but I do
+>>> notice that the git-fast-import stops right as the clone/sync dies.
+>>> I'm wondering if git is overwhelmed and terminates. Have you ever seen
+>>> this? Any suggestions?
+>>
+>>
+>> Running out of memory?
+>>
+>> Is this on a 32bit or 64bit system? How much virtual memory do you have?
+>>
+>> Luke
+>>
