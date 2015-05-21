@@ -1,143 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v11 5/5] help: respect new common command grouping
-Date: Thu, 21 May 2015 14:04:58 -0400
-Message-ID: <CAPig+cQ0ExDCoSU_P02on0U+8WXbyGbZecK-4vrUVFp1Mo11hA@mail.gmail.com>
-References: <1432229962-21405-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1432229962-21405-6-git-send-email-sebastien.guimmara@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 07/14] remote.c: introduce branch_get_upstream helper
+Date: Thu, 21 May 2015 11:07:33 -0700
+Message-ID: <xmqqbnhdkdne.fsf@gitster.dls.corp.google.com>
+References: <20150521044429.GA5857@peff.net> <20150521044528.GG23409@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 20:05:04 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 21 20:07:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvUq8-0007cd-Fj
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 20:05:04 +0200
+	id 1YvUsf-0000ng-5f
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 20:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755748AbbEUSE7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2015 14:04:59 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:33073 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755334AbbEUSE6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 May 2015 14:04:58 -0400
-Received: by iebgx4 with SMTP id gx4so14313363ieb.0
-        for <git@vger.kernel.org>; Thu, 21 May 2015 11:04:58 -0700 (PDT)
+	id S1755232AbbEUSHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 14:07:37 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:36063 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751569AbbEUSHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 14:07:36 -0400
+Received: by igbpi8 with SMTP id pi8so16649372igb.1
+        for <git@vger.kernel.org>; Thu, 21 May 2015 11:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=m7x7m+uhs02EjAEUl2OduIYjv2hLlTW1eikqeUmihek=;
-        b=d5HLCs1M2i/vtivKO+VDbHVIkhjdgVmUzBYjY+XOAP/8f27zFL9NEAxulncIMYFUV/
-         U0hYbqHltUvv47v7WATsIvq9NRj/mR2Fe6NMqDeOpLHTNZQRO/PJfmn3tfS4HYMAEEr2
-         nh3YOkfPGrjm6dMylj7Xb+54aMF0Z1qP1YwJg1rc68yr8OUqO+wziq8zR4By0qOtwI5r
-         vnV3TwTGe35bc15oy86IyMOF1loN/M53lCJiFVR5jr02N3ikcHINmDncB8kTEFH9acrd
-         829bOs9hhdNvNc5bxrpAKRNd32RwfIUY5RaU3TUW61MYdXdkVhzFEQ0fAHTbS4COW6Gz
-         oIcw==
-X-Received: by 10.107.31.134 with SMTP id f128mr5085148iof.19.1432231498083;
- Thu, 21 May 2015 11:04:58 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 21 May 2015 11:04:58 -0700 (PDT)
-In-Reply-To: <1432229962-21405-6-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: WwDo7XlKnG9AM8VYvq0pN28GrGk
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=qqM3DclJLkBS6EPsOSdKvbLkmqO3nwQ0IIHj+zEscms=;
+        b=tAJER7xooXIID4mef0MHL0cU3gY0R0v2kaTam+L5H7bk2Nqq4mVhuPwUGMpH3qHTI1
+         uQ348U3V2bEzxXQ5dXQz7Z205I4UKagUWDh6Sva1k6LCTx13FV6OFlfsWPthF9FoVgY3
+         GwD96eKsr611u3W+17mUA37RDGYYTKVrtdoUIzdayZunzoSb5oKznG5WbLmwniFDAkV7
+         /RgRX2psCUyB0tBOrxRkm/S29dc/mZp6r3SE3Qe2W95dyuDgr065WdiuUbj1WSlX2qXK
+         uUdQoAHbEcaDYhCxAs6X4E/J+CuvMlSvZKNxJWGPL7ewzi04Ic/Xua8DO3x0UN8WTvIr
+         rQAg==
+X-Received: by 10.107.131.141 with SMTP id n13mr5129929ioi.74.1432231655706;
+        Thu, 21 May 2015 11:07:35 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:c1e1:e830:c078:d79d])
+        by mx.google.com with ESMTPSA id l30sm15417420iod.12.2015.05.21.11.07.34
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 21 May 2015 11:07:35 -0700 (PDT)
+In-Reply-To: <20150521044528.GG23409@peff.net> (Jeff King's message of "Thu,
+	21 May 2015 00:45:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269632>
 
-On Thu, May 21, 2015 at 1:39 PM, S=C3=A9bastien Guimmara
-<sebastien.guimmara@gmail.com> wrote:
-> 'git help' shows common commands in alphabetical order:
->
-> The most commonly used git commands are:
->    add        Add file contents to the index
->    bisect     Find by binary search the change that introduced a bug
->    branch     List, create, or delete branches
->    checkout   Checkout a branch or paths to the working tree
->    clone      Clone a repository into a new directory
->    commit     Record changes to the repository
->    [...]
->
-> without any indication of how commands relate to high-level
-> concepts or each other. Revise the output to explain their relationsh=
-ip
-> with the typical Git workflow:
->
-> The most commonly used git commands are:
+Jeff King <peff@peff.net> writes:
 
-The above line in the commit message does not match the actual output:
+> All of the information needed to find the @{upstream} of a
+> branch is included in the branch struct, but callers have to
+> navigate a series of possible-NULL values to get there.
+> Let's wrap that logic up in an easy-to-read helper.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-    "These are common Git commands used in various situations:"
+This step in the whole series is a gem.  I cannot believe that we
+were content having to repeat that "branch->merge[0]->dst if we can
+dereference down to that level" this many times.  Nice clean-up.
 
-> start a working area (see also: git help tutorial)
->    clone      Clone a repository into a new directory
->    init       Create an empty Git repository or reinitialize [...]
->
-> work on the current change (see also: git help everyday)
->    add        Add file contents to the index
->    reset      Reset current HEAD to the specified state
->
-> examine the history and state (see also: git help revisions)
->    log        Show commit logs
->    status     Show the working tree status
->
->    [...]
->
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
-> ---
-> diff --git a/help.c b/help.c
-> index 2072a87..8f72051 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -218,17 +218,39 @@ void list_commands(unsigned int colopts,
->         }
->  }
->
-> +static int cmd_group_cmp(const void *elem1, const void *elem2)
-> +{
-> +       const struct cmdname_help *e1 =3D elem1;
-> +       const struct cmdname_help *e2 =3D elem2;
-> +
-> +       if (e1->group < e2->group)
-> +               return -1;
-> +       if (e1->group > e2->group)
-> +               return 1;
-> +       return strcmp(e1->name, e2->name);
-> +}
-> +
->  void list_common_cmds_help(void)
->  {
->         int i, longest =3D 0;
-> +       int current_grp =3D -1;
->
->         for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
->                 if (longest < strlen(common_cmds[i].name))
->                         longest =3D strlen(common_cmds[i].name);
->         }
->
-> -       puts(_("The most commonly used git commands are:"));
-> +       qsort(common_cmds, ARRAY_SIZE(common_cmds),
-> +               sizeof(common_cmds[0]), cmd_group_cmp);
-> +
-> +       puts(_("These are common Git commands used in various situati=
-ons:"));
-> +
->         for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
-> +               if (common_cmds[i].group !=3D current_grp) {
-> +                       printf("\n%s\n", _(common_cmd_groups[common_c=
-mds[i].group]));
-> +                       current_grp =3D common_cmds[i].group;
-> +               }
-> +
->                 printf("   %s   ", common_cmds[i].name);
->                 mput_char(' ', longest - strlen(common_cmds[i].name))=
-;
->                 puts(_(common_cmds[i].help));
-> --
-> 2.4.0.GIT
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 258fe2f..1eb6215 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -123,14 +123,12 @@ static int branch_merged(int kind, const char *name,
+>  
+>  	if (kind == REF_LOCAL_BRANCH) {
+>  		struct branch *branch = branch_get(name);
+> +		const char *upstream = branch_get_upstream(branch);
+>  		unsigned char sha1[20];
+>  
+> -		if (branch &&
+> -		    branch->merge &&
+> -		    branch->merge[0] &&
+> -		    branch->merge[0]->dst &&
+> +		if (upstream &&
+>  		    (reference_name = reference_name_to_free =
+> -		     resolve_refdup(branch->merge[0]->dst, RESOLVE_REF_READING,
+> +		     resolve_refdup(upstream, RESOLVE_REF_READING,
+>  				    sha1, NULL)) != NULL)
+>  			reference_rev = lookup_commit_reference(sha1);
