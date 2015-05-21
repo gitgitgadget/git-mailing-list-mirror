@@ -1,131 +1,168 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 02/14] remote.c: refactor setup of branch->merge list
-Date: Thu, 21 May 2015 00:45:09 -0400
-Message-ID: <20150521044509.GB23409@peff.net>
+Subject: [PATCH v3 03/14] remote.c: drop "remote" pointer from "struct branch"
+Date: Thu, 21 May 2015 00:45:13 -0400
+Message-ID: <20150521044512.GC23409@peff.net>
 References: <20150521044429.GA5857@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 21 06:45:19 2015
+X-From: git-owner@vger.kernel.org Thu May 21 06:45:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvIMB-0008Jx-7y
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 06:45:19 +0200
+	id 1YvIMF-0008Mn-Mg
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 06:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167AbbEUEpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 00:45:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33666 "HELO cloud.peff.net"
+	id S1753189AbbEUEpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 00:45:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33671 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752988AbbEUEpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 00:45:12 -0400
-Received: (qmail 2258 invoked by uid 102); 21 May 2015 04:45:12 -0000
+	id S1753181AbbEUEpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 00:45:15 -0400
+Received: (qmail 2271 invoked by uid 102); 21 May 2015 04:45:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 23:45:12 -0500
-Received: (qmail 31137 invoked by uid 107); 21 May 2015 04:45:13 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 23:45:15 -0500
+Received: (qmail 31142 invoked by uid 107); 21 May 2015 04:45:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 May 2015 00:45:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 May 2015 00:45:09 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 May 2015 00:45:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 May 2015 00:45:13 -0400
 Content-Disposition: inline
 In-Reply-To: <20150521044429.GA5857@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269544>
 
-When we call branch_get() to lookup or create a "struct
-branch", we make sure the "merge" field is filled in so that
-callers can access it. But the conditions under which we do
-so are a little confusing, and can lead to two funny
-situations:
+When we create each branch struct, we fill in the
+"remote_name" field from the config, and then fill in the
+actual "remote" field (with a "struct remote") based on that
+name. However, it turns out that nobody really cares about
+the latter field. The only two sites that access it at all
+are:
 
-  1. If there's no branch.*.remote config, we cannot provide
-     branch->merge (because it is really just an application
-     of branch.*.merge to our remote's refspecs). But
-     branch->merge_nr may be non-zero, leading callers to be
-     believe they can access branch->merge (e.g., in
-     branch_merge_matches and elsewhere).
+  1. git-merge, which uses it to notice when the branch does
+     not have a remote defined. But we can easily replace this
+     with looking at remote_name instead.
 
-     It doesn't look like this can cause a segfault in
-     practice, as most code paths dealing with merge config
-     will bail early if there is no remote defined. But it's
-     a bit of a dangerous construct.
+  2. remote.c itself, when setting up the @{upstream} merge
+     config. But we don't need to save the "remote" in the
+     "struct branch" for that; we can just look it up for
+     the duration of the operation.
 
-     We can fix this by setting merge_nr to "0" explicitly
-     when we realize that we have no merge config. Note that
-     merge_nr also counts the "merge_name" fields (which we
-     _do_ have; that's how merge_nr got incremented), so we
-     will "lose" access to them, in the sense that we forget
-     how many we had. But no callers actually care; we use
-     merge_name only while iteratively reading the config,
-     and then convert it to the final "merge" form the first
-     time somebody calls branch_get().
+So there is no need to have both fields; they are redundant
+with each other (the struct remote contains the name, or you
+can look up the struct from the name). It would be nice to
+simplify this, especially as we are going to add matching
+pushremote config in a future patch (and it would be nice to
+keep them consistent).
 
-  2. We set up the "merge" field every time branch_get is
-     called, even if it has already been done. This leaks
-     memory.
+So which one do we keep and which one do we get rid of?
 
-     It's not a big deal in practice, since most code paths
-     will access only one branch, or perhaps each branch
-     only one time. But if you want to be pathological, you
-     can leak arbitrary memory with:
+If we had a lot of callers accessing the struct, it would be
+more efficient to keep it (since you have to do a lookup to
+go from the name to the struct, but not vice versa). But we
+don't have a lot of callers; we have exactly one, so
+efficiency doesn't matter. We can decide this based on
+simplicity and readability.
 
-       yes @{upstream} | head -1000 | git rev-list --stdin
-
-     We can fix this by skipping setup when branch->merge is
-     already non-NULL.
-
-In addition to those two fixes, this patch pushes the "do we
-need to setup merge?" logic down into set_merge, where it is
-a bit easier to follow.
+And the meaning of the struct value is somewhat unclear. Is
+it always the remote matching remote_name? If remote_name is
+NULL (i.e., no per-branch config), does the struct fall back
+to the "origin" remote, or is it also NULL? These questions
+will get even more tricky with pushremotes, whose fallback
+behavior is more complicated. So let's just store the name,
+which pretty clearly represents the branch.*.remote config.
+Any lookup or fallback behavior can then be implemented in
+helper functions.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- remote.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ Documentation/technical/api-remote.txt | 4 ----
+ builtin/merge.c                        | 2 +-
+ remote.c                               | 7 ++++---
+ remote.h                               | 1 -
+ 4 files changed, 5 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/technical/api-remote.txt b/Documentation/technical/api-remote.txt
+index 5d245aa..2cfdd22 100644
+--- a/Documentation/technical/api-remote.txt
++++ b/Documentation/technical/api-remote.txt
+@@ -97,10 +97,6 @@ It contains:
+ 
+ 	The name of the remote listed in the configuration.
+ 
+-`remote`::
+-
+-	The struct remote for that remote.
+-
+ `merge_name`::
+ 
+ 	An array of the "merge" lines in the configuration.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index f89f60e..85c54dc 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -933,7 +933,7 @@ static int setup_with_upstream(const char ***argv)
+ 
+ 	if (!branch)
+ 		die(_("No current branch."));
+-	if (!branch->remote)
++	if (!branch->remote_name)
+ 		die(_("No remote for the current branch."));
+ 	if (!branch->merge_nr)
+ 		die(_("No default upstream defined for the current branch."));
 diff --git a/remote.c b/remote.c
-index bec8b31..ac17e66 100644
+index ac17e66..c298a43 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1636,6 +1636,19 @@ static void set_merge(struct branch *ret)
+@@ -1632,6 +1632,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 
+ static void set_merge(struct branch *ret)
+ {
++	struct remote *remote;
+ 	char *ref;
  	unsigned char sha1[20];
  	int i;
+@@ -1649,11 +1650,13 @@ static void set_merge(struct branch *ret)
+ 		return;
+ 	}
  
-+	if (!ret)
-+		return; /* no branch */
-+	if (ret->merge)
-+		return; /* already run */
-+	if (!ret->remote_name || !ret->merge_nr) {
-+		/*
-+		 * no merge config; let's make sure we don't confuse callers
-+		 * with a non-zero merge_nr but a NULL merge
-+		 */
-+		ret->merge_nr = 0;
-+		return;
-+	}
++	remote = remote_get(ret->remote_name);
 +
  	ret->merge = xcalloc(ret->merge_nr, sizeof(*ret->merge));
  	for (i = 0; i < ret->merge_nr; i++) {
  		ret->merge[i] = xcalloc(1, sizeof(**ret->merge));
-@@ -1660,11 +1673,9 @@ struct branch *branch_get(const char *name)
+ 		ret->merge[i]->src = xstrdup(ret->merge_name[i]);
+-		if (!remote_find_tracking(ret->remote, ret->merge[i]) ||
++		if (!remote_find_tracking(remote, ret->merge[i]) ||
+ 		    strcmp(ret->remote_name, "."))
+ 			continue;
+ 		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]),
+@@ -1673,8 +1676,6 @@ struct branch *branch_get(const char *name)
  		ret = current_branch;
  	else
  		ret = make_branch(name, 0);
--	if (ret && ret->remote_name) {
-+	if (ret && ret->remote_name)
- 		ret->remote = remote_get(ret->remote_name);
--		if (ret->merge_nr)
--			set_merge(ret);
--	}
-+	set_merge(ret);
+-	if (ret && ret->remote_name)
+-		ret->remote = remote_get(ret->remote_name);
+ 	set_merge(ret);
  	return ret;
  }
+diff --git a/remote.h b/remote.h
+index 02d66ce..4bb6672 100644
+--- a/remote.h
++++ b/remote.h
+@@ -203,7 +203,6 @@ struct branch {
+ 	const char *refname;
  
+ 	const char *remote_name;
+-	struct remote *remote;
+ 
+ 	const char **merge_name;
+ 	struct refspec **merge;
 -- 
 2.4.1.528.g00591e3
