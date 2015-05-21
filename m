@@ -1,70 +1,113 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] git-verify-pack.txt: fix inconsistent spelling of
- "packfile"
-Date: Wed, 20 May 2015 22:04:03 -0400
-Message-ID: <20150521020402.GA11619@peff.net>
-References: <1431845814-2541-1-git-send-email-ps@pks.im>
- <xmqqwq04745w.fsf@gitster.dls.corp.google.com>
- <20150519222427.GA994@peff.net>
- <xmqqmw0znjfc.fsf@gitster.dls.corp.google.com>
- <xmqqd21vnid6.fsf@gitster.dls.corp.google.com>
- <20150520194906.GA8421@peff.net>
- <xmqqzj4ylvto.fsf@gitster.dls.corp.google.com>
+Subject: [PATCH/RFC 0/3] --seed as an alias for --dissociate --reference
+Date: Thu, 21 May 2015 00:14:35 -0400
+Message-ID: <20150521041435.GA18978@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 21 04:04:19 2015
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 21 06:14:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvFqL-00063T-CM
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 04:04:17 +0200
+	id 1YvHsZ-0007SD-Je
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 06:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864AbbEUCEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2015 22:04:07 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33606 "HELO cloud.peff.net"
+	id S1753751AbbEUEOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 00:14:39 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33621 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753452AbbEUCEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2015 22:04:06 -0400
-Received: (qmail 21502 invoked by uid 102); 21 May 2015 02:04:06 -0000
+	id S1750996AbbEUEOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 00:14:38 -0400
+Received: (qmail 551 invoked by uid 102); 21 May 2015 04:14:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 21:04:06 -0500
-Received: (qmail 30222 invoked by uid 107); 21 May 2015 02:04:07 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 23:14:38 -0500
+Received: (qmail 30724 invoked by uid 107); 21 May 2015 04:14:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 22:04:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 May 2015 22:04:03 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 May 2015 00:14:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 May 2015 00:14:35 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqzj4ylvto.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269537>
 
-On Wed, May 20, 2015 at 03:37:23PM -0700, Junio C Hamano wrote:
+In a thread a few months ago[1], we discussed the idea that the
+"--dissociate --reference=foo" interface was somewhat awkward for
+somebody who just wants to optimize their clone. This is mostly due to
+the historical development of the features. The logical interface for
+somebody who just wants a faster clone is something like
 
-> In any case, even though I merged these three to 'next', I think we
-> need to either revert 3/3 or do s/pack-file/packfile/ throughout the
-> pack-protocol documentation.  The original has something like this:
-> 
->     The pack-file MUST NOT be sent if the only command used is 'delete'.
-> 
->     A pack-file MUST be sent if either create or update command is used,
->     even if the server already has all the necessary objects.  In this
->     case the client MUST send an empty pack-file.   The only time this
->     is likely to happen is if the client is creating
->     a new branch or a tag that points to an existing obj-id.
-> 
-> and these are explicitly referring to what EBNF defines as "pack-file".
-> Changing them to "packfile" is simply wrong.
+   git clone --optimize-my-clone-from=foo.git git://example.com/bar.git
 
-Yeah, I agree they should agree with the EBNF. And my inclination is for
-"packfile", as it is refering to the concept of the on-the-wire packfile
-data (there is no "file ending in .pack" in this context).
+But we got stuck in that thread on coming up with a decent name for the
+option. Having just read through it, I think a succinct name for the
+idea is "seed". That is, we seed the clone with objects from another
+repository.
 
-Which I guess argues for a further patch.
+That thread also brought up the idea that we do not necessarily need to
+seed from a local repository; we could do something like:
+
+  1. Fetch from the seed repo into refs/seed/*
+
+  2. Fetch from the real clone source; the fetch is optimized by the
+     presence of refs/seed/*.
+
+  3. Delete refs/seed/*. Optionally repack to drop any objects needed
+     only by the seed refs.
+
+This is awkward with the "--reference" interface, because its
+implementation is publicly tied to the concept of alternates. Whereas
+"--seed" is about the end result you want; we can implement it using
+alternates or with a clone, depending on where the repo is located.
+
+There are a few open issues with this series:
+
+  1. Assuming that "seed" is a reasonable verb for this concept, is
+     "--seed=<repo>" OK for the option?  Would "--seed-from=<repo>" be
+     better? (Also, the response "bleh, seed is a terrible name" is
+     fine, too, but only if accompanied by your own suggestion :) ).
+
+  2. My main goal here is making the concept easier to explain to users.
+     The documentation in the third patch explains "--seed" as an alias
+     for the other options, which probably isn't helping much. It might
+     make sense to have a patch 4/3 that explains "--seed" first, and
+     then explains "--reference" as "like --seed, but keep the
+     relationship after the clone". Or maybe they should just get their
+     own descriptions entirely.
+
+  3. We can't dissociate from a specific alternate, so using "--seed"
+     implies that all "--reference" options get dissociated. In this
+     series, I issue a warning in that case.  But that would be easily
+     solved if "--seed" used the fetch strategy described above, even
+     for local clones (which would probably still be quite fast if we
+     took clone's usual hard-link shortcut instead of actually fetching
+     from a local clone).
+
+I don't have particular plans to implement generic "--seed" from remotes
+anytime soon. I think this takes us a step in the right direction
+interface-wise, and it does introduce a succinct concept and option. But
+the abstraction does leak (e.g., in that it implies "--dissociate"). So
+one response might be "yes, this is a good building block, and later we
+can extend --seed; how it works is an implementation detail". But
+equally valid would be "eh, I like the name and the concept, but this
+implementation is too hacky; let's wait for somebody to implement it for
+real". Hence the RFC label.
+
+The patches are:
+
+  [1/3]: clone: use OPT_STRING_LIST for --reference
+  [2/3]: clone: reorder --dissociate and --reference options
+  [3/3]: clone: add `--seed` shorthand
+
+The third one is the interesting one, and the first two are nearby
+cleanups. Whether we pursue the third one or not, I think the first two
+are worth taking by themselves.
 
 -Peff
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/264178/focus=264234
