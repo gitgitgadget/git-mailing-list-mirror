@@ -1,111 +1,131 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/3] l10: de.po: grammar fix
-Date: Thu, 21 May 2015 22:27:53 +0200
-Message-ID: <CAN0XMOL8vPBpJi=LuQBDsDjm68mjvMJXOGr8aTqemcCaB4FY1Q@mail.gmail.com>
-References: <cover.1432025365.git.git@drmicha.warpmail.net>
-	<2b4460dbf6abb15c4cd94d4c5c335cc9e8059ee7.1432025365.git.git@drmicha.warpmail.net>
-	<CAGZ79kYPhTK=tymEcB_YsYdNZvt0=sA4-Hon1SLwujV39W7fmA@mail.gmail.com>
-	<555C4C14.4040305@drmicha.warpmail.net>
+From: Philippe De Muyter <phdm@macq.eu>
+Subject: Re: identical hashes on two branches, but holes in git log
+Date: Thu, 21 May 2015 22:37:57 +0200
+Message-ID: <20150521203757.GA2711@frolo.macqel>
+References: <20150519132958.GA21130@frolo.macqel> <xmqq617oa75l.fsf@gitster.dls.corp.google.com> <20150519214719.GA12732@frolo.macqel> <xmqqiobop67k.fsf@gitster.dls.corp.google.com> <20150521071518.GA8675@frolo.macqel> <B2DD947EDB314A2C878567932ECB974E@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 21 22:28:07 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu May 21 22:38:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvX4U-0001En-9n
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 22:28:02 +0200
+	id 1YvXEF-0007gC-Mw
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 22:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbbEUU15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 16:27:57 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:36452 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932124AbbEUU1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 16:27:54 -0400
-Received: by wizk4 with SMTP id k4so27230613wiz.1
-        for <git@vger.kernel.org>; Thu, 21 May 2015 13:27:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1/j/a4yMT2/qlPnvbFlP43GLgCyP6tUkRHur4a9undE=;
-        b=xaSbMEk4X9bUDKdL9lKBC+b7DRdz8koD2GyHMRqjRzk2Ei9JDtzlASzDbYrQSX5yW/
-         OvFmqtNFeO9pnq0Vzx48vP0Z6lZ8NTlrSrM1CIKCI9UxLv4YCZfOnUL4pcFx7TUSwIiZ
-         SHxRGbDjUtnrvbOkMi1iPIyxll6kWUnFzvvnGf5C9wNL47pV3x+xbw9Z1wNzaPLe3t+I
-         +BhXHWzAgquRrvwh6iBfUXdoSn+rZfbgZ6vMl83Fr+KOLKGb4nF6rcG1/6QvhnuGKwMF
-         Q75/99tTTEXQzsjrfmw2ZRIdNNGIqIJwGMwrMNfKBHs/c2py/DoBFFZ78hZJRb3VyLyN
-         y5+w==
-X-Received: by 10.195.18.1 with SMTP id gi1mr8685064wjd.0.1432240073784; Thu,
- 21 May 2015 13:27:53 -0700 (PDT)
-Received: by 10.194.72.6 with HTTP; Thu, 21 May 2015 13:27:53 -0700 (PDT)
-In-Reply-To: <555C4C14.4040305@drmicha.warpmail.net>
+	id S1756544AbbEUUiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 16:38:04 -0400
+Received: from smtp2.macqel.be ([109.135.2.61]:60036 "EHLO smtp2.macqel.be"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756164AbbEUUiC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 16:38:02 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by smtp2.macqel.be (Postfix) with ESMTP id 7C524130CFD;
+	Thu, 21 May 2015 22:37:59 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at macqel.be
+Received: from smtp2.macqel.be ([127.0.0.1])
+	by localhost (mail.macqel.be [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hiYOClrgF+cW; Thu, 21 May 2015 22:37:57 +0200 (CEST)
+Received: from frolo.macqel.be (frolo.macqel [10.1.40.73])
+	by smtp2.macqel.be (Postfix) with ESMTP id CDB6D130CE5;
+	Thu, 21 May 2015 22:37:57 +0200 (CEST)
+Received: by frolo.macqel.be (Postfix, from userid 1000)
+	id AFA3FDF06BC; Thu, 21 May 2015 22:37:57 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <B2DD947EDB314A2C878567932ECB974E@PhilipOakley>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269658>
 
-2015-05-20 10:55 GMT+02:00 Michael J Gruber <git@drmicha.warpmail.net>:
-> Stefan Beller venit, vidit, dixit 19.05.2015 23:46:
->> On Tue, May 19, 2015 at 1:51 AM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->>> ---
->>>  po/de.po | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, May 21, 2015 at 08:58:35PM +0100, Philip Oakley wrote:
+> From: "Philippe De Muyter" <phdm@macq.eu>
+> To: "Junio C Hamano" <gitster@pobox.com>
+> Cc: <git@vger.kernel.org>; "Jeff King" <peff@peff.net>; "John Keeping" 
+> <john@keeping.me.uk>
+> Sent: Thursday, May 21, 2015 8:15 AM
+> Subject: Re: identical hashes on two branches, but holes in git log
+>
+>
+>> On Tue, May 19, 2015 at 03:12:31PM -0700, Junio C Hamano wrote:
+>>> Philippe De Muyter <phdm@macq.eu> writes:
 >>>
->>> diff --git a/po/de.po b/po/de.po
->>> index 2feaec1..25258e3 100644
->>> --- a/po/de.po
->>> +++ b/po/de.po
->>> @@ -10478,7 +10478,7 @@ msgstr ""
->>>  #: git-am.sh:142
->>>  msgid "Using index info to reconstruct a base tree..."
->>>  msgstr ""
->>> -"Verwende Informationen aus der Staging-Area, um einen Basisverzeichnis "
->>> +"Verwende Informationen aus der Staging-Area, um ein Basisverzeichnis "
->>>  "nachzustellen"
+>>> > On Tue, May 19, 2015 at 09:01:10AM -0700, Junio C Hamano wrote:
+>>> >> Philippe De Muyter <phdm@macq.eu> writes:
+>>> >>
+>>> >> > Trying to understand, I have eventually done "git log" on my >> > 
+>>> branch and
+>>> >> > on v3.15 with the following commands :
+>>> >> >
+>>> >> > git log v3.15 --full-history --decorate=short | grep '^commit' > >> 
+>>> > /tmp/3.15.commits
+>>> >> > git log --full-history --decorate=short | grep '^commit' > >> > 
+>>> /tmp/mybranch.commits
+>>> >>
+>>> >> Either
+>>> >>
+>>> >>     git log --oneline v3.15..HEAD ;# show what I have not in >> theirs
+>>> >>
+>>> >> or
+>>> >>
+>>> >>     gitk v3.15...HEAD ;# show our differences graphically
+>>> >
+>>> > This shows the commits in my branch starting from the most recent > 
+>>> common point,
+>>> > thus my commits, but I see differences in the files not explained > by 
+>>> my commits,
+>>> > but by the fact that many older commits (between v3.13 and v3.14) > are 
+>>> missing on
+>>> > my branch, but still in both branches I have a commit called v3.14 > 
+>>> with the
+>>> > same hash.  Is that normal ?
+>>>
+>>> Sorry, cannot parse.  Neither of the above would show files, so just
+>>> about the place where you start talking about "I see differences in
+>>> the files", you lost me.
 >>
->> Waere es sinnvoll Staging-Area in Staging-Bereich umzubenennen?
->> "Staging" ist wohl ein eher fester Term mit dem man den index/staging area
->> assoziert, aber "Area" 'doesn't ring a bell for me'.
+>> Look at the other part of the thread, with the discussion with Jeff and 
+>> John
+>>
+>> The light has come, and what I understand is:
+>>
+>> don't trust the default (ordering) mode of 'git log' :(
 >
-> Staging-Bereich would be Denglish - half German and halb Englisch.
 >
-> In any case, the term staging area is highly confusing in this context:
-> It really is the index, and in this case the user has not "staged
-> anything for commit" in the index. The index is used for storing
-> information during the 3way merge. This is why we refused to replace
-> "index/cache" by "staging area" in the original git documentation.
+> Surely the question now should be "What should the man page say that would 
+> have explained the default ordering mode in an understandable way, rather 
+> than the current misunderstanding?".
 >
-> The de l10n team decided to use "Staging-Area" as the translation for
-> "index" (as far as I can see), and therefore I kept this term: It is
-> important to translate the same concept in the same way consistently in
-> all places. Changing the translation of "index" would be a major
-> decision and a major patch. (I'd vote for "Index".)
+> What 'ordering' were you 'trusting' (presuming) anyway? The current default 
+> mode doesn't actually say anything about the order anyway (as you've 
+> discovered).
+
+I have used 'git log' on the current 'master' branch of the linux kernel
+to find at which point in the history a commit - that I know is disruptive
+for my work and that I know by name because I have seen it passing on a
+mailing list - had been applied.
+
+'git log -decorate=short' showed it happening between v3.14-rc1 and v3.14-rc2,
+but after
+
+	git checkout v3.14
+
+I did not find the effects of the commit in the files that should have been
+affected by the commit.
+
+I expected at least that a commit listed between two tags on the same branch
+was really applied to that branch between those two tags.
+
+Philippe
 >
-
-The initial version of the glossary of git.git's de.po has been developed in
-thread [1], where "Index" was part of, initially. We ended up only using
-"Staging-Area" for "index", because people might understand "Index"
-as a book's index or database's index [2].
-
-Git itself uses the term "staging area" *very* rarely. "index" would be a
-Git term we don't translate, but there's also the German word "Index"
-and hence we might confuse users. However, I still think it may only be
-confusing for absolute newbies, but give a benefit for users who knows
-about git's index. I'll send a patch for this change.
-
-Thanks
-
-[1]
-http://thread.gmane.org/gmane.comp.version-control.git/224132/
-[2]
-http://article.gmane.org/gmane.comp.version-control.git/224974
-
-> Michael
+>>
+>> I surmise this happens only when 'git merge' has been used.
+>>
+> --
+> Philip 
