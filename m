@@ -1,138 +1,89 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] doc: fix inconsistent spelling of "packfile"
-Date: Thu, 21 May 2015 09:27:05 +0200
-Message-ID: <1432193225-3502-1-git-send-email-ps@pks.im>
-References: <xmqqr3qaledb.fsf@gitster.dls.corp.google.com>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 21 09:27:52 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 8/8] t5520: check reflog action in fast-forward merge
+Date: Thu, 21 May 2015 16:07:05 +0800
+Message-ID: <CACRoPnRHAA7w8iJ-GQGPt11Hnm29o6wgP5bEG_q531XmcK-P1Q@mail.gmail.com>
+References: <1431955978-17890-1-git-send-email-pyokagan@gmail.com>
+	<1431955978-17890-9-git-send-email-pyokagan@gmail.com>
+	<8e51ff8168d050cb2f8fedd4464b2f7b@www.dscho.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 21 10:08:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvKtT-0000P5-IO
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 09:27:51 +0200
+	id 1YvLWL-0006Wc-18
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 10:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752941AbbEUH1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 03:27:47 -0400
-Received: from sender1.zohomail.com ([74.201.84.157]:24425 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751962AbbEUH1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 03:27:46 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=from:to:cc:subject:date:message-id:in-reply-to:references; 
-  b=eGOGTXGU6OuOpX4ZIlg7pW9zjB6jTdjY8UxUvzez0RcKDwv080S86l6NNs6G3e4g0rkNMP9BVBQj
-    nyUHqiT0PLntShlzPhCjQrBI36e6ohY0rBr7Z+UHCAr3y5FeTrLDpghASWIUg9PLy27je5VKYEhi
-    W5C+dlYuAkhqqzQrHos=  
-Received: from localhost (x55b3850b.dyn.telefonica.de [85.179.133.11]) by mx.zohomail.com
-	with SMTPS id 1432193263041432.1117025650791; Thu, 21 May 2015 00:27:43 -0700 (PDT)
-X-Mailer: git-send-email 2.4.1
-In-Reply-To: <xmqqr3qaledb.fsf@gitster.dls.corp.google.com>
-X-ZohoMail: Ss  SS_10 UW1 iCHF_KNW_WHT_EXT  SGR3_0_08055_4
-X-ZohoMail-Owner: <1432193225-3502-1-git-send-email-ps@pks.im>+zmo_0_<ps@pks.im>
-X-ZohoMail-Sender: 85.179.133.11
-X-Zoho-Virus-Status: 2
+	id S1755187AbbEUIHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 04:07:55 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:33998 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754940AbbEUIHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 04:07:07 -0400
+Received: by laat2 with SMTP id t2so96677254laa.1
+        for <git@vger.kernel.org>; Thu, 21 May 2015 01:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5Co2+juXHf4MKf27lILPwUM2ZofQbCE3K43xhB+r33E=;
+        b=TvPFRTBU9HkBLaXsN+RC6wP4N++NYhGI+TcRoqHjBcx4DnfLIO51HiQXUiSNe7EFdE
+         qSlKXovhs0EQYEdHTdjivVdahrd078SQpYSh9mm3vOAQ02DUnJQ+4c/I02vQrXUY3THS
+         p1NcRheA0NB1rAiIBd0Qt0sXjc9hT7rhZ5VoLxtnghMyj8IHPzGzXEn2r55hseWWrhoQ
+         kWZFfMe/2zcg5vcv9AVfXdkiwoc2RYNlZyWiHzAMyb1jn/zghNoRD3nygY8zHDF95ZZg
+         kOvOlfl61I5ZZmZv1r9c7GRz4w/5FIOBxQxJw8BFbOeReDUBIMbCUdXdqcerHrWw7lkA
+         XPfw==
+X-Received: by 10.112.142.232 with SMTP id rz8mr1143056lbb.74.1432195625466;
+ Thu, 21 May 2015 01:07:05 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 21 May 2015 01:07:05 -0700 (PDT)
+In-Reply-To: <8e51ff8168d050cb2f8fedd4464b2f7b@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269566>
 
-Fix remaining instances where "pack-file" is used instead of
-"packfile".
+Hi,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-This patch now also fixes instances where we refer to EBNF-style
-command line parameters, as discussed by Junio and Peff.
+On Mon, May 18, 2015 at 11:20 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Paul,
+>
+> On 2015-05-18 15:32, Paul Tan wrote:
+>
+>> @@ -95,7 +94,11 @@ test_expect_success 'test . as a remote' '
+>>       git checkout copy &&
+>>       test "$(cat file)" = file &&
+>>       git pull &&
+>> -     test "$(cat file)" = updated
+>> +     test "$(cat file)" = updated &&
+>> +     git reflog -1 >reflog.actual &&
+>> +     sed "s/$_x05[0-9a-f]*/OBJID/g" reflog.actual >reflog.fuzzy &&
+>
+> Actually, let's use "s/^[0-9a-f]*/OBJID/" instead: you only want to replace the first few characters.
 
- Documentation/git-index-pack.txt          | 10 +++++-----
- Documentation/git-unpack-objects.txt      |  2 +-
- Documentation/technical/pack-protocol.txt |  4 ++--
- Documentation/user-manual.txt             |  2 +-
- 4 files changed, 9 insertions(+), 9 deletions(-)
+Did you mean "s/^$_x05[0-9a-f]*/OBJID/"? (with "$_x05" expanding to
+'[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]' from test-lib.sh). If not,
+then it would match even if there was no SHA1 hash.
 
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 7a4e055..49621da 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -9,9 +9,9 @@ git-index-pack - Build pack index file for an existing packed archive
- SYNOPSIS
- --------
- [verse]
--'git index-pack' [-v] [-o <index-file>] <pack-file>
-+'git index-pack' [-v] [-o <index-file>] <packfile>
- 'git index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
--                 [<pack-file>]
-+		  [<packfile>]
- 
- 
- DESCRIPTION
-@@ -37,11 +37,11 @@ OPTIONS
- 
- --stdin::
- 	When this flag is provided, the pack is read from stdin
--	instead and a copy is then written to <pack-file>. If
--	<pack-file> is not specified, the pack is written to
-+	instead and a copy is then written to <packfile>. If
-+	<packfile> is not specified, the pack is written to
- 	objects/pack/ directory of the current Git repository with
- 	a default name determined from the pack content.  If
--	<pack-file> is not specified consider using --keep to
-+	<packfile> is not specified consider using --keep to
- 	prevent a race condition between this process and
- 	'git repack'.
- 
-diff --git a/Documentation/git-unpack-objects.txt b/Documentation/git-unpack-objects.txt
-index 894d20b..07d4329 100644
---- a/Documentation/git-unpack-objects.txt
-+++ b/Documentation/git-unpack-objects.txt
-@@ -9,7 +9,7 @@ git-unpack-objects - Unpack objects from a packed archive
- SYNOPSIS
- --------
- [verse]
--'git unpack-objects' [-n] [-q] [-r] [--strict] < <pack-file>
-+'git unpack-objects' [-n] [-q] [-r] [--strict] < <packfile>
- 
- 
- DESCRIPTION
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 812d857..fc09c63 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -465,7 +465,7 @@ contain all the objects that the server will need to complete the new
- references.
- 
- ----
--  update-request    =  *shallow ( command-list | push-cert ) [pack-file]
-+  update-request    =  *shallow ( command-list | push-cert ) [packfile]
- 
-   shallow           =  PKT-LINE("shallow" SP obj-id LF)
- 
-@@ -491,7 +491,7 @@ references.
- 		      *PKT-LINE(gpg-signature-lines LF)
- 		      PKT-LINE("push-cert-end" LF)
- 
--  pack-file         = "PACK" 28*(OCTET)
-+  packfile          = "PACK" 28*(OCTET)
- ----
- 
- If the receiving end does not support delete-refs, the sending end MUST
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 68978f5..7147519 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -3164,7 +3164,7 @@ objects.  (Note that linkgit:git-tag[1] can also be used to create
- "lightweight tags", which are not tag objects at all, but just simple
- references whose names begin with `refs/tags/`).
- 
--[[pack-files]]
-+[[packfiles]]
- How Git stores objects efficiently: pack files
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--- 
-2.4.1
+But yes, without the "^" there will very likely be false positives.
+Thanks for catching.
+
+>> @@ -106,7 +109,11 @@ test_expect_success 'the default remote . should
+>> not break explicit pull' '
+>>       git reset --hard HEAD^ &&
+>>       test "$(cat file)" = file &&
+>>       git pull . second &&
+>> -     test "$(cat file)" = modified
+>> +     test "$(cat file)" = modified &&
+>> +     git reflog -1 >reflog.actual &&
+>> +     sed "s/$_x05[0-9a-f]*/OBJID/g" reflog.actual >reflog.fuzzy &&
+>
+> Same here.
+
+Regards,
+Paul
