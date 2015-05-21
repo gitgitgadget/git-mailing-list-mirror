@@ -1,59 +1,334 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Troubleshoot clone issue to NFS.
-Date: Thu, 21 May 2015 21:38:30 +0700
-Message-ID: <CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
-References: <7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com>
- <CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
+From: adatoccpptranslator@free.fr
+Subject: Issue when merging a subtree whose a file has been removed
+Date: Thu, 21 May 2015 17:40:05 +0200 (CEST)
+Message-ID: <1191356813.419782668.1432222805047.JavaMail.root@zimbra41-e7.priv.proxad.net>
+References: <160239201.419722978.1432221938533.JavaMail.root@zimbra41-e7.priv.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: steve.norman@thomsonreuters.com
-X-From: git-owner@vger.kernel.org Thu May 21 16:39:08 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 21 17:40:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvRcq-00021M-44
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 16:39:08 +0200
+	id 1YvSZx-0007ia-0X
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 17:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755507AbbEUOjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 10:39:04 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:38368 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753638AbbEUOjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 10:39:01 -0400
-Received: by igcau1 with SMTP id au1so10113378igc.1
-        for <git@vger.kernel.org>; Thu, 21 May 2015 07:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=q6NtS3B2ZgRiR9p47AjdwSUNQlu2DOUb4ADBEf5/pHc=;
-        b=zoN/cIWNTPgZtLBv48drR6ePGpEdPJzUG9lhQTIlNl+KtJIXIbzMgHbcH+4MBRBAIp
-         rvtesZjreDw2+CqV2fqNX7oPX6fHJYmzA9Oo35EzqmL5ZYeQykHx6Kpv2gIupylyjVUR
-         SwZXwqt6atWtc17BCzMFIISq7Si86pIMrAePEaFSfL1zbhQrADVOWZov97ahuYsIkWkD
-         FX6GXazmnQFxmUjHv4BrSsX3BOWi9x3DGZC1MW9FfGPw7t435p0RFZWG6yzYHb3U8SPP
-         1qK2LnCaBeQ+TQ+Y4picX7Y0U9k6dtg1vfOJWxn0F3Vm5sMuVKsXnAlKaCI5UeaKdKar
-         sUuA==
-X-Received: by 10.107.128.30 with SMTP id b30mr3705062iod.84.1432219140814;
- Thu, 21 May 2015 07:39:00 -0700 (PDT)
-Received: by 10.107.181.136 with HTTP; Thu, 21 May 2015 07:38:30 -0700 (PDT)
-In-Reply-To: <CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
+	id S1755989AbbEUPkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 11:40:07 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:29573 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755424AbbEUPkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 11:40:06 -0400
+X-Greylist: delayed 10526 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 May 2015 11:40:06 EDT
+Received: from zimbra41-e7.priv.proxad.net (unknown [172.20.243.191])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id DDB9D9400E1
+	for <git@vger.kernel.org>; Thu, 21 May 2015 17:36:39 +0200 (CEST)
+In-Reply-To: <160239201.419722978.1432221938533.JavaMail.root@zimbra41-e7.priv.proxad.net>
+X-Originating-IP: [37.163.199.1]
+X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
+X-Authenticated-User: adatoccpptranslator@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269599>
 
-On Thu, May 21, 2015 at 9:31 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> In case an object is not found pack directory
-> is re-read again, which might cause some increased load on nfs.
-> has_sha1_file() not finding the object should not happen often..
+Hi all,
 
-That last statement is probably very wrong, but I have no time to test
-this now. In index-pack, there is a has_sha1_file() for file collision
-test. That call on a fresh clone would fail for _every_ object in the
-(new) pack and the cost of reprepare pack files could be sky high...
--- 
-Duy
+I want to use subtrees in one of my projects and I use method desribed here https://git-scm.com/book/en/v1/Git-Tools-Subtree-Merging
+I`m facing issues when merging subtree in my subproject in case some files have been removed from the subtree.
+
+I`m running git 1.9.1 on Kubuntu  14.04
+sub_project is integrated as subtree in my main project. I modify a file and remove an other file from my sub_project, commit the modification, go in my main_project, checkout the sub_project integration branch, pull the modification.
+I see the modification of the modified file and the deletion of the removed file
+I checkout the master branch of my main project.
+git diff-tree -p sub_project_branch indicate that one file has been modified and one files has been deleted
+then I perform a merge of my subtree integration branch into master branch.
+
+Here are the corresponding commands:
+#!/bin/sh
+
+# Creating project that will be used as subtree
+$ mkdir sub_project
+$ cd sub_project
+$ git init
+$ touch toto
+$ echo "-----------------" >> toto
+$ echo "- toto file">> toto
+$ echo "-----------------" >> toto
+$ touch tata
+$ echo "-----------------" >> tata
+$ echo "- tata file">> tata
+$ echo "-----------------" >> tata
+$ git add toto tata
+$ git commit -m "Initial commit"
+$ echo "echo toto" >> toto
+$ echo "echo tata" >> tata
+$ git commit -am "Add content to file"
+$ cd ..
+
+# Creating main project that will use the subtree
+$ mkdir main_project
+$ cd main_project
+$ git init
+$ touch tutu
+$ echo "-----------------" >> tutu
+$ echo "- tutu file">> tutu
+$ echo "-----------------" >> tutu
+$ git add tutu
+$ git commit -m "Add tutu file"
+# Creation of subtree
+$ mkdir sources
+$ git remote add sub_project_remote ../sub_project
+$ git fetch sub_project_remote
+$ git checkout -b sub_project_branch sub_project_remote/master
+$ git checkout master
+$ git read-tree --prefix=sources/sub_project/ -u sub_project_branch
+$ git commit -am "Integration of subtree"
+
+$ echo "------------------------"
+------------------------
+$ echo "Subtree well integrated "
+Subtree well integrated 
+$ ls *
+tutu
+
+sources:
+sub_project
+$ ls sources/sub_project
+tata
+toto
+$ echo "------------------------"
+------------------------
+
+# Go in subtree to remove tata file
+$ cd ../sub_project
+$ echo "#EOF" >> toto
+$ git add toto
+$ git rm tata
+$ git commit -m "Add EOF and remove tata"
+
+# go back in main project to integrate subtree modifications
+$ cd ../main_project
+$ git checkout sub_project_branch
+$ git fetch sub_project_remote
+$ git pull
+
+$ echo "------------------------"
+------------------------
+$ echo "Check that tata has been removed "
+Check that tata has been removed 
+$ ls *
+toto
+$ echo "------------------------"
+------------------------
+
+$ git checkout master
+$ git diff-tree -p sub_project_branch
+diff --git a/tata b/tata
+deleted file mode 100644
+index a4f4cc4..0000000
+--- a/tata
++++ /dev/null
+@@ -1,4 +0,0 @@
+------------------
+-- tata file
+------------------
+-echo tata
+diff --git a/toto b/toto
+index 8dfbe14..98ae756 100644
+--- a/toto
++++ b/toto
+@@ -2,3 +2,4 @@
+ - toto file
+ -----------------
+ echo toto
++#EOF
+
+$ git merge -v --squash --no-commit -X subtree=sources/sub_project -X theirs sub_project_branch
+
+$ echo "------------------------"
+------------------------
+$ echo "Check after merge that tata has been removed "
+Check after merge that tata has been removed 
+$ ls sources/*
+tata
+toto
+$ echo "------------------------"
+------------------------
+$ git commit -m "Second integration from subtree"
+$ cd ..
+#EOF
+
+I was expecting to see the in master the modification of the file and the deletion of the other file but the removed file is still there and tracked. The modification of file has been done but It looks like the deletion has not been "merged".
+
+The behaviour I expect is the same that the one illustrated in command sequence below which perform exactly the same actions excepted they are done in a branch instead of a subtree:
+toto should have been modified, tata should no more be there or at least no more be tracked
+#!/bin/sh
+$ git init
+$ touch toto
+$ echo "-----------------" >> toto
+$ echo "- toto file">> toto
+$ echo "-----------------" >> toto
+$ touch tata
+$ echo "-----------------" >> tata
+$ echo "- tata file">> tata
+$ echo "-----------------" >> tata
+$ git add toto tata
+$ git commit -m "Initial commit"
+$ echo "echo toto" >> toto
+$ echo "echo tata" >> tata
+$ git commit -am "Add content to file"
+$ git checkout -b headers
+$ echo "#EOF" >> toto
+$ git add toto
+$ git rm tata
+$ git commit -m "Add EOF and remove tata"
+$ git checkout master
+$ touch tutu
+$ echo "-----------------" >> tutu
+$ echo "- tutu file">> tutu
+$ echo "-----------------" >> tutu
+$ git add tutu
+$ git commit -m "Add tutu file"
+$ git merge -m "Merge from headers branch" headers
+Merge made by the 'recursive' strategy.
+ tata | 4 ----
+ toto | 1 +
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+ delete mode 100644 tata
+[master a9cad6d] Add EOF
+ 1 file changed, 1 insertion(+)
+$ echo "#EOF" >> tutu
+$ git add tutu
+$ git commit -m "Add EOF"
+$ ls
+toto
+tutu
+#EOF
+
+
+According to what I see it seems that the subtree merge is doing a kind of copy instead of a real merge meaning that if source file disappear then the corresponding target file is untouched instead of being deleted.
+Is this behaviour correct or is it my understanding of what subtree merge should do that is wrong ?
+
+
+Thanks by advance
+Julien
+
+PS : as my subtree prefix has 2 levels I also test with a single level like in subtree tutorial to ensure this was not the cause of my issue but the problem remains the same. the single level test is performed by the following command sequence:
+
+#!/bin/sh
+
+# Creating project that will be used as subtree
+$ mkdir sub_project
+$ cd sub_project
+$ git init
+$ touch toto
+$ echo "-----------------" >> toto
+$ echo "- toto file">> toto
+$ echo "-----------------" >> toto
+$ touch tata
+$ echo "-----------------" >> tata
+$ echo "- tata file">> tata
+$ echo "-----------------" >> tata
+$ git add toto tata
+$ git commit -m "Initial commit"
+$ echo "echo toto" >> toto
+$ echo "echo tata" >> tata
+$ git commit -am "Add content to file"
+$ cd ..
+
+# Creating main project that will use the subtree
+$ mkdir main_project
+$ cd main_project
+$ git init
+$ touch tutu
+$ echo "-----------------" >> tutu
+$ echo "- tutu file">> tutu
+$ echo "-----------------" >> tutu
+$ git add tutu
+$ git commit -m "Add tutu file"
+# Creation of subtree
+$ git remote add sub_project_remote ../sub_project
+$ git fetch sub_project_remote
+$ git checkout -b sub_project_branch sub_project_remote/master
+$ git checkout master
+$ git read-tree --prefix=sub_project/ -u sub_project_branch
+$ git commit -am "Integration of subtree"
+
+$ echo "------------------------"
+------------------------
+$ echo "Subtree well integrated "
+Subtree well integrated
+$ ls *
+tutu
+
+sub_project:
+tata
+toto
+$ echo "------------------------"
+------------------------
+
+# Go in subtree to remove tata file
+$ cd ../sub_project
+$ echo "#EOF" >> toto
+$ git add toto
+$ git rm tata
+$ git commit -m "Add EOF and remove tata"
+
+# go back in main project to integrate subtree modifications
+$ cd ../main_project
+$ git checkout sub_project_branch
+$ git fetch sub_project_remote
+$ git pull
+
+$ echo "------------------------"
+------------------------
+$ echo "Check that tata has been removed "
+Check that tata has been removed 
+$ ls *
+toto
+$ echo "------------------------"
+------------------------
+
+$ git checkout master
+$ git diff-tree -p sub_project_branch
+diff --git a/tata b/tata
+deleted file mode 100644
+index a4f4cc4..0000000
+--- a/tata
++++ /dev/null
+@@ -1,4 +0,0 @@
+------------------
+-- tata file
+------------------
+-echo tata
+diff --git a/toto b/toto
+index 8dfbe14..98ae756 100644
+--- a/toto
++++ b/toto
+@@ -2,3 +2,4 @@
+ - toto file
+ -----------------
+ echo toto
++#EOF
+$ git merge -v --squash --no-commit -s subtree -X theirs sub_project_branch
+
+$ echo "------------------------"
+------------------------
+$ echo "Check after merge that tata has been removed "
+Check after merge that tata has been removed 
+$ ls *
+tutu
+
+sub_project:
+tata
+toto
+$ echo "------------------------"
+------------------------
+$ git commit -m "Second integration from subtree"
+$ cd ..
+#EOF
