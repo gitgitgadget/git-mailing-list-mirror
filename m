@@ -1,86 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 07/14] remote.c: introduce branch_get_upstream helper
-Date: Thu, 21 May 2015 11:07:33 -0700
-Message-ID: <xmqqbnhdkdne.fsf@gitster.dls.corp.google.com>
-References: <20150521044429.GA5857@peff.net> <20150521044528.GG23409@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 21 20:07:43 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/2] fix post-rewrite hook with 'git rebase -i --exec'
+Date: Thu, 21 May 2015 20:13:00 +0200
+Message-ID: <1432231982-31314-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr,
+	remi.lespinet@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 21 20:13:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvUsf-0000ng-5f
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 20:07:41 +0200
+	id 1YvUyE-0004OZ-Jn
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 20:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755232AbbEUSHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 14:07:37 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:36063 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569AbbEUSHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 14:07:36 -0400
-Received: by igbpi8 with SMTP id pi8so16649372igb.1
-        for <git@vger.kernel.org>; Thu, 21 May 2015 11:07:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=qqM3DclJLkBS6EPsOSdKvbLkmqO3nwQ0IIHj+zEscms=;
-        b=tAJER7xooXIID4mef0MHL0cU3gY0R0v2kaTam+L5H7bk2Nqq4mVhuPwUGMpH3qHTI1
-         uQ348U3V2bEzxXQ5dXQz7Z205I4UKagUWDh6Sva1k6LCTx13FV6OFlfsWPthF9FoVgY3
-         GwD96eKsr611u3W+17mUA37RDGYYTKVrtdoUIzdayZunzoSb5oKznG5WbLmwniFDAkV7
-         /RgRX2psCUyB0tBOrxRkm/S29dc/mZp6r3SE3Qe2W95dyuDgr065WdiuUbj1WSlX2qXK
-         uUdQoAHbEcaDYhCxAs6X4E/J+CuvMlSvZKNxJWGPL7ewzi04Ic/Xua8DO3x0UN8WTvIr
-         rQAg==
-X-Received: by 10.107.131.141 with SMTP id n13mr5129929ioi.74.1432231655706;
-        Thu, 21 May 2015 11:07:35 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:c1e1:e830:c078:d79d])
-        by mx.google.com with ESMTPSA id l30sm15417420iod.12.2015.05.21.11.07.34
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 21 May 2015 11:07:35 -0700 (PDT)
-In-Reply-To: <20150521044528.GG23409@peff.net> (Jeff King's message of "Thu,
-	21 May 2015 00:45:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755612AbbEUSNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 14:13:22 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53040 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755170AbbEUSNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 14:13:21 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4LIDBPk013549
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 21 May 2015 20:13:12 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4LIDEmU011277;
+	Thu, 21 May 2015 20:13:14 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1YvUy1-0008Ek-Rb; Thu, 21 May 2015 20:13:13 +0200
+X-Mailer: git-send-email 2.4.1.171.g060e6ae.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 21 May 2015 20:13:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4LIDBPk013549
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1432836793.61179@fOCRF0KbpFZ/A9SAX3B2+g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269633>
 
-Jeff King <peff@peff.net> writes:
+Matthieu Moy (2):
+  rebase -i: demonstrate incorrect behavior of post-rewrite hook with
+    exec
+  rebase -i: fix post-rewrite hook with failed exec command
 
-> All of the information needed to find the @{upstream} of a
-> branch is included in the branch struct, but callers have to
-> navigate a series of possible-NULL values to get there.
-> Let's wrap that logic up in an easy-to-read helper.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+ git-rebase--interactive.sh   | 10 +++++-----
+ t/t5407-post-rewrite-hook.sh | 17 +++++++++++++++++
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
-This step in the whole series is a gem.  I cannot believe that we
-were content having to repeat that "branch->merge[0]->dst if we can
-dereference down to that level" this many times.  Nice clean-up.
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 258fe2f..1eb6215 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -123,14 +123,12 @@ static int branch_merged(int kind, const char *name,
->  
->  	if (kind == REF_LOCAL_BRANCH) {
->  		struct branch *branch = branch_get(name);
-> +		const char *upstream = branch_get_upstream(branch);
->  		unsigned char sha1[20];
->  
-> -		if (branch &&
-> -		    branch->merge &&
-> -		    branch->merge[0] &&
-> -		    branch->merge[0]->dst &&
-> +		if (upstream &&
->  		    (reference_name = reference_name_to_free =
-> -		     resolve_refdup(branch->merge[0]->dst, RESOLVE_REF_READING,
-> +		     resolve_refdup(upstream, RESOLVE_REF_READING,
->  				    sha1, NULL)) != NULL)
->  			reference_rev = lookup_commit_reference(sha1);
+-- 
+2.4.1.171.g060e6ae.dirty
