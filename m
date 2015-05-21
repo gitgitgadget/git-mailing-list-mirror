@@ -1,166 +1,219 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 14/14] for-each-ref: accept "%(push)" format
-Date: Thu, 21 May 2015 00:45:55 -0400
-Message-ID: <20150521044555.GN23409@peff.net>
+Subject: [PATCH v3 12/14] sha1_name: implement @{push} shorthand
+Date: Thu, 21 May 2015 00:45:47 -0400
+Message-ID: <20150521044547.GL23409@peff.net>
 References: <20150521044429.GA5857@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 21 06:46:07 2015
+X-From: git-owner@vger.kernel.org Thu May 21 06:46:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvIMw-0000OW-2k
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 06:46:06 +0200
+	id 1YvIMo-0000Iz-W9
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 06:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613AbbEUEp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 00:45:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33727 "HELO cloud.peff.net"
+	id S1753432AbbEUEpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 00:45:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33716 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753466AbbEUEp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 00:45:58 -0400
-Received: (qmail 2459 invoked by uid 102); 21 May 2015 04:45:58 -0000
+	id S932125AbbEUEpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 00:45:49 -0400
+Received: (qmail 2430 invoked by uid 102); 21 May 2015 04:45:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 23:45:58 -0500
-Received: (qmail 31340 invoked by uid 107); 21 May 2015 04:45:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 May 2015 23:45:49 -0500
+Received: (qmail 31294 invoked by uid 107); 21 May 2015 04:45:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 May 2015 00:45:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 May 2015 00:45:55 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 May 2015 00:45:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 May 2015 00:45:47 -0400
 Content-Disposition: inline
 In-Reply-To: <20150521044429.GA5857@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269555>
 
-Just as we have "%(upstream)" to report the "@{upstream}"
-for each ref, this patch adds "%(push)" to match "@{push}".
-It supports the same tracking format modifiers as upstream
-(because you may want to know, for example, which branches
-have commits to push).
+In a triangular workflow, each branch may have two distinct
+points of interest: the @{upstream} that you normally pull
+from, and the destination that you normally push to. There
+isn't a shorthand for the latter, but it's useful to have.
+
+For instance, you may want to know which commits you haven't
+pushed yet:
+
+  git log @{push}..
+
+Or as a more complicated example, imagine that you normally
+pull changes from origin/master (which you set as your
+@{upstream}), and push changes to your own personal fork
+(e.g., as myfork/topic). You may push to your fork from
+multiple machines, requiring you to integrate the changes
+from the push destination, rather than upstream. With this
+patch, you can just do:
+
+  git rebase @{push}
+
+rather than typing out the full name.
+
+The heavy lifting is all done by branch_get_push; here we
+just wire it up to the "@{push}" syntax.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-for-each-ref.txt |  6 ++++++
- builtin/for-each-ref.c             | 17 +++++++++++++++--
- t/t6300-for-each-ref.sh            | 13 ++++++++++++-
- 3 files changed, 33 insertions(+), 3 deletions(-)
+ Documentation/revisions.txt | 25 ++++++++++++++++++
+ sha1_name.c                 | 14 +++++++++-
+ t/t1514-rev-parse-push.sh   | 63 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 101 insertions(+), 1 deletion(-)
+ create mode 100755 t/t1514-rev-parse-push.sh
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 4240875..7f8d9a5 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -97,6 +97,12 @@ upstream::
- 	or "=" (in sync).  Has no effect if the ref does not have
- 	tracking information associated with it.
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 0796118..d85e303 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -98,6 +98,31 @@ some output processing may assume ref names in UTF-8.
+   `branch.<name>.merge`).  A missing branchname defaults to the
+   current one.
  
-+push::
-+	The name of a local ref which represents the `@{push}` location
-+	for the displayed ref. Respects `:short`, `:track`, and
-+	`:trackshort` options as `upstream` does. Produces an empty
-+	string if no `@{push}` ref is configured.
++'<branchname>@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
++  The suffix '@\{push}' reports the branch "where we would push to" if
++  `git push` were run while `branchname` was checked out (or the current
++  'HEAD' if no branchname is specified). Since our push destination is
++  in a remote repository, of course, we report the local tracking branch
++  that corresponds to that branch (i.e., something in 'refs/remotes/').
+++
++Here's an example to make it more clear:
+++
++------------------------------
++$ git config push.default current
++$ git config remote.pushdefault myfork
++$ git checkout -b mybranch origin/master
 +
- HEAD::
- 	'*' if HEAD matches current ref (the checked out branch), ' '
- 	otherwise.
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 345d8dd..6847400 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -74,6 +74,7 @@ static struct {
- 	{ "contents:body" },
- 	{ "contents:signature" },
- 	{ "upstream" },
-+	{ "push" },
- 	{ "symref" },
- 	{ "flag" },
- 	{ "HEAD" },
-@@ -669,6 +670,16 @@ static void populate_value(struct refinfo *ref)
- 			refname = branch_get_upstream(branch, NULL);
- 			if (!refname)
- 				continue;
-+		} else if (starts_with(name, "push")) {
-+			const char *branch_name;
-+			if (!skip_prefix(ref->refname, "refs/heads/",
-+					 &branch_name))
-+				continue;
-+			branch = branch_get(branch_name);
++$ git rev-parse --symbolic-full-name @{upstream}
++refs/remotes/origin/master
 +
-+			refname = branch_get_push(branch, NULL);
-+			if (!refname)
-+				continue;
- 		} else if (starts_with(name, "color:")) {
- 			char color[COLOR_MAXLEN] = "";
++$ git rev-parse --symbolic-full-name @{push}
++refs/remotes/myfork/mybranch
++------------------------------
+++
++Note in the example that we set up a triangular workflow, where we pull
++from one location and push to another. In a non-triangular workflow,
++'@\{push}' is the same as '@\{upstream}', and there is no need for it.
++
+ '<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+   A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+diff --git a/sha1_name.c b/sha1_name.c
+index 506e0c9..1096943 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -435,6 +435,12 @@ static inline int upstream_mark(const char *string, int len)
+ 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+ }
  
-@@ -714,7 +725,8 @@ static void populate_value(struct refinfo *ref)
- 				refname = shorten_unambiguous_ref(refname,
- 						      warn_ambiguous_refs);
- 			else if (!strcmp(formatp, "track") &&
--				 starts_with(name, "upstream")) {
-+				 (starts_with(name, "upstream") ||
-+				  starts_with(name, "push"))) {
- 				char buf[40];
++static inline int push_mark(const char *string, int len)
++{
++	const char *suffix[] = { "@{push}" };
++	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
++}
++
+ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
+ static int interpret_nth_prior_checkout(const char *name, int namelen, struct strbuf *buf);
  
- 				if (stat_tracking_info(branch, &num_ours,
-@@ -736,7 +748,8 @@ static void populate_value(struct refinfo *ref)
+@@ -482,7 +488,8 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
+ 					nth_prior = 1;
+ 					continue;
  				}
- 				continue;
- 			} else if (!strcmp(formatp, "trackshort") &&
--				   starts_with(name, "upstream")) {
-+				   (starts_with(name, "upstream") ||
-+				    starts_with(name, "push"))) {
- 				assert(branch);
+-				if (!upstream_mark(str + at, len - at)) {
++				if (!upstream_mark(str + at, len - at) &&
++				    !push_mark(str + at, len - at)) {
+ 					reflog_len = (len-1) - (at+2);
+ 					len = at;
+ 				}
+@@ -1145,6 +1152,11 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+ 					    upstream_mark, branch_get_upstream);
+ 		if (len > 0)
+ 			return len;
++
++		len = interpret_branch_mark(name, namelen, at - name, buf,
++					    push_mark, branch_get_push);
++		if (len > 0)
++			return len;
+ 	}
  
- 				if (stat_tracking_info(branch, &num_ours,
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index c66bf79..24fc2ba 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -28,7 +28,10 @@ test_expect_success setup '
- 	git update-ref refs/remotes/origin/master master &&
- 	git remote add origin nowhere &&
- 	git config branch.master.remote origin &&
--	git config branch.master.merge refs/heads/master
-+	git config branch.master.merge refs/heads/master &&
-+	git remote add myfork elsewhere &&
-+	git config remote.pushdefault myfork &&
-+	git config push.default current
- '
- 
- test_atom() {
-@@ -47,6 +50,7 @@ test_atom() {
- 
- test_atom head refname refs/heads/master
- test_atom head upstream refs/remotes/origin/master
-+test_atom head push refs/remotes/myfork/master
- test_atom head objecttype commit
- test_atom head objectsize 171
- test_atom head objectname $(git rev-parse refs/heads/master)
-@@ -83,6 +87,7 @@ test_atom head HEAD '*'
- 
- test_atom tag refname refs/tags/testtag
- test_atom tag upstream ''
-+test_atom tag push ''
- test_atom tag objecttype tag
- test_atom tag objectsize 154
- test_atom tag objectname $(git rev-parse refs/tags/testtag)
-@@ -347,6 +352,12 @@ test_expect_success 'Check that :track[short] works when upstream is invalid' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '%(push) supports tracking specifiers, too' '
-+	echo "[ahead 1]" >expected &&
-+	git for-each-ref --format="%(push:track)" refs/heads >actual &&
-+	test_cmp expected actual
+ 	return -1;
+diff --git a/t/t1514-rev-parse-push.sh b/t/t1514-rev-parse-push.sh
+new file mode 100755
+index 0000000..7214f5b
+--- /dev/null
++++ b/t/t1514-rev-parse-push.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++
++test_description='test <branch>@{push} syntax'
++. ./test-lib.sh
++
++resolve () {
++	echo "$2" >expect &&
++	git rev-parse --symbolic-full-name "$1" >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'setup' '
++	git init --bare parent.git &&
++	git init --bare other.git &&
++	git remote add origin parent.git &&
++	git remote add other other.git &&
++	test_commit base &&
++	git push origin HEAD &&
++	git branch --set-upstream-to=origin/master master &&
++	git branch --track topic origin/master &&
++	git push origin topic &&
++	git push other topic
 +'
 +
- cat >expected <<EOF
- $(git rev-parse --short HEAD)
- EOF
++test_expect_success '@{push} with default=nothing' '
++	test_config push.default nothing &&
++	test_must_fail git rev-parse master@{push}
++'
++
++test_expect_success '@{push} with default=simple' '
++	test_config push.default simple &&
++	resolve master@{push} refs/remotes/origin/master
++'
++
++test_expect_success 'triangular @{push} fails with default=simple' '
++	test_config push.default simple &&
++	test_must_fail git rev-parse topic@{push}
++'
++
++test_expect_success '@{push} with default=current' '
++	test_config push.default current &&
++	resolve topic@{push} refs/remotes/origin/topic
++'
++
++test_expect_success '@{push} with default=matching' '
++	test_config push.default matching &&
++	resolve topic@{push} refs/remotes/origin/topic
++'
++
++test_expect_success '@{push} with pushremote defined' '
++	test_config push.default current &&
++	test_config branch.topic.pushremote other &&
++	resolve topic@{push} refs/remotes/other/topic
++'
++
++test_expect_success '@{push} with push refspecs' '
++	test_config push.default nothing &&
++	test_config remote.origin.push refs/heads/*:refs/heads/magic/* &&
++	git push &&
++	resolve topic@{push} refs/remotes/origin/magic/topic
++'
++
++test_done
 -- 
 2.4.1.528.g00591e3
