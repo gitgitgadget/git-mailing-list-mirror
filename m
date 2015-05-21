@@ -1,131 +1,150 @@
-From: Philippe De Muyter <phdm@macq.eu>
-Subject: Re: identical hashes on two branches, but holes in git log
-Date: Thu, 21 May 2015 22:37:57 +0200
-Message-ID: <20150521203757.GA2711@frolo.macqel>
-References: <20150519132958.GA21130@frolo.macqel> <xmqq617oa75l.fsf@gitster.dls.corp.google.com> <20150519214719.GA12732@frolo.macqel> <xmqqiobop67k.fsf@gitster.dls.corp.google.com> <20150521071518.GA8675@frolo.macqel> <B2DD947EDB314A2C878567932ECB974E@PhilipOakley>
+From: Allen Hubbe <allenbh@gmail.com>
+Subject: Re: [PATCH] git-send-email.perl: Add sendmail aliases support
+Date: Thu, 21 May 2015 16:48:15 -0400
+Message-ID: <CAJ80satMSCGydLRb5k=xpSqxXSBL=_T7nsHEz3jsuFV9MdmmtA@mail.gmail.com>
+References: <3f1091c3de6e4e62037bc3c84c69026e33ee9707.1432229888.git.allenbh@gmail.com>
+	<xmqqioblisyk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu May 21 22:38:09 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 21 22:48:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvXEF-0007gC-Mw
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 22:38:08 +0200
+	id 1YvXOG-0005ch-SR
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 22:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756544AbbEUUiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 16:38:04 -0400
-Received: from smtp2.macqel.be ([109.135.2.61]:60036 "EHLO smtp2.macqel.be"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756164AbbEUUiC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 16:38:02 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by smtp2.macqel.be (Postfix) with ESMTP id 7C524130CFD;
-	Thu, 21 May 2015 22:37:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at macqel.be
-Received: from smtp2.macqel.be ([127.0.0.1])
-	by localhost (mail.macqel.be [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hiYOClrgF+cW; Thu, 21 May 2015 22:37:57 +0200 (CEST)
-Received: from frolo.macqel.be (frolo.macqel [10.1.40.73])
-	by smtp2.macqel.be (Postfix) with ESMTP id CDB6D130CE5;
-	Thu, 21 May 2015 22:37:57 +0200 (CEST)
-Received: by frolo.macqel.be (Postfix, from userid 1000)
-	id AFA3FDF06BC; Thu, 21 May 2015 22:37:57 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <B2DD947EDB314A2C878567932ECB974E@PhilipOakley>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756687AbbEUUsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 16:48:19 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:37141 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756399AbbEUUsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 16:48:17 -0400
+Received: by wibt6 with SMTP id t6so27014365wib.0
+        for <git@vger.kernel.org>; Thu, 21 May 2015 13:48:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mMXh+Mnd8JaNzwhnGJ4hyhPxLebsqJz/MnS/6qGMpG4=;
+        b=C3iVW9VTE55WqEahsMC6C8u9SAw3AGVjuF2gsZknLJ0gOPQO2lpd60zbNo+Xzl9Euu
+         XKkxBUykUx2NSe/sY0pioDE20CIDHGfZDGbdFKVM7jFxc6bN4bRf9D/2rXpyPUtu7jT0
+         p+zDAKOUH/XDYpDNfCLOIGY7OmqQP6pl11M/LVBBQKYOavHrhySjAql3SPPkzr6/iLW1
+         6wwHNNWe9Ki1zIBGPGkuioxoQsh4aoZVeoypF/6dDA9/qWWk3pJUjSSFKotV8F6Fk0LN
+         0oCKEIiCox3sjfCwcGuxfDiVGpiTDJD2+oHGKxy2dxPtltjq5Lr+XGZ8MFkJyDSHyh7/
+         3ZYQ==
+X-Received: by 10.180.74.144 with SMTP id t16mr992970wiv.33.1432241295881;
+ Thu, 21 May 2015 13:48:15 -0700 (PDT)
+Received: by 10.28.59.4 with HTTP; Thu, 21 May 2015 13:48:15 -0700 (PDT)
+In-Reply-To: <xmqqioblisyk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269659>
 
-On Thu, May 21, 2015 at 08:58:35PM +0100, Philip Oakley wrote:
-> From: "Philippe De Muyter" <phdm@macq.eu>
-> To: "Junio C Hamano" <gitster@pobox.com>
-> Cc: <git@vger.kernel.org>; "Jeff King" <peff@peff.net>; "John Keeping" 
-> <john@keeping.me.uk>
-> Sent: Thursday, May 21, 2015 8:15 AM
-> Subject: Re: identical hashes on two branches, but holes in git log
+On Thu, May 21, 2015 at 4:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Allen Hubbe <allenbh@gmail.com> writes:
 >
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> index e1e9b14..5f2ec0d 100755
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>> @@ -515,7 +515,12 @@ my %parse_alias = (
+>>                              $aliases{$alias} = [ split_addrs($addr) ];
+>>                         }
+>>                     } },
+>> -
+>> +     sendmail => sub { my $fh = shift; while (<$fh>) {
+>> +             next if /^$|^#|^\s/;
+>> +             if (/^(\S+)\s*:\s*(.*?)\\?$/) {
+>> +                     my ($alias, $addr) = ($1, $2);
+>> +                     $aliases{$alias} = [ split_addrs($addr) ];
+>> +             }}},
 >
->> On Tue, May 19, 2015 at 03:12:31PM -0700, Junio C Hamano wrote:
->>> Philippe De Muyter <phdm@macq.eu> writes:
->>>
->>> > On Tue, May 19, 2015 at 09:01:10AM -0700, Junio C Hamano wrote:
->>> >> Philippe De Muyter <phdm@macq.eu> writes:
->>> >>
->>> >> > Trying to understand, I have eventually done "git log" on my >> > 
->>> branch and
->>> >> > on v3.15 with the following commands :
->>> >> >
->>> >> > git log v3.15 --full-history --decorate=short | grep '^commit' > >> 
->>> > /tmp/3.15.commits
->>> >> > git log --full-history --decorate=short | grep '^commit' > >> > 
->>> /tmp/mybranch.commits
->>> >>
->>> >> Either
->>> >>
->>> >>     git log --oneline v3.15..HEAD ;# show what I have not in >> theirs
->>> >>
->>> >> or
->>> >>
->>> >>     gitk v3.15...HEAD ;# show our differences graphically
->>> >
->>> > This shows the commits in my branch starting from the most recent > 
->>> common point,
->>> > thus my commits, but I see differences in the files not explained > by 
->>> my commits,
->>> > but by the fact that many older commits (between v3.13 and v3.14) > are 
->>> missing on
->>> > my branch, but still in both branches I have a commit called v3.14 > 
->>> with the
->>> > same hash.  Is that normal ?
->>>
->>> Sorry, cannot parse.  Neither of the above would show files, so just
->>> about the place where you start talking about "I see differences in
->>> the files", you lost me.
->>
->> Look at the other part of the thread, with the discussion with Jeff and 
->> John
->>
->> The light has come, and what I understand is:
->>
->> don't trust the default (ordering) mode of 'git log' :(
+> Let me unfold the line only to make commenting it easier.
 >
+>         sendmail => sub {
+>                 my $fh = shift;
+>                 while (<$fh>) {
+>                         next if /^$|^#|^\s/;
+>                         if (/^(\S+)\s*:\s*(.*?)\\?$/) {
+>                                 my ($alias, $addr) = ($1, $2);
+>                                 $aliases{$alias} = [ split_addrs($addr) ];
+>                         }
+>                 }
+>         },
 >
-> Surely the question now should be "What should the man page say that would 
-> have explained the default ordering mode in an understandable way, rather 
-> than the current misunderstanding?".
+> It is probably OK to omit support for folded lines, but wouldn't it
+> be easy enough to be a bit more helpful to give a warning when you
+> find such lines in the input?  Otherwise you will leave the users
+> wondering why some of their aliases work while others don't.
+
+The diff doesn't show enough context to include this comment:
+
+my %parse_alias = (
+        # multiline formats can be supported in the future
+...
+
+I can't be sure the author's intent, but my interpretation is such.
+The parsers do not support multiline, even though the format might
+allow it by definition.  Another interpretation could be, no multiline
+formats allowed, or, the first person to add a multiline format should
+remove this comment.
+
+I think the first interpretation is correct, because according to this
+script, the mutt format also has continuation lines.  I didn't find a
+more authoritative document in my quick search.
+
+http://www.wizzu.com/mutt/checkalias.pl
+
+I suppose at this point it is also worth mentioning that /etc/aliases
+doesn't claim to support aliases of aliases, but does support
+non-email-addresses like mail directories and pipes.  I don't think
+most git users would try to send email directly to a pipe.
+
+My motivation for this patch was not really to support the sendmail
+aliases file directly.  The commit message may therefore be
+misleading.  So, I could also rewrite the commit message to say
+something like, "loosely based on" the sendmail aliases format, if the
+exceptions to the format in the current message are not enough.
+Really, I just prefer the simpler <alias>: <email|alias> syntax
+instead of the ones for mutt, elm, etc, and that is why I wrote this
+patch.
+
 >
-> What 'ordering' were you 'trusting' (presuming) anyway? The current default 
-> mode doesn't actually say anything about the order anyway (as you've 
-> discovered).
-
-I have used 'git log' on the current 'master' branch of the linux kernel
-to find at which point in the history a commit - that I know is disruptive
-for my work and that I know by name because I have seen it passing on a
-mailing list - had been applied.
-
-'git log -decorate=short' showed it happening between v3.14-rc1 and v3.14-rc2,
-but after
-
-	git checkout v3.14
-
-I did not find the effects of the commit in the files that should have been
-affected by the commit.
-
-I expected at least that a commit listed between two tags on the same branch
-was really applied to that branch between those two tags.
-
-Philippe
+> Perhaps like this (this is not even an output from "diff" but typed
+> in my MUA, so there may be typos---take it just as illustrating
+> ideas)?
 >
->>
->> I surmise this happens only when 'git merge' has been used.
->>
-> --
-> Philip 
+> That way, users can fold the input themselves and try again if they
+> wanted to.  The warning _may_ have to be squelched after a few hits
+> to keep the result usable, though.
+>
+>         sendmail => sub {
+>                 my $fh = shift;
+>                 while (<$fh>) {
+> -                       next if /^$|^#|^\s/;
+> -                       if (/^(\S+)\s*:\s*(.*?)\\?$/) {
+> +                       next if /^$|^#/;
+> +                       if (/^\s/ || /\\$/) {
+> +                               print STDERR "$.: $_";
+> +                               print STDERR "continuation lines in alias not supported\n";
+> +                               next;
+> +                       }
+> +                       if (/^(\S+)\s*:\s*(.*)$/) {
+>                                 my ($alias, $addr) = ($1, $2);
+>                                 $aliases{$alias} = [ split_addrs($addr) ];
+>                         }
+>                 }
+>         },
+
+That's interesting.  I'd like to hear a second opinion before I add
+that.  It's a good idea, but none of the other parsing routines print
+out messages.
+
+>
+> Thanks.
