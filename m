@@ -1,91 +1,145 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 02/14] pull: pass verbosity, --progress flags to fetch
- and merge
-Date: Thu, 21 May 2015 17:59:09 +0200
-Organization: gmx
-Message-ID: <f90387a786c1e0f4287c9fee405f8e2f@www.dscho.org>
-References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
- <1431961571-20370-3-git-send-email-pyokagan@gmail.com>
- <4213f4fa8fb52fb020c2e9b5d78fbf7b@www.dscho.org>
- <CACRoPnRVcjcegRU8J6a=X6uN=b7fhJyD9=js4LqJ7ORX6gT=jg@mail.gmail.com>
+From: <steve.norman@thomsonreuters.com>
+Subject: RE: Troubleshoot clone issue to NFS.
+Date: Thu, 21 May 2015 15:53:57 +0000
+Message-ID: <7FAE15F0A93C0144AD8B5FBD584E1C5519759641@C111KXTEMBX51.ERF.thomson.com>
+References: <7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com>
+ <CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
+ <CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 17:59:23 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>, <peff@peff.net>
+To: <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 18:02:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvSsT-0003Uw-KP
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 17:59:21 +0200
+	id 1YvSvq-0005im-81
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 18:02:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756617AbbEUP7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 11:59:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51330 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756401AbbEUP7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 11:59:12 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LjZhg-1ZSblW2CtM-00baxW; Thu, 21 May 2015 17:59:10
- +0200
-In-Reply-To: <CACRoPnRVcjcegRU8J6a=X6uN=b7fhJyD9=js4LqJ7ORX6gT=jg@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:DxtRz+7k3GJSidG/JaqKVLoZcYYeQcY5+ixKxHdmk6R2Q4IKZa5
- QBAUzdpyxarDlzy5+ljSaUfJtPf3wI6HFey7nzzkRkglGqTAUDWgs1i/QnCr6XYfP+mqwel
- FUbvy83vEAEl556zvXB8O0dgKQtLVSgVd0w+Fdq/HSjD94+DedVhJ/DXWEpq3cHVT843ifx
- mzRPT/w5/imV9tjLn6dag==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1422656AbbEUPyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 11:54:18 -0400
+Received: from mailout2-trp.thomsonreuters.com ([163.231.6.26]:39898 "EHLO
+	mailout2-trp.thomsonreuters.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161049AbbEUPyN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 May 2015 11:54:13 -0400
+Received: from trpusmneagrly02.int.westgroup.com (relay2 [163.231.22.113])
+	by mailout2-trp.thomsonreuters.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.1) with ESMTP id t4LFsATc027574
+	(version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
+	Thu, 21 May 2015 15:54:11 GMT
+Received: from EAGF-ERFPHUB13.ERF.thomson.com (xch2 [163.231.23.9])
+	by trpusmneagrly02.int.westgroup.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.1) with ESMTP id t4LFs8R6022538
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Thu, 21 May 2015 15:54:10 GMT
+Received: from C195DQZEHUB07.ERF.THOMSON.COM (163.231.29.205) by
+ EAGF-ERFPHUB13.ERF.thomson.com (163.231.23.9) with Microsoft SMTP Server
+ (TLS) id 14.3.158.1; Thu, 21 May 2015 10:53:48 -0500
+Received: from C111KXTEMBX51.ERF.thomson.com ([fe80::4999:4010:4bd1:ba61]) by
+ C195DQZEHUB07.ERF.thomson.com ([fe80::1cfc:a5f0:ea4b:b5f5%14]) with mapi id
+ 14.03.0158.001; Thu, 21 May 2015 10:53:57 -0500
+Thread-Topic: Troubleshoot clone issue to NFS.
+Thread-Index: AdCTxW/SgCCnMnTuQvaf51AB2UW2tgAN1NmAAAA88gAACEcAsA==
+In-Reply-To: <CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.206.30.5]
+X-TM-AS-Product-Ver: SMEX-10.2.0.3308-7.500.1018-21558.006
+X-TM-AS-Result: No--17.290400-0.000000-31
+X-TM-AS-User-Approved-Sender: Yes
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269601>
 
-Hi Paul,
-
-On 2015-05-21 11:48, Paul Tan wrote:
-> 
-> On Tue, May 19, 2015 at 1:41 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
->> On 2015-05-18 17:05, Paul Tan wrote:
->>> diff --git a/builtin/pull.c b/builtin/pull.c
->>> index 0b771b9..a4d9c92 100644
->>> --- a/builtin/pull.c
->>> +++ b/builtin/pull.c
->>> @@ -11,16 +11,64 @@
->>>  #include "argv-array.h"
->>>  #include "run-command.h"
->>>
->>> +/**
->>> + * Given an option opt, where opt->value points to a char* and opt->defval is a
->>> + * string, sets opt->value to the evaluation of "--$defval=$arg". If `arg` is
->>> + * NULL, then opt->value is set to "--$defval". If unset is true, then
->>> + * opt->value is set to "--no-$defval".
->>> + */
->>> +static int parse_opt_passthru(const struct option *opt, const char
->>> *arg, int unset)
->>
->> Implied by my suggested description, I also propose to put the re-recreated command-line option into a strbuf instead of a char *, to make memory management easier (read: avoid memory leaks).
-> 
-> Unfortunately, the usage of strbuf means that we lose the ability to
-> know if an option was not provided at all (the value is NULL). This is
-> important as some of these options are used to override the default
-> configured behavior.
-
-Would this not be implied by the strbuf's len being 0?
-
->> You might also want to verify that arg is `NULL` when `unset != 0`. Something like this:
-> 
-> Hmm, would there be a situation where arg is NULL when `unset != 0`?
-
-I forgot to say that my suggestion was purely meant as defensive coding. Yes, `arg` *should* be `NULL` when `unset != 0`. Should ;-)
-
-By the way, just to make sure: My comments and suggestions are no demands; you should feel very free to reject them when you feel that your code is better without the suggested changes. I am just trying to be helpful.
-
-Ciao,
-Dscho
+T24gVGh1LCBNYXkgMjEsIDIwMTVhIGF0IDk6MzEgUE0sIER1eSBOZ3V5ZW4gW21haWx0bzpwY2xv
+dWRzQGdtYWlsLmNvbV0sIGRpZCBzY3JpYmJsZToNCj4gPiBJbiBjYXNlIGFuIG9iamVjdCBpcyBu
+b3QgZm91bmQgcGFjayBkaXJlY3RvcnkgaXMgcmUtcmVhZCBhZ2Fpbiwgd2hpY2gNCj4gPiBtaWdo
+dCBjYXVzZSBzb21lIGluY3JlYXNlZCBsb2FkIG9uIG5mcy4NCj4gPiBoYXNfc2hhMV9maWxlKCkg
+bm90IGZpbmRpbmcgdGhlIG9iamVjdCBzaG91bGQgbm90IGhhcHBlbiBvZnRlbi4uDQo+IA0KPiBU
+aGF0IGxhc3Qgc3RhdGVtZW50IGlzIHByb2JhYmx5IHZlcnkgd3JvbmcsIGJ1dCBJIGhhdmUgbm8g
+dGltZSB0byB0ZXN0IHRoaXMNCj4gbm93LiBJbiBpbmRleC1wYWNrLCB0aGVyZSBpcyBhIGhhc19z
+aGExX2ZpbGUoKSBmb3IgZmlsZSBjb2xsaXNpb24gdGVzdC4gVGhhdCBjYWxsDQo+IG9uIGEgZnJl
+c2ggY2xvbmUgd291bGQgZmFpbCBmb3IgX2V2ZXJ5XyBvYmplY3QgaW4gdGhlDQo+IChuZXcpIHBh
+Y2sgYW5kIHRoZSBjb3N0IG9mIHJlcHJlcGFyZSBwYWNrIGZpbGVzIGNvdWxkIGJlIHNreSBoaWdo
+Li4uDQoNCkNvbmZpcm1lZCB3aXRoIGJpc2VjdCB0aGF0IGl0IGlzIHRoYXQgY29tbWl0Og0KDQp+
+L2dpdCAkIGdpdCBiaXNlY3QgYmFkDQo0NWU4YTc0ODczMzljMGYwZWEyODI0NGVmMDY4NTEzMDhk
+MDczODdjIGlzIHRoZSBmaXJzdCBiYWQgY29tbWl0DQpjb21taXQgNDVlOGE3NDg3MzM5YzBmMGVh
+MjgyNDRlZjA2ODUxMzA4ZDA3Mzg3Yw0KQXV0aG9yOiBKZWZmIEtpbmcgPHBlZmZAcGVmZi5uZXQ+
+DQpEYXRlOiAgIEZyaSBBdWcgMzAgMTU6MTQ6MTMgMjAxMyAtMDQwMA0KDQpJIGhhdmUgYW4gc3Ry
+YWNlIGZvciB0aGF0IGJ1aWxkIGJ1dCBpdCBpcyAxNTMgbWVnYWJ5dGVzIHNvIEkgcHJvYmFibHkg
+c2hvdWxkbid0IGF0dGFjaCwgYnV0IHRoZSBjYWxsIHN1bW1hcnkgaXMgYmVsb3c6DQoNCiUgdGlt
+ZSAgICAgc2Vjb25kcyAgdXNlY3MvY2FsbCAgICAgY2FsbHMgICAgZXJyb3JzIHN5c2NhbGwNCi0t
+LS0tLSAtLS0tLS0tLS0tLSAtLS0tLS0tLS0tLSAtLS0tLS0tLS0gLS0tLS0tLS0tIC0tLS0tLS0t
+LS0tLS0tLS0NCiA5My43MSAgIDM5LjY3MDA4NCAgICAgICAgIDEwMyAgICAzODY4MzUgICAgICAy
+MTcxIGZ1dGV4DQogIDMuMTYgICAgMS4zMzg1NzIgICAgICAgICAgIDcgICAgMTkwNTUwICAgICAg
+IDE4MSBvcGVuDQogIDEuNTYgICAgMC42NTg3ODYgICAgICAgICAgMTggICAgIDM3NDUwICAgICAg
+ICAgMyByZWFkDQogIDAuNjIgICAgMC4yNjI3NDAgICAgICAgICAgIDIgICAgMTQxMzkwICAgICAg
+ICAgICBwcmVhZA0KICAwLjQxICAgIDAuMTcxNTI2ICAgICAgICAgICA1ICAgICAzNzMxMyAgICAg
+ICAgIDkgd3JpdGUNCiAgMC4xOCAgICAwLjA3NjE2NiAgICAgICAgICAgMCAgICAxODg4NTkgICAg
+MTg4ODM1IGFjY2Vzcw0KICAwLjExICAgIDAuMDQ3OTQxICAgICAgICAgICAwICAgIDM3NDcxMiAg
+ICAgICAgICAgZ2V0ZGVudHMNCiAgMC4xMSAgICAwLjA0NTE3NCAgICAgICAgICAxMSAgICAgIDQw
+NjcgICAgICAzOTEwIGxzdGF0DQogIDAuMDYgICAgMC4wMjM2MzAgICAgICAgICAgIDAgICAgMTkw
+NDI1ICAgICAgICAgICBjbG9zZQ0KICAwLjA0ICAgIDAuMDE3OTk1ICAgICAgICAgICA2ICAgICAg
+Mjk3NSAgICAgICAgIDEgZnN0YXQNCiAgMC4wMiAgICAwLjAwNzY2OCAgICAgICAgMTkxNyAgICAg
+ICAgIDQgICAgICAgICAgIHdhaXQ0DQogIDAuMDEgICAgMC4wMDQxNTAgICAgICAgICAgIDEgICAg
+ICA1MDY1ICAgICAgICAgICBtYWR2aXNlDQogIDAuMDEgICAgMC4wMDM1NDggICAgICAgICAgIDAg
+ICAgIDE2MDkwICAgICAgICAgOCByZWN2ZnJvbQ0KICAwLjAwICAgIDAuMDAxODcyICAgICAgICAg
+ICAwICAgICAgODA0OCAgICAgICAgICAgc2VsZWN0DQogIDAuMDAgICAgMC4wMDE4NzAgICAgICAg
+ICAgMTEgICAgICAgMTczICAgICAgICAgMSBta2Rpcg0KICAwLjAwICAgIDAuMDAwODcyICAgICAg
+ICAgICAwICAgICAgODA1NSAgICAgICAgICAgcG9sbA0KICAwLjAwICAgIDAuMDAwMjYyICAgICAg
+ICAgIDIyICAgICAgICAxMiAgICAgICAgMTIgcmVhZGxpbmsNCiAgMC4wMCAgICAwLjAwMDE4NSAg
+ICAgICAgICAgMCAgICAgIDEyMTcgICAgICAxMTQ2IHN0YXQNCiAgMC4wMCAgICAwLjAwMDE1OCAg
+ICAgICAgICAgMCAgICAgICA0NTcgICAgICAgICAgIG1wcm90ZWN0DQogIDAuMDAgICAgMC4wMDAw
+NzQgICAgICAgICAgIDAgICAgICAgMjk4ICAgICAgICAgICBtbWFwDQogIDAuMDAgICAgMC4wMDAw
+NjkgICAgICAgICAgIDEgICAgICAgMTA5ICAgICAgICAgOCBydF9zaWdyZXR1cm4NCiAgMC4wMCAg
+ICAwLjAwMDA0NyAgICAgICAgICAgMCAgICAgICAxNTkgICAgICAgICAgIGJyaw0KICAwLjAwICAg
+IDAuMDAwMDIxICAgICAgICAgICAxICAgICAgICAxNyAgICAgICAgICAgZ2V0Y3dkDQogIDAuMDAg
+ICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgIDQyICAgICAgICAgMyBsc2Vlaw0KICAwLjAw
+ICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICA5MiAgICAgICAgICAgbXVubWFwDQogIDAu
+MDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgIDM1ICAgICAgICAgICBydF9zaWdhY3Rp
+b24NCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDkgICAgICAgICAgIHJ0
+X3NpZ3Byb2NtYXNrDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgICA4ICAg
+ICAgICAgMyBpb2N0bA0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICAxMSAg
+ICAgICAgICAgcGlwZQ0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICAgMyAg
+ICAgICAgICAgZHVwDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgICA4ICAg
+ICAgICAgICBkdXAyDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgICA2ICAg
+ICAgICAgICBzZXRpdGltZXINCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAg
+MTEgICAgICAgICAxIHNvY2tldA0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAg
+ICAgOCAgICAgICAgIDcgY29ubmVjdA0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAg
+ICAgICAgOCAgICAgICAgICAgc2VuZHRvDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAg
+ICAgICAgICAyICAgICAgICAgICByZWN2bXNnDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAg
+IDAgICAgICAgICAxICAgICAgICAgICBiaW5kDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAg
+IDAgICAgICAgICAxICAgICAgICAgICBnZXRzb2NrbmFtZQ0KICAwLjAwICAgIDAuMDAwMDAwICAg
+ICAgICAgICAwICAgICAgICAgMyAgICAgICAgIDEgZ2V0cGVlcm5hbWUNCiAgMC4wMCAgICAwLjAw
+MDAwMCAgICAgICAgICAgMCAgICAgICAgIDIgICAgICAgICAgIHNldHNvY2tvcHQNCiAgMC4wMCAg
+ICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDIgICAgICAgICAgIGdldHNvY2tvcHQNCiAg
+MC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDggICAgICAgICAgIGNsb25lDQog
+IDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgICA1ICAgICAgICAgICBleGVjdmUN
+CiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDMgICAgICAgICAgIHVuYW1l
+DQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgMTAwICAgICAgICAgICBmY250
+bA0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICAgMiAgICAgICAgICAgZnN5
+bmMNCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgMTMgICAgICAgICAgIGNo
+ZGlyDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAgICAgIDE0ICAgICAgICAgICBy
+ZW5hbWUNCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDIgICAgICAgICAg
+IGxpbmsNCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDUgICAgICAgICAg
+IHVubGluaw0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICAgMiAgICAgICAg
+ICAgc3ltbGluaw0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICAgOSAgICAg
+ICAgICAgY2htb2QNCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAgICAgICAgIDYgICAg
+ICAgICAgIGdldHJsaW1pdA0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAgICAg
+MiAgICAgICAgICAgc3lzaW5mbw0KICAwLjAwICAgIDAuMDAwMDAwICAgICAgICAgICAwICAgICAg
+ICAgOCAgICAgICAgICAgZ2V0dWlkDQogIDAuMDAgICAgMC4wMDAwMDAgICAgICAgICAgIDAgICAg
+ICAgICAxICAgICAgICAgICBzdGF0ZnMNCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAgICAgMCAg
+ICAgICAgIDUgICAgICAgICAgIGFyY2hfcHJjdGwNCiAgMC4wMCAgICAwLjAwMDAwMCAgICAgICAg
+ICAgMCAgICAgICAgIDEgICAgICAgICAgIGdldHRpZA0KICAwLjAwICAgIDAuMDAwMDAwICAgICAg
+ICAgICAwICAgICAgICAgNSAgICAgICAgICAgc2V0X3RpZF9hZGRyZXNzDQogIDAuMDAgICAgMC4w
+MDAwMDAgICAgICAgICAgIDAgICAgICAgIDEzICAgICAgICAgICBzZXRfcm9idXN0X2xpc3QNCi0t
+LS0tLSAtLS0tLS0tLS0tLSAtLS0tLS0tLS0tLSAtLS0tLS0tLS0gLS0tLS0tLS0tIC0tLS0tLS0t
+LS0tLS0tLS0NCjEwMC4wMCAgIDQyLjMzMzQxMCAgICAgICAgICAgICAgIDE1OTQ3MzYgICAgMTk2
+MzAwIHRvdGFsDQoNCklzIHRoZXJlIGFueXRoaW5nIGVsc2UgSSBjYW4gcHJvdmlkZSBvciB0ZXN0
+Pw0KDQpUaGFua3MgZm9yIHRoZSBoZWxwLA0KDQpTdGV2ZQ0KDQo=
