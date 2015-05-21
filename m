@@ -1,90 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PUB]corrupt repos does not return error with `git fsck`
-Date: Thu, 21 May 2015 10:09:45 +0200
-Message-ID: <vpqd21ujqra.fsf@anie.imag.fr>
-References: <alpine.DEB.2.11.1505202142540.9343@orwell.homelinux.org>
-	<vpq382rkvzf.fsf@anie.imag.fr>
-	<alpine.DEB.2.11.1505202256330.9343@orwell.homelinux.org>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 3/8] t5520: test for failure if index has unresolved entries
+Date: Thu, 21 May 2015 16:15:24 +0800
+Message-ID: <CACRoPnT8qLnjW2BAsOeqWQUPZPSmLgXOtnyVZg0Pn-ijweowZA@mail.gmail.com>
+References: <1431955978-17890-1-git-send-email-pyokagan@gmail.com>
+	<1431955978-17890-4-git-send-email-pyokagan@gmail.com>
+	<d3f29ef8736ae4c077b754ec6e410308@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Faheem Mitha <faheem@faheem.info>
-X-From: git-owner@vger.kernel.org Thu May 21 10:10:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 21 10:15:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvLYX-0007oN-9E
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 10:10:17 +0200
+	id 1YvLdo-0002TE-SX
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 10:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbbEUIKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 04:10:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50678 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755490AbbEUIJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 04:09:51 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4L89iOt023046
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 21 May 2015 10:09:44 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4L89jte030562;
-	Thu, 21 May 2015 10:09:45 +0200
-In-Reply-To: <alpine.DEB.2.11.1505202256330.9343@orwell.homelinux.org> (Faheem
-	Mitha's message of "Wed, 20 May 2015 23:28:15 +0530 (IST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 21 May 2015 10:09:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4L89iOt023046
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1432800585.23926@pqLyEKMo+FWn78rs11LceQ
+	id S1753615AbbEUIPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 04:15:35 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:32979 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751462AbbEUIPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 04:15:25 -0400
+Received: by lagr1 with SMTP id r1so96763805lag.0
+        for <git@vger.kernel.org>; Thu, 21 May 2015 01:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PrbvXR2bxxypl4dXD8lwojdEk5DWf0jLOdw0icIHSHw=;
+        b=bVGVWp1hdmVx73TavSFcDUyMTq1hoqAAeyursKXaJdVklEUv7qoWCFd9cRYmH5r9Wb
+         T03NHHIgcridqLSvZPnl8HpFJw9wkpL3kovlZOJYFxEPTKe6UScPKD7+K1UIM/El6MuF
+         eMqZ6AIwRHy1Ga6Yzpx+XpWF1vt3iLdh6hE4cwnFPgH2w9nPw6mC9eBWEqzyJU4qQxzV
+         jOsOQ3cxS6w828y+WzNH0GTj2+beymBB5HUT+PHfnBsp59Ijw43ndYE3dRF41nH+GvQB
+         8MqOvfkuurWInWH7i7i7IGf8rTLJIjDsBcsTetvddn2pi2FgsWBa9MMXpA9rPZ9s3HBs
+         4V5g==
+X-Received: by 10.152.6.105 with SMTP id z9mr1174522laz.98.1432196124155; Thu,
+ 21 May 2015 01:15:24 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 21 May 2015 01:15:24 -0700 (PDT)
+In-Reply-To: <d3f29ef8736ae4c077b754ec6e410308@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269568>
 
-Faheem Mitha <faheem@faheem.info> writes:
+Hi,
 
-> I was going by the answer (by CodeWizard) in
-> http://stackoverflow.com/q/30348615/350713
-
-OK, so the hash you got comes from a superproject which references it.
-My guess is that the superproject did a private commit in a submodule,
-added this submodule to the superproject, and forgot to push the
-submodule.
-
-If so, it's a user error (that could arguably have been avoided with a
-better command-line interface, so Git is partly guilty), but not a
-repository corruption.
-
-> If I just give a random hash to `git show` in that repos, I get
+On Mon, May 18, 2015 at 11:13 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Paul,
 >
->     fatal: ambiguous argument '...': unknown revision or path not in the working tree.
+> On 2015-05-18 15:32, Paul Tan wrote:
+>
+>> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+>> index 4a2c0a1..3bc0594 100755
+>> --- a/t/t5520-pull.sh
+>> +++ b/t/t5520-pull.sh
+>> @@ -164,6 +164,26 @@ test_expect_success 'fail if upstream branch does
+>> not exist' '
+>>       test "$(cat file)" = file
+>>  '
+>>
+>> +test_expect_success 'fail if the index has unresolved entries' '
+>> +     git checkout -b third second^ &&
+>> +     test_when_finished "git checkout -f copy && git branch -D third" &&
+>
+> If you agree with my argument in 2/8, it would be nice to drop this line, too.
 
-Not "a random hash", but a random abreviated hash. Look:
+As mentioned by Junio in 2/8 the cleanup functions will not run under
+--immediate mode.
 
-Changing the last digit:
+Besides, the use of test_when_finished is to send a clear signal that
+the "third" branch is temporary and is not meant to be used by other
+test cases. Furthermore, subsequent tests assume that the current
+branch is "copy", so it's best to preserve that.
 
-$ git show 280c12ab49223c64c6f914944287a7d049cf4d23
-fatal: bad object 280c12ab49223c64c6f914944287a7d049cf4d23
-$ git show 280c12ab49223c64c6f914944287a7d049cf4d24
-fatal: bad object 280c12ab49223c64c6f914944287a7d049cf4d24
-$ git show 280c12ab49223c64c6f914944287a7d049cf4d25
-fatal: bad object 280c12ab49223c64c6f914944287a7d049cf4d25
-$ git show 280c12ab49223c64c6f914944287a7d049cf4d26
-fatal: bad object 280c12ab49223c64c6f914944287a7d049cf4d26
+>> +     test "$(cat file)" = file &&
+>> +     echo modified2 >file &&
+>> +     git commit -a -m modified2 &&
+>
+> These two lines could be combined into "test_commit modified2 file".
 
-Removing the last digit:
+Fixed, thanks.
 
-$ git show 280c12ab49223c64c6f914944287a7d049cf4d2 
-fatal: ambiguous argument '280c12ab49223c64c6f914944287a7d049cf4d2': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Paul
