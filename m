@@ -1,101 +1,138 @@
-From: "McHenry, Matt" <mmchenry@carnegielearning.com>
-Subject: RE: recovering from "unordered stage entries in index" error
-Date: Thu, 21 May 2015 09:19:11 -0400
-Message-ID: <D377A9280DB18546A2471214D5CBB0E908599F7E02@exchdb01>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+From: <steve.norman@thomsonreuters.com>
+Subject: Troubleshoot clone issue to NFS.
+Date: Thu, 21 May 2015 13:13:32 +0000
+Message-ID: <7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 15:19:25 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 21 15:23:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvQNh-0004yr-1e
-	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 15:19:25 +0200
+	id 1YvQRx-0007cg-Qg
+	for gcvg-git-2@plane.gmane.org; Thu, 21 May 2015 15:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbbEUNTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 09:19:15 -0400
-Received: from mail3.carnegielearning.com ([204.80.87.3]:53345 "EHLO
-	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753908AbbEUNTO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 May 2015 09:19:14 -0400
-X-ASG-Debug-ID: 1432214352-07bc7c14083d84e30001-QuoKaX
-Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id sDGEDtHapdIkg5Gu (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Thu, 21 May 2015 09:19:12 -0400 (EDT)
-X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
-Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
- ([127.0.0.1]) with mapi; Thu, 21 May 2015 09:19:12 -0400
-Thread-Topic: recovering from "unordered stage entries in index" error
-X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
-Thread-Index: AdCTrIVIek4UbbUnR0ad3hufiuU+WQAG2kGw
-In-Reply-To: <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+	id S1755467AbbEUNXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 09:23:39 -0400
+Received: from mailout2-trp.thomsonreuters.com ([163.231.6.26]:19230 "EHLO
+	mailout2-trp.thomsonreuters.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755334AbbEUNXg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 09:23:36 -0400
+X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 May 2015 09:23:36 EDT
+Received: from trpusmneagrly02.int.westgroup.com (relay2 [163.231.22.113])
+	by mailout2-trp.thomsonreuters.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.1) with ESMTP id t4LDDYeG001417
+	(version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
+	for <git@vger.kernel.org>; Thu, 21 May 2015 13:13:35 GMT
+Received: from EAGE-ERFPHUB06.ERF.thomson.com (EAGE-ERFPHUB06.erf.thomson.com [163.231.23.45])
+	by trpusmneagrly02.int.westgroup.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.1) with ESMTP id t4LDDXbY004793
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Thu, 21 May 2015 13:13:34 GMT
+Received: from C597JHEEHUB03.ERF.thomson.com (163.231.29.203) by
+ EAGE-ERFPHUB06.ERF.thomson.com (163.231.23.45) with Microsoft SMTP Server
+ (TLS) id 14.3.158.1; Thu, 21 May 2015 08:13:33 -0500
+Received: from C111KXTEMBX51.ERF.thomson.com ([fe80::4999:4010:4bd1:ba61]) by
+ C597JHEEHUB03.ERF.thomson.com ([fe80::21ac:e4a1:cd8a:978d%15]) with mapi id
+ 14.03.0158.001; Thu, 21 May 2015 08:13:33 -0500
+Thread-Topic: Troubleshoot clone issue to NFS.
+Thread-Index: AdCTxW/SgCCnMnTuQvaf51AB2UW2tg==
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
-X-Barracuda-Connect: UNKNOWN[10.1.10.4]
-X-Barracuda-Start-Time: 1432214352
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: https://10.1.10.16:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at carnegielearning.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
-X-Barracuda-Spam-Score: 0.51
-X-Barracuda-Spam-Status: No, SCORE=0.51 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19166
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.50 BSF_RULE7568M          Custom Rule 7568M
+x-originating-ip: [10.206.30.5]
+X-TM-AS-Product-Ver: SMEX-10.2.0.3308-7.500.1018-21558.006
+X-TM-AS-Result: No--19.088300-0.000000-31
+X-TM-AS-User-Approved-Sender: Yes
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269591>
 
-PiBUaGlzIG1lc3NhZ2UgY2FuIGJlIGltcHJvdmVkIHRvIHNob3cgd2hhdCBlbnRyaWVzIGhhdmUg
-dGhpcyBwcm9ibGVtLg0KDQoJWWVzLCB0aGF0IHdvdWxkIGRlZmluaXRlbHkgYmUgYSBzdGFydC4g
-IDopDQoNCj4gQnV0IHRoZW4gSSBkb24ndCBzZWUgYW55IHdheSB0byByZWNvdmVyIHRoZSBpbmRl
-eCBtYW51YWxseS4gbHMtZmlsZXMNCj4gd2lsbCBkaWUgdG9vLiBQZXJoYXBzIHdlIHNob3VsZCBi
-ZSBnZW50bGUgaW4gdGhpcyBjYXNlOiBzaG93IHdhcm5pbmdzDQoNCglBY3R1YWxseSwgbHMtZmls
-ZXMgc3VjY2VlZHMgb24gbXkgYnJva2VuIGluZGV4Og0KDQokIGdpdCBscy1maWxlcyA+IC9kZXYv
-bnVsbA0KJCBlY2hvICQ/DQowDQoNCglDb3VsZCBJIGRvIHNvbWV0aGluZyB3aXRoICdnaXQgcmVh
-ZC10cmVlJyB0byBmb3JjZSBjcmVhdGlvbiBvZiBhIG5ldyB2YWxpZCBpbmRleD8gIEkgZ3Vlc3Mg
-J2dpdCBjbG9uZScgd291bGQgd29yayB0b28sIGV4Y2VwdCB0aGF0IEkgaGF2ZSAnZ2l0IHN2bicg
-bWV0YWRhdGEgdGhhdCBJJ2QgbmVlZCB0byBwcmVzZXJ2ZS4NCg0KPiBpbnN0ZWFkIG9mIGFib3J0
-aW5nIHRoZSBwcm9ncmFtIGFuZCBpbnRlcm5hbGx5IHJlb3JkZXIgdGhlIGluZGV4LiBJDQo+IHRo
-aW5rLCB1bmxlc3MgeW91IGhhdmUgbXVsdGlwbGUgZW50cmllcyB3aXRoIHRoZSBzYW1lIHN0YWdl
-LCB0aGUNCj4gcmVjb3ZlcmVkIGluZGV4IHNob3VsZCBydW4gd2VsbC4gVGhlIGJyb2tlbiBpbmRl
-eCBjb3VsZCBiZSByZW5hbWVkIHRvDQo+IGluZGV4LmJyb2tlbiBvciBzb21ldGhpbmcgZm9yIGxh
-dGVyIGFuYWx5c2lzLCBvciB3ZSBmb3JiaWQgd3JpdGluZyB0aGUNCj4gcmVvcmRlcmVkIGluZGV4
-IHRvIGRpc2suDQo+IA0KPiBIbW0/DQo+IA0KPiA+IHdyaXRlLXRyZWU6IGNvbW1hbmQgcmV0dXJu
-ZWQgZXJyb3I6IDEyOA0KPiA+DQo+ID4gICAgICAgICAnZ2l0IHN0YXR1cycgc2hvd3MgYSBmZXcg
-dW50cmFja2VkIGZpbGVzIGJ1dCBpcyBvdGhlcndpc2UgY2xlYW4uDQo+ID4NCj4gPiAgICAgICAg
-IEl0IGxvb2tzIGxpa2UgdGhpcyBjaGVjayB3YXMgaW50cm9kdWNlZCBpbg0KPiAxNTk5OWQwYmU4
-MTc5ZmI3YTJlNmVhZmI5MzFkMjVlZDY1ZGY1MGFhLCB3aXRoIHRoZSBzdW1tYXJ5DQo+ICJyZWFk
-X2luZGV4X2Zyb20oKTogY2F0Y2ggb3V0IG9mIG9yZGVyIGVudHJpZXMgd2hlbiByZWFkaW5nIGFu
-IGluZGV4IGZpbGUiDQo+IChmaXJzdCBhcHBlYXJpbmcgaW4gMi4yLjApLg0KPiA+DQo+ID4gICAg
-ICAgICBNYWlsaW5nIGxpc3QgZGlzY3Vzc2lvbiBsb29rZWQgbGlrZSBpdCBpbXBsaWNhdGVkIHRo
-aXJkLXBhcnR5DQo+IHRvb2xzLiAgSSBkb24ndCByZWNhbGwgcnVubmluZyBhbnkgb3RoZXIgdG9v
-bHMgb24gdGhpcyByZXBvOyBpdCBkb2Vzbid0IGRvDQo+IG11Y2ggZGF5LXRvLWRheSBvdGhlciB0
-aGFuIGEgbG9uZyBzZXJpZXMgb2YgJ2dpdCBzdm4gZmV0Y2gnZXMuICAoQnV0IGl0J3MNCj4gYmVl
-biBhcm91bmQgZm9yIGEgY291cGxlIG9mIHllYXJzLCBzbyB3aG8ga25vd3MuKQ0KPiA+DQo+ID4g
-ICAgICAgICBBdCBhbnkgcmF0ZSwgd2hhdCBjYW4gSSBkbyB0byByZWNvdmVyIGZyb20gdGhpcyBz
-aXR1YXRpb24/ICBJDQo+IHRyaWVkIHRvIGxvY2F0ZSBhIHBhdGggd2l0aCBtdWx0aXBsZSBpbmRl
-eCBlbnRyaWVzIGxpa2UgdGhpcywgYnV0IGdvdCBubw0KPiByZXN1bHRzOg0KPiA+DQo+ID4gJCBn
-aXQgbHMtZmlsZXMgLXMgfCBjdXQgLWYgMi0xMDAgfCBzb3J0IHwgdW5pcSAtYyB8IGdyZXAgLXYg
-J15bIFx0XSoxICcNCj4gPg0KPiA+ICAgICAgICAgKEkgb3JpZ2luYWxseSBwb3N0ZWQgb24gU08g
-YXQNCj4gaHR0cDovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8zMDI2NDgyNi87IEknbGwg
-dXBkYXRlIHRoYXQgd2l0aCBhbnkNCj4gc29sdXRpb25zIHRoYXQgY29tZSB1cCBoZXJlLCB0byBl
-YXNlIGZ1dHVyZSBnb29nbGluZy4pDQo+ID4gLS0NCj4gPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRo
-aXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0KPiA+IHRoZSBib2R5
-IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnDQo+ID4gTW9yZSBtYWpv
-cmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1s
-DQo+IA0KPiANCj4gDQo+IA0KPiAtLQ0KPiBEdXkNCg==
+In setting up some new git servers I was trying to test the performance of some NFS mounted volumes and when compared to local disk (although this is a vitualized server so not truly local) cloning to NFS was taking a long time.
+
+Here are some timings:
+
+~ $ time bin/git clone https://github.com/git/git test
+Cloning into 'test'...
+remote: Counting objects: 185964, done.
+remote: Compressing objects: 100% (276/276), done.
+remote: Total 185964 (delta 203), reused 32 (delta 32), pack-reused 185656
+Receiving objects: 100% (185964/185964), 61.42 MiB | 26.16 MiB/s, done.
+Resolving deltas: 100% (135454/135454), done.
+Checking connectivity... done.
+
+real    0m8.156s
+user    0m10.569s
+sys     0m3.857s
+
+~ $ time bin/git clone https://github.com/git/git /sami/test
+Cloning into '/sami/test'...
+remote: Counting objects: 185964, done.
+remote: Compressing objects: 100% (276/276), done.
+remote: Total 185964 (delta 203), reused 32 (delta 32), pack-reused 185656
+Receiving objects: 100% (185964/185964), 61.42 MiB | 10.15 MiB/s, done.
+Resolving deltas: 100% (135454/135454), done.
+Checking connectivity... done.
+Checking out files: 100% (2795/2795), done.
+
+real    0m58.685s
+user    0m12.153s
+sys     0m7.619s
+
+So cloning to NFS is 50 seconds slower on average (I've run this a lot over the last few days and it does appear to be consistent and not a network / github connectivity issue).  Tests creating files on the NFS with dd didn't show that much difference to the local disk (and were sometimes quicker).
+
+Volume mount differences are:
+
+/dev/mapper/rootvg-homelv on /home type ext4 (rw,nodev)
+nfsserver:/vol/sami/repos on /sami type nfs (rw,bg,nfsvers=3,tcp,hard,nointr,timeo=600,rsize=32768,wsize=32768,addr=10.1.1.1)
+
+And there doesn't appear to be any issue with NFS retransmissions:
+
+/sami $ nfsstat
+Client rpc stats:
+calls      retrans    authrefrsh
+11719847   0          11720190
+
+This morning I did some more digging as when I tried this on a newly build server the NFS times were slower than local disk, but only buy around 6-10 seconds.  The new server had git 1.7.1  installed on it compared to 2.4.0 on the machine I've been testing on.  So I build a number of versions of git to test each one to try and find the point where it changed:
+
+v1.8.0          11.363 s
+v1.8.3          13.597 s
+v1.8.4          13.958 s
+v1.8.4.1                14.563 s
+v1.8.4.2                1m 0s
+v1.8.4.3                1m 9s
+v1.8.4.5                1m 1s
+v1.8.5          1m 0s
+v1.8.5.6                1m 0s
+v1.9.0          1m 38
+
+v2.4.0          58s
+v2.4.1          58s
+
+So there appears to be a change in 1.8.4.2 that made this issue appear for me.  Looking at the release notes the only thing that I can see that might be related could be:
+
+* When an object is not found after checking the packfiles and then
+   loose object directory, read_sha1_file() re-checks the packfiles to
+   prevent racing with a concurrent repacker; teach the same logic to
+   has_sha1_file().
+
+So the questions are:
+
+1) Should I expect a clone to NFS to be that much slower?
+2) Is there anything I could do to speed it up (I've tried --bare as that is what the repositories will be when stored on NFS and there wasn't really a difference).
+3) What else can I use in git to compare the performance on local to NFS to see if it is just clones that are affected?
+4) I assume I could bisect between 1.8.4.1 and 1.8.4.2 to find exactly where things get worse for me?
+
+Thanks for any help,
+
+Steve
+
+________________________________
+
+This e-mail is for the sole use of the intended recipient and contains information that may be privileged and/or confidential. If you are not an intended recipient, please notify the sender by return e-mail and delete this e-mail and any attachments. Certain required legal entity disclosures can be accessed on our website.<http://thomsonreuters.com/prof_disclosures/>
