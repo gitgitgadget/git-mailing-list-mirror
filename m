@@ -1,156 +1,122 @@
-From: "McHenry, Matt" <mmchenry@carnegielearning.com>
-Subject: RE: recovering from "unordered stage entries in index" error
-Date: Fri, 22 May 2015 15:57:40 -0400
-Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F50D@exchdb01>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CAPc5daVFA-FKTSUCRmb=JUr=H9ECtK8nJB3nyxHprCcJ+0CHBQ@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v6 2/2] mergetools: add winmerge as a builtin tool
+Date: Fri, 22 May 2015 12:58:03 -0700
+Message-ID: <20150522195802.GA26066@gmail.com>
+References: <1432112843-973-1-git-send-email-davvid@gmail.com>
+ <1432112843-973-2-git-send-email-davvid@gmail.com>
+ <20150520130929.Horde.vYwOuIDRpi6hr15rOUbW1w7@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 22 21:57:49 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Phil Susi <phillsusi@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri May 22 21:58:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvt4m-0008OJ-E1
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:57:48 +0200
+	id 1Yvt5C-0000FN-Dl
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756792AbbEVT5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 15:57:44 -0400
-Received: from mail3.carnegielearning.com ([204.80.87.3]:9351 "EHLO
-	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756048AbbEVT5m (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 15:57:42 -0400
-X-ASG-Debug-ID: 1432324661-07bc7c14083e4a640001-QuoKaX
-Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id 8yb3rcFpkonALlQ0 (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Fri, 22 May 2015 15:57:41 -0400 (EDT)
-X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
-Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
- ([127.0.0.1]) with mapi; Fri, 22 May 2015 15:57:40 -0400
-Thread-Topic: recovering from "unordered stage entries in index" error
-X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
-Thread-Index: AdCUxQg2XvHUFH5NQM27KjkUXpaaKQAALRWg
-In-Reply-To: <CAPc5daVFA-FKTSUCRmb=JUr=H9ECtK8nJB3nyxHprCcJ+0CHBQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
-X-Barracuda-Connect: UNKNOWN[10.1.10.4]
-X-Barracuda-Start-Time: 1432324661
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: https://10.1.10.16:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at carnegielearning.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
-X-Barracuda-Spam-Score: 0.51
-X-Barracuda-Spam-Status: No, SCORE=0.51 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M, MAILTO_TO_SPAM_ADDR
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19204
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.00 MAILTO_TO_SPAM_ADDR    URI: Includes a link to a likely spammer email
-	0.50 BSF_RULE7568M          Custom Rule 7568M
+	id S1757411AbbEVT6K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 May 2015 15:58:10 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:33450 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756048AbbEVT6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 15:58:09 -0400
+Received: by padbw4 with SMTP id bw4so27536164pad.0
+        for <git@vger.kernel.org>; Fri, 22 May 2015 12:58:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=rilUYAqGHqhAOkbown83JK9on1etzZyh98aeqw8qHWs=;
+        b=KE0LGVG1QD/OXYc2SyqW77/lSmGIexqgl+Npc+iaIFnOds8vGFrT9/5REHM8DFqcNZ
+         7yeRpZAa3jotYXK2lF2UzZCl3kV6nSRiDQodJmTaMObO9zZ7C/1c4JL6A5V0BaONKNtD
+         B/QoPgoBZLN00SxXv1uZHYX2+9yB7QrXNFCxvWEQ2HWIUsuEMiqK57Dz/hT+QCXjkVIr
+         TP3BUPNBRAXA5qvbgM5cwFDby0SrJ68DTWiRRlt0aGSWGDIFN0V9gsSj8HWyKmRIilrH
+         3KVuuxQuGEZjVZFhEM7U/jHNinRR2cGJtcVAeY3ghfr4Px/eH8wWFGGPYso/c1+7Z5zZ
+         4M9A==
+X-Received: by 10.70.53.99 with SMTP id a3mr18454106pdp.169.1432324688646;
+        Fri, 22 May 2015 12:58:08 -0700 (PDT)
+Received: from gmail.com (remote-11.disneyanimation.com. [198.187.190.11])
+        by mx.google.com with ESMTPSA id b10sm2930179pdj.0.2015.05.22.12.58.06
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 22 May 2015 12:58:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20150520130929.Horde.vYwOuIDRpi6hr15rOUbW1w7@webmail.informatik.kit.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269754>
 
-DQoJWWVzLCB0aGF0IGRvZXMgdHVybiB1cCBzb21lIGludGVyZXN0aW5nIHN0dWZmLiAgSXQgbG9v
-a3MgbGlrZSB0aGUgcmVwb3NpdG9yeSBjb250YWlucyBzb21lIHBhdGhzIHdpdGggbm9uLUFTQ0lJ
-IGNoYXJhY3RlcnMsIGZvciBleGFtcGxlIHRoaXMgb25lIGhhcyBzb21lIGVuLWRhc2hlcyAoVSsy
-MDEzKSBpbiBpdHMgbmFtZToNCg0KJCBzdm4gbHMgLVIgc3ZuOi8vZGV2L3RydW5rL2N1cnJpY3Vs
-dW0vRmx1ZW5jeSB8IGdyZXAgTmluamFfX0JldGENCkh1cml4IHdvcmsvc291cmNlIGZyb20gTWF5
-IDIwMTQvRm9yX0FuZXNoLzA2IERlbGl2ZXJhYmxlcy9QaGFzZSAyL0ZUMyDigJMgTmluamEvRlQz
-IOKAkyBOaW5qYV9fQmV0YS56aXANCg0KJCBzdm4gbHMgLVIgc3ZuOi8vZGV2L3RydW5rL2N1cnJp
-Y3VsdW0vRmx1ZW5jeSB8IGdyZXAgTmluamFfX0JldGEgfCBvZCAtY3gNCjAwMDAwMDAgICBIICAg
-dSAgIHIgICBpICAgeCAgICAgICB3ICAgbyAgIHIgICBrICAgLyAgIHMgICBvICAgdSAgIHIgICBj
-DQogICAgICAgICAgIDc1NDggICAgNjk3MiAgICAyMDc4ICAgIDZmNzcgICAgNmI3MiAgICA3MzJm
-ICAgIDc1NmYgICAgNjM3Mg0KMDAwMDAyMCAgIGUgICAgICAgZiAgIHIgICBvICAgbSAgICAgICBN
-ICAgYSAgIHkgICAgICAgMiAgIDAgICAxICAgNCAgIC8NCiAgICAgICAgICAgMjA2NSAgICA3MjY2
-ICAgIDZkNmYgICAgNGQyMCAgICA3OTYxICAgIDMyMjAgICAgMzEzMCAgICAyZjM0DQowMDAwMDQw
-ICAgRiAgIG8gICByICAgXyAgIEEgICBuICAgZSAgIHMgICBoICAgLyAgIDAgICA2ICAgICAgIEQg
-ICBlICAgbA0KICAgICAgICAgICA2ZjQ2ICAgIDVmNzIgICAgNmU0MSAgICA3MzY1ICAgIDJmNjgg
-ICAgMzYzMCAgICA0NDIwICAgIDZjNjUNCjAwMDAwNjAgICBpICAgdiAgIGUgICByICAgYSAgIGIg
-ICBsICAgZSAgIHMgICAvICAgUCAgIGggICBhICAgcyAgIGUNCiAgICAgICAgICAgNzY2OSAgICA3
-MjY1ICAgIDYyNjEgICAgNjU2YyAgICAyZjczICAgIDY4NTAgICAgNzM2MSAgICAyMDY1DQowMDAw
-MTAwICAgMiAgIC8gICBGICAgVCAgIDMgICAgIDM0MiAyMDAgMjIzICAgICAgIE4gICBpICAgbiAg
-IGogICBhICAgLw0KICAgICAgICAgICAyZjMyICAgIDU0NDYgICAgMjAzMyAgICA4MGUyICAgIDIw
-OTMgICAgNjk0ZSAgICA2YTZlICAgIDJmNjENCjAwMDAxMjAgICBGICAgVCAgIDMgICAgIDM0MiAy
-MDAgMjIzICAgICAgIE4gICBpICAgbiAgIGogICBhICAgXyAgIF8gICBCDQogICAgICAgICAgIDU0
-NDYgICAgMjAzMyAgICA4MGUyICAgIDIwOTMgICAgNjk0ZSAgICA2YTZlICAgIDVmNjEgICAgNDI1
-Zg0KMDAwMDE0MCAgIGUgICB0ICAgYSAgIC4gICB6ICAgaSAgIHAgIFxuDQogICAgICAgICAgIDc0
-NjUgICAgMmU2MSAgICA2OTdhICAgIDBhNzANCjAwMDAxNTANCg0KCUluIHRoZSBvdXRwdXQgb2Yg
-J2dpdCBscy1maWxlcycsIHRob3NlIHBhdGhzIGFwcGVhciBxdW90ZWQgKHRoZXJlIGFyZSBhbG1v
-c3QgMTAwIG9mIHRoZW0pOg0KDQokIGdpdCBscy1maWxlcyB8IGdyZXAgTmluamFfX0JldGENCiJj
-dXJyaWN1bHVtL0ZsdWVuY3kvSHVyaXggd29yay9zb3VyY2UgZnJvbSBNYXkgMjAxNC9Gb3JfQW5l
-c2gvMDYgRGVsaXZlcmFibGVzL1BoYXNlIDIvRlQzIFwzNDJcMjAwXDIyMyBOaW5qYS9GVDMgXDM0
-MlwyMDBcMjIzIE5pbmphX19CZXRhLnppcCINCg0KJCBnaXQgbHMtZmlsZXMgfCBncmVwIF5cIiB8
-IHdjIC1sDQo4OQ0KDQoNCglJbiB0aGUgZGlmZiB5b3Ugc3VnZ2VzdGVkLCAnc29ydCcgcHV0cyB0
-aG9zZSBwYXRocyBhdCB0aGUgYWJzb2x1dGUgdG9wIG9mIHRoZSBsaXN0LCB3aGlsZSBwbGFpbiBv
-bGQgbHMtZmlsZXMgcHV0cyB0aGVtIGlubGluZSB3aXRoIHRoZSByZXN0IG9mIHRoZSBjb250ZW50
-cyBvZiB0aGUgY3VycmljdWx1bS8gc3ViZGlyOg0KDQokIGdyZXAgLW4gTmluamFfX0JldGEgUSBS
-DQpROjM2MTA5OiJjdXJyaWN1bHVtL0ZsdWVuY3kvSHVyaXggd29yay9zb3VyY2UgZnJvbSBNYXkg
-MjAxNC9Gb3JfQW5lc2gvMDYgRGVsaXZlcmFibGVzL1BoYXNlIDIvRlQzIFwzNDJcMjAwXDIyMyBO
-aW5qYS9GVDMgXDM0MlwyMDBcMjIzIE5pbmphX19CZXRhLnppcCINClI6ODk6ImN1cnJpY3VsdW0v
-Rmx1ZW5jeS9IdXJpeCB3b3JrL3NvdXJjZSBmcm9tIE1heSAyMDE0L0Zvcl9BbmVzaC8wNiBEZWxp
-dmVyYWJsZXMvUGhhc2UgMi9GVDMgXDM0MlwyMDBcMjIzIE5pbmphL0ZUMyBcMzQyXDIwMFwyMjMg
-TmluamFfX0JldGEuemlwIg0KDQoJQWxzbywgSSBoYXZlIHRoZSBjdXJyaWN1bHVtL0ZsdWVuY3kv
-IGRpcmVjdG9yeSBtYXJrZWQgYXMgc3BhcnNlLWNoZWNrb3V0Og0KDQokIGNhdCAuZ2l0L2luZm8v
-c3BhcnNlLWNoZWNrb3V0DQovKg0KIS9jdXJyaWN1bHVtL0ZsdWVuY3kvDQohL2N1cnJpY3VsdW0v
-UHJvYmxlbXMvbGlzcC8NCiEvY3VycmljdWx1bS9Qcm9ibGVtcy9saXNwX2VzLw0KIS9jdXJyaWN1
-bHVtL1Byb2JsZW1zL3Nkay9HZW9tZXRyeS8NCiEvY3VycmljdWx1bS9Qcm9ibGVtcy9zZGtfZXMv
-R2VvbWV0cnkvDQohL2N1cnJpY3VsdW0vUHJvYmxlbXMvc2RrL1Rlc3QtUXVlc3Rpb25zLw0KIS9j
-dXJyaWN1bHVtL1Byb2JsZW1zL3Nka19lcy9UZXN0LVF1ZXN0aW9ucy8NCiEvY3VycmljdWx1bS9Q
-cm9ibGVtcy9zZGsvR3JhbW1hci8NCg0KDQoJSG93ZXZlciwgSSB0cmllZCB0byBjb25zdHJ1Y3Qg
-YSB0ZXN0IGNhc2UgdGhhdCB3b3VsZCByZXByb2R1Y2UgdGhpcyB3aXRoIGEgc2ltcGxlIFNWTiBy
-ZXBvIGNvbnRhaW5pbmcgYSBmaWxlIGNyZWF0ZWQgYnkgJ3RvdWNoICJtYWtlLWdpdC1zdm4tJChl
-Y2hvIC1lICdcdTIwMWMnKXVuaGFwcHkkKGVjaG8gLWUgJ1x1MjAxZCcpIicsIGJ1dCBjb3VsZCBu
-b3QgZ2V0IGl0IHRvIGZhaWwuICBTbyB0aGVyZSBtYXkgYmUgc29tZXRoaW5nIG1vcmUgc3VidGxl
-IGdvaW5nIG9uIGhlcmUgLi4uDQoNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBG
-cm9tOiBqY2gyMzU1QGdtYWlsLmNvbSBbbWFpbHRvOmpjaDIzNTVAZ21haWwuY29tXSBPbiBCZWhh
-bGYgT2YgSnVuaW8gQw0KPiBIYW1hbm8NCj4gU2VudDogRnJpZGF5LCBNYXkgMjIsIDIwMTUgMTU6
-MjUNCj4gVG86IE1jSGVucnksIE1hdHQNCj4gQ2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCj4gU3Vi
-amVjdDogUmU6IHJlY292ZXJpbmcgZnJvbSAidW5vcmRlcmVkIHN0YWdlIGVudHJpZXMgaW4gaW5k
-ZXgiIGVycm9yDQo+IA0KPiBUaGUgbWVzc2FnZSAidW5vcmRlcmVkIHN0YWdlIGVudHJpZXMgaW4g
-aW5kZXgiIGNvbWVzIG9ubHkgd2hlbg0KPiB0d28gYWRqYWNlbnQgZW50cmllcyBpbiB0aGUgaW5k
-ZXggYXJlIGluIGEgd3Jvbmcgb3JkZXIsIGUuZy4gInRlc3QwIg0KPiBzaG91bGQgY29tZSBiZWZv
-cmUgInRlc3QxIiBidXQgc29tZWhvdyB0aGUgaW5kZXggcmVjb3JkcyB0aGVtDQo+IGluIHRoZSBv
-dGhlciB3YXkgYXJvdW5kLiBEb2luZyBzb21ldGhpbmcgbGlrZSB0aGlzOg0KPiANCj4gJCBnaXQg
-bHMtZmlsZXMgPlENCj4gJCBMQU5HPUMgTENfQUxMPUMgc29ydCBRID5SDQo+ICQgZGlmZiBRIFIN
-Cj4gDQo+IG1heSB0ZWxsIHlvdSB3aGljaCBlbnRyaWVzIGFyZSB3cm9uZywgZXZlbiB0aG91Z2gg
-aXQgd291bGRuJ3Qgc2hvdw0KPiB3aG8gbWFkZSB0aGVtIHdyb25nLg0KPiANCj4gKHBhcmRvbiB0
-b3AtcG9zdGluZywgb3ZlcmxvbmcgbGluZXMgYW5kIHR5cG9zOyBzZW50IGZyb20gR01haWwgd2Vi
-IFVJKQ0KPiANCj4gT24gVHVlLCBNYXkgMTksIDIwMTUgYXQgNjo0OCBBTSwgTWNIZW5yeSwgTWF0
-dA0KPiA8bW1jaGVucnlAY2FybmVnaWVsZWFybmluZy5jb20+IHdyb3RlOg0KPiA+DQo+ID4gICAg
-ICAgICBJJ3ZlIGp1c3QgdXBncmFkZWQgbXkgZ2l0IGZyb20gMi4wLjUgdG8gMi4zLjYsIGFuZCBJ
-J20gbm93DQo+IHVuYWJsZSB0byBydW4gJ2dpdCBzdm4gZmV0Y2gnIGluIG9uZSBvZiBteSByZXBv
-c2l0b3JpZXM6DQo+ID4NCj4gPiAkIGdpdCBzdm4gZmV0Y2gNCj4gPiBmYXRhbDogdW5vcmRlcmVk
-IHN0YWdlIGVudHJpZXMgaW4gaW5kZXgNCj4gPiB3cml0ZS10cmVlOiBjb21tYW5kIHJldHVybmVk
-IGVycm9yOiAxMjgNCj4gPg0KPiA+ICAgICAgICAgJ2dpdCBzdGF0dXMnIHNob3dzIGEgZmV3IHVu
-dHJhY2tlZCBmaWxlcyBidXQgaXMgb3RoZXJ3aXNlIGNsZWFuLg0KPiA+DQo+ID4gICAgICAgICBJ
-dCBsb29rcyBsaWtlIHRoaXMgY2hlY2sgd2FzIGludHJvZHVjZWQgaW4NCj4gMTU5OTlkMGJlODE3
-OWZiN2EyZTZlYWZiOTMxZDI1ZWQ2NWRmNTBhYSwgd2l0aCB0aGUgc3VtbWFyeQ0KPiAicmVhZF9p
-bmRleF9mcm9tKCk6IGNhdGNoIG91dCBvZiBvcmRlciBlbnRyaWVzIHdoZW4gcmVhZGluZyBhbiBp
-bmRleCBmaWxlIg0KPiAoZmlyc3QgYXBwZWFyaW5nIGluIDIuMi4wKS4NCj4gPg0KPiA+ICAgICAg
-ICAgTWFpbGluZyBsaXN0IGRpc2N1c3Npb24gbG9va2VkIGxpa2UgaXQgaW1wbGljYXRlZCB0aGly
-ZC1wYXJ0eQ0KPiB0b29scy4gIEkgZG9uJ3QgcmVjYWxsIHJ1bm5pbmcgYW55IG90aGVyIHRvb2xz
-IG9uIHRoaXMgcmVwbzsgaXQgZG9lc24ndCBkbw0KPiBtdWNoIGRheS10by1kYXkgb3RoZXIgdGhh
-biBhIGxvbmcgc2VyaWVzIG9mICdnaXQgc3ZuIGZldGNoJ2VzLiAgKEJ1dCBpdCdzDQo+IGJlZW4g
-YXJvdW5kIGZvciBhIGNvdXBsZSBvZiB5ZWFycywgc28gd2hvIGtub3dzLikNCj4gPg0KPiA+ICAg
-ICAgICAgQXQgYW55IHJhdGUsIHdoYXQgY2FuIEkgZG8gdG8gcmVjb3ZlciBmcm9tIHRoaXMgc2l0
-dWF0aW9uPyAgSQ0KPiB0cmllZCB0byBsb2NhdGUgYSBwYXRoIHdpdGggbXVsdGlwbGUgaW5kZXgg
-ZW50cmllcyBsaWtlIHRoaXMsIGJ1dCBnb3Qgbm8NCj4gcmVzdWx0czoNCj4gPg0KPiA+ICQgZ2l0
-IGxzLWZpbGVzIC1zIHwgY3V0IC1mIDItMTAwIHwgc29ydCB8IHVuaXEgLWMgfCBncmVwIC12ICde
-WyBcdF0qMSAnDQo+ID4NCj4gPiAgICAgICAgIChJIG9yaWdpbmFsbHkgcG9zdGVkIG9uIFNPIGF0
-DQo+IGh0dHA6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzAyNjQ4MjYvOyBJJ2xsIHVw
-ZGF0ZSB0aGF0IHdpdGggYW55DQo+IHNvbHV0aW9ucyB0aGF0IGNvbWUgdXAgaGVyZSwgdG8gZWFz
-ZSBmdXR1cmUgZ29vZ2xpbmcuKQ0KPiA+IC0tDQo+ID4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlz
-IGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGdpdCIgaW4NCj4gPiB0aGUgYm9keSBv
-ZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZw0KPiA+IE1vcmUgbWFqb3Jk
-b21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbA0K
+
+[just wrapping up the unaswered questions in this thread]
+
+On Wed, May 20, 2015 at 01:09:29PM +0200, SZEDER G=C3=A1bor wrote:
+>=20
+> Quoting David Aguilar <davvid@gmail.com>:
+>=20
+> >+translate_merge_tool_path() {
+> >+	# Use WinMergeU.exe if it exists in $PATH
+> >+	if type -p WinMergeU.exe >/dev/null 2>&1
+> >+	then
+> >+		printf WinMergeU.exe
+> >+		return
+> >+	fi
+> >+
+> >+	# Look for WinMergeU.exe in the typical locations
+> >+	winmerge_exe=3D"WinMerge/WinMergeU.exe"
+>=20
+> This variable is not used elsewhere, right?  Then you might want to
+> mark it as local to make this clear.
+
+
+"local" is a bash-ism, otherwise that'd be a good idea.
+
+
+> >+	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=
+=3D' |
+> >+		cut -d '=3D' -f 2- | sort -u)
+> >+	do
+> >+		if test -n "$directory" && test -x "$directory/$winmerge_exe"
+> >+		then
+> >+			printf '%s' "$directory/$winmerge_exe"
+> >+			return
+> >+		fi
+> >+	done
+> >+
+> >+	printf WinMergeU.exe
+>=20
+> Please pardon my ignorance and curiosity, but what is the purpose of
+> this last printf?
+> It outputs the same as in the case when winmerge is in $PATH at the
+> beginning of the function.  However, if we reach this printf, then
+> winmerge is not in $PATH, so what will be executed?
+
+
+This function maps what we call the tool (winmerge) to the actual execu=
+table.
+That last printf provides the following behavior:
+
+	$ git difftool -t winmerge HEAD~
+=09
+	Viewing (1/1): 'mergetools/winmerge'
+	Launch 'winmerge' [Y/n]:
+	The diff tool winmerge is not available as 'WinMergeU.exe'
+	fatal: external diff died, stopping at mergetools/winmerge
+
+It ensures that the user sees 'WinMergeU.exe' in the error message.
+That way the user can resolve the problem by e.g. adjusting their $PATH=
+,
+or realizing that they don't have WinMergeU.exe installed.
+--=20
+David
