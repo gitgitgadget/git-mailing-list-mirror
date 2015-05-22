@@ -1,175 +1,266 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] submodule documentation: Reorder introductory paragraphs
-Date: Fri, 22 May 2015 22:18:27 +0100
-Organization: OPDS
-Message-ID: <FB89514A616F4190A54B09E0520A7ADD@PhilipOakley>
-References: <1432323527-26868-1-git-send-email-sbeller@google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] log: do not shorten decoration names too early
+Date: Fri, 22 May 2015 14:21:16 -0700
+Message-ID: <xmqqmw0we2b7.fsf@gitster.dls.corp.google.com>
+References: <55534D95.60609@alum.mit.edu>
+	<xmqqwq0c9zc1.fsf@gitster.dls.corp.google.com>
+	<xmqqsib09z8y.fsf@gitster.dls.corp.google.com>
+	<xmqqoalo9sgc.fsf_-_@gitster.dls.corp.google.com>
+	<20150514063317.GA22509@peff.net>
+	<xmqq8ucr83h8.fsf@gitster.dls.corp.google.com>
+	<xmqqfv6yj0dl.fsf@gitster.dls.corp.google.com>
+	<20150514215453.GA16897@peff.net>
+	<xmqq7fsaiyoy.fsf@gitster.dls.corp.google.com>
+	<20150514223313.GA21149@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <jrnieder@gmail.com>, <git@vger.kernel.org>, <hvoigt@hvoigt.net>,
-	"Stefan Beller" <sbeller@google.com>
-To: "Stefan Beller" <sbeller@google.com>, <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 22 23:17:59 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 22 23:21:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvuKM-0001dS-U5
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 23:17:59 +0200
+	id 1YvuNr-00043q-Di
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 23:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946226AbbEVVRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 17:17:50 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:38870 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1946007AbbEVVRs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 17:17:48 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AlEgDJm19VPJBLFlxcgxCBMoZNbcM3BAQCgTpNAQEBAQEBBwEBAQFAASQbQQODWQUBAQEBAgEIAQEuHgEBIQUGAgMFAgEDDgcMJRQBBBoGBwMUBgESCAIBAgMBiBMMtwSdXos6hQWDHoEWBYZphGg1hnx5izyOIIQEg1mBBIEpHIFTPTGCRwEBAQ
-X-IPAS-Result: A2AlEgDJm19VPJBLFlxcgxCBMoZNbcM3BAQCgTpNAQEBAQEBBwEBAQFAASQbQQODWQUBAQEBAgEIAQEuHgEBIQUGAgMFAgEDDgcMJRQBBBoGBwMUBgESCAIBAgMBiBMMtwSdXos6hQWDHoEWBYZphGg1hnx5izyOIIQEg1mBBIEpHIFTPTGCRwEBAQ
-X-IronPort-AV: E=Sophos;i="5.13,478,1427756400"; 
-   d="scan'208";a="552051169"
-Received: from host-92-22-75-144.as13285.net (HELO PhilipOakley) ([92.22.75.144])
-  by out1.ip03ir2.opaltelecom.net with ESMTP; 22 May 2015 22:17:45 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1757737AbbEVVVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 17:21:22 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:32854 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757652AbbEVVVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 17:21:19 -0400
+Received: by igbpi8 with SMTP id pi8so1316794igb.0
+        for <git@vger.kernel.org>; Fri, 22 May 2015 14:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=QRvBQJpJVLqjJKJjvt1SJh1IBLC1gcNQCsRqlouku8Y=;
+        b=HaD0KuJRMex2iMFNYv5VPU1GzC8I+uFMdFm1/5gVpFh44tg5LqoTXIleN+eskD50wm
+         qvMcAgdQ37wVzb2Atyh0zmln1fSwnnLMcYEyvZzOy1vRTUN4/MFcw+TV7UccF4Oqeqcn
+         OMuKpdkGbVh6GL01HcTJDIQsOINHtUyhAVJR2xUKzb1tfz3vc4EMDyDnKIk368SDOP87
+         xXgnHtiiTEN2CoUMfiyvE5gNhrlEC/bAEjGSma/C7Kg4irqLTTZMuKCZYXbBWWrF/Fgm
+         e19Wc5RU8o8rlpwQ/ZZOs53tmS5K+qJ1c0L0irVbqiavQKxCqq5NewIRjHtgQXvwCikP
+         ZXxg==
+X-Received: by 10.50.43.196 with SMTP id y4mr8259647igl.14.1432329678256;
+        Fri, 22 May 2015 14:21:18 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:609e:6a22:2d9d:c8d5])
+        by mx.google.com with ESMTPSA id k186sm2657651ioe.37.2015.05.22.14.21.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 22 May 2015 14:21:17 -0700 (PDT)
+In-Reply-To: <20150514223313.GA21149@peff.net> (Jeff King's message of "Thu,
+	14 May 2015 18:33:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269763>
 
-From: "Stefan Beller" <sbeller@google.com>
-> It's better to start the man page with a description of what 
-> submodules
-> actually are instead of saying what they are not.
->
-> Reorder the paragraphs such that
-> the first short paragraph introduces the submodule concept,
-> the second paragraph highlights the usage of the submodule command,
-> the third paragraph giving background information,
-> and finally the fourth paragraph discusing alternatives such
-> as subtrees and remotes, which we don't want to be confused with.
->
-> This ordering deepens the knowledge on submodules with each paragraph.
-> First the basic questions like "How/what" will be answered, while the
-> underlying concepts will be taught at a later time.
->
-> Making sure it is not confused with subtrees and remotes is not really
-> enhancing knowledge of submodules itself, but rather painting the big
-> picture of git concepts, so you could also argue to have it as the 
-> second
-> paragraph. Personally I think this may confuse readers, specially
-> newcomers though.
->
-> Additionally to reordering the paragraphs, they have been slightly
-> reworded.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->
-> For now I used a part of Junios suggestion
->    Submodules are not to be confused with remotes, which are other
->    repositories of the same project;
->
-> I like the "are not to be confused" part, as they warn the reader
-> that there will be a paragraph not as concise but touching other
-> commands and topics.
->
-> Documentation/git-submodule.txt | 50 
-> ++++++++++++++++++-----------------------
-> 1 file changed, 22 insertions(+), 28 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt 
-> b/Documentation/git-submodule.txt
-> index 2c25916..d126c86 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -25,22 +25,17 @@ SYNOPSIS
->
-> DESCRIPTION
-> -----------
-> -Submodules allow foreign repositories to be embedded within
-> -a dedicated subdirectory of the source tree, always pointed
-> -at a particular commit.
-> +This command will inspect, update and manage submodules.
->
-> -They are not to be confused with remotes, which are meant mainly
-> -for branches of the same project; submodules are meant for
-> -different projects you would like to make part of your source tree,
-> -while the history of the two projects still stays completely
-> -independent and you cannot modify the contents of the submodule
-> -from within the main project.
-> -If you want to merge the project histories and want to treat the
-> -aggregated whole as a single project from then on, you may want to
-> -add a remote for the other project and use the 'subtree' merge 
-> strategy,
-> -instead of treating the other project as a submodule. Directories
-> -that come from both projects can be cloned and checked out as a whole
-> -if you choose to go that route.
-> +Submodules allow you to keep another Git repository in a subdirectory
-> +of your repository. The other repository has its own history, which 
-> does not
-> +interfere with the history of the current repository. This can be 
-> used to
-> +have external dependencies such as libraries for example.
-> +
-> +When cloning or pulling a repository containing submodules however,
-> +these will not be checked out by default; the 'init' and 'update'
-> +subcommands will maintain submodules checked out and at
-> +appropriate revision in your working tree.
->
-> Submodules are composed from a so-called `gitlink` tree entry
-> in the main repository that refers to a particular commit object
-> @@ -51,19 +46,18 @@ describes the default URL the submodule shall be 
-> cloned from.
-> The logical name can be used for overriding this URL within your
-> local repository configuration (see 'submodule init').
->
-> -This command will manage the tree entries and contents of the
-> -gitmodules file for you, as well as inspect the status of your
-> -submodules and update them.
-> -When adding a new submodule to the tree, the 'add' subcommand
-> -is to be used.  However, when pulling a tree containing submodules,
-> -these will not be checked out by default;
-> -the 'init' and 'update' subcommands will maintain submodules
-> -checked out and at appropriate revision in your working tree.
-> -You can briefly inspect the up-to-date status of your submodules
-> -using the 'status' subcommand and get a detailed overview of the
-> -difference between the index and checkouts using the 'summary'
-> -subcommand.
-> -
-> +Submodules are not to be confused with remotes, which are other
-> +repositories of the same project;
+Jeff King <peff@peff.net> writes:
 
-I said (22 May 2015 20:47):
-"if a nice well understood explanatory phrase can be found " - I'm happy 
-with yours. Many thanks
+> On Thu, May 14, 2015 at 03:25:33PM -0700, Junio C Hamano wrote:
+>
+>> @@ -90,6 +97,8 @@ static MAYBE_UNUSED elemtype *slabname## _at(struct slabname *s,	\
+>>  									\
+>>  	if (s->slab_count <= nth_slab) {				\
+>>  		int i;							\
+>> +		if (!add_if_missing)					\
+>> +			return NULL;					\
+>>  		s->slab = xrealloc(s->slab,				\
+>>  				   (nth_slab + 1) * sizeof(*s->slab));	\
+>>  		stat_ ##slabname## realloc++;				\
+>
+> This skips extending the list of slabs if we would go past the nth slab.
+> But we don't fill in each slab in the first place. I.e., we may have 10
+> slabs, but only s->slab[10] is non-NULL.
+>
+> A few lines below this, we xcalloc() it if necessary. I think that needs
+> to respect add_if_missing, as well.
 
->                                        submodules are meant for
-> +different projects you would like to make part of your source tree,
-> +while the history of the two projects still stays completely
-> +independent and you cannot modify the contents of the submodule
-> +from within the main project.
-> +If you want to merge the project histories and want to treat the
-> +aggregated whole as a single project from then on, you may want to
-> +add a remote for the other project and use the 'subtree' merge 
-> strategy,
-> +instead of treating the other project as a submodule. Directories
-> +that come from both projects can be cloned and checked out as a whole
-> +if you choose to go that route.
+Yup, thanks.
+
 >
-> COMMANDS
-> --------
-> -- 
-> 2.4.1.233.g3f9b614.dirty
+>>  void unuse_commit_buffer(const struct commit *commit, const void *buffer)
+>>  {
+>> -	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
+>> -	if (v->buffer != buffer)
+>> +	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+>> +	if (v && v->buffer != buffer)
+>>  		free((void *)buffer);
+>>  }
 >
-> --
-Philip 
+> I think you want:
+>
+>   if (!v || v->buffer != buffer)
+>
+> here. IOW, we free it only if it is not our cached buffer, and it cannot
+> be if we do not have a cached buffer. It may be easier to read by
+> flipping the logic:
+>
+>   if (v && v->buffer == buffer)
+> 	return; /* it is saved in the cache */
+>   free((void *)buffer);
+>
+> Or some variation on that.
+
+I ended up doing it as a variant of the latter, "free unless we have
+v->buffer pointing at it".
+
+Sorry for a long delay.
+
+-- >8 --
+Subject: [PATCH] commit-slab: introduce slabname##_peek() function
+
+There is no API to ask "Does this commit have associated data in
+slab?".  If an application wants to (1) parse just a few commits at
+the beginning of a process, (2) store data for only these commits,
+and then (3) start processing many commits, taking into account the
+data stored (for a few of them) in the slab, the application would
+use slabname##_at() to allocate a space to store data in (2), but
+there is no API other than slabname##_at() to use in step (3).  This
+allocates and wasts new space for these commits the caller is only
+interested in checking if they have data stored in step (2).
+
+Introduce slabname##_peek(), which is similar to slabname##_at() but
+returns NULL when there is no data already associated to it in such
+a use case.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ commit-slab.h | 34 +++++++++++++++++++++++++++++-----
+ commit.c      | 28 ++++++++++++++++++++--------
+ 2 files changed, 49 insertions(+), 13 deletions(-)
+
+diff --git a/commit-slab.h b/commit-slab.h
+index 375c9c7..9d12ce2 100644
+--- a/commit-slab.h
++++ b/commit-slab.h
+@@ -15,7 +15,13 @@
+  * - int *indegree_at(struct indegree *, struct commit *);
+  *
+  *   This function locates the data associated with the given commit in
+- *   the indegree slab, and returns the pointer to it.
++ *   the indegree slab, and returns the pointer to it.  The location to
++ *   store the data is allocated as necessary.
++ *
++ * - int *indegree_peek(struct indegree *, struct commit *);
++ *
++ *   This function is similar to indegree_at(), but it will return NULL
++ *   until a call to indegree_at() was made for the commit.
+  *
+  * - void init_indegree(struct indegree *);
+  *   void init_indegree_with_stride(struct indegree *, int);
+@@ -80,8 +86,9 @@ static MAYBE_UNUSED void clear_ ##slabname(struct slabname *s)		\
+ 	s->slab = NULL;							\
+ }									\
+ 									\
+-static MAYBE_UNUSED elemtype *slabname## _at(struct slabname *s,	\
+-				       const struct commit *c)		\
++static MAYBE_UNUSED elemtype *slabname## _at_peek(struct slabname *s,	\
++						  const struct commit *c, \
++						  int add_if_missing)   \
+ {									\
+ 	int nth_slab, nth_slot;						\
+ 									\
+@@ -90,6 +97,8 @@ static MAYBE_UNUSED elemtype *slabname## _at(struct slabname *s,	\
+ 									\
+ 	if (s->slab_count <= nth_slab) {				\
+ 		int i;							\
++		if (!add_if_missing)					\
++			return NULL;					\
+ 		s->slab = xrealloc(s->slab,				\
+ 				   (nth_slab + 1) * sizeof(*s->slab));	\
+ 		stat_ ##slabname## realloc++;				\
+@@ -97,10 +106,25 @@ static MAYBE_UNUSED elemtype *slabname## _at(struct slabname *s,	\
+ 			s->slab[i] = NULL;				\
+ 		s->slab_count = nth_slab + 1;				\
+ 	}								\
+-	if (!s->slab[nth_slab])						\
++	if (!s->slab[nth_slab]) {					\
++		if (!add_if_missing)					\
++			return NULL;					\
+ 		s->slab[nth_slab] = xcalloc(s->slab_size,		\
+ 					    sizeof(**s->slab) * s->stride);		\
+-	return &s->slab[nth_slab][nth_slot * s->stride];				\
++	}								\
++	return &s->slab[nth_slab][nth_slot * s->stride];		\
++}									\
++									\
++static MAYBE_UNUSED elemtype *slabname## _at(struct slabname *s,	\
++					     const struct commit *c)	\
++{									\
++	return slabname##_at_peek(s, c, 1);				\
++}									\
++									\
++static MAYBE_UNUSED elemtype *slabname## _peek(struct slabname *s,	\
++					     const struct commit *c)	\
++{									\
++	return slabname##_at_peek(s, c, 0);				\
+ }									\
+ 									\
+ static int stat_ ##slabname## realloc
+diff --git a/commit.c b/commit.c
+index 65179f9..5fb9496 100644
+--- a/commit.c
++++ b/commit.c
+@@ -244,7 +244,12 @@ void set_commit_buffer(struct commit *commit, void *buffer, unsigned long size)
+ 
+ const void *get_cached_commit_buffer(const struct commit *commit, unsigned long *sizep)
+ {
+-	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
++	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	if (!v) {
++		if (sizep)
++			*sizep = 0;
++		return NULL;
++	}
+ 	if (sizep)
+ 		*sizep = v->size;
+ 	return v->buffer;
+@@ -271,24 +276,31 @@ const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
+ 
+ void unuse_commit_buffer(const struct commit *commit, const void *buffer)
+ {
+-	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
+-	if (v->buffer != buffer)
++	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	if (!(v && v->buffer == buffer))
+ 		free((void *)buffer);
+ }
+ 
+ void free_commit_buffer(struct commit *commit)
+ {
+-	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
+-	free(v->buffer);
+-	v->buffer = NULL;
+-	v->size = 0;
++	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	if (v) {
++		free(v->buffer);
++		v->buffer = NULL;
++		v->size = 0;
++	}
+ }
+ 
+ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
+ {
+-	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
++	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+ 	void *ret;
+ 
++	if (!v) {
++		if (sizep)
++			*sizep = 0;
++		return NULL;
++	}
+ 	ret = v->buffer;
+ 	if (sizep)
+ 		*sizep = v->size;
+-- 
+2.4.1-449-g1f6c7df
