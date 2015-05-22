@@ -1,133 +1,164 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] send-email: Add simple email aliases format
-Date: Fri, 22 May 2015 12:53:03 -0400
-Message-ID: <CAPig+cTsygj1g=8sQ2b=1WYsmgAVyZmHCTW=NKTGuNyQwm3VFA@mail.gmail.com>
-References: <9f88da801466c83331d02262855e8bef4164e5eb.1432266004.git.allenbh@gmail.com>
-	<CAPig+cRLxk26p7DFaS+gRkKZxkRwf8g=4=j2QHX6AC2Uk5J++w@mail.gmail.com>
-	<CAJ80satbXXBYva9qrgR1oA_f7LAHUeAm21=R-mGsWx+sDoQ9sQ@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule
+ does not yield complete logs")
+Date: Fri, 22 May 2015 09:53:26 -0700
+Message-ID: <CAGZ79kbeATbzSGHd5ub-NphB8=hxKfzv40Z1HucsC_EtEotv2Q@mail.gmail.com>
+References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 18:53:30 2015
+Cc: Robert Dailey <rcdailey.lists@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	emma@gitforteams.com
+To: Roberto Tyley <roberto.tyley@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 22 18:53:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvqC6-0001he-Ak
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 18:53:11 +0200
+	id 1YvqCT-0001vo-I2
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 18:53:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946016AbbEVQxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 12:53:06 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:38300 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945937AbbEVQxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 12:53:04 -0400
-Received: by igcau1 with SMTP id au1so37129365igc.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 09:53:03 -0700 (PDT)
+	id S1946021AbbEVQx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 12:53:28 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:32775 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945995AbbEVQx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 12:53:27 -0400
+Received: by qgfa63 with SMTP id a63so11746767qgf.0
+        for <git@vger.kernel.org>; Fri, 22 May 2015 09:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Hg9VY9TvD7X6vw5CY6wOgfTGiJL7y4xp7rTdsYx+h1k=;
-        b=yds8VhbpBp7loameX6Nby/5moNkuGXve3WsIw0VaLnZn33P1KELF6BGl9728bVYDzG
-         nk2SAOS8lDWrZ9clL40lLmM2vEfgVRwFGIgVRJq7E/ECYDyuWrKQxalIbRFSPW6hd75s
-         W17/oh3MqMsmC1RLf1HQAsuVynvTpIEpMBdnv6V0JjvYTEOb96zXoOhU6w1m4mVrdiEp
-         6DagWmrqLmHle8kt++D6/zoHla7U6lC3CiYiLcDgxTkYF1WEloD9i/oik4tQnXXDgGRB
-         PgTcgBd7zG+4mfYhW2aFWDJ+Qz2ZYdDikg8a1fz7Sz2Ezg3sw0qf2lkOhOq/QBZ3dSrW
-         vLsQ==
-X-Received: by 10.42.67.80 with SMTP id s16mr10268708ici.25.1432313583714;
- Fri, 22 May 2015 09:53:03 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 22 May 2015 09:53:03 -0700 (PDT)
-In-Reply-To: <CAJ80satbXXBYva9qrgR1oA_f7LAHUeAm21=R-mGsWx+sDoQ9sQ@mail.gmail.com>
-X-Google-Sender-Auth: WsMHBEGlu8svQcT-mSyITZSqzaw
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=E3T0Uwl85oRUvWmCYY3GdygF4mhJs3aX84MNxST3zK8=;
+        b=n2oqloZ8zuftme0XHDUBBcfdPBpZ6gL+CothhjmRIPfgWthmMD1QSbpDtdfsPogxcN
+         CT6Ed2eQmsN/sqhHF48zLcfSxahMiXwI8BpuHy7n1enw+PBnGQKVdxbWitJDDOAMrrlC
+         kvUw5NJOFpLECM8o6D+uMHKBKwdVYTsqIicaeVlPeSNpx7OmzAGVmJse1jI/LRCHmcew
+         m80rLGpdbJVY4y0uu11XmEvquN2QMSZfHcVcyt5QIVLL9dqBcbWCipuBrNDMcAsdHZDG
+         VX7qNmjhOaujiiciCuMyesn/KXOBagkXbPy/7us9kjMXxNT40Elvu9qOurED5p8ZyMr1
+         5pFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=E3T0Uwl85oRUvWmCYY3GdygF4mhJs3aX84MNxST3zK8=;
+        b=f8G7zkHm4F2PKZuuXhJL1cInpZEi3Yb9e13JSBhzD/GF5osJ5geme+ce7tI3fdXp4v
+         /zndxLt1g44UFuzUjCSWKpVJUcYct89GykM4X8043Z/sTyDbFLoaIbJdVTno2KL3TtfH
+         zbcf/fWWg7a43xhQTnZATP0MU8jVMlFtQwOcj03x/er9F/NBTsdgqCC/wZFvWmFNx2Lp
+         3f4/AZPhnK8s9l0ppjKANXuVHDB3CtQ7rk631RAFXDWCPyNhTCqX2e7PqkiIPYC/iINl
+         Zflt4tkp9mbBiMO1sSNTpSdv68ZVN5JoLoUPBLF446zorQglHeBHl2H/RpCLR8h7NgIc
+         pH1A==
+X-Gm-Message-State: ALoCoQnuy7rvZYQQfsgWOW+VzUv/GuXx1UqsGMvvaSZkgOz9H5EghpoQ7kkgIeXdmEysjNBSQAHM
+X-Received: by 10.140.89.200 with SMTP id v66mr11916161qgd.50.1432313606523;
+ Fri, 22 May 2015 09:53:26 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Fri, 22 May 2015 09:53:26 -0700 (PDT)
+In-Reply-To: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269736>
 
-On Fri, May 22, 2015 at 8:12 AM, Allen Hubbe <allenbh@gmail.com> wrote:
-> On Fri, May 22, 2015 at 12:29 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, May 21, 2015 at 11:40 PM, Allen Hubbe <allenbh@gmail.com> wrote:
->>> +If the format is 'simple', then the alias file format is described below.
->>> +Descriptions of the other file formats to the following formats can be found in
->>> +the documentation of the email program of the same name.
+On Fri, May 22, 2015 at 1:33 AM, Roberto Tyley <roberto.tyley@gmail.com> wrote:
+> On Tuesday, 19 May 2015, Stefan Beller <sbeller@google.com> wrote:
+>> On Tue, May 19, 2015 at 12:29 PM, Robert Dailey
+>> <rcdailey.lists@gmail.com> wrote:
+>> > How do you send your patches inline?
+> [snip]
+>> This workflow discussion was a topic at the GitMerge2015 conference,
+>> and there are essentially 2 groups, those who know how to send email
+>> and those who complain about it. A solution was agreed on by nearly all
+>> of the contributors. It would be awesome to have a git-to-email proxy,
+>> such that you could do a git push <proxy> master:refs/for/mailinglist
+>> and this proxy would convert the push into sending patch series to the
+>> mailing list. It could even convert the following discussion back into
+>> comments (on Github?) but as a first step we'd want to try out a one
+>> way proxy.
 >>
->> The second sentence probably needs some proof-reading.
+>> Unfortunately nobody stepped up to actually do the work, yet :(
 >
-> Could you be more specific?
-
-Unable to parse "of the other file formats to the following formats".
-I'm guessing that the "to the following formats" portion doesn't
-belong.
-
-> It depends what we want to do with this parser: accept existing
-> sendmail aliases files in git, or enforce that git alias files are
-> usable for sendmail.
-
-Aside from these possibilities (likely or unlikely), there is also the
-issue of breaking expectations. Precedence for this style 'aliases'
-format was set decades ago by sendmail. People are familiar with it
-and understand its strengths and weaknesses. Even if documented as not
-being sendmail-compatible, because it's so similar to sendmail
-'aliases', people will expect it to work the same way, thus unless
-there's a good reason to diverge from that standard format, it makes
-sense to be compatible with it (even if only as a proper subset).
-
-> I really don't expect the second to ever happen.
-> The first, maybe, but only if the alias file is edited to remove
-> aliases of pipes and maildirs etc.  The second may not work if we have
-> comments to the right, or aliases of aliases, which sendmail does not
-> claim to support.
-
-It's not clear why you say that sendmail does not claim to support
-aliases of aliases. Although it's true that some sources, such as [1],
-fail to mention support explicitly, other more authoritative sources
-do[2]. Moreover, the 1993 "sendmail" book by Bryan Costales, with
-contributions from Eric Allman (the creator of sendmail), talks
-explicitly about expansion of aliases on the right-hand-side. Finally,
-since time immemorial (at least the early 1980's), every /etc/aliases
-file has contained the following mandatory entries:
-
-    postmaster: root
-    MAILER-DAEMON: postmaster
-
-which indicates clearly that alias expansion on the RHS is supported.
-
-[1]: http://www.feep.net/sendmail/tutorial/intro/aliases.html
-[2]: https://www.freebsd.org/cgi/man.cgi?query=aliases&sektion=5
-
-> I don't know what sendmail would actually do with a '#' elsewhere.  It
-> only talks about having '#' at the beginning of a line, or in the
-> alias name in quotes (which is not supported by this parser - proper
-> handling of quoted strings is not easy).  It doesn't say what sendmail
-> does with '#' if the name is not quoted, and it doesn't define a
-> meaning for '#' in the definition of an alias.  If these other cases
-> would be errors for sendmail, so what if they are not errors here?
-
-All the more reason to stick with the documented standard. When you
-diverge from it, you paint the format into a corner, thus closing the
-door on someone who wants to bring it more in line with the standard.
-
->> For the same reason, I'm not convinced that "simple" is a good name.
->> "sendmail" may indeed be a more appropriate name, even if it means
->> that this early implementation documents it as (currently) a subset of
->> the richer sendmail/postfix 'aliases' format. By doing so, we leave
->> the door open so a future person can implement additional features to
->> bring it closer to that format.
 >
-> Or, a future person can write a sendmail parser that is closer to that format.
+> Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
+> one-way GitHub PR -> Mailing list tool, called submitGit:
 
-Yes, but git maintainers must continue to support your "simple" format
-even if someone comes along later and adds a more proper sendmail-like
-format alongside. That's why these questions and observations are
-being raised now: not to string you along and not because your
-proposal is necessarily undesirable, but because once such support
-lands in git, then it remains indefinitely and must be supported for
-the life of the project. Long-term project health is important, which
-is why it's desirable to consider these issues early, and to avoid
-painting ourselves into a corner.
+Cool!
+I will try that with the next patch I want to submit.
+
+>
+> https://submitgit.herokuapp.com/
+>
+> Here's what a user does:
+>
+> * create a PR on https://github.com/git/git
+
+When looking at https://github.com/git/git
+
+    Git Source Code Mirror - This is a publish-only repository and all
+    pull requests are ignored. Please follow Documentation/SubmittingPatches
+    procedure for any of your improvements.
+
+Once this tool has proven to be usable (in a few days?), we want to reword that.
+
+    Guidelines for submitting patches to Git. Half this document covers how
+    to send a patch via email without it getting corrupted - which submitGit
+    will do for you - but the other half is very useful, giving guidance on what
+    good patches for the Git project should look like.
+
+If it turns out this tool is widely used we may want to consider splitting up
+SubmittingPatches inside git.git into two files, one dealing with the contents
+i.e. How to write good, reviewable commits, following the coding guide lines
+and having a proper sign off, and another document on how to get your
+contributions
+upstream (email, pull request, ...)
+
+> * logs into https://submitgit.herokuapp.com/ with GitHub auth
+> * selects their PR on https://submitgit.herokuapp.com/git/git/pulls
+> * gets submitGit to email the PR as patches to themselves, in order to
+> check it looks ok
+> * when they're ready, get submitGit to send it to the mailing list on
+> their behalf
+>
+> All discussion of the patch *stays* on the mailing list - I'm not
+> attempting to change
+> anything about the Git community process, other than make it easier
+> for a wider group
+> people to submit patches to the list.
+>
+> For hard-core contributors to Git, I'd imagine that git format-patch &
+> send-email
+> remain the fastest way to do their work. But those tools are _unfamiliar to the
+> majority of Git users_ - so submitGit aims to cater to those users, because they
+> definitely have valuable contributions to make, which would be tragic
+> to throw away.
+>
+> I've been working on submitGit in my spare time for the past few
+> weeks, and there
+> are still features I plan to add (like guiding the user to more
+> 'correct' word wrapping,
+> sign-off, etc), but given this discussion, I wanted to chime in and
+> let people know
+> what's here so far. It would be great if people could take the time to
+> explore the tool
+> (you don't have to raise a git/git PR in order to try sending one *to
+> yourself*, for
+> instance) and give feedback on list, or in GitHub issues:
+>
+> https://github.com/rtyley/submitgit/issues
+>
+> I've been lucky enough to discuss the ideas around submitGit with a
+> few people at
+> the Git-Merge conf, so thanks to Peff, Thomas Ferris Nicolaisen, and Emma Jane
+> Hogbin Westby for listening to me (not to imply their endorsement of
+> what I've done,
+> just thanks for talking about it!).
+
+Wow!
+Thanks for doing this,
+Stefan
+
+>
+> Roberto
