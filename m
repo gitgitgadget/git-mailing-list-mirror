@@ -1,7 +1,7 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule does not yield complete logs")
-Date: Fri, 22 May 2015 18:14:07 +0200
-Message-ID: <vpqd21slhdc.fsf@anie.imag.fr>
+Date: Fri, 22 May 2015 09:27:57 -0700
+Message-ID: <xmqq4mn4fugi.fsf@gitster.dls.corp.google.com>
 References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -13,100 +13,79 @@ Cc: Stefan Beller <sbeller@google.com>,
 	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
 	emma@gitforteams.com
 To: Roberto Tyley <roberto.tyley@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 18:14:27 2015
+X-From: git-owner@vger.kernel.org Fri May 22 18:28:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvpaa-0002oJ-1f
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 18:14:24 +0200
+	id 1Yvpnp-000319-JZ
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 18:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757465AbbEVQOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 12:14:20 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39416 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757136AbbEVQOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 12:14:18 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4MGE6J8011588
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 22 May 2015 18:14:06 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4MGE7Lr031311;
-	Fri, 22 May 2015 18:14:07 +0200
+	id S1945953AbbEVQ2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 12:28:01 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:34524 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945937AbbEVQ17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 12:27:59 -0400
+Received: by ieczm2 with SMTP id zm2so35079803iec.1
+        for <git@vger.kernel.org>; Fri, 22 May 2015 09:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=1Pwn29nyKV2S3ClnFWj+0+XwgXrDuhnDUbihicTI6bc=;
+        b=IOF7n9AtvUocq5jENXZOhLeLta+VB2iDaDx8yWGdgKXpuFdO1l1w/AmBkrPoN6skPI
+         Abas+x3OeaBiSUvaeLrF3/Lo+XrTvUhj+MEiekDwuagWxK0OFQy1wRqWeoRYd7J80aAf
+         OrmzOeNkg0p+24qlh7OwGBTPdx3aufySWX1/Z7Cs1Tor0az2NS86tlMJFJd4SxzGpA80
+         BEVNuDl+SO0tyJZEb0iK1V0tvSEynPotEXKlM9ocqDBsPNNpwQZJI6EZMMTYFav5JRMP
+         3fPieWiLnHKklL22O4mUAhD30+oP9vS4ZJD/kaMPCSjEwgDYpV0G+osVapk8X9vLwGTI
+         wj9w==
+X-Received: by 10.50.79.196 with SMTP id l4mr6791586igx.48.1432312078822;
+        Fri, 22 May 2015 09:27:58 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:19:f810:32d8:695f])
+        by mx.google.com with ESMTPSA id i4sm4271765igm.2.2015.05.22.09.27.58
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 22 May 2015 09:27:58 -0700 (PDT)
 In-Reply-To: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
 	(Roberto Tyley's message of "Fri, 22 May 2015 09:33:20 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 22 May 2015 18:14:07 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4MGE6J8011588
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1432916049.43275@jU29hI0nOH0XeRG843ZZQA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269733>
 
 Roberto Tyley <roberto.tyley@gmail.com> writes:
 
-> Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
-> one-way GitHub PR -> Mailing list tool, called submitGit:
+> Here's what a user does:
 >
-> https://submitgit.herokuapp.com/
+> * create a PR on https://github.com/git/git
+> * logs into https://submitgit.herokuapp.com/ with GitHub auth
 
-This is absolutely awsome. A few thoughts after testing the system to
-send two patches:
+Hmm, this seems to request too much authorization, though.
 
-* This is awesome :-). Really.
+    Repositories
+    Public only
+    This application will be able to read and write all public repo
+    data. This includes the following:
 
-* I found no way to specify a version like [PATCH v2 ...]. Similarly,
-  there could be a way to say [RFC/PATCH ...].
+    Code
+    Issues
+    Pull requests
+    Wikis
+    Settings
+    Webhooks and services
+    Deploy keys
 
-* I'm used to 'git send-email' and I have an alias to add the --signoff
-  for me. I just sent a series where I forgot the signed-off-by. The
-  system could warn if I didn't signoff.
+I really wanted to try this out, but I do not think, as the owner of
+a reasonably important repository, it would be irresponsible for me
+to grant write access to Code or Settings for my primary GitHub
+account.  Also I think you reject an account that is too young (I
+found out about submitGit via your comment on a pull request to
+git/git and read its source before reading your message I am
+responding to, and that was the impression I got from the recent log
+messages there), so I cannot create and try with a throw-away
+account, either.
 
-* I had a text+subject for the pull-request, I was expecting a cover
-  letter email with them.
-
-* A simple way to add "below-triple-dash" comments would be cool. For
-  now, I guess we can do this by having the --- within the commit
-  message.
-
-* The explanation on how to register one's email were unclear to me. It
-  told me that I had to register my email without telling how, and that
-  I had to send the series to myself before. Once I sent the series to
-  myself I got better explanation, hence reversing the order of the
-  advices would already be an improvement.
-
-* The link to the original PR could be more visible. For now, I can get
-  to the PR by clicking the octocat icon, but perhaps a text "click here
-  to view the PR on GitHub" or a link on the whole title would have been
-  easier to find.
-
-* I missed a way to specify In-reply-to: to follow up to my previous
-  version.
-
-* The submitGit link on the top left does nothing for me. I would expect
-  to come back to the home page of submitGit.
-
-* For completess: Junio just noticed in another thread that the patch
-  order is reversed, PATCH 2/2 predates PATCH 1/2 and the second is
-  In-Reply-To: the first.
-
-* I was about to suggest that you post a comment on the GitHub pull
-  request when sending the email, but it is already the case, with a
-  link to Gmane. Very very cool.
-
-* Did I mention how awesome the application is already? 'Cause it really
-  is!
-
-Thanks a lot for doing this!
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+That would mean that I cannot join the fun X-<.
