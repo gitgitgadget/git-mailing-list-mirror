@@ -1,88 +1,242 @@
-From: Allen Hubbe <allenbh@gmail.com>
-Subject: Re: [PATCH v4] send-email: Add simple email aliases format
-Date: Fri, 22 May 2015 11:39:39 -0400
-Message-ID: <CAJ80sateODWDUvkAf9YbMMSYv_-=nKnBopGjgDFFSkVHuQJJMQ@mail.gmail.com>
-References: <9f88da801466c83331d02262855e8bef4164e5eb.1432266004.git.allenbh@gmail.com>
-	<CAPig+cRLxk26p7DFaS+gRkKZxkRwf8g=4=j2QHX6AC2Uk5J++w@mail.gmail.com>
-	<CAJ80satbXXBYva9qrgR1oA_f7LAHUeAm21=R-mGsWx+sDoQ9sQ@mail.gmail.com>
-	<xmqqlhggfz97.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] rebase -i: demonstrate incorrect behavior of post-rewrite
+Date: Fri, 22 May 2015 08:44:51 -0700
+Message-ID: <xmqqh9r4fwgc.fsf@gitster.dls.corp.google.com>
+References: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
+	<0000014d7bc3f7a5-332dd95f-907f-4f46-a5d6-6b9e5dc70b0a-000000@eu-west-1.amazonses.com>
+	<xmqq1ti8heu9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 22 17:39:45 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri May 22 17:45:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvp33-0006AC-88
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 17:39:45 +0200
+	id 1Yvp86-0001FZ-LU
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 17:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964818AbbEVPjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 11:39:40 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:34373 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756486AbbEVPjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 11:39:40 -0400
-Received: by wghq2 with SMTP id q2so21503739wgh.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 08:39:39 -0700 (PDT)
+	id S1758058AbbEVPoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 11:44:54 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:37692 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757728AbbEVPox (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 11:44:53 -0400
+Received: by igbsb11 with SMTP id sb11so35681547igb.0
+        for <git@vger.kernel.org>; Fri, 22 May 2015 08:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=O851NfyHlwPwNMUJb1rFxNuz5hXTyDN3Xn5vGAEbX/4=;
-        b=XsKwTXWFPu/Yh9ATmJRhokwco/eW/ZmHvs2Ze6KXbCyMq0sJ1swXAvH/PNGLFoUpNc
-         xGEj1cZYxtF1VmsYI/mJoNfP5cp5lQ2NE7PxllKzUGeZqkcFVfRf5LePIDz2+DE3FXqv
-         rN8xYlbxMZMbtgp8qpxCdgVmiPR/huz47/ruTPCnayNZZLsH78Ii1Sbq94vnUCBg0778
-         Ihq6afKQlzGFzhQeO9JwLK0VZ0V6DwnmM2U09eP2sqnYQspk9aeVmH/RLFHuWvLgqUEN
-         YCwyHUex6SrS/KrOsa5cGtrrShQxIMIZwJIjmSMwnE0Rw+tIxkm6YU3HiHGhM4gTVdKI
-         RvgA==
-X-Received: by 10.180.206.229 with SMTP id lr5mr8850055wic.86.1432309179095;
- Fri, 22 May 2015 08:39:39 -0700 (PDT)
-Received: by 10.28.59.4 with HTTP; Fri, 22 May 2015 08:39:39 -0700 (PDT)
-In-Reply-To: <xmqqlhggfz97.fsf@gitster.dls.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=iFtr5EUpdqR0FHnyVk/eC2t4Ml0dxXlvsotJGMtcNNc=;
+        b=qo5e59jZD+PH0rjhG1SJRdi25IG5tp4AiyXJ5xS0VKKxPrgCizHL5ti97RW+awyAYa
+         SKFIqPkncbVvd1mrwg6xZcq/S+HghO83O2Qnz1zw4cB38lMN0ucXlbmPYWumInlKHtBT
+         /Ij7NXm0jcXufREL5Vgrh0UIk6FnDmRXKCMPx2fQU0ijM9bD0GEfA/9H/tvJjvLe8B1n
+         FjO1poz1zZ2veha7gFkDqxJ9wb85tv9pLqI6Q8JYkdmLvtZqcBZYk99uZM0LGHJC+7PV
+         huXFh+lVaiNhrWHJuC/PgpyBvqWyRMtOcTAUPh0F09qYKnSnji5J98dSpimXuoqPcvrD
+         N/tA==
+X-Received: by 10.50.57.112 with SMTP id h16mr6418714igq.35.1432309492688;
+        Fri, 22 May 2015 08:44:52 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:19:f810:32d8:695f])
+        by mx.google.com with ESMTPSA id a74sm2021070ioe.36.2015.05.22.08.44.51
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 22 May 2015 08:44:52 -0700 (PDT)
+In-Reply-To: <xmqq1ti8heu9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 22 May 2015 07:22:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269729>
 
-On Fri, May 22, 2015 at 10:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Allen Hubbe <allenbh@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> +	cat >expected.data <<EOF &&
+>> +$(git rev-parse C) $(git rev-parse HEAD^)
+>> +$(git rev-parse D) $(git rev-parse HEAD)
+>> +EOF
 >
->> It depends what we want to do with this parser: accept existing
->> sendmail aliases files in git, or enforce that git alias files are
->> usable for sendmail.  I really don't expect the second to ever happen.
->> The first, maybe, but only if the alias file is edited to remove
->> aliases of pipes and maildirs etc.  The second may not work if we have
->> comments to the right, or aliases of aliases, which sendmail does not
->> claim to support.
->
-> Let me step back a bit.  Earlier you said your aim is not to use an
-> alias file you already have and use with the MUA/MTA, but to have a
-> collection of aliases to use with git-send-email only.  Is there a
-> reason to add support for a new format (whether it is compatible to
-> or subset of postfix/sendmail format, or a totally new one) for that
-> goal?  What makes the existing formats unsuitable?
->
+> By using a dash to start the here-document like this:
+> ...
 
-It's just a matter of personal preference what is suitable or not, for
-me, in my environment, etc.  Is there a reason I should use the alias
-format of some email client, if I don't use that email client?
+Sorry, I should have checked, as I know you know that <<-EOF thing.
+Your patch is done this way to be consistent with existing ones.
 
-I'm not trying to force anything on anyone else by offering this, just
-another option that might be suitable for someone else, in their
-environment, as it is in mine.  People who don't like it can choose a
-different option.  People who don't like any of the options can write
-their own like I did, or is that not allowed for some reason?
+I'll do a separate patch to clean them all up on top.
 
-I've already shown that I am willing to change the name, write the
-documentation, write the tests, modify the syntax, and so on.  I've
-done the work, from +6 lines to +57 lines, as requested.  I'm not
-looking forward to v5, v6... v10 of what was a really really simple
-patch.  If you don't like it, please don't string me along.  This is
-not my job.  If you think the patch is generally ok, but could be
-improved to be accepted, then let's together try to make v5 the last.
+Thanks.
+
+-- >8 --
+Subject: [PATCH] t5407: use <<- to align the expected output
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5407-post-rewrite-hook.sh | 80 ++++++++++++++++++++++----------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
+
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index 06ffad6..7a48236 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -61,10 +61,10 @@ test_expect_success 'git rebase' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD^)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -77,9 +77,9 @@ test_expect_success 'git rebase --skip' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -89,9 +89,9 @@ test_expect_success 'git rebase --skip the last one' '
+ 	test_must_fail git rebase --onto D A &&
+ 	git rebase --skip &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse E) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse E) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -103,10 +103,10 @@ test_expect_success 'git rebase -m' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD^)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -119,9 +119,9 @@ test_expect_success 'git rebase -m --skip' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -148,10 +148,10 @@ test_expect_success 'git rebase -i (unchanged)' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD^)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -163,9 +163,9 @@ test_expect_success 'git rebase -i (skip)' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -177,10 +177,10 @@ test_expect_success 'git rebase -i (squash)' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -189,10 +189,10 @@ test_expect_success 'git rebase -i (fixup without conflict)' '
+ 	clear_hook_input &&
+ 	FAKE_LINES="1 fixup 2" git rebase -i B &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -205,10 +205,10 @@ test_expect_success 'git rebase -i (double edit)' '
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD^)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+@@ -222,10 +222,10 @@ test_expect_success 'git rebase -i (exec)' '
+ 	test_must_fail git rebase --continue &&
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+-	cat >expected.data <<EOF &&
+-$(git rev-parse C) $(git rev-parse HEAD^)
+-$(git rev-parse D) $(git rev-parse HEAD)
+-EOF
++	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
++	$(git rev-parse D) $(git rev-parse HEAD)
++	EOF
+ 	verify_hook_input
+ '
+ 
+-- 
+2.4.1-439-gcfa393f
