@@ -1,94 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] rebase -i: demonstrate incorrect behavior of
- post-rewrite
-Date: Fri, 22 May 2015 13:15:50 +0000
-Message-ID: <0000014d7bc3f7a5-332dd95f-907f-4f46-a5d6-6b9e5dc70b0a-000000@eu-west-1.amazonses.com>
-References: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 02/14] pull: pass verbosity, --progress flags to fetch and merge
+Date: Fri, 22 May 2015 21:38:17 +0800
+Message-ID: <CACRoPnRR60DK7tE7yenSX0wouGSQDMDpcphjCdCr-GGdkfPrYQ@mail.gmail.com>
+References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
+	<1431961571-20370-3-git-send-email-pyokagan@gmail.com>
+	<4213f4fa8fb52fb020c2e9b5d78fbf7b@www.dscho.org>
+	<CACRoPnRVcjcegRU8J6a=X6uN=b7fhJyD9=js4LqJ7ORX6gT=jg@mail.gmail.com>
+	<f90387a786c1e0f4287c9fee405f8e2f@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_8_693652891.1432300550013"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 22 15:35:28 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 22 15:38:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvn6e-0001F3-Gj
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:35:20 +0200
+	id 1Yvn9h-00030w-Hk
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946140AbbEVNfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 09:35:15 -0400
-Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:56787
-	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1946125AbbEVNfN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 09:35:13 -0400
-X-Greylist: delayed 1161 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2015 09:35:13 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1432300550;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Date:Feedback-ID;
-	bh=Aw7Z8HV9lyOOrXYY1xFtHx4eF5+h1X2zNqXxxsv4xlE=;
-	b=LrXaGbuMqfzArtWTvnZg2PH4CMCjf5GnM00YYxfvE59EmdC0L7xFTiBoTQDUxHvO
-	9yuMoeKGe5KedlK78WBdh5cjHxQqHmEvckMVRdBYdmYZr67XCWKVVvYvQ3Smq+j4XXD
-	PlnBhp9swo5RJVVF0fdyuBb01YYqr51l8V+Ilo5M=
-In-Reply-To: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
-X-SES-Outgoing: 2015.05.22-54.240.6.243
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S932478AbbEVNiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 09:38:23 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:33005 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932408AbbEVNiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 09:38:21 -0400
+Received: by lami4 with SMTP id i4so12846932lam.0
+        for <git@vger.kernel.org>; Fri, 22 May 2015 06:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=9hpSBC1gW8VFmJxAydD0hiwPM4XTXywuOmcHr03qdRU=;
+        b=P7OI98ZuHGBU+PN4RFQqWRSteehw7p7lPFXYGzxo8P7KhKa98+bq4XtStQtHNq3n4T
+         GuozTrw3hUdJpp+Gw6qRHkrBk6UYF8PQtXb5p0zfuNgBLCPi6DuaGyBpS/WxQif6fq/e
+         XXoSKOGQO5BRZ2EmXBJzR7h+CitLaMRz26iciB6Pk98KNiRrnC7B3TBw+nkAopo68owL
+         Xo+z/GHuwI8ditW1ohbWleQIVBOewq+oSZqrPIHMtoRNd8nmL6Ver1GnpE+sSyQ7Qp7N
+         nwd1i0R1/AAxXzAe9PLSQS+Bhwjq9CmcgqVaxfE8rleIGuzE8owzBmwBbwNr33diUSBL
+         KTHg==
+X-Received: by 10.153.6.6 with SMTP id cq6mr4553769lad.74.1432301898035; Fri,
+ 22 May 2015 06:38:18 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Fri, 22 May 2015 06:38:17 -0700 (PDT)
+In-Reply-To: <f90387a786c1e0f4287c9fee405f8e2f@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269715>
 
-------=_Part_8_693652891.1432300550013
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Hi Johannes,
 
-The 'exec' command is sending the current commit to stopped-sha, which is
-supposed to contain the original commit (before rebase). As a result, if
-an 'exec' command fails, the next 'git rebase --continue' will send the
-current commit as <old-sha1> to the post-rewrite hook.
+On Thu, May 21, 2015 at 11:59 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Paul,
+>
+> On 2015-05-21 11:48, Paul Tan wrote:
+>> Unfortunately, the usage of strbuf means that we lose the ability to
+>> know if an option was not provided at all (the value is NULL). This is
+>> important as some of these options are used to override the default
+>> configured behavior.
+>
+> Would this not be implied by the strbuf's len being 0?
 
-The test currently fails with :
+You're right >.< I think I need more coffee as well ;-)
 
---- expected.data       2015-05-21 17:55:29.000000000 +0000
-+++ [...]post-rewrite.data      2015-05-21 17:55:29.000000000 +0000
-@@ -1,2 +1,3 @@
- 2362ae8e1b1b865e6161e6f0e165ffb974abf018 488028e9fac0b598b70cbeb594258a917e3f6fab
-+488028e9fac0b598b70cbeb594258a917e3f6fab 488028e9fac0b598b70cbeb594258a917e3f6fab
- babc8a4c7470895886fc129f1a015c486d05a351 8edffcc4e69a4e696a1d4bab047df450caf99507
----
- t/t5407-post-rewrite-hook.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+It would mean adding STRBUF_INIT's to all of the option variables, but
+I don't think it is a problem. strbufs it is, then.
 
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index ea2e0d4..53a4062 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -212,4 +212,21 @@ EOF
- 	verify_hook_input
- '
- 
-+test_expect_failure 'git rebase -i (exec)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="edit 1 exec_false 2" git rebase -i B &&
-+	echo something >bar &&
-+	git add bar &&
-+	# Fails because of exec false
-+	test_must_fail git rebase --continue &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
- test_done
+>>> You might also want to verify that arg is `NULL` when `unset != 0`. Something like this:
+>>
+>> Hmm, would there be a situation where arg is NULL when `unset != 0`?
+>
+> I forgot to say that my suggestion was purely meant as defensive coding. Yes, `arg` *should* be `NULL` when `unset != 0`. Should ;-)
+>
+> By the way, just to make sure: My comments and suggestions are no demands; you should feel very free to reject them when you feel that your code is better without the suggested changes. I am just trying to be helpful.
 
+Thanks, your comments have been really helpful. I really do appreciate it :).
 
----
-https://github.com/git/git/pull/138
-------=_Part_8_693652891.1432300550013--
+Regards,
+Paul
