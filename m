@@ -1,76 +1,94 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule
- does not yield complete logs")
-Date: Fri, 22 May 2015 15:25:14 +0200
-Message-ID: <555F2E3A.1040600@atlas-elektronik.com>
-References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2] rebase -i: demonstrate incorrect behavior of
+ post-rewrite
+Date: Fri, 22 May 2015 13:15:50 +0000
+Message-ID: <0000014d7bc3f7a5-332dd95f-907f-4f46-a5d6-6b9e5dc70b0a-000000@eu-west-1.amazonses.com>
+References: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Robert Dailey <rcdailey.lists@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	"emma@gitforteams.com" <emma@gitforteams.com>
-To: Roberto Tyley <roberto.tyley@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 22 15:31:22 2015
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_8_693652891.1432300550013"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 22 15:35:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvn2n-0007Nu-36
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:31:21 +0200
+	id 1Yvn6e-0001F3-Gj
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161118AbbEVNbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 09:31:16 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:14530 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422688AbbEVNbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 09:31:15 -0400
-X-Greylist: delayed 347 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2015 09:31:15 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id B4CC710915;
-	Fri, 22 May 2015 15:25:27 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QPQ5nodpeHxr; Fri, 22 May 2015 15:25:15 +0200 (CEST)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Fri, 22 May 2015 15:25:15 +0200 (CEST)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 967ED2716C;
-	Fri, 22 May 2015 15:25:14 +0200 (CEST)
-Received: from [10.200.54.122] (10.200.54.122) by MSSRVS1.atlas.de
- (10.200.101.71) with Microsoft SMTP Server id 8.3.327.1; Fri, 22 May 2015
- 15:25:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
-OpenPGP: id=2DF5E01B09C37501BCA99666829B49C5922127AF
+	id S1946140AbbEVNfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 09:35:15 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:56787
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1946125AbbEVNfN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 09:35:13 -0400
+X-Greylist: delayed 1161 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2015 09:35:13 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1432300550;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Date:Feedback-ID;
+	bh=Aw7Z8HV9lyOOrXYY1xFtHx4eF5+h1X2zNqXxxsv4xlE=;
+	b=LrXaGbuMqfzArtWTvnZg2PH4CMCjf5GnM00YYxfvE59EmdC0L7xFTiBoTQDUxHvO
+	9yuMoeKGe5KedlK78WBdh5cjHxQqHmEvckMVRdBYdmYZr67XCWKVVvYvQ3Smq+j4XXD
+	PlnBhp9swo5RJVVF0fdyuBb01YYqr51l8V+Ilo5M=
+In-Reply-To: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2015.05.22-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269714>
 
-Am 22.05.2015 um 10:33 schrieb Roberto Tyley:
-> [...]
-> Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
-> one-way GitHub PR -> Mailing list tool, called submitGit:
-> 
-> https://submitgit.herokuapp.com/
+------=_Part_8_693652891.1432300550013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
-That looks really promising!
-I wonder if that wouldn't make a good addition to github's repository ui
-in general ?
+The 'exec' command is sending the current commit to stopped-sha, which is
+supposed to contain the original commit (before rebase). As a result, if
+an 'exec' command fails, the next 'git rebase --continue' will send the
+current commit as <old-sha1> to the post-rewrite hook.
 
-Thanks,
-  Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: Diplomacy: The patriotic art of lying for one's country.
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')" 
-GPG Key fingerprint = 2DF5 E01B 09C3 7501 BCA9  9666 829B 49C5 9221 27AF
+The test currently fails with :
+
+--- expected.data       2015-05-21 17:55:29.000000000 +0000
++++ [...]post-rewrite.data      2015-05-21 17:55:29.000000000 +0000
+@@ -1,2 +1,3 @@
+ 2362ae8e1b1b865e6161e6f0e165ffb974abf018 488028e9fac0b598b70cbeb594258a917e3f6fab
++488028e9fac0b598b70cbeb594258a917e3f6fab 488028e9fac0b598b70cbeb594258a917e3f6fab
+ babc8a4c7470895886fc129f1a015c486d05a351 8edffcc4e69a4e696a1d4bab047df450caf99507
+---
+ t/t5407-post-rewrite-hook.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index ea2e0d4..53a4062 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -212,4 +212,21 @@ EOF
+ 	verify_hook_input
+ '
+ 
++test_expect_failure 'git rebase -i (exec)' '
++	git reset --hard D &&
++	clear_hook_input &&
++	FAKE_LINES="edit 1 exec_false 2" git rebase -i B &&
++	echo something >bar &&
++	git add bar &&
++	# Fails because of exec false
++	test_must_fail git rebase --continue &&
++	git rebase --continue &&
++	echo rebase >expected.args &&
++	cat >expected.data <<EOF &&
++$(git rev-parse C) $(git rev-parse HEAD^)
++$(git rev-parse D) $(git rev-parse HEAD)
++EOF
++	verify_hook_input
++'
++
+ test_done
+
+
+---
+https://github.com/git/git/pull/138
+------=_Part_8_693652891.1432300550013--
