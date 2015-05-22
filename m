@@ -1,166 +1,194 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule documentation: Reorder introductory paragraphs
-Date: Fri, 22 May 2015 12:38:47 -0700
-Message-ID: <1432323527-26868-1-git-send-email-sbeller@google.com>
-Cc: philipoakley@iee.org, jrnieder@gmail.com, git@vger.kernel.org,
-	hvoigt@hvoigt.net, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 22 21:38:59 2015
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] submodule documentation: Reorder introductory paragraphs
+Date: Fri, 22 May 2015 20:47:38 +0100
+Organization: OPDS
+Message-ID: <7A83EF56E45A425A9756B4B084CA69A1@PhilipOakley>
+References: <1432163517-22785-1-git-send-email-sbeller@google.com><9AF4B2205E154BDA863E8CAAACAE0BDF@PhilipOakley><CAGZ79kZ5yxG7k++9QFRhnb=6A3HD64Kz3_B9UBrHA+Akht8tZw@mail.gmail.com><xmqqwq00fzlv.fsf@gitster.dls.corp.google.com><CAGZ79kYiG9=px3P+k1shqvt8ouXmfJjeKgCarj6KEQy08WAmjg@mail.gmail.com><05CAAED4A70A416590A620BF584E7F3D@PhilipOakley> <CAGZ79kYD9hjKGK=G7p+3-JEiFP7gGd8ERzdnocGDU8S1h6nDNA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>,
+	"Petr Baudis" <pasky@suse.cz>, "Heiko Voigt" <hvoigt@hvoigt.net>
+To: "Stefan Beller" <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 22 21:47:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvsmX-0004tb-Eu
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:38:57 +0200
+	id 1Yvsun-0001mF-CZ
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757225AbbEVTiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 15:38:52 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:36782 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757104AbbEVTiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 15:38:51 -0400
-Received: by igbpi8 with SMTP id pi8so43687202igb.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 12:38:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=VEDI1bjKiEGY9gWzMhjaDYjlPfOy+yBG/J+hvmWf3z0=;
-        b=hId7FWZ0TZROLGkjWco54xJiJq+ayV02KRRV7Q1gYiXAle3b/KxXPz5Bki9QiPkJIJ
-         ns+QcoHTNxBRL7KnxPfdvKE9yodOWgVjqXFKxIwiWLz0ZCY6D3dt94RWw2kQ7vIVRmWj
-         f8+XQ0mWfrPDc2gvCZawOHxU6m7maVA+3Oxsvjm5UGOECFIwxc8GpAE2lftybkOjNGMu
-         YqVXnbzFSmtU9Rj+GOIZmI/7na+72LbEkrsespHrzREDrl605sMdhJPRKdpxb+va0s9R
-         bBZuOI8CYwDgHW0n225Xq9FWpCU4hV+FDof0L04+e8V0s6xKX3DU55C3bwJGQYTI3jk+
-         Wmfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=VEDI1bjKiEGY9gWzMhjaDYjlPfOy+yBG/J+hvmWf3z0=;
-        b=HfE6eXYY+q/QrjYnuHqfXg5aGI8LhyKVlOY+mr0hPe9rIGBL952P3BlrnhZmgeUjiX
-         QJQWDwuOAfOPa/ZH/3cmR36OOMSprklpUHqfKMGte/6aUS5vHgKB0G4RQnwI2O8mkrX/
-         +aw1AfO2RFJE8ouxuiJHQeBKdh7YZM7g1CTpHKvmEF79pQsxtJliljqIqFpJAppu6ajd
-         cg324pbnFxYNvOnL6FoElI1Xj7BqYzjfNSM+k/1w35W51yEVwNYyt/TjEpYBIFkS6NIg
-         uYPlVxM2iEmlkC4p4t4zcoIgRqz/NvvL3W+X8NlGkHg4Hu/YznE/HOcjlIBX0CTa6LPs
-         WIjg==
-X-Gm-Message-State: ALoCoQnyxanP2WkV29/yv4RSqOxC4y6/oDLAC3bDpfK0s4MBr8qAEeDcqWcdQZnOPR0SucFpTRni
-X-Received: by 10.107.12.34 with SMTP id w34mr9276756ioi.10.1432323530735;
-        Fri, 22 May 2015 12:38:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:607c:a992:c63c:57f3])
-        by mx.google.com with ESMTPSA id h33sm2473655iod.12.2015.05.22.12.38.49
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 22 May 2015 12:38:50 -0700 (PDT)
-X-Mailer: git-send-email 2.4.1.233.g3f9b614.dirty
+	id S1756841AbbEVTrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 15:47:24 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:30615 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756229AbbEVTrX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 15:47:23 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2DFEAAkh19VPJBLFlxcgxCBMoMfgy5twzUEBAKBO00BAQEBAQEHAQEBAUABJBtBA4NZBQEBAQECAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBMMsB6GVJ1hgSGKGYQ6S4JvL4EWBZMCeYs8kiSDWYEEZh8kHIFTPTGCRwEBAQ
+X-IPAS-Result: A2DFEAAkh19VPJBLFlxcgxCBMoMfgy5twzUEBAKBO00BAQEBAQEHAQEBAUABJBtBA4NZBQEBAQECAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBMMsB6GVJ1hgSGKGYQ6S4JvL4EWBZMCeYs8kiSDWYEEZh8kHIFTPTGCRwEBAQ
+X-IronPort-AV: E=Sophos;i="5.13,477,1427756400"; 
+   d="scan'208";a="520523381"
+Received: from host-92-22-75-144.as13285.net (HELO PhilipOakley) ([92.22.75.144])
+  by out1.ip04ir2.opaltelecom.net with ESMTP; 22 May 2015 20:47:21 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269752>
 
-It's better to start the man page with a description of what submodules
-actually are instead of saying what they are not.
+From: "Stefan Beller" <sbeller@google.com>
+> On Fri, May 22, 2015 at 10:35 AM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> From: "Stefan Beller" <sbeller@google.com>
+>>>
+>>> On Fri, May 22, 2015 at 7:36 AM, Junio C Hamano <gitster@pobox.com> 
+>>> wrote:
+>>>>
+>>>> Stefan Beller <sbeller@google.com> writes:
+>>>>
+>>>>> On Thu, May 21, 2015 at 1:03 PM, Philip Oakley 
+>>>>> <philipoakley@iee.org>
+>>>>> wrote:
+>>>>>>>
+>>>>>>> +Submodules are not to be confused with remotes, which are meant
+>>>>>>> +mainly for branches of the same project;
+>>>>>>
+>>>>>>
+>>>>>> This use of 'branches' didn't work for me. "remotes are meant 
+>>>>>> mainly
+>>>>>> for
+>>>>>> branches of the same project" ?
+>>>>
+>>>>
+>>>> The "branch" in the original is used in a much wider sense than
+>>>> usual branch (i.e. ref/heads/ thing you have locally); it refers to
+>>>> forks of the same project but with a bit of twist.  When you say
+>>>> repository A is a fork of the same project as my local repository,
+>>>> you would give an impression that A is not the authoritative copy 
+>>>> of
+>>>> the project.  But you can say my repository and that repository A
+>>>> are branches of the same project, you give zero information as to
+>>>> A's authoritativeness.
+>>>
+>>>
+>>> While this is correct, I think it is also confusing, because 
+>>> 'branch'
+>>> is a command which deals with local branches only in my perception
+>>> To deal with remote branches you need to use the commands
+>>> {remote, fetch, pull}.
+>>>
+>>> So when someone mentions "branch" I need to think of local 
+>>> operations
+>>> in one repository and not on different distributed histories.
+>>>
+>>
+>> If we are having difficulties defining a "remote" here (its not 
+>> defined in
+>> gitglossary.txt anyway),
+>
+> Now that we have a discussion on what remotes are, I'll send a patch 
+> for that
+> as well.
+>
+>> why not simply put a full stop (period) after the
+>> "Submodules are not to be confused with remotes.", and bypass the 
+>> problem,
+>> avoiding digging the hole deeper.
+>
+> I think we should dig deeper and point out the differences as it may
+> not be clear what
+> the differences are for new comers. Not digging deeper sounds to me 
+> like saying
+>
+>    'git frotz' is not to be confused with 'git bar' FULL STOP AND I
+> WONT TELL YOU WHY!
 
-Reorder the paragraphs such that
-the first short paragraph introduces the submodule concept,
-the second paragraph highlights the usage of the submodule command,
-the third paragraph giving background information,
-and finally the fourth paragraph discusing alternatives such
-as subtrees and remotes, which we don't want to be confused with.
+Hi Stefan,
+This was more of a case of "simply a full stop, 'cos I can't easily tell 
+you why" ;-).  I've seen too many work situations (*) where colleagues 
+just dig deeper when they should stop digging, hence the note. It may be 
+that the style of reason could be changed. This is the final 
+introductory paragraph and was being pushed down partly because of this 
+problem (explaining things by saying what its not).
 
-This ordering deepens the knowledge on submodules with each paragraph.
-First the basic questions like "How/what" will be answered, while the
-underlying concepts will be taught at a later time.
+(*) The usual phrase in a report would be "A moments thought will show 
+that ..." for those concepts that would take two pages to explain and 
+would still be misunderstood by the unthinking folks.
 
-Making sure it is not confused with subtrees and remotes is not really
-enhancing knowledge of submodules itself, but rather painting the big
-picture of git concepts, so you could also argue to have it as the second
-paragraph. Personally I think this may confuse readers, specially
-newcomers though.
+That all said, if a nice well understood explanatory phrase can be found 
+then I'm all for it.
 
-Additionally to reordering the paragraphs, they have been slightly
-reworded.
+>
+> which is not helpful. (Why is the documentation pointing out there is
+> a difference to
+> that other command/concept, but not saying what is different?)
+>
+>>
+>>>>
+>>>>>     Submodules should not be confused with remote repositories, 
+>>>>> which
+>>>>> are
+>>>>>     meant to track the same repository, just at another location; 
+>>>>> ...
+>>>>
+>>>>
+>>>> I do not think this is a great improvement.  You now conflated
+>>>> "repository" to mean "project" in the latter half of the sentence,
+>>>> while you are trying to explain what a "remote repository" is.
+>>>
+>>>
+>>> That's true.
+>>>
+>>>>
+>>>> Your copy of git.git is not the same repository as mine; they have
+>>>> different histories.  Both repositories are used to work on the 
+>>>> same
+>>>> project.  "submoules are not remotes, which are other repositories
+>>>> of the same project", perhaps?
+>>>
+>>>
+>>> That makes sense.
+>>>
+>>
+>> If maybe that the feature we should pick on is the common root of the
+>> development between the local and remote repository, and quite 
+>> distinct for
+>> the submodule. This allows remotes to be on the same machine, as well 
+>> as
+>> distant machines and server.
+>
+> I don't think this is actually true for all remotes. Think of shallow 
+> clones
+> (they have no root or a different root) or even subtrees which are 
+> pulled
+> in via a remotes?
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+I'd avoided mentioning that potential explanation mud-hole on the same 
+basis that it would be hard.
 
-For now I used a part of Junios suggestion
-    Submodules are not to be confused with remotes, which are other
-    repositories of the same project;
-    
-I like the "are not to be confused" part, as they warn the reader
-that there will be a paragraph not as concise but touching other
-commands and topics.
-
- Documentation/git-submodule.txt | 50 ++++++++++++++++++-----------------------
- 1 file changed, 22 insertions(+), 28 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 2c25916..d126c86 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -25,22 +25,17 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Submodules allow foreign repositories to be embedded within
--a dedicated subdirectory of the source tree, always pointed
--at a particular commit.
-+This command will inspect, update and manage submodules.
- 
--They are not to be confused with remotes, which are meant mainly
--for branches of the same project; submodules are meant for
--different projects you would like to make part of your source tree,
--while the history of the two projects still stays completely
--independent and you cannot modify the contents of the submodule
--from within the main project.
--If you want to merge the project histories and want to treat the
--aggregated whole as a single project from then on, you may want to
--add a remote for the other project and use the 'subtree' merge strategy,
--instead of treating the other project as a submodule. Directories
--that come from both projects can be cloned and checked out as a whole
--if you choose to go that route.
-+Submodules allow you to keep another Git repository in a subdirectory
-+of your repository. The other repository has its own history, which does not
-+interfere with the history of the current repository. This can be used to
-+have external dependencies such as libraries for example.
-+
-+When cloning or pulling a repository containing submodules however,
-+these will not be checked out by default; the 'init' and 'update'
-+subcommands will maintain submodules checked out and at
-+appropriate revision in your working tree.
- 
- Submodules are composed from a so-called `gitlink` tree entry
- in the main repository that refers to a particular commit object
-@@ -51,19 +46,18 @@ describes the default URL the submodule shall be cloned from.
- The logical name can be used for overriding this URL within your
- local repository configuration (see 'submodule init').
- 
--This command will manage the tree entries and contents of the
--gitmodules file for you, as well as inspect the status of your
--submodules and update them.
--When adding a new submodule to the tree, the 'add' subcommand
--is to be used.  However, when pulling a tree containing submodules,
--these will not be checked out by default;
--the 'init' and 'update' subcommands will maintain submodules
--checked out and at appropriate revision in your working tree.
--You can briefly inspect the up-to-date status of your submodules
--using the 'status' subcommand and get a detailed overview of the
--difference between the index and checkouts using the 'summary'
--subcommand.
--
-+Submodules are not to be confused with remotes, which are other
-+repositories of the same project; submodules are meant for
-+different projects you would like to make part of your source tree,
-+while the history of the two projects still stays completely
-+independent and you cannot modify the contents of the submodule
-+from within the main project.
-+If you want to merge the project histories and want to treat the
-+aggregated whole as a single project from then on, you may want to
-+add a remote for the other project and use the 'subtree' merge strategy,
-+instead of treating the other project as a submodule. Directories
-+that come from both projects can be cloned and checked out as a whole
-+if you choose to go that route.
- 
- COMMANDS
- --------
--- 
-2.4.1.233.g3f9b614.dirty
+>
+> The main thing about remotes is "not being here" (as in "part of this
+> repository". As you point out it can be nearby in the local fs or even 
+> on
+> another machine, or in the cloud)
+>
+>>
+>> It is I believe technically possible to have a submodule which is its 
+>> own
+>> super project, with and without recursion, but would be very 
+>> atypical, and
+>> would belong in the 'don't do that' category
+>
+regards
+Philip 
