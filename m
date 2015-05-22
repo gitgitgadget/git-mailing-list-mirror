@@ -1,102 +1,110 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] send-email: Add simple email aliases format
-Date: Thu, 21 May 2015 23:59:38 -0400
-Message-ID: <CAPig+cSDAagVNhdobtTDGrdzLNSxKpOtUhEEDq+NLQZBOoWJxg@mail.gmail.com>
-References: <4b56f6ab3c14aff7752804d11917b1f330f55f40.1432252898.git.allenbh@gmail.com>
-	<CAPig+cQ8Gw3Q1QcJ=k4647LW1gBZ3fuJBYpOCE=AxA0ZWtktmQ@mail.gmail.com>
-	<CAJ80savXAOMAbdDC_F77esD1Fdi=BP6GK4biFOLJTtqqehjEOw@mail.gmail.com>
+Subject: Re: [PATCH v4] send-email: Add simple email aliases format
+Date: Fri, 22 May 2015 00:29:53 -0400
+Message-ID: <CAPig+cRLxk26p7DFaS+gRkKZxkRwf8g=4=j2QHX6AC2Uk5J++w@mail.gmail.com>
+References: <9f88da801466c83331d02262855e8bef4164e5eb.1432266004.git.allenbh@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Git List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 05:59:47 2015
+X-From: git-owner@vger.kernel.org Fri May 22 06:30:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yve7c-0005lL-0Y
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 05:59:44 +0200
+	id 1Yveat-0001Td-8O
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 06:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756085AbbEVD7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 23:59:39 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33843 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755735AbbEVD7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 23:59:38 -0400
-Received: by igbhj9 with SMTP id hj9so27138534igb.1
-        for <git@vger.kernel.org>; Thu, 21 May 2015 20:59:38 -0700 (PDT)
+	id S1754448AbbEVE3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 00:29:54 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:35077 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752120AbbEVE3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 00:29:53 -0400
+Received: by igbyr2 with SMTP id yr2so26890074igb.0
+        for <git@vger.kernel.org>; Thu, 21 May 2015 21:29:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=Ct8SyqJQ9qdkFFVN1oZL7ne972yFXblFxLGhgxCHWsE=;
-        b=YT5SvDilOczojT5NcZ8f1+ACdzUvNqv9cRs14iPopgiqqO6xRREg5Evm5lrht7V3vO
-         vW4ZEz8MK0vaqTxu+YBNmqRLr2AwtpdDfCoO3nYSHh8/wWAfacvelVYTUXvZm6kfAszE
-         gyguYY6XiUV/9z/yZXta9Cs2ONzSgAMZkgu1v28Uugfu2irfMw8Ji6M0Bgr8vzWInzaL
-         usAlTqRkwwg2XcW2w0zRuzL6OwjnToXwJpBHB99ITAqz2dNEYMMrtCzzEzxSXTByEvzN
-         s+Oco7FZKvPqjWWzzVStc5ozSrKxQgNmSMAN9DMI1f5zkRzhxGrrKQp0UJaZf3L59rUs
-         fvFA==
-X-Received: by 10.107.151.75 with SMTP id z72mr8010670iod.46.1432267178432;
- Thu, 21 May 2015 20:59:38 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 21 May 2015 20:59:38 -0700 (PDT)
-In-Reply-To: <CAJ80savXAOMAbdDC_F77esD1Fdi=BP6GK4biFOLJTtqqehjEOw@mail.gmail.com>
-X-Google-Sender-Auth: XYXnvxIkyLG51y-JUNMfQEW1ejQ
+        bh=j6TTdKY8rqm9zvZxZPoGuLRoVlhYXYLXW+0E2WVqqNo=;
+        b=kR7o2XXIahWzVNLmFNdHaoUALBIfGJssli/Oglh5gnKX1lQGX9cCwVXRFtyfxTBm44
+         ZcxFyf2aQxc95X2+TP55DWbK1TrZ0qk7B0FWRxL+RDuHs+vOhMvca229PgypV/s6ut6t
+         NkHG83mlhEKxWtK9s2n45R/NLhCOlwQfkBN+7S56kbxuh7poiEPzivEdmuIc4tugOIRs
+         tFLryasfLsGte/SRMv0ab5Ot+FWEnIZSC/QMg5vBypRjNnv83BSvfA0+OwYRvXc5Cpor
+         ygyslzkefqZ9jBuQZUY0Bc6f3hQmHulRHWCXvfSLcxrpw6dipYPhql0t0TiqeR1lozZg
+         3msA==
+X-Received: by 10.107.137.80 with SMTP id l77mr1677361iod.92.1432268993305;
+ Thu, 21 May 2015 21:29:53 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 21 May 2015 21:29:53 -0700 (PDT)
+In-Reply-To: <9f88da801466c83331d02262855e8bef4164e5eb.1432266004.git.allenbh@gmail.com>
+X-Google-Sender-Auth: TqoLCdA67yQ6HkCdMwlaTTngnFg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269689>
 
-On Thu, May 21, 2015 at 11:19 PM, Allen Hubbe <allenbh@gmail.com> wrote:
-> On May 21, 2015 9:05 PM, "Eric Sunshine" <sunshine@sunshineco.com> wrote:
->> On Thu, May 21, 2015 at 8:16 PM, Allen Hubbe <allenbh@gmail.com> wrote:
->> > +test_expect_success $PREREQ 'sendemail.aliasfiletype=simple' '
->> > +       clean_fake_sendmail && rm -fr outdir &&
->> > +       git format-patch -1 -o outdir &&
->> > +       {
->> > +               echo "alice: Alice W Land <awol@example.com>"
->> > +               echo "bob: Robert Bobbyton <bob@example.com>"
->> > +               echo "chloe: chloe@example.com"
->> > +               echo "abgroup: alice, bob"
->> > +               echo "bcgrp: bob, chloe, Other <o@example.com>"
->> > +       } >~/.tmp-email-aliases &&
->>
->> A here-doc would be easier to maintain and read:
->>
->>     cat >~/.tmp-email-aliases <<-\EOF &&
->>         alice: Alice W Land <awol@example.com>
->>         bob: Robert Bobbyton <bob@example.com>
->>         ...
->>     EOF
+On Thu, May 21, 2015 at 11:40 PM, Allen Hubbe <allenbh@gmail.com> wrote:
+> This format is more simple than the other alias file formats, so it may
+> be preferred by some users. [...]
+> Signed-off-by: Allen Hubbe <allenbh@gmail.com>
+> ---
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index 804554609def..38ade31e0c28 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -383,7 +383,29 @@ sendemail.aliasesFile::
 >
-> A here-doc does not flow nicely in an indented block.  Each line in
-> the here-doc will also contain any indentation which may appear to the
-> reader to be part of the test case.  Alternatively, the here-doc could
-> be indented differently than the surrounding test case (all the way to
-> the left column), but that also has a negative impact for readability.
-> Finally, the EOF marker can not be indented.
+>  sendemail.aliasFileType::
+>         Format of the file(s) specified in sendemail.aliasesFile. Must be
+> -       one of 'mutt', 'mailrc', 'pine', 'elm', or 'gnus'.
+> +       one of 'simple', 'mutt', 'mailrc', 'pine', 'elm', or 'gnus'.
+> ++
+> +If the format is 'simple', then the alias file format is described below.
+> +Descriptions of the other file formats to the following formats can be found in
+> +the documentation of the email program of the same name.
 
-That's true if you use <<EOF here-doc, but not for <<-EOF, as I did in
-the example. With <<-EOF, all leading tabs are stripped from the input
-lines, including from the EOF line, which is why it can be indented to
-the same level as the other code in the test. The added '\' in <<-\EOF
-from my example indicates that you don't want/expect any interpolation
-inside the here-doc. The <<-\EOF form is used extensively throughout
-the Git test suite.
+The second sentence probably needs some proof-reading.
 
-> With echo "string", exactly "string" is output to the line.  The
-> operation is obvious to the reader.  The test case can use sane
-> indentation, and the resulting output will be exactly what what it
-> would appear to be in the test case.
+> ++
+> +This 'simple' format is is as follows.
+> ++
+> +       <alias>: <address|alias>[, <address|alias>...]
+> ++
+> +Aliases are specified one per line.  There is no line splitting.  Anything on a
+> +line after and including a `#` symbol is considered a comment, and is ignored.
+> +Blank lines are ignored.
 
-Same with <<-\EOF; plus <<-\EOF content is more readable since it's
-not polluted with 'echo' noise.
+I'm not convinced that gratuitously diverging from the
+sendmail/postfix 'aliases' format is warranted. In particular, that
+format recognizes a comment line only when '#' is the first
+non-whitespace character[1]; and does not consider '#' a
+comment-introducer anywhere else in the line. By recognizing '#'
+anywhere as a comment-introducer, you may be painting this format into
+a corner rather than leaving it open for someone later to extend it to
+be more sendmail/postfix-like by, for instance, supporting name
+quoting and line-continuation[1].
 
-> Especially for something like a test case where there should be
-> absolutely no confusion as to exactly what is the input to the test,
-> clarity matters.  Any operation where the result is not immediately
-> obvious to the reader, does not belong here.  Therefore, I will keep
-> the lines in the test case as echo "string".
+For the same reason, I'm not convinced that "simple" is a good name.
+"sendmail" may indeed be a more appropriate name, even if it means
+that this early implementation documents it as (currently) a subset of
+the richer sendmail/postfix 'aliases' format. By doing so, we leave
+the door open so a future person can implement additional features to
+bring it closer to that format.
+
+[1]: http://www.postfix.org/aliases.5.html
+
+> ++
+> +Example of the 'simple' format:
+> ++
+> +       alice: Alice W Land <awol@example.com>
+> +       bob: Robert Bobbyton <bob@example.com>
+> +       # this is a comment
+> +          # this is also a comment
+> +       chloe: chloe@example.com
+> +       abgroup: alice, bob # comment after an alias
+> +       bcgrp: bob, chloe, Other <o@example.com>
