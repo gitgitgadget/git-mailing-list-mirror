@@ -1,194 +1,156 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] submodule documentation: Reorder introductory paragraphs
-Date: Fri, 22 May 2015 20:47:38 +0100
-Organization: OPDS
-Message-ID: <7A83EF56E45A425A9756B4B084CA69A1@PhilipOakley>
-References: <1432163517-22785-1-git-send-email-sbeller@google.com><9AF4B2205E154BDA863E8CAAACAE0BDF@PhilipOakley><CAGZ79kZ5yxG7k++9QFRhnb=6A3HD64Kz3_B9UBrHA+Akht8tZw@mail.gmail.com><xmqqwq00fzlv.fsf@gitster.dls.corp.google.com><CAGZ79kYiG9=px3P+k1shqvt8ouXmfJjeKgCarj6KEQy08WAmjg@mail.gmail.com><05CAAED4A70A416590A620BF584E7F3D@PhilipOakley> <CAGZ79kYD9hjKGK=G7p+3-JEiFP7gGd8ERzdnocGDU8S1h6nDNA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "McHenry, Matt" <mmchenry@carnegielearning.com>
+Subject: RE: recovering from "unordered stage entries in index" error
+Date: Fri, 22 May 2015 15:57:40 -0400
+Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F50D@exchdb01>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+ <CAPc5daVFA-FKTSUCRmb=JUr=H9ECtK8nJB3nyxHprCcJ+0CHBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>,
-	"Petr Baudis" <pasky@suse.cz>, "Heiko Voigt" <hvoigt@hvoigt.net>
-To: "Stefan Beller" <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 22 21:47:31 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 22 21:57:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvsun-0001mF-CZ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:47:29 +0200
+	id 1Yvt4m-0008OJ-E1
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756841AbbEVTrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 15:47:24 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:30615 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756229AbbEVTrX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 15:47:23 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DFEAAkh19VPJBLFlxcgxCBMoMfgy5twzUEBAKBO00BAQEBAQEHAQEBAUABJBtBA4NZBQEBAQECAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBMMsB6GVJ1hgSGKGYQ6S4JvL4EWBZMCeYs8kiSDWYEEZh8kHIFTPTGCRwEBAQ
-X-IPAS-Result: A2DFEAAkh19VPJBLFlxcgxCBMoMfgy5twzUEBAKBO00BAQEBAQEHAQEBAUABJBtBA4NZBQEBAQECAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBMMsB6GVJ1hgSGKGYQ6S4JvL4EWBZMCeYs8kiSDWYEEZh8kHIFTPTGCRwEBAQ
-X-IronPort-AV: E=Sophos;i="5.13,477,1427756400"; 
-   d="scan'208";a="520523381"
-Received: from host-92-22-75-144.as13285.net (HELO PhilipOakley) ([92.22.75.144])
-  by out1.ip04ir2.opaltelecom.net with ESMTP; 22 May 2015 20:47:21 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1756792AbbEVT5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 15:57:44 -0400
+Received: from mail3.carnegielearning.com ([204.80.87.3]:9351 "EHLO
+	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756048AbbEVT5m (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 15:57:42 -0400
+X-ASG-Debug-ID: 1432324661-07bc7c14083e4a640001-QuoKaX
+Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id 8yb3rcFpkonALlQ0 (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Fri, 22 May 2015 15:57:41 -0400 (EDT)
+X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
+Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
+ ([127.0.0.1]) with mapi; Fri, 22 May 2015 15:57:40 -0400
+Thread-Topic: recovering from "unordered stage entries in index" error
+X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
+Thread-Index: AdCUxQg2XvHUFH5NQM27KjkUXpaaKQAALRWg
+In-Reply-To: <CAPc5daVFA-FKTSUCRmb=JUr=H9ECtK8nJB3nyxHprCcJ+0CHBQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+X-Barracuda-Connect: UNKNOWN[10.1.10.4]
+X-Barracuda-Start-Time: 1432324661
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: https://10.1.10.16:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at carnegielearning.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
+X-Barracuda-Spam-Score: 0.51
+X-Barracuda-Spam-Status: No, SCORE=0.51 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M, MAILTO_TO_SPAM_ADDR
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19204
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.00 MAILTO_TO_SPAM_ADDR    URI: Includes a link to a likely spammer email
+	0.50 BSF_RULE7568M          Custom Rule 7568M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269753>
 
-From: "Stefan Beller" <sbeller@google.com>
-> On Fri, May 22, 2015 at 10:35 AM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->> From: "Stefan Beller" <sbeller@google.com>
->>>
->>> On Fri, May 22, 2015 at 7:36 AM, Junio C Hamano <gitster@pobox.com> 
->>> wrote:
->>>>
->>>> Stefan Beller <sbeller@google.com> writes:
->>>>
->>>>> On Thu, May 21, 2015 at 1:03 PM, Philip Oakley 
->>>>> <philipoakley@iee.org>
->>>>> wrote:
->>>>>>>
->>>>>>> +Submodules are not to be confused with remotes, which are meant
->>>>>>> +mainly for branches of the same project;
->>>>>>
->>>>>>
->>>>>> This use of 'branches' didn't work for me. "remotes are meant 
->>>>>> mainly
->>>>>> for
->>>>>> branches of the same project" ?
->>>>
->>>>
->>>> The "branch" in the original is used in a much wider sense than
->>>> usual branch (i.e. ref/heads/ thing you have locally); it refers to
->>>> forks of the same project but with a bit of twist.  When you say
->>>> repository A is a fork of the same project as my local repository,
->>>> you would give an impression that A is not the authoritative copy 
->>>> of
->>>> the project.  But you can say my repository and that repository A
->>>> are branches of the same project, you give zero information as to
->>>> A's authoritativeness.
->>>
->>>
->>> While this is correct, I think it is also confusing, because 
->>> 'branch'
->>> is a command which deals with local branches only in my perception
->>> To deal with remote branches you need to use the commands
->>> {remote, fetch, pull}.
->>>
->>> So when someone mentions "branch" I need to think of local 
->>> operations
->>> in one repository and not on different distributed histories.
->>>
->>
->> If we are having difficulties defining a "remote" here (its not 
->> defined in
->> gitglossary.txt anyway),
->
-> Now that we have a discussion on what remotes are, I'll send a patch 
-> for that
-> as well.
->
->> why not simply put a full stop (period) after the
->> "Submodules are not to be confused with remotes.", and bypass the 
->> problem,
->> avoiding digging the hole deeper.
->
-> I think we should dig deeper and point out the differences as it may
-> not be clear what
-> the differences are for new comers. Not digging deeper sounds to me 
-> like saying
->
->    'git frotz' is not to be confused with 'git bar' FULL STOP AND I
-> WONT TELL YOU WHY!
-
-Hi Stefan,
-This was more of a case of "simply a full stop, 'cos I can't easily tell 
-you why" ;-).  I've seen too many work situations (*) where colleagues 
-just dig deeper when they should stop digging, hence the note. It may be 
-that the style of reason could be changed. This is the final 
-introductory paragraph and was being pushed down partly because of this 
-problem (explaining things by saying what its not).
-
-(*) The usual phrase in a report would be "A moments thought will show 
-that ..." for those concepts that would take two pages to explain and 
-would still be misunderstood by the unthinking folks.
-
-That all said, if a nice well understood explanatory phrase can be found 
-then I'm all for it.
-
->
-> which is not helpful. (Why is the documentation pointing out there is
-> a difference to
-> that other command/concept, but not saying what is different?)
->
->>
->>>>
->>>>>     Submodules should not be confused with remote repositories, 
->>>>> which
->>>>> are
->>>>>     meant to track the same repository, just at another location; 
->>>>> ...
->>>>
->>>>
->>>> I do not think this is a great improvement.  You now conflated
->>>> "repository" to mean "project" in the latter half of the sentence,
->>>> while you are trying to explain what a "remote repository" is.
->>>
->>>
->>> That's true.
->>>
->>>>
->>>> Your copy of git.git is not the same repository as mine; they have
->>>> different histories.  Both repositories are used to work on the 
->>>> same
->>>> project.  "submoules are not remotes, which are other repositories
->>>> of the same project", perhaps?
->>>
->>>
->>> That makes sense.
->>>
->>
->> If maybe that the feature we should pick on is the common root of the
->> development between the local and remote repository, and quite 
->> distinct for
->> the submodule. This allows remotes to be on the same machine, as well 
->> as
->> distant machines and server.
->
-> I don't think this is actually true for all remotes. Think of shallow 
-> clones
-> (they have no root or a different root) or even subtrees which are 
-> pulled
-> in via a remotes?
-
-I'd avoided mentioning that potential explanation mud-hole on the same 
-basis that it would be hard.
-
->
-> The main thing about remotes is "not being here" (as in "part of this
-> repository". As you point out it can be nearby in the local fs or even 
-> on
-> another machine, or in the cloud)
->
->>
->> It is I believe technically possible to have a submodule which is its 
->> own
->> super project, with and without recursion, but would be very 
->> atypical, and
->> would belong in the 'don't do that' category
->
-regards
-Philip 
+DQoJWWVzLCB0aGF0IGRvZXMgdHVybiB1cCBzb21lIGludGVyZXN0aW5nIHN0dWZmLiAgSXQgbG9v
+a3MgbGlrZSB0aGUgcmVwb3NpdG9yeSBjb250YWlucyBzb21lIHBhdGhzIHdpdGggbm9uLUFTQ0lJ
+IGNoYXJhY3RlcnMsIGZvciBleGFtcGxlIHRoaXMgb25lIGhhcyBzb21lIGVuLWRhc2hlcyAoVSsy
+MDEzKSBpbiBpdHMgbmFtZToNCg0KJCBzdm4gbHMgLVIgc3ZuOi8vZGV2L3RydW5rL2N1cnJpY3Vs
+dW0vRmx1ZW5jeSB8IGdyZXAgTmluamFfX0JldGENCkh1cml4IHdvcmsvc291cmNlIGZyb20gTWF5
+IDIwMTQvRm9yX0FuZXNoLzA2IERlbGl2ZXJhYmxlcy9QaGFzZSAyL0ZUMyDigJMgTmluamEvRlQz
+IOKAkyBOaW5qYV9fQmV0YS56aXANCg0KJCBzdm4gbHMgLVIgc3ZuOi8vZGV2L3RydW5rL2N1cnJp
+Y3VsdW0vRmx1ZW5jeSB8IGdyZXAgTmluamFfX0JldGEgfCBvZCAtY3gNCjAwMDAwMDAgICBIICAg
+dSAgIHIgICBpICAgeCAgICAgICB3ICAgbyAgIHIgICBrICAgLyAgIHMgICBvICAgdSAgIHIgICBj
+DQogICAgICAgICAgIDc1NDggICAgNjk3MiAgICAyMDc4ICAgIDZmNzcgICAgNmI3MiAgICA3MzJm
+ICAgIDc1NmYgICAgNjM3Mg0KMDAwMDAyMCAgIGUgICAgICAgZiAgIHIgICBvICAgbSAgICAgICBN
+ICAgYSAgIHkgICAgICAgMiAgIDAgICAxICAgNCAgIC8NCiAgICAgICAgICAgMjA2NSAgICA3MjY2
+ICAgIDZkNmYgICAgNGQyMCAgICA3OTYxICAgIDMyMjAgICAgMzEzMCAgICAyZjM0DQowMDAwMDQw
+ICAgRiAgIG8gICByICAgXyAgIEEgICBuICAgZSAgIHMgICBoICAgLyAgIDAgICA2ICAgICAgIEQg
+ICBlICAgbA0KICAgICAgICAgICA2ZjQ2ICAgIDVmNzIgICAgNmU0MSAgICA3MzY1ICAgIDJmNjgg
+ICAgMzYzMCAgICA0NDIwICAgIDZjNjUNCjAwMDAwNjAgICBpICAgdiAgIGUgICByICAgYSAgIGIg
+ICBsICAgZSAgIHMgICAvICAgUCAgIGggICBhICAgcyAgIGUNCiAgICAgICAgICAgNzY2OSAgICA3
+MjY1ICAgIDYyNjEgICAgNjU2YyAgICAyZjczICAgIDY4NTAgICAgNzM2MSAgICAyMDY1DQowMDAw
+MTAwICAgMiAgIC8gICBGICAgVCAgIDMgICAgIDM0MiAyMDAgMjIzICAgICAgIE4gICBpICAgbiAg
+IGogICBhICAgLw0KICAgICAgICAgICAyZjMyICAgIDU0NDYgICAgMjAzMyAgICA4MGUyICAgIDIw
+OTMgICAgNjk0ZSAgICA2YTZlICAgIDJmNjENCjAwMDAxMjAgICBGICAgVCAgIDMgICAgIDM0MiAy
+MDAgMjIzICAgICAgIE4gICBpICAgbiAgIGogICBhICAgXyAgIF8gICBCDQogICAgICAgICAgIDU0
+NDYgICAgMjAzMyAgICA4MGUyICAgIDIwOTMgICAgNjk0ZSAgICA2YTZlICAgIDVmNjEgICAgNDI1
+Zg0KMDAwMDE0MCAgIGUgICB0ICAgYSAgIC4gICB6ICAgaSAgIHAgIFxuDQogICAgICAgICAgIDc0
+NjUgICAgMmU2MSAgICA2OTdhICAgIDBhNzANCjAwMDAxNTANCg0KCUluIHRoZSBvdXRwdXQgb2Yg
+J2dpdCBscy1maWxlcycsIHRob3NlIHBhdGhzIGFwcGVhciBxdW90ZWQgKHRoZXJlIGFyZSBhbG1v
+c3QgMTAwIG9mIHRoZW0pOg0KDQokIGdpdCBscy1maWxlcyB8IGdyZXAgTmluamFfX0JldGENCiJj
+dXJyaWN1bHVtL0ZsdWVuY3kvSHVyaXggd29yay9zb3VyY2UgZnJvbSBNYXkgMjAxNC9Gb3JfQW5l
+c2gvMDYgRGVsaXZlcmFibGVzL1BoYXNlIDIvRlQzIFwzNDJcMjAwXDIyMyBOaW5qYS9GVDMgXDM0
+MlwyMDBcMjIzIE5pbmphX19CZXRhLnppcCINCg0KJCBnaXQgbHMtZmlsZXMgfCBncmVwIF5cIiB8
+IHdjIC1sDQo4OQ0KDQoNCglJbiB0aGUgZGlmZiB5b3Ugc3VnZ2VzdGVkLCAnc29ydCcgcHV0cyB0
+aG9zZSBwYXRocyBhdCB0aGUgYWJzb2x1dGUgdG9wIG9mIHRoZSBsaXN0LCB3aGlsZSBwbGFpbiBv
+bGQgbHMtZmlsZXMgcHV0cyB0aGVtIGlubGluZSB3aXRoIHRoZSByZXN0IG9mIHRoZSBjb250ZW50
+cyBvZiB0aGUgY3VycmljdWx1bS8gc3ViZGlyOg0KDQokIGdyZXAgLW4gTmluamFfX0JldGEgUSBS
+DQpROjM2MTA5OiJjdXJyaWN1bHVtL0ZsdWVuY3kvSHVyaXggd29yay9zb3VyY2UgZnJvbSBNYXkg
+MjAxNC9Gb3JfQW5lc2gvMDYgRGVsaXZlcmFibGVzL1BoYXNlIDIvRlQzIFwzNDJcMjAwXDIyMyBO
+aW5qYS9GVDMgXDM0MlwyMDBcMjIzIE5pbmphX19CZXRhLnppcCINClI6ODk6ImN1cnJpY3VsdW0v
+Rmx1ZW5jeS9IdXJpeCB3b3JrL3NvdXJjZSBmcm9tIE1heSAyMDE0L0Zvcl9BbmVzaC8wNiBEZWxp
+dmVyYWJsZXMvUGhhc2UgMi9GVDMgXDM0MlwyMDBcMjIzIE5pbmphL0ZUMyBcMzQyXDIwMFwyMjMg
+TmluamFfX0JldGEuemlwIg0KDQoJQWxzbywgSSBoYXZlIHRoZSBjdXJyaWN1bHVtL0ZsdWVuY3kv
+IGRpcmVjdG9yeSBtYXJrZWQgYXMgc3BhcnNlLWNoZWNrb3V0Og0KDQokIGNhdCAuZ2l0L2luZm8v
+c3BhcnNlLWNoZWNrb3V0DQovKg0KIS9jdXJyaWN1bHVtL0ZsdWVuY3kvDQohL2N1cnJpY3VsdW0v
+UHJvYmxlbXMvbGlzcC8NCiEvY3VycmljdWx1bS9Qcm9ibGVtcy9saXNwX2VzLw0KIS9jdXJyaWN1
+bHVtL1Byb2JsZW1zL3Nkay9HZW9tZXRyeS8NCiEvY3VycmljdWx1bS9Qcm9ibGVtcy9zZGtfZXMv
+R2VvbWV0cnkvDQohL2N1cnJpY3VsdW0vUHJvYmxlbXMvc2RrL1Rlc3QtUXVlc3Rpb25zLw0KIS9j
+dXJyaWN1bHVtL1Byb2JsZW1zL3Nka19lcy9UZXN0LVF1ZXN0aW9ucy8NCiEvY3VycmljdWx1bS9Q
+cm9ibGVtcy9zZGsvR3JhbW1hci8NCg0KDQoJSG93ZXZlciwgSSB0cmllZCB0byBjb25zdHJ1Y3Qg
+YSB0ZXN0IGNhc2UgdGhhdCB3b3VsZCByZXByb2R1Y2UgdGhpcyB3aXRoIGEgc2ltcGxlIFNWTiBy
+ZXBvIGNvbnRhaW5pbmcgYSBmaWxlIGNyZWF0ZWQgYnkgJ3RvdWNoICJtYWtlLWdpdC1zdm4tJChl
+Y2hvIC1lICdcdTIwMWMnKXVuaGFwcHkkKGVjaG8gLWUgJ1x1MjAxZCcpIicsIGJ1dCBjb3VsZCBu
+b3QgZ2V0IGl0IHRvIGZhaWwuICBTbyB0aGVyZSBtYXkgYmUgc29tZXRoaW5nIG1vcmUgc3VidGxl
+IGdvaW5nIG9uIGhlcmUgLi4uDQoNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBG
+cm9tOiBqY2gyMzU1QGdtYWlsLmNvbSBbbWFpbHRvOmpjaDIzNTVAZ21haWwuY29tXSBPbiBCZWhh
+bGYgT2YgSnVuaW8gQw0KPiBIYW1hbm8NCj4gU2VudDogRnJpZGF5LCBNYXkgMjIsIDIwMTUgMTU6
+MjUNCj4gVG86IE1jSGVucnksIE1hdHQNCj4gQ2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCj4gU3Vi
+amVjdDogUmU6IHJlY292ZXJpbmcgZnJvbSAidW5vcmRlcmVkIHN0YWdlIGVudHJpZXMgaW4gaW5k
+ZXgiIGVycm9yDQo+IA0KPiBUaGUgbWVzc2FnZSAidW5vcmRlcmVkIHN0YWdlIGVudHJpZXMgaW4g
+aW5kZXgiIGNvbWVzIG9ubHkgd2hlbg0KPiB0d28gYWRqYWNlbnQgZW50cmllcyBpbiB0aGUgaW5k
+ZXggYXJlIGluIGEgd3Jvbmcgb3JkZXIsIGUuZy4gInRlc3QwIg0KPiBzaG91bGQgY29tZSBiZWZv
+cmUgInRlc3QxIiBidXQgc29tZWhvdyB0aGUgaW5kZXggcmVjb3JkcyB0aGVtDQo+IGluIHRoZSBv
+dGhlciB3YXkgYXJvdW5kLiBEb2luZyBzb21ldGhpbmcgbGlrZSB0aGlzOg0KPiANCj4gJCBnaXQg
+bHMtZmlsZXMgPlENCj4gJCBMQU5HPUMgTENfQUxMPUMgc29ydCBRID5SDQo+ICQgZGlmZiBRIFIN
+Cj4gDQo+IG1heSB0ZWxsIHlvdSB3aGljaCBlbnRyaWVzIGFyZSB3cm9uZywgZXZlbiB0aG91Z2gg
+aXQgd291bGRuJ3Qgc2hvdw0KPiB3aG8gbWFkZSB0aGVtIHdyb25nLg0KPiANCj4gKHBhcmRvbiB0
+b3AtcG9zdGluZywgb3ZlcmxvbmcgbGluZXMgYW5kIHR5cG9zOyBzZW50IGZyb20gR01haWwgd2Vi
+IFVJKQ0KPiANCj4gT24gVHVlLCBNYXkgMTksIDIwMTUgYXQgNjo0OCBBTSwgTWNIZW5yeSwgTWF0
+dA0KPiA8bW1jaGVucnlAY2FybmVnaWVsZWFybmluZy5jb20+IHdyb3RlOg0KPiA+DQo+ID4gICAg
+ICAgICBJJ3ZlIGp1c3QgdXBncmFkZWQgbXkgZ2l0IGZyb20gMi4wLjUgdG8gMi4zLjYsIGFuZCBJ
+J20gbm93DQo+IHVuYWJsZSB0byBydW4gJ2dpdCBzdm4gZmV0Y2gnIGluIG9uZSBvZiBteSByZXBv
+c2l0b3JpZXM6DQo+ID4NCj4gPiAkIGdpdCBzdm4gZmV0Y2gNCj4gPiBmYXRhbDogdW5vcmRlcmVk
+IHN0YWdlIGVudHJpZXMgaW4gaW5kZXgNCj4gPiB3cml0ZS10cmVlOiBjb21tYW5kIHJldHVybmVk
+IGVycm9yOiAxMjgNCj4gPg0KPiA+ICAgICAgICAgJ2dpdCBzdGF0dXMnIHNob3dzIGEgZmV3IHVu
+dHJhY2tlZCBmaWxlcyBidXQgaXMgb3RoZXJ3aXNlIGNsZWFuLg0KPiA+DQo+ID4gICAgICAgICBJ
+dCBsb29rcyBsaWtlIHRoaXMgY2hlY2sgd2FzIGludHJvZHVjZWQgaW4NCj4gMTU5OTlkMGJlODE3
+OWZiN2EyZTZlYWZiOTMxZDI1ZWQ2NWRmNTBhYSwgd2l0aCB0aGUgc3VtbWFyeQ0KPiAicmVhZF9p
+bmRleF9mcm9tKCk6IGNhdGNoIG91dCBvZiBvcmRlciBlbnRyaWVzIHdoZW4gcmVhZGluZyBhbiBp
+bmRleCBmaWxlIg0KPiAoZmlyc3QgYXBwZWFyaW5nIGluIDIuMi4wKS4NCj4gPg0KPiA+ICAgICAg
+ICAgTWFpbGluZyBsaXN0IGRpc2N1c3Npb24gbG9va2VkIGxpa2UgaXQgaW1wbGljYXRlZCB0aGly
+ZC1wYXJ0eQ0KPiB0b29scy4gIEkgZG9uJ3QgcmVjYWxsIHJ1bm5pbmcgYW55IG90aGVyIHRvb2xz
+IG9uIHRoaXMgcmVwbzsgaXQgZG9lc24ndCBkbw0KPiBtdWNoIGRheS10by1kYXkgb3RoZXIgdGhh
+biBhIGxvbmcgc2VyaWVzIG9mICdnaXQgc3ZuIGZldGNoJ2VzLiAgKEJ1dCBpdCdzDQo+IGJlZW4g
+YXJvdW5kIGZvciBhIGNvdXBsZSBvZiB5ZWFycywgc28gd2hvIGtub3dzLikNCj4gPg0KPiA+ICAg
+ICAgICAgQXQgYW55IHJhdGUsIHdoYXQgY2FuIEkgZG8gdG8gcmVjb3ZlciBmcm9tIHRoaXMgc2l0
+dWF0aW9uPyAgSQ0KPiB0cmllZCB0byBsb2NhdGUgYSBwYXRoIHdpdGggbXVsdGlwbGUgaW5kZXgg
+ZW50cmllcyBsaWtlIHRoaXMsIGJ1dCBnb3Qgbm8NCj4gcmVzdWx0czoNCj4gPg0KPiA+ICQgZ2l0
+IGxzLWZpbGVzIC1zIHwgY3V0IC1mIDItMTAwIHwgc29ydCB8IHVuaXEgLWMgfCBncmVwIC12ICde
+WyBcdF0qMSAnDQo+ID4NCj4gPiAgICAgICAgIChJIG9yaWdpbmFsbHkgcG9zdGVkIG9uIFNPIGF0
+DQo+IGh0dHA6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzAyNjQ4MjYvOyBJJ2xsIHVw
+ZGF0ZSB0aGF0IHdpdGggYW55DQo+IHNvbHV0aW9ucyB0aGF0IGNvbWUgdXAgaGVyZSwgdG8gZWFz
+ZSBmdXR1cmUgZ29vZ2xpbmcuKQ0KPiA+IC0tDQo+ID4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlz
+IGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGdpdCIgaW4NCj4gPiB0aGUgYm9keSBv
+ZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZw0KPiA+IE1vcmUgbWFqb3Jk
+b21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbA0K
