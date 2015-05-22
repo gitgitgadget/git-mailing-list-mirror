@@ -1,178 +1,261 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] prepare_packed_git: use stat_validity to avoid
- re-reading packs
-Date: Fri, 22 May 2015 19:54:05 -0400
-Message-ID: <20150522235404.GA4973@peff.net>
-References: <20150522235116.GA4300@peff.net>
+From: Fredrik Medley <fredrik.medley@gmail.com>
+Subject: Re: [PATCH v5 3/3] upload-pack: optionally allow fetching reachable sha1
+Date: Sat, 23 May 2015 01:55:12 +0200
+Message-ID: <CABA5-zm3LqA+BAHj0EegoXmTuaNobhEHyD0v2kg=VfCzzqx-+A@mail.gmail.com>
+References: <1432068269-14895-1-git-send-email-fredrik.medley@gmail.com>
+ <1432239819-21794-1-git-send-email-fredrik.medley@gmail.com>
+ <1432239819-21794-3-git-send-email-fredrik.medley@gmail.com> <xmqqioblh91w.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: pclouds@gmail.com, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: steve.norman@thomsonreuters.com
-X-From: git-owner@vger.kernel.org Sat May 23 01:54:30 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	Dan Johnson <computerdruid@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 23 01:55:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvwlp-0006od-07
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 01:54:29 +0200
+	id 1Yvwmy-0008Bm-0W
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 01:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757801AbbEVXyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 19:54:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35086 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757583AbbEVXyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 19:54:07 -0400
-Received: (qmail 11797 invoked by uid 102); 22 May 2015 23:54:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 May 2015 18:54:07 -0500
-Received: (qmail 22443 invoked by uid 107); 22 May 2015 23:54:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 May 2015 19:54:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 May 2015 19:54:05 -0400
-Content-Disposition: inline
-In-Reply-To: <20150522235116.GA4300@peff.net>
+	id S1945980AbbEVXzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 19:55:35 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:35980 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945968AbbEVXze (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 19:55:34 -0400
+Received: by lbbqq2 with SMTP id qq2so22326733lbb.3
+        for <git@vger.kernel.org>; Fri, 22 May 2015 16:55:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dKxsdOyxmVFdBmX4zDUsf6QKJEbNTlvSGUkTLrLOLA8=;
+        b=LiCXPe06r99hCYBlquOx6hcfIpvVCXSiVrS6Sw6SIF/7SflGeUiUdZ4Z2R6w0BDbb1
+         BL/wbsV5ZikLVH/80tgcjkZGLBh9Z43IEIaftM7ZjSsIXb9qs/uhQliyFldqoANA8pJb
+         guPM8YInvMRMLTXDFls4moi8L0uztPBUeLSfyODcRgkoBJVuGgi9dbrlcTqo8ZXwA5/y
+         iW9QR9WIiFpZXkq7nVq1tOCEeHCL/EKRIOqCDzQc8Vg4/TBa+gk87IwPLalbed4z5pvZ
+         fT//z0O1laUBYN/2WvAxzAfpnELMa6uQsC/kceCRnFN+oCISOqg+hrqUsoYv0pbKE1OX
+         ri9A==
+X-Received: by 10.152.42.242 with SMTP id r18mr8433967lal.8.1432338932748;
+ Fri, 22 May 2015 16:55:32 -0700 (PDT)
+Received: by 10.114.246.235 with HTTP; Fri, 22 May 2015 16:55:12 -0700 (PDT)
+In-Reply-To: <xmqqioblh91w.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269780>
 
-When we try to read an object and fail, we call
-reprepare_packed_git() to re-scan the list of packfiles.
-This catches any "racy" cases in which somebody is repacking
-or making new objects. The performance implications of
-re-scanning the pack directory are not usually a big deal,
-because failing to find an object is the unlikely case;
-we typically die if the re-scan does not help.
+2015-05-22 0:15 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
+> Fredrik Medley <fredrik.medley@gmail.com> writes:
+>
+>> --- a/Documentation/technical/protocol-capabilities.txt
+>> +++ b/Documentation/technical/protocol-capabilities.txt
+>> @@ -260,6 +260,13 @@ If the upload-pack server advertises this capability, fetch-pack may
+>>  send "want" lines with SHA-1s that exist at the server but are not
+>>  advertised by upload-pack.
+>>
+>> +allow-reachable-sha1-in-want
+>> +----------------------
+>
+> This is an underline applied to one line prior, and their length
+> must match.  I'll amend while applying (attached at end), so there
+> is no need to resend with correction unless you have other reasons
+> to do so.
+>
+>> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+>> index 8a5f236..fdcc114 100755
+>> --- a/t/t5516-fetch-push.sh
+>> +++ b/t/t5516-fetch-push.sh
+>> @@ -1120,6 +1120,61 @@ test_expect_success 'fetch exact SHA1' '
+>>       )
+>>  '
+>
+> It looks like this new set of tests are well thought out; good job.
+>
+> I spotted a few minor nits, though.  All I'll amend while applying
+> so there is no need to resend only to correct them.
 
-Since 45e8a74 (has_sha1_file: re-check pack directory before
-giving up, 2013-08-30), we do the same thing for
-has_sha1_file.  Some calls to has_sha1_file are in the same
-boat: they expect most calls to return true. But some sites,
-such as the collision test in index-pack.c, may make a large
-number of calls, most of which they expect to be false. On a
-local system, this can cause a performance slowdown of
-around 5%. But on a system with high-latency system calls
-(like NFS), it can be much worse.
+I agree on all your comments and your proposed amendment further down
+looks good.
+Should the test code contain the explanations you've written in this email?
 
-Since the common case is that the pack directory has _not_
-changed, we can improve the performance by using stat()
-before doing the opendir()/readdir()/closedir() to re-scan
-the directory. It's valid to check stat() for just the
-single "objects/pack" directory because:
+>
+>> +for configallowtipsha1inwant in true false
+>> +do
+>> +     test_expect_success "shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwant=$configallowtipsha1inwant" '
+>> +             mk_empty testrepo &&
+>> +             (
+>> +                     cd testrepo &&
+>> +                     git config uploadpack.allowtipsha1inwant $configallowtipsha1inwant &&
+>> +                     git commit --allow-empty -m foo &&
+>> +                     git commit --allow-empty -m bar
+>> +             ) &&
+>> +             SHA1=$(git --git-dir=testrepo/.git rev-parse HEAD^) &&
+>> +             mk_empty shallow &&
+>> +             (
+>> +                     cd shallow &&
+>> +                     test_must_fail git fetch --depth=1 ../testrepo/.git $SHA1 &&
+>
+> This tries to fetch one before the tip with "allowTipSHA1InWant" set
+> to true or false; either should fail.  Good.
+>
+>> +                     git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+>> +                     git fetch --depth=1 ../testrepo/.git $SHA1 &&
+>
+> And regardless of allowTip setting, with allowReachable set to true,
+> fetching the reachable HEAD^ would succeed.  Good.
+>
+>> +                     git cat-file commit $SHA1 >/dev/null
+>
+> Minor nit; drop ">/dev/null", as test framework will squelch the
+> output by default, and when the test is run with "-v" option, the
+> output would help debugging the script.
+>
+>> +             )
+>> +     '
+>> +
+>> +     test_expect_success "deny fetch unreachable SHA1, allowtipsha1inwant=$configallowtipsha1inwant" '
+>> +             mk_empty testrepo &&
+>> +             (
+>> +                     cd testrepo &&
+>> +                     git config uploadpack.allowtipsha1inwant $configallowtipsha1inwant &&
+>> +                     git commit --allow-empty -m foo &&
+>> +                     git commit --allow-empty -m bar &&
+>> +                     git commit --allow-empty -m xyz
+>> +             )
+>
+> Broken && chain
+>
+>> +             SHA1_1=$(git --git-dir=testrepo/.git rev-parse HEAD^^) &&
+>> +             SHA1_2=$(git --git-dir=testrepo/.git rev-parse HEAD^) &&
+>> +             SHA1_3=$(git --git-dir=testrepo/.git rev-parse HEAD) &&
+>> +             (
+>> +                     cd testrepo &&
+>> +                     git reset --hard $SHA1_2 &&
+>
+> We have one before the tip (SHA1_1), one after the tip and no longer
+> reachable (SHA1_3); SHA1_2 is sitting at the tip of a ref.
+>
+>> +                     git cat-file commit $SHA1_3 >/dev/null &&
+>> +                     git cat-file commit $SHA1_3 >/dev/null
+>
+> I think one of the latter two is $SHA1_1, i.e. you make sure SHA1_{1,2,3}
+> are there in testrepo.
 
-  1. We know that packfiles themselves are not changed in
-     place; only new files are written, which would update
-     the mtime of the directory.
+Yes, that was intended.
 
-  2. There are no subdirectories inside the pack directory.
-     Checking the single top-level directory can tell us
-     whether anything changed.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm not sure what we want to do for the case where we don't have DIRFD.
-We have to separately open the directory, but I'm not sure if regular
-open() is even valid on a regular directory on all systems. We could
-just skip the stat_validity entirely in that case.
-
- cache.h           |  1 +
- git-compat-util.h |  4 ++++
- sha1_file.c       | 27 ++++++++++++++++++++++++---
- 3 files changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index cdd279a..9c34a17 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1216,6 +1216,7 @@ void stat_validity_update(struct stat_validity *sv, int fd);
- extern struct alternate_object_database {
- 	struct alternate_object_database *next;
- 	char *name;
-+	struct stat_validity pack_validity;
- 	char base[FLEX_ARRAY]; /* more */
- } *alt_odb_list;
- extern void prepare_alt_odb(void);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b7a97fb..8631e75 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -941,4 +941,8 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
- #define getc_unlocked(fh) getc(fh)
- #endif
- 
-+#if _POSIX_VERSION >= 200809L
-+#define HAVE_DIRFD
-+#endif
-+
- #endif
-diff --git a/sha1_file.c b/sha1_file.c
-index ccc6dac..0e77838 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1225,7 +1225,8 @@ static void report_pack_garbage(struct string_list *list)
- 	report_helper(list, seen_bits, first, list->nr);
- }
- 
--static void prepare_packed_git_one(char *objdir, int local)
-+static void prepare_packed_git_one(char *objdir, int local,
-+				   struct stat_validity *validity)
- {
- 	struct strbuf path = STRBUF_INIT;
- 	size_t dirnamelen;
-@@ -1235,6 +1236,12 @@ static void prepare_packed_git_one(char *objdir, int local)
- 
- 	strbuf_addstr(&path, objdir);
- 	strbuf_addstr(&path, "/pack");
-+
-+	if (stat_validity_check(validity, path.buf)) {
-+		strbuf_release(&path);
-+		return;
-+	}
-+
- 	dir = opendir(path.buf);
- 	if (!dir) {
- 		if (errno != ENOENT)
-@@ -1243,6 +1250,19 @@ static void prepare_packed_git_one(char *objdir, int local)
- 		strbuf_release(&path);
- 		return;
- 	}
-+
-+#ifdef HAVE_DIRFD
-+	stat_validity_update(validity, dirfd(dir));
-+#else
-+	{
-+		int fd = open(path.buf, O_RDONLY);
-+		if (fd >= 0) {
-+			stat_validity_update(validity, fd);
-+			close(fd);
-+		}
-+	}
-+#endif
-+
- 	strbuf_addch(&path, '/');
- 	dirnamelen = path.len;
- 	while ((de = readdir(dir)) != NULL) {
-@@ -1348,15 +1368,16 @@ static void rearrange_packed_git(void)
- static int prepare_packed_git_run_once = 0;
- void prepare_packed_git(void)
- {
-+	static struct stat_validity validity;
- 	struct alternate_object_database *alt;
- 
- 	if (prepare_packed_git_run_once)
- 		return;
--	prepare_packed_git_one(get_object_directory(), 1);
-+	prepare_packed_git_one(get_object_directory(), 1, &validity);
- 	prepare_alt_odb();
- 	for (alt = alt_odb_list; alt; alt = alt->next) {
- 		alt->name[-1] = 0;
--		prepare_packed_git_one(alt->base, 0);
-+		prepare_packed_git_one(alt->base, 0, &alt->pack_validity);
- 		alt->name[-1] = '/';
- 	}
- 	rearrange_packed_git();
--- 
-2.4.1.538.g69ac333
+>
+>> +             ) &&
+>> +             mk_empty shallow &&
+>> +             (
+>> +                     cd shallow &&
+>> +                     test_must_fail git fetch ../testrepo/.git $SHA1_3 &&
+>> +                     test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
+>
+> With allowTip only, whether it is set to true or false, fetching _1
+> or _3 that are not at tip will fail.  Good.
+>
+>> +                     git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+>> +                     git fetch ../testrepo/.git $SHA1_1 &&
+>> +                     git cat-file commit $SHA1_1 >/dev/null &&
+>
+> With allowReachable, _1 which is reachable from tip is possible,
+> regardless of the setting of allowTip.  Good.
+>
+>> +                     test_must_fail git cat-file commit $SHA1_2 >/dev/null &&
+>
+> And fetching _1 will not pull in _2, which is _1's child, that we
+> did not ask for.  Good (but it is probably not very relevant for the
+> purpose of these tests).
+>
+>> +                     git fetch ../testrepo/.git $SHA1_2 &&
+>> +                     git cat-file commit $SHA1_2 >/dev/null &&
+>
+> And of course, _2 can be fetched.
+>
+>> +                     test_must_fail git fetch ../testrepo/.git $SHA1_3
+>
+> And _3 that is not reachable cannot.
+>
+>> +             )
+>> +     '
+>> +done
+>
+> Again, very carefully covering combinations.  Good.
+>
+>
+>
+>
+>  Documentation/technical/protocol-capabilities.txt |  2 +-
+>  t/t5516-fetch-push.sh                             | 14 +++++++-------
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+> index 265fcab..eaab6b4 100644
+> --- a/Documentation/technical/protocol-capabilities.txt
+> +++ b/Documentation/technical/protocol-capabilities.txt
+> @@ -261,7 +261,7 @@ send "want" lines with SHA-1s that exist at the server but are not
+>  advertised by upload-pack.
+>
+>  allow-reachable-sha1-in-want
+> -----------------------
+> +----------------------------
+>
+>  If the upload-pack server advertises this capability, fetch-pack may
+>  send "want" lines with SHA-1s that exist at the server but are not
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index fdcc114..ec22c98 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1137,7 +1137,7 @@ do
+>                         test_must_fail git fetch --depth=1 ../testrepo/.git $SHA1 &&
+>                         git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+>                         git fetch --depth=1 ../testrepo/.git $SHA1 &&
+> -                       git cat-file commit $SHA1 >/dev/null
+> +                       git cat-file commit $SHA1
+>                 )
+>         '
+>
+> @@ -1149,15 +1149,15 @@ do
+>                         git commit --allow-empty -m foo &&
+>                         git commit --allow-empty -m bar &&
+>                         git commit --allow-empty -m xyz
+> -               )
+> +               ) &&
+>                 SHA1_1=$(git --git-dir=testrepo/.git rev-parse HEAD^^) &&
+>                 SHA1_2=$(git --git-dir=testrepo/.git rev-parse HEAD^) &&
+>                 SHA1_3=$(git --git-dir=testrepo/.git rev-parse HEAD) &&
+>                 (
+>                         cd testrepo &&
+>                         git reset --hard $SHA1_2 &&
+> -                       git cat-file commit $SHA1_3 >/dev/null &&
+> -                       git cat-file commit $SHA1_3 >/dev/null
+> +                       git cat-file commit $SHA1_1 &&
+> +                       git cat-file commit $SHA1_3
+>                 ) &&
+>                 mk_empty shallow &&
+>                 (
+> @@ -1166,10 +1166,10 @@ do
+>                         test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
+>                         git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+>                         git fetch ../testrepo/.git $SHA1_1 &&
+> -                       git cat-file commit $SHA1_1 >/dev/null &&
+> -                       test_must_fail git cat-file commit $SHA1_2 >/dev/null &&
+> +                       git cat-file commit $SHA1_1 &&
+> +                       test_must_fail git cat-file commit $SHA1_2 &&
+>                         git fetch ../testrepo/.git $SHA1_2 &&
+> -                       git cat-file commit $SHA1_2 >/dev/null &&
+> +                       git cat-file commit $SHA1_2 &&
+>                         test_must_fail git fetch ../testrepo/.git $SHA1_3
+>                 )
+>         '
+> --
+> 2.4.1-439-gcfa393f
+>
