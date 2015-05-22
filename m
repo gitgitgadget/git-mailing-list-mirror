@@ -1,147 +1,97 @@
-From: Allen Hubbe <allenbh@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v4] send-email: Add simple email aliases format
-Date: Fri, 22 May 2015 14:03:45 -0400
-Message-ID: <CAJ80satx=A+SHYbvkTrUTpCSDq9UR0CKxGr=0BuLzgJJa4-x3A@mail.gmail.com>
+Date: Fri, 22 May 2015 14:49:03 -0400
+Message-ID: <CAPig+cRc=u=AKRgp3Dn5De13WcMYFXr1QomzPY0rXAwpN5WwLA@mail.gmail.com>
 References: <9f88da801466c83331d02262855e8bef4164e5eb.1432266004.git.allenbh@gmail.com>
 	<CAPig+cRLxk26p7DFaS+gRkKZxkRwf8g=4=j2QHX6AC2Uk5J++w@mail.gmail.com>
 	<CAJ80satbXXBYva9qrgR1oA_f7LAHUeAm21=R-mGsWx+sDoQ9sQ@mail.gmail.com>
-	<xmqqlhggfz97.fsf@gitster.dls.corp.google.com>
-	<CAJ80sateODWDUvkAf9YbMMSYv_-=nKnBopGjgDFFSkVHuQJJMQ@mail.gmail.com>
-	<xmqqzj4wedlo.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTsygj1g=8sQ2b=1WYsmgAVyZmHCTW=NKTGuNyQwm3VFA@mail.gmail.com>
+	<CAJ80savzM_BL2oPiyTaPYAgnNL7F571aumGJLLw76vtryTacrg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 22 20:04:11 2015
+To: Allen Hubbe <allenbh@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 22 20:49:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvrIn-0003GX-CX
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 20:04:09 +0200
+	id 1Yvs0N-0006fi-1J
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 20:49:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946027AbbEVSED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 14:04:03 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:35469 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161013AbbEVSDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 14:03:47 -0400
-Received: by wgfl8 with SMTP id l8so24793594wgf.2
-        for <git@vger.kernel.org>; Fri, 22 May 2015 11:03:46 -0700 (PDT)
+	id S1756961AbbEVStG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 14:49:06 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:36162 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756645AbbEVStE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 14:49:04 -0400
+Received: by iepj10 with SMTP id j10so37578321iep.3
+        for <git@vger.kernel.org>; Fri, 22 May 2015 11:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jtZdIK51zpxaFfi15vhyH8XigfyodDnXLO4CuyDksl4=;
-        b=pc+2tjgzx72AY0j+3RW9TSCuh/NF2Bvzd/0LYwzt69yDFfj02VKXiwpp7dhG6VlQje
-         tOTPP0BuEoSsmlNZh9SBw+Pacwk7/+AcHrUuLKIenz6QlBZmiPCtTD7bClodD5NMxf1F
-         Q53J0Vi2HoWQKyZ2ii8geEhQilXVHLcCkYAWurnJO2tuJkat8va2JEZMTuuPu3TzEAci
-         x11/uVNIBzJ9WEKiUFk+mWLRmRO3YrPb35Dynwb0M15uWc1I/l1wKebvDq9RnzSzl5c1
-         CqQJ7b6ZP3CJdN1cPQ2ueHGjKpTC/ynkSA7BHROcqnAtDJS6IXPOypq2o9cEVev7HT2C
-         HM6g==
-X-Received: by 10.180.94.168 with SMTP id dd8mr9660597wib.76.1432317825934;
- Fri, 22 May 2015 11:03:45 -0700 (PDT)
-Received: by 10.28.59.4 with HTTP; Fri, 22 May 2015 11:03:45 -0700 (PDT)
-In-Reply-To: <xmqqzj4wedlo.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=uRKh4GReYomqi3IwX8wqLs4eBxPZDzZAdQptCEgsvCY=;
+        b=eK86WTGlJ2lnOzgJmPrV13rg3JAZ+HGalO8UwaYe15FholIu4kyXbFys6s6JtCS9d5
+         4vGauS5dgIIUgfQzZobaFE+JwYLamCFgfbVHGxxxS9rLqEC3bM2ZTPDyni1m5Iod3aXo
+         AOeaN+E8BD4ByPkIJswJlFGfxqwLiKGfHPQfhOBV352X2kzCTl4g1EVHAeVBuSdeebGB
+         4cdVdFdCEOO4LBI7fCRRA9+BND0XJXY/YzwWA/FvbQHUmPdRMywyT6qNwIeWOBcHY8Hc
+         q/CkuLmpBQOd2R6Qe9gnB3i2OjgfmGNTaVTAdSi4zJjE/GdFPzgA4I0pUDhmhARCS1g1
+         fH9w==
+X-Received: by 10.107.137.80 with SMTP id l77mr6093553iod.92.1432320543980;
+ Fri, 22 May 2015 11:49:03 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 22 May 2015 11:49:03 -0700 (PDT)
+In-Reply-To: <CAJ80savzM_BL2oPiyTaPYAgnNL7F571aumGJLLw76vtryTacrg@mail.gmail.com>
+X-Google-Sender-Auth: 7tZLhGxqbArgDITevgHiTzyexlE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269747>
 
-On Fri, May 22, 2015 at 1:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Allen Hubbe <allenbh@gmail.com> writes:
->
->> On Fri, May 22, 2015 at 10:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, May 22, 2015 at 2:01 PM, Allen Hubbe <allenbh@gmail.com> wrote:
+> On Fri, May 22, 2015 at 12:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Fri, May 22, 2015 at 8:12 AM, Allen Hubbe <allenbh@gmail.com> wrote:
+>>>> For the same reason, I'm not convinced that "simple" is a good name.
+>>>> "sendmail" may indeed be a more appropriate name, even if it means
+>>>> that this early implementation documents it as (currently) a subset of
+>>>> the richer sendmail/postfix 'aliases' format. By doing so, we leave
+>>>> the door open so a future person can implement additional features to
+>>>> bring it closer to that format.
+>>>
+>>> Or, a future person can write a sendmail parser that is closer to that format.
 >>
->>> Let me step back a bit.  Earlier you said your aim is not to use an
->>> alias file you already have and use with the MUA/MTA, but to have a
->>> collection of aliases to use with git-send-email only.  Is there a
->>> reason to add support for a new format (whether it is compatible to
->>> or subset of postfix/sendmail format, or a totally new one) for that
->>> goal?  What makes the existing formats unsuitable?
->>
->> It's just a matter of personal preference what is suitable or not, for
->> me, in my environment, etc.  Is there a reason I should use the alias
->> format of some email client, if I don't use that email client?
+>> Yes, but git maintainers must continue to support your "simple" format
+>> even if someone comes along later and adds a more proper sendmail-like
+>> format alongside.
 >
-> I do not think "should" is a good word in the context of that
-> sentence, as nobody is forcing you to choose one of the existing
-> formats.  But one reason you might want to do so would be because
-> git-send-email already knows about it.
->
-> It is a different matter if you already use an email client that
-> supports your new format and you are trying to reuse an alias file
-> with that email client.  But I got an impression that was not the
-> case, so the choice seemed to me between
->
->  - learning and using one of existing 5; and
+> Someone might implement a sendmail parser in the future, or perhaps
+> never.  So, there is the possibility.  How strong of a reason is that
+> to reject some other format that is based on a colon?
 
-I imagine that's what most people would do, faced with the same issue.
-I did initially go look at those formats.  Since I didn't really
-prefer any of them, I approached solving the problem in a different
-way.
+Nobody has suggested that your format should be rejected. Rather, the
+issue raised regards gratuitous divergence from the sendmail 'aliases'
+format. You seem to be arguing in favor of gratuitous divergence
+(without explanation) despite the proposed "proper subset" approach
+serving your use-case just as well.
 
+> What is the harm of the two side by side?  This is only a small bit of
+> code that really shouldn't require much maintenance.  What is the harm
+> to just leave it in?
 >
->  - inventing, adding support for, and using a new one.
->
-> That felt to me was a choice that is clearly not in favor of the
-> latter, and I was wondering if there were other reasons to shift the
-> balance.  For example, "all of the existing formats are klunky and
-> difficult to write" might be why "learning and using one of existing
-> 5" is not a win, compared to "inventing, ading support for, and
-> using a new one".  I do not know if that is the case, so I wanted to
-> hear the reason why.
+> If the future sendmail parser happens to support the simple format,
+> and the future maintainers determine the situation to be unacceptable,
+> there is still a solution.  Simply define both names 'simple' and
+> 'sendmail' to refer to the same sendmail parser.  The dead code can be
+> removed.
 
-That "for example" is it.  Why should I have to type "alias" before
-each alias in the file?  It's not in any way hard to do - it just
-serves no purpose other than to make the parser happy.  Perhaps the
-keyword does serve a purpose in mutt, but for me it is pointless to
-type that.
-
->
->> I'm not trying to force anything on anyone else by offering this, just
->> another option that might be suitable for someone else, in their
->> environment, as it is in mine.  People who don't like it can choose a
->> different option.  People who don't like any of the options can write
->> their own like I did, or is that not allowed for some reason?
->
-> We prefer not to carry dead code---when we add things, we would want
-> to make sure it will be widely useful so that other people benefit.
-
-1 vote for useful.  I realize this is self serving, but I hoped
-sharing it would benefit others.
-
->
->> I've already shown that I am willing to change the name, write the
->> documentation, write the tests, modify the syntax, and so on.  I've
->> done the work, from +6 lines to +57 lines, as requested.  I'm not
->> looking forward to v5, v6... v10 of what was a really really simple
->> patch.  If you don't like it, please don't string me along.  This is
->> not my job.
->
-> Yeah, I know.
->
-> A trade off from contributor's side is between (1) handing the
-> maintenance to the upstream, so that a feature will stay available
-> with minimum fuss in the future, or (2) having to carry one's own
-> enhancement forward every time one updates from the upstream.
-
-(3) good citizenship in open source to share one's changes to the code.
-
->
-> On the other hand, a trade off from project's side is between (1)
-> rejecting a half-way finished ware and hurting feelings of people
-> and (2) accepting a half-way finished ware and having to spend
-> engineering effort (e.g. making sure it fits to the rest of the
-> system without adding dead weight) to polish it to the end.
->
-
-I get that, in the general case, and especially for large features
-that affect a lot of the user base.  How worried are you in this case,
-about (2), for such a small amount of code that now has a more
-extensive unit test case and documentation than any of the other
-options?
+This "simple solution" doesn't work if your new format diverges from
+the sendmail 'aliases' format, which is why the issue is being raised
+now, in order to avoid painting ourselves into that corner. If, on the
+other hand, your new format remains a proper subset of sendmail
+'aliases', then the "simple solution" does work; and, as a proper
+subset, it can just as well be named "sendmail" without hurting any
+future effort to implement missing functionality.
