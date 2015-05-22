@@ -1,119 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2] rebase -i: fix post-rewrite hook with failed exec
- command
-Date: Fri, 22 May 2015 13:15:49 +0000
-Message-ID: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v3] pull: handle --log=<n>
+Date: Fri, 22 May 2015 21:29:55 +0800
+Message-ID: <CACRoPnSbAA=6xH+4W8KGPRWe8Pi304zz70Kz8TgY92qKtDYQ8A@mail.gmail.com>
+References: <1431956396-21788-1-git-send-email-pyokagan@gmail.com>
+	<5661061272076a1883cfde1087be4a42@www.dscho.org>
+	<20150521103617.GA6159@yoshi.chippynet.com>
+	<xmqq1ti9ipy9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_6_1487761309.1432300549779"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 22 15:24:13 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 22 15:30:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvmvs-0003HM-Cx
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:24:12 +0200
+	id 1Yvn1a-0006kJ-UJ
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756826AbbEVNYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 09:24:07 -0400
-Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:53024
-	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756587AbbEVNYF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 09:24:05 -0400
-X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2015 09:24:05 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1432300549;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Date:Feedback-ID;
-	bh=I0kkDZkdLfJRD6VSbAqJw984+swdGDMo0klSAp4nW4c=;
-	b=XSH1VY4l7hCyPvJSdqtyhsa87E45R9xbivL41MoKJt3enpPNaaTVlstqj8LI63Wb
-	G4BB7TfjMhvIXOtJA/Beb8BLnhAl5Efxbpm5YnvPwrZgD/3h57rYZkPf5Q1GU3XbjuA
-	gaLELLGaXjh6q6WdoT2f+B/YoPs6yHu2MpG9iwlA=
-X-SES-Outgoing: 2015.05.22-54.240.6.246
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1422693AbbEVNaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 09:30:00 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:36185 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422688AbbEVN35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 09:29:57 -0400
+Received: by lagv1 with SMTP id v1so12598501lag.3
+        for <git@vger.kernel.org>; Fri, 22 May 2015 06:29:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SDKxH9SZEl51sH1OuCVGTVdtJ2tqYSZXnDCrfScODVA=;
+        b=w2flnIyBN8g2DTUZok7XFNj5b+Hx58WPpVomix20hlFOpj3jPjx3jKt7pupcKjHlyj
+         lXRReZZJp99tUhplztI5v2Bh/qUDytEexhhhLQixR3BduqWJA99pbvoLiEP3DVSFQ5IF
+         VjQJhIHgKbpamhPEeWUrfbmeg5H9KXzjCdGaZTjnoei7lw/sxPR0p15xjTfNQp6n2jdJ
+         DU1dsk93cD3ucTyjUt17sQEnS4S3fA7OI5qyxw0mErddLRF/zMBaO+PCJSU+mWG9JOa2
+         sgIFRKf4nbCCufW9BOfvcCUwISKF8xf4qhzaBcMc1t5k4oZXnQMY/NtRbbPyMt7jPLyU
+         ZWIQ==
+X-Received: by 10.112.171.101 with SMTP id at5mr6590801lbc.66.1432301395720;
+ Fri, 22 May 2015 06:29:55 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Fri, 22 May 2015 06:29:55 -0700 (PDT)
+In-Reply-To: <xmqq1ti9ipy9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269712>
 
-------=_Part_6_1487761309.1432300549779
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Hi Junio,
 
-Usually, when 'git rebase' stops before completing the rebase, it is to
-give the user an opportunity to edit a commit (e.g. with the 'edit'
-command). In such cases, 'git rebase' leaves the sha1 of the commit being
-rewritten in "$state_dir"/stopped-sha, and subsequent 'git rebase
---continue' will call the post-rewrite hook with this sha1 as <old-sha1>
-argument to the post-rewrite hook.
+On Fri, May 22, 2015 at 5:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> So, here's the re-rolled patch.
+>
+> Sigh, too late.
+>
+> I thought the previous round was good enough and the patch is
+> already on 'next'.
+>
+> If the incremental change is still worth doing on top, please do so.
+>
+> Thanks.
 
-The case of 'git rebase' stopping because of a failed 'exec' command is
-different: it gives the opportunity to the user to examine or fix the
-failure, but does not stop saying "here's a commit to edit, use
---continue when you're done". So, there's no reason to call the
-post-rewrite hook for 'exec' commands. If the user did rewrite the
-commit, it would be with 'git commit --amend' which already called the
-post-rewrite hook.
+My bad, I should have checked 'next'.
 
-Fix the behavior to leave no stopped-sha file in case of failed exec
-command, and teach 'git rebase --continue' to skip record_in_rewritten if
-no stopped-sha file is found.
----
- git-rebase--interactive.sh   | 10 +++++-----
- t/t5407-post-rewrite-hook.sh |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+But it's okay, I re-rolled the patch because it seemed that people
+preferred "test_commit". I personally don't have a strong opinion on
+this, so if you're fine with it then I'm okay as well.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 08e5d86..1c321e4 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -486,7 +486,7 @@ do_pick () {
- }
- 
- do_next () {
--	rm -f "$msg" "$author_script" "$amend" || exit
-+	rm -f "$msg" "$author_script" "$amend" "$state_dir"/stopped-sha || exit
- 	read -r command sha1 rest < "$todo"
- 	case "$command" in
- 	"$comment_char"*|''|noop)
-@@ -576,9 +576,6 @@ do_next () {
- 		read -r command rest < "$todo"
- 		mark_action_done
- 		printf 'Executing: %s\n' "$rest"
--		# "exec" command doesn't take a sha1 in the todo-list.
--		# => can't just use $sha1 here.
--		git rev-parse --verify HEAD > "$state_dir"/stopped-sha
- 		${SHELL:-@SHELL_PATH@} -c "$rest" # Actual execution
- 		status=$?
- 		# Run in subshell because require_clean_work_tree can die.
-@@ -874,7 +871,10 @@ first and then run 'git rebase --continue' again."
- 		fi
- 	fi
- 
--	record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
-+	if test -r "$state_dir"/stopped-sha
-+	then
-+		record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
-+	fi
- 
- 	require_clean_work_tree "rebase"
- 	do_rest
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 53a4062..06ffad6 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -212,7 +212,7 @@ EOF
- 	verify_hook_input
- '
- 
--test_expect_failure 'git rebase -i (exec)' '
-+test_expect_success 'git rebase -i (exec)' '
- 	git reset --hard D &&
- 	clear_hook_input &&
- 	FAKE_LINES="edit 1 exec_false 2" git rebase -i B &&
-
----
-https://github.com/git/git/pull/138
-------=_Part_6_1487761309.1432300549779--
+Thanks,
+Paul
