@@ -1,127 +1,119 @@
-From: Bastien Traverse <bt@esrevart.net>
-Subject: [BUG] "git commit --date" format parsing
-Date: Fri, 22 May 2015 15:18:53 +0200
-Message-ID: <555F2CBD.8050501@esrevart.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/2] rebase -i: fix post-rewrite hook with failed exec
+ command
+Date: Fri, 22 May 2015 13:15:49 +0000
+Message-ID: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_6_1487761309.1432300549779"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 22 15:19:12 2015
+X-From: git-owner@vger.kernel.org Fri May 22 15:24:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvmr1-0000RY-As
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:19:11 +0200
+	id 1Yvmvs-0003HM-Cx
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757373AbbEVNTE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 May 2015 09:19:04 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:36651 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757026AbbEVNSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 09:18:55 -0400
-Received: from [IPv6:2001:41d0:fc06:e100:6236:ddff:fe94:4666] (unknown [IPv6:2001:41d0:fc06:e100:6236:ddff:fe94:4666])
-	(Authenticated sender: bastien@esrevart.net)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id EAEAD172081
-	for <git@vger.kernel.org>; Fri, 22 May 2015 15:18:53 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+	id S1756826AbbEVNYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 09:24:07 -0400
+Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:53024
+	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756587AbbEVNYF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 09:24:05 -0400
+X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2015 09:24:05 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1432300549;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Date:Feedback-ID;
+	bh=I0kkDZkdLfJRD6VSbAqJw984+swdGDMo0klSAp4nW4c=;
+	b=XSH1VY4l7hCyPvJSdqtyhsa87E45R9xbivL41MoKJt3enpPNaaTVlstqj8LI63Wb
+	G4BB7TfjMhvIXOtJA/Beb8BLnhAl5Efxbpm5YnvPwrZgD/3h57rYZkPf5Q1GU3XbjuA
+	gaLELLGaXjh6q6WdoT2f+B/YoPs6yHu2MpG9iwlA=
+X-SES-Outgoing: 2015.05.22-54.240.6.246
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269711>
 
-Hi *
+------=_Part_6_1487761309.1432300549779
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
-Trying to specify a commit (author) date using `--date` option yields
-unpredictable results that are incoherent with man git-commit:
+Usually, when 'git rebase' stops before completing the rebase, it is to
+give the user an opportunity to edit a commit (e.g. with the 'edit'
+command). In such cases, 'git rebase' leaves the sha1 of the commit being
+rewritten in "$state_dir"/stopped-sha, and subsequent 'git rebase
+--continue' will call the post-rewrite hook with this sha1 as <old-sha1>
+argument to the post-rewrite hook.
 
-$ git --version
-git version 2.4.1
+The case of 'git rebase' stopping because of a failed 'exec' command is
+different: it gives the opportunity to the user to examine or fix the
+failure, but does not stop saying "here's a commit to edit, use
+--continue when you're done". So, there's no reason to call the
+post-rewrite hook for 'exec' commands. If the user did rewrite the
+commit, it would be with 'git commit --amend' which already called the
+post-rewrite hook.
 
-$ uname -a
-Linux arch-clevo 4.0.4-1-ARCH #1 SMP PREEMPT Mon May 18 06:43:19 CEST
-2015 x86_64 GNU/Linux
+Fix the behavior to leave no stopped-sha file in case of failed exec
+command, and teach 'git rebase --continue' to skip record_in_rewritten if
+no stopped-sha file is found.
+---
+ git-rebase--interactive.sh   | 10 +++++-----
+ t/t5407-post-rewrite-hook.sh |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-$ mkdir test && cd test/
-$ git init
-$ touch test
-$ git add test
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 08e5d86..1c321e4 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -486,7 +486,7 @@ do_pick () {
+ }
+ 
+ do_next () {
+-	rm -f "$msg" "$author_script" "$amend" || exit
++	rm -f "$msg" "$author_script" "$amend" "$state_dir"/stopped-sha || exit
+ 	read -r command sha1 rest < "$todo"
+ 	case "$command" in
+ 	"$comment_char"*|''|noop)
+@@ -576,9 +576,6 @@ do_next () {
+ 		read -r command rest < "$todo"
+ 		mark_action_done
+ 		printf 'Executing: %s\n' "$rest"
+-		# "exec" command doesn't take a sha1 in the todo-list.
+-		# => can't just use $sha1 here.
+-		git rev-parse --verify HEAD > "$state_dir"/stopped-sha
+ 		${SHELL:-@SHELL_PATH@} -c "$rest" # Actual execution
+ 		status=$?
+ 		# Run in subshell because require_clean_work_tree can die.
+@@ -874,7 +871,10 @@ first and then run 'git rebase --continue' again."
+ 		fi
+ 	fi
+ 
+-	record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
++	if test -r "$state_dir"/stopped-sha
++	then
++		record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
++	fi
+ 
+ 	require_clean_work_tree "rebase"
+ 	do_rest
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index 53a4062..06ffad6 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -212,7 +212,7 @@ EOF
+ 	verify_hook_input
+ '
+ 
+-test_expect_failure 'git rebase -i (exec)' '
++test_expect_success 'git rebase -i (exec)' '
+ 	git reset --hard D &&
+ 	clear_hook_input &&
+ 	FAKE_LINES="edit 1 exec_false 2" git rebase -i B &&
 
-1. ISO 8601 (strict)
-
-$ git commit --date=3D"2015-05-21T16=E2=88=B631+02:00" -m "Test commit =
-to check
-date format parsing"
-[master (root commit) fed9ae6] Test commit to check date format parsing
- Date: Thu May 21 02:00:00 2015 +0200
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 test
-
-  --> gets the date right but confuses the timezone for the time
-
-2. git-log --date=3Diso8601 format:
-
-$ git commit --amend --date=3D"2015-05-21 16=E2=88=B631 +0200" -m "Test=
- commit to
-check date format parsing"
-[master d2cdbf2] Test commit to check date format parsing
- Date: Thu May 21 14:37:37 2015 +0200
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 test
-
-  --> gets the date right but uses current time, not specified one
-
-3. date format git uses in output of commit command:
-
-$ git commit --amend --date=3D"Thu May 21 16=E2=88=B631 2015 +0200"
-=2E..
-Date: Sat May 21 14:40:08 2016 +0200
-
-  --> get the day and month right but not the year, uses current time
-
-4. RFC 2822
-
-$ git commit --amend --date=3D"Thu, 21 May 2015 16=E2=88=B631 +0200"
-=2E..
-Date: Thu May 21 15:01:03 2015 +0200
-
-  --> gets the date right but uses current time
-
-5. Environment variable with ISO 8601 (strict)
-
-$ GIT_AUTHOR_DATE=3D"2015-05-21T16=E2=88=B631+02:00" git commit --amend
-=2E..
-Date: Thu May 21 15:04:30 2015 +0200
-
-  --> using the env var we get something better than 1. (not confusing
-timezone for time) but still not the specified date.
-
-
-Seeing the discussions there have been here around date parsing and ISO
-8601 [1][2], I suggest only supporting the W3C=E2=80=99s suggested prof=
-ile of
-ISO 8601 [3] to cut in the complexity.
-
-My use case for using the --date option to git-commit is to reconstruct
-the revision history of a set of files that were timestamped with YAML
-`date:` metadata, so as to see which files were added after which other=
-s
-etc.
-
-I was hoping to use a script to parse the YAML datetime metadata in git
-commit, but right now the time information would be lost, which is
-problematic.
-
-Besides this, documentation for git-commit is currently uncorrect since
-it suggests we can use RFC 2822 and ISO 8601 while this seems not to be
-the case.
-
-Thanks for your feedback,
-Bastien
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/256109
-[2] http://thread.gmane.org/gmane.comp.version-control.git/52414/focus=3D=
-52597
-[3] http://www.w3.org/TR/NOTE-datetime
+---
+https://github.com/git/git/pull/138
+------=_Part_6_1487761309.1432300549779--
