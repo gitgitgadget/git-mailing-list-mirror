@@ -1,75 +1,127 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule
- does not yield complete logs")
-Date: Fri, 22 May 2015 15:06:01 +0200
-Message-ID: <555F29B9.1040805@gmail.com>
-References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+From: Bastien Traverse <bt@esrevart.net>
+Subject: [BUG] "git commit --date" format parsing
+Date: Fri, 22 May 2015 15:18:53 +0200
+Message-ID: <555F2CBD.8050501@esrevart.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robert Dailey <rcdailey.lists@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	emma@gitforteams.com
-To: Roberto Tyley <roberto.tyley@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 22 15:06:17 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 22 15:19:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvmeS-0001kz-Hi
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:06:12 +0200
+	id 1Yvmr1-0000RY-As
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757193AbbEVNGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 09:06:08 -0400
-Received: from mail-wg0-f41.google.com ([74.125.82.41]:34478 "EHLO
-	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757035AbbEVNGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 09:06:04 -0400
-Received: by wghq2 with SMTP id q2so17308181wgh.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 06:06:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=059PVGIjFPM7PWZZgLTDlp9o+4nja99T4kn2vlZV+NE=;
-        b=dd8OaA8jwg88VmWfDbdKn1ofPPTOyd/SnsyfoW5XAWKJNzTbaN9QMTy86IEjFgSgd8
-         AVwabqxhQDeCrZurZkuW2Xqg+h/XMbkg5eumF4F3zA6NdAE5gmCGn/5uYnldB2Kghvbl
-         KruK00o8EayvKBkoDgvuvqpc9D4awKBWJA9V4bfXpxc92uxdhNsN7p9Z4COpfsvnIV8a
-         Y3kEhexf0PWPhbMfgx+kTxofy/bynlXnTKHqzhaJgt2o0WLLDsjcmlTCXA0+vBN8Kf5z
-         6yF5t2/oMh/fhKOzjqKS8yxJCB3MNViY4uVv22Kzpk3rZWNox0BMIa78/qYKe+lF48jy
-         0xHQ==
-X-Received: by 10.180.98.1 with SMTP id ee1mr7576126wib.86.1432299963759;
-        Fri, 22 May 2015 06:06:03 -0700 (PDT)
-Received: from [10.223.42.70] ([131.228.216.128])
-        by mx.google.com with ESMTPSA id gi14sm3070454wjc.42.2015.05.22.06.06.02
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 May 2015 06:06:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+	id S1757373AbbEVNTE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 May 2015 09:19:04 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:36651 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757026AbbEVNSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 09:18:55 -0400
+Received: from [IPv6:2001:41d0:fc06:e100:6236:ddff:fe94:4666] (unknown [IPv6:2001:41d0:fc06:e100:6236:ddff:fe94:4666])
+	(Authenticated sender: bastien@esrevart.net)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id EAEAD172081
+	for <git@vger.kernel.org>; Fri, 22 May 2015 15:18:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269710>
 
-On 5/22/2015 10:33, Roberto Tyley wrote:
+Hi *
 
-> Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
-> one-way GitHub PR -> Mailing list tool, called submitGit:
->
-> https://submitgit.herokuapp.com/
+Trying to specify a commit (author) date using `--date` option yields
+unpredictable results that are incoherent with man git-commit:
 
-That's fantastic! Me being the one who brought up that topic at the Git 
-Merge contributor's summit, I can say this sounds *very* much like the 
-tool I've envisioned. Many thanks for that, I'll be sure to give it a 
-try as soon as I can.
+$ git --version
+git version 2.4.1
 
-Best regards,
-Sebastian
+$ uname -a
+Linux arch-clevo 4.0.4-1-ARCH #1 SMP PREEMPT Mon May 18 06:43:19 CEST
+2015 x86_64 GNU/Linux
+
+$ mkdir test && cd test/
+$ git init
+$ touch test
+$ git add test
+
+1. ISO 8601 (strict)
+
+$ git commit --date=3D"2015-05-21T16=E2=88=B631+02:00" -m "Test commit =
+to check
+date format parsing"
+[master (root commit) fed9ae6] Test commit to check date format parsing
+ Date: Thu May 21 02:00:00 2015 +0200
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test
+
+  --> gets the date right but confuses the timezone for the time
+
+2. git-log --date=3Diso8601 format:
+
+$ git commit --amend --date=3D"2015-05-21 16=E2=88=B631 +0200" -m "Test=
+ commit to
+check date format parsing"
+[master d2cdbf2] Test commit to check date format parsing
+ Date: Thu May 21 14:37:37 2015 +0200
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test
+
+  --> gets the date right but uses current time, not specified one
+
+3. date format git uses in output of commit command:
+
+$ git commit --amend --date=3D"Thu May 21 16=E2=88=B631 2015 +0200"
+=2E..
+Date: Sat May 21 14:40:08 2016 +0200
+
+  --> get the day and month right but not the year, uses current time
+
+4. RFC 2822
+
+$ git commit --amend --date=3D"Thu, 21 May 2015 16=E2=88=B631 +0200"
+=2E..
+Date: Thu May 21 15:01:03 2015 +0200
+
+  --> gets the date right but uses current time
+
+5. Environment variable with ISO 8601 (strict)
+
+$ GIT_AUTHOR_DATE=3D"2015-05-21T16=E2=88=B631+02:00" git commit --amend
+=2E..
+Date: Thu May 21 15:04:30 2015 +0200
+
+  --> using the env var we get something better than 1. (not confusing
+timezone for time) but still not the specified date.
+
+
+Seeing the discussions there have been here around date parsing and ISO
+8601 [1][2], I suggest only supporting the W3C=E2=80=99s suggested prof=
+ile of
+ISO 8601 [3] to cut in the complexity.
+
+My use case for using the --date option to git-commit is to reconstruct
+the revision history of a set of files that were timestamped with YAML
+`date:` metadata, so as to see which files were added after which other=
+s
+etc.
+
+I was hoping to use a script to parse the YAML datetime metadata in git
+commit, but right now the time information would be lost, which is
+problematic.
+
+Besides this, documentation for git-commit is currently uncorrect since
+it suggests we can use RFC 2822 and ISO 8601 while this seems not to be
+the case.
+
+Thanks for your feedback,
+Bastien
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/256109
+[2] http://thread.gmane.org/gmane.comp.version-control.git/52414/focus=3D=
+52597
+[3] http://www.w3.org/TR/NOTE-datetime
