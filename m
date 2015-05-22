@@ -1,161 +1,132 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] send-email: Add simple email aliases format
-Date: Thu, 21 May 2015 21:05:12 -0400
-Message-ID: <CAPig+cQ8Gw3Q1QcJ=k4647LW1gBZ3fuJBYpOCE=AxA0ZWtktmQ@mail.gmail.com>
-References: <4b56f6ab3c14aff7752804d11917b1f330f55f40.1432252898.git.allenbh@gmail.com>
+From: FusionX86 <fusionx86@gmail.com>
+Subject: Re: git p4 clone - exclude file types
+Date: Thu, 21 May 2015 19:33:44 -0600
+Message-ID: <CAFcBi884jBq9a7v8cATMkT3Wh75zmuW9mc8DfA5ZYLcCXEQEHw@mail.gmail.com>
+References: <CAFcBi88K-HEn4JCVkONq3h4O9XS1FFX0OXch2d-VJ2bLEsPM0g@mail.gmail.com>
+	<555A52BD.1030802@diamand.org>
+	<CAFcBi89XwW48Goaap=OCVQ_CJrNa_hj5+DWtOHGOsrm6jMs-mw@mail.gmail.com>
+	<555C2E5D.70502@diamand.org>
+	<CAFcBi8-SShvWLS7sRy3L=vF=OmQqmroK5NpcuA9N=0J2x4DEXA@mail.gmail.com>
+	<555E5304.5030502@diamand.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 03:05:19 2015
+Cc: Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Fri May 22 03:33:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvbOp-0007ic-9V
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 03:05:19 +0200
+	id 1YvbqW-0001A3-Ju
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 03:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755334AbbEVBFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2015 21:05:14 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:35548 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754487AbbEVBFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2015 21:05:13 -0400
-Received: by iesa3 with SMTP id a3so21155789ies.2
-        for <git@vger.kernel.org>; Thu, 21 May 2015 18:05:12 -0700 (PDT)
+	id S1755145AbbEVBdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2015 21:33:46 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:33924 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754013AbbEVBdp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2015 21:33:45 -0400
+Received: by qgez61 with SMTP id z61so2197198qge.1
+        for <git@vger.kernel.org>; Thu, 21 May 2015 18:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=D2bfyloBY+z8DZk6xsno/7ez7q6qLE3vp7SH/x5T15A=;
-        b=aa61ov/LylVDSz6n06+uOzWcFQCuAZeGr35mGYEyoshleXT0C3doCmQtfBn+Dc/xhf
-         W0NsGKO6ijr8TZGGl7QOJFPYxbDXu818sdNvgJ1NgmbWA8iNfJTpxs+IF4Y2pPbwL/AG
-         AzBlmbVuNH4K2adklHDtD45Qn7684YiKbYGDA1ERfgpSNLge2FGyYWWTlHw3HMsLAL72
-         PRTEgdsrpNKY0EJF6ze5dqog/olGomyoPWQStIBWR3Ic7beKcmmXoUGPg0UHZHchQyFv
-         cUwOXqmfKldVsOZ8SFtX+Ulj/p2rdn0IYBAVOdkbfcMs5aaVPjN1QsxSYrdYPCvxd+et
-         iV0A==
-X-Received: by 10.107.31.134 with SMTP id f128mr7230866iof.19.1432256712269;
- Thu, 21 May 2015 18:05:12 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 21 May 2015 18:05:12 -0700 (PDT)
-In-Reply-To: <4b56f6ab3c14aff7752804d11917b1f330f55f40.1432252898.git.allenbh@gmail.com>
-X-Google-Sender-Auth: F1ldfg7JpC1DHnQF7-8Wg0Tl40A
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ras1LXz53Q4BiBa+5xL4CTzvXt8Y2qJl/jp3ZD3i8W4=;
+        b=JsV6D8GMqYAwJRF3vgWG8xlTaJLKrnVNqmfBmoQoXkTsp939maBMouev/XwP5aDaGB
+         AUiOW3ar8BSJ0o+cqd3wKp1VjD9Y0cKbNvXBkoEESGWR5CxWIxMpNUjHjU91xrb+wJiO
+         eKmTktlLKlV1ymVo61BQVBXdxmmTFt82eUnyuR4Z/nJfXu37MvktCc97oMn7ParrPUz4
+         qozWomusjwSvQ9E/WOxTKu0dmrq0EEQdGA0EYdvanLXZaZfWxfRoN56h3FT6KSZhiFN5
+         CKSI8VsLuZsb8SYFiDRCdAPFNUDMehgIFVmcnc0IIFcDFKwJKAqeNNhUPLg3IWFJRk/d
+         Jg2A==
+X-Received: by 10.140.88.242 with SMTP id t105mr7622407qgd.92.1432258424725;
+ Thu, 21 May 2015 18:33:44 -0700 (PDT)
+Received: by 10.140.93.44 with HTTP; Thu, 21 May 2015 18:33:44 -0700 (PDT)
+In-Reply-To: <555E5304.5030502@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269683>
 
-On Thu, May 21, 2015 at 8:16 PM, Allen Hubbe <allenbh@gmail.com> wrote:
-> This format is more simple than the other alias file formats, so it may
-> be preferred by some users.  The format is as follows.
+Sure, but it doesn't show anything other than the last file that
+p4/git was working on. It's always a different file, but looks
+something like this:
+
+/path/to/file/somefile1
+/path/to/file/somefile2
+
+and then just hangs...
+
+It is trying to clone ~42846 files.
+
+The p4d server version is older. It hasn't been maintained and we have
+no support. The version is: P4D/NTX64/2012.1/459601 (2012/05/09)
+
+The single CPU does hit 100% at times, but it doesn't last and load is
+never high. Thought about adding a second CPU to see if it helps by
+chance. This isn't a show stopper since I can eventually get it to
+work if I keep trying, but figured I'd send it out to the community.
+
+On Thu, May 21, 2015 at 3:49 PM, Luke Diamand <luke@diamand.org> wrote:
+> On 21/05/15 21:49, FusionX86 wrote:
+>>
+>> I thought about that, but no. The box I'm running git-p4 on has the
+>> following specs:
+>>
+>> CentOS 6.6 64bit
+>> 1 CPU
+>> 8GB RAM
+>> 8GB Swap
 >
-> <alias>: <address|alias>[, <address|alias>...]
 >
-> Aliases are specified one per line.  There is no line splitting.
+> Can you post the output, with "-v" added?
 >
-> Example:
->         alice: Alice W Land <awol@example.com>
->         bob: Robert Bobbyton <bob@example.com>
->         chloe: chloe@example.com
->         abgroup: alice, bob
->         bcgrp: bob, chloe, Other <o@example.com>
+> $ git-p4 clone //depot/some/dir -v
 >
-> Signed-off-by: Allen Hubbe <allenbh@gmail.com>
-> ---
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 804554609def..99583c4f8969 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -383,7 +383,7 @@ sendemail.aliasesFile::
+> Also, what is your p4d server version?
 >
->  sendemail.aliasFileType::
->         Format of the file(s) specified in sendemail.aliasesFile. Must be
-> -       one of 'mutt', 'mailrc', 'pine', 'elm', or 'gnus'.
-> +       one of 'mutt', 'mailrc', 'pine', 'elm', 'gnus', or 'simple'.
-
-It's perhaps somewhat unfortunate that the formats of the other alias
-file types aren't described here, however, the reader can at least
-look them up. But the new "simple" format is never described anywhere
-in the documentation, so it's effectively unusable. Most users will be
-unable or unwilling to consult the source code or the commit message
-to figure out how to use this format. The description you wrote for
-the commit message might be sufficient as proper documentation (with
-proper Asciidoc formatting, of course).
-
->  sendemail.multiEdit::
->         If true (default), a single editor instance will be spawned to edit
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index e1e9b1460ced..25d72e8db8bf 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -515,7 +515,11 @@ my %parse_alias = (
->                                $aliases{$alias} = [ split_addrs($addr) ];
->                           }
->                       } },
-> -
-> +       simple => sub { my $fh = shift; while (<$fh>) {
-> +               if (/^\s*(\S+)\s*:\s*(.+)$/) {
-
-I imagine that users would appreciate being able to add comments to
-their aliases file, and the implementation complexity to support
-comment lines and blank lines (as described in the Postfix aliases
-documentation you cited earlier[1]) would be so minor that I'm rather
-surprised you chose not to do so.
-
-[1]: http://www.postfix.org/aliases.5.html
-
-> +                       my ($alias, $addr) = ($1, $2);
-> +                       $aliases{$alias} = [ split_addrs($addr) ];
-> +               }}},
->         gnus => sub { my $fh = shift; while (<$fh>) {
->                 if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
->                         $aliases{$1} = [ $2 ];
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 7be14a4e37f7..bbb73cdf8bec 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1548,6 +1548,30 @@ test_expect_success $PREREQ 'sendemail.aliasfile=~/.mailrc' '
->                 2>errors >out &&
->         grep "^!someone@example\.org!$" commandline1
->  '
-> +test_expect_success $PREREQ 'sendemail.aliasfiletype=simple' '
-> +       clean_fake_sendmail && rm -fr outdir &&
-> +       git format-patch -1 -o outdir &&
-> +       {
-> +               echo "alice: Alice W Land <awol@example.com>"
-> +               echo "bob: Robert Bobbyton <bob@example.com>"
-> +               echo "chloe: chloe@example.com"
-> +               echo "abgroup: alice, bob"
-> +               echo "bcgrp: bob, chloe, Other <o@example.com>"
-> +       } >~/.tmp-email-aliases &&
-
-A here-doc would be easier to maintain and read:
-
-    cat >~/.tmp-email-aliases <<-\EOF &&
-        alice: Alice W Land <awol@example.com>
-        bob: Robert Bobbyton <bob@example.com>
-        ...
-    EOF
-
-> +       git config --replace-all sendemail.aliasesfile \
-> +               "$(pwd)/.tmp-email-aliases" &&
-> +       git config sendemail.aliasfiletype simple &&
-> +       git send-email \
-> +               --from="Example <nobody@example.com>" \
-> +               --to=alice --to=bcgrp \
-> +               --smtp-server="$(pwd)/fake.sendmail" \
-> +               outdir/0001-*.patch \
-> +               2>errors >out &&
-> +       grep "^!awol@example\.com!$" commandline1 &&
-> +       grep "^!bob@example\.com!$" commandline1 &&
-> +       grep "^!chloe@example\.com!$" commandline1 &&
-> +       grep "^!o@example\.com!$" commandline1
-> +'
+> $ p4 info
 >
->  do_xmailer_test () {
->         expected=$1 params=$2 &&
-> --
-> 2.3.4
+> A quick test just cloning a repo with 4 files of 256MB each seems fine,
+> FWIW.
+>
+>
+>>
+>> It is also on the same physical network as the Perforce server. I
+>> remember seeing someone else complain about this, but I can't find the
+>> article/blog now.
+>>
+>>
+>> On Wed, May 20, 2015 at 12:49 AM, Luke Diamand <luke@diamand.org> wrote:
+>>>
+>>> On 19/05/15 08:38, FusionX86 wrote:
+>>>>
+>>>>
+>>>> Thanks Luke, looks like this does work for excluding files when using
+>>>> git p4. Great!
+>>>>
+>>>> Unrelated question...
+>>>>
+>>>> While using git p4 I have noticed that most of the time the clone/sync
+>>>> operations hang and I have to keep retrying. The Perforce depot I'm
+>>>> currently working with is larger than I'd like and has a lot of binary
+>>>> files which might be the cause. The point it gets to in the clone/sync
+>>>> is always random and doesn't ever stop on the same files or file
+>>>> types. Sometimes it'll die soon after starting, but other times it
+>>>> almost completes and then dies. If I keep retrying, it will eventually
+>>>> complete. I haven't been able to narrow down the cause, but I do
+>>>> notice that the git-fast-import stops right as the clone/sync dies.
+>>>> I'm wondering if git is overwhelmed and terminates. Have you ever seen
+>>>> this? Any suggestions?
+>>>
+>>>
+>>>
+>>> Running out of memory?
+>>>
+>>> Is this on a 32bit or 64bit system? How much virtual memory do you have?
+>>>
+>>> Luke
+>>>
+>
