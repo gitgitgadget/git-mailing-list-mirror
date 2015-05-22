@@ -1,118 +1,147 @@
-From: Roberto Tyley <roberto.tyley@gmail.com>
-Subject: [Announce] submitGit for patch submission (was "Diffing submodule
- does not yield complete logs")
-Date: Fri, 22 May 2015 09:33:20 +0100
-Message-ID: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+From: <steve.norman@thomsonreuters.com>
+Subject: RE: Troubleshoot clone issue to NFS.
+Date: Fri, 22 May 2015 08:35:52 +0000
+Message-ID: <7FAE15F0A93C0144AD8B5FBD584E1C551975ADA4@C111KXTEMBX51.ERF.thomson.com>
+References: <7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com>
+ <CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
+ <CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
+ <7FAE15F0A93C0144AD8B5FBD584E1C5519759641@C111KXTEMBX51.ERF.thomson.com>
+ <CACsJy8BULBJ=cL1+4TFX_7tYSCFL3MNEz1Ay0YGqx8W_8=nwAg@mail.gmail.com>
+ <20150522071224.GA10734@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Robert Dailey <rcdailey.lists@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	emma@gitforteams.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 22 10:33:31 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>
+To: <peff@peff.net>, <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 22 10:36:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YviOY-0003CJ-HX
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 10:33:30 +0200
+	id 1YviRB-0004Yp-SN
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 10:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757109AbbEVIdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 04:33:25 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:33184 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567AbbEVIdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 04:33:21 -0400
-Received: by iebgx4 with SMTP id gx4so26411235ieb.0
-        for <git@vger.kernel.org>; Fri, 22 May 2015 01:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=yHEIUhtT79U9sagtnVkcQII9THOb9PvsfpsiWwmmNew=;
-        b=xutcJwFvmWzxUEtrnC80kFssADJHirkF8qF9lU5XYiLvvAkCcbhluBOzUTwod+BDsK
-         D1JDWUMu0HsuLpCm1L9/SnXqa4sTVsTzQ3x32S+Vi5SCBBcrLzrMZ6pNeSbYN8utOOQ2
-         XkpDqQcIqeg/fhzp/t+sTCHGYIn07tMhHODgRYBZNavb2vTeNO7hoN/baAVmc7RL2msv
-         Sm2jytKu+jnqH5BTvXytrcjF7h7p97EqFH8r5dxG56C8Gprfc4a3MYCWmyZO4EX9o+Te
-         3Sd8VYsNVS6cDxxoKC+qp4Y8b2m0/VxyJD4wmgcWEYwnx09nhuxeW17FA9d/tgtCU0db
-         BVLA==
-X-Received: by 10.107.32.73 with SMTP id g70mr9312166iog.23.1432283600429;
- Fri, 22 May 2015 01:33:20 -0700 (PDT)
-Received: by 10.79.35.162 with HTTP; Fri, 22 May 2015 01:33:20 -0700 (PDT)
+	id S1754889AbbEVIgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 04:36:04 -0400
+Received: from mailout2-trp.thomsonreuters.com ([163.231.6.26]:32358 "EHLO
+	mailout2-trp.thomsonreuters.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751228AbbEVIgB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 04:36:01 -0400
+Received: from trpusmneagrly02.int.westgroup.com (relay2 [163.231.22.113])
+	by mailout2-trp.thomsonreuters.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.1) with ESMTP id t4M8Zruj013938
+	(version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
+	Fri, 22 May 2015 08:35:54 GMT
+Received: from EAGH-ERFPHUB05.ERF.thomson.com (EAGH-ERFPHUB05.erf.thomson.com [163.231.29.164])
+	by trpusmneagrly02.int.westgroup.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.1) with ESMTP id t4M8Zo4l008183
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Fri, 22 May 2015 08:35:53 GMT
+Received: from C111KXTEMBX51.ERF.thomson.com ([fe80::4999:4010:4bd1:ba61]) by
+ EAGH-ERFPHUB05.ERF.thomson.com ([fe80::1c57:55a4:6bfc:4f11%11]) with mapi id
+ 14.03.0158.001; Fri, 22 May 2015 03:35:52 -0500
+Thread-Topic: Troubleshoot clone issue to NFS.
+Thread-Index: AdCTxW/SgCCnMnTuQvaf51AB2UW2tgAN1NmAAAA88gAACEcAsAAL7E0AAA6C3AAACBBrAA==
+In-Reply-To: <20150522071224.GA10734@peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.206.30.8]
+x-tm-as-product-ver: SMEX-10.2.0.3308-7.500.1018-21558.006
+x-tm-as-result: No--52.327200-0.000000-31
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269700>
 
-On Tuesday, 19 May 2015, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, May 19, 2015 at 12:29 PM, Robert Dailey
-> <rcdailey.lists@gmail.com> wrote:
-> > How do you send your patches inline?
-[snip]
-> This workflow discussion was a topic at the GitMerge2015 conference,
-> and there are essentially 2 groups, those who know how to send email
-> and those who complain about it. A solution was agreed on by nearly all
-> of the contributors. It would be awesome to have a git-to-email proxy,
-> such that you could do a git push <proxy> master:refs/for/mailinglist
-> and this proxy would convert the push into sending patch series to the
-> mailing list. It could even convert the following discussion back into
-> comments (on Github?) but as a first step we'd want to try out a one
-> way proxy.
->
-> Unfortunately nobody stepped up to actually do the work, yet :(
-
-
-Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
-one-way GitHub PR -> Mailing list tool, called submitGit:
-
-https://submitgit.herokuapp.com/
-
-Here's what a user does:
-
-* create a PR on https://github.com/git/git
-* logs into https://submitgit.herokuapp.com/ with GitHub auth
-* selects their PR on https://submitgit.herokuapp.com/git/git/pulls
-* gets submitGit to email the PR as patches to themselves, in order to
-check it looks ok
-* when they're ready, get submitGit to send it to the mailing list on
-their behalf
-
-All discussion of the patch *stays* on the mailing list - I'm not
-attempting to change
-anything about the Git community process, other than make it easier
-for a wider group
-people to submit patches to the list.
-
-For hard-core contributors to Git, I'd imagine that git format-patch &
-send-email
-remain the fastest way to do their work. But those tools are _unfamiliar to the
-majority of Git users_ - so submitGit aims to cater to those users, because they
-definitely have valuable contributions to make, which would be tragic
-to throw away.
-
-I've been working on submitGit in my spare time for the past few
-weeks, and there
-are still features I plan to add (like guiding the user to more
-'correct' word wrapping,
-sign-off, etc), but given this discussion, I wanted to chime in and
-let people know
-what's here so far. It would be great if people could take the time to
-explore the tool
-(you don't have to raise a git/git PR in order to try sending one *to
-yourself*, for
-instance) and give feedback on list, or in GitHub issues:
-
-https://github.com/rtyley/submitgit/issues
-
-I've been lucky enough to discuss the ideas around submitGit with a
-few people at
-the Git-Merge conf, so thanks to Peff, Thomas Ferris Nicolaisen, and Emma Jane
-Hogbin Westby for listening to me (not to imply their endorsement of
-what I've done,
-just thanks for talking about it!).
-
-Roberto
+T24gRnJpZGF5LCBNYXkgMjIsIDIwMTUgQCA4OjEyIEFNIEplZmYgS2luZyBkaWQgc2NyaWJibGU6
+DQoNCj4gPiBJbiBidWlsdGluL2luZGV4LXBhY2suYywgcmVwbGFjZSB0aGUgbGluZSAiY29sbGlz
+aW9uX3Rlc3RfbmVlZGVkID0NCj4gPiBoYXNfc2hhMV9maWxlKHNoYTEpOyIgd2l0aCAiY29sbGlz
+aW9uX3Rlc3RfbmVlZGVkID0gMDsiLiBTZWN1cml0eSBpcw0KPiA+IGNvbXByb21pc2VkIGJ1dCBm
+b3IgdGhpcyB0ZXN0IGl0IHNob3VsZCBiZSBvay4gVGhlbiBjbG9uZSBhZ2Fpbi4gSQ0KPiA+IGhv
+cGUgdGhlIG5ldyBudW1iZXIgZ2V0cyBkb3duIGNsb3NlIHRvIHYxLjguNC4xLg0KPiANCj4gWWVh
+aCwgSSB0aGluayB0aGF0IGlzIGEgZ29vZCBzdGFydGluZyBwb2ludC4gSSB0aW1lZCBhIGxvY2Fs
+IGNsb25lDQo+IGJlZm9yZSBhbmQgYWZ0ZXIgNDVlOGE3NDsgdGhlcmUgaXMgYSBzbWFsbCBkaWZm
+ZXJlbmNlIG9uIG15IHN5c3RlbQ0KPiAoYWJvdXQgNSUpLCBidXQgaXQgZ29lcyBhd2F5IHdpdGgg
+eW91ciBzdWdnZXN0aW9uLg0KDQpUZXN0ZWQgdGhpcyBjaGFuZ2Ugb24gYSBjb3VwbGUgb2YgdmVy
+c2lvbnMsIGZpcnN0IG9mIGFsbCBvbiB0aGUgcmV2aXNpb24NCndoZXJlIHRoaW5ncyBnbyB3cm9u
+ZyBmb3IgbWU6DQoNCn4gJCBiaW4vZ2l0IC0tdmVyc2lvbg0KZ2l0IHZlcnNpb24gMS44LjQuMS5n
+NDVlOGE3NC5kaXJ0eQ0KDQp+ICQgdGltZSBiaW4vZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNv
+bS9naXQvZ2l0IHRlc3QNCjxzbmlwPg0KDQpyZWFsICAgIDBtNy4xMDVzDQp1c2VyICAgIDBtOS41
+NjZzDQpzeXMgICAgIDBtMC45ODlzDQoNCn4gJCB0aW1lIGJpbi9naXQgY2xvbmUgaHR0cHM6Ly9n
+aXRodWIuY29tL2dpdC9naXQgL3NhbWkvdGVzdA0KPHNuaXA+DQoNCnJlYWwgICAgMG0xNC40MTFz
+DQp1c2VyICAgIDBtOS43MDNzDQpzeXMgICAgIDBtMS4zNzRzDQoNClRoaXMgaXMgbW9yZSBpbiBs
+aW5lIHdpdGggd2hhdCBJIHNlZSBub3JtYWxseS4gICBBbHNvIHRlc3RlZCBvbiBtYXN0ZXI6DQoN
+Cn4gJCBiaW4vZ2l0IC0tdmVyc2lvbg0KZ2l0IHZlcnNpb24gMi40LjEuMjE3Lmc2YzEyNDljLmRp
+cnR5DQoNCn4gJCB0aW1lIGJpbi9naXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL2dpdC9naXQg
+dGVzdA0KPHNuaXA+DQoNCnJlYWwgICAgMG01Ljk0NnMNCnVzZXIgICAgMG05LjExMXMNCnN5cyAg
+ICAgMG0xLjMzMnMNCg0KDQp+ICQgdGltZSBiaW4vZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNv
+bS9naXQvZ2l0IC9zYW1pL3Rlc3QNCjxzbmlwPg0KDQpyZWFsICAgIDBtMTIuMzQ0cw0KdXNlciAg
+ICAwbTkuMTg3cw0Kc3lzICAgICAwbTEuNTc5cw0KDQpTbyBzaW1pbGFyIG9uIHRoZSBsYXRlc3Qg
+YXMgd2VsbC4NCg0KPiBUaGUgcHJvYmxlbSB3aXRoIGhhc19zaGExX2ZpbGUoKSBwcmlvciB0byB2
+MS44LjQuMiBpcyB0aGF0IGl0IGlzIHJhY3kNCj4gd2l0aCByZXNwZWN0IHRvIHNpbXVsdGFuZW91
+cyBvcGVyYXRpb25zOyB3ZSBtaWdodCBjbGFpbSB3ZSBkbyBub3QgaGF2ZQ0KPiBhbiBvYmplY3Qs
+IHdoZW4gaW4gZmFjdCB3ZSBkby4gQXMgeW91IG5vdGVkLCB1c3VhbGx5IGhhc19zaGExX2ZpbGUo
+KQ0KPiByZXR1cm5zIHRydWUgKGkuZS4sIHdlIGxvb2sgdXAgb2JqZWN0cyB0aGF0IHdlIGV4cGVj
+dCB0byBoYXZlKSwgYW5kIHRoZQ0KPiBwZXJmb3JtYW5jZSBpbXBhY3QgaXMgbWluaW1hbC4NCj4g
+DQo+IEJ1dCBmb3IgY29kZSBwYXRocyB3aGVyZSBfbm90XyBoYXZpbmcgdGhlIG9iamVjdCBpcyBu
+b3JtYWwsIHRoZSBpbXBhY3QNCj4gaXMgbXVjaCBncmVhdGVyLiBTbyBJIHRoaW5rIHRoZXJlIGFy
+ZSB0d28gcG9zc2liaWxpdGllcyBmb3IgaW1wcm92aW5nDQo+IHRoaXM6DQo+IA0KPiAgIDEuIEZp
+bmQgcGxhY2VzIHdoZXJlIHdlIGV4cGVjdCB0aGUgb2JqZWN0IHdpbGwgbm90IGV4aXN0IChsaWtl
+IHRoZQ0KPiAgICAgIGNvbGxpc2lvbl90ZXN0IGNoZWNrIHlvdSBwb2ludGVkIG91dCkgYW5kIHVz
+ZSBhDQo+ICAgICAgImhhc19zaGExX2ZpbGVfZmFzdCIgdGhhdCBhY2NlcHRzIHRoYXQgaXQgbWF5
+IHZlcnkgb2NjYXNpb25hbGx5DQo+ICAgICAgZXJyb25lb3VzbHkgcmV0dXJuIGZhbHNlLiBJbiB0
+aGlzIGNhc2UgaXQgd291bGQgbWVhbiBwb3RlbnRpYWxseQ0KPiAgICAgIHNraXBwaW5nIGEgY29s
+bGlzaW9uIGNoZWNrLCBidXQgSSB0aGluayB0aGF0IGlzIE9LLiBUaGF0IGNvdWxkIGhhdmUNCj4g
+ICAgICBzZWN1cml0eSBpbXBsaWNhdGlvbnMsIGJ1dCBvbmx5IGlmIGFuIGF0dGFja2VyOg0KPiAN
+Cj4gICAgICAgIGEuIGhhcyBicm9rZW4gc2hhMSB0byBnZW5lcmF0ZSBhIGNvbGxpZGluZyBvYmpl
+Y3QNCj4gDQo+ICAgICAgICBiLiBjYW4gbWFuaXB1bGF0ZSB0aGUgdmljdGltIGludG8gcmVwYWNr
+aW5nIGluIGEgbG9vcA0KPiANCj4gICAgICAgIGMuIGNhbiBtYW5pcHVsYXRlIHRoZSB2aWN0aW0g
+aW50byBmZXRjaGluZyAob3IgcmVjZWl2aW5nIGEgcHVzaCkNCj4gICAgICAgICAgIHNpbXVsdGFu
+ZW91c2x5IHdpdGggKGIpDQo+IA0KPiAgICAgIGF0IHdoaWNoIHBvaW50IHRoZXkgY2FuIHRyeSB0
+byByYWNlIHRoZSByZXBhY2sgcHJvY2VkdXJlIHRvIGFkZA0KPiAgICAgIHRoZWlyIGNvbGxpZGlu
+ZyBvYmplY3QgdG8gdGhlIHJlcG9zaXRvcnkuIEl0IHNlZW1zIHJhdGhlciB1bmxpa2VseQ0KPiAg
+ICAgIChlc3BlY2lhbGx5IHBhcnQgYSkuDQo+IA0KPiAgIDIuIE1ha2UgcmVwcmVwYXJlX3BhY2tl
+ZF9naXQoKSBjaGVhcGVyIGluIHRoZSBjb21tb24gY2FzZSB0aGF0IG5vdGhpbmcNCj4gICAgICBo
+YXMgY2hhbmdlZC4gSXQgd291bGQgcHJvYmFibHkgYmUgZW5vdWdoIHRvIHN0YXQoIm9iamVjdHMv
+cGFjayIpLg0KPiAgICAgIFdlIGtub3cgdGhhdCBwYWNrZmlsZXMgdGhlbXNlbHZlcyBkbyBub3Qg
+Y2hhbmdlOyB3ZSBtYXkgb25seSBhZGQgb3INCj4gICAgICBkZWxldGUgdGhlbS4gQW5kIHNpbmNl
+IHRoZSBoaWVyYXJjaHkgb2Ygb2JqZWN0cy9wYWNrIGlzIGZsYXQsIHdlDQo+ICAgICAga25vdyB0
+aGF0IHRoZSBtdGltZSBvbiB0aGF0IGRpcmVjdG9yeSB3aWxsIGNoYW5nZSBpZiBhbnkgcGFja3Mg
+YXJlDQo+ICAgICAgYWRkZWQgb3IgcmVtb3ZlZC4NCj4gDQo+ICAgICAgT2YgY291cnNlLCB3ZSBh
+cmUgc3RpbGwgZG9pbmcgYW4gZXh0cmEgc3RhdCgpIGZvciBlYWNoIGhhc19zaGExX2ZpbGUNCj4g
+ICAgICBjYWxsLiBXaGV0aGVyIHRoYXQgaGVscHMgZm9yIHRoZSBORlMgY2FzZSBkZXBlbmRzIG9u
+IHdoZXRoZXIgc3RhdCgpDQo+ICAgICAgaXMgc2lnbmlmaWNhbnRseSBjaGVhcGVyIHRoYW4gb3Bl
+bmRpci9yZWFkZGlyL2Nsb3NlZGlyLiBPbiBteSBsb2NhbA0KPiAgICAgIGRpc2ssIHRoZSBoYWNr
+eSBwYXRjaCBiZWxvdyBkaWQgc2VlbSB0byBnaXZlIG1lIGJhY2sgdGhlIDUlIGxvc3QgYnkNCj4g
+ICAgICA0NWU4YTc0IChJIGRpZCBpdCBkaXJlY3RseSBvbiBtYXN0ZXIsIHNpbmNlIHRoYXQgb2xk
+IGNvbW1pdCBkb2VzDQo+ICAgICAgbm90IGhhdmUgdGhlIHN0YXRfdmFsaWRpdHkgaW5mcmFzdHJ1
+Y3R1cmUpLg0KDQpBbHNvIHRlc3RlZCBtYXN0ZXIgd2l0aCB0aGUgcGF0Y2ggcHJvdmlkZWQ6DQoN
+Cn4gJCBiaW4vZ2l0IC0tdmVyc2lvbg0KZ2l0IHZlcnNpb24gMi40LjEuMjE3Lmc2YzEyNDljLmRp
+cnR5DQoNCn4gJCB0aW1lIGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vZ2l0L2dpdCB0ZXN0
+DQoNCnJlYWwgICAgMG04LjI2M3MNCnVzZXIgICAgMG0xMC41NTBzDQpzeXMgICAgIDBtMy43NjNz
+DQoNCn4gJCB0aW1lIGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vZ2l0L2dpdCAvc2FtaS90
+ZXN0DQoNCnJlYWwgICAgMW0zLjI4NnMNCnVzZXIgICAgMG0xMi4xNDlzDQpzeXMgICAgIDBtOS4x
+OTJzDQoNClNvIHRoZSBwYXRjaCBpc24ndCByZWR1Y2luZyB0aGUgdGltZSB0YWtlbiB3aGVuIGNs
+b25pbmcgdG8gTkFTLg0KDQpIZXJlIGFyZSB0aGUgdG9wIGNhbGxzIGZyb20gc3RyYWNlDQoNCiUg
+dGltZSAgICAgc2Vjb25kcyAgdXNlY3MvY2FsbCAgICAgY2FsbHMgICAgZXJyb3JzIHN5c2NhbGwN
+Ci0tLS0tLSAtLS0tLS0tLS0tLSAtLS0tLS0tLS0tLSAtLS0tLS0tLS0gLS0tLS0tLS0tIC0tLS0t
+LS0tLS0tLS0tLS0NCiA5MC42OCAgIDE5Ljk0NjE3MSAgICAgICAgICA0NiAgICA0MzczOTggICAg
+IDQ1NDM2IGZ1dGV4DQogIDQuNjMgICAgMS4wMTc2MzcgICAgICAgICAgMjIgICAgIDQ2MTQxICAg
+ICAgICAgNSByZWFkDQogIDIuMzcgICAgMC41MjExNjEgICAgICAgICAgIDQgICAgMTQxNDI5ICAg
+ICAgICAgICBwcmVhZA0KICAwLjczICAgIDAuMTYxNDQyICAgICAgICAgICAzICAgICA0NzEzMCAg
+ICAgICAgIDkgd3JpdGUNCiAgMC40MiAgICAwLjA5MzE0NiAgICAgICAgICAgMCAgICAxODg2NDUg
+ICAgMTg4NjIxIGFjY2Vzcw0KICAwLjM4ICAgIDAuMDgzMDMzICAgICAgICAgIDI2ICAgICAgMzIw
+OSAgICAgICAxODEgb3Blbg0KICAwLjMyICAgIDAuMDY5NTg3ICAgICAgICAgICAwICAgIDE4ODYx
+MyAgICAgIDExNDYgc3RhdA0KICAwLjIzICAgIDAuMDUwODU1ICAgICAgICAgIDEyICAgICAgNDA4
+MiAgICAgIDM5MjUgbHN0YXQNCiAgMC4xMSAgICAwLjAyMzMxNyAgICAgICAgICAgOCAgICAgIDI5
+NzkgICAgICAgICAxIGZzdGF0DQogIDAuMDQgICAgMC4wMDkxMzQgICAgICAgICAgIDAgICAgIDM1
+Njk2ICAgICAgICAgMyByZWN2ZnJvbQ0KICAwLjAzICAgIDAuMDA3NjY2ICAgICAgICAxOTE3ICAg
+ICAgICAgNCAgICAgICAgICAgd2FpdDQNCiAgMC4wMiAgICAwLjAwNDQ3OCAgICAgICAgICAgMSAg
+ICAgIDM5MjMgICAgICAgICAgIG1hZHZpc2UNCiAgMC4wMSAgICAwLjAwMjI5MSAgICAgICAgICAg
+MCAgICAgMTc4NTggICAgICAgICAgIHBvbGwNCiAgMC4wMSAgICAwLjAwMjE1NSAgICAgICAgICAg
+MCAgICAgMTc4NTEgICAgICAgICAgIHNlbGVjdA0KDQpUaGFua3MgZm9yIGxvb2tpbmcgaW50byB0
+aGlzLg0KDQpTdGV2ZQ0K
