@@ -1,91 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule does not yield complete logs")
-Date: Fri, 22 May 2015 09:27:57 -0700
-Message-ID: <xmqq4mn4fugi.fsf@gitster.dls.corp.google.com>
-References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] test_bitmap_walk: free bitmap with bitmap_free
+Date: Fri, 22 May 2015 09:37:27 -0700
+Message-ID: <CAGZ79kZqRE78qFGPcU9xiFDiGG3X0kaBFdH+rGhUCZBM3ikUDA@mail.gmail.com>
+References: <20150522005336.GA26326@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Robert Dailey <rcdailey.lists@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	emma@gitforteams.com
-To: Roberto Tyley <roberto.tyley@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 18:28:06 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 22 18:37:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvpnp-000319-JZ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 18:28:05 +0200
+	id 1Yvpx7-0000KR-96
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 18:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945953AbbEVQ2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 12:28:01 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34524 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945937AbbEVQ17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 12:27:59 -0400
-Received: by ieczm2 with SMTP id zm2so35079803iec.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 09:27:58 -0700 (PDT)
+	id S1757849AbbEVQhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 12:37:31 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:35287 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757810AbbEVQh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 12:37:28 -0400
+Received: by qgew3 with SMTP id w3so11394365qge.2
+        for <git@vger.kernel.org>; Fri, 22 May 2015 09:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=1Pwn29nyKV2S3ClnFWj+0+XwgXrDuhnDUbihicTI6bc=;
-        b=IOF7n9AtvUocq5jENXZOhLeLta+VB2iDaDx8yWGdgKXpuFdO1l1w/AmBkrPoN6skPI
-         Abas+x3OeaBiSUvaeLrF3/Lo+XrTvUhj+MEiekDwuagWxK0OFQy1wRqWeoRYd7J80aAf
-         OrmzOeNkg0p+24qlh7OwGBTPdx3aufySWX1/Z7Cs1Tor0az2NS86tlMJFJd4SxzGpA80
-         BEVNuDl+SO0tyJZEb0iK1V0tvSEynPotEXKlM9ocqDBsPNNpwQZJI6EZMMTYFav5JRMP
-         3fPieWiLnHKklL22O4mUAhD30+oP9vS4ZJD/kaMPCSjEwgDYpV0G+osVapk8X9vLwGTI
-         wj9w==
-X-Received: by 10.50.79.196 with SMTP id l4mr6791586igx.48.1432312078822;
-        Fri, 22 May 2015 09:27:58 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:19:f810:32d8:695f])
-        by mx.google.com with ESMTPSA id i4sm4271765igm.2.2015.05.22.09.27.58
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 22 May 2015 09:27:58 -0700 (PDT)
-In-Reply-To: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
-	(Roberto Tyley's message of "Fri, 22 May 2015 09:33:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YzmNPdHefRmDrqq44Z2q0Vr3PUGPi2IWeJJA4Eghv+o=;
+        b=AK8lHJ+GLLErn71mXDz27l4XYDJdzN3ADoskSegEOblkQnCKsEqYj3On3ETkXeBoGV
+         M0nDA0Theg2KWdAA3n+K6W8ynZdYqPt3/x0gWq4wZEVqHo11I9j9Lb85dCcqvdnWESvz
+         p2IBZ+88OadV6aUKou8Y9R6B0qJS9sOCfdBg5R7inQjGyIe76sogfdcZw20lUK3Do/US
+         JTDCj1NPnTxiSDO4b1ex8mnbe/n32cnVQHZRn/3WcWLTM6/84ZOQdikC4FjkvFWK0dnA
+         +MlXXWxc+CUjKmzVAdweZXdXY5yO45NoLlZn+EPYiK6hdJaWB0rOS987vxRYKSM3mRJI
+         P+Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=YzmNPdHefRmDrqq44Z2q0Vr3PUGPi2IWeJJA4Eghv+o=;
+        b=A6Os8vUBb7uY8yMVLByEbP1tT0TkxVpxPTTtSH6FmnoOgDDt/8Zm+u2txCWVzLrqN3
+         Rd3zbCKvhyGBh2yQjNxQjw5QFmoBUZOVQb5Lo4P60ErNnDApZp1knykzRfTvhDKYNlTy
+         wpXlla+1HZmOsSBzJRkfhT+fyKdZs6vUlq7wiLFIdhWcnShdpuyNQHathm9M1RX6O8QU
+         WDqjZnUsOhu1JSYNjbRqdTjlkdKlua4MFVFdL6+j+oHuM+OdjBMkb1+W17aETrS7xBmf
+         vRbaw8gMMRhHrL2paVUT72/PIzeH/Cf108l7cjigI0IQf0wilpB1PAEAri4IVD46th0v
+         sWeQ==
+X-Gm-Message-State: ALoCoQk/Acsyfq9Y/Ut4ojqBvTRlB5UfHQMU4/YkAOxfiY99ZrVW2agDQMY/ESfLYic5sI/4o8ve
+X-Received: by 10.55.19.197 with SMTP id 66mr20060012qkt.24.1432312647276;
+ Fri, 22 May 2015 09:37:27 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Fri, 22 May 2015 09:37:27 -0700 (PDT)
+In-Reply-To: <20150522005336.GA26326@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269734>
 
-Roberto Tyley <roberto.tyley@gmail.com> writes:
-
-> Here's what a user does:
+On Thu, May 21, 2015 at 5:53 PM, Jeff King <peff@peff.net> wrote:
+> Commit f86a374 (pack-bitmap.c: fix a memleak, 2015-03-30)
+> noticed that we leak the "result" bitmap. But we should use
+> "bitmap_free" rather than straight "free", as the former
+> remembers to free the bitmap array pointed to by the struct.
 >
-> * create a PR on https://github.com/git/git
-> * logs into https://submitgit.herokuapp.com/ with GitHub auth
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Sorry, I should have noticed this when reviewing the original.
 
-Hmm, this seems to request too much authorization, though.
+No need to be sorry, me too.
+This looks good to me.
 
-    Repositories
-    Public only
-    This application will be able to read and write all public repo
-    data. This includes the following:
-
-    Code
-    Issues
-    Pull requests
-    Wikis
-    Settings
-    Webhooks and services
-    Deploy keys
-
-I really wanted to try this out, but I do not think, as the owner of
-a reasonably important repository, it would be irresponsible for me
-to grant write access to Code or Settings for my primary GitHub
-account.  Also I think you reject an account that is too young (I
-found out about submitGit via your comment on a pull request to
-git/git and read its source before reading your message I am
-responding to, and that was the impression I got from the recent log
-messages there), so I cannot create and try with a throw-away
-account, either.
-
-That would mean that I cannot join the fun X-<.
+>
+>  pack-bitmap.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 62a98cc..d64bd94 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -987,7 +987,7 @@ void test_bitmap_walk(struct rev_info *revs)
+>         else
+>                 fprintf(stderr, "Mismatch!\n");
+>
+> -       free(result);
+> +       bitmap_free(result);
+>  }
+>
+>  static int rebuild_bitmap(uint32_t *reposition,
+> --
+> 2.4.1.528.g00591e3
