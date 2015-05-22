@@ -1,122 +1,114 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v6 2/2] mergetools: add winmerge as a builtin tool
-Date: Fri, 22 May 2015 12:58:03 -0700
-Message-ID: <20150522195802.GA26066@gmail.com>
-References: <1432112843-973-1-git-send-email-davvid@gmail.com>
- <1432112843-973-2-git-send-email-davvid@gmail.com>
- <20150520130929.Horde.vYwOuIDRpi6hr15rOUbW1w7@webmail.informatik.kit.edu>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [Announce] submitGit for patch submission (was "Diffing
+ submodule does not yield complete logs")
+Date: Fri, 22 May 2015 21:58:19 +0200
+Organization: gmx
+Message-ID: <93994cca5e27388aee7e7c5fd4508816@www.dscho.org>
+References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+ <73db761f3c737965f64ac45005f7a716@www.dscho.org>
+ <5b4bab2727a9fcee3a07724c64752cf9@www.dscho.org>
+ <0B3203305DF54249930E5903864B4988@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Phil Susi <phillsusi@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri May 22 21:58:15 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Roberto Tyley <roberto.tyley@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Robert Dailey <rcdailey.lists@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	emma@gitforteams.com
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri May 22 21:58:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvt5C-0000FN-Dl
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:58:14 +0200
+	id 1Yvt5T-0000R4-Ve
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 21:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757411AbbEVT6K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 May 2015 15:58:10 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:33450 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756048AbbEVT6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 15:58:09 -0400
-Received: by padbw4 with SMTP id bw4so27536164pad.0
-        for <git@vger.kernel.org>; Fri, 22 May 2015 12:58:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=rilUYAqGHqhAOkbown83JK9on1etzZyh98aeqw8qHWs=;
-        b=KE0LGVG1QD/OXYc2SyqW77/lSmGIexqgl+Npc+iaIFnOds8vGFrT9/5REHM8DFqcNZ
-         7yeRpZAa3jotYXK2lF2UzZCl3kV6nSRiDQodJmTaMObO9zZ7C/1c4JL6A5V0BaONKNtD
-         B/QoPgoBZLN00SxXv1uZHYX2+9yB7QrXNFCxvWEQ2HWIUsuEMiqK57Dz/hT+QCXjkVIr
-         TP3BUPNBRAXA5qvbgM5cwFDby0SrJ68DTWiRRlt0aGSWGDIFN0V9gsSj8HWyKmRIilrH
-         3KVuuxQuGEZjVZFhEM7U/jHNinRR2cGJtcVAeY3ghfr4Px/eH8wWFGGPYso/c1+7Z5zZ
-         4M9A==
-X-Received: by 10.70.53.99 with SMTP id a3mr18454106pdp.169.1432324688646;
-        Fri, 22 May 2015 12:58:08 -0700 (PDT)
-Received: from gmail.com (remote-11.disneyanimation.com. [198.187.190.11])
-        by mx.google.com with ESMTPSA id b10sm2930179pdj.0.2015.05.22.12.58.06
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 22 May 2015 12:58:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20150520130929.Horde.vYwOuIDRpi6hr15rOUbW1w7@webmail.informatik.kit.edu>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757385AbbEVT62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 15:58:28 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59062 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756048AbbEVT61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 15:58:27 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MYwVv-1YhyyE0Wvb-00Vcwa; Fri, 22 May 2015 21:58:21
+ +0200
+In-Reply-To: <0B3203305DF54249930E5903864B4988@PhilipOakley>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:Wkob0DOkH+RiZ4yVhYtzF1fuU6AMvUPnuPDS7b8driZ9EfjzRx+
+ c+iHzw0D/rMKncnjHIWvIrzmy2AXlVPVoSnLCiCPtb7OOhxsX6ecBAvBemUiojGTdn5zZ9Q
+ aZv80OJuVulv5koz9c2BBI66lCJTtxeXDggTPGX7sfoOLchbPE4MFxcFDOfXu820mvFOGPt
+ XfTHQtoB2DoPqawulTe5Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269755>
 
+Hi,
 
-[just wrapping up the unaswered questions in this thread]
+On 2015-05-22 19:14, Philip Oakley wrote:
+> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
 
-On Wed, May 20, 2015 at 01:09:29PM +0200, SZEDER G=C3=A1bor wrote:
->=20
-> Quoting David Aguilar <davvid@gmail.com>:
->=20
-> >+translate_merge_tool_path() {
-> >+	# Use WinMergeU.exe if it exists in $PATH
-> >+	if type -p WinMergeU.exe >/dev/null 2>&1
-> >+	then
-> >+		printf WinMergeU.exe
-> >+		return
-> >+	fi
-> >+
-> >+	# Look for WinMergeU.exe in the typical locations
-> >+	winmerge_exe=3D"WinMerge/WinMergeU.exe"
->=20
-> This variable is not used elsewhere, right?  Then you might want to
-> mark it as local to make this clear.
+>> On 2015-05-22 11:42, Johannes Schindelin wrote:
+>>
+>>> On 2015-05-22 10:33, Roberto Tyley wrote:
+>>>> On Tuesday, 19 May 2015, Stefan Beller <sbeller@google.com> wrote:
+>>>>> On Tue, May 19, 2015 at 12:29 PM, Robert Dailey
+>>>>> <rcdailey.lists@gmail.com> wrote:
+>>>>> > How do you send your patches inline?
+>>>> [snip]
+>>>>> This workflow discussion was a topic at the GitMerge2015 conference,
+>>>>> and there are essentially 2 groups, those who know how to send email
+>>>>> and those who complain about it. A solution was agreed on by nearly all
+>>>>> of the contributors. It would be awesome to have a git-to-email proxy,
+>>>>> such that you could do a git push <proxy> master:refs/for/mailinglist
+>>>>> and this proxy would convert the push into sending patch series to the
+>>>>> mailing list. It could even convert the following discussion back into
+>>>>> comments (on Github?) but as a first step we'd want to try out a one
+>>>>> way proxy.
+>>>>>
+>>>>> Unfortunately nobody stepped up to actually do the work, yet :(
+>>>>
+>>>>
+>>>> Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
+>>>> one-way GitHub PR -> Mailing list tool, called submitGit:
+>>>>
+>>>> https://submitgit.herokuapp.com/
+>>>
+>>> Wow!!!
+>>>
+>>> I will make sure to test it with a couple of patches I want to submit anyway.
+>>
+>> I just tried this with https://github.com/git/git/pull/139 and would like to tell you about two wishes I had immediately:
+>>
+>> - If the author of a patch I am submitting is not myself, could submitGit maybe add that `From: ` line at the top of the mail?
+>> - The patch series is sent without a cover letter, but it would be *really* great if a path series consisting of more than one patch could have the initial comment of the Pull Request as a cover letter, with the link to the original Pull Request at the bottom? This would also be the mail to use in the "In-reply-yo" header instead of the first patch.
+>>
+>> Thanks so much!
+>> Dscho
+> 
+> 
+> A separate request would be to be able to use PRs that are for forks
+> of git/git, such as msysgit etc. (i.e. have a common --root), which
+> would help in the upstreaming of some changes.
+> 
+> 
+> I ask because I just logged in and my preparatory PR318
+> (https://github.com/msysgit/git/pull/318) for rejuvenating the
+> msvc-build system wasn't listed, probably because of the forking.
 
+You can easily change what upstream your PR is intended for. For example, I made my PR from my own Git fork (which is based on msysgit/git) relative to git/git by entering the URL:
 
-"local" is a bash-ism, otherwise that'd be a good idea.
+https://github.com/git/git/compare/next...dscho:non-win-fixes?expand=true
 
+So there is no real need for anything extra: the only git.git project that requires emails (that I am aware of) for the submission process is git/git.
 
-> >+	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=
-=3D' |
-> >+		cut -d '=3D' -f 2- | sort -u)
-> >+	do
-> >+		if test -n "$directory" && test -x "$directory/$winmerge_exe"
-> >+		then
-> >+			printf '%s' "$directory/$winmerge_exe"
-> >+			return
-> >+		fi
-> >+	done
-> >+
-> >+	printf WinMergeU.exe
->=20
-> Please pardon my ignorance and curiosity, but what is the purpose of
-> this last printf?
-> It outputs the same as in the case when winmerge is in $PATH at the
-> beginning of the function.  However, if we reach this printf, then
-> winmerge is not in $PATH, so what will be executed?
-
-
-This function maps what we call the tool (winmerge) to the actual execu=
-table.
-That last printf provides the following behavior:
-
-	$ git difftool -t winmerge HEAD~
-=09
-	Viewing (1/1): 'mergetools/winmerge'
-	Launch 'winmerge' [Y/n]:
-	The diff tool winmerge is not available as 'WinMergeU.exe'
-	fatal: external diff died, stopping at mergetools/winmerge
-
-It ensures that the user sees 'WinMergeU.exe' in the error message.
-That way the user can resolve the problem by e.g. adjusting their $PATH=
-,
-or realizing that they don't have WinMergeU.exe installed.
---=20
-David
+Ciao,
+Dscho
