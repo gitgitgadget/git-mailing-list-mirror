@@ -1,113 +1,122 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 14/14] pull --rebase: error on no merge candidate cases
-Date: Fri, 22 May 2015 10:12:57 -0700
-Message-ID: <CAGZ79kad1aunDXkg8K3HQrOkG31-FJ51k04O=S1mk_JLbpsjKw@mail.gmail.com>
-References: <1431961571-20370-1-git-send-email-pyokagan@gmail.com>
-	<1431961571-20370-15-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kbhA2+AJ1Vtz6khX5uEBCCUBUuXhpBezZApZsC_txhewA@mail.gmail.com>
-	<5fcd2fa185fab4c64939ad09eb10e6d5@www.dscho.org>
-	<xmqqoalg8re2.fsf@gitster.dls.corp.google.com>
-	<CACRoPnR=ajnzvX42jwSpaYE1fgd2J-Ph7+_s=ch=OQJf5FRpQQ@mail.gmail.com>
-	<632335d05ab160ea935c920249f62970@www.dscho.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule does not yield complete logs")
+Date: Fri, 22 May 2015 18:14:51 +0100
+Organization: OPDS
+Message-ID: <0B3203305DF54249930E5903864B4988@PhilipOakley>
+References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com> <73db761f3c737965f64ac45005f7a716@www.dscho.org> <5b4bab2727a9fcee3a07724c64752cf9@www.dscho.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 22 19:13:07 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Stefan Beller" <sbeller@google.com>,
+	"Robert Dailey" <rcdailey.lists@gmail.com>,
+	"Heiko Voigt" <hvoigt@hvoigt.net>,
+	"Jens Lehmann" <Jens.Lehmann@web.de>, "Git" <git@vger.kernel.org>,
+	"Thomas Ferris Nicolaisen" <tfnico@gmail.com>,
+	<emma@gitforteams.com>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>
+To: "Roberto Tyley" <roberto.tyley@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 22 19:15:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvqVL-0005ux-GZ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 19:13:03 +0200
+	id 1YvqXY-0007Hu-Rj
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 19:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812AbbEVRM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 13:12:59 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:34743 "EHLO
-	mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964802AbbEVRM6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 13:12:58 -0400
-Received: by qkgx75 with SMTP id x75so16634599qkg.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 10:12:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=uX5y8F5h+nHXEGGAVk31zIvVYjpHmEXoAzpHSqBMpFs=;
-        b=eumPf6eTWi+gROohgqTZHer/rMPMMuBoks6st9LfJ63C8uIJi+yuChr3VM5WHF0SLC
-         /GW7EajjIJDUhOBqaujLIisF3eji0bMciPE2yyz4Rf8deQ8Os250U3QFwwN+9S526t+h
-         tNjzrQcJM/D/rf0R9ej//ETYjvOOLhsVoDFpvmBTXv36ONRgfLN1S5TjuDP/yHASRtHC
-         ca7lzML+PZTlCFom7HwcFY1UX44KwnoBpDMMBbeDZAV4i9gJbVDrfkQleq1YoMRBLKuN
-         F0jHM9428sIYLRNWiXw1/0T9aZbN5S8sW9YjjjTYgYeMHzdRga2/zEKxykLua5BS+Kam
-         ZN+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uX5y8F5h+nHXEGGAVk31zIvVYjpHmEXoAzpHSqBMpFs=;
-        b=hrwX7hUKC46WxggoIaG+i81qYkQV90gOOFlT3hGSH4+siZxHnUlTaXUpn3pXR2nlAv
-         D90Q6mZOKbiKKOewHVUFbjv5Vht899wAO9ihYkaWMVmiIo4u/qzqLl1bdbdG/eKhwyHD
-         CdmkRBsrMlt7Q3W3J5HfiyyRVvcBhWANyWy6dL4mo+671L6SjM9z/i5mjWUJq99TK0aG
-         z3lKF9pC/DELh0+TGwGf762u8I0QEZ5U9HNdFN4I2lhVNKrJs46TwwPYhlXzLQIH9BbR
-         Sgzq19X0wTLseGiLuxqIsBKPRWDiGFdbb96c24/RdvzKjM27fbc0uvc6WunPGTZeRBcV
-         +lEg==
-X-Gm-Message-State: ALoCoQkc4J6NPoAtGygYjZkykguttl0Ik8YuF89SBhjTZVXJ3vGewI5pPkEVM28v2f8cxZi0V963
-X-Received: by 10.55.19.197 with SMTP id 66mr20388266qkt.24.1432314777258;
- Fri, 22 May 2015 10:12:57 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Fri, 22 May 2015 10:12:57 -0700 (PDT)
-In-Reply-To: <632335d05ab160ea935c920249f62970@www.dscho.org>
+	id S1946130AbbEVRPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 13:15:16 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:63446 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1946028AbbEVRPP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 13:15:15 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CsEADtY19VPJBLFlxcgxBUXoc6vRwfBoVxBAQCgTpNAQEBAQEBBwEBAQFBJBtBA4NZBQEBAQEDAQIFAQEdER4BARAGCwsCAwUCAQMVAwkaCxQBBAgHCwYHAxQGEwgCAQIDAQqHfAMWCbY9mDYNhHIBCxwEizqBPQGBD4FVEAIBUIMegRYFjAaGfHmDPIQdYoMBjnyDKINZgjokgT49MYJHAQEB
+X-IPAS-Result: A2CsEADtY19VPJBLFlxcgxBUXoc6vRwfBoVxBAQCgTpNAQEBAQEBBwEBAQFBJBtBA4NZBQEBAQEDAQIFAQEdER4BARAGCwsCAwUCAQMVAwkaCxQBBAgHCwYHAxQGEwgCAQIDAQqHfAMWCbY9mDYNhHIBCxwEizqBPQGBD4FVEAIBUIMegRYFjAaGfHmDPIQdYoMBjnyDKINZgjokgT49MYJHAQEB
+X-IronPort-AV: E=Sophos;i="5.13,476,1427756400"; 
+   d="scan'208";a="592887124"
+Received: from host-92-22-75-144.as13285.net (HELO PhilipOakley) ([92.22.75.144])
+  by out1.ip05ir2.opaltelecom.net with ESMTP; 22 May 2015 18:14:49 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269739>
 
-On Fri, May 22, 2015 at 7:14 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Paul,
+From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> Hi Roberto,
 >
-> On 2015-05-22 15:48, Paul Tan wrote:
->> On Wed, May 20, 2015 at 12:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On 2015-05-22 11:42, Johannes Schindelin wrote:
+>
+>> On 2015-05-22 10:33, Roberto Tyley wrote:
+>>> On Tuesday, 19 May 2015, Stefan Beller <sbeller@google.com> wrote:
+>>>> On Tue, May 19, 2015 at 12:29 PM, Robert Dailey
+>>>> <rcdailey.lists@gmail.com> wrote:
+>>>> > How do you send your patches inline?
+>>> [snip]
+>>>> This workflow discussion was a topic at the GitMerge2015 
+>>>> conference,
+>>>> and there are essentially 2 groups, those who know how to send 
+>>>> email
+>>>> and those who complain about it. A solution was agreed on by nearly 
+>>>> all
+>>>> of the contributors. It would be awesome to have a git-to-email 
+>>>> proxy,
+>>>> such that you could do a git push <proxy> 
+>>>> master:refs/for/mailinglist
+>>>> and this proxy would convert the push into sending patch series to 
+>>>> the
+>>>> mailing list. It could even convert the following discussion back 
+>>>> into
+>>>> comments (on Github?) but as a first step we'd want to try out a 
+>>>> one
+>>>> way proxy.
+>>>>
+>>>> Unfortunately nobody stepped up to actually do the work, yet :(
 >>>
->>>>>> -               fprintf(stderr,
->>>>>> -                       _("There are no candidates for merging among the refs that you just fetched.\n"
->>>>>> -                       "Generally this means that you provided a wildcard refspec which had no\n"
->>>>>> -                       "matches on the remote end.\n"));
->>>>>> +               if (opt_rebase)
->>>>>> +                       fputs(_("There is no candidate for rebasing against among the refs that you just fetched."), stderr);
->>>>>
->>>>     The puts() function appends a <newline> while fputs() does not.
 >>>
->>> Yup, so this update makes the command spew unterminated lines, which
->>> not something intended...
+>>> Hello, I'm stepping up to do that work :) Or at least, I'm 
+>>> implementing a
+>>> one-way GitHub PR -> Mailing list tool, called submitGit:
+>>>
+>>> https://submitgit.herokuapp.com/
 >>
->> Ugh >< Will put the "\n" back.
+>> Wow!!!
 >>
->> And yes, I used fputs() because it seems wasteful to use fprintf()
->> which will scan the string looking for any '%' formatting units, when
->> we know there aren't.
->>
->> I will also update 05/14 to use fputs() as well where appropriate.
+>> I will make sure to test it with a couple of patches I want to submit 
+>> anyway.
 >
-> I believe the common thinking is that consistency beats speed in error messages, so it would be easier to read and maintain the code if all of those error messages were just using `fprintf(stderr, ...);`. It's not as if we spit out hundreds of thousands of error messages per second where that `%s` parsing would hurt ;-)
+> I just tried this with https://github.com/git/git/pull/139 and would 
+> like to tell you about two wishes I had immediately:
 >
-> Ciao,
+> - If the author of a patch I am submitting is not myself, could 
+> submitGit maybe add that `From: ` line at the top of the mail?
+> - The patch series is sent without a cover letter, but it would be 
+> *really* great if a path series consisting of more than one patch 
+> could have the initial comment of the Pull Request as a cover letter, 
+> with the link to the original Pull Request at the bottom? This would 
+> also be the mail to use in the "In-reply-yo" header instead of the 
+> first patch.
+>
+> Thanks so much!
 > Dscho
 
-As soon as we spit out one error message,
-the speed game is over anyway. (IO is slow,
-and I believe in the error case correctness
-is the most critical thing to get right, so no
-need to pay attention to performance).
-Though I don't mind having a fputs/fprintf
-mixture. I just happened to work on parts
-of code without any fputs before, that's why
-I brought up this discussion.
 
-Actually I think I'd prefer fputs when there is no %.
+A separate request would be to be able to use PRs that are for forks of 
+git/git, such as msysgit etc. (i.e. have a common --root), which would 
+help in the upstreaming of some changes.
+
+
+I ask because I just logged in and my preparatory PR318 
+(https://github.com/msysgit/git/pull/318) for rejuvenating the 
+msvc-build system wasn't listed, probably because of the forking.
+--
+Philip 
