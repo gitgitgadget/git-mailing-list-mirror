@@ -1,78 +1,76 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v3] pull: handle --log=<n>
-Date: Fri, 22 May 2015 21:29:55 +0800
-Message-ID: <CACRoPnSbAA=6xH+4W8KGPRWe8Pi304zz70Kz8TgY92qKtDYQ8A@mail.gmail.com>
-References: <1431956396-21788-1-git-send-email-pyokagan@gmail.com>
-	<5661061272076a1883cfde1087be4a42@www.dscho.org>
-	<20150521103617.GA6159@yoshi.chippynet.com>
-	<xmqq1ti9ipy9.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [Announce] submitGit for patch submission (was "Diffing submodule
+ does not yield complete logs")
+Date: Fri, 22 May 2015 15:25:14 +0200
+Message-ID: <555F2E3A.1040600@atlas-elektronik.com>
+References: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 22 15:30:13 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Robert Dailey <rcdailey.lists@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	"emma@gitforteams.com" <emma@gitforteams.com>
+To: Roberto Tyley <roberto.tyley@gmail.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 22 15:31:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvn1a-0006kJ-UJ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:30:07 +0200
+	id 1Yvn2n-0007Nu-36
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 15:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422693AbbEVNaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 09:30:00 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:36185 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422688AbbEVN35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 09:29:57 -0400
-Received: by lagv1 with SMTP id v1so12598501lag.3
-        for <git@vger.kernel.org>; Fri, 22 May 2015 06:29:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SDKxH9SZEl51sH1OuCVGTVdtJ2tqYSZXnDCrfScODVA=;
-        b=w2flnIyBN8g2DTUZok7XFNj5b+Hx58WPpVomix20hlFOpj3jPjx3jKt7pupcKjHlyj
-         lXRReZZJp99tUhplztI5v2Bh/qUDytEexhhhLQixR3BduqWJA99pbvoLiEP3DVSFQ5IF
-         VjQJhIHgKbpamhPEeWUrfbmeg5H9KXzjCdGaZTjnoei7lw/sxPR0p15xjTfNQp6n2jdJ
-         DU1dsk93cD3ucTyjUt17sQEnS4S3fA7OI5qyxw0mErddLRF/zMBaO+PCJSU+mWG9JOa2
-         sgIFRKf4nbCCufW9BOfvcCUwISKF8xf4qhzaBcMc1t5k4oZXnQMY/NtRbbPyMt7jPLyU
-         ZWIQ==
-X-Received: by 10.112.171.101 with SMTP id at5mr6590801lbc.66.1432301395720;
- Fri, 22 May 2015 06:29:55 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Fri, 22 May 2015 06:29:55 -0700 (PDT)
-In-Reply-To: <xmqq1ti9ipy9.fsf@gitster.dls.corp.google.com>
+	id S1161118AbbEVNbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 09:31:16 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:14530 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422688AbbEVNbP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 09:31:15 -0400
+X-Greylist: delayed 347 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2015 09:31:15 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id B4CC710915;
+	Fri, 22 May 2015 15:25:27 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QPQ5nodpeHxr; Fri, 22 May 2015 15:25:15 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Fri, 22 May 2015 15:25:15 +0200 (CEST)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 967ED2716C;
+	Fri, 22 May 2015 15:25:14 +0200 (CEST)
+Received: from [10.200.54.122] (10.200.54.122) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server id 8.3.327.1; Fri, 22 May 2015
+ 15:25:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAFY1edY3+Wt-p2iQ5k64Fg-nMk2PmRSvhVkQSVNw94R18uPV2Q@mail.gmail.com>
+OpenPGP: id=2DF5E01B09C37501BCA99666829B49C5922127AF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269713>
 
-Hi Junio,
+Am 22.05.2015 um 10:33 schrieb Roberto Tyley:
+> [...]
+> Hello, I'm stepping up to do that work :) Or at least, I'm implementing a
+> one-way GitHub PR -> Mailing list tool, called submitGit:
+> 
+> https://submitgit.herokuapp.com/
 
-On Fri, May 22, 2015 at 5:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Tan <pyokagan@gmail.com> writes:
->
->> So, here's the re-rolled patch.
->
-> Sigh, too late.
->
-> I thought the previous round was good enough and the patch is
-> already on 'next'.
->
-> If the incremental change is still worth doing on top, please do so.
->
-> Thanks.
-
-My bad, I should have checked 'next'.
-
-But it's okay, I re-rolled the patch because it seemed that people
-preferred "test_commit". I personally don't have a strong opinion on
-this, so if you're fine with it then I'm okay as well.
+That looks really promising!
+I wonder if that wouldn't make a good addition to github's repository ui
+in general ?
 
 Thanks,
-Paul
+  Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Diplomacy: The patriotic art of lying for one's country.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')" 
+GPG Key fingerprint = 2DF5 E01B 09C3 7501 BCA9  9666 829B 49C5 9221 27AF
