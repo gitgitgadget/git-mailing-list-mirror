@@ -1,97 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] send-email: Add simple email aliases format
-Date: Fri, 22 May 2015 14:49:03 -0400
-Message-ID: <CAPig+cRc=u=AKRgp3Dn5De13WcMYFXr1QomzPY0rXAwpN5WwLA@mail.gmail.com>
-References: <9f88da801466c83331d02262855e8bef4164e5eb.1432266004.git.allenbh@gmail.com>
-	<CAPig+cRLxk26p7DFaS+gRkKZxkRwf8g=4=j2QHX6AC2Uk5J++w@mail.gmail.com>
-	<CAJ80satbXXBYva9qrgR1oA_f7LAHUeAm21=R-mGsWx+sDoQ9sQ@mail.gmail.com>
-	<CAPig+cTsygj1g=8sQ2b=1WYsmgAVyZmHCTW=NKTGuNyQwm3VFA@mail.gmail.com>
-	<CAJ80savzM_BL2oPiyTaPYAgnNL7F571aumGJLLw76vtryTacrg@mail.gmail.com>
+From: "McHenry, Matt" <mmchenry@carnegielearning.com>
+Subject: RE: recovering from "unordered stage entries in index" error
+Date: Fri, 22 May 2015 14:56:23 -0400
+Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+ <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+ <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com>
+ <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 20:49:11 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 22 20:58:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvs0N-0006fi-1J
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 20:49:11 +0200
+	id 1Yvs7S-0002Vr-RS
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 20:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756961AbbEVStG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 14:49:06 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:36162 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756645AbbEVStE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 14:49:04 -0400
-Received: by iepj10 with SMTP id j10so37578321iep.3
-        for <git@vger.kernel.org>; Fri, 22 May 2015 11:49:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uRKh4GReYomqi3IwX8wqLs4eBxPZDzZAdQptCEgsvCY=;
-        b=eK86WTGlJ2lnOzgJmPrV13rg3JAZ+HGalO8UwaYe15FholIu4kyXbFys6s6JtCS9d5
-         4vGauS5dgIIUgfQzZobaFE+JwYLamCFgfbVHGxxxS9rLqEC3bM2ZTPDyni1m5Iod3aXo
-         AOeaN+E8BD4ByPkIJswJlFGfxqwLiKGfHPQfhOBV352X2kzCTl4g1EVHAeVBuSdeebGB
-         4cdVdFdCEOO4LBI7fCRRA9+BND0XJXY/YzwWA/FvbQHUmPdRMywyT6qNwIeWOBcHY8Hc
-         q/CkuLmpBQOd2R6Qe9gnB3i2OjgfmGNTaVTAdSi4zJjE/GdFPzgA4I0pUDhmhARCS1g1
-         fH9w==
-X-Received: by 10.107.137.80 with SMTP id l77mr6093553iod.92.1432320543980;
- Fri, 22 May 2015 11:49:03 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 22 May 2015 11:49:03 -0700 (PDT)
-In-Reply-To: <CAJ80savzM_BL2oPiyTaPYAgnNL7F571aumGJLLw76vtryTacrg@mail.gmail.com>
-X-Google-Sender-Auth: 7tZLhGxqbArgDITevgHiTzyexlE
+	id S1757242AbbEVS40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 14:56:26 -0400
+Received: from mail3.carnegielearning.com ([204.80.87.3]:27617 "EHLO
+	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757225AbbEVS4Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 14:56:25 -0400
+X-ASG-Debug-ID: 1432320984-0424f512db3e45d30001-QuoKaX
+Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id VOj9c10VSk66CJam (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Fri, 22 May 2015 14:56:24 -0400 (EDT)
+X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
+Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
+ ([127.0.0.1]) with mapi; Fri, 22 May 2015 14:56:23 -0400
+Thread-Topic: recovering from "unordered stage entries in index" error
+X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
+Thread-Index: AdCUJM+40SFZpJ+7TyiosuofsqgODgAmpVUA
+In-Reply-To: <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+X-Barracuda-Connect: UNKNOWN[10.1.10.4]
+X-Barracuda-Start-Time: 1432320984
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: https://10.1.10.29:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at carnegielearning.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.4987 1.0000 0.0000
+X-Barracuda-Spam-Score: 0.50
+X-Barracuda-Spam-Status: No, SCORE=0.50 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19202
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.50 BSF_RULE7568M          Custom Rule 7568M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269748>
 
-On Fri, May 22, 2015 at 2:01 PM, Allen Hubbe <allenbh@gmail.com> wrote:
-> On Fri, May 22, 2015 at 12:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Fri, May 22, 2015 at 8:12 AM, Allen Hubbe <allenbh@gmail.com> wrote:
->>>> For the same reason, I'm not convinced that "simple" is a good name.
->>>> "sendmail" may indeed be a more appropriate name, even if it means
->>>> that this early implementation documents it as (currently) a subset of
->>>> the richer sendmail/postfix 'aliases' format. By doing so, we leave
->>>> the door open so a future person can implement additional features to
->>>> bring it closer to that format.
->>>
->>> Or, a future person can write a sendmail parser that is closer to that format.
->>
->> Yes, but git maintainers must continue to support your "simple" format
->> even if someone comes along later and adds a more proper sendmail-like
->> format alongside.
->
-> Someone might implement a sendmail parser in the future, or perhaps
-> never.  So, there is the possibility.  How strong of a reason is that
-> to reject some other format that is based on a colon?
-
-Nobody has suggested that your format should be rejected. Rather, the
-issue raised regards gratuitous divergence from the sendmail 'aliases'
-format. You seem to be arguing in favor of gratuitous divergence
-(without explanation) despite the proposed "proper subset" approach
-serving your use-case just as well.
-
-> What is the harm of the two side by side?  This is only a small bit of
-> code that really shouldn't require much maintenance.  What is the harm
-> to just leave it in?
->
-> If the future sendmail parser happens to support the simple format,
-> and the future maintainers determine the situation to be unacceptable,
-> there is still a solution.  Simply define both names 'simple' and
-> 'sendmail' to refer to the same sendmail parser.  The dead code can be
-> removed.
-
-This "simple solution" doesn't work if your new format diverges from
-the sendmail 'aliases' format, which is why the issue is being raised
-now, in order to avoid painting ourselves into that corner. If, on the
-other hand, your new format remains a proper subset of sendmail
-'aliases', then the "simple solution" does work; and, as a proper
-subset, it can just as well be named "sendmail" without hurting any
-future effort to implement missing functionality.
+PiA+IElzbid0IHRoaXMgZmFpbHVyZSBjb21pbmcgZnJvbSBnaXQtc3ZuIHRoYXQgdHJpZXMgdG8g
+d3JpdGUgb3V0IGENCj4gPiB0cmVlIGFmdGVyIGl0IHByZXBhcmVkIHdoYXRldmVyIGl0IHdhbnRz
+IHRvIHJlY29yZCBpbiBpdHMgKHBvc3NpYmx5DQo+ID4gdGVtcG9yYXJ5KSBpbmRleD8gIEkgaGF2
+ZSBhIGZlZWxpbmcgdGhhdCB0aGUgaW5kZXggaGVsZCBieSB0aGUgZW5kDQo+ID4gdXNlciBpcyBu
+b3QgYnJva2VuLg0KPiANCj4gQWhoIHRoYXQgd291bGQgZXhwbGFpbiB3aHkgbHMtZmlsZXMgd29y
+a3MuIFllcC4NCg0KCUkgY3JlYXRlZCBhIGNvcHkgb2YgdGhpcyByZXBvICsgd2MgdmlhIHJzeW5j
+IGFuZCB0cmllZCBhIGNvdXBsZSBvZiB0aGluZ3MuICAnZ2l0IHN2biByZWJhc2UgLWwnIHdvcmtl
+ZCBmaW5lLCBidXQgZGlkbid0IGZpeCB0aGUgZXJyb3IuICBOZXh0LCByZXNldDoNCg0KJCBnaXQg
+c3ZuIGxvZyAtLWxpbWl0PTEgfCBncmVwIF5yDQpyMjMxNjU1IHwgYXZ1b25nIHwgMjAxNS0wNS0x
+MCAxMDozMjoxNiAtMDQwMCAoU3VuLCAxMCBNYXkgMjAxNSkgfCAyIGxpbmVzDQoNCiQgZ2l0IHN2
+biByZXNldCAtciAyMzE2NTUgLXANCnIyMzE2NTMgPSAxM2E3ZjZkNmEzZjNlNDRlZDFjODUyM2Ix
+YTYzZDcyZmM0ZjBkZGI5IChyZWZzL3JlbW90ZXMvdHJ1bmspDQoNCiQgZ2l0IHN2biBmZXRjaA0K
+ZmF0YWw6IHVub3JkZXJlZCBzdGFnZSBlbnRyaWVzIGluIGluZGV4DQp3cml0ZS10cmVlOiBjb21t
+YW5kIHJldHVybmVkIGVycm9yOiAxMjgNCg0KCVNvIGl0IGRvZXNuJ3Qgc2VlbSB0byBiZSBzcGVj
+aWZpYyB0byB0aGUgcmV2aXNpb24gYmVpbmcgZmV0Y2hlZC4gIEkgY291bGQgZG8gYSBtb3JlIGRy
+YXN0aWMgJ2dpdCBzdm4gcmVzZXQnLCBidXQgYXMgeW91IGNhbiBzZWUgSSd2ZSBhbHJlYWR5IGZl
+dGNoZWQgYSBsb3Qgb2YgcmV2cywgc28gSSdkIHJhdGhlciBhdm9pZCByZS1mZXRjaGluZyBpZiBw
+b3NzaWJsZS4NCg0KCVRoYW5rcyBmb3IgeW91ciBoZWxwIHNvIGZhciAtLSBhbnkgb3RoZXIgaWRl
+YXMgKG9yIHJlcXVlc3RzIGZvciBmdXJ0aGVyIGRlYnVnZ2luZyBpbmZvKSBhcmUgYXBwcmVjaWF0
+ZWQhDQo=
