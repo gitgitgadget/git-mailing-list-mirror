@@ -1,74 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Troubleshoot clone issue to NFS.
-Date: Fri, 22 May 2015 07:37:51 -0700
-Message-ID: <xmqqsiaofzk0.fsf@gitster.dls.corp.google.com>
-References: <7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com>
-	<CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
-	<CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
-	<7FAE15F0A93C0144AD8B5FBD584E1C5519759641@C111KXTEMBX51.ERF.thomson.com>
-	<CACsJy8BULBJ=cL1+4TFX_7tYSCFL3MNEz1Ay0YGqx8W_8=nwAg@mail.gmail.com>
-	<20150522071224.GA10734@peff.net>
-	<7FAE15F0A93C0144AD8B5FBD584E1C551975ADA4@C111KXTEMBX51.ERF.thomson.com>
-	<CACsJy8DMqj8sCowZ5f-QZMgrAMFjGOaWfYjZWHxs+jvBsDpp5w@mail.gmail.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Pushing and pulling the result of `git replace` and objects/info/alternates
+Date: Fri, 22 May 2015 16:38:34 +0200
+Message-ID: <CACHsx4Kz3_bMbKqd1O7-ZXLBUqJBs6hTsiRNAALNJhDV44v6Rw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: steve.norman@thomsonreuters.com, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 16:38:02 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 22 16:38:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvo5H-00023U-60
-	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 16:37:59 +0200
+	id 1Yvo6A-0002ar-WC
+	for gcvg-git-2@plane.gmane.org; Fri, 22 May 2015 16:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757194AbbEVOhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 10:37:55 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37018 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757290AbbEVOhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 10:37:53 -0400
-Received: by igbsb11 with SMTP id sb11so34145866igb.0
-        for <git@vger.kernel.org>; Fri, 22 May 2015 07:37:53 -0700 (PDT)
+	id S1757211AbbEVOir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 10:38:47 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:35470 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757164AbbEVOig (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 10:38:36 -0400
+Received: by labbd9 with SMTP id bd9so14065589lab.2
+        for <git@vger.kernel.org>; Fri, 22 May 2015 07:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=IwBCz9Gdt3g2HAiP4p1Pa2UkdJVuwB3u7X38Hk8UpeQ=;
-        b=CchqbmMJAMp+qIob/iiPR3xfYR6yugjFo4mUbqdCRIQpfHJzsM8kG/7NMb0XV29GeE
-         0nWll0OBoGGf6pDktJCOBxtxVv4z+tlk+JaZH4+Rrr6QEJC5xQvyaXpBjzMPM4Ir8QhO
-         vB6Z5aC2AsM823vCR09OMWbKvWshiEqO3mNGPmOU0ORELPw764yd7tQ41wagiuPGCYbj
-         SfsFajf78E4OPk56Tgk6rKz8YnyBZGw4UYKRdUO8WDEd2uqbbfgVL42SkyqDHdATYfK2
-         SvYcn8NyJCu5DOvyw9meot/g8DuP+q2pU6T/1jKBTE2t7Wd0XfF5sqs0b4OgPs9+k+ZG
-         uLTA==
-X-Received: by 10.107.134.153 with SMTP id q25mr10936536ioi.27.1432305473400;
-        Fri, 22 May 2015 07:37:53 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:19:f810:32d8:695f])
-        by mx.google.com with ESMTPSA id k37sm1896482iod.39.2015.05.22.07.37.52
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 22 May 2015 07:37:52 -0700 (PDT)
-In-Reply-To: <CACsJy8DMqj8sCowZ5f-QZMgrAMFjGOaWfYjZWHxs+jvBsDpp5w@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 22 May 2015 17:05:36 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=0gZOAORY3oGMM0euaoCJ2LvWHeXyXgyLmCk5dgoqzh0=;
+        b=ESXF1K03hAK89AvRNZxJU6Ys/LQOGuUYME6eM8VBXL69WD6YzpdEgI16dAzCCMpNxG
+         hSbAPXsBXD+FgZYbDkA24pfMY4igAXT5qZNj7tMhkhudh2XiMkkpPHseFixsUDCxtSlZ
+         rnKGZWOJ1KnjpnNFTho5zWj02O9hXDOGfzjenbaO7BoKh4UkmtGaoWp+FkNgpGIcMTVP
+         KPNETpi95oZtt4zF33Fg4nVcmbbMDUA4hCGkJJ02tv+MKmK8se+GnT0DiE6T2PZcnVNq
+         qWSxO4srXvWhUX924gVBW5toRlc8XczdOiT5iQ0HlysTp6aZVMdR1yMdWfgIrTPlFRFo
+         LIXQ==
+X-Received: by 10.112.199.1 with SMTP id jg1mr6835136lbc.59.1432305514342;
+ Fri, 22 May 2015 07:38:34 -0700 (PDT)
+Received: by 10.114.200.16 with HTTP; Fri, 22 May 2015 07:38:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269723>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hello,
 
-> Strange. Maybe there is something else... Anyway some numbers from me.
-> This is nfs3 hosted by Raspberry Pi, accessed over wireless. I just
-> run index-pack on git.git pack instead of full clone.
+I have an 'integration repo' which contains other git repos as submodules.
 
-So the checkout codepath to touch working tree is one difference?
-Are there other differences?
+One of the submodules is to be split in two to extract a library.
 
->
->  - v1.8.4.1 34s
->  - v1.8.4.2 519s (oh.. wireless..)
->  - v1.8.4.2 without has_sha1_file() in index-pack.c 33s
->  - v1.8.4.2 + Jeff's mtime patch 36s
+A common way of doing that is to use git-filter-branch. A disadvantage
+of that is that it results in duplicated partial-history in the
+extracted repo. So, git log shows the entire history, but there is not
+one canonical sha which represents the history at that point. The
+split repo will contain 'false history', and checking it out will not
+be useful.
+
+So, I want to avoid git-filter-branch.
+
+I have tried out using `git replace --graft` and
+.git/objects/info/alternates to 'refer to' the history in the origin
+repo instead of 'duplicating' it. This is similar to how Qt5 repos
+refer to Qt 4 history in a different repo.
+
+Question 1) Is this a reasonable thing to do for this scenario?
+
+Question 2) Is there a way to push the `git replace` result and the
+`info/alternates` content so that clients cloning the 'integration
+repo' do not have to do that 'manually' or with a 'setup-repo.sh'
+script?
+
+The sequence of commands below can be pasted into a tmp directory to
+see the scenario in action.
+
+Thanks!
+
+
+mkdir calculator
+cd calculator
+mkdir mainui libcalc
+echo "print \"hello\"" > mainui/app.py
+echo "print \"hello\"" > libcalc/adder.py
+echo "print \"hello\"" > libcalc/subtracter.py
+git init
+git add .
+git commit -am "Initial commit"
+git checkout `git rev-parse HEAD`
+
+cd ..
+mkdir appsuite
+cd appsuite
+git init
+git submodule add ../calculator
+git commit -m "Add calculator submodule"
+
+# Add other submodules in the suite...
+
+cd calculator
+
+echo "print \"goodbye\"" > libcalc/subtracter.py
+git add libcalc/subtracter.py
+git commit -am "Fix bug in subtracter"
+
+echo "print \"Hi\"" > libcalc/adder.py
+git add libcalc/adder.py
+git commit -am "Make adder more efficient"
+
+echo "print \"Hello, world!\"" > mainui/app.py
+git add mainui/app.py
+git commit -am "Improve app"
+
+echo "print \"hello, hello\"" > libcalc/multiplier.py
+git add libcalc/multiplier.py
+git commit -am "Add multiplier"
+
+cd ..
+git add calculator
+git commit -m "Update calculator submodule"
+
+mkdir compute
+cd calculator
+mv libcalc ../compute
+
+extraction_sha=`git rev-parse HEAD`
+git commit -am "Remove libcalc from calculator repo" -m "It is moved
+to a new compute repo"
+removal_sha=`git rev-parse HEAD`
+git push
+
+cd ../compute
+git init
+git add .
+git commit -m "Create the compute repo." -m "This commit will not be
+normally visible after the replace --graft below."
+
+echo "This is the compute framework. It contains the libcalc library." > README
+git add README
+git commit -m "Initialize the compute repo." -m "This has been
+extracted from calculator.git at $removal_sha"
+git checkout `git rev-parse HEAD`
+
+cd ..
+mv compute ..
+git submodule add ../compute
+
+git add calculator compute
+git commit -m "Split compute framework out of calculator repo."
+
+cd compute
+git log --oneline
+# We don't see older history from the calculator repo
+
+# Let's add alternates
+echo "../../calculator/objects" >
+../.git/modules/compute/objects/info/alternates
+
+# ... and graft onto the extraction commit
+git replace --graft HEAD $extraction_sha
+
+git log --oneline
+# Great, now we see history from the calculator repo.
+
+cd ../..
+git clone appsuite appsuite-clone
+cd appsuite-clone
+git submodule update --init
+cd compute
+ls ../.git/modules/compute/objects/info
+git log --oneline
+# The replacement and alternatives did not get cloned ... :(
+
+echo "../../calculator/objects" >
+../.git/modules/compute/objects/info/alternates
+git replace --graft HEAD $extraction_sha
+
+# And now we see the history from the calculator repo. Great. But, it
+required user action after the clone.
