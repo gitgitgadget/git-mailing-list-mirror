@@ -1,99 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] ref-filter: add ref-filter API
-Date: Sat, 23 May 2015 10:18:04 -0700
-Message-ID: <xmqqoalbciwj.fsf@gitster.dls.corp.google.com>
-References: <555C88C2.8060902@gmail.com>
-	<1432127904-21070-2-git-send-email-karthik.188@gmail.com>
-	<vpqr3qagvv6.fsf@anie.imag.fr> <555E1CE7.8090507@gmail.com>
-	<vpqbnhd157k.fsf@anie.imag.fr> <555F252C.2060601@gmail.com>
-	<vpq8ucffj8h.fsf@anie.imag.fr>
+Subject: Re: git status doesn't ignore GIT_DIR directory?
+Date: Sat, 23 May 2015 10:39:39 -0700
+Message-ID: <xmqqk2vzchwk.fsf@gitster.dls.corp.google.com>
+References: <555FD1EA.2060706@rightscale.com>
+	<CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com>
+	<20150523022256.GA17789@lanh> <20150523053900.GA2364@glandium.org>
+	<xmqq1ti7dyky.fsf@gitster.dls.corp.google.com>
+	<xmqqwpzzcjq0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: karthik nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat May 23 19:18:13 2015
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Thorsten von Eicken <tve@rightscale.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat May 23 19:39:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwD3r-0003BQ-K1
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:18:11 +0200
+	id 1YwDOn-00068Y-9v
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758050AbbEWRSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2015 13:18:07 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:32779 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757985AbbEWRSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2015 13:18:06 -0400
-Received: by iebgx4 with SMTP id gx4so50474753ieb.0
-        for <git@vger.kernel.org>; Sat, 23 May 2015 10:18:05 -0700 (PDT)
+	id S1758024AbbEWRjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2015 13:39:43 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:33634 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753951AbbEWRjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2015 13:39:42 -0400
+Received: by igbpi8 with SMTP id pi8so13104440igb.0
+        for <git@vger.kernel.org>; Sat, 23 May 2015 10:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=TQ1Dng9xqNulBQa4I0kWqyVV7NIH3utgiPxRgGxxGPA=;
-        b=TJ3VyRJN9u8Qh6o918KtqwJ2xGZDM7LzKX1418Sru0KpIrXrHgdGORmivGySVxVEKh
-         /agcim853MzTls4mJVUeiiSIQCH06pMIdGGCJd2pwmKHnlkQy2UYWxmwb1glZ9y3mIWP
-         5UVPlxeHewMb4ly+TJ20AE52yaLrInJim0earPzaF0nF67Nzk3ek/KjCflJD4GZf3kNk
-         qLtyd2vzCLWEmTsSx5+Mr3id6rhP3hUhtFjDi24FS7AgbPnto55IBzs4y01aypotwKGn
-         n8iaX/xIcneX9p/rtVYYhG50glXvvA5Wlgfp8R1kWX9Okh+hHS1d0dAdSRzsUp6z18/n
-         uXsw==
-X-Received: by 10.50.29.40 with SMTP id g8mr12965316igh.41.1432401485559;
-        Sat, 23 May 2015 10:18:05 -0700 (PDT)
+        bh=ib9H76N9jRnnSAyLzTp9gQvWKa/cNk1q+gaGWy34z6A=;
+        b=uTM/beAt7fCvvXcgtTzu4+tMOz+LSd2uPNVtvWbRu4KAlm545/Bw5YXbppFjBYB18D
+         UcbZ0a7Lk1B4jdtk1TkVIWubFHaH6drICZ6XKMdkHx3ZmVqiWpJAL2SJb9qRyK8XUHmx
+         WBcvQi1mfZeEmefUsHRYUpvivd1c2o9Nmt+bljCKCzGFcQYvsLp5sOseOUOnsVzqtQuj
+         Dn6QWRtnHMqgmgPqC8mOlgNpw3H69y+wbJrlnBYI8Uj2Lxr2hGew3N9aMPE2Y/ZuVF8G
+         Irp7CL8HMEm8naHGoc8GsCcGhAlrF9kH+nh5JEszSgWZkijEQC9ylAzkuDwJM0/ZTcrj
+         swUA==
+X-Received: by 10.107.14.78 with SMTP id 75mr18282833ioo.15.1432402782261;
+        Sat, 23 May 2015 10:39:42 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:609e:6a22:2d9d:c8d5])
-        by mx.google.com with ESMTPSA id d185sm4560298ioe.42.2015.05.23.10.18.04
+        by mx.google.com with ESMTPSA id i185sm4612186ioi.24.2015.05.23.10.39.40
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 23 May 2015 10:18:05 -0700 (PDT)
-In-Reply-To: <vpq8ucffj8h.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
-	23 May 2015 16:42:38 +0200")
+        Sat, 23 May 2015 10:39:40 -0700 (PDT)
+In-Reply-To: <xmqqwpzzcjq0.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 23 May 2015 10:00:23 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269811>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> But I think this could be clearer in the code (and/or comment + commit
-> message). Perhaps stg like:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> struct ref_filter_data /* Probably not the best name */ {
->         struct ref_list list;
->         struct ref_filter filter;
-> };
+>> I think both of you are wrong ;-)
+>>
+>> The thing is, what you are seeing does not have much to do with
+>> GIT_DIR.  It is "what Git does when it finds a directory inside the
+>> working tree of a project".  And ".git" is the only special thing in
+>> that context.
 >
-> struct ref_list {
->  	int count, alloc;
->  	struct ref_filter_item **items;
-> };
+> In short, I think Duy's "how about this" means well, but adds
+> documentation at a wrong place.
+>
+> Having said all that, the message I am responding to showed the
+> right way to look at, understand, and explain the current behaviour.
+> It is a separate issue if the current behaviour is optimal from the
+> usability point of view.  It is not entirely implausible to extend
+> the special casing rules from "a directory named '.git' only" to "in
+> addition, the directory pointed at by GIT_DIR, if exists, is treated
+> the same way".
 
-If you plan to use ALLOC_GROW() API, name the bookkeeping variables
-"alloc" & "nr", unless you have a compelling reason to deviate from
-the prevailing practice.
+If somebody is interested in pursuing this further in the direction
+of changing the behaviour (so that Thorsten's original would work as
+expected), one thing to be careful about is the case (1) (case (2)
+is more or less straight-forward and obvious).
 
-> struct ref_filter {
-> 	const char **name_patterns;
-> 	/* There will be more here later */
-> };
+If you do
 
-Very good suggestion.
+    $ GIT_DIR=/path/to/worktree/sub/repo.git
+    $ GIT_WORK_TREE=/path/to/worktree
+    $ export GIT_DIR GIT_WORK_TREE
+    $ cd $GIT_WORK_TREE
+    $ git add sub
 
-Whatever the final name would be, it is a good idea to separate the
-"list of things that are operated on" and the "set of operations to
-be applied".  That makes things conceptually cleaner; you can have
-multiple of the former operated on with a singleton of the latter
-and then their results merged, etc. etc.
+with the current rule, because sub/repo.git does not trigger the
+special casing, we may end up adding everything inside our own
+repository, which is clearly crazy.  But if you change the rule to
+special case the directory pointed at by $GIT_DIR, then we would
+start treating that directory as "ah, there is a Git repository".
+But the updated code must not say "hence, sub/ is the top level of
+the working tree of that repository, so we add it as a submodule".
 
-And I do not think an array of things that are operated on should
-not be named "ref_filter_item".
+It instead should just ignore that repo.git directory, just like a
+plain vanilla "git add ."  ignores ".git" at the top-level, and add
+other things in sub/ directory, i.e. treating sub/ as just a normal
+subdirectory in our working tree.
 
-Surely, the latter "set of operations to be applied" may currently
-be only filtering, but who says it has to stay that way?  "I have a
-set of refs that represent my local branches I am interested
-in. Please map them to their corresponding @{upstream}" is a
-reasonable request once you have an infrastructure to represent "set
-of refs to be worked on" and "set of operations to apply", and at
-that point, the items are no longer filter-items (map-items?).
+I am not planning to do this in a near future myself, but I thought
+I should caution in case anybody is interested.
+
+Thanks.
