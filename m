@@ -1,79 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/4] ref-filter: add ref-filter API
-Date: Sat, 23 May 2015 19:00:46 +0200
-Message-ID: <vpqr3q7cjpd.fsf@anie.imag.fr>
-References: <555C88C2.8060902@gmail.com>
-	<1432127904-21070-2-git-send-email-karthik.188@gmail.com>
-	<vpqr3qagvv6.fsf@anie.imag.fr> <555E1CE7.8090507@gmail.com>
-	<vpqbnhd157k.fsf@anie.imag.fr> <555F252C.2060601@gmail.com>
-	<vpq8ucffj8h.fsf@anie.imag.fr>
-	<CAP8UFD0CPLcTGYTo1Oh_QFxVkORBZF2SmwRYu0O8do66qmakPw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: recovering from "unordered stage entries in index" error
+Date: Sat, 23 May 2015 10:06:17 -0700
+Message-ID: <xmqqsiancjg6.fsf@gitster.dls.corp.google.com>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+	<CAPc5daVFA-FKTSUCRmb=JUr=H9ECtK8nJB3nyxHprCcJ+0CHBQ@mail.gmail.com>
+	<D377A9280DB18546A2471214D5CBB0E9087568F50D@exchdb01>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: karthik nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 23 19:00:56 2015
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "McHenry\, Matt" <mmchenry@carnegielearning.com>
+X-From: git-owner@vger.kernel.org Sat May 23 19:06:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwCn9-0002N6-CV
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:00:55 +0200
+	id 1YwCsT-0005Kl-Ew
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:06:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758000AbbEWRAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2015 13:00:51 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57650 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758034AbbEWRAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2015 13:00:50 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4NH0iE6019188
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 23 May 2015 19:00:44 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4NH0kGM013684;
-	Sat, 23 May 2015 19:00:46 +0200
-In-Reply-To: <CAP8UFD0CPLcTGYTo1Oh_QFxVkORBZF2SmwRYu0O8do66qmakPw@mail.gmail.com>
-	(Christian Couder's message of "Sat, 23 May 2015 18:04:27 +0200")
+	id S1758049AbbEWRGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2015 13:06:20 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:35497 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758003AbbEWRGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2015 13:06:19 -0400
+Received: by iesa3 with SMTP id a3so50434601ies.2
+        for <git@vger.kernel.org>; Sat, 23 May 2015 10:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=inUBxA4k5vlpJUhuHZMX3Px3QSH00a26Melxm+yWUcA=;
+        b=oqitYEY6krUfV7E0d7tE1x3EuD+ByVFr0fyW1WjVlYB+jAmC22DgcRb/DCzMAt59a8
+         Y5jxQkq73ScMnndkvezYVJ+ewCgG4nHFGW2Jq//92MFaxaABRBJsSU3Vc3WxJzXxIajf
+         EMtGPP4HH2k9evv5v/pP1kKAbIpSqyKxEMT97GX9O3PCQpzagtPs6h7fJ3I6FenHiyBJ
+         r2/CYD3nBA0jVYooIdvkwLDB/5O0aqR5KbECl8SeL6KVBBfX8O1LMTBMh/1UQp3rhY7n
+         KPk5dyiUqZUZzUIm/N/MfB3A6lg5+BObn/CJ/qi8BjJaHMruoQ8u9jVC3Ct0CSuVhhTt
+         oAIg==
+X-Received: by 10.50.73.169 with SMTP id m9mr11153291igv.37.1432400779066;
+        Sat, 23 May 2015 10:06:19 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:609e:6a22:2d9d:c8d5])
+        by mx.google.com with ESMTPSA id x10sm1917299igl.0.2015.05.23.10.06.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 23 May 2015 10:06:18 -0700 (PDT)
+In-Reply-To: <D377A9280DB18546A2471214D5CBB0E9087568F50D@exchdb01> (Matt
+	McHenry's message of "Fri, 22 May 2015 15:57:40 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 23 May 2015 19:00:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4NH0iE6019188
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433005244.83875@zMm0VOMBy0iC9e1dfyndLQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269809>
 
-Christian Couder <christian.couder@gmail.com> writes:
+"McHenry, Matt" <mmchenry@carnegielearning.com> writes:
 
->> struct ref_list {
->>         int count, alloc;
->>         struct ref_filter_item **items;
->>         const char **name_patterns;
->> };
->
-> Matthieu, I think you forgot to remove "const char **name_patterns;"
-> in the above struct, as you put it in the "ref_filter" struct below:
+> 	Yes, that does turn up some interesting stuff.  It looks
+> 	like the repository contains some paths with non-ASCII
+> 	characters, for example this one has some en-dashes (U+2013)
+> 	in its name:
 
-Yes, indeed. Too quick cut-and-paste.
+Then the recipe in the message you are responding to shoulld be
+changed somewhat to tell Git that it is OK to show non-ASCII in
+verbatim.
 
-> I agree that it might be clearer to separate both. In this case
-> instead of "ref_list" the struct might be called "ref_filter_array" as
-> we already have "argv_array" in argv-array.h and "sha1_array" in
-> "sha1-array.h".
+Perhaps doing this once
 
-I'd drop the "filter" part and make it ref_array then. There's no reason
-we could not use it it places other than filter.
+    git config core.quotepath false
 
-But we also have string_list which is an array underneath, so I think
-both names (_array and _list) are fine.
+before asking ls-files to show the paths should be sufficient.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
