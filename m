@@ -1,71 +1,94 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: recovering from "unordered stage entries in index" error
-Date: Sat, 23 May 2015 09:06:41 +0700
-Message-ID: <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
- <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com> <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
+Subject: Re: git status doesn't ignore GIT_DIR directory?
+Date: Sat, 23 May 2015 09:22:56 +0700
+Message-ID: <20150523022256.GA17789@lanh>
+References: <555FD1EA.2060706@rightscale.com>
+ <CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "McHenry, Matt" <mmchenry@carnegielearning.com>
-X-From: git-owner@vger.kernel.org Sat May 23 04:07:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thorsten von Eicken <tve@rightscale.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 23 04:23:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvyqM-0008Px-Vp
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 04:07:19 +0200
+	id 1Yvz5b-0002aw-BM
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 04:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546AbbEWCHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 22:07:13 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37179 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756390AbbEWCHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 22:07:12 -0400
-Received: by igbsb11 with SMTP id sb11so3194060igb.0
-        for <git@vger.kernel.org>; Fri, 22 May 2015 19:07:11 -0700 (PDT)
+	id S1757175AbbEWCW6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 May 2015 22:22:58 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:34622 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756883AbbEWCW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2015 22:22:58 -0400
+Received: by pdbnk13 with SMTP id nk13so32046535pdb.1
+        for <git@vger.kernel.org>; Fri, 22 May 2015 19:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=upCZ9VMBp3MOp+Nr2o5QWmfsKgs3X4OYgT3IHGl66YM=;
-        b=yqiqLsBYPk/QnRn3W0zf+56DfIwpg8kEB4eUNxFbq/0+0V6p21F8PG0+kB7JvM54t4
-         43gKm2LsauvyfxOfT9ELL4l0011MLxCwiokJ66La7QnBIWuZ1oH0LN5choyU/9tDtPzZ
-         6yCZDhN3M4PkCGxmqKoljBLmfvBPODwMYUsh8k95AU8uvYzU5HKbh1eVeggRcowCfRq9
-         2+aE2dFFiyEma5UO7NCQyW7VFTKEjI7JKEB9RpX4kb7MicrW6UWPxjAfPNya2aaxXAM3
-         +M9cXDSFIeidkaQeEIbPeJm6TjNJX228B+kQs+5ENtGmTBSzTLrO5c1m4p7b+VUGm2X0
-         6+dA==
-X-Received: by 10.50.142.67 with SMTP id ru3mr9450006igb.40.1432346831607;
- Fri, 22 May 2015 19:07:11 -0700 (PDT)
-Received: by 10.107.181.136 with HTTP; Fri, 22 May 2015 19:06:41 -0700 (PDT)
-In-Reply-To: <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=w7JRc8oLE3PxsMgduHSNAMaH2xJKCpj7MuyxI5I3lOg=;
+        b=NrKWGKDQXxR2e6j/Fs9Xs2psQ2SGqFmaQKN/xIolCM+ZuDOfKT0yJTuqTj8dB6fRmj
+         Ewx19IyyFM8m9k61Nw+R03QI4G07YOK5QhaDPsmN39mg2F7zW8HCG4wi2yuRvUo13bXP
+         uKoeWYFoWr812iVIzQKr3dQbcOhQer+d7MZIhvXJQXd151/QLMpF0CCrRPLklQeCwpFw
+         zdxQdL4QO0df7EiLI6YLQSbl6g4RyvNc4HkpUYE8LUe7KKc7tsAdzgxhksM/xfvifcHZ
+         Q8c6JH9G9A2O43YxkfBq64fnXIYuqLAcACle10tpkXOi/KoLZWyQT2B/AWFXKeoauqcQ
+         uAWQ==
+X-Received: by 10.68.135.36 with SMTP id pp4mr20969681pbb.134.1432347777701;
+        Fri, 22 May 2015 19:22:57 -0700 (PDT)
+Received: from lanh ([115.73.30.10])
+        by mx.google.com with ESMTPSA id x2sm3351166pda.31.2015.05.22.19.22.54
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 May 2015 19:22:57 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 23 May 2015 09:22:56 +0700
+Content-Disposition: inline
+In-Reply-To: <CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269791>
 
-On Sat, May 23, 2015 at 1:56 AM, McHenry, Matt
-<mmchenry@carnegielearning.com> wrote:
-> $ git svn fetch
-> fatal: unordered stage entries in index
-> write-tree: command returned error: 128
+On Fri, May 22, 2015 at 07:03:48PM -0700, Junio C Hamano wrote:
+> As far as I know, GIT_DIR was prepared as a mechanism to point at
+> another .git directory that does not live inside the working tree, no=
+t
+> as a mechanism to rename it to arbitrary name. E.g.
+>=20
+>  $ git init
+>  $ mv .git .svn
+>  $ GIT_DIR=3D$(pwd)/.svn ; export GIT_DIR
+>=20
+> is not expected to work.
 
-git-svn does not create the index manually. It uses update-index or
-read-tree to do that. While there's still a chance of bugs in
-update-index that produces broken index, it's probably read-tree in
-this case because it assumes good order from the source tree object,
-which is(?) generated by git-svn. And the write-tree message supports
-this (the code does read-tree then write-tree).
+This is not the first time we get this report. Perhaps we should
+document it.
 
-So maybe you can do "GIT_TRACE=2 git svn fetch" and post the output.
-I'd expect to see something like "git read-tree <sha1>" before "fatal:
-unorder...". You can then use git ls-tree <sha1> to examine this tree,
-try to sort the file list with "LANG=C sort" and compare with the
-original list.
--- 
-Duy
+-- 8< --
+Subject: git.txt: mention the special name ".git" in GIT_DIR
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 90c5f37..91d6dd2 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -691,6 +691,9 @@ Git so take care if using Cogito etc.
+ 	specifies a path to use instead of the default `.git`
+ 	for the base of the repository.
+ 	The '--git-dir' command-line option also sets this value.
+++
++Note that if GIT_DIR is set explicitly to a directory inside working
++tree, the directory name must be ".git".
+=20
+ 'GIT_WORK_TREE'::
+ 	Set the path to the root of the working tree.
+-- 8< --
