@@ -1,76 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git status doesn't ignore GIT_DIR directory?
-Date: Sat, 23 May 2015 10:00:23 -0700
-Message-ID: <xmqqwpzzcjq0.fsf@gitster.dls.corp.google.com>
-References: <555FD1EA.2060706@rightscale.com>
-	<CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com>
-	<20150523022256.GA17789@lanh> <20150523053900.GA2364@glandium.org>
-	<xmqq1ti7dyky.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/4] ref-filter: add ref-filter API
+Date: Sat, 23 May 2015 19:00:46 +0200
+Message-ID: <vpqr3q7cjpd.fsf@anie.imag.fr>
+References: <555C88C2.8060902@gmail.com>
+	<1432127904-21070-2-git-send-email-karthik.188@gmail.com>
+	<vpqr3qagvv6.fsf@anie.imag.fr> <555E1CE7.8090507@gmail.com>
+	<vpqbnhd157k.fsf@anie.imag.fr> <555F252C.2060601@gmail.com>
+	<vpq8ucffj8h.fsf@anie.imag.fr>
+	<CAP8UFD0CPLcTGYTo1Oh_QFxVkORBZF2SmwRYu0O8do66qmakPw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Thorsten von Eicken <tve@rightscale.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat May 23 19:00:34 2015
+Cc: karthik nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 23 19:00:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwCmn-00029M-Em
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:00:33 +0200
+	id 1YwCn9-0002N6-CV
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758041AbbEWRA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2015 13:00:26 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:36285 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757957AbbEWRAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2015 13:00:25 -0400
-Received: by igbpi8 with SMTP id pi8so11571248igb.1
-        for <git@vger.kernel.org>; Sat, 23 May 2015 10:00:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=WewYE04xUYpp495YNhWOnICv1+BnoIqjDZRqH3qk1xE=;
-        b=KpSwjI+pl5CHNpoNtY4N/I4p3XiUT0gl8rLZlGf5Rp8kVyL1UB31SdW0FyRkQNxhsF
-         8IjPrnGlzKGg+vdVH6bsya2mlVX5T8p7yDFnIaqD3IrvE6WrBjEUZxy246aJTuUiUzN9
-         RSb1t2rjWsQ/CsDhy3onkSLTR2QlDzpsi+5f355cALm1tJaBQs+T0lBaeiYyZZTwSncc
-         zGUt1rMJ6Jiqk1ZfVSo9n5PiIQo7mY2nV3Bo+FQlTLQW5DeFEhuh4Yqo9306A2D7oOxp
-         5fkdrDFJQSxVwN/OGDjemqnvy5mc0VY/LhqPVgdsbvJEJ2yiPB03iYFluG95BjZr73dC
-         fjRg==
-X-Received: by 10.42.226.8 with SMTP id iu8mr15478164icb.17.1432400425095;
-        Sat, 23 May 2015 10:00:25 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:609e:6a22:2d9d:c8d5])
-        by mx.google.com with ESMTPSA id m9sm1902468igv.4.2015.05.23.10.00.24
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 23 May 2015 10:00:24 -0700 (PDT)
-In-Reply-To: <xmqq1ti7dyky.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 23 May 2015 09:54:05 -0700")
+	id S1758000AbbEWRAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2015 13:00:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57650 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758034AbbEWRAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2015 13:00:50 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4NH0iE6019188
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 23 May 2015 19:00:44 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4NH0kGM013684;
+	Sat, 23 May 2015 19:00:46 +0200
+In-Reply-To: <CAP8UFD0CPLcTGYTo1Oh_QFxVkORBZF2SmwRYu0O8do66qmakPw@mail.gmail.com>
+	(Christian Couder's message of "Sat, 23 May 2015 18:04:27 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 23 May 2015 19:00:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4NH0iE6019188
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1433005244.83875@zMm0VOMBy0iC9e1dfyndLQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269808>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> I think both of you are wrong ;-)
+>> struct ref_list {
+>>         int count, alloc;
+>>         struct ref_filter_item **items;
+>>         const char **name_patterns;
+>> };
 >
-> The thing is, what you are seeing does not have much to do with
-> GIT_DIR.  It is "what Git does when it finds a directory inside the
-> working tree of a project".  And ".git" is the only special thing in
-> that context.
+> Matthieu, I think you forgot to remove "const char **name_patterns;"
+> in the above struct, as you put it in the "ref_filter" struct below:
 
-In short, I think Duy's "how about this" means well, but adds
-documentation at a wrong place.
+Yes, indeed. Too quick cut-and-paste.
 
-Having said all that, the message I am responding to showed the
-right way to look at, understand, and explain the current behaviour.
-It is a separate issue if the current behaviour is optimal from the
-usability point of view.  It is not entirely implausible to extend
-the special casing rules from "a directory named '.git' only" to "in
-addition, the directory pointed at by GIT_DIR, if exists, is treated
-the same way".
+> I agree that it might be clearer to separate both. In this case
+> instead of "ref_list" the struct might be called "ref_filter_array" as
+> we already have "argv_array" in argv-array.h and "sha1_array" in
+> "sha1-array.h".
+
+I'd drop the "filter" part and make it ref_array then. There's no reason
+we could not use it it places other than filter.
+
+But we also have string_list which is an array underneath, so I think
+both names (_array and _list) are fine.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
