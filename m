@@ -1,98 +1,164 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: What's cooking in git.git (May 2015, #06; Fri, 22)
-Date: Sat, 23 May 2015 20:24:24 +0100
-Message-ID: <5560D3E8.1010704@diamand.org>
-References: <xmqqiobkdzv9.fsf@gitster.dls.corp.google.com>
+From: "McHenry, Matt" <mmchenry@carnegielearning.com>
+Subject: RE: recovering from "unordered stage entries in index" error
+Date: Sat, 23 May 2015 17:36:32 -0400
+Message-ID: <D377A9280DB18546A2471214D5CBB0E90875A547E6@exchdb01>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+ <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+ <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com>
+ <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
+ <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>,<805ACAFCB18CC2408F45D98ABEC64B650A06EC538B@exchdb01>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 23 21:25:11 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 23 23:39:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwF2l-0002li-Ds
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 21:25:11 +0200
+	id 1YwH8u-0005n2-GV
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 23:39:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932291AbbEWTZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2015 15:25:06 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:37521 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932189AbbEWTZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2015 15:25:04 -0400
-Received: by wibt6 with SMTP id t6so16838796wib.0
-        for <git@vger.kernel.org>; Sat, 23 May 2015 12:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=iJQSjtn61m4iMLmSOJcZ4KcmykfD9k4Yd3od71copBw=;
-        b=QEs/Sjq2bBcT4NQ5hwru9olpFX/JG2hBWvSDHdO0hTJm5hPYAOGYcx590FfNnIbR0x
-         7l9pr5mhiXE3oepRAAR9U5fAzmhOYYpZqwuDIQlcYJiJJ/NAO9BvIugI8KHKBqma9Uxr
-         9vu9ABrrko/+Kj1TNeAAEi+cfTtN1ayYtqVfM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=iJQSjtn61m4iMLmSOJcZ4KcmykfD9k4Yd3od71copBw=;
-        b=G7xh96NrTXvH3G2/6hPSmHAeuPDdyIGwsoGYnAd2okxbT2t2/K7DewtKihdzJ+BcXE
-         6bg+SKsUBA0EXaoLkIsM29/j+F9Ze/G5NAEEkvMGlYYnKCmR+jtTkWTVC34wHOSry2/f
-         MaNFC1bUX5Toy/g0iVo9HvP5lfXUdYaBnqzfT6SOUo/C2D+lKEL3dzWTb402Ixd/NS6k
-         MGRg5ryMWuQpNUpcBbkwzdJIns06azhrfMomqC13+0OoZQmMyd2neMg3ncI4jS3l1jBV
-         9qP9YtSJ6Gn7OgyZl/FIaYTt+s7juzbLJy/SfMGzEmFgkrH2tdygD7+gyaTAPPOjedOy
-         ctag==
-X-Gm-Message-State: ALoCoQnTKtiLhH07eRn7gRJMPp6pQeN4D36fwOVzToDRKhzsICEMDnlDII5xzEna+V7zkNt7/ZQS
-X-Received: by 10.194.200.228 with SMTP id jv4mr25434523wjc.157.1432409103069;
-        Sat, 23 May 2015 12:25:03 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id ch2sm4175173wib.18.2015.05.23.12.25.01
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 May 2015 12:25:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <xmqqiobkdzv9.fsf@gitster.dls.corp.google.com>
+	id S1752583AbbEWVj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2015 17:39:28 -0400
+Received: from mail3.carnegielearning.com ([204.80.87.3]:21654 "EHLO
+	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752079AbbEWVj1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2015 17:39:27 -0400
+X-ASG-Debug-ID: 1432417165-07bc7c14083ee2cc0001-QuoKaX
+Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id NR739xIV7OdmuurN (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Sat, 23 May 2015 17:39:25 -0400 (EDT)
+X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
+Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
+ ([127.0.0.1]) with mapi; Sat, 23 May 2015 17:39:25 -0400
+Thread-Topic: recovering from "unordered stage entries in index" error
+X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
+Thread-Index: AdCU/S7vnqWDYWJfQL6Iki+SOZ43BAAAgcIAAChU5IQ=
+In-Reply-To: <805ACAFCB18CC2408F45D98ABEC64B650A06EC538B@exchdb01>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+X-Barracuda-Connect: UNKNOWN[10.1.10.4]
+X-Barracuda-Start-Time: 1432417165
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: https://10.1.10.16:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at carnegielearning.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
+X-Barracuda-Spam-Score: 0.01
+X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19219
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269818>
 
-On 22/05/15 23:14, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.
->
-ry_matches(): inline function
->   + is_> The fourth batch of topics have been merged to 'master'.
->
 
-<snip>
+Per Junio's email, with core.quotepath=false, there are no differences with sorting in either ls-files or the tree named in the GIT_TRACE_2 output:
 
->
->
-> * ld/p4-editor-multi-words (2015-05-20) 6 commits
->   - SQUASH
->   - git-p4: tests: use test-chmtime in place of touch
->   - SQUASH
->   - git-p4: fix handling of multi-word P4EDITOR
->   - SQUASH
->   - git-p4: add failing test for P4EDITOR handling
->
->   Unlike "$EDITOR" and "$GIT_EDITOR" that can hold the path to the
->   command and initial options (e.g. "/path/to/emacs -nw"), 'git p4'
->   did not let the shell interpolate the contents of the environment
->   variable that name the editor "$P4EDITOR" (and "$EDITOR", too).
->   Make it in line with the rest of Git, as well as with Perforce.
+$ git config --local core.quotepath false
 
-The latest versions in the branch (with the SQUASH) all look good to me.
+$ git ls-tree --name-only -r 74332b7d653cde7ba3b999cc7b0adcfd9d924440 > ls-tree
+$ LANG=C LC_ALL=C sort ls-tree > ls-tree-sorted-lc-all
+$ diff -s ls-tree ls-tree-sorted-lc-all 
+Files ls-tree and ls-tree-sorted-lc-all are identical
 
-The other thing still missing from this series is fixing Windows builds. 
-I've been attempting to get a Windows build environment going to 
-actually test it (if it hasn't been tested, it doesn't work.... :-).
+$ git ls-files > ls-files
+$ LANG=C LC_ALL=C sort ls-files > ls-files-sorted-lc-all
+$ diff -s ls-files ls-files-sorted-lc-all 
+Files ls-files and ls-files-sorted-lc-all are identical
 
-I'm slowly getting there, but I'm not very familiar with this particular OS.
 
-Thanks,
-Luke
+________________________________________
+From: McHenry, Matt
+Sent: Friday, May 22, 2015 10:47 PM
+To: Duy Nguyen
+Cc: Junio C Hamano; git@vger.kernel.org
+Subject: RE: recovering from "unordered stage entries in index" error
+
+> So maybe you can do "GIT_TRACE=2 git svn fetch" and post the output.
+> I'd expect to see something like "git read-tree <sha1>" before "fatal:
+> unorder...". You can then use git ls-tree <sha1> to examine this tree,
+> try to sort the file list with "LANG=C sort" and compare with the
+> original list.
+
+        There is no read-tree in the output (below).  The sha1 that is mentioned, 74332b7, is the one for the current trunk:
+
+$ git svn log -1 --show-commit --oneline trunk
+r231655 | 74332b7 | CLT: changed skill from not compound to compound.
+
+        So not surprisingly, I guess, I get basically the same results as with the ls-files commands earlier: files with Unicode chars are quoted and sort at the front:
+
+$ git ls-tree --name-only -r 74332b7d653cde7ba3b999cc7b0adcfd9d924440 > ls-tree
+$ LANG=C LC_ALL=C sort ls-tree > ls-tree-sorted-lc-all
+$ grep -n Ninja__Beta ls-tree*
+ls-tree:36974:"curriculum/Fluency/Hurix work/source from May 2014/For_Anesh/06 Deliverables/Phase 2/FT3 \342\200\223 Ninja/FT3 \342\200\223 Ninja__Beta.zip"
+ls-tree-sorted-lc-all:89:"curriculum/Fluency/Hurix work/source from May 2014/For_Anesh/06 Deliverables/Phase 2/FT3 \342\200\223 Ninja/FT3 \342\200\223 Ninja__Beta.zip"
+
+        (Just sorting with LANG=C but without LC_ALL=C produced a ton of other differences, mostly around numeric vs. lexical ordering as far as I could tell.)
+
+        I tried this same thing with my test repo, and it exhibits the same quoted-filename-sorts-to-the-top behaviour, but does not exhibit the git svn fetch write-tree error.
+
+
+$ GIT_TRACE=2 git svn fetch
+22:21:16.683918 git.c:557               trace: exec: 'git-svn' 'fetch'
+22:21:16.683945 run-command.c:351       trace: run_command: 'git-svn' 'fetch'
+02:21:16.918593 git.c:348               trace: built-in: git 'rev-parse' '--git-dir'
+02:21:16.920218 git.c:348               trace: built-in: git 'rev-parse' '--show-cdup'
+02:21:16.921997 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.fetchall'
+02:21:16.923609 git.c:348               trace: built-in: git 'config' '--int' '--get' 'svn.repack'
+02:21:16.925164 git.c:348               trace: built-in: git 'config' '--get' 'svn.repackflags'
+02:21:16.926706 git.c:348               trace: built-in: git 'config' '--get' 'svn.revision'
+02:21:16.928847 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.nocheckout'
+02:21:16.930410 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.useSvnsyncProps'
+02:21:16.931963 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.localtime'
+02:21:16.933538 git.c:348               trace: built-in: git 'config' '--get' 'svn.includepaths'
+02:21:16.935107 git.c:348               trace: built-in: git 'config' '--get' 'svn.username'
+02:21:16.936675 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.noauthcache'
+02:21:16.940413 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.quiet'
+02:21:16.942064 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.uselogauthor'
+02:21:16.943696 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.noMetadata'
+02:21:16.945344 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.useSvmProps'
+02:21:16.947607 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.parent'
+02:21:16.950737 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.addauthorfrom'
+02:21:16.952532 git.c:348               trace: built-in: git 'config' '--get' 'svn.authorsprog'
+02:21:16.954133 git.c:348               trace: built-in: git 'config' '--get' 'svn.ignorepaths'
+02:21:16.955704 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'svn.followparent'
+02:21:16.957287 git.c:348               trace: built-in: git 'config' '--get' 'svn.configdir'
+02:21:16.958930 git.c:348               trace: built-in: git 'config' '--get' 'svn.authorsfile'
+02:21:16.962142 git.c:348               trace: built-in: git 'config' '--int' '--get' 'svn.logwindowsize'
+02:21:16.963913 git.c:348               trace: built-in: git 'config' '--get' 'svn.ignorerefs'
+02:21:16.966130 git.c:348               trace: built-in: git 'rev-parse' '--symbolic' '--all'
+02:21:16.970537 git.c:348               trace: built-in: git 'config' '-l'
+02:21:16.972410 git.c:348               trace: built-in: git 'config' '-l'
+02:21:16.974187 git.c:348               trace: built-in: git 'config' '--bool' 'svn.useSvmProps'
+02:21:16.976074 git.c:348               trace: built-in: git 'config' '-l'
+02:21:17.136056 git.c:348               trace: built-in: git 'config' '--int' '--get' 'svn-remote.svn.branches-maxRev'
+02:21:17.137928 git.c:348               trace: built-in: git 'config' '--int' '--get' 'svn-remote.svn.tags-maxRev'
+02:21:17.140124 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.url'
+02:21:17.142192 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.pushurl'
+02:21:17.144203 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.uuid'
+02:21:17.149689 git.c:348               trace: built-in: git 'rev-list' '--pretty=raw' '--reverse' '74332b7d653cde7ba3b999cc7b0adcfd9d924440..refs/remotes/trunk' '--'
+02:21:17.152412 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteRoot'
+02:21:17.154482 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteUUID'
+02:21:17.160391 git.c:348               trace: built-in: git 'cat-file' '--batch'
+02:21:17.582641 git.c:348               trace: built-in: git 'config' 'svn-remote.svn.branches-maxRev' '231655'
+02:21:17.585237 git.c:348               trace: built-in: git 'config' 'svn-remote.svn.tags-maxRev' '231655'
+02:21:17.590152 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.usesvmprops'
+02:21:17.592063 git.c:348               trace: built-in: git 'config' '--get' 'svn-remote.svn.nometadata'
+02:21:17.593997 git.c:348               trace: built-in: git 'cat-file' 'commit' '74332b7d653cde7ba3b999cc7b0adcfd9d924440'
+02:21:17.596529 git.c:348               trace: built-in: git 'write-tree'
+fatal: unordered stage entries in index
+write-tree: command returned error: 128
