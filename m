@@ -1,178 +1,72 @@
-From: "McHenry, Matt" <mmchenry@carnegielearning.com>
-Subject: RE: recovering from "unordered stage entries in index" error
-Date: Fri, 22 May 2015 22:47:18 -0400
-Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
- <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com>
- <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
- <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
+From: Thorsten von Eicken <tve@rightscale.com>
+Subject: Re: git status doesn't ignore GIT_DIR directory?
+Date: Fri, 22 May 2015 21:41:02 -0700
+Organization: RightScale, Inc.
+Message-ID: <556004DE.7080504@rightscale.com>
+References: <555FD1EA.2060706@rightscale.com> <CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com> <20150523022256.GA17789@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 23 04:47:57 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 23 06:41:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YvzTL-0001YD-7t
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 04:47:35 +0200
+	id 1Yw1F8-000784-1f
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 06:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757009AbbEWCrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2015 22:47:23 -0400
-Received: from mail3.carnegielearning.com ([204.80.87.3]:22354 "EHLO
-	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756390AbbEWCrW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 22:47:22 -0400
-X-ASG-Debug-ID: 1432349239-0424f512db3e76290001-QuoKaX
-Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id 31mCFYrAZ7xbVLiE (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Fri, 22 May 2015 22:47:19 -0400 (EDT)
-X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
-Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
- ([127.0.0.1]) with mapi; Fri, 22 May 2015 22:47:19 -0400
-Thread-Topic: recovering from "unordered stage entries in index" error
-X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
-Thread-Index: AdCU/S7vnqWDYWJfQL6Iki+SOZ43BAAAgcIA
-In-Reply-To: <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
-X-Barracuda-Connect: UNKNOWN[10.1.10.4]
-X-Barracuda-Start-Time: 1432349239
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: https://10.1.10.29:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at carnegielearning.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
-X-Barracuda-Spam-Score: 0.01
-X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19208
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
+	id S1751723AbbEWEk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2015 00:40:57 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33726 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750899AbbEWEk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2015 00:40:56 -0400
+Received: by padbw4 with SMTP id bw4so34187323pad.0
+        for <git@vger.kernel.org>; Fri, 22 May 2015 21:40:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:organization:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=eY5BXHG7xoxv+6J6KL/XImhY3Z/HtaOaERas8YpNsQk=;
+        b=CgXB9b+7dkxdSdtEEikkshcygnfmOmUY6hyFMO/VfRKdTUgowffhrhWj4niWKtKQC7
+         nbf3DhMlTOc2Kzv5JHRBBO431gpvNhbiqdrRwHcDKXzrfo3T009XR9AApaSJQe/eAreE
+         WUWbMjfW/yGdWXtTI24FYo1hA9tFfjWiUinOgCiVUyRCgahv/JdRZIM5yymDNxn+GC5y
+         DY4l52cQ0hTIn0PA71Inss616KT1ML4zO011sp+LF/NCB7Je/CaDN5H+kaoDp0qZZjpD
+         04vAyrReUA/nA1bgT3wjRnNpjTBLiF/JmHCuaC/0e0T6dTUV9bIBizITWGe3jbbuEzDD
+         2n1Q==
+X-Gm-Message-State: ALoCoQlXlwENOHdoJANCJeVb2H1uzHb4zpxgW6+nMTPz5eTHaY48CKGtmuj4lg/YzGklud8Jlzqq
+X-Received: by 10.66.156.198 with SMTP id wg6mr21483215pab.126.1432356055836;
+        Fri, 22 May 2015 21:40:55 -0700 (PDT)
+Received: from [192.168.0.2] (sb0-cf9a65cf.dsl.impulse.net. [207.154.101.207])
+        by mx.google.com with ESMTPSA id af5sm3553552pbc.90.2015.05.22.21.40.52
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 May 2015 21:40:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <20150523022256.GA17789@lanh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269794>
 
-PiBTbyBtYXliZSB5b3UgY2FuIGRvICJHSVRfVFJBQ0U9MiBnaXQgc3ZuIGZldGNoIiBhbmQgcG9z
-dCB0aGUgb3V0cHV0Lg0KPiBJJ2QgZXhwZWN0IHRvIHNlZSBzb21ldGhpbmcgbGlrZSAiZ2l0IHJl
-YWQtdHJlZSA8c2hhMT4iIGJlZm9yZSAiZmF0YWw6DQo+IHVub3JkZXIuLi4iLiBZb3UgY2FuIHRo
-ZW4gdXNlIGdpdCBscy10cmVlIDxzaGExPiB0byBleGFtaW5lIHRoaXMgdHJlZSwNCj4gdHJ5IHRv
-IHNvcnQgdGhlIGZpbGUgbGlzdCB3aXRoICJMQU5HPUMgc29ydCIgYW5kIGNvbXBhcmUgd2l0aCB0
-aGUNCj4gb3JpZ2luYWwgbGlzdC4NCg0KCVRoZXJlIGlzIG5vIHJlYWQtdHJlZSBpbiB0aGUgb3V0
-cHV0IChiZWxvdykuICBUaGUgc2hhMSB0aGF0IGlzIG1lbnRpb25lZCwgNzQzMzJiNywgaXMgdGhl
-IG9uZSBmb3IgdGhlIGN1cnJlbnQgdHJ1bms6DQoNCiQgZ2l0IHN2biBsb2cgLTEgLS1zaG93LWNv
-bW1pdCAtLW9uZWxpbmUgdHJ1bmsNCnIyMzE2NTUgfCA3NDMzMmI3IHwgQ0xUOiBjaGFuZ2VkIHNr
-aWxsIGZyb20gbm90IGNvbXBvdW5kIHRvIGNvbXBvdW5kLg0KDQoJU28gbm90IHN1cnByaXNpbmds
-eSwgSSBndWVzcywgSSBnZXQgYmFzaWNhbGx5IHRoZSBzYW1lIHJlc3VsdHMgYXMgd2l0aCB0aGUg
-bHMtZmlsZXMgY29tbWFuZHMgZWFybGllcjogZmlsZXMgd2l0aCBVbmljb2RlIGNoYXJzIGFyZSBx
-dW90ZWQgYW5kIHNvcnQgYXQgdGhlIGZyb250Og0KDQokIGdpdCBscy10cmVlIC0tbmFtZS1vbmx5
-IC1yIDc0MzMyYjdkNjUzY2RlN2JhM2I5OTljYzdiMGFkY2ZkOWQ5MjQ0NDAgPiBscy10cmVlDQok
-IExBTkc9QyBMQ19BTEw9QyBzb3J0IGxzLXRyZWUgPiBscy10cmVlLXNvcnRlZC1sYy1hbGwNCiQg
-Z3JlcCAtbiBOaW5qYV9fQmV0YSBscy10cmVlKg0KbHMtdHJlZTozNjk3NDoiY3VycmljdWx1bS9G
-bHVlbmN5L0h1cml4IHdvcmsvc291cmNlIGZyb20gTWF5IDIwMTQvRm9yX0FuZXNoLzA2IERlbGl2
-ZXJhYmxlcy9QaGFzZSAyL0ZUMyBcMzQyXDIwMFwyMjMgTmluamEvRlQzIFwzNDJcMjAwXDIyMyBO
-aW5qYV9fQmV0YS56aXAiDQpscy10cmVlLXNvcnRlZC1sYy1hbGw6ODk6ImN1cnJpY3VsdW0vRmx1
-ZW5jeS9IdXJpeCB3b3JrL3NvdXJjZSBmcm9tIE1heSAyMDE0L0Zvcl9BbmVzaC8wNiBEZWxpdmVy
-YWJsZXMvUGhhc2UgMi9GVDMgXDM0MlwyMDBcMjIzIE5pbmphL0ZUMyBcMzQyXDIwMFwyMjMgTmlu
-amFfX0JldGEuemlwIg0KDQoJKEp1c3Qgc29ydGluZyB3aXRoIExBTkc9QyBidXQgd2l0aG91dCBM
-Q19BTEw9QyBwcm9kdWNlZCBhIHRvbiBvZiBvdGhlciBkaWZmZXJlbmNlcywgbW9zdGx5IGFyb3Vu
-ZCBudW1lcmljIHZzLiBsZXhpY2FsIG9yZGVyaW5nIGFzIGZhciBhcyBJIGNvdWxkIHRlbGwuKQ0K
-DQoJSSB0cmllZCB0aGlzIHNhbWUgdGhpbmcgd2l0aCBteSB0ZXN0IHJlcG8sIGFuZCBpdCBleGhp
-Yml0cyB0aGUgc2FtZSBxdW90ZWQtZmlsZW5hbWUtc29ydHMtdG8tdGhlLXRvcCBiZWhhdmlvdXIs
-IGJ1dCBkb2VzIG5vdCBleGhpYml0IHRoZSBnaXQgc3ZuIGZldGNoIHdyaXRlLXRyZWUgZXJyb3Iu
-DQoNCg0KJCBHSVRfVFJBQ0U9MiBnaXQgc3ZuIGZldGNoDQoyMjoyMToxNi42ODM5MTggZ2l0LmM6
-NTU3ICAgICAgICAgICAgICAgdHJhY2U6IGV4ZWM6ICdnaXQtc3ZuJyAnZmV0Y2gnDQoyMjoyMTox
-Ni42ODM5NDUgcnVuLWNvbW1hbmQuYzozNTEgICAgICAgdHJhY2U6IHJ1bl9jb21tYW5kOiAnZ2l0
-LXN2bicgJ2ZldGNoJw0KMDI6MjE6MTYuOTE4NTkzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRy
-YWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtcGFyc2UnICctLWdpdC1kaXInDQowMjoyMToxNi45MjAy
-MTggZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ3Jldi1wYXJz
-ZScgJy0tc2hvdy1jZHVwJw0KMDI6MjE6MTYuOTIxOTk3IGdpdC5jOjM0OCAgICAgICAgICAgICAg
-IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5mZXRj
-aGFsbCcNCjAyOjIxOjE2LjkyMzYwOSBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVp
-bHQtaW46IGdpdCAnY29uZmlnJyAnLS1pbnQnICctLWdldCcgJ3N2bi5yZXBhY2snDQowMjoyMTox
-Ni45MjUxNjQgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2Nv
-bmZpZycgJy0tZ2V0JyAnc3ZuLnJlcGFja2ZsYWdzJw0KMDI6MjE6MTYuOTI2NzA2IGdpdC5jOjM0
-OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2
-bi5yZXZpc2lvbicNCjAyOjIxOjE2LjkyODg0NyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFj
-ZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4ubm9jaGVja291
-dCcNCjAyOjIxOjE2LjkzMDQxMCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQt
-aW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4udXNlU3Zuc3luY1Byb3BzJw0K
-MDI6MjE6MTYuOTMxOTYzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
-Z2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5sb2NhbHRpbWUnDQowMjoyMToxNi45
-MzM1MzggZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZp
-ZycgJy0tZ2V0JyAnc3ZuLmluY2x1ZGVwYXRocycNCjAyOjIxOjE2LjkzNTEwNyBnaXQuYzozNDgg
-ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4u
-dXNlcm5hbWUnDQowMjoyMToxNi45MzY2NzUgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6
-IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLm5vYXV0aGNhY2hl
-Jw0KMDI6MjE6MTYuOTQwNDEzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
-bjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5xdWlldCcNCjAyOjIxOjE2Ljk0
-MjA2NCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmln
-JyAnLS1ib29sJyAnLS1nZXQnICdzdm4udXNlbG9nYXV0aG9yJw0KMDI6MjE6MTYuOTQzNjk2IGdp
-dC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJv
-b2wnICctLWdldCcgJ3N2bi5ub01ldGFkYXRhJw0KMDI6MjE6MTYuOTQ1MzQ0IGdpdC5jOjM0OCAg
-ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdl
-dCcgJ3N2bi51c2VTdm1Qcm9wcycNCjAyOjIxOjE2Ljk0NzYwNyBnaXQuYzozNDggICAgICAgICAg
-ICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4u
-cGFyZW50Jw0KMDI6MjE6MTYuOTUwNzM3IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBi
-dWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5hZGRhdXRob3Jmcm9t
-Jw0KMDI6MjE6MTYuOTUyNTMyIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
-bjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5hdXRob3JzcHJvZycNCjAyOjIxOjE2Ljk1NDEz
-MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAn
-LS1nZXQnICdzdm4uaWdub3JlcGF0aHMnDQowMjoyMToxNi45NTU3MDQgZ2l0LmM6MzQ4ICAgICAg
-ICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAn
-c3ZuLmZvbGxvd3BhcmVudCcNCjAyOjIxOjE2Ljk1NzI4NyBnaXQuYzozNDggICAgICAgICAgICAg
-ICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4uY29uZmlnZGlyJw0K
-MDI6MjE6MTYuOTU4OTMwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
-Z2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5hdXRob3JzZmlsZScNCjAyOjIxOjE2Ljk2MjE0MiBn
-aXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1p
-bnQnICctLWdldCcgJ3N2bi5sb2d3aW5kb3dzaXplJw0KMDI6MjE6MTYuOTYzOTEzIGdpdC5jOjM0
-OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2
-bi5pZ25vcmVyZWZzJw0KMDI6MjE6MTYuOTY2MTMwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRy
-YWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtcGFyc2UnICctLXN5bWJvbGljJyAnLS1hbGwnDQowMjoy
-MToxNi45NzA1MzcgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQg
-J2NvbmZpZycgJy1sJw0KMDI6MjE6MTYuOTcyNDEwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRy
-YWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctbCcNCjAyOjIxOjE2Ljk3NDE4NyBnaXQuYzoz
-NDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAn
-c3ZuLnVzZVN2bVByb3BzJw0KMDI6MjE6MTYuOTc2MDc0IGdpdC5jOjM0OCAgICAgICAgICAgICAg
-IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctbCcNCjAyOjIxOjE3LjEzNjA1NiBnaXQu
-YzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1pbnQn
-ICctLWdldCcgJ3N2bi1yZW1vdGUuc3ZuLmJyYW5jaGVzLW1heFJldicNCjAyOjIxOjE3LjEzNzky
-OCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAn
-LS1pbnQnICctLWdldCcgJ3N2bi1yZW1vdGUuc3ZuLnRhZ3MtbWF4UmV2Jw0KMDI6MjE6MTcuMTQw
-MTI0IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcn
-ICctLWdldCcgJ3N2bi1yZW1vdGUuc3ZuLnVybCcNCjAyOjIxOjE3LjE0MjE5MiBnaXQuYzozNDgg
-ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4t
-cmVtb3RlLnN2bi5wdXNodXJsJw0KMDI6MjE6MTcuMTQ0MjAzIGdpdC5jOjM0OCAgICAgICAgICAg
-ICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi1yZW1vdGUuc3Zu
-LnV1aWQnDQowMjoyMToxNy4xNDk2ODkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1
-aWx0LWluOiBnaXQgJ3Jldi1saXN0JyAnLS1wcmV0dHk9cmF3JyAnLS1yZXZlcnNlJyAnNzQzMzJi
-N2Q2NTNjZGU3YmEzYjk5OWNjN2IwYWRjZmQ5ZDkyNDQ0MC4ucmVmcy9yZW1vdGVzL3RydW5rJyAn
-LS0nDQowMjoyMToxNy4xNTI0MTIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0
-LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4ucmV3cml0ZVJvb3QnDQow
-MjoyMToxNy4xNTQ0ODIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBn
-aXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4ucmV3cml0ZVVVSUQnDQowMjoyMTox
-Ny4xNjAzOTEgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2Nh
-dC1maWxlJyAnLS1iYXRjaCcNCjAyOjIxOjE3LjU4MjY0MSBnaXQuYzozNDggICAgICAgICAgICAg
-ICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnc3ZuLXJlbW90ZS5zdm4uYnJhbmNoZXMt
-bWF4UmV2JyAnMjMxNjU1Jw0KMDI6MjE6MTcuNTg1MjM3IGdpdC5jOjM0OCAgICAgICAgICAgICAg
-IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICdzdm4tcmVtb3RlLnN2bi50YWdzLW1heFJl
-dicgJzIzMTY1NScNCjAyOjIxOjE3LjU5MDE1MiBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFj
-ZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4tcmVtb3RlLnN2bi51c2Vzdm1w
-cm9wcycNCjAyOjIxOjE3LjU5MjA2MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVp
-bHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4tcmVtb3RlLnN2bi5ub21ldGFkYXRhJw0K
-MDI6MjE6MTcuNTkzOTk3IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
-Z2l0ICdjYXQtZmlsZScgJ2NvbW1pdCcgJzc0MzMyYjdkNjUzY2RlN2JhM2I5OTljYzdiMGFkY2Zk
-OWQ5MjQ0NDAnDQowMjoyMToxNy41OTY1MjkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6
-IGJ1aWx0LWluOiBnaXQgJ3dyaXRlLXRyZWUnDQpmYXRhbDogdW5vcmRlcmVkIHN0YWdlIGVudHJp
-ZXMgaW4gaW5kZXgNCndyaXRlLXRyZWU6IGNvbW1hbmQgcmV0dXJuZWQgZXJyb3I6IDEyOA0KDQo=
+On 5/22/2015 7:22 PM, Duy Nguyen wrote:
+> On Fri, May 22, 2015 at 07:03:48PM -0700, Junio C Hamano wrote:
+>> As far as I know, GIT_DIR was prepared as a mechanism to point at
+>> another .git directory that does not live inside the working tree, not
+>> as a mechanism to rename it to arbitrary name. E.g.
+>>
+>>  $ git init
+>>  $ mv .git .svn
+>>  $ GIT_DIR=$(pwd)/.svn ; export GIT_DIR
+>>
+>> is not expected to work.
+>
+> ++
+> +Note that if GIT_DIR is set explicitly to a directory inside working
+> +tree, the directory name must be ".git".
+This is not at all what I was hoping to hear, but thanks for the response.
+Thorsten
