@@ -1,94 +1,178 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git status doesn't ignore GIT_DIR directory?
-Date: Sat, 23 May 2015 09:22:56 +0700
-Message-ID: <20150523022256.GA17789@lanh>
-References: <555FD1EA.2060706@rightscale.com>
- <CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com>
+From: "McHenry, Matt" <mmchenry@carnegielearning.com>
+Subject: RE: recovering from "unordered stage entries in index" error
+Date: Fri, 22 May 2015 22:47:18 -0400
+Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+ <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+ <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com>
+ <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
+ <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thorsten von Eicken <tve@rightscale.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 23 04:23:04 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 23 04:47:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yvz5b-0002aw-BM
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 04:23:03 +0200
+	id 1YvzTL-0001YD-7t
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 04:47:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757175AbbEWCW6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 May 2015 22:22:58 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:34622 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756883AbbEWCW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2015 22:22:58 -0400
-Received: by pdbnk13 with SMTP id nk13so32046535pdb.1
-        for <git@vger.kernel.org>; Fri, 22 May 2015 19:22:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=w7JRc8oLE3PxsMgduHSNAMaH2xJKCpj7MuyxI5I3lOg=;
-        b=NrKWGKDQXxR2e6j/Fs9Xs2psQ2SGqFmaQKN/xIolCM+ZuDOfKT0yJTuqTj8dB6fRmj
-         Ewx19IyyFM8m9k61Nw+R03QI4G07YOK5QhaDPsmN39mg2F7zW8HCG4wi2yuRvUo13bXP
-         uKoeWYFoWr812iVIzQKr3dQbcOhQer+d7MZIhvXJQXd151/QLMpF0CCrRPLklQeCwpFw
-         zdxQdL4QO0df7EiLI6YLQSbl6g4RyvNc4HkpUYE8LUe7KKc7tsAdzgxhksM/xfvifcHZ
-         Q8c6JH9G9A2O43YxkfBq64fnXIYuqLAcACle10tpkXOi/KoLZWyQT2B/AWFXKeoauqcQ
-         uAWQ==
-X-Received: by 10.68.135.36 with SMTP id pp4mr20969681pbb.134.1432347777701;
-        Fri, 22 May 2015 19:22:57 -0700 (PDT)
-Received: from lanh ([115.73.30.10])
-        by mx.google.com with ESMTPSA id x2sm3351166pda.31.2015.05.22.19.22.54
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 May 2015 19:22:57 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 23 May 2015 09:22:56 +0700
-Content-Disposition: inline
-In-Reply-To: <CAPc5daW2yTHHegPDrEWS5KiSYWZECV+AxMnewzz9ayASB1QNUw@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757009AbbEWCrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2015 22:47:23 -0400
+Received: from mail3.carnegielearning.com ([204.80.87.3]:22354 "EHLO
+	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756390AbbEWCrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 May 2015 22:47:22 -0400
+X-ASG-Debug-ID: 1432349239-0424f512db3e76290001-QuoKaX
+Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id 31mCFYrAZ7xbVLiE (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Fri, 22 May 2015 22:47:19 -0400 (EDT)
+X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
+Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
+ ([127.0.0.1]) with mapi; Fri, 22 May 2015 22:47:19 -0400
+Thread-Topic: recovering from "unordered stage entries in index" error
+X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
+Thread-Index: AdCU/S7vnqWDYWJfQL6Iki+SOZ43BAAAgcIA
+In-Reply-To: <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+X-Barracuda-Connect: UNKNOWN[10.1.10.4]
+X-Barracuda-Start-Time: 1432349239
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: https://10.1.10.29:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at carnegielearning.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5000 1.0000 0.0100
+X-Barracuda-Spam-Score: 0.01
+X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19208
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269792>
 
-On Fri, May 22, 2015 at 07:03:48PM -0700, Junio C Hamano wrote:
-> As far as I know, GIT_DIR was prepared as a mechanism to point at
-> another .git directory that does not live inside the working tree, no=
-t
-> as a mechanism to rename it to arbitrary name. E.g.
->=20
->  $ git init
->  $ mv .git .svn
->  $ GIT_DIR=3D$(pwd)/.svn ; export GIT_DIR
->=20
-> is not expected to work.
-
-This is not the first time we get this report. Perhaps we should
-document it.
-
--- 8< --
-Subject: git.txt: mention the special name ".git" in GIT_DIR
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 90c5f37..91d6dd2 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -691,6 +691,9 @@ Git so take care if using Cogito etc.
- 	specifies a path to use instead of the default `.git`
- 	for the base of the repository.
- 	The '--git-dir' command-line option also sets this value.
-++
-+Note that if GIT_DIR is set explicitly to a directory inside working
-+tree, the directory name must be ".git".
-=20
- 'GIT_WORK_TREE'::
- 	Set the path to the root of the working tree.
--- 8< --
+PiBTbyBtYXliZSB5b3UgY2FuIGRvICJHSVRfVFJBQ0U9MiBnaXQgc3ZuIGZldGNoIiBhbmQgcG9z
+dCB0aGUgb3V0cHV0Lg0KPiBJJ2QgZXhwZWN0IHRvIHNlZSBzb21ldGhpbmcgbGlrZSAiZ2l0IHJl
+YWQtdHJlZSA8c2hhMT4iIGJlZm9yZSAiZmF0YWw6DQo+IHVub3JkZXIuLi4iLiBZb3UgY2FuIHRo
+ZW4gdXNlIGdpdCBscy10cmVlIDxzaGExPiB0byBleGFtaW5lIHRoaXMgdHJlZSwNCj4gdHJ5IHRv
+IHNvcnQgdGhlIGZpbGUgbGlzdCB3aXRoICJMQU5HPUMgc29ydCIgYW5kIGNvbXBhcmUgd2l0aCB0
+aGUNCj4gb3JpZ2luYWwgbGlzdC4NCg0KCVRoZXJlIGlzIG5vIHJlYWQtdHJlZSBpbiB0aGUgb3V0
+cHV0IChiZWxvdykuICBUaGUgc2hhMSB0aGF0IGlzIG1lbnRpb25lZCwgNzQzMzJiNywgaXMgdGhl
+IG9uZSBmb3IgdGhlIGN1cnJlbnQgdHJ1bms6DQoNCiQgZ2l0IHN2biBsb2cgLTEgLS1zaG93LWNv
+bW1pdCAtLW9uZWxpbmUgdHJ1bmsNCnIyMzE2NTUgfCA3NDMzMmI3IHwgQ0xUOiBjaGFuZ2VkIHNr
+aWxsIGZyb20gbm90IGNvbXBvdW5kIHRvIGNvbXBvdW5kLg0KDQoJU28gbm90IHN1cnByaXNpbmds
+eSwgSSBndWVzcywgSSBnZXQgYmFzaWNhbGx5IHRoZSBzYW1lIHJlc3VsdHMgYXMgd2l0aCB0aGUg
+bHMtZmlsZXMgY29tbWFuZHMgZWFybGllcjogZmlsZXMgd2l0aCBVbmljb2RlIGNoYXJzIGFyZSBx
+dW90ZWQgYW5kIHNvcnQgYXQgdGhlIGZyb250Og0KDQokIGdpdCBscy10cmVlIC0tbmFtZS1vbmx5
+IC1yIDc0MzMyYjdkNjUzY2RlN2JhM2I5OTljYzdiMGFkY2ZkOWQ5MjQ0NDAgPiBscy10cmVlDQok
+IExBTkc9QyBMQ19BTEw9QyBzb3J0IGxzLXRyZWUgPiBscy10cmVlLXNvcnRlZC1sYy1hbGwNCiQg
+Z3JlcCAtbiBOaW5qYV9fQmV0YSBscy10cmVlKg0KbHMtdHJlZTozNjk3NDoiY3VycmljdWx1bS9G
+bHVlbmN5L0h1cml4IHdvcmsvc291cmNlIGZyb20gTWF5IDIwMTQvRm9yX0FuZXNoLzA2IERlbGl2
+ZXJhYmxlcy9QaGFzZSAyL0ZUMyBcMzQyXDIwMFwyMjMgTmluamEvRlQzIFwzNDJcMjAwXDIyMyBO
+aW5qYV9fQmV0YS56aXAiDQpscy10cmVlLXNvcnRlZC1sYy1hbGw6ODk6ImN1cnJpY3VsdW0vRmx1
+ZW5jeS9IdXJpeCB3b3JrL3NvdXJjZSBmcm9tIE1heSAyMDE0L0Zvcl9BbmVzaC8wNiBEZWxpdmVy
+YWJsZXMvUGhhc2UgMi9GVDMgXDM0MlwyMDBcMjIzIE5pbmphL0ZUMyBcMzQyXDIwMFwyMjMgTmlu
+amFfX0JldGEuemlwIg0KDQoJKEp1c3Qgc29ydGluZyB3aXRoIExBTkc9QyBidXQgd2l0aG91dCBM
+Q19BTEw9QyBwcm9kdWNlZCBhIHRvbiBvZiBvdGhlciBkaWZmZXJlbmNlcywgbW9zdGx5IGFyb3Vu
+ZCBudW1lcmljIHZzLiBsZXhpY2FsIG9yZGVyaW5nIGFzIGZhciBhcyBJIGNvdWxkIHRlbGwuKQ0K
+DQoJSSB0cmllZCB0aGlzIHNhbWUgdGhpbmcgd2l0aCBteSB0ZXN0IHJlcG8sIGFuZCBpdCBleGhp
+Yml0cyB0aGUgc2FtZSBxdW90ZWQtZmlsZW5hbWUtc29ydHMtdG8tdGhlLXRvcCBiZWhhdmlvdXIs
+IGJ1dCBkb2VzIG5vdCBleGhpYml0IHRoZSBnaXQgc3ZuIGZldGNoIHdyaXRlLXRyZWUgZXJyb3Iu
+DQoNCg0KJCBHSVRfVFJBQ0U9MiBnaXQgc3ZuIGZldGNoDQoyMjoyMToxNi42ODM5MTggZ2l0LmM6
+NTU3ICAgICAgICAgICAgICAgdHJhY2U6IGV4ZWM6ICdnaXQtc3ZuJyAnZmV0Y2gnDQoyMjoyMTox
+Ni42ODM5NDUgcnVuLWNvbW1hbmQuYzozNTEgICAgICAgdHJhY2U6IHJ1bl9jb21tYW5kOiAnZ2l0
+LXN2bicgJ2ZldGNoJw0KMDI6MjE6MTYuOTE4NTkzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRy
+YWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtcGFyc2UnICctLWdpdC1kaXInDQowMjoyMToxNi45MjAy
+MTggZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ3Jldi1wYXJz
+ZScgJy0tc2hvdy1jZHVwJw0KMDI6MjE6MTYuOTIxOTk3IGdpdC5jOjM0OCAgICAgICAgICAgICAg
+IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5mZXRj
+aGFsbCcNCjAyOjIxOjE2LjkyMzYwOSBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVp
+bHQtaW46IGdpdCAnY29uZmlnJyAnLS1pbnQnICctLWdldCcgJ3N2bi5yZXBhY2snDQowMjoyMTox
+Ni45MjUxNjQgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2Nv
+bmZpZycgJy0tZ2V0JyAnc3ZuLnJlcGFja2ZsYWdzJw0KMDI6MjE6MTYuOTI2NzA2IGdpdC5jOjM0
+OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2
+bi5yZXZpc2lvbicNCjAyOjIxOjE2LjkyODg0NyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFj
+ZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4ubm9jaGVja291
+dCcNCjAyOjIxOjE2LjkzMDQxMCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQt
+aW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4udXNlU3Zuc3luY1Byb3BzJw0K
+MDI6MjE6MTYuOTMxOTYzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
+Z2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5sb2NhbHRpbWUnDQowMjoyMToxNi45
+MzM1MzggZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZp
+ZycgJy0tZ2V0JyAnc3ZuLmluY2x1ZGVwYXRocycNCjAyOjIxOjE2LjkzNTEwNyBnaXQuYzozNDgg
+ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4u
+dXNlcm5hbWUnDQowMjoyMToxNi45MzY2NzUgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6
+IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLm5vYXV0aGNhY2hl
+Jw0KMDI6MjE6MTYuOTQwNDEzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
+bjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5xdWlldCcNCjAyOjIxOjE2Ljk0
+MjA2NCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmln
+JyAnLS1ib29sJyAnLS1nZXQnICdzdm4udXNlbG9nYXV0aG9yJw0KMDI6MjE6MTYuOTQzNjk2IGdp
+dC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJv
+b2wnICctLWdldCcgJ3N2bi5ub01ldGFkYXRhJw0KMDI6MjE6MTYuOTQ1MzQ0IGdpdC5jOjM0OCAg
+ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdl
+dCcgJ3N2bi51c2VTdm1Qcm9wcycNCjAyOjIxOjE2Ljk0NzYwNyBnaXQuYzozNDggICAgICAgICAg
+ICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4u
+cGFyZW50Jw0KMDI6MjE6MTYuOTUwNzM3IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBi
+dWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi5hZGRhdXRob3Jmcm9t
+Jw0KMDI6MjE6MTYuOTUyNTMyIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
+bjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5hdXRob3JzcHJvZycNCjAyOjIxOjE2Ljk1NDEz
+MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAn
+LS1nZXQnICdzdm4uaWdub3JlcGF0aHMnDQowMjoyMToxNi45NTU3MDQgZ2l0LmM6MzQ4ICAgICAg
+ICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAn
+c3ZuLmZvbGxvd3BhcmVudCcNCjAyOjIxOjE2Ljk1NzI4NyBnaXQuYzozNDggICAgICAgICAgICAg
+ICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4uY29uZmlnZGlyJw0K
+MDI6MjE6MTYuOTU4OTMwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
+Z2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5hdXRob3JzZmlsZScNCjAyOjIxOjE2Ljk2MjE0MiBn
+aXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1p
+bnQnICctLWdldCcgJ3N2bi5sb2d3aW5kb3dzaXplJw0KMDI6MjE6MTYuOTYzOTEzIGdpdC5jOjM0
+OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2
+bi5pZ25vcmVyZWZzJw0KMDI6MjE6MTYuOTY2MTMwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRy
+YWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtcGFyc2UnICctLXN5bWJvbGljJyAnLS1hbGwnDQowMjoy
+MToxNi45NzA1MzcgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQg
+J2NvbmZpZycgJy1sJw0KMDI6MjE6MTYuOTcyNDEwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRy
+YWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctbCcNCjAyOjIxOjE2Ljk3NDE4NyBnaXQuYzoz
+NDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAn
+c3ZuLnVzZVN2bVByb3BzJw0KMDI6MjE6MTYuOTc2MDc0IGdpdC5jOjM0OCAgICAgICAgICAgICAg
+IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctbCcNCjAyOjIxOjE3LjEzNjA1NiBnaXQu
+YzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1pbnQn
+ICctLWdldCcgJ3N2bi1yZW1vdGUuc3ZuLmJyYW5jaGVzLW1heFJldicNCjAyOjIxOjE3LjEzNzky
+OCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAn
+LS1pbnQnICctLWdldCcgJ3N2bi1yZW1vdGUuc3ZuLnRhZ3MtbWF4UmV2Jw0KMDI6MjE6MTcuMTQw
+MTI0IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcn
+ICctLWdldCcgJ3N2bi1yZW1vdGUuc3ZuLnVybCcNCjAyOjIxOjE3LjE0MjE5MiBnaXQuYzozNDgg
+ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4t
+cmVtb3RlLnN2bi5wdXNodXJsJw0KMDI6MjE6MTcuMTQ0MjAzIGdpdC5jOjM0OCAgICAgICAgICAg
+ICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi1yZW1vdGUuc3Zu
+LnV1aWQnDQowMjoyMToxNy4xNDk2ODkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1
+aWx0LWluOiBnaXQgJ3Jldi1saXN0JyAnLS1wcmV0dHk9cmF3JyAnLS1yZXZlcnNlJyAnNzQzMzJi
+N2Q2NTNjZGU3YmEzYjk5OWNjN2IwYWRjZmQ5ZDkyNDQ0MC4ucmVmcy9yZW1vdGVzL3RydW5rJyAn
+LS0nDQowMjoyMToxNy4xNTI0MTIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0
+LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4ucmV3cml0ZVJvb3QnDQow
+MjoyMToxNy4xNTQ0ODIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBn
+aXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4ucmV3cml0ZVVVSUQnDQowMjoyMTox
+Ny4xNjAzOTEgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2Nh
+dC1maWxlJyAnLS1iYXRjaCcNCjAyOjIxOjE3LjU4MjY0MSBnaXQuYzozNDggICAgICAgICAgICAg
+ICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnc3ZuLXJlbW90ZS5zdm4uYnJhbmNoZXMt
+bWF4UmV2JyAnMjMxNjU1Jw0KMDI6MjE6MTcuNTg1MjM3IGdpdC5jOjM0OCAgICAgICAgICAgICAg
+IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICdzdm4tcmVtb3RlLnN2bi50YWdzLW1heFJl
+dicgJzIzMTY1NScNCjAyOjIxOjE3LjU5MDE1MiBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFj
+ZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4tcmVtb3RlLnN2bi51c2Vzdm1w
+cm9wcycNCjAyOjIxOjE3LjU5MjA2MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVp
+bHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4tcmVtb3RlLnN2bi5ub21ldGFkYXRhJw0K
+MDI6MjE6MTcuNTkzOTk3IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
+Z2l0ICdjYXQtZmlsZScgJ2NvbW1pdCcgJzc0MzMyYjdkNjUzY2RlN2JhM2I5OTljYzdiMGFkY2Zk
+OWQ5MjQ0NDAnDQowMjoyMToxNy41OTY1MjkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6
+IGJ1aWx0LWluOiBnaXQgJ3dyaXRlLXRyZWUnDQpmYXRhbDogdW5vcmRlcmVkIHN0YWdlIGVudHJp
+ZXMgaW4gaW5kZXgNCndyaXRlLXRyZWU6IGNvbW1hbmQgcmV0dXJuZWQgZXJyb3I6IDEyOA0KDQo=
