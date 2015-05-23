@@ -1,248 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/1] send-email: Add sendmail email aliases format
-Date: Sat, 23 May 2015 10:45:44 -0700
-Message-ID: <xmqqfv6nchmf.fsf@gitster.dls.corp.google.com>
-References: <49e9a95b52aa61ed4f37edf1dfa178186acb4a29.1432367540.git.allenbh@gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 2/4] ref-filter: add ref-filter API
+Date: Sat, 23 May 2015 23:22:51 +0530
+Message-ID: <5560BE73.8020801@gmail.com>
+References: <555C88C2.8060902@gmail.com>	<1432127904-21070-2-git-send-email-karthik.188@gmail.com>	<vpqr3qagvv6.fsf@anie.imag.fr> <555E1CE7.8090507@gmail.com>	<vpqbnhd157k.fsf@anie.imag.fr> <555F252C.2060601@gmail.com> <vpq8ucffj8h.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 23 19:45:54 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat May 23 19:53:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwDUd-0000sy-VN
-	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:45:52 +0200
+	id 1YwDba-0004fr-33
+	for gcvg-git-2@plane.gmane.org; Sat, 23 May 2015 19:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758047AbbEWRpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2015 13:45:47 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:34726 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754116AbbEWRpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2015 13:45:46 -0400
-Received: by igbhj9 with SMTP id hj9so13159640igb.1
-        for <git@vger.kernel.org>; Sat, 23 May 2015 10:45:45 -0700 (PDT)
+	id S1758052AbbEWRw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2015 13:52:56 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33024 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754116AbbEWRw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2015 13:52:56 -0400
+Received: by padbw4 with SMTP id bw4so42770640pad.0
+        for <git@vger.kernel.org>; Sat, 23 May 2015 10:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=+wAeu6Vv30oqwzPNZfPPf/OBauXFalxtLAJEON/UFfU=;
-        b=ZeTtUzmAwxaMVg/EVHRxkTcr9ZtE8JnB0dN5OU8TC7BWdQOgI6YA7e1jLbQhr0EY8L
-         NWF4qoJi7/AaHbB2PUcmwjLRHJcz/wLLEAQe9Q0hpCGB2zegQrRwoIM9w3xuL+uElwHS
-         ygejQnqaktjQNAfa9wBffizod4ixBhmze2pJ2nJ3xPedOOnl2A3deMtbc1UldgA3KT3M
-         pZsUvhID/0gPsnIyxU+8hiiUorzJC39lBzjkpqDZSFpEjKUbadBk1yHHjJzabSNdRHFN
-         4MQ0qNARd3XZYaUb9yxlWq4mlRDtg+lq1v79VFqSdaToJzi75pmdduK0IwKm/mW70ky6
-         fNYw==
-X-Received: by 10.50.85.113 with SMTP id g17mr13138957igz.46.1432403145821;
-        Sat, 23 May 2015 10:45:45 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:609e:6a22:2d9d:c8d5])
-        by mx.google.com with ESMTPSA id p4sm1960039igg.20.2015.05.23.10.45.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 23 May 2015 10:45:45 -0700 (PDT)
-In-Reply-To: <49e9a95b52aa61ed4f37edf1dfa178186acb4a29.1432367540.git.allenbh@gmail.com>
-	(Allen Hubbe's message of "Sat, 23 May 2015 09:21:27 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=9cnk4iD+GKgEvs00Qb2KO4v2MGat59jJzaQ4hGWp6+E=;
+        b=lQ54LcHoJvVyo8n2fHAsGnQy00eF9OpKNlW/EEUSut29YgJ+r9lJF0olhKT5qIZJJq
+         VRYx9a6TaC/bTcypFy1eljBHea7n9sRqj0XmA7qkR9ptsup95Kfq2HgxLWQnem7e2eJI
+         bYepnlZr4kagpWoNCS5ZxGEbSFRN10NrKa3xX9AgRbRiLKjcXx2SX2Yp3dZOLe4a6z0l
+         gWxDrne145ju4uxTy/XPSg1o4njVO0mcdCCJYBqzirBudnV+i1TcFA6pZwxkApT+ssi7
+         hcu0LAVWS8F7mm7TLmVGA8aDpaqgS8vnXKBsJMWQ5Y7rdj/Rbv+AV2BPdScFplasPRWF
+         tw5Q==
+X-Received: by 10.68.57.229 with SMTP id l5mr26149015pbq.130.1432403575517;
+        Sat, 23 May 2015 10:52:55 -0700 (PDT)
+Received: from [192.168.0.105] ([106.51.130.23])
+        by mx.google.com with ESMTPSA id ph4sm5499175pdb.43.2015.05.23.10.52.53
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 May 2015 10:52:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <vpq8ucffj8h.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269813>
 
-Allen Hubbe <allenbh@gmail.com> writes:
+>
+> But it also contains struct ref_filter_item **items, which as I
+> understand it contains a list of refs (with name, sha1 & such).
+>
+> That's the part I do not find natural: the same structure contains both
+> the list of refs and the way it should be filtered.
+>
+> Re-reading the patch, I seem to understand that you're putting both on
+> the same struct because of the API of for_each_ref() which takes one
+> 'data' pointer to be casted, so you want both the input (filter
+> description) and the output (list of refs after filtering) to be
+> contained in the same struct.
 
-> Note that this only adds support for a limited subset of the sendmail
-> format.  The format is is as follows.
->
-> 	<alias>: <address|alias>[, <address|alias>...]
->
-> Aliases are specified one per line, and must start on the first column of the
-> line.  Blank lines are ignored.  If the first non whitespace character
-> on a line is a '#' symbol, then the whole line is considered a comment,
-> and is ignored.
->
-> Example:
->
-> 	alice: Alice W Land <awol@example.com>
-> 	bob: Robert Bobbyton <bob@example.com>
-> 	# this is a comment
-> 	   # this is also a comment
-> 	chloe: chloe@example.com
-> 	abgroup: alice, bob
-> 	bcgrp: bob, chloe, Other <o@example.com>
->
-> Unlike the standard sendmail format, this does not support quoted
-> aliases or quoted addresses.  Line continuations are not supported.
-> Warnings are printed for explicitly unsupported constructs, and any
-> other lines that are not recognized.
->
-> Signed-off-by: Allen Hubbe <allenbh@gmail.com>
-> ---
->
-> Notes:
->     This v5 renames the parser 'sendmail' again, from 'simple'.
->     Therefore, the subject line is changed again, too.
->     
->     Previous subject line: send-email: Add simple email aliases format
->     
->     The format is restricted to a subset of sendmail.  When the subset
->     diverges from sendmail, the parser warns about the line that diverges,
->     and ignores the line.  The supported format is described in the
->     documentation, as well as the behavior when an unsupported format
->     construct is detected.
->     
->     A badly constructed sentence was corrected in the documentation.
->     
->     The test case was changed to use a here document, and the unsupported
->     comment after an alias was removed from the test case alias file input.
+Was kinda confused, This clears out things, Thanks.
 
-Thanks.
-
-A small thing I noticed in the test (and this patch is not adding a
-new "breakage"---there are a few existing instances) is the use of
-"~/"; it should be spelled "$HOME/" instead for portability (not in
-POSIX, even though bash, dash and ksh all seem to understand it).
-
-I think this round looks good from a cursory read.
-
-Eric, what do you think?
-
->  Documentation/git-send-email.txt | 37 ++++++++++++++++++++++++++++++++++++-
->  git-send-email.perl              | 29 +++++++++++++++++++++++++++++
->  t/t9001-send-email.sh            | 27 +++++++++++++++++++++++++++
->  3 files changed, 92 insertions(+), 1 deletion(-)
 >
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 804554609def..97387fd27a8d 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -383,7 +383,42 @@ sendemail.aliasesFile::
->  
->  sendemail.aliasFileType::
->  	Format of the file(s) specified in sendemail.aliasesFile. Must be
-> -	one of 'mutt', 'mailrc', 'pine', 'elm', or 'gnus'.
-> +	one of 'sendmail', 'mutt', 'mailrc', 'pine', 'elm', or 'gnus'.
-> ++
-> +If the format is 'sendmail', then the alias file format is described below.
-> +Descriptions of the other file formats can be found by searching the
-> +documentation of the email program of the same name.
-> ++
-> +The 'sendmail' format is is as follows.  Note that 'git-send-email' currently
-> +only supports a limited subset of the sendmail format.
-> ++
-> +	<alias>: <address|alias>[, <address|alias>...]
-> ++
-> +Aliases are specified one per line, and must start on the first column of the
-> +line.  Blank lines are ignored.  If the first non whitespace character on a
-> +line is a `#` symbol, then the whole line is considered a comment, and is
-> +ignored.
-> ++
-> +Example of the 'sendmail' format:
-> ++
-> +	alice: Alice W Land <awol@example.com>
-> +	bob: Robert Bobbyton <bob@example.com>
-> +	# this is a comment
-> +	   # this is also a comment
-> +	chloe: chloe@example.com
-> +	abgroup: alice, bob
-> +	bcgrp: bob, chloe, Other <o@example.com>
-> ++
-> +Unlike the standard sendmail format, 'git-send-email' currently diverges in the
-> +following ways.
-> ++
-> +*	Quoted aliases and quoted addresses are not supported: lines that
-> +	contain a `"` symbol are ignored.
-> +*	Line continuations are not supported: any lines that start with
-> +	whitespace, or end with a `\` symbol are ignored.
-> +*	Warnings are printed on the standard error output for any explicitly
-> +	unsupported constructs, and any other lines that are not recognized
-> +	by the parser.
->  
->  sendemail.multiEdit::
->  	If true (default), a single editor instance will be spawned to edit
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index e1e9b1460ced..ffea50094a48 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -487,6 +487,8 @@ sub split_addrs {
->  }
->  
->  my %aliases;
-> +
-> +
->  my %parse_alias = (
->  	# multiline formats can be supported in the future
->  	mutt => sub { my $fh = shift; while (<$fh>) {
-> @@ -516,6 +518,33 @@ my %parse_alias = (
->  			  }
->  		      } },
->  
-> +	sendmail => sub { my $fh = shift; while (<$fh>) {
-> +		# ignore comment lines
-> +		if (/^\s*(?:#.*)?$/) { }
-> +
-> +		# warn on lines that contain quotes
-> +		elsif (/"/) {
-> +			print STDERR "sendmail alias with quotes is not supported: $_\n";
-> +			next;
-> +		}
-> +
-> +		# warn on lines that continue
-> +		elsif (/^\s|\\$/) {
-> +			print STDERR "sendmail continuation line is not supported: $_\n";
-> +			next;
-> +		}
-> +
-> +		# recognize lines that look like an alias
-> +		elsif (/^(\S+)\s*:\s*(.+?)$/) {
-> +			my ($alias, $addr) = ($1, $2);
-> +			$aliases{$alias} = [ split_addrs($addr) ];
-> +		}
-> +
-> +		# warn on lines that are not recognized
-> +		else {
-> +			print STDERR "sendmail line is not recognized: $_\n";
-> +		}}},
-> +
->  	gnus => sub { my $fh = shift; while (<$fh>) {
->  		if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
->  			$aliases{$1} = [ $2 ];
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 7be14a4e37f7..b04d26364767 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1549,6 +1549,33 @@ test_expect_success $PREREQ 'sendemail.aliasfile=~/.mailrc' '
->  	grep "^!someone@example\.org!$" commandline1
->  '
->  
-> +test_expect_success $PREREQ 'sendemail.aliasfiletype=sendmail' '
-> +	clean_fake_sendmail && rm -fr outdir &&
-> +	git format-patch -1 -o outdir &&
-> +	cat >>~/.tmp-email-aliases <<-\EOF &&
-> +	alice: Alice W Land <awol@example.com>
-> +	bob: Robert Bobbyton <bob@example.com>
-> +	# this is a comment
-> +	   # this is also a comment
-> +	chloe: chloe@example.com
-> +	abgroup: alice, bob
-> +	bcgrp: bob, chloe, Other <o@example.com>
-> +	EOF
-> +	git config --replace-all sendemail.aliasesfile \
-> +		"$(pwd)/.tmp-email-aliases" &&
-> +	git config sendemail.aliasfiletype sendmail &&
-> +	git send-email \
-> +		--from="Example <nobody@example.com>" \
-> +		--to=alice --to=bcgrp \
-> +		--smtp-server="$(pwd)/fake.sendmail" \
-> +		outdir/0001-*.patch \
-> +		2>errors >out &&
-> +	grep "^!awol@example\.com!$" commandline1 &&
-> +	grep "^!bob@example\.com!$" commandline1 &&
-> +	grep "^!chloe@example\.com!$" commandline1 &&
-> +	grep "^!o@example\.com!$" commandline1
-> +'
-> +
->  do_xmailer_test () {
->  	expected=$1 params=$2 &&
->  	git format-patch -1 &&
+> But I think this could be clearer in the code (and/or comment + commit
+> message). Perhaps stg like:
+>
+> struct ref_filter_data /* Probably not the best name */ {
+>          struct ref_list list;
+>          struct ref_filter filter;
+> };
+>
+> struct ref_list {
+>   	int count, alloc;
+>   	struct ref_filter_item **items;
+>   	const char **name_patterns;
+> };
+>
+> struct ref_filter {
+> 	const char **name_patterns;
+> 	/* There will be more here later */
+> };
+>
+
+This seems cleaner, agreed.
+
+ >
+ > I agree that it might be clearer to separate both. In this case
+ > instead of "ref_list" the struct might be called "ref_filter_array" as
+ > we already have "argv_array" in argv-array.h and "sha1_array" in
+ > "sha1-array.h".
+ >
+
+Somehow ref_list seems more real to me, list of refs.
+
+ >
+ > And I do not think an array of things that are operated on should
+ > not be named "ref_filter_item".
+ >
+ > Surely, the latter "set of operations to be applied" may currently
+ > be only filtering, but who says it has to stay that way?  "I have a
+ > set of refs that represent my local branches I am interested
+ > in. Please map them to their corresponding @{upstream}" is a
+ > reasonable request once you have an infrastructure to represent "set
+ > of refs to be worked on" and "set of operations to apply", and at
+ > that point, the items are no longer filter-items (map-items?).
+ >
+
+That's also a good point to consider, I shall rename and restructure the 
+code as discussed here, thanks.
+
+-- 
+Regards,
+Karthik
