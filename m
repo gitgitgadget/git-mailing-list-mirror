@@ -1,69 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: recovering from "unordered stage entries in index" error
-Date: Sun, 24 May 2015 16:52:37 +0700
-Message-ID: <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
- <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com> <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01> <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 3/3] git-p4: tests: use test-chmtime in place of touch
+Date: Sun, 24 May 2015 11:56:03 -0700
+Message-ID: <xmqqy4kdby9o.fsf@gitster.dls.corp.google.com>
+References: <xmqqa8x0a7wq.fsf@gitster.dls.corp.google.com>
+	<1432074198-13806-1-git-send-email-luke@diamand.org>
+	<1432074198-13806-4-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "McHenry, Matt" <mmchenry@carnegielearning.com>
-X-From: git-owner@vger.kernel.org Sun May 24 11:53:15 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sun May 24 20:56:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwSao-0005tK-8c
-	for gcvg-git-2@plane.gmane.org; Sun, 24 May 2015 11:53:14 +0200
+	id 1Ywb4H-0004Ao-VV
+	for gcvg-git-2@plane.gmane.org; Sun, 24 May 2015 20:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090AbbEXJxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2015 05:53:10 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:35374 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbbEXJxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2015 05:53:07 -0400
-Received: by igbyr2 with SMTP id yr2so18897940igb.0
-        for <git@vger.kernel.org>; Sun, 24 May 2015 02:53:07 -0700 (PDT)
+	id S1751664AbbEXS4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2015 14:56:09 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:36900 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282AbbEXS4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2015 14:56:07 -0400
+Received: by igbsb11 with SMTP id sb11so21339543igb.0
+        for <git@vger.kernel.org>; Sun, 24 May 2015 11:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5F20Kkhzg9kvHgcEOO93nGBtHl9TynI1+2XnMvcflxo=;
-        b=kKVh6R5guqc2gfY+fPyrwpkNbyuSYlPco5HCuKPYuLtwMKscO5/g9RtSys1ZgPFn2H
-         1wmVJsnj1Bvo7KKNT9PG2Vpp9puuBner4gQj+Ghp6ZGvkxWlzi0mOj+sw0llIPHqMMGV
-         AuWO/E2qja9XNbxNKZyU0vycs5DPwP1QZCbTkaWVDn05otqhfTQu74jZbC3n8ZbsiLmh
-         8dqGrQ7M4VcinZF8s5nrn5Og0XyOgqEesibMrTOWU6uZsOjg6LHm4E6OG0DEYSIJoy00
-         3wtD3XiapJ4I5MMwi4r210xu0go36NKM3U7IIPnzDtXCR4TRNiPhhM2i7vwlpErD3lR3
-         h7IQ==
-X-Received: by 10.43.172.68 with SMTP id nx4mr6512381icc.48.1432461187429;
- Sun, 24 May 2015 02:53:07 -0700 (PDT)
-Received: by 10.107.181.136 with HTTP; Sun, 24 May 2015 02:52:37 -0700 (PDT)
-In-Reply-To: <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=0sylFWYKsRUdGqH30ZbEc2XkNx7Xpg1ydLtI2lLOm2Y=;
+        b=C/FX4WHkkFcH2aqFfgxDXqjnD3UxLRQgHkPgjxSzlEOc+/siZnc1FQAWeAgQhe3d2G
+         5cS5kEHj48CTAjrewUqtKCESul9lD8j3/i7Mgk9sNiY7a1j0/Bb8+x9LqsBloodc2QTF
+         Csjl5dfXZ97hIhuc93ov84ZTiRFm0IO/rsMeXHbgPY1GPSLcisQzmF5y/nT+2Qm129rh
+         T5pLdYg844PYKNEJDzN1FKCk0dMFD1+9vLuFjkpZ34MFhgzYVWDAfocef+o0aVCQiQzx
+         /R7nvI97JNZkdD1mbuSAI5Be4JXWejIngRQ6YJajYzh01ShfpWandhU+lkH/W72ZNfp9
+         UqYw==
+X-Received: by 10.50.33.51 with SMTP id o19mr19222313igi.45.1432493766833;
+        Sun, 24 May 2015 11:56:06 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:45f7:b54f:6e94:918d])
+        by mx.google.com with ESMTPSA id z195sm6945341iod.33.2015.05.24.11.56.04
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 24 May 2015 11:56:05 -0700 (PDT)
+In-Reply-To: <1432074198-13806-4-git-send-email-luke@diamand.org> (Luke
+	Diamand's message of "Tue, 19 May 2015 23:23:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269830>
 
-On Sat, May 23, 2015 at 9:47 AM, McHenry, Matt
-<mmchenry@carnegielearning.com> wrote:
->> So maybe you can do "GIT_TRACE=2 git svn fetch" and post the output.
->> I'd expect to see something like "git read-tree <sha1>" before "fatal:
->> unorder...". You can then use git ls-tree <sha1> to examine this tree,
->> try to sort the file list with "LANG=C sort" and compare with the
->> original list.
->
->         There is no read-tree in the output (below).  The sha1 that is mentioned, 74332b7, is the one for the current trunk:
+Luke Diamand <luke@diamand.org> writes:
 
-Hm.. neither read-tree nor update-index is in the output. I can see
-git-svn closing stderr sometimes, but not sure if that's why we don't
-see these commands, or something else. Could you try again with
-GIT_TRACE=/absolute/path/to/some/where instead of GIT_TRACE=2 and post
-the content of /abso../some/where?
--- 
-Duy
+> diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
+> index 166b840..fe65788 100755
+> --- a/t/t9813-git-p4-preserve-users.sh
+> +++ b/t/t9813-git-p4-preserve-users.sh
+> @@ -53,7 +53,8 @@ test_expect_success 'preserve users' '
+>  		git commit --author "Alice <alice@example.com>" -m "a change by alice" file1 &&
+>  		git commit --author "Bob <bob@example.com>" -m "a change by bob" file2 &&
+>  		git config git-p4.skipSubmitEditCheck true &&
+> -		P4EDITOR=touch P4USER=alice P4PASSWD=secret git p4 commit --preserve-user &&
+> +		P4EDITOR="test-chmtime +5" P4USER=alice P4PASSWD=secret &&
+> +		git p4 commit --preserve-user &&
+
+I think this hunk is wrong; we need to either change && to \ to make
+it a single logical line that exports three environment variables
+only to "git p4 commit --preserve-user", or insert "export P4EDITOR
+P4USER P4PASSWD &&" between these two lines.
+
+The latter seems to be what the remainder of the test is doing, so
+I'd fix this up to mimick them.
+
+Sorry for not catching it in the earlier review.
+
+Thanks.
+
+> @@ -69,7 +70,7 @@ test_expect_success 'refuse to preserve users without perms' '
+>  		git config git-p4.skipSubmitEditCheck true &&
+>  		echo "username-noperms: a change by alice" >>file1 &&
+>  		git commit --author "Alice <alice@example.com>" -m "perms: a change by alice" file1 &&
+> -		P4EDITOR=touch P4USER=bob P4PASSWD=secret &&
+> +		P4EDITOR="test-chmtime +5" P4USER=bob P4PASSWD=secret &&
+>  		export P4EDITOR P4USER P4PASSWD &&
+>  		test_must_fail git p4 commit --preserve-user &&
+>  		! git diff --exit-code HEAD..p4/master
