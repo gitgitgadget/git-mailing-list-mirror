@@ -1,8 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 01/56] refs: convert struct ref_entry to use struct object_id
-Date: Mon, 25 May 2015 18:38:27 +0000
-Message-ID: <1432579162-411464-2-git-send-email-sandals@crustytoothpaste.net>
-References: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 00/56] Convert parts of refs.c to struct object_id
+Date: Mon, 25 May 2015 18:38:26 +0000
+Message-ID: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
@@ -12,202 +11,155 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwxIK-0000kV-QL
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:40:13 +0200
+	id 1YwxIK-0000kV-1U
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:40:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751274AbbEYSkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 14:40:07 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50583 "EHLO
+	id S1751261AbbEYSkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 14:40:06 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50584 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750837AbbEYSkF (ORCPT
+	by vger.kernel.org with ESMTP id S1751246AbbEYSkF (ORCPT
 	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:05 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 30C9E28092;
-	Mon, 25 May 2015 18:40:03 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 91BC32808F;
+	Mon, 25 May 2015 18:40:02 +0000 (UTC)
 X-Mailer: git-send-email 2.4.0
-In-Reply-To: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269851>
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+This is a conversion of parts of refs.c to use struct object_id.
 
-diff --git a/refs.c b/refs.c
-index 8480d8d..9ca4651 100644
---- a/refs.c
-+++ b/refs.c
-@@ -161,7 +161,7 @@ struct ref_value {
- 	 * null.  If REF_ISSYMREF, then this is the name of the object
- 	 * referred to by the last reference in the symlink chain.
- 	 */
--	unsigned char sha1[20];
-+	struct object_id oid;
- 
- 	/*
- 	 * If REF_KNOWS_PEELED, then this field holds the peeled value
-@@ -169,7 +169,7 @@ struct ref_value {
- 	 * be peelable.  See the documentation for peel_ref() for an
- 	 * exact definition of "peelable".
- 	 */
--	unsigned char peeled[20];
-+	struct object_id peeled;
- };
- 
- struct ref_cache;
-@@ -351,8 +351,8 @@ static struct ref_entry *create_ref_entry(const char *refname,
- 		die("Reference has invalid format: '%s'", refname);
- 	len = strlen(refname) + 1;
- 	ref = xmalloc(sizeof(struct ref_entry) + len);
--	hashcpy(ref->u.value.sha1, sha1);
--	hashclr(ref->u.value.peeled);
-+	hashcpy(ref->u.value.oid.hash, sha1);
-+	oidclr(&ref->u.value.peeled);
- 	memcpy(ref->name, refname, len);
- 	ref->flag = flag;
- 	return ref;
-@@ -626,7 +626,7 @@ static int is_dup_ref(const struct ref_entry *ref1, const struct ref_entry *ref2
- 		/* This is impossible by construction */
- 		die("Reference directory conflict: %s", ref1->name);
- 
--	if (hashcmp(ref1->u.value.sha1, ref2->u.value.sha1))
-+	if (oidcmp(&ref1->u.value.oid, &ref2->u.value.oid))
- 		die("Duplicated ref, and SHA1s don't match: %s", ref1->name);
- 
- 	warning("Duplicated ref: %s", ref1->name);
-@@ -674,7 +674,7 @@ static int ref_resolves_to_object(struct ref_entry *entry)
- {
- 	if (entry->flag & REF_ISBROKEN)
- 		return 0;
--	if (!has_sha1_file(entry->u.value.sha1)) {
-+	if (!has_sha1_file(entry->u.value.oid.hash)) {
- 		error("%s does not point to a valid object!", entry->name);
- 		return 0;
- 	}
-@@ -722,7 +722,7 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
- 	/* Store the old value, in case this is a recursive call: */
- 	old_current_ref = current_ref;
- 	current_ref = entry;
--	retval = data->fn(entry->name + data->trim, entry->u.value.sha1,
-+	retval = data->fn(entry->name + data->trim, entry->u.value.oid.hash,
- 			  entry->flag, data->cb_data);
- 	current_ref = old_current_ref;
- 	return retval;
-@@ -1258,7 +1258,7 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
- 		    line.len == PEELED_LINE_LENGTH &&
- 		    line.buf[PEELED_LINE_LENGTH - 1] == '\n' &&
- 		    !get_sha1_hex(line.buf + 1, sha1)) {
--			hashcpy(last->u.value.peeled, sha1);
-+			hashcpy(last->u.value.peeled.hash, sha1);
- 			/*
- 			 * Regardless of what the file header said,
- 			 * we definitely know the value of *this*
-@@ -1439,7 +1439,7 @@ static int resolve_gitlink_packed_ref(struct ref_cache *refs,
- 	if (ref == NULL)
- 		return -1;
- 
--	hashcpy(sha1, ref->u.value.sha1);
-+	hashcpy(sha1, ref->u.value.oid.hash);
- 	return 0;
- }
- 
-@@ -1526,7 +1526,7 @@ static int resolve_missing_loose_ref(const char *refname,
- 	 */
- 	entry = get_packed_ref(refname);
- 	if (entry) {
--		hashcpy(sha1, entry->u.value.sha1);
-+		hashcpy(sha1, entry->u.value.oid.hash);
- 		if (flags)
- 			*flags |= REF_ISPACKED;
- 		return 0;
-@@ -1836,9 +1836,9 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
- 	if (entry->flag & REF_KNOWS_PEELED) {
- 		if (repeel) {
- 			entry->flag &= ~REF_KNOWS_PEELED;
--			hashclr(entry->u.value.peeled);
-+			oidclr(&entry->u.value.peeled);
- 		} else {
--			return is_null_sha1(entry->u.value.peeled) ?
-+			return is_null_oid(&entry->u.value.peeled) ?
- 				PEEL_NON_TAG : PEEL_PEELED;
- 		}
- 	}
-@@ -1847,7 +1847,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
- 	if (entry->flag & REF_ISSYMREF)
- 		return PEEL_IS_SYMREF;
- 
--	status = peel_object(entry->u.value.sha1, entry->u.value.peeled);
-+	status = peel_object(entry->u.value.oid.hash, entry->u.value.peeled.hash);
- 	if (status == PEEL_PEELED || status == PEEL_NON_TAG)
- 		entry->flag |= REF_KNOWS_PEELED;
- 	return status;
-@@ -1862,7 +1862,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
- 			    || !strcmp(current_ref->name, refname))) {
- 		if (peel_entry(current_ref, 0))
- 			return -1;
--		hashcpy(sha1, current_ref->u.value.peeled);
-+		hashcpy(sha1, current_ref->u.value.peeled.hash);
- 		return 0;
- 	}
- 
-@@ -1882,7 +1882,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
- 		if (r) {
- 			if (peel_entry(r, 0))
- 				return -1;
--			hashcpy(sha1, r->u.value.peeled);
-+			hashcpy(sha1, r->u.value.peeled.hash);
- 			return 0;
- 		}
- 	}
-@@ -2496,9 +2496,9 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
- 	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
- 		error("internal error: %s is not a valid packed reference!",
- 		      entry->name);
--	write_packed_entry(cb_data, entry->name, entry->u.value.sha1,
-+	write_packed_entry(cb_data, entry->name, entry->u.value.oid.hash,
- 			   peel_status == PEEL_PEELED ?
--			   entry->u.value.peeled : NULL);
-+			   entry->u.value.peeled.hash : NULL);
- 	return 0;
- }
- 
-@@ -2615,24 +2615,24 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
- 	peel_status = peel_entry(entry, 1);
- 	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
- 		die("internal error peeling reference %s (%s)",
--		    entry->name, sha1_to_hex(entry->u.value.sha1));
-+		    entry->name, oid_to_hex(&entry->u.value.oid));
- 	packed_entry = find_ref(cb->packed_refs, entry->name);
- 	if (packed_entry) {
- 		/* Overwrite existing packed entry with info from loose entry */
- 		packed_entry->flag = REF_ISPACKED | REF_KNOWS_PEELED;
--		hashcpy(packed_entry->u.value.sha1, entry->u.value.sha1);
-+		oidcpy(&packed_entry->u.value.oid, &entry->u.value.oid);
- 	} else {
--		packed_entry = create_ref_entry(entry->name, entry->u.value.sha1,
-+		packed_entry = create_ref_entry(entry->name, entry->u.value.oid.hash,
- 						REF_ISPACKED | REF_KNOWS_PEELED, 0);
- 		add_ref(cb->packed_refs, packed_entry);
- 	}
--	hashcpy(packed_entry->u.value.peeled, entry->u.value.peeled);
-+	oidcpy(&packed_entry->u.value.peeled, &entry->u.value.peeled);
- 
- 	/* Schedule the loose reference for pruning if requested. */
- 	if ((cb->flags & PACK_REFS_PRUNE)) {
- 		int namelen = strlen(entry->name) + 1;
- 		struct ref_to_prune *n = xcalloc(1, sizeof(*n) + namelen);
--		hashcpy(n->sha1, entry->u.value.sha1);
-+		hashcpy(n->sha1, entry->u.value.oid.hash);
- 		strcpy(n->name, entry->name);
- 		n->next = cb->ref_to_prune;
- 		cb->ref_to_prune = n;
+refs.c, and the for_each_ref series of functions explicitly, is the
+source for many instances of object IDs in the codebase.  Therefore, it
+makes sense to convert this series of functions to provide a basis for
+further conversions.
+
+Changes from v2:
+* Adopt Michael Haggerty's patch series that uses an adapter function.
+* Squash some of these patches together where it makes sense in order to
+  reduce the quantity of patches.
+
+This does only slightly more than my original series, just in a
+different way, with a larger number of much smaller patches.  If the
+quantity of patches is too large for people's tastes, I can do a v4
+based off of v2 that has less of this problem.
+
+Converting most of the for_each_ref series of functions all at once is
+important to avoid confusing interface mismatches.  I intend to send
+smaller patch series in the future to make reviewers' lives easier.
+
+This passes the testsuite at each step and is based off of master.
+
+Also available in branch oid-refs-adapter-squashed at:
+
+  https://git.crustytoothpaste.net/git/bmc/git.git
+  https://github.com/bk2204/git.git
+
+Michael Haggerty (55):
+  each_ref_fn: change to take an object_id parameter
+  builtin/rev-parse: rewrite to take an object_id argument
+  handle_one_ref(): rewrite to take an object_id argument
+  register_ref(): rewrite to take an object_id argument
+  append_ref(): rewrite to take an object_id argument
+  add_pending_uninteresting_ref(): rewrite to take an object_id argument
+  get_name(): rewrite to take an object_id argument
+  builtin/fetch: rewrite to take an object_id argument
+  grab_single_ref(): rewrite to take an object_id argument
+  name_ref(): rewrite to take an object_id argument
+  builtin/pack-objects: rewrite to take an object_id argument
+  show_ref_cb(): rewrite to take an object_id argument
+  builtin/reflog: rewrite ref functions to take an object_id argument
+  add_branch_for_removal(): rewrite to take an object_id argument
+  add_branch_for_removal(): don't set "util" field of string_list
+    entries
+  builtin/remote: rewrite functions to take object_id arguments
+  show_reference(): rewrite to take an object_id argument
+  append_matching_ref(): rewrite to take an object_id argument
+  builtin/show-branch: rewrite functions to take object_id arguments
+  append_one_rev(): rewrite to work with object_id
+  builtin/show-branch: rewrite functions to work with object_id
+  cmd_show_branch(): fix error message
+  fsck: change functions to use object_id
+  builtin/show-ref: rewrite to use object_id
+  show_ref(): convert local variable peeled to object_id
+  builtin/show-ref: rewrite to take an object_id argument
+  append_similar_ref(): rewrite to take an object_id argument
+  http-backend: rewrite to take an object_id argument
+  show_head_ref(): convert local variable "unused" to object_id
+  add_ref_decoration(): rewrite to take an object_id argument
+  add_ref_decoration(): convert local variable original_sha1 to
+    object_id
+  string_list_add_one_ref(): rewrite to take an object_id argument
+  add_one_ref(): rewrite to take an object_id argument
+  remote: rewrite functions to take object_id arguments
+  register_replace_ref(): rewrite to take an object_id argument
+  handle_one_reflog(): rewrite to take an object_id argument
+  add_info_ref(): rewrite to take an object_id argument
+  handle_one_ref(): rewrite to take an object_id argument
+  shallow: rewrite functions to take object_id arguments
+  submodule: rewrite to take an object_id argument
+  write_refs_to_temp_dir(): convert local variable sha1 to object_id
+  write_one_ref(): rewrite to take an object_id argument
+  find_symref(): rewrite to take an object_id argument
+  find_symref(): convert local variable "unused" to object_id
+  upload-pack: rewrite functions to take object_id arguments
+  send_ref(): convert local variable "peeled" to object_id
+  mark_complete(): rewrite to take an object_id argument
+  clear_marks(): rewrite to take an object_id argument
+  mark_complete_oid(): new function, taking an object_oid
+  mark_complete(): remove unneeded arguments
+  rev_list_insert_ref_oid(): new function, taking an object_oid
+  rev_list_insert_ref(): remove unneeded arguments
+  each_ref_fn_adapter(): remove adapter
+  warn_if_dangling_symref(): convert local variable "junk" to object_id
+  struct ref_lock: convert old_sha1 member to object_id
+
+brian m. carlson (1):
+  refs: convert struct ref_entry to use struct object_id
+
+ Documentation/technical/api-ref-iteration.txt |   2 +-
+ bisect.c                                      |   8 +-
+ builtin/branch.c                              |   4 +-
+ builtin/checkout.c                            |   4 +-
+ builtin/describe.c                            |  12 +--
+ builtin/fetch.c                               |  15 ++--
+ builtin/for-each-ref.c                        |   5 +-
+ builtin/fsck.c                                |  20 ++---
+ builtin/name-rev.c                            |   6 +-
+ builtin/pack-objects.c                        |  14 ++--
+ builtin/receive-pack.c                        |   5 +-
+ builtin/reflog.c                              |   9 ++-
+ builtin/remote.c                              |  21 +++---
+ builtin/replace.c                             |  16 ++--
+ builtin/rev-parse.c                           |   8 +-
+ builtin/show-branch.c                         |  73 ++++++++++--------
+ builtin/show-ref.c                            |  28 +++----
+ builtin/tag.c                                 |  18 ++---
+ fetch-pack.c                                  |  29 +++++--
+ help.c                                        |   2 +-
+ http-backend.c                                |  18 ++---
+ log-tree.c                                    |  12 +--
+ notes.c                                       |   2 +-
+ reachable.c                                   |   5 +-
+ refs.c                                        | 104 +++++++++++++-------------
+ refs.h                                        |   2 +-
+ remote.c                                      |  13 ++--
+ replace_object.c                              |   4 +-
+ revision.c                                    |  11 ++-
+ server-info.c                                 |   7 +-
+ sha1_name.c                                   |   7 +-
+ shallow.c                                     |  12 +--
+ submodule.c                                   |   7 +-
+ transport.c                                   |  14 ++--
+ upload-pack.c                                 |  32 ++++----
+ walker.c                                      |   6 +-
+ 36 files changed, 300 insertions(+), 255 deletions(-)
+
 -- 
 2.4.0
