@@ -1,31 +1,31 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 54/56] each_ref_fn_adapter(): remove adapter
-Date: Mon, 25 May 2015 18:39:20 +0000
-Message-ID: <1432579162-411464-55-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 50/56] mark_complete_oid(): new function, taking an object_oid
+Date: Mon, 25 May 2015 18:39:16 +0000
+Message-ID: <1432579162-411464-51-git-send-email-sandals@crustytoothpaste.net>
 References: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 20:41:22 2015
+X-From: git-owner@vger.kernel.org Mon May 25 20:41:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwxJO-0001Mp-2X
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:41:18 +0200
+	id 1YwxJW-0001Qj-9H
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:41:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595AbbEYSlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 14:41:05 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50787 "EHLO
+	id S1751612AbbEYSlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 14:41:19 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50762 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751523AbbEYSki (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:38 -0400
+	by vger.kernel.org with ESMTP id S1751501AbbEYSkf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:35 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2A46C280A2;
-	Mon, 25 May 2015 18:40:35 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 37E472809B;
+	Mon, 25 May 2015 18:40:33 +0000 (UTC)
 X-Mailer: git-send-email 2.4.0
 In-Reply-To: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -33,61 +33,47 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269875>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-All of the callers of the for_each_ref family of functions have now
-been rewritten to work with object_ids, so this adapter is no longer
-needed.
+This function can be used with for_each_ref() without having to be
+wrapped.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- refs.c |  8 --------
- refs.h | 11 -----------
- 2 files changed, 19 deletions(-)
+ fetch-pack.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 43dce01..162760c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2176,14 +2176,6 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 1e875cf..d7a4a48 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -490,6 +490,12 @@ static int mark_complete(const char *refname, const unsigned char *sha1, int fla
+ 	return 0;
  }
  
--int each_ref_fn_adapter(const char *refname,
--			const struct object_id *oid, int flags, void *cb_data)
--{
--	struct each_ref_fn_sha1_adapter *cb = cb_data;
--
--	return cb->original_fn(refname, oid->hash, flags, cb->original_cb_data);
--}
--
- const char *prettify_refname(const char *name)
++static int mark_complete_oid(const char *refname, const struct object_id *oid,
++			     int flag, void *cb_data)
++{
++	return mark_complete(refname, oid->hash, flag, cb_data);
++}
++
+ static void mark_recent_complete_commits(struct fetch_pack_args *args,
+ 					 unsigned long cutoff)
  {
- 	return name + (
-diff --git a/refs.h b/refs.h
-index 4042109..8c3d433 100644
---- a/refs.h
-+++ b/refs.h
-@@ -69,17 +69,6 @@ struct ref_transaction;
- typedef int each_ref_fn(const char *refname,
- 			const struct object_id *oid, int flags, void *cb_data);
+@@ -602,10 +608,7 @@ static int everything_local(struct fetch_pack_args *args,
+ 	}
  
--typedef int each_ref_sha1_fn(const char *refname,
--			     const unsigned char *sha1, int flags, void *cb_data);
+ 	if (!args->depth) {
+-		struct each_ref_fn_sha1_adapter wrapped_mark_complete =
+-			{mark_complete, NULL};
 -
--struct each_ref_fn_sha1_adapter {
--	each_ref_sha1_fn *original_fn;
--	void *original_cb_data;
--};
--
--extern int each_ref_fn_adapter(const char *refname,
--			       const struct object_id *oid, int flags, void *cb_data);
--
- /*
-  * The following functions invoke the specified callback function for
-  * each reference indicated.  If the function ever returns a nonzero
+-		for_each_ref(each_ref_fn_adapter, &wrapped_mark_complete);
++		for_each_ref(mark_complete_oid, NULL);
+ 		for_each_alternate_ref(mark_alternate_complete, NULL);
+ 		commit_list_sort_by_date(&complete);
+ 		if (cutoff)
 -- 
 2.4.0
