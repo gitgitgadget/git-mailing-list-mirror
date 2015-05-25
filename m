@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 56/56] struct ref_lock: convert old_sha1 member to object_id
-Date: Mon, 25 May 2015 18:39:22 +0000
-Message-ID: <1432579162-411464-57-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 46/56] upload-pack: rewrite functions to take object_id arguments
+Date: Mon, 25 May 2015 18:39:12 +0000
+Message-ID: <1432579162-411464-47-git-send-email-sandals@crustytoothpaste.net>
 References: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
 	Stefan Beller <sbeller@google.com>
@@ -12,20 +12,20 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwxJB-0001F8-Qh
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:41:06 +0200
+	id 1YwxJB-0001F8-6k
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbbEYSlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 14:41:01 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50788 "EHLO
+	id S1751561AbbEYSkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 14:40:47 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50747 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751527AbbEYSki (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:38 -0400
+	by vger.kernel.org with ESMTP id S1751491AbbEYSkc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:32 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2878A280A5;
-	Mon, 25 May 2015 18:40:36 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4B9F52809F;
+	Mon, 25 May 2015 18:40:31 +0000 (UTC)
 X-Mailer: git-send-email 2.4.0
 In-Reply-To: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -33,114 +33,106 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269870>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- refs.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ upload-pack.c | 32 ++++++++++++++------------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 7515c2e..a742d79 100644
---- a/refs.c
-+++ b/refs.c
-@@ -10,7 +10,7 @@ struct ref_lock {
- 	char *ref_name;
- 	char *orig_ref_name;
- 	struct lock_file *lk;
--	unsigned char old_sha1[20];
-+	struct object_id old_oid;
- };
+diff --git a/upload-pack.c b/upload-pack.c
+index 8268037..929284f 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -681,9 +681,9 @@ static void receive_needs(void)
+ }
  
- /*
-@@ -2225,16 +2225,16 @@ static struct ref_lock *verify_lock(struct ref_lock *lock,
+ /* return non-zero if the ref is hidden, otherwise 0 */
+-static int mark_our_ref(const char *refname, const unsigned char *sha1)
++static int mark_our_ref(const char *refname, const struct object_id *oid)
  {
- 	if (read_ref_full(lock->ref_name,
- 			  mustexist ? RESOLVE_REF_READING : 0,
--			  lock->old_sha1, NULL)) {
-+			  lock->old_oid.hash, NULL)) {
- 		int save_errno = errno;
- 		error("Can't verify ref %s", lock->ref_name);
- 		unlock_ref(lock);
- 		errno = save_errno;
- 		return NULL;
- 	}
--	if (hashcmp(lock->old_sha1, old_sha1)) {
-+	if (hashcmp(lock->old_oid.hash, old_sha1)) {
- 		error("Ref %s is at %s but expected %s", lock->ref_name,
--			sha1_to_hex(lock->old_sha1), sha1_to_hex(old_sha1));
-+			oid_to_hex(&lock->old_oid), sha1_to_hex(old_sha1));
- 		unlock_ref(lock);
- 		errno = EBUSY;
- 		return NULL;
-@@ -2382,7 +2382,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	}
+-	struct object *o = lookup_unknown_object(sha1);
++	struct object *o = lookup_unknown_object(oid->hash);
  
- 	refname = resolve_ref_unsafe(refname, resolve_flags,
--				     lock->old_sha1, &type);
-+				     lock->old_oid.hash, &type);
- 	if (!refname && errno == EISDIR) {
- 		/* we are trying to lock foo but we used to
- 		 * have foo/bar which now does not exist;
-@@ -2401,7 +2401,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 			goto error_return;
- 		}
- 		refname = resolve_ref_unsafe(orig_refname, resolve_flags,
--					     lock->old_sha1, &type);
-+					     lock->old_oid.hash, &type);
- 	}
- 	if (type_p)
- 	    *type_p = type;
-@@ -2421,7 +2421,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * refname, nor a packed ref whose name is a proper prefix of
- 	 * our refname.
- 	 */
--	if (is_null_sha1(lock->old_sha1) &&
-+	if (is_null_oid(&lock->old_oid) &&
- 	    verify_refname_available(refname, extras, skip,
- 				     get_packed_refs(&ref_cache), err)) {
- 		last_errno = ENOTDIR;
-@@ -2944,7 +2944,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 		strbuf_release(&err);
- 		goto rollback;
- 	}
--	hashcpy(lock->old_sha1, orig_sha1);
-+	hashcpy(lock->old_oid.hash, orig_sha1);
+ 	if (ref_is_hidden(refname)) {
+ 		o->flags |= HIDDEN_REF;
+@@ -693,9 +693,10 @@ static int mark_our_ref(const char *refname, const unsigned char *sha1)
+ 	return 0;
+ }
  
- 	if (write_ref_to_lockfile(lock, orig_sha1) ||
- 	    commit_ref_update(lock, orig_sha1, logmsg)) {
-@@ -3199,9 +3199,9 @@ static int commit_ref_update(struct ref_lock *lock,
- 			     const unsigned char *sha1, const char *logmsg)
+-static int check_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int check_ref(const char *refname, const struct object_id *oid,
++		     int flag, void *cb_data)
  {
- 	clear_loose_ref_cache(&ref_cache);
--	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
-+	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg) < 0 ||
- 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
--	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
-+	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg) < 0)) {
- 		unlock_ref(lock);
- 		return -1;
- 	}
-@@ -3225,7 +3225,7 @@ static int commit_ref_update(struct ref_lock *lock,
- 					      head_sha1, &head_flag);
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name))
--			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
-+			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg);
- 	}
- 	if (commit_ref(lock)) {
- 		error("Couldn't set %s", lock->ref_name);
-@@ -3923,7 +3923,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 						  (update->flags & REF_NODEREF));
+-	mark_our_ref(refname, sha1);
++	mark_our_ref(refname, oid);
+ 	return 0;
+ }
  
- 			if (!overwriting_symref &&
--			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-+			    !hashcmp(update->lock->old_oid.hash, update->new_sha1)) {
- 				/*
- 				 * The reference already has the desired
- 				 * value, so we don't need to write it.
+@@ -709,7 +710,8 @@ static void format_symref_info(struct strbuf *buf, struct string_list *symref)
+ 		strbuf_addf(buf, " symref=%s:%s", item->string, (char *)item->util);
+ }
+ 
+-static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int send_ref(const char *refname, const struct object_id *oid,
++		    int flag, void *cb_data)
+ {
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+@@ -717,7 +719,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	const char *refname_nons = strip_namespace(refname);
+ 	unsigned char peeled[20];
+ 
+-	if (mark_our_ref(refname, sha1))
++	if (mark_our_ref(refname, oid))
+ 		return 0;
+ 
+ 	if (capabilities) {
+@@ -725,7 +727,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 
+ 		format_symref_info(&symref_info, cb_data);
+ 		packet_write(1, "%s %s%c%s%s%s%s agent=%s\n",
+-			     sha1_to_hex(sha1), refname_nons,
++			     oid_to_hex(oid), refname_nons,
+ 			     0, capabilities,
+ 			     allow_tip_sha1_in_want ? " allow-tip-sha1-in-want" : "",
+ 			     stateless_rpc ? " no-done" : "",
+@@ -733,7 +735,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 			     git_user_agent_sanitized());
+ 		strbuf_release(&symref_info);
+ 	} else {
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
++		packet_write(1, "%s %s\n", oid_to_hex(oid), refname_nons);
+ 	}
+ 	capabilities = NULL;
+ 	if (!peel_ref(refname, peeled))
+@@ -765,20 +767,14 @@ static void upload_pack(void)
+ 	head_ref_namespaced(find_symref, &symref);
+ 
+ 	if (advertise_refs || !stateless_rpc) {
+-		struct each_ref_fn_sha1_adapter wrapped_send_ref =
+-			{send_ref, &symref};
+-
+ 		reset_timeout();
+-		head_ref_namespaced(each_ref_fn_adapter, &wrapped_send_ref);
+-		for_each_namespaced_ref(each_ref_fn_adapter, &wrapped_send_ref);
++		head_ref_namespaced(send_ref, &symref);
++		for_each_namespaced_ref(send_ref, &symref);
+ 		advertise_shallow_grafts(1);
+ 		packet_flush(1);
+ 	} else {
+-		struct each_ref_fn_sha1_adapter wrapped_check_ref =
+-			{check_ref, NULL};
+-
+-		head_ref_namespaced(each_ref_fn_adapter, &wrapped_check_ref);
+-		for_each_namespaced_ref(each_ref_fn_adapter, &wrapped_check_ref);
++		head_ref_namespaced(check_ref, NULL);
++		for_each_namespaced_ref(check_ref, NULL);
+ 	}
+ 	string_list_clear(&symref, 1);
+ 	if (advertise_refs)
 -- 
 2.4.0
