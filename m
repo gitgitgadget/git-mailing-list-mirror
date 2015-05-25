@@ -1,147 +1,108 @@
-From: Christian Brabandt <cblists@256bit.org>,
-	Christian Brabandt <cb@256bit.org>
-Subject: Mark trailing whitespace error in del lines of diff
-Date: Mon, 25 May 2015 23:11:34 +0200
-Message-ID: <9b8e349e223dc9cd871fc5f7915e590548322932.1432585659.git.cb@256bit.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule documentation: Reorder introductory paragraphs
+Date: Mon, 25 May 2015 15:00:42 -0700
+Message-ID: <xmqqfv6k9v1x.fsf@gitster.dls.corp.google.com>
+References: <1432323527-26868-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 23:51:10 2015
+Content-Type: text/plain
+Cc: philipoakley@iee.org, jrnieder@gmail.com, git@vger.kernel.org,
+	hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 26 00:00:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yx0H5-0005S9-V8
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 23:51:08 +0200
+	id 1Yx0QT-0000Z0-7S
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 00:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbbEYVvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 17:51:04 -0400
-Received: from 256bit.org ([144.76.87.176]:44293 "EHLO 256bit.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750929AbbEYVvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2015 17:51:00 -0400
-X-Greylist: delayed 2364 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 May 2015 17:51:00 EDT
-Received: from chrisbra by 256bit.org with local (Exim 4.76)
-	(envelope-from <chrisbra@256bit.org>)
-	id 1Ywzeo-0007sy-Dv
-	for git@vger.kernel.org; Mon, 25 May 2015 23:11:34 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: chrisbra@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+	id S1751203AbbEYWAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 18:00:45 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:36728 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802AbbEYWAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2015 18:00:44 -0400
+Received: by igbpi8 with SMTP id pi8so44258611igb.1
+        for <git@vger.kernel.org>; Mon, 25 May 2015 15:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=rhMx1PqdseQUsr6DqDJA/vnCqqeAvCMQhdCyGhx7+xg=;
+        b=Qzqw3HyQtYqdcqHIkxX073oeYIFv9kicgbkIqZ1HXyhhDr/oMbboH6pwYYLLbedr0j
+         B3yHtxjIyLse2/OjbKq796S+NAo9NeVyU6fq0RDfopdY9JWZiwSVaZ4t14HWTL3CJ5YK
+         TDYG4llcpSkHWswByvVRwo5k+h1wlcx0Z6MtXlbw1anBXDHQO/Bh0Xcctu5VDTp1oKpV
+         el2I2mrBN1rCQ0aB8hdlMtLgY8tw7SXHEDGdNk/mYZVF9oWohZzBoFIwDsS7MUyiWZpK
+         ac8jz4pw9G3i4l0UyzhrCfR109zGPQJdpW9ZJC9yaqZSrDo9IeA+dsjxTjC+4qRIWsWk
+         YdEA==
+X-Received: by 10.107.133.154 with SMTP id p26mr30755833ioi.7.1432591243876;
+        Mon, 25 May 2015 15:00:43 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:f93e:abc0:fe54:4a5a])
+        by mx.google.com with ESMTPSA id g12sm9602103ioe.28.2015.05.25.15.00.42
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 25 May 2015 15:00:43 -0700 (PDT)
+In-Reply-To: <1432323527-26868-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 22 May 2015 12:38:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269913>
 
-Currently git-diff only highlights trailing whitespace in the new lines
-(prefixed with '+'), thus it is not visible in the deleted lines
-(prefixed with '-').
+Stefan Beller <sbeller@google.com> writes:
 
-Therefore introduce a new configuration variable for the core.whitespace
-setting "blank-at-eol-old" (default off) that will highlight trailing
-whitespace in those lines as well.
+>  DESCRIPTION
+>  -----------
+> +This command will inspect, update and manage submodules.
+>  
+> +Submodules allow you to keep another Git repository in a subdirectory
+> +of your repository. The other repository has its own history,...
 
-Signed-off-by: Christian Brabandt <cb@256bit.org>
----
+The first line somehow bothered me, so I took a random sample of
+commands I often use:
 
-Hi,
-please be gentle, this is the first time I contribute to the git 
-development.
+    git log
+       Shows the commit logs.
 
-Here is my use case: I have been working in a team repository, 
-reformatting the source and wondered, why my reformatting did introduce 
-some trailing whitespace. I suspected a bug in Vim and started to debug 
-it, until I found out, that git-diff simply does not show trailing 
-whitespace in the deleted lines. Therefore, I'd like to have an option, 
-to also show trailing whitespace in the deleted lines of a diff. So here 
-is the patch.
+    git show
+       Shows one or more objects (blobs, trees, tags and commits).
 
-As far as I can see, this does not break any tests and also the 
-behaviour of git-diff --check does not change. 
+    git commit
+       Stores the current contents of the index in a new commit along with a
+       log message from the user describing the changes.
 
- Documentation/config.txt | 2 ++
- cache.h                  | 1 +
- diff.c                   | 8 +++++++-
- ws.c                     | 8 ++++++--
- 4 files changed, 16 insertions(+), 3 deletions(-)
+    git diff
+       Show changes between the working tree and the index or a tree, changes
+       between the index and a tree, changes between two trees, changes
+       between two blob objects, or changes between two files on disk.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0f668bb..f73f0f7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -670,6 +670,8 @@ core.whitespace::
- +
- * `blank-at-eol` treats trailing whitespaces at the end of the line
-   as an error (enabled by default).
-+* `blank-at-eol-old` like `blank-at-eol`, but for the deleted lines
-+  of a patch (i.e. those preceeded with a '-') (not enabled by default)
- * `space-before-tab` treats a space character that appears immediately
-   before a tab character in the initial indent part of the line as an
-   error (enabled by default).
-diff --git a/cache.h b/cache.h
-index 1f4226b..811b640 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1618,6 +1618,7 @@ void shift_tree_by(const unsigned char *, const unsigned char *, unsigned char *
- #define WS_CR_AT_EOL           01000
- #define WS_BLANK_AT_EOF        02000
- #define WS_TAB_IN_INDENT       04000
-+#define WS_BLANK_AT_EOL_OLD    010000
- #define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
- #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
- #define WS_TAB_WIDTH_MASK        077
-diff --git a/diff.c b/diff.c
-index 7500c55..4245956 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1254,10 +1254,16 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		const char *color =
- 			diff_get_color(ecbdata->color_diff,
- 				       line[0] == '-' ? DIFF_FILE_OLD : DIFF_PLAIN);
-+		const char *ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
-+
- 		ecbdata->lno_in_preimage++;
- 		if (line[0] == ' ')
- 			ecbdata->lno_in_postimage++;
--		emit_line(ecbdata->opt, color, reset, line, len);
-+		if (*ws && ecbdata->ws_rule & WS_BLANK_AT_EOL_OLD)
-+			ws_check_emit(line, len, ecbdata->ws_rule,
-+				ecbdata->opt->file, color, reset, ws);
-+		else
-+			emit_line(ecbdata->opt, color, reset, line, len);
- 	} else {
- 		ecbdata->lno_in_postimage++;
- 		emit_add_line(reset, ecbdata, line + 1, len - 1);
-diff --git a/ws.c b/ws.c
-index ea4b2b1..09e04f0 100644
---- a/ws.c
-+++ b/ws.c
-@@ -18,6 +18,7 @@ static struct whitespace_rule {
- 	{ "indent-with-non-tab", WS_INDENT_WITH_NON_TAB, 0 },
- 	{ "cr-at-eol", WS_CR_AT_EOL, 1 },
- 	{ "blank-at-eol", WS_BLANK_AT_EOL, 0 },
-+	{ "blank-at-eol-del", WS_BLANK_AT_EOL_OLD, 0, 1 },
- 	{ "blank-at-eof", WS_BLANK_AT_EOF, 0 },
- 	{ "tab-in-indent", WS_TAB_IN_INDENT, 0, 1 },
- };
-@@ -170,11 +171,14 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
- 	}
- 
- 	/* Check for trailing whitespace. */
--	if (ws_rule & WS_BLANK_AT_EOL) {
-+	if ((ws_rule & WS_BLANK_AT_EOL) || (ws_rule & WS_BLANK_AT_EOL_OLD)) {
- 		for (i = len - 1; i >= 0; i--) {
- 			if (isspace(line[i])) {
- 				trailing_whitespace = i;
--				result |= WS_BLANK_AT_EOL;
-+				if (ws_rule & WS_BLANK_AT_EOL)
-+					result |= WS_BLANK_AT_EOL;
-+				else
-+					result |= WS_BLANK_AT_EOL_OLD;
- 			}
- 			else
- 				break;
+    git push
+       Updates remote refs using local refs, while sending objects necessary
+       to complete the given refs.
+
+I _think_ what bothered me was "This command" (drawing the reaction
+"eh, what other command are you going to talk about in the help page
+for this command?").  Perhaps
+
+    Inspects, updates and manages submodules.
+
+may match the style of other help pages better.
+
+On the other hand, I probably would not have felt such a strong
+"strangeness" if it were described like this:
+
+    This command can help you inspect, update, and manage
+    submodules.
+
+I haven't analized it enough to say why it is, but I suspect it has
+something to do with (my own) perception that "git submodule" is not
+very essential to do any of these things (i.e. .gitmodules is a very
+simple text file), but is primarily a helpful wrapper.
+
+The description of "git config", on which I have a similar
+perception, seem to match ;-)
+
+    git config
+       You can query/set/replace/unset options with this command.
