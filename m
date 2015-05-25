@@ -1,108 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule documentation: Reorder introductory paragraphs
-Date: Mon, 25 May 2015 15:00:42 -0700
-Message-ID: <xmqqfv6k9v1x.fsf@gitster.dls.corp.google.com>
-References: <1432323527-26868-1-git-send-email-sbeller@google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Mark trailing whitespace error in del lines of diff
+Date: Mon, 25 May 2015 22:22:16 +0000
+Message-ID: <20150525222215.GI26436@vauxhall.crustytoothpaste.net>
+References: <9b8e349e223dc9cd871fc5f7915e590548322932.1432585659.git.cb@256bit.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: philipoakley@iee.org, jrnieder@gmail.com, git@vger.kernel.org,
-	hvoigt@hvoigt.net
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 26 00:00:51 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DozTQjXnjm3C9Xhk"
+Cc: git@vger.kernel.org
+To: Christian Brabandt <cblists@256bit.org>,
+	Christian Brabandt <cb@256bit.org>
+X-From: git-owner@vger.kernel.org Tue May 26 00:22:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yx0QT-0000Z0-7S
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 00:00:49 +0200
+	id 1Yx0lQ-0000JF-Ld
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 00:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbbEYWAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 18:00:45 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:36728 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802AbbEYWAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2015 18:00:44 -0400
-Received: by igbpi8 with SMTP id pi8so44258611igb.1
-        for <git@vger.kernel.org>; Mon, 25 May 2015 15:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=rhMx1PqdseQUsr6DqDJA/vnCqqeAvCMQhdCyGhx7+xg=;
-        b=Qzqw3HyQtYqdcqHIkxX073oeYIFv9kicgbkIqZ1HXyhhDr/oMbboH6pwYYLLbedr0j
-         B3yHtxjIyLse2/OjbKq796S+NAo9NeVyU6fq0RDfopdY9JWZiwSVaZ4t14HWTL3CJ5YK
-         TDYG4llcpSkHWswByvVRwo5k+h1wlcx0Z6MtXlbw1anBXDHQO/Bh0Xcctu5VDTp1oKpV
-         el2I2mrBN1rCQ0aB8hdlMtLgY8tw7SXHEDGdNk/mYZVF9oWohZzBoFIwDsS7MUyiWZpK
-         ac8jz4pw9G3i4l0UyzhrCfR109zGPQJdpW9ZJC9yaqZSrDo9IeA+dsjxTjC+4qRIWsWk
-         YdEA==
-X-Received: by 10.107.133.154 with SMTP id p26mr30755833ioi.7.1432591243876;
-        Mon, 25 May 2015 15:00:43 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:f93e:abc0:fe54:4a5a])
-        by mx.google.com with ESMTPSA id g12sm9602103ioe.28.2015.05.25.15.00.42
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 25 May 2015 15:00:43 -0700 (PDT)
-In-Reply-To: <1432323527-26868-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Fri, 22 May 2015 12:38:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750929AbbEYWWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 18:22:25 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51077 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750859AbbEYWWX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 18:22:23 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:fd6a:414d:f0e6:5f35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7B0392808F;
+	Mon, 25 May 2015 22:22:21 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Christian Brabandt <cblists@256bit.org>,
+	Christian Brabandt <cb@256bit.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <9b8e349e223dc9cd871fc5f7915e590548322932.1432585659.git.cb@256bit.org>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16.0-4-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269914>
 
-Stefan Beller <sbeller@google.com> writes:
 
->  DESCRIPTION
->  -----------
-> +This command will inspect, update and manage submodules.
->  
-> +Submodules allow you to keep another Git repository in a subdirectory
-> +of your repository. The other repository has its own history,...
+--DozTQjXnjm3C9Xhk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The first line somehow bothered me, so I took a random sample of
-commands I often use:
+On Mon, May 25, 2015 at 11:11:34PM +0200, Christian Brabandt wrote:
+> Here is my use case: I have been working in a team repository,
+> reformatting the source and wondered, why my reformatting did introduce
+> some trailing whitespace. I suspected a bug in Vim and started to debug
+> it, until I found out, that git-diff simply does not show trailing
+> whitespace in the deleted lines. Therefore, I'd like to have an option,
+> to also show trailing whitespace in the deleted lines of a diff. So here
+> is the patch.
 
-    git log
-       Shows the commit logs.
+I like this idea.  My use case is determining whether a patch to a
+pristine-tar repository introduced trailing whitespace (which is not
+okay) or just left it there (which is okay).
 
-    git show
-       Shows one or more objects (blobs, trees, tags and commits).
+> As far as I can see, this does not break any tests and also the
+> behaviour of git-diff --check does not change.
 
-    git commit
-       Stores the current contents of the index in a new commit along with a
-       log message from the user describing the changes.
+Perhaps you'd care to implement a test or two to make sure that this
+continues to work properly?
 
-    git diff
-       Show changes between the working tree and the index or a tree, changes
-       between the index and a tree, changes between two trees, changes
-       between two blob objects, or changes between two files on disk.
+>  Documentation/config.txt | 2 ++
+>  cache.h                  | 1 +
+>  diff.c                   | 8 +++++++-
+>  ws.c                     | 8 ++++++--
+>  4 files changed, 16 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 0f668bb..f73f0f7 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -670,6 +670,8 @@ core.whitespace::
+>  +
+>  * `blank-at-eol` treats trailing whitespaces at the end of the line
+>    as an error (enabled by default).
+> +* `blank-at-eol-old` like `blank-at-eol`, but for the deleted lines
 
-    git push
-       Updates remote refs using local refs, while sending objects necessary
-       to complete the given refs.
+You might want to insert "works" before "like" so that it's a complete
+sentence.
 
-I _think_ what bothered me was "This command" (drawing the reaction
-"eh, what other command are you going to talk about in the help page
-for this command?").  Perhaps
+> +  of a patch (i.e. those preceeded with a '-') (not enabled by default)
 
-    Inspects, updates and manages submodules.
+I believe this should be "preceded".
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-may match the style of other help pages better.
+--DozTQjXnjm3C9Xhk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-On the other hand, I probably would not have felt such a strong
-"strangeness" if it were described like this:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-    This command can help you inspect, update, and manage
-    submodules.
+iQIcBAEBCgAGBQJVY6CXAAoJEL9TXYEfUvaL9dAP/1V0LucwMFMv0EiHTwseCYvq
+pF0lr/Hnuyx7BboYg46aWxGxViTLc7vtyXLjccWpTGoXTP3PBB9I3GUkohEjk6gN
++uqTnZXmvykfOnIdV87kvcHCWZtZOcUJgWcTFiV5Mf+7LkMB8/CEpEImZL4cJPON
+2xhUcharTFP98dFH5VDnU/Rm7EpGTZOTq9eJTtrduqLN7jwCnm2XhLLbk+wtwZ/V
+hG8xnbG5/n5g5Gl0hZGP+0TC9mK2DpMKNgmqADTb76r60CbgAHYBgSzJbCyzgus0
+Ow5jOyBXAcebce5500r8WeRI0UdzBnoPUH3hTz3I1+GzwQ03qMt8Cpbaa32Q8P8J
+AMhGZ7uBLbi2qN5B5baJgovjbfU2FEMetVwg3T/Q2RawnOz4QqgMf+3U8c6SlKAe
+0RwEZqpDeIhzTuUo6rNHMbUAAxHRnlGjKitgJUKi1PnwZQj0m/+f3I6oTvNOhYAh
+TjUBPlM+OkPOypUb3lYjaRIztVDi5ZKk8sJ6vJfcNgHX59DCmtqqCAEIGrA7MpdC
+dHStyVYDOwx/Y/9GlBOm3jFOzUJ4/OxbTT5a7poYcnn+67Ez2Ua9EncG0a7PSxtb
+b4nvVWN4ATLYNItnqBw92ZyF4QkLHLCyYMTu/b2NEXZxOPoSJ+n4gmvlWm+obhej
+i7n0HBYgpGlocr6r6rPl
+=YP8O
+-----END PGP SIGNATURE-----
 
-I haven't analized it enough to say why it is, but I suspect it has
-something to do with (my own) perception that "git submodule" is not
-very essential to do any of these things (i.e. .gitmodules is a very
-simple text file), but is primarily a helpful wrapper.
-
-The description of "git config", on which I have a similar
-perception, seem to match ;-)
-
-    git config
-       You can query/set/replace/unset options with this command.
+--DozTQjXnjm3C9Xhk--
