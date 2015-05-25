@@ -1,31 +1,31 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 25/56] builtin/show-ref: rewrite to use object_id
-Date: Mon, 25 May 2015 18:38:51 +0000
-Message-ID: <1432579162-411464-26-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 40/56] shallow: rewrite functions to take object_id arguments
+Date: Mon, 25 May 2015 18:39:06 +0000
+Message-ID: <1432579162-411464-41-git-send-email-sandals@crustytoothpaste.net>
 References: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 20:40:45 2015
+X-From: git-owner@vger.kernel.org Mon May 25 20:40:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwxIq-00013c-Ql
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:40:45 +0200
+	id 1YwxIr-00013c-WD
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 20:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbbEYSkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 14:40:32 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50667 "EHLO
+	id S1751532AbbEYSkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 14:40:40 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50724 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751412AbbEYSkR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:17 -0400
+	by vger.kernel.org with ESMTP id S1751472AbbEYSk2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 14:40:28 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 870C228099;
-	Mon, 25 May 2015 18:40:16 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D6A2E28099;
+	Mon, 25 May 2015 18:40:26 +0000 (UTC)
 X-Mailer: git-send-email 2.4.0
 In-Reply-To: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -33,117 +33,104 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269860>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/show-ref.c | 33 +++++++++++++++------------------
- 1 file changed, 15 insertions(+), 18 deletions(-)
+ shallow.c | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 8e25536..18f84fb 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -17,16 +17,17 @@ static int deref_tags, show_head, tags_only, heads_only, found_match, verify,
- static const char **pattern;
- static const char *exclude_existing_arg;
- 
--static void show_one(const char *refname, const unsigned char *sha1)
-+static void show_one(const char *refname, const struct object_id *oid)
- {
--	const char *hex = find_unique_abbrev(sha1, abbrev);
-+	const char *hex = find_unique_abbrev(oid->hash, abbrev);
- 	if (hash_only)
- 		printf("%s\n", hex);
- 	else
- 		printf("%s %s\n", hex, refname);
+diff --git a/shallow.c b/shallow.c
+index 9488edc..257d811 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -475,11 +475,10 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+ 	free(tmp);
  }
  
--static int show_ref(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
-+static int show_ref(const char *refname, const struct object_id *oid,
-+		    int flag, void *cbdata)
+-static int mark_uninteresting(const char *refname,
+-			      const unsigned char *sha1,
++static int mark_uninteresting(const char *refname, const struct object_id *oid,
+ 			      int flags, void *cb_data)
  {
- 	const char *hex;
- 	unsigned char peeled[20];
-@@ -69,14 +70,14 @@ match:
- 	 * detect and return error if the repository is corrupt and
- 	 * ref points at a nonexistent object.
+-	struct commit *commit = lookup_commit_reference_gently(sha1, 1);
++	struct commit *commit = lookup_commit_reference_gently(oid->hash, 1);
+ 	if (!commit)
+ 		return 0;
+ 	commit->object.flags |= UNINTERESTING;
+@@ -512,8 +511,6 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	unsigned int i, nr;
+ 	int *shallow, nr_shallow = 0;
+ 	struct paint_info pi;
+-	struct each_ref_fn_sha1_adapter wrapped_mark_uninteresting =
+-		{mark_uninteresting, NULL};
+ 
+ 	trace_printf_key(&trace_shallow, "shallow: assign_shallow_commits_to_refs\n");
+ 	shallow = xmalloc(sizeof(*shallow) * (info->nr_ours + info->nr_theirs));
+@@ -544,8 +541,8 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	 * connect to old refs. If not (e.g. force ref updates) it'll
+ 	 * have to go down to the current shallow commits.
  	 */
--	if (!has_sha1_file(sha1))
-+	if (!has_sha1_file(oid->hash))
- 		die("git show-ref: bad ref %s (%s)", refname,
--		    sha1_to_hex(sha1));
-+		    oid_to_hex(oid));
+-	head_ref(each_ref_fn_adapter, &wrapped_mark_uninteresting);
+-	for_each_ref(each_ref_fn_adapter, &wrapped_mark_uninteresting);
++	head_ref(mark_uninteresting, NULL);
++	for_each_ref(mark_uninteresting, NULL);
  
- 	if (quiet)
- 		return 0;
+ 	/* Mark potential bottoms so we won't go out of bound */
+ 	for (i = 0; i < nr_shallow; i++) {
+@@ -586,12 +583,12 @@ struct commit_array {
+ 	int nr, alloc;
+ };
  
--	show_one(refname, sha1);
-+	show_one(refname, oid);
- 
- 	if (!deref_tags)
- 		return 0;
-@@ -88,7 +89,8 @@ match:
+-static int add_ref(const char *refname,
+-		   const unsigned char *sha1, int flags, void *cb_data)
++static int add_ref(const char *refname, const struct object_id *oid,
++		   int flags, void *cb_data)
+ {
+ 	struct commit_array *ca = cb_data;
+ 	ALLOC_GROW(ca->commits, ca->nr + 1, ca->alloc);
+-	ca->commits[ca->nr] = lookup_commit_reference_gently(sha1, 1);
++	ca->commits[ca->nr] = lookup_commit_reference_gently(oid->hash, 1);
+ 	if (ca->commits[ca->nr])
+ 		ca->nr++;
  	return 0;
- }
+@@ -620,8 +617,6 @@ static void post_assign_shallow(struct shallow_info *info,
+ 	int dst, i, j;
+ 	int bitmap_nr = (info->ref->nr + 31) / 32;
+ 	struct commit_array ca;
+-	struct each_ref_fn_sha1_adapter wrapped_add_ref =
+-		{add_ref, &ca};
  
--static int add_existing(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
-+static int add_existing(const char *refname, const struct object_id *oid,
-+			int flag, void *cbdata)
- {
- 	struct string_list *list = (struct string_list *)cbdata;
- 	string_list_insert(list, refname);
-@@ -109,10 +111,8 @@ static int exclude_existing(const char *match)
- 	static struct string_list existing_refs = STRING_LIST_INIT_DUP;
- 	char buf[1024];
- 	int matchlen = match ? strlen(match) : 0;
--	struct each_ref_fn_sha1_adapter wrapped_add_existing =
--		{add_existing, &existing_refs};
+ 	trace_printf_key(&trace_shallow, "shallow: post_assign_shallow\n");
+ 	if (ref_status)
+@@ -645,8 +640,8 @@ static void post_assign_shallow(struct shallow_info *info,
+ 	info->nr_theirs = dst;
  
--	for_each_ref(each_ref_fn_adapter, &wrapped_add_existing);
-+	for_each_ref(add_existing, &existing_refs);
- 	while (fgets(buf, sizeof(buf), stdin)) {
- 		char *ref;
- 		int len = strlen(buf);
-@@ -193,9 +193,6 @@ static const struct option show_ref_options[] = {
+ 	memset(&ca, 0, sizeof(ca));
+-	head_ref(each_ref_fn_adapter, &wrapped_add_ref);
+-	for_each_ref(each_ref_fn_adapter, &wrapped_add_ref);
++	head_ref(add_ref, &ca);
++	for_each_ref(add_ref, &ca);
  
- int cmd_show_ref(int argc, const char **argv, const char *prefix)
- {
--	struct each_ref_fn_sha1_adapter wrapped_show_ref =
--		{show_ref, NULL};
--
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(show_ref_usage, show_ref_options);
+ 	/* Remove unreachable shallow commits from "ours" */
+ 	for (i = dst = 0; i < info->nr_ours; i++) {
+@@ -678,12 +673,10 @@ int delayed_reachability_test(struct shallow_info *si, int c)
  
-@@ -213,12 +210,12 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 		if (!pattern)
- 			die("--verify requires a reference");
- 		while (*pattern) {
--			unsigned char sha1[20];
-+			struct object_id oid;
+ 		if (!si->commits) {
+ 			struct commit_array ca;
+-			struct each_ref_fn_sha1_adapter wrapped_add_ref =
+-				{add_ref, &ca};
  
- 			if (starts_with(*pattern, "refs/") &&
--			    !read_ref(*pattern, sha1)) {
-+			    !read_ref(*pattern, oid.hash)) {
- 				if (!quiet)
--					show_one(*pattern, sha1);
-+					show_one(*pattern, &oid);
- 			}
- 			else if (!quiet)
- 				die("'%s' - not a valid ref", *pattern);
-@@ -230,8 +227,8 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (show_head)
--		head_ref(each_ref_fn_adapter, &wrapped_show_ref);
--	for_each_ref(each_ref_fn_adapter, &wrapped_show_ref);
-+		head_ref(show_ref, NULL);
-+	for_each_ref(show_ref, NULL);
- 	if (!found_match) {
- 		if (verify && !quiet)
- 			die("No match");
+ 			memset(&ca, 0, sizeof(ca));
+-			head_ref(each_ref_fn_adapter, &wrapped_add_ref);
+-			for_each_ref(each_ref_fn_adapter, &wrapped_add_ref);
++			head_ref(add_ref, &ca);
++			for_each_ref(add_ref, &ca);
+ 			si->commits = ca.commits;
+ 			si->nr_commits = ca.nr;
+ 		}
 -- 
 2.4.0
