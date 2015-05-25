@@ -1,93 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] for-each-ref: re-structure code for moving to 'ref-filter'
-Date: Mon, 25 May 2015 12:39:47 -0700
-Message-ID: <xmqq617gbg58.fsf@gitster.dls.corp.google.com>
-References: <556317F8.2070609@gmail.com>
-	<1432557943-25337-1-git-send-email-karthik.188@gmail.com>
-	<xmqqegm4bmtg.fsf@gitster.dls.corp.google.com>
-	<55636301.7060803@gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 00/56] Convert parts of refs.c to struct object_id
+Date: Mon, 25 May 2015 19:40:08 +0000
+Message-ID: <20150525194007.GH26436@vauxhall.crustytoothpaste.net>
+References: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
+ <xmqqa8wsbgd8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	matthieu.moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 21:39:58 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Tu8ztk+XgTAiG9Id"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 25 21:40:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwyE8-0000bA-Fa
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 21:39:56 +0200
+	id 1YwyEU-0000lj-MF
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 21:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbbEYTjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 15:39:49 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:32925 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211AbbEYTjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2015 15:39:49 -0400
-Received: by iebgx4 with SMTP id gx4so77847187ieb.0
-        for <git@vger.kernel.org>; Mon, 25 May 2015 12:39:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=c9/bvc2sKHVJ8H1N01GOrx2EQQJIyCrIMavwpZHXDpg=;
-        b=UCjrVH9kgOPsOkDWgPjJhNOZaY4eIyWcNGq4r6x3wBR+l2/LidmA1OrJzKIQI14VWI
-         mGczIXt34m62V2QHNouLUkx/exbLC0XrMa7nZ9o9uQhVmrv1RI6cUv0TjoXm39xoVD+l
-         39XkjaVbcFbsB2f1kaBCVENs2mgPYFbFIazqVEDajRy9siXCR29ICVl/203NVOLj9OwZ
-         x1MJo3yjxUX9NuqC0oEqQzPlcme0oHd8o8ojNXcj1k75bs3Dgxi8Ghsgj23uuxpvCZc/
-         Ddm8Ll6K0/ItVBB5rJ3zcBufSYQl9p9Fth453KDDAKTY3gjx/0dvhRscv2s9WIwIJ2f9
-         sTBw==
-X-Received: by 10.107.3.79 with SMTP id 76mr29442958iod.60.1432582788553;
-        Mon, 25 May 2015 12:39:48 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:f93e:abc0:fe54:4a5a])
-        by mx.google.com with ESMTPSA id m9sm6709832igv.4.2015.05.25.12.39.47
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 25 May 2015 12:39:47 -0700 (PDT)
-In-Reply-To: <55636301.7060803@gmail.com> (Karthik Nayak's message of "Mon, 25
-	May 2015 23:29:29 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750903AbbEYTkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 15:40:14 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50968 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750853AbbEYTkM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2015 15:40:12 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:fd6a:414d:f0e6:5f35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 65A8B2808F;
+	Mon, 25 May 2015 19:40:11 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>
+Content-Disposition: inline
+In-Reply-To: <xmqqa8wsbgd8.fsf@gitster.dls.corp.google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16.0-4-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269909>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
 
->> I do not see much point in renaming between these two.  The latter
->> makes it sound as if this is only for "filtering" and from that
->> angle of view is probably a worse name.  If you do not think of a
->> better one, and if you are going to name the array that contains
->> this thing "ref_list", calling "ref_list_item" would be following
->> suit to what string-list did.
->>
->
-> Well I just wanted to keep it related to 'ref-filter', I think
-> 'ref_list_item'
-> sounds better after seeing your point of view.
+--Tu8ztk+XgTAiG9Id
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also I think Matthieu already commented that "filter" was out of
-place for that struct.  I still think your ref_list is better called
-ref_array, but that is a minor point.  Use of "foo_list" in our
-codebase is predominantly (because we use "commit_list" very often
-in the core part of the system) for a linear linked list where you
-do not have a random access to the items.  string-list is misnomer,
-I would think.
+On Mon, May 25, 2015 at 12:34:59PM -0700, Junio C Hamano wrote:
+> [PATCH 01/56] was authored by you but has Michael's sign-off, which
+> looked somewhat odd to me, though.
 
-> I didn't know about the "we are trying to move away from calling the
-> name of objects as "sha1[]"". Will leave it as objectname then.
+Yes, it does.  He picked it up from me, and signed off, and I took his
+branch.  I don't believe he changed it, but I didn't check for certain.
+So technically, although I wrote it, I also received it from him without
+changing it, so both (a) and (c) of the DCO apply.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-I think you now know after seeing that 56-patch series ;-)
+--Tu8ztk+XgTAiG9Id
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
->> You didn't explain why you reordered the fields, either.  Were you
->> planning to make the name[] field to flex-array to reduce need for
->> one level of redirection or something?
->>
->
-> Yes! exactly why the re-order, was going to rebase it and squash it
-> in, if the code seemed to be up and running.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-If that is the case, I would suggest making that "turn it flex array"
-a separate step.
+iQIcBAEBCgAGBQJVY3qXAAoJEL9TXYEfUvaLi0kP/3YZKHPrP9sy7p+Ww5jthOc8
+D5irKwShms0+ycRdhIYh5os1pbWjlfR8bYQrJ+Dic+AoeFn+3zhljhScZd3mJifd
+VDgD2SZT24lnfZ78PVVO4ijmQKgu3B+SDBzUK8ErIX5ANMM/4FJ8f1p8LOWM7H9R
+4BRN2PkGWaJ65cYJBKhi1NAX+cqseUACRSI5nY55UQD52ejYEhbu0TMxL93GBi2C
+9ybqHJe/oGJUAAsiPKVnzaCuuLv/1Wq5wB+aStaAewo6+yylKHENDF9EWjqh0rYw
+I6s7ib9iJS1YH59HOu9055Sw+oz3FKeSZul00DeYy5E9rxV8OV7YFhNshBHm/Yde
+Ir0/R4ElxHAXC0sUT+yjLyK/Ky9XlC6jc8awIkjM6N3NYXexToHkJGwyduZsJmZX
+De/eErk5dvtaWVrjU/x7zMmNI98U8txkagHs/Ah7ePhOXalXn8bs3WvTsRn/X7dW
++CQ+VcC7gvamceGlt0RswsFtXshKaq8s5aze38CmWEC/PLvQZZJ3CbWBOXJC94QD
+fvY0W2De97VzHcVZgWGCt8FN6G4BU4zQ9PbG2UcFTTzNPCnrIPwhvLC4zVgm28Or
+ecIXYyn88cNH9HnB5SiNkcjQ0P9arFWNTI9y5A5FK9hPRW2SXJFburknvqNacMXP
+CogMs22jufoCxS2XYqRx
+=ib/Z
+-----END PGP SIGNATURE-----
+
+--Tu8ztk+XgTAiG9Id--
