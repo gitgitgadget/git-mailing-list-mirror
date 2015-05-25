@@ -1,87 +1,93 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH/RFC 0/3] --seed as an alias for --dissociate --reference
-Date: Mon, 25 May 2015 01:53:14 +0200
-Message-ID: <5562646A.1080608@alum.mit.edu>
-References: <20150521041435.GA18978@peff.net>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: Pushing and pulling the result of `git replace` and objects/info/alternates
+Date: Mon, 25 May 2015 11:49:17 +0200
+Message-ID: <5562F01D.8000601@gmail.com>
+References: <CACHsx4Kz3_bMbKqd1O7-ZXLBUqJBs6hTsiRNAALNJhDV44v6Rw@mail.gmail.com> <CAP8UFD3G8_ChRX6HHtieFTksUJBiXu9FLNbewFQVj7qPyGh8EQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 01:59:46 2015
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 25 11:49:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ywfo1-000802-Q1
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 01:59:46 +0200
+	id 1Ywp0q-0007sI-A7
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 11:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420AbbEXXxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2015 19:53:30 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:42448 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751354AbbEXXxa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 May 2015 19:53:30 -0400
-X-AuditID: 1207440d-f79026d000000bad-38-5562646d41b8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 39.50.02989.D6462655; Sun, 24 May 2015 19:53:17 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB1007.dip0.t-ipconnect.de [93.219.16.7])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4ONrFAx022543
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 24 May 2015 19:53:16 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <20150521041435.GA18978@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1M1NSQo1mHdd3qLrSjeTRUPvFWaL
-	Hy09zA7MHs969zB6XLyk7PF5k1wAcxS3TVJiSVlwZnqevl0Cd8bBz7fZCp5xVOy5fYilgfEL
-	WxcjJ4eEgInE5yl3oGwxiQv31gPZXBxCApcZJW50bmWGcM4ySXw+N4cZpIpXQFti44oNLF2M
-	HBwsAqoSh6eagITZBHQlFvU0M4GERQWCJF6/zIWoFpQ4OfMJC4gtImAkcePDN7BdzAJqEoeW
-	PGIEsYUFfCTmbz4HNl0IaMzsN1/BbE4BPYktd9cyQdSrS/yZd4kZwpaXaN46m3kCo8AsJCtm
-	ISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdI73czBK91JTSTYyQwOXdwfh/ncwh
-	RgEORiUe3gUGiaFCrIllxZW5hxglOZiURHmv2yeFCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh
-	jYoGyvGmJFZWpRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHgnJQE1ChalpqdW
-	pGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIPiNL4YGKkgKR6gveLJIHuLCxJzgaIQracYFaXE
-	eXeDzBUASWSU5sGNhaWjV4ziQF8K8waDtPMAUxlc9yugwUxAg680J4IMLklESEk1MFqwc7Kd
-	cN83zdL35ZwOjdyZJ9uzHL/zzj3glcdSnPSm8H2Z0Cem5kUnLwjLfAjN/KiY81bE7thdpv6j
-	LUnCOqtePnSIl+uZUKsZdevSEZcyn3N/9HafOr/t7YmVetGTV/IfObN8fV/cyQvv 
+	id S1751537AbbEYJtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 05:49:31 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:36033 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859AbbEYJta (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2015 05:49:30 -0400
+Received: by wizk4 with SMTP id k4so43099365wiz.1
+        for <git@vger.kernel.org>; Mon, 25 May 2015 02:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=9/ZHqMLo8IKfqxg/KE4zL9H0Vf9gdDdWUiVOT+4TkC8=;
+        b=xDxssKhRvFsb6cpnJ9pySnVyNBvV/goQ7rosseJ/BtQiVSv9OwyIyCxwZdk5+CZ7Dv
+         FRYKnP22V7OriStsTmw3vlpFQ/ZD8wIjEaIAjXJKKQYNOh/Wic3B7DoT36t4Rdv7FFnu
+         k/gYKSHC6l4SjS9WdBJqDx4SUZCJXPg3ehizeSHDDLC3ux0b+tFt1q6mQVOpe0yPFsT3
+         rUwLhjqH/zEMuSeFii3JVv6TMxXcPmXeJLOj23EZoMQTRqpAdkwJ9EFsuZYCvIJOYAOK
+         C6jDGZxGAMZ7TOsSecsLcrwkD44QRJpFHoRbzL4q8GeHBYZqbcxTiIi/PtTdLRt15L1U
+         ovhA==
+X-Received: by 10.180.231.41 with SMTP id td9mr29949005wic.69.1432547369061;
+        Mon, 25 May 2015 02:49:29 -0700 (PDT)
+Received: from [192.168.1.25] (x55b2fc65.dyn.telefonica.de. [85.178.252.101])
+        by mx.google.com with ESMTPSA id fh6sm11055296wic.5.2015.05.25.02.49.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 May 2015 02:49:28 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <CAP8UFD3G8_ChRX6HHtieFTksUJBiXu9FLNbewFQVj7qPyGh8EQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269833>
 
-Thanks for working on this. I have one little bikeshedding comment...
+On 05/24/2015 07:28 AM, Christian Couder wrote:
+> Hi,
+>
+> On Fri, May 22, 2015 at 4:38 PM, Stephen Kelly <steveire@gmail.com> wrote:
+>> I have tried out using `git replace --graft` and
+>> .git/objects/info/alternates to 'refer to' the history in the origin
+>> repo instead of 'duplicating' it. This is similar to how Qt5 repos
+>> refer to Qt 4 history in a different repo.
+>>
+>> Question 1) Is this a reasonable thing to do for this scenario?
+> I think it should work without too much work, but see the answer to
+> the next question.
 
-On 05/21/2015 06:14 AM, Jeff King wrote:
-> [...]
-> There are a few open issues with this series:
-> 
->   1. Assuming that "seed" is a reasonable verb for this concept, is
->      "--seed=<repo>" OK for the option?  Would "--seed-from=<repo>" be
->      better? (Also, the response "bleh, seed is a terrible name" is
->      fine, too, but only if accompanied by your own suggestion :) ).
+Ok, thanks. The concern is that there is plenty of documentation for
+git-filter-branch, but no documentation or porcelain for info/alternates
+and little out on the internet about it or git replace and using them
+together.
 
-I think "seed" is a pretty good name. The only downside is that "seed"
-suggests that the process injects just a few seeds that are much smaller
-than the whole. But in fact, (hopefully) this option causes the bulk of
-the needed objects to be pre-fetched.
+However, it seems to be a reasonable thing to do.
 
-I can't think of any name that is clearly better. Some brainstorming:
+>> echo "../../calculator/objects" >
+>> ../.git/modules/compute/objects/info/alternates
+>> git replace --graft HEAD $extraction_sha
+> Maybe use the following instead of the above line:
+>
+> git fetch 'refs/replace/*:refs/replace/*'
 
-* prepare -- meh
-* prime (as in "prime the pump"). But "prime" alone could have too many
-meanings, so...
-* prime-from
-* pre-fetch or pre-fetch-from
-* pre-load or pre-load-from
+Thanks.
 
-BTW I think "--seed-from=<repo>" is more self-explanatory than
-"--seed=<repo>".
+>> # And now we see the history from the calculator repo. Great. But, it
+>> required user action after the clone.
+> Yeah, but if the 2 above commands are in a script maybe it's
+> reasonable to ask the user to launch the script once after cloning.
 
-Michael
+Would it be possible to do this in a hook in the 'integration repo'
+which contains both submodules in the example I posted? Like a fetch
+hook or something?
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Thanks,
+
+Steve.
