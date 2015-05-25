@@ -1,71 +1,78 @@
-From: Allen Hubbe <allenbh@gmail.com>
-Subject: Re: [PATCH v5 1/1] send-email: Add sendmail email aliases format
-Date: Mon, 25 May 2015 08:47:32 -0400
-Message-ID: <CAJ80sas_D-6z4MvuFvvjoX7U_bM6b3brCo4rvYFCUfTmKS=6bA@mail.gmail.com>
-References: <49e9a95b52aa61ed4f37edf1dfa178186acb4a29.1432367540.git.allenbh@gmail.com>
-	<xmqqfv6nchmf.fsf@gitster.dls.corp.google.com>
-	<xmqq382ncgmb.fsf@gitster.dls.corp.google.com>
-	<CAJ80savVjb3_iKhNWPjQNK72DL7eq5YkbjWWG-1Gkx5+LOjzeg@mail.gmail.com>
+From: Alangi Derick <alangiderick@gmail.com>
+Subject: [PATCH] Fixed a typographical error
+Date: Mon, 25 May 2015 16:07:05 +0100
+Message-ID: <55633a99.xZnVU1n2HFdRqJGY%alangiderick@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 25 14:47:53 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: alangiderick@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 25 17:08:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YwrnI-0002Mz-HX
-	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 14:47:48 +0200
+	id 1Ywtz9-0004eG-IO
+	for gcvg-git-2@plane.gmane.org; Mon, 25 May 2015 17:08:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbbEYMrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2015 08:47:35 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:37426 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608AbbEYMrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2015 08:47:33 -0400
-Received: by wibt6 with SMTP id t6so48100745wib.0
-        for <git@vger.kernel.org>; Mon, 25 May 2015 05:47:32 -0700 (PDT)
+	id S1751639AbbEYPIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2015 11:08:06 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:35097 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751135AbbEYPIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2015 11:08:05 -0400
+Received: by wgme6 with SMTP id e6so6692756wgm.2
+        for <git@vger.kernel.org>; Mon, 25 May 2015 08:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=h9FLjLeQpnhOJd04MncUHaEaSIfBeIJ3zufH+33O7fc=;
-        b=kPaMT8yq2Qca+XMM8hQZKjo8iTzzFep5Z8tlEvSNqq2+u16B6Zwdkybn+OVFHWB7Ft
-         L2iKNOBYOAtx7sT0rXwGhlYmgT0YJcouc0T75kiKrh/qaqMAjXcexSgB102yvnX+qq3j
-         AjXjyqaXDyQXp2gTHRLSFUpT4MuQXK+aSZBAOqeYmLIg8RCFoXrzQZ4OQphc0BOiAgeY
-         Sw8TfdLB+ugziXpvlQgzL1913taoSpaMpOOALvF3mqbn4s7MEfHd6/IsSvY1y8WRcBwE
-         spREHb8n1jeweNWUPhMnI/aqAWd6LBA5nUaU4E22UOcxAsZ4WrtMoJuefWPR8rJq+cwi
-         8f8g==
-X-Received: by 10.180.89.234 with SMTP id br10mr8225471wib.86.1432558052139;
- Mon, 25 May 2015 05:47:32 -0700 (PDT)
-Received: by 10.28.59.4 with HTTP; Mon, 25 May 2015 05:47:32 -0700 (PDT)
-In-Reply-To: <CAJ80savVjb3_iKhNWPjQNK72DL7eq5YkbjWWG-1Gkx5+LOjzeg@mail.gmail.com>
+        h=date:from:to:subject:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=1m6iTlquQO/9dJD19HGw1qfOJ6goHu/ijspFyLm0NLA=;
+        b=jXMi1CBfT9qOVWRMX/xWm2nmHp1Ri41J+lRCVm5FvQISMmBlYTRbZ/UdzJkypnyQ1P
+         0BhyPyDIMFqb0hZXJtcLw/m86MKptPE7fi7gzXcsIoe05uBYbQyURAI+BbVdg2sV+PCX
+         e1fnBgLCGD/a5oa5D/PogDJ7nuMPeMM+ADlW0zZlPqkEPRZ0W5SrgQC6iUV8AuVC1YyL
+         9+I6CNQBtzo5Yy2Z4qu191dwiim9dFwzNpCMMUeDI+gyJ9WFvKcCbJurcc5Hi1cwCP7o
+         jA30T2MT8Ko3koZ+dPLghZEyuPxl0xfbNxh9280x35FpIoUhAg3nrITUGwqw5KJOZk0m
+         G5Ig==
+X-Received: by 10.180.73.176 with SMTP id m16mr33063619wiv.68.1432566483965;
+        Mon, 25 May 2015 08:08:03 -0700 (PDT)
+Received: from localhost ([41.205.24.229])
+        by mx.google.com with ESMTPSA id ng5sm12293420wic.24.2015.05.25.08.07.57
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 May 2015 08:08:03 -0700 (PDT)
+User-Agent: Heirloom mailx 12.5 6/20/10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269840>
 
-On Sat, May 23, 2015 at 6:24 PM, Allen Hubbe <allenbh@gmail.com> wrote:
-> On Sat, May 23, 2015 at 2:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> A small thing I noticed in the test (and this patch is not adding a
->>> new "breakage"---there are a few existing instances) is the use of
->>> "~/"; it should be spelled "$HOME/" instead for portability (not in
->>> POSIX, even though bash, dash and ksh all seem to understand it).
->>
->> Well, I was wrong. Tilde expansion is in POSIX.
->>
->> Nevertheless, I'd prefer if we avoided it.
->
-> Alright, $HOME it will be.
+>From e8c2ea38865cf5dcc135e34ec2e80def8736b582 Mon Sep 17 00:00:00 2001
+From: Alangi Derick <alangiderick@gmail.com>
+Date: Sun, 24 May 2015 14:58:30 +0100
+Subject: [PATCH] Fixed a typographical error
 
-Looking closer at this and the other test cases, they are inconsistent
-about using ".mailrc", "~/.mailrc", and "$(pwd)/.mailrc".  This would
-add another one, "$HOME/.mailrc".
+This is a patch to fix a typographical error in the 2.5.0.txt file in
+the Documentation/RelNotes directory. The error was in the word "thoughout"
+which was to be spelled "throughout" based on the context of the sentence.
 
-How do you feel about using just ".mailrc", and "$(pwd)/.mailrc" when
-an absolute path is needed in gitconfig?
+Signed-off-by: Alangi Derick <alangiderick@gmail.com>
+---
+ Documentation/RelNotes/2.5.0.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/RelNotes/2.5.0.txt b/Documentation/RelNotes/2.5.0.txt
+index a11e53c..02fdc66 100644
+--- a/Documentation/RelNotes/2.5.0.txt
++++ b/Documentation/RelNotes/2.5.0.txt
+@@ -32,7 +32,7 @@ UI, Workflows & Features
+ 
+ Performance, Internal Implementation, Development Support etc.
+ 
+- * "unsigned char [20]" used thoughout the code to represent object
++ * "unsigned char [20]" used throughout the code to represent object
+    names are being converted into a semi-opaque "struct object_id".
+    This effort is expected to interfere with other topics in flight,
+    but hopefully will give us one extra level of abstraction in the
+-- 
+2.4.0.53.g8440f74.dirty
