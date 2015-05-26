@@ -1,98 +1,84 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH v3 0/4] submodule config lookup API
-Date: Tue, 26 May 2015 17:46:10 +0200
-Message-ID: <20150526154610.GB31115@book.hvoigt.net>
-References: <20150521170616.GA22979@book.hvoigt.net>
- <xmqqy4khixjn.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 1/2] for-each-ref: re-structure code for moving to 'ref-filter'
+Date: Tue, 26 May 2015 17:49:49 +0200
+Message-ID: <vpqpp5nfiea.fsf@anie.imag.fr>
+References: <556317F8.2070609@gmail.com>
+	<1432557943-25337-1-git-send-email-karthik.188@gmail.com>
+	<xmqqegm4bmtg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 26 17:46:49 2015
+X-From: git-owner@vger.kernel.org Tue May 26 17:50:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxH45-0006Yy-CB
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 17:46:49 +0200
+	id 1YxH7O-000096-JV
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 17:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbbEZPqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 11:46:35 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.37]:33973 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754706AbbEZPqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 11:46:31 -0400
-Received: from [188.108.15.115] (helo=book.hvoigt.net)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1YxH2w-00068E-3r; Tue, 26 May 2015 17:45:38 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqy4khixjn.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1755041AbbEZPuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 11:50:07 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53683 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755037AbbEZPuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2015 11:50:04 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4QFnlK0005036
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 26 May 2015 17:49:47 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4QFnnf6030030;
+	Tue, 26 May 2015 17:49:49 +0200
+In-Reply-To: <xmqqegm4bmtg.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 25 May 2015 10:15:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 26 May 2015 17:49:47 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4QFnlK0005036
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1433260188.76827@0XfjC0uMio3wFL4632Poaw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269948>
 
-On Thu, May 21, 2015 at 11:40:44AM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > This is finally the next iteration of the submodule config api. The last
-> > iteration can be found here:
-> >
-> > http://article.gmane.org/gmane.comp.version-control.git/252601
-> >
-> > This iteration fixes the lookup of submodules by name
-> > (submodule_from_name()) where one needed to pass in the gitmodule sha1
-> > by mistake. To keep it simple for the user and behave as documented we
-> > should take the commit sha1 which is now fixed here. We now also test
-> > the lookup by name in the api tests.
-> >
-> > This should be ready for inclusion.
-> >
-> > Cheers Heiko
-> >
-> > Here is the interdiff to the last iteration:
-> >
-> > diff --git a/submodule-config.c b/submodule-config.c
-> > index 96623ad..177767d 100644
-> > --- a/submodule-config.c
-> > +++ b/submodule-config.c
-> > @@ -25,6 +25,11 @@ struct submodule_entry {
-> >  	struct submodule *config;
-> >  };
-> >  
-> > +enum lookup_type {
-> > +	lookup_name,
-> > +	lookup_path,
-> > +};
-> 
-> Please lose the comma after the last element in enum.  Some
-> compilers do not like it, I was told.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Fixed.
+> Yuck; I can see what you are doing but can you imitate what the more
+> experienced people (e.g. peff, mhagger) do when restructuring
+> existing code and do things in smaller increments?
 
-> > +	switch (lookup_type) {
-> > +		case lookup_name:
-> > +			submodule = cache_lookup_name(cache, sha1, key);
-> > +			break;
-> > +		case lookup_path:
-> > +			submodule = cache_lookup_path(cache, sha1, key);
-> > +			break;
-> 
-> Is this too deeply indented?
+Seconded. Some reasons/guide to split:
 
-It seems I accidentially used vim's default indenting. Fixed.
+* Split trivial and non-trivial stuff. I can quickly review a
+  "rename-only" patch even if it's a bit long (essentially, I'll check
+  that you did find-and-replace properly), but reviewing a mix of
+  renames and actual code change is hard.
 
-Will wait a little longer if there are more comments than the style
-fixes before sending another iteration.
+* Split controversial and non-controversial stuff. For example, you
+  changed the ordering of fields in a struct. Perhaps it was not a good
+  idea. Perhaps it was a good idea, but then you want this reordering to
+  be alone in its patch so that you can explain why it's a good idea in
+  the commit message (you'll see me use the word "why" a lot when
+  talking about commit messages; not a coincidence).
 
-Cheers Heiko
+* Split code movement and other stuff. For example extraction of
+  match_name_as_path() would be trivial if made in its own patch.
+
+I'd also make a separate patch "introduce the ref_list data-structure"
+to introduce struct ref_list and basic helper functions (constructors,
+mutators, destructors).
+
+It will take time and may appear to be counter-productive at first, but
+you'll get used to it, and you'll end up being actually more productive
+this way (well, maybe not "you" but the set "you + reviewers").
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
