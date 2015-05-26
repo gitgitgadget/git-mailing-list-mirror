@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFC/WIP PATCH 05/11] transport: add infrastructure to support a protocol version number
-Date: Tue, 26 May 2015 15:01:09 -0700
-Message-ID: <1432677675-5118-6-git-send-email-sbeller@google.com>
+Subject: [RFC/WIP PATCH 07/11] fetch-pack: use the configured transport protocol
+Date: Tue, 26 May 2015 15:01:11 -0700
+Message-ID: <1432677675-5118-8-git-send-email-sbeller@google.com>
 References: <1432677675-5118-1-git-send-email-sbeller@google.com>
 Cc: pclouds@gmail.com, peff@peff.net, gitster@pobox.com,
 	Stefan Beller <sbeller@google.com>
@@ -12,187 +12,105 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxMux-000208-Ao
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 00:01:47 +0200
+	id 1YxMux-000208-Tv
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 00:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbbEZWBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 18:01:40 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:35273 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751918AbbEZWBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 18:01:35 -0400
-Received: by iesa3 with SMTP id a3so29208ies.2
-        for <git@vger.kernel.org>; Tue, 26 May 2015 15:01:34 -0700 (PDT)
+	id S1752319AbbEZWBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 18:01:41 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:34554 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910AbbEZWBi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2015 18:01:38 -0400
+Received: by igbhj9 with SMTP id hj9so72105700igb.1
+        for <git@vger.kernel.org>; Tue, 26 May 2015 15:01:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DUngTBuVOzXGyogb5cT1KNwmO5HYpXdKvAqhD9OJI9c=;
-        b=ZXSqP973Cdt3aV/y+Jp2GyAUYBJhBL6O3XkHIP/rx/rVZrBNBVzDQTAbWmLbFHN4v2
-         LaqmUZwZNZRXmAaeJ6p7FRZ8y07j2/ByBf/dhmcjB0D9WMWO/lLUlkw+BaDEud7ZgU9c
-         X84R+da/Zwmw3O2S6AaN13iUStkofGLONSgeCJECqi3yon2dA/gdmUKvsfrvMCEKll4x
-         J7QJMgJVhpCXRFn6j5nxg2Ki5ojCUVW4SYlVEFGL6lORbb09h3D550+a0EEOQwM0kty9
-         BSSxwOXPoDeP3OOBAKW0eYwAwv2geweSdqKRF7R7Q/qprxXac4zCIag9yPDOU3ghiyda
-         1Q/Q==
+        bh=tJp6Gel4ymTt1GvovGQZAlsafaMIEXX5gp0S0+x9BPo=;
+        b=gZ+h0oG0lxR5iXcpQf2dSBf3bemJtcQmoJHKd27DNnHtn4DUxnNtVqlTfxfgIi1gcR
+         j4UY/LQHRE9b0rvAcoxtTMKr5dumT59BV93SFLTotX1amPkQEbjcy5cFtY+MvIQOWZM5
+         WtK13fPKmcyDzAa7Wcw45JFlIrrSI19sr80SB+aEp3rFbqw9RPEYHo+j97mGPJy2xZDr
+         j1P5sDWcdUY6kbGZlem5e2bZomPHMDueWMQ5+Uacc2LtM9ef/R0jsu8rXyhdSSeJ7NBz
+         bXknpm/rA6GuOxZChyLqypELwGewL7iDpDXvVEZ65apC/KvCkOCtHYMegRy+7Sn4IBUh
+         cjzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DUngTBuVOzXGyogb5cT1KNwmO5HYpXdKvAqhD9OJI9c=;
-        b=Uqx62TK5rWszoP2O/mFcekXbzdThPD/azacD3Gy98mwpb+JS7HHBBFSu5SOG01S/bY
-         EBdXt7r4Dp1VCU9M4+EM/AnkR1UO2cFwe/HpPOgXQsjr/wVhGXXEYbCU4iDZ0IvXG2f1
-         n9ko8XGrFqnKQ9T04GjhbjJCqp5ulBDlDMq/2yK7Ldl61u1jodC+xcqChIAhBKSZC2Se
-         l9r6oliRNMMsZNln/OCysEz1T4No8ykfnRZKeGHt2Z4L/EpomW9n715z3ChXMjqAGogT
-         hrw/cHKbgJmyuP0DWYKu2j0xGHdpobmpDDdEsKE5QX9Z7fizcC8x8b+F7j4Pl3ctprH/
-         S3Iw==
-X-Gm-Message-State: ALoCoQkmGFgQ4up7oyLyuH06KTPPbEMONB7f/Nm0jkOkwzo4jcfJAM4qIdmXycRwFVbRM8eWVjp4
-X-Received: by 10.107.29.148 with SMTP id d142mr39071204iod.9.1432677694231;
-        Tue, 26 May 2015 15:01:34 -0700 (PDT)
+        bh=tJp6Gel4ymTt1GvovGQZAlsafaMIEXX5gp0S0+x9BPo=;
+        b=G1stMU2oQYkrhcwIQQ8VkRxudH9ZV3o1AZJrDPs7FJQDeQNiSX8XM6LLSl3prVsLxo
+         IrHzGoom1NXpnX1Hkr0+yAvoux+6CBDDVE746zzdwAsbJzNaqEZ81IZG6bCHWbviXl5j
+         k6X62Iuyly0ltkNOQBC5cDKp0q2YgHGN4xV16REuhKITFTXwOAhFGPGvdl6SjvCeTsUk
+         ginWm79Bgp/Gy+xjf4WsHiwLE6KhW9xSjvqEPtVZ2fkc8Jo58VQwzS56hB5bgRl+lHQJ
+         yIrsOs5OAfbYE9ujme+QYiEMaEboK/dKgNr/Z3cXFH5hbP5/BjFKRZK5gzdF+lgns2HK
+         Kk6A==
+X-Gm-Message-State: ALoCoQmmNDonJhWZkH6fgR+BO1NdDB20Swn58oXdIWp60p7Y8PjbHWHva7L9vEDEPQaKteDI+Gfq
+X-Received: by 10.42.144.131 with SMTP id b3mr32364340icv.35.1432677697855;
+        Tue, 26 May 2015 15:01:37 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:6430:9229:a464:d5f6])
-        by mx.google.com with ESMTPSA id j3sm300289igx.21.2015.05.26.15.01.33
+        by mx.google.com with ESMTPSA id d185sm11989454ioe.42.2015.05.26.15.01.37
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 26 May 2015 15:01:33 -0700 (PDT)
+        Tue, 26 May 2015 15:01:37 -0700 (PDT)
 X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 In-Reply-To: <1432677675-5118-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269990>
-
-The transport version set via command line argument in
-git fetch takes precedence over the configured version.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269991>
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/fetch.c    |  6 ++++++
- remote.c           |  2 ++
- remote.h           |  2 ++
- transport-helper.c |  1 +
- transport.c        | 13 +++++++++++++
- transport.h        |  4 ++++
- 6 files changed, 28 insertions(+)
+ builtin/fetch-pack.c | 17 ++++++++++++++++-
+ fetch-pack.h         |  1 +
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7910419..d2e1828 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -46,6 +46,7 @@ static const char *recurse_submodules_default;
- static int shown_url = 0;
- static int refmap_alloc, refmap_nr;
- static const char **refmap_array;
-+static const char *transport_version;
- 
- static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
-@@ -121,6 +122,9 @@ static struct option builtin_fetch_options[] = {
- 		   N_("default mode for recursion"), PARSE_OPT_HIDDEN },
- 	OPT_BOOL(0, "update-shallow", &update_shallow,
- 		 N_("accept refs that update .git/shallow")),
-+	OPT_STRING('y', "transport-version", &transport_version,
-+		   N_("transport-version"),
-+		   N_("specify transport version to be used")),
- 	{ OPTION_CALLBACK, 0, "refmap", NULL, N_("refmap"),
- 	  N_("specify fetch refmap"), PARSE_OPT_NONEG, parse_refmap_arg },
- 	OPT_END()
-@@ -848,6 +852,8 @@ static struct transport *prepare_transport(struct remote *remote)
- 	struct transport *transport;
- 	transport = transport_get(remote, NULL);
- 	transport_set_verbosity(transport, verbosity, progress);
-+	if (transport_version)
-+		set_option(transport, TRANS_OPT_TRANSPORTVERSION, transport_version);
- 	if (upload_pack)
- 		set_option(transport, TRANS_OPT_UPLOADPACK, upload_pack);
- 	if (keep)
-diff --git a/remote.c b/remote.c
-index 68901b0..2914d9d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -476,6 +476,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 					 key, value);
- 	} else if (!strcmp(subkey, ".vcs")) {
- 		return git_config_string(&remote->foreign_vcs, key, value);
-+	} else if (!strcmp(subkey, ".transportversion")) {
-+		remote->transport_version = git_config_int(key, value);
- 	}
- 	return 0;
- }
-diff --git a/remote.h b/remote.h
-index 02d66ce..04e2310 100644
---- a/remote.h
-+++ b/remote.h
-@@ -50,6 +50,8 @@ struct remote {
- 	const char *receivepack;
- 	const char *uploadpack;
- 
-+	int transport_version;
-+
- 	/*
- 	 * for curl remotes only
- 	 */
-diff --git a/transport-helper.c b/transport-helper.c
-index 5d99a6b..ab3cd5b 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -247,6 +247,7 @@ static int disconnect_helper(struct transport *transport)
- }
- 
- static const char *unsupported_options[] = {
-+	TRANS_OPT_TRANSPORTVERSION,
- 	TRANS_OPT_UPLOADPACK,
- 	TRANS_OPT_RECEIVEPACK,
- 	TRANS_OPT_THIN,
-diff --git a/transport.c b/transport.c
-index f080e93..3ef15f6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -479,6 +479,16 @@ static int set_git_option(struct git_transport_options *opts,
- 	} else if (!strcmp(name, TRANS_OPT_PUSH_CERT)) {
- 		opts->push_cert = !!value;
- 		return 0;
-+	} else if (!strcmp(name, TRANS_OPT_TRANSPORTVERSION)) {
-+		if (!value)
-+			opts->transport_version = 0;
-+		else {
-+			char *end;
-+			opts->transport_version = strtol(value, &end, 0);
-+			if (*end)
-+				die("transport: invalid transport version option '%s'", value);
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 4a6b340..32dc8b0 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -127,6 +127,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.update_shallow = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--transport-version", arg)) {
++			args.version = strtol(arg + strlen("--transport-version"), NULL, 0);
++			continue;
 +		}
-+		return 0;
- 	}
- 	return 1;
- }
-@@ -988,6 +998,9 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->smart_options->receivepack = "git-receive-pack";
- 		if (remote->receivepack)
- 			ret->smart_options->receivepack = remote->receivepack;
-+		if (remote->transport_version)
-+			ret->smart_options->transport_version =
-+				remote->transport_version;
+ 		usage(fetch_pack_usage);
  	}
  
- 	return ret;
-diff --git a/transport.h b/transport.h
-index 18d2cf8..e07d356 100644
---- a/transport.h
-+++ b/transport.h
-@@ -14,6 +14,7 @@ struct git_transport_options {
- 	unsigned update_shallow : 1;
- 	unsigned push_cert : 1;
- 	int depth;
-+	int transport_version;
- 	const char *uploadpack;
- 	const char *receivepack;
- 	struct push_cas_option *cas;
-@@ -162,6 +163,9 @@ struct transport *transport_get(struct remote *, const char *);
- /* Send push certificates */
- #define TRANS_OPT_PUSH_CERT "pushcert"
- 
-+/* Use a new version of the git protocol */
-+#define TRANS_OPT_TRANSPORTVERSION "transportversion"
+@@ -175,7 +179,18 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 		if (!conn)
+ 			return args.diag_url ? 0 : 1;
+ 	}
+-	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
 +
- /**
-  * Returns 0 if the option was used, non-zero otherwise. Prints a
-  * message to stderr if the option is not used.
++	switch (args.version) {
++	default:
++	case 2:
++		get_remote_capabilities(fd[0], NULL, 0);
++		request_capabilities(fd[1]);
++		break;
++	case 1: /* fall through */
++	case 0:
++		get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
++		break;
++	}
+ 
+ 	ref = fetch_pack(&args, fd, conn, ref, dest, sought, nr_sought,
+ 			 &shallow, pack_lockfile_ptr);
+diff --git a/fetch-pack.h b/fetch-pack.h
+index bb7fd76..b48b4f5 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -10,6 +10,7 @@ struct fetch_pack_args {
+ 	const char *uploadpack;
+ 	int unpacklimit;
+ 	int depth;
++	int version;
+ 	unsigned quiet:1;
+ 	unsigned keep_pack:1;
+ 	unsigned lock_pack:1;
 -- 
 2.4.1.345.gab207b6.dirty
