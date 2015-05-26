@@ -1,85 +1,167 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] git-new-workdir: add windows compatibility
-Date: Tue, 26 May 2015 14:35:30 +0200
-Organization: gmx
-Message-ID: <1fb8315dfaffb91ec4925bcc458e12a2@www.dscho.org>
-References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
- <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com>
- <cbfbf842705637b52cde9c6b61f89a75@www.dscho.org>
- <1432642835.17513.22.camel@mad-scientist.net>
+From: "McHenry, Matt" <mmchenry@carnegielearning.com>
+Subject: RE: recovering from "unordered stage entries in index" error
+Date: Tue, 26 May 2015 09:28:33 -0400
+Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F735@exchdb01>
+References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
+ <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
+ <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com>
+ <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
+ <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01>
+ <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Smith <dansmith65@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Richard Hartmann <richih@net.in.tum.de>
-To: paul@mad-scientist.net
-X-From: git-owner@vger.kernel.org Tue May 26 15:24:22 2015
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 26 15:29:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxEq8-0006DL-4j
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 15:24:16 +0200
+	id 1YxEvM-00018s-FH
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 15:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbbEZNXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 09:23:07 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49368 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754189AbbEZNXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 09:23:03 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MYfre-1Ybh5i1Qfa-00VSpP; Tue, 26 May 2015 14:35:32
- +0200
-In-Reply-To: <1432642835.17513.22.camel@mad-scientist.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:rFYnthPARKsqyltJ865/K5BCXEFohfGOLvV6iCTCgxytbSmYFfy
- +dfUn+V8lWBuvGdvSLjACBBdBtLgfcQTPQmWuK08d8xleEnfJJGIXmKOMHe8VXli+Xbodxj
- wkdoMazza0csTKhD7LTbOKJcFrn9Lnt7BD9ujkYBp3/P1hIDsUokSroYgjdV1eHVSQooKyD
- ydwpYrI8hYeHZmGdouYZg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753383AbbEZN3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 09:29:36 -0400
+Received: from mail3.carnegielearning.com ([204.80.87.3]:39187 "EHLO
+	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752195AbbEZN2g (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 May 2015 09:28:36 -0400
+X-ASG-Debug-ID: 1432646914-0424f512db40605e0001-QuoKaX
+Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id rUam2JAKJTRODJ6W (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Tue, 26 May 2015 09:28:34 -0400 (EDT)
+X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
+Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
+ ([127.0.0.1]) with mapi; Tue, 26 May 2015 09:28:34 -0400
+Thread-Topic: recovering from "unordered stage entries in index" error
+X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
+Thread-Index: AdCWB3BZrPv5kXlcSLCk2PzR2rtdaQBr69Kw
+In-Reply-To: <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
+X-Barracuda-Connect: UNKNOWN[10.1.10.4]
+X-Barracuda-Start-Time: 1432646914
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: https://10.1.10.29:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at carnegielearning.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.4995 1.0000 0.0000
+X-Barracuda-Spam-Score: 0.75
+X-Barracuda-Spam-Status: No, SCORE=0.75 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE_7580D
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19288
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.75 BSF_RULE_7580D         Custom Rule 7580D
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269937>
 
-Hi Paul,
-
-On 2015-05-26 14:20, Paul Smith wrote:
-> On Tue, 2015-05-26 at 11:53 +0200, Johannes Schindelin wrote:
->> The biggest problem with `mklink` is that it is only supported on
->> Windows Vista and later, while I really like to keep Windows XP
->> support in Git for Windows.
-> 
-> No, the biggest problem with mklink is that you have to have
-> administrative privileges to use it... from wikipedia:
-> 
-> http://en.wikipedia.org/wiki/NTFS_symbolic_link
-
-It is even worse than that, as you pointed out below: administrators *can* permit non-administrators to create and use of symbolic links.
-
-However, from a maintainer's perspective (which is my role in this thread), the compatibility problem is an even worse problem than the permissions.
-
->> The default security settings in Windows Vista/Windows 7 disallow
->> non-elevated administrators and all non-administrators from creating
->> symbolic links. This behavior can be changed running "secpol.msc" the
->> Local Security Policy management console (under: Security Settings
->> \Local Policies\User Rights Assignment\Create symbolic links). It can
->> be worked around by starting cmd.exe with Run as administrator option
->> or the runas command.
-> 
-> Except even that is not so simple, as various StackOverflow questions
-> and answers will show (I have to run so I can't look them up now).  I
-> did try to get this to work a year or so ago, and although I'm in no way
-> a Windows person (so maybe someone else would have better luck) I
-> couldn't get it to work.
-
-For what it is worth, I tried my hand a couple of years ago at the project to move git-new-workdir to use the `.git` *file* and alternates mechanisms, but that does not work because you really need a separate `.git/HEAD`.
-
-Ciao,
-Johannes
+PiBzZWUgdGhlc2UgY29tbWFuZHMsIG9yIHNvbWV0aGluZyBlbHNlLiBDb3VsZCB5b3UgdHJ5IGFn
+YWluIHdpdGgNCj4gR0lUX1RSQUNFPS9hYnNvbHV0ZS9wYXRoL3RvL3NvbWUvd2hlcmUgaW5zdGVh
+ZCBvZiBHSVRfVFJBQ0U9MiBhbmQgcG9zdA0KPiB0aGUgY29udGVudCBvZiAvYWJzby4uL3NvbWUv
+d2hlcmU/DQoNCglJdCBsb29rcyB0aGUgc2FtZSBhcyBmYXIgYXMgSSBjYW4gc2VlOg0KDQokIEdJ
+VF9UUkFDRT0vdG1wL2dpdC10cmFjZSBnaXQgc3ZuIGZldGNoDQpmYXRhbDogdW5vcmRlcmVkIHN0
+YWdlIGVudHJpZXMgaW4gaW5kZXgNCndyaXRlLXRyZWU6IGNvbW1hbmQgcmV0dXJuZWQgZXJyb3I6
+IDEyOA0KDQokIGVncmVwIC1pICdyZWFkfHRyZWV8dXBkYXRlfGluZGV4JyAvdG1wL2dpdC10cmFj
+ZQ0KMTM6MjY6MDguMTY5OTIxIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
+bjogZ2l0ICd3cml0ZS10cmVlJw0KDQokIGNhdCAvdG1wL2dpdC10cmFjZQ0KMDk6MjY6MDcuNDAy
+NzM1IGdpdC5jOjU1NyAgICAgICAgICAgICAgIHRyYWNlOiBleGVjOiAnZ2l0LXN2bicgJ2ZldGNo
+Jw0KMDk6MjY6MDcuNDAyNzg0IHJ1bi1jb21tYW5kLmM6MzUxICAgICAgIHRyYWNlOiBydW5fY29t
+bWFuZDogJ2dpdC1zdm4nICdmZXRjaCcNCjA5OjI2OjA3LjY4ODg2NiBnaXQuYzozNDggICAgICAg
+ICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAncmV2LXBhcnNlJyAnLS1zaG93LXByZWZpeCcN
+CjEzOjI2OjA3LjY5MTIwNyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46
+IGdpdCAncmV2LXBhcnNlJyAnLS1naXQtZGlyJw0KMTM6MjY6MDcuNjkzMjI4IGdpdC5jOjM0OCAg
+ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtcGFyc2UnICctLXNob3ctY2R1
+cCcNCjEzOjI2OjA3LjY5NTU5NCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQt
+aW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4ucXVpZXQnDQoxMzoyNjowNy42
+OTcyNzkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZp
+ZycgJy0tZ2V0JyAnc3ZuLmF1dGhvcnNwcm9nJw0KMTM6MjY6MDcuNjk5MDMwIGdpdC5jOjM0OCAg
+ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5p
+Z25vcmVwYXRocycNCjEzOjI2OjA3LjcwMDkxNCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFj
+ZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4uYXV0aG9yc2ZpbGUnDQoxMzoy
+NjowNy43MDI4NzIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQg
+J2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLmZvbGxvd3BhcmVudCcNCjEzOjI2OjA3Ljcw
+NDk0OSBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmln
+JyAnLS1nZXQnICdzdm4uY29uZmlnZGlyJw0KMTM6MjY6MDcuNzA2Njc0IGdpdC5jOjM0OCAgICAg
+ICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcg
+J3N2bi5sb2NhbHRpbWUnDQoxMzoyNjowNy43MDg1OTAgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAg
+dHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLnVzZVN2
+bVByb3BzJw0KMTM6MjY6MDcuNzEwNjY5IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBi
+dWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi51c2VTdm5zeW5jUHJv
+cHMnDQoxMzoyNjowNy43MTI2MDIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0
+LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLm5vYXV0aGNhY2hlJw0KMTM6
+MjY6MDcuNzE0NTI3IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0
+ICdjb25maWcnICctLWdldCcgJ3N2bi51c2VybmFtZScNCjEzOjI2OjA3LjcxNjI1NyBnaXQuYzoz
+NDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1pbnQnICct
+LWdldCcgJ3N2bi5sb2d3aW5kb3dzaXplJw0KMTM6MjY6MDcuNzE3ODcyIGdpdC5jOjM0OCAgICAg
+ICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcg
+J3N2bi5ub01ldGFkYXRhJw0KMTM6MjY6MDcuNzE5OTA1IGdpdC5jOjM0OCAgICAgICAgICAgICAg
+IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5pZ25vcmVyZWZzJw0K
+MTM6MjY6MDcuNzIxNjIzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
+Z2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5pbmNsdWRlcGF0aHMnDQoxMzoyNjowNy43MjM0ODUg
+Z2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0t
+Ym9vbCcgJy0tZ2V0JyAnc3ZuLm5vY2hlY2tvdXQnDQoxMzoyNjowNy43MjU0NDEgZ2l0LmM6MzQ4
+ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0t
+Z2V0JyAnc3ZuLmFkZGF1dGhvcmZyb20nDQoxMzoyNjowNy43MjcxMjUgZ2l0LmM6MzQ4ICAgICAg
+ICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLnJlcGFj
+a2ZsYWdzJw0KMTM6MjY6MDcuNzI5MTc5IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBi
+dWlsdC1pbjogZ2l0ICdjb25maWcnICctLWludCcgJy0tZ2V0JyAnc3ZuLnJlcGFjaycNCjEzOjI2
+OjA3LjczMTE0MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAn
+Y29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4udXNlbG9nYXV0aG9yJw0KMTM6MjY6MDcuNzMz
+MTM5IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcn
+ICctLWJvb2wnICctLWdldCcgJ3N2bi5wYXJlbnQnDQoxMzoyNjowNy43MzQ5MTEgZ2l0LmM6MzQ4
+ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0t
+Z2V0JyAnc3ZuLmZldGNoYWxsJw0KMTM6MjY6MDcuNzM2OTkyIGdpdC5jOjM0OCAgICAgICAgICAg
+ICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5yZXZpc2lvbicN
+CjEzOjI2OjA3LjczOTM5OCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46
+IGdpdCAncmV2LXBhcnNlJyAnLS1zeW1ib2xpYycgJy0tYWxsJw0KMTM6MjY6MDcuNzQ0NTE0IGdp
+dC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctbCcN
+CjEzOjI2OjA3Ljc0Njc3MCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46
+IGdpdCAnY29uZmlnJyAnLWwnDQoxMzoyNjowNy43NDkxMDggZ2l0LmM6MzQ4ICAgICAgICAgICAg
+ICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJ3N2bi51c2VTdm1Qcm9w
+cycNCjEzOjI2OjA3Ljc1MTYxMyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQt
+aW46IGdpdCAnY29uZmlnJyAnLWwnDQoxMzoyNjowNy45MDc3MDcgZ2l0LmM6MzQ4ICAgICAgICAg
+ICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0taW50JyAnLS1nZXQnICdzdm4t
+cmVtb3RlLnN2bi5icmFuY2hlcy1tYXhSZXYnDQoxMzoyNjowNy45MTAxNzEgZ2l0LmM6MzQ4ICAg
+ICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0taW50JyAnLS1nZXQn
+ICdzdm4tcmVtb3RlLnN2bi50YWdzLW1heFJldicNCjEzOjI2OjA3LjkxMjYwOCBnaXQuYzozNDgg
+ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4t
+cmVtb3RlLnN2bi51cmwnDQoxMzoyNjowNy45MTU1MzkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAg
+dHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4ucHVz
+aHVybCcNCjEzOjI2OjA3LjkxNzgyNSBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVp
+bHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4tcmVtb3RlLnN2bi51dWlkJw0KMTM6MjY6
+MDcuOTE5NjIwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdy
+ZXYtcGFyc2UnICctLXZlcmlmeScgJ3JlZnMvcmVtb3Rlcy90cnVua14wJw0KMTM6MjY6MDcuOTIz
+NzUyIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtbGlz
+dCcgJy0tcHJldHR5PXJhdycgJy0tcmV2ZXJzZScgJzc0MzMyYjdkNjUzY2RlN2JhM2I5OTljYzdi
+MGFkY2ZkOWQ5MjQ0NDAuLnJlZnMvcmVtb3Rlcy90cnVuaycgJy0tJw0KMTM6MjY6MDcuOTI2MTI4
+IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICct
+LWdldCcgJ3N2bi1yZW1vdGUuc3ZuLnJld3JpdGVSb290Jw0KMTM6MjY6MDcuOTI4NzA3IGdpdC5j
+OjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcg
+J3N2bi1yZW1vdGUuc3ZuLnJld3JpdGVVVUlEJw0KMTM6MjY6MDcuOTMzNjIxIGdpdC5jOjM0OCAg
+ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjYXQtZmlsZScgJy0tYmF0Y2gnDQox
+MzoyNjowOC4xNTAzOTYgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBn
+aXQgJ2NvbmZpZycgJ3N2bi1yZW1vdGUuc3ZuLmJyYW5jaGVzLW1heFJldicgJzIzMTY1NScNCjEz
+OjI2OjA4LjE1Mjk2MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdp
+dCAnY29uZmlnJyAnc3ZuLXJlbW90ZS5zdm4udGFncy1tYXhSZXYnICcyMzE2NTUnDQoxMzoyNjow
+OC4xNTU0NTcgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ3Jl
+di1wYXJzZScgJy0tdmVyaWZ5JyAncmVmcy9yZW1vdGVzL3RydW5rXjAnDQoxMzoyNjowOC4xNTg3
+ODkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycg
+Jy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4udXNlc3ZtcHJvcHMnDQoxMzoyNjowOC4xNjA5MjkgZ2l0
+LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0
+JyAnc3ZuLXJlbW90ZS5zdm4ubm9tZXRhZGF0YScNCjEzOjI2OjA4LjE2NDc3OCBnaXQuYzozNDgg
+ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY2F0LWZpbGUnICdjb21taXQnICc3
+NDMzMmI3ZDY1M2NkZTdiYTNiOTk5Y2M3YjBhZGNmZDlkOTI0NDQwJw0KMTM6MjY6MDguMTY5OTIx
+IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICd3cml0ZS10cmVl
+Jw0K
