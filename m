@@ -1,71 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: recovering from "unordered stage entries in index" error
-Date: Tue, 26 May 2015 20:37:23 +0700
-Message-ID: <CACsJy8CqSERT+MXnU89gmSD-U9RBgRnQVyz2LAHFbCAxW-MESw@mail.gmail.com>
-References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
- <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
- <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com> <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01> <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01> <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F735@exchdb01>
+From: Paul Smith <paul@mad-scientist.net>
+Subject: Re: [PATCH] git-new-workdir: add windows compatibility
+Date: Tue, 26 May 2015 08:20:35 -0400
+Organization: I may be mad, but I am a professional!
+Message-ID: <1432642835.17513.22.camel@mad-scientist.net>
+References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
+	 <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com>
+	 <cbfbf842705637b52cde9c6b61f89a75@www.dscho.org>
+Reply-To: paul@mad-scientist.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "McHenry, Matt" <mmchenry@carnegielearning.com>
-X-From: git-owner@vger.kernel.org Tue May 26 15:39:01 2015
+	Daniel Smith <dansmith65@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	Richard Hartmann <richih@net.in.tum.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 26 16:07:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxF4M-00067H-0m
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 15:38:58 +0200
+	id 1YxFW9-0004Af-MA
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 16:07:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068AbbEZNil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 09:38:41 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34190 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932298AbbEZNiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 09:38:04 -0400
-Received: by igbhj9 with SMTP id hj9so59604363igb.1
-        for <git@vger.kernel.org>; Tue, 26 May 2015 06:37:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SPfyp0HoArpGimxya7Nn1xn/yuNBDma6f4NYgPYZHsc=;
-        b=wIGDx5sde8/2fDgLZme3PvxtOt6bSeVQGlN7ShPhjkPkJM9/A7N4iH75e5x+KvfFZC
-         jfLvHI6ui97OsSS3nbaZgvTWIy/nRsDchmDiHtMuD90NOproOvPgZpKQcsw6Yh+LYj5d
-         NsnlbS00fdR5Yn4Q0Z6puQj1tNy1ZUAv7Ipa1g73pEBYlgJRaruJ71f9TJcFWBgNvOT6
-         c68XJHSlNuZcfmfL7vBY5jhU2Cd60apbJTas7SJzJS+wD8fINVgb0kNxUrLvpz8VfoBh
-         rhlSikyDiWaSYgim8g+6emD51zRFS8dq9wRu4etqYeGmvFVA6ghrlsxlWx8z+qmMYKpm
-         +kxA==
-X-Received: by 10.42.76.146 with SMTP id e18mr30983309ick.42.1432647474143;
- Tue, 26 May 2015 06:37:54 -0700 (PDT)
-Received: by 10.107.181.136 with HTTP; Tue, 26 May 2015 06:37:23 -0700 (PDT)
-In-Reply-To: <D377A9280DB18546A2471214D5CBB0E9087568F735@exchdb01>
+	id S1755519AbbEZOHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 10:07:34 -0400
+Received: from gproxy8-pub.mail.unifiedlayer.com ([67.222.33.93]:41910 "HELO
+	gproxy8-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754418AbbEZOH2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 May 2015 10:07:28 -0400
+X-Greylist: delayed 2797 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 May 2015 10:07:28 EDT
+Received: (qmail 20841 invoked by uid 0); 26 May 2015 12:20:48 -0000
+Received: from unknown (HELO cmgw4) (10.0.90.85)
+  by gproxy8.mail.unifiedlayer.com with SMTP; 26 May 2015 12:20:48 -0000
+Received: from box531.bluehost.com ([74.220.219.131])
+	by cmgw4 with 
+	id YiDX1q00R2qhmhE01iDaQW; Tue, 26 May 2015 12:13:37 -0600
+X-Authority-Analysis: v=2.1 cv=D8zUdJhj c=1 sm=1 tr=0
+ a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
+ a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
+ a=xb9AoMtQs74A:10 a=h1PgugrvaO0A:10 a=8pif782wAAAA:8 a=sde-2SfQDcxyCX6T0F8A:9
+ a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
+	h=Content-Transfer-Encoding:Mime-Version:Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:Message-ID; bh=58avJ27np4pP6CHMTaWVVd03zzTPGO8/eYFHPUZdANw=;
+	b=KBz6ni+YXJEfk64tuysfItKqifDdNwhIJsWAG/K7jEvijS+Y7VyBerEilK7cd/pcXd+W5c9ex88jdKE2BZsks01WxlMqX6Bkt9LiB1yAcRVIyzbVi2KaxRN4EGW4TXIf;
+Received: from [72.93.83.251] (port=54124 helo=homebase)
+	by box531.bluehost.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+	(Exim 4.84)
+	(envelope-from <paul@mad-scientist.net>)
+	id 1YxDqc-0004Vs-8a; Tue, 26 May 2015 06:20:42 -0600
+In-Reply-To: <cbfbf842705637b52cde9c6b61f89a75@www.dscho.org>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
+X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 72.93.83.251 authed with paul+mad-scientist.us}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269939>
 
-On Tue, May 26, 2015 at 8:28 PM, McHenry, Matt
-<mmchenry@carnegielearning.com> wrote:
->> see these commands, or something else. Could you try again with
->> GIT_TRACE=/absolute/path/to/some/where instead of GIT_TRACE=2 and post
->> the content of /abso../some/where?
->
->         It looks the same as far as I can see:
->
-> $ GIT_TRACE=/tmp/git-trace git svn fetch
-> fatal: unordered stage entries in index
-> write-tree: command returned error: 128
->
-> $ egrep -i 'read|tree|update|index' /tmp/git-trace
-> 13:26:08.169921 git.c:348               trace: built-in: git 'write-tree'
+On Tue, 2015-05-26 at 11:53 +0200, Johannes Schindelin wrote:
+> The biggest problem with `mklink` is that it is only supported on
+> Windows Vista and later, while I really like to keep Windows XP
+> support in Git for Windows.
 
-OK I give up. Can't think of how the index is written, and by whom.
--- 
-Duy
+No, the biggest problem with mklink is that you have to have
+administrative privileges to use it... from wikipedia:
+
+http://en.wikipedia.org/wiki/NTFS_symbolic_link
+
+> The default security settings in Windows Vista/Windows 7 disallow
+> non-elevated administrators and all non-administrators from creating
+> symbolic links. This behavior can be changed running "secpol.msc" the
+> Local Security Policy management console (under: Security Settings
+> \Local Policies\User Rights Assignment\Create symbolic links). It can
+> be worked around by starting cmd.exe with Run as administrator option
+> or the runas command.
+
+Except even that is not so simple, as various StackOverflow questions
+and answers will show (I have to run so I can't look them up now).  I
+did try to get this to work a year or so ago, and although I'm in no way
+a Windows person (so maybe someone else would have better luck) I
+couldn't get it to work.
