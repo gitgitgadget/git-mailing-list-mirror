@@ -1,168 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-new-workdir: add windows compatibility
-Date: Mon, 25 May 2015 21:03:20 -0700
-Message-ID: <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com>
-References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Paul Smith <paul@mad-scientist.net>,
-	Jeff King <peff@peff.net>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Richard Hartmann <richih@net.in.tum.de>
-To: Daniel Smith <dansmith65@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 26 06:03:44 2015
+From: Patryk Obara <patryk.obara@gmail.com>
+Subject: [PATCH 0/2] commit -t appends newline after template file
+Date: Tue, 26 May 2015 08:15:06 +0200
+Message-ID: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 26 08:16:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yx65f-00056U-Nc
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 06:03:44 +0200
+	id 1Yx8A9-0006NG-Nw
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 08:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011AbbEZEDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 00:03:37 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:34472 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807AbbEZEDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 00:03:36 -0400
-Received: by igbhj9 with SMTP id hj9so49902310igb.1
-        for <git@vger.kernel.org>; Mon, 25 May 2015 21:03:22 -0700 (PDT)
+	id S1751363AbbEZGP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 02:15:56 -0400
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:35580 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287AbbEZGPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2015 02:15:55 -0400
+Received: by wgme6 with SMTP id e6so18699471wgm.2
+        for <git@vger.kernel.org>; Mon, 25 May 2015 23:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=cdfr8QD5JiltHTvy6Rk/1caYzfPhZN2RXKFPxKUm/XY=;
-        b=lfonCNS93H2QxO4/GOdd7NH7xfCFNkBOEUbYHQpln8WzyKcyKP6OBfXHMF9BkYwEoY
-         io4r6807O3Tl33+5xUv7Jjqod7u3w4wU8HEuuBz3wksFEyZQlsB0tN6rr41vorxJHFwY
-         RM9ULDlYIYl3yXf9X+72aJ2FP67Zpi3G/3kqwsSMxddnqvC9B2E2ezKBxRqA34YroLC+
-         n71PU9vlglXxa+quD3K3bXQcfgQWT7UnyiVpQrwWDUWaeoTprmh3NATTpR1mdqAoH7nf
-         SpBVxQDQ8NcXqFFURtPLtDDGo6o/3+BC4OGFBumsuoT9PXMADhOIEiAp0frvHnyzaThQ
-         hkjA==
-X-Received: by 10.50.178.230 with SMTP id db6mr27134608igc.26.1432613002347;
-        Mon, 25 May 2015 21:03:22 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:f93e:abc0:fe54:4a5a])
-        by mx.google.com with ESMTPSA id d4sm7554908igl.1.2015.05.25.21.03.21
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 25 May 2015 21:03:21 -0700 (PDT)
-In-Reply-To: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
-	(Daniel Smith's message of "Mon, 25 May 2015 16:44:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id;
+        bh=iMDqOtlQl2P+L2hv6Igc5slGZi37pWiFUrF9zwnJFFE=;
+        b=W7b9ITHIDuSaWdMNspd4TfqAk63iua1qVuqbNLtLgr7RjQZWmReG55/GTodE9UR7rM
+         pd8QJ34K8EIre8V/YT5Qxx640jkSA9PFQZAwypOYhwRD7o6wTDcg4a9y7cFXnJkDVqos
+         o+zs2XwQZ190ZI4+EU85j0Zg0/6ildMgylT0oARnZk+pNI4kHm7LH8M+dAlFpioNdBVB
+         H6x0T81+H2zIbKFNKV/CIM+w+0JJyyAjvq0nn9S+Tg6L2wnssAsTFa2t7I2SZMTKhkeC
+         ric4HbMjkPL6JgI5+MBrHeiw9TZaXaFTSq+0Oem2zX9om+pKKoIbbMB/4v+9lchf2nLG
+         vtzg==
+X-Received: by 10.180.85.42 with SMTP id e10mr36916006wiz.17.1432620914369;
+        Mon, 25 May 2015 23:15:14 -0700 (PDT)
+Received: from tars.localdomain ([188.121.16.104])
+        by mx.google.com with ESMTPSA id js3sm20027090wjc.5.2015.05.25.23.15.13
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 May 2015 23:15:13 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269930>
 
-Daniel Smith <dansmith65@gmail.com> writes:
+These are my first patches to git, so be extra pedantic during review, please.
 
-> When running on Windows in MinGW, creating symbolic links via ln always
-> failed.
->
-> Using mklink instead of ln is the recommended method of creating links on
-> Windows:
-> http://stackoverflow.com/questions/18641864/git-bash-shell-fails-to-create-symbolic-links
->
-> Script now branches on Windows to use mklink. This change should not affect
-> unix systems.
->
-> Signed-off-by: Daniel Smith <dansmith65@gmail.com>
->
-> Has been tested on Windows 8.1 and OS X Yosemite.
-> ---
+I noticed, that newline is appended, when I try to use template file - which
+is annoying if template ends with comment. I digged a bit and it turned out
+that:
 
-Swap the "Has been tested..." and "Signed-off-by:" lines.
+* my editor (vim) was appending newline before eof in template, (I forgot
+  about this); most editors, that I tested appends newline before eof by
+  default. Emacs was exception here.
 
-I'll defer to Windows folks if "mklink" is a sensible thing to use
-or not; I have no first-hand experience with Windows, but only heard
-that links are for admin user only or something like that, so I want
-to hear from people whose judgement on Windows matters I trust.
+* commit --status appends newline unconditionally before placing first
+  comment line - it needs to do this or comment might be appended to last line
+  of template file. Usually, in result two newlines are appended after
+  template file content - and unexpected empty line appears in editor.
 
->
-> +iswindows () {
-> + [[ -n "$WINDIR" ]];
-> +}
+* tests for git-commit do not verify newlines at all
 
-Please don't add unnecessary bash-isms.  We have kept this script
-usable without stepping out of POSIX.
+I fixed tests and wrote few more (patch 1/2) - after applying this patch
+some tests won't pass (they shouldn't be passing in the first place imo).
+Patch 2 fixes all broken tests.
 
-	test -n "$WINDIR"
-
-> -git_dir=$(cd "$git_dir" && pwd) || exit 1
-> +if iswindows
-> +then
-> + git_dir=$(cd "$git_dir"; cmd.exe /c cd) || exit 1
-> +else
-> + git_dir=$(cd "$git_dir" && pwd) || exit 1
-> +fi
-
-Indentation of lines inside a new block is done with one more level
-of HT in our scripts, not with just one SP.
-
-> - ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
-> + if iswindows
-> + then
-
-Move these into a helper shell function, starting from here...
-
-> + if test -d "$git_dir/$x"
-> + then
-> + # create directory symbolic link
-> + isdir="/d"
-> + fi
-> + # convert path separator to backslash
-> + targetPath=$(sed -e 's#^J:##' -e 's#/#\\#g' <<< "$git_dir/$x")
-> + cmd.exe /c "mklink $isdir \"$new_workdir/.git/$x\" \"$targetPath\"" || failed
-
-... up to here.  Also a few points about these new lines:
-
- * Use indentation when doing nested if/then/if/then/fi/fi block,
-   i.e.
-
-	if isWindows
-        then
-		if test -d "..."
-                then
-			isdir=/d
-                fi
-                target=..
-                cmd.exe /c ...
-	fi
-
- * "<<<" is a bash-ism, isn't it?
-
- * Use of "#" as s/// separator, when slash is not involved, looks
-   ugly and makes it harder to read.
-
- * Is "J:" drive something special (unlike C: or D: drives)?
-
- * Can computation of targetPath fail?  IOW, shouldn't that line end
-   with &&?
-
- * Share || failed between this part and POSIX part, i.e.
-
-	if isWindows
-        then
-		ln_s_win "$new_workdir" "$x"
-	else
-		ln -s "$git_dir/$x" "$new_workdir'.git/$x"
-	fi || failed
-
-   where ln_s_win would be the "helper shell function" I suggested.
-
-	ln_s_win () {
-		if test -d "$git_dir/$2"
-		then
-                	isdir=/d
-		fi
-                target=$(printf "%s" "$git_dir/$2" | sed -e "...") &&
-		cmd.exe /c "mklink $isdir ..."
-	}
-
-> + else
-> + ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
-> + fi
->  done
->
->  # commands below this are run in the context of the new workdir
-
-Thanks.
+More detailed description is in mails to follow.
