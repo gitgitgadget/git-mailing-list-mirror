@@ -1,81 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-p4: fix handling of multi-word P4EDITOR
-Date: Tue, 26 May 2015 13:21:01 -0700
-Message-ID: <xmqqpp5njdjm.fsf@gitster.dls.corp.google.com>
-References: <1431019501-30807-1-git-send-email-luke@diamand.org>
-	<1431019501-30807-3-git-send-email-luke@diamand.org>
-	<xmqqr3qsp8a0.fsf@gitster.dls.corp.google.com>
-	<554BBCBE.1020408@diamand.org>
-	<xmqqlhh0nny1.fsf@gitster.dls.corp.google.com>
-	<554BCE25.5070308@diamand.org>
-	<xmqqa8xgnlme.fsf@gitster.dls.corp.google.com>
-	<xmqq3838nl5l.fsf@gitster.dls.corp.google.com>
-	<554BE15B.3040303@diamand.org>
-	<xmqqtwvom3t4.fsf@gitster.dls.corp.google.com>
-	<556199A2.8090802@diamand.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 1/1] send-email: Add sendmail email aliases format
+Date: Tue, 26 May 2015 16:53:14 -0400
+Message-ID: <CAPig+cQoUrAhpvyrBTFyDDjaZt8brkhhw3aehC-hNeS7gND6jw@mail.gmail.com>
+References: <49e9a95b52aa61ed4f37edf1dfa178186acb4a29.1432367540.git.allenbh@gmail.com>
+	<CAPig+cTaiZ_PVaGk6n_bsEqqTJEYEMSCWcnC0=MiN2Bf7L4sWw@mail.gmail.com>
+	<CAJ80sasp6kNgbJJw-2TzZnPPDVgYdAwwsdh=hNH4xxu1TBtiyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Chris Lasell <chrisl@pixar.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Tue May 26 22:21:11 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Allen Hubbe <allenbh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 26 22:53:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxLLa-0007id-Sl
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 22:21:11 +0200
+	id 1YxLqi-00049E-EF
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 22:53:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751982AbbEZUVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 16:21:06 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:32959 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751958AbbEZUVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 16:21:03 -0400
-Received: by igbpi8 with SMTP id pi8so69618576igb.0
-        for <git@vger.kernel.org>; Tue, 26 May 2015 13:21:03 -0700 (PDT)
+	id S1751217AbbEZUxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 16:53:15 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:32880 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751087AbbEZUxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2015 16:53:14 -0400
+Received: by igbpi8 with SMTP id pi8so70318779igb.0
+        for <git@vger.kernel.org>; Tue, 26 May 2015 13:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=OiARBnjnkZcHjAv4ZuZam4qtnt67AqltH9kZkJK2ZC4=;
-        b=YqrbZqC7kj+fZFp91SKGGTDW1Vj6/eqVXNmj3fpQPhQz+vHIZiiP1RN5bUzROMl0tw
-         k3LvcypxCK0EDZrq6ccLkwpVxHFS4eyYaOCkcMp99H7c2GQ4tvMUYmddwJ1BtAj3wp4D
-         /8hsSmhpdYmBSxvLmS8+j6s8I2Vfk5KJYAvMF5r2ATc+Te4iufWILFx3hnvHi/JpaHP9
-         REqb6KiLFZT91cCQmvGSh96EO2J8cXmjLFvkY08VApz9tYsRUjTqxevvVY2m32J0JOHw
-         1HNrWxZVhrYk8koiTGkqKrtXo/8ebF5q22NScaIrmXYE+pdn7W2bm6+picjpEYjIaWp+
-         S/Mw==
-X-Received: by 10.42.49.137 with SMTP id w9mr31850318icf.39.1432671662811;
-        Tue, 26 May 2015 13:21:02 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4485:3520:962f:d5a5])
-        by mx.google.com with ESMTPSA id kl1sm98519igb.15.2015.05.26.13.21.01
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 26 May 2015 13:21:01 -0700 (PDT)
-In-Reply-To: <556199A2.8090802@diamand.org> (Luke Diamand's message of "Sun,
-	24 May 2015 10:28:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WSwQSpmshQ+OFODi2BeJpJ5dhJfFeTsv4UElTMhq1r8=;
+        b=zzO36MdobIctk4DxtrvkWNhaWU19JYbq8vYBVYyVLbMK7JWu6quVbfidOk6UoBiR0U
+         tgFrTMUjY2VgUrwQn64uFQSeoppIGadFEUnKPto38HZ1lT6D+I2qZW9HPDUmOT1qDNzq
+         eafDG8wLE9IkH0YqD1VHCAs+CVl8V8Qpegf2NbVsZOLtokLNkx3p2rcNfVxbqNvwr+/O
+         nfVYhuY59yENgfsm69mXzH98pWjMGfKsUnKc0y6VTdBw+z5fMtGOWF2jRTaBfuHR7S9j
+         KD7KDUve9mOUnFoCA+WF8tZV4pJLnFW4JKdIjjc1YGNZR5WuPi341QozfyQMF9szJKEn
+         78Sw==
+X-Received: by 10.107.151.75 with SMTP id z72mr37560933iod.46.1432673594313;
+ Tue, 26 May 2015 13:53:14 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Tue, 26 May 2015 13:53:14 -0700 (PDT)
+In-Reply-To: <CAJ80sasp6kNgbJJw-2TzZnPPDVgYdAwwsdh=hNH4xxu1TBtiyA@mail.gmail.com>
+X-Google-Sender-Auth: BU9zsxT5UY7rUS-HnYjZDwbBjVU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269974>
 
-Luke Diamand <luke@diamand.org> writes:
-
-> On 07/05/15 23:16, Junio C Hamano wrote:
->> Luke Diamand <luke@diamand.org> writes:
+On Tue, May 26, 2015 at 3:41 PM, Allen Hubbe <allenbh@gmail.com> wrote:
+> On Tue, May 26, 2015 at 3:10 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Saturday, May 23, 2015, Allen Hubbe <allenbh@gmail.com> wrote:
+>>> diff --git a/git-send-email.perl b/git-send-email.perl
+>>> index e1e9b1460ced..ffea50094a48 100755
+>>> --- a/git-send-email.perl
+>>> +++ b/git-send-email.perl
+>>> @@ -516,6 +518,33 @@ my %parse_alias = (
+>>>                           }
+>>>                       } },
+>>>
+>>> +       sendmail => sub { my $fh = shift; while (<$fh>) {
+>>> +               # ignore comment lines
+>>> +               if (/^\s*(?:#.*)?$/) { }
 >>
+>> This confused me at first because the comment talks only about
+>> "comment lines", for which a simpler /^\s*#/ would suffice. The regex,
+>> however, actually matches blank lines and comment lines (both of which
+>> get skipped). Either the comment should be fixed or the regex could be
+>> split into two much simpler ones. The splitting into simpler regex's
+>> has the benefit of being easier to comprehend at a glance. For
+>> instance:
+>>
+>>     next if /^\s*$/;
+>>     next if /^\s*#/;
 >
-> [Resurrecting old thread]
-> ...
+> I noticed this too after sending the patch, and I have already changed
+> the comment to mention blank lines or comment lines.
 >
-> To me, that seems to imply that for GIT_WINDOWS_NATIVE, we take the
-> *second* branch and use "sh", so again, the the code as it stands will
-> be fine. msysgit uses that path.
-> ...
->
-> I don't think we need to do anything. msysgit works fine with the
-> origin "sh", "-c", ... code.
+> Splitting the regex would be more simple, but the regex is already
+> quite simple as it is.
 
-Thanks.  Let's merge what is in 'pu' down to 'next' then.
+To be clear, the reason that I brought up the idea of splitting the
+regex was that /^\s*$/ and /^\s*#/ are very common idioms which people
+can and do recognize and understand at-a-glance without having to
+spend time deciphering them. On the other hand, /^\s*(?:#.*)?$/
+doesn't lend itself to that sort of instant comprehension; it requires
+a certain amount of mental effort to understand.
+
+Anyhow, it's just an idea put forth in case you or someone favors it;
+not an outright request for a change.
+
+>>> +               # recognize lines that look like an alias
+>>> +               elsif (/^(\S+)\s*:\s*(.+?)$/) {
+>>
+>> Observation: Given "foo:bar:baz", this regex will take "foo:bar" as
+>> the key, and "baz" as the value, which is probably not what was
+>> intended, however, it likely doesn't matter much in this case since
+>> colon isn't legal in an email address[1].
+>
+> That's a keen observation.  I think it would work simply to use a
+> non-greedy +? in the first capture group.
+
+Yes, that would work. Alternately: /^([^\s:]+)\s*:\s*(.+?)$/
