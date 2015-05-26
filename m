@@ -1,155 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Mark trailing whitespace error in del lines of diff
-Date: Tue, 26 May 2015 10:34:32 -0700
-Message-ID: <xmqq617fkztj.fsf@gitster.dls.corp.google.com>
-References: <9b8e349e223dc9cd871fc5f7915e590548322932.1432585659.git.cb@256bit.org>
-	<20150525222215.GI26436@vauxhall.crustytoothpaste.net>
-	<xmqqbnh89r0z.fsf@gitster.dls.corp.google.com>
-	<20150526162937.GA24439@256bit.org>
-	<xmqqegm3l06u.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 00/56] Convert parts of refs.c to struct object_id
+Date: Tue, 26 May 2015 10:37:29 -0700
+Message-ID: <CAGZ79kbxrPhcMUFx3OY1s_qk4TkUcBgscDwqSvrLtDXmF1YwWw@mail.gmail.com>
+References: <1432579162-411464-1-git-send-email-sandals@crustytoothpaste.net>
+	<xmqqa8wsbgd8.fsf@gitster.dls.corp.google.com>
+	<20150525194007.GH26436@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Christian Brabandt <cblists@256bit.org>
-X-From: git-owner@vger.kernel.org Tue May 26 19:34:40 2015
+Content-Type: text/plain; charset=UTF-8
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 26 19:37:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxIkR-0004jr-QQ
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 19:34:40 +0200
+	id 1YxInH-0006GC-A4
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 19:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbbEZRef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 13:34:35 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:35733 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752437AbbEZRee (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 13:34:34 -0400
-Received: by igbyr2 with SMTP id yr2so64413857igb.0
-        for <git@vger.kernel.org>; Tue, 26 May 2015 10:34:34 -0700 (PDT)
+	id S1753172AbbEZRha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 13:37:30 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:33100 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbbEZRh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2015 13:37:29 -0400
+Received: by qkhg32 with SMTP id g32so11401518qkh.0
+        for <git@vger.kernel.org>; Tue, 26 May 2015 10:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=riGVrizBFGPiTgtC5WOjMJII6lhs/fqcaiFGB3G3YDA=;
-        b=eklXfQlFEhOvC7XC4W8GQcaBsMYcdbDTK/lA3XXNHDjRxQyJKN1FMsenAlL1XDS/ke
-         ducwsdc4GHpZK4ZBYCbb1QJm0p0EEn+0VTKYAPtbGVkaUb4/my4rbKlzE1J+eAcRtsIP
-         FwyUBi9Ruw2H59unZC+Y60eoqbU6T4EkhUBWf3hmgwQbuhGrd0PYicYrZqnC0Xh4Z/iC
-         jiwR4TU8alVhWbtpJddmNMjpz9ItKELYb5QEhl8GXcW+BR/d3KD+Xv+PFoRZbYZPBPYV
-         rskKxZUpd02iSSJ/OT9db73w0pw1f+rlC6cIBxqBWIeaAdPdH0g9QWloVQxFpX9eqALq
-         qtRQ==
-X-Received: by 10.50.102.68 with SMTP id fm4mr31249408igb.25.1432661674186;
-        Tue, 26 May 2015 10:34:34 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:f93e:abc0:fe54:4a5a])
-        by mx.google.com with ESMTPSA id u35sm1672441iou.7.2015.05.26.10.34.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 26 May 2015 10:34:33 -0700 (PDT)
-In-Reply-To: <xmqqegm3l06u.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 26 May 2015 10:26:33 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=8iiBwQH7ECQy4tZ8ghKa2MZ/Z2+Riw4qiEk8gwgNaOQ=;
+        b=iRk7XPMevR6B98jrGPtQqJHXejqlxK/9JthmtUkPMURzGpu4KnGJWdNRzoQ+me6nA5
+         1J15CJjzAn+FXro3+vwRgMkmXuXL1ataE37TK0AOFjuTf31SuVfu1wEx+VNwiGrH6n84
+         lLBGVw2KNEkmqP3pl2RGouvWh4tvwzqMqocYQn8KhzopfpObszqeOF0Xhy+HCelmtOep
+         bpJMHOqdsDPbEkQBI+T5QA/HaT0GiFPi6J+ycqPqBoCq2j6CqxCpquxPAYzAhYdFGA0P
+         HO3exSimGNioMva+6XCh/UEDFKPzvtz7wuZ8af9flGValpJlyzwMJvz6mihXZbxeVcXR
+         Dr7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=8iiBwQH7ECQy4tZ8ghKa2MZ/Z2+Riw4qiEk8gwgNaOQ=;
+        b=mB9EjpFF4xpXlgnVFuTbkszn3+lIvMA3FYOhGa5ZN1btvF6m3Onaa6UI6/z0AZr8YZ
+         WPP1kOBWggwZTIpJLqOeWW+oCM9ewdopS+rw8n7XYgpLuxq1m19Z4+f22xoZEc8F43vy
+         /TPIpn4+UD+jb/+0c9U5+bC+V1Akrwo3V+xlAXQPnZiJRlybPRHq8HBc94wBAC7e3Mi5
+         ZexmmPyfydB0fKPxoQc3YYq10SiOhg87kUi8h3LxkPLWRhZhvhjWFrj9T9fl1qFXdGsB
+         Lasox0R2A5YOL+lDkkybRYplm80h4VK+00arurhZTNaiU132gQtG7AVvuB3MhegON4uL
+         5K6w==
+X-Gm-Message-State: ALoCoQkIaNhWxFve0M+ul8b2bp7chZYVoXHPf/rdlSWZalYA4YiFjoO3YH8P5gslxiTMK87ZX7Xj
+X-Received: by 10.140.133.9 with SMTP id 9mr31457975qhf.5.1432661849152; Tue,
+ 26 May 2015 10:37:29 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Tue, 26 May 2015 10:37:29 -0700 (PDT)
+In-Reply-To: <20150525194007.GH26436@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269957>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, May 25, 2015 at 12:40 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, May 25, 2015 at 12:34:59PM -0700, Junio C Hamano wrote:
+>> [PATCH 01/56] was authored by you but has Michael's sign-off, which
+>> looked somewhat odd to me, though.
+>
+> Yes, it does.  He picked it up from me, and signed off, and I took his
+> branch.  I don't believe he changed it, but I didn't check for certain.
+> So technically, although I wrote it, I also received it from him without
+> changing it, so both (a) and (c) of the DCO apply.
 
-> I'll send out two patch series to do the painting part (I didn't
-> want to touch "--check", as its utility is even more dubious
-> compared to painting, at least to me).
+At least in the kernel, the sign offs are also used to track a patchs way
+of life, so essentially whenever somebody touches that patch (either as
+an author, or as a patch shoveling sub Lieutenant), you'd add a sign off.
 
-And here is the second one.
+So if we were to handle the sign offs just as the kernel people, I would
+have assumed a sign-off block like
 
--- >8 --
-Subject: [PATCH 2/2] diff.c: --ws-check-deleted option
+Sign-off: you
+Sign off: Michael
+Sign-off: you
 
-Traditionally, we only cared about whitespace breakages introduced
-in new lines.  Some people want to paint whitespace breakages on old
-lines, too.  When they see a whitespace breakage on a new line, they
-can spot the same kind of whitespace breakage on the corresponding
-old line and want to say "Ah, that breakage is there but was
-inherited from the original, so let's not fix that for now."
+as that would indicate that Michael did not author it from scratch but
+based his work on yours. That's just my understanding of the sign off
+process for linux and I guessed we'd follow a very similar process. But
+no objections from me regarding the signing.
 
-Enable such use with the new option, "--ws-check-deleted".
+All patches have been
+Skimmed-over-and-run-test-suite-by: Stefan Beller <sbeller@google.com>
+if that helps.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/diff-options.txt |  7 +++++++
- diff.c                         | 21 ++++++++++++++++++++-
- diff.h                         |  1 +
- 3 files changed, 28 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index b7c3afe..617cbc6 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -282,6 +282,13 @@ ifndef::git-format-patch[]
- 	initial indent of the line are considered whitespace errors.
- 	Exits with non-zero status if problems are found. Not compatible
- 	with --exit-code.
-+
-+--ws-check-deleted::
-+--no-ws-check-deleted::
-+	Highlight whitespace errors in deleted lines in the color
-+	specified by `color.diff.whitespace`, as well as in added
-+	lines.
-+
- endif::git-format-patch[]
- 
- --full-index::
-diff --git a/diff.c b/diff.c
-index 93c1eb4..44cc234 100644
---- a/diff.c
-+++ b/diff.c
-@@ -503,8 +503,22 @@ static void emit_del_line(const char *reset,
- 			  const char *line, int len)
- {
- 	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_OLD);
-+	const char *ws = NULL;
- 
--	emit_line_0(ecbdata->opt, set, reset, '-', line, len);
-+	if (ecbdata->opt->ws_check_deleted) {
-+		ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
-+		if (!*ws)
-+			ws = NULL;
-+	}
-+
-+	if (!ws)
-+		emit_line_0(ecbdata->opt, set, reset, '-', line, len);
-+	else {
-+		/* Emit just the prefix, then the rest. */
-+		emit_line_0(ecbdata->opt, set, reset, '-', "", 0);
-+		ws_check_emit(line, len, ecbdata->ws_rule,
-+			      ecbdata->opt->file, set, reset, ws);
-+	}
- }
- 
- static void emit_hunk_header(struct emit_callback *ecbdata,
-@@ -3819,6 +3833,11 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (skip_prefix(arg, "--submodule=", &arg))
- 		return parse_submodule_opt(options, arg);
- 
-+	else if (!strcmp(arg, "--ws-check-deleted"))
-+		options->ws_check_deleted = 1;
-+	else if (!strcmp(arg, "--no-ws-check-deleted"))
-+		options->ws_check_deleted = 0;
-+
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
- 		options->line_termination = 0;
-diff --git a/diff.h b/diff.h
-index f6fdf49..baca5ec 100644
---- a/diff.h
-+++ b/diff.h
-@@ -138,6 +138,7 @@ struct diff_options {
- 	int dirstat_permille;
- 	int setup;
- 	int abbrev;
-+	int ws_check_deleted;
- 	const char *prefix;
- 	int prefix_length;
- 	const char *stat_sep;
--- 
-2.4.1-511-gc1146d5
+> --
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
