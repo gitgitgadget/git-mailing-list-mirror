@@ -1,109 +1,112 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/WIP PATCH 08/11] transport: connect_setup appends protocol
- version number
-Date: Tue, 26 May 2015 15:31:12 -0700
-Message-ID: <CAGZ79kY=hZ=6pUbpVHUW8rU3AEMx2TwkBYDsDsZ+bPH_QnsYzA@mail.gmail.com>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
-	<1432677675-5118-9-git-send-email-sbeller@google.com>
-	<xmqq1ti3j7ym.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a commit
+Date: Tue, 26 May 2015 18:52:15 -0400
+Message-ID: <CAPig+cThB1xC0B6wC29Bm0QUiPpGbkVe9j_Qu5LLdVq3XFMgoQ@mail.gmail.com>
+References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 27 00:31:19 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: =?UTF-8?Q?Galan_R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed May 27 00:52:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxNNW-00076W-Hg
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 00:31:18 +0200
+	id 1YxNhy-0007bt-GN
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 00:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbbEZWbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 18:31:14 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:36705 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751232AbbEZWbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 18:31:13 -0400
-Received: by qgf2 with SMTP id 2so38247735qgf.3
-        for <git@vger.kernel.org>; Tue, 26 May 2015 15:31:13 -0700 (PDT)
+	id S1751488AbbEZWwS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 May 2015 18:52:18 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:36366 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085AbbEZWwP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 May 2015 18:52:15 -0400
+Received: by igbpi8 with SMTP id pi8so70832162igb.1
+        for <git@vger.kernel.org>; Tue, 26 May 2015 15:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Tall20jAZCDSBIR71w+jj1VmGoZ0mSegeaB2HVqzVRE=;
-        b=pnUsHybEZHJu6WGgi2Mxx1wzKvfmTUPycAzwTrUv7WEYEXojAXF+VFvmbl6NDXQUZ1
-         odg9iQOeTYS7Re6OyI6xF2lGLqrjEK9VUBLT+417vCuVjgEom/FaDLIVjQPYTHDyJMZX
-         dQQwG9ASMjMiF5+lYdtj6tDYrl/WIrYn9RxR6nW3RV8GaoZpM+7lWZccrMC6tYkTxjlh
-         DApuLcRqe33p3ydgT/86sYOToeEMJ23kll7f/8YNRIqZ++8JeXkuVsOihE2+cq9L+yn3
-         xJTIy2GXwrzcCLuZk7SFaaGHvFzPhdV8jMTCR4pawZSFcd28wMQcvQNeqJtuOnpbyacL
-         3e7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Tall20jAZCDSBIR71w+jj1VmGoZ0mSegeaB2HVqzVRE=;
-        b=Hx0U02sZ3QMTX3o5fcmDZABGGXArwwV3o9qociEZgALawfKYfx2L0asDRsJ/rLWURL
-         FVqdugiC0ilCIShEFH0X+VRTn750PeOeUTLMzqaUWJYrve0W8/TNcMQGrlOl83f7XH8W
-         H+ZP615q0OMssChy2uT00j8z+ZJlq3lGcbJC5mhTEK6C1Nu+GJ9esu4y0hMYuAW7RCjg
-         /iweAhhmaILGqtSAIBv6vTdksRXEuBDvcsUdz49zy9vtdxEJsgMwQyDrLLYnu/Y4KPM5
-         gT168svhBIZqnVtvnWgl3cBVUp+GdCkxJqSGvzIcBiJGkrbnxsTJ1MwWnB+Md9IkhlcJ
-         jSGQ==
-X-Gm-Message-State: ALoCoQlyyaOOxMiEsejYgcVviF4HOVRlsBtxH5zqtLeNmP1oIoN6LbFJDtKNXWaJbWSImIH1esSJ
-X-Received: by 10.55.19.197 with SMTP id 66mr61128922qkt.24.1432679472900;
- Tue, 26 May 2015 15:31:12 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Tue, 26 May 2015 15:31:12 -0700 (PDT)
-In-Reply-To: <xmqq1ti3j7ym.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=45JjduCDP6DXRY7g62Xmbk5LMXs+A1A8RIRt59cv/Ow=;
+        b=kio8IDht5doG8CM4WQy6YR9IyMX1rwReCAzUsqVze7n249KZM0iQ21wOT6uy3DqOdq
+         BaBNguefUfR2fYqEAP3Gpfhz4j7Y93FiCq26G/Dcd+nrwZFme6z5FpAeF+lTGm0vuH9C
+         msPC3p8GfRtQiMZ0Ejqeh6Mr166N1kfPvMd0dbvT5vIre7k9h1lpdSXxazDjqcOWitxq
+         pCeYvC2wrErVbU5b83uYI91Y9x+PULrxhI3+euYIXmbujG8lUFGcdVwETb6wPfxDIcOC
+         jJHHU0bxHJLlz1KTGwfDGBHQRUuKhBgxCq9iJ8QmZK0rEbcgGmltad8tJQE2w5D6onCn
+         5IeA==
+X-Received: by 10.50.61.200 with SMTP id s8mr28188311igr.7.1432680735124; Tue,
+ 26 May 2015 15:52:15 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Tue, 26 May 2015 15:52:15 -0700 (PDT)
+In-Reply-To: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-Google-Sender-Auth: vp6Ba6ZQk-YK1Ri8GzDAKjzh-40
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270005>
 
-On Tue, May 26, 2015 at 3:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Tue, May 26, 2015 at 5:38 PM, Galan R=C3=A9mi
+<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
+> git-rebase -i: Add key word "drop" to remove a commit
+
+"key word" is unusual. More typical is "keyword". However, perhaps
+"command" might be even better. Also, custom on this project is not to
+capitalize, so:
+
+    git-rebase -i: add command "drop" to remove a commit
+
+> Instead of removing a line to remove the commit, you can use the key
+> word "drop" (just like "pick" or "edit"). It has the same effect as
+> deleting the line (removing the commit) except that you keep a visual
+> trace of your actions, allowing a better control and reducing the
+> possibility of removing a commit by mistake.
+
+Nicely explained.
+
+Ditto regarding "key word".
+
+> Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-i=
+np.fr>
+> ---
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.=
+txt
+> index 1d01baa..3cd2ef2 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -514,6 +514,9 @@ rebasing.
+>  If you just want to edit the commit message for a commit, replace th=
+e
+>  command "pick" with the command "reword".
 >
->> +     if (transport->smart_options
->> +         && transport->smart_options->transport_version) {
->> +             buf = xmalloc(strlen(remote_program) + 12);
->> +             sprintf(buf, "%s-%d", remote_program,
->> +                     transport->smart_options->transport_version);
->> +             remote_program = buf;
->> +     }
->
-> Bikeshedding: so the versioning scheme is that the current one is
-> zero, and the next one is two?  I would have expected that there
-> would be something like
+> +If you want to remove a commit, replace the command "pick" by the
+> +command "drop".
 
-I think currently we have version 1. But we don't advertise it, so
-I'll call it 0
-(the default or unadvertised or however you name it. 0 as in "unsure" maybe)
+I think the existing method of removing a commit merits mention here. P=
+erhaps:
 
-I thought about future proofing this version a bit. Say version 2 is bad because
-I don't have the experience of 10 years Git nor of maintaining large
-projects and
-you want to make a version 3 soon. And this would support that just fine.
+    To drop a commit, delete its line or replace the command
+    "pick" with "drop".
 
-The meaning being: Any version except 0 should have a dedicated
-extension -${version}
-The 0 is left out for backwards compatibility.
+Or, if you want to emphasize "drop":
 
-So in a later patch where we want to introduce force-using of old
-versions  you could
-configure upload-pack to be explicit upload-pack-1. The upload-pack-1
-version is not
-yet there with this series though.
+    To drop a commit, replace the command "pick" with "drop",
+    or just delete its line.
 
->
->         if (...->version < 2) {
->                 ... append "-%d" ...
->         }
->
-> involved.
-
-Oh! I see here you would count the current one as 1, which has no
-number extension,
-and any further would have a -${version}. That would transport the
-intention much better
-I guess.
+>  If you want to fold two or more commits into one, replace the comman=
+d
+>  "pick" for the second and subsequent commits with "squash" or "fixup=
+".
+>  If the commits had different authors, the folded commit will be
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index dc3133f..cb749e8 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
