@@ -1,167 +1,71 @@
-From: "McHenry, Matt" <mmchenry@carnegielearning.com>
-Subject: RE: recovering from "unordered stage entries in index" error
-Date: Tue, 26 May 2015 09:28:33 -0400
-Message-ID: <D377A9280DB18546A2471214D5CBB0E9087568F735@exchdb01>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: recovering from "unordered stage entries in index" error
+Date: Tue, 26 May 2015 20:37:23 +0700
+Message-ID: <CACsJy8CqSERT+MXnU89gmSD-U9RBgRnQVyz2LAHFbCAxW-MESw@mail.gmail.com>
 References: <D377A9280DB18546A2471214D5CBB0E908599428C7@exchdb01>
  <CACsJy8AS-9Cv6V=OKTckpnqd6OGsmvRy17TLoikT4QkA0sRofg@mail.gmail.com>
- <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com>
- <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01>
- <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
- <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01>
- <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
+ <xmqqwq01kh8r.fsf@gitster.dls.corp.google.com> <CACsJy8Bdx5tto0w1q7rZ1ORx8RmHZCEKPyBqYs37k=YvbO3kzA@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F47B@exchdb01> <CACsJy8As8-b6kWHDnmAwAftyPG6X-BmoQdToQywzn9D4dtg2Fg@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F592@exchdb01> <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
+ <D377A9280DB18546A2471214D5CBB0E9087568F735@exchdb01>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 26 15:29:47 2015
+To: "McHenry, Matt" <mmchenry@carnegielearning.com>
+X-From: git-owner@vger.kernel.org Tue May 26 15:39:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxEvM-00018s-FH
-	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 15:29:40 +0200
+	id 1YxF4M-00067H-0m
+	for gcvg-git-2@plane.gmane.org; Tue, 26 May 2015 15:38:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753383AbbEZN3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 09:29:36 -0400
-Received: from mail3.carnegielearning.com ([204.80.87.3]:39187 "EHLO
-	mail3.carnegielearning.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752195AbbEZN2g (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 May 2015 09:28:36 -0400
-X-ASG-Debug-ID: 1432646914-0424f512db40605e0001-QuoKaX
-Received: from webmail.carnegielearning.com ([10.1.10.4]) by mail3.carnegielearning.com with ESMTP id rUam2JAKJTRODJ6W (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Tue, 26 May 2015 09:28:34 -0400 (EDT)
-X-Barracuda-Envelope-From: mmchenry@carnegielearning.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.1.10.4
-Received: from exchdb01.carnegielearning.com ([127.0.0.1]) by exchdb01
- ([127.0.0.1]) with mapi; Tue, 26 May 2015 09:28:34 -0400
-Thread-Topic: recovering from "unordered stage entries in index" error
-X-ASG-Orig-Subj: RE: recovering from "unordered stage entries in index" error
-Thread-Index: AdCWB3BZrPv5kXlcSLCk2PzR2rtdaQBr69Kw
-In-Reply-To: <CACsJy8B=ttGa1aBKTdZAe6bLN4rbEE1r3fA+ifNNvUWhYD0Yfg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-x-exclaimer-md-config: 4a2a7f2a-5ce0-45d8-a978-59e527d0c9d2
-X-Barracuda-Connect: UNKNOWN[10.1.10.4]
-X-Barracuda-Start-Time: 1432646914
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: https://10.1.10.29:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at carnegielearning.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.4995 1.0000 0.0000
-X-Barracuda-Spam-Score: 0.75
-X-Barracuda-Spam-Status: No, SCORE=0.75 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE_7580D
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.19288
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.75 BSF_RULE_7580D         Custom Rule 7580D
+	id S1755068AbbEZNil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2015 09:38:41 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:34190 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932298AbbEZNiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2015 09:38:04 -0400
+Received: by igbhj9 with SMTP id hj9so59604363igb.1
+        for <git@vger.kernel.org>; Tue, 26 May 2015 06:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=SPfyp0HoArpGimxya7Nn1xn/yuNBDma6f4NYgPYZHsc=;
+        b=wIGDx5sde8/2fDgLZme3PvxtOt6bSeVQGlN7ShPhjkPkJM9/A7N4iH75e5x+KvfFZC
+         jfLvHI6ui97OsSS3nbaZgvTWIy/nRsDchmDiHtMuD90NOproOvPgZpKQcsw6Yh+LYj5d
+         NsnlbS00fdR5Yn4Q0Z6puQj1tNy1ZUAv7Ipa1g73pEBYlgJRaruJ71f9TJcFWBgNvOT6
+         c68XJHSlNuZcfmfL7vBY5jhU2Cd60apbJTas7SJzJS+wD8fINVgb0kNxUrLvpz8VfoBh
+         rhlSikyDiWaSYgim8g+6emD51zRFS8dq9wRu4etqYeGmvFVA6ghrlsxlWx8z+qmMYKpm
+         +kxA==
+X-Received: by 10.42.76.146 with SMTP id e18mr30983309ick.42.1432647474143;
+ Tue, 26 May 2015 06:37:54 -0700 (PDT)
+Received: by 10.107.181.136 with HTTP; Tue, 26 May 2015 06:37:23 -0700 (PDT)
+In-Reply-To: <D377A9280DB18546A2471214D5CBB0E9087568F735@exchdb01>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/269938>
 
-PiBzZWUgdGhlc2UgY29tbWFuZHMsIG9yIHNvbWV0aGluZyBlbHNlLiBDb3VsZCB5b3UgdHJ5IGFn
-YWluIHdpdGgNCj4gR0lUX1RSQUNFPS9hYnNvbHV0ZS9wYXRoL3RvL3NvbWUvd2hlcmUgaW5zdGVh
-ZCBvZiBHSVRfVFJBQ0U9MiBhbmQgcG9zdA0KPiB0aGUgY29udGVudCBvZiAvYWJzby4uL3NvbWUv
-d2hlcmU/DQoNCglJdCBsb29rcyB0aGUgc2FtZSBhcyBmYXIgYXMgSSBjYW4gc2VlOg0KDQokIEdJ
-VF9UUkFDRT0vdG1wL2dpdC10cmFjZSBnaXQgc3ZuIGZldGNoDQpmYXRhbDogdW5vcmRlcmVkIHN0
-YWdlIGVudHJpZXMgaW4gaW5kZXgNCndyaXRlLXRyZWU6IGNvbW1hbmQgcmV0dXJuZWQgZXJyb3I6
-IDEyOA0KDQokIGVncmVwIC1pICdyZWFkfHRyZWV8dXBkYXRlfGluZGV4JyAvdG1wL2dpdC10cmFj
-ZQ0KMTM6MjY6MDguMTY5OTIxIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
-bjogZ2l0ICd3cml0ZS10cmVlJw0KDQokIGNhdCAvdG1wL2dpdC10cmFjZQ0KMDk6MjY6MDcuNDAy
-NzM1IGdpdC5jOjU1NyAgICAgICAgICAgICAgIHRyYWNlOiBleGVjOiAnZ2l0LXN2bicgJ2ZldGNo
-Jw0KMDk6MjY6MDcuNDAyNzg0IHJ1bi1jb21tYW5kLmM6MzUxICAgICAgIHRyYWNlOiBydW5fY29t
-bWFuZDogJ2dpdC1zdm4nICdmZXRjaCcNCjA5OjI2OjA3LjY4ODg2NiBnaXQuYzozNDggICAgICAg
-ICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAncmV2LXBhcnNlJyAnLS1zaG93LXByZWZpeCcN
-CjEzOjI2OjA3LjY5MTIwNyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46
-IGdpdCAncmV2LXBhcnNlJyAnLS1naXQtZGlyJw0KMTM6MjY6MDcuNjkzMjI4IGdpdC5jOjM0OCAg
-ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtcGFyc2UnICctLXNob3ctY2R1
-cCcNCjEzOjI2OjA3LjY5NTU5NCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQt
-aW46IGdpdCAnY29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4ucXVpZXQnDQoxMzoyNjowNy42
-OTcyNzkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZp
-ZycgJy0tZ2V0JyAnc3ZuLmF1dGhvcnNwcm9nJw0KMTM6MjY6MDcuNjk5MDMwIGdpdC5jOjM0OCAg
-ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5p
-Z25vcmVwYXRocycNCjEzOjI2OjA3LjcwMDkxNCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFj
-ZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4uYXV0aG9yc2ZpbGUnDQoxMzoy
-NjowNy43MDI4NzIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQg
-J2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLmZvbGxvd3BhcmVudCcNCjEzOjI2OjA3Ljcw
-NDk0OSBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmln
-JyAnLS1nZXQnICdzdm4uY29uZmlnZGlyJw0KMTM6MjY6MDcuNzA2Njc0IGdpdC5jOjM0OCAgICAg
-ICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcg
-J3N2bi5sb2NhbHRpbWUnDQoxMzoyNjowNy43MDg1OTAgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAg
-dHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLnVzZVN2
-bVByb3BzJw0KMTM6MjY6MDcuNzEwNjY5IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBi
-dWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcgJ3N2bi51c2VTdm5zeW5jUHJv
-cHMnDQoxMzoyNjowNy43MTI2MDIgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0
-LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0tZ2V0JyAnc3ZuLm5vYXV0aGNhY2hlJw0KMTM6
-MjY6MDcuNzE0NTI3IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0
-ICdjb25maWcnICctLWdldCcgJ3N2bi51c2VybmFtZScNCjEzOjI2OjA3LjcxNjI1NyBnaXQuYzoz
-NDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1pbnQnICct
-LWdldCcgJ3N2bi5sb2d3aW5kb3dzaXplJw0KMTM6MjY6MDcuNzE3ODcyIGdpdC5jOjM0OCAgICAg
-ICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWJvb2wnICctLWdldCcg
-J3N2bi5ub01ldGFkYXRhJw0KMTM6MjY6MDcuNzE5OTA1IGdpdC5jOjM0OCAgICAgICAgICAgICAg
-IHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5pZ25vcmVyZWZzJw0K
-MTM6MjY6MDcuNzIxNjIzIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjog
-Z2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5pbmNsdWRlcGF0aHMnDQoxMzoyNjowNy43MjM0ODUg
-Z2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0t
-Ym9vbCcgJy0tZ2V0JyAnc3ZuLm5vY2hlY2tvdXQnDQoxMzoyNjowNy43MjU0NDEgZ2l0LmM6MzQ4
-ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0t
-Z2V0JyAnc3ZuLmFkZGF1dGhvcmZyb20nDQoxMzoyNjowNy43MjcxMjUgZ2l0LmM6MzQ4ICAgICAg
-ICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLnJlcGFj
-a2ZsYWdzJw0KMTM6MjY6MDcuNzI5MTc5IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBi
-dWlsdC1pbjogZ2l0ICdjb25maWcnICctLWludCcgJy0tZ2V0JyAnc3ZuLnJlcGFjaycNCjEzOjI2
-OjA3LjczMTE0MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAn
-Y29uZmlnJyAnLS1ib29sJyAnLS1nZXQnICdzdm4udXNlbG9nYXV0aG9yJw0KMTM6MjY6MDcuNzMz
-MTM5IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcn
-ICctLWJvb2wnICctLWdldCcgJ3N2bi5wYXJlbnQnDQoxMzoyNjowNy43MzQ5MTEgZ2l0LmM6MzQ4
-ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJy0t
-Z2V0JyAnc3ZuLmZldGNoYWxsJw0KMTM6MjY6MDcuNzM2OTkyIGdpdC5jOjM0OCAgICAgICAgICAg
-ICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcgJ3N2bi5yZXZpc2lvbicN
-CjEzOjI2OjA3LjczOTM5OCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46
-IGdpdCAncmV2LXBhcnNlJyAnLS1zeW1ib2xpYycgJy0tYWxsJw0KMTM6MjY6MDcuNzQ0NTE0IGdp
-dC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctbCcN
-CjEzOjI2OjA3Ljc0Njc3MCBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46
-IGdpdCAnY29uZmlnJyAnLWwnDQoxMzoyNjowNy43NDkxMDggZ2l0LmM6MzQ4ICAgICAgICAgICAg
-ICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tYm9vbCcgJ3N2bi51c2VTdm1Qcm9w
-cycNCjEzOjI2OjA3Ljc1MTYxMyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQt
-aW46IGdpdCAnY29uZmlnJyAnLWwnDQoxMzoyNjowNy45MDc3MDcgZ2l0LmM6MzQ4ICAgICAgICAg
-ICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0taW50JyAnLS1nZXQnICdzdm4t
-cmVtb3RlLnN2bi5icmFuY2hlcy1tYXhSZXYnDQoxMzoyNjowNy45MTAxNzEgZ2l0LmM6MzQ4ICAg
-ICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0taW50JyAnLS1nZXQn
-ICdzdm4tcmVtb3RlLnN2bi50YWdzLW1heFJldicNCjEzOjI2OjA3LjkxMjYwOCBnaXQuYzozNDgg
-ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4t
-cmVtb3RlLnN2bi51cmwnDQoxMzoyNjowNy45MTU1MzkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAg
-dHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4ucHVz
-aHVybCcNCjEzOjI2OjA3LjkxNzgyNSBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVp
-bHQtaW46IGdpdCAnY29uZmlnJyAnLS1nZXQnICdzdm4tcmVtb3RlLnN2bi51dWlkJw0KMTM6MjY6
-MDcuOTE5NjIwIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdy
-ZXYtcGFyc2UnICctLXZlcmlmeScgJ3JlZnMvcmVtb3Rlcy90cnVua14wJw0KMTM6MjY6MDcuOTIz
-NzUyIGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdyZXYtbGlz
-dCcgJy0tcHJldHR5PXJhdycgJy0tcmV2ZXJzZScgJzc0MzMyYjdkNjUzY2RlN2JhM2I5OTljYzdi
-MGFkY2ZkOWQ5MjQ0NDAuLnJlZnMvcmVtb3Rlcy90cnVuaycgJy0tJw0KMTM6MjY6MDcuOTI2MTI4
-IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICct
-LWdldCcgJ3N2bi1yZW1vdGUuc3ZuLnJld3JpdGVSb290Jw0KMTM6MjY6MDcuOTI4NzA3IGdpdC5j
-OjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjb25maWcnICctLWdldCcg
-J3N2bi1yZW1vdGUuc3ZuLnJld3JpdGVVVUlEJw0KMTM6MjY6MDcuOTMzNjIxIGdpdC5jOjM0OCAg
-ICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICdjYXQtZmlsZScgJy0tYmF0Y2gnDQox
-MzoyNjowOC4xNTAzOTYgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBn
-aXQgJ2NvbmZpZycgJ3N2bi1yZW1vdGUuc3ZuLmJyYW5jaGVzLW1heFJldicgJzIzMTY1NScNCjEz
-OjI2OjA4LjE1Mjk2MyBnaXQuYzozNDggICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdp
-dCAnY29uZmlnJyAnc3ZuLXJlbW90ZS5zdm4udGFncy1tYXhSZXYnICcyMzE2NTUnDQoxMzoyNjow
-OC4xNTU0NTcgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ3Jl
-di1wYXJzZScgJy0tdmVyaWZ5JyAncmVmcy9yZW1vdGVzL3RydW5rXjAnDQoxMzoyNjowOC4xNTg3
-ODkgZ2l0LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycg
-Jy0tZ2V0JyAnc3ZuLXJlbW90ZS5zdm4udXNlc3ZtcHJvcHMnDQoxMzoyNjowOC4xNjA5MjkgZ2l0
-LmM6MzQ4ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgJ2NvbmZpZycgJy0tZ2V0
-JyAnc3ZuLXJlbW90ZS5zdm4ubm9tZXRhZGF0YScNCjEzOjI2OjA4LjE2NDc3OCBnaXQuYzozNDgg
-ICAgICAgICAgICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCAnY2F0LWZpbGUnICdjb21taXQnICc3
-NDMzMmI3ZDY1M2NkZTdiYTNiOTk5Y2M3YjBhZGNmZDlkOTI0NDQwJw0KMTM6MjY6MDguMTY5OTIx
-IGdpdC5jOjM0OCAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0ICd3cml0ZS10cmVl
-Jw0K
+On Tue, May 26, 2015 at 8:28 PM, McHenry, Matt
+<mmchenry@carnegielearning.com> wrote:
+>> see these commands, or something else. Could you try again with
+>> GIT_TRACE=/absolute/path/to/some/where instead of GIT_TRACE=2 and post
+>> the content of /abso../some/where?
+>
+>         It looks the same as far as I can see:
+>
+> $ GIT_TRACE=/tmp/git-trace git svn fetch
+> fatal: unordered stage entries in index
+> write-tree: command returned error: 128
+>
+> $ egrep -i 'read|tree|update|index' /tmp/git-trace
+> 13:26:08.169921 git.c:348               trace: built-in: git 'write-tree'
+
+OK I give up. Can't think of how the index is written, and by whom.
+-- 
+Duy
