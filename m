@@ -1,84 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC 2/2] git rebase -i: Warn removed or dupplicated commits
-Date: Wed, 27 May 2015 13:38:22 +0200
-Message-ID: <vpqy4ka5jyp.fsf@anie.imag.fr>
-References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<1432676318-22852-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<loom.20150527T105315-517@post.gmane.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/5] Fix verify_lock() to report errors via strbuf
+Date: Wed, 27 May 2015 13:59:42 +0200
+Message-ID: <5565B1AE.3010708@alum.mit.edu>
+References: <1432337697-29161-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 13:38:34 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 14:00:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxZfL-0006W6-EL
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 13:38:31 +0200
+	id 1Yxa09-0001yX-8Y
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 14:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbbE0Li1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2015 07:38:27 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39432 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751645AbbE0Li0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 07:38:26 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4RBcLfE016393
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 May 2015 13:38:21 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4RBcMar016280;
-	Wed, 27 May 2015 13:38:22 +0200
-In-Reply-To: <loom.20150527T105315-517@post.gmane.org> (Stephen Kelly's
-	message of "Wed, 27 May 2015 08:54:55 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 May 2015 13:38:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4RBcLfE016393
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433331501.87674@ANczdrKCvTAMeUsJBRCu7g
+	id S1751364AbbE0L7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 07:59:51 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:46622 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750755AbbE0L7u (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 May 2015 07:59:50 -0400
+X-AuditID: 12074413-f79386d000000d23-61-5565b1b188bc
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 40.DF.03363.1B1B5655; Wed, 27 May 2015 07:59:45 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB0143.dip0.t-ipconnect.de [93.219.1.67])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4RBxh0s015108
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 27 May 2015 07:59:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <1432337697-29161-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1N24MTXUYMYVNouuK91MFg29V5gt
+	Nm9uZ3Fg9liwqdTj4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M6Yfb2UveMZZcWQeawPjB/Yu
+	Rk4OCQETiacHmqBsMYkL99azdTFycQgJXGaU+Lj6NTuEc5ZJYtuteUAOBwevgLbE8TZ1kAYW
+	AVWJRR+Os4HYbAK6Eot6mplASkQFgiRev8wFCfMKCEqcnPmEBcQWEVCTmNh2CMxmFrCWWN61
+	FmyvsICbxIUv88DGCAm4SPRu/wZWwyngKnF7aR8TRL2exI7rv1ghbHmJ5q2zmScwCsxCsmIW
+	krJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI118vNLNFLTSndxAgJWuEdjLtOyh1i
+	FOBgVOLhzZBMDRViTSwrrsw9xCjJwaQkyrtqBVCILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO+1
+	6UA53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IEb8gGoEbBotT01Iq0
+	zJwShDQTByfIcC4pkeLUvJTUosTSkox4UJTGFwPjFCTFA7R30nqQvcUFiblAUYjWU4yKUuK8
+	m0ASAiCJjNI8uLGwVPSKURzoS2FeLpDtPMA0Btf9CmgwE9Bgs6MpIINLEhFSUg2M8Tzu6l6B
+	6zJEn8tszZLQ6j/4+43wnAr7RenFyWZRZR1z513VOSX5JXazvMmjb/ouS9oUIhf5zj/DvP75
+	7YNh6iUlFb3RDktCQne7W6/IN3znluT7eMP79mdLj7THMd5On7JXwL8mKGtRbDUz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270042>
 
-Stephen Kelly <steveire@gmail.com> writes:
+On 05/23/2015 01:34 AM, Michael Haggerty wrote:
+> verify_lock() is a helper function called while committing reference
+> transactions. But when it fails, instead of recording its error
+> message in a strbuf to be passed back to the caller of
+> ref_transaction_commit(), the error message was being written directly
+> to stderr.
+> 
+> Instead, report the errors via a strbuf so that they make it back to
+> the caller of ref_transaction_commit().
+> 
+> [...]
+> 
+> This is the patch series that I mentioned here [1]. It applies on top
+> of mh/ref-directory-file [2] and is thematically a continuation of
+> that series in the sense that it further cleans up the error handling
+> within reference transactions. It would be easy to rebase to master if
+> that is preferred.
 
-> Galan R=E9mi <remi.galan-alfonso <at> ensimag.grenoble-inp.fr> writes=
-:
->
->>=20
->> Check if commits were removed (i.e. a line was deleted) or dupplicat=
-ed
->> (e.g. the same commit is picked twice), can print warnings or abort
->> git rebase according to the value of the configuration variable
->> rebase.checkLevel.
->
-> I sometimes duplicate commits deliberately if I want to split a commi=
-t in
-> two. I move a copy up and fix the conflict, and I know that I'll stil=
-l get
-> the right thing later even if I make a mistake with the conflict
-> resolution.
+The last sentence is nonsense. This patch series relies on
+lock_ref_sha1_basic() having a "strbuf *err" parameter, which is only
+the case since
 
-The more I think about it, the more I think we should either not warn a=
-t
-all on duplicate commits, or have a separate config variable.
+    4a32b2e lock_ref_sha1_basic(): report errors via a "struct strbuf
+*err" (2015-05-11)
 
-It's rare to duplicate by mistake, and when you do so, it's already eas=
-y
-to notice: you get conflicts, and you can git rebase --skip the second
-occurence. Accidentally dropped commits are another story: it's rather
-easy to cut-and-forget-to-paste, and the consequence currently is silen=
-t
-data loss ...
+The latter commit is in mh/ref-directory-file (which has now been merged
+to master, so technically the last sentence is now correct again).
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sorry for the confusion.
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
