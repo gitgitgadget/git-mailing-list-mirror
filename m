@@ -1,87 +1,119 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a
- commit
-Date: Wed, 27 May 2015 08:28:42 +0200
-Organization: gmx
-Message-ID: <c78cd2ac17333a2e70d1113d95495c41@www.dscho.org>
-References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: =?UTF-8?Q?Galan_R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed May 27 08:28:51 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 2/4] t4015: separate common setup and per-test expectation
+Date: Tue, 26 May 2015 23:30:30 -0700
+Message-ID: <1432708232-29892-3-git-send-email-gitster@pobox.com>
+References: <1432669584-342-1-git-send-email-gitster@pobox.com>
+ <1432708232-29892-1-git-send-email-gitster@pobox.com>
+Cc: Christian Brabandt <cblists@256bit.org>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 27 08:30:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxUpf-0000d2-0s
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 08:28:51 +0200
+	id 1YxUrY-0001bm-Ki
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 08:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752405AbbE0G2q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2015 02:28:46 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50789 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752371AbbE0G2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 02:28:46 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lw2Sj-1ZBZuI1nPp-017jJn; Wed, 27 May 2015 08:28:43
- +0200
-In-Reply-To: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:3UTX5L8s8AYbjfUeGsmny1nctsLBUuD+JeeyB+EeTa06V66lrsC
- UAPHb0bNXXiI/ljUFJHKb4UVZPIrdBLC3gTB/QjAnnb+ard54N+1CHXBPX1bMBcmXb7dHfR
- kBjOxavrJ4w1AKgEzeihj3fDMHvToA/yWpHzFhzOnQC0Yt7Fs4mGxC09QLBjfRHRfGZvOoh
- AJoBVdlJAG1SdMaKoOPNA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752469AbbE0Gam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 02:30:42 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:35006 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbbE0Gah (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 02:30:37 -0400
+Received: by iesa3 with SMTP id a3so6414759ies.2
+        for <git@vger.kernel.org>; Tue, 26 May 2015 23:30:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=PJsUO4h8yKOo55yC8l2Jum78ek1svQ2s4/bptOU1e4A=;
+        b=fGEXHmZTSWg362Jd4t9zjvAIjt+LlQ9fTqaJdyj17Yhtaf9/REdqT3fSXMirXzPWwV
+         ztuPCDgsjr4xq7VoCjalbze7j/b1FlmAGOImLvIW0fUxjaSuheAmIgflA14c9pwvA8yx
+         K9aZHPzt0NIotgGYWWNItcOQBssubMfd1dIq6XlaNfOorDY9exnFsHaQ3KZD6q88+2YU
+         VZLwkSrKsta1JrUvoGLCPSc/XRnihLvomAXaCH8NNEaTZe9/vhd7Dw82CoQ/xvXwyPb7
+         iN9+CcmNk8RaUvsQxVqxpkO3SOtNrPi5dVE7SVpA9XzxAxy6HfaVXsHWRXLmBrRySd3C
+         xzCA==
+X-Received: by 10.107.133.9 with SMTP id h9mr35804200iod.47.1432708237021;
+        Tue, 26 May 2015 23:30:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4485:3520:962f:d5a5])
+        by mx.google.com with ESMTPSA id v3sm1176168igk.1.2015.05.26.23.30.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 26 May 2015 23:30:36 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2-503-g2442661
+In-Reply-To: <1432708232-29892-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270018>
 
-Hi R=C3=A9mi,
+The last two tests in the script were to
 
-On 2015-05-26 23:38, Galan R=C3=A9mi wrote:
-> Instead of removing a line to remove the commit, you can use the key
-> word "drop" (just like "pick" or "edit"). It has the same effect as
-> deleting the line (removing the commit) except that you keep a visual
-> trace of your actions, allowing a better control and reducing the
-> possibility of removing a commit by mistake.
+ - set up color.diff.* slots
+ - set up an expectation for a single test
+ - run that test and check the result
 
-Please note that you can already just comment-out the line if you need =
-to keep a visual trace.
+but split in a wrong way.  It did the first two in the first test
+and the third one in the second test.  The latter two belong to each
+other.  This matters when you plan to add more of these tests that
+share the common coloring.
 
-Alternatively, you can replace the `pick` command by `noop`.
+While at it, make sure we use a color different from old, which is
+also red.
 
-If you really need the `drop` command (with which I am not 100% happy b=
-ecause I already envisage users appending a `drop A` to an edit script =
-"pick A; pick B; pick C" and expecting A *not to be picked*), then it i=
-s better to just add the `drop` part to the already existing `noop` cla=
-use:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t4015-diff-whitespace.sh | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f7deeb0..8355be8 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -489,7 +489,7 @@ do_next () {
- 	rm -f "$msg" "$author_script" "$amend" || exit
- 	read -r command sha1 rest < "$todo"
- 	case "$command" in
--	"$comment_char"*|''|noop)
-+	"$comment_char"*|''|noop|drop)
- 		mark_action_done
- 		;;
- 	pick|p)
-
-Ciao,
-Johannes
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 0bfc7ff..4da30e5 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -810,11 +810,20 @@ test_expect_success 'setup diff colors' '
+ 	git config color.diff.old red &&
+ 	git config color.diff.new green &&
+ 	git config color.diff.commit yellow &&
+-	git config color.diff.whitespace "normal red" &&
++	git config color.diff.whitespace blue &&
+ 
+-	git config core.autocrlf false &&
++	git config core.autocrlf false
++'
++
++test_expect_success 'diff that introduces a line with only tabs' '
++	git config core.whitespace blank-at-eol &&
++	git reset --hard &&
++	echo "test" >x &&
++	git commit -m "initial" x &&
++	echo "{NTN}" | tr "NT" "\n\t" >>x &&
++	git -c color.diff=always diff | test_decode_color >current &&
+ 
+-	cat >expected <<-\EOF
++	cat >expected <<-\EOF &&
+ 	<BOLD>diff --git a/x b/x<RESET>
+ 	<BOLD>index 9daeafb..2874b91 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+@@ -822,18 +831,10 @@ test_expect_success 'setup diff colors' '
+ 	<CYAN>@@ -1 +1,4 @@<RESET>
+ 	 test<RESET>
+ 	<GREEN>+<RESET><GREEN>{<RESET>
+-	<GREEN>+<RESET><BRED>	<RESET>
++	<GREEN>+<RESET><BLUE>	<RESET>
+ 	<GREEN>+<RESET><GREEN>}<RESET>
+ 	EOF
+-'
+ 
+-test_expect_success 'diff that introduces a line with only tabs' '
+-	git config core.whitespace blank-at-eol &&
+-	git reset --hard &&
+-	echo "test" >x &&
+-	git commit -m "initial" x &&
+-	echo "{NTN}" | tr "NT" "\n\t" >>x &&
+-	git -c color.diff=always diff | test_decode_color >current &&
+ 	test_cmp expected current
+ '
+ 
+-- 
+2.4.2-503-g3e4528a
