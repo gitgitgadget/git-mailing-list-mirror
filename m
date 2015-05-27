@@ -1,82 +1,76 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/WIP PATCH 06/11] remote.h: add get_remote_capabilities, request_capabilities
-Date: Wed, 27 May 2015 13:19:39 -0400
-Message-ID: <CAPig+cQUtjVbdF5eEo0EH-QXz4q_UqOtoFZ5DcTNzceCxWLS=A@mail.gmail.com>
+Subject: Re: [RFC/WIP PATCH 04/11] upload-pack-2: Implement the version 2 of upload-pack
+Date: Wed, 27 May 2015 13:30:28 -0400
+Message-ID: <CAPig+cSFEN+V0668FPDM1jY2KdW_nVaEn7+AOWJj_KwUU_UVPw@mail.gmail.com>
 References: <1432677675-5118-1-git-send-email-sbeller@google.com>
-	<1432677675-5118-7-git-send-email-sbeller@google.com>
-	<CAPig+cRfJKAQ8Q5PF1VfTAGA1njXAshC0RbnMv9cEp4bH_MN7A@mail.gmail.com>
-	<20150527065030.GE885@peff.net>
+	<1432677675-5118-5-git-send-email-sbeller@google.com>
+	<20150527063558.GB885@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 27 19:19:46 2015
+X-From: git-owner@vger.kernel.org Wed May 27 19:30:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxezZ-0007iB-Fm
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 19:19:45 +0200
+	id 1YxfA1-00053Q-Vm
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 19:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbbE0RTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 13:19:40 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33494 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753145AbbE0RTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 13:19:39 -0400
-Received: by iebgx4 with SMTP id gx4so18904837ieb.0
-        for <git@vger.kernel.org>; Wed, 27 May 2015 10:19:39 -0700 (PDT)
+	id S1751946AbbE0Ra3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 13:30:29 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:38629 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751726AbbE0Ra3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 13:30:29 -0400
+Received: by igbjd9 with SMTP id jd9so4438921igb.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 10:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=EC2kfVGrcU/2gC7PTjXr19UVxHL4tvrGUbyOGMVMT3s=;
-        b=KWGKEN/bbfEdGqqWZ5RxN19BSqRJomSPPtpgYpbV7qYGZK7LbSMOqZWV1aEhlaq0N4
-         7t8iVi18JPsUdEUiQC+/FYdOnh6y2Cvs01O2ORlb4cWdOKi51cQwxHm4KbnlbCwF9SWx
-         GvnlZdXyBrC8KiW/YktiwDVv1jbimwQxuyW1we43S7Ic16cJVVI7cxEGNxjLNpsRgBVK
-         t7rHGN659qtsRAY0go90m8n68qOEd1tpMsMCCPMZjabFqz6jrsOHMvDxSpgw++dNkOKg
-         iY+c1IJEprSN3Qjm/AtyzVOHa4AaRBKdYSlj7mERoiYdTZyIiiJgipMPmS9e2WFnRKjm
-         yDiA==
-X-Received: by 10.50.66.234 with SMTP id i10mr5828335igt.22.1432747179275;
- Wed, 27 May 2015 10:19:39 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Wed, 27 May 2015 10:19:39 -0700 (PDT)
-In-Reply-To: <20150527065030.GE885@peff.net>
-X-Google-Sender-Auth: RP_Wwg-0UCWHhQqWvmvpyzsapZg
+        bh=qJckbIof6fmfnpXRq3PPP9zzp7yoXBJB3qGIcYgtVUU=;
+        b=qZdWQtW5DMTt7OhWdBDaQcCOmmx/SY/FXpsALiYQxrcfvjlYjqy/oosVZe6lupIDxM
+         vRdZ85R9i+VBrMLCM3yZhtocoURH8/m+/uaBtM5NveuU+tkurSnSX+PRkcbky7GafX3k
+         AC3fUHE4L6ChdAgZSBLxtifqiUR5QpRnBiYZPtb4QKGuRTczohZ/NyUGur56hdPJEzmW
+         k+DA0NoCtQgR49lcETqFBY4C+uv3U5Nopml1uomElYhmdL7ARnybnJ1TZqOKmaeGy+yS
+         JL1fknKNLj1LlOU4uP7MpTRqY3GeZJdXvgdaQDCxddOeUU9A2KvaCY/DpuA6YpDs3LDy
+         RO8A==
+X-Received: by 10.107.31.134 with SMTP id f128mr43668065iof.19.1432747828292;
+ Wed, 27 May 2015 10:30:28 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Wed, 27 May 2015 10:30:28 -0700 (PDT)
+In-Reply-To: <20150527063558.GB885@peff.net>
+X-Google-Sender-Auth: ceMYyktFY7lJWISUICdVb_w3jec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270060>
 
-On Wed, May 27, 2015 at 2:50 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, May 26, 2015 at 11:25:05PM -0400, Eric Sunshine wrote:
+On Wed, May 27, 2015 at 2:35 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, May 26, 2015 at 03:01:08PM -0700, Stefan Beller wrote:
+>> +static void send_capabilities(void)
+>> +{
+>> +     char buf[100];
+>> +
+>> +     while (next_capability(buf))
+>> +             packet_write(1, "capability:%s\n", buf);
 >
->> > +               len = packet_read(in, &src_buf, &src_len,
->> > +                                 packet_buffer, sizeof(packet_buffer),
->> > +                                 PACKET_READ_GENTLE_ON_EOF |
->> > +                                 PACKET_READ_CHOMP_NEWLINE);
->> > +               if (len < 0)
->> > +                       die_initial_contact(0);
->> > +
->> > +               if (!len)
->> > +                       break;
->> > +
->> > +               if (len > 4 && skip_prefix(line, "ERR ", &arg))
->>
->> The 'len > 4' check is needed because there's no guarantee that 'line'
->> is NUL-terminated. Correct?
+> Like Eric, I find the whole next_capability thing a little ugly. His
+> suggestion to pass in the parsing state is an improvement, but I wonder
+> why we need to parse at all. Can we keep the capabilities as:
 >
-> I think this was just blindly copied from get_remote_heads(). And I
-> think that code was being overly paranoid. Ever since f3a3214 (Make
-> send/receive-pack be closer to doing something interesting, 2005-06-29),
-> the pkt-line reader will add an extra NUL to the buffer to ease cases
-> like this.
+>   const char *capabilities[] = {
+>         "multi_ack",
+>         "thin-pack",
+>         ... etc ...
+>   };
+>
+> and then loop over the array?
 
-Thanks. I had started digging into packet_read() to determine whether
-it guaranteed NUL-termination, but didn't get far enough to decide. I
-agree that if NUL-termination is guaranteed, then the 'len > 4' check
-is superfluous (and confusing, which is why it caught my attention in
-the first place).
+Yes, that would be much nicer. I also had this in mind but didn't know
+if there was a strong reason for the capabilities to be shoehorned
+into a single string as they are currently.
