@@ -1,81 +1,60 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] git-new-workdir: add windows compatibility
-Date: Wed, 27 May 2015 10:17:05 +0200
-Organization: gmx
-Message-ID: <4f5a995a4012f7f4bce10c8170b06527@www.dscho.org>
-References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
- <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com> <5564A3F7.8030305@gmail.com>
- <CADBZQ5hR1L7FPM_Ht00-as5eXw+PMJk1T2P3_ZiHedf0bi-H1w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] clone: add `--seed` shorthand
+Date: Wed, 27 May 2015 04:19:10 -0400
+Message-ID: <20150527081909.GA10008@peff.net>
+References: <20150521041435.GA18978@peff.net>
+ <20150521041619.GC5196@peff.net>
+ <8895881cd3f324d2b8a827e311296a48@www.dscho.org>
+ <3516DC60279A42188EE2AA394921FC70@PhilipOakley>
+ <1be7702fa53d1705e913aff2e00eac21@www.dscho.org>
+ <20150522064922.GA27716@peff.net>
+ <xmqqtwv1bxpy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Paul Smith <paul@mad-scientist.net>, Jeff King <peff@peff.net>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Richard Hartmann <richih@net.in.tum.de>
-To: Daniel Smith <dansmith65@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 10:17:29 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 10:19:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxWWn-0008Dd-6c
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 10:17:29 +0200
+	id 1YxWYZ-0000fm-9a
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 10:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658AbbE0IRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 04:17:24 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59285 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752440AbbE0IRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 04:17:21 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LiDrv-1ZSgQC0rOF-00nOMX; Wed, 27 May 2015 10:17:07
- +0200
-In-Reply-To: <CADBZQ5hR1L7FPM_Ht00-as5eXw+PMJk1T2P3_ZiHedf0bi-H1w@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:ii1eGe6gfU8lcoFfH1hTl94dSjpZIhgBDBfb+GJdJfEYo71ZmP4
- xc5Ri3/o84M5L5z5O/OXA5/NdH/u69S6v0Vr/zDoMnh/t9zzdKkyI2YklAOoH/GxPjN9J0i
- F6RFcWSAhAoMhvhTuQzkXRWe8t2GEjslx8qcD5WFkBzPuvazfth6T254HUZM2kvFjchQ2EE
- xi85KVhuM5w5+yCksq4aA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752552AbbE0ITO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 04:19:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36546 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752232AbbE0ITM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 04:19:12 -0400
+Received: (qmail 4628 invoked by uid 102); 27 May 2015 08:19:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 03:19:12 -0500
+Received: (qmail 5500 invoked by uid 107); 27 May 2015 08:19:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 04:19:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 May 2015 04:19:10 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqtwv1bxpy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270037>
 
-Hi Daniel,
+On Sun, May 24, 2015 at 12:07:53PM -0700, Junio C Hamano wrote:
 
-On 2015-05-26 19:16, Daniel Smith wrote:
-> Thanks to everyone for reviewing my proposed patch an providing valuable
-> feedback. This was my first patch submission to a large open source project
-> like Git and the whole process was a little daunting.
-
-Heh, yeah, it can be quite overwhelming (and this mailing list is very "male", too). Sorry!
-
-I hope, though, that it was obvious we all only wanted to be helpful?
-
-> On Tue, May 26, 2015 at 9:48 AM, Karsten Blees <karsten.blees@gmail.com>
-> wrote:
+> Jeff King <peff@peff.net> writes:
 > 
->> AFAICT, the MSys2 symlink() implementation is pretty smart to detect these
->> conditions and fall back to deep copy (aka 'cp -a') if symlinks are not
->> supported.
->>
->> IOW, using 'ln -s' will hopefully "just work" in the upcoming Git for
->> Windows 2, thus trying to fix it for MSys1 / Git for Windows 1.9x is
->> probably a lost cause.
->>
+> > Having slept on it, I really think "--seed" should be "fetch from the
+> > seed into temp refs", and not what I posted earlier.
 > 
-> In that case, I'll abandon this patch and wait for Git for Windows 2 to
-> come out.
+> Yeah, I think that is the right way to do it.
 
-Speaking of which: Could you try `git-new-workdir` with Git for Windows 2.x (developers' preview)? https://git-for-windows.github.io/#download
+In the meantime, do you want to pick up patches 1 and 2? I think they
+are cleanups that stand on their own, whether we do patch 3 or not.
 
-It *might* be necessary to define the `MSYS` environment variable to `winsymlinks:nativestrict` before starting the Git Bash, to enable symlinking. It would be really good to know if that is the case so that I can do something about this in the Git for Windows installer.
-
-Ciao,
-Johannes
+-Peff
