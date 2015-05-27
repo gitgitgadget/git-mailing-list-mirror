@@ -1,99 +1,74 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/WIP PATCH 08/11] transport: connect_setup appends protocol
- version number
-Date: Tue, 26 May 2015 23:33:48 -0400
-Message-ID: <CAPig+cQAYKH-3Kr4h+Mhag0J8XC+9qDPfyLZD9FfTXOYmUuDLQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/WIP PATCH 08/11] transport: connect_setup appends protocol version number
+Date: Tue, 26 May 2015 22:09:45 -0700
+Message-ID: <xmqqwpzuip2e.fsf@gitster.dls.corp.google.com>
 References: <1432677675-5118-1-git-send-email-sbeller@google.com>
 	<1432677675-5118-9-git-send-email-sbeller@google.com>
+	<xmqq1ti3j7ym.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kY=hZ=6pUbpVHUW8rU3AEMx2TwkBYDsDsZ+bPH_QnsYzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 27 05:33:58 2015
+X-From: git-owner@vger.kernel.org Wed May 27 07:09:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxS6N-00053G-Jg
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 05:33:55 +0200
+	id 1YxTbF-0004rq-Cq
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 07:09:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203AbbE0Ddu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2015 23:33:50 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:34918 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751603AbbE0Ddt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2015 23:33:49 -0400
-Received: by iesa3 with SMTP id a3so4383732ies.2
-        for <git@vger.kernel.org>; Tue, 26 May 2015 20:33:48 -0700 (PDT)
+	id S1751562AbbE0FJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 01:09:48 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:36283 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751030AbbE0FJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 01:09:47 -0400
+Received: by igbpi8 with SMTP id pi8so75908784igb.1
+        for <git@vger.kernel.org>; Tue, 26 May 2015 22:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=s/JpO5JnWzoFvTCeRVtlN/oMfbPeSI+y+GRPqhWIIqQ=;
-        b=SHH4uLWOfq/yddIfwD/8BCV6LPr+bzzMD/jOpYMAfl4dyx2oelVYINIJo5fVXct3/d
-         2W47PeH1Z+W2O1IcCbm52C61OLV60Or3+7/BXOuQnkwiHlIn0j8ZHSodWfJd2Hb3XWFo
-         nPz0fbEfBYfCYt4fXIp4LktLuz4PkycroTqIivLSlEPIYABOjvHGaG3dzqf0GvwCW9Zf
-         LRqJHf9jkBNbmn+azQNbhSi958omPE/RZUWHfhL5GKoxUJh7Zc9wRn6+Ffq3qbRjF6cx
-         Rn/ezoKqgUHqBe0UIcmWpFSjs5YHufEbMB0txrcY6BvwUea7jKj2ugXD5Sl0AP5hA4so
-         qLNA==
-X-Received: by 10.107.137.80 with SMTP id l77mr31658203iod.92.1432697628794;
- Tue, 26 May 2015 20:33:48 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Tue, 26 May 2015 20:33:48 -0700 (PDT)
-In-Reply-To: <1432677675-5118-9-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: H_SvSca--HN0e5T-JqHLgmpdC2k
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=J6nmGeDcMAa5uYnV+KDipF2GGc9rNBectjqn/EjXjXA=;
+        b=FIQcBsGjB2PeFCpaSnwbhqUkJ2R6uvQeVMWDgmvyTEakBYzzhDm4AU1+BHiYlwh9/7
+         gJyhoaluVdIzuX0szXDE+4CDDvSNZ2xUl43innyyt7XityvCupu7vfcOLTugHIx+WHQ9
+         IX53eExkmzlCW52WGS8KkjrmYn+lWZoRLDOd9Rks6uOviVHuGmLBBukn9QxBpTCHx+iE
+         5S1vhmu8bx2s3tAMWz1IlQnx05OIpP39lPW6GahFIWmaQXRL9JYf17UjPG0iwALGjFHM
+         a70PNJUaKEI5FXZ2meKNlSBBpPtZZufs8g/9nxnIRS+J3AalYPlH+qbuCRjf4NpGBCtb
+         mGog==
+X-Received: by 10.50.30.9 with SMTP id o9mr1530748igh.23.1432703386990;
+        Tue, 26 May 2015 22:09:46 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4485:3520:962f:d5a5])
+        by mx.google.com with ESMTPSA id j4sm1075235igo.0.2015.05.26.22.09.46
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 26 May 2015 22:09:46 -0700 (PDT)
+In-Reply-To: <CAGZ79kY=hZ=6pUbpVHUW8rU3AEMx2TwkBYDsDsZ+bPH_QnsYzA@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 26 May 2015 15:31:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270012>
 
-On Tue, May 26, 2015 at 6:01 PM, Stefan Beller <sbeller@google.com> wrote:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/transport.c b/transport.c
-> index 3ef15f6..33644a6 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -496,15 +496,29 @@ static int set_git_option(struct git_transport_options *opts,
->  static int connect_setup(struct transport *transport, int for_push, int verbose)
->  {
->         struct git_transport_data *data = transport->data;
-> +       const char *remote_program;
-> +       char *buf = 0;
+Stefan Beller <sbeller@google.com> writes:
 
-Naming this 'to_free' would make its purpose more obvious[1], and be
-more consistent with code elsewhere in the project.
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/256125/
-
->         if (data->conn)
->                 return 0;
+> On Tue, May 26, 2015 at 3:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> +       remote_program = (for_push ? data->options.receivepack
-> +                                  : data->options.uploadpack);
-> +
-> +       if (transport->smart_options
-> +           && transport->smart_options->transport_version) {
-> +               buf = xmalloc(strlen(remote_program) + 12);
-> +               sprintf(buf, "%s-%d", remote_program,
-> +                       transport->smart_options->transport_version);
-> +               remote_program = buf;
-> +       }
-> +
->         data->conn = git_connect(data->fd, transport->url,
-> -                                for_push ? data->options.receivepack :
-> -                                data->options.uploadpack,
-> +                                remote_program,
->                                  verbose ? CONNECT_VERBOSE : 0);
+>>
+>>         if (...->version < 2) {
+>>                 ... append "-%d" ...
+>>         }
+>>
+>> involved.
 >
-> +       free(buf);
-> +
->         return 0;
->  }
->
-> --
-> 2.4.1.345.gab207b6.dirty
+> Oh! I see here you would count the current one as 1, which has no
+> number extension, and any further would have a -${version}. That
+> would transport the intention much better I guess.
+
+Yeah, except that I screwed up my comparison.  Obviously, I should
+have said "If version is 2 or later, then append -%d to the name,
+otherwise use the name as-is".
