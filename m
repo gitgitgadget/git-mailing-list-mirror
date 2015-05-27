@@ -1,76 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] showing existing ws breakage
-Date: Wed, 27 May 2015 16:36:49 -0400
-Message-ID: <20150527203648.GE14309@peff.net>
-References: <1432669584-342-1-git-send-email-gitster@pobox.com>
- <1432708232-29892-1-git-send-email-gitster@pobox.com>
- <20150527072218.GB6898@peff.net>
- <xmqqa8wpn910.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/WIP 3/8] am: implement patch queue mechanism
+Date: Wed, 27 May 2015 13:38:51 -0700
+Message-ID: <xmqqy4k9kb6s.fsf@gitster.dls.corp.google.com>
+References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
+	<1432733618-25629-4-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 27 22:36:57 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 27 22:39:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxi4O-0007fU-FX
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 22:36:56 +0200
+	id 1Yxi6Q-0000UP-Ci
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 22:39:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751877AbbE0Ugw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 16:36:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36851 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751575AbbE0Ugv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 16:36:51 -0400
-Received: (qmail 12783 invoked by uid 102); 27 May 2015 20:36:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 15:36:51 -0500
-Received: (qmail 10235 invoked by uid 107); 27 May 2015 20:36:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 16:36:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 May 2015 16:36:49 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqa8wpn910.fsf@gitster.dls.corp.google.com>
+	id S1752347AbbE0Ui7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 16:38:59 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:38378 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752255AbbE0Uiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 16:38:54 -0400
+Received: by igbjd9 with SMTP id jd9so8557213igb.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 13:38:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=ZuYSvt+9ROkU5S/Nq96pRz/cf8DoaQaxO47HxHQNCss=;
+        b=XCmU0w5plW7KsKWj3gtFeb9S0Xq37od1NKPVfx9BdDLbsJfwI4zIYwwEoe8+V7fw/O
+         7oD4uECii1O01FAFOSM2JiFRlu7LHMOuwYc6hqjliXIh/CZn6pc0zeaUhWl505jHYQMa
+         7WhOvvkFxkC4MOvy9VIQ5715dxP4bc4vsASwBBpZ4Nww+JCASVtZUVGl7N/EVZtyna8q
+         tdlhHdI/T6XyQhKKkGiJoto7fVivIC89XbQZ1hkuBJ3tHADnYoDdWWo15Ro0jn5Br8/l
+         RmwuMhTpbs+5D9ARelcTw8+22Ua0Q2L0x4B/oVxWM38TkE9PRtMbuz+JBVLljB79J5nW
+         caRg==
+X-Received: by 10.50.50.148 with SMTP id c20mr39451260igo.0.1432759133251;
+        Wed, 27 May 2015 13:38:53 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id c20sm61574ioc.40.2015.05.27.13.38.52
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 May 2015 13:38:52 -0700 (PDT)
+In-Reply-To: <1432733618-25629-4-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Wed, 27 May 2015 21:33:33 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270088>
 
-On Wed, May 27, 2015 at 11:57:15AM -0700, Junio C Hamano wrote:
+Paul Tan <pyokagan@gmail.com> writes:
 
-> > -- >8 --
-> > Subject: diff: accept color.diff.context as a synonym for "plain"
-> >
-> > The term "plain" is a bit ambiguous; let's allow the more
-> > specific "context", but keep "plain" around for
-> > compatibility.
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > I didn't bother mentioning the historical "plain" in the documentation.
-> > I don't know if it's better to (for people who find it in the wild and
-> > wonder what it means) or if it simply clutters the description.
-> 
-> 'plain' does sound a misnomer, as these slot names are about "what"
-> are painted, not "how" they are painted.  The latter is what their
-> values represent.  Whoever named that slot was confused by the fact
-> that 'context' (i.e. "what") lines are by default painted in 'plain'
-> color without frills (i.e. "how").
-> 
-> We usually try to give a brief mention to historical names primarily
-> to silence those who pick up stale information from the Web, get
-> curious, and then complain loudly after finding that we no longer
-> document them even though we keep accepting them silently, so I am
-> somewhat tempted to do this on top.
+>  Makefile     |   2 +-
+>  builtin.h    |   1 +
+>  builtin/am.c | 167 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  git.c        |   1 +
+>  4 files changed, 170 insertions(+), 1 deletion(-)
+>  create mode 100644 builtin/am.c
+>
+> diff --git a/Makefile b/Makefile
+> index 323c401..57a7c8c 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -466,7 +466,6 @@ TEST_PROGRAMS_NEED_X =
+>  # interactive shell sessions without exporting it.
+>  unexport CDPATH
+>  
+> -SCRIPT_SH += git-am.sh
 
-Yeah, I waffled on doing it myself. If you take the patch, please do
-squash that in.
-
-Do you want me to also eradicate PLAIN from the code itself? It's a
-rather simple change, but it does touch a lot of places.
-
--Peff
+If you are building this "new am" incrementally (and for something
+complex like "am", that's the only sensible way), perhaps it is a
+good idea to do the "competing implementation" trick I suggested
+earlier when we were discussing your "new pull" patches, to allow
+you to keep both versions and switch between them at runtime.  That
+way, you can run tests, both existing ones and new ones you add, on
+both versions to make sure they behave the same way.
