@@ -1,126 +1,72 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH/WIP 1/8] wrapper: implement xopen()
-Date: Wed, 27 May 2015 21:03:47 +0200
-Message-ID: <55661513.8000306@web.de>
-References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com> <1432733618-25629-2-git-send-email-pyokagan@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/WIP PATCH 05/11] transport: add infrastructure to support a protocol version number
+Date: Wed, 27 May 2015 12:10:37 -0700
+Message-ID: <xmqq617dn8eq.fsf@gitster.dls.corp.google.com>
+References: <1432677675-5118-1-git-send-email-sbeller@google.com>
+	<1432677675-5118-6-git-send-email-sbeller@google.com>
+	<20150527063925.GC885@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 21:04:13 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, pclouds@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 27 21:10:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxgcY-00013b-TT
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 21:04:07 +0200
+	id 1Yxgj2-0005Uu-Ku
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 21:10:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753091AbbE0TEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 15:04:00 -0400
-Received: from mout.web.de ([212.227.15.14]:62769 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752268AbbE0TD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 15:03:58 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0LmxtE-1ZcVbq0lSO-00h2Nf; Wed, 27 May 2015 21:03:54
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <1432733618-25629-2-git-send-email-pyokagan@gmail.com>
-X-Provags-ID: V03:K0:CFlq/319w763/cM+OzJ+bRJOmdl9/SUAxa25orgczrkpNsJ7LuC
- kFG/WrisCqOHHOdjhTK4GboPFQT/PKf1d/rLQNjz0ZU0+kacFX7skmLvnRFVrFcOv4G/TzT
- MA+9YbiggkMvnFsY2pa3CPv8TUM0HaaceI1NKuwx8cVUJKw7SaBjlFFffKehO/irBEfKB9+
- 7kZ/gAffppy0wDOn7qmvw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:y2R/fnIqJSE=:0vmTtEMLQZ25oAFIEwe/LI
- 16AN2jMU6Krz9RjgwPt+T1Zixw8RIHenJf3h22NUqa50AwpSwBBLBxu3sfWvFPZLYY71qBQAN
- yxfJj/O3r551ikOasM7SHA74mP1vW81EwqAaWYFeQXNQZ34Oc04PxpXvqmohFMy1MZElAamXV
- Hn9kKgv9wRNYgamF+rg6Wef5fktT8RQ6YcI1uoz8ssOQfILI1CrwYVuAlcw9oNtyXTEw+Q4hE
- sUDaLTU7j0GJpbOgGex9tGi4/4uQw+UDDYno8Zb+4tavODxqW+thsEWuGiNJzVwRhUs1giP4e
- BqiCm0ps/yc86VpKZy046b4W9YtRHJorK7LQIoXo52NaUx3JjW4f2UFmFpjPwgyE8FNlU4pVs
- WJmTJQfUhzKTrddpHibOlhelPMjea85IqoOudtYiy1/cZ+x7IJ7TZY7iUs5inWp7u/7uz9h1K
- BpUqdTSoRt/FrpUBAQlOg2d6JKyf0XnQVa1esbuJck7IgfG8+BGcn3bDp2bqGcfwmJN/0FTK0
- 0HlyYu7idtVgXiWHJAU5ZXcQQlO4wbaj6TwASZJx4Zx+iR/XIvRHUA4JZSPswKMcej5VAI8be
- Q7GyKhqFZhddyU93LLlwPdOfZ+KRPA4x7fLof9kwDxTxH3GN3aLsQPvCwXRZwKHGcTh2auFZw
- iT18JG+FzxVh4lNI0iQBnWFpFaHUc7Advwgc8Dio++65LFCmpjAlaGB97O2xWFq7ELhk=
+	id S1754460AbbE0TKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 15:10:43 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:36165 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754457AbbE0TKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 15:10:39 -0400
+Received: by igbpi8 with SMTP id pi8so93288586igb.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 12:10:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=HKzT91yjq/tNrko7vn7/aSez7x5fz9Ahs/CKXKE9Onw=;
+        b=XMRrVNKsItKv3p3hy8e8Elv82mN+MP2F17vJBx7r7wB0ZtArGfu+bAoWLuZ6FRtRxb
+         nlAM6KM/36g/uHVHd4U6QhDMYmoxBFDza3UlQ8mjXv3SJomO9fePOmQ+syS5kG3KbF7H
+         gLRTJAL4VYSDbAyi9AyydrV8n7I35zcihUgpGhcldY3n2UdKiZE/8r6TOBULtf2nqM4k
+         kbbH8aExI1Xj6iI4/BoLZAgPXClBs/Ho3Q4rZoadqVDae3/jmEHkJWxw9YAyXU8IH2Tl
+         Rfy3r6pU1weyaohcee78/Mj8qp0wPVgDAkZVlwdL0aSqmj1ocp051UmfEBdYQqe0owZE
+         mIlQ==
+X-Received: by 10.42.50.81 with SMTP id z17mr5244753icf.57.1432753839236;
+        Wed, 27 May 2015 12:10:39 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id 7sm6739619iok.43.2015.05.27.12.10.38
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 May 2015 12:10:38 -0700 (PDT)
+In-Reply-To: <20150527063925.GC885@peff.net> (Jeff King's message of "Wed, 27
+	May 2015 02:39:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270066>
 
-On 2015-05-27 15.33, Paul Tan wrote:
-> A common usage pattern of open() is to check if it was successful, and
-> die() if it was not:
-> 
-> 	int fd = open(path, O_WRONLY | O_CREAT, 0777);
-> 	if (fd < 0)
-> 		die_errno(_("Could not open '%s' for writing."), path);
-> 
-> Implement a wrapper function xopen() that does the above so that we can
-> save a few lines of code, and make the die() messages consistent.
-> 
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
->  git-compat-util.h |  1 +
->  wrapper.c         | 18 ++++++++++++++++++
->  2 files changed, 19 insertions(+)
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 17584ad..9745962 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -718,6 +718,7 @@ extern char *xstrndup(const char *str, size_t len);
->  extern void *xrealloc(void *ptr, size_t size);
->  extern void *xcalloc(size_t nmemb, size_t size);
->  extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
-> +extern int xopen(const char *path, int flags, mode_t mode);
->  extern ssize_t xread(int fd, void *buf, size_t len);
->  extern ssize_t xwrite(int fd, const void *buf, size_t len);
->  extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
-> diff --git a/wrapper.c b/wrapper.c
-> index c1a663f..971665a 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -189,6 +189,24 @@ void *xcalloc(size_t nmemb, size_t size)
->  # endif
->  #endif
->  
-The original open can take 2 or 3 parameters, how about this:
-int xopen(const char *path, int oflag, ... )
-{
-        va_list params;
-        int mode;
-        int fd;
+Jeff King <peff@peff.net> writes:
 
-        va_start(params, oflag);
-        mode = va_arg(params, int);
-        va_end(params);
+> On Tue, May 26, 2015 at 03:01:09PM -0700, Stefan Beller wrote:
+>
+>> +	OPT_STRING('y', "transport-version", &transport_version,
+>> +		   N_("transport-version"),
+>> +		   N_("specify transport version to be used")),
+>
+> Interesting choice for the short option ("-v" would be nice, but
+> obviously it is taken). Do we want to delay on claiming the
+> short-and-sweet 'y' until we are sure this is something people will use
+> a lot? In an ideal world, it is not (i.e., auto-upgrade and other tricks
+> become good enough that nobody bothers to specify it manually).
 
-        fd = open(path, oflag, mode);
-
-
-> +/**
-> + * xopen() is the same as open(), but it die()s if the open() fails.
-> + */
-> +int xopen(const char *path, int flags, mode_t mode)
-> +{
-> +	int fd;
-> +
-> +	assert(path);
-> +	fd = open(path, flags, mode);
-> +	if (fd < 0) {
-> +		if ((flags & O_WRONLY) || (flags & O_RDWR))
-> +			die_errno(_("could not open '%s' for writing"), path);
-This is only partly true:
-it could be either "writing" or "read write".
-I don't know if the info "for reading" or "for writing" is needed/helpful at all,
-or if a simple "could not open" would be enough.
-
-
-Another thing:
-should we handle EINTR ?
-(Somewhere in the back of my head I remember that some OS
- returned EINTR when handling some foreign file system
- Mac OS / NTFS ?)
+Yes, just stuff 0 (not NULL but NUL) there; unless we have a very
+good reason to believe that the option will be used every day to
+toggle per invocation settings, we shouldn't squat on a short and
+sweet single letter.
