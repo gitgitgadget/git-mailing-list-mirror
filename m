@@ -1,96 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] glossary: add "remote" and "submodule"
-Date: Wed, 27 May 2015 16:05:31 -0700
-Message-ID: <xmqqwpztiptw.fsf@gitster.dls.corp.google.com>
-References: <1432761209-4120-1-git-send-email-sbeller@google.com>
-	<xmqq617dk621.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kbz6d8j1p5d-pO2cpou76ivhkCQPq4cpGxozc-9cnACPQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 28 01:05:39 2015
+From: Miguel Torroja <miguel.torroja@gmail.com>
+Subject: [PATCH] p4: Retrieve the right revision of the UTF-16 file
+Date: Thu, 28 May 2015 01:14:39 +0200
+Message-ID: <1432768479-7894-1-git-send-email-miguel.torroja@gmail.com>
+References: <CAPc5daW=BEPiGn6BGbN+JHczV-cPTW7WbZmr8vRRdpb1JL_aLQ@mail.gmail.com>
+Cc: gitster@pobox.com, luke@diamand.org,
+	Miguel Torroja <miguel.torroja@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 01:14:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxkOI-0000VD-FT
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 01:05:38 +0200
+	id 1YxkXH-0006EA-T2
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 01:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbbE0XFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 19:05:34 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36502 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630AbbE0XFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 19:05:33 -0400
-Received: by igbpi8 with SMTP id pi8so97935965igb.1
-        for <git@vger.kernel.org>; Wed, 27 May 2015 16:05:33 -0700 (PDT)
+	id S1753215AbbE0XOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 19:14:51 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:34761 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753161AbbE0XOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 19:14:50 -0400
+Received: by wgv5 with SMTP id 5so22088074wgv.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 16:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Xi8dxGYLtE55a6Fqpfok+h42F0/DCB3v+EsOF3vnpWI=;
-        b=icQmE4Z3+bHujimDk7qecrdcM9LwtCIbilO7zRCFSVm7G/66DF4mm1IYGUmUP10DGB
-         rGx0LzQxDMxHIpb/oJ4CylEDwZKcReqlDH4YXjMFfOHw6ptOLoEeb0wJZY52uWmue8Oa
-         sxGuDqhWpNk4PsRJo8sHADPnGvWc0DYiNAebdWVBM8Fhee8d2Qz9wq9MpVIel91mBT2P
-         YRUrbWTNTkcLQcaqRMpkhYVw3AcHweyOUrV7tlLK6wiNy66mJTQ/h0Aqu+Kso+TobzrS
-         WfUC/9ThlXhX+yb9yM2N4CCBA5Mzd9BtpOQFfwznFJVKpLUeg7ZeEaZ6CmJ1MhkbQ6EL
-         uQXA==
-X-Received: by 10.42.240.82 with SMTP id kz18mr1646114icb.92.1432767932996;
-        Wed, 27 May 2015 16:05:32 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
-        by mx.google.com with ESMTPSA id d185sm331988ioe.42.2015.05.27.16.05.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 May 2015 16:05:32 -0700 (PDT)
-In-Reply-To: <CAGZ79kbz6d8j1p5d-pO2cpou76ivhkCQPq4cpGxozc-9cnACPQ@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 27 May 2015 15:59:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=O28vcFRyodfENBjJkzkxlNsliwsvQzskIWl2npLktYI=;
+        b=Z3V46XjqZZ4DeC3tyT/O4mgbNyFdHEBE/obn16NUWja5er7B+ZO3OslCUsavUnDvQh
+         ToqQsZPQ26pSNdEUUC+6C+8zxe1MUv0y+wWy8zu8AhQ1qM6DvwXIMC4HtiwPcbtwvHqD
+         LUTiXcY+ENPhoEXktIfjO5s9nzR1jcfNj/5PkREAk4HFw2l6NfAc8ytUFdOkukD5f0eq
+         ePrMV2IQ1cRwR1X2Mb3L9aOXONg5a8F7LUe9B1+StB8yhs9BFy52NhaD9nkKJSm2XrNG
+         RbzE4BRVgpB5GDMIgaFmw0fzIix0PLFsB0A1yz/XI3/Hgiv2q6aQRA1HmI9gZHCj/GKK
+         6KTQ==
+X-Received: by 10.194.82.167 with SMTP id j7mr22018073wjy.123.1432768489493;
+        Wed, 27 May 2015 16:14:49 -0700 (PDT)
+Received: from localhost.localdomain (98.Red-2-139-52.dynamicIP.rima-tde.net. [2.139.52.98])
+        by mx.google.com with ESMTPSA id x3sm5776765wiy.20.2015.05.27.16.14.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 May 2015 16:14:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <CAPc5daW=BEPiGn6BGbN+JHczV-cPTW7WbZmr8vRRdpb1JL_aLQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270118>
 
-Stefan Beller <sbeller@google.com> writes:
+Fixing bug with UTF-16 files when they are retrieved by git-p4.
+It was always getting the tip version of the file and the history of the
+file was lost.
 
->>> +[[def_submodule]]submodule::
->>> +     A <<def_repository,repository>> inside another repository. The two
->>> +     repositories have different history, though the outer repository
->>> +     knows the commit of the inner repository.
->>
-> ... But correctness trumps brevity indeed.
+Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
+---
+ git-p4.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I do not think the correct way is that much longer, though.
-
-A repository inside another repository. The two repositories have different history
-A repository that holds the history of a separate project inside another repository
-
-Heh, they are the same length, no?
-
->
->>
->>        A repository that holds the history of a separate project
->>        inside another repository (the latter of which is called
->>        superproject).
->
-> This is better than what I proposed, but confusing. When naming
-> a project a submodule, my mental standpoint is the superproject.
-> ("This project has the submodule foo and bar"). But In your description
-> the superproject is called "another repository".
-
-That is because you are adding an entry for "submodule" to the
-glossary, no?  I was writing from submodule's point of view, i.e. "I
-(submodule) is inside another repository, and my project is separate
-from that other repository's".
-
->>        The containing superproject knows about the
->>        names of (but does not hold copies of) commit objects of the
->>        contained submodules.
->
-> That makes sense to point out here. Though should we also introduce
-> "superproject" now?
-
-Yes, that is what I was hinting at.
+diff --git a/git-p4.py b/git-p4.py
+index cdfa2df..be2c7da 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2098,7 +2098,7 @@ class P4Sync(Command, P4UserMap):
+             # them back too.  This is not needed to the cygwin windows version,
+             # just the native "NT" type.
+             #
+-            text = p4_read_pipe(['print', '-q', '-o', '-', file['depotFile']])
++            text = p4_read_pipe(['print', '-q', '-o', '-', "%s@%s" % (file['depotFile'], file['change']) ])
+             if p4_version_string().find("/NT") >= 0:
+                 text = text.replace("\r\n", "\n")
+             contents = [ text ]
+-- 
+1.7.10.4
