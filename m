@@ -1,123 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Bug: .gitconfig folder
-Date: Wed, 27 May 2015 15:24:47 -0700
-Message-ID: <CAGZ79kbGyZLx=UYCi5JeSLj7keMhcX_eH3qtWs3O+PidRjye4w@mail.gmail.com>
-References: <5565C6A7.60007@gmx.es>
-	<xmqq7frtlq56.fsf@gitster.dls.corp.google.com>
-	<20150527221813.GF23259@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] glossary: add "remote" and "submodule"
+Date: Wed, 27 May 2015 15:29:42 -0700
+Message-ID: <xmqq617dk621.fsf@gitster.dls.corp.google.com>
+References: <1432761209-4120-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jorge <griffin@gmx.es>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 28 00:24:55 2015
+Content-Type: text/plain
+Cc: philipoakley@iee.org, git@vger.kernel.org, hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 28 00:29:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxjkr-0000Kg-O2
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 00:24:54 +0200
+	id 1Yxjpk-0003a1-Vd
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 00:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbbE0WYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 18:24:49 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:36681 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751055AbbE0WYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 18:24:48 -0400
-Received: by qgf2 with SMTP id 2so9461346qgf.3
-        for <git@vger.kernel.org>; Wed, 27 May 2015 15:24:47 -0700 (PDT)
+	id S932359AbbE0W3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 18:29:46 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:34116 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932314AbbE0W3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 18:29:44 -0400
+Received: by ieczm2 with SMTP id zm2so25109899iec.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 15:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IIYs/Kh8s+R5AOQh89x+NWRkRUBABScvffAXRwko3Zg=;
-        b=XLlxsbKApeboebn/+K92ZV7wUxgT5sgdmHeVzn+gIoEsrEVpE5HDUZ1KfGotoi4uo8
-         S4vxg5f/n3Vu4jRT0fThG+ytCbdVsiO+6FpqyeLR70qt572kPQPgP/ui8ATKtZqzARGq
-         dUGvCmaPmHOpFCK5dzOZk+Wl3p/c1oWLIivUvD3o3fMc9Y4GhiVCbGFqHxaZclJzdAb1
-         WdqZbZ9taayHcSnWz73s3aPnT8e7ZDazJe67lpi2tgRNb0gtb2qczPkOMKAHyNqD7SOa
-         HJ0Dxw74dvVRu62j3rJOjzzDZWs/I/pYRTuc7UWvtJWbpW0tEchVuLsCuJCxG3tKTUki
-         xCSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=IIYs/Kh8s+R5AOQh89x+NWRkRUBABScvffAXRwko3Zg=;
-        b=AX+yTuODvTczBLI5UB4pDX48x20zfyvpz+WmM4Yzwug1NTvkDpR4ZgByOXwWcCFJrY
-         8zbbZeT1E6i5t0W9vBe1VysXoeMRLX/m1p9FB5z39iVRHg8UR5pNVlfUjfG8109sjP2M
-         v+qUKMeqTecJ7WrQIV/fDPn/EogYfL1QjX4+HXGro3etLWRHG+JEo128xbdqr7hMzNcN
-         I9Hbd5Mj7/CUwLViveFb0IxyY+DtzgEu4cAcjIMnmEPanVaTbvIfBvxYeCWQxKtzr1An
-         R+pqXl8tY0QKYoG8Z/GKzBGg4Zn4KF26gwgpTAGQfIsW9N0qXEu7zmKnqcEDy2XGbAlZ
-         v9CQ==
-X-Gm-Message-State: ALoCoQmXOpuxXnYqF1O7h6dOjZRbVE3yPL2z6dQH8ngGt3rkh7h+EoR5VKCXOAVu0gKUEtidwAPF
-X-Received: by 10.140.96.202 with SMTP id k68mr42786280qge.102.1432765487578;
- Wed, 27 May 2015 15:24:47 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Wed, 27 May 2015 15:24:47 -0700 (PDT)
-In-Reply-To: <20150527221813.GF23259@peff.net>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=QK/naFeZHWXPIBmJefEhBbvu/KHZcDeXoW2BrkkkjKM=;
+        b=agXPvOIWi+3AT6q8+TBu91ZO/EvV0qAQSbL7ohQkKXt7tk4NxPCCz6OHRyLI7hu7TE
+         w3XTphsfWOGIVXo1YlR34DaMz2/Sw59xl1sxFAuZHRzYkmpKXDUPQTEg8uUXi/vxr5n4
+         WStUWvW87HKFPXirMJeGfMosxBmJxapn/LaQdiCU7dbQ+LQaO5Xyjwns3YFpFdLn8XxS
+         0eMsPzA0cTfKD4q2dff7gEsAFWBJG04hXM5n3BEwkwvsqK7Z572VcUU+uWvWqpM/gebx
+         A39Qfo1BKbjec5I801+EIe7rrpUHyAT69o8DaQphDQUnAfze1Ik7Ri1EtrXRe1kL4G0d
+         1ieQ==
+X-Received: by 10.50.12.102 with SMTP id x6mr7462464igb.20.1432765783905;
+        Wed, 27 May 2015 15:29:43 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id i4sm11831101igm.2.2015.05.27.15.29.42
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 May 2015 15:29:43 -0700 (PDT)
+In-Reply-To: <1432761209-4120-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 27 May 2015 14:13:29 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270114>
 
-On Wed, May 27, 2015 at 3:18 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, May 27, 2015 at 01:30:29PM -0700, Junio C Hamano wrote:
->
->> Jorge <griffin@gmx.es> writes:
->>
->> > If you have a folder named ~/.gitconfig instead of a file with that
->> > name, when you try to run some global config editing command it will
->> > fail with a wrong error message:
->> >
->> >     "fatal: Out of memory? mmap failed: No such device"
->>
->> That indeed is a funny error message.
->>
->> How about this patch?
->>
->> -- >8 --
->> We show that message with die_errno(), but the OS is ought to know
->> why mmap(2) failed much better than we do.  There is no reason for
->> us to say "Out of memory?" here.
->>
->> Note that mmap(2) fails with ENODEV when the file you specify is not
->> something that can be mmap'ed, so you still need to know that "No
->> such device" can include cases like having a directory when a
->> regular file is expected, but we can expect that a user who creates
->> a directory to a location where a regular file is expected to be
->> would know what s/he is doing, hopefully ;-)
->>
->>  sha1_file.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/sha1_file.c b/sha1_file.c
->> index ccc6dac..551a9e9 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -720,7 +720,7 @@ void *xmmap(void *start, size_t length,
->>               release_pack_memory(length);
->>               ret = mmap(start, length, prot, flags, fd, offset);
->>               if (ret == MAP_FAILED)
->> -                     die_errno("Out of memory? mmap failed");
->> +                     die_errno("mmap failed");
->>       }
->
-> This is definitely an improvement, but the real failing of that error
-> message is that it does not tell us that "~/.gitconfig" is the culprit.
-> I don't think we can do much from xmmap, though; it does not have the
-> filename. It would be nice if we got EISDIR from open() in the first
-> place, but I don't think we can implement that efficiently (if we added
-> an "xopen" that checked that, it would have to stat() every file we
-> opened).
+Stefan Beller <sbeller@google.com> writes:
 
-What is our thinking for after-fact recovery attempts?
-Like we try the mmap first, if that fails we just use open to get the
-contents of
-the file. And when open fails, we can still print a nice error message?
-
+> Noticed-by: Philip Oakley <philipoakley@iee.org>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Documentation/glossary-content.txt | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index bf383c2..e303135 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -469,6 +469,11 @@ The most notable example is `HEAD`.
+>  	<<def_push,push>> to describe the mapping between remote
+>  	<<def_ref,ref>> and local ref.
+>  
+> +[[def_remote]]remote repository::
+> +	A <<def_repository,repository>> which is used to track the same
+> +	project but resides somewhere else. To communicate with remotes,
+> +	see <<def_fetch,fetch>> or <<def_push,push>>.
+> +
+
+OK.
+
+> @@ -515,6 +520,11 @@ The most notable example is `HEAD`.
+>  	is created by giving the `--depth` option to linkgit:git-clone[1], and
+>  	its history can be later deepened with linkgit:git-fetch[1].
+>  
+> +[[def_submodule]]submodule::
+> +	A <<def_repository,repository>> inside another repository. The two
+> +	repositories have different history, though the outer repository
+> +	knows the commit of the inner repository.
+
+I'd stress that they are not just different histories (as the
+'master' and the 'maint' branches of my project has different
+histories) but they are separate projects.  Perhaps like this?
+
+       A repository that holds the history of a separate project
+       inside another repository (the latter of which is called
+       superproject).  The containing superproject knows about the
+       names of (but does not hold copies of) commit objects of the
+       contained submodules.
+
+It is not like that it is strange or unintuitive that the
+superproject knows about some commits in its submodule.  "X, though
+Y" however makes it sound as if Y is true "despite X".  I do not
+think there is any "despite" here.
