@@ -1,78 +1,163 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a commit
-Date: Wed, 27 May 2015 21:44:34 +0200
-Message-ID: <vpq8uc9yfdp.fsf@anie.imag.fr>
-References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<c78cd2ac17333a2e70d1113d95495c41@www.dscho.org>
-	<1506177855.44397.1432738386768.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpq1ti23vva.fsf@anie.imag.fr>
-	<xmqqsiahltbu.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 27 21:44:59 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3] submodule documentation: Reorder introductory paragraphs
+Date: Wed, 27 May 2015 12:48:01 -0700
+Message-ID: <1432756081-31180-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, philipoakley@iee.org, hvoigt@hvoigt.net,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed May 27 21:48:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxhG0-0001EH-N4
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 21:44:53 +0200
+	id 1YxhJG-0003Lb-R2
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 21:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753534AbbE0Toq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 15:44:46 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50435 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753130AbbE0Too (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 15:44:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4RJiVRv006693
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 May 2015 21:44:32 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4RJiYGb025482;
-	Wed, 27 May 2015 21:44:34 +0200
-In-Reply-To: <xmqqsiahltbu.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 27 May 2015 12:21:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 May 2015 21:44:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4RJiVRv006693
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433360674.22471@GcsKqMMn7PL93DIwIigNug
+	id S1753777AbbE0TsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 15:48:10 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:36804 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752445AbbE0TsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 15:48:07 -0400
+Received: by iepj10 with SMTP id j10so21968160iep.3
+        for <git@vger.kernel.org>; Wed, 27 May 2015 12:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=H2NEHx4201JtSfwv8tOmWhzmfDRPDAORJ/XA3RypnUA=;
+        b=Wxq+8kYUhFXhoNU0t/1eSa2RWLsLAfBJ2RQlakDp8plxrfSMRylfomZ9+rs0V/oZPA
+         Lzhs9bxouRBJyG+THfK3LotcHzuwgXVD/LWvKPyUJcO2QT6YLwd/TVZRitj1o73IoSiX
+         rR0JXvFGWe/UKAxdUQ15bk88OQ6TA5x/ZLYV55Rpgwf8MvOqVrOZKWLOw8SDpjeXE0Ny
+         raZkk5iQvZ0asXKZjQh0fkZCLgM5E/OKZ7pzIHqtznnxkje2UWlnshDcjTKZqoc4Rldf
+         MA8ShZgLqYKodv5eGfLdd3aqMyxuCI2mLbZr/Lm8ulOqt8Dxo4m74G6G4IzvuaAiuhhw
+         o7OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=H2NEHx4201JtSfwv8tOmWhzmfDRPDAORJ/XA3RypnUA=;
+        b=NDoL1ss/G/Hp80JZG1U7mYfbYsYR7pJ81Bd0/MVw65OJFC5Z3Ex2/dteZjIxgVkib+
+         sGZ3B2XGHY/z5wRc+kMzZT0AHNS0K6JxElJIUBS8J7f3QGNt31CkUGAzwOmZu4Wxgdoa
+         pwfAiYM/zvbWfxhJhjqTAw7SuVgf28cSfqhck9m1foTyLYb7PR1cdkZ3VGHg/XwYgFwp
+         D9LpgqAFgOXJzZhz9Qt0Ri9wEExVTz8bkUYXe9rrFnqASNiVlMM8v7recPqiovI7+kIy
+         AnHmB1+QObPcRVkhBux84X0RMvHtaEaCqbFOMpd5jnFuejg4F+G8abnlVSxROwNZR+oA
+         Gclw==
+X-Gm-Message-State: ALoCoQlb7jLAxXSxz+ev7xM+fZ9Ao07RDBcFO1kD8pE9bXiKAAMD1vxzJVo9orFN0Qssx3SoxCkW
+X-Received: by 10.42.83.212 with SMTP id i20mr5428935icl.91.1432756086729;
+        Wed, 27 May 2015 12:48:06 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:e1d5:6fe9:c696:4b29])
+        by mx.google.com with ESMTPSA id fs5sm11369806igb.0.2015.05.27.12.48.04
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 May 2015 12:48:05 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270073>
 
-Junio C Hamano <gitster@pobox.com> writes:
+It's better to start the man page with a description of what submodules
+actually are instead of saying what they are not.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> I find it weird to write
->>
->> noop <sha1> <title>
->
-> True, but then it can be spelled
->
->     # <sha1> <title>
+Reorder the paragraphs such that
+the first short paragraph introduces the submodule concept,
+the second paragraph highlights the usage of the submodule command,
+the third paragraph giving background information,
+and finally the fourth paragraph discusing alternatives such
+as subtrees and remotes, which we don't want to be confused with.
 
-I do find it weird too. "#" means "comment", which means "do as if it
-was not there" to me. And in this case it does change the semantics once
-you activate the safety feature: error out without the "# <sha1>
-<title>", rebase dropping the commit if the comment is present.
+This ordering deepens the knowledge on submodules with each paragraph.
+First the basic questions like "How/what" will be answered, while the
+underlying concepts will be taught at a later time.
 
+Making sure it is not confused with subtrees and remotes is not really
+enhancing knowledge of submodules itself, but rather painting the big
+picture of git concepts, so you could also argue to have it as the second
+paragraph. Personally I think this may confuse readers, specially
+newcomers though.
+
+Additionally to reordering the paragraphs, they have been slightly
+reworded.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+I think this is the best I can come up with for now.
+* It still mentions the remotes as a potential explanation mud-hole, but I feel
+  it helps the reader understand submodules a little better.
+* We also start with a typical git man page intro (Dropping "This command does ...")
+
+ Documentation/git-submodule.txt | 50 ++++++++++++++++++-----------------------
+ 1 file changed, 22 insertions(+), 28 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 2c25916..2ca1391 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -25,22 +25,17 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Submodules allow foreign repositories to be embedded within
+-a dedicated subdirectory of the source tree, always pointed
+-at a particular commit.
++Inspects, updates and manages submodules.
+ 
+-They are not to be confused with remotes, which are meant mainly
+-for branches of the same project; submodules are meant for
+-different projects you would like to make part of your source tree,
+-while the history of the two projects still stays completely
+-independent and you cannot modify the contents of the submodule
+-from within the main project.
+-If you want to merge the project histories and want to treat the
+-aggregated whole as a single project from then on, you may want to
+-add a remote for the other project and use the 'subtree' merge strategy,
+-instead of treating the other project as a submodule. Directories
+-that come from both projects can be cloned and checked out as a whole
+-if you choose to go that route.
++A Submodule allows you to keep another Git repository in a subdirectory
++of your repository. The other repository has its own history, which does not
++interfere with the history of the current repository. This can be used to
++have external dependencies such as third party libraries for example.
++
++When cloning or pulling a repository containing submodules however,
++these will not be checked out by default; the 'init' and 'update'
++subcommands will maintain submodules checked out and at
++appropriate revision in your working tree.
+ 
+ Submodules are composed from a so-called `gitlink` tree entry
+ in the main repository that refers to a particular commit object
+@@ -51,19 +46,18 @@ describes the default URL the submodule shall be cloned from.
+ The logical name can be used for overriding this URL within your
+ local repository configuration (see 'submodule init').
+ 
+-This command will manage the tree entries and contents of the
+-gitmodules file for you, as well as inspect the status of your
+-submodules and update them.
+-When adding a new submodule to the tree, the 'add' subcommand
+-is to be used.  However, when pulling a tree containing submodules,
+-these will not be checked out by default;
+-the 'init' and 'update' subcommands will maintain submodules
+-checked out and at appropriate revision in your working tree.
+-You can briefly inspect the up-to-date status of your submodules
+-using the 'status' subcommand and get a detailed overview of the
+-difference between the index and checkouts using the 'summary'
+-subcommand.
+-
++Submodules are not to be confused with remotes, which are other
++repositories of the same project; submodules are meant for
++different projects you would like to make part of your source tree,
++while the history of the two projects still stays completely
++independent and you cannot modify the contents of the submodule
++from within the main project.
++If you want to merge the project histories and want to treat the
++aggregated whole as a single project from then on, you may want to
++add a remote for the other project and use the 'subtree' merge strategy,
++instead of treating the other project as a submodule. Directories
++that come from both projects can be cloned and checked out as a whole
++if you choose to go that route.
+ 
+ COMMANDS
+ --------
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.4.1.345.gab207b6.dirty
