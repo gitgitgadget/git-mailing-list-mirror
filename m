@@ -1,124 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/WIP PATCH 00/11] Protocol version 2, again!
-Date: Wed, 27 May 2015 02:18:19 -0400
-Message-ID: <20150527061818.GA885@peff.net>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a
+ commit
+Date: Wed, 27 May 2015 08:28:42 +0200
+Organization: gmx
+Message-ID: <c78cd2ac17333a2e70d1113d95495c41@www.dscho.org>
+References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 27 08:18:29 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: =?UTF-8?Q?Galan_R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed May 27 08:28:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxUfb-00047D-6p
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 08:18:27 +0200
+	id 1YxUpf-0000d2-0s
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 08:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585AbbE0GSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 02:18:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36448 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751129AbbE0GSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 02:18:22 -0400
-Received: (qmail 30090 invoked by uid 102); 27 May 2015 06:18:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 01:18:22 -0500
-Received: (qmail 4694 invoked by uid 107); 27 May 2015 06:18:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 02:18:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 May 2015 02:18:19 -0400
-Content-Disposition: inline
-In-Reply-To: <1432677675-5118-1-git-send-email-sbeller@google.com>
+	id S1752405AbbE0G2q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2015 02:28:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50789 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752371AbbE0G2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 02:28:46 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lw2Sj-1ZBZuI1nPp-017jJn; Wed, 27 May 2015 08:28:43
+ +0200
+In-Reply-To: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:3UTX5L8s8AYbjfUeGsmny1nctsLBUuD+JeeyB+EeTa06V66lrsC
+ UAPHb0bNXXiI/ljUFJHKb4UVZPIrdBLC3gTB/QjAnnb+ard54N+1CHXBPX1bMBcmXb7dHfR
+ kBjOxavrJ4w1AKgEzeihj3fDMHvToA/yWpHzFhzOnQC0Yt7Fs4mGxC09QLBjfRHRfGZvOoh
+ AJoBVdlJAG1SdMaKoOPNA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270017>
 
-On Tue, May 26, 2015 at 03:01:04PM -0700, Stefan Beller wrote:
+Hi R=C3=A9mi,
 
->     "Just give us something to play around with" - Peff at GitMerge 2015
+On 2015-05-26 23:38, Galan R=C3=A9mi wrote:
+> Instead of removing a line to remove the commit, you can use the key
+> word "drop" (just like "pick" or "edit"). It has the same effect as
+> deleting the line (removing the commit) except that you keep a visual
+> trace of your actions, allowing a better control and reducing the
+> possibility of removing a commit by mistake.
 
-Sounds like something I would say.
+Please note that you can already just comment-out the line if you need =
+to keep a visual trace.
 
-> The new protocol works just like the old protocol, except for
-> the capabilities negotiation being before any exchange of real data.
+Alternatively, you can replace the `pick` command by `noop`.
 
-I like this approach. We all know that one next step is going to be a
-"show me only these refs" capability negotiation of some kind. But it's
-good to keep the version-breaking changes separated from that, and this
-should be enough to bootstrap that conversation later.
+If you really need the `drop` command (with which I am not 100% happy b=
+ecause I already envisage users appending a `drop A` to an edit script =
+"pick A; pick B; pick C" and expecting A *not to be picked*), then it i=
+s better to just add the `drop` part to the already existing `noop` cla=
+use:
 
-If I understand correctly, your proposed protocol allows for a single
-back-and-forth of capabilities followed by the server speaking the ref
-advertisement. So it is worth thinking a moment how we might have a more
-involved conversation before the advertisement if we want to do so in
-the future.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f7deeb0..8355be8 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -489,7 +489,7 @@ do_next () {
+ 	rm -f "$msg" "$author_script" "$amend" || exit
+ 	read -r command sha1 rest < "$todo"
+ 	case "$command" in
+-	"$comment_char"*|''|noop)
++	"$comment_char"*|''|noop|drop)
+ 		mark_action_done
+ 		;;
+ 	pick|p)
 
-I think in the simplest case, the server claims to understand the "foo"
-extension, and then the client says "I wish to use foo". And then a rule
-of "foo" might be that the conversation continues in some way before
-sending the advertisement. Like (each line is a pkt-line):
-
-  ...
-  S: foo
-  S: flush
-  ...
-  C: foo
-  S: Here's some extra foo data.
-  C: Now I respond to that foo data.
-  S: Now the foo conversation is done. Here's the ref advertisement.
-
-What if there are multiple such extensions? E.g., if the client asks for
-both "foo" and "bar", and both require extra back-and-forth messages?
-Which conversation happens first?
-
-Maybe the rule is just "whichever one the client asked for first in the
-capabilities list". And I think in general we want to avoid protocol
-round-trips if we can (so we'd prefer the client say
-"refspec=refs/heads/*", and not "I understand refspecs, too! Let's have
-a conversation about which ones I'm interested in."). But I think it's
-worth giving it a little thought to make sure we don't paint ourselves
-in a corner.
-
-> My preference for a string suffix instead of a sequential number is
-> motiviated by the discussion of sha1 vs sequential numbers to describe
-> a state of a repository. The main difference here is however how often
-> we expect changes. Version 1 of the protocol is current for 10 years by
-> now, so I do not changes to the protocol number often, which makes it
-> suitable for just having a counter appended to the binary.
-
-I think I prefer a number. I'm really hoping that v2 lasts even longer
-than v1 has, because the capability negotiation should allow us to
-extend it from within rather than breaking compatibility.
-
-As a minor nit, I think I like "upload-pack-v2" better than
-"upload-pack-2". But I can live with it either way. :)
-
-> This series doesn't include an automatic upgrade of the protocol version
-> for later changes if the server supports it, so for now the use of the new
-> protocol needs to be activated manually via setting remote.origin.transportversion.
-
-I think that's a good start. Last time we discussed it, I think
-everybody was more or less on board with client probing (so v1 would
-start to say "btw, I speak v2", and then client would set its
-remote.origin.transportversion flag). That can come later, and we are
-not painting ourselves into a corner.
-
-I think we also discussed passing the version information out-of-band.
-So over git-daemon, as "git-upload-pack repo\0host=...\0\0version=2",
-for example. I _think_ we are also fine to build that on top of what you
-have here. If the version information makes it through to upload-pack,
-then we can do v2, and if not, we are no worse off than we were. HTTP
-can do a similar out-of-band thing, but I think ssh is mostly out of
-luck. The best I could think of was passing an environment variable, but
-ssh typically only lets through a few variables. We could abuse PATH or
-something, but that's getting pretty nasty.
-
-Anyway, that is all for the future. The only reason I mention it is to
-make sure that we are not closing any future doors, and I don't think we
-are.
-
--Peff
+Ciao,
+Johannes
