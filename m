@@ -1,153 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 3/4] diff.c: add emit_del_line() and emit_context_line()
-Date: Tue, 26 May 2015 23:30:31 -0700
-Message-ID: <1432708232-29892-4-git-send-email-gitster@pobox.com>
-References: <1432669584-342-1-git-send-email-gitster@pobox.com>
- <1432708232-29892-1-git-send-email-gitster@pobox.com>
-Cc: Christian Brabandt <cblists@256bit.org>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 08:30:55 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/WIP PATCH 04/11] upload-pack-2: Implement the version 2 of
+ upload-pack
+Date: Wed, 27 May 2015 02:35:58 -0400
+Message-ID: <20150527063558.GB885@peff.net>
+References: <1432677675-5118-1-git-send-email-sbeller@google.com>
+ <1432677675-5118-5-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 27 08:36:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxUre-0001eY-Ed
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 08:30:54 +0200
+	id 1YxUwj-000462-1z
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 08:36:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752484AbbE0Gap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 02:30:45 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:33568 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418AbbE0Gai (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 02:30:38 -0400
-Received: by igbpi8 with SMTP id pi8so78638126igb.0
-        for <git@vger.kernel.org>; Tue, 26 May 2015 23:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JcNzpO8Ip5kNksSVVLl1aTNGnsHFQjDzBx8KHT2lNDM=;
-        b=XPw20FlqOoGc4MEGSJdeLug5c76N2Y4uM9YjjQYDzq8TTZMte9J+ZAz1KcBp4auviv
-         JCjzEnK5q65oQqW+1iB0M3TahGp59eQLSo/2N2VWqffdQi36utEzPboTjjwYCNDp0BoA
-         lTDG6wgd9Mzp/Hvh859Ax4JY1AmrBwPcDrUaXb6kjMOCba957JFs6FBQs5V+hdXSbRf/
-         rGonXqPqczbDLUKCadhK/zXuI6BBNjOsG8GIZE0hr3XCCnZb/4/pC9hbMXRiT6mFWcjs
-         jTJNKyo2/jqNhipLJHTFOXICMhS34JLXZqPs8M4umpQCk+tl2LY5Zw1/em+0Qm/RqdMN
-         2wbw==
-X-Received: by 10.50.164.138 with SMTP id yq10mr1821168igb.29.1432708238219;
-        Tue, 26 May 2015 23:30:38 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4485:3520:962f:d5a5])
-        by mx.google.com with ESMTPSA id z195sm12841027iod.33.2015.05.26.23.30.37
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 26 May 2015 23:30:37 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2-503-g2442661
-In-Reply-To: <1432708232-29892-1-git-send-email-gitster@pobox.com>
+	id S1752281AbbE0GgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 02:36:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36466 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752181AbbE0GgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 02:36:01 -0400
+Received: (qmail 31305 invoked by uid 102); 27 May 2015 06:36:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 01:36:01 -0500
+Received: (qmail 4856 invoked by uid 107); 27 May 2015 06:36:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 02:36:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 May 2015 02:35:58 -0400
+Content-Disposition: inline
+In-Reply-To: <1432677675-5118-5-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270023>
 
-Traditionally, we only had emit_add_line() helper, which knows how
-to find and paint whitespace breakages on the given line, because we
-only care about whitespace breakages introduced in new lines.  The
-context lines and old (i.e. deleted) lines are emitted with a
-simpler emit_line_0() that paints the entire line in plain or old
-colors.
+On Tue, May 26, 2015 at 03:01:08PM -0700, Stefan Beller wrote:
 
-Identify callers of emit_line_0() that show deleted lines and
-context lines, have them call new helpers, emit_del_line() and
-emit_context_line(), so that we can later tweak what is done to
-these two classes of lines.
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -716,10 +716,47 @@ static void format_symref_info(struct strbuf *buf, struct string_list *symref)
+>  		strbuf_addf(buf, " symref=%s:%s", item->string, (char *)item->util);
+>  }
+>  
+> -static const char *advertise_capabilities = "multi_ack thin-pack side-band"
+> +static char *advertise_capabilities = "multi_ack thin-pack side-band"
+>  		" side-band-64k ofs-delta shallow no-progress"
+>  		" include-tag multi_ack_detailed";
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 50 ++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+If we are upload-pack-2, should we advertise that in the capabilities? I
+think it may make things easier later if we try to provide some
+opportunistic out-of-band data. E.g., if see tell git-daemon:
 
-diff --git a/diff.c b/diff.c
-index d1bd534..c575c45 100644
---- a/diff.c
-+++ b/diff.c
-@@ -498,6 +498,24 @@ static void emit_add_line(const char *reset,
- 	}
- }
- 
-+static void emit_del_line(const char *reset,
-+			  struct emit_callback *ecbdata,
-+			  const char *line, int len)
-+{
-+	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_OLD);
-+
-+	emit_line_0(ecbdata->opt, set, reset, '-', line, len);
-+}
-+
-+static void emit_context_line(const char *reset,
-+			      struct emit_callback *ecbdata,
-+			      const char *line, int len)
-+{
-+	const char *set = diff_get_color(ecbdata->color_diff, DIFF_PLAIN);
-+
-+	emit_line_0(ecbdata->opt, set, reset, ' ', line, len);
-+}
-+
- static void emit_hunk_header(struct emit_callback *ecbdata,
- 			     const char *line, int len)
- {
-@@ -603,7 +621,6 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
- {
- 	const char *endp = NULL;
- 	static const char *nneof = " No newline at end of file\n";
--	const char *old = diff_get_color(ecb->color_diff, DIFF_FILE_OLD);
- 	const char *reset = diff_get_color(ecb->color_diff, DIFF_RESET);
- 
- 	while (0 < size) {
-@@ -613,8 +630,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
- 		len = endp ? (endp - data + 1) : size;
- 		if (prefix != '+') {
- 			ecb->lno_in_preimage++;
--			emit_line_0(ecb->opt, old, reset, '-',
--				    data, len);
-+			emit_del_line(reset, ecb, data, len);
- 		} else {
- 			ecb->lno_in_postimage++;
- 			emit_add_line(reset, ecb, data, len);
-@@ -1250,17 +1266,27 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		return;
- 	}
- 
--	if (line[0] != '+') {
--		const char *color =
--			diff_get_color(ecbdata->color_diff,
--				       line[0] == '-' ? DIFF_FILE_OLD : DIFF_PLAIN);
--		ecbdata->lno_in_preimage++;
--		if (line[0] == ' ')
--			ecbdata->lno_in_postimage++;
--		emit_line(ecbdata->opt, color, reset, line, len);
--	} else {
-+	switch (line[0]) {
-+	case '+':
- 		ecbdata->lno_in_postimage++;
- 		emit_add_line(reset, ecbdata, line + 1, len - 1);
-+		break;
-+	case '-':
-+		ecbdata->lno_in_preimage++;
-+		emit_del_line(reset, ecbdata, line + 1, len - 1);
-+		break;
-+	case ' ':
-+		ecbdata->lno_in_postimage++;
-+		ecbdata->lno_in_preimage++;
-+		emit_context_line(reset, ecbdata, line + 1, len - 1);
-+		break;
-+	default:
-+		/* incomplete line at the end */
-+		ecbdata->lno_in_preimage++;
-+		emit_line(ecbdata->opt,
-+			  diff_get_color(ecbdata->color_diff, DIFF_PLAIN),
-+			  reset, line, len);
-+		break;
- 	}
- }
- 
--- 
-2.4.2-503-g3e4528a
+  git-upload-pack repo\0host=whatever\0\0version=2
+
+how do we know whether version=2 was understood and kicked us into v2
+mode, versus an old server that ignored it?
+
+It also just makes the protocol more self-describing; from the
+conversation you can see which version is in use.
+
+> +static void send_capabilities(void)
+> +{
+> +	char buf[100];
+> +
+> +	while (next_capability(buf))
+> +		packet_write(1, "capability:%s\n", buf);
+
+Having a static-sized buffer and then passing it to a function which has
+no idea of the buffer size seems like a recipe for a buffer overflow. :)
+
+You are fine here because you are parsing the hard-coded capabilities
+string, and we know 100 is enough there. But it's nice to avoid such
+magic.
+
+Like Eric, I find the whole next_capability thing a little ugly. His
+suggestion to pass in the parsing state is an improvement, but I wonder
+why we need to parse at all. Can we keep the capabilities as:
+
+  const char *capabilities[] = {
+	"multi_ack",
+	"thin-pack",
+	... etc ...
+  };
+
+and then loop over the array? The v1 writer will need to be modified,
+but it should be fairly straightforward (loop and add them to the buffer
+rather than dumping the whole string).
+
+Also, do we need the capability noise-word? They all have it, except
+for:
+
+> +	packet_write(1, "agent:%s\n", git_user_agent_sanitized());
+
+But isn't that basically a capability, too (I agree it is stretching the
+definition of "capability", but I think that ship has sailed; the
+client's response is not "I support this, too" but "I want to enable
+this").
+
+IOW, is there a reason that the initial conversation is not just:
+
+  pkt-line("multi_ack");
+  pkt-line("thin-pack");
+  ...
+  pkt-line("agent=v2.5.0");
+  pkt-line(0000);
+
+We already have framing for each capability due to the use of pkt-line.
+The "capability:" is just one more thing the client has to parse past.
+The keys are already unique up to any "=", so I don't think there is any
+ambiguity (e.g., we don't care about "capability:agent"; we have already
+assigned a meaning to the term "agent", and will never introduce a
+standalone capability with the same name).
+
+Likewise, if we introduce new protocol items here, the client should
+either ignore them (if it does not understand them) or know what to do
+with them.
+
+> +static void receive_capabilities(void)
+> +{
+> +	int done = 0;
+> +	while (1) {
+> +		char *line = packet_read_line(0, NULL);
+> +		if (!line)
+> +			break;
+> +		if (starts_with(line, "capability:"))
+> +			parse_features(line + strlen("capability:"));
+> +	}
+
+Use:
+
+  const char *cap;
+  if (skip_prefix(line, "capability:", &cap))
+	parse_features(cap);
+
+Or better yet, if you take my suggestion above:
+
+  parse_features(line);
+
+:)
+
+> +static int endswith(const char *teststring, const char *ending)
+> +{
+> +	int slen = strlen(teststring);
+> +	int elen = strlen(ending);
+> +	return !strcmp(teststring + slen - elen, ending);
+> +}
+
+Eric mentioned the underflow problems here, but I wonder even more:
+what's wrong with the global ends_with() that we already provide?
+
+-Peff
