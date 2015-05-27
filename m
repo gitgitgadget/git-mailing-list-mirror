@@ -1,302 +1,134 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP 3/8] am: implement patch queue mechanism
-Date: Wed, 27 May 2015 21:33:33 +0800
-Message-ID: <1432733618-25629-4-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/WIP 7/8] am: apply patch with git-apply
+Date: Wed, 27 May 2015 21:33:37 +0800
+Message-ID: <1432733618-25629-8-git-send-email-pyokagan@gmail.com>
 References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 15:34:52 2015
+X-From: git-owner@vger.kernel.org Wed May 27 15:35:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxbTp-0006FL-UK
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 15:34:46 +0200
+	id 1YxbUN-0006UN-S4
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 15:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbbE0Nec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 09:34:32 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:34210 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326AbbE0Nea (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 09:34:30 -0400
-Received: by pdbki1 with SMTP id ki1so15461889pdb.1
-        for <git@vger.kernel.org>; Wed, 27 May 2015 06:34:30 -0700 (PDT)
+	id S1752896AbbE0Nep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 09:34:45 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:34595 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752853AbbE0Nen (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 09:34:43 -0400
+Received: by pdbki1 with SMTP id ki1so15470185pdb.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 06:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W4xD//I8cGoAUfvDhRMxg0exf/4/Kzf+/jomy4DwYpE=;
-        b=lY/PUVvcLKCSNkX6aWUeow+DU2Vq4ueLvomyro4MAtBSGiq5KTVqwh3ehMi0cg3RgW
-         mpArduexhvEpSzMqQysdRb9TejFkZSlL0CUsvoHNIbJSJRiWXy/YMUh4mTMgfw4KTb+s
-         K4Rf7nPbg2GBy6OPKPRPPdXQUA03FM2CwdSQ/A0Nk6kOja1yP/yll1uoikZA/K0gBaZM
-         9/tX3/JJu9s7fc2Xl3/DPEdSuxqmjzOuoQN2zg7zAGx9TzY45zX01SeMTbjJ3W9vfQOZ
-         O6KZbvQ8Zyz87TnO/4aXa1OAcyLkaVg47h6EBnvj86MgpYUGzVorsdlAZeh6sOUyjGln
-         +NcA==
-X-Received: by 10.70.30.193 with SMTP id u1mr57946980pdh.59.1432733669972;
-        Wed, 27 May 2015 06:34:29 -0700 (PDT)
+        bh=j5BrWriuiMAsbseH5PO0yOuA7M/+auZ/ZqDeldDXagg=;
+        b=NNmBuLekFMVEe/zbHtliS7cFm2ULV172Zxm8MLJ0wSxKrNxm/Q1NEk+Ms8sdTdw/Ar
+         l9Z1JaApA5ARSPWVSH0tHCLKVNrp3am6vgqiudFHCPuzcztvsxWfhULfnYMMpYQ1aDkj
+         CKP9DCWZ7YJVSiZ1JUdjDYQb3zwNJyWngNMo2dQM/+CM7khF8wQTmAMxfrqbgtAaX7ux
+         ASU/49ZIK52Z7w8PrGBSYq3LSyCfVfgDX9aceQ7wvEKHnn9fZ1MMJNzVSvyiNhKFxuL5
+         UZe+/2SmUK+eva+hbXusjbJ/CTPrSD81dSFUI3J1WWVYv6ZpWBIZtWnTsNu6WOBTLlP0
+         edRw==
+X-Received: by 10.68.202.135 with SMTP id ki7mr58511968pbc.122.1432733682640;
+        Wed, 27 May 2015 06:34:42 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id e5sm16301395pdc.94.2015.05.27.06.34.27
+        by mx.google.com with ESMTPSA id e5sm16301395pdc.94.2015.05.27.06.34.40
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 May 2015 06:34:28 -0700 (PDT)
+        Wed, 27 May 2015 06:34:41 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270053>
 
-git-am applies a series of patches. If the process terminates
-abnormally, we want to be able to resume applying the series of patches.
-This requires the session state to be saved in a persistent location.
-
-Implement the mechanism of a "patch queue", represented by 2 integers --
-the index of the current patch we are applying and the index of the last
-patch, as well as its lifecycle through the following functions:
-
-* am_setup(), which will set up the state directory
-  $GIT_DIR/rebase-apply. As such, even if the process exits abnormally,
-  the last-known state will still persist.
-
-* am_state_load(), which is called if there is an am session in
-  progress, to load the last known state from the state directory so we
-  can resume applying patches.
-
-* am_run(), which will do the actual patch application. After applying a
-  patch, it calls am_next() to increment the current patch index. The
-  logic for applying and committing a patch is not implemented yet.
-
-* am_destroy(), which is finally called when we successfully applied all
-  the patches in the queue, to clean up by removing the state directory
-  and its contents.
+Implement applying the patch to the index using git-apply.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- Makefile     |   2 +-
- builtin.h    |   1 +
- builtin/am.c | 167 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- git.c        |   1 +
- 4 files changed, 170 insertions(+), 1 deletion(-)
- create mode 100644 builtin/am.c
+ builtin/am.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 49 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 323c401..57a7c8c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -466,7 +466,6 @@ TEST_PROGRAMS_NEED_X =
- # interactive shell sessions without exporting it.
- unexport CDPATH
- 
--SCRIPT_SH += git-am.sh
- SCRIPT_SH += git-bisect.sh
- SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
-@@ -812,6 +811,7 @@ LIB_OBJS += xdiff-interface.o
- LIB_OBJS += zlib.o
- 
- BUILTIN_OBJS += builtin/add.o
-+BUILTIN_OBJS += builtin/am.o
- BUILTIN_OBJS += builtin/annotate.o
- BUILTIN_OBJS += builtin/apply.o
- BUILTIN_OBJS += builtin/archive.o
-diff --git a/builtin.h b/builtin.h
-index b87df70..d50c9d1 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -30,6 +30,7 @@ extern int textconv_object(const char *path, unsigned mode, const unsigned char
- extern int is_builtin(const char *s);
- 
- extern int cmd_add(int argc, const char **argv, const char *prefix);
-+extern int cmd_am(int argc, const char **argv, const char *prefix);
- extern int cmd_annotate(int argc, const char **argv, const char *prefix);
- extern int cmd_apply(int argc, const char **argv, const char *prefix);
- extern int cmd_archive(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/am.c b/builtin/am.c
-new file mode 100644
-index 0000000..6c00009
---- /dev/null
+index 0b8a42d..7126df3 100644
+--- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -0,0 +1,167 @@
+@@ -25,6 +25,18 @@ static int is_empty_file(const char *filename)
+ 	return !st.st_size;
+ }
+ 
++/**
++ * Returns the first line of msg
++ */
++static const char *firstline(const char *msg)
++{
++	static struct strbuf sb = STRBUF_INIT;
++
++	strbuf_reset(&sb);
++	strbuf_add(&sb, msg, strchrnul(msg, '\n') - msg);
++	return sb.buf;
++}
++
+ enum patch_format {
+ 	PATCH_FORMAT_UNKNOWN = 0,
+ 	PATCH_FORMAT_MBOX
+@@ -503,6 +515,29 @@ static int parse_patch(struct am_state *state, const char *patch)
+ 	return 0;
+ }
+ 
 +/*
-+ * Builtin "git am"
-+ *
-+ * Based on git-am.sh by Junio C Hamano.
++ * Applies current patch with git-apply. Returns 0 on success, -1 otherwise.
 + */
-+#include "cache.h"
-+#include "parse-options.h"
-+#include "dir.h"
-+
-+struct am_state {
-+	struct strbuf dir;            /* state directory path */
-+	int cur;                      /* current patch number */
-+	int last;                     /* last patch number */
-+};
-+
-+/**
-+ * Initializes am_state with the default values.
-+ */
-+static void am_state_init(struct am_state *state)
++static int run_apply(const struct am_state *state)
 +{
-+	memset(state, 0, sizeof(*state));
++	struct child_process cp = CHILD_PROCESS_INIT;
 +
-+	strbuf_init(&state->dir, 0);
-+}
++	cp.git_cmd = 1;
 +
-+/**
-+ * Release memory allocated by an am_state.
-+ */
-+static void am_state_release(struct am_state *state)
-+{
-+	strbuf_release(&state->dir);
-+}
++	argv_array_push(&cp.args, "apply");
++	argv_array_push(&cp.args, "--index");
++	argv_array_push(&cp.args, am_path(state, "patch"));
 +
-+/**
-+ * Returns path relative to the am_state directory.
-+ */
-+static inline const char *am_path(const struct am_state *state, const char *path)
-+{
-+	return mkpath("%s/%s", state->dir.buf, path);
-+}
-+
-+/**
-+ * Returns 1 if there is an am session in progress, 0 otherwise.
-+ */
-+static int am_in_progress(const struct am_state *state)
-+{
-+	struct stat st;
-+
-+	if (lstat(state->dir.buf, &st) < 0 || !S_ISDIR(st.st_mode))
-+		return 0;
-+	if (lstat(am_path(state, "last"), &st) || !S_ISREG(st.st_mode))
-+		return 0;
-+	if (lstat(am_path(state, "next"), &st) || !S_ISREG(st.st_mode))
-+		return 0;
-+	return 1;
-+}
-+
-+/**
-+ * Reads the contents of `file`. The third argument can be used to give a hint
-+ * about the file size, to avoid reallocs. Returns 0 on success, -1 if the file
-+ * does not exist.
-+ */
-+static int read_state_file(struct strbuf *sb, const char *file, size_t hint) {
-+	strbuf_reset(sb);
-+
-+	if (!strbuf_read_file(sb, file, hint))
-+		return 0;
-+
-+	if (errno == ENOENT)
++	if (run_command(&cp))
 +		return -1;
 +
-+	die_errno(_("could not read '%s'"), file);
-+}
-+
-+/**
-+ * Loads state from disk.
-+ */
-+static void am_state_load(struct am_state *state)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	read_state_file(&sb, am_path(state, "next"), 8);
-+	state->cur = strtol(sb.buf, NULL, 10);
-+
-+	read_state_file(&sb, am_path(state, "last"), 8);
-+	state->last = strtol(sb.buf, NULL, 10);
-+
-+	strbuf_release(&sb);
-+}
-+
-+/**
-+ * Remove the am_state directory.
-+ */
-+static void am_destroy(const struct am_state *state)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	strbuf_addstr(&sb, state->dir.buf);
-+	remove_dir_recursively(&sb, 0);
-+	strbuf_release(&sb);
-+}
-+
-+/**
-+ * Setup a new am session for applying patches
-+ */
-+static void am_setup(struct am_state *state)
-+{
-+	if (mkdir(state->dir.buf, 0777) < 0 && errno != EEXIST)
-+		die_errno(_("failed to create directory '%s'"), state->dir.buf);
-+
-+	write_file(am_path(state, "next"), 1, "%d", state->cur);
-+
-+	write_file(am_path(state, "last"), 1, "%d", state->last);
-+}
-+
-+/**
-+ * Increments the patch pointer, and cleans am_state for the application of the
-+ * next patch.
-+ */
-+static void am_next(struct am_state *state)
-+{
-+	state->cur++;
-+	write_file(am_path(state, "next"), 1, "%d", state->cur);
-+}
-+
-+/**
-+ * Applies all queued patches.
-+ */
-+static void am_run(struct am_state *state)
-+{
-+	while (state->cur <= state->last)
-+		am_next(state);
-+
-+	am_destroy(state);
-+}
-+
-+struct am_state state;
-+
-+static const char * const am_usage[] = {
-+	N_("git am [options] [(<mbox>|<Maildir>)...]"),
-+	NULL
-+};
-+
-+static struct option am_options[] = {
-+	OPT_END()
-+};
-+
-+int cmd_am(int argc, const char **argv, const char *prefix)
-+{
-+	git_config(git_default_config, NULL);
-+
-+	am_state_init(&state);
-+	strbuf_addstr(&state.dir, git_path("rebase-apply"));
-+
-+	argc = parse_options(argc, argv, prefix, am_options, am_usage, 0);
-+
-+	if (am_in_progress(&state))
-+		am_state_load(&state);
-+	else
-+		am_setup(&state);
-+
-+	am_run(&state);
-+
-+	am_state_release(&state);
++	/* Reload index as git-apply will have modified it. */
++	discard_cache();
++	read_cache();
 +
 +	return 0;
 +}
-diff --git a/git.c b/git.c
-index 44374b1..42328ed 100644
---- a/git.c
-+++ b/git.c
-@@ -370,6 +370,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
++
+ /**
+  * Applies all queued patches.
+  */
+@@ -520,7 +555,20 @@ static void am_run(struct am_state *state)
+ 		write_file(am_path(state, "final-commit"), 1, "%s", state->msg.buf);
+ 		write_author_script(state);
  
- static struct cmd_struct commands[] = {
- 	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
-+	{ "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
- 	{ "annotate", cmd_annotate, RUN_SETUP },
- 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
- 	{ "archive", cmd_archive },
+-		/* patch application not implemented yet */
++		printf_ln(_("Applying: %s"), firstline(state->msg.buf));
++
++		if (run_apply(state) < 0) {
++			int value;
++
++			printf_ln(_("Patch failed at %s %s"), msgnum(state),
++					firstline(state->msg.buf));
++
++			if (!git_config_get_bool("advice.amworkdir", &value) && !value)
++				printf_ln(_("The copy of the patch that failed is found in: %s"),
++						am_path(state, "patch"));
++
++			exit(128);
++		}
+ 
+ next:
+ 		am_next(state);
 -- 
 2.1.4
