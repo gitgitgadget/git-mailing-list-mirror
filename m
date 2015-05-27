@@ -1,110 +1,84 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Recovering from 'fatal: core.bare and core.worktree do not make
- sense'
-Date: Wed, 27 May 2015 12:31:47 +0200
-Message-ID: <20150527123147.Horde.GqzoX-7JvXiOGBlB5moP4A8@webmail.informatik.kit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC 2/2] git rebase -i: Warn removed or dupplicated commits
+Date: Wed, 27 May 2015 13:38:22 +0200
+Message-ID: <vpqy4ka5jyp.fsf@anie.imag.fr>
+References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1432676318-22852-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<loom.20150527T105315-517@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 27 12:32:18 2015
+Cc: git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 27 13:38:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxYdD-0000Ue-LE
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 12:32:16 +0200
+	id 1YxZfL-0006W6-EL
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 13:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540AbbE0KcL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2015 06:32:11 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:53231 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750959AbbE0KcJ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 06:32:09 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1YxYd6-0006t2-1b
-	for <git@vger.kernel.org>; Wed, 27 May 2015 12:32:08 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1YxYcl-0005tY-QV
-	for git@vger.kernel.org; Wed, 27 May 2015 12:31:47 +0200
-Received: from x590c2e9c.dyn.telefonica.de (x590c2e9c.dyn.telefonica.de
- [89.12.46.156]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Wed, 27 May 2015 12:31:47 +0200
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1432722728.
+	id S1752372AbbE0Li1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2015 07:38:27 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39432 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751645AbbE0Li0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 07:38:26 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4RBcLfE016393
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 27 May 2015 13:38:21 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4RBcMar016280;
+	Wed, 27 May 2015 13:38:22 +0200
+In-Reply-To: <loom.20150527T105315-517@post.gmane.org> (Stephen Kelly's
+	message of "Wed, 27 May 2015 08:54:55 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 May 2015 13:38:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4RBcLfE016393
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1433331501.87674@ANczdrKCvTAMeUsJBRCu7g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270041>
 
+Stephen Kelly <steveire@gmail.com> writes:
 
-Hi,
+> Galan R=E9mi <remi.galan-alfonso <at> ensimag.grenoble-inp.fr> writes=
+:
+>
+>>=20
+>> Check if commits were removed (i.e. a line was deleted) or dupplicat=
+ed
+>> (e.g. the same commit is picked twice), can print warnings or abort
+>> git rebase according to the value of the configuration variable
+>> rebase.checkLevel.
+>
+> I sometimes duplicate commits deliberately if I want to split a commi=
+t in
+> two. I move a copy up and fix the conflict, and I know that I'll stil=
+l get
+> the right thing later even if I make a mistake with the conflict
+> resolution.
 
-the other day I said 'git config core.worktree /somewhere' in a bare
-repo while thinking I was in a regular one, user error.  The 'fatal:
-core.bare and core.worktree do not make sense' error from the next
-command made me realize immediately that I was wrong, that's good.
-However...
+The more I think about it, the more I think we should either not warn a=
+t
+all on duplicate commits, or have a separate config variable.
 
-OK, let's have a look and recover from the situation:
+It's rare to duplicate by mistake, and when you do so, it's already eas=
+y
+to notice: you get conflicts, and you can git rebase --skip the second
+occurence. Accidentally dropped commits are another story: it's rather
+easy to cut-and-forget-to-paste, and the consequence currently is silen=
+t
+data loss ...
 
-    $ git config --edit
-    fatal: core.bare and core.worktree do not make sense
-
-Well, all was well before I set 'core.worktree', so let's unset it:
-
-    $ git config --unset core.worktree
-    fatal: core.bare and core.worktree do not make sense
-
-Hmph, not expecting much, but how about unsetting the other
-variable?
-
-    $ git config --unset core.bare
-    fatal: core.bare and core.worktree do not make sense
-
-Good, at least it's pretty consistent, though I still don't get what
-'git config' has to do with the worktree that is so important that
-it has to bail out.  Time to look for help:
-
-    $ git help config
-    fatal: core.bare and core.worktree do not make sense
-
-WTF :)
-Alright, I give up:
-
-    $ vim config
-    $ # happy
-
-It was two days later that I had a bit of a lightbulb moment,
-reproduced the situation and just for fun tried this:
-
-    $ git -c core.bare=3Dfalse config --unset core.bare
-
-I didn't expect, but it worked!  Great.
-
-Some thoughts:
-
-    1) Perhaps 'git config' should be more careful in the first place
-       and refuse to set 'core.worktree' when 'core.bare' is already
-       true and vice versa.
-
-    2) The damage was done with 'git config', so I expected that I can
-       repair it with "plain" 'git config' (i.e. without 'git -c') as
-       well.  'git config' has nothing to do with the path to the
-       worktree after all.  And 'git config --edit' should work
-       regardless of the mess that might be in the config file.
-
-    3) 'git help <cmd>' should always work, shouldn't it?  (Though
-       that's the easiest to remedy, just cd out of the repo, or fire
-       up a new terminal window.)
-
-
-G=C3=A1bor
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
