@@ -1,67 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Fix verify_lock() to report errors via strbuf
-Date: Wed, 27 May 2015 12:55:10 -0700
-Message-ID: <xmqqfv6hlrs1.fsf@gitster.dls.corp.google.com>
-References: <1432337697-29161-1-git-send-email-mhagger@alum.mit.edu>
-	<5565B1AE.3010708@alum.mit.edu>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 2/2] completion: use new 'git config' options to reliably list variable names
+Date: Wed, 27 May 2015 22:07:20 +0200
+Message-ID: <1432757240-4445-2-git-send-email-szeder@ira.uka.de>
+References: <1432757240-4445-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed May 27 21:55:21 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 22:07:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxhQ6-0007mF-Pk
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 21:55:19 +0200
+	id 1YxhcA-0006uj-2W
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 22:07:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbbE0TzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 15:55:13 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:34430 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597AbbE0TzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 15:55:12 -0400
-Received: by ieczm2 with SMTP id zm2so22254420iec.1
-        for <git@vger.kernel.org>; Wed, 27 May 2015 12:55:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=XStidHGqpb7JGLbcV0aQ+7SbqsmpaLAIizPh7vQZSH0=;
-        b=bUfyoO5A3r1tnvnhGQWOLI4mtUyIawouBlqzl9LQtLrTxc8MbtljaDzeL8z9dFY7+j
-         yhjxpI6t9EGxYJTGI7z4RCOvIyQkx9/9x29if+vMukxxOrZUOlZ6Vbvie7igqP9YfPyG
-         X6mojT9CftwgpTo1R70maEFKBSDqCX8xUnIGYJu58W/0C7YVYr4HMy62G7tzYUyfRPOY
-         kpMsYTwcLKIzoI/5AwHfazWX44vn0A9SvAPd35EEBqJ0EipkyoJzde6wlZqSLF0+VzIQ
-         kQ0U5Rmb7Wl/Aas5r78syWwTR4rCdXymrdj/xEykRyeN6m30VF7s2pK4xSJZ1ZzEuHZY
-         IYWw==
-X-Received: by 10.107.162.147 with SMTP id l141mr44360381ioe.77.1432756511768;
-        Wed, 27 May 2015 12:55:11 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
-        by mx.google.com with ESMTPSA id 33sm14226412iop.22.2015.05.27.12.55.11
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 May 2015 12:55:11 -0700 (PDT)
-In-Reply-To: <5565B1AE.3010708@alum.mit.edu> (Michael Haggerty's message of
-	"Wed, 27 May 2015 13:59:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753643AbbE0UHk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2015 16:07:40 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:36897 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753634AbbE0UHj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 May 2015 16:07:39 -0400
+Received: from x590c2e9c.dyn.telefonica.de ([89.12.46.156] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
+	iface 141.3.10.81 id 1Yxhbz-0006X1-1u; Wed, 27 May 2015 22:07:36 +0200
+X-Mailer: git-send-email 2.4.2.347.ge926c0d
+In-Reply-To: <1432757240-4445-1-git-send-email-szeder@ira.uka.de>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1432757256.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270076>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+List all set config variable names with 'git config --list-names' inste=
+ad
+of '--list' post processing.  Similarly, use 'git config
+--get-name-regexp' instead of '--get-regexp' to get config variables in=
+ a
+given section.
 
-> The last sentence is nonsense. This patch series relies on
-> lock_ref_sha1_basic() having a "strbuf *err" parameter, which is only
-> the case since
->
->     4a32b2e lock_ref_sha1_basic(): report errors via a "struct strbuf
-> *err" (2015-05-11)
->
-> The latter commit is in mh/ref-directory-file (which has now been merged
-> to master, so technically the last sentence is now correct again).
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ contrib/completion/git-completion.bash | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-[5/5] seems to conflict with the write_ref_sha1() vs write_ref_to_lockfile()
-updates; I think I can manage, though ;-)
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 6abbd56..121aa31 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -744,9 +744,8 @@ __git_compute_porcelain_commands ()
+ __git_get_config_variables ()
+ {
+ 	local section=3D"$1" i IFS=3D$'\n'
+-	for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "^$secti=
+on\..*" 2>/dev/null); do
+-		i=3D"${i#$section.}"
+-		echo "${i/ */}"
++	for i in $(git --git-dir=3D"$(__gitdir)" config --get-name-regexp "^$=
+section\..*" 2>/dev/null); do
++		echo "${i#$section.}"
+ 	done
+ }
+=20
+@@ -1774,15 +1773,7 @@ __git_config_get_set_variables ()
+ 		c=3D$((--c))
+ 	done
+=20
+-	git --git-dir=3D"$(__gitdir)" config $config_file --list 2>/dev/null =
+|
+-	while read -r line
+-	do
+-		case "$line" in
+-		*.*=3D*)
+-			echo "${line/=3D*/}"
+-			;;
+-		esac
+-	done
++	git --git-dir=3D"$(__gitdir)" config $config_file --list-names 2>/dev=
+/null
+ }
+=20
+ _git_config ()
+--=20
+2.4.2.347.ge926c0d
