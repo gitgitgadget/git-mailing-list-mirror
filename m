@@ -1,180 +1,302 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP 5/8] am: detect mbox patches
-Date: Wed, 27 May 2015 21:33:35 +0800
-Message-ID: <1432733618-25629-6-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/WIP 3/8] am: implement patch queue mechanism
+Date: Wed, 27 May 2015 21:33:33 +0800
+Message-ID: <1432733618-25629-4-git-send-email-pyokagan@gmail.com>
 References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 15:34:53 2015
+X-From: git-owner@vger.kernel.org Wed May 27 15:34:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxbTr-0006FL-7K
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 15:34:47 +0200
+	id 1YxbTp-0006FL-UK
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 15:34:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752841AbbE0Nei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 09:34:38 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:34986 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630AbbE0Neh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 09:34:37 -0400
-Received: by pdea3 with SMTP id a3so15337181pde.2
-        for <git@vger.kernel.org>; Wed, 27 May 2015 06:34:37 -0700 (PDT)
+	id S1752838AbbE0Nec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 09:34:32 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:34210 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751326AbbE0Nea (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 09:34:30 -0400
+Received: by pdbki1 with SMTP id ki1so15461889pdb.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 06:34:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+6V4B6ZVL3ubpPdeofFaPdP46ZJsdYceDcjqOscyu2c=;
-        b=FJoyNt/0sPULpXNTEsxUZyGaqFcSNxDIn5UvMhTPs9/VSyGCsMboHn0kHmBJqmTpPs
-         6yPutfqFDk5YCH/KdXRs+LJ94q0G9OFQ2iAd94YZkDnBy+dValXioVIwAwduRGlrP6WP
-         6p33bTLZHqcaIDNkuEAMbi2IhP1wFmKjGMED5/PHdzmyZAABDr+hzGvjFhzlmgISKYsj
-         lK9C2AZ8swAE9sJPH7DT+pfwQydixxG7vwRzuUKXN9u3r+R6WlmCbWt9PnMradhdOQlC
-         pn+zk/7G2zTKZxTw7WXxdMcf1KnPKi4IS0UUvLVgNYfhGvbmoGvX2tfviXQ4434PiNYA
-         6Umg==
-X-Received: by 10.70.62.6 with SMTP id u6mr30436279pdr.142.1432733677140;
-        Wed, 27 May 2015 06:34:37 -0700 (PDT)
+        bh=W4xD//I8cGoAUfvDhRMxg0exf/4/Kzf+/jomy4DwYpE=;
+        b=lY/PUVvcLKCSNkX6aWUeow+DU2Vq4ueLvomyro4MAtBSGiq5KTVqwh3ehMi0cg3RgW
+         mpArduexhvEpSzMqQysdRb9TejFkZSlL0CUsvoHNIbJSJRiWXy/YMUh4mTMgfw4KTb+s
+         K4Rf7nPbg2GBy6OPKPRPPdXQUA03FM2CwdSQ/A0Nk6kOja1yP/yll1uoikZA/K0gBaZM
+         9/tX3/JJu9s7fc2Xl3/DPEdSuxqmjzOuoQN2zg7zAGx9TzY45zX01SeMTbjJ3W9vfQOZ
+         O6KZbvQ8Zyz87TnO/4aXa1OAcyLkaVg47h6EBnvj86MgpYUGzVorsdlAZeh6sOUyjGln
+         +NcA==
+X-Received: by 10.70.30.193 with SMTP id u1mr57946980pdh.59.1432733669972;
+        Wed, 27 May 2015 06:34:29 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id e5sm16301395pdc.94.2015.05.27.06.34.34
+        by mx.google.com with ESMTPSA id e5sm16301395pdc.94.2015.05.27.06.34.27
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 May 2015 06:34:35 -0700 (PDT)
+        Wed, 27 May 2015 06:34:28 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270052>
 
-Since 15ced75 (git-am foreign patch support: autodetect some patch
-formats, 2009-05-27), git-am.sh is able to autodetect mbox, stgit and
-mercurial patches through heuristics.
+git-am applies a series of patches. If the process terminates
+abnormally, we want to be able to resume applying the series of patches.
+This requires the session state to be saved in a persistent location.
 
-Re-implement support for autodetecting mbox/maildir files.
+Implement the mechanism of a "patch queue", represented by 2 integers --
+the index of the current patch we are applying and the index of the last
+patch, as well as its lifecycle through the following functions:
+
+* am_setup(), which will set up the state directory
+  $GIT_DIR/rebase-apply. As such, even if the process exits abnormally,
+  the last-known state will still persist.
+
+* am_state_load(), which is called if there is an am session in
+  progress, to load the last known state from the state directory so we
+  can resume applying patches.
+
+* am_run(), which will do the actual patch application. After applying a
+  patch, it calls am_next() to increment the current patch index. The
+  logic for applying and committing a patch is not implemented yet.
+
+* am_destroy(), which is finally called when we successfully applied all
+  the patches in the queue, to clean up by removing the state directory
+  and its contents.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ Makefile     |   2 +-
+ builtin.h    |   1 +
+ builtin/am.c | 167 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git.c        |   1 +
+ 4 files changed, 170 insertions(+), 1 deletion(-)
+ create mode 100644 builtin/am.c
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 9c7b058..d589ec5 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -108,6 +108,97 @@ static void am_destroy(const struct am_state *state)
- 	strbuf_release(&sb);
- }
+diff --git a/Makefile b/Makefile
+index 323c401..57a7c8c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -466,7 +466,6 @@ TEST_PROGRAMS_NEED_X =
+ # interactive shell sessions without exporting it.
+ unexport CDPATH
  
+-SCRIPT_SH += git-am.sh
+ SCRIPT_SH += git-bisect.sh
+ SCRIPT_SH += git-difftool--helper.sh
+ SCRIPT_SH += git-filter-branch.sh
+@@ -812,6 +811,7 @@ LIB_OBJS += xdiff-interface.o
+ LIB_OBJS += zlib.o
+ 
+ BUILTIN_OBJS += builtin/add.o
++BUILTIN_OBJS += builtin/am.o
+ BUILTIN_OBJS += builtin/annotate.o
+ BUILTIN_OBJS += builtin/apply.o
+ BUILTIN_OBJS += builtin/archive.o
+diff --git a/builtin.h b/builtin.h
+index b87df70..d50c9d1 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -30,6 +30,7 @@ extern int textconv_object(const char *path, unsigned mode, const unsigned char
+ extern int is_builtin(const char *s);
+ 
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
++extern int cmd_am(int argc, const char **argv, const char *prefix);
+ extern int cmd_annotate(int argc, const char **argv, const char *prefix);
+ extern int cmd_apply(int argc, const char **argv, const char *prefix);
+ extern int cmd_archive(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/am.c b/builtin/am.c
+new file mode 100644
+index 0000000..6c00009
+--- /dev/null
++++ b/builtin/am.c
+@@ -0,0 +1,167 @@
 +/*
-+ * Returns 1 if the file looks like a piece of email a-la RFC2822, 0 otherwise.
-+ * We check this by grabbing all the non-indented lines and seeing if they look
-+ * like they begin with valid header field names.
++ * Builtin "git am"
++ *
++ * Based on git-am.sh by Junio C Hamano.
 + */
-+static int is_email(const char *filename)
++#include "cache.h"
++#include "parse-options.h"
++#include "dir.h"
++
++struct am_state {
++	struct strbuf dir;            /* state directory path */
++	int cur;                      /* current patch number */
++	int last;                     /* last patch number */
++};
++
++/**
++ * Initializes am_state with the default values.
++ */
++static void am_state_init(struct am_state *state)
 +{
-+	struct strbuf sb = STRBUF_INIT;
-+	FILE *fp = xfopen(filename, "r");
-+	int ret = 1;
++	memset(state, 0, sizeof(*state));
 +
-+	while (!strbuf_getline(&sb, fp, '\n')) {
-+		const char *x;
-+
-+		strbuf_rtrim(&sb);
-+
-+		if (!sb.len)
-+			break; /* End of header */
-+
-+		/* Ignore indented folded lines */
-+		if (*sb.buf == '\t' || *sb.buf == ' ')
-+			continue;
-+
-+		/* It's a header if it matches the regexp "^[!-9;-~]+:" */
-+		for (x = sb.buf; *x; x++) {
-+			if (('!' <= *x && *x <= '9') || (';' <= *x && *x <= '~'))
-+				continue;
-+			if (*x == ':' && x != sb.buf)
-+				break;
-+			ret = 0;
-+			goto fail;
-+		}
-+	}
-+
-+fail:
-+	fclose(fp);
-+	strbuf_release(&sb);
-+	return ret;
++	strbuf_init(&state->dir, 0);
 +}
 +
 +/**
-+ * Attempts to detect the patch_format of the patches contained in `paths`,
-+ * returning the PATCH_FORMAT_* enum value. Returns PATCH_FORMAT_UNKNOWN if
-+ * detection fails.
++ * Release memory allocated by an am_state.
 + */
-+static int detect_patch_format(struct string_list *paths)
++static void am_state_release(struct am_state *state)
 +{
-+	enum patch_format ret = PATCH_FORMAT_UNKNOWN;
-+	struct strbuf l1 = STRBUF_INIT;
-+	struct strbuf l2 = STRBUF_INIT;
-+	struct strbuf l3 = STRBUF_INIT;
-+	FILE *fp;
-+
-+	/*
-+	 * We default to mbox format if input is from stdin and for directories
-+	 */
-+	if (!paths->nr || !strcmp(paths->items->string, "-") ||
-+	    is_directory(paths->items->string)) {
-+		strbuf_release(&l1);
-+		strbuf_release(&l2);
-+		strbuf_release(&l3);
-+		return PATCH_FORMAT_MBOX;
-+	}
-+
-+	/*
-+	 * Otherwise, check the first few 3 lines of the first patch, starting
-+	 * from the first non-blank line, to try to detect its format.
-+	 */
-+	fp = xfopen(paths->items->string, "r");
-+	while (!strbuf_getline(&l1, fp, '\n')) {
-+		strbuf_trim(&l1);
-+		if (l1.len)
-+			break;
-+	}
-+	strbuf_getline(&l2, fp, '\n');
-+	strbuf_trim(&l2);
-+	strbuf_getline(&l3, fp, '\n');
-+	strbuf_trim(&l3);
-+	fclose(fp);
-+
-+	if (starts_with(l1.buf, "From ") || starts_with(l1.buf, "From: "))
-+		ret = PATCH_FORMAT_MBOX;
-+	else if (l1.len && l2.len && l3.len && is_email(paths->items->string))
-+		ret = PATCH_FORMAT_MBOX;
-+
-+	strbuf_release(&l1);
-+	strbuf_release(&l2);
-+	strbuf_release(&l3);
-+	return ret;
++	strbuf_release(&state->dir);
 +}
 +
- /**
-  * Splits out individual patches from `paths`, where each path is either a mbox
-  * file or a Maildir. Return 0 on success, -1 on failure.
-@@ -162,6 +253,14 @@ static int split_patches(struct am_state *state, enum patch_format patch_format,
- static void am_setup(struct am_state *state, enum patch_format patch_format,
- 		struct string_list *paths)
- {
-+	if (!patch_format)
-+		patch_format = detect_patch_format(paths);
++/**
++ * Returns path relative to the am_state directory.
++ */
++static inline const char *am_path(const struct am_state *state, const char *path)
++{
++	return mkpath("%s/%s", state->dir.buf, path);
++}
 +
-+	if (!patch_format) {
-+		fprintf_ln(stderr, _("Patch format detection failed."));
-+		exit(128);
-+	}
++/**
++ * Returns 1 if there is an am session in progress, 0 otherwise.
++ */
++static int am_in_progress(const struct am_state *state)
++{
++	struct stat st;
 +
- 	if (mkdir(state->dir.buf, 0777) < 0 && errno != EEXIST)
- 		die_errno(_("failed to create directory '%s'"), state->dir.buf);
++	if (lstat(state->dir.buf, &st) < 0 || !S_ISDIR(st.st_mode))
++		return 0;
++	if (lstat(am_path(state, "last"), &st) || !S_ISREG(st.st_mode))
++		return 0;
++	if (lstat(am_path(state, "next"), &st) || !S_ISREG(st.st_mode))
++		return 0;
++	return 1;
++}
++
++/**
++ * Reads the contents of `file`. The third argument can be used to give a hint
++ * about the file size, to avoid reallocs. Returns 0 on success, -1 if the file
++ * does not exist.
++ */
++static int read_state_file(struct strbuf *sb, const char *file, size_t hint) {
++	strbuf_reset(sb);
++
++	if (!strbuf_read_file(sb, file, hint))
++		return 0;
++
++	if (errno == ENOENT)
++		return -1;
++
++	die_errno(_("could not read '%s'"), file);
++}
++
++/**
++ * Loads state from disk.
++ */
++static void am_state_load(struct am_state *state)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	read_state_file(&sb, am_path(state, "next"), 8);
++	state->cur = strtol(sb.buf, NULL, 10);
++
++	read_state_file(&sb, am_path(state, "last"), 8);
++	state->last = strtol(sb.buf, NULL, 10);
++
++	strbuf_release(&sb);
++}
++
++/**
++ * Remove the am_state directory.
++ */
++static void am_destroy(const struct am_state *state)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	strbuf_addstr(&sb, state->dir.buf);
++	remove_dir_recursively(&sb, 0);
++	strbuf_release(&sb);
++}
++
++/**
++ * Setup a new am session for applying patches
++ */
++static void am_setup(struct am_state *state)
++{
++	if (mkdir(state->dir.buf, 0777) < 0 && errno != EEXIST)
++		die_errno(_("failed to create directory '%s'"), state->dir.buf);
++
++	write_file(am_path(state, "next"), 1, "%d", state->cur);
++
++	write_file(am_path(state, "last"), 1, "%d", state->last);
++}
++
++/**
++ * Increments the patch pointer, and cleans am_state for the application of the
++ * next patch.
++ */
++static void am_next(struct am_state *state)
++{
++	state->cur++;
++	write_file(am_path(state, "next"), 1, "%d", state->cur);
++}
++
++/**
++ * Applies all queued patches.
++ */
++static void am_run(struct am_state *state)
++{
++	while (state->cur <= state->last)
++		am_next(state);
++
++	am_destroy(state);
++}
++
++struct am_state state;
++
++static const char * const am_usage[] = {
++	N_("git am [options] [(<mbox>|<Maildir>)...]"),
++	NULL
++};
++
++static struct option am_options[] = {
++	OPT_END()
++};
++
++int cmd_am(int argc, const char **argv, const char *prefix)
++{
++	git_config(git_default_config, NULL);
++
++	am_state_init(&state);
++	strbuf_addstr(&state.dir, git_path("rebase-apply"));
++
++	argc = parse_options(argc, argv, prefix, am_options, am_usage, 0);
++
++	if (am_in_progress(&state))
++		am_state_load(&state);
++	else
++		am_setup(&state);
++
++	am_run(&state);
++
++	am_state_release(&state);
++
++	return 0;
++}
+diff --git a/git.c b/git.c
+index 44374b1..42328ed 100644
+--- a/git.c
++++ b/git.c
+@@ -370,6 +370,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
  
+ static struct cmd_struct commands[] = {
+ 	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
++	{ "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "annotate", cmd_annotate, RUN_SETUP },
+ 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
+ 	{ "archive", cmd_archive },
 -- 
 2.1.4
