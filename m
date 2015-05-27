@@ -1,95 +1,162 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/WIP 6/8] am: extract patch, message and authorship with git-mailinfo
-Date: Wed, 27 May 2015 13:44:26 -0700
-Message-ID: <xmqqtwuxkaxh.fsf@gitster.dls.corp.google.com>
-References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
-	<1432733618-25629-7-git-send-email-pyokagan@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/WIP PATCH 04/11] upload-pack-2: Implement the version 2 of upload-pack
+Date: Wed, 27 May 2015 13:45:55 -0700
+Message-ID: <CAGZ79kb6rsxpiXKg+eaVc+5bgUgPSaq+ocd-UHa=_K+rLxreTQ@mail.gmail.com>
+References: <1432677675-5118-1-git-send-email-sbeller@google.com>
+	<1432677675-5118-5-git-send-email-sbeller@google.com>
+	<20150527063558.GB885@peff.net>
+	<CAGZ79kYaoViDrz9TKXWebif4mfyUjzJ6b3id8ozTqtwsmjAC1A@mail.gmail.com>
+	<20150527203451.GD14309@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 22:44:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 27 22:46:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxiBm-0003wV-9I
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 22:44:34 +0200
+	id 1YxiDB-0004pz-O8
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 22:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751497AbbE0Uo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 16:44:29 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:34324 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445AbbE0Uo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 16:44:28 -0400
-Received: by ieczm2 with SMTP id zm2so23276387iec.1
-        for <git@vger.kernel.org>; Wed, 27 May 2015 13:44:28 -0700 (PDT)
+	id S1751586AbbE0Up6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 16:45:58 -0400
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:36539 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361AbbE0Up4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 16:45:56 -0400
+Received: by qcxw10 with SMTP id w10so9331080qcx.3
+        for <git@vger.kernel.org>; Wed, 27 May 2015 13:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=kdcjn+KKu0jZALVgeZXuqBSuiKdkWfUUfU6D+dVEkyQ=;
-        b=L1UYgc7KqqHJ2UYbtu/DfFKzZDrllca7RGW/MEYGaTfT9t3+TpziGTB0UFqhr00ey+
-         t1jUMyqVgFYiy/yu3g5ZHTQrjSZNkw39rlf/yOTc7A3MExjOhaYfx0a/POZbJmbLrCC1
-         b2acIcc3dK+Dj5VvtjqPQ6DF4yyCHf0y33cTZBlIpVoFP95WN5SVZLwgJxpDKuvIF2om
-         TaLXnWWNDjAJ1OaOsA8M5GQkYjBO0eCPIoCtDFO9aUfJdnqCtcE7vDrPfKAK7TlES2ks
-         dwgl35mLCLdS/Ww1uC0AORXPG9zn/ceiJeplgJpV8T/2u/hYJ7x305VBkFjrrRTDop+d
-         kMog==
-X-Received: by 10.43.146.67 with SMTP id jx3mr5620379icc.63.1432759468055;
-        Wed, 27 May 2015 13:44:28 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
-        by mx.google.com with ESMTPSA id l1sm78670ioe.32.2015.05.27.13.44.27
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 May 2015 13:44:27 -0700 (PDT)
-In-Reply-To: <1432733618-25629-7-git-send-email-pyokagan@gmail.com> (Paul
-	Tan's message of "Wed, 27 May 2015 21:33:36 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OZ+53BJ6FqbRJIES0pQzzedwGNQG5xxuZONZ7Hawc5c=;
+        b=JsFR7WGH6N/BywRlOYMiMagYAT0HTCmE0T4W0rNAg9UkDOJxvCPMRMUQK+dAlq4xce
+         qFdwUwfvPxrUW5Dzgp2wMzlpnjZERX6oiPP2AZeyWIMTKuWVYDWKCJyhFsIkNpV9NIZo
+         FNNJ2oOPE9s8oBliAq18Yj/DTPCRpB4ouW4praMYP6jZucBU5ofeohUAX54DcivieBZx
+         w0rrDUyGRWVRn5fnQQ1LaHRVYGq8uiqYNUr41we2SfSmlQQZX28S/LBrntkiMk86qZBP
+         lv4c0u9UXp/ok6zeFh1rX8aKQo4EjNnu16MYDgQVcRJijLT7XtH9Ysi3N9Ae2TickDFL
+         zVGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=OZ+53BJ6FqbRJIES0pQzzedwGNQG5xxuZONZ7Hawc5c=;
+        b=AQfuxSLhsLbFXKReHkv2Om5mqaAwRv+iVk93JA4HB9YA3D3KEhHcoTa16ZyFrSxY4U
+         ZJr0N/ejU1wFuvs/OusB+K4n9PxKkPygD2cd4ca9M3XJ5kTV6Db12ICMszdo6dxE9gtq
+         Q5YJhbZC+JSG7YDCKIy5o/3cL0caNeRnN/Es1Hxp3hK/icPHAFY5szLwEo5dVuJFiUzJ
+         7bCNB1MRt+u7EFKK1kYhHYC9AYi7sDXg2huvCKFFam+14rRqOx8P9O4Q+wE3bnShlCbL
+         Quny/MAM8RA5aMMot/DKSjYhY24ApKPa25Pl8bvOsro9htg9L5n+7R2EICGK2xL5RaaW
+         +t2Q==
+X-Gm-Message-State: ALoCoQnVkBOvaa/HAxz4z4hnf6RNO2gJYAOpaG86xjy7fbKBrPzdG1+xugtWBGCp8V/zvcVgyHHP
+X-Received: by 10.55.22.143 with SMTP id 15mr14242379qkw.85.1432759555834;
+ Wed, 27 May 2015 13:45:55 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Wed, 27 May 2015 13:45:55 -0700 (PDT)
+In-Reply-To: <20150527203451.GD14309@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270090>
 
-Paul Tan <pyokagan@gmail.com> writes:
+On Wed, May 27, 2015 at 1:34 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, May 27, 2015 at 10:40:37AM -0700, Stefan Beller wrote:
+>
+>> > If we are upload-pack-2, should we advertise that in the capabilities? I
+>> > think it may make things easier later if we try to provide some
+>> > opportunistic out-of-band data. E.g., if see tell git-daemon:
+>> >
+>> >   git-upload-pack repo\0host=whatever\0\0version=2
+>> >
+>> > how do we know whether version=2 was understood and kicked us into v2
+>> > mode, versus an old server that ignored it?
+>>
+>> So in my vision we would call git-upload-pack-2 instead of having a "version=2".
+>> and if git-upload-pack-2 doesn't exist, the whole conversation is
+>> over, the client
+>> it is left to make up some good error message or retry version 1.
+>
+> I'd like for that to be a starting point for us, and then to be able to
+> add-on "hints" to ease the transition path in whatever way we want. We
+> may even not do that in the long run, but I want to leave the door open
+> if we can.
+>
+>> But I think advertising both which versions the server could deal
+>> with, as well as
+>> the currently expected version is a good thing.
+>>
+>> capability: can_speak=1,2
+>> capability: speaking_now=2
+>
+> I was thinking just "speaking_now=2", but it probably makes sense to do
+> both. I do not think using it to "downgrade" will ever be particularly
+> useful (certainly not from v2 to v1, since to understand the flag both
+> sides must be v2 in the first place). But advertising that via the v1
+> conversation will be a good way to tell the other side that upgrade is
+> possible.
 
-> @@ -17,6 +34,10 @@ struct am_state {
->  	struct strbuf dir;            /* state directory path */
->  	int cur;                      /* current patch number */
->  	int last;                     /* last patch number */
-> +	struct strbuf msg;            /* commit message */
-> +	struct strbuf author_name;    /* commit author's name */
-> +	struct strbuf author_email;   /* commit author's email */
-> +	struct strbuf author_date;    /* commit author's date */
->  	int prec;                     /* number of digits in patch filename */
->  };
+If for some reason we discover a flaw in the current version, which
+makes it unusable
+(a buffer overflow?, some stupid abuse which makes the capability list huge),
+you may want to force downgrading (and in the very distant future when we are
+current on version 4 and have dropped version 1 already, you can only downgrade
+to 2 and 3, so I can see value in it.
 
-I always get suspicious when structure fields are overly commented,
-wondering if it is a sign of naming fields poorly.  All of the above
-fields look quite self-explanatory and I am not sure if it is worth
-having these comments, spending efforts to type SP many times to
-align them and all.
+Another idea to make it all more future proof:
+"capability: speaking_now=2" must be sent as the first line, so then
+you can adapt
+on the client side easily for which version you are listening.
 
-By the way, the overall structure of the series look sensible.
+>
+>> > Also, do we need the capability noise-word?
+>>
+>> I thought it opens up a new possible door in the future.
+>> As we ignore anything not starting with "capability" for now, you
+>> could introduce
+>> your foo and bar ping pong easily and still be version 2 compatible.
+>>
+>> S: capability: thin
+>> S: capability: another-capability
+>> S: ping-pong foo
+>> S: done
+>> C: (not having understood ping-pong) just answering with capability: thin
+>> C: done, let's proceed to refs advertisement
+>>
+>> The alternative client would do:
+>>
+>> C: ping-pong: foo-data1a
+>> S: ping-pong: foo-data1b
+>> C: ping-pong: foo-data2a
+>> C: capability: thin
+>> ...
+>
+> Right, but I think (and please correct me if there's a case I'm missing)
+> that the behavior is the same whether it is spelled "ping-pong" or
+> "capability:ping-pong". That is, the rule for "capability:" is "if you
+> do not understand it, ignore it and do not mention it in your
+> capabilities; the server is required to assume you were written before
+> that capability was invented". But that is _also_ the rule for
+> ping-pong, I think.
 
-> +static int read_author_script(struct am_state *state)
-> +{
-> +	char *value;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	const char *filename = am_path(state, "author-script");
-> +	FILE *fp = fopen(filename, "r");
-> +	if (!fp) {
-> +		if (errno == ENOENT)
-> +			return 0;
-> +		die(_("could not open '%s' for reading"), filename);
+The rules are the same, right. But the allowed characters are limited
+(in theory)
+as the regular expressions given for the capabilities don't allow for
+binary data
+for example, but only well formed ASCII text, space separated.
+The "ping-pong" keyword could introduce a binary stream there
+including line feeds. (Today it sounds like a stupid idea though)
 
-Hmph, do we want to report with die_errno()?
-
-> +	}
-> +
-> +	if (strbuf_getline(&sb, fp, '\n'))
-> +		return -1;
-> +	if (!skip_prefix(sb.buf, "GIT_AUTHOR_NAME=", (const char**) &value))
-
-This cast is unfortunate; can't "value" be of "const char *" type?
+>
+>> > Eric mentioned the underflow problems here, but I wonder even more:
+>> > what's wrong with the global ends_with() that we already provide?
+>>
+>> I was missing knowledge we have that, and apparently I was thinking it's
+>> faster to come up with my own version than to look for it. :)
+>
+> Makes sense. :)
+>
+> -Peff
