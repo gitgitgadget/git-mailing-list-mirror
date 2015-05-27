@@ -1,101 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/4] showing existing ws breakage
-Date: Wed, 27 May 2015 11:57:15 -0700
-Message-ID: <xmqqa8wpn910.fsf@gitster.dls.corp.google.com>
-References: <1432669584-342-1-git-send-email-gitster@pobox.com>
-	<1432708232-29892-1-git-send-email-gitster@pobox.com>
-	<20150527072218.GB6898@peff.net>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH/WIP 1/8] wrapper: implement xopen()
+Date: Wed, 27 May 2015 21:03:47 +0200
+Message-ID: <55661513.8000306@web.de>
+References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com> <1432733618-25629-2-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 27 20:57:29 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 27 21:04:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxgW9-00051X-7p
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 20:57:29 +0200
+	id 1YxgcY-00013b-TT
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 21:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505AbbE0S5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 14:57:22 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:37378 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238AbbE0S5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 14:57:18 -0400
-Received: by igbsb11 with SMTP id sb11so21581251igb.0
-        for <git@vger.kernel.org>; Wed, 27 May 2015 11:57:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ws05QzYme9CWJut4l6nFB4Jc7F5XmiGMDNB82/mPfKY=;
-        b=IyW60R34BlqXRxNhY5RFAlsD6mjSxT96qj/vLTI7vuXuLHRxey3nOqVMBmyo3fImbD
-         vC1ID58mrvb8inEeASZo5Ax0ubaZVfRGwPjW5J5h6HyM9SdTEftfmFjD/dnRSE4Bd7bS
-         jOfb/jIXsX84K6KtCopZsdLRT8dmvBEmlFHQqg6/J5A9KlQ/oNVla7rIyqO58YG9T8p0
-         SN++jGJVVzM3kPe7+inovpsGPq9f/+seCJiniUczy7xFTY+aCIu+DLDi8dV3YowwPSLI
-         nokGDBAcXn5GyiTYif+qpBSS8rX+Xyci4dm9j6T+uMI6UX+qGugEzjVJKNqpj5z995OW
-         loUw==
-X-Received: by 10.107.129.133 with SMTP id l5mr42859714ioi.32.1432753037648;
-        Wed, 27 May 2015 11:57:17 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4485:3520:962f:d5a5])
-        by mx.google.com with ESMTPSA id qh1sm223176igb.17.2015.05.27.11.57.16
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 May 2015 11:57:17 -0700 (PDT)
-In-Reply-To: <20150527072218.GB6898@peff.net> (Jeff King's message of "Wed, 27
-	May 2015 03:22:19 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753091AbbE0TEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 15:04:00 -0400
+Received: from mout.web.de ([212.227.15.14]:62769 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752268AbbE0TD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 15:03:58 -0400
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0LmxtE-1ZcVbq0lSO-00h2Nf; Wed, 27 May 2015 21:03:54
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <1432733618-25629-2-git-send-email-pyokagan@gmail.com>
+X-Provags-ID: V03:K0:CFlq/319w763/cM+OzJ+bRJOmdl9/SUAxa25orgczrkpNsJ7LuC
+ kFG/WrisCqOHHOdjhTK4GboPFQT/PKf1d/rLQNjz0ZU0+kacFX7skmLvnRFVrFcOv4G/TzT
+ MA+9YbiggkMvnFsY2pa3CPv8TUM0HaaceI1NKuwx8cVUJKw7SaBjlFFffKehO/irBEfKB9+
+ 7kZ/gAffppy0wDOn7qmvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:y2R/fnIqJSE=:0vmTtEMLQZ25oAFIEwe/LI
+ 16AN2jMU6Krz9RjgwPt+T1Zixw8RIHenJf3h22NUqa50AwpSwBBLBxu3sfWvFPZLYY71qBQAN
+ yxfJj/O3r551ikOasM7SHA74mP1vW81EwqAaWYFeQXNQZ34Oc04PxpXvqmohFMy1MZElAamXV
+ Hn9kKgv9wRNYgamF+rg6Wef5fktT8RQ6YcI1uoz8ssOQfILI1CrwYVuAlcw9oNtyXTEw+Q4hE
+ sUDaLTU7j0GJpbOgGex9tGi4/4uQw+UDDYno8Zb+4tavODxqW+thsEWuGiNJzVwRhUs1giP4e
+ BqiCm0ps/yc86VpKZy046b4W9YtRHJorK7LQIoXo52NaUx3JjW4f2UFmFpjPwgyE8FNlU4pVs
+ WJmTJQfUhzKTrddpHibOlhelPMjea85IqoOudtYiy1/cZ+x7IJ7TZY7iUs5inWp7u/7uz9h1K
+ BpUqdTSoRt/FrpUBAQlOg2d6JKyf0XnQVa1esbuJck7IgfG8+BGcn3bDp2bqGcfwmJN/0FTK0
+ 0HlyYu7idtVgXiWHJAU5ZXcQQlO4wbaj6TwASZJx4Zx+iR/XIvRHUA4JZSPswKMcej5VAI8be
+ Q7GyKhqFZhddyU93LLlwPdOfZ+KRPA4x7fLof9kwDxTxH3GN3aLsQPvCwXRZwKHGcTh2auFZw
+ iT18JG+FzxVh4lNI0iQBnWFpFaHUc7Advwgc8Dio++65LFCmpjAlaGB97O2xWFq7ELhk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270065>
 
-Jeff King <peff@peff.net> writes:
-
-> In color.diff.*, these are called "new", "old", and "plain". I am of the
-> opinion that "context" is a far better name than "plain", but perhaps we
-> should support both for consistency.
->
-> Here's a patch for the color.diff side, if we want to go that route.
->
-> -- >8 --
-> Subject: diff: accept color.diff.context as a synonym for "plain"
->
-> The term "plain" is a bit ambiguous; let's allow the more
-> specific "context", but keep "plain" around for
-> compatibility.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+On 2015-05-27 15.33, Paul Tan wrote:
+> A common usage pattern of open() is to check if it was successful, and
+> die() if it was not:
+> 
+> 	int fd = open(path, O_WRONLY | O_CREAT, 0777);
+> 	if (fd < 0)
+> 		die_errno(_("Could not open '%s' for writing."), path);
+> 
+> Implement a wrapper function xopen() that does the above so that we can
+> save a few lines of code, and make the die() messages consistent.
+> 
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
 > ---
-> I didn't bother mentioning the historical "plain" in the documentation.
-> I don't know if it's better to (for people who find it in the wild and
-> wonder what it means) or if it simply clutters the description.
+>  git-compat-util.h |  1 +
+>  wrapper.c         | 18 ++++++++++++++++++
+>  2 files changed, 19 insertions(+)
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 17584ad..9745962 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -718,6 +718,7 @@ extern char *xstrndup(const char *str, size_t len);
+>  extern void *xrealloc(void *ptr, size_t size);
+>  extern void *xcalloc(size_t nmemb, size_t size);
+>  extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+> +extern int xopen(const char *path, int flags, mode_t mode);
+>  extern ssize_t xread(int fd, void *buf, size_t len);
+>  extern ssize_t xwrite(int fd, const void *buf, size_t len);
+>  extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+> diff --git a/wrapper.c b/wrapper.c
+> index c1a663f..971665a 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -189,6 +189,24 @@ void *xcalloc(size_t nmemb, size_t size)
+>  # endif
+>  #endif
+>  
+The original open can take 2 or 3 parameters, how about this:
+int xopen(const char *path, int oflag, ... )
+{
+        va_list params;
+        int mode;
+        int fd;
 
-'plain' does sound a misnomer, as these slot names are about "what"
-are painted, not "how" they are painted.  The latter is what their
-values represent.  Whoever named that slot was confused by the fact
-that 'context' (i.e. "what") lines are by default painted in 'plain'
-color without frills (i.e. "how").
+        va_start(params, oflag);
+        mode = va_arg(params, int);
+        va_end(params);
 
-We usually try to give a brief mention to historical names primarily
-to silence those who pick up stale information from the Web, get
-curious, and then complain loudly after finding that we no longer
-document them even though we keep accepting them silently, so I am
-somewhat tempted to do this on top.
+        fd = open(path, oflag, mode);
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0a7ffa5..b458590 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -870,7 +870,8 @@ command line with the `--color[=<when>]` option.
- color.diff.<slot>::
- 	Use customized color for diff colorization.  `<slot>` specifies
- 	which part of the patch to use the specified color, and is one
--	of `context` (context text), `meta` (metainformation), `frag`
-+	of `context` (context text - `plain` is a historical synonym),
-+	`meta` (metainformation), `frag`
- 	(hunk header), 'func' (function in hunk header), `old` (removed lines),
- 	`new` (added lines), `commit` (commit headers), or `whitespace`
- 	(highlighting whitespace errors). The values of these variables may be
+
+> +/**
+> + * xopen() is the same as open(), but it die()s if the open() fails.
+> + */
+> +int xopen(const char *path, int flags, mode_t mode)
+> +{
+> +	int fd;
+> +
+> +	assert(path);
+> +	fd = open(path, flags, mode);
+> +	if (fd < 0) {
+> +		if ((flags & O_WRONLY) || (flags & O_RDWR))
+> +			die_errno(_("could not open '%s' for writing"), path);
+This is only partly true:
+it could be either "writing" or "read write".
+I don't know if the info "for reading" or "for writing" is needed/helpful at all,
+or if a simple "could not open" would be enough.
+
+
+Another thing:
+should we handle EINTR ?
+(Somewhere in the back of my head I remember that some OS
+ returned EINTR when handling some foreign file system
+ Mac OS / NTFS ?)
