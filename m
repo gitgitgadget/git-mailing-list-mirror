@@ -1,47 +1,76 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: [PATCH/RFC 2/2] git rebase -i: Warn removed or dupplicated commits
-Date: Wed, 27 May 2015 08:54:55 +0000 (UTC)
-Message-ID: <loom.20150527T105315-517@post.gmane.org>
-References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <1432676318-22852-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t7063: hide stderr from setup inside prereq
+Date: Wed, 27 May 2015 05:34:58 -0400
+Message-ID: <20150527093457.GA2826@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 10:55:13 2015
+X-From: git-owner@vger.kernel.org Wed May 27 11:35:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxX7I-0001nK-Gm
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 10:55:12 +0200
+	id 1YxXjw-0005dT-On
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 11:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbbE0IzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 04:55:08 -0400
-Received: from plane.gmane.org ([80.91.229.3]:44097 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751537AbbE0IzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 04:55:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YxX76-0001hw-VA
-	for git@vger.kernel.org; Wed, 27 May 2015 10:55:04 +0200
-Received: from nat2.ableton.net ([217.110.199.118])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 27 May 2015 10:55:00 +0200
-Received: from steveire by nat2.ableton.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 27 May 2015 10:55:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 217.110.199.118 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:37.0) Gecko/20100101 Firefox/37.0)
+	id S1751529AbbE0JfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 05:35:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36561 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750755AbbE0JfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 05:35:02 -0400
+Received: (qmail 8882 invoked by uid 102); 27 May 2015 09:35:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 04:35:02 -0500
+Received: (qmail 5795 invoked by uid 107); 27 May 2015 09:35:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 05:35:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 May 2015 05:34:58 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270039>
 
-R2FsYW4gUsOpbWkgPHJlbWkuZ2FsYW4tYWxmb25zbyA8YXQ+IGVuc2ltYWcuZ3Jlbm9ibGUtaW5wLmZyPiB3cml0ZXM6Cgo+IAo+IENoZWNrIGlmIGNvbW1pdHMgd2VyZSByZW1vdmVkIChpLmUuIGEgbGluZSB3YXMgZGVsZXRlZCkgb3IgZHVwcGxpY2F0ZWQKPiAoZS5nLiB0aGUgc2FtZSBjb21taXQgaXMgcGlja2VkIHR3aWNlKSwgY2FuIHByaW50IHdhcm5pbmdzIG9yIGFib3J0Cj4gZ2l0IHJlYmFzZSBhY2NvcmRpbmcgdG8gdGhlIHZhbHVlIG9mIHRoZSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCj4gcmViYXNlLmNoZWNrTGV2ZWwuCgpJIHNvbWV0aW1lcyBkdXBsaWNhdGUgY29tbWl0cyBkZWxpYmVyYXRlbHkgaWYgSSB3YW50IHRvIHNwbGl0IGEgY29tbWl0IGluCnR3by4gSSBtb3ZlIGEgY29weSB1cCBhbmQgZml4IHRoZSBjb25mbGljdCwgYW5kIEkga25vdyB0aGF0IEknbGwgc3RpbGwgZ2V0CnRoZSByaWdodCB0aGluZyBsYXRlciBldmVuIGlmIEkgbWFrZSBhIG1pc3Rha2Ugd2l0aCB0aGUgY29uZmxpY3QgcmVzb2x1dGlvbi4=
+When t7063 starts, it runs "update-index --untracked-cache"
+to see if we support the untracked cache. Its output goes
+straight to stderr, even if the test is not run with "-v".
+Let's wrap it in a prereq that will hide the output by
+default, but show it with "-v".
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I noticed this messing up my "prove" output. And it always runs first
+with "prove --state=slow", because it has a whopping 17 seconds of
+sleeps in it.
+
+ t/t7063-status-untracked-cache.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 2b2ffd7..bd4806c 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -8,10 +8,14 @@ avoid_racy() {
+ 	sleep 1
+ }
+ 
+-git update-index --untracked-cache
+ # It's fine if git update-index returns an error code other than one,
+ # it'll be caught in the first test.
+-if test $? -eq 1; then
++test_lazy_prereq UNTRACKED_CACHE '
++	{ git update-index --untracked-cache; ret=$?; } &&
++	test $ret -ne 1
++'
++
++if ! test_have_prereq UNTRACKED_CACHE; then
+ 	skip_all='This system does not support untracked cache'
+ 	test_done
+ fi
+-- 
+2.4.1.552.g6de66a4
