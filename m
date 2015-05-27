@@ -1,94 +1,145 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/WIP PATCH 04/11] upload-pack-2: Implement the version 2 of
- upload-pack
-Date: Wed, 27 May 2015 17:46:17 -0400
-Message-ID: <20150527214616.GA23259@peff.net>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
- <1432677675-5118-5-git-send-email-sbeller@google.com>
- <20150527063558.GB885@peff.net>
- <CAGZ79kYaoViDrz9TKXWebif4mfyUjzJ6b3id8ozTqtwsmjAC1A@mail.gmail.com>
- <20150527203451.GD14309@peff.net>
- <CAGZ79kb6rsxpiXKg+eaVc+5bgUgPSaq+ocd-UHa=_K+rLxreTQ@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a commit
+Date: Wed, 27 May 2015 14:47:47 -0700
+Message-ID: <CAGZ79kansAUWsjBsBznqaxRFeN3uF1u2hUZgO8b+OjOw8SKsUw@mail.gmail.com>
+References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<c78cd2ac17333a2e70d1113d95495c41@www.dscho.org>
+	<1506177855.44397.1432738386768.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpq1ti23vva.fsf@anie.imag.fr>
+	<xmqqsiahltbu.fsf@gitster.dls.corp.google.com>
+	<vpq8uc9yfdp.fsf@anie.imag.fr>
+	<xmqq382hlpwt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 27 23:46:26 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 23:47:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxj9c-0001N5-I3
-	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 23:46:24 +0200
+	id 1YxjB3-0002K0-Uw
+	for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 23:47:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585AbbE0VqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 17:46:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36918 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751765AbbE0VqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2015 17:46:19 -0400
-Received: (qmail 16529 invoked by uid 102); 27 May 2015 21:46:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 16:46:19 -0500
-Received: (qmail 10921 invoked by uid 107); 27 May 2015 21:46:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 May 2015 17:46:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 May 2015 17:46:17 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kb6rsxpiXKg+eaVc+5bgUgPSaq+ocd-UHa=_K+rLxreTQ@mail.gmail.com>
+	id S1752035AbbE0Vrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 17:47:49 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:32781 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751829AbbE0Vrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 17:47:48 -0400
+Received: by qgfa63 with SMTP id a63so9181079qgf.0
+        for <git@vger.kernel.org>; Wed, 27 May 2015 14:47:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=LVg5vWJWrBKMBx24wfp/GZ7w+WyIOVrpQZXoGhdv8Rw=;
+        b=pgZ2hN1B4mDS0xJ3vlN75rM76BT4/n4HiUOgA2HipVmHtgRNUJH0yIeMbOd+Vxqj2O
+         Q5gd+SHrhOTgBk4VDo+Jn9Q9RqSERhdRt8/5mU8JmXohqLy97M4v3OHFVsJj8wG8Dxed
+         3Ul1IJbe5yatFLJagwHZ96qhb+UhODNq9B1kVg5aYuQh7yrwYvwXk3hbREskdbPvm9nc
+         Qr4B53MM8yW60XnK0eojvwNub3n3VH+MNmBWVmrOpU9xT9SOiIMrjlynNGtZ6WTtTW/G
+         fEgr+yyt0B8iLDSBImGoV5GbuyV7DZktO6qeBkd+tihnIKw6WXM/+lWZmgRYIbNHD+Yx
+         KQvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=LVg5vWJWrBKMBx24wfp/GZ7w+WyIOVrpQZXoGhdv8Rw=;
+        b=Fl/QGL7Z9lwa+ziSaOhRNp2pY0Hc5vBzpR4x6kyXmE/YMEyQrcGGhfKKTybRXcRXeD
+         PfxwlM8cX3d5qib74U/OdST32zoI1tyM1cHIwfoDlsx5LVT+utLuyiMFq+Acx1MlFYWY
+         AssU6NXUr+4iH+IDAzyO+zRz20zVxz8LVhkdslmQqoHDA3Mco2+XXtBghyK6/+XWEuQI
+         0hHoHk1KDtj3xrqVlyzb8vtIfEUytGfvbTQlpJEDZx+SKmrG6jMEpvts6KqQIjdP0iXf
+         e68irz9UabgjWReln5KyzqfRFZI1yMHh20SAVjBCImVloa/5zdb2TC8BoH71buI8kG3s
+         +/gA==
+X-Gm-Message-State: ALoCoQmfMD7k1cckR1rsLDmTx7ODJScwAKeXEFvoacTMNxyPvFpstkUXw+Y80p/Ljox4R+Eb92Rw
+X-Received: by 10.55.22.143 with SMTP id 15mr14727032qkw.85.1432763268033;
+ Wed, 27 May 2015 14:47:48 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Wed, 27 May 2015 14:47:47 -0700 (PDT)
+In-Reply-To: <xmqq382hlpwt.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270102>
 
-On Wed, May 27, 2015 at 01:45:55PM -0700, Stefan Beller wrote:
+On Wed, May 27, 2015 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>>>
+>>>> I find it weird to write
+>>>>
+>>>> noop <sha1> <title>
+>>>
+>>> True, but then it can be spelled
+>>>
+>>>     # <sha1> <title>
+>>
+>> I do find it weird too. "#" means "comment", which means "do as if it
+>> was not there" to me. And in this case it does change the semantics once
+>> you activate the safety feature: error out without the "# <sha1>
+>> <title>", rebase dropping the commit if the comment is present.
+>
+> Well, I do not agree with the premise that "A line was removed, the
+> user may have made a mistake, we need to warn about it" is a good
+> idea in the first place.  Removing an insn that is not wanted has
+> been the way to skip and not replay a change from the beginning of
+> the time, and users shouldn't be trained into thinking that somehow
+> is a bad practice by having such an option that warns.
 
-> > Right, but I think (and please correct me if there's a case I'm
-> > missing) that the behavior is the same whether it is spelled
-> > "ping-pong" or "capability:ping-pong". That is, the rule for
-> > "capability:" is "if you do not understand it, ignore it and do not
-> > mention it in your capabilities; the server is required to assume
-> > you were written before that capability was invented". But that is
-> > _also_ the rule for ping-pong, I think.
-> 
-> The rules are the same, right. But the allowed characters are limited
-> (in theory) as the regular expressions given for the capabilities
-> don't allow for binary data for example, but only well formed ASCII
-> text, space separated.  The "ping-pong" keyword could introduce a
-> binary stream there including line feeds. (Today it sounds like a
-> stupid idea though)
+Talking about ideas:
+I sometimes have the wrong branch checked out when doing a small
+fixup commit. So I want to drop that patch from the current branch
+and apply it to another branch. Maybe an instruction like
+cherry-pick-to-branch-(and-do-not-apply-here) would help me there.
 
-Do we need that restriction? IOW, as long as we parse from the start of
-the packet and give up as soon as we realize it is not a thing we
-understand, I do not think anybody is hurt by the contents of the item.
+On the other hand I do understand the reasoning for having more
+safety features in rebase as that exposes lots of power and many people
+find the power a bit daunting.
 
-E.g., if an old client sees:
+So maybe you don't want to check the rebase instructions, but rather
+after the fact, when the rebase is done:
 
-   00XXping-pong=<binary goo>
+$ git rebase -i origin/master
+Successfully rebased and updated refs/heads/mytopic
+Rebased the following commits:
+    0e33744 Document protocol version 2
+    6b6e3a7 t5544: add a test case for the new protocol
+    d6aff73 transport: get_refs_via_connect exchanges capabilities before refs.
+    cbb6089 transport: connect_setup appends protocol version number
+    0b86fa1 fetch-pack: use the configured transport protocol
+    23ed0ff remote.h: add get_remote_capabilities, request_capabilities
+    e18b6dc transport: add infrastructure to support a protocol version number
+    fd8d40d upload-pack-2: Implement the version 2 of upload-pack
+    bf781ae upload-pack: move capabilities out of send_ref
+    4c9cb59 upload-pack: make client capability parsing code a separate function
+Dropped the following commits:
+    deadbee upload-pack: only accept capabilities on the first "want" line
+New commits: (due to rewording, double picking, etc)
+    c0ffee1 More Documentation
 
-It knows:
+I'd guess you would construct the information from the reflog
+(The line before "rebase -i (start)" in the reflog) delta'd against HEAD,
+so it's a crude incantation of git log maybe?
 
-  1. The item starts with ping-pong; we don't know what that is, so we
-     never even bother looking at the binary goo.
+Also we need to turn this off for the power users, though I'd welcome if
+we'd make it default on in git 3. (Being maximally verbose is good for new
+users I assume, and turning it off is easy for advanced folks, so we can do
+that for all porcelain commands?)
 
-  2. It's in a pkt-line. We read to the end of the packet line and throw
-     the rest of the data away. Now we're synchronized to read the next
-     item.
-
-Of course, "ping-pong" may also introduce another phase to the protocol
-which is not encapsulated in pkt-lines (e.g., if the data is too big to
-fit right inside the capability pkt-line, or if it needs a lot of back
-and forth like ref negotiation). But then we only proceed to that
-phase if both sides have said "I understand ping-pong".
-
-So I think we are capable of boot-strapping just about anything using
-capability negotiation (with the exception of fixing the capability
-negotiation itself; but even that, we can bootstrap a second more
-intensive capability negotiation using a capability in the initial
-list).
-
--Peff
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
