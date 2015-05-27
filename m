@@ -1,130 +1,69 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Release candidate of Git for Windows 2.x is out
-Date: Thu, 28 May 2015 00:11:30 +0200
-Organization: gmx
-Message-ID: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/WIP 6/8] am: extract patch, message and authorship with git-mailinfo
+Date: Wed, 27 May 2015 15:13:20 -0700
+Message-ID: <xmqqh9qxk6tb.fsf@gitster.dls.corp.google.com>
+References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
+	<1432733618-25629-7-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
- git-for-windows@googlegroups.com
-X-From: msysgit+bncBCZPH74Q5YNRBFUCTGVQKGQED66WHGA@googlegroups.com Thu May 28 00:11:37 2015
-Return-path: <msysgit+bncBCZPH74Q5YNRBFUCTGVQKGQED66WHGA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f183.google.com ([209.85.212.183])
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 28 00:13:30 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBFUCTGVQKGQED66WHGA@googlegroups.com>)
-	id 1YxjXz-0000NX-Jz
-	for gcvm-msysgit@m.gmane.org; Thu, 28 May 2015 00:11:35 +0200
-Received: by wibbw19 with SMTP id bw19sf10725227wib.0
-        for <gcvm-msysgit@m.gmane.org>; Wed, 27 May 2015 15:11:35 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YxjZm-0001Yu-UX
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 00:13:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752845AbbE0WNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 18:13:23 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:34270 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660AbbE0WNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 18:13:22 -0400
+Received: by igbhj9 with SMTP id hj9so99505380igb.1
+        for <git@vger.kernel.org>; Wed, 27 May 2015 15:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:content-type:content-transfer-encoding:date:from:to
-         :subject:organization:message-id:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=QCWgdn8LKAlm3BBs3FQWVGgwMgRgOJR0TwCSrKkI3Yk=;
-        b=U9CM6ovDqss3pmsg/nDmCVPAfwO19kqrTJS+rurnFM+edj8ewJbc4XWqBH1OYKKMqX
-         4mQmRQO7TK+A38MH4Koy/9xhftHUU5JEyYnBqDTmoSSiWABP1mXeAhVghsW2taIm2EAm
-         3iLJJZKI6dzX1YEnCuW2DU0/v4c3lPAa6vM07Nj3sQtcoO5v5+3YSlVi+PjYm66PP/0S
-         kAKa+xKNxd3k7/8QzGsxBHXZ+25Dk3tENUBO4D6CAiXKLS0q/H5q34mLzhEIErsVuDqk
-         8GZ8KIEex4dOG67qwkbznxYqDVA8ll2hWxTN6RqnXHuwhuF33JixXhhqmG9W6dfmPPFe
-         X1kg==
-X-Received: by 10.152.29.166 with SMTP id l6mr377718lah.25.1432764695256;
-        Wed, 27 May 2015 15:11:35 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.120.71 with SMTP id la7ls116919lab.25.gmail; Wed, 27 May
- 2015 15:11:33 -0700 (PDT)
-X-Received: by 10.112.93.203 with SMTP id cw11mr33986952lbb.0.1432764693979;
-        Wed, 27 May 2015 15:11:33 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.19])
-        by gmr-mx.google.com with ESMTPS id t6si766393wiz.0.2015.05.27.15.11.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 May 2015 15:11:33 -0700 (PDT)
-Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.19 as permitted sender) client-ip=212.227.15.19;
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LnwxU-1Zdh8M3oeu-00fx41; Thu, 28 May 2015 00:11:30
- +0200
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:x2R+wxG0oZfvC0LFH7P5Iyqtd3qPK7/ukUTdMZE8eZvlbpoMRM4
- Va3HEL2k5CKXVMZDQNrFiRO4gHjplVAHxCuvHBmKQPfQMBjFurYNXFgWtNchhn+iNUxpYXe
- Ck5n4toDmssumixnFGdZj/P7cljfDw1RfiwSxo5g2LQrr+cLF3dgt5NSyCfZGQPrqCdGYYG
- BDLlBwQ5PKC0sK08/YjoA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WKHWwssp0ms=:Q6qsY+UPsvnaKDNLPyTDXp
- hp68YQJluURDs6iQGugtCPdAdEMmNaV7+uVQuY4q/02QY27NFH7wZ2a3Xe9IUFBMgDo51Jl+V
- Zj+GxbPC6Z/eqG6v6CqeC6n7ST2RAM1j6O+e01a5YgNfrTdiRbpX1mPdTXZlBmjK7To6hv39+
- oOqefwotdpPFu9zZsAFT1o3rwnaqDKXzzhlbla7DyHVb3UomPIOulO/ULSotnTXBqkKls0pto
- IkmbUVjCgcyucj6tm0BeRitjbiW618qtbUr/Vurs5/BSHV1L6kMmw8VSwyaSIlgaOuO8PuzhW
- mHozzsPcRDsU9DNU1V9VN0k2SoAp7o6ojkg6O2aKlHjfEHYsn9SpeZRSJNUiRY0jqMchiNr/1
- y5Bs8HjnQ3F3bsC6ZMVbh9zXXDHkDPU1sC49IlmgOE0wI6NUUtnmFYT7Mf7hIESljmrJBMeV+
- 7JCtq1gLNIAgyXF991O0P9PO19jYHCBDRp66m8GPhAsOiMDUWpfrCDMrTG8axQ25c+rM3mDtc
- gX4XEq4y+oTKqwFUBG9FXT8blH/oCfZaL1Jn/lHL/sYOzTbCZGc1pUga8RK2cqOah0hcQNYLV
- X+TzTFSH/usLAUi1Ggjigh2JH+I9SOnjFAqnYmiyywvgnO2h5UV1WuIvHZpdzuruuwAUXLASR
- Vbut0Txxmrq0tfhhzbkaZMUf4v3JK/VUNL1iY659+/VHlFZkNvlbGcqwSeHu7hohs50M=
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.19 as
- permitted sender) smtp.mail=johannes.schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270108>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Hn2pipGqwmrxgVpnCT9F8pv85tFJP007EwF0TX2GBgY=;
+        b=av5onRrKYcdisBPMbNwfQyNqdZWvULiUDYwc4LBX9ryLah12HjSoUIXnScpnLq8IEA
+         +bjj7WaLJ8umSfEbkYDsPZuxPwJmA2VsL9bJuc3jUHwAHE+o+NV+XteYPSQIIStXP9qZ
+         Gy+BfwwzP7dUWfEXSJ4Ngdw+aPQUpFTEgZEDiSNYNVNtBVRkMVDwzF+FpfR+/YY9Ek+M
+         NpsQg4rkNIXGvBka8fdogANaGsHIxNXf3o1ntfeO/VNUnleiN1nx2XNjIZp+ay++V/dJ
+         2gmAbS1zQ22Fg3L4/fHMQ3+whyoqNwBHkvfXEMiIARVJ0xJQ4VxSZJvoZYQNg9Tyyed1
+         b9pw==
+X-Received: by 10.107.8.40 with SMTP id 40mr46602732ioi.38.1432764801668;
+        Wed, 27 May 2015 15:13:21 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id j20sm580881igt.16.2015.05.27.15.13.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 May 2015 15:13:21 -0700 (PDT)
+In-Reply-To: <1432733618-25629-7-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Wed, 27 May 2015 21:33:36 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270109>
 
-Hi all,
+Paul Tan <pyokagan@gmail.com> writes:
 
-I just uploaded release candidates for the upcoming Git for Windows 2.x rel=
-ease. Please find the download link here:
+> +static const char *msgnum(const struct am_state *state)
+> +{
+> +	static struct strbuf fmt = STRBUF_INIT;
+> +	static struct strbuf sb = STRBUF_INIT;
+> +
+> +	strbuf_reset(&fmt);
+> +	strbuf_addf(&fmt, "%%0%dd", state->prec);
+> +
+> +	strbuf_reset(&sb);
+> +	strbuf_addf(&sb, fmt.buf, state->cur);
 
-https://git-for-windows.github.io/#download
-
-There are 32-bit and 64-bit versions both of regular installers and portabl=
-e installers ("portable" meaning that they are .7z archives that can be unp=
-acked anywhere and run in place, without any need for running an installer)=
-.
-
-My projected time line is to hammer out the last kinks until Friday, and th=
-en continue after a one-week leave, if needed, and then finally retire msys=
-Git and start the official 2.x release cycle of Git for Windows.
-
-If you are running Windows and have a little time to spare, please test thi=
-s release candidate thoroughly. If you find bugs, please first look at http=
-s://github.com/git-for-windows/git/issues (even the closed ones), and comme=
-nt either on existing tickets or open new ones. It would be even cooler, of=
- course, if you could open Pull Requests with fixes :-)
-
-Ciao,
-Johannes
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Hmph, wouldn't ("%*d", state->prec, state->cur) work or am I missing
+something?
