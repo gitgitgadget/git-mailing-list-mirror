@@ -1,88 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] config.c: rewrite ENODEV into EISDIR when mmap fails
-Date: Thu, 28 May 2015 04:03:01 -0400
-Message-ID: <20150528080300.GD23395@peff.net>
-References: <20150528075142.GB3688@peff.net>
+From: Patryk Obara <patryk.obara@gmail.com>
+Subject: Re: [PATCH 0/2] commit -t appends newline after template file
+Date: Thu, 28 May 2015 12:06:34 +0200
+Message-ID: <CAJfL8+QueOnGwPu0vkpSkWDqPnYYtqdM0mHRWEC8Bad4wuvC4Q@mail.gmail.com>
+References: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jorge <griffin@gmx.es>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 28 10:03:21 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 12:07:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxsme-00053i-Gk
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 10:03:20 +0200
+	id 1YxuiV-0002uq-Hm
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 12:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751949AbbE1IDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 04:03:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37114 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751381AbbE1IDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 04:03:04 -0400
-Received: (qmail 16508 invoked by uid 102); 28 May 2015 08:03:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 May 2015 03:03:03 -0500
-Received: (qmail 14160 invoked by uid 107); 28 May 2015 08:03:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 May 2015 04:03:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2015 04:03:01 -0400
-Content-Disposition: inline
-In-Reply-To: <20150528075142.GB3688@peff.net>
+	id S1753425AbbE1KHH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 06:07:07 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:35538 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753047AbbE1KHF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 06:07:05 -0400
+Received: by wicmx19 with SMTP id mx19so140573359wic.0
+        for <git@vger.kernel.org>; Thu, 28 May 2015 03:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=FKajJpgDrv0imM5uv3T8Y1dBbXwchZ0dVz4LC1JOrbo=;
+        b=SqsTrFNjRHt1x6q5oBeOo8xFJHGWHaJvZ4RERk/xLaYHa4XzBEmEIV8YuWsm1opsDg
+         rcB0h4KwLaonfxZJlqK8i8Pn3Yo8DKMOr/m5AsVbNUt3cZ8Uee21CJtWprQ4/Gi1gJ35
+         a+day/zBKOlh2HIGSJG//pwv8vrH3bUU11c+zG0MbgLo6/tYz2X/aDkSZkleQEjZJKk+
+         fqkv6e4gyd7rE0xcFNjG9+VWtGjvlajiT98WMjir1NENgSTi+/76R34Qr2rc+RByr659
+         /NtMuIvrt1QfqQIHAq6wXLY6rXhcgpo22yH2YK5nAYeOlmYtc0DtPX032cwmrfDf2kC+
+         Qx4Q==
+X-Received: by 10.180.84.170 with SMTP id a10mr14933136wiz.52.1432807624346;
+ Thu, 28 May 2015 03:07:04 -0700 (PDT)
+Received: by 10.28.153.141 with HTTP; Thu, 28 May 2015 03:06:34 -0700 (PDT)
+In-Reply-To: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
+X-Google-Sender-Auth: YRYgMh5yWDkGYQx4C3_ZuDBpq9Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270133>
 
-If we try to mmap a directory, we'll get ENODEV. This
-translates to "no such device" for the user, which is not
-very helpful. Since we've just fstat()'d the file, we can
-easily check whether the problem was a directory to give a
-better message.
+On Tue, May 26, 2015 at 8:15 AM, Patryk Obara <patryk.obara@gmail.com> =
+wrote:
+>
+> These are my first patches to git, so be extra pedantic during review=
+, please.
+>
+> I noticed, that newline is appended, when I try to use template file =
+- which
+> is annoying if template ends with comment. I digged a bit and it turn=
+ed out
+> that:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-It feels a bit wrong to put this magic conversion here, and not in
-xmmap. But of course xmmap does not have the stat information.
+Hey, can anyone go through my commit and tell me if I need to improve a=
+nything
+or (maybe) accept it?
 
-Which makes me wonder if we should provide an interface that will take
-the whole "struct stat" rather than just the size. That's less flexible,
-but in most cases, we're mapping the whole file (the packfiles are the
-big exception, where we use a window).
-
-We could also potentially drop some of the useless options. As of patch
-1, all of our calls are PROT_READ. They must all be MAP_PRIVATE, or our
-pread compatibility wrapper will fail, and we never use other flags. We
-never request a specific address. And in a whole-file remap, the offset
-will always be 0. So something like:
-
-  void *xmmap_file(int fd, struct stat *st);
-
-would probably work. We could even do the fstat() on behalf of the
-caller, though they need to know the length themselves. Maybe:
-
-  void *xmmap_file(int fd, size_t *len);
-
-I dunno if it is worth it or not.
-
- config.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/config.c b/config.c
-index e7dc155..29fa012 100644
---- a/config.c
-+++ b/config.c
-@@ -2056,6 +2056,8 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 		contents = xmmap_gently(NULL, contents_sz, PROT_READ,
- 					MAP_PRIVATE, in_fd, 0);
- 		if (contents == MAP_FAILED) {
-+			if (errno == ENODEV && S_ISDIR(st.st_mode))
-+				errno = EISDIR;
- 			error("unable to mmap '%s': %s",
- 			      config_filename, strerror(errno));
- 			ret = CONFIG_INVALID_FILE;
--- 
-2.4.2.668.gc3b1ade.dirty
+--=20
+| =E2=86=90 Ceci n'est pas une pipe
+Patryk Obara
