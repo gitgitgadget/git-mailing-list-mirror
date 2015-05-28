@@ -1,68 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/WIP v3 2/4] for-each-ref: introduce new structures for better organisation
-Date: Thu, 28 May 2015 14:18:40 -0700
-Message-ID: <xmqqmw0ofljj.fsf@gitster.dls.corp.google.com>
-References: <5567527A.6090607@gmail.com>
-	<1432835025-13291-2-git-send-email-karthik.188@gmail.com>
-	<vpqegm0o3dx.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 28 23:18:52 2015
+From: Trevor Saunders <tbsaunde@tbsaunde.org>
+Subject: [PATCH] bisect: stop printing raw diff of first bad commit
+Date: Thu, 28 May 2015 12:16:13 -0400
+Message-ID: <1432829773-4754-1-git-send-email-tbsaunde@tbsaunde.org>
+Cc: Trevor Saunders <tbsaunde@tbsaunde.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 23:26:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy5CR-0005h7-F4
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 23:18:47 +0200
+	id 1Yy5Jj-0002av-R5
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 23:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754645AbbE1VSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 17:18:44 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:33624 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753959AbbE1VSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 17:18:42 -0400
-Received: by igbpi8 with SMTP id pi8so463548igb.0
-        for <git@vger.kernel.org>; Thu, 28 May 2015 14:18:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=XsC696nWOkyMUr31ZK004yUGknIFZ3S9Vj5l3Zxnkqc=;
-        b=s/CVK1DUO8hvsfg7LDk87Ye0FEyScB7Y3r1MZcEhSlXdgiav7QBUg7LEdhhe46Pp5j
-         r1cKlAtYlmnMjgVHakwmOlWYlETbbtnCYCtVOeq5BjvQVR2XnHNDSqAcNaXbUHUF4kj7
-         9IiK0dfQDuNv9So5aoB+VkQp/Twh4x79zyo9FiWl+6Fk9+DwXrNf7icii2pl6W7DiUQ+
-         jb5xaiVZotRc2KNjDm+mtoeJUjB2nWpovAl7NiZ0Mx6mxqKFVroFquuM5YSpPLQz+3wx
-         kEzD4kVLDsa39v/MCAyHvt3D8r2T4m+mOP/hvUl3z/RmMdNRKhJQWTRq2Qscph+kAUSj
-         Tbvg==
-X-Received: by 10.107.137.80 with SMTP id l77mr5925370iod.92.1432847922139;
-        Thu, 28 May 2015 14:18:42 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:89d0:c49e:8012:77d2])
-        by mx.google.com with ESMTPSA id c20sm2643083ioc.40.2015.05.28.14.18.41
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 May 2015 14:18:41 -0700 (PDT)
-In-Reply-To: <vpqegm0o3dx.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	28 May 2015 22:26:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755180AbbE1V0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 17:26:15 -0400
+Received: from tbsaunde.org ([66.228.47.254]:41443 "EHLO
+	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754566AbbE1V0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 17:26:14 -0400
+Received: from iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
+	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 84DDDC07C;
+	Thu, 28 May 2015 21:26:13 +0000 (UTC)
+X-Mailer: git-send-email 2.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270201>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Signed-off-by: Trevor Saunders <tbsaunde@tbsaunde.org>
+---
+The test change only kind of tests the change in behavior and doesn't seem all
+that useful.  However I'm not sure if its preferable to not even try and test
+that something isn't output.
 
-> Not very important, but two spaces after a period is what one is
-> supposed to do in English. Not everybody follow the rule, but it seems
-> backward to change the code to break it.
+ bisect.c                    | 7 ++-----
+ t/t6030-bisect-porcelain.sh | 3 ++-
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-I am old fashioned enough to personally agree, but this practice
-that originates in the typewriter era is frowned upon in many
-circles, including those who work with professional typesetters, I
-think.
-
-Sent off-list to reduce noise level; this is an issue that attracts
-a lot of useless comments.
+diff --git a/bisect.c b/bisect.c
+index 10f5e57..244f9e5 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -875,16 +875,13 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
+ 	init_revisions(&opt, prefix);
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	opt.abbrev = 0;
+-	opt.diff = 1;
++	opt.diff = 0;
+ 
+ 	/* This is what "--pretty" does */
+ 	opt.verbose_header = 1;
+ 	opt.use_terminator = 0;
+ 	opt.commit_format = CMIT_FMT_DEFAULT;
+-
+-	/* diff-tree init */
+-	if (!opt.diffopt.output_format)
+-		opt.diffopt.output_format = DIFF_FORMAT_RAW;
++	opt.always_show_header = 1;
+ 
+ 	log_tree_commit(&opt, commit);
+ }
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 06b4868..eb820b2 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -591,7 +591,8 @@ test_expect_success 'test bisection on bare repo - --no-checkout defaulted' '
+ 			"test \$(git rev-list BISECT_HEAD ^$HASH2 --max-count=1 | wc -l) = 0" \
+ 			>../defaulted.log
+ 	) &&
+-	grep "$HASH3 is the first bad commit" defaulted.log
++	grep "$HASH3 is the first bad commit" defaulted.log &&
++	test 0 -eq $(grep -c '^:' defaulted.log)
+ '
+ 
+ #
+-- 
+2.4.0
