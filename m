@@ -1,187 +1,285 @@
-From: =?UTF-8?q?Guillaume=20Pag=C3=A8s?= 
-	<guillaume.pages@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFC] create a skeleton for the command git rebase --status
-Date: Thu, 28 May 2015 14:08:11 +0200
-Message-ID: <1432814891-4717-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH v2 1/2] config: add options to list only variable names
+Date: Thu, 28 May 2015 14:29:34 +0200
+Message-ID: <1432816175-18988-2-git-send-email-szeder@ira.uka.de>
+References: <1432757240-4445-1-git-send-email-szeder@ira.uka.de>
+ <1432816175-18988-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 14:15:45 2015
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 28 14:30:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxwiu-0007KJ-Ee
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 14:15:44 +0200
+	id 1Yxwwv-0008TZ-H7
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 14:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753704AbbE1MPk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 08:15:40 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:41686 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932094AbbE1MPi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 08:15:38 -0400
-X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2015 08:15:38 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 6826548849;
-	Thu, 28 May 2015 14:08:53 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id COsVBs1KQ9Bm; Thu, 28 May 2015 14:08:53 +0200 (CEST)
-Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4729E48751;
-	Thu, 28 May 2015 14:08:53 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id 3EAEE20D6;
-	Thu, 28 May 2015 14:08:53 +0200 (CEST)
-Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rsJZRhMqGPIL; Thu, 28 May 2015 14:08:53 +0200 (CEST)
-Received: from guillaume-W35-37ET.grenet.fr (wificampus-029096.grenet.fr [130.190.29.96])
-	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 2447F20D4;
-	Thu, 28 May 2015 14:08:53 +0200 (CEST)
-X-Mailer: git-send-email 2.0.5.6.g819e04a
+	id S1750756AbbE1M36 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 08:29:58 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:41364 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752201AbbE1M35 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 08:29:57 -0400
+Received: from x590c3072.dyn.telefonica.de ([89.12.48.114] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
+	iface 141.3.10.81 id 1YxwwY-0007cw-Se; Thu, 28 May 2015 14:29:53 +0200
+X-Mailer: git-send-email 2.4.2.349.g6883b65
+In-Reply-To: <1432816175-18988-1-git-send-email-szeder@ira.uka.de>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1432816193.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270141>
 
-It is an almost empty code I send to validate the global architecture
-of this command.  I choose to write it in C because git status is
-already in C and it seems that it is the current tendency to port
-shell code to C. Moreover I would like to use code from wt_status to
-implement this functionnality. I wrote a helper that I call from shell
-script, as it is made in bisect (bisect--helper.c).
+Recenty I created a multi-line branch description with '.' and '=3D'
+characters on one of the lines, and noticed that fragments of that line
+show up when completing set variable names for 'git config', e.g.:
 
-Signed-off-by: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-i=
-np.fr>
+  $ git config --get branch.b.description
+  Branch description to fool the completion script with a
+  second line containing dot . and equals =3D characters.
+  $ git config --unset <TAB>
+  ...
+  second line containing dot . and equals
+  ...
+
+The completion script runs 'git config --list' and processes its output=
+ to
+strip the values and keep only the variable names.  It does so by looki=
+ng
+for lines containing '.' and '=3D' and outputting everything before the=
+ '=3D',
+which was fooled by my multi-line branch description.
+
+A similar issue exists with aliases and pretty format aliases with
+multi-line values, but in that case 'git config --get-regexp' is run an=
+d
+subsequent lines don't have to contain either '.' or '=3D' to fool the
+completion script.
+
+Though 'git config' can produce null-terminated output for newline-safe
+parsing, that's of no use in this case, becase we can't cope with nulls=
+ in
+the shell.
+
+Help the completion script by introducing the '--list-names' and
+'--get-name-regexp' options, the "names-only" equivalents of '--list' a=
+nd
+'--get-regexp', so it doesn't have to separate variable names from thei=
+r
+values anymore.
+
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- Makefile         | 2 ++
- builtin.h        | 1 +
- git-rebase.sh    | 7 ++++++-
- git.c            | 1 +
- rebase--status.c | 6 ++++++
- rebase--status.h | 7 +++++++
- 6 files changed, 23 insertions(+), 1 deletion(-)
- create mode 100644 rebase--status.c
- create mode 100644 rebase--status.h
+ Documentation/git-config.txt           | 12 ++++++++++--
+ builtin/config.c                       | 17 ++++++++++++++---
+ contrib/completion/git-completion.bash |  4 ++--
+ t/t1300-repo-config.sh                 | 22 ++++++++++++++++++++++
+ 4 files changed, 48 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e0caec3..e3b3e63 100644
---- a/Makefile
-+++ b/Makefile
-@@ -853,6 +853,7 @@ LIB_OBJS +=3D prompt.o
- LIB_OBJS +=3D quote.o
- LIB_OBJS +=3D reachable.o
- LIB_OBJS +=3D read-cache.o
-+LIB_OBJS +=3D rebase--status.o
- LIB_OBJS +=3D reflog-walk.o
- LIB_OBJS +=3D refs.o
- LIB_OBJS +=3D remote.o
-@@ -969,6 +970,7 @@ BUILTIN_OBJS +=3D builtin/prune-packed.o
- BUILTIN_OBJS +=3D builtin/prune.o
- BUILTIN_OBJS +=3D builtin/push.o
- BUILTIN_OBJS +=3D builtin/read-tree.o
-+BUILTIN_OBJS +=3D builtin/rebase--status--helper.o
- BUILTIN_OBJS +=3D builtin/receive-pack.o
- BUILTIN_OBJS +=3D builtin/reflog.o
- BUILTIN_OBJS +=3D builtin/remote.o
-diff --git a/builtin.h b/builtin.h
-index c47c110..5071a08 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -99,6 +99,7 @@ extern int cmd_prune(int argc, const char **argv, con=
-st char *prefix);
- extern int cmd_prune_packed(int argc, const char **argv, const char *p=
-refix);
- extern int cmd_push(int argc, const char **argv, const char *prefix);
- extern int cmd_read_tree(int argc, const char **argv, const char *pref=
-ix);
-+extern int cmd_rebase_status__helper(int argc, const char **argv, cons=
-t char *prefix);
- extern int cmd_receive_pack(int argc, const char **argv, const char *p=
-refix);
- extern int cmd_reflog(int argc, const char **argv, const char *prefix)=
-;
- extern int cmd_remote(int argc, const char **argv, const char *prefix)=
-;
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 47ca3b9..8454071 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -43,6 +43,7 @@ continue!          continue
- abort!             abort and check out the original branch
- skip!              skip current patch and continue
- edit-todo!         edit the todo list during an interactive rebase
-+status!            show the status of the current rebase
- "
- . git-sh-setup
- . git-sh-i18n
-@@ -238,7 +239,7 @@ do
- 	--verify)
- 		ok_to_skip_pre_rebase=3D
- 		;;
--	--continue|--skip|--abort|--edit-todo)
-+	--continue|--skip|--abort|--edit-todo|--status)
- 		test $total_argc -eq 2 || usage
- 		action=3D${1##--}
- 		;;
-@@ -401,6 +402,10 @@ abort)
- edit-todo)
- 	run_specific_rebase
- 	;;
-+status)
-+	git rebase--status--helper
-+	die
-+	;;
- esac
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.tx=
+t
+index 02ec096faa..b69c8592ac 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -16,11 +16,12 @@ SYNOPSIS
+ 'git config' [<file-option>] [type] [-z|--null] --get-all name [value_=
+regex]
+ 'git config' [<file-option>] [type] [-z|--null] --get-regexp name_rege=
+x [value_regex]
+ 'git config' [<file-option>] [type] [-z|--null] --get-urlmatch name UR=
+L
++'git config' [<file-option>] [-z|--null] --get-name-regexp name_regex
+ 'git config' [<file-option>] --unset name [value_regex]
+ 'git config' [<file-option>] --unset-all name [value_regex]
+ 'git config' [<file-option>] --rename-section old_name new_name
+ 'git config' [<file-option>] --remove-section name
+-'git config' [<file-option>] [-z|--null] -l | --list
++'git config' [<file-option>] [-z|--null] -l | --list | --list-names
+ 'git config' [<file-option>] --get-color name [default]
+ 'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
+ 'git config' [<file-option>] -e | --edit
+@@ -96,6 +97,10 @@ OPTIONS
+ 	in which section and variable names are lowercased, but subsection
+ 	names are not.
 =20
- # Make sure no rebase is in progress
-diff --git a/git.c b/git.c
-index 9efd1a3..3ebc144 100644
---- a/git.c
-+++ b/git.c
-@@ -410,6 +410,7 @@ static struct cmd_struct commands[] =3D {
- 	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
- 	{ "push", cmd_push, RUN_SETUP },
- 	{ "read-tree", cmd_read_tree, RUN_SETUP },
-+	{ "rebase--status--helper", cmd_rebase_status__helper, RUN_SETUP },
- 	{ "receive-pack", cmd_receive_pack },
- 	{ "reflog", cmd_reflog, RUN_SETUP },
- 	{ "remote", cmd_remote, RUN_SETUP },
-diff --git a/rebase--status.c b/rebase--status.c
-new file mode 100644
-index 0000000..d67af52
---- /dev/null
-+++ b/rebase--status.c
-@@ -0,0 +1,6 @@
-+#include "rebase--status.h"
++--get-name-regexp::
++	Like --get-regexp, but shows only matching variable names, not its
++	values.
 +
-+int rebase_status(){
-+	printf("Rebase in progress\n");
-+	return 0;
-+}
-diff --git a/rebase--status.h b/rebase--status.h
-new file mode 100644
-index 0000000..17d22a1
---- /dev/null
-+++ b/rebase--status.h
-@@ -0,0 +1,7 @@
-+#ifndef REBASE__STATUS_H
-+#define REBASE__STATUS_H
+ --get-urlmatch name URL::
+ 	When given a two-part name section.key, the value for
+ 	section.<url>.key whose <url> part matches the best to the
+@@ -159,7 +164,10 @@ See also <<FILES>>.
+=20
+ -l::
+ --list::
+-	List all variables set in config file.
++	List all variables set in config file, along with their values.
 +
++--list-names::
++	List the names of all variables set in config file.
+=20
+ --bool::
+ 	'git config' will ensure that the output is "true" or "false"
+diff --git a/builtin/config.c b/builtin/config.c
+index 7188405f7e..c23f329b00 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -13,6 +13,7 @@ static char *key;
+ static regex_t *key_regexp;
+ static regex_t *regexp;
+ static int show_keys;
++static int omit_values;
+ static int use_key_regexp;
+ static int do_all;
+ static int do_not_match;
+@@ -43,6 +44,8 @@ static int respect_includes =3D -1;
+ #define ACTION_GET_COLOR (1<<13)
+ #define ACTION_GET_COLORBOOL (1<<14)
+ #define ACTION_GET_URLMATCH (1<<15)
++#define ACTION_LIST_NAMES (1<<16)
++#define ACTION_GET_NAME_REGEXP (1<<17)
+=20
+ #define TYPE_BOOL (1<<0)
+ #define TYPE_INT (1<<1)
+@@ -60,6 +63,7 @@ static struct option builtin_config_options[] =3D {
+ 	OPT_BIT(0, "get", &actions, N_("get value: name [value-regex]"), ACTI=
+ON_GET),
+ 	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-regex]=
+"), ACTION_GET_ALL),
+ 	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-re=
+gex [value-regex]"), ACTION_GET_REGEXP),
++	OPT_BIT(0, "get-name-regexp", &actions, N_("get names for regexp: nam=
+e-regex"), ACTION_GET_NAME_REGEXP),
+ 	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the U=
+RL: section[.var] URL"), ACTION_GET_URLMATCH),
+ 	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variable=
+s: name value [value_regex]"), ACTION_REPLACE_ALL),
+ 	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACT=
+ION_ADD),
+@@ -68,6 +72,7 @@ static struct option builtin_config_options[] =3D {
+ 	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name n=
+ew-name"), ACTION_RENAME_SECTION),
+ 	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), =
+ACTION_REMOVE_SECTION),
+ 	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
++	OPT_BIT(0, "list-names", &actions, N_("list all variable names"), ACT=
+ION_LIST_NAMES),
+ 	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
+ 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot=
+ [default]"), ACTION_GET_COLOR),
+ 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slo=
+t [stdout-is-tty]"), ACTION_GET_COLORBOOL),
+@@ -91,7 +96,7 @@ static void check_argc(int argc, int min, int max) {
+=20
+ static int show_all_config(const char *key_, const char *value_, void =
+*cb)
+ {
+-	if (value_)
++	if (!omit_values && value_)
+ 		printf("%s%c%s%c", key_, delim, value_, term);
+ 	else
+ 		printf("%s%c", key_, term);
+@@ -117,6 +122,10 @@ static int format_config(struct strbuf *buf, const=
+ char *key_, const char *value
+ 		strbuf_addstr(buf, key_);
+ 		must_print_delim =3D 1;
+ 	}
++	if (omit_values) {
++		strbuf_addch(buf, term);
++		return 0;
++	}
+ 	if (types =3D=3D TYPE_INT)
+ 		sprintf(value, "%"PRId64,
+ 			git_config_int64(key_, value_ ? value_ : ""));
+@@ -550,7 +559,8 @@ int cmd_config(int argc, const char **argv, const c=
+har *prefix)
+ 			usage_with_options(builtin_config_usage, builtin_config_options);
+ 		}
+=20
+-	if (actions =3D=3D ACTION_LIST) {
++	if (actions =3D=3D ACTION_LIST || actions =3D=3D ACTION_LIST_NAMES) {
++		omit_values =3D (actions =3D=3D ACTION_LIST_NAMES);
+ 		check_argc(argc, 0, 0);
+ 		if (git_config_with_options(show_all_config, NULL,
+ 					    &given_config_source,
+@@ -631,8 +641,9 @@ int cmd_config(int argc, const char **argv, const c=
+har *prefix)
+ 		check_argc(argc, 1, 2);
+ 		return get_value(argv[0], argv[1]);
+ 	}
+-	else if (actions =3D=3D ACTION_GET_REGEXP) {
++	else if (actions =3D=3D ACTION_GET_REGEXP || actions =3D=3D ACTION_GE=
+T_NAME_REGEXP) {
+ 		show_keys =3D 1;
++		omit_values =3D (actions =3D=3D ACTION_GET_NAME_REGEXP);
+ 		use_key_regexp =3D 1;
+ 		do_all =3D 1;
+ 		check_argc(argc, 1, 2);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index bfc74e9d57..6abbd564b6 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1883,8 +1883,8 @@ _git_config ()
+ 	--*)
+ 		__gitcomp "
+ 			--system --global --local --file=3D
+-			--list --replace-all
+-			--get --get-all --get-regexp
++			--list --list-names --replace-all
++			--get --get-all --get-regexp --get-name-regexp
+ 			--add --unset --unset-all
+ 			--remove-section --rename-section
+ 			"
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 66dd28644f..525b093c59 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -353,6 +353,18 @@ test_expect_success '--list without repo produces =
+empty output' '
+ '
+=20
+ cat > expect << EOF
++beta.noindent
++nextsection.nonewline
++123456.a123
++version.1.2.3eX.alpha
++EOF
 +
-+extern int rebase_status();
++test_expect_success 'working --list-names' '
++	git config --list-names >output &&
++	test_cmp expect output
++'
 +
-+#endif
++cat > expect << EOF
+ beta.noindent sillyValue
+ nextsection.nonewline wow2 for me
+ EOF
+@@ -363,6 +375,16 @@ test_expect_success '--get-regexp' '
+ '
+=20
+ cat > expect << EOF
++beta.noindent
++nextsection.nonewline
++EOF
++
++test_expect_success '--get-name-regexp' '
++	git config --get-name-regexp in >output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
+ wow2 for me
+ wow4 for you
+ EOF
 --=20
-2.0.5.5.g1d968ca.dirty
+2.4.2.349.g6883b65
