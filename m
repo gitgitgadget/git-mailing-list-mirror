@@ -1,80 +1,55 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH v2] create a skeleton for the command git rebase --status
-Date: Thu, 28 May 2015 21:40:51 +0200
-Message-ID: <vpqlhg8pk1o.fsf@anie.imag.fr>
-References: <1432822837-10320-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<CACRoPnRa1wrOJr=wGnR4NayZfe2yJ4F7Abv_sjqRpgQnicxm1g@mail.gmail.com>
-	<1141577560.115469.1432827789020.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqiobcy9yt.fsf@anie.imag.fr>
-	<xmqqtwuwh8fv.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Paul Tan <pyokagan@gmail.com>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 28 21:41:06 2015
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: pre-commit hook not run on conflict resolution during rebase
+Date: Thu, 28 May 2015 21:38:02 +0200
+Message-ID: <1m55i3m.1fum4zo1fpnhncM%lists@haller-berlin.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 21:43:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy3fs-000317-BT
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 21:41:04 +0200
+	id 1Yy3hv-0004bt-K8
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 21:43:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754185AbbE1TlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 15:41:00 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51558 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752909AbbE1Tk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 15:40:58 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4SJen3M029117
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 28 May 2015 21:40:49 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4SJepuF017242;
-	Thu, 28 May 2015 21:40:51 +0200
-In-Reply-To: <xmqqtwuwh8fv.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 28 May 2015 11:18:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 28 May 2015 21:40:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4SJen3M029117
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433446851.646@mLBpgUrGILdfX4RDEXe+7Q
+	id S1754583AbbE1TnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 15:43:07 -0400
+Received: from server90.greatnet.de ([178.254.50.90]:54704 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752271AbbE1TnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 15:43:05 -0400
+X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2015 15:43:05 EDT
+Received: from [192.168.42.152] (dslb-178-000-061-065.178.000.pools.vodafone-ip.de [178.0.61.65])
+	by server90.greatnet.de (Postfix) with ESMTPA id 4121B60044
+	for <git@vger.kernel.org>; Thu, 28 May 2015 21:38:02 +0200 (CEST)
+User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.10.3 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270186>
 
-Junio C Hamano <gitster@pobox.com> writes:
+When a rebase stops because of a conflict, and I edit the file to
+resolve the conflict and say "git rebase --continue", then the
+pre-commit hook doesn't run at that point, which means that I can commit
+bad stuff which the pre-commit hook would normally not allow in. We were
+bitten by this a few times already. (In our case, the hook rejects code
+that hasn't been run through clang-format. That's easy to forget when
+resolving conflicts during a rebase.)
 
-> If this topic enhances 'git status' with the in-progress rebase
-> information, I'd view it as turning 'git status' from 'a more or
-> less useless command during rebase' to 'a useful command'.
+>From glancing through the githooks manpage, I couldn't see any other
+hook that would help in this situation. Am I missing something?
 
-For day-to-day operations, what we already have in status already
-qualifies as 'useful command' to me:
+I guess the next best solution would be to also have a pre-push hook
+that performs the same checks again, just in case the bad code managed
+to get past the pre-commit hook for some reason or other. This feels
+very redundant, but I guess it would work well.
 
-$ git status
-rebase in progress; onto 7f9a792
-You are currently rebasing branch 'master' on '7f9a792'.
-  (fix conflicts and then run "git rebase --continue")
-  (use "git rebase --skip" to skip this patch)
-  (use "git rebase --abort" to check out the original branch)
+Any other suggestions?
 
-I like the output of "git status" to be concise. OTOH, there are tons of
-information in .git/rebase-merge/ that could be displayed to the user.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
+ 
