@@ -1,80 +1,82 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a commit
-Date: Thu, 28 May 2015 00:42:48 +0100
-Organization: OPDS
-Message-ID: <68A62E92218D4FD4A71EA138C9F3725A@PhilipOakley>
-References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr><c78cd2ac17333a2e70d1113d95495c41@www.dscho.org><1506177855.44397.1432738386768.JavaMail.zimbra@ensimag.grenoble-inp.fr><vpq1ti23vva.fsf@anie.imag.fr> <xmqqsiahltbu.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Redirect "git" subcommand to itself?
+Date: Wed, 27 May 2015 17:28:34 -0700
+Message-ID: <CAGZ79kZHa9wUrRsWfHgGdSdx+cN9VAirAAfu3YLVTuSmggcehg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Remi Galan Alfonso" <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	<git@vger.kernel.org>,
-	"Remi Lespinet" <remi.lespinet@ensimag.grenoble-inp.fr>,
-	"Guillaume Pages" <guillaume.pages@ensimag.grenoble-inp.fr>,
-	"Louis-Alexandre Stuber" 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	"Antoine Delaite" <antoine.delaite@ensimag.grenoble-inp.fr>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 28 01:43:00 2015
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 28 02:28:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxkyP-0006lI-KC
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 01:42:57 +0200
+	id 1Yxlge-0000v2-Ro
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 02:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417AbbE0Xmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2015 19:42:51 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:39000 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752310AbbE0Xmr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 May 2015 19:42:47 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CEPQA2VWZVPCS2BlxcgxCBMoZNbcF6BAQCgURNAQEBAQEBBwEBAQFBJBtBAQMBg1cGAQEECAEBLh4BASELAgMFAgEDFQwlFAEEGgYHAxQGARIIAgECAwELiBW1T51nizqFBYMegRYFjAqGfnmhRYEEgxg9MYJHAQEB
-X-IPAS-Result: A2CEPQA2VWZVPCS2BlxcgxCBMoZNbcF6BAQCgURNAQEBAQEBBwEBAQFBJBtBAQMBg1cGAQEECAEBLh4BASELAgMFAgEDFQwlFAEEGgYHAxQGARIIAgECAwELiBW1T51nizqFBYMegRYFjAqGfnmhRYEEgxg9MYJHAQEB
-X-IronPort-AV: E=Sophos;i="5.13,509,1427756400"; 
-   d="scan'208";a="593199289"
-Received: from host-92-6-182-36.as43234.net (HELO PhilipOakley) ([92.6.182.36])
-  by out1.ip05ir2.opaltelecom.net with ESMTP; 28 May 2015 00:42:45 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751517AbbE1A2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2015 20:28:36 -0400
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:33571 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468AbbE1A2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2015 20:28:35 -0400
+Received: by qcmi9 with SMTP id i9so11328030qcm.0
+        for <git@vger.kernel.org>; Wed, 27 May 2015 17:28:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Uoyk8O6UuX3fmJcfMUheP4pV4s1WqW5BYTvnmEk3a6E=;
+        b=l+lMDwmk3YOlBAhramFaxQQ9Z3bLJKC6i7x5xibSsUBf5P+shbRNiXuSBmZbG/pLpQ
+         O50mFI9J325z+whbDs3Q4iePAyH+HrRTaQag95wYC2XX2gJgTFSGvdTbTmFmZy2c85Q+
+         NT0N49Hd6tbbNKq2MTGbtHn8Pm0vd9qdwDoaWIM9EeWWl+26YeiZT3ldBQgnGyYc6uKd
+         yqVghfFmdC2L2s3pUVbXxeICFcqduIfbdFyfLJ3e6EhmP5oWCEAobvSSrH+U8/uqJSmp
+         fYEcsrtT5vhwvOuKVsn4WWMiP06WnqXKpRSZoN71WJBsr4Ou81SJ0EAtrRWH0xEemBOT
+         MYUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Uoyk8O6UuX3fmJcfMUheP4pV4s1WqW5BYTvnmEk3a6E=;
+        b=NM4+SVfNNZCVp9VVj+Cx1anx357lPFxixpmtdHNEb9DMkTgh+gxm4Zvb8EAZvur4wU
+         Clt+WYjxInjA2QKJ2AJDQRmHvGsO7g+LxYVVB9A9wTtNk5EfeicqmGJW/S9NGKuFHIau
+         lb69Vg9qPlrQrH3ga6zG9AprYL7u0Tmsk4yjZKrXxTWYIhc3sf02AqdH3TbE/kVjYGyZ
+         nOjkS5RaDYJ7yU/TEB3/9qqANx0ztIRk3l8Mjbs/h8W8SYAflUePI0nSlXnvpeCwK8cK
+         XcjNyIIAPfhkmIL2/3HhiL/0E9SdkBsHkk8xvxbAaYzZDdTUaCw/E6QmNTK99DvEScNV
+         zvkw==
+X-Gm-Message-State: ALoCoQlRdAhM0eyKAMrdtfXAsZCFa6FEArAY227yN6EJsvl7bvzJTLPO0AOOBboWt8ZuUYbkGHvz
+X-Received: by 10.55.22.143 with SMTP id 15mr46283qkw.85.1432772915021; Wed,
+ 27 May 2015 17:28:35 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Wed, 27 May 2015 17:28:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270121>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> I find it weird to write
->>
->> noop <sha1> <title>
->
-> True, but then it can be spelled
->
->    # <sha1> <title>
->
-> too, so do we still want 'drop'?  Unless we have a strong reason to
-> believe migrants from Hg cannot be (re)trained, personally, I'd feel
-> that we do not need this 'drop' thing.
->
-To me, the addition of "drop" would be a better completion of the list 
-of action verbs for 'normal' users.
+Hi,
 
-Training/Retraining users to use atypical techniques is a never ending 
-task, so making drop a synonym for the existing noop appeals to my 
-experience of users (of all sorts of tools, including personal 
-experience ;-).
+so I just run into this problem again (which happens to me maybe twice a week):
+I want to do a git operations, so I type "git " into my shell, and
+then I look around what
+exactly I want to do and usually I find it in the help text of a
+previous command such as
+    You are currently reverting commit 383c14b.
+      (fix conflicts and run "git revert --continue")
+      (use "git revert --abort" to cancel the revert operation)
 
---
-Philip 
+then I copy the whole operation "git revert --abort" in this case and
+paste it to the shell
+and let go.
+The result looks like
+    $ git git revert --abort
+    git: 'git' is not a git command. See 'git --help'.
+
+    Did you mean this?
+    init
+
+I wonder if we want to make a "git" subcommand, which behaves exactly
+the same as git itself?
+Then "git git git status" would just return the same as "git status".
+
+Thanks,
+Stefan
