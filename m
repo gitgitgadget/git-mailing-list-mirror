@@ -1,136 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] git-am: add am.threeWay config variable
-Date: Thu, 28 May 2015 10:57:31 -0700
-Message-ID: <xmqqy4k8h9f8.fsf@gitster.dls.corp.google.com>
-References: <1432675975-11020-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<1432675975-11020-3-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<CACRoPnSnwA5GcYZjHHTepz4WzXYuJ+9nJqGsL92r_vnsNrN_-w@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC] send-email: allow multiple emails using --cc --to and --bcc
+Date: Thu, 28 May 2015 14:02:36 -0400
+Message-ID: <CAPig+cR_N10=k6QX=udpfWG-qNYkBNXQQNZ-LOrGC=1UqoZcVw@mail.gmail.com>
+References: <1432809733-4321-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1432809733-4321-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<CAPig+cRb0GstQThkprzBA=VwHSFxUeX6KDdSA7Xjdb_B2mH6Uw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
 	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
 	Louis-Alexandre Stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 19:57:51 2015
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu May 28 20:02:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy23p-0006vF-AL
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:57:41 +0200
+	id 1Yy28h-0002C4-1G
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 20:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448AbbE1R5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 13:57:38 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:36748 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754422AbbE1R5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 13:57:33 -0400
-Received: by igbpi8 with SMTP id pi8so118555080igb.1
-        for <git@vger.kernel.org>; Thu, 28 May 2015 10:57:33 -0700 (PDT)
+	id S1754051AbbE1SCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 14:02:39 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:35477 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753827AbbE1SCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 14:02:37 -0400
+Received: by iesa3 with SMTP id a3so44672105ies.2
+        for <git@vger.kernel.org>; Thu, 28 May 2015 11:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=5DYMq5khvWedapkx6fCMv//k7Wpjb2B1TcPenSQvR1c=;
-        b=LbOkkxx/g7QRqBAcpsd+rOVK4rWJqQ6rU+v2TUZuFlulaE0wmwC8RHWE9Ayi5Zw9wS
-         iV7fgJ+fwIY6MFMeAKryvJ9cTQPArtaQFx2reUhRnww6yWQEQSdoS/d7pzD+ljTZWoro
-         t6cdwcteR4twBHOu7gz356+m9fb5danyFm2Bypb3FBBCwCSBZnX1QKUHlWNNGDVV8ne9
-         tU9bpeCi32LGg2VvRaxilclXNq+FosZM63S7DoAFAYv4QvFpvFAa2hmaio34OIaL93dN
-         UESXStt97+TUh+07Xr8R2aRRKix3Bl7A9vqv/coD9oxtzggr2uh3aQhUMnB/2U1+SRer
-         7ZFA==
-X-Received: by 10.50.61.200 with SMTP id s8mr41005921igr.7.1432835853065;
-        Thu, 28 May 2015 10:57:33 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
-        by mx.google.com with ESMTPSA id w4sm2595779igl.22.2015.05.28.10.57.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 May 2015 10:57:32 -0700 (PDT)
-In-Reply-To: <CACRoPnSnwA5GcYZjHHTepz4WzXYuJ+9nJqGsL92r_vnsNrN_-w@mail.gmail.com>
-	(Paul Tan's message of "Thu, 28 May 2015 21:47:47 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=XNUPpYOsGeEvRqsVBN6bDJQNhE3rbq9g7nBlaCUpHvo=;
+        b=wuYZRqyMW8wQtlhFOGm6xuka7JHLw7jzLrq7T0JeGeKsFy4OR3Tfz56yHVAgaXkH9e
+         2MjRfojdRawS+2aXShT45l8M5kiE4io40K7zqGrCWGVp3Xa0hmzOVszF66s2ab7raFhr
+         WJ8WWTjGa9a83tc8jXsuQ5VCOrTKZsU6fji1rVpUIj/gr1fpEdwsl9gID0VYpmtwwr5V
+         VbifV+8ickIbTMa9E7ECLymtoZX4ukkQL0q1OMiFVC0WAXhGihOo3uDJZwGrM636vzCS
+         vzQrkzpUsatIbtPXIDGxJBFp0nHL+4HbPKOEhhQLagShAghmf/oA6JYzUBnerWZNlADF
+         foDg==
+X-Received: by 10.42.166.200 with SMTP id p8mr3285415icy.25.1432836156721;
+ Thu, 28 May 2015 11:02:36 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 28 May 2015 11:02:36 -0700 (PDT)
+In-Reply-To: <CAPig+cRb0GstQThkprzBA=VwHSFxUeX6KDdSA7Xjdb_B2mH6Uw@mail.gmail.com>
+X-Google-Sender-Auth: -RpkbojySa2UaR8ubI0D1AvsWsU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270173>
 
-Paul Tan <pyokagan@gmail.com> writes:
-
->> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
->> index 0d8ba48..3190c05 100644
->> --- a/Documentation/git-am.txt
->> +++ b/Documentation/git-am.txt
->> @@ -89,11 +89,13 @@ default.   You can use `--no-utf8` to override this.
->>         linkgit:git-mailinfo[1]).
->>
->>  -3::
->> ---3way::
->> +--[no-]3way::
+On Thu, May 28, 2015 at 11:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, May 28, 2015 at 6:42 AM, Remi Lespinet
+> <remi.lespinet@ensimag.grenoble-inp.fr> wrote:
+>> +       The format supported for email list is the following:
+>> +       "Foo <foo@example.com>, bar@example.com".
+>> +       Please notice that the email list does not handle commas in
+>> +       email names such as "Foo, Bar <foobar@example.com>".
 >
-> There's no need to mention --no-3way,...
-
-Actually, we prefer to do it this way:
-
-	-3::
-	--3way::
-	--no-3way::
-		Describe what --3way does here.
-
-
-$ git grep -e '^--no-' -e '^--\[no-\]' Documentation/
-
-
-
-
->>         When the patch does not apply cleanly, fall back on
->>         3-way merge if the patch records the identity of blobs
->>         it is supposed to apply to and we have those blobs
->> -       available locally.
->> +       available locally.  `am.threeWay` configuration variable
->> +       can be used to specify the default behaviour.  `--no-3way`
->> +       is useful to override `am.threeWay`.
+> A few issues:
 >
-> Usually configuration settings are mentioned in a separate section in
-> the documentation "CONFIGURATION" (or not mentioned at all).
+> In order for this to format correctly in Asciidoc, the text needs to
+> be left-justified (just as was the line which you removed).
 
-I can go either way, actually.  But if the description mentions
-am.threeWay as a way to tweak the default, it also should spell out
-the default when the configuration is not there at all.
+s/left-justified/unindented/
 
-> Also, there's no need to mention that --no-3way can be used to
-> mention the configuration, as its usual (and expected) that the
-> configuration value sets the default behavior, and the
-> command-line switch can override i.
-
-Yes.  Also --3way is useful to override `am.threeWay` set to `false` ;-)
-
-> To end off, some off-tangent issues that are not related to the patch
-> series in question, but since I'm looking at git-am.sh....
+> The sentence "The format supported..." seems superfluous. It's merely
+> repeating what is already clearly indicated by "--bcc=<address>,...",
+> thus it could easily be dropped without harm.
 >
-> I've noticed that in the block above that initializes all the variables,
+> Mention that commas in names are not currently handled is indeed a
+
+s/Mention/Mentioning/
+
+> good idea, however, "please" tends to be an overused and wasted word
+> in documentation. More tersely:
 >
->     sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
->     messageid= resolvemsg= resume= scissors= no_inbody_headers=
->     git_apply_opt=
->     committer_date_is_author_date=
->     ignore_date=
->     allow_rerere_autoupdate=
->     gpg_sign_opt=
+>     Note: Addresses containing commas ("Foo, Bar" <...>)
+>     are not currently supported.
+> [...]
+>>  sub sanitize_address_list {
+>> -       return (map { sanitize_address($_) } @_);
+>> +       my @addr_list = split_address_list(@_);
+>> +       return (map { sanitize_address($_) } @addr_list);
+>>  }
 >
-> threeway is not initialized at all, and thus I think running
-> "threeway=t git am blah" will affect the behavior of git-am.
+> Although, it was convenient from an implementation perspective to plop
+> the split_address_list() invocation into sanitize_address_list(), it
+> pollutes sanitize_address_list() by making it do something unrelated
+> to its purpose.
+>
+> If you examine places where sanitize_address_list() is called, you will see:
+>
+>     validate_address_list(sanitize_address_list(@xx))
+>
+> which clearly shows that sanitation and validation are distinct
 
-Correct.  I overlooked this when I originally did threeway.  Perhaps
-a preparatory bugfix patch is warranted before this one.
+Oops: s/sanitation/sanitization/
 
-> Also, I noticed that we do not check for --no-interactive,
-> --no-signoff, --no-keep, --no-whitespace, etc.
-
-Even though adding support for them would not hurt, lack of these
-are OK, as long as we do not have configuration variables to tweak
-their defaults.
+> operations (and each function does only what its name implies). To
+> continue this idea, the splitting of addresses should be performed
+> distinctly from the other operations, in this order:
+>
+>    split -> sanitize -> validate
+>
+> or:
+>
+>     validate_address_list(sanitize_address_list(
+>         split_address_list(@xx))
+>
+> That's pretty verbose, so introducing a new function to encapsulates
+> that behavior might be reasonable.
