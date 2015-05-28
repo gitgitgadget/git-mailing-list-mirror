@@ -1,87 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v2] create a skeleton for the command git rebase --status
-Date: Thu, 28 May 2015 11:18:44 -0700
-Message-ID: <xmqqtwuwh8fv.fsf@gitster.dls.corp.google.com>
-References: <1432822837-10320-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<CACRoPnRa1wrOJr=wGnR4NayZfe2yJ4F7Abv_sjqRpgQnicxm1g@mail.gmail.com>
-	<1141577560.115469.1432827789020.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqiobcy9yt.fsf@anie.imag.fr>
+Subject: Re: [PATCH 2/2] commit: fix ending newline for template files
+Date: Thu, 28 May 2015 11:22:15 -0700
+Message-ID: <xmqqpp5kh8a0.fsf@gitster.dls.corp.google.com>
+References: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
+	<1432620908-16071-3-git-send-email-patryk.obara@gmail.com>
+	<CAPig+cTt5sQ=49qS2+8ZOtiX61kHjAisAvpP7K3XPhtNtCatOg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Paul Tan <pyokagan@gmail.com>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 28 20:19:21 2015
+Cc: Patryk Obara <patryk.obara@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu May 28 20:22:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy2OU-0004Xs-Rg
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 20:19:03 +0200
+	id 1Yy2Ri-0006jP-MU
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 20:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754104AbbE1SS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 14:18:58 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:35833 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754489AbbE1SSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 14:18:48 -0400
-Received: by igbyr2 with SMTP id yr2so119529385igb.0
-        for <git@vger.kernel.org>; Thu, 28 May 2015 11:18:48 -0700 (PDT)
+	id S1754149AbbE1SWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 14:22:19 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37775 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753895AbbE1SWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 14:22:17 -0400
+Received: by igbsb11 with SMTP id sb11so46193774igb.0
+        for <git@vger.kernel.org>; Thu, 28 May 2015 11:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=gOgpeze3b3Erk+XEOjC91K/1oCN8AJbTvfFkIwnD5l4=;
-        b=vAgovmFt2bBqimLUooN862QIGFMwRhyWZHa+5eOocI18Ok9jXl9oIFnyu2fH4W9i3j
-         jVD17EC6Oc6ZJP58hHjnm7hgiLdrxk5xAXs2JEJfmNaBFlDM/etWhMqdNDuPKyz7Pt3l
-         jgcjf8LfX3RE1Hzjr2D8JTZ4x+fZD2CqiZq8/dH0aVkA0uW6OumyivLB3BeQF/jS+CaO
-         xmf11mVOSC6eKtG/M/kbs2AHO9C/UrDbpbMID8FLvPOFlB0Tjt2ZrQdKhVSqGNf1SRxS
-         wf2meEJCoaE6jCWGO+jS8AVVSKrZCki1ZU0SjWjEX+dJk11hfVB3QutkOR3RvdfOGg5f
-         80Tg==
-X-Received: by 10.50.43.227 with SMTP id z3mr12947135igl.12.1432837128229;
-        Thu, 28 May 2015 11:18:48 -0700 (PDT)
+        bh=igWA6/edft1wsYAxVYFZb07ZXqD1zqVsnRAVCQh2Bdc=;
+        b=airCAUI+hcqKHXoft/7GyUP6gfIJUPY3UqMe44+Kg5g5Z4Mr4b/vMwTgy2jJCcUrva
+         xNOHiYityCQJ6N+pmoJ6RkQqV2oJYSz4JgSZuIBqwCH33llLWncslX0Fa0IPfV0Sog5U
+         iBtpHOGxdGD7uMXv+fyU/qBdY3eeDoEXQJLOOATr+lc12LaXVsxQNU82I1Oq8bQa6sbn
+         7Vo3GtgcLrrnGuYtnJUH1qRjvQDVQlQMPWUc1XFerWPvZMrX+5HX3D3N6xCkKhQGCC0y
+         J02e265ySz7/+yc2z5ozJ2Nfcf4BBw6QhB0xOUhcoxRJEDSm6FxOejACG2jok5tU3Cuh
+         VqEg==
+X-Received: by 10.50.67.146 with SMTP id n18mr7347660igt.40.1432837337326;
+        Thu, 28 May 2015 11:22:17 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
-        by mx.google.com with ESMTPSA id ot6sm4845497igb.11.2015.05.28.11.18.47
+        by mx.google.com with ESMTPSA id d4sm4866166igl.1.2015.05.28.11.22.16
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 May 2015 11:18:47 -0700 (PDT)
-In-Reply-To: <vpqiobcy9yt.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	28 May 2015 17:53:46 +0200")
+        Thu, 28 May 2015 11:22:16 -0700 (PDT)
+In-Reply-To: <CAPig+cTt5sQ=49qS2+8ZOtiX61kHjAisAvpP7K3XPhtNtCatOg@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 28 May 2015 10:29:18 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270176>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> But I think there are more relevant information to show (e.g. list of
-> already applied commits, remaining list of commits, possibly truncated
-> if the list is overly long, and information that rebase gave you when
-> stopping like the path to the file being applied). Having them all in
-> "git status" would make the output really long, for little benefit in
-> day-to-day use.
+> Moreover, it lacks justification and explanation of why you consider
+> the cleanup unnecessary. History [1] indicates that its application to
+> -F but not -t was intentional.
+>
+> [1]: bc92377 (commit: fix ending newline for template files, 2015-05-26)
 
-Sorry, I do not quite agree with this reasoning.
+Sorry, but the date of that commit seems to be too new to be
+considered "history"; I do not seem to have it, either.
 
-Isn't "git status" during a rebase that shows "really long"
-information to help the rebase operation a good thing?  In
-day-to-day use when you are not in the middle of rebase, the command
-would not show what remains to be done, would it?
-
-I may be biased, because I rarely use 'git status' while running
-'git rebase' (with or without interactive).  But to me, 'git diff'
-would be a more appropriate tool to help me unstuck in managing the
-current step of conflict resolution than 'git status' gives me
-during either a rebase or a merge as "Unmerged paths" anyway.
-
-If this topic enhances 'git status' with the in-progress rebase
-information, I'd view it as turning 'git status' from 'a more or
-less useless command during rebase' to 'a useful command'.
+But I agree with you that I too failed to see why this change is
+necessary or desirable in the explanation in the proposed log
+message.
