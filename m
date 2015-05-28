@@ -1,65 +1,77 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH/WIP v3 2/4] for-each-ref: introduce new structures for
- better organisation
-Date: Fri, 29 May 2015 02:13:08 +0530
-Message-ID: <55677DDC.2070601@gmail.com>
-References: <5567527A.6090607@gmail.com> <1432835025-13291-2-git-send-email-karthik.188@gmail.com> <vpqegm0o3dx.fsf@anie.imag.fr> <55677C7F.6080400@gmail.com> <vpq8uc8l9k0.fsf@anie.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] config.c: rewrite ENODEV into EISDIR when mmap fails
+Date: Thu, 28 May 2015 16:44:37 -0400
+Message-ID: <20150528204436.GB29148@peff.net>
+References: <20150528075142.GB3688@peff.net>
+ <20150528080300.GD23395@peff.net>
+ <xmqq7frsiq3o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, christian.couder@gmail.com
-To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 28 22:43:19 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Jorge <griffin@gmx.es>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 28 22:44:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy4e6-0005xl-TR
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 22:43:19 +0200
+	id 1Yy4fU-0006xK-7i
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 22:44:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782AbbE1UnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 16:43:15 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:36245 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754620AbbE1UnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 16:43:13 -0400
-Received: by paza2 with SMTP id a2so31856998paz.3
-        for <git@vger.kernel.org>; Thu, 28 May 2015 13:43:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=S6ml0E+D6lSAHoRapxvQYXpxC97dOZZsfxGFLQRHROM=;
-        b=hoD5EEB1gUsLm6fWqzZGE/2UeGxQSAY+srZkNn7zAqdE9ShHcBuFnKSSESRMkmzT2l
-         3O3ii70DONu6y/NSufdUiOK0k9er4sNTHBdtHvfOh8sUIScUnbxdMNo/Y/3jy+65hMug
-         YxPfwccl+6MhOMvYMSpG9N6ZJkfk4wtN8lhdC54jtiF4NvhuKYI7cpapiygpsG2megi8
-         8va4dV7/iR0+FcrugEaFRaa5AzfkY+VWg8k3pW23EC0ALSTY9EoaUmpxZeVGhOUJ3uWN
-         N1hbDsA3AWVPEgUT0fs+cTcLIF/9g5ngJFSvtrDYsass6+HDO/++a6jIqdsjLOhW8xeG
-         U03w==
-X-Received: by 10.68.191.167 with SMTP id gz7mr8834046pbc.43.1432845793018;
-        Thu, 28 May 2015 13:43:13 -0700 (PDT)
-Received: from [192.168.0.100] ([106.51.130.23])
-        by mx.google.com with ESMTPSA id e12sm3297763pap.40.2015.05.28.13.43.11
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 May 2015 13:43:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <vpq8uc8l9k0.fsf@anie.imag.fr>
+	id S1754472AbbE1Uok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 16:44:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37400 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751556AbbE1Uoj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 16:44:39 -0400
+Received: (qmail 19649 invoked by uid 102); 28 May 2015 20:44:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 May 2015 15:44:39 -0500
+Received: (qmail 19077 invoked by uid 107); 28 May 2015 20:44:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 May 2015 16:44:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2015 16:44:37 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq7frsiq3o.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270197>
 
-On 05/29/2015 02:11 AM, Matthieu Moy wrote:
-> The point of separating them is that the rename implies a relatively
-> long patch (you have 17 occurences of 'refinfo' in the deletion part of
-> your patch), but it is straightforward to review (apply, run "git diff
-> --color-words" and press space a few times). But it is no longer so
-> simple once you mix it with anything else.
->
-Makes sense, thanks for putting it out.
+On Thu, May 28, 2015 at 10:11:55AM -0700, Junio C Hamano wrote:
 
--- 
-Regards,
-Karthik
+> >  		if (contents == MAP_FAILED) {
+> > +			if (errno == ENODEV && S_ISDIR(st.st_mode))
+> > +				errno = EISDIR;
+> >  			error("unable to mmap '%s': %s",
+> >  			      config_filename, strerror(errno));
+> >  			ret = CONFIG_INVALID_FILE;
+> 
+> I think this patch places the "magic" at the right place, but I
+> would have preferred to see something more like this:
+> 
+> 	if (contents == MAP_FAILED) {
+>         	if (errno == ENODEV && S_ISDIR(st.st_mode))
+> 			error("unable to mmap a directory '%s',
+>                         	config_filename);
+> 		else
+>                 	error("unable to mmap '%s': %s",
+>                         	config_filename, strerror(errno));
+> 		ret = CONFIG_INVALID_FILE;
+> 
+> But that is a very minor preference.  I am OK with relying on our
+> knowledge that strerror(EISDIR) would give something that says "the
+> thing is a directory which is not appropriate for the operation", as
+> nobody after that strerror() refers to 'errno' in this codepath.
+
+I am OK if you want to switch it. Certainly EISDIR produces good output
+on my system, but I don't know if that is universal.
+
+We also know S_ISDIR(st.st_mode) _before_ we actually mmap. So I was
+tempted to simply check it beforehand, under the assumption that the
+mmap cannot possibly work if we have a directory. But by doing it in the
+error code path, then we _know_ we are not affecting the outcome, only
+the error message. :)
+
+-Peff
