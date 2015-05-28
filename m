@@ -1,221 +1,124 @@
-From: Robert Dailey <rcdailey@gmail.com>
-Subject: Re: Release candidate of Git for Windows 2.x is out
-Date: Thu, 28 May 2015 09:25:56 -0700 (PDT)
-Message-ID: <0efdc7c9-b982-4134-8128-d2a7d84f9a66@googlegroups.com>
-References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] glossary: add "remote", "submodule", "superproject"
+Date: Thu, 28 May 2015 09:45:41 -0700
+Message-ID: <xmqqk2vsirbe.fsf@gitster.dls.corp.google.com>
+References: <CAGZ79kauSsZK3_X+zTwL8TKuZiHNMGvMZfoCemW9-K7RWgrgCA@mail.gmail.com>
+	<1432777801-6073-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_207_285538310.1432830356253"
-Cc: git@vger.kernel.org, git-for-windows@googlegroups.com
-To: msysgit@googlegroups.com
-X-From: msysgit+bncBCKNPCNAWECRBFEDTWVQKGQEFIRKO5Y@googlegroups.com Thu May 28 18:26:00 2015
-Return-path: <msysgit+bncBCKNPCNAWECRBFEDTWVQKGQEFIRKO5Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qg0-f59.google.com ([209.85.192.59])
+Content-Type: text/plain
+Cc: git@vger.kernel.org, philipoakley@iee.org, hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 28 18:47:23 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCKNPCNAWECRBFEDTWVQKGQEFIRKO5Y@googlegroups.com>)
-	id 1Yy0d4-00088I-0G
-	for gcvm-msysgit@m.gmane.org; Thu, 28 May 2015 18:25:58 +0200
-Received: by qgdz60 with SMTP id z60sf12319458qgd.0
-        for <gcvm-msysgit@m.gmane.org>; Thu, 28 May 2015 09:25:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:x-original-sender:precedence:mailing-list
-         :list-id:list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=FKp8XaYRcIstidgrLsIMb4uHESTJbUq4H7cK0MoXt2c=;
-        b=tJBcVmPSPA7/YbOPaxZVmEOYlzNeJq3sDIzoE3g3PFvohqdN/B+/E7QqmT9yJWOvwA
-         SICz/GGsnc9xS4nzcTV3RtKqugG2iez6Gcp8kzx2p1qpysKaipjyJz7fyzXCKY9q0FIu
-         oCETFF/wzhuKWJrdPySyZsuHb3YjFBdv3wXMUsG+ljJL0u2ziKV5IHtb1qWA6j5IH5Ve
-         GrMJiubm9T60f3fjnZ1AMuSw14Gb4tlcP7Lc8bkvLNub9LOmsAAx9b/IPkvE2IoQ8aYt
-         3/djekarO9Ri77RurNWP+BJURGQZMd7p7pJqHmtC3DorbeKzgMcDgU+ZguBcgVeT2KXn
-         m+KA==
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Yy0xm-00067B-Jg
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 18:47:22 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932367AbbE1QrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 12:47:17 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:34787 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932258AbbE1Qpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 12:45:43 -0400
+Received: by igbhj9 with SMTP id hj9so119468564igb.1
+        for <git@vger.kernel.org>; Thu, 28 May 2015 09:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:x-original-sender:precedence:mailing-list
-         :list-id:list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=FKp8XaYRcIstidgrLsIMb4uHESTJbUq4H7cK0MoXt2c=;
-        b=RHpl5EbhZmqNz1xE8aLztsrU4L/TOfzLIeWdIIck352WZ5rNljy9Sz9hZaY1S8P/Fj
-         wE60+jFcFd7y3DrfBFDbCGRwr8CHAGzp2kkTRLEMnH/nTThsM3JoIXj3HiTD1L0WidM3
-         4QoJe4raOh/Pf36Sy4vPzNRxEhp1Tacrb8utLbN0trPUKkz97KvX2wj00786GnGZihUC
-         V1PgGE1I8vN8xg4sE0Fw4dGTubE1aYh8jxu90qfhdqRQr2A+5Vokv5y3BmxkjDm+NsgQ
-         xGbrs7BmBX8wPpsLskNfT9suQk0C9cxGQjw613oUczefnsB3XSJ0zQqOWnAi4f9KqPET
-         W2FA==
-X-Received: by 10.182.28.6 with SMTP id x6mr32023obg.37.1432830357214;
-        Thu, 28 May 2015 09:25:57 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.230.168 with SMTP id sz8ls295845obc.14.gmail; Thu, 28 May
- 2015 09:25:56 -0700 (PDT)
-X-Received: by 10.182.20.212 with SMTP id p20mr30703obe.11.1432830356604;
-        Thu, 28 May 2015 09:25:56 -0700 (PDT)
-In-Reply-To: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
-X-Original-Sender: rcdailey@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270157>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=YXGdaKbYhosmv6KKzjj3vXHld6OS8gkbcMtYvSzLChU=;
+        b=xdrMwBPwC2HRWlLa8dTUqwbfnW9KM+w3cWs3/55ipONgDCW9AtMEzF7aZGOZO9Wvz3
+         z8PEVrslsGcLX7qcJ0NSfAXuhSrjmdjQdgSn79kVqEEyzj1vNPMwCEauYm7/CkH1RccV
+         grhz/AjQ99CO6ocqNlu0Ptv3NAGK7ztAefi4d6YUxQbzZWj56bZDSQMqUOk6OznEB+Gg
+         GLJArsJE6UT46r1A/NyQAhVTs1wXzmNz5nHicr248q8m7iQpmOleY2sbaV9owUKbRQdY
+         4GSiFEmF6emsGb5KyJEJvoMqXZcfar3KCB3l9Q60WpYk9jLX5oL2I5xw9cppK7B4NrCZ
+         R2Ug==
+X-Received: by 10.50.41.8 with SMTP id b8mr44875047igl.38.1432831542925;
+        Thu, 28 May 2015 09:45:42 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id b8sm2129833ioe.23.2015.05.28.09.45.41
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 28 May 2015 09:45:42 -0700 (PDT)
+In-Reply-To: <1432777801-6073-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 27 May 2015 18:50:01 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270158>
 
-------=_Part_207_285538310.1432830356253
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_208_1563908772.1432830356253"
+Stefan Beller <sbeller@google.com> writes:
 
-------=_Part_208_1563908772.1432830356253
-Content-Type: text/plain; charset=UTF-8
+> Noticed-by: Philip Oakley <philipoakley@iee.org>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Documentation/glossary-content.txt | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 
-On Wednesday, May 27, 2015 at 5:11:37 PM UTC-5, Johannes Schindelin wrote:
->
-> Hi all, 
->
-> I just uploaded release candidates for the upcoming Git for Windows 2.x 
-> release. Please find the download link here: 
->
-> https://git-for-windows.github.io/#download 
->
-> There are 32-bit and 64-bit versions both of regular installers and 
-> portable installers ("portable" meaning that they are .7z archives that can 
-> be unpacked anywhere and run in place, without any need for running an 
-> installer). 
->
-> My projected time line is to hammer out the last kinks until Friday, and 
-> then continue after a one-week leave, if needed, and then finally retire 
-> msysGit and start the official 2.x release cycle of Git for Windows. 
->
-> If you are running Windows and have a little time to spare, please test 
-> this release candidate thoroughly. If you find bugs, please first look at 
-> https://github.com/git-for-windows/git/issues (even the closed ones), and 
-> comment either on existing tickets or open new ones. It would be even 
-> cooler, of course, if you could open Pull Requests with fixes :-) 
->
-> Ciao, 
-> Johannes 
->
+The updates in this version relative to the previous one looks very
+good, at least to me.  A bit more comments.
 
-When adding self-signed certificates, I see two locations:
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index bf383c2..23ab692 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -469,6 +469,11 @@ The most notable example is `HEAD`.
+>  	<<def_push,push>> to describe the mapping between remote
+>  	<<def_ref,ref>> and local ref.
+>  
+> +[[def_remote]]remote repository::
+> +	A <<def_repository,repository>> which is used to track the same
+> +	project but resides somewhere else. To communicate with remotes,
+> +	see <<def_fetch,fetch>> or <<def_push,push>>.
+> +
 
-E:\Git\usr\ssl\certs\ca-bundle.crt
-E:\Git\mingw64\ssl\certs\ca-bundle.crt
+The last sentence sounds a tiny bit strange, in that I have to do a
+bit more than just see the explanation of these commands in order to
+communicate with remotes.
 
-It seems the 2nd one is the one used by git commands. I have to access a 
-git server over HTTPS that uses a self-signed certificate. What is the 
-purpose of the 1st ca-bundle.crt file? It would be more ideal to add to the 
-first one since it doesn't depend on architecture (the path changes for 
-32-bit installs).
+But it probably is just me.
 
-Do you have a recommended process for this?
+> @@ -515,6 +520,18 @@ The most notable example is `HEAD`.
+>  	is created by giving the `--depth` option to linkgit:git-clone[1], and
+>  	its history can be later deepened with linkgit:git-fetch[1].
+>  
+> +[[def_submodule]]submodule::
+> +	A <<def_repository,repository>> that holds the history of a
+> +	separate project inside another repository (the latter of
+> +	which is called <<def_superproject, superproject>>). The
+> +	containing superproject knows about the names of (but does
+> +	not hold copies of) commit objects of the contained submodules.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+I agree with one point you mentioned in one of your messages, which
+is that a submodule is not aware that it is used as part of a larger
+project.  That makes me wonder if the last sentence sits better in
+the description of the superproject, rather than the description of
+the submodule.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+> +[[def_superproject]]superproject::
+> +	A <<def_repository,repository>> that references other repositories
+> +	inside itself as <<def_submodule,submodules>>.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Perhaps "repositories of other projects"?  Does "inside" make it
+clear enough that we are talking about the relationship between
+working trees of the superproject and submodules?
 
-------=_Part_208_1563908772.1432830356253
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> +	The superproject
+> +	tracks only the remote and the name of the submodule.
 
-<div dir=3D"ltr">On Wednesday, May 27, 2015 at 5:11:37 PM UTC-5, Johannes S=
-chindelin wrote:<blockquote class=3D"gmail_quote" style=3D"margin: 0;margin=
--left: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;">Hi all,
-<br>
-<br>I just uploaded release candidates for the upcoming Git for Windows 2.x=
- release. Please find the download link here:
-<br>
-<br><a href=3D"https://git-for-windows.github.io/#download" target=3D"_blan=
-k" rel=3D"nofollow" onmousedown=3D"this.href=3D'https://www.google.com/url?=
-q\75https%3A%2F%2Fgit-for-windows.github.io%2F%23download\46sa\75D\46sntz\0=
-751\46usg\75AFQjCNH7Xr6ehKYvOq0YKmWM2A1d350WTQ';return true;" onclick=3D"th=
-is.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fgit-for-windows.git=
-hub.io%2F%23download\46sa\75D\46sntz\0751\46usg\75AFQjCNH7Xr6ehKYvOq0YKmWM2=
-A1d350WTQ';return true;">https://git-for-windows.<wbr>github.io/#download</=
-a>
-<br>
-<br>There are 32-bit and 64-bit versions both of regular installers and por=
-table installers ("portable" meaning that they are .7z archives that can be=
- unpacked anywhere and run in place, without any need for running an instal=
-ler).
-<br>
-<br>My projected time line is to hammer out the last kinks until Friday, an=
-d then continue after a one-week leave, if needed, and then finally retire =
-msysGit and start the official 2.x release cycle of Git for Windows.
-<br>
-<br>If you are running Windows and have a little time to spare, please test=
- this release candidate thoroughly. If you find bugs, please first look at =
-<a href=3D"https://github.com/git-for-windows/git/issues" target=3D"_blank"=
- rel=3D"nofollow" onmousedown=3D"this.href=3D'https://www.google.com/url?q\=
-75https%3A%2F%2Fgithub.com%2Fgit-for-windows%2Fgit%2Fissues\46sa\75D\46sntz=
-\0751\46usg\75AFQjCNH6XxulA5MmlpLkhQVoy3XchJhA8A';return true;" onclick=3D"=
-this.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fgithub.com%2Fgit-=
-for-windows%2Fgit%2Fissues\46sa\75D\46sntz\0751\46usg\75AFQjCNH6XxulA5MmlpL=
-khQVoy3XchJhA8A';return true;">https://github.com/git-for-<wbr>windows/git/=
-issues</a> (even the closed ones), and comment either on existing tickets o=
-r open new ones. It would be even cooler, of course, if you could open Pull=
- Requests with fixes :-)
-<br>
-<br>Ciao,
-<br>Johannes
-<br></blockquote><div><br></div><div>When adding self-signed certificates, =
-I see two locations:</div><div><br></div><div>E:\Git\usr\ssl\certs\ca-bundl=
-e.crt</div><div>E:\Git\mingw64\ssl\certs\ca-bundle.crt<br></div><div><br></=
-div><div>It seems the 2nd one is the one used by git commands. I have to ac=
-cess a git server over HTTPS that uses a self-signed certificate. What is t=
-he purpose of the 1st ca-bundle.crt file? It would be more ideal to add to =
-the first one since it doesn't depend on architecture (the path changes for=
- 32-bit installs).</div><div><br></div><div>Do you have a recommended proce=
-ss for this?</div></div>
+I am not sure what this sentence means [*1*], and I do not know if
+(a corrected version of) such a description is necessary here.
 
-<p></p>
+Thanks.
 
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
-i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
-br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
-//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &=
-quot;Git for Windows&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
-ubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
-s://groups.google.com/d/optout</a>.<br />
+[Footnote]
 
-------=_Part_208_1563908772.1432830356253--
-------=_Part_207_285538310.1432830356253--
+*1* The superproject records a bit more than "remote and name" in
+.gitmodules, and of course it records the history of the paths that
+the submodule is bound to over time, with specific commits from the
+submodule in its history.
