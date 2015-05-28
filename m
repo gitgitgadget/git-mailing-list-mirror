@@ -1,67 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2015, #07; Tue, 26)
-Date: Thu, 28 May 2015 14:52:50 -0700
-Message-ID: <xmqqa8wofjyl.fsf@gitster.dls.corp.google.com>
-References: <xmqqegm3j9jo.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/WIP 4/8] am: split out mbox/maildir patches with git-mailsplit
+Date: Thu, 28 May 2015 19:05:43 -0400
+Message-ID: <CAPig+cSK_yEabXJFF4UvKkbcisgpZGV0aX7jExcnK=Q-Ozm-eg@mail.gmail.com>
+References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
+	<1432733618-25629-5-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 23:53:01 2015
+X-From: git-owner@vger.kernel.org Fri May 29 01:05:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy5jX-0005Nl-O9
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 23:53:00 +0200
+	id 1Yy6s1-0008KT-I1
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 01:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668AbbE1Vwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 17:52:55 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34801 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812AbbE1Vww (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 17:52:52 -0400
-Received: by igbhj9 with SMTP id hj9so971506igb.1
-        for <git@vger.kernel.org>; Thu, 28 May 2015 14:52:52 -0700 (PDT)
+	id S1754745AbbE1XFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 19:05:45 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:34880 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754142AbbE1XFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 19:05:44 -0400
+Received: by igbyr2 with SMTP id yr2so1201804igb.0
+        for <git@vger.kernel.org>; Thu, 28 May 2015 16:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=mwPQZW3/rCitf56lZzN+1YW5Yqr1q4My1JxM7kbp5Gw=;
-        b=AXNb9H9N+HNNxIvKYCgCzp8XI7EpQtvgHq5yK8m5ZcTvk3gjlfpmaV6OOYnSfyChGt
-         cye7oDwckOlvcHogwySLj9M/mvP04XTEGqgePU+ziIWXuYEH/U+eOON59wC1IbVk/4lH
-         mHdQuD79uj3FlHdUHsZVy4leUUFax6dP0xkXZDS9Y79T0TEhSFKmfYdcRwexpli4d14a
-         870BLKSndxPOMVUix07So98zjtHi3Zw/u0sX58vignJBgGFA3jvgD7GP9MXVDO6aJHmO
-         FKjx5Dpn/N4QA/To5R3Q3gVKuaxszIIpKrW1SbpF7KNJea73ZXJMzGQ7KiONHyB9TSSV
-         UEQQ==
-X-Received: by 10.107.152.14 with SMTP id a14mr6250260ioe.59.1432849972109;
-        Thu, 28 May 2015 14:52:52 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:89d0:c49e:8012:77d2])
-        by mx.google.com with ESMTPSA id e69sm2724900ioe.11.2015.05.28.14.52.51
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 May 2015 14:52:51 -0700 (PDT)
-In-Reply-To: <xmqqegm3j9jo.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 26 May 2015 14:47:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SV6e/SihGsxFWNJix8mYJslUborLpXEE5mCw335oNEA=;
+        b=Zu1SSf6GqQlkqL+glTYpufjdJlSYQyzTuHLJYN7k63eibL02SOa+C2j4Ug8UZrXgPF
+         OLGSGwvnvGBgn2b+v1Z27sTs1/MkmYuKkujCakpVw0pR54WKIWfD4LWcs71SleqzD7Z+
+         HD7JKEI7SQDeMj4KaGNMbNtn4wT9EKpSi33aXgIBwSOWXGqBvhMMs0Xs4bPk5eg359Yy
+         XSiSwfn2MSe6IEkImhCwaf5QSKjazr3Htp7FYqN6qf7LUpc+JvyI31XxAKyE6qCTu/Mp
+         wrYi9S+GxAFIdODnBgxhqNN5QXTqS6MlJ00eoFdzsoKUCqIBqVQ14cPKifEX2pMmQxfr
+         rU4Q==
+X-Received: by 10.42.166.200 with SMTP id p8mr4510959icy.25.1432854343542;
+ Thu, 28 May 2015 16:05:43 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 28 May 2015 16:05:43 -0700 (PDT)
+In-Reply-To: <1432733618-25629-5-git-send-email-pyokagan@gmail.com>
+X-Google-Sender-Auth: naPSnwEafnZkowZB_4IYYpiNkS8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270205>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> * pt/pull-tests (2015-05-18) 8 commits
->  - t5520: check reflog action in fast-forward merge
->  - t5521: test --dry-run does not make any changes
->  - t5520: test --rebase failure on unborn branch with index
->  - t5520: test --rebase with multiple branches
->  - t5520: test work tree fast-forward when fetch updates head
->  - t5520: test for failure if index has unresolved entries
->  - t5520: test no merge candidates cases
->  - t5520: prevent field splitting in content comparisons
+On Wed, May 27, 2015 at 9:33 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> git-am.sh supports mbox, stgit and mercurial patches. Re-implement
+> support for splitting out mbox/maildirs using git-mailsplit, while also
+> implementing the framework required to support other patch formats in
+> the future.
 >
->  Add more test coverage to "git pull".
+> Re-implement support for the --patch-format option (since a5a6755
+> (git-am foreign patch support: introduce patch_format, 2009-05-27)) to
+> allow the user to choose between the different patch formats.
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+> @@ -128,13 +190,32 @@ static void am_next(struct am_state *state)
+>   */
+> +/**
+> + * parse_options() callback that validates and sets opt->value to the
+> + * PATCH_FORMAT_* enum value corresponding to `arg`.
+> + */
+> +static int parse_opt_patchformat(const struct option *opt, const char *arg, int unset)
+> +{
+> +       int *opt_value = opt->value;
+> +
+> +       if (!strcmp(arg, "mbox"))
+> +               *opt_value = PATCH_FORMAT_MBOX;
+> +       else
+> +               return -1;
+> +       return 0;
+> +}
+> +
+>  struct am_state state;
+> +int opt_patch_format;
 
-Sorry, but I lost track.  What's the doneness of this one?
+Should these two variables be static?
+
+>  static const char * const am_usage[] = {
+>         N_("git am [options] [(<mbox>|<Maildir>)...]"),
