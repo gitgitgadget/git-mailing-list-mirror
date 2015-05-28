@@ -1,283 +1,234 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH/WIP v3 2/4] for-each-ref: introduce new structures for better organisation
-Date: Thu, 28 May 2015 23:13:43 +0530
-Message-ID: <1432835025-13291-2-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH/WIP v3 3/4] for-each-ref: rename some functions and make them public
+Date: Thu, 28 May 2015 23:13:44 +0530
+Message-ID: <1432835025-13291-3-git-send-email-karthik.188@gmail.com>
 References: <5567527A.6090607@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 19:44:12 2015
+X-From: git-owner@vger.kernel.org Thu May 28 19:44:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy1ql-0005MF-1m
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:44:11 +0200
+	id 1Yy1qq-0005SY-Cw
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754318AbbE1RoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754326AbbE1RoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 13:44:11 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:33020 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753959AbbE1RoH (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 28 May 2015 13:44:07 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34624 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753839AbbE1RoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 13:44:03 -0400
-Received: by pabru16 with SMTP id ru16so28578744pab.1
-        for <git@vger.kernel.org>; Thu, 28 May 2015 10:44:02 -0700 (PDT)
+Received: by pdbqa5 with SMTP id qa5so46705869pdb.0
+        for <git@vger.kernel.org>; Thu, 28 May 2015 10:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LQNIzJReN3GPZLx44dAtroH1LpNu1uV816Py2VMrOsM=;
-        b=D/SYA2vYFovY/EbIaKtQaZr7JrVFtLPsJB6QSsaervsBXEk0cAYlPpgBphI7RfEPI8
-         o5TSOTS3+PBk8NZbjw5MvOYQzIiUdxJJsmKhmLJwihcIBhg2LDgwUjcPsC8jrkWS21rC
-         dBqIr+SKQwiaaUzAbSBZSikA5smH7O4JX6rfzGbtoHI/r6gh/Sa5Tf11G97lKQooUndd
-         hD/5uNFMg3rKV2tEbyrAgYSeLkz3pnL2CRT2nXdfBluK+Ocwtc7IphQ87/BMfJlt9IRH
-         2OfqQIPbZEefcjJjVhJHVQIvr7vUohUtH99oddTRD5NG5hCA5Yb0v9WUmBqXpGZLayAQ
-         OYdQ==
-X-Received: by 10.66.194.201 with SMTP id hy9mr7772444pac.140.1432835042790;
-        Thu, 28 May 2015 10:44:02 -0700 (PDT)
+        bh=9Xwlb9bmWQ3cKcNbnIVDMm4Ve7elVO2Ntp1bfbrechY=;
+        b=PTwnXeZSozOwgYPMhS5KbeH6YygQYW+8S7tqEiVx/JPwfjCEn4U17upeGrJCW0ZWyW
+         QiFwB6GXtudlfZGOv4gAgOXDX2UuzPyeWp/gaMhwiip6I7FbFITF0xAWyt/RSyEvx4nQ
+         4SJ4fbGCXFnD1pGcn0BEOmgr1XcSrVKYknPFILmfTplmOmnD6spiovyMxakHC9LkVk3b
+         UQ7Qotq+yeH+hOxzcgxqVLJk0LoLLlgFkL4tUw7b+GR/Juj+k5FZB52Qsz8CY4EXvzsw
+         eqa3ZKBIsu67Jx5JZA2ABh2AjEMz31hiL5Bcx7bsu8+qoB8etSX7YSkGcd1qDDEoM38D
+         MbRw==
+X-Received: by 10.69.27.66 with SMTP id je2mr7525662pbd.156.1432835046486;
+        Thu, 28 May 2015 10:44:06 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id k13sm3003649pbq.79.2015.05.28.10.44.00
+        by mx.google.com with ESMTPSA id k13sm3003649pbq.79.2015.05.28.10.44.04
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 28 May 2015 10:44:02 -0700 (PDT)
+        Thu, 28 May 2015 10:44:05 -0700 (PDT)
 X-Mailer: git-send-email 2.4.1
 In-Reply-To: <5567527A.6090607@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270167>
 
-Rename 'refinfo' to 'ref_array_item' and intoduce 'ref_filter_cbdata'
-which will hold 'ref_filter' (Conditions to filter the refs on) and
-'ref_array' (The array of ref_array_items). Modify the code to use
-these new structures.
+Rename some of the functions and make them publically available.
+This is a preparatory step for moving code from 'for-each-ref'
+to 'ref-filter' to make meaningful, targeted services available to
+other commands via public APIs.
 
-Re-order the fields in 'ref_array_item' so that refname can be
-eventually converted to a FLEX_ARRAY.
-
-Introduce 'ref_filter_clear_data' to clear all allocated memory.
-
-This is a preparatory patch to eventually move code from 'for-each-ref'
-to 'ref-filter' and making it publically available.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>   Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Based-on-patch-by: Jeff King <peff@peff.net>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/for-each-ref.c | 103 +++++++++++++++++++++++++++++--------------------
- 1 file changed, 61 insertions(+), 42 deletions(-)
+ builtin/for-each-ref.c | 45 +++++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 919d45e..d9fd512 100644
+index d9fd512..f045def 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -31,12 +31,26 @@ struct ref_sort {
- 	unsigned reverse : 1;
- };
- 
--struct refinfo {
--	char *refname;
-+struct ref_array_item {
- 	unsigned char objectname[20];
- 	int flag;
- 	const char *symref;
- 	struct atom_value *value;
-+	char *refname;
-+};
-+
-+struct ref_array {
-+	int nr, alloc;
-+	struct ref_array_item **items;
-+};
-+
-+struct ref_filter {
-+	const char **name_patterns;
-+};
-+
-+struct ref_filter_cbdata {
-+	struct ref_array array;
-+	struct ref_filter filter;
- };
- 
- static struct {
-@@ -85,7 +99,7 @@ static struct {
-  * a "*" to denote deref_tag().
-  *
-  * We parse given format string and sort specifiers, and make a list
-- * of properties that we need to extract out of objects.  refinfo
-+ * of properties that we need to extract out of objects. ref_array_item
-  * structure will hold an array of values extracted that can be
-  * indexed with the "atom number", which is an index into this
-  * array.
-@@ -622,7 +636,7 @@ static inline char *copy_advance(char *dst, const char *src)
+@@ -112,7 +112,7 @@ static int need_color_reset_at_eol;
  /*
-  * Parse the object referred by ref, and grab needed value.
+  * Used to parse format string and sort specifiers
   */
--static void populate_value(struct refinfo *ref)
-+static void populate_value(struct ref_array_item *ref)
+-static int parse_atom(const char *atom, const char *ep)
++int parse_ref_filter_atom(const char *atom, const char *ep)
  {
- 	void *buf;
- 	struct object *obj;
-@@ -821,7 +835,7 @@ static void populate_value(struct refinfo *ref)
+ 	const char *sp;
+ 	int i, at;
+@@ -189,7 +189,7 @@ static const char *find_next(const char *cp)
+  * Make sure the format string is well formed, and parse out
+  * the used atoms.
+  */
+-static int verify_format(const char *format)
++int verify_ref_format(const char *format)
+ {
+ 	const char *cp, *sp;
+ 
+@@ -201,7 +201,7 @@ static int verify_format(const char *format)
+ 		if (!ep)
+ 			return error("malformed format string %s", sp);
+ 		/* sp points at "%(" and ep points at the closing ")" */
+-		at = parse_atom(sp + 2, ep);
++		at = parse_ref_filter_atom(sp + 2, ep);
+ 		cp = ep + 1;
+ 
+ 		if (skip_prefix(used_atom[at], "color:", &color))
+@@ -408,7 +408,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	/*
+ 	 * We got here because atomname ends in "date" or "date<something>";
+ 	 * it's not possible that <something> is not ":<format>" because
+-	 * parse_atom() wouldn't have allowed it, so we can assume that no
++	 * parse_ref_filter_atom() wouldn't have allowed it, so we can assume that no
+ 	 * ":" means no format is specified, and use the default.
+ 	 */
+ 	formatp = strchr(atomname, ':');
+@@ -835,7 +835,7 @@ static void populate_value(struct ref_array_item *ref)
   * Given a ref, return the value for the atom.  This lazily gets value
   * out of the object by calling populate value.
   */
--static void get_value(struct refinfo *ref, int atom, struct atom_value **v)
-+static void get_value(struct ref_array_item *ref, int atom, struct atom_value **v)
+-static void get_value(struct ref_array_item *ref, int atom, struct atom_value **v)
++static void get_ref_atom_value(struct ref_array_item *ref, int atom, struct atom_value **v)
  {
  	if (!ref->value) {
  		populate_value(ref);
-@@ -830,12 +844,6 @@ static void get_value(struct refinfo *ref, int atom, struct atom_value **v)
- 	*v = &ref->value[atom];
+@@ -882,10 +882,10 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
  }
  
--struct grab_ref_cbdata {
--	struct refinfo **grab_array;
--	const char **grab_pattern;
--	int grab_cnt;
--};
--
  /*
-  * Given a refname, return 1 if the refname matches with one of the patterns
-  * while the pattern is a pathname like 'refs/tags' or 'refs/heads/master'
-@@ -860,12 +868,12 @@ static int match_name_as_path(const char **pattern, const char *refname)
- 	return 0;
- }
- 
--/* Allocate space for a new refinfo and copy the objectname and flag to it */
--static struct refinfo *new_refinfo(const char *refname,
--				   const unsigned char *objectname,
--				   int flag)
-+/* Allocate space for a new ref_array_item and copy the objectname and flag to it */
-+static struct ref_array_item *new_ref_array_item(const char *refname,
-+						 const unsigned char *objectname,
-+						 int flag)
- {
--	struct refinfo *ref = xcalloc(1, sizeof(struct refinfo));
-+	struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item));
- 	ref->refname = xstrdup(refname);
- 	hashcpy(ref->objectname, objectname);
- 	ref->flag = flag;
-@@ -879,26 +887,39 @@ static struct refinfo *new_refinfo(const char *refname,
+- * A call-back given to for_each_ref().  Filter refs and keep them for
++ * A call-back given to for_each_ref(). Filter refs and keep them for
+  * later object processing.
   */
- static int grab_single_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+-static int grab_single_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++int ref_filter_handler(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
  {
--	struct grab_ref_cbdata *cb = cb_data;
--	struct refinfo *ref;
-+	struct ref_filter_cbdata *ref_cbdata = cb_data;
-+	struct ref_filter *filter = &ref_cbdata->filter;
-+	struct ref_array_item *ref;
- 
- 	if (flag & REF_BAD_NAME) {
--		  warning("ignoring ref with broken name %s", refname);
--		  return 0;
-+		warning("ignoring ref with broken name %s", refname);
-+		return 0;
- 	}
- 
--	if (*cb->grab_pattern && !match_name_as_path(cb->grab_pattern, refname))
-+	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
- 		return 0;
- 
--	ref = new_refinfo(refname, sha1, flag);
-+	ref = new_ref_array_item(refname, sha1, flag);
- 
--	REALLOC_ARRAY(cb->grab_array, cb->grab_cnt + 1);
--	cb->grab_array[cb->grab_cnt++] = ref;
-+	REALLOC_ARRAY(ref_cbdata->array.items, ref_cbdata->array.nr + 1);
-+	ref_cbdata->array.items[ref_cbdata->array.nr++] = ref;
- 
- 	return 0;
- }
- 
--static int cmp_ref_sort(struct ref_sort *s, struct refinfo *a, struct refinfo *b)
-+/* Free all memory allocated for ref_filter_cbdata */
-+void ref_filter_clear_data(struct ref_filter_cbdata *ref_cbdata)
-+{
-+	int i;
-+
-+	for (i = 0; i < ref_cbdata->array.nr; i++)
-+		free(ref_cbdata->array.items[i]);
-+	free(ref_cbdata->array.items);
-+	ref_cbdata->array.items = NULL;
-+	ref_cbdata->array.nr = ref_cbdata->array.alloc = 0;
-+}
-+
-+static int cmp_ref_sort(struct ref_sort *s, struct ref_array_item *a, struct ref_array_item *b)
- {
- 	struct atom_value *va, *vb;
+ 	struct ref_filter_cbdata *ref_cbdata = cb_data;
+ 	struct ref_filter *filter = &ref_cbdata->filter;
+@@ -925,8 +925,8 @@ static int cmp_ref_sort(struct ref_sort *s, struct ref_array_item *a, struct ref
  	int cmp;
-@@ -925,8 +946,8 @@ static int cmp_ref_sort(struct ref_sort *s, struct refinfo *a, struct refinfo *b
- static struct ref_sort *ref_sort;
- static int compare_refs(const void *a_, const void *b_)
- {
--	struct refinfo *a = *((struct refinfo **)a_);
--	struct refinfo *b = *((struct refinfo **)b_);
-+	struct ref_array_item *a = *((struct ref_array_item **)a_);
-+	struct ref_array_item *b = *((struct ref_array_item **)b_);
- 	struct ref_sort *s;
+ 	cmp_type cmp_type = used_atom_type[s->atom];
  
- 	for (s = ref_sort; s; s = s->next) {
-@@ -937,10 +958,10 @@ static int compare_refs(const void *a_, const void *b_)
+-	get_value(a, s->atom, &va);
+-	get_value(b, s->atom, &vb);
++	get_ref_atom_value(a, s->atom, &va);
++	get_ref_atom_value(b, s->atom, &vb);
+ 	switch (cmp_type) {
+ 	case FIELD_STR:
+ 		cmp = strcmp(va->s, vb->s);
+@@ -958,7 +958,7 @@ static int compare_refs(const void *a_, const void *b_)
  	return 0;
  }
  
--static void sort_refs(struct ref_sort *sort, struct refinfo **refs, int num_refs)
-+static void sort_refs(struct ref_sort *sort, struct ref_array *array)
+-static void sort_refs(struct ref_sort *sort, struct ref_array *array)
++void sort_ref_array(struct ref_sort *sort, struct ref_array *array)
  {
  	ref_sort = sort;
--	qsort(refs, num_refs, sizeof(struct refinfo *), compare_refs);
-+	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
- }
- 
- static void print_value(struct atom_value *v, int quote_style)
-@@ -1007,7 +1028,7 @@ static void emit(const char *cp, const char *ep)
+ 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
+@@ -1028,7 +1028,7 @@ static void emit(const char *cp, const char *ep)
  	}
  }
  
--static void show_ref(struct refinfo *info, const char *format, int quote_style)
-+static void show_ref(struct ref_array_item *info, const char *format, int quote_style)
+-static void show_ref(struct ref_array_item *info, const char *format, int quote_style)
++void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
  {
  	const char *cp, *sp, *ep;
  
-@@ -1076,12 +1097,12 @@ static char const * const for_each_ref_usage[] = {
+@@ -1038,7 +1038,7 @@ static void show_ref(struct ref_array_item *info, const char *format, int quote_
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+ 			emit(cp, sp);
+-		get_value(info, parse_atom(sp + 2, ep), &atomv);
++		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+ 		print_value(atomv, quote_style);
+ 	}
+ 	if (*cp) {
+@@ -1057,18 +1057,19 @@ static void show_ref(struct ref_array_item *info, const char *format, int quote_
+ 	putchar('\n');
+ }
  
- int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+-static struct ref_sort *default_sort(void)
++/*  If no sorting option is given, use refname to sort as default */
++struct ref_sort *ref_default_sort(void)
  {
--	int i, num_refs;
-+	int i;
- 	const char *format = "%(objectname) %(objecttype)\t%(refname)";
- 	struct ref_sort *sort = NULL, **sort_tail = &sort;
- 	int maxcount = 0, quote_style = 0;
--	struct refinfo **refs;
--	struct grab_ref_cbdata cbdata;
-+	struct ref_filter_cbdata ref_cbdata;
-+	memset(&ref_cbdata, 0, sizeof(ref_cbdata));
+ 	static const char cstr_name[] = "refname";
  
- 	struct option opts[] = {
- 		OPT_BIT('s', "shell", &quote_style,
-@@ -1119,17 +1140,15 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	struct ref_sort *sort = xcalloc(1, sizeof(*sort));
+ 
+ 	sort->next = NULL;
+-	sort->atom = parse_atom(cstr_name, cstr_name + strlen(cstr_name));
++	sort->atom = parse_ref_filter_atom(cstr_name, cstr_name + strlen(cstr_name));
+ 	return sort;
+ }
+ 
+-static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
++int opt_parse_ref_sort(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct ref_sort **sort_tail = opt->value;
+ 	struct ref_sort *s;
+@@ -1086,7 +1087,7 @@ static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
+ 		arg++;
+ 	}
+ 	len = strlen(arg);
+-	s->atom = parse_atom(arg, arg+len);
++	s->atom = parse_ref_filter_atom(arg, arg+len);
+ 	return 0;
+ }
+ 
+@@ -1118,7 +1119,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
+ 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
+ 		OPT_CALLBACK(0 , "sort", sort_tail, N_("key"),
+-			    N_("field name to sort on"), &opt_parse_sort),
++			    N_("field name to sort on"), &opt_parse_ref_sort),
+ 		OPT_END(),
+ 	};
+ 
+@@ -1131,24 +1132,24 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		error("more than one quoting style?");
+ 		usage_with_options(for_each_ref_usage, opts);
+ 	}
+-	if (verify_format(format))
++	if (verify_ref_format(format))
+ 		usage_with_options(for_each_ref_usage, opts);
+ 
+ 	if (!sort)
+-		sort = default_sort();
++		sort = ref_default_sort();
+ 
  	/* for warn_ambiguous_refs */
  	git_config(git_default_config, NULL);
  
--	memset(&cbdata, 0, sizeof(cbdata));
--	cbdata.grab_pattern = argv;
--	for_each_rawref(grab_single_ref, &cbdata);
--	refs = cbdata.grab_array;
--	num_refs = cbdata.grab_cnt;
-+	ref_cbdata.filter.name_patterns = argv;
-+	for_each_rawref(grab_single_ref, &ref_cbdata);
+ 	ref_cbdata.filter.name_patterns = argv;
+-	for_each_rawref(grab_single_ref, &ref_cbdata);
++	for_each_rawref(ref_filter_handler, &ref_cbdata);
  
--	sort_refs(sort, refs, num_refs);
-+	sort_refs(sort, &ref_cbdata.array);
+-	sort_refs(sort, &ref_cbdata.array);
++	sort_ref_array(sort, &ref_cbdata.array);
  
--	if (!maxcount || num_refs < maxcount)
--		maxcount = num_refs;
-+	if (!maxcount || ref_cbdata.array.nr < maxcount)
-+		maxcount = ref_cbdata.array.nr;
+ 	if (!maxcount || ref_cbdata.array.nr < maxcount)
+ 		maxcount = ref_cbdata.array.nr;
  	for (i = 0; i < maxcount; i++)
--		show_ref(refs[i], format, quote_style);
-+		show_ref(ref_cbdata.array.items[i], format, quote_style);
-+	ref_filter_clear_data(&ref_cbdata);
+-		show_ref(ref_cbdata.array.items[i], format, quote_style);
++		show_ref_array_item(ref_cbdata.array.items[i], format, quote_style);
+ 	ref_filter_clear_data(&ref_cbdata);
  	return 0;
  }
 -- 
