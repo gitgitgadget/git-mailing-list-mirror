@@ -1,7 +1,7 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH/RFC] create a skeleton for the command git rebase --status
-Date: Thu, 28 May 2015 14:36:30 +0200
-Message-ID: <vpq382gri9d.fsf@anie.imag.fr>
+Date: Thu, 28 May 2015 15:06:34 +0200
+Message-ID: <vpqlhg8onqd.fsf@anie.imag.fr>
 References: <1432814891-4717-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
@@ -14,90 +14,56 @@ Cc: git@vger.kernel.org,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
 To: Guillaume =?iso-8859-1?Q?Pag=E8s?= 
 	<guillaume.pages@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 28 14:36:42 2015
+X-From: git-owner@vger.kernel.org Thu May 28 15:06:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxx3B-0004FG-2Z
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 14:36:41 +0200
+	id 1YxxWH-0006bV-0g
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 15:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753693AbbE1Mgg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 08:36:36 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:55428 "EHLO rominette.imag.fr"
+	id S1753730AbbE1NGk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 09:06:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56406 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753357AbbE1Mgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 08:36:36 -0400
+	id S1753675AbbE1NGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 09:06:39 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4SCaSLI023573
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4SD6Wlm028929
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 28 May 2015 14:36:28 +0200
+	Thu, 28 May 2015 15:06:32 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4SCaUhg009094;
-	Thu, 28 May 2015 14:36:30 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4SD6Y8w010029;
+	Thu, 28 May 2015 15:06:34 +0200
 In-Reply-To: <1432814891-4717-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
 	("Guillaume \=\?iso-8859-1\?Q\?Pag\=E8s\=22's\?\= message of "Thu, 28 May 2015
  14:08:11 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 28 May 2015 14:36:29 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 28 May 2015 15:06:33 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4SCaSLI023573
+X-MailScanner-ID: t4SD6Wlm028929
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433421391.01668@2ld4uaxeG8gLywCAnoLJHg
+MailScanner-NULL-Check: 1433423194.20156@n37lpTUfv6oreH/9i76d+g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270146>
 
 Guillaume Pag=E8s <guillaume.pages@ensimag.grenoble-inp.fr> writes:
 
 > It is an almost empty code I send to validate the global architecture
-> of this command.  I choose to write
+> of this command.
 
-Avoid personal wording (I choose to write ... because -> The code is
-written ... because). What matters in the commit message is the reason
-for the choice, not who made it.
-
-> +BUILTIN_OBJS +=3D builtin/rebase--status--helper.o
-
-No builtin/rebase--status--helper.c in your patch, is it intended?
-
-> +status)
-> +	git rebase--status--helper
-> +	die
-
-"die" is used to exit with an error code ($? !=3D 0). You just mean exi=
-t
-$? here, to exit with the same code as the helper.
-
-And actually, you don't need to keep your script alive while the helper
-is ran, so you can write
-
-exec git rebase--status--helper
-
-> --- /dev/null
-> +++ b/rebase--status.c
-> @@ -0,0 +1,6 @@
-> +#include "rebase--status.h"
-> +
-> +int rebase_status(){
-> +	printf("Rebase in progress\n");
-
-=2E.. or not.
-
-Avoid leaving incorrect things like this in intermediate steps, even if
-you're going to fix them eventually. It's too easy to forget the actual
-fix and leave a "Rebase in progress" message even when there's no rebas=
-e
-in progress. And reviewers may get confused.
-
-I'd have written stg like
-
-	printf("git rebase --status is not yet implemented");
+One more note: I know what "git rebase --status" is about because I'm
+the one who suggested it and I read your previous message, but not
+everybody is me, and most people would appreciate a brief explanation o=
+f
+what "git rebase --status" is before knowing how you're starting the
+work.
 
 --=20
 Matthieu Moy
