@@ -1,7 +1,7 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 1/2] config: add options to list only variable names
-Date: Thu, 28 May 2015 14:29:34 +0200
-Message-ID: <1432816175-18988-2-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH v2 2/2] completion: use new 'git config' options to reliably list variable names
+Date: Thu, 28 May 2015 14:29:35 +0200
+Message-ID: <1432816175-18988-3-git-send-email-szeder@ira.uka.de>
 References: <1432757240-4445-1-git-send-email-szeder@ira.uka.de>
  <1432816175-18988-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
@@ -10,276 +10,83 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 28 14:30:18 2015
+X-From: git-owner@vger.kernel.org Thu May 28 14:30:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yxwwv-0008TZ-H7
+	id 1Yxwww-0008TZ-B3
 	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 14:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756AbbE1M36 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 08:29:58 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:41364 "EHLO
+	id S932120AbbE1MaB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 08:30:01 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:41370 "EHLO
 	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752201AbbE1M35 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 08:29:57 -0400
+	by vger.kernel.org with ESMTP id S1752212AbbE1M36 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 08:29:58 -0400
 Received: from x590c3072.dyn.telefonica.de ([89.12.48.114] helo=localhost.localdomain)
 	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1YxwwY-0007cw-Se; Thu, 28 May 2015 14:29:53 +0200
+	iface 141.3.10.81 id 1Yxwwb-0007cw-75; Thu, 28 May 2015 14:29:54 +0200
 X-Mailer: git-send-email 2.4.2.349.g6883b65
 In-Reply-To: <1432816175-18988-1-git-send-email-szeder@ira.uka.de>
 X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1432816193.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1432816194.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270142>
 
-Recenty I created a multi-line branch description with '.' and '=3D'
-characters on one of the lines, and noticed that fragments of that line
-show up when completing set variable names for 'git config', e.g.:
-
-  $ git config --get branch.b.description
-  Branch description to fool the completion script with a
-  second line containing dot . and equals =3D characters.
-  $ git config --unset <TAB>
-  ...
-  second line containing dot . and equals
-  ...
-
-The completion script runs 'git config --list' and processes its output=
- to
-strip the values and keep only the variable names.  It does so by looki=
-ng
-for lines containing '.' and '=3D' and outputting everything before the=
- '=3D',
-which was fooled by my multi-line branch description.
-
-A similar issue exists with aliases and pretty format aliases with
-multi-line values, but in that case 'git config --get-regexp' is run an=
-d
-subsequent lines don't have to contain either '.' or '=3D' to fool the
-completion script.
-
-Though 'git config' can produce null-terminated output for newline-safe
-parsing, that's of no use in this case, becase we can't cope with nulls=
- in
-the shell.
-
-Help the completion script by introducing the '--list-names' and
-'--get-name-regexp' options, the "names-only" equivalents of '--list' a=
-nd
-'--get-regexp', so it doesn't have to separate variable names from thei=
-r
-values anymore.
+List all set config variable names with 'git config --list-names' inste=
+ad
+of '--list' and post processing.  Similarly, use 'git config
+--get-name-regexp' instead of '--get-regexp' to get config variables in=
+ a
+given section.
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- Documentation/git-config.txt           | 12 ++++++++++--
- builtin/config.c                       | 17 ++++++++++++++---
- contrib/completion/git-completion.bash |  4 ++--
- t/t1300-repo-config.sh                 | 22 ++++++++++++++++++++++
- 4 files changed, 48 insertions(+), 7 deletions(-)
+ contrib/completion/git-completion.bash | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.tx=
-t
-index 02ec096faa..b69c8592ac 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -16,11 +16,12 @@ SYNOPSIS
- 'git config' [<file-option>] [type] [-z|--null] --get-all name [value_=
-regex]
- 'git config' [<file-option>] [type] [-z|--null] --get-regexp name_rege=
-x [value_regex]
- 'git config' [<file-option>] [type] [-z|--null] --get-urlmatch name UR=
-L
-+'git config' [<file-option>] [-z|--null] --get-name-regexp name_regex
- 'git config' [<file-option>] --unset name [value_regex]
- 'git config' [<file-option>] --unset-all name [value_regex]
- 'git config' [<file-option>] --rename-section old_name new_name
- 'git config' [<file-option>] --remove-section name
--'git config' [<file-option>] [-z|--null] -l | --list
-+'git config' [<file-option>] [-z|--null] -l | --list | --list-names
- 'git config' [<file-option>] --get-color name [default]
- 'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
- 'git config' [<file-option>] -e | --edit
-@@ -96,6 +97,10 @@ OPTIONS
- 	in which section and variable names are lowercased, but subsection
- 	names are not.
-=20
-+--get-name-regexp::
-+	Like --get-regexp, but shows only matching variable names, not its
-+	values.
-+
- --get-urlmatch name URL::
- 	When given a two-part name section.key, the value for
- 	section.<url>.key whose <url> part matches the best to the
-@@ -159,7 +164,10 @@ See also <<FILES>>.
-=20
- -l::
- --list::
--	List all variables set in config file.
-+	List all variables set in config file, along with their values.
-+
-+--list-names::
-+	List the names of all variables set in config file.
-=20
- --bool::
- 	'git config' will ensure that the output is "true" or "false"
-diff --git a/builtin/config.c b/builtin/config.c
-index 7188405f7e..c23f329b00 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -13,6 +13,7 @@ static char *key;
- static regex_t *key_regexp;
- static regex_t *regexp;
- static int show_keys;
-+static int omit_values;
- static int use_key_regexp;
- static int do_all;
- static int do_not_match;
-@@ -43,6 +44,8 @@ static int respect_includes =3D -1;
- #define ACTION_GET_COLOR (1<<13)
- #define ACTION_GET_COLORBOOL (1<<14)
- #define ACTION_GET_URLMATCH (1<<15)
-+#define ACTION_LIST_NAMES (1<<16)
-+#define ACTION_GET_NAME_REGEXP (1<<17)
-=20
- #define TYPE_BOOL (1<<0)
- #define TYPE_INT (1<<1)
-@@ -60,6 +63,7 @@ static struct option builtin_config_options[] =3D {
- 	OPT_BIT(0, "get", &actions, N_("get value: name [value-regex]"), ACTI=
-ON_GET),
- 	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-regex]=
-"), ACTION_GET_ALL),
- 	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-re=
-gex [value-regex]"), ACTION_GET_REGEXP),
-+	OPT_BIT(0, "get-name-regexp", &actions, N_("get names for regexp: nam=
-e-regex"), ACTION_GET_NAME_REGEXP),
- 	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the U=
-RL: section[.var] URL"), ACTION_GET_URLMATCH),
- 	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variable=
-s: name value [value_regex]"), ACTION_REPLACE_ALL),
- 	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACT=
-ION_ADD),
-@@ -68,6 +72,7 @@ static struct option builtin_config_options[] =3D {
- 	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name n=
-ew-name"), ACTION_RENAME_SECTION),
- 	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), =
-ACTION_REMOVE_SECTION),
- 	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
-+	OPT_BIT(0, "list-names", &actions, N_("list all variable names"), ACT=
-ION_LIST_NAMES),
- 	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
- 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot=
- [default]"), ACTION_GET_COLOR),
- 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slo=
-t [stdout-is-tty]"), ACTION_GET_COLORBOOL),
-@@ -91,7 +96,7 @@ static void check_argc(int argc, int min, int max) {
-=20
- static int show_all_config(const char *key_, const char *value_, void =
-*cb)
- {
--	if (value_)
-+	if (!omit_values && value_)
- 		printf("%s%c%s%c", key_, delim, value_, term);
- 	else
- 		printf("%s%c", key_, term);
-@@ -117,6 +122,10 @@ static int format_config(struct strbuf *buf, const=
- char *key_, const char *value
- 		strbuf_addstr(buf, key_);
- 		must_print_delim =3D 1;
- 	}
-+	if (omit_values) {
-+		strbuf_addch(buf, term);
-+		return 0;
-+	}
- 	if (types =3D=3D TYPE_INT)
- 		sprintf(value, "%"PRId64,
- 			git_config_int64(key_, value_ ? value_ : ""));
-@@ -550,7 +559,8 @@ int cmd_config(int argc, const char **argv, const c=
-har *prefix)
- 			usage_with_options(builtin_config_usage, builtin_config_options);
- 		}
-=20
--	if (actions =3D=3D ACTION_LIST) {
-+	if (actions =3D=3D ACTION_LIST || actions =3D=3D ACTION_LIST_NAMES) {
-+		omit_values =3D (actions =3D=3D ACTION_LIST_NAMES);
- 		check_argc(argc, 0, 0);
- 		if (git_config_with_options(show_all_config, NULL,
- 					    &given_config_source,
-@@ -631,8 +641,9 @@ int cmd_config(int argc, const char **argv, const c=
-har *prefix)
- 		check_argc(argc, 1, 2);
- 		return get_value(argv[0], argv[1]);
- 	}
--	else if (actions =3D=3D ACTION_GET_REGEXP) {
-+	else if (actions =3D=3D ACTION_GET_REGEXP || actions =3D=3D ACTION_GE=
-T_NAME_REGEXP) {
- 		show_keys =3D 1;
-+		omit_values =3D (actions =3D=3D ACTION_GET_NAME_REGEXP);
- 		use_key_regexp =3D 1;
- 		do_all =3D 1;
- 		check_argc(argc, 1, 2);
 diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
 n/git-completion.bash
-index bfc74e9d57..6abbd564b6 100644
+index 6abbd564b6..121aa31342 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1883,8 +1883,8 @@ _git_config ()
- 	--*)
- 		__gitcomp "
- 			--system --global --local --file=3D
--			--list --replace-all
--			--get --get-all --get-regexp
-+			--list --list-names --replace-all
-+			--get --get-all --get-regexp --get-name-regexp
- 			--add --unset --unset-all
- 			--remove-section --rename-section
- 			"
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 66dd28644f..525b093c59 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -353,6 +353,18 @@ test_expect_success '--list without repo produces =
-empty output' '
- '
+@@ -744,9 +744,8 @@ __git_compute_porcelain_commands ()
+ __git_get_config_variables ()
+ {
+ 	local section=3D"$1" i IFS=3D$'\n'
+-	for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "^$secti=
+on\..*" 2>/dev/null); do
+-		i=3D"${i#$section.}"
+-		echo "${i/ */}"
++	for i in $(git --git-dir=3D"$(__gitdir)" config --get-name-regexp "^$=
+section\..*" 2>/dev/null); do
++		echo "${i#$section.}"
+ 	done
+ }
 =20
- cat > expect << EOF
-+beta.noindent
-+nextsection.nonewline
-+123456.a123
-+version.1.2.3eX.alpha
-+EOF
-+
-+test_expect_success 'working --list-names' '
-+	git config --list-names >output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect << EOF
- beta.noindent sillyValue
- nextsection.nonewline wow2 for me
- EOF
-@@ -363,6 +375,16 @@ test_expect_success '--get-regexp' '
- '
+@@ -1774,15 +1773,7 @@ __git_config_get_set_variables ()
+ 		c=3D$((--c))
+ 	done
 =20
- cat > expect << EOF
-+beta.noindent
-+nextsection.nonewline
-+EOF
-+
-+test_expect_success '--get-name-regexp' '
-+	git config --get-name-regexp in >output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect << EOF
- wow2 for me
- wow4 for you
- EOF
+-	git --git-dir=3D"$(__gitdir)" config $config_file --list 2>/dev/null =
+|
+-	while read -r line
+-	do
+-		case "$line" in
+-		*.*=3D*)
+-			echo "${line/=3D*/}"
+-			;;
+-		esac
+-	done
++	git --git-dir=3D"$(__gitdir)" config $config_file --list-names 2>/dev=
+/null
+ }
+=20
+ _git_config ()
 --=20
 2.4.2.349.g6883b65
