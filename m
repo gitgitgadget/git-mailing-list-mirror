@@ -1,165 +1,136 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] glossary: add "remote", "submodule", "superproject"
-Date: Thu, 28 May 2015 10:52:17 -0700
-Message-ID: <CAGZ79kb7M9L-xkMEG1GhAhYVWPR3env2fLiWt4fpbB=e6+jUhA@mail.gmail.com>
-References: <CAGZ79kauSsZK3_X+zTwL8TKuZiHNMGvMZfoCemW9-K7RWgrgCA@mail.gmail.com>
-	<1432777801-6073-1-git-send-email-sbeller@google.com>
-	<xmqqk2vsirbe.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] git-am: add am.threeWay config variable
+Date: Thu, 28 May 2015 10:57:31 -0700
+Message-ID: <xmqqy4k8h9f8.fsf@gitster.dls.corp.google.com>
+References: <1432675975-11020-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1432675975-11020-3-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<CACRoPnSnwA5GcYZjHHTepz4WzXYuJ+9nJqGsL92r_vnsNrN_-w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 28 19:52:27 2015
+Content-Type: text/plain
+Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 28 19:57:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy1yi-0002wJ-1K
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:52:24 +0200
+	id 1Yy23p-0006vF-AL
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031AbbE1RwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 13:52:20 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:36751 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753518AbbE1RwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 13:52:18 -0400
-Received: by qkx62 with SMTP id 62so30727464qkx.3
-        for <git@vger.kernel.org>; Thu, 28 May 2015 10:52:17 -0700 (PDT)
+	id S1754448AbbE1R5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 13:57:38 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:36748 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754422AbbE1R5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 13:57:33 -0400
+Received: by igbpi8 with SMTP id pi8so118555080igb.1
+        for <git@vger.kernel.org>; Thu, 28 May 2015 10:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wUile2dGDLDqnwojyALVXQawyP5eHPgVMIcSJ7tI3/Q=;
-        b=kU9igYOFarGUzbE32tbRnHsbHylS/gCJgHZJABftb2YSykAts0TlchyFe8AIzfQ2AP
-         slo938e4ftNgyawwQMqCYI1g6Z63gw6ygPa7nDYJt7Yso4BknPwyOdPtvmBkuTU87KIh
-         /iho5LXWPJo3dL7Dgk5xPYe2T2/gK+IagYgOUFP79CMi/tbT0seGsGSW+UNqTgFzimle
-         MLHz0BUI8IGynpIN+2gUYPgi/9PdsPvPOMCjKC1k5ykdhDRnGueoMRR7m7k15zK1Ik4w
-         A3St35cChl5lBMPSCphaUif/88My74DE6nSLRa8zcjuHTiLSKlv4Dz20SlOG62lU9Jfo
-         Wi9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=wUile2dGDLDqnwojyALVXQawyP5eHPgVMIcSJ7tI3/Q=;
-        b=gas8IPff4ZP/LCEyGngLjtx5nPDI7L+Jr+2Cveh2P/+bu8mO8ClqMh3J08QIe9F5DC
-         cAlgybjkeO3NFPP0yRxJF1d8cZ1E98hRbaim79mIo4ee5ZaKKy18ZuXnALJLQ3pE3M5w
-         mozUhDxRHHOKxt0ddyYYWVKZmk1dZ1Yezb3idM0jYcQa7TVQtV3qUgL44WcaoXxzuPRx
-         jhGDC66gjjUnJpig9o+ePmXkqy4dpxSQCc+RNbhotpfUime/XoDrm4ydP7J8WQFhfqCN
-         gsaDCwDtU+GqiEVop/MpnxappOhuWNXzuoNAIRofSHwzZ1mkgfKjRmli91Rybb3pKxXb
-         FFMw==
-X-Gm-Message-State: ALoCoQnZZ0gAfbTVq0+pHamkYAFO7G9c8/prgAXahcaR4MpFE4AaNRLo0YysNs17wVjPLziOeCLa
-X-Received: by 10.140.96.202 with SMTP id k68mr4681175qge.102.1432835537453;
- Thu, 28 May 2015 10:52:17 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Thu, 28 May 2015 10:52:17 -0700 (PDT)
-In-Reply-To: <xmqqk2vsirbe.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=5DYMq5khvWedapkx6fCMv//k7Wpjb2B1TcPenSQvR1c=;
+        b=LbOkkxx/g7QRqBAcpsd+rOVK4rWJqQ6rU+v2TUZuFlulaE0wmwC8RHWE9Ayi5Zw9wS
+         iV7fgJ+fwIY6MFMeAKryvJ9cTQPArtaQFx2reUhRnww6yWQEQSdoS/d7pzD+ljTZWoro
+         t6cdwcteR4twBHOu7gz356+m9fb5danyFm2Bypb3FBBCwCSBZnX1QKUHlWNNGDVV8ne9
+         tU9bpeCi32LGg2VvRaxilclXNq+FosZM63S7DoAFAYv4QvFpvFAa2hmaio34OIaL93dN
+         UESXStt97+TUh+07Xr8R2aRRKix3Bl7A9vqv/coD9oxtzggr2uh3aQhUMnB/2U1+SRer
+         7ZFA==
+X-Received: by 10.50.61.200 with SMTP id s8mr41005921igr.7.1432835853065;
+        Thu, 28 May 2015 10:57:33 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id w4sm2595779igl.22.2015.05.28.10.57.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 28 May 2015 10:57:32 -0700 (PDT)
+In-Reply-To: <CACRoPnSnwA5GcYZjHHTepz4WzXYuJ+9nJqGsL92r_vnsNrN_-w@mail.gmail.com>
+	(Paul Tan's message of "Thu, 28 May 2015 21:47:47 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270172>
 
-On Thu, May 28, 2015 at 9:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Noticed-by: Philip Oakley <philipoakley@iee.org>
->> Helped-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  Documentation/glossary-content.txt | 17 +++++++++++++++++
->>  1 file changed, 17 insertions(+)
->
-> The updates in this version relative to the previous one looks very
-> good, at least to me.  A bit more comments.
->
->> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
->> index bf383c2..23ab692 100644
->> --- a/Documentation/glossary-content.txt
->> +++ b/Documentation/glossary-content.txt
->> @@ -469,6 +469,11 @@ The most notable example is `HEAD`.
->>       <<def_push,push>> to describe the mapping between remote
->>       <<def_ref,ref>> and local ref.
+Paul Tan <pyokagan@gmail.com> writes:
+
+>> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+>> index 0d8ba48..3190c05 100644
+>> --- a/Documentation/git-am.txt
+>> +++ b/Documentation/git-am.txt
+>> @@ -89,11 +89,13 @@ default.   You can use `--no-utf8` to override this.
+>>         linkgit:git-mailinfo[1]).
 >>
->> +[[def_remote]]remote repository::
->> +     A <<def_repository,repository>> which is used to track the same
->> +     project but resides somewhere else. To communicate with remotes,
->> +     see <<def_fetch,fetch>> or <<def_push,push>>.
->> +
+>>  -3::
+>> ---3way::
+>> +--[no-]3way::
 >
-> The last sentence sounds a tiny bit strange, in that I have to do a
-> bit more than just see the explanation of these commands in order to
-> communicate with remotes.
+> There's no need to mention --no-3way,...
 
-Maybe s/see/use/ here?
+Actually, we prefer to do it this way:
 
->
-> But it probably is just me.
->
->> @@ -515,6 +520,18 @@ The most notable example is `HEAD`.
->>       is created by giving the `--depth` option to linkgit:git-clone[1], and
->>       its history can be later deepened with linkgit:git-fetch[1].
->>
->> +[[def_submodule]]submodule::
->> +     A <<def_repository,repository>> that holds the history of a
->> +     separate project inside another repository (the latter of
->> +     which is called <<def_superproject, superproject>>). The
->> +     containing superproject knows about the names of (but does
->> +     not hold copies of) commit objects of the contained submodules.
->
-> I agree with one point you mentioned in one of your messages, which
-> is that a submodule is not aware that it is used as part of a larger
-> project.  That makes me wonder if the last sentence sits better in
-> the description of the superproject, rather than the description of
-> the submodule.
-
-Moved in the upcoming reroll.
-
->
->> +[[def_superproject]]superproject::
->> +     A <<def_repository,repository>> that references other repositories
->> +     inside itself as <<def_submodule,submodules>>.
->
-> Perhaps "repositories of other projects"?  Does "inside" make it
-> clear enough that we are talking about the relationship between
-> working trees of the superproject and submodules?
+	-3::
+	--3way::
+	--no-3way::
+		Describe what --3way does here.
 
 
-    A <<def_repository,repository>> that references repositories
-    of other projects in its working tree as <<def_submodule,submodules>>.
+$ git grep -e '^--no-' -e '^--\[no-\]' Documentation/
 
->
->> +     The superproject
->> +     tracks only the remote and the name of the submodule.
->
-> I am not sure what this sentence means [*1*], and I do not know if
-> (a corrected version of) such a description is necessary here.
 
-When looking at submodules and subtrees I feel they behave similar
-to symbolic and hard links. If you delete the remote of the submodule
-you need to take care when dealing with the superproject, similar
-to repairing a dangling symlink. ("Is it gone or just moved? Where
-do I point it now?")
 
-My intend here was to show that submodules are fragile like symlinks are.
 
-Usually a repository (or a file in that analogy) is quite self contained,
-if you have a copy of the repository, you can do lots of operation on it
-like reading, changing(writing), moving. If there is a broken (git/sym-)link
-reading in full becomes a hassle, as parts are missing.
+>>         When the patch does not apply cleanly, fall back on
+>>         3-way merge if the patch records the identity of blobs
+>>         it is supposed to apply to and we have those blobs
+>> -       available locally.
+>> +       available locally.  `am.threeWay` configuration variable
+>> +       can be used to specify the default behaviour.  `--no-3way`
+>> +       is useful to override `am.threeWay`.
+>
+> Usually configuration settings are mentioned in a separate section in
+> the documentation "CONFIGURATION" (or not mentioned at all).
 
-I am not sure if the discussion belongs into the glossary though.
-But where would you start looking for information if you want to decided
-whether to use submodules or subtrees?
+I can go either way, actually.  But if the description mentions
+am.threeWay as a way to tweak the default, it also should spell out
+the default when the configuration is not there at all.
 
+> Also, there's no need to mention that --no-3way can be used to
+> mention the configuration, as its usual (and expected) that the
+> configuration value sets the default behavior, and the
+> command-line switch can override i.
+
+Yes.  Also --3way is useful to override `am.threeWay` set to `false` ;-)
+
+> To end off, some off-tangent issues that are not related to the patch
+> series in question, but since I'm looking at git-am.sh....
 >
-> Thanks.
+> I've noticed that in the block above that initializes all the variables,
 >
-> [Footnote]
+>     sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
+>     messageid= resolvemsg= resume= scissors= no_inbody_headers=
+>     git_apply_opt=
+>     committer_date_is_author_date=
+>     ignore_date=
+>     allow_rerere_autoupdate=
+>     gpg_sign_opt=
 >
-> *1* The superproject records a bit more than "remote and name" in
-> .gitmodules, and of course it records the history of the paths that
-> the submodule is bound to over time, with specific commits from the
-> submodule in its history.
->
+> threeway is not initialized at all, and thus I think running
+> "threeway=t git am blah" will affect the behavior of git-am.
+
+Correct.  I overlooked this when I originally did threeway.  Perhaps
+a preparatory bugfix patch is warranted before this one.
+
+> Also, I noticed that we do not check for --no-interactive,
+> --no-signoff, --no-keep, --no-whitespace, etc.
+
+Even though adding support for them would not hurt, lack of these
+are OK, as long as we do not have configuration variables to tweak
+their defaults.
