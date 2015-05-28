@@ -1,67 +1,80 @@
-From: Patryk Obara <patryk.obara@gmail.com>
-Subject: Re: [PATCH 0/2] commit -t appends newline after template file
-Date: Thu, 28 May 2015 12:06:34 +0200
-Message-ID: <CAJfL8+QueOnGwPu0vkpSkWDqPnYYtqdM0mHRWEC8Bad4wuvC4Q@mail.gmail.com>
-References: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC] send-email: allow multiple emails using --cc --to and --bcc
+Date: Thu, 28 May 2015 12:42:12 +0200
+Message-ID: <1432809733-4321-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 12:07:12 2015
+X-From: git-owner@vger.kernel.org Thu May 28 12:42:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YxuiV-0002uq-Hm
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 12:07:11 +0200
+	id 1YxvGu-0008Do-5G
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 12:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbbE1KHH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2015 06:07:07 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:35538 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753047AbbE1KHF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 06:07:05 -0400
-Received: by wicmx19 with SMTP id mx19so140573359wic.0
-        for <git@vger.kernel.org>; Thu, 28 May 2015 03:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=FKajJpgDrv0imM5uv3T8Y1dBbXwchZ0dVz4LC1JOrbo=;
-        b=SqsTrFNjRHt1x6q5oBeOo8xFJHGWHaJvZ4RERk/xLaYHa4XzBEmEIV8YuWsm1opsDg
-         rcB0h4KwLaonfxZJlqK8i8Pn3Yo8DKMOr/m5AsVbNUt3cZ8Uee21CJtWprQ4/Gi1gJ35
-         a+day/zBKOlh2HIGSJG//pwv8vrH3bUU11c+zG0MbgLo6/tYz2X/aDkSZkleQEjZJKk+
-         fqkv6e4gyd7rE0xcFNjG9+VWtGjvlajiT98WMjir1NENgSTi+/76R34Qr2rc+RByr659
-         /NtMuIvrt1QfqQIHAq6wXLY6rXhcgpo22yH2YK5nAYeOlmYtc0DtPX032cwmrfDf2kC+
-         Qx4Q==
-X-Received: by 10.180.84.170 with SMTP id a10mr14933136wiz.52.1432807624346;
- Thu, 28 May 2015 03:07:04 -0700 (PDT)
-Received: by 10.28.153.141 with HTTP; Thu, 28 May 2015 03:06:34 -0700 (PDT)
-In-Reply-To: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
-X-Google-Sender-Auth: YRYgMh5yWDkGYQx4C3_ZuDBpq9Y
+	id S1753660AbbE1Kmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 06:42:40 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:46832 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752290AbbE1Kmi (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2015 06:42:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 6B34648850;
+	Thu, 28 May 2015 12:42:35 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KdoZlo1iGtCl; Thu, 28 May 2015 12:42:35 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5068A48849;
+	Thu, 28 May 2015 12:42:35 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id 4B8DB20D6;
+	Thu, 28 May 2015 12:42:35 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Q-qUHk8K03tz; Thu, 28 May 2015 12:42:35 +0200 (CEST)
+Received: from Groseille.grenet.fr (wificampus-031226.grenet.fr [130.190.31.226])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 3260320D4;
+	Thu, 28 May 2015 12:42:35 +0200 (CEST)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270134>
 
-On Tue, May 26, 2015 at 8:15 AM, Patryk Obara <patryk.obara@gmail.com> =
-wrote:
->
-> These are my first patches to git, so be extra pedantic during review=
-, please.
->
-> I noticed, that newline is appended, when I try to use template file =
-- which
-> is annoying if template ends with comment. I digged a bit and it turn=
-ed out
-> that:
+Hello,
 
-Hey, can anyone go through my commit and tell me if I need to improve a=
-nything
-or (maybe) accept it?
+I've corrected an old patch from an Ensimag student.
+(http://thread.gmane.org/gmane.comp.version-control.git/228182). This
+patch allows multiple email addresses for options --cc, --to and
+--bcc. As said in the commit message, this patch doesn't handle commas
+in name, and the only possibility for using commas in name is to use the
+rfc2047 syntax:
 
---=20
-| =E2=86=90 Ceci n'est pas une pipe
-Patryk Obara
+To: =?ISO-8859-1?Q?Ex=2C_ample?= <to@a.com>
+
+I would like to add the possibility to use the following command lines:
+
+    git send-email --to '"Ex, am ple" <to@a.com>'
+
+    git send-email --to '"Ex, am" "ple" <to@a.com>'
+
+    git send-email --to "\"Ex, am ple\" <to@a.com>"
+
+    git send-email --to "\"Ex, am\" \"ple\" <to@a.com>"
+
+
+Here are my questions :
+Is this a good idea to handle commas in name ?
+Do you have any suggestion about proposed syntaxes ?
