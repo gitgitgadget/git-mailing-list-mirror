@@ -1,87 +1,91 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 1/2] git-rebase -i: Add key word "drop" to remove a
- commit
-Date: Thu, 28 May 2015 19:06:28 +0200
-Organization: gmx
-Message-ID: <f5ed9832bba0381314d01fba13e20667@www.dscho.org>
-References: <1432676318-22852-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
- <c78cd2ac17333a2e70d1113d95495c41@www.dscho.org>
- <1506177855.44397.1432738386768.JavaMail.zimbra@ensimag.grenoble-inp.fr>
- <vpq1ti23vva.fsf@anie.imag.fr>
- <xmqqsiahltbu.fsf@gitster.dls.corp.google.com>
- <vpq8uc9yfdp.fsf@anie.imag.fr>
- <xmqq382hlpwt.fsf@gitster.dls.corp.google.com>
- <CAGZ79kansAUWsjBsBznqaxRFeN3uF1u2hUZgO8b+OjOw8SKsUw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug: .gitconfig folder
+Date: Thu, 28 May 2015 10:06:43 -0700
+Message-ID: <xmqqbnh4iqcc.fsf@gitster.dls.corp.google.com>
+References: <5565C6A7.60007@gmx.es>
+	<xmqq7frtlq56.fsf@gitster.dls.corp.google.com>
+	<20150527221813.GF23259@peff.net>
+	<xmqq1ti1k5nv.fsf@gitster.dls.corp.google.com>
+	<20150528075142.GB3688@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 28 19:06:40 2015
+Content-Type: text/plain
+Cc: Jorge <griffin@gmx.es>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 28 19:06:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yy1GR-0002TH-NH
-	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:06:40 +0200
+	id 1Yy1Gc-0002be-Q8
+	for gcvg-git-2@plane.gmane.org; Thu, 28 May 2015 19:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754319AbbE1RGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2015 13:06:35 -0400
-Received: from mout.gmx.net ([212.227.17.21]:62753 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754254AbbE1RGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2015 13:06:34 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MMXVC-1Z2ynw00sA-008Mdj; Thu, 28 May 2015 19:06:30
- +0200
-In-Reply-To: <CAGZ79kansAUWsjBsBznqaxRFeN3uF1u2hUZgO8b+OjOw8SKsUw@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:2NYh4O3o40ZVrrtkpMVUlct9RrX20JXrR903Jq+HwQulB0Jurb1
- Eop554cenMw62OgAC4QxxgGDbqHhzOmT2Aj8bzJmvquHVZKYGtfGkKGBREPBpTokm3cq8HC
- K9ahceZKYhgXmGNAZV4TpsPB9zhAiqYIleRWy7/Ity8MB9nP19i5DeBRZQkWrDDYFqXIi+t
- I+I4lKCkmymvzq5Dai1fA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4oja69crtJA=:R2Gs0LAIIQw3plpjo2I7CD
- ePmEDBmXOB9xfkNPQSWY9JvYZaUcAQbOwn+590sTMALH/xx1XsE1L6pHVfqF06midX6AgT/Bi
- 6r9qnJ6kX5vBQmUMLZ6ZVBtN9/mwLU8ucCQcQUy/0OnDhRstO7tafHCYntuLClNc4Gi79Ea7K
- sQgi5NJWSoaVV94kFw7Np1Y92ibHi2/7/l2OO7hV5LDGm6UyouK72noK+YW8l7DSgW11pU/fT
- mE2DN9p8d8B1kFW9VS5PCxaa5u3omIqVbRoMVUOj9tJRx53/QU2kAiybj3GFYoVbAn9yZ9G5C
- /5ST2Q8oZamE6HtQ+cuWJfwRHwLxN+UV6YxUR3TrreSSGJOX9mbsfCv0PHnG8TPDinqSFK5Tc
- ALlz/+cBnR2qxjB8l5CrGjSwHRFTsMrIazT+teXWxrVi6wpN72EIE/wwfZfyC2fG2fDJwooYr
- xhC2jEqJJMYjxkLeWHJS0vSFq+EOvnKckma3Y5+ysLkXxARKZxbDIvTarfD2/uaQ6mzDsAmMN
- XKCDJ26eGC3pNCG03PWAfnZyKv0CKyo5v1ObA1DMavV0N7qpKX2ZLMYb3NolnqiSnUFmeXXwC
- OkkEkJimRrneXd7/PPaxyxodVMTVBi7tg2m7dqy8YPu4qMrbJzxoGSwyS9l4PQskkMy/2pvWY
- LELn/b+VMFHdPNVP96bZkLdFlFBYNYCQaJpIb1jgcclfwrem2FDQyD2Stj9mXbZbA3Hk=
+	id S1754389AbbE1RGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2015 13:06:47 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:33982 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754281AbbE1RGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2015 13:06:45 -0400
+Received: by igbhj9 with SMTP id hj9so119994573igb.1
+        for <git@vger.kernel.org>; Thu, 28 May 2015 10:06:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Bm48aF6aZnH5S6pSPh8tSiLwEdi/48eeF97OtMR6mZk=;
+        b=s3OY3uWnZnXqTOwyUGjAuArzjm4AQy9toPs3z6LuZkg2TGBvOyYaPINNiLn9FMwBNs
+         MwxdSJLiU5k3H+EQPf3R2KNsHcQvwuL67DoNJCwJZ3I4Liv/TDxPXnRh//6fK6NM+086
+         Hpmu3LrFy6+J/KNEQGWOmRWt31tdV+8IAnU56nq/HTRLQyG1nddMTXYLTo/Y/yBfHBZ/
+         +n27nNql7ZkD5y/c21wzne7NcsDgDsbWRPFyYeyQCCaR5TQN/+ICjqnHUQ00c8AGodos
+         ilS0hjqk7UcIKxFiabpK+k+PztbArKD3bMgabo1Ptd1KGcQlvWAiueFJeE/0xFxELR4n
+         fCiQ==
+X-Received: by 10.50.64.243 with SMTP id r19mr12496584igs.5.1432832804744;
+        Thu, 28 May 2015 10:06:44 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:91c7:752b:4513:7344])
+        by mx.google.com with ESMTPSA id k16sm4693629igf.19.2015.05.28.10.06.43
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 28 May 2015 10:06:44 -0700 (PDT)
+In-Reply-To: <20150528075142.GB3688@peff.net> (Jeff King's message of "Thu, 28
+	May 2015 03:51:42 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270161>
 
-Hi Stefan,
+Jeff King <peff@peff.net> writes:
 
-On 2015-05-27 23:47, Stefan Beller wrote:
-> On Wed, May 27, 2015 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Talking about ideas:
-> I sometimes have the wrong branch checked out when doing a small
-> fixup commit. So I want to drop that patch from the current branch
-> and apply it to another branch. Maybe an instruction like
-> cherry-pick-to-branch-(and-do-not-apply-here) would help me there.
+> On Wed, May 27, 2015 at 03:38:12PM -0700, Junio C Hamano wrote:
+>
+>> The patch was meant to be a tongue-in-cheek tangent that is a vast
+>> improvement for cases where we absolutely need to use mmap but does
+>> not help the OP at all ;-)  I do not think there is any need for the
+>> config reader to read the existing file via mmap interface; just
+>> open it, strbuf_read() the whole thing (and complain when it cannot)
+>> and we should be ok.
+>> 
+>> Or do we write back through the mmaped region or something?
+>
+> No, I think we must never do that in our code because our compat mmap
+> implementation uses pread(). So all maps must be MAP_PRIVATE (and our
+> compat mmap barfs if it is not).
+>
+> I started to go the strbuf_read() route, but it just felt so dirty to
+> change the way the code works only to try to get a better error message.
 
-Oh, is it wish-anything time? *claps-his-hands*
+Hmm.  I actually thought that we long time ago updated the system to
+read small loose object files via read(2) instead of mmap(2) purely
+as an optimization, as mmap(2) is a bad match if you are going to
+read the whole thing from the beginning to the end anyway, and the
+"why not strbuf_read() the whole configuration file" was a suggestion
+along that line.
 
-I would wish for a graphical tool which visualizes the commit graph in a visually pleasing manner, where I can select one or more commits and drop them onto a commit in the graph, and then it goes and magically cherry-picks-and-drops them.
+But apparently we do not have such an optimization in read_object()
+codepath, perhaps I was hallucinating X-<.
 
-:-)
+> ... but the config-writing code is such a tangled
+> mess that I don't want to spend the time or risk the regressions.
 
-Ciao,
-Dscho
+That part I agree with.  I was kinda hoping that the previous GSoC
+would clean it up, but that did not happen.
