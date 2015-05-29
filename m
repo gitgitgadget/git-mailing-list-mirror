@@ -1,83 +1,133 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] Makefile: drop dependency between git-instaweb and gitweb
-Date: Fri, 29 May 2015 03:25:45 -0400
-Message-ID: <20150529072545.GA9670@peff.net>
+Subject: [PATCH 2/3] Makefile: avoid timestamp updates to GIT-BUILD-OPTIONS
+Date: Fri, 29 May 2015 03:26:30 -0400
+Message-ID: <20150529072630.GB9670@peff.net>
 References: <20150529072119.GA5415@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 09:25:54 2015
+X-From: git-owner@vger.kernel.org Fri May 29 09:26:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyEfw-0004Pc-N7
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 09:25:53 +0200
+	id 1YyEgf-0004vN-QC
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 09:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754653AbbE2HZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 03:25:49 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37503 "HELO cloud.peff.net"
+	id S932295AbbE2H0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 03:26:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37506 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752189AbbE2HZr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 03:25:47 -0400
-Received: (qmail 8344 invoked by uid 102); 29 May 2015 07:25:47 -0000
+	id S932240AbbE2H0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 03:26:33 -0400
+Received: (qmail 8419 invoked by uid 102); 29 May 2015 07:26:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 May 2015 02:25:47 -0500
-Received: (qmail 23523 invoked by uid 107); 29 May 2015 07:25:46 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 May 2015 02:26:33 -0500
+Received: (qmail 23539 invoked by uid 107); 29 May 2015 07:26:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 May 2015 03:25:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 May 2015 03:25:45 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 May 2015 03:26:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 May 2015 03:26:30 -0400
 Content-Disposition: inline
 In-Reply-To: <20150529072119.GA5415@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270212>
 
-The rule for "git-instaweb" depends on "gitweb". This makes
-no sense, because:
+We force the GIT-BUILD-OPTIONS recipe to run every time
+"make" is invoked. We must do this to catch new options
+which may have come from the command-line or environment.
 
-  1. git-instaweb has no build-time dependency on gitweb; it
-     is a run-time dependency
+However, we actually update the file's timestamp each time
+the recipe is run, whether anything changed or not. As a
+result, any files which depend on it (for example, all of
+the perl scripts, which need to know whether NO_PERL was
+set) will be re-built every time.
 
-  2. gitweb is a directory that we want to recursively make
-     in. As a result, its recipe is marked .PHONY, which
-     causes "make" to rebuild git-instaweb every time it is
-     run.
+Let's do our usual trick of writing to a tempfile, then
+doing a "cmp || mv" to update the file only when something
+changed.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Note that this actually means we won't build "gitweb" at all with just
-"make". It's possible that might break somebody's packaging script that
-does:
-
-  make &&
-  cp gitweb/gitweb /some/place
-
-I'm not incredibly concerned with that, as it was only being built as a
-bizarre side effect here, and they should probably be doing "make
-gitweb" (or "cd gitweb && make") if that's what they want to build.
-
-But if we do want to build it by default, we can add it into the "all::"
-rule, as we do for "templates".
-
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile | 45 +++++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 323c401..6283353 100644
+index 6283353..6b4fbeb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1784,7 +1784,7 @@ GIT-PERL-DEFINES: FORCE
- gitweb:
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+@@ -2103,46 +2103,47 @@ GIT-LDFLAGS: FORCE
+ # that runs GIT-BUILD-OPTIONS, and then again to protect it
+ # and the first level quoting from the shell that runs "echo".
+ GIT-BUILD-OPTIONS: FORCE
+-	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
+-	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >>$@
+-	@echo DIFF=\''$(subst ','\'',$(subst ','\'',$(DIFF)))'\' >>$@
+-	@echo PYTHON_PATH=\''$(subst ','\'',$(PYTHON_PATH_SQ))'\' >>$@
+-	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
+-	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
+-	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@
+-	@echo USE_LIBPCRE=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@
+-	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
+-	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
+-	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
++	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@+
++	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >>$@+
++	@echo DIFF=\''$(subst ','\'',$(subst ','\'',$(DIFF)))'\' >>$@+
++	@echo PYTHON_PATH=\''$(subst ','\'',$(PYTHON_PATH_SQ))'\' >>$@+
++	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@+
++	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
++	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
++	@echo USE_LIBPCRE=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
++	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
++	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
++	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ ifdef TEST_OUTPUT_DIRECTORY
+-	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
++	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+ endif
+ ifdef GIT_TEST_OPTS
+-	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@
++	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@+
+ endif
+ ifdef GIT_TEST_CMP
+-	@echo GIT_TEST_CMP=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_CMP)))'\' >>$@
++	@echo GIT_TEST_CMP=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_CMP)))'\' >>$@+
+ endif
+ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+-	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@
++	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@+
+ endif
+-	@echo NO_GETTEXT=\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\' >>$@
+-	@echo GETTEXT_POISON=\''$(subst ','\'',$(subst ','\'',$(GETTEXT_POISON)))'\' >>$@
++	@echo NO_GETTEXT=\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\' >>$@+
++	@echo GETTEXT_POISON=\''$(subst ','\'',$(subst ','\'',$(GETTEXT_POISON)))'\' >>$@+
+ ifdef GIT_PERF_REPEAT_COUNT
+-	@echo GIT_PERF_REPEAT_COUNT=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPEAT_COUNT)))'\' >>$@
++	@echo GIT_PERF_REPEAT_COUNT=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPEAT_COUNT)))'\' >>$@+
+ endif
+ ifdef GIT_PERF_REPO
+-	@echo GIT_PERF_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPO)))'\' >>$@
++	@echo GIT_PERF_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPO)))'\' >>$@+
+ endif
+ ifdef GIT_PERF_LARGE_REPO
+-	@echo GIT_PERF_LARGE_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_LARGE_REPO)))'\' >>$@
++	@echo GIT_PERF_LARGE_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_LARGE_REPO)))'\' >>$@+
+ endif
+ ifdef GIT_PERF_MAKE_OPTS
+-	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@
++	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@+
+ endif
+ ifdef TEST_GIT_INDEX_VERSION
+-	@echo TEST_GIT_INDEX_VERSION=\''$(subst ','\'',$(subst ','\'',$(TEST_GIT_INDEX_VERSION)))'\' >>$@
++	@echo TEST_GIT_INDEX_VERSION=\''$(subst ','\'',$(subst ','\'',$(TEST_GIT_INDEX_VERSION)))'\' >>$@+
+ endif
++	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
  
--git-instaweb: git-instaweb.sh gitweb GIT-SCRIPT-DEFINES
-+git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
- 	$(QUIET_GEN)$(cmd_munge_script) && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
+ ### Detect Python interpreter path changes
+ ifndef NO_PYTHON
 -- 
 2.4.2.668.gc3b1ade.dirty
