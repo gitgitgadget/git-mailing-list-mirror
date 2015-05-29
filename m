@@ -1,105 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v2] create a skeleton for the command git rebase --status
-Date: Fri, 29 May 2015 08:44:08 -0700
-Message-ID: <xmqqoal3e6d3.fsf@gitster.dls.corp.google.com>
-References: <1432822837-10320-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<CACRoPnRa1wrOJr=wGnR4NayZfe2yJ4F7Abv_sjqRpgQnicxm1g@mail.gmail.com>
-	<1141577560.115469.1432827789020.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqiobcy9yt.fsf@anie.imag.fr>
-	<xmqqtwuwh8fv.fsf@gitster.dls.corp.google.com>
-	<vpqlhg8pk1o.fsf@anie.imag.fr>
-	<xmqq382gh465.fsf@gitster.dls.corp.google.com>
-	<12496325.145058.1432896023146.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpq4mmvv37f.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: BUG: For first push to a bare repo, using "--tags" prevents creation of master branch
+Date: Fri, 29 May 2015 17:45:06 +0200
+Message-ID: <vpq4mmvs7zx.fsf@anie.imag.fr>
+References: <CABRuA+iVRZR9SxvYVCO5zd0hZEbn6tioyP6dZ5xSbaAeNF4w+w@mail.gmail.com>
+	<vpqbnh4hro7.fsf@anie.imag.fr>
+	<xmqq617bflzh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Paul Tan <pyokagan@gmail.com>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 29 17:44:17 2015
+Cc: Michael Darling <darlingm@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 29 17:45:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyMSG-0002Xx-Mu
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 17:44:17 +0200
+	id 1YyMTH-0003J5-U5
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 17:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750998AbbE2PoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 11:44:12 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:38630 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751995AbbE2PoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 11:44:10 -0400
-Received: by igbjd9 with SMTP id jd9so17387852igb.1
-        for <git@vger.kernel.org>; Fri, 29 May 2015 08:44:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=pwD+Y8ZFSZRB8+t7iqiQcMlqTGADz0g6QdpO7LAkqnE=;
-        b=ZdFRiY3/cvfpbGRx/DpFfkTKkMAlKAiiu0ljcRyLJJY1M+6wBLGnFqFOTCyafCvINo
-         zzNi0uBWgjSxtBafRhp0/2cQ840yMZ4WkzvsCvDrHnS0sLM7U2VEnFpB9DYKZw1bD71V
-         gMq1XH3EO4pC131lkb/iNNsMA+O6pc/oeOW6ozQ6A0yq0QrLthToMREXBUiqi+vaz8c6
-         lof82q2nMb1JguK0Mv/6OtrmlU4P+AqWeatjW5GHj4FkM+nXbCTeKo1nMdzZkZDxrrQf
-         1afzdXWiBiDitGQn8H5l/s15luBmP4OOklHDwwjvTYLiyJdGpoxnxsXgy9guuW6gEvjn
-         UNIA==
-X-Received: by 10.50.78.170 with SMTP id c10mr627848igx.0.1432914250423;
-        Fri, 29 May 2015 08:44:10 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:89d0:c49e:8012:77d2])
-        by mx.google.com with ESMTPSA id l1sm4416176ioe.32.2015.05.29.08.44.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 29 May 2015 08:44:09 -0700 (PDT)
-In-Reply-To: <vpq4mmvv37f.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
-	29 May 2015 17:00:20 +0200")
+	id S1756394AbbE2PpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 11:45:13 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45829 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756381AbbE2PpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 11:45:12 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4TFj5U7030981
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 29 May 2015 17:45:05 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4TFj6Zi003882;
+	Fri, 29 May 2015 17:45:06 +0200
+In-Reply-To: <xmqq617bflzh.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 29 May 2015 08:21:22 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 29 May 2015 17:45:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4TFj5U7030981
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1433519105.39738@7QJ6td/CrRqyUyi2fR0IHw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270247>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr> writes:
-> ...
->> And during an interactive rebase:
->>
->> rebase in progress;
->
-> This could even become "interactive rebase in progress".
->
-> Most of the time, you're supposed to remember whether you ran "git
-> rebase" with -i, but a typical use-case is when a newbie requests help
-> like "I don't know what I did, but can you fix it?", and then any
-> information can be valuable.
+> Yeah.  I am not sure --tags-also is necessarily a good thing (I do
+> not think "fetch --tags" is a good thing, either).  If --follow-tags
+> does not touch lightweight ones, that may be a bug we would want to
+> fix.  I did not mean to implement --follow-tags that way, and I do
+> not offhand remember if there was a reason to omit lightweight ones.
 
-Yeah, I like that.
+It's documented to push only annotated tags both in the commit message
+of c2aba15 (push: --follow-tags, 2013-03-04) and in the man page, so it
+was done on purpose, but I don't know if it was a good thing.
 
-> Not sure the blank lines are meant to be there, but I wouldn't put them
-> in the actual output. I'd format it as
->
-> Last commands done (5 commands done) :
->   pick 62609785 commit message1
->   (see more at .git/rebase-merge/done)
->
-> (lower-case "see" to be consistant with other hints)
+Perhaps a justification is that annotated tags are clearly meant to be
+public while lightweight tags can also be used as private bookmarks.
 
-Nice.
+In any case, the fact that it's been this way and documented this way
+since 2013 makes it a bit hard to change now.
 
->> Is it a good practice to send the user find information in the .git
->> directory?
->
-> We usually avoid doing that and provide commands to do this (e.g. "git
-> rebase --edit-todo" instead of asking the user to do $EDITOR
-> .git/rebase-merge/git-rebase-todo), but the ones you show seem OK to me.
-
-Yeah, I think it is OK to suggest peeking into (not writing) files
-like this.  We may update the internal implementation but then the
-suggestion can and should be updated when that happens.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
