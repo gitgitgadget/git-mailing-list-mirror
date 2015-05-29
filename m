@@ -1,61 +1,72 @@
-From: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-Subject: [BUG] potential error in parsing git checkout options?
-Date: Fri, 29 May 2015 12:30:21 +0200 (CEST)
-Message-ID: <854038739.144343.1432895421483.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <156258182.144342.1432895411512.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: What's cooking in git.git (May 2015, #07; Tue, 26)
+Date: Fri, 29 May 2015 18:39:12 +0800
+Message-ID: <CACRoPnSYue6XBwF=KiPi-C=a3d9aAcOfS7ac=BZCue46EUsWTA@mail.gmail.com>
+References: <xmqqegm3j9jo.fsf@gitster.dls.corp.google.com>
+	<xmqqa8wofjyl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 12:30:19 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 29 12:39:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyHYP-0006Aj-9r
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 12:30:17 +0200
+	id 1YyHh9-0003ba-7u
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 12:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755667AbbE2KaN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2015 06:30:13 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:33194 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755514AbbE2KaL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 06:30:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 3795927CD;
-	Fri, 29 May 2015 12:30:08 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LC+MI8Ycd55N; Fri, 29 May 2015 12:30:08 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 265EF269F;
-	Fri, 29 May 2015 12:30:08 +0200 (CEST)
-In-Reply-To: <156258182.144342.1432895411512.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF37 (Linux)/8.0.9_GA_6191)
-Thread-Topic: potential error in parsing git checkout options?
-Thread-Index: OLK+gIWQKb+u0IcDELAhgo7/nZmPhA==
+	id S1755856AbbE2KjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 06:39:15 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:34909 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753839AbbE2KjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 06:39:14 -0400
+Received: by labko7 with SMTP id ko7so48905624lab.2
+        for <git@vger.kernel.org>; Fri, 29 May 2015 03:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=flfVaQo9YmqlU3XOZiDMsKdyAsaowSZP/5wtn1tYDXY=;
+        b=nlC8bEgMWKtN//AUx9+yOgMDYvwVNY5q3m8VsULUgEPlFoak1auU2x+IV8qvsguoMB
+         FresF+b5Q21gM32aoEmpLnzGbzN9AQYQmm9QpY14G5eK916JwoOewyRJR8cyopIVTF7p
+         h1+DIBRwlP+xKy2z02YtvNC8XruF7ijM70dmyKR30vJkGtNv4cEaMLani19gKvhqzrzr
+         NubbIy2T0fCODur9j1Ic+Ehe8WGeYC3QX30ti7c3pfqHWcymGi61AzenHCgPqd8RE5HN
+         zdter75ieL6YQ5VGmjqdj7Qsi5h00fp3tnXGVKTxGId9uiVFLilvjAWwY7DBWrqNPyek
+         cC6g==
+X-Received: by 10.112.182.4 with SMTP id ea4mr1893725lbc.35.1432895952517;
+ Fri, 29 May 2015 03:39:12 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Fri, 29 May 2015 03:39:12 -0700 (PDT)
+In-Reply-To: <xmqqa8wofjyl.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270221>
 
-Git version : 2.4.1.652.g8fd8657=20
+Hi,
 
-When we run git checkout -babar, we would expect an error message like=20
-"unknown switch 'a' " and we get "Switched to a new branch 'abar'". We=20
-are not sure since we don't entirely understand the syntax -b <branch>=20
-which is shown in the documentation, but as average users, we found it=20
-a bit surprising.=20
+On Fri, May 29, 2015 at 5:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * pt/pull-tests (2015-05-18) 8 commits
+>>  - t5520: check reflog action in fast-forward merge
+>>  - t5521: test --dry-run does not make any changes
+>>  - t5520: test --rebase failure on unborn branch with index
+>>  - t5520: test --rebase with multiple branches
+>>  - t5520: test work tree fast-forward when fetch updates head
+>>  - t5520: test for failure if index has unresolved entries
+>>  - t5520: test no merge candidates cases
+>>  - t5520: prevent field splitting in content comparisons
+>>
+>>  Add more test coverage to "git pull".
+>
+> Sorry, but I lost track.  What's the doneness of this one?
 
+Not done yet, but I'm working on it now, so if I don't have any issues
+I'll have a re-roll out by the end of today or tomorrow.
 
-Guillaume Pag=C3=A8s
+Thanks,
+Paul
