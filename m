@@ -1,66 +1,83 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: pre-commit hook not run on conflict resolution during rebase
-Date: Fri, 29 May 2015 09:25:28 +0200
-Message-ID: <1m56dnm.1tg204rp3q4paM%lists@haller-berlin.de>
-References: <xmqqy4k8fp1g.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com (Junio C Hamano)
-X-From: git-owner@vger.kernel.org Fri May 29 09:25:36 2015
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/3] Makefile: drop dependency between git-instaweb and gitweb
+Date: Fri, 29 May 2015 03:25:45 -0400
+Message-ID: <20150529072545.GA9670@peff.net>
+References: <20150529072119.GA5415@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 29 09:25:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyEff-0004Ff-Jr
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 09:25:35 +0200
+	id 1YyEfw-0004Pc-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 09:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754259AbbE2HZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 03:25:31 -0400
-Received: from server90.greatnet.de ([178.254.50.90]:35594 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752598AbbE2HZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 03:25:30 -0400
-Received: from [192.168.42.152] (dslb-188-102-144-123.188.102.pools.vodafone-ip.de [188.102.144.123])
-	by server90.greatnet.de (Postfix) with ESMTPA id 350CC6014C;
-	Fri, 29 May 2015 09:25:28 +0200 (CEST)
-In-Reply-To: <xmqqy4k8fp1g.fsf@gitster.dls.corp.google.com>
-User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.10.3 (x86))
+	id S1754653AbbE2HZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 03:25:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37503 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752189AbbE2HZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 03:25:47 -0400
+Received: (qmail 8344 invoked by uid 102); 29 May 2015 07:25:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 May 2015 02:25:47 -0500
+Received: (qmail 23523 invoked by uid 107); 29 May 2015 07:25:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 May 2015 03:25:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 May 2015 03:25:45 -0400
+Content-Disposition: inline
+In-Reply-To: <20150529072119.GA5415@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270211>
 
-Junio C Hamano <gitster@pobox.com> wrote:
+The rule for "git-instaweb" depends on "gitweb". This makes
+no sense, because:
 
-> lists@haller-berlin.de (Stefan Haller) writes:
-> 
-> > I guess the next best solution would be to also have a pre-push hook
-> > that performs the same checks again, just in case the bad code managed
-> > to get past the pre-commit hook for some reason or other. This feels
-> > very redundant, but I guess it would work well.
-> 
-> I'd say pre-receive would be the most sensible place to check things
-> like this.
+  1. git-instaweb has no build-time dependency on gitweb; it
+     is a run-time dependency
 
-Yes, I totally agree, and we used to have this setup when we were still
-hosting our code in-house; with pre-receive doing the authorative
-checks, and pre-commit being optional as a convenience for developers,
-as you say.
+  2. gitweb is a directory that we want to recursively make
+     in. As a result, its recipe is marked .PHONY, which
+     causes "make" to rebuild git-instaweb every time it is
+     run.
 
-Now we have moved most of our code to github, and you can't have
-pre-receive hooks there, as far as I can tell. (I should have mentioned
-that, sorry.)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Note that this actually means we won't build "gitweb" at all with just
+"make". It's possible that might break somebody's packaging script that
+does:
 
-To make up for that, we have put considerable effort into ensuring that
-everyone on the team has up-to-date hooks locally, by installing them
-automatically as part of our build system infrastructure.
+  make &&
+  cp gitweb/gitweb /some/place
 
-In that light, do you agree that a pre-push hook is the best we can do
-now to plug this hole?
+I'm not incredibly concerned with that, as it was only being built as a
+bizarre side effect here, and they should probably be doing "make
+gitweb" (or "cd gitweb && make") if that's what they want to build.
 
+But if we do want to build it by default, we can add it into the "all::"
+rule, as we do for "templates".
 
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 323c401..6283353 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1784,7 +1784,7 @@ GIT-PERL-DEFINES: FORCE
+ gitweb:
+ 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+ 
+-git-instaweb: git-instaweb.sh gitweb GIT-SCRIPT-DEFINES
++git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
+ 	$(QUIET_GEN)$(cmd_munge_script) && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
 -- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+2.4.2.668.gc3b1ade.dirty
