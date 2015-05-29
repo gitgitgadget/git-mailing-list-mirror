@@ -1,123 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH v2] create a skeleton for the command git rebase --status
-Date: Fri, 29 May 2015 17:00:20 +0200
-Message-ID: <vpq4mmvv37f.fsf@anie.imag.fr>
-References: <1432822837-10320-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<CACRoPnRa1wrOJr=wGnR4NayZfe2yJ4F7Abv_sjqRpgQnicxm1g@mail.gmail.com>
-	<1141577560.115469.1432827789020.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqiobcy9yt.fsf@anie.imag.fr>
-	<xmqqtwuwh8fv.fsf@gitster.dls.corp.google.com>
-	<vpqlhg8pk1o.fsf@anie.imag.fr>
-	<xmqq382gh465.fsf@gitster.dls.corp.google.com>
-	<12496325.145058.1432896023146.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: BUG: For first push to a bare repo, using "--tags" prevents creation of master branch
+Date: Fri, 29 May 2015 08:21:22 -0700
+Message-ID: <xmqq617bflzh.fsf@gitster.dls.corp.google.com>
+References: <CABRuA+iVRZR9SxvYVCO5zd0hZEbn6tioyP6dZ5xSbaAeNF4w+w@mail.gmail.com>
+	<vpqbnh4hro7.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Paul Tan <pyokagan@gmail.com>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 29 17:00:59 2015
+Cc: Michael Darling <darlingm@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri May 29 17:21:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyLm4-0004lb-G0
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 17:00:40 +0200
+	id 1YyM6F-0002gf-B3
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 17:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582AbbE2PAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 11:00:34 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:44631 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756200AbbE2PA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 11:00:28 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4TF0IpO023516
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 29 May 2015 17:00:18 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4TF0KPJ003040;
-	Fri, 29 May 2015 17:00:20 +0200
-In-Reply-To: <12496325.145058.1432896023146.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Guillaume Pages's message of "Fri, 29 May 2015 12:40:23 +0200
-	(CEST)")
+	id S1161066AbbE2PV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 11:21:27 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:34346 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756500AbbE2PV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 11:21:26 -0400
+Received: by igbhj9 with SMTP id hj9so17310210igb.1
+        for <git@vger.kernel.org>; Fri, 29 May 2015 08:21:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=1Zrs58pIFomaSZmCVVB8AXeIDXaE8/h+Xx6E/888rHs=;
+        b=ETZZzQSa7FFGL4ltNnhA3NlYg9utsmqGTGPDH+nPPRAvGdTc2oJLcTI+elWNbRFUZm
+         ebnW5LY7aPm0i7gB9cdyXz8LleLrnxfRc87aavhUcu1jGja6BkTMZejRt9xHsY4HJZ9P
+         1qBI+aoRlHmYdvEJx48B9chcMGCP4sr1lE/MGg/smPcv2+JsLzKqZLb6qQXfjZbRkNIs
+         8Ph9lGm77XJV7/geU14JdpNCDJV1u5eNAKAxHZd5VPXXKVoN3ek8eUx3anpbmu02eHPa
+         S3MEtIqLThIl1JGi9RABhHTY5c1X2GFhKK9NUOi7ts09T7QAJTRYW7+ASLW2qIuCqGz0
+         TOtg==
+X-Received: by 10.42.208.139 with SMTP id gc11mr8527930icb.84.1432912885399;
+        Fri, 29 May 2015 08:21:25 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:89d0:c49e:8012:77d2])
+        by mx.google.com with ESMTPSA id r4sm1709532igh.9.2015.05.29.08.21.24
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 29 May 2015 08:21:24 -0700 (PDT)
+In-Reply-To: <vpqbnh4hro7.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
+	29 May 2015 07:35:36 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 29 May 2015 17:00:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4TF0IpO023516
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433516420.2257@FHdfy9ysO0XvUbc35umeOg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270242>
 
-Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> rebase in progress; onto d9d448a You are currently rebasing branch
-> 'branche1' on 'd9d448a'.  (fix conflicts and then run "git rebase
-> --continue") (use "git rebase --skip" to skip this patch) (use "git
-> rebase --abort" to check out the original branch) (5 commits applied,
-> 3 remainings) Failed to apply:
->
-> 252c273 commit message
+> You did not provide any refspec (you provided <repository> but not
+> <refspec>), hence --tags pushes only tags. So, this is the expected
+> behavior.
 
-You messed-up something with the formatting, but I agree that this would
-be nice. I'd reverse order between the hints ("(use ... to ...)") and
-the "Failed to apply: ...".
+Right.
 
-> And during an interactive rebase:
->
-> rebase in progress;
+> That said, we may want to add an option like --tags-also that would push
+> tags _in addition_ to what would normally be pushed. --follow-tags does
+> more or less this, though, but only for annotated tags pointing at a ref
+> being pushed.
 
-This could even become "interactive rebase in progress".
+Yeah.  I am not sure --tags-also is necessarily a good thing (I do
+not think "fetch --tags" is a good thing, either).  If --follow-tags
+does not touch lightweight ones, that may be a bug we would want to
+fix.  I did not mean to implement --follow-tags that way, and I do
+not offhand remember if there was a reason to omit lightweight ones.
 
-Most of the time, you're supposed to remember whether you ran "git
-rebase" with -i, but a typical use-case is when a newbie requests help
-like "I don't know what I did, but can you fix it?", and then any
-information can be valuable.
-
-> Last commands done (5 commands done) :
->
-> pick 62609785 commit message1 reword 85ae9001 new commit message2
->
-> (See more at .git/rebase-merge/done)
->
-> Next commands to do (3 remainings commands) :
->
-> squash 62609785 commit message3 pick 85ae9001 commit message4
->
-> (See more at .git/rebase-merge/git-rebase-todo)
-
-Not sure the blank lines are meant to be there, but I wouldn't put them
-in the actual output. I'd format it as
-
-Last commands done (5 commands done) :
-  pick 62609785 commit message1
-  (see more at .git/rebase-merge/done)
-
-(lower-case "see" to be consistant with other hints)
-
-> Is it a good practice to send the user find information in the .git
-> directory?
-
-We usually avoid doing that and provide commands to do this (e.g. "git
-rebase --edit-todo" instead of asking the user to do $EDITOR
-.git/rebase-merge/git-rebase-todo), but the ones you show seem OK to me.
-
-There's already at least one instance of this when a rebase fails:
-
-  Patch failed at 0001 foo
-  The copy of the patch that failed is found in:
-     /tmp/clone/.git/rebase-apply/patch
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
