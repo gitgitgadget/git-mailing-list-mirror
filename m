@@ -1,106 +1,69 @@
-From: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-Subject: Re: [RFC/PATCH v2] create a skeleton for the command git rebase
- --status
-Date: Fri, 29 May 2015 12:40:23 +0200 (CEST)
-Message-ID: <12496325.145058.1432896023146.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1432822837-10320-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr> <CACRoPnRa1wrOJr=wGnR4NayZfe2yJ4F7Abv_sjqRpgQnicxm1g@mail.gmail.com> <1141577560.115469.1432827789020.JavaMail.zimbra@ensimag.grenoble-inp.fr> <vpqiobcy9yt.fsf@anie.imag.fr> <xmqqtwuwh8fv.fsf@gitster.dls.corp.google.com> <vpqlhg8pk1o.fsf@anie.imag.fr> <xmqq382gh465.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] git-new-workdir: add windows compatibility
+Date: Fri, 29 May 2015 17:48:52 +0700
+Message-ID: <CACsJy8AtoQ=OJbmWN7WMqjxQ3yG7oPTrRszrcqSTSuqVnTkV7g@mail.gmail.com>
+References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
+ <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com> <cbfbf842705637b52cde9c6b61f89a75@www.dscho.org>
+ <1432642835.17513.22.camel@mad-scientist.net> <1fb8315dfaffb91ec4925bcc458e12a2@www.dscho.org>
+ <55683700.3010201@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Paul Tan <pyokagan@gmail.com>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 29 12:40:29 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	paul@mad-scientist.net, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Smith <dansmith65@gmail.com>, Jeff King <peff@peff.net>,
+	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	Richard Hartmann <richih@net.in.tum.de>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri May 29 12:49:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyHiA-0004Lt-J7
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 12:40:22 +0200
+	id 1YyHqy-0001SA-Mo
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 12:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755932AbbE2KkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 06:40:16 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:53982 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755680AbbE2KkM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 May 2015 06:40:12 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CADD42788;
-	Fri, 29 May 2015 12:40:09 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id My2k8vOB08c2; Fri, 29 May 2015 12:40:09 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B7BFA261E;
-	Fri, 29 May 2015 12:40:09 +0200 (CEST)
-In-Reply-To: <xmqq382gh465.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF37 (Linux)/8.0.9_GA_6191)
-Thread-Topic: create a skeleton for the command git rebase --status
-Thread-Index: gKx86CBR2h4FrmytZRZNlU3a+M7MJA==
+	id S1755911AbbE2KtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 06:49:25 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:35766 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755489AbbE2KtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 06:49:23 -0400
+Received: by igbyr2 with SMTP id yr2so10934831igb.0
+        for <git@vger.kernel.org>; Fri, 29 May 2015 03:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=c0K6U9UsvIAJjbbzWNe4AJYi89XGzRKCiv3atWbA3kI=;
+        b=bUw4/hw9QxMZCa5k79WNqIZI6J5OqNFEiKTsyAuzejI9BC/FWAA3fDBtDlGJQBjPrk
+         Y3sMKGVG9eoSbTcGtJsmE2tX1caI1TdYcC5paNrttg9iFVsylHQqA9mrS+UrKl3mCHTl
+         +4d2PP7ueUlY5cmoXovtlCGNtxcOKq1mP19YRcRRZjB1GgKVMLMP347Q5/WhkkavzQkB
+         dlrUHVCD938PfDexhmfnbepOZch3f6sdc4KLlj6RpbZeHwyFLBUJBNpfSWc5rMeeP/3t
+         fq7EwDyQZIr3ekNXqTewZSaEZLyphevbxbpVKELgkuI6ZpmZGH9Q+JUeo5jVDXKu6UOH
+         IvlA==
+X-Received: by 10.43.172.68 with SMTP id nx4mr14101930icc.48.1432896562640;
+ Fri, 29 May 2015 03:49:22 -0700 (PDT)
+Received: by 10.107.6.9 with HTTP; Fri, 29 May 2015 03:48:52 -0700 (PDT)
+In-Reply-To: <55683700.3010201@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270223>
 
-After this discussion I eventually agree that it would be better
-upgrading git status than creating a new command.When people use git
-status, it means that they need information to continue their work, so
-if you don't even know that you are in a rebase, you will very likely
-need information about the current rebase.
+On Fri, May 29, 2015 at 4:53 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Isn't that basically the approach that "git checkout --to" is taking? Is
+> that one "Windows proof"?
 
-During a classic rebase we could have output like:
+It should be.
 
-rebase in progress; onto d9d448a You are currently rebasing branch
-'branche1' on 'd9d448a'.  (fix conflicts and then run "git rebase
---continue") (use "git rebase --skip" to skip this patch) (use "git
-rebase --abort" to check out the original branch) (5 commits applied,
-3 remainings) Failed to apply:
+> I've lost track of its status, though.
 
-252c273 commit message
-
-Unmerged paths: (use "git reset HEAD <file>..." to unstage) (use "git
-add <file>..." to mark resolution)
-
-both modified: file1
-
-
-And during an interactive rebase:
-
-rebase in progress; onto 247c883 You are currently editing a commit
-while rebasing branch 'b1.1' on '247c883'.  (use "git commit --amend"
-to amend the current commit) (use "git rebase --continue" once you are
-satisfied with your changes)
-
-Last commands done (5 commands done) :
-
-pick 62609785 commit message1 reword 85ae9001 new commit message2
-
-(See more at .git/rebase-merge/done)
-
-Next commands to do (3 remainings commands) :
-
-squash 62609785 commit message3 pick 85ae9001 commit message4
-
-(See more at .git/rebase-merge/git-rebase-todo)
-
-Changes not staged for commit: (use "git add <file>..." to update what
-will be committed) (use "git checkout -- <file>..." to discard changes
-in working directory)
-
-modified: file1 ...
-
-Is it a good practice to send the user find information in the .git
-directory?
-
-Thanks
-
-Guillaume
+It should be fine to use as long as you don't do checkout --to on a
+submodule. Some progress was made on that direction, but I was busy
+with other series and then didn't have time for git for a while.
+-- 
+Duy
