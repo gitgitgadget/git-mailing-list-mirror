@@ -1,92 +1,100 @@
-From: Christian Neukirchen <chneukirchen@gmail.com>
-Subject: Re: Redirect "git" subcommand to itself?
-Date: Fri, 29 May 2015 18:41:02 +0200
-Message-ID: <87r3pz49r5.fsf@gmail.com>
-References: <CAGZ79kZHa9wUrRsWfHgGdSdx+cN9VAirAAfu3YLVTuSmggcehg@mail.gmail.com>
-	<xmqqoal5ii21.fsf@gitster.dls.corp.google.com>
-	<87zj4n4w3t.fsf@gmail.com>
-	<xmqqsiafe6md.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: BUG: Wrong error message when access to .git directory denied
+Date: Fri, 29 May 2015 09:45:13 -0700
+Message-ID: <CAGZ79kZPTpJjLsKSd6E8vQ0HFuSeCH5Hr_LBhSjx9=SQdQhOBQ@mail.gmail.com>
+References: <20150529104743.6220a11f@outerspace.dyndns.org>
+	<xmqq1thzfll9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonas Berlin <xkr47@outerspace.dyndns.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 29 18:41:09 2015
+X-From: git-owner@vger.kernel.org Fri May 29 18:45:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyNLB-0001EQ-4J
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 18:41:01 +0200
+	id 1YyNPN-0004Q1-2m
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 18:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756830AbbE2Qk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 12:40:57 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:38163 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756599AbbE2QjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 12:39:12 -0400
-Received: by wizo1 with SMTP id o1so30830631wiz.1
-        for <git@vger.kernel.org>; Fri, 29 May 2015 09:39:11 -0700 (PDT)
+	id S1756447AbbE2QpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 12:45:16 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:34828 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756250AbbE2QpO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 12:45:14 -0400
+Received: by qgg60 with SMTP id 60so31392096qgg.2
+        for <git@vger.kernel.org>; Fri, 29 May 2015 09:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=swJ2tJS2CEKRxSbRwOyR0YVBqLLpRBJC8PFOG2KYhb4=;
-        b=q6XdBkfM4uszEfh8A8laBZMnVLvnFVsXpYpYZdRYPMNk3ksqjvuDsobGM88BeiuUlr
-         N8WdGKouBfLWWUsufEBFFzaNDkOzB9jihqbXOrtcE05ZPNU7fqyUA6whlO/15SUQToNZ
-         Ep4vzAR7DRWixrE+936KluObMImOwAROkXECSwB9McK1sUJ7sy/yADIZdtE3vzj15zw6
-         oKcLVd58SUbv/VmfAN1tPssQ5Ndx63Ghl19i+F8ny3mf/GTlPROs0kuYrjxjQ3DWkpGx
-         nb5fABZgEbRI7lR2l8VlNrhKijWuP+3OrFX8IIyrI4WDkmnEGTDDUl2z7h3i7nJDzk4D
-         A2YQ==
-X-Received: by 10.194.110.100 with SMTP id hz4mr17021755wjb.6.1432917551170;
-        Fri, 29 May 2015 09:39:11 -0700 (PDT)
-Received: from juno.home.vuxu.org ([2001:4ca0:0:f230:a288:b4ff:fea1:ce50])
-        by mx.google.com with ESMTPSA id ef10sm9074720wjd.49.2015.05.29.09.39.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 May 2015 09:39:09 -0700 (PDT)
-Received: from localhost (juno.home.vuxu.org [local]);
-	by juno.home.vuxu.org (OpenSMTPD) with ESMTPA id 378044ae;
-	Fri, 29 May 2015 16:41:02 +0000 (UTC)
-In-Reply-To: <xmqqsiafe6md.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 29 May 2015 08:38:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3gaQZtMskvF5dj/W8Owm8CwRtsx6/UkVPkGmS4srkSA=;
+        b=Kct7ipYsBFLPcVutZhl+h/xPGVbcEgAnV16QHGCgbQEAxFtMSvx0unTc9Ix55bYgao
+         2U8+8m9tE8i6u02E6iXGt7alOjfNmt+x9Q/4v+NlOd7sLiacU3eZ4o88itA8/yiTFN43
+         fU/HrCnH/Wn82jtTLFNgS61sa/302UhQnyWnfTvmCpVVLo9yXerDkChUhFiBlbodKziq
+         TP8lG37bgFxySwkp/8O9doaSKNtdO0KHQeUKzsebxS8UFb9hompnDbQOZmwwHIY1pp8Z
+         AfNodwAAG7Mtxfk/Rny/IadZzxJkoM0FNM1uQWhsWOady45iKWQRyoMFH6T7E0jl74Bh
+         0/Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=3gaQZtMskvF5dj/W8Owm8CwRtsx6/UkVPkGmS4srkSA=;
+        b=ERS4Mj3zceVzjWPFkC95k9Gj61qh+xCvpca48zuiEY7ttgfT4xGW2VnZs2SZkk9ShH
+         L78OAurkMIBKrS+JosUCrna4SwCDR2wSl4I4T4+zljAsX8Fpwaa8fFhZWVpnzxIYHTw9
+         MJ4Yt0oGPhdHNTbSl3AabC+JfeLGKNWj7uksjcmF7/msGrzeh4n/r6Zbnns4CpbQGdVT
+         dk6GrZleDy/WUlxluLN/EePWv2DRfgkr3fAeUltRtH3gKl1nJwJpEl5wJWiERWARN1cp
+         ZTomyz/dCc9g15NVMcTpnNmrfa4LQ8W/lZ85n/trzbhzX7kDEC+x6tT5Aknu0AS1tRGZ
+         R9eQ==
+X-Gm-Message-State: ALoCoQkShrZmyl4GSkkLxzVK+uDiWR7Bt6gBYf4BJoKiZjrlIwxz15JnQ4JqtqoQa0R6sydYumOW
+X-Received: by 10.140.133.9 with SMTP id 9mr11002306qhf.5.1432917913166; Fri,
+ 29 May 2015 09:45:13 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Fri, 29 May 2015 09:45:13 -0700 (PDT)
+In-Reply-To: <xmqq1thzfll9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270256>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Christian Neukirchen <chneukirchen@gmail.com> writes:
+On Fri, May 29, 2015 at 8:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonas Berlin <xkr47@outerspace.dyndns.org> writes:
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>>  * You can help yourself with something like this, I suppose:
->>>
->>>    [alias]
->>> 	git = "!sh -c 'exec git \"$@\"' -"
->>>
->>>    but I personally feel that it is too ugly to live as part of our
->>>    official suggestion, so please do not send a patch to add it as
->>>    a built-in alias ;-).
->>
->> So I thought I was clever, but this didn't work:
->>
->> % ln -s /usr/bin/git ~/bin/git-git  
->> % git git
->> fatal: cannot handle git as a builtin
+>> Severity: Low
+>> Impact: Confusion
 >
-> Why did you have to do that when I already gave an alias that works?
+> ;-)
+>
+>> Git version: 1.9.1
+>>
+>> If I don't have permissions to access the .git folder of a non-bare
+>> git repository, I get the following output:
+>>
+>>   fatal: Not a git repository (or any of the parent directories): .git
+>>
+>> Expected output:
+>>
+>>   fatal: Permission denied while accessing .git directory
+>
+> But the thing is, .git being unreadable simply means we do not know
+> if it is a .git directory, or a random directory that does not have
+> anything to do with Git that happens to have that name.
+>
+> So "Not a git repository" is the best Git can say.
 
-I was just toying around, and it would have been cute.
+fatal: Permission denied while accessing .git directory
 
-> Or didn't the alias work?
+does not imply we're having a git repository here at all, but rather
+sounds like "We wanted to check for you if this is a git repository,
+but we cannot do that as we lack permissions to do so.
 
-It does.  This seems to work just as well, and is easier:
+So git doesn't know if it is inside a repo or not, so the actual error message
+"Not a git repository" is wrong. It's just that the current permissions cannot
+tell if we're in a repository or not.
 
-	git = !git
-
-Thanks,
--- 
-Christian Neukirchen  <chneukirchen@gmail.com>  http://chneukirchen.org
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
