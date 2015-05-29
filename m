@@ -1,155 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/WIP PATCH 11/11] Document protocol version 2
-Date: Fri, 29 May 2015 14:36:26 -0700
-Message-ID: <CAGZ79kbELvZ6otnNwGHsgiC9EjgS2vrDGU2KCgF2c_Azm=-rWg@mail.gmail.com>
+Date: Fri, 29 May 2015 14:52:14 -0700
+Message-ID: <xmqqk2vraw6p.fsf@gitster.dls.corp.google.com>
 References: <1432677675-5118-1-git-send-email-sbeller@google.com>
 	<1432677675-5118-12-git-send-email-sbeller@google.com>
 	<xmqqsiafazr7.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kbELvZ6otnNwGHsgiC9EjgS2vrDGU2KCgF2c_Azm=-rWg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
 	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 29 23:36:33 2015
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 29 23:52:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyRxA-0001iE-Vg
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 23:36:33 +0200
+	id 1YySCU-000522-GG
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 23:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756919AbbE2Vg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 17:36:29 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:36014 "EHLO
-	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756266AbbE2Vg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 17:36:27 -0400
-Received: by qkx62 with SMTP id 62so52218408qkx.3
-        for <git@vger.kernel.org>; Fri, 29 May 2015 14:36:26 -0700 (PDT)
+	id S1757297AbbE2VwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 17:52:18 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:38157 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757028AbbE2VwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 17:52:16 -0400
+Received: by igbjd9 with SMTP id jd9so24750813igb.1
+        for <git@vger.kernel.org>; Fri, 29 May 2015 14:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5WyVD5umXmwBDhs00rDmw1tbKm5sQcplba3wi5KLJkQ=;
-        b=euBkVftYaNmO7qR1qkiqn8sr0rK2qBAgk8BdxtMwAwnoYF1Q7TwCYMH+4N1/+STuGI
-         H0TWsEQTc17zK/1Th/WfND0GewrR+nwGIz8OKib7//LmXh8Jw7hG44ZuBtf9r44WxyvP
-         rn48vDY2sgRC0H8vsC2QOrCqIeP9MTtYUJ266b62t5Em3lBcdpQgxR6sq+shB+0NlvQ4
-         +O1EbM7qrOe91E+SmQi5FfP4Y67gXG0UD0MAtEVb7jBihomcbAwZ0U34hX8T8Ix38z6P
-         PsBVdAwrIta52FHpH8/MYKTCE9OdgS+m0pF/shN3hH0AQh1EJttqHr9RheHyWDuMbWgf
-         ItwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=5WyVD5umXmwBDhs00rDmw1tbKm5sQcplba3wi5KLJkQ=;
-        b=lZau0OqC6J7qldm/bsD3NizAqNrqvu6UeRtY+THhpmM99gD4dTwGRp2eSFrEcYYF5W
-         ptqjiI0cAl2t1L5K/C4VwyOh+aeRCDmwl/fRbBV/Zqcw21583EfKNnoIsRXDEDXqTb/f
-         T3IFmglExgypc8EyHukh6exMSGD93RvBgrN3zGibKumyKYJCvS0MMVubc0ohY6IfYJPo
-         sJZh0Fk7CQMV6ZkMJYRFHXMXT2B6MiJ2NPLlJGfZ/30D1Xwe8y6p+eb6YoJ4BePXuH2q
-         hTZW+fSbSpALi7bztXdMiXzx7FnbcqeCljuLBv1OU97/ocTjykVlquHBWrtGsqcYada4
-         kP/A==
-X-Gm-Message-State: ALoCoQl9LfHUuaKaNUKAV155gUxhkn32Geunp5xGoN2UjtbgJef7EM7i4YyzdeDQIEhdKt7VxBJP
-X-Received: by 10.140.133.9 with SMTP id 9mr12442255qhf.5.1432935386654; Fri,
- 29 May 2015 14:36:26 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Fri, 29 May 2015 14:36:26 -0700 (PDT)
-In-Reply-To: <xmqqsiafazr7.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=sXaMD0dd79KIBbqFJOoQRjOcAVftn4K2W9Lx5FongQs=;
+        b=bgYKEdqFMvUiNYibSSTY9+npq28AEkcRntzAMRR1Co9ad4RSKp2HNRdimZEgqgZv1W
+         /UUfRoQh8cFy5pyz4bTCtai3d1pk/dQzWN4gVgvT6ChNkVi3uTCaFx+vwNmCTdVlsAH9
+         Gv9uRVxF4bM8U/DEAcdgpP9y74Z0xZNXaJKy8i3eW2ooX7UZGvaGVS/GT2MSyWqdL53M
+         bAKOTFLmsQej8bsNAoZZDAEz58aOTu/ytBXKUHq2zTQvSiUptp3cjD9IDoyRLk3V6OU3
+         /qeIKNxKly48lcJnPY3B+IRuZV93OsuG2vlBrJrc7E1GA+yh0khdXLUsAJMkPgsQkSR6
+         9gow==
+X-Received: by 10.107.3.210 with SMTP id e79mr12981247ioi.50.1432936336281;
+        Fri, 29 May 2015 14:52:16 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d9c8:419b:acd5:cf1d])
+        by mx.google.com with ESMTPSA id w4sm2410088igl.22.2015.05.29.14.52.15
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 29 May 2015 14:52:15 -0700 (PDT)
+In-Reply-To: <CAGZ79kbELvZ6otnNwGHsgiC9EjgS2vrDGU2KCgF2c_Azm=-rWg@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 29 May 2015 14:36:26 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270274>
 
-On Fri, May 29, 2015 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> @@ -1,11 +1,11 @@
->>  Packfile transfer protocols
->>  ===========================
+Stefan Beller <sbeller@google.com> writes:
+
+>>> +Capability discovery (v2)
+>>> +-------------------------
+>>> ...
+>>> +  capability-list  =  *(capability) [agent LF] flush-pkt
+>>> +  capability       =  PKT-LINE("capability:" keyvaluepair LF)
+>>> +  agent            =  keyvaluepair LF
+>>> +  keyvaluepair     =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
 >>
->> -Git supports transferring data in packfiles over the ssh://, git:// and
->> +Git supports transferring data in packfiles over the ssh://, git://, http:// and
->
-> When you have chance, can you do things like this, which is a clear
-> improvement of the current document even if we never had v2, as
-> separate patches?
-
-will do.
-
->
->> +Capability discovery (v2)
->> +-------------------------
->> ...
->> +  capability-list  =  *(capability) [agent LF] flush-pkt
->> +  capability       =  PKT-LINE("capability:" keyvaluepair LF)
->> +  agent            =  keyvaluepair LF
->> +  keyvaluepair     =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
->
-> What is the "=" doing there?  If you meant to cover things like
-> "lang=en" with this, I do not think it is a good idea.  Rather, it
-> should be more like this:
->
->         capability = 1*(LC_ALPHA / DIGIT / "-" / "_") [ "=" value ]
->         value = 0*( any octet other than LF, NUL )
->
-> in order to leave us wiggle room to have more than very limited
-> subset of US-ASCII in 'value'.  I suspect that we may want to allow
-> anything other than LF (unlike v1 that allowed anything other than
-> SP and LF).
-
-Currently we can do a = as part of the line after the first ref, such as
-
-    symref=HEAD:refs/heads/master agent=git/2:2.4.0
-
-so I thought we want to keep this. And below I just corrected what I thought
-was a difference between documentation and implementation.
-
->
->> +  LC_ALPHA         =  %x61-7A
->> +----
->> +
->> +The client MUST ignore any data on pkt-lines starting with anything
->> +different than "capability" for future ease of extension.
->> +
->> +The client MUST NOT ask for capabilities the server did not say it
->> +supports. The server MUST diagnose and abort if capabilities it does
->> +not understand was requested. The server MUST NOT ignore capabilities
->> +that client requested and server advertised.  As a consequence of these
->> +rules, server MUST NOT advertise capabilities it does not understand.
->
-> I think it was already discussed that we shouldn't do the
-> "capability:" and "cap:" prefixes in reviews of earlier parts, so
-> the details of this part would be updated?
-
-sure
-
->
->> @@ -154,10 +203,14 @@ If HEAD is a valid ref, HEAD MUST appear as the first advertised
->>  ref.  If HEAD is not a valid ref, HEAD MUST NOT appear in the
->>  advertisement list at all, but other refs may still appear.
+>> What is the "=" doing there?  If you meant to cover things like
+>> "lang=en" with this, I do not think it is a good idea.  Rather, it
+>> should be more like this:
 >>
->> -The stream MUST include capability declarations behind a NUL on the
->> -first ref. The peeled value of a ref (that is "ref^{}") MUST be
->> -immediately after the ref itself, if presented. A conforming server
->> -MUST peel the ref if it's an annotated tag.
->> +In version 1 the stream MUST include capability declarations behind
->> +a NUL on the first ref. The peeled value of a ref (that is "ref^{}")
->> +MUST be immediately after the ref itself, if presented. A conforming
->> +server MUST peel the ref if it's an annotated tag.
->> +
->> +In version 2 the capabilities are already negotiated, so the first ref
->> +MUST NOT be followed by any capability advertisement, but it should be
->> +treated as any other refs advertising line.
->
-> Sensible.
->
->> @@ -178,13 +231,28 @@ MUST peel the ref if it's an annotated tag.
->>    shallow          =  PKT-LINE("shallow" SP obj-id)
+>>         capability = 1*(LC_ALPHA / DIGIT / "-" / "_") [ "=" value ]
+>>         value = 0*( any octet other than LF, NUL )
 >>
->>    capability-list  =  capability *(SP capability)
->> -  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_")
->> +  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
+>> in order to leave us wiggle room to have more than very limited
+>> subset of US-ASCII in 'value'.  I suspect that we may want to allow
+>> anything other than LF (unlike v1 that allowed anything other than
+>> SP and LF).
 >
-> Ditto.
+> Currently we can do a = as part of the line after the first ref, such as
 >
-> Thanks.
+>     symref=HEAD:refs/heads/master agent=git/2:2.4.0
+>
+> so I thought we want to keep this.
+
+I do not understand that statement.
+
+Capability exchange in v2 is one packet per cap, so the above
+example would be expressed as:
+
+	symref=HEAD:refs/heads/master
+        agent=git/2:2.4.0
+
+right?  Your "keyvaluepair" is limited to [a-z0-9-_=]*, and neither
+of the above two can be expressed with that, which was why I said
+you need two different set of characters before and after "=".  Left
+hand side of "=" is tightly limited and that is OK.  Right hand side
+may contain characters like ':', '.' and '/', so your alphabet need
+to be more lenient, even in v1 (which I would imagine would be "any
+octet other than SP, LF and NUL").
