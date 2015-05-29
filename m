@@ -1,66 +1,46 @@
-From: Christian Neukirchen <chneukirchen@gmail.com>
-Subject: Re: Redirect "git" subcommand to itself?
-Date: Fri, 29 May 2015 10:38:14 +0200
-Message-ID: <87zj4n4w3t.fsf@gmail.com>
-References: <CAGZ79kZHa9wUrRsWfHgGdSdx+cN9VAirAAfu3YLVTuSmggcehg@mail.gmail.com>
-	<xmqqoal5ii21.fsf@gitster.dls.corp.google.com>
+From: "ts1@a.56067.net" <ts1@a.56067.net>
+Subject: LCD WALL MOUNT
+Date: Fri, 29 May 2015 16:03:27 +0800
+Message-ID: <201505291603270359134@a.56067.net>
+Reply-To: dwm1682@163.com
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 10:36:44 2015
+Content-Type: text/plain;
+	charset="GB2312"
+Content-Transfer-Encoding: base64
+To: "git" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 29 10:37:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyFmV-0000cc-LY
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 10:36:44 +0200
+	id 1YyFml-0000oa-2e
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 10:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755500AbbE2Igk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 04:36:40 -0400
-Received: from plane.gmane.org ([80.91.229.3]:57737 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755481AbbE2Igi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 04:36:38 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YyFmL-0000VW-59
-	for git@vger.kernel.org; Fri, 29 May 2015 10:36:33 +0200
-Received: from host57-2.natpool.mwn.de ([138.246.2.57])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 May 2015 10:36:33 +0200
-Received: from chneukirchen by host57-2.natpool.mwn.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 May 2015 10:36:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: host57-2.natpool.mwn.de
-In-Reply-To: <xmqqoal5ii21.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 27 May 2015 18:53:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1755510AbbE2Igy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 04:36:54 -0400
+Received: from [118.193.226.56] ([118.193.226.56]:53967 "EHLO a.56067.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751763AbbE2Igx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 04:36:53 -0400
+Received: from qrrsstuu (unknown [27.38.9.40])
+	by a.56067.net (Postfix) with ESMTPA id A4E86CE548
+	for <git@vger.kernel.org>; Fri, 29 May 2015 16:01:29 +0800 (CST)
+X-Mailer: Foxmail 6, 10, 201, 20 [cn]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270216>
+X-Spam-Report: 6.8 points;
+ *  1.8 SUBJ_ALL_CAPS Subject is all capitals
+ *  2.2 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+ *  2.8 MIME_BASE64_TEXT RAW: Message text disguised using base64 encoding
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270217>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->  * You can help yourself with something like this, I suppose:
->
->    [alias]
-> 	git = "!sh -c 'exec git \"$@\"' -"
->
->    but I personally feel that it is too ugly to live as part of our
->    official suggestion, so please do not send a patch to add it as
->    a built-in alias ;-).
-
-So I thought I was clever, but this didn't work:
-
-% ln -s /usr/bin/git ~/bin/git-git  
-% git git
-fatal: cannot handle git as a builtin
-
--- 
-Christian Neukirchen  <chneukirchen@gmail.com>  http://chneukirchen.org
+RGVhciBTaXIvTWFkYW0sDQoNCkdyZWV0aW5ncyENCg0KV2UgYXJlIG1hbnVmYWN0dXJlciBvZiBM
+Q0QgV2FsbCBNb3VudCwgQ2FtZXJhIE1vdW50LCBUViBNb3VudGluZ3MsIExhcHRvcCBTdGFuZC4g
+IFdlbGNvbWUgdG8gY29udGFjdCB1cyBmb3IgYW55IGluZm9ybWF0aW9uIG9mIG91ciBwcm9kdWN0
+cy4NCkN1c3RvbWl6ZWQgcHJvZHVjdHMgYWxzbyBhY2NlcHRhYmxlLCBwbGVhc2Ugc2VuZCB1cyB5
+b3VyIGRldmVsb3BtZW50IGlkZWEgb25seS4NCkxvb2sgZm9yd2FyZCB0byBzdGFydCBjb29wZXJh
+dGlvbiByZWxhdGlvbnNoaXAgd2l0aCB5b3UuDQoNClNpbmNlcmVseSB5b3VycywNCk1zLiBaaGFu
+Zw0KSG9tZXBhZ2U6IHd3dy5qaWF3ZWloYW8uY29tIA0KU2t5cGU6IHJlYmVjY2EzMDc2MTk=
