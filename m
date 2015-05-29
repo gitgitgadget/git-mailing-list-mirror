@@ -1,104 +1,82 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-new-workdir: add windows compatibility
-Date: Fri, 29 May 2015 11:53:04 +0200
-Message-ID: <55683700.3010201@drmicha.warpmail.net>
-References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com> <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com> <cbfbf842705637b52cde9c6b61f89a75@www.dscho.org> <1432642835.17513.22.camel@mad-scientist.net> <1fb8315dfaffb91ec4925bcc458e12a2@www.dscho.org>
+Subject: Re: Staging commits with visual diff tools?
+Date: Fri, 29 May 2015 11:57:44 +0200
+Message-ID: <55683818.5010002@drmicha.warpmail.net>
+References: <alpine.DEB.2.10.1505262147230.3709@alice> <20150527072826.GC6898@peff.net> <alpine.DEB.2.10.1505270831490.4687@alice>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Smith <dansmith65@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Richard Hartmann <richih@net.in.tum.de>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	paul@mad-scientist.net, Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 11:53:25 2015
+To: John Lee <jjl@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 29 11:57:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyGyb-0007gj-AT
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 11:53:17 +0200
+	id 1YyH31-0002G8-H4
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 11:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755825AbbE2JxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 05:53:13 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:45153 "EHLO
+	id S1755633AbbE2J5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 05:57:48 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:56261 "EHLO
 	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751763AbbE2JxL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 May 2015 05:53:11 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id D230320D85
-	for <git@vger.kernel.org>; Fri, 29 May 2015 05:53:06 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Fri, 29 May 2015 05:53:06 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
+	by vger.kernel.org with ESMTP id S1754259AbbE2J5q (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 May 2015 05:57:46 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5A16920D13
+	for <git@vger.kernel.org>; Fri, 29 May 2015 05:57:46 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 29 May 2015 05:57:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=TOLooeSmUPGHtuNjVWDEUDWC51w=; b=Iy4nc5
-	9qYLdk4Y6753sEWTpa30zKPkTkm1l5qEqcOH5N/2uXxNH0lefQUAJH0+CDT7Xz5T
-	jBSFwWa8P/iMvkXxwv4I3CV6iwgjUPuJ0nswLkSOnV40mmp2P3I9gaj0BUb/yg9I
-	7vowcQACQ1qiw/HpyogRvtlt1cppre9z2Mi+s=
+	:x-sasl-enc; s=mesmtp; bh=g8aIU1wFy033EyMlKxhyaBYz1bA=; b=eM2aK6
+	dzFKD7iLl6ZRsb8A/8qwJocLf+uHRO860p2hXMvlyf7HJ766JmMmfZ3K5J1h7gB7
+	0rlpM7+ummxr7TSm2zgmehBAtcQxNNYTuvd1MF7bXvPLVqoRZeoFNj/WPi1m4zj6
+	WvkIiL6Vgfwt0tDrajLue+nlHrVFk0NSyfv3o=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	messagingengine.com; h=content-transfer-encoding:content-type
 	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=TOLooeSmUPGHtuN
-	jVWDEUDWC51w=; b=o2qvs2RpfRH5H2x4wciB72q+5yxN4eZ9w80zedSgCOhmtdX
-	uhUTkHPY3mYqeR3dhY32AWQ6Zr6sAQO/ChTOSC+C8SA3PrrSOd2kTmy2JROnDU3m
-	PkeBZVyAMdUTRYkoEd+YrokcX4TwOZwbxpp+9krNkaAmIVgnmO9UINUJMSOg=
-X-Sasl-enc: mdys/rdr+f1XexT0wzIhHBdqDSszJsex1oGzlH8xMdlR 1432893186
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=g8aIU1wFy033EyM
+	lKxhyaBYz1bA=; b=bRzzuwdFVp69H9nEyCZJbCl2ne0O6YeJU5wMeFwfjNM1R1g
+	zt5LmTcbki2hXf22QN2pZI5aY9fkLqe0ECmTP3B5scAiHPi4V49wB7xIpBnVazi5
+	79V5YBrRUrQ1hLXqQ8gGetjdK05nehxJAuaMytXuk815WCiHRjIje5TaLJI8=
+X-Sasl-enc: nnPcH/YqFKHpDEF4WoNooA0D4IGKB3xQTi76RhrDzMB/ 1432893466
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4401FC00015;
-	Fri, 29 May 2015 05:53:05 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id B10796800BF;
+	Fri, 29 May 2015 05:57:45 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <1fb8315dfaffb91ec4925bcc458e12a2@www.dscho.org>
+In-Reply-To: <alpine.DEB.2.10.1505270831490.4687@alice>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270219>
 
-Johannes Schindelin venit, vidit, dixit 26.05.2015 14:35:
-> Hi Paul,
+John Lee venit, vidit, dixit 27.05.2015 09:34:
+> On Wed, 27 May 2015, Jeff King wrote:
 > 
-> On 2015-05-26 14:20, Paul Smith wrote:
->> On Tue, 2015-05-26 at 11:53 +0200, Johannes Schindelin wrote:
->>> The biggest problem with `mklink` is that it is only supported on
->>> Windows Vista and later, while I really like to keep Windows XP
->>> support in Git for Windows.
->>
->> No, the biggest problem with mklink is that you have to have
->> administrative privileges to use it... from wikipedia:
->>
->> http://en.wikipedia.org/wiki/NTFS_symbolic_link
+>> If you are interested in looking further, see how the %patch_mode hash
+>> is defined in git-add--interactive.perl. Specifically, note that "add
+>> -p" is just one case: diff against the index and apply with "apply
+>> --cached". But once you have a separate tool for picking hunks, you
+>> should be able to drop in the different DIFF/APPLY pairs to implement
+>> "checkout -p", etc.
 > 
-> It is even worse than that, as you pointed out below: administrators *can* permit non-administrators to create and use of symbolic links.
+> My plan was to use symlinks, checkout-index, and update-index 
+> --index-info, similar to how difftool does it.  I verified on the command 
+> line that that seems to work.
 > 
-> However, from a maintainer's perspective (which is my role in this thread), the compatibility problem is an even worse problem than the permissions.
 > 
->>> The default security settings in Windows Vista/Windows 7 disallow
->>> non-elevated administrators and all non-administrators from creating
->>> symbolic links. This behavior can be changed running "secpol.msc" the
->>> Local Security Policy management console (under: Security Settings
->>> \Local Policies\User Rights Assignment\Create symbolic links). It can
->>> be worked around by starting cmd.exe with Run as administrator option
->>> or the runas command.
->>
->> Except even that is not so simple, as various StackOverflow questions
->> and answers will show (I have to run so I can't look them up now).  I
->> did try to get this to work a year or so ago, and although I'm in no way
->> a Windows person (so maybe someone else would have better luck) I
->> couldn't get it to work.
-> 
-> For what it is worth, I tried my hand a couple of years ago at the project to move git-new-workdir to use the `.git` *file* and alternates mechanisms, but that does not work because you really need a separate `.git/HEAD`.
-> 
-> Ciao,
-> Johannes
+> John
 > 
 
-Isn't that basically the approach that "git checkout --to" is taking? Is
-that one "Windows proof"? I've lost track of its status, though.
+Yes, having "git addtool" (or "stagetool") to go with difftool and merge
+tool would be nice, and it could hopefully resuse code or infrastructure
+from those tools, as well as the tool config.
+
+I vaguely remember a sketch or proof-of-concept by Jeff (not reusing
+*tool) but may be wrong.
 
 Michael
