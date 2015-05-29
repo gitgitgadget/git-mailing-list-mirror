@@ -1,65 +1,91 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Redirect "git" subcommand to itself?
-Date: Fri, 29 May 2015 09:00:20 -0700
-Message-ID: <CAGZ79kbOCUDVUT_WFQUNppD6QLr=kUUpZbuGi13ot=j_D7Zf8w@mail.gmail.com>
-References: <CAGZ79kZHa9wUrRsWfHgGdSdx+cN9VAirAAfu3YLVTuSmggcehg@mail.gmail.com>
-	<xmqqoal5ii21.fsf@gitster.dls.corp.google.com>
-	<87zj4n4w3t.fsf@gmail.com>
-	<xmqqsiafe6md.fsf@gitster.dls.corp.google.com>
+From: Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC] send-email: allow multiple emails using --cc --to and --bcc
+Date: Fri, 29 May 2015 18:05:08 +0200
+Message-ID: <87oal32wuj.fsf@ensimag.grenoble-inp.fr>
+References: <1432809733-4321-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1432809733-4321-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<xmqq382giokd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Neukirchen <chneukirchen@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 29 18:00:27 2015
+X-From: git-owner@vger.kernel.org Fri May 29 18:05:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyMhu-0005nP-A6
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 18:00:26 +0200
+	id 1YyMmi-00012v-Gq
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 18:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030196AbbE2QAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 12:00:23 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:36026 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756126AbbE2QAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 12:00:21 -0400
-Received: by qkx62 with SMTP id 62so47315932qkx.3
-        for <git@vger.kernel.org>; Fri, 29 May 2015 09:00:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=eDtsT4qGt8RkD116k/dCaUXZ+CVLzSZKQc1n9fZjSkg=;
-        b=fDgaET68KVPxzbhgpEfBcmPpKfjxZJtlT88INGXvE2bLQTD+QuyGkcScXGWRwfEYV2
-         F+lbSfywdCuZvZYfcs/vYInVzNIgdMMbLw7WmEcDtTANG4fZyew5t0aCTLDGG/GbsSPS
-         tplnhTL0duELXtmI4j53J1Hm/enOjq6cFrvvAIpFow18ySPZhaV5w6SlA6e8O1HGFyBy
-         Wm4cVjXIWoHRVvFxekSsln4jE+RR2oowdHJcj9v1gkSNmkD00yUKVV6xeYcFdzL5jHYV
-         GGpFu8Qxr2HMCrHHa6PN+foJV1thadyZKp4qyP73lZdzVAjTiZhMeqvAXzCsa9S7zrMd
-         INbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=eDtsT4qGt8RkD116k/dCaUXZ+CVLzSZKQc1n9fZjSkg=;
-        b=BDywUyVIiERSkb0qvawY/J72zjm9Qgrc04YEoAU/A2uVMU4YaUx29Y9mZdfxMr83ou
-         wD6X3CIDq7o2BTf4Kovo25Z7oRiKCmIwVRDZS6x8JfrLX0vkTUZbY+toh3RCjqSVjzD5
-         sZDg2gCZjSser1lROcl/EUGOjtqusIaHfbZxtZftP+X0qZQN2TNgu+185itlAyAUHfAi
-         eqz7OPuEy+mL13GMsVz6K7j1KWsAdYyHSBC1BZq6sNLjyDuOmz84xaZspTu6vUHZl6h+
-         FcycjB/EGGSNEdJIEpQ8NxPwHfu24DuNNcNlIV2XHpudy6eBjVvBcUaN8H8uCr2paEiM
-         nXGw==
-X-Gm-Message-State: ALoCoQkcNWagddDBMDFZYXthmKW/OcJnKPmSspyx6m4NbKcLraXSljqxQSGKe9u6LnYNXbh9SxQ9
-X-Received: by 10.55.19.197 with SMTP id 66mr17294449qkt.24.1432915220550;
- Fri, 29 May 2015 09:00:20 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Fri, 29 May 2015 09:00:20 -0700 (PDT)
-In-Reply-To: <xmqqsiafe6md.fsf@gitster.dls.corp.google.com>
+	id S1756629AbbE2QFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 12:05:19 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:58848 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756455AbbE2QFR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 May 2015 12:05:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id F27EB24A8;
+	Fri, 29 May 2015 18:05:13 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CZaSx7WD4SFv; Fri, 29 May 2015 18:05:13 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id E0457237D;
+	Fri, 29 May 2015 18:05:13 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id D7F5020D6;
+	Fri, 29 May 2015 18:05:13 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GeCIPkZ+i+2b; Fri, 29 May 2015 18:05:13 +0200 (CEST)
+Received: from Groseille (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 2BABC20D4;
+	Fri, 29 May 2015 18:05:13 +0200 (CEST)
+In-Reply-To: <xmqq382giokd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 28 May 2015 10:45:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270250>
 
-Thanks a lot for the discussion!
-So I'll just fix it locally for me and we keep the state as is.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+
+>     Accept a list of emails separated by commas in flags --cc, --to
+>     and --bcc.  Multiple addresses can already be given by using
+>     these options multiple times, but it is more convenient to allow
+>     cutting-and-pasting a list of addresses from the header of an
+>     existing e-mail message, which already lists them as
+>     comma-separated list, as a value to a single parameter.
+>
+> perhaps?
+I've taken this description for the first part of the commit
+message. Thanks!
+
+> > before handling more complex ones such as names with commas:
+> >         $ git send-email --to='Foo, Bar <foobar@example.com>'
+> 
+> Shouldn't this example send to two users, i.e. a local user Foo and
+> the mailbox 'foobar' at example.com whose human-readable name is
+> Bar?  If so, that is a bad example to illustrate the aspiration for
+> the finished patch?
+
+Yes, that works if Foo is in an alias file, so that's clearly a bad
+example, I added quotes:
+
+	git send-email --to='"Foo, Bar" <foobar@example.com>'
+
+Thanks!
