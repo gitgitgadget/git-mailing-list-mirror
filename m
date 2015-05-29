@@ -1,76 +1,155 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] git-new-workdir: add windows compatibility
-Date: Fri, 29 May 2015 12:52:13 +0200
-Organization: gmx
-Message-ID: <0ff0ae5b80b4bf5a82444343ac99590b@www.dscho.org>
-References: <CADBZQ5iAKsSrdvBnFcdPcm9psaJo5B-H1zqJj0aRc+xx6cCFMQ@mail.gmail.com>
- <xmqqfv6k7zp3.fsf@gitster.dls.corp.google.com>
- <cbfbf842705637b52cde9c6b61f89a75@www.dscho.org>
- <1432642835.17513.22.camel@mad-scientist.net>
- <1fb8315dfaffb91ec4925bcc458e12a2@www.dscho.org>
- <55683700.3010201@drmicha.warpmail.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git clone --depth: shallow clone problems
+Date: Fri, 29 May 2015 18:04:31 +0700
+Message-ID: <CACsJy8AO7UNF-SnuqohOPDy2dOvfg=bA+b0rdVihabxBLAz19Q@mail.gmail.com>
+References: <CALxdAKiyRMR-jF2KcBQGYgXUb+D8=YaESU3E9KN+zBLx=0UCNw@mail.gmail.com>
+ <20150526124702.GA12101@lanh> <xmqqmw0rl78r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: paul@mad-scientist.net, Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Smith <dansmith65@gmail.com>, Jeff King <peff@peff.net>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Richard Hartmann <richih@net.in.tum.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri May 29 12:52:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michal Pomorski <misieck@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 29 13:05:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyHtu-0003Ll-Gt
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 12:52:30 +0200
+	id 1YyI6F-00038O-8F
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 13:05:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755638AbbE2Kw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 06:52:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59569 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753839AbbE2KwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 06:52:25 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lg5kl-1ZRuYG3jbf-00pdB2; Fri, 29 May 2015 12:52:15
- +0200
-In-Reply-To: <55683700.3010201@drmicha.warpmail.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:sXCzQpUA1HJsLJ6K9fhAdJKEDTd7sFHf7moOfN0PV6NwdYVFlY8
- NN77SPw80TcR2NDcXU0jvU0Uj2iXLGQ5o0CHvXZ0yEAesOvxdYGkMLWRQhbZ/jU30bT1U8n
- ad09QPrY36rGY7Rlb4VnkDFFV2UGGquMaVTBAlq2Dcvsdzll5SK62c1/wVnaI/57jvoRXSF
- I3l9vEspVrdBQh1LBYZ+Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nXRs7AHppAg=:g5zwgsR4StNsNNmWbHdpKQ
- BOWPMZCX5jbvkfwNlK+YqycuHm8gbnMaB2002AT0e6cMy18nKRsx00040izcRrwyPXjYxhcMX
- RLtJvppo8KMZlisv3bDMhlvrFkq67vJShVzpGeUfCCoU3ZG3Xxl1cAvVow/uFrSFINAtj3yaw
- Rdw2NMVh9Gf9HixYYskF13n+2RAgApz2c0fcK/l9ydp9Yc04GKIq97ARYQdY8X8iKWOjVBOZs
- tR5gSTGnVTOjT+wochrb6wiBb51mZEKnzXzCBq6pabP9ae/3XY6YSNvL8AKyZr09VBj7N4MtI
- FfYKyvb0flJxZhDwYbBX/c5Lsl7KzOQr3lS8uibV7A895OFHWG0ZvJhhCeGB16IRT2hbapGTR
- hE6IFCWK52LSGsbn5wMeTfrqo+YQs4XcE+K5XEHoPOGEvQwEI4vZBS8YPY6xzYZSzAk1kutXQ
- WRXfEKHxXLyXThkaLSEr28jC3uNC/2jK3bmzKb12kdoG8yYMnTLWb1hYYaYjWY4Nx1jEjK67X
- G6O8K4hA4thMd1v71B/2y6ShzusZ4nGUq3fy63E5SL7CccOScmCjEOfe70/rE4nFgzRKYzsac
- IkQ7Ois41t15p33O96/nVBhr0WtX1aN93JR1sI2hFfPSWsbFw6jcDlEEdicipi9SBX276SJdx
- vEDKD7dnQ7vkCzoQIj64ovKCEaJ+HXWXCLiwyBIqMqOSIwWIXu1p2kKS6L16XYN6Y8yA=
+	id S1755514AbbE2LFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 07:05:04 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:37441 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754472AbbE2LFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 07:05:03 -0400
+Received: by igbsb11 with SMTP id sb11so11321777igb.0
+        for <git@vger.kernel.org>; Fri, 29 May 2015 04:05:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=POKlbXNKxFnnh2VIhq2luOZpIx0DMH7uAmBGcpBofeY=;
+        b=bKcixtbUF41QmYEv0DvBRlljZRtQL13FoLNnPrYWSJdP80M+S+jGMKndAGxW2dxreM
+         bM+mBE47AGumaSaeBKJrA75+fCXeNf3HR/JgWO0lhE70IjG7cjMYvIamdmaeNZ5Iwani
+         9iEdOMjZWPD8wqdXpmdrt7vXb+yfhTctoBpB6Us4vyz7FAH2BzgxOX82KYOmkzqfakT5
+         IBbQY1VoTwKGAgTdbK7O36A+MlPrayGJhYjJ8WC3XOoFen8fKfx1zwugA+z4Nuf/Zgc9
+         DQqLsyFSqOvCc070P2h7uOXwIWrxXClsJCGy0hen3e5Yzr5vkRwyYUaQiLYAqJcuEp4G
+         /wZQ==
+X-Received: by 10.43.172.68 with SMTP id nx4mr14160519icc.48.1432897502304;
+ Fri, 29 May 2015 04:05:02 -0700 (PDT)
+Received: by 10.107.6.9 with HTTP; Fri, 29 May 2015 04:04:31 -0700 (PDT)
+In-Reply-To: <xmqqmw0rl78r.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270225>
 
-Hi Michael,
+On Tue, May 26, 2015 at 9:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>>  --unshallow::
+>> -     If the source repository is complete, convert a shallow
+>> -     repository to a complete one, removing all the limitations
+>> +     If the source repository is complete, convert all shallow
+>> +     refs to complete ones, removing all the limitations
+>
+> Define "shallow ref", or better yet explain without introducing such
+> a new term (I do not think shallow-ness is a property of a ref, by
+> the way---I think you meant all refs that can reach the points the
+> history is cauterised by .git/shallow, but we shouldn't assume that
+> the target audience of this paragraph to know Git as well as I do).
 
-On 2015-05-29 11:53, Michael J Gruber wrote:
-> Johannes Schindelin venit, vidit, dixit 26.05.2015 14:35:
->> For what it is worth, I tried my hand a couple of years ago at the project to move git-new-workdir to use the `.git` *file* and alternates mechanisms, but that does not work because you really need a separate `.git/HEAD`.
-> 
-> Isn't that basically the approach that "git checkout --to" is taking? Is
-> that one "Windows proof"? I've lost track of its status, though.
+OK maybe
 
-I haven't tried `git checkout --to` on Windows yet, and sadly I won't be able to do that for another week...
+Make sure all existing refs have the same history as the ones from the
+source repository. If the source repository is complete, this removes
+all limitations imposed by shallow repositories.
 
-Ciao,
-Dscho
+?
+
+>>       imposed by shallow repositories.
+>>  +
+>>  If the source repository is shallow, fetch as much as possible so that
+>> -the current repository has the same history as the source repository.
+>> +the all existing refs of current repository have the same history as in
+>> +the source repository.
+>
+> Makes sense, modulo "so that the all existing refs" sounds strange
+> to my ears ("all the existing refs" perhaps).
+
+Will fix. Although I think the new paragraph above already covers this case too.
+
+>> ++
+>> +Note that if the repository is created with --single-branch, which is
+>> +default for a shallow clone, only one ref is completed. `--unshallow`
+>> +does not fetch all remaining refs from source repository.
+>
+> I do not think this "Note" is being as helpful as it could be.
+>
+>  - If the repository was created with --single-branch but if the
+>    user later fetched and started tracking other branches, the
+>    statement "only one ref is completed" is untrue; the true version
+>    is "only the existing refs are completed", which leads to a more
+>    important point.  It says the same thing as "all existing refs"
+>    above and does not add any useful information.
+>
+>  - The last sentence is less than useful but merely frustrating---it
+>    says what you cannot do with this option, strongly hints that the
+>    writer of the sentence knows what the reader wants to achieve,
+>    but without saying what other way the reader go to achieve it.
+>
+> Perhaps replace that Note paragraph with something along this line?
+>
+>     +
+>     By fetching and tracking refs that you haven't been tracking,
+>     you can add these new refs to "all refs" to be unshallowed.
+
+It was meant to emphasize --unshallow would not create a true clone,
+if people miss the keywords "all existing" refs.. Maybe..
+
+You may need to fetch and track other refs from the source repository
+if you want to make full clone.
+
+?
+
+>
+>>> 2) git fetch --unshallow should convert the clone into an actual
+>>> equivalent of a normal, not shallow clone.
+>>
+>> I was thinking of some way to undo --single-branch too. I don't think
+>> it should be the job of --unshallow, maybe a new option, but I can't
+>> think of a name better than --really-unshallow :P
+>
+> Isn't that just the matter of updating remote.origin.fetch?  I do
+> not think it belongs to "clone" (or "fetch").  Perhaps it belongs to
+> "remote", where it already shows with "git remote -v" what is
+> fetched and pushed.
+
+Yeah, perhaps showing an advice about git-remote is enough if the
+current ref spec does not fetch everything.
+
+>>  --depth <depth>::
+>>       Create a 'shallow' clone with a history truncated to the
+>> -     specified number of revisions.
+>> +     specified number of revisions. --single-branch is
+>> +     automatically specified unless the user overrides it with
+>> +     --no-single-branch
+>
+> Yeah, something like that would be a definite improvement.
+>
+> By the way, while composing this message, I scratched my head after
+> typing
+>
+>     $ git clone --shallow=4 --no-local ./git.git ./playpen
+>
+> Is it just me or do we want to add such a synonym?
+
+I have a series to define shallow boundaries by tags or dates, in
+addition to history depth. It may take a few more months until I'm
+finished with my ongoing topics. Then you could think about what
+--shallow means exactly ;-)
+-- 
+Duy
