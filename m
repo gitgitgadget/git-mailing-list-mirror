@@ -1,144 +1,67 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/WIP PATCH 06/11] remote.h: add get_remote_capabilities, request_capabilities
-Date: Fri, 29 May 2015 12:39:35 -0700
-Message-ID: <CAGZ79kbm5FCjMH-vV+_ByNvAdOD2idVtd8-bizEJpZpdE9cGjQ@mail.gmail.com>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
-	<1432677675-5118-7-git-send-email-sbeller@google.com>
-	<20150527064521.GD885@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame: add blame.showemail config option
+Date: Fri, 29 May 2015 12:40:09 -0700
+Message-ID: <xmqq617bcgva.fsf@gitster.dls.corp.google.com>
+References: <1429841612-5131-1-git-send-email-qneill@quicinc.com>
+	<CAPig+cQrUPHOaKjNhsmLho+bFdAOQxb0NK2YK2QsFmdDBF6h4g@mail.gmail.com>
+	<CACfD1vvaAGkx2P3yMfZPOZrRvG3-H96zQVOCevnd-O0rBJ7wjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 29 21:39:42 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Quentin Neill <quentin.neill@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 21:40:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyQ85-0004eg-KK
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 21:39:41 +0200
+	id 1YyQ8g-0005CF-KH
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 21:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756544AbbE2Tji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 15:39:38 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:35447 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756539AbbE2Tjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 15:39:36 -0400
-Received: by qkhq76 with SMTP id q76so22194320qkh.2
-        for <git@vger.kernel.org>; Fri, 29 May 2015 12:39:35 -0700 (PDT)
+	id S1756888AbbE2TkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 15:40:14 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:38404 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756654AbbE2TkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2015 15:40:12 -0400
+Received: by igbjd9 with SMTP id jd9so22419380igb.1
+        for <git@vger.kernel.org>; Fri, 29 May 2015 12:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TuIf0/rjgGr88+9vDDGgr6Wyb+VPQdr6/uMJfXAqmfA=;
-        b=PBiMr5vokwHD4oTL6jXmNuReUxbqx46BBLqSKlfNg1XOoRR5f3iMOknV5yrBJ8LWBj
-         nuZNPor1J8MlohKIXB5UEhdGAn5HO8uaM31kc6x6B30Ca/2zdB8H3TbiuCaAvNhezSSd
-         JVyxnjZ0YlYfOHo6PBnRj3c6hFGGvQOrDM7Q5oB88Z6EmxHXtT4qifH6j7ySxklKLiXT
-         s2xxNbmLuNNPm24YphadUpE0S49TMA/+aLW9aqpSgPUmcMukLn0hk2O4pvUpWhpuEZrX
-         cjxlD1tZfJP1LNC9JekXBDcpSeuMgR4dEk50VSMCevHk0D1KW0xehUD+JJ8OkO2okPXZ
-         Iukw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=TuIf0/rjgGr88+9vDDGgr6Wyb+VPQdr6/uMJfXAqmfA=;
-        b=ajb1lOYkn3ZPnLHyfTslw5SqBzR2PamEvc2CeDjnecAaqYLy83JR/qfvC1+jImZkg3
-         XqYkuBU8TdEhN5HkK/rO1badKgUAL+amByn5/HOl/ezjEx/bUeIdMypAy5AKj1Ntej5S
-         lu8frTPWS+i4DiOmgPZMUyfuGZQNldkWmADY//NSusacJjjKgghdX4TtwZc75QH+EitG
-         tTzISr9EfFwmkGKpjbithAV7taeSODmAM/J3SAzxSgaiXZWyElPpblucWBei7yFYA1nQ
-         qsJVXQskCMaYp3w/K6DAo/9MmV6aprJ0MwJR6qEdu1/jlrbFd0GnsXaEV1EscFa4GukA
-         Q7Yw==
-X-Gm-Message-State: ALoCoQm42h1CokDbe3xkzoXCYFIg++nPQu5hkH/jjAANTNT2ARwTmrovGvlZnkw/IQHAL1grKOtK
-X-Received: by 10.140.133.9 with SMTP id 9mr11876696qhf.5.1432928375353; Fri,
- 29 May 2015 12:39:35 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Fri, 29 May 2015 12:39:35 -0700 (PDT)
-In-Reply-To: <20150527064521.GD885@peff.net>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=g0OPhxRNap0Lb+jaJwBMwDq588hY38+TG5B/B73Q1qc=;
+        b=xtKB8bhEmWScWq1BEO5QJKQiim9sAx3bUmRbt2spbae0sD1kZn5EhnKPtNcQJoVCXb
+         B2MyFA5F20k40JPjBZARHkTqg8jiSiYuVPaeXNTDm0WQVIz4a902tX7dIuxPGZOYxpb2
+         W2Ajnles53kdtKP6sJ68/CGCB0k3WYJorT6NLPquspguuEQ1SiNmrdE8mZqJT92Le15y
+         DMYuCjBd/3rsUOo5uez8inQF/wD2q0iDskJcIKWMToHDfxcoFS+TJaDEJDBcTKxbfCTj
+         GX5Vqx2Mt+UDZ0b01rHqX9pmHwq7TcKfOe5qisO6b5r81/6m8apTe/nqlAab1+I3ZH0i
+         uAtA==
+X-Received: by 10.50.64.147 with SMTP id o19mr5982684igs.33.1432928411765;
+        Fri, 29 May 2015 12:40:11 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d9c8:419b:acd5:cf1d])
+        by mx.google.com with ESMTPSA id j3sm2179040igx.21.2015.05.29.12.40.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 29 May 2015 12:40:10 -0700 (PDT)
+In-Reply-To: <CACfD1vvaAGkx2P3yMfZPOZrRvG3-H96zQVOCevnd-O0rBJ7wjw@mail.gmail.com>
+	(Quentin Neill's message of "Mon, 27 Apr 2015 08:46:14 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270268>
 
-On Tue, May 26, 2015 at 11:45 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, May 26, 2015 at 03:01:10PM -0700, Stefan Beller wrote:
->
->> +void get_remote_capabilities(int in, char *src_buf, size_t src_len)
->> +{
->> +     struct strbuf capabilities_string = STRBUF_INIT;
->> +     for (;;) {
->> +             int len;
->> +             char *line = packet_buffer;
->> +             const char *arg;
->> +
->> +             len = packet_read(in, &src_buf, &src_len,
->> +                               packet_buffer, sizeof(packet_buffer),
->> +                               PACKET_READ_GENTLE_ON_EOF |
->> +                               PACKET_READ_CHOMP_NEWLINE);
->> +             if (len < 0)
->> +                     die_initial_contact(0);
->> +
->> +             if (!len)
->> +                     break;
->> +
->> +             if (len > 4 && skip_prefix(line, "ERR ", &arg))
->> +                     die("remote error: %s", arg);
->> +
->> +             if (starts_with(line, "capability:")) {
->> +                     strbuf_addstr(&capabilities_string, line + strlen("capability:"));
->> +                     strbuf_addch(&capabilities_string, ' ');
->> +             }
->> +     }
->
-> I think this is the reverse case of next_capabilities in the upload-pack
-> side, so I'll make the reverse suggestion. :) Would it make things nicer
-> if both v1 and v2 parsed the capabilities into a string_list?
+Quentin Neill <quentin.neill@gmail.com> writes:
 
-Ok, I'll do that. Though this makes future enhancements a bit uneasy.
-Say we want to transport a message by the server admins, this might be
-the right place to do.
+> Thanks for the thorough review!
+> I have adjusted the commit messages and updated the documentation changes.
+> I'm in trying to add tests, I'll probably have some issues but will
+> post something that works soon.
 
-    if (starts_with("message"))
-        fprintf(stderr, ....
+Hi, I was sweeping my old mailbox for leftover bits, and noticed
+that this thread ended without seeing the final step.
 
-Of course we can later add this in the future, but it would break older
-clients (clients as of this patch series). That's why I like the idea of
-adding a prefix here. Maybe just a "c:" as an abbreviation for capability.
-But now making it short and concise makes it painful in the future when
-we want to transport anything else apart from capabilities in this phase
-of the protocol exchange. Of course we could have a capability "server-message"
-indicating that after the capabilities we'll have a dedicated message to be
-displayed to the user.
-
-Yeah well that should do.
-
-I'll just parse in a string_list for now.
-
->
->> +     free(server_capabilities);
->> +     server_capabilities = xmalloc(capabilities_string.len + 1);
->> +     server_capabilities = strbuf_detach(&capabilities_string, NULL);
->
-> Is this xmalloc line left over? The strbuf_detach will write over it.
-
-No, I wasn't reading the fine documentation and assuming things I
-should not.
-
->
->> +     strbuf_release(&capabilities_string);
->
-> No need to release if we just detached.
->
->> +int request_capabilities(int out)
->> +{
->> +     fprintf(stderr, "request_capabilities\n");
->
-> Debug cruft, I presume.
->
->> +     // todo: send our capabilities
->> +     packet_write(out, "capability:foo");
->
-> No C99 comments. But I think this is just a placeholder. :)
->
-> -Peff
+Has anything further happened to this topic, did you got too busy,
+or you lost interest?
