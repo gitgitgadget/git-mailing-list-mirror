@@ -1,110 +1,144 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 8/8] t5520: check reflog action in fast-forward merge
-Date: Fri, 29 May 2015 19:44:45 +0800
-Message-ID: <1432899885-25143-9-git-send-email-pyokagan@gmail.com>
-References: <1432899885-25143-1-git-send-email-pyokagan@gmail.com>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Paul Tan <pyokagan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 13:45:29 2015
+From: Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH 1/3] t4150-am: refactor and clean common setup
+Date: Fri, 29 May 2015 13:50:43 +0200
+Message-ID: <871thz4n70.fsf@ensimag.grenoble-inp.fr>
+References: <1432675975-11020-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<CACRoPnQEJHPfoz0LjSs2X1CrW-TdVGb54XSrg6VWXP2tdyu5Uw@mail.gmail.com>
+	<CAPig+cRm6MRaR=Qgjxo2fGGcs522DstVedmq4j_fAQeBwG4ZUg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri May 29 13:51:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyIjA-00043m-9U
-	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 13:45:28 +0200
+	id 1YyIoV-0007e5-1n
+	for gcvg-git-2@plane.gmane.org; Fri, 29 May 2015 13:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755387AbbE2LpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2015 07:45:23 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33207 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755461AbbE2LpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2015 07:45:18 -0400
-Received: by padbw4 with SMTP id bw4so55992712pad.0
-        for <git@vger.kernel.org>; Fri, 29 May 2015 04:45:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iyNFD81P90Uvp/5KhkifSxswhoX62ZzOeiyZzDZChK4=;
-        b=YjXf3lqfIK+5RUgKSpz8RdDcHif5lukta0RpHl4q444mR/0Lk2rgRrz/wVZXPoLEW+
-         YZ3qk3rHk2Gka4JqPxoy+3v8GRUCpYl+Z8iI4tlGGhKM6O4UrLnQcgrPo6KIRpw/8QqZ
-         OJRg7xWWcApBEakY6xwVw3qJd7q6foaYLtt/ws9AP+XerE5yFFk4bkEaGpBOxa77cLFo
-         5LRbTg2IP3dCCw/SiUncZAb3mZdCzNMQVkW54GiGfguugJHwO2Gob7AefPJJDMNCcfzS
-         jePqiI7+ryC0fDo9rB28xC5wOe/Meh5M6kx07aSh7zFviNEOBBJ4CQDpt2xYv2hAkjxx
-         dTeA==
-X-Received: by 10.66.191.226 with SMTP id hb2mr14405828pac.72.1432899918025;
-        Fri, 29 May 2015 04:45:18 -0700 (PDT)
-Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id qg5sm5392460pdb.13.2015.05.29.04.45.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 May 2015 04:45:16 -0700 (PDT)
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1432899885-25143-1-git-send-email-pyokagan@gmail.com>
+	id S1755233AbbE2Luu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2015 07:50:50 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:54279 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752833AbbE2Lus (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 May 2015 07:50:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 64BF248864;
+	Fri, 29 May 2015 13:50:45 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id BlPmA-u-GKhK; Fri, 29 May 2015 13:50:45 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4B44D48861;
+	Fri, 29 May 2015 13:50:45 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id 4218A20D6;
+	Fri, 29 May 2015 13:50:45 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nqb6kyLPFGyg; Fri, 29 May 2015 13:50:45 +0200 (CEST)
+Received: from Groseille (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 5D2FD20D4;
+	Fri, 29 May 2015 13:50:44 +0200 (CEST)
+In-Reply-To: <CAPig+cRm6MRaR=Qgjxo2fGGcs522DstVedmq4j_fAQeBwG4ZUg@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 28 May 2015 14:15:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270237>
 
-When testing a fast-forward merge with git-pull, check to see if the
-reflog action is "pull" with the arguments passed to git-pull.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-While we are in the vicinity, remove the empty line as well.
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+> >> Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+> >> +       tmp_name=${2-"temporary"}
+> >
+> > I don't think the quotes are required. Also, I don't feel good about
+> > swapping the order of the arguments to git-checkout. (or making $2 an
+> > optional argument). As the patch stands, if I see
+> >
+> > setup_temporary_branch lorem
+> >
+> > I will think: so we are creating a temporary branch "lorem". But nope,
+> > we are creating a temporary branch "temporary" that branches from
+> > "lorem". I don't think writing setup_temporary_branch "temporary"
+> > "lorem" explicitly is that bad.
+> 
+> In fact, the second argument is never used in any of the three
+> patches, so it seems to be wasted functionality (at this time). If so,
+> then an even more appropriate name might be new_temp_branch_from().
+> Clearly, then:
+> 
+>     new_temp_branch_from lorem
 
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
+Considering your two comments about the name of the function I think
+removing the possibility of using the second argument and renaming the
+function new_temp_branch_from gets everyone to agree since it has not
+the possible confusion with git-checkout problem.
 
-Notes:
-    v5:
-    
-    * Loosen up the pattern used for search-and-replace of the object ID in
-      the reflog: it may not always be the case that the abbreviated object
-      ID is at least 5 characters.
-    
-    * Only match the beginning of the reflog entry for the object ID.
+> This is confusing. The commit message seems to advertise this patch as
+> primarily a refactoring change (pulling boilerplate out of tests and
+> into a new function), but the operation of that new function is
+> surprisingly different from the boilerplate it's replacing: The old
+> code did not create a branch, the new function does.
+> 
+> If your intention really is to create new branches in tests which
+> previously did not need throwaway branches, then the commit message
+> should state that as its primary purpose and explain why doing so is
+> desirable, since it is not clear from this patch what you gain from
+> doing so.
+> 
+> Moreover, typically, you should only either refactor or change
+> behavior in a single patch, not both. For instance, patch 1 would add
+> the new function and update tests to call it in place of the
+> boilerplate; and patch 2 would change behavior (such as creating a
+> temporary branch).
+> 
+> On the other hand, if these tests really don't benefit from having a
+> throw-away branch, then this change seems suspect and obscures the
+> intent of the test rather than clarifying or simplifying.
 
- t/t5520-pull.sh | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+The purpose of this patch was originally to eliminate some test
+dependancies introduced by the checkouts relative to HEAD (which
+caused "cascade failure") and avoid creating branches, whose name
+can't be reused, but you're right, that may not benefit as much as I
+expected...  Perhaps I should have make tags from branches used as
+start points, which would have done the same effect as these temporary
+branches.
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index a04f55c..af31f04 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -86,7 +86,6 @@ test_expect_success 'pulling into void must not create an octopus' '
- '
- 
- test_expect_success 'test . as a remote' '
--
- 	git branch copy master &&
- 	git config branch.copy.remote . &&
- 	git config branch.copy.merge refs/heads/master &&
-@@ -95,7 +94,11 @@ test_expect_success 'test . as a remote' '
- 	git checkout copy &&
- 	test "$(cat file)" = file &&
- 	git pull &&
--	test "$(cat file)" = updated
-+	test "$(cat file)" = updated &&
-+	git reflog -1 >reflog.actual &&
-+	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
-+	echo "OBJID HEAD@{0}: pull: Fast-forward" >reflog.expected &&
-+	test_cmp reflog.expected reflog.fuzzy
- '
- 
- test_expect_success 'the default remote . should not break explicit pull' '
-@@ -106,7 +109,11 @@ test_expect_success 'the default remote . should not break explicit pull' '
- 	git reset --hard HEAD^ &&
- 	test "$(cat file)" = file &&
- 	git pull . second &&
--	test "$(cat file)" = modified
-+	test "$(cat file)" = modified &&
-+	git reflog -1 >reflog.actual &&
-+	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
-+	echo "OBJID HEAD@{0}: pull . second: Fast-forward" >reflog.expected &&
-+	test_cmp reflog.expected reflog.fuzzy
- '
- 
- test_expect_success 'fail if wildcard spec does not match any refs' '
--- 
-2.1.4
+> >         sed -n -e "3,\$p" msg >file &&
+> >         head -n 9 msg >>file &&
+> >         git add file &&
+> > @@ -303,10 +297,8 @@ test_expect_success 'am -3 -p0 can read --no-prefix patch' '
+> >  '
+> >
+> >  test_expect_success 'am can rename a file' '
+> > +       setup_temporary_branch lorem &&
+> >         grep "^rename from" rename.patch &&
+> > -       rm -fr .git/rebase-apply &&
+> > -       git reset --hard &&
+> > -       git checkout lorem^0 &&
+> 
+> In other cases, you insert the setup_temporary_branch() invocation
+> where the old code resided. Why the difference in this test (and
+> others following)?
+
+This doesn't affect the result of the test (assuming
+setup_temporary_branch doesn't fail). I preferred to add the setup
+before anything else in the test.  It affects efficiency in case the
+rename patch has not the correct syntax. So it may be better to put the
+grep as the first instruction to avoid evaluating all the test in case
+the syntax of the patch is not correct.
+
+Thanks a lot for your comments, I'll correct the patch asap !
