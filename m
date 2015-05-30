@@ -1,7 +1,7 @@
 From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
 Subject: [PATCH v2 1/2] completion: Add sequencer function
-Date: Sat, 30 May 2015 18:01:50 +0200
-Message-ID: <1433001710.5113.8.camel@virtuell-zuhause.de>
+Date: Sat, 30 May 2015 18:02:05 +0200
+Message-ID: <1433001725.5113.9.camel@virtuell-zuhause.de>
 References: <CALkWK0m9Fj_3AnJcENL-kAFSbYjW4fKpN76Tftrt672hQj4qww@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
@@ -11,32 +11,32 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	John Keeping <john@keeping.me.uk>,
 	SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 30 18:01:58 2015
+X-From: git-owner@vger.kernel.org Sat May 30 18:02:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyjCv-0001aq-Mi
-	for gcvg-git-2@plane.gmane.org; Sat, 30 May 2015 18:01:58 +0200
+	id 1YyjDB-0001my-Es
+	for gcvg-git-2@plane.gmane.org; Sat, 30 May 2015 18:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755804AbbE3QBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2015 12:01:53 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:33649 "EHLO
+	id S932349AbbE3QCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2015 12:02:09 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:33726 "EHLO
 	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755351AbbE3QBw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 May 2015 12:01:52 -0400
+	by vger.kernel.org with ESMTP id S1755767AbbE3QCI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 May 2015 12:02:08 -0400
 Received: from p5ddc33fc.dip0.t-ipconnect.de ([93.220.51.252] helo=[192.168.100.43]); authenticated
 	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1YyjCo-0004nv-R2; Sat, 30 May 2015 18:01:50 +0200
+	id 1YyjD4-0004vK-7j; Sat, 30 May 2015 18:02:06 +0200
 In-Reply-To: <CALkWK0m9Fj_3AnJcENL-kAFSbYjW4fKpN76Tftrt672hQj4qww@mail.gmail.com>
 X-Mailer: Evolution 3.12.9-1+b1 
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1433001712;43fcb5aa;
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1433001727;8cef58b9;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270289>
 
 Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
 ---
