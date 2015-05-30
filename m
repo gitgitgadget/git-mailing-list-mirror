@@ -1,122 +1,86 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: [PATCH v2 1/2] completion: Add sequencer function
-Date: Sat, 30 May 2015 18:02:05 +0200
-Message-ID: <1433001725.5113.9.camel@virtuell-zuhause.de>
-References: <CALkWK0m9Fj_3AnJcENL-kAFSbYjW4fKpN76Tftrt672hQj4qww@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] commit: fix ending newline for template files
+Date: Sat, 30 May 2015 09:59:38 -0700
+Message-ID: <xmqqfv6eatmt.fsf@gitster.dls.corp.google.com>
+References: <1432620908-16071-1-git-send-email-patryk.obara@gmail.com>
+	<1432620908-16071-3-git-send-email-patryk.obara@gmail.com>
+	<CAPig+cTt5sQ=49qS2+8ZOtiX61kHjAisAvpP7K3XPhtNtCatOg@mail.gmail.com>
+	<xmqqpp5kh8a0.fsf@gitster.dls.corp.google.com>
+	<CAPig+cR=Mrgb+-ZZcM6m7AcL25gXYtmEVpO3c23k_UKXPgyQnA@mail.gmail.com>
+	<xmqqwpzrb0kb.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTrW9f1TGvpr4KH+EcOsy=FWvGRj6ZQM6nsFyXc15c4qg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 30 18:02:14 2015
+Content-Type: text/plain
+Cc: Patryk Obara <patryk.obara@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat May 30 18:59:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyjDB-0001my-Es
-	for gcvg-git-2@plane.gmane.org; Sat, 30 May 2015 18:02:13 +0200
+	id 1Yyk6z-0004oE-EP
+	for gcvg-git-2@plane.gmane.org; Sat, 30 May 2015 18:59:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932349AbbE3QCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2015 12:02:09 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:33726 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755767AbbE3QCI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 May 2015 12:02:08 -0400
-Received: from p5ddc33fc.dip0.t-ipconnect.de ([93.220.51.252] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1YyjD4-0004vK-7j; Sat, 30 May 2015 18:02:06 +0200
-In-Reply-To: <CALkWK0m9Fj_3AnJcENL-kAFSbYjW4fKpN76Tftrt672hQj4qww@mail.gmail.com>
-X-Mailer: Evolution 3.12.9-1+b1 
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1433001727;8cef58b9;
+	id S1757203AbbE3Q7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2015 12:59:43 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:34477 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757071AbbE3Q7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2015 12:59:41 -0400
+Received: by ieczm2 with SMTP id zm2so83419622iec.1
+        for <git@vger.kernel.org>; Sat, 30 May 2015 09:59:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=82VD9sLmshaimHmHYGYa/LoF3xQhe6HpUojNi5uQniE=;
+        b=FpTeWvRFIxjd1MZrT7MPi/sAKderc3YblkJa06fOWBG21YEf5BRpLTKiDMmZX3bO2J
+         oP1FXVWyg0xApONgy8x32BlYk0kNMgcliG6cbufprnz44xoJFmrx2PkjYHIk0bv4TyvU
+         b9pbcFyZTZlEiS3OMEbCVgQX3o0lD9csZJLCU4h/Rj1lf+iasqhiV7T2atLKsZdvf39X
+         v37LvDgrD6fVuASC4WSx0jbHsd3bvsKo5dUqvqoVKKlc7MeGsgD7A/HyaHVsasVniIuG
+         BmapeebKilLXmufOYi/cDfx4Gn2B8ejz1m6HmnG5JwchghMSWGTcP1LXKe0xDsZs7ApH
+         hBLQ==
+X-Received: by 10.42.203.4 with SMTP id fg4mr20561487icb.52.1433005180635;
+        Sat, 30 May 2015 09:59:40 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d9c8:419b:acd5:cf1d])
+        by mx.google.com with ESMTPSA id q78sm6672260ioe.9.2015.05.30.09.59.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 30 May 2015 09:59:39 -0700 (PDT)
+In-Reply-To: <CAPig+cTrW9f1TGvpr4KH+EcOsy=FWvGRj6ZQM6nsFyXc15c4qg@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 29 May 2015 18:25:29 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270290>
 
-Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
----
- contrib/completion/git-completion.bash | 48 +++++++++++++++++++++++-----------
- 1 file changed, 33 insertions(+), 15 deletions(-)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index bfc74e9..f6e5bf6 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -851,15 +851,40 @@ __git_count_arguments ()
- 	printf "%d" $c
- }
- 
-+__git_complete_sequencer ()
-+{
-+	local dir="$(__gitdir)"
-+
-+	case "$1" in
-+	am)
-+		if [ -d "$dir"/rebase-apply ]; then
-+			__gitcomp "--skip --continue --resolved --abort"
-+			return 0
-+		fi
-+		;;
-+	cherry-pick)
-+		if [ -f "$dir"/CHERRY_PICK_HEAD ]; then
-+			__gitcomp "--continue --quit --abort"
-+			return 0
-+		fi
-+		;;
-+	rebase)
-+		if [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
-+			__gitcomp "--continue --skip --abort"
-+			return 0
-+		fi
-+		;;
-+	esac
-+
-+	return 1
-+}
-+
- __git_whitespacelist="nowarn warn error error-all fix"
- 
- _git_am ()
- {
--	local dir="$(__gitdir)"
--	if [ -d "$dir"/rebase-apply ]; then
--		__gitcomp "--skip --continue --resolved --abort"
--		return
--	fi
-+	__git_complete_sequencer "am" && return
-+
- 	case "$cur" in
- 	--whitespace=*)
- 		__gitcomp "$__git_whitespacelist" "" "${cur##--whitespace=}"
-@@ -1044,11 +1069,8 @@ _git_cherry ()
- 
- _git_cherry_pick ()
- {
--	local dir="$(__gitdir)"
--	if [ -f "$dir"/CHERRY_PICK_HEAD ]; then
--		__gitcomp "--continue --quit --abort"
--		return
--	fi
-+	__git_complete_sequencer "cherry-pick" && return
-+
- 	case "$cur" in
- 	--*)
- 		__gitcomp "--edit --no-commit --signoff --strategy= --mainline"
-@@ -1666,11 +1688,7 @@ _git_push ()
- 
- _git_rebase ()
- {
--	local dir="$(__gitdir)"
--	if [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
--		__gitcomp "--continue --skip --abort"
--		return
--	fi
-+	__git_complete_sequencer "rebase" && return
- 	__git_complete_strategy && return
- 	case "$cur" in
- 	--whitespace=*)
+> On Fri, May 29, 2015 at 4:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> By default, we should run clean-up after the editor we spawned gives
+>> us the edited result.  Not adding one more LF after the template
+>> when it already ends with LF would not hurt, but an extra blank
+>> after the template material does not hurt, either, so I am honestly
+>> indifferent.
+>
+> I had a similar reaction. The one salient bit I picked up was that
+> Patryk finds it aesthetically offensive[1] when the template ends with
+> a comment line, and that comment line does not flow directly into the
+> comment lines provided by --status. That is:
+>
+>     Template line 1
+>     # Template line 2
+>
+>     # Please enter the commit message...
+>     # with '#' will be ignored...
+>
+> [1]: Quoting from the commit message of patch 1/2: "...which is very
+> annoying when template ends with line starting with '#'"
+
+As I said in the message you are responding to, I do not think it
+would hurt if we stopped adding an LF after a template that already
+ends with LF.  I think I am OK with a patch that does so without
+doing anything else, like changing when clean-up happens, etc.
