@@ -1,74 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP/PATCH v4 6/8] for-each-ref: rename some functions and make them public
-Date: Sun, 31 May 2015 10:54:36 -0700
-Message-ID: <xmqqiob8aazn.fsf@gitster.dls.corp.google.com>
-References: <5569EF77.4010300@gmail.com>
-	<1433008411-8550-6-git-send-email-karthik.188@gmail.com>
-	<CAP8UFD080Yuv-CYcDzAG0u6OV7Sqry=0s1HKoJbt5wfKjTNO3Q@mail.gmail.com>
+Subject: Re: [PATCH v2] blame: add blame.showEmail configuration
+Date: Sun, 31 May 2015 11:13:23 -0700
+Message-ID: <xmqqa8wkaa4c.fsf@gitster.dls.corp.google.com>
+References: <xmqq617bcgva.fsf@gitster.dls.corp.google.com>
+	<1433021926-17762-1-git-send-email-qneill@quicinc.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 31 19:54:45 2015
+Cc: git@vger.kernel.org
+To: Quentin Neill <quentin.neill@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 31 20:13:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yz7Rb-0004m3-Ma
-	for gcvg-git-2@plane.gmane.org; Sun, 31 May 2015 19:54:44 +0200
+	id 1Yz7jm-0006Gj-Jl
+	for gcvg-git-2@plane.gmane.org; Sun, 31 May 2015 20:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758388AbbEaRyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2015 13:54:39 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33076 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758379AbbEaRyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2015 13:54:38 -0400
-Received: by igbpi8 with SMTP id pi8so46464502igb.0
-        for <git@vger.kernel.org>; Sun, 31 May 2015 10:54:38 -0700 (PDT)
+	id S1758451AbbEaSN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2015 14:13:26 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:34979 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754559AbbEaSNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2015 14:13:25 -0400
+Received: by igbyr2 with SMTP id yr2so46813116igb.0
+        for <git@vger.kernel.org>; Sun, 31 May 2015 11:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=mWLOXwf3MAiBUV1//yl2vkvmo6K/q1Wvh2xLsu7Z/Ac=;
-        b=o05tzLE/pVGVTGrrsztpDuEq7JEyJEEhBw4KdYz7MjxkZqdCnjDphOEnUCuHcMSP2G
-         dzvszOR9eqTrGN9Hx0/c56i8Qru27jhcSvvvnQ4Eg14r2nMUXOkpU7y8HkH1SjtTMck0
-         w5VFYV0mLNT6Eie2ZOx5iGQf73P1R8X6ci2q+TnhFcrYU20TyS5jR+lxvh+xW6SCnPRM
-         Utv0pXR6nsAPpzbMdxTNaRNEAejMLHcQGbrJcxCxAeLNhTbHr/SJCLeSdZ27M3JSvQQX
-         6ZChNdMVjExGpqBQaWVSg1hTcwFT+PA4GRGQMipygrtwkZzaoVxCh1sgRz9Vu0vVDvsf
-         1gvQ==
-X-Received: by 10.50.79.167 with SMTP id k7mr8748028igx.32.1433094878208;
-        Sun, 31 May 2015 10:54:38 -0700 (PDT)
+        bh=5LWVX5hyJVtRsdoLp1Qm4GGTpDyH+Cecf06g3xFht2g=;
+        b=Wz/bfVVd9zdo2CvT8l6G6Nc47Qe6H6kZdh8aeYxt8JKOiqDQws3STsZ+uZL0enj34g
+         agIG7BN9VtueGRlloOlWtNszXxDFPgyx0oIce1H1j+TqaCxN78QwidanGrN4/5aAC9xG
+         DutXQAJnZPiAndDfKHFnIeVJnkKhAfGdUgOJ0P/La/0Oj++cBopJEoC+7+UPYMtPsusT
+         S3dDi+qnW7N2AYUD4mAHnlP4GcFk+0GH3uicM/5VFp0S2mhUiwXOK3GEkT738WlXIoi/
+         7fkaCLgG3l8j+ubaWjj1zxp3yOrOlLSOC9kCuXe3nTFhgjarbdM+5MQzsGxKimmfALyh
+         w0SQ==
+X-Received: by 10.107.35.203 with SMTP id j194mr22258653ioj.45.1433096004534;
+        Sun, 31 May 2015 11:13:24 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:3d1d:5ddf:1454:826b])
-        by mx.google.com with ESMTPSA id 137sm8738888ioo.29.2015.05.31.10.54.37
+        by mx.google.com with ESMTPSA id rr5sm6176464igb.7.2015.05.31.11.13.23
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 31 May 2015 10:54:37 -0700 (PDT)
-In-Reply-To: <CAP8UFD080Yuv-CYcDzAG0u6OV7Sqry=0s1HKoJbt5wfKjTNO3Q@mail.gmail.com>
-	(Christian Couder's message of "Sun, 31 May 2015 10:04:32 +0200")
+        Sun, 31 May 2015 11:13:24 -0700 (PDT)
+In-Reply-To: <1433021926-17762-1-git-send-email-qneill@quicinc.com> (Quentin
+	Neill's message of "Sat, 30 May 2015 16:38:46 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270340>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Quentin Neill <quentin.neill@gmail.com> writes:
 
-> On Sat, May 30, 2015 at 7:53 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>
->> -static void sort_refs(struct ref_sort *sort, struct ref_array *array)
->> +void sort_ref_array(struct ref_sort *sort, struct ref_array *array)
+> From: Quentin Neill <quentin.neill@gmail.com>
 >
-> It is probably better to call the above function ref_array_sort()...
+> Complement existing --show-email option with fallback
+> configuration variable, with tests.
+> ---
 
-Care to explain the reasoning behind that suggestion?  The function
-"sorts" "ref_array", so verb-object sounds like a valid construction
-of a name.  All the functions externalized by the patch under
-discussion follows that pattern, I think (e.g. parse-ref-filter-atom,
-verify-ref-format, show-ref-array-item).
+The patch itself looks very reasonable.  Thanks for getting back to
+us ;-)
 
-Making the API function share a common prefix is another valid
-school of design; while that may justify ref-array-sort(), but if
-you are going in that direction, all the others need to be renamed
-along that line consistently, I would think.
+A few minor nits:
+
+    - Your in-body "From:" is redundant and unnecessary, as your
+      e-mail is coming from the same address.
+
+    - You need "Signed-off-by: Quentin Neill <quentin.neill@gmail.com>"
+      after your log message (separate it with a blank line before
+      the sign-off, and place the sign-off before the three-dash
+      lines).
+
+> diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+> index 5cdf3f1..faf1660 100755
+> --- a/t/t8002-blame.sh
+> +++ b/t/t8002-blame.sh
+> @@ -19,4 +19,66 @@ test_expect_success 'blame --show-email' '
+>  		"<E at test dot git>" 1
+>  '
+>  
+> +test_expect_success 'setup showEmail tests' '
+> +	echo "bin: test number 1" >one &&
+> +	git add . &&
+> +	GIT_AUTHOR_NAME=name1 GIT_AUTHOR_EMAIL=email1@test.git git commit -a -m First --date="2010-01-01 01:00:00"
+> +'
+> +
+> +cat >expected_n <<\EOF &&
+> +(name1 2010-01-01 01:00:00 +0000 1) bin: test number 1
+> +EOF
+> +
+> +cat >expected_e <<\EOF &&
+> +(<email1@test.git> 2010-01-01 01:00:00 +0000 1) bin: test number 1
+> +EOF
+
+These two commands outside test_expect_success are part of setup, so
+
+	test_expect_success 'setup showEmail tests' '
+        	echo "bin: test number 1" >one &&
+                git add one &&
+                GIT_AUTHOR_NAME=name1 \
+                GIT_AUTHOR_EMAIL=email1@test.git \
+                git commit -m First --date="2010-01-01 01:00:00" &&
+		cat >expected_n <<-\EOF &&
+                (name1 ...
+                EOF
+                cat >expected_e <<-\EOF
+                (<email1@...
+		EOF
+	'
+
+Also do not hesitate to break overlong lines with "\".
+
+> +find_blame() {
+
+style: "find_blame () {"
+
+Other than that, the patch looks good.
+
+Thanks.
