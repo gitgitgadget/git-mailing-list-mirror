@@ -1,72 +1,76 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [WIP/PATCH v4 1/8] for-each-ref: extract helper functions out
- of grab_single_ref()
-Date: Sun, 31 May 2015 13:41:26 +0530
-Message-ID: <556AC22E.90405@gmail.com>
-References: <5569EF77.4010300@gmail.com>	<1433008411-8550-1-git-send-email-karthik.188@gmail.com> <CAPig+cSBaKwRqEEBB62LX0OyYGNddLHNU-zMEx2478kV8=+pDQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [WIP/PATCH v4 6/8] for-each-ref: rename some functions and make
+ them public
+Date: Sun, 31 May 2015 10:11:51 +0200
+Message-ID: <CAP8UFD1TTMfruCE-+GT-LzhK5C9LorStPbn64tZ-hhAkC=8Bdw@mail.gmail.com>
+References: <5569EF77.4010300@gmail.com>
+	<1433008411-8550-6-git-send-email-karthik.188@gmail.com>
+	<CAP8UFD080Yuv-CYcDzAG0u6OV7Sqry=0s1HKoJbt5wfKjTNO3Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun May 31 10:11:42 2015
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 31 10:12:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YyyLN-00053Y-4V
-	for gcvg-git-2@plane.gmane.org; Sun, 31 May 2015 10:11:41 +0200
+	id 1YyyLg-0005Dw-GN
+	for gcvg-git-2@plane.gmane.org; Sun, 31 May 2015 10:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758035AbbEaILg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2015 04:11:36 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:34946 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751071AbbEaILb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2015 04:11:31 -0400
-Received: by pdbnf5 with SMTP id nf5so24107834pdb.2
-        for <git@vger.kernel.org>; Sun, 31 May 2015 01:11:31 -0700 (PDT)
+	id S1758172AbbEaIL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2015 04:11:56 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:34267 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071AbbEaILw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2015 04:11:52 -0400
+Received: by wgv5 with SMTP id 5so91764820wgv.1
+        for <git@vger.kernel.org>; Sun, 31 May 2015 01:11:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=QX7kYl2J+UEeoP4NI0QQQKUEsCaPI1ZCPz2rhyDvThw=;
-        b=Zj55WZwJazPCklWHogx66aeqxBfKiIgZpSYFYPv/gvgOHvQIF5q+IDgx+bTRoXEMIM
-         371qq3whOkOkvzecGoCMenWG/E3Bf8ndz9M80B4U9UTs/MHTeToHPx2hnJk7aCN6iFas
-         Rh8sEs1c+SXOyv5KVOpXLbzegvz9a05IiOptWkXnCZD1K15ILpoXLK+53IeZrcxv50R8
-         EkaM+6bMO7rXXqifUw9xjw2+BUpXXjVxRgdLsStoQ9mjyDVge+qYKPngka/piwnkuMsO
-         dmx3eQUt++7dUV+kEFhiCsiuk8pqzKbQrUVsj22piK2OADOc+/O97IYLuB9isXPYGKXx
-         B0og==
-X-Received: by 10.70.54.7 with SMTP id f7mr29589597pdp.75.1433059891137;
-        Sun, 31 May 2015 01:11:31 -0700 (PDT)
-Received: from [192.168.0.101] ([106.51.130.23])
-        by mx.google.com with ESMTPSA id l1sm10654592pdp.71.2015.05.31.01.11.28
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 31 May 2015 01:11:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <CAPig+cSBaKwRqEEBB62LX0OyYGNddLHNU-zMEx2478kV8=+pDQ@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ovwQWVeFuaXUE96G7Zdun/KvwrdrFGAIR99Z0heh0O4=;
+        b=zWyf3jMDTWXqwXZN8dG2UyXHWCmqyT3YocL7+XFY6V47SJ35KX+Y+f/eSTJ/ALJvQ0
+         JpPIDloqcS8FCeDbeqToYFoLGGZeRMwfz8qbufgx6HRVLiVOk71GSj+KVivbVglTYsrO
+         5l0xlSkBfWXqzn9Vm4SCdB8qBmoNwY+45POvBJZKKCmHjhqsLbDEM2uujb5Yrgn5Pgd+
+         nBS7vE/Cr+iCmkDt4LarPook83Lo2uDDLr1cWKC7RubHuXzHvw5k9TTUpYZd1JX1xjrI
+         AoaDb8LpP4oTqWft21xF1qjGid6pK3i69UlOE17PZ2lBWxWz4pR211Gj1EfpyokL37N9
+         a/gQ==
+X-Received: by 10.181.13.198 with SMTP id fa6mr10609618wid.41.1433059911213;
+ Sun, 31 May 2015 01:11:51 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Sun, 31 May 2015 01:11:51 -0700 (PDT)
+In-Reply-To: <CAP8UFD080Yuv-CYcDzAG0u6OV7Sqry=0s1HKoJbt5wfKjTNO3Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270318>
 
+On Sun, May 31, 2015 at 10:04 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Sat, May 30, 2015 at 7:53 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>
+>> -static void sort_refs(struct ref_sort *sort, struct ref_array *array)
+>> +void sort_ref_array(struct ref_sort *sort, struct ref_array *array)
 >
-> Why did this comment get removed? Isn't it still meaningful to the
-> overall logic of this function?
+> It is probably better to call the above function ref_array_sort()...
 >
-
-Wasn't intentional, will put that back.
-
+> [...]
 >
-> Sneaking in whitespace change?
+>> -static struct ref_sort *default_sort(void)
+>> +/*  If no sorting option is given, use refname to sort as default */
+>> +struct ref_sort *ref_default_sort(void)
 >
+> ... especially since you call the above ref_default_sort()...
+>
+>> -static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
+>> +int opt_parse_ref_sort(const struct option *opt, const char *arg, int unset)
+>
+> ... and the above opt_parse_sort().
 
-Noted. thanks
-
-
--- 
-Regards,
-Karthik
+After saying that I realize that these two other functions are not
+doing the same thing.
+This might suggest that they are not named very well as well.
