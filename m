@@ -1,70 +1,81 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [WIP/PATCH v4 8/8] ref-filter: add 'ref-filter.h'
-Date: Mon, 1 Jun 2015 00:34:17 +0200
-Message-ID: <CAP8UFD1RnP1pk-MdzEBtiqTtpjaDyn-UZnEjCthrmHPYi1WCAA@mail.gmail.com>
-References: <5569EF77.4010300@gmail.com>
-	<1433008411-8550-8-git-send-email-karthik.188@gmail.com>
-	<CAPig+cR88O=STcJDrB+96uJ0Y60mO49QxoJfbOY8Xk4hPvNxGA@mail.gmail.com>
-	<556AC40C.5020205@gmail.com>
-	<vpqlhg4jx0d.fsf@anie.imag.fr>
-	<556B740A.5030404@gmail.com>
+Subject: Re: seg fault in "git format-patch"
+Date: Mon, 1 Jun 2015 01:14:41 +0200
+Message-ID: <CAP8UFD1rKmKgKqCsffCLyOCny3JEACxgmBN_eqOj_=3zBW-MZg@mail.gmail.com>
+References: <556B5D4C.4030406@gmail.com>
+	<CAP8UFD0Pi3_hF0+S3AXktD5NkBL_Q1mU_oN4fULyZemDEUr8Jg@mail.gmail.com>
+	<CAKRnqNKVfzt_qMqoxsjMpunUYDNYd8C0jACM69HxGhJHEeVY-Q@mail.gmail.com>
+	<CAKRnqNJnaLioQPWYDmSiBfLCSMGdFR21bAEXRzdpkChDBf2wgw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 00:34:25 2015
+Cc: GIT Development <git@vger.kernel.org>
+To: Bruce Korb <bruce.korb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 01:14:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzBoF-0007go-2o
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 00:34:23 +0200
+	id 1YzCRO-0003ZO-2c
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 01:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758610AbbEaWeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2015 18:34:20 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:36827 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758574AbbEaWeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2015 18:34:18 -0400
-Received: by wibdq8 with SMTP id dq8so13593216wib.1
-        for <git@vger.kernel.org>; Sun, 31 May 2015 15:34:17 -0700 (PDT)
+	id S1758489AbbEaXOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2015 19:14:43 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:36407 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751232AbbEaXOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2015 19:14:43 -0400
+Received: by wibdq8 with SMTP id dq8so13942897wib.1
+        for <git@vger.kernel.org>; Sun, 31 May 2015 16:14:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=cT5DmzknXtTLcFRZZcrS4ZjQ0E0KMyZcdLqG2Lhh4cc=;
-        b=zy6VWosDSWs1tBMy5gUkO9yeQb6qDh9/fvKCF/E1ha4OFX2T4sDMPgqxcCN4X9aGoH
-         y5iCVoV3LTckN1iycjbi32DDuJ5+XaZSI9JYNHhqp6IoSLcp0bEenmvPJdK421fKRkbF
-         azKwdDDXKR8FSfeG+bB2FwWf4E/glCWycws9ApdPSXuf9/deYTmkpULok+bebEvXfI4q
-         eFQOWMoDb8H/nIq8v/GRhZNWxLLWDBFR5WwLutQ/sFIgENIB8n8DjBE2WFxi7nOrE95Z
-         bYpV9SZbYYNmy2YR9U22hqDb/1ZG54P8F+UCaVKQbc05aWGybJxQb0pbos9/mrXktIKQ
-         JD9w==
-X-Received: by 10.180.88.99 with SMTP id bf3mr15086609wib.75.1433111657336;
- Sun, 31 May 2015 15:34:17 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Sun, 31 May 2015 15:34:17 -0700 (PDT)
-In-Reply-To: <556B740A.5030404@gmail.com>
+        bh=46HGAdVxs6250+L1PswxF6Cafuhr6sucQnVXLiG/ReE=;
+        b=SAh7l+sGxm7B8Q1fzzcRogY6L3oLJdBKFg6P2+/ABm3bUCNZn5eU2qWA0fx5WCA0VC
+         V9L/tFjewelmr2h/YSd4iTQHOUcWpKjJmDWquYMYvlTpUXixaPWnYgxUF2YXYkSH2jkV
+         nMqoZRwvx0z7rwzE8pnH6pt8gUfibZCw8pBJVK/KgEVPkv9VDeaFc8KaujP0y0FqJkOA
+         qv3+/Tv45OFmxSFphuaUjXtH4oF9p1H3vJCblhNV9nZT2sfSjlhPuTSaACc44TBKy7HW
+         SzjnesQWb+erF070GZqsgOzMp+wSA2oAmZq0Slxz1yY6BeyiMTxyAdfAfqvdEZrvdjNs
+         SLxg==
+X-Received: by 10.180.88.99 with SMTP id bf3mr15273677wib.75.1433114081923;
+ Sun, 31 May 2015 16:14:41 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Sun, 31 May 2015 16:14:41 -0700 (PDT)
+In-Reply-To: <CAKRnqNJnaLioQPWYDmSiBfLCSMGdFR21bAEXRzdpkChDBf2wgw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270366>
 
-On Sun, May 31, 2015 at 10:50 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On 06/01/2015 02:16 AM, Matthieu Moy wrote:
->>
->> You can have a preparatory patch that adds ref-filter.c containing just
->> "#include ref-filter.h" and ref-filter.h with proper content. After this
->> preparatory patch, you're in a rather silly situation because you have
->> an almost empty .c file, but it's still passing all tests and
->> compileable.
->>
->> Then, the next patch can be just code movement.
->>
-> Would it be okay, If I just include the Makefile addition along with the
-> code movement
-> from 'for-each-ref' to 'ref-filter.c' like Eric suggested?
+On Sun, May 31, 2015 at 10:45 PM, Bruce Korb <bruce.korb@gmail.com> wrote:
+> Oh, you can also clone the gnu-pw-mgr and likely get the same result:
 
-Yeah, I think it is ok as well.
+Yeah, after cloning from http://git.savannah.gnu.org/r/gnu-pw-mgr.git
+I get the following backtrace:
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000004b26b1 in clear_commit_marks_1 (plist=0x7fffffffbf78,
+commit=0x84e8d0, mark=139) at commit.c:528
+528                     while ((parents = parents->next))
+(gdb) bt
+#0  0x00000000004b26b1 in clear_commit_marks_1 (plist=0x7fffffffbf78,
+commit=0x84e8d0, mark=139) at commit.c:528
+#1  0x00000000004b2743 in clear_commit_marks_many (nr=-1,
+commit=0x7fffffffbfa0, mark=139) at commit.c:544
+#2  0x00000000004b2771 in clear_commit_marks (commit=0x84e8d0,
+mark=139) at commit.c:549
+#3  0x00000000004537cc in get_patch_ids (rev=0x7fffffffd190,
+ids=0x7fffffffc910) at builtin/log.c:832
+#4  0x0000000000455580 in cmd_format_patch (argc=1,
+argv=0x7fffffffdc20, prefix=0x0) at builtin/log.c:1425
+#5  0x0000000000405807 in run_builtin (p=0x80cac8 <commands+840>,
+argc=5, argv=0x7fffffffdc20) at git.c:350
+#6  0x0000000000405a15 in handle_builtin (argc=5, argv=0x7fffffffdc20)
+at git.c:532
+#7  0x0000000000405b31 in run_argv (argcp=0x7fffffffdafc,
+argv=0x7fffffffdb10) at git.c:578
+#8  0x0000000000405d29 in main (argc=5, av=0x7fffffffdc18) at git.c:686
+
+(Please don't top post if you reply to this email as it is frown upon
+on this list.)
