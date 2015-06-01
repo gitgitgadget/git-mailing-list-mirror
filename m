@@ -1,98 +1,63 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: Re: [RFC] solving a bug with hunks starting at line 1 in git apply
-Date: Mon, 1 Jun 2015 23:37:39 +0200 (CEST)
-Message-ID: <864699446.258590.1433194659960.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <87k2vnqrv8.fsf@ensimag.grenoble-inp.fr> <xmqqiob773iy.fsf@gitster.dls.corp.google.com> <vpqa8wj48c1.fsf@anie.imag.fr> <xmqqpp5f5l7v.fsf@gitster.dls.corp.google.com> <vpqiob7z2n7.fsf@anie.imag.fr> <xmqqeglv5kg1.fsf@gitster.dls.corp.google.com>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH 1/2] rebase -i: demonstrate incorrect behavior of post-rewrite
+Date: Mon, 1 Jun 2015 23:17:41 +0100
+Message-ID: <CAFY1edb75T91EMM6v4wWz09HZruTsioVmXxmZYjnGpK+_qshow@mail.gmail.com>
+References: <0000014d7bc3f6bf-72bd5f07-9e26-411a-8484-e9b86a1bf429-000000@eu-west-1.amazonses.com>
+	<0000014d7bc3f7a5-332dd95f-907f-4f46-a5d6-6b9e5dc70b0a-000000@eu-west-1.amazonses.com>
+	<xmqq1ti8heu9.fsf@gitster.dls.corp.google.com>
+	<vpqd21soead.fsf@anie.imag.fr>
+	<xmqqd21sfvsm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 23:45:55 2015
+X-From: git-owner@vger.kernel.org Tue Jun 02 00:17:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzXWt-0002Li-B8
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 23:45:55 +0200
+	id 1YzY1j-0007eJ-EI
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 00:17:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752872AbbFAVpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 17:45:47 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:55579 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754052AbbFAVpi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 17:45:38 -0400
-X-Greylist: delayed 508 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Jun 2015 17:45:38 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id BE2254882A;
-	Mon,  1 Jun 2015 23:37:07 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3egBfEiXtmbD; Mon,  1 Jun 2015 23:37:07 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9F61148813;
-	Mon,  1 Jun 2015 23:37:07 +0200 (CEST)
-In-Reply-To: <xmqqeglv5kg1.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: solving a bug with hunks starting at line 1 in git apply
-Thread-Index: QYxAPOyQ/Z6J6vrIye7ElVva+Aj33Q==
+	id S1751874AbbFAWRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 18:17:43 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:35513 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628AbbFAWRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 18:17:41 -0400
+Received: by iesa3 with SMTP id a3so120119866ies.2
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 15:17:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VjrTmkfENXG2ahyAIi5WYSypnZQ0GSNcV6+dlx1Tz4I=;
+        b=bb/BWy2CDBOG42+9N/ZlJQrRRd0MrPZlOVO2IyZMWvZeGV0F8QtHI74WtyxVgC6+ME
+         oOw1fuGOgnvC9a+Rlcf1OBsH0VeqDI97dc8dilij1af0DWmV/2e9bmjTh96pW2L/VOvT
+         u/IljkoXsXSpGmdFwACn+HqsZJCehKbNiKqjFvjh1kb7lyH6xMObsjENWkBv/Aupi8sv
+         O3Nl2c7rLXZfjjKPaMz/9hvKieTKWI9zj1Q4Ok4BMhGRAk35wTROTXm4zEeOynFxVGyc
+         hSkAFZWUhdBnJwgg+GsOnEUwO1jnQ35Li5YoYmDi/uQadgys4m0eIuvZ/xEtWjLVAQ47
+         TjSw==
+X-Received: by 10.107.32.73 with SMTP id g70mr29873644iog.23.1433197061175;
+ Mon, 01 Jun 2015 15:17:41 -0700 (PDT)
+Received: by 10.79.34.5 with HTTP; Mon, 1 Jun 2015 15:17:41 -0700 (PDT)
+In-Reply-To: <xmqqd21sfvsm.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270474>
 
-Ok, Thanks for all the informations
+On 22 May 2015 at 16:59, Junio C Hamano <gitster@pobox.com> wrote:
+> Roberto, isn't your threading of multi-patch series busted?
+>
+> Why is 1/2 a follow-up to 2/2?  Do you have a time-machine ;-)?
 
-> Notice that the pre-context lines in this second example is only one
-> line.  Is it giving the same degree of safety if we rejected an
-> attempt to apply this patch only when the original does not have 10,
-> 20, 30 and 40 in this order?
-> 
-> No.  Because we are doing two-line context patch, the patch is not
-> just saying "this change applies to a place where the first line is
-> 10".  It also is saying "there is no line before that line".
+Oh, embarrassing, I better destroy the time-machine:
 
-Yes, It's obvious that "patch" has not the same degree of safety as the
-git apply command. But I thought that any patch working with
-git apply should work with the "patch" command and give the same output,
-It seems that this is not true, regarding
+https://github.com/rtyley/submitgit/pull/5
 
-file:
-
-10
-10
-10
-10
-20
-
-diff:
-
-@@ -1,2 +1,3 @@
-+10
- 10
- 10
-@@ -1,4 +2,5 @@
- 10
- 10
-+cc
- 10
- 10
-
-(I changed it to have 2 line context).  Of course these are
-hand-written patches, which can't be obtained with a diff (except with
-the non coalescing git add -p as you said yourself). Wouldn't it 
-be a problem?
-
-> In other words, isn't the right fix to coalesce that input, so that
-> the second hunk does *not* require fuzzy application in the first
-> place?
-
-Yes, you're right, that will be fixed if we restore coalescing, I
-didn't thought of this possibility. This will cause fewer split but
-we have the edit option anyway.
-
-
-Thanks
+This was due to me not realising that the GitHub API returns commit lists for
+PRs in reverse-chronological order... thanks for pointing that out!
