@@ -1,132 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] format-patch: dereference tags with
- --ignore-if-in-upstream
-Date: Mon, 1 Jun 2015 07:47:29 -0400
-Message-ID: <20150601114729.GA5160@peff.net>
-References: <CAP8UFD1phg8E0JCgkz88CMUo9H-W=s5JDuKeCMOkf1=UYBJt+g@mail.gmail.com>
- <1433120593-186980-1-git-send-email-sandals@crustytoothpaste.net>
- <20150601102046.GA31792@peff.net>
- <20150601112212.GA140991@vauxhall.crustytoothpaste.net>
+From: Allen Hubbe <allenbh@gmail.com>
+Subject: Re: [PATCH 0/9] send-email: add sendmail aliases line continuation support
+Date: Mon, 1 Jun 2015 07:49:36 -0400
+Message-ID: <CAJ80saufd9xMAdvBT6Ts0RyVWW+PimTwvgojZ9bCT26vgUF-7g@mail.gmail.com>
+References: <1433111371-19573-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Bruce Korb <bruce.korb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 13:47:38 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 13:49:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzOBt-0006sq-88
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 13:47:37 +0200
+	id 1YzODu-0007vw-6Q
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 13:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbbFALrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 07:47:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38750 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751609AbbFALrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 07:47:31 -0400
-Received: (qmail 4051 invoked by uid 102); 1 Jun 2015 11:47:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 06:47:31 -0500
-Received: (qmail 28747 invoked by uid 107); 1 Jun 2015 11:47:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 07:47:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 07:47:29 -0400
-Content-Disposition: inline
-In-Reply-To: <20150601112212.GA140991@vauxhall.crustytoothpaste.net>
+	id S1751344AbbFALti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 07:49:38 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:36009 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751283AbbFALth (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 07:49:37 -0400
+Received: by obbea2 with SMTP id ea2so101056155obb.3
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 04:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0/jYUe3iIRXtupgd8vFtzSlXTrvvkrxtqdFII8sutYs=;
+        b=YTaK/1NbCXCUQ0d/MQfw1v+kb46fCZlRYxB6O0LBYxIoK2+lpPhaqdJYYz8Sfq57Ff
+         /uNIFsHUAghoWBne/Mstu3EGqPm/opUZo8Vp07q6fEpAjEcxECMh32zAoaLCrsEr6uDg
+         q+Ct5HHTZVffJEL9bsH6i++PApLrArIHZVe3OvPC505aEYrdwpZw1vFJHccDIIF7aa5D
+         KzmD8PIF43rF4GbKl+bIB1xPuE1FnhrM/m6s3Ow3XgPD+SV0FWE8Mx57Vx0pUPzeGkuO
+         ytG9HEl5CMWSfRahu+UwCb+KHQg1zs7bIUnpyDt9cnDEyHyIIsF3NG7dk73bf6mojQqV
+         hHRQ==
+X-Received: by 10.202.196.11 with SMTP id u11mr16959235oif.8.1433159376366;
+ Mon, 01 Jun 2015 04:49:36 -0700 (PDT)
+Received: by 10.182.117.197 with HTTP; Mon, 1 Jun 2015 04:49:36 -0700 (PDT)
+In-Reply-To: <1433111371-19573-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270403>
 
-On Mon, Jun 01, 2015 at 11:22:12AM +0000, brian m. carlson wrote:
+This series looks very good to me.  Thanks for the extra work you've
+done to make the sendmail alias support much better :)
 
-> > As an aside, now that we are dereferencing, these flags are from the
-> > wrong object. They _should_ be the same (we mark the tag as
-> > UNINTERESTING, too), but it's a little weird that at the end of the
-> > function we restore the saved flags from the tag object onto the commit.
-> > Just bumping the assignment of flags{1,2} would work (or just bump up
-> > the lookup_commit_or_die call to where we assign to o{1,2}).
-> 
-> I tried looking up the flags after dereferencing the tags, but that led
-> to the die("Not a range.") being triggered.  That's why the commit
-> message ended up mentioning loading the flags before dereferencing.
+I'm not too concerned about this, but if you think it would be
+appropriate you may use it:
+Acked-by: Allen Hubbe <allenbh@gmail.com>
 
-Oh, sorry, I somehow totally missed that mention in the commit message.
-
-It seems doubly wrong then to pull the flags from the tag and then later
-apply them to the commit at the end. And in fact, if you do not have the
-UNINTERESTING flag on your commit here, that is a real problem. If we
-make your test:
-
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 60b9875..37bf70a 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -60,8 +60,9 @@ test_expect_success "format-patch --ignore-if-in-upstream" '
- test_expect_success "format-patch --ignore-if-in-upstream handles tags" '
- 
- 	git tag -a v1 -m tag side &&
-+	git tag -a v2 -m tag master &&
- 	git format-patch --stdout \
--		--ignore-if-in-upstream master..v1 >patch1 &&
-+		--ignore-if-in-upstream v2..v1 >patch1 &&
- 	cnt=$(grep "^From " patch1 | wc -l) &&
- 	test $cnt = 2
- 
-
-then it fails (the key is having the tag on the left-hand side, because
-that is where we need the UNINTERESTING flag to be).
-
-Normally this flag is propagated to the dereferenced commit as part of
-prepare_revision_walk, but we are looking at the flags before that gets
-called. So you'll have to either propagate it manually here, or just
-feed the original tags to the sub-traversal. I think the latter is
-probably simpler. Something like:
-
-  1. Check the flags on the original objects (o1 and o2).
-
-  2. Peel them to commits; complain if they're not both commits. Store
-     the result in another variable (e.g., commit1, commit2).
-
-  3. Feed o1 and o2 to the new check_rev traversal.
-
-  4. Clear the commit flags off of commit1 and commit2.
-
-  5. Restore the original flags to o1 and o2.
-
-Yeesh. I would have thought that we could just do this as part of the
-normal traversal by using "--cherry-pick" (I think format-patch predates
-that option). We have to have a symmetric range to do that, but I wonder
-if we could simulate it by converting "foo..bar" into "--cherry-pick
---right-only foo...bar".
-
-I guess that is basically "--cherry", but we still have to massage
-"foo..bar" into "foo...bar". I think that is basically just:
-
-   o1 ^= ~UNINTERESTING;
-   o1 |= SYMMETRIC_LEFT;
-
-but there might be a hidden catch I am not considering.
-
-> > I think this avoids the usual "wc" whitespace pitfall because you don't
-> > use double-quotes. But maybe:
-> > 
-> >   grep "^From " patch1 >count &&
-> >   test_line_count = 2 patch1
-> > 
-> > would be more idiomatic.
-> 
-> I can certainly make that change.  I made the test as similar as
-> possible to other tests in the area, but I wasn't aware of
-> test_line_count.
-
-Ah, I just looked at the context in your patch, not at the whole test. I
-don't mind matching the surrounding code. But I also don't mind a
-preparatory modernization patch to the test script. :)
-
--Peff
+On Sun, May 31, 2015 at 6:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> This series adds line continuation support for sendmail aliases.
+> It extends basic sendmail aliases functionality implemented by
+> ah/send-email-sendmail-alias (currently d1205b07 in 'pu')
+>
+> Eric Sunshine (9):
+>   send-email: further document missing sendmail aliases functionality
+>   send-email: visually distinguish sendmail aliases parser warnings
+>   send-email: drop noise comments which merely repeat what code says
+>   send-email: fix style: cuddle 'elsif' and 'else' with closing brace
+>   send-email: refactor sendmail aliases parser
+>   send-email: simplify sendmail aliases comment and blank line
+>     recognizer
+>   send-email: implement sendmail aliases line continuation support
+>   t9001: refactor sendmail aliases test infrastructure
+>   t9001: add sendmail aliases line continuation tests
+>
+>  Documentation/git-send-email.txt |  5 ++-
+>  git-send-email.perl              | 54 ++++++++++++++-------------
+>  t/t9001-send-email.sh            | 81 +++++++++++++++++++++++++++++++---------
+>  3 files changed, 94 insertions(+), 46 deletions(-)
+>
+> --
+> 2.4.2.538.g5f4350e
+>
