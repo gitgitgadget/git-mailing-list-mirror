@@ -1,79 +1,81 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2 1/2] completion: Add sequencer function
-Date: Mon, 01 Jun 2015 17:06:03 +0200
-Message-ID: <20150601170603.Horde.iiRpDlRNsOoCFFaHVSBOwg1@webmail.informatik.kit.edu>
-References: <CALkWK0m9Fj_3AnJcENL-kAFSbYjW4fKpN76Tftrt672hQj4qww@mail.gmail.com>
- <1433001710.5113.8.camel@virtuell-zuhause.de>
- <20150530210103.Horde.YoJthfdQJy5oq9wT_oOl3Q1@webmail.informatik.kit.edu>
- <xmqq6177a3zk.fsf@gitster.dls.corp.google.com>
+From: phillip <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate "index" as "Index"
+Date: Mon, 01 Jun 2015 17:10:24 +0200
+Message-ID: <9A423AE7-27D6-402F-80C2-C9DA7AF08033@gmail.com>
+References: <1432925644-26231-1-git-send-email-ralf.thielow@gmail.com> <556C0BFD.3060806@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 17:06:47 2015
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: sbeller@google.com, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: git@drmicha.warpmail.net, Ralf Thielow <ralf.thielow@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 01 17:10:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzRIa-0002K1-79
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 17:06:44 +0200
+	id 1YzRMK-0004P9-9g
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 17:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753269AbbFAPGl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 11:06:41 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:37926 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753232AbbFAPGe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 11:06:34 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1YzRIM-0004h1-0J; Mon, 01 Jun 2015 17:06:30 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1YzRHv-0001tE-Jv; Mon, 01 Jun 2015 17:06:03 +0200
-Received: from x590c2d02.dyn.telefonica.de (x590c2d02.dyn.telefonica.de
- [89.12.45.2]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Mon, 01 Jun 2015 17:06:03 +0200
-In-Reply-To: <xmqq6177a3zk.fsf@gitster.dls.corp.google.com>
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1433171190.
+	id S1752429AbbFAPKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 11:10:32 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:36055 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751503AbbFAPK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 11:10:29 -0400
+Received: by wibdq8 with SMTP id dq8so32566451wib.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 08:10:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=8ZAqKYcAHlhHueVZegXLcK4v0DlhBd8GQqAdiICL7xE=;
+        b=OWX1H1AeuTac5Sl1Ksgb/C7qsPVrcfT9ebh6MWWsfAjGYxwLsiu4Z3FJ3nC7GXq+1U
+         ubAtY5OOKDU9eJCYO34FHkLpiUagEeWscVcS4K8wypp3fMegO35Y7A0Qy7YklsN2YhIk
+         4Hi4ftjquxEhu0/QRFgfk8iTVfacwVhq6RjefhPXN0vZAl4+5AFTO5JVx8OhxT3zwy+i
+         psVz04Z7BvsHObTHZeVlYu737sJVlbzcbpQXekfQI16YCGGXtVYJOIfcpQr9KGTL2w9I
+         vzpSjcb/p9Z4LavxUzSwagbdawgOKqd6rKxhUIHhTD373NXqLBwhVk2NkyaJyx0ErD+J
+         4pCw==
+X-Received: by 10.180.90.236 with SMTP id bz12mr21650119wib.33.1433171428269;
+        Mon, 01 Jun 2015 08:10:28 -0700 (PDT)
+Received: from android-b7bb6bce7d91de53.fritz.box (i577AB4B1.versanet.de. [87.122.180.177])
+        by mx.google.com with ESMTPSA id u9sm22338227wju.44.2015.06.01.08.10.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jun 2015 08:10:27 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <556C0BFD.3060806@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270423>
 
+ 
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Hi, 
 
-> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+>>  #: sequencer.c:661
+>>  #, c-format
+>>  msgid "git %s: failed to read the index"
+>> -msgstr "git %s: Fehler beim Lesen der Staging-Area"
+>> +msgstr "git %s: Fehler beim Lesen des Indexes"
 >
->> I don't see the benefits of this change.  This patch adds more than
->> twice as many lines as it removes, and patch 2/2 adds 8 new lines
->> although it could get away with only 5 without this function.  To
->> offer sequencer options we currently go through a single if statemen=
-t,
->> with this patch we'd go through a case statement, an if statement an=
-d
->> finally an &&.
->>
->> G=C3=A1bor
+>Now we have to decide whether we flex "Index" like a foreign word in
+>German or like a German word:
 >
-> Perhaps, especially given that I'd imagine we won't be adding 47 new
-> commands that drive the sequencer in the near future ;-)
+>der Index, des Index, ...; die Indizes (pl.)
 >
-> I presume that you are OK with Thomas's original version, then?
+>or
+>
+>der Index, des Indexes, ...; die Indexe (pl.)
+>
+>I'd vote the former.
+>
 
-Yes, definitely.
+You can use Indizes and Indexe both as german word. I would prefer Indexe as its easier to understand.
 
-It's a shame all these sequencing commands have different sets of =20
-sequencer options.  Perhaps something to clean up for, say, v3.0 :)
-
-
-G=C3=A1bor
+Phillip 
