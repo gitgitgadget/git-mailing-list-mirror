@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Galan=20R=C3=A9mi?= 
 	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFCv2 1/2] git-rebase -i: add command "drop" to remove a commit
-Date: Mon,  1 Jun 2015 13:52:02 +0200
-Message-ID: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFCv2 2/2] git rebase -i: warn about removed commits
+Date: Mon,  1 Jun 2015 13:52:03 +0200
+Message-ID: <1433159523-6596-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+References: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -21,139 +22,257 @@ Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	=?UTF-8?q?Galan=20R=C3=A9mi?= 
 	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 01 13:52:17 2015
+X-From: git-owner@vger.kernel.org Mon Jun 01 13:52:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzOGO-0000kz-MX
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 13:52:17 +0200
+	id 1YzOGT-0000ns-SI
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 13:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153AbbFALwM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 07:52:12 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:47941 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751540AbbFALwL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 07:52:11 -0400
+	id S1752160AbbFALwS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 07:52:18 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:43762 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751422AbbFALwQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 07:52:16 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CA46C27F7;
-	Mon,  1 Jun 2015 13:52:07 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hWq32xwRiobe; Mon,  1 Jun 2015 13:52:07 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4891F48841;
+	Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ubqCw4HRE3RD; Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id AD6EE276E;
-	Mon,  1 Jun 2015 13:52:07 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2A51D48836;
+	Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 9FF7420E4;
-	Mon,  1 Jun 2015 13:52:07 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 1F53520E4;
+	Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XhnIdufX4m2y; Mon,  1 Jun 2015 13:52:07 +0200 (CEST)
+	with ESMTP id meW3YmeGvu0K; Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
 Received: from galanalr-Dell-System-Inspiron-N7110.grenet.fr (eduroam-032225.grenet.fr [130.190.32.225])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id D72F020DD;
-	Mon,  1 Jun 2015 13:52:06 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C19AE20DD;
+	Mon,  1 Jun 2015 13:52:12 +0200 (CEST)
 X-Mailer: git-send-email 2.4.1.363.g9535a9c
+In-Reply-To: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270405>
 
-Instead of removing a line to remove the commit, you can use the
-command "drop" (just like "pick" or "edit"). It has the same effect as
-deleting the line (removing the commit) except that you keep a visual
-trace of your actions, allowing a better control and reducing the
-possibility of removing a commit by mistake.
+Check if commits were removed (i.e. a line was deleted) and print
+warnings or abort git rebase according to the value of the
+configuration variable rebase.checkLevel.
+
+Add the configuration variable rebase.checkLevel.
+    - When unset or set to "ignore", no checking is done.
+    - When set to "warn", the commits are checked, warnings are
+      displayed but git rebase still proceeds.
+    - When set to "error", the commits are checked, warnings are
+      displayed and the rebase is aborted.
+
+rebase.checkLevel defaults to "ignore".
 
 Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp=
 =2Efr>
 ---
- Documentation/git-rebase.txt  |  3 +++
- git-rebase--interactive.sh    |  3 ++-
- t/lib-rebase.sh               |  4 ++--
- t/t3404-rebase-interactive.sh | 11 +++++++++++
- 4 files changed, 18 insertions(+), 3 deletions(-)
+ Documentation/config.txt      |   9 ++++
+ Documentation/git-rebase.txt  |   6 +++
+ git-rebase--interactive.sh    | 105 ++++++++++++++++++++++++++++++++++=
+++++++++
+ t/t3404-rebase-interactive.sh |  10 +++-
+ 4 files changed, 129 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5f76e8c..e2e5554 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2160,6 +2160,15 @@ rebase.autoStash::
+ 	successful rebase might result in non-trivial conflicts.
+ 	Defaults to false.
+=20
++rebase.checkLevel::
++	If set to "warn", git rebase -i will print a warning if some
++	commits are removed (i.e. a line was deleted) or if some
++	commits appear more than one time (e.g. the same commit is
++	picked twice), however the rebase will still proceed. If set
++	to "error", it will print the previous warnings and abort the
++	rebase. If set to "ignore", no checking is done.  Defaults to
++	"ignore".
++
+ receive.advertiseAtomic::
+ 	By default, git-receive-pack will advertise the atomic push
+ 	capability to its clients. If you don't want to this capability
 diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
 t
-index 1d01baa..9cf3760 100644
+index 9cf3760..d348ca2 100644
 --- a/Documentation/git-rebase.txt
 +++ b/Documentation/git-rebase.txt
-@@ -514,6 +514,9 @@ rebasing.
- If you just want to edit the commit message for a commit, replace the
- command "pick" with the command "reword".
+@@ -213,6 +213,12 @@ rebase.autoSquash::
+ rebase.autoStash::
+ 	If set to true enable '--autostash' option by default.
 =20
-+To drop a commit, replace the command "pick" with "drop", or just
-+delete its line.
++rebase.checkLevel::
++	If set to "warn" print warnings about removed commits and
++	duplicated commits in interactive mode. If set to "error"
++	print the warnings and abort the rebase. If set to "ignore" no
++	checking is done. "ignore" by default.
 +
- If you want to fold two or more commits into one, replace the command
- "pick" for the second and subsequent commits with "squash" or "fixup".
- If the commits had different authors, the folded commit will be
+ OPTIONS
+ -------
+ --onto <newbase>::
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index bab0dcc..2882276 100644
+index 2882276..58da6ee 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -152,6 +152,7 @@ Commands:
-  s, squash =3D use commit, but meld into previous commit
-  f, fixup =3D like "squash", but discard this commit's log message
-  x, exec =3D run command (the rest of the line) using shell
-+ d, drop =3D remove commit
+@@ -837,6 +837,109 @@ add_exec_commands () {
+ 	mv "$1.new" "$1"
+ }
 =20
- These lines can be re-ordered; they are executed from top to bottom.
++# Print the list of the SHA-1 of the commits
++# from a todo list in a file.
++# $1: todo-file, $2: outfile
++todo_list_to_sha_list () {
++	todo_list=3D$(git stripspace --strip-comments <"$1")
++	temp_file=3D$(mktemp)
++	echo "$todo_list" >$temp_file
++	while read -r command sha1 rest
++	do
++		case $command in
++		x|"exec")
++			;;
++		*)
++			printf "%s\n" "$sha1"
++			;;
++		esac
++	done <$temp_file >"$2"
++	rm $temp_file
++}
++
++# Transforms SHA-1 list in argument
++# to a list of commits (in place)
++# Doesn't check if the SHA-1 are commits.
++# $1: file with long SHA-1 list
++long_sha_to_commit_list () {
++	short_missing=3D""
++	git_command=3D"git show --oneline"
++	get_line_command=3D"head -n 1"
++	temp_file=3D$(mktemp)
++	while read -r sha
++	do
++		if test -n "$sha"
++		then
++			commit=3D$($git_command $sha | $get_line_command)
++			if test -n "$commit"
++			then
++				printf "%s\n" "$commit"
++			fi
++		fi
++	done <"$1" >$temp_file
++	mv $temp_file "$1"
++}
++
++# Use warn for each line of a file
++# $1: file to warn
++warn_file () {
++	while read -r line
++	do
++		warn " - $line"
++	done <"$1"
++}
++
++# Check if the user dropped some commits by mistake
++# Behaviour determined by .gitconfig.
++check_commits () {
++	checkLevel=3D$(git config --get rebase.checkLevel)
++	checkLevel=3D${checkLevel:-ignore}
++	# To lowercase
++	checkLevel=3D$(echo "$checkLevel" | tr 'A-Z' 'a-z')
++
++	case "$checkLevel" in
++	warn|error)
++		# Get the SHA-1 of the commits
++		todo_list_to_sha_list "$todo".backup "$todo".oldsha1
++		todo_list_to_sha_list "$todo" "$todo".newsha1
++
++		# Sort the SHA-1 and compare them
++		echo "$(sort -u "$todo".oldsha1)" >"$todo".oldsha1
++		echo "$(sort -u "$todo".newsha1)" >"$todo".newsha1
++		echo "$(comm -2 -3 "$todo".oldsha1 "$todo".newsha1)" >"$todo".miss
++
++		# Make the list user-friendly
++		long_sha_to_commit_list "$todo".miss
++
++		# Check missing commits
++		if test -s "$todo".miss
++		then
++			warn "Warning : some commits may have been dropped" \
++				"accidentally."
++			warn "Dropped commits (in no relevent order):"
++			warn_file "$todo".miss
++			warn ""
++			warn "To avoid this message, use \"drop\" to" \
++				"explicitly remove a commit."
++			warn "Use git --config rebase.checkLevel to change" \
++				"the level of warnings (ignore,warn,error)."
++			warn ""
++
++			if test "$checkLevel" =3D error
++			then
++				die_abort "Rebase aborted due to dropped commits."
++			fi
++		fi
++		;;
++	ignore)
++		;;
++	*)
++		warn "Unrecognized setting $checkLevel for option" \
++			"rebase.checkLevel in git rebase -i."
++		;;
++	esac
++}
++
+ # The whole contents of this file is run by dot-sourcing it from
+ # inside a shell function.  It used to be that "return"s we see
+ # below were not inside any function, and expected to return
+@@ -1079,6 +1182,8 @@ has_action "$todo" ||
 =20
-@@ -505,7 +506,7 @@ do_next () {
- 	rm -f "$msg" "$author_script" "$amend" || exit
- 	read -r command sha1 rest < "$todo"
- 	case "$command" in
--	"$comment_char"*|''|noop)
-+	"$comment_char"*|''|noop|drop|d)
- 		mark_action_done
- 		;;
- 	pick|p)
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 6bd2522..fdbc900 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -14,7 +14,7 @@
- #       specified line.
- #
- #   "<cmd> <lineno>" -- add a line with the specified command
--#       ("squash", "fixup", "edit", or "reword") and the SHA1 taken
-+#       ("squash", "fixup", "edit", "reword" or "drop") and the SHA1 t=
-aken
- #       from the specified line.
- #
- #   "exec_cmd_with_args" -- add an "exec cmd with args" line.
-@@ -46,7 +46,7 @@ set_fake_editor () {
- 	action=3Dpick
- 	for line in $FAKE_LINES; do
- 		case $line in
--		squash|fixup|edit|reword)
-+		squash|fixup|edit|reword|drop)
- 			action=3D"$line";;
- 		exec*)
- 			echo "$line" | sed 's/_/ /g' >> "$1";;
+ expand_todo_ids
+=20
++check_commits
++
+ test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_pi=
+cks
+=20
+ GIT_REFLOG_ACTION=3D"$GIT_REFLOG_ACTION: checkout $onto_name"
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
 =2Esh
-index ac429a0..1bad068 100755
+index 1bad068..d3a9ed5 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1102,4 +1102,15 @@ test_expect_success 'rebase -i commits that over=
-write untracked files (no ff)' '
- 	test $(git cat-file commit HEAD | sed -ne \$p) =3D I
+@@ -1103,7 +1103,6 @@ test_expect_success 'rebase -i commits that overw=
+rite untracked files (no ff)' '
  '
 =20
-+test_expect_success 'drop' '
-+	git checkout master &&
+ test_expect_success 'drop' '
+-	git checkout master &&
+ 	test_when_finished "git checkout master" &&
+ 	git checkout -b dropBranchTest master &&
+ 	set_fake_editor &&
+@@ -1113,4 +1112,13 @@ test_expect_success 'drop' '
+ 	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
+ '
+=20
++test_expect_success 'rebase -i respects rebase.checkLevel' '
++	test_config rebase.checkLevel error &&
 +	test_when_finished "git checkout master" &&
-+	git checkout -b dropBranchTest master &&
++	git checkout -b tmp2 master &&
 +	set_fake_editor &&
-+	FAKE_LINES=3D"1 drop 2 3 drop 4 5" git rebase -i --root &&
-+	test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-+	test C =3D $(git cat-file commit HEAD^ | sed -ne \$p) &&
-+	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
++	test_must_fail env FAKE_LINES=3D"1 2 3 4" git rebase -i --root &&
++	test E =3D $(git cat-file commit HEAD | sed -ne \$p)
 +'
 +
  test_done
