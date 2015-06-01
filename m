@@ -1,110 +1,99 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] format-patch: dereference tags with
- --ignore-if-in-upstream
-Date: Mon, 1 Jun 2015 22:34:09 +0000
-Message-ID: <20150601223409.GB140991@vauxhall.crustytoothpaste.net>
-References: <CAP8UFD1phg8E0JCgkz88CMUo9H-W=s5JDuKeCMOkf1=UYBJt+g@mail.gmail.com>
- <1433120593-186980-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqqr3pv8okj.fsf@gitster.dls.corp.google.com>
- <xmqq6177728a.fsf@gitster.dls.corp.google.com>
- <20150601174712.GA18364@peff.net>
- <xmqq4mmr5fqy.fsf@gitster.dls.corp.google.com>
+From: Allen Hubbe <allenbh@gmail.com>
+Subject: Re: [PATCH 1/9] send-email: further document missing sendmail aliases functionality
+Date: Mon, 1 Jun 2015 18:44:49 -0400
+Message-ID: <CAJ80sasfCfN7e6bi7nHjLet=DWMN8kyJxMyvqu-7psFqJ0k+pA@mail.gmail.com>
+References: <1433111371-19573-1-git-send-email-sunshine@sunshineco.com>
+	<1433111371-19573-2-git-send-email-sunshine@sunshineco.com>
+	<CAJ80sau0GeeFxFZYsEE=uupfPqJ=vRZfNRuNd0qRJPDNvnbMPw@mail.gmail.com>
+	<20150601182236.GA28030@flurp.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JP+T4n/bALQSJXh8"
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>,
-	Bruce Korb <bruce.korb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 00:34:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jun 02 00:44:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzYHj-000635-Ox
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 00:34:20 +0200
+	id 1YzYS0-0002Dj-QU
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 00:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753105AbbFAWeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 18:34:16 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:58364 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752245AbbFAWeO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 18:34:14 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:fd0c:c3b:29e1:d998])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2EACC2808F;
-	Mon,  1 Jun 2015 22:34:13 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Bruce Korb <bruce.korb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <xmqq4mmr5fqy.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1753233AbbFAWow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 18:44:52 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:32779 "EHLO
+	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751904AbbFAWou (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 18:44:50 -0400
+Received: by oiww2 with SMTP id w2so112970190oiw.0
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 15:44:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=loRyiMMlPoxYGG2shksE6OGim8M92eZ8pcwUyhLu9zo=;
+        b=LWT/p6kur6Rua+N3L8d4q2L671qvZa8m6bQB7eSe8+GfeXiIMyyqPMn7FNTis3TcLq
+         znyymF3XyJigrN6g/B28zhYF9iT7t0FE9A1tvMFQZBPcA3rwfQd4f3NvSzT54KMa9+Gi
+         PjIzq9no8/kzDH1RGDTAe1GEJ9WdxsOjCOn49sPpkM6jm5knwaL7+1d/WThnnMr0H7/D
+         AxmlOhWjissGNnKQtuV1a5ULwwjnVPBX+ZExEVFMxdpX2aCYY2aAGrzekxZjit6mET3A
+         4LX6OPWLgpHJhTRxOPSH8EXEGlBnkB4Sgh1lF7pSbDZXMRdC1KD6tD9VwzX83T2HZnbj
+         MDVA==
+X-Received: by 10.60.175.72 with SMTP id by8mr20447278oec.35.1433198689945;
+ Mon, 01 Jun 2015 15:44:49 -0700 (PDT)
+Received: by 10.182.117.197 with HTTP; Mon, 1 Jun 2015 15:44:49 -0700 (PDT)
+In-Reply-To: <20150601182236.GA28030@flurp.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270476>
 
+This looks good.
 
---JP+T4n/bALQSJXh8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jun 01, 2015 at 01:35:17PM -0700, Junio C Hamano wrote:
-> -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Mon, 1 Jun 2015 10:44:21 -0700
-> Subject: [PATCH] format-patch: do not feed tags to clear_commit_marks()
->=20
-> "git format-patch --ignore-if-in-upstream A..B", when either A or B
-> is a tag, failed miserably.
->=20
-> This is because the code passes the tips it used for traversal to
-> clear_commit_marks(), after running a temporary revision traversal
-> to enumerate the commits on both branches to find if they have
-> commits that make equivalent changes.  The revision traversal
-> machinery knows how to enumerate commits reachable starting from a
-> tag, but clear_commit_marks() wants to take nothing but a commit.
->=20
-> In the longer term, it might be a more correct fix to teach
-> clear_commit_marks() to do the same "committish to commit"
-> dereferncing that is done in the revision traversal machinery, but
-
-"dereferencing".  Otherwise, looks exactly like what I would have
-written in my reroll had you not gotten to it before me.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---JP+T4n/bALQSJXh8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJVbN3hAAoJEL9TXYEfUvaLSaoP/A1xo6V8e6Oe5arSJqVA9YiA
-iRKWuWLyEfJgCMR8jG7ALD69I1ReoVPfhIAHy1J0USBNNCVyBhLVJXMlfudih5lV
-QLv4vMzTYH5PDa9LuGoH5MLvO6hKrQstgB88yskcj+hkq+JT1WAi3hiiorZB1jLI
-o/2dRQvIY+R6buo0HjF8m75hkRXmkXWMD1hYXAWoHguWshxdLqttEy5uqfO+SfWl
-NrPueyq41rpP0kBuR/htGdLfZ33daz9hOte5t6+YMv9QIc4g+A6RTl2mvf9erxbJ
-HDpXZPihKUwFFKEGBDAuH2Yy/eh8z9RFcJABjrHF6tTHZ3uunNNG6svHw5td3ACP
-T0Eh498W5CcJzJNq//AHi+CbiKYePi0PAvL3z6Cc8xAgA4dqR3mrqHpxilCZrWnG
-J60+RaFpp/qfQTae8b1vejB/pcFzg9IEC2VE35sYWCnwgkOXm9UQWOrvM4qKdTEX
-ej+FggIXfUkNkVrkty+Z/Ib9nHfsrwvZrpoxkXfOSKulfDbX0MPIw8vso2y1DE5a
-su+kx/TW9IJ/6aSiymz22vP9spp8pW6OSqcgZJZmqYtoXKYlSu6wO2MK9FrQRVMM
-CEOKFodOuBgP8dGNVEUUTMJV1iMabGMl9ILmkhABiAWXmzn39mphxS71u/OJXhB7
-vigyT/v7K2HjTKUvxnww
-=mmCJ
------END PGP SIGNATURE-----
-
---JP+T4n/bALQSJXh8--
+On Mon, Jun 1, 2015 at 2:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Jun 01, 2015 at 07:43:08AM -0400, Allen Hubbe wrote:
+>> On May 31, 2015 at 6:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > Sendmail aliases[1] supports expansion to a file ("/path/name") or
+>> > pipe ("|command"), as well as file inclusion (":include: /path/name"),
+>> > however, our implementation does not support such functionality.
+>>
+>> According to the documentation, the parser should print a warning for
+>> any explicitly unsupported constructs.  These are now explicitly
+>> unsupported, so the parser should warn on |, /, and :include: .
+>> Perhaps the lines that match should be ignored like the others, too.
+>
+> Indeed. I had that in mind and then promptly forgot about it. Here's a
+> follow-on patch:
+>
+> --- >8 ---
+> From: Eric Sunshine <sunshine@sunshineco.com>
+> Subject: [PATCH 10/9] send-email: further warn about unsupported sendmail aliases features
+>
+> The sendmail aliases parser diagnoses unsupported features and
+> unrecognized lines. For completeness, also warn about unsupported
+> redirection to "/path/name" and "|command", as well as ":include:".
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  git-send-email.perl | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index eb1d678..ae9f869 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -492,6 +492,10 @@ sub parse_sendmail_alias {
+>         local $_ = shift;
+>         if (/"/) {
+>                 print STDERR "warning: sendmail alias with quotes is not supported: $_\n";
+> +       } elsif (/:include:/) {
+> +               print STDERR "warning: `:include:` not supported: $_\n";
+> +       } elsif (/[\/|]/) {
+> +               print STDERR "warning: `/file` or `|pipe` redirection not supported: $_\n";
+>         } elsif (/^(\S+?)\s*:\s*(.+)$/) {
+>                 my ($alias, $addr) = ($1, $2);
+>                 $aliases{$alias} = [ split_addrs($addr) ];
+> --
+> 2.4.2.538.g5f4350e
+>
+> --- >8 ---
