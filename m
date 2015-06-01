@@ -1,153 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] add quieter versions of parse_{tree,commit}
-Date: Mon, 1 Jun 2015 05:56:26 -0400
-Message-ID: <20150601095625.GA31389@peff.net>
+Subject: [PATCH 3/3] suppress errors on missing UNINTERESTING links
+Date: Mon, 1 Jun 2015 05:56:40 -0400
+Message-ID: <20150601095640.GC31389@peff.net>
 References: <20150601095410.GA16976@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 01 11:56:47 2015
+X-From: git-owner@vger.kernel.org Mon Jun 01 11:57:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzMSd-0002oP-4J
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 11:56:47 +0200
+	id 1YzMT8-00034Q-TM
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 11:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbbFAJ4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 05:56:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38662 "HELO cloud.peff.net"
+	id S1752892AbbFAJ4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 05:56:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38667 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752823AbbFAJ43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 05:56:29 -0400
-Received: (qmail 22704 invoked by uid 102); 1 Jun 2015 09:56:28 -0000
+	id S932075AbbFAJ4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 05:56:44 -0400
+Received: (qmail 22767 invoked by uid 102); 1 Jun 2015 09:56:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 04:56:28 -0500
-Received: (qmail 27717 invoked by uid 107); 1 Jun 2015 09:56:28 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 04:56:42 -0500
+Received: (qmail 27725 invoked by uid 107); 1 Jun 2015 09:56:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 05:56:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 05:56:26 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 05:56:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 05:56:40 -0400
 Content-Disposition: inline
 In-Reply-To: <20150601095410.GA16976@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270386>
 
-When we call parse_commit, it will complain to stderr if the
-object does not exist or cannot be read. This means that we
-may produce useless error messages if this situation is
-expected (e.g., because the object is marked UNINTERESTING,
-or because revs->ignore_missing_links is set).
-
-We can fix this by adding a new "parse_X_gently" form that
-takes a flag to suppress the messages. The existing
-"parse_X" form is already gentle in the sense that it
-returns an error rather than dying, and we could in theory
-just add a "quiet" flag to it (with existing callers passing
-"0"). But doing it this way means we do not have to disturb
-existing callers.
-
-Note also that the new flag is "quiet_on_missing", and not
-just "quiet". We could add a flag to suppress _all_ errors,
-but besides being a more invasive change (we would have to
-pass the flag down to sub-functions, too), there is a good
-reason not to: we would never want to use it. Missing a
-linked object is expected in some circumstances, but it is
-never expected to have a malformed commit, or to get a tree
-when we wanted a commit.  We should always complain about
-these corruptions.
+When we are traversing commit parents along the
+UNINTERESTING side of a revision walk, we do not care if
+the parent turns out to be missing. That lets us limit
+traversals using unreachable and possibly incomplete
+sections of history. However, we do still print error
+messages about the missing commits; this patch suppresses
+the error, as well.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- commit.c | 5 +++--
- commit.h | 6 +++++-
- tree.c   | 5 +++--
- tree.h   | 6 +++++-
- 4 files changed, 16 insertions(+), 6 deletions(-)
+ revision.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/commit.c b/commit.c
-index 2d9de80..6e2103c 100644
---- a/commit.c
-+++ b/commit.c
-@@ -357,7 +357,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
- 	return 0;
- }
- 
--int parse_commit(struct commit *item)
-+int parse_commit_gently(struct commit *item, int quiet_on_missing)
- {
- 	enum object_type type;
- 	void *buffer;
-@@ -370,7 +370,8 @@ int parse_commit(struct commit *item)
- 		return 0;
- 	buffer = read_sha1_file(item->object.sha1, &type, &size);
- 	if (!buffer)
--		return error("Could not read %s",
-+		return quiet_on_missing ? -1 :
-+			error("Could not read %s",
- 			     sha1_to_hex(item->object.sha1));
- 	if (type != OBJ_COMMIT) {
- 		free(buffer);
-diff --git a/commit.h b/commit.h
-index ed3a1d5..9a1fa96 100644
---- a/commit.h
-+++ b/commit.h
-@@ -59,7 +59,11 @@ struct commit *lookup_commit_reference_by_name(const char *name);
- struct commit *lookup_commit_or_die(const unsigned char *sha1, const char *ref_name);
- 
- int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size);
--int parse_commit(struct commit *item);
-+int parse_commit_gently(struct commit *item, int quiet_on_missing);
-+static inline int parse_commit(struct commit *item)
-+{
-+	return parse_commit_gently(item, 0);
-+}
- void parse_commit_or_die(struct commit *item);
- 
- /*
-diff --git a/tree.c b/tree.c
-index 58ebfce..413a5b1 100644
---- a/tree.c
-+++ b/tree.c
-@@ -204,7 +204,7 @@ int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
- 	return 0;
- }
- 
--int parse_tree(struct tree *item)
-+int parse_tree_gently(struct tree *item, int quiet_on_missing)
- {
- 	 enum object_type type;
- 	 void *buffer;
-@@ -214,7 +214,8 @@ int parse_tree(struct tree *item)
- 		return 0;
- 	buffer = read_sha1_file(item->object.sha1, &type, &size);
- 	if (!buffer)
--		return error("Could not read %s",
-+		return quiet_on_missing ? -1 :
-+			error("Could not read %s",
- 			     sha1_to_hex(item->object.sha1));
- 	if (type != OBJ_TREE) {
- 		free(buffer);
-diff --git a/tree.h b/tree.h
-index d24125f..d24786c 100644
---- a/tree.h
-+++ b/tree.h
-@@ -16,7 +16,11 @@ struct tree *lookup_tree(const unsigned char *sha1);
- 
- int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
- 
--int parse_tree(struct tree *tree);
-+int parse_tree_gently(struct tree *tree, int quiet_on_missing);
-+static inline int parse_tree(struct tree *tree)
-+{
-+	return parse_tree_gently(tree, 0);
-+}
- void free_tree_buffer(struct tree *tree);
- 
- /* Parses and returns the tree in the given ent, chasing tags and commits. */
+diff --git a/revision.c b/revision.c
+index 29e5143..0b322b4 100644
+--- a/revision.c
++++ b/revision.c
+@@ -817,7 +817,7 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+ 			parent = parent->next;
+ 			if (p)
+ 				p->object.flags |= UNINTERESTING;
+-			if (parse_commit(p) < 0)
++			if (parse_commit_gently(p, 1) < 0)
+ 				continue;
+ 			if (p->parents)
+ 				mark_parents_uninteresting(p);
 -- 
 2.4.2.690.g2a79674
