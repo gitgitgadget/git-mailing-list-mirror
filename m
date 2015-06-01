@@ -1,76 +1,63 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH/RFCv2 1/2] git-rebase -i: add command "drop" to remove a
- commit
-Date: Mon, 1 Jun 2015 19:45:20 +0200 (CEST)
-Message-ID: <563732680.250935.1433180720935.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1433152643-4292-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <1433152643-4292-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <xmqqvbf7757q.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] format-patch: dereference tags with
+ --ignore-if-in-upstream
+Date: Mon, 1 Jun 2015 13:47:12 -0400
+Message-ID: <20150601174712.GA18364@peff.net>
+References: <CAP8UFD1phg8E0JCgkz88CMUo9H-W=s5JDuKeCMOkf1=UYBJt+g@mail.gmail.com>
+ <1433120593-186980-1-git-send-email-sandals@crustytoothpaste.net>
+ <xmqqr3pv8okj.fsf@gitster.dls.corp.google.com>
+ <xmqq6177728a.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Stephen Kelly <steveire@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Bruce Korb <bruce.korb@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 19:45:01 2015
+X-From: git-owner@vger.kernel.org Mon Jun 01 19:47:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzTlj-0003Qe-5U
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 19:44:59 +0200
+	id 1YzTo3-0004hn-GC
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 19:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753610AbbFARoz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 13:44:55 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:57550 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752935AbbFARoy convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 13:44:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 6B37526FF;
-	Mon,  1 Jun 2015 19:44:50 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W7u-uns8VmI7; Mon,  1 Jun 2015 19:44:50 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 580C7260A;
-	Mon,  1 Jun 2015 19:44:50 +0200 (CEST)
-In-Reply-To: <xmqqvbf7757q.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git-rebase -i: add command "drop" to remove a commit
-Thread-Index: mhmJ3+xjm3oLqsoleRA1BNX2RBABuQ==
+	id S1753774AbbFARrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 13:47:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39004 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753726AbbFARrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 13:47:15 -0400
+Received: (qmail 16644 invoked by uid 102); 1 Jun 2015 17:47:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 12:47:14 -0500
+Received: (qmail 32506 invoked by uid 107); 1 Jun 2015 17:47:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 13:47:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 13:47:12 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq6177728a.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270447>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Is this sufficient?
+On Mon, Jun 01, 2015 at 10:44:21AM -0700, Junio C Hamano wrote:
 
-> If you are going to do something in 2/2 that relies on the format of
-> this line being correct (as opposed to "noop" or "#" that can have
-> any garbage on the remainder of the line), wouldn't you want to at
-> least check $sha1 is sensible?
+> > Shouldn't you ensure o1 and o2 are commits here?
+> 
+> Heh, I should have read the remainder of the thread before
+> responding.
+> 
+> How about doing it this way?  We know and trust that existing
+> revision traversal machinery is doing the right thing, and it is
+> only that the clear_commit_marks() calls are botched.
 
-That's also something that I was wondering, I wrote about it in the
-0/2 part of this patch, I wanted some opinion about it.
-If there is no opposition on the subject, I will have it ready for
-the v3 of the patch.
+Yeah, I think this matches the recommendation I gave in the last round.
 
-Quote of that part of the 0/2 for more clarity:
-Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
-> For the 'drop' command, maybe instead of just doing the same thing as
-> noop, checking if the SHA-1 that supposedly follow does exist could b=
-e
-> a good idea.
+I do still think we could get rid of this "second" traversal entirely in
+favor of using "--cherry", but that is a much larger topic. Even if
+somebody wants to pursue that, the immediate fix should look like this.
+
+-Peff
