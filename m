@@ -1,73 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/3] silence missing-link warnings in some cases
-Date: Mon, 1 Jun 2015 11:41:03 -0400
-Message-ID: <20150601154103.GA14538@peff.net>
-References: <556C0BAD.80106@atlas-elektronik.com>
- <20150601081450.GA32634@peff.net>
- <556C1A95.9010704@atlas-elektronik.com>
- <20150601085226.GA20537@peff.net>
- <20150601095410.GA16976@peff.net>
- <xmqqmw0j8o9i.fsf@gitster.dls.corp.google.com>
+From: "Gondek, Andreas" <Andreas.Gondek@dwpbank.de>
+Subject: Getting the full path of a conflicting file within a custom merge
+ driver?
+Date: Mon, 1 Jun 2015 15:46:44 +0000
+Message-ID: <D8780C527EB1E642B3150E6D705B46D468837861@DWPWHMS531.dwpbank.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 17:41:17 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 01 17:46:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzRq0-0004Ps-P2
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 17:41:17 +0200
+	id 1YzRvR-0007H1-4b
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 17:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753540AbbFAPlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 11:41:09 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38908 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752850AbbFAPlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 11:41:06 -0400
-Received: (qmail 1634 invoked by uid 102); 1 Jun 2015 15:41:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 10:41:06 -0500
-Received: (qmail 31235 invoked by uid 107); 1 Jun 2015 15:41:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 11:41:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 11:41:03 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqmw0j8o9i.fsf@gitster.dls.corp.google.com>
+	id S1753016AbbFAPqs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 11:46:48 -0400
+Received: from mail2.dwpbank.de ([145.253.155.115]:38740 "EHLO
+	mail2.dwpbank.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbbFAPqr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 11:46:47 -0400
+X-IronPort-AV: E=Sophos;i="5.13,533,1427752800"; 
+   d="scan'208";a="786461"
+Received: from DWPWHMS531.dwpbank.local ([169.254.2.243]) by
+ DWPFRMS530.dwpbank.local ([169.254.3.86]) with mapi id 14.03.0195.001; Mon, 1
+ Jun 2015 17:46:45 +0200
+Thread-Topic: Getting the full path of a conflicting file within a custom
+ merge driver?
+Thread-Index: AdCcgiEmcewjfbrsSCO3jW4YkOAV1w==
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.101.236.155]
+x-c2processedorg: 25ee705c-9766-409d-8ffd-513701a730da
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270427>
 
-On Mon, Jun 01, 2015 at 08:03:05AM -0700, Junio C Hamano wrote:
+Hello,
 
-> > The reason is that since git d3038d2 (prune: keep objects reachable from
-> > recent objects, 2014-10-15), we will traverse objects that are not
-> > reachable but have recent mtimes (within the 2-week prune expiration
-> > window). Because they are not reachable, we may not actually have all of
-> > their ancestors; we use the revs->ignore_missing_links option to avoid
-> > making this a fatal error. But we still print an error message. This
-> > series suppresses those messages.
-> 
-> Nice finding.  One of us should have thought of this kind of fallout
-> when we discussed that change, but we apparently failed.
+I'm wondering if there is no option to find out the full path of a conf=
+licting file from within a custom merge driver? If I understand this co=
+rrectly, Git only provides the name of the 3 temporary local files and =
+the size of the limiter. But is there any possibility to get the path o=
+f the file via a Git command, that I can run from within the merge driv=
+er? Maybe as part of the repository's status?
 
-I think the real culprit is that this should have been added along with
-ignore_missing_links in the first place. That came along with the bitmap
-code, but I was too busy focusing on the hard problems there to notice.
-:)
+Thank you in advance.
 
-> The fixes make sense to me (I haven't carefully read the
-> implementation, but design/approach explained in the proposed log
-> messages are very sound), and I think 3/3 is a good thing to do,
-> too, in the new world order after d3038d2.
+Greetings,
+Andreas Gondek
+Applications
+________________________________
 
-I think it's rather the opposite. In a post-d3038d2 world, a missing
-object is _more_ likely to be a real corruption, and we would probably
-prefer to complain about it. I am on the fence though.
+Deutsche WertpapierService Bank AG
+ITTAS
+Derendorfer Allee 2
+40476 D=FCsseldorf
+Tel.: +49 69 5099 9503
+=46ax: +49 69 5099 85 9503
+E-Mail: Andreas.Gondek@dwpbank.de
+http://www.dwpbank.de
 
--Peff
+Deutsche WertpapierService Bank AG | Wildunger Stra=DFe 14 | 60487 Fran=
+kfurt am Main=20
+Sitz der AG: Frankfurt am Main, HRB 56913 | USt.-ID: DE 813759005=20
+Vorstand: Thomas Klanten, Dr. Christian Tonnesen
+Aufsichtsrat: Wilfried Groos (Vors.)
