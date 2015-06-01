@@ -1,141 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] send-email: allow multiple emails using --cc, --to and --bcc
-Date: Mon, 01 Jun 2015 08:19:16 -0700
-Message-ID: <xmqqiob78nij.fsf@gitster.dls.corp.google.com>
-References: <1433168042-28269-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<1433168042-28269-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 0/3] silence missing-link warnings in some cases
+Date: Mon, 1 Jun 2015 11:41:03 -0400
+Message-ID: <20150601154103.GA14538@peff.net>
+References: <556C0BAD.80106@atlas-elektronik.com>
+ <20150601081450.GA32634@peff.net>
+ <556C1A95.9010704@atlas-elektronik.com>
+ <20150601085226.GA20537@peff.net>
+ <20150601095410.GA16976@peff.net>
+ <xmqqmw0j8o9i.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 01 17:19:25 2015
+	Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 17:41:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzRUr-0000ct-2b
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 17:19:25 +0200
+	id 1YzRq0-0004Ps-P2
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 17:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609AbbFAPTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 11:19:21 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:33117 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbbFAPTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 11:19:19 -0400
-Received: by igbpi8 with SMTP id pi8so63720056igb.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 08:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=6/ZNuuo3FzGFm43aNkPYBolnj6PptwyzeMRj+lognzk=;
-        b=Ph6UFwiGiWQu5pHhBW2tOLB6IBK3mBhcT3w1SkWR43MelOxhMMHCtKE+xvYJOVubkL
-         ghTuCloIjTiGh5BfQBGid6bn1H2OmSkwEKGiYgel5P9VQ764an24XQc7qXkTInFx4oK5
-         7zZyFPCnKArNT1Op1dqmQEfQiNOnPzRItO+lrMbPiScdeupLrtgGDVCYe+g5qrEkG65H
-         jZ5nHLM8iRnsMYDxOJt32Hj2jK3n0OB1sKoYd/PlEdWWdkayiiY37wbe/NE2f3Nia/C1
-         u4vTzlPGwlWtotH28LNfGKf8+RZpkcrpT7Ov6Vm8p7P2RkZ9hSEfAVvy1AOyzzbSj9Ea
-         QzGg==
-X-Received: by 10.42.132.6 with SMTP id b6mr29695019ict.8.1433171957815;
-        Mon, 01 Jun 2015 08:19:17 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:b0e6:ec48:f0c0:da4d])
-        by mx.google.com with ESMTPSA id e69sm10597498ioe.11.2015.06.01.08.19.17
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Jun 2015 08:19:17 -0700 (PDT)
-In-Reply-To: <1433168042-28269-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	(Remi Lespinet's message of "Mon, 1 Jun 2015 16:14:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753540AbbFAPlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 11:41:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38908 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752850AbbFAPlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 11:41:06 -0400
+Received: (qmail 1634 invoked by uid 102); 1 Jun 2015 15:41:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 10:41:06 -0500
+Received: (qmail 31235 invoked by uid 107); 1 Jun 2015 15:41:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 11:41:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 11:41:03 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqmw0j8o9i.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270426>
 
-Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+On Mon, Jun 01, 2015 at 08:03:05AM -0700, Junio C Hamano wrote:
 
-> Accept a list of emails separated by commas in flags --cc, --to and
-> --bcc.  Multiple addresses can already be given by using these options
-> multiple times, but it is more convenient to allow cutting-and-pasting
-> a list of addresses from the header of an existing e-mail message,
-> which already lists them as comma-separated list, as a value to a
-> single parameter.
->
-> The following format can now be used:
->
->     $ git send-email --to='Jane <jdoe@example.com>, mike@example.com'
->
-> However format using commas in names doesn't work:
->
->     $ git send-email --to='"Jane, Doe" <jdoe@example.com>'
+> > The reason is that since git d3038d2 (prune: keep objects reachable from
+> > recent objects, 2014-10-15), we will traverse objects that are not
+> > reachable but have recent mtimes (within the 2-week prune expiration
+> > window). Because they are not reachable, we may not actually have all of
+> > their ancestors; we use the revs->ignore_missing_links option to avoid
+> > making this a fatal error. But we still print an error message. This
+> > series suppresses those messages.
+> 
+> Nice finding.  One of us should have thought of this kind of fallout
+> when we discussed that change, but we apparently failed.
 
-That looks as if you are doing "Remi, Lespinet", which is not a good
-example.  I think you want "Doe, Jane", the use of comma is when a
-name is spelled in the "LastName, FirstName" order.
+I think the real culprit is that this should have been added along with
+ignore_missing_links in the first place. That came along with the bitmap
+code, but I was too busy focusing on the hard problems there to notice.
+:)
 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index ffea500..389f19c 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -460,20 +460,6 @@ my ($repoauthor, $repocommitter);
->  ($repoauthor) = Git::ident_person(@repo, 'author');
->  ($repocommitter) = Git::ident_person(@repo, 'committer');
->  
-> -# Verify the user input
-> -
-> -foreach my $entry (@initial_to) {
-> -	die "Comma in --to entry: $entry'\n" unless $entry !~ m/,/;
-> -}
-> -
-> -foreach my $entry (@initial_cc) {
-> -	die "Comma in --cc entry: $entry'\n" unless $entry !~ m/,/;
-> -}
-> -
-> -foreach my $entry (@bcclist) {
-> -	die "Comma in --bcclist entry: $entry'\n" unless $entry !~ m/,/;
-> -}
+> The fixes make sense to me (I haven't carefully read the
+> implementation, but design/approach explained in the proposed log
+> messages are very sound), and I think 3/3 is a good thing to do,
+> too, in the new world order after d3038d2.
 
-So at this point, each element in @initial_to and friends is one
-item we got from the user, e.g. "--to=<arg>", where <arg> may want
-to include multiple addresses, e.g. "me, you".
+I think it's rather the opposite. In a post-d3038d2 world, a missing
+object is _more_ likely to be a real corruption, and we would probably
+prefer to complain about it. I am on the fence though.
 
-And then later, in the more interesting part of the patch, I find a
-puzzling code.
-
->  @initial_to = expand_aliases(@initial_to);
-> -@initial_to = validate_address_list(sanitize_address_list(@initial_to));
-> +@initial_to = extract_address_list(@initial_to);
-
-A question: what is in @initial_to at this point in the code,
-immediately before you call expand_aliases() on it?  Isn't one of
-the elements be "me, you" when I said --to="me, you"?
-
-Shouldn't you be splitting that into "me" and "you" and expand these
-two as potential aliases separately?
-
-In other words, I wonder why the patch needs to be any more complex
-than this instead:
-
-	+@initial_to = split_at_comma(@initial_to);
-	 @initial_to = expand_aliases(@initial_to);
-	 @initial_to = validate_address_list(sanitize_address_list(@initial_to));
-
-As your goal is to treat --to="<address 1>, <address 2>" as if the
-user said --to="<address 1>" --to="<address 2>", that would be a
-more straight-forward way to enhance the system, and you shouldn't
-have to change anything else, no?
-
-
->  @initial_cc = expand_aliases(@initial_cc);
-> -@initial_cc = validate_address_list(sanitize_address_list(@initial_cc));
-> +@initial_cc = extract_address_list(@initial_cc);
->  @bcclist = expand_aliases(@bcclist);
-> -@bcclist = validate_address_list(sanitize_address_list(@bcclist));
-> +@bcclist = extract_address_list(@bcclist);
-
-Ditto.
+-Peff
