@@ -1,104 +1,103 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [RFC] solving a bug with hunks starting at line 1 in git apply
-Date: Mon, 01 Jun 2015 20:00:46 +0200
-Message-ID: <vpqa8wj48c1.fsf@anie.imag.fr>
+Date: Mon, 01 Jun 2015 20:20:09 +0200
+Message-ID: <vpq382b47fq.fsf@anie.imag.fr>
 References: <87k2vnqrv8.fsf@ensimag.grenoble-inp.fr>
-	<xmqqiob773iy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 20:01:06 2015
+Cc: git@vger.kernel.org
+To: Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 01 20:20:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzU1J-0003Im-P9
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 20:01:06 +0200
+	id 1YzUJu-00052P-7X
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 20:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752935AbbFASBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 14:01:00 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44893 "EHLO rominette.imag.fr"
+	id S1753209AbbFASUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 14:20:13 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59870 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752850AbbFASA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 14:00:59 -0400
+	id S1753309AbbFASUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 14:20:13 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t51I0itP019800
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t51IK72M031646
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 1 Jun 2015 20:00:44 +0200
+	Mon, 1 Jun 2015 20:20:07 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t51I0ksh024945;
-	Mon, 1 Jun 2015 20:00:46 +0200
-In-Reply-To: <xmqqiob773iy.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 01 Jun 2015 10:16:21 -0700")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t51IK90C025106;
+	Mon, 1 Jun 2015 20:20:09 +0200
+In-Reply-To: <87k2vnqrv8.fsf@ensimag.grenoble-inp.fr> (Remi LESPINET's message
+	of "Mon, 01 Jun 2015 19:07:55 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 01 Jun 2015 20:00:44 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 01 Jun 2015 20:20:07 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t51I0itP019800
+X-MailScanner-ID: t51IK72M031646
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433786447.61982@+utlpdTpgQtmjaAHr7mrag
+MailScanner-NULL-Check: 1433787608.76091@dfX7uxmKQ8pYb2UTSMS6+Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270450>
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr> writes:
->
->> first original file:
->>
->> 10
->> 20
->> 30
->> 40
->>
->> for the following diff file:
->>
->> @@ -1,2 +1,2 @@
->>  20
->> -30
->> +35
->>  40
->>
->> The patch will not be applied with a git apply command, but it will
->> with a basic patch command.
->
-> Doesn't that merely indicate a bug in "patch", though?
-
-No, it's just that patch does a fuzzy match in this case:
-
-$ patch < patch.diff 
-patching file pre.txt
-Hunk #1 succeeded at 2 with fuzz 1 (offset 1 line).
-
-It's different from the other case:
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270451>
 
 Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr> writes:
 
-> @@ -1,1 +1,2 @@
-> +5
->  10
-> @@ -1,3 +2,3 @@
->  10
-> +15
-> -20
->  30
+> ======================================================================
+> = 2. Correction
+> ======================================================================
+>
+> I see mainly two ways to fix the bug:
+>
+> ********************************************************************
+> * 2.1 first method (the most basic)
+> ********************************************************************
+>
+> The most basic is to change the code so that the special behavior
+> only affects the hunks of the form
+>
+> @@ -1,k +1,m @@
 
-With this one, I get:
+I do not think that this would work in all cases. It seems git apply has
+issues with overlapping contexts, not just with hunks starting at line
+1. See:
 
-$ git apply < p2.diff   
-error: patch failed: pre.txt:1
+$ cat pre.txt
+-1
+0
+10
+20
+30
+40
+$ cat p2.diff 
+--- pre.txt
++++ pre.txt
+@@ -2,2 +2,3 @@
+ 0
++5
+ 10
+@@ -3,3 +4,3 @@
+ 10
++15
+-20
+ 30
+$ git apply p2.diff
+error: patch failed: pre.txt:3
 error: pre.txt: patch does not apply
 $ patch < p2.diff 
 patching file pre.txt
-
-=> no fuzzy matching for patch, git apply should actually work.
+$ cat pre.txt
+-1
+0
+5
+10
+15
+30
+40
 
 -- 
 Matthieu Moy
