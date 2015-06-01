@@ -1,101 +1,108 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/9] send-email: further document missing sendmail
- aliases functionality
-Date: Mon, 1 Jun 2015 14:22:36 -0400
-Message-ID: <20150601182236.GA28030@flurp.local>
-References: <1433111371-19573-1-git-send-email-sunshine@sunshineco.com>
- <1433111371-19573-2-git-send-email-sunshine@sunshineco.com>
- <CAJ80sau0GeeFxFZYsEE=uupfPqJ=vRZfNRuNd0qRJPDNvnbMPw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug in 'git am' when applying a broken patch
+Date: Mon, 01 Jun 2015 11:31:10 -0700
+Message-ID: <xmqqwpzn5lht.fsf@gitster.dls.corp.google.com>
+References: <20150601001759.GA3934@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Allen Hubbe <allenbh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 20:22:49 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Gaston Gonzalez <gascoar@gmail.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 01 20:31:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzUMK-0006Hd-7E
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 20:22:48 +0200
+	id 1YzUUY-0002Ag-Ea
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 20:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbbFASWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 14:22:43 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:33675 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753736AbbFASWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 14:22:42 -0400
-Received: by iebgx4 with SMTP id gx4so115275979ieb.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 11:22:42 -0700 (PDT)
+	id S1752864AbbFASbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 14:31:14 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:33092 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493AbbFASbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 14:31:12 -0400
+Received: by iebgx4 with SMTP id gx4so115444643ieb.0
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 11:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Y98nCg91cKzvP86R/skXRZloo5aD2LfCKGqVWeHLg2U=;
-        b=saHoEgB+LcyceDlBVBxJvjq9FpDw/PzG3VNmw7FeLtLdAoQYDxHEaUEKSCsL4MbkCP
-         MzEX0HbHz1XxNkSNUuYjLcAAGjpjszIKefem3FQ3hvKVXSfCITJGRzO6pwYVCDE8tCeF
-         y5+suhldUe9KVIyTdXLO1zW0eB3bTQtXs/+ES1iChkceFcB+uUxvtZpPuMRYBflgCIwT
-         UYGna1Z2FSDGEcF6CvDJ7pwXqlJ1AfvPvFjCYWoJndw1JdhxSuPcAbjN4znEhMYOeR56
-         kTGSNJLHxgKznQW1pnlQ2uSbeqQz8eth+5KklpWw168T3eTh9/6Wwn8z/Um0mkjt+QPc
-         08cg==
-X-Received: by 10.107.26.207 with SMTP id a198mr28458788ioa.5.1433182962179;
-        Mon, 01 Jun 2015 11:22:42 -0700 (PDT)
-Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id q85sm10919479ioi.6.2015.06.01.11.22.41
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Jun 2015 11:22:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAJ80sau0GeeFxFZYsEE=uupfPqJ=vRZfNRuNd0qRJPDNvnbMPw@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=w7y24YzQofS0SqgvHsCEOFaOOg1G47Wf9jyN33Uhjvg=;
+        b=eXUi0KJiEAurT2ylMK4D9DELyJ4859jGAIHF0/VVUItszKP29uTVXWFvlxjkLVpWga
+         7k7a5/EWMR3tCk44caIScm67g4lEJELEshYtrElM/jGsWlMu48ekYl/3MU5nRM3Dvviu
+         g8s0QdhYusW7IOiUvF26khL2m8FLNdoFtmCc89m8c+n1Fpwi2YAonB1EpaDQE3fyU5aO
+         KCpOTU8e5Udel4ld4FDBoExQ+giKDVjdjEwkK4xmH/LNDq8hKHcnjIEPw7xYnzsxjMss
+         E/62xNtKBLqAuxoNyVS1unaGZsiFzHy0nkfnIr/H4/+u9OJOQWum7DHyYE7LKJAtK666
+         eXbA==
+X-Received: by 10.50.78.225 with SMTP id e1mr6704714igx.19.1433183472011;
+        Mon, 01 Jun 2015 11:31:12 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:f9ca:66ee:8cb4:7220])
+        by mx.google.com with ESMTPSA id d4sm10927393iod.17.2015.06.01.11.31.11
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Jun 2015 11:31:11 -0700 (PDT)
+In-Reply-To: <20150601001759.GA3934@kroah.com> (Greg KH's message of "Mon, 1
+	Jun 2015 09:17:59 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270453>
 
-On Mon, Jun 01, 2015 at 07:43:08AM -0400, Allen Hubbe wrote:
-> On May 31, 2015 at 6:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > Sendmail aliases[1] supports expansion to a file ("/path/name") or
-> > pipe ("|command"), as well as file inclusion (":include: /path/name"),
-> > however, our implementation does not support such functionality.
+Greg KH <gregkh@linuxfoundation.org> writes:
+
+> But, there's nothing in the patch at all except the commit message:
 >
-> According to the documentation, the parser should print a warning for
-> any explicitly unsupported constructs.  These are now explicitly
-> unsupported, so the parser should warn on |, /, and :include: .
-> Perhaps the lines that match should be ignored like the others, too.
+> $ git show HEAD
+> ...
+> Any ideas what is going on here?  Shouldn't 'git am' have failed?
 
-Indeed. I had that in mind and then promptly forgot about it. Here's a
-follow-on patch:
+Yes.  The patch reads like this:
 
---- >8 ---
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 10/9] send-email: further warn about unsupported sendmail aliases features
+    ---
+     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c | 5 +++--
+     1 file changed, 3 insertions(+), 2 deletions(-)
 
-The sendmail aliases parser diagnoses unsupported features and
-unrecognized lines. For completeness, also warn about unsupported
-redirection to "/path/name" and "|command", as well as ":include:".
+    diff --git a/drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c b/...
+    index d2e8b12..0477ba1 100644
+    --- a/drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c
+    +++ b/drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c
+    @@ -660,2 +660,2 @@ inline struct sk_buff *ieee80211_authentic...
+            auth = (struct ieee80211_authentication *)
+                    skb_put(skb, sizeof(struct ieee80211_authentication));
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- git-send-email.perl | 4 ++++
- 1 file changed, 4 insertions(+)
+    -	auth->header.frame_ctl = IEEE80211_STYPE_AUTH;
+    -	if (challengelen) auth->header.frame_ctl |= IEEE80211_FCTL_WEP;
+    +	auth->header.frame_ctl = cpu_to_le16(IEEE80211_STYPE_AUTH);
+    +	if (challengelen)
+    +		auth->header.frame_ctl |= cpu_to_le16(IEEE80211_FCTL_WEP);
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index eb1d678..ae9f869 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -492,6 +492,10 @@ sub parse_sendmail_alias {
- 	local $_ = shift;
- 	if (/"/) {
- 		print STDERR "warning: sendmail alias with quotes is not supported: $_\n";
-+	} elsif (/:include:/) {
-+		print STDERR "warning: `:include:` not supported: $_\n";
-+	} elsif (/[\/|]/) {
-+		print STDERR "warning: `/file` or `|pipe` redirection not supported: $_\n";
- 	} elsif (/^(\S+?)\s*:\s*(.+)$/) {
- 		my ($alias, $addr) = ($1, $2);
- 		$aliases{$alias} = [ split_addrs($addr) ];
--- 
-2.4.2.538.g5f4350e
+            auth->header.duration_id = 0x013a; //FIXME
 
---- >8 ---
+    --
+    2.1.4
+
+    _______________________________________________
+    devel mailing list
+    devel@linuxdriverproject.org
+    http://driverdev.linuxdriverproject.org/mailman/listinfo/driverdev-devel
+
+
+It claims that it has only 2 lines in the hunk, so "git apply"
+parses the hunk that begins at line 660 as such:
+
+    @@ -660,2 +660,2 @@ inline struct sk_buff *ieee80211_authentic...
+            auth = (struct ieee80211_authentication *)
+                    skb_put(skb, sizeof(struct ieee80211_authentication));
+
+And then seeing that the next line (which is a blank line, not even
+a lone SP on it) does not begin with "@@ -", it says "OK, the
+remainder is a cruft after the patch" and discards the rest (which
+it must be capable of, to ignore "-- ", "2.1.4", "devel mailing
+list", etc.)
+
+There is some safety against not finding a correct patch header
+(i.e. "diff --git" line) by detecting a lone "@@ -" while parsing
+the patch stream, but there is no logic implemented to detect this
+kind of breakage in the code.
