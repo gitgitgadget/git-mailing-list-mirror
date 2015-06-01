@@ -1,88 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFCv2 1/2] git-rebase -i: add command "drop" to remove a commit
-Date: Mon, 01 Jun 2015 20:36:01 +0200
-Message-ID: <vpqoakz1dke.fsf@anie.imag.fr>
-References: <1433152643-4292-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<1433152643-4292-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<xmqqvbf7757q.fsf@gitster.dls.corp.google.com>
-	<563732680.250935.1433180720935.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] solving a bug with hunks starting at line 1 in git apply
+Date: Mon, 01 Jun 2015 11:37:08 -0700
+Message-ID: <xmqqpp5f5l7v.fsf@gitster.dls.corp.google.com>
+References: <87k2vnqrv8.fsf@ensimag.grenoble-inp.fr>
+	<xmqqiob773iy.fsf@gitster.dls.corp.google.com>
+	<vpqa8wj48c1.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Stephen Kelly <steveire@gmail.com>
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 01 20:36:28 2015
+Cc: Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 01 20:37:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzUZY-0004nD-5a
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 20:36:28 +0200
+	id 1YzUaK-0005Dn-Ve
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 20:37:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808AbbFASgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 14:36:19 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:60148 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753744AbbFASgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 14:36:15 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t51Ia0G6000964
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 1 Jun 2015 20:36:00 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t51Ia15L025241;
-	Mon, 1 Jun 2015 20:36:01 +0200
-In-Reply-To: <563732680.250935.1433180720935.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Remi Galan Alfonso's message of "Mon, 1 Jun 2015 19:45:20 +0200
-	(CEST)")
+	id S1753831AbbFAShM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 14:37:12 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:34451 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753794AbbFAShK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 14:37:10 -0400
+Received: by ieczm2 with SMTP id zm2so115873727iec.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 11:37:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=tE2FhzGZfo1GKUvM9RoFngmWb3XatQCf0Z0RPYCkLPU=;
+        b=mfW3WceuL5qMqK73kRVB7sIWof/u4I9JbifgGDcFh6v7xt7FqZ+XKm6ZMSEaaycSfH
+         YGQ7vkKdFmDav5f59e0mMUGGYfiKmBlOTvC/kFY4J+Lr+1L32k3hUOEmRYrdwYqIciK1
+         QSeqDw7r5qvPNvkf9Cb2xqzJJA28umGlZ2WJici3nBn2djvi35wXoj+Em5emldVVYRrE
+         meoY+xzAWJlCAe5To89ql+PduKKL7edrjc13Dy4AApOA/fAGGyLuTxcDtdlHjOFqy9kr
+         8anX0PIjwm6QOnj6vxcNNYw7XnULyii+n0dK2EofwAQPwJxOtbQpDxxPLBmtWNhQbuOH
+         dvjQ==
+X-Received: by 10.107.161.6 with SMTP id k6mr29684216ioe.41.1433183829951;
+        Mon, 01 Jun 2015 11:37:09 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:f9ca:66ee:8cb4:7220])
+        by mx.google.com with ESMTPSA id w4sm8345035igl.22.2015.06.01.11.37.09
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Jun 2015 11:37:09 -0700 (PDT)
+In-Reply-To: <vpqa8wj48c1.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	01 Jun 2015 20:00:46 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 01 Jun 2015 20:36:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t51Ia0G6000964
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433788564.47305@8zH7STcYX0Ibi6SNsUDzlA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270455>
 
-Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> Is this sufficient?
+>> @@ -1,1 +1,2 @@
+>> +5
+>>  10
+>> @@ -1,3 +2,3 @@
+>>  10
+>> +15
+>> -20
+>>  30
 >
->> If you are going to do something in 2/2 that relies on the format of
->> this line being correct (as opposed to "noop" or "#" that can have
->> any garbage on the remainder of the line), wouldn't you want to at
->> least check $sha1 is sensible?
+> With this one, I get:
 >
-> That's also something that I was wondering, I wrote about it in the
-> 0/2 part of this patch, I wanted some opinion about it.
+> $ git apply < p2.diff   
+> error: patch failed: pre.txt:1
+> error: pre.txt: patch does not apply
+> $ patch < p2.diff 
+> patching file pre.txt
+>
+> => no fuzzy matching for patch, git apply should actually work.
 
-Ideally, I think we should do a sanity check before starting the rebase,
-and error out if we encounter an invalid command, a command that should
-be followed by a valid sha1 and does not, ...
+I am not sure what you are trying to do with that patch that tries
+to touch the same line twice.  Is this the same old laziness coming
+back to bite us, the one that we attempted to work around with
+933e44d3 ("add -p": work-around an old laziness that does not
+coalesce hunks, 2011-04-06)?
 
-But currently, we do the verification while applying commands, and I
-don't think there's anything really helpful to do if we encounter a
-"drop this-is-not-a-sha1" command.
-
-So, IMHO, why not do this check, but I'm not sure it will actually help
-much.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+In other words, isn't the right fix to coalesce that input, so that
+the second hunk does *not* require fuzzy application in the first
+place?
