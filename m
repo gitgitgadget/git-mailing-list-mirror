@@ -1,94 +1,101 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [PATCH] l10n: de.po: translate "index" as "Index"
-Date: Mon, 01 Jun 2015 22:00:20 +0200
-Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
-Message-ID: <1749852.uCRPrjoCKZ@cs-pc>
-References: <1432925644-26231-1-git-send-email-ralf.thielow@gmail.com> <3813728.oJDPxEPYet@cs-pc> <CAGZ79kb01tODVL+iMNWvQdxwUZujy8fy0B3ZiNwODoJ5kadzvw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Bug in 'git am' when applying a broken patch
+Date: Mon, 1 Jun 2015 16:09:55 -0400
+Message-ID: <CAPig+cTc72npgXUA9EirGonrjwhXCROxn4cc=6=uPywers_h9w@mail.gmail.com>
+References: <20150601001759.GA3934@kroah.com>
+	<xmqqwpzn5lht.fsf@gitster.dls.corp.google.com>
+	<xmqqd21f5k7w.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, tr@thomasrast.ch,
-	jk@jk.gs, phillip.szelat@gmail.com, matthias.ruester@gmail.com,
-	magnus.goerlitz@googlemail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 22:00:47 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Greg KH <gregkh@linuxfoundation.org>,
+	Git List <git@vger.kernel.org>,
+	Gaston Gonzalez <gascoar@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 22:10:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzVt2-00045X-8H
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 22:00:40 +0200
+	id 1YzW25-0000Iu-B6
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 22:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288AbbFAUAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 16:00:32 -0400
-Received: from smtp6.rz.tu-harburg.de ([134.28.205.36]:36720 "EHLO
-	smtp6.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753200AbbFAUAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 16:00:30 -0400
-Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail.tu-harburg.de", Issuer "TUHH CA in DFN-PKI Global - G01" (verified OK))
-	by smtp6.rz.tu-harburg.de (Postfix) with ESMTPS id 3m0nRc6kn1zGmS2;
-	Mon,  1 Jun 2015 22:00:28 +0200 (CEST)
-Received: from mailspring.rz.tu-harburg.de (mailspring.rz.tu-harburg.de [134.28.202.181])
-	(user=alucst mech=PLAIN)
-	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id t51K0Sue000956
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 1 Jun 2015 22:00:28 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2015-23;
-	t=1433188828; bh=O7snybgLewEZ3Nz88o9Jo88bTjFdIWwDs01hH2a9V7k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding:Content-Type;
-	b=UxbGWq/kPHyOnELqMnhIi6UZp2nuAPHlmTwMaqliZyOv3G1WERW2YwTUtl6O7roRZ
-	 czmXqN+rXjM/uNdSZZ7IG/h9WHcyWZ42nYUYbaVeXMijoKeZhPRNJlfGFIcA4bOOyO
-	 k40fGD7FXUvdp/aZF38SgvxR1N4n9AO7FXnm/M2Q=
-User-Agent: KMail/4.13 (Linux/3.13.0-52-generic; KDE/4.13.3; x86_64; ; )
-In-Reply-To: <CAGZ79kb01tODVL+iMNWvQdxwUZujy8fy0B3ZiNwODoJ5kadzvw@mail.gmail.com>
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+	id S1752814AbbFAUJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 16:09:57 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:35773 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752317AbbFAUJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 16:09:55 -0400
+Received: by igbyr2 with SMTP id yr2so70907281igb.0
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 13:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=ChZF+DSsKPQkcu1YiuQHZoQWe57Ep0Ju0wMUK0tWYiw=;
+        b=liG3MYtv7xJRvWXGwM/adBJyp4Vp1VmjYspkMSkJKSyqQ5522VeXz4LPZO1QbtMKRW
+         SSI+YvdzBqTzvzZVjOG71lswrd3hfMP3FgxGPku+KYAim4jd2m3zfzAl2WCUkfgP7KQW
+         o/Q7ngpWZ85Y7ncjxM45V7roM9A6m/X9Gjo154ax7408g90HyjX6Q7llDOrk9vwq/KTc
+         Y1wx5nLQbvz0hti7pJClcYF9PgMi9wJL6pEYG0uad7oscVEE3t8+PMeceYzFHmnla8A0
+         9Xwv7UQhoFeVTjbuSEHHlvBpwd9n4oVuwU0HuuckAL2Vl4hhC1Xum4N8j3IKTktFPJ7G
+         Ampg==
+X-Received: by 10.107.137.80 with SMTP id l77mr28083934iod.92.1433189395384;
+ Mon, 01 Jun 2015 13:09:55 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Mon, 1 Jun 2015 13:09:55 -0700 (PDT)
+In-Reply-To: <xmqqd21f5k7w.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: R1HqdgiEBnctZmnlQfg1lShLr0M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270468>
 
-Am Montag, 1. Juni 2015, 12:34:31 schrieb Stefan Beller:
-> On Mon, Jun 1, 2015 at 12:26 PM, Christian Stimming <stimming@tuhh.de> 
-wrote:
-> > "index" concept, my explanation routinely says "This concept is called
-> > 'index' but it has nothing to do with any associations you make with that
-> > word. Better remember this thingy as *** and replace the termin 'index'
-> > with *** every time you read about it." where "***" is my preferred
-> > translation. The facial expressions of the audience regarding "index"
-> > regularly confirm this approach as the better one. I never encountered
-> > anyone who says "Oh, but isn't 'index' a much better term for this than
-> > what you said..."
-> 
-> So the *** is cut out here, or do you literally advise to think of a
-> black magic box here?
-> I'd be interested to know your preferred translation, maybe that can
-> be used instead of Staging-Area then?
+On Mon, Jun 1, 2015 at 2:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Subject: apply: reject a hunk that does not do anything
+>
+> A hunk like this in a hand-edited patch without correctly adjusting
+> the line counts:
+>
+>      @@ -660,2 +660,2 @@ inline struct sk_buff *ieee80211_authentic...
+>              auth = (struct ieee80211_authentication *)
+>                      skb_put(skb, sizeof(struct ieee80211_authentication));
+>      -       some old text
+>      +       some new text
+>      --
+>      2.1.0
+>
+>      dev mailing list
+>
+> at the end of the patch does not have a good way for us to diagnose
+> it as corrupt patch.  We just read two lines and discard the remainder
+> as cruft, which we must do in order to ignore the e-mail footer.
+>
+> If the hand-edited hunk header were "@@ -660,3, +660,2", this fix
+> will not help---we would just remove the old text without adding the
+> enw one, and treat "+ some new text" and everything after that line
 
-Sorry for being unclear here: I left out the concrete word I use because you 
-might need to come up with your own choice in the command-line git 
-translation. The point of this remark is rather that almost any other term is 
-better than leaving "index" as a term as-is. The term that I use is only one 
-among probably many possibilities.
+s/enw/new/
 
-In case you still want to know my preferred German word, I stick to the 
-translations that are used in git-gui, mostly still proposed by myself in 
-(huh) 2008. http://repo.or.cz/w/git-gui.git/blob/HEAD:/po/glossary/de.po  
-There, "index" isn't used in the user interface anymore but rather "staging 
-area", and that's translated into German as "Bereitstellung". In my experience 
-this term works quite well for a German-speaking developer audience, even 
-though the term with its military background is only seldomly used or known. 
-But the word triggers some well-suited associations: partly "bereit" for the 
-next step, partly "Stellung" as some extra third place in addition to working 
-copy and repository. But that might very well be a different discussion than 
-what you need to discuss for command line git.
-
-Regards,
-
-Christian
+> as trailing cruft.  So it is dubious that this patch would help very
+> much in practice, but it is better than nothing ;-)
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/apply.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index 146be97..54aba4e 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -1638,6 +1638,9 @@ static int parse_fragment(const char *line, unsigned long size,
+>         }
+>         if (oldlines || newlines)
+>                 return -1;
+> +       if (!deleted && !added)
+> +               return -1;
+> +
+>         fragment->leading = leading;
+>         fragment->trailing = trailing;
+>
+> --
