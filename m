@@ -1,136 +1,157 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/WIP PATCH 11/11] Document protocol version 2
-Date: Mon, 1 Jun 2015 16:14:15 -0700
-Message-ID: <CAGZ79kaRTLX7eBCOA=yQHVwcN-H-o_aZFfQ1gw7Nx-NC82pbag@mail.gmail.com>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
-	<1432677675-5118-12-git-send-email-sbeller@google.com>
-	<xmqqsiafazr7.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kbELvZ6otnNwGHsgiC9EjgS2vrDGU2KCgF2c_Azm=-rWg@mail.gmail.com>
-	<xmqqk2vraw6p.fsf@gitster.dls.corp.google.com>
-	<20150529222120.GB15678@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFCv2 2/2] git rebase -i: warn about removed commits
+Date: Mon, 1 Jun 2015 19:16:11 -0400
+Message-ID: <CAPig+cRGT4qgCNgVi_x-==GKze7VUPVbVPGHYui7y5ZXie72Qw@mail.gmail.com>
+References: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1433159523-6596-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 02 01:14:25 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Stephen Kelly <steveire@gmail.com>
+To: =?UTF-8?Q?Galan_R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 02 01:16:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzYuW-0005n8-0N
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 01:14:24 +0200
+	id 1YzYwL-0006QA-Sb
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 01:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348AbbFAXOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 19:14:20 -0400
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:33298 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753602AbbFAXOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 19:14:18 -0400
-Received: by qcmi9 with SMTP id i9so53750281qcm.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 16:14:15 -0700 (PDT)
+	id S1752447AbbFAXQO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 19:16:14 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:36774 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbbFAXQM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 19:16:12 -0400
+Received: by ieclw1 with SMTP id lw1so25687342iec.3
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 16:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=q2nv8Mo761iJGAG//7vX8xpI9nREUIH+sIA033XZQGM=;
-        b=SeuEhm+0SyxCqEAdc9BL0/0NT9DkfPGu67cGEtoXlQcyWZQbHFc1G+zTzmkhzv53gb
-         axP3XkxEPipV6B0gYijyYfeEp7FeAZ4bIZywLLn0OHEokFQ9xMSEvS99KSCsG6U5l8K+
-         BI6gQoZtKFqHw2j2oxJV08dz3Vim+xiYIjxuZLgSDMZwSPrIwRdm1LevAkmPbDRQVT4T
-         41VVq7Ai2V4a9wDsDQPWI7UD2xWcORPdb5UNmF651VSBpYp304KkXvAGT21O4b+pYHFQ
-         HApwcaBMsmLV8NARMln0IQ+isJyzCUKGSpK1e3nu/tac1UjQZ+whxt2mZUInpvyJHj/x
-         rjlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=q2nv8Mo761iJGAG//7vX8xpI9nREUIH+sIA033XZQGM=;
-        b=YYsxjTyhkJ3qRHcmxxmdOkGP8XPE9v1qE026pPZfk/rt4wLkro9P/+xXU+hnhB4SNC
-         oU+VjY9dqpNZsi83xDRrX5YSS+j400gSQg3nO7xuCUYRXQXGqTRqMsReC4RYr7qQFmh8
-         +8RBemz1EM3M33hwRmiE1q8WkfH2i8YfoTTd6TmsSLpKOGJqi9he2DImC6A/1RQo3QjS
-         GfY0icDl9F1buk1k3O5QebzPGk/L+MoLXUQ20vZCKOsuZOddah69cDyM0NKEL0pQOKbu
-         jcz/8o/nkDL17WJt5SzWr3Dp4ruciiDhUvPn4CWNMvr2ZyTls02hbPBvDCUkkluqtIMB
-         E1Ow==
-X-Gm-Message-State: ALoCoQk5BYTNn3x2IG1mrQ1CZnwBM3HOC65UwrALKkbxVW5I4V/2cWQS516HHBUtEw6BbPbCsRhD
-X-Received: by 10.55.19.197 with SMTP id 66mr42702139qkt.24.1433200455460;
- Mon, 01 Jun 2015 16:14:15 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Mon, 1 Jun 2015 16:14:15 -0700 (PDT)
-In-Reply-To: <20150529222120.GB15678@peff.net>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=GMNXNLkHhaL2n3vUskw+Z0N3dz4953T3GHqsddlJBao=;
+        b=owREFJxi2f4knrAIe6EDrUpn2nP0Zlne5FCxqoCK3+ZUtrrOqSiUCxKqkJhLaB/6W9
+         +679e9FlJXxtKSW5coHgJs/D3MaAJ0FmWHG/WNUn8E+FqRB28CNl0MBKXcfeTGYrfBIL
+         sJdKisKabUcAp12bhRXv4lPccTUpiN5Fqel+e/59l+IJ2+P1TyRGulPdA8lrMyFkvaSn
+         Byi2FYq1q5ruEFsUz5cekKXLR78K1K7ldtIRnj9XgKQTmaTVhSZCBuamFzs0OWHRnjLu
+         dUXRPkDQgeHf5aZKuHifET0DyXlLbs3h7mG2FXooIC+XV5uUW8/H4locIBt+RgD6Qdye
+         iIKg==
+X-Received: by 10.107.137.80 with SMTP id l77mr28898801iod.92.1433200571371;
+ Mon, 01 Jun 2015 16:16:11 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Mon, 1 Jun 2015 16:16:11 -0700 (PDT)
+In-Reply-To: <1433159523-6596-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-Google-Sender-Auth: s60ekbWrK26RUwOyLX8ylfD3nqQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270480>
 
-On Fri, May 29, 2015 at 3:21 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, May 29, 2015 at 02:52:14PM -0700, Junio C Hamano wrote:
+On Mon, Jun 1, 2015 at 7:52 AM, Galan R=C3=A9mi
+<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
+> Check if commits were removed (i.e. a line was deleted) and print
+> warnings or abort git rebase according to the value of the
+> configuration variable rebase.checkLevel.
 >
->> > Currently we can do a = as part of the line after the first ref, such as
->> >
->> >     symref=HEAD:refs/heads/master agent=git/2:2.4.0
->> >
->> > so I thought we want to keep this.
->>
->> I do not understand that statement.
->>
->> Capability exchange in v2 is one packet per cap, so the above
->> example would be expressed as:
->>
->>       symref=HEAD:refs/heads/master
->>         agent=git/2:2.4.0
->>
->> right?  Your "keyvaluepair" is limited to [a-z0-9-_=]*, and neither
->> of the above two can be expressed with that, which was why I said
->> you need two different set of characters before and after "=".  Left
->> hand side of "=" is tightly limited and that is OK.  Right hand side
->> may contain characters like ':', '.' and '/', so your alphabet need
->> to be more lenient, even in v1 (which I would imagine would be "any
->> octet other than SP, LF and NUL").
+> Add the configuration variable rebase.checkLevel.
+>     - When unset or set to "ignore", no checking is done.
+>     - When set to "warn", the commits are checked, warnings are
+>       displayed but git rebase still proceeds.
+>     - When set to "error", the commits are checked, warnings are
+>       displayed and the rebase is aborted.
+>
+> rebase.checkLevel defaults to "ignore".
+>
+> Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-i=
+np.fr>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 5f76e8c..e2e5554 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2160,6 +2160,15 @@ rebase.autoStash::
+>         successful rebase might result in non-trivial conflicts.
+>         Defaults to false.
+>
+> +rebase.checkLevel::
+> +       If set to "warn", git rebase -i will print a warning if some
+> +       commits are removed (i.e. a line was deleted) or if some
+> +       commits appear more than one time (e.g. the same commit is
+> +       picked twice), however the rebase will still proceed. If set
 
-I think the recent issue with the push certificates shows that having arbitrary
-data after the = is a bad idea. So we need to be very cautious when to allow
-which data after the =.
+The cover letter says that v2 no longer checks for a duplicate,
+however, this documentation still mentions it.
 
-I'll try split up the patch.
+> +       to "error", it will print the previous warnings and abort the
+> +       rebase. If set to "ignore", no checking is done.  Defaults to
+> +       "ignore".
+> +
+>  receive.advertiseAtomic::
+>         By default, git-receive-pack will advertise the atomic push
+>         capability to its clients. If you don't want to this capabili=
+ty
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.=
+txt
+> index 9cf3760..d348ca2 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -213,6 +213,12 @@ rebase.autoSquash::
+>  rebase.autoStash::
+>         If set to true enable '--autostash' option by default.
+>
+> +rebase.checkLevel::
+> +       If set to "warn" print warnings about removed commits and
+> +       duplicated commits in interactive mode. If set to "error"
 
->
-> Yes. See git_user_agent_sanitized(), for example, which allows basically
-> any printable ASCII except for SP.
->
-> I think the v2 capabilities do not even need to have that restriction.
-> It can allow arbitrary binary data, because it has an 8bit-clean framing
-> mechanism (pkt-lines). Of course, that means such capabilities cannot be
-> represented in a v1 conversation (whose framing mechanism involves SP
-> and NUL). But it's probably acceptable to introduce new capabilities
-> which are only available in a v2 conversation. Old clients that do not
-> understand v2 would not understand the capability either. It does
-> require new clients implementing the capability to _also_ implement v2
-> if they have not done so, but I do not mind pushing people in that
-> direction.
->
-> The initial v2 client implementation should probably do a few cautionary
-> things, then:
->
->   1. Do _not_ fold the per-pkt capabilities into a v1 string; that loses
->      the robust framing. I suggested string_list earlier, but probably
->      we want a list of ptr/len pair, so that it can remain NUL-clean.
->
->   2. Avoid holding on to unknown packets longer than necessary. Some
->      capability pkt-lines may be arbitrarily large (up to 64K). If we do
->      not understand them during the v2 read of the capabilities, there
->      is no point hanging on to them. It's not _wrong_ to do so, but just
->      inefficient; if we know that clients will just throw away unknown
->      packets, then we can later introduce new packets with large data,
->      without worrying about wasting the client's resources.
->
->      I suspect it's not that big a deal either way, though. I have no
->      plans for sending a bunch of large packets, and anyway network
->      bandwidth is probably more precious than client memory.
+Same here.
 
-That's very sensible thoughts after rereading this email. The version
-I'll be sending out today will not follow those suggestions though. :(
-
+> +       print the warnings and abort the rebase. If set to "ignore" n=
+o
+> +       checking is done. "ignore" by default.
+> +
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interacti=
+ve.sh
+> index 1bad068..d3a9ed5 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1103,7 +1103,6 @@ test_expect_success 'rebase -i commits that ove=
+rwrite untracked files (no ff)' '
+>  '
 >
-> -Peff
+>  test_expect_success 'drop' '
+> -       git checkout master &&
+>         test_when_finished "git checkout master" &&
+>         git checkout -b dropBranchTest master &&
+
+This "cleanup" change might deserve its own test (or at least a
+mention in the commit message).
+
+>         set_fake_editor &&
+> @@ -1113,4 +1112,13 @@ test_expect_success 'drop' '
+>         test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
+>  '
+>
+> +test_expect_success 'rebase -i respects rebase.checkLevel' '
+> +       test_config rebase.checkLevel error &&
+> +       test_when_finished "git checkout master" &&
+> +       git checkout -b tmp2 master &&
+> +       set_fake_editor &&
+> +       test_must_fail env FAKE_LINES=3D"1 2 3 4" git rebase -i --roo=
+t &&
+> +       test E =3D $(git cat-file commit HEAD | sed -ne \$p)
+> +'
+
+Shouldn't you also explicitly test "warn" and "ignore" modes?
