@@ -1,280 +1,137 @@
-From: =?UTF-8?q?Galan=20R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFCv2 2/2] git rebase -i: warn about removed commits
-Date: Mon,  1 Jun 2015 13:52:03 +0200
-Message-ID: <1433159523-6596-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-References: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Bug in 'git am' when applying a broken patch
+Date: Mon, 1 Jun 2015 14:09:49 +0200
+Message-ID: <CAP8UFD1XzrC=XLpOYd5S5g_3t6BAbveafO0SctFe=yrwLEAS6Q@mail.gmail.com>
+References: <20150601001759.GA3934@kroah.com>
+	<20150601015428.GA24214@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Stephen Kelly <steveire@gmail.com>,
-	=?UTF-8?q?Galan=20R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 01 13:52:22 2015
+Content-Type: multipart/mixed; boundary=089e013d1472e08373051773b3be
+Cc: git <git@vger.kernel.org>, Gaston Gonzalez <gascoar@gmail.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 01 14:09:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzOGT-0000ns-SI
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 13:52:22 +0200
+	id 1YzOXU-0001zV-JR
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 14:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbbFALwS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 07:52:18 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:43762 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751422AbbFALwQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 07:52:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4891F48841;
-	Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ubqCw4HRE3RD; Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2A51D48836;
-	Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 1F53520E4;
-	Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id meW3YmeGvu0K; Mon,  1 Jun 2015 13:52:13 +0200 (CEST)
-Received: from galanalr-Dell-System-Inspiron-N7110.grenet.fr (eduroam-032225.grenet.fr [130.190.32.225])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C19AE20DD;
-	Mon,  1 Jun 2015 13:52:12 +0200 (CEST)
-X-Mailer: git-send-email 2.4.1.363.g9535a9c
-In-Reply-To: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	id S1752768AbbFAMJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 08:09:53 -0400
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:35693 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbbFAMJv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 08:09:51 -0400
+Received: by wgme6 with SMTP id e6so112330546wgm.2
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 05:09:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=i19//kLSGlYcKQz3CrzC9Smu+pN1p9adDl1nJoPED2s=;
+        b=DeY3oCjQ5MCIB/4XC1LTlRa7LNngo7C93wzR8YNOpVsKabE6ztTUqweeIU66EHHMJY
+         xARoVo8KvhaPVcypSJE0PpB4Y4mDPf3txh6oygmhOWLbS3VapUP3CFU8pk928c00PVfE
+         B3UD/JfmTVp+dJMkDFgFeJlRt0HADpk81jUSzVTrmaROJ4ZbGh1LyUjxEx9XuBzo8Wl6
+         JXUSpnAuzZVUIZXFGna+IU9YqBLTH0XfUrNoxBuimFM7Ssfx68epo8UOE8U9hsgapjvg
+         oQIzgJaUgIRKtQnZCI0drzvXzAWhUMbGkDCIheFdadaXNMqcml/+lbFZQX15r5udaO2m
+         i6ag==
+X-Received: by 10.194.242.195 with SMTP id ws3mr41325800wjc.155.1433160590037;
+ Mon, 01 Jun 2015 05:09:50 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Mon, 1 Jun 2015 05:09:49 -0700 (PDT)
+In-Reply-To: <20150601015428.GA24214@kroah.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270406>
 
-Check if commits were removed (i.e. a line was deleted) and print
-warnings or abort git rebase according to the value of the
-configuration variable rebase.checkLevel.
+--089e013d1472e08373051773b3be
+Content-Type: text/plain; charset=UTF-8
 
-Add the configuration variable rebase.checkLevel.
-    - When unset or set to "ignore", no checking is done.
-    - When set to "warn", the commits are checked, warnings are
-      displayed but git rebase still proceeds.
-    - When set to "error", the commits are checked, warnings are
-      displayed and the rebase is aborted.
+Hi Greg,
 
-rebase.checkLevel defaults to "ignore".
+On Mon, Jun 1, 2015 at 3:54 AM, Greg KH <gregkh@linuxfoundation.org> wrote:
+> On Mon, Jun 01, 2015 at 09:17:59AM +0900, Greg KH wrote:
+>> Hi all,
+>>
+>> I received the patch attached below as part of a submission against the
+>> Linux kernel tree.  The patch seems to have been hand-edited, and is not
+>> correct, and patch verifies this as being a problem:
+>>
+>> $ patch -p1 --dry-run < bad_patch.mbox
+>> checking file drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c
+>> patch: **** malformed patch at line 133:                skb_put(skb, sizeof(struct ieee80211_authentication));
+>>
+>> But git will actually apply it:
+>> $ git am -s bad_patch.mbox
+>> Applying: staging: rtl8192u: ieee80211: Fix sparse endianness warnings
+>>
+>> But, there's nothing in the patch at all except the commit message:
+>>
+>> $ git show HEAD
+>> commit f6643dfef5b701db86f23be9ce6fb5b3bafe76b6
+>> Author: Gaston Gonzalez <gascoar@gmail.com>
+>> Date:   Sun May 31 12:17:48 2015 -0300
+>>
+>>     staging: rtl8192u: ieee80211: Fix sparse endianness warnings
+>>
+>>     Fix the following sparse warnings:
+>>
+>>     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c:663:32: warning: incorrect type in assignment (different base types)
+>>     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c:663:32:    expected restricted __le16 [usertype] frame_ctl
+>>     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c:663:32:    got int
+>>     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c:664:50: warning: invalid assignment: |=
+>>     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c:664:50:    left side has type restricted __le16
+>>     drivers/staging/rtl8192u/ieee80211/ieee80211_softmac.c:664:50:    right side has type int
+>>
+>>     Signed-off-by: Gaston Gonzalez <gascoar@gmail.com>
+>>     Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>
+>> $ git diff HEAD^
+>> $
+>>
+>> Any ideas what is going on here?  Shouldn't 'git am' have failed?
+>>
+>> Oh, I'm using git version 2.4.2 right now.
+>>
+>> I've asked Gaston for the original patch to verify before he hand-edited
+>> it, to verify that git wasn't creating something wrong here, as well.
+>
+> Gaston sent me his original patch, before he edited it, and it was
+> correct, so git is correctly creating the patch, which is good.  So it's
+> just a 'git am' issue with a broken patch file.
 
-Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp=
-=2Efr>
----
- Documentation/config.txt      |   9 ++++
- Documentation/git-rebase.txt  |   6 +++
- git-rebase--interactive.sh    | 105 ++++++++++++++++++++++++++++++++++=
-++++++++
- t/t3404-rebase-interactive.sh |  10 +++-
- 4 files changed, 129 insertions(+), 1 deletion(-)
+Yeah, git am is calling 'git apply --index' on the attached patch and
+'git apply' doesn't apply it, doesn't warn and exits with code 0.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5f76e8c..e2e5554 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2160,6 +2160,15 @@ rebase.autoStash::
- 	successful rebase might result in non-trivial conflicts.
- 	Defaults to false.
-=20
-+rebase.checkLevel::
-+	If set to "warn", git rebase -i will print a warning if some
-+	commits are removed (i.e. a line was deleted) or if some
-+	commits appear more than one time (e.g. the same commit is
-+	picked twice), however the rebase will still proceed. If set
-+	to "error", it will print the previous warnings and abort the
-+	rebase. If set to "ignore", no checking is done.  Defaults to
-+	"ignore".
-+
- receive.advertiseAtomic::
- 	By default, git-receive-pack will advertise the atomic push
- 	capability to its clients. If you don't want to this capability
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index 9cf3760..d348ca2 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -213,6 +213,12 @@ rebase.autoSquash::
- rebase.autoStash::
- 	If set to true enable '--autostash' option by default.
-=20
-+rebase.checkLevel::
-+	If set to "warn" print warnings about removed commits and
-+	duplicated commits in interactive mode. If set to "error"
-+	print the warnings and abort the rebase. If set to "ignore" no
-+	checking is done. "ignore" by default.
-+
- OPTIONS
- -------
- --onto <newbase>::
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2882276..58da6ee 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -837,6 +837,109 @@ add_exec_commands () {
- 	mv "$1.new" "$1"
- }
-=20
-+# Print the list of the SHA-1 of the commits
-+# from a todo list in a file.
-+# $1: todo-file, $2: outfile
-+todo_list_to_sha_list () {
-+	todo_list=3D$(git stripspace --strip-comments <"$1")
-+	temp_file=3D$(mktemp)
-+	echo "$todo_list" >$temp_file
-+	while read -r command sha1 rest
-+	do
-+		case $command in
-+		x|"exec")
-+			;;
-+		*)
-+			printf "%s\n" "$sha1"
-+			;;
-+		esac
-+	done <$temp_file >"$2"
-+	rm $temp_file
-+}
-+
-+# Transforms SHA-1 list in argument
-+# to a list of commits (in place)
-+# Doesn't check if the SHA-1 are commits.
-+# $1: file with long SHA-1 list
-+long_sha_to_commit_list () {
-+	short_missing=3D""
-+	git_command=3D"git show --oneline"
-+	get_line_command=3D"head -n 1"
-+	temp_file=3D$(mktemp)
-+	while read -r sha
-+	do
-+		if test -n "$sha"
-+		then
-+			commit=3D$($git_command $sha | $get_line_command)
-+			if test -n "$commit"
-+			then
-+				printf "%s\n" "$commit"
-+			fi
-+		fi
-+	done <"$1" >$temp_file
-+	mv $temp_file "$1"
-+}
-+
-+# Use warn for each line of a file
-+# $1: file to warn
-+warn_file () {
-+	while read -r line
-+	do
-+		warn " - $line"
-+	done <"$1"
-+}
-+
-+# Check if the user dropped some commits by mistake
-+# Behaviour determined by .gitconfig.
-+check_commits () {
-+	checkLevel=3D$(git config --get rebase.checkLevel)
-+	checkLevel=3D${checkLevel:-ignore}
-+	# To lowercase
-+	checkLevel=3D$(echo "$checkLevel" | tr 'A-Z' 'a-z')
-+
-+	case "$checkLevel" in
-+	warn|error)
-+		# Get the SHA-1 of the commits
-+		todo_list_to_sha_list "$todo".backup "$todo".oldsha1
-+		todo_list_to_sha_list "$todo" "$todo".newsha1
-+
-+		# Sort the SHA-1 and compare them
-+		echo "$(sort -u "$todo".oldsha1)" >"$todo".oldsha1
-+		echo "$(sort -u "$todo".newsha1)" >"$todo".newsha1
-+		echo "$(comm -2 -3 "$todo".oldsha1 "$todo".newsha1)" >"$todo".miss
-+
-+		# Make the list user-friendly
-+		long_sha_to_commit_list "$todo".miss
-+
-+		# Check missing commits
-+		if test -s "$todo".miss
-+		then
-+			warn "Warning : some commits may have been dropped" \
-+				"accidentally."
-+			warn "Dropped commits (in no relevent order):"
-+			warn_file "$todo".miss
-+			warn ""
-+			warn "To avoid this message, use \"drop\" to" \
-+				"explicitly remove a commit."
-+			warn "Use git --config rebase.checkLevel to change" \
-+				"the level of warnings (ignore,warn,error)."
-+			warn ""
-+
-+			if test "$checkLevel" =3D error
-+			then
-+				die_abort "Rebase aborted due to dropped commits."
-+			fi
-+		fi
-+		;;
-+	ignore)
-+		;;
-+	*)
-+		warn "Unrecognized setting $checkLevel for option" \
-+			"rebase.checkLevel in git rebase -i."
-+		;;
-+	esac
-+}
-+
- # The whole contents of this file is run by dot-sourcing it from
- # inside a shell function.  It used to be that "return"s we see
- # below were not inside any function, and expected to return
-@@ -1079,6 +1182,8 @@ has_action "$todo" ||
-=20
- expand_todo_ids
-=20
-+check_commits
-+
- test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_pi=
-cks
-=20
- GIT_REFLOG_ACTION=3D"$GIT_REFLOG_ACTION: checkout $onto_name"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index 1bad068..d3a9ed5 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1103,7 +1103,6 @@ test_expect_success 'rebase -i commits that overw=
-rite untracked files (no ff)' '
- '
-=20
- test_expect_success 'drop' '
--	git checkout master &&
- 	test_when_finished "git checkout master" &&
- 	git checkout -b dropBranchTest master &&
- 	set_fake_editor &&
-@@ -1113,4 +1112,13 @@ test_expect_success 'drop' '
- 	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
- '
-=20
-+test_expect_success 'rebase -i respects rebase.checkLevel' '
-+	test_config rebase.checkLevel error &&
-+	test_when_finished "git checkout master" &&
-+	git checkout -b tmp2 master &&
-+	set_fake_editor &&
-+	test_must_fail env FAKE_LINES=3D"1 2 3 4" git rebase -i --root &&
-+	test E =3D $(git cat-file commit HEAD | sed -ne \$p)
-+'
-+
- test_done
---=20
-2.4.1.363.g9535a9c
+Thanks,
+Christian.
+
+--089e013d1472e08373051773b3be
+Content-Type: text/plain; charset=US-ASCII; name="bad_patch.txt"
+Content-Disposition: attachment; filename="bad_patch.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_iadupqev0
+
+LS0tCiBkcml2ZXJzL3N0YWdpbmcvcnRsODE5MnUvaWVlZTgwMjExL2llZWU4MDIxMV9zb2Z0bWFj
+LmMgfCA1ICsrKy0tCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9u
+cygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvc3RhZ2luZy9ydGw4MTkydS9pZWVlODAyMTEvaWVl
+ZTgwMjExX3NvZnRtYWMuYyBiL2RyaXZlcnMvc3RhZ2luZy9ydGw4MTkydS9pZWVlODAyMTEvaWVl
+ZTgwMjExX3NvZnRtYWMuYwppbmRleCBkMmU4YjEyLi4wNDc3YmExIDEwMDY0NAotLS0gYS9kcml2
+ZXJzL3N0YWdpbmcvcnRsODE5MnUvaWVlZTgwMjExL2llZWU4MDIxMV9zb2Z0bWFjLmMKKysrIGIv
+ZHJpdmVycy9zdGFnaW5nL3J0bDgxOTJ1L2llZWU4MDIxMS9pZWVlODAyMTFfc29mdG1hYy5jCkBA
+IC02NjAsMiArNjYwLDIgQEAgaW5saW5lIHN0cnVjdCBza19idWZmICppZWVlODAyMTFfYXV0aGVu
+dGljYXRpb25fcmVxKHN0cnVjdCBpZWVlODAyMTFfbmV0d29yayAqYmUKIAlhdXRoID0gKHN0cnVj
+dCBpZWVlODAyMTFfYXV0aGVudGljYXRpb24gKikKIAkJc2tiX3B1dChza2IsIHNpemVvZihzdHJ1
+Y3QgaWVlZTgwMjExX2F1dGhlbnRpY2F0aW9uKSk7CgotCWF1dGgtPmhlYWRlci5mcmFtZV9jdGwg
+PSBJRUVFODAyMTFfU1RZUEVfQVVUSDsKLQlpZiAoY2hhbGxlbmdlbGVuKSBhdXRoLT5oZWFkZXIu
+ZnJhbWVfY3RsIHw9IElFRUU4MDIxMV9GQ1RMX1dFUDsKKwlhdXRoLT5oZWFkZXIuZnJhbWVfY3Rs
+ID0gY3B1X3RvX2xlMTYoSUVFRTgwMjExX1NUWVBFX0FVVEgpOworCWlmIChjaGFsbGVuZ2VsZW4p
+CisJCWF1dGgtPmhlYWRlci5mcmFtZV9jdGwgfD0gY3B1X3RvX2xlMTYoSUVFRTgwMjExX0ZDVExf
+V0VQKTsKCiAJYXV0aC0+aGVhZGVyLmR1cmF0aW9uX2lkID0gMHgwMTNhOyAvL0ZJWE1FCgotLQoy
+LjEuNAoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KZGV2
+ZWwgbWFpbGluZyBsaXN0CmRldmVsQGxpbnV4ZHJpdmVycHJvamVjdC5vcmcKaHR0cDovL2RyaXZl
+cmRldi5saW51eGRyaXZlcnByb2plY3Qub3JnL21haWxtYW4vbGlzdGluZm8vZHJpdmVyZGV2LWRl
+dmVsCgo=
+--089e013d1472e08373051773b3be--
