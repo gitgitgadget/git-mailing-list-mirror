@@ -1,97 +1,119 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: git gc gives "error: Could not read..."
-Date: Mon, 1 Jun 2015 12:08:27 +0200
-Message-ID: <556C2F1B.1060508@atlas-elektronik.com>
-References: <556C0BAD.80106@atlas-elektronik.com> <20150601081450.GA32634@peff.net> <556C1A95.9010704@atlas-elektronik.com> <20150601085226.GA20537@peff.net> <556C2273.4030405@atlas-elektronik.com> <20150601095850.GD31389@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] format-patch: dereference tags with
+ --ignore-if-in-upstream
+Date: Mon, 1 Jun 2015 06:20:46 -0400
+Message-ID: <20150601102046.GA31792@peff.net>
+References: <CAP8UFD1phg8E0JCgkz88CMUo9H-W=s5JDuKeCMOkf1=UYBJt+g@mail.gmail.com>
+ <1433120593-186980-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 01 12:08:45 2015
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Bruce Korb <bruce.korb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jun 01 12:20:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzMeC-0000WV-H4
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 12:08:44 +0200
+	id 1YzMpy-0006G2-NP
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jun 2015 12:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbbFAKIk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 06:08:40 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:27510 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751500AbbFAKIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 06:08:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id CC4E41015D;
-	Mon,  1 Jun 2015 12:08:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7TJN-Brmroeo; Mon,  1 Jun 2015 12:08:28 +0200 (CEST)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Mon,  1 Jun 2015 12:08:28 +0200 (CEST)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id DA63F2716C;
-	Mon,  1 Jun 2015 12:08:27 +0200 (CEST)
-Received: from [10.200.54.122] (10.200.54.122) by MSSRVS1.atlas.de
- (10.200.101.71) with Microsoft SMTP Server id 8.3.327.1; Mon, 1 Jun 2015
- 12:08:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150601095850.GD31389@peff.net>
-OpenPGP: id=2DF5E01B09C37501BCA99666829B49C5922127AF
+	id S1750851AbbFAKUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 06:20:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38697 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750820AbbFAKUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 06:20:49 -0400
+Received: (qmail 25886 invoked by uid 102); 1 Jun 2015 10:20:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 05:20:49 -0500
+Received: (qmail 28044 invoked by uid 107); 1 Jun 2015 10:20:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Jun 2015 06:20:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jun 2015 06:20:46 -0400
+Content-Disposition: inline
+In-Reply-To: <1433120593-186980-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270393>
 
-Am 01.06.2015 um 11:58 schrieb Jeff King:
-> On Mon, Jun 01, 2015 at 11:14:27AM +0200, Stefan N=C3=A4we wrote:
->=20
->> Maybe this one:
->>
->>    d3038d (prune: keep objects reachable from recent objects)
->=20
-> Yes, exactly.
->=20
->> It would be really helpful if you sent the patch as an attachment.
->> I know that's not the normal wokflow but our mail server garbles eve=
-ry
->> message so that I can't (or don't know how to...) use 'git am' to te=
-st
->> the patch, which I'm willing to do!
->=20
-> It ended up as a patch series. However, you can fetch it from:
->=20
->   git://github.com/peff/git.git jk/silence-unreachable-broken-links
->=20
-> which is perhaps even easier.
+On Mon, Jun 01, 2015 at 01:03:13AM +0000, brian m. carlson wrote:
 
-Not really in my situation...(but that's another story)
+> format-patch would segfault if provided a tag as one of the range
+> endpoints in conjunction with --ignore-if-in-upstream, as it assumed the
+> object was a commit and attempted to cast it to struct commit.
+> Dereference the tag as soon as possible to prevent this, but not until
+> after copying the necessary flags.
 
-I managed to create patch files by simply copy-and-pasting the message
-text (and the From:, Date:, and Subject: fields from 'View message sour=
-ce' in Thunderbird...)
-which I could then 'git am' ;-)
+I bisected Bruce's case earlier to 895c5ba (revision: do not peel tags
+used in range notation, 2013-09-19). This is an obvious fallout from
+that commit; unlike most traversals which read from rev->commits, we
+read straight from rev->pending here. So I wondered briefly if that
+commit was not being sufficiently careful.
 
-The patches applied (and compiled) cleanly on v2.4.2 and 'git gc'
-stopped giving me the error message.
+But as it turns out, this code was buggy long before then. 895c5ba only
+changed the range notation. Even before then, if you did:
 
-So (FWIW):
+  git format-patch --ignore-if-in-upstream ^v2.2.0 v2.2.1
 
-Tested-by: Stefan Naewe <stefan.naewe@gmail.com>
+we would segfault. Anybody reading from rev->pending should be ready to
+handle any kind of object.
 
-Anything else I could test ?
+Which also makes me wonder about...
 
-Thanks,
-  Stefan
---=20
-----------------------------------------------------------------
-/dev/random says: Windows N'T: as in Wouldn't, Couldn't, and Didn't.
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
-e696b2e636f6d'.decode('hex')"=20
-GPG Key fingerprint =3D 2DF5 E01B 09C3 7501 BCA9  9666 829B 49C5 9221 2=
-7AF
+> diff --git a/builtin/log.c b/builtin/log.c
+> index dd8f3fc..e0465ba 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -807,6 +807,12 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
+>  	o2 = rev->pending.objects[1].item;
+>  	flags2 = o2->flags;
+>  
+> +	o1 = deref_tag(o1, NULL, 0);
+> +	o2 = deref_tag(o2, NULL, 0);
+> +
+> +	if (!o1 || !o2)
+> +		die(_("Invalid tag."));
+
+This will dereference tags, but it won't help at all with:
+
+  git format-patch --ignore-if-in-upstream ^HEAD:Makefile HEAD:Documentation
+
+where we end up with blobs. That is ridiculous, of course, but we should
+complain, not segfault.
+
+So I think what you really want is lookup_commit_reference. And the
+error message is really not "invalid tag", but "not a commit". I think
+you can just use lookup_commit_or_die.
+
+>  	if ((flags1 & UNINTERESTING) == (flags2 & UNINTERESTING))
+>  		die(_("Not a range."));
+
+As an aside, now that we are dereferencing, these flags are from the
+wrong object. They _should_ be the same (we mark the tag as
+UNINTERESTING, too), but it's a little weird that at the end of the
+function we restore the saved flags from the tag object onto the commit.
+Just bumping the assignment of flags{1,2} would work (or just bump up
+the lookup_commit_or_die call to where we assign to o{1,2}).
+
+> +test_expect_success "format-patch --ignore-if-in-upstream handles tags" '
+> +
+> +	git tag -a v1 -m tag side &&
+> +	git format-patch --stdout \
+> +		--ignore-if-in-upstream master..v1 >patch1 &&
+> +	cnt=$(grep "^From " patch1 | wc -l) &&
+> +	test $cnt = 2
+
+I think this avoids the usual "wc" whitespace pitfall because you don't
+use double-quotes. But maybe:
+
+  grep "^From " patch1 >count &&
+  test_line_count = 2 patch1
+
+would be more idiomatic.
+
+-Peff
