@@ -1,99 +1,75 @@
-From: Allen Hubbe <allenbh@gmail.com>
-Subject: Re: [PATCH 1/9] send-email: further document missing sendmail aliases functionality
-Date: Mon, 1 Jun 2015 18:44:49 -0400
-Message-ID: <CAJ80sasfCfN7e6bi7nHjLet=DWMN8kyJxMyvqu-7psFqJ0k+pA@mail.gmail.com>
-References: <1433111371-19573-1-git-send-email-sunshine@sunshineco.com>
-	<1433111371-19573-2-git-send-email-sunshine@sunshineco.com>
-	<CAJ80sau0GeeFxFZYsEE=uupfPqJ=vRZfNRuNd0qRJPDNvnbMPw@mail.gmail.com>
-	<20150601182236.GA28030@flurp.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] format-patch: dereference tags with --ignore-if-in-upstream
+Date: Mon, 01 Jun 2015 15:46:08 -0700
+Message-ID: <xmqqwpzn3v4f.fsf@gitster.dls.corp.google.com>
+References: <CAP8UFD1phg8E0JCgkz88CMUo9H-W=s5JDuKeCMOkf1=UYBJt+g@mail.gmail.com>
+	<1433120593-186980-1-git-send-email-sandals@crustytoothpaste.net>
+	<xmqqr3pv8okj.fsf@gitster.dls.corp.google.com>
+	<xmqq6177728a.fsf@gitster.dls.corp.google.com>
+	<20150601174712.GA18364@peff.net>
+	<xmqq4mmr5fqy.fsf@gitster.dls.corp.google.com>
+	<20150601223409.GB140991@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 00:44:57 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>,
+	Bruce Korb <bruce.korb@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Jun 02 00:46:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzYS0-0002Dj-QU
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 00:44:57 +0200
+	id 1YzYTI-0002p2-GC
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 00:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233AbbFAWow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 18:44:52 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:32779 "EHLO
-	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751904AbbFAWou (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 18:44:50 -0400
-Received: by oiww2 with SMTP id w2so112970190oiw.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 15:44:50 -0700 (PDT)
+	id S1752245AbbFAWqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 18:46:12 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:38579 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751779AbbFAWqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 18:46:10 -0400
+Received: by igbjd9 with SMTP id jd9so73654366igb.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 15:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=loRyiMMlPoxYGG2shksE6OGim8M92eZ8pcwUyhLu9zo=;
-        b=LWT/p6kur6Rua+N3L8d4q2L671qvZa8m6bQB7eSe8+GfeXiIMyyqPMn7FNTis3TcLq
-         znyymF3XyJigrN6g/B28zhYF9iT7t0FE9A1tvMFQZBPcA3rwfQd4f3NvSzT54KMa9+Gi
-         PjIzq9no8/kzDH1RGDTAe1GEJ9WdxsOjCOn49sPpkM6jm5knwaL7+1d/WThnnMr0H7/D
-         AxmlOhWjissGNnKQtuV1a5ULwwjnVPBX+ZExEVFMxdpX2aCYY2aAGrzekxZjit6mET3A
-         4LX6OPWLgpHJhTRxOPSH8EXEGlBnkB4Sgh1lF7pSbDZXMRdC1KD6tD9VwzX83T2HZnbj
-         MDVA==
-X-Received: by 10.60.175.72 with SMTP id by8mr20447278oec.35.1433198689945;
- Mon, 01 Jun 2015 15:44:49 -0700 (PDT)
-Received: by 10.182.117.197 with HTTP; Mon, 1 Jun 2015 15:44:49 -0700 (PDT)
-In-Reply-To: <20150601182236.GA28030@flurp.local>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=NxqUi2hRGDqBKoywwvRYhxGTFIrRoDAabS1WQ5pSz7c=;
+        b=gQlI5easFp3o9AbcxtE9bAY5qKEWHE/jO0/7BW/6n5ZPkqSSNH/uqThAH8QTLN8n3Q
+         BFLb03FuFe7+FUBz/fErAgTxaKTlu7W3tW1pNpEB3+MKfKvESeEp02pXQRiAjhigdiev
+         ku2plkNH9Kh2gyYBDC+jqrxxXSnLy2JiUaRTNnw2WZcmMma/KjmmCN+gvQmJtWLpOaUu
+         6R+Ujb4qTZ7NTd1jqec1vByTYtNGeuDSzxzLAOCVqCsfy6F7qafdyN0qlfwtbtQj4EnS
+         gKH4GJz9RKrpe3O1e3hEmPk4eyIdGCMK7I/jV87DY/MBr5UkEefcA9VWqghtGFkbxiZn
+         QfMg==
+X-Received: by 10.107.137.170 with SMTP id t42mr30197656ioi.16.1433198769926;
+        Mon, 01 Jun 2015 15:46:09 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:f9ca:66ee:8cb4:7220])
+        by mx.google.com with ESMTPSA id j3sm7594677ige.0.2015.06.01.15.46.09
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Jun 2015 15:46:09 -0700 (PDT)
+In-Reply-To: <20150601223409.GB140991@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 1 Jun 2015 22:34:09 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270477>
 
-This looks good.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-On Mon, Jun 1, 2015 at 2:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Jun 01, 2015 at 07:43:08AM -0400, Allen Hubbe wrote:
->> On May 31, 2015 at 6:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> > Sendmail aliases[1] supports expansion to a file ("/path/name") or
->> > pipe ("|command"), as well as file inclusion (":include: /path/name"),
->> > however, our implementation does not support such functionality.
->>
->> According to the documentation, the parser should print a warning for
->> any explicitly unsupported constructs.  These are now explicitly
->> unsupported, so the parser should warn on |, /, and :include: .
->> Perhaps the lines that match should be ignored like the others, too.
+>> In the longer term, it might be a more correct fix to teach
+>> clear_commit_marks() to do the same "committish to commit"
+>> dereferncing that is done in the revision traversal machinery, but
 >
-> Indeed. I had that in mind and then promptly forgot about it. Here's a
-> follow-on patch:
->
-> --- >8 ---
-> From: Eric Sunshine <sunshine@sunshineco.com>
-> Subject: [PATCH 10/9] send-email: further warn about unsupported sendmail aliases features
->
-> The sendmail aliases parser diagnoses unsupported features and
-> unrecognized lines. For completeness, also warn about unsupported
-> redirection to "/path/name" and "|command", as well as ":include:".
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  git-send-email.perl | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index eb1d678..ae9f869 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -492,6 +492,10 @@ sub parse_sendmail_alias {
->         local $_ = shift;
->         if (/"/) {
->                 print STDERR "warning: sendmail alias with quotes is not supported: $_\n";
-> +       } elsif (/:include:/) {
-> +               print STDERR "warning: `:include:` not supported: $_\n";
-> +       } elsif (/[\/|]/) {
-> +               print STDERR "warning: `/file` or `|pipe` redirection not supported: $_\n";
->         } elsif (/^(\S+?)\s*:\s*(.+)$/) {
->                 my ($alias, $addr) = ($1, $2);
->                 $aliases{$alias} = [ split_addrs($addr) ];
-> --
-> 2.4.2.538.g5f4350e
->
-> --- >8 ---
+> "dereferencing".  Otherwise, looks exactly like what I would have
+> written in my reroll had you not gotten to it before me.
+
+Heh thanks.
+
+I do not mind if you sent in a replacement.  What I sent was done
+primarily because I saw multiple people coming up with essentially
+the same solution and I was afraid everybody would say "it is being
+taken care of by others" and we end up not having any patch ;-).
