@@ -1,123 +1,120 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFCv2 08/16] transport: select transport version via command line or config
-Date: Mon,  1 Jun 2015 17:02:10 -0700
-Message-ID: <1433203338-27493-9-git-send-email-sbeller@google.com>
+Subject: [RFCv2 11/16] remote: have preselect_capabilities
+Date: Mon,  1 Jun 2015 17:02:13 -0700
+Message-ID: <1433203338-27493-12-git-send-email-sbeller@google.com>
 References: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Cc: pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 02:04:34 2015
+X-From: git-owner@vger.kernel.org Tue Jun 02 02:04:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzZfW-0000j9-Dx
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:02:58 +0200
+	id 1YzZfj-0000kM-RX
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754566AbbFBACw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 20:02:52 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:35444 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754399AbbFBACn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 20:02:43 -0400
-Received: by igbyr2 with SMTP id yr2so74911195igb.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:42 -0700 (PDT)
+	id S1754595AbbFBADF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 20:03:05 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:36098 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754554AbbFBACr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 20:02:47 -0400
+Received: by igbpi8 with SMTP id pi8so74557428igb.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NyFKAQN7DHI6blXakYhgVeTWwqq6MM7lqVax3tl4Z08=;
-        b=j1jXVqOmnn1KBehsFmGcrOqepQErHUk8yBYLEeimIw7+hQ7jzXLyTC1D1LUHg26XP0
-         rDc+pln9aj7hNgDLSuVwBtQUg9SfDcN0frQVjmYkvfJWwO9v5nbUpJXCNdlfWBdJzx2t
-         q2xFnzIUG/4x/ZZVT7PJrm0VsXmNNLnRVtppn2InJeFVFeYinvP7oxKuw03pozcX9QXq
-         r94ZJu4P/lpAq07fMgA8Za8yRoXGBwfy6e2a+GLDNdXw/+x4UICFayMId+QAH0gJ1eyr
-         92C5iaLaICYPfvgfiqTw4om7Nkjams9N/2gsVHAVKaQcDkPMg+YadTKHWQ10gaAhmPmL
-         ysBg==
+        bh=iepAf0WjnPBpLhpSw5rHioVdZOj28uLF8U5GMhIgcio=;
+        b=mfT/jKk7s/9J6flLJyneS8UF0Kn3RJNehT/JklmRc2jqDjwaqD6cpxt+RIeXGyfTQk
+         42eKCCCUdbMXkEkJVkEBsESvAhhybHAY5CXr3q1j2kB3bDF/Ym8IHU65cEyntW74TTVf
+         kcnhXTYKX55FIMa8kZbUZ95pRyjVyPUsRVMCHJSB5WlrVDOLJSR6+zP4075gADbbrA6n
+         8iQLZNjinZxeQFhSG1A5HGULDJPw65fEi1LWeqYleFiCSIw0/C6osccxCrzbHVvjL3oo
+         Dsc4Pqnf51JtdApC0sd4DTdWtUSqHNK4Qeg/YmKUwsha1naHmVow3p3P6HyQXP4/O9Jf
+         i68w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NyFKAQN7DHI6blXakYhgVeTWwqq6MM7lqVax3tl4Z08=;
-        b=UbYg3IJeH5W90DUYxlO5HqDTUzbWtt9uGcN/1BIUqGlJivqBqJE6dy4RhCmkSnTMnK
-         YQnxz8POUi+ykUfAFyGZupSmL7ya5X0oIPXuxbU08C/w6iQCrO0bIcF56TlcKijRhPL5
-         IdvGjZ2pGVfyliQ7i3rjYZ+Lw+Zi6TbVWew+maeKJn1+HCJviK4hMHYPYc3GQ+Yiwjga
-         sQk20o/PuVxpRN4fPKtd7NvNDZjb3aU3Y2pXXC2V0EFF6UxHMjdgNBrBzj+kK2RZCyGP
-         HQ7n4B5H3KIp8lRu5mWU79SbBjSrb6I7EhARGm1jaYY6OwE46I3nolywcbn2uDAhqL4k
-         iGUA==
-X-Gm-Message-State: ALoCoQnIjQeH3i/Z9tLsAfzcPep68j/0iqNWxuHKVYq25DJQJd2gQpkuWrUmFtvrwSPPBj74vV3R
-X-Received: by 10.107.31.134 with SMTP id f128mr12284472iof.19.1433203362577;
-        Mon, 01 Jun 2015 17:02:42 -0700 (PDT)
+        bh=iepAf0WjnPBpLhpSw5rHioVdZOj28uLF8U5GMhIgcio=;
+        b=S8ge2mVK+UJGs7ZCrzOshIgq7VeXrFEOxgAQcNnfd3dceDNxxf0yl7ThTcZoq7gvq7
+         rIqZHZLZG9AuAAJtrMV+TH0PHyYZ6KfE+qVfdp0r5z8fR+l3tjOAFB7ZZZLgTDbgTRB2
+         IIL8D2WnekN2TUjdo+UfA2D2N+ySwAZ1P0KNpQRsL3boQhtVE7gJ/2gr1E940XbLCTj/
+         dzInGmeFw7NKTK58G2tCAvb6lSTcTr4p3rWFAdPj8a0NAt6Az7/nTuhVPn3D64TyS4bq
+         6EucVUemrfjsyv7Vcxvep0+CMuiaj1OhTmCFha9wYgH+mAiHKopCQDrKw4/OJTkClodU
+         TJxw==
+X-Gm-Message-State: ALoCoQnffVtupIxyB4cHobyvayyuddYElbaVY9AbWDfYageK+QPl9+aj9CCWzchiFANGs0vudT5H
+X-Received: by 10.42.166.200 with SMTP id p8mr23894393icy.25.1433203366982;
+        Mon, 01 Jun 2015 17:02:46 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:3900:deed:b754:addb])
-        by mx.google.com with ESMTPSA id j4sm8918084igo.0.2015.06.01.17.02.41
+        by mx.google.com with ESMTPSA id rj5sm8925710igc.2.2015.06.01.17.02.46
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Jun 2015 17:02:42 -0700 (PDT)
+        Mon, 01 Jun 2015 17:02:46 -0700 (PDT)
 X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 In-Reply-To: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270487>
-
-The transport version set via command line argument in
-git fetch takes precedence over the configured version.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270488>
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
+ connect.c | 28 ++++++++++++++++++++++++++++
+ remote.h  |  1 +
+ 2 files changed, 29 insertions(+)
 
-Notes:
-    removed -y as the short --transport-version
-    
-    This patch has been split up and is the second part
-    carrying only the exposure to the user.
-
- builtin/fetch.c | 6 ++++++
- remote.c        | 2 ++
- 2 files changed, 8 insertions(+)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7910419..a558563 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -46,6 +46,7 @@ static const char *recurse_submodules_default;
- static int shown_url = 0;
- static int refmap_alloc, refmap_nr;
- static const char **refmap_array;
-+static const char *transport_version;
- 
- static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
-@@ -121,6 +122,9 @@ static struct option builtin_fetch_options[] = {
- 		   N_("default mode for recursion"), PARSE_OPT_HIDDEN },
- 	OPT_BOOL(0, "update-shallow", &update_shallow,
- 		 N_("accept refs that update .git/shallow")),
-+	OPT_STRING(0, "transport-version", &transport_version,
-+		   N_("transport-version"),
-+		   N_("specify transport version to be used")),
- 	{ OPTION_CALLBACK, 0, "refmap", NULL, N_("refmap"),
- 	  N_("specify fetch refmap"), PARSE_OPT_NONEG, parse_refmap_arg },
- 	OPT_END()
-@@ -848,6 +852,8 @@ static struct transport *prepare_transport(struct remote *remote)
- 	struct transport *transport;
- 	transport = transport_get(remote, NULL);
- 	transport_set_verbosity(transport, verbosity, progress);
-+	if (transport_version)
-+		set_option(transport, TRANS_OPT_TRANSPORTVERSION, transport_version);
- 	if (upload_pack)
- 		set_option(transport, TRANS_OPT_UPLOADPACK, upload_pack);
- 	if (keep)
-diff --git a/remote.c b/remote.c
-index 68901b0..2914d9d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -476,6 +476,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 					 key, value);
- 	} else if (!strcmp(subkey, ".vcs")) {
- 		return git_config_string(&remote->foreign_vcs, key, value);
-+	} else if (!strcmp(subkey, ".transportversion")) {
-+		remote->transport_version = git_config_int(key, value);
+diff --git a/connect.c b/connect.c
+index 4ebe1dc..752b9a5 100644
+--- a/connect.c
++++ b/connect.c
+@@ -126,6 +126,34 @@ void get_remote_capabilities(int in, char *src_buf, size_t src_len)
  	}
- 	return 0;
  }
+ 
++/* just select all options the server advertised. */
++void preselect_capabilities(struct transport_options *options)
++{
++	if (is_repository_shallow() && !server_supports("shallow"))
++		die("Server does not support shallow clients");
++
++	if (server_supports("multi_ack"))
++		options->multi_ack = 1;
++	else if (server_supports("multi_ack_detailed"))
++		options->multi_ack = 2;
++
++	if (server_supports("side-band"))
++		options->use_sideband = 1;
++	else if (server_supports("side-band-64k"))
++		options->use_sideband = 2;
++
++	if (server_supports("no-done"))
++		options->no_done = 1;
++	if (server_supports("thin-pack"))
++		options->use_thin_pack = 1;
++	if (server_supports("no-progress"))
++		options->no_progress = 1;
++	if (server_supports("include-tag"))
++		options->include_tag = 1;
++	if (server_supports("ofs-delta"))
++		options->prefer_ofs_delta = 1;
++}
++
+ int request_capabilities(int out, struct transport_options *options)
+ {
+ 	if (options->multi_ack == 2)    packet_write(out, "multi_ack_detailed");
+diff --git a/remote.h b/remote.h
+index 61619c5..264a513 100644
+--- a/remote.h
++++ b/remote.h
+@@ -166,6 +166,7 @@ extern void get_remote_heads(int in, char *src_buf, size_t src_len,
+ 			     struct sha1_array *shallow);
+ 
+ void get_remote_capabilities(int in, char *src_buf, size_t src_len);
++void preselect_capabilities(struct transport_options *options);
+ int request_capabilities(int out, struct transport_options*);
+ 
+ int resolve_remote_symref(struct ref *ref, struct ref *list);
 -- 
 2.4.1.345.gab207b6.dirty
