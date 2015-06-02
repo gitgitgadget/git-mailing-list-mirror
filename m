@@ -1,119 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFCv2 11/16] remote: have preselect_capabilities
-Date: Tue, 02 Jun 2015 14:45:50 -0700
-Message-ID: <xmqqvbf5zsvl.fsf@gitster.dls.corp.google.com>
-References: <1433203338-27493-1-git-send-email-sbeller@google.com>
-	<1433203338-27493-12-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, pclouds@gmail.com, peff@peff.net
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 23:46:00 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] ewah/bitmap: silence warning about MASK macro redefinition
+Date: Tue,  2 Jun 2015 17:47:55 -0400
+Message-ID: <1433281675-24893-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 02 23:52:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yzu0T-00049H-B5
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 23:45:57 +0200
+	id 1Yzu2v-0005P5-6e
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 23:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbbFBVpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 17:45:53 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:35439 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbbFBVpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 17:45:52 -0400
-Received: by iesa3 with SMTP id a3so143682751ies.2
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 14:45:51 -0700 (PDT)
+	id S1752035AbbFBVs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 17:48:26 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36559 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378AbbFBVsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 17:48:24 -0400
+Received: by igbpi8 with SMTP id pi8so97469457igb.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 14:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ajg8K6NAqFa8DQQHG1Z6oF3jvDTWxDXKn2DUOHZy81s=;
-        b=YN1zJ5w1dj8/4uq97HrtGIWhnPLn/LM1a4dttesP57wIUgkzMuY3Gp2lQ/LPyUl2Zv
-         YGDVy1Q7SzbxjRP8gB/1g17vGU5TnMIQqph3H0vGxu4Ug4F7MN2+L/3W5yMTrJaKp89b
-         GPrIpja7sJ4ygOx11B6y+l5BzspsmkbkwPCm6bVvyolNiUWoCFsvpn6CP7ES4z9qoVxG
-         u8DoOmJGsIkKhwJ90cF8A4JCOxrpd2LHYa6ZDSl9NvUojkVIr5Y0byqKkxtFMKmD3Gas
-         vZAzeTK8HOyWKJ6WDZzAuMTZcKNr1v275PAZfxtZJSla0M0GlfZDNACCwRvzWyY2fCoX
-         MH5g==
-X-Received: by 10.107.14.193 with SMTP id 184mr36220241ioo.15.1433281551642;
-        Tue, 02 Jun 2015 14:45:51 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3140:53f3:e8c0:89b0])
-        by mx.google.com with ESMTPSA id rr5sm10821954igb.7.2015.06.02.14.45.50
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Jun 2015 14:45:51 -0700 (PDT)
-In-Reply-To: <1433203338-27493-12-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 1 Jun 2015 17:02:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=kVcJHnOZHQypAMKQTbI6LYXJRTMTemZjnqbs9Qdnj/Y=;
+        b=pu2VZjGq+SS/AUTb1c5b+O4MeNjOoFMiz6fDMHRPLZYrgPEHb2hmVaPO+HbHeM8dWu
+         NAqfX0yDqavFekndH18OWI/YKDt8/7UaqlG3RHuQJ7g/RuG80mY9SdVAQ6ADBm7rpJX7
+         AfzM7n79n1MOvWAcC47Zx2U96Ah9f39CzNHVzPDIgCon5nvo27v7A/cDzvKSK7US0Du4
+         5mqj44TRJbhrXIlPHeHbcVDBcJP714BcQ7W3aq9Z5x3mVIx409Y//5uGlL2MxpGLk/Ds
+         8JECfy0xUvaVoTCV68FjSltLgHZURa47z4lz8D8Z8FPWAIKI7QMsbz1ejuUnjzJ0wMvT
+         P30A==
+X-Received: by 10.50.110.104 with SMTP id hz8mr22748697igb.38.1433281703861;
+        Tue, 02 Jun 2015 14:48:23 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id a139sm13368724ioa.14.2015.06.02.14.48.23
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 02 Jun 2015 14:48:23 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.598.gb4379f4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270610>
 
-Stefan Beller <sbeller@google.com> writes:
+On PowerPC Mac OS X (10.5.8 "Leopard" with Xcode 3.1), system header
+/usr/include/ppc/param.h[1] pollutes the preprocessor namespace with a
+macro generically named MASK. This conflicts with the same-named macro
+in ewah/bitmap.c.
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+[1]: Included indirectly via:
+     git-compat-util.h ->
+     sys/sysctl.h ->
+     sys/ucred.h ->
+     sys/param.h ->
+     machine/param.h ->
+     ppc/param.h
 
-Why?
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-When adding a new thing that nobody uses yet, please explain what it
-is used for and how it would help the callers in what way to help
-reviewers.
+The alternative is to rename MASK in ewah/bitmap.c to something less
+generic, resulting in a slightly more noisy patch. I chose the #undef
+approach since it's a relatively common idiom to #undef a macro before
+#defining it in order to avoid exactly this sort of redefinition
+problem.
 
->  connect.c | 28 ++++++++++++++++++++++++++++
->  remote.h  |  1 +
->  2 files changed, 29 insertions(+)
->
-> diff --git a/connect.c b/connect.c
-> index 4ebe1dc..752b9a5 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -126,6 +126,34 @@ void get_remote_capabilities(int in, char *src_buf, size_t src_len)
->  	}
->  }
->  
-> +/* just select all options the server advertised. */
-> +void preselect_capabilities(struct transport_options *options)
-> +{
-> +	if (is_repository_shallow() && !server_supports("shallow"))
-> +		die("Server does not support shallow clients");
-> +
-> +	if (server_supports("multi_ack"))
-> +		options->multi_ack = 1;
-> +	else if (server_supports("multi_ack_detailed"))
-> +		options->multi_ack = 2;
-> +
-> +	if (server_supports("side-band"))
-> +		options->use_sideband = 1;
-> +	else if (server_supports("side-band-64k"))
-> +		options->use_sideband = 2;
-> +
-> +	if (server_supports("no-done"))
-> +		options->no_done = 1;
-> +	if (server_supports("thin-pack"))
-> +		options->use_thin_pack = 1;
-> +	if (server_supports("no-progress"))
-> +		options->no_progress = 1;
-> +	if (server_supports("include-tag"))
-> +		options->include_tag = 1;
-> +	if (server_supports("ofs-delta"))
-> +		options->prefer_ofs_delta = 1;
-> +}
-> +
->  int request_capabilities(int out, struct transport_options *options)
->  {
->  	if (options->multi_ack == 2)    packet_write(out, "multi_ack_detailed");
-> diff --git a/remote.h b/remote.h
-> index 61619c5..264a513 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -166,6 +166,7 @@ extern void get_remote_heads(int in, char *src_buf, size_t src_len,
->  			     struct sha1_array *shallow);
->  
->  void get_remote_capabilities(int in, char *src_buf, size_t src_len);
-> +void preselect_capabilities(struct transport_options *options);
->  int request_capabilities(int out, struct transport_options*);
->  
->  int resolve_remote_symref(struct ref *ref, struct ref *list);
+ ewah/bitmap.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index 710e58c..b31cf75 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -20,6 +20,8 @@
+ #include "git-compat-util.h"
+ #include "ewok.h"
+ 
++#undef MASK
++#undef BLOCK
+ #define MASK(x) ((eword_t)1 << (x % BITS_IN_WORD))
+ #define BLOCK(x) (x / BITS_IN_WORD)
+ 
+-- 
+2.4.2.598.gb4379f4
