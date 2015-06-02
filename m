@@ -1,95 +1,117 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC v2 2/2] git-am: add am.threeWay config variable
-Date: Tue, 02 Jun 2015 16:13:13 +0200
-Message-ID: <vpqmw0ijj0m.fsf@anie.imag.fr>
-References: <1433251472-29460-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<1433251472-29460-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+From: Petr Stodulka <pstodulk@redhat.com>
+Subject: [PATCH] request-pull: short sha handling, manual update
+Date: Tue, 02 Jun 2015 16:14:15 +0200
+Message-ID: <556DBA37.2010402@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 02 16:13:25 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 02 16:14:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzmwW-00023V-73
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 16:13:24 +0200
+	id 1YzmxS-0002mJ-Gf
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 16:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758926AbbFBONT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 10:13:19 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:53982 "EHLO shiva.imag.fr"
+	id S1759049AbbFBOOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 10:14:18 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39417 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756284AbbFBONS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 10:13:18 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t52EDCiL020712
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 2 Jun 2015 16:13:12 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t52EDDXe013214;
-	Tue, 2 Jun 2015 16:13:13 +0200
-In-Reply-To: <1433251472-29460-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	(Remi Lespinet's message of "Tue, 2 Jun 2015 15:24:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Jun 2015 16:13:13 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t52EDCiL020712
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1433859194.17048@rkYKjlhhDMEQ/zDoU9mIOQ
+	id S1758907AbbFBOOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 10:14:17 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (Postfix) with ESMTPS id 4AC682CAF31
+	for <git@vger.kernel.org>; Tue,  2 Jun 2015 14:14:17 +0000 (UTC)
+Received: from [10.34.4.110] (unused-4-110.brq.redhat.com [10.34.4.110])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t52EEF3A022090
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Tue, 2 Jun 2015 10:14:16 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270539>
 
-Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+request-pull prints incorrectly warn messages about not found commits 
+and man pages don't say
+anything about todays changed behaviour. People are confused and try 
+look for errors at wrong places.
+At least these should be fixed/modified.
 
-> Add the am.threeWay configuration variable to use the -3 or --3way
-> option of git am by default. When am.threeway is set and not desired
-> for a specific git am command, the --no-3way option can be used to
-> override it.
->
-> Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-> ---
->  Documentation/config.txt |  7 +++++++
->  Documentation/git-am.txt |  6 ++++--
->  git-am.sh                |  7 +++++++
->  t/t4150-am.sh            | 19 +++++++++++++++++++
->  4 files changed, 37 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index d44bc85..8e42752 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -769,6 +769,13 @@ am.keepcr::
->  	by giving '--no-keep-cr' from the command line.
->  	See linkgit:git-am[1], linkgit:git-mailsplit[1].
->  
-> +am.threeWay::
-> +	If true, git-am will fall back on 3-way merge when the patch
+Warn massage says that commit can't be found ar remote, however there it 
+is in and is missing on local repository
+in 'many' cases. So I don't know if better solution is check, where 
+commit is truly missing or transform warning message.
+Something like:
 
-git-am should be spelled `git am` or 'git am' (the second is used a lot
-in git-am.txt, but Documentation/CodingGuidelines says:
+    warn: No match for commit <commit> found at <url> or local repository.
+    warn: Are you sure you have synchronized branch with remote repository?
 
- Literal examples (e.g. use of command-line options, command names, and
- configuration variables) are typeset in monospace, and if you can use
- `backticks around word phrases`, do so.
-   `--pretty=oneline`
-   `git rev-list`
-   `remote.pushDefault`
-) so I guess the first is the right way to typeset it.
+......
+man page could be changed like this:
 
-FYI, the syntax git-am actually existed in the past (before git 1.6).
+-------------------------------------------------------
+diff --git a/Documentation/git-request-pull.txt 
+b/Documentation/git-request-pull.txt
+index 283577b..6d34fc7 100644
+--- a/Documentation/git-request-pull.txt
++++ b/Documentation/git-request-pull.txt
+@@ -73,6 +73,17 @@ then you can ask that to be pulled with
+         git request-pull v1.0 https://git.ko.xz/project master:for-linus
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
++NOTES
++-----
++
++Since git version 2.0.0 is behaviour of git request-pull little different.
++It is recommended use of third argument for each request-pull, otherwise
++you can get error message like:
++
++   warn: No match for commit <commit> found at <url>
++   warn: Are you sure you pushed 'HEAD' there?
++
++
+  GIT
+  ---
+  Part of the linkgit:git[1] suite
+
+-------------------------------------------------------
+
+Second patch provides right processing of third parameter when short 
+version of sha hash is used (e.g. 897a111). Now is
+supported only full hash, what is different behaviour against first 
+parameter or what can be found in other functions. Extra
+solves one of cases of wrong warn message.
+
+-------------------------------------------------------
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index d5500fd..2dc735e 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -92,9 +92,11 @@ find_matching_ref='
+                 chomp;
+                 my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
+                 my ($pattern);
++               my ($pattern2);
+                 next unless ($sha1 eq $headrev);
+
+                 $pattern="/$head\$";
++               $pattern2="^$head";
+                 if ($ref eq $head) {
+                         $found = $ref;
+                 }
+@@ -104,6 +106,9 @@ find_matching_ref='
+                 if ($sha1 eq $head) {
+                         $found = $sha1;
+                 }
++               elsif ($sha1 =~ /$pattern2/ and (length $head) gt 7) {
++                       $found = $sha1
++               }
+         }
+         if ($found) {
+                 print "$found\n";
+-------------------------------------------------------
