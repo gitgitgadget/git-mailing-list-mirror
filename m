@@ -1,117 +1,74 @@
-From: Petr Stodulka <pstodulk@redhat.com>
-Subject: [PATCH] request-pull: short sha handling, manual update
-Date: Tue, 02 Jun 2015 16:14:15 +0200
-Message-ID: <556DBA37.2010402@redhat.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv3 1/2] git-rebase -i: add command "drop" to remove a commit
+Date: Tue, 02 Jun 2015 16:17:52 +0200
+Message-ID: <vpqeglujisv.fsf@anie.imag.fr>
+References: <1433252180-25591-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 16:14:31 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Galan =?iso-8859-1?Q?R=E9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 02 16:18:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzmxS-0002mJ-Gf
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 16:14:22 +0200
+	id 1Yzn14-0005JH-Cy
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 16:18:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759049AbbFBOOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 10:14:18 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39417 "EHLO mx1.redhat.com"
+	id S1759310AbbFBOSC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 10:18:02 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38595 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758907AbbFBOOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 10:14:17 -0400
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
-	by mx1.redhat.com (Postfix) with ESMTPS id 4AC682CAF31
-	for <git@vger.kernel.org>; Tue,  2 Jun 2015 14:14:17 +0000 (UTC)
-Received: from [10.34.4.110] (unused-4-110.brq.redhat.com [10.34.4.110])
-	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t52EEF3A022090
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 2 Jun 2015 10:14:16 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+	id S1758633AbbFBOSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 10:18:00 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t52EHpeZ032193
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 2 Jun 2015 16:17:51 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t52EHqO8013301;
+	Tue, 2 Jun 2015 16:17:52 +0200
+In-Reply-To: <1433252180-25591-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	("Galan \=\?iso-8859-1\?Q\?R\=E9mi\=22's\?\= message of "Tue, 2 Jun 2015 15:36:19
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 02 Jun 2015 16:17:51 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t52EHpeZ032193
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1433859472.02806@Xki3Yi5z30rxfhTL1pNUlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270540>
 
-request-pull prints incorrectly warn messages about not found commits 
-and man pages don't say
-anything about todays changed behaviour. People are confused and try 
-look for errors at wrong places.
-At least these should be fixed/modified.
+Galan R=E9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
 
-Warn massage says that commit can't be found ar remote, however there it 
-is in and is missing on local repository
-in 'many' cases. So I don't know if better solution is check, where 
-commit is truly missing or transform warning message.
-Something like:
+> +test_expect_success 'drop' '
 
-    warn: No match for commit <commit> found at <url> or local repository.
-    warn: Are you sure you have synchronized branch with remote repository?
+Please, be more descriptive in the first argument of
+test_expect_success. It's usually a good thing to say not only what the
+test stresses but also what the expected behavior is.
 
-......
-man page could be changed like this:
+test_expect_success 'drop actually drops the lines' '
+	...
+'
 
--------------------------------------------------------
-diff --git a/Documentation/git-request-pull.txt 
-b/Documentation/git-request-pull.txt
-index 283577b..6d34fc7 100644
---- a/Documentation/git-request-pull.txt
-+++ b/Documentation/git-request-pull.txt
-@@ -73,6 +73,17 @@ then you can ask that to be pulled with
-         git request-pull v1.0 https://git.ko.xz/project master:for-linus
+?
 
-
-+NOTES
-+-----
-+
-+Since git version 2.0.0 is behaviour of git request-pull little different.
-+It is recommended use of third argument for each request-pull, otherwise
-+you can get error message like:
-+
-+   warn: No match for commit <commit> found at <url>
-+   warn: Are you sure you pushed 'HEAD' there?
-+
-+
-  GIT
-  ---
-  Part of the linkgit:git[1] suite
-
--------------------------------------------------------
-
-Second patch provides right processing of third parameter when short 
-version of sha hash is used (e.g. 897a111). Now is
-supported only full hash, what is different behaviour against first 
-parameter or what can be found in other functions. Extra
-solves one of cases of wrong warn message.
-
--------------------------------------------------------
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index d5500fd..2dc735e 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -92,9 +92,11 @@ find_matching_ref='
-                 chomp;
-                 my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
-                 my ($pattern);
-+               my ($pattern2);
-                 next unless ($sha1 eq $headrev);
-
-                 $pattern="/$head\$";
-+               $pattern2="^$head";
-                 if ($ref eq $head) {
-                         $found = $ref;
-                 }
-@@ -104,6 +106,9 @@ find_matching_ref='
-                 if ($sha1 eq $head) {
-                         $found = $sha1;
-                 }
-+               elsif ($sha1 =~ /$pattern2/ and (length $head) gt 7) {
-+                       $found = $sha1
-+               }
-         }
-         if ($found) {
-                 print "$found\n";
--------------------------------------------------------
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
