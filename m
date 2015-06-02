@@ -1,267 +1,276 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFCv2 04/16] upload-pack-2: Implement the version 2 of upload-pack
-Date: Mon,  1 Jun 2015 17:02:06 -0700
-Message-ID: <1433203338-27493-5-git-send-email-sbeller@google.com>
+Subject: [RFCv2 03/16] connect: rewrite feature parsing to work on string_list
+Date: Mon,  1 Jun 2015 17:02:05 -0700
+Message-ID: <1433203338-27493-4-git-send-email-sbeller@google.com>
 References: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Cc: pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 02:04:33 2015
+X-From: git-owner@vger.kernel.org Tue Jun 02 02:04:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzZfP-0000iz-J9
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:02:52 +0200
+	id 1YzZfI-0000iX-EM
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:02:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754418AbbFBACo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 20:02:44 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:36576 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753898AbbFBACh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 20:02:37 -0400
-Received: by ieclw1 with SMTP id lw1so26286825iec.3
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:36 -0700 (PDT)
+	id S1754270AbbFBACl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 20:02:41 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:33095 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753065AbbFBACf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 20:02:35 -0400
+Received: by iebgx4 with SMTP id gx4so121186062ieb.0
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=apfUOFjNvvqFzljEP8uoH8lNMrE8EG3NMdAEsZ0X8W0=;
-        b=i83Ls6S4u6Pih7Z/FCzS9g5VAXwNFLlmqQM/7cGeluNUhKIrhlGaHMwEvhijSto9g+
-         DcI3izl9lYIRgIyGI074G9sRrxasZf7+rZy2WwtfoxgvEQ9AWqKigZ3qXb86AZcUrF+R
-         o6OPRgoPLoe3N1Yjcww7JFZsj5z/5HauIe6K8io+MUQBIlywVC1J5tKcBGlQ+ZCySkc+
-         cgrG4O90bcsZfcmzJp7gz6xbcI3ZL9hdCGJEs/qpFFe8J6W6bSJIvlasQCFLDFHl10/b
-         LcJOF3X5YnvOebdJnyZhxCmInuZSI8ubK9RzphwL3vPcL9GYiU+PpKyVyQYUy9pXFbmP
-         PFQQ==
+        bh=tawBgt4lySwLIARFKyBx/tdDgRSUYgRWZO6PvFYhtpA=;
+        b=BgPpqGYn463MNUaHs4S4JiPwsIbhp5BbAyrLRFcHgucohvl6IAB0BtJ5AbwDmrhl/1
+         GhWwYFk7vULxnP2mxk4O7P+D3IP3tvbehVSlUgSYa8m28EwDGyunoc43SD2IwcGr38v8
+         xSSVRNf6vnddfoLFYmmRDSbl7o9jk99FzUkYRvsNr8dNHta7kF+WL+olWMLdkUZ9oag5
+         DiEFVyakqnDBt5zT+HC87+JkzTA52/TrUtAXKO9pTmrskDdNw+gv8IQut4CnvEuuTcvF
+         501/TZgGIianvtJf7gcoJ+G/AEx8A2iDdnQ3ewPEb78JnmTnU1fEWyaV0moPDyl8yopm
+         yeDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=apfUOFjNvvqFzljEP8uoH8lNMrE8EG3NMdAEsZ0X8W0=;
-        b=EWX/rrNsZgsacm7VNfzBzBIIi+lJJdMwI+gnRpNdSsM4deyS4JwF0dyapc2RIWrAvA
-         A5e/y7MrRt6mrH/5QHGCGXla1Mmb4qtnjKINCqeGuUqbzI2KuBNw8VFjzVkLRzpCMG2Y
-         3wqva5aNwQYzBPrApSa5jDsChPCwVqdCZWbnOfJKW5PmO8Sg4M1gK3hx2LFrpUJpGfZQ
-         qPnKSsM0gnV1JgAfyUl7ym21O5xXtDqhNAnsMj/jpGSFk5jAp3k5t/pyHP0h3hdTbGX5
-         eYfmEkvfL7XIuxXDVE8BpgvLXIdlqrz41CqmjKxl1gzs8brL3tysPrryZ6/0FKCwvKid
-         WG9w==
-X-Gm-Message-State: ALoCoQmXtmRUu6xtG6Nho4+WWQ4C2aACWjV7w6fJEKCrPDd9KuX9IQyBZyhuikkjgmq6CJur7lOh
-X-Received: by 10.50.64.147 with SMTP id o19mr16617230igs.33.1433203356632;
-        Mon, 01 Jun 2015 17:02:36 -0700 (PDT)
+        bh=tawBgt4lySwLIARFKyBx/tdDgRSUYgRWZO6PvFYhtpA=;
+        b=IbCzh2aCOhsLMrQmsWLxlkmIYdEIT3DHAjRVZM4WZAJrk4I4HABgdsDzi5pTpKDgtl
+         ME77Z63ch2LxcuvFNEgbOE0Nh1P+AJ2QJNJbnTtXCJReBGRjR0ZYL/pw/C9NyjN3p28j
+         /0ZlakvV3USlq9hYhV+zHW87n7KXCS0MakUxoGgENXCOhsXM+R27VEXrWxk1VnibH2+Q
+         OeIFlqhZuTcbaDC0nsm9nCUZmCUNS3LA16i5kxzzj+dxNQCeulIRf4jWH9Zz6BktThd+
+         DSYCl5GFLk7TPi81BcE6Kkt6mlqN+DjW5PGXCDUva6SBAZuIioWzgmOOaO4BTBrgmrRA
+         NaXQ==
+X-Gm-Message-State: ALoCoQl81nj+ICvtRwQX+I7dDd2zFuaccMVhu/d6qSocQdWLaGX9a4hAEITAApNBbi85Nzv5stIE
+X-Received: by 10.43.84.73 with SMTP id aj9mr31996235icc.69.1433203355233;
+        Mon, 01 Jun 2015 17:02:35 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:3900:deed:b754:addb])
-        by mx.google.com with ESMTPSA id z195sm11475981iod.33.2015.06.01.17.02.35
+        by mx.google.com with ESMTPSA id p4sm8901501igg.20.2015.06.01.17.02.34
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Jun 2015 17:02:36 -0700 (PDT)
+        Mon, 01 Jun 2015 17:02:34 -0700 (PDT)
 X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 In-Reply-To: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270485>
-
-In upload-pack-2 we send each capability in its own packet buffer.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270486>
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
+ builtin/receive-pack.c | 13 +++++----
+ connect.c              | 79 ++++++++++++++++++++++----------------------------
+ connect.h              |  2 +-
+ upload-pack.c          | 11 +++++--
+ 4 files changed, 51 insertions(+), 54 deletions(-)
 
-Notes:
-    Moved the capabilities into a struct containing all the capabilities,
-    and then we selectively cancel out unwanted capabilities.
-
- .gitignore      |   1 +
- Makefile        |   2 ++
- upload-pack-2.c |   1 +
- upload-pack.c   | 100 ++++++++++++++++++++++++++++++++++++++++++++++----------
- 4 files changed, 86 insertions(+), 18 deletions(-)
- create mode 120000 upload-pack-2.c
-
-diff --git a/.gitignore b/.gitignore
-index 422c538..2213af4 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -165,6 +165,7 @@
- /git-update-server-info
- /git-upload-archive
- /git-upload-pack
-+/git-upload-pack-2
- /git-var
- /git-verify-commit
- /git-verify-pack
-diff --git a/Makefile b/Makefile
-index 323c401..f83f02d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -560,6 +560,7 @@ PROGRAM_OBJS += sh-i18n--envsubst.o
- PROGRAM_OBJS += shell.o
- PROGRAM_OBJS += show-index.o
- PROGRAM_OBJS += upload-pack.o
-+PROGRAM_OBJS += upload-pack-2.o
- PROGRAM_OBJS += remote-testsvn.o
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index d2ec52b..518ce85 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1391,16 +1391,19 @@ static struct command *read_head_info(struct sha1_array *shallow)
  
- # Binary suffix, set to .exe for Windows builds
-@@ -626,6 +627,7 @@ OTHER_PROGRAMS = git$X
- # what test wrappers are needed and 'install' will install, in bindir
- BINDIR_PROGRAMS_NEED_X += git
- BINDIR_PROGRAMS_NEED_X += git-upload-pack
-+BINDIR_PROGRAMS_NEED_X += git-upload-pack-2
- BINDIR_PROGRAMS_NEED_X += git-receive-pack
- BINDIR_PROGRAMS_NEED_X += git-upload-archive
- BINDIR_PROGRAMS_NEED_X += git-shell
-diff --git a/upload-pack-2.c b/upload-pack-2.c
-new file mode 120000
-index 0000000..e30a871
---- /dev/null
-+++ b/upload-pack-2.c
-@@ -0,0 +1 @@
-+upload-pack.c
-\ No newline at end of file
+ 		linelen = strlen(line);
+ 		if (linelen < len) {
+-			const char *feature_list = line + linelen + 1;
+-			if (parse_feature_request(feature_list, "report-status"))
++			struct string_list feature_list = STRING_LIST_INIT_DUP;
++			from_space_separated_string(&feature_list, line + linelen + 1);
++			if (parse_feature_request(&feature_list, "report-status"))
+ 				report_status = 1;
+-			if (parse_feature_request(feature_list, "side-band-64k"))
++			if (parse_feature_request(&feature_list, "side-band-64k"))
+ 				use_sideband = LARGE_PACKET_MAX;
+-			if (parse_feature_request(feature_list, "quiet"))
++			if (parse_feature_request(&feature_list, "quiet"))
+ 				quiet = 1;
+ 			if (advertise_atomic_push
+-			    && parse_feature_request(feature_list, "atomic"))
++			    && parse_feature_request(&feature_list, "atomic"))
+ 				use_atomic = 1;
++
++			string_list_clear(&feature_list, 1);
+ 		}
+ 
+ 		if (!strcmp(line, "push-cert")) {
+diff --git a/connect.c b/connect.c
+index c0144d8..4295ba1 100644
+--- a/connect.c
++++ b/connect.c
+@@ -10,8 +10,8 @@
+ #include "string-list.h"
+ #include "sha1-array.h"
+ 
+-static char *server_capabilities;
+-static const char *parse_feature_value(const char *, const char *, int *);
++struct string_list server_capabilities = STRING_LIST_INIT_DUP;
++static const char *parse_feature_value(struct string_list *, const char *, int *);
+ 
+ static int check_ref(const char *name, unsigned int flags)
+ {
+@@ -80,18 +80,18 @@ reject:
+ 
+ static void annotate_refs_with_symref_info(struct ref *ref)
+ {
++	struct string_list_item *item;
+ 	struct string_list symref = STRING_LIST_INIT_DUP;
+-	const char *feature_list = server_capabilities;
+ 
+-	while (feature_list) {
+-		int len;
++	for_each_string_list_item(item, &server_capabilities) {
+ 		const char *val;
+ 
+-		val = parse_feature_value(feature_list, "symref", &len);
+-		if (!val)
+-			break;
+-		parse_one_symref_info(&symref, val, len);
+-		feature_list = val + 1;
++		if (skip_prefix(item->string, "symref", &val)) {
++			if (!val)
++				continue;
++			val++; /* skip the = */
++			parse_one_symref_info(&symref, val, strlen(val));
++		}
+ 	}
+ 	string_list_sort(&symref);
+ 
+@@ -153,8 +153,8 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 
+ 		name_len = strlen(name);
+ 		if (len != name_len + 41) {
+-			free(server_capabilities);
+-			server_capabilities = xstrdup(name + name_len + 1);
++			string_list_clear(&server_capabilities, 1);
++			from_space_separated_string(&server_capabilities, name + name_len + 1);
+ 		}
+ 
+ 		if (extra_have && !strcmp(name, ".have")) {
+@@ -176,51 +176,40 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 	return list;
+ }
+ 
+-static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
++static const char *parse_feature_value(struct string_list *feature_list, const char *feature, int *lenp)
+ {
+-	int len;
+-
+-	if (!feature_list)
+-		return NULL;
+-
+-	len = strlen(feature);
+-	while (*feature_list) {
+-		const char *found = strstr(feature_list, feature);
+-		if (!found)
+-			return NULL;
+-		if (feature_list == found || isspace(found[-1])) {
+-			const char *value = found + len;
+-			/* feature with no value (e.g., "thin-pack") */
+-			if (!*value || isspace(*value)) {
+-				if (lenp)
+-					*lenp = 0;
+-				return value;
+-			}
+-			/* feature with a value (e.g., "agent=git/1.2.3") */
+-			else if (*value == '=') {
+-				value++;
+-				if (lenp)
+-					*lenp = strcspn(value, " \t\n");
+-				return value;
+-			}
+-			/*
+-			 * otherwise we matched a substring of another feature;
+-			 * keep looking
+-			 */
++	const char *value;
++	struct string_list_item *item;
++
++	for_each_string_list_item(item, feature_list) {
++		if (!skip_prefix(item->string, feature, &value))
++			continue;
++
++		/* feature with no value (e.g., "thin-pack") */
++		if (!*value) {
++			if (lenp)
++				*lenp = 0;
++			return value;
++		}
++		/* feature with a value (e.g., "agent=git/1.2.3") */
++		else if (*value == '=') {
++			value++;
++			if (lenp)
++				*lenp = strlen(value);
++			return value;
+ 		}
+-		feature_list = found + 1;
+ 	}
+ 	return NULL;
+ }
+ 
+-int parse_feature_request(const char *feature_list, const char *feature)
++int parse_feature_request(struct string_list *feature_list, const char *feature)
+ {
+ 	return !!parse_feature_value(feature_list, feature, NULL);
+ }
+ 
+ const char *server_feature_value(const char *feature, int *len)
+ {
+-	return parse_feature_value(server_capabilities, feature, len);
++	return parse_feature_value(&server_capabilities, feature, len);
+ }
+ 
+ int server_supports(const char *feature)
+diff --git a/connect.h b/connect.h
+index c41a685..47492e5 100644
+--- a/connect.h
++++ b/connect.h
+@@ -7,7 +7,7 @@ extern struct child_process *git_connect(int fd[2], const char *url, const char
+ extern int finish_connect(struct child_process *conn);
+ extern int git_connection_is_socket(struct child_process *conn);
+ extern int server_supports(const char *feature);
+-extern int parse_feature_request(const char *features, const char *feature);
++extern int parse_feature_request(struct string_list *, const char *feature);
+ extern const char *server_feature_value(const char *feature, int *len_ret);
+ extern int url_is_local_not_ssh(const char *url);
+ 
 diff --git a/upload-pack.c b/upload-pack.c
-index 2493964..7477ca3 100644
+index 5449ff7..2493964 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -716,33 +716,69 @@ static void format_symref_info(struct strbuf *buf, struct string_list *symref)
- 		strbuf_addf(buf, " symref=%s:%s", item->string, (char *)item->util);
- }
- 
-+static int advertise_capabilities = 1;
-+const char *all_capabilities[] = {
-+	"multi_ack",
-+	"thin-pack",
-+	"side-band",
-+	"side-band-64k",
-+	"ofs-delta",
-+	"shallow",
-+	"no-progress",
-+	"include-tag",
-+	"multi_ack_detailed",
-+	"allow-tip-sha1-in-want",
-+	"no-done",
-+};
-+
-+static void send_capabilities(void)
-+{
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(all_capabilities); i++) {
-+		const char *cap = all_capabilities[i];
-+		if (!strcmp(cap, "allow-tip-sha1-in-want") && !allow_tip_sha1_in_want)
-+			continue;
-+		if (!strcmp(cap, "no-done") && !stateless_rpc)
-+			continue;
-+		packet_write(1,"%s", cap);
-+	}
-+
-+	packet_write(1, "agent=%s\n", git_user_agent_sanitized());
-+	packet_flush(1);
-+}
-+
- static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
--	static const char *capabilities = "multi_ack thin-pack side-band"
--		" side-band-64k ofs-delta shallow no-progress"
--		" include-tag multi_ack_detailed";
-+
- 	const char *refname_nons = strip_namespace(refname);
- 	unsigned char peeled[20];
- 
- 	if (mark_our_ref(refname, sha1))
- 		return 0;
- 
--	if (capabilities) {
--		struct strbuf symref_info = STRBUF_INIT;
--
--		format_symref_info(&symref_info, cb_data);
--		packet_write(1, "%s %s%c%s%s%s%s agent=%s\n",
--			     sha1_to_hex(sha1), refname_nons,
--			     0, capabilities,
--			     allow_tip_sha1_in_want ? " allow-tip-sha1-in-want" : "",
--			     stateless_rpc ? " no-done" : "",
--			     symref_info.buf,
--			     git_user_agent_sanitized());
--		strbuf_release(&symref_info);
-+	if (advertise_capabilities) {
-+		int i;
-+		struct strbuf capabilities = STRBUF_INIT;
-+
-+		for (i = 0; i < ARRAY_SIZE(all_capabilities); i++) {
-+			const char *cap = all_capabilities[i];
-+			if (!strcmp(cap, "allow-tip-sha1-in-want") && !allow_tip_sha1_in_want)
-+				continue;
-+			if (!strcmp(cap, "no-done") && !stateless_rpc)
-+				continue;
-+			strbuf_addf(&capabilities, " %s", cap);
-+		}
-+
-+		format_symref_info(&capabilities, cb_data);
-+		strbuf_addf(&capabilities, " agent=%s", git_user_agent_sanitized());
-+
-+		packet_write(1, "%s %s%c%s\n", sha1_to_hex(sha1), refname_nons,
-+			     0, capabilities.buf);
-+		strbuf_release(&capabilities);
-+		advertise_capabilities = 0;
- 	} else {
- 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
- 	}
--	capabilities = NULL;
- 	if (!peel_ref(refname, peeled))
- 		packet_write(1, "%s %s^{}\n", sha1_to_hex(peeled), refname_nons);
- 	return 0;
-@@ -792,6 +828,29 @@ static void upload_pack(void)
+@@ -531,7 +531,7 @@ error:
  	}
  }
  
-+static void receive_capabilities(void)
-+{
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+	char *line = packet_read_line(0, NULL);
-+	while (line) {
-+		string_list_append(&list, line);
-+		line = packet_read_line(0, NULL);
-+	}
-+	parse_features(&list);
-+	string_list_clear(&list, 1);
-+}
-+
-+static void upload_pack_version_2(void)
-+{
-+	send_capabilities();
-+	receive_capabilities();
-+
-+	/* The rest of the protocol stays the same, capabilities advertising
-+	   is disabled though. */
-+	advertise_capabilities = 0;
-+	upload_pack();
-+}
-+
- static int upload_pack_config(const char *var, const char *value, void *unused)
+-static void parse_features(const char *features)
++static void parse_features(struct string_list *features)
  {
- 	if (!strcmp("uploadpack.allowtipsha1inwant", var))
-@@ -807,13 +866,14 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- int main(int argc, char **argv)
- {
- 	char *dir;
-+	const char *cmd;
- 	int i;
- 	int strict = 0;
- 
- 	git_setup_gettext();
- 
- 	packet_trace_identity("upload-pack");
--	git_extract_argv0_path(argv[0]);
-+	cmd = git_extract_argv0_path(argv[0]);
- 	check_replace_refs = 0;
- 
- 	for (i = 1; i < argc; i++) {
-@@ -855,6 +915,10 @@ int main(int argc, char **argv)
- 		die("'%s' does not appear to be a git repository", dir);
- 
- 	git_config(upload_pack_config, NULL);
--	upload_pack();
+ 	if (parse_feature_request(features, "multi_ack_detailed"))
+ 		multi_ack = 2;
+@@ -563,7 +563,10 @@ static void receive_needs(void)
+ 	for (;;) {
+ 		struct object *o;
+ 		unsigned char sha1_buf[20];
+-		char *line = packet_read_line(0, NULL);
++		int pkt_len;
++		struct string_list list = STRING_LIST_INIT_DUP;
++		char *line = packet_read_line(0, &pkt_len);
 +
-+	if (ends_with(cmd, "-2"))
-+		upload_pack_version_2();
-+	else
-+		upload_pack();
- 	return 0;
- }
+ 		reset_timeout();
+ 		if (!line)
+ 			break;
+@@ -596,7 +599,9 @@ static void receive_needs(void)
+ 			die("git upload-pack: protocol error, "
+ 			    "expected to get sha, not '%s'", line);
+ 
+-		parse_features(line + 45);
++		from_space_separated_string(&list, xstrdup(line + 45));
++		parse_features(&list);
++		string_list_clear(&list, 1);
+ 
+ 		o = parse_object(sha1_buf);
+ 		if (!o)
 -- 
 2.4.1.345.gab207b6.dirty
