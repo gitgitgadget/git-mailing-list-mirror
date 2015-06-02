@@ -1,110 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFCv2 10/16] transport: connect_setup appends protocol version number
-Date: Tue, 02 Jun 2015 15:27:44 -0700
-Message-ID: <xmqqa8whzqxr.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFCv2 04/16] upload-pack-2: Implement the version 2 of upload-pack
+Date: Tue, 2 Jun 2015 16:08:12 -0700
+Message-ID: <CAGZ79kbe+1okiUL5bGcfykyn7MmhALF+3ANY9k-ycadk0RNAuw@mail.gmail.com>
 References: <1433203338-27493-1-git-send-email-sbeller@google.com>
-	<1433203338-27493-11-git-send-email-sbeller@google.com>
-	<xmqq8uc123n5.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kbnX_kyuvj73PGcO7OBOj7CfdouARrqNWEkCnUfdN=DqQ@mail.gmail.com>
+	<1433203338-27493-5-git-send-email-sbeller@google.com>
+	<xmqqfv6a2ayx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 00:28:00 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 01:08:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yzuf1-0006CC-Sr
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 00:27:52 +0200
+	id 1YzvIB-0000NV-AK
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 01:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbbFBW1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 18:27:48 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:38843 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605AbbFBW1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 18:27:46 -0400
-Received: by igblz2 with SMTP id lz2so704508igb.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 15:27:46 -0700 (PDT)
+	id S1750704AbbFBXIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 19:08:15 -0400
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:32873 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378AbbFBXIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 19:08:13 -0400
+Received: by qcmi9 with SMTP id i9so66526833qcm.0
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 16:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=jPwoDXdfOt7hMbykHPJyI+zEkHGbUoOz92hnp/c0tlk=;
-        b=UpaHKxwCP42gyg31N05pkazpJO3qwSXP4TNnXLBu8FwF10em/EEgdd2iMJBkOFjoDi
-         PPUrmBrnbL6uvzgVauadoe0TFUUTiZDm6mstTqL7Bn4x6AN4L3WJBdc6Zj6DCUNnKW6r
-         kSFP/Z2IcIa5H8zE9gP9q2LMYw+tJE3lb7oxhClUsiaH/FxVSn2enAoGebeMeZ2jLz5f
-         BNvQ1KPJCoMR4nSv23iLZ2mgtfNXgf1IQ6Pcd/T9YQhkofEthq9v3osMgU8pRpVvFie6
-         t5PJuJ+dJRvqrX/msmELyJ6n/oi3Yr0LtckoyLVF03l4vd0Cej7elh5xIjInwKuAbPo7
-         /qMg==
-X-Received: by 10.50.49.46 with SMTP id r14mr23363339ign.45.1433284066140;
-        Tue, 02 Jun 2015 15:27:46 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3140:53f3:e8c0:89b0])
-        by mx.google.com with ESMTPSA id qt1sm10900360igb.5.2015.06.02.15.27.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Jun 2015 15:27:45 -0700 (PDT)
-In-Reply-To: <CAGZ79kbnX_kyuvj73PGcO7OBOj7CfdouARrqNWEkCnUfdN=DqQ@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 2 Jun 2015 15:09:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=azKTCFiFptyVsC+12YfYSPK/COMZqmgyomaetS245iw=;
+        b=hp9gHUjoFvm97PzS6sDRpyJEP85rY9dd4q489nwqqnIms2pVT2ykFYIg4ljBwkRvHF
+         HCHnx9JgB3EamNJvjNdMbmD1dAA5HCSe3L6HIkbQfKVvWdpMpOPiKLOu6OWICYtui5gG
+         ipgX4+uilAawFn+E64bv0YdLdghBKhsee32QYYf6oQfoRls2sc7HkfK+7nK9eI+VEyaK
+         0xJKG3UxJQxVCOzL0/pCanxIFD4ZY9Kis6UZYdMJ/051VOVvkdmX+E1lPiiqrCH5LXHF
+         5RMjn931aD9trM4BH776szorjAs9sF1I+3EMMFmzCt4CPsc9qXtFV8YDx12cyIwbwQfD
+         Uyzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=azKTCFiFptyVsC+12YfYSPK/COMZqmgyomaetS245iw=;
+        b=UMrPXHY+OWZcwH3byu6Zp7Ukww/RwxAQ9oIhs1kNWqCsDMoD2ibxPasD1Ydxqe1pKp
+         qUUzR4YivvHRwPoWW0yR/rDPsul2yA25RWboUTUg9tHfaLbpVEkimzzazBnqr+Z68wCk
+         V+fDI/W2vxq1VB9Bdj6tLBdprXBCWAAsBfi8exQjvom3zDDod6dl9/LpyYl91YDqblMy
+         pgwKsavPeHoq0AyRLX9yBakf4j05CqezNJkvDsJHs00Byp/BNkZefEFb2WZXzedtidHb
+         Jhz8q1VhrFLixdKhnqN6LAMqqObWEV92YLBzD1yzgxhi0YblTkkVj+Y7lfbxVdISBJ8b
+         rLfQ==
+X-Gm-Message-State: ALoCoQnI/4WZQO+lnuMjOiYgGWqh8lqYxw1ZjYEO1Q97Zn95m9OWT6tzdHk8LjHKYYEDEgagOf4v
+X-Received: by 10.55.22.143 with SMTP id 15mr53273998qkw.85.1433286492592;
+ Tue, 02 Jun 2015 16:08:12 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Tue, 2 Jun 2015 16:08:12 -0700 (PDT)
+In-Reply-To: <xmqqfv6a2ayx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270619>
 
-Stefan Beller <sbeller@google.com> writes:
-
->> Hmph, so everybody else thinks it is interacting with 'upload-pack',
->> and this is the only function that knows it is actually talking with
->> 'upload-pack-2'?
+On Tue, Jun 2, 2015 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Yes.
+>> Subject: [RFCv2 04/16] upload-pack-2: Implement the version 2 of upload-pack
+>
+> Nit; s/I/i/, to match others in the series, I think.
+>
+>> In upload-pack-2 we send each capability in its own packet buffer.
 >>
->> I am wondering why there isn't a separate helper function that
->> munges data->options.{uploadpack,receivepack} fields based on
->> the value of transport_version that is called _before_ this function
->> is called.
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>
+>> Notes:
+>>     Moved the capabilities into a struct containing all the capabilities,
+>>     and then we selectively cancel out unwanted capabilities.
 >
-> That makes sense.
-
-Hmph, but then everybody would know that it is now interacting with
-upload-pack-2; I think it probably is a better way to go.
-
-In any case, all codepaths other than what actually runs exec()
-should not be basing their decision on the program names---that is
-what you added transport_version field for, and they should look
-at that field if they want to switch behaviour between protocol
-versions anyway, so I think we can live with either way.
-
->> Also, how does this interact with the name of the program the end
->> user can specify via "fetch --upload-pack=<program name>" option?
+>> diff --git a/upload-pack-2.c b/upload-pack-2.c
+>> new file mode 120000
+>> index 0000000..e30a871
+>> --- /dev/null
+>> +++ b/upload-pack-2.c
+>> @@ -0,0 +1 @@
+>> +upload-pack.c
+>> \ No newline at end of file
 >
-> You'd specify --upload-pack=foo-frotz and --transport-version=2
-> and it would look for foo-frotz-2 instead.
+> Yuck.
+>
+> Can't we do an equivalent without this symbolic link, i.e. a new
+> Makefile rule to compile upload-pack.c in two different ways to two
+> different object files?
 
-Hmm, that's an unfortunate interaction.  If you wrote a new protocol
-driver that talks v2, it may be natural to say
+Ok I changed that and it works now (only one upload-pack.c file no
+upload-pack-2.c and no corresponding object either.)
 
-	git fetch --upload-pack=a.out --transport-version=2
+However we don't want to have the version used in upload pack depending
+on the file name at run time, which is why I am reverting to this state
+and depending on the file name at compile time. Instead of a symlink we
+could use an option passed into the compiler as well, but I am not sure if
+that is as easy to add to the Makefile as this way.
 
-when you want to test it, and we do not want to invoke a.out-2 in
-that case.
+>
+> The way this patch is organized makes it unclear which part is what
+> was added for v2 and which part is shared with v1 (and changes can
+> be possible breakage to the existing code), leading to a patch that
+> is hard to review.
 
-> The problem IMHO is we have quite a few places where the
-> upload-pack binary path can be configured. Either as a command line
-> option or as a repository configuration.
+ok :(
 
-At least shouldn't you be able to tell if we are using compiled-in
-default or user specified value (whether configuration/command line)?
-
-Does the code that initialise data->options.{upload,receive}pack
-fields with the compiled-in default values know what protocol
-version is going to be used at that point?  I think that is where
-the appending of "-2" should be done; in other words, I think
-addition of "-2" should be done _ONLY_ for compiled-in default
-values, and it should be done not just for exec() but should be
-visible to everybody, including those who are debugging and inspect
-data->options.uploadpack field.  What we spawn must match what is
-stored there.
+Changed in a reroll.
