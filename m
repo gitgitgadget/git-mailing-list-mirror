@@ -1,116 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v3 2/4] git-am.txt: add configuration section in git am documentation
-Date: Tue, 02 Jun 2015 13:16:13 -0700
-Message-ID: <xmqq38293lyq.fsf@gitster.dls.corp.google.com>
-References: <1433266446-2845-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<1433266446-2845-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] config.mak.uname: Darwin: define HAVE_GETDELIM for
+ modern OS X releases
+Date: Tue, 2 Jun 2015 16:17:38 -0400
+Message-ID: <CAPig+cQsrxgMcK0+1jPLY8YXtNF4y17ivTUrFE8L8RS3MeffgA@mail.gmail.com>
+References: <1433269138-10890-1-git-send-email-sunshine@sunshineco.com>
+	<1433269138-10890-2-git-send-email-sunshine@sunshineco.com>
+	<20150602184413.GA11437@peff.net>
+	<20150602190403.GA12660@peff.net>
+	<CAPig+cQLSF4=-4b1qOY4ChBj00=trvAO0qFEh0kOjLonJL4MBg@mail.gmail.com>
+	<20150602200134.GA13382@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 02 22:16:24 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 02 22:17:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yzsbm-0006Ss-2I
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 22:16:22 +0200
+	id 1YzsdC-0007W0-TW
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 22:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbbFBUQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 16:16:18 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:34296 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbbFBUQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 16:16:16 -0400
-Received: by igbhj9 with SMTP id hj9so95606945igb.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 13:16:15 -0700 (PDT)
+	id S1752202AbbFBURp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 16:17:45 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:38714 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953AbbFBURj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 16:17:39 -0400
+Received: by igblz2 with SMTP id lz2so20420277igb.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 13:17:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=TEgVwsUOWqeO/UtUD/AxQ08W80MA/RhW4v2JEWFcjYY=;
-        b=wky+PuKnwkerMCHuRdvEYUvhyQR3e7td8Lo/HoBCsvnIa3dSY6bk0+p58TgjGEfISg
-         9xF9SSOkKelEQ+hBRsDlTEeQUV/VNqkvwFMW5lVuMZeqnpVkcCPE2H6cL5gYB58gNSNw
-         AQNzcq/8MNdKRVB6nZHgZgp1p5nuzq/KB7m5WyEQWoDMrqtTeRMHK4h1G47Gncrxq82F
-         ko8xqnK8rbHLzbnc/KAVrHh0TAlyM3ne0t5Mw4QlDkJ1WAQiUnaBkH9mXQ8nVMgOAvsA
-         ft2IBzs0TFF75bfh5mlo34na9LlU2mszB44Px1hf3MLUF3K7PB+UliP84FfQx8vFmrL6
-         6F8Q==
-X-Received: by 10.107.17.161 with SMTP id 33mr36301644ior.48.1433276175534;
-        Tue, 02 Jun 2015 13:16:15 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3140:53f3:e8c0:89b0])
-        by mx.google.com with ESMTPSA id qs10sm10658285igb.14.2015.06.02.13.16.14
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Jun 2015 13:16:14 -0700 (PDT)
-In-Reply-To: <1433266446-2845-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	(Remi Lespinet's message of "Tue, 2 Jun 2015 19:34:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=qS6x3ZQgYzyGwbno8a6yTFtpYoNqgT6tpwvGAAfKyEE=;
+        b=Xi5ktBeJ1bHaNnEDxe6uxdetxFdoul7OSZ6BNjeteG0I/bgOkRP+CZQoeDHJumoLBB
+         fafd864LbAef5tBBDnm/ClWWwi0mN4fs+nwWkbPhjbUD6d3gV+mTLmye2w8/5jyNNtZX
+         0sP9vjU/pop29vlSAO5rqjXoD0TNPuXGheRO5cMtEJLCdnYSkdqdc7MjKI9JvUt66CjO
+         P2Oc4Ia56nFM0bDzRUC14rxJwDDLaje6dbQYB2VUjflQrvoIrnNZvJd0X9z6uc3hrcGq
+         sUtTmt1UR+Yn/h4ZSzWnMuo3nHuVpGMcyiIpindnEiid4iucBKIqcNFTUCHrBzEZ/kr4
+         +01A==
+X-Received: by 10.50.66.234 with SMTP id i10mr680316igt.22.1433276258664; Tue,
+ 02 Jun 2015 13:17:38 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Tue, 2 Jun 2015 13:17:38 -0700 (PDT)
+In-Reply-To: <20150602200134.GA13382@peff.net>
+X-Google-Sender-Auth: 6C7_R9-SMbDCStgj3_Uwosr7z9I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270593>
 
-Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
-
-> Prepare a configuration section for the git am documentation.
-> Remove the part related to the am.keepcr configuration variable in the
-> description of the --keepcr option and place the description of the
-> am.keepcr configuration variable in the newly created configuration
-> section.
+On Tue, Jun 2, 2015 at 4:01 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 02, 2015 at 03:57:44PM -0400, Eric Sunshine wrote:
 >
-> This section will be used in the next commit.
+>> > Oops, I missed the trailing '.' in the regex there, and it probably
+>> > needs double-quotes in case the inner expr fails to match anything.
+>>
+>> Which is messy considering the double quotes already surrounding
+>> $(uname_R). Suggestions?
 >
-> Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-> ---
->  Documentation/git-am.txt | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
+> The shell should do the right thing with nested quotes inside backticks.
+> So just (untested):
 >
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 0d8ba48..d412f6b 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -24,6 +24,16 @@ Splits mail messages in a mailbox into commit log message,
->  authorship information and patches, and applies them to the
->  current branch.
->  
-> +CONFIGURATION
-> +-------------
-> +
-> +am.keepcr::
-> +	If true, git-am will call git-mailsplit for patches in mbox format
-> +	with parameter '--keep-cr'. In this case git-mailsplit will
-> +	not remove `\r` from lines ending with `\r\n`. Can be overridden
-> +	by giving '--no-keep-cr' from the command line.
-> +	See linkgit:git-am[1], linkgit:git-mailsplit[1].
+>   $(shell expr "`expr "$(uname_R)" : '\([0-9][0-9]*\.\)'`" '>=' 11),1)
 
-As this is git-am.txt, the first reference smells a bit odd.
+Right. Temporary brain derailment on my part.
 
-Other than that, looks OK to me.
+>> I suppose the combination of `...` with built-in 'test' and built-in
+>> 'echo' would be the most efficient choice. Do you want it re-rolled?
+>
+> I can live with it either way. It's all pretty horrible and ugly; the
+> saving grace is that we hopefully never have to touch that line again.
 
-Thanks.
+I'll re-roll, taking advantage of `...` and (typically, builtin)
+'test' and 'echo'. This:
 
->  OPTIONS
->  -------
->  (<mbox>|<Maildir>)...::
-> @@ -43,11 +53,11 @@ OPTIONS
->  --keep-non-patch::
->  	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
->  
-> ---[no-]keep-cr::
-> +--keep-cr::
-> +--no-keep-cr::
->  	With `--keep-cr`, call 'git mailsplit' (see linkgit:git-mailsplit[1])
->  	with the same option, to prevent it from stripping CR at the end of
-> -	lines. `am.keepcr` configuration variable can be used to specify the
-> -	default behaviour.  `--no-keep-cr` is useful to override `am.keepcr`.
-> +	lines.
->  
->  -c::
->  --scissors::
+$(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -ge 11 && echo 1)
+
+Already tested on OS X 10.10 (Yosemite) and 10.5 (Leopard).
