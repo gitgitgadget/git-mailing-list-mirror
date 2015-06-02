@@ -1,94 +1,115 @@
-From: Andre Bossert <anb0s@anbos.de>
-Subject: git mergetool: create temporary files in different sub-folders but
- with same filenames
-Date: Tue, 02 Jun 2015 20:48:25 +0200
-Message-ID: <556DFA79.9020904@anbos.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: git mergetool: create temporary files in different sub-folders
+ but with same filenames
+Date: Tue, 2 Jun 2015 11:57:01 -0700
+Message-ID: <CAGZ79kbiOe1Krs1Kxb_eKLF9gn830sSVArMp8oXcnHRPQngkvQ@mail.gmail.com>
+References: <556DFA79.9020904@anbos.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 20:48:43 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andre Bossert <anb0s@anbos.de>
+X-From: git-owner@vger.kernel.org Tue Jun 02 20:57:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzrEt-0001cb-HX
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 20:48:39 +0200
+	id 1YzrNB-0007Vt-HO
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 20:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525AbbFBSsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 14:48:36 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:38527 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754112AbbFBSse (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 14:48:34 -0400
-Received: by wizo1 with SMTP id o1so156044326wiz.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 11:48:33 -0700 (PDT)
+	id S1754207AbbFBS5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 14:57:04 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:36205 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753970AbbFBS5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 14:57:02 -0400
+Received: by qgep100 with SMTP id p100so530092qge.3
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 11:57:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0vsKmv8PmMoEJp92GNYpSQEPAbopRcVjOG0DiE1+9zY=;
+        b=Kw9TxEVpn8NJlsthpAYgLEdZ+DyLXhNZRNNJyaX/+AhVJNTq5BzlQWg3flTnU7/07k
+         DhJvGez/UtnLTCF6c+7LssoXeqe5r+pZD4IB2PDCsxDQAfYhrd/d2jGnNJpzjvKi3AAO
+         nxYLw4cQZSEoIbkJh65bdk1ZMAv6/eqVdiEj5n69+Rk4YBhOnl6Ldjhul4MAGcKdauaG
+         figxXGYRhNUnMxi9OgajbFRW2rJYzNxtKxjogm9BLy5ZxpXZTKlQSPN7P20qXZOQKiJJ
+         TgZmQb9F3t+vS4gvmNFF74DEXdbNsDFoPBmTQILl5LOk2CWWs4D2OGTiuQ4aHF+wFJxa
+         7bpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:message-id:date:from:user-agent
-         :mime-version:to:subject:content-type:content-transfer-encoding;
-        bh=LuB9ZunHS1+v5P7ErZAfJMrROE3Ccl8JySMy0kW8Ndc=;
-        b=Folkw2m5OlaxjGN+TyzQa6S/i6tV6ZLr7spkf5nKqOiju95ZNU1YEjGURh9USY+m7W
-         qZOChha30mHVGyhCpD84fkKIPQVKX+zCOXtkifl+LUrTDeLqvu86BkwTcLb9Y4DxZo7a
-         tLTATZk+JorbHpa1ttI1YF0FpQC8nHnDK9gelG5q8EuWLOOxkBlgrdZ59DPHgNKbkcrU
-         H/FZIfGez5nzgVHNygxc3TtF54/XAzM3p50cfKvinKi2hVHO518JxNFGc/1hknXnyVjR
-         9F+GcGOTpADmkKjItwq4Qku3oORkk9J7JrCu6nLe5zfZWtMOiPw0jIOqJihok4b8OWaa
-         dFOg==
-X-Gm-Message-State: ALoCoQm4i3j6ic4tya9rgr3s0ElvRl36QnGySlGqQregpdMeExywk2x+WuZzy9723CytErt0vWDB
-X-Received: by 10.194.161.138 with SMTP id xs10mr54484750wjb.37.1433270913253;
-        Tue, 02 Jun 2015 11:48:33 -0700 (PDT)
-Received: from [192.168.22.22] (p57A3B28E.dip0.t-ipconnect.de. [87.163.178.142])
-        by mx.google.com with ESMTPSA id v3sm22906562wix.8.2015.06.02.11.48.32
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Jun 2015 11:48:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=0vsKmv8PmMoEJp92GNYpSQEPAbopRcVjOG0DiE1+9zY=;
+        b=heuUnCTsh6oRyMP/xyynoYuGKVabGd5MbN+WbQypmAYzs1WUQyOI2n5/RmvzVT4kX9
+         BQ6gY5KyJO+vdRhSZ8zU6Ynyj8kZLrKZ/HJB9Wqf+gtDPvtCnDfl6QI0cytHQ9Zo8hRv
+         ihk7RUPyUY1Ta2Dp5A3S4JmwirDSohpi5vzFvpisQZrBlhjV0dtOjOiQTPrC4luE//jQ
+         K5IAAOveZl5iqGyH6vGe9m6mFng8KOFyorBxDTduNojRoDj58HZby+fFdjwlUOvPvO3D
+         rPqHtNl+Ai0m4fWcIMXF8E25QsWS9y8nwIqt4++cq19VyMPwpX5l+GDYaJ6HGz4Zg92W
+         Kc+A==
+X-Gm-Message-State: ALoCoQkTK75PVTXS0jzMZ35rRqbG3zGeke+E5qafCt0hHpEJHCN+RdVIDdEGInmHB8fCGT9ajB4j
+X-Received: by 10.140.196.140 with SMTP id r134mr31544703qha.60.1433271421618;
+ Tue, 02 Jun 2015 11:57:01 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Tue, 2 Jun 2015 11:57:01 -0700 (PDT)
+In-Reply-To: <556DFA79.9020904@anbos.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270584>
 
-Hello,
+On Tue, Jun 2, 2015 at 11:48 AM, Andre Bossert <anb0s@anbos.de> wrote:
+> Hello,
+>
+> we are moving from ClearCase to Git (MSYS 1.9.5 at Win7x64) and trying to
+> configure one special merge tool "DiffMerge" for IBM Rhapsody files. So
+> we've added our merge tool (script) to gitconfig. The merge script calls the
+> DiffMerge for some file-extensions (sbs, rpy etc.). It works in general, but
+> the different file names passed to DiffMerge (e.g.
+> <base-name>.LOCAL.xyz.<ext>, <base-name>.REMOTE.xyz.<ext>) are shown as
+> conflict  --> user have to solve it manually.
+>
+> I've found the new feature (mergetool.writeToTemp = true) in
+> "https://github.com/git/git/blob/master/git-mergetool.sh
+> <https://github.com/git/git/blob/master/git-mergetool.sh>" that creates one
+> temporary folder for all four files with different names. I've added some
+> handling for sub-folders.
+>
+> Instead of:
+>     BACKUP="./$MERGED.BACKUP.$ext"
+>     LOCAL="./$MERGED.LOCAL.$ext"
+>     REMOTE="./$MERGED.REMOTE.$ext"
+>     BASE="./$MERGED.BASE.$ext"
+>
+> i've added this definitions (and some other handling for creation etc.)
+> ...
+>     TEMP_BACKUP="$MERGETOOL_TMPDIR/BACKUP"
+>     TEMP_LOCAL="$MERGETOOL_TMPDIR/LOCAL"
+>     TEMP_REMOTE="$MERGETOOL_TMPDIR/REMOTE"
+>     TEMP_BASE="$MERGETOOL_TMPDIR/BASE"
+>
+>     BACKUP="$TEMP_BACKUP/${BASE}$ext"
+>     LOCAL="$TEMP_LOCAL/${BASE}$ext"
+>     REMOTE="$TEMP_REMOTE/${BASE}$ext"
+>     BASE="$TEMP_BASE/${BASE}$ext"
+> ...
+>
+> I've tested the script with normal merge-workflows and it worked. May i
+> request a review and integration in Git?
 
-we are moving from ClearCase to Git (MSYS 1.9.5 at Win7x64) and trying 
-to configure one special merge tool "DiffMerge" for IBM Rhapsody files. 
-So we've added our merge tool (script) to gitconfig. The merge script 
-calls the DiffMerge for some file-extensions (sbs, rpy etc.). It works 
-in general, but the different file names passed to DiffMerge (e.g. 
-<base-name>.LOCAL.xyz.<ext>, <base-name>.REMOTE.xyz.<ext>) are shown as 
-conflict  --> user have to solve it manually.
+https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+explains how to get your change into Git.
 
-I've found the new feature (mergetool.writeToTemp = true) in 
-"https://github.com/git/git/blob/master/git-mergetool.sh 
-<https://github.com/git/git/blob/master/git-mergetool.sh>" that creates 
-one temporary folder for all four files with different names. I've added 
-some handling for sub-folders.
+So essentially you'd not write an email as this in prose, but rather as a patch.
+So you'd make the change as above in your copy of git.git and commit it,
+then format it with git format-patch and then send the result to this list. :)
 
-Instead of:
-     BACKUP="./$MERGED.BACKUP.$ext"
-     LOCAL="./$MERGED.LOCAL.$ext"
-     REMOTE="./$MERGED.REMOTE.$ext"
-     BASE="./$MERGED.BASE.$ext"
-
-i've added this definitions (and some other handling for creation etc.)
-...
-     TEMP_BACKUP="$MERGETOOL_TMPDIR/BACKUP"
-     TEMP_LOCAL="$MERGETOOL_TMPDIR/LOCAL"
-     TEMP_REMOTE="$MERGETOOL_TMPDIR/REMOTE"
-     TEMP_BASE="$MERGETOOL_TMPDIR/BASE"
-
-     BACKUP="$TEMP_BACKUP/${BASE}$ext"
-     LOCAL="$TEMP_LOCAL/${BASE}$ext"
-     REMOTE="$TEMP_REMOTE/${BASE}$ext"
-     BASE="$TEMP_BASE/${BASE}$ext"
-...
-
-I've tested the script with normal merge-workflows and it worked. May i 
-request a review and integration in Git?
-
--- 
-Regards
-Andre (anb0s)
-eMail: anb0s@anbos.de <mailto:anb0s@anbos.de>
+>
+> --
+> Regards
+> Andre (anb0s)
+> eMail: anb0s@anbos.de <mailto:anb0s@anbos.de>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
