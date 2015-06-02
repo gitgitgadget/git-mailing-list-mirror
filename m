@@ -1,125 +1,95 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate "index" as "Index"
-Date: Tue, 2 Jun 2015 18:07:39 +0200
-Message-ID: <CAN0XMOLavKP6kSQpArGjnqSPePuvP-WR=LxngBRo17RT6ZiSTw@mail.gmail.com>
-References: <1432925644-26231-1-git-send-email-ralf.thielow@gmail.com>
-	<556C0BFD.3060806@drmicha.warpmail.net>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv3 2/2] git rebase -i: warn about removed commits
+Date: Tue, 2 Jun 2015 18:32:16 +0200 (CEST)
+Message-ID: <133653833.39653.1433262736640.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1433252180-25591-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <1433252180-25591-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <vpqzj4ignwe.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	Phillip Sz <phillip.szelat@gmail.com>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jun 02 18:08:04 2015
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 02 18:32:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzojJ-0003NX-Ps
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 18:07:54 +0200
+	id 1Yzp6z-0003sA-UL
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 18:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759479AbbFBQHp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 12:07:45 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:35001 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758947AbbFBQHk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 12:07:40 -0400
-Received: by wgme6 with SMTP id e6so144108862wgm.2
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 09:07:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WXmax9k9lMAEUXn3DMrJ7fdT2c5E7F/zunMJV4cSU0g=;
-        b=mynkcljEtfM3r3GqQLVFMCQxbAcQAXfRVyxXx8UXuSUfcGoQptH5L+mIRA4NWmjRVV
-         3XGhi0VUkNbI+VJ3EGs6+KJZPNKqmj3RL/fxHTb0t7JD8pMPspzJ0rmtlvPak5cR44Vx
-         wNoY/ZTU9JIrPygs3q966aBDmoIV0PRo/xra+XyNz/xJHEvKEMS6Cce1tYpCkU3i+izN
-         Z5h6gHUoDLDXJ299p/Gd9PNJTrX3ncACxxWZNUivnwDBFG0Ki1Yq9Ik3qKdReQCPfYeb
-         x6ttnCglSeWTbsNewMOdo1UEzFTmJ2otq0AdsDNDj4Vr1Cg/zlrKqW4aCS4hl/917x6y
-         T6ew==
-X-Received: by 10.194.5.103 with SMTP id r7mr50872318wjr.47.1433261259226;
- Tue, 02 Jun 2015 09:07:39 -0700 (PDT)
-Received: by 10.194.152.197 with HTTP; Tue, 2 Jun 2015 09:07:39 -0700 (PDT)
-In-Reply-To: <556C0BFD.3060806@drmicha.warpmail.net>
+	id S932282AbbFBQcS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 12:32:18 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:49381 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752615AbbFBQcQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 12:32:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id A6C3A280E;
+	Tue,  2 Jun 2015 18:32:13 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gzTsmXTgrqSl; Tue,  2 Jun 2015 18:32:13 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 95A0827A4;
+	Tue,  2 Jun 2015 18:32:13 +0200 (CEST)
+In-Reply-To: <vpqzj4ignwe.fsf@anie.imag.fr>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git rebase -i: warn about removed commits
+Thread-Index: +89WAzknqfOdsxtImoahEJAlOHNHtg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270561>
 
-Am 1. Juni 2015 um 09:38 schrieb  <git@drmicha.warpmail.net>:
-> Ralf Thielow venit, vidit, dixit 29.05.2015 20:54:
->>  #: sequencer.c:501
->>  #, c-format
->> @@ -1294,12 +1294,12 @@ msgstr "leere Menge von Commits =C3=BCbergeb=
-en"
->>  #: sequencer.c:661
->>  #, c-format
->>  msgid "git %s: failed to read the index"
->> -msgstr "git %s: Fehler beim Lesen der Staging-Area"
->> +msgstr "git %s: Fehler beim Lesen des Indexes"
->
-> Now we have to decide whether we flex "Index" like a foreign word in
-> German or like a German word:
->
-> der Index, des Index, ...; die Indizes (pl.)
->
-> or
->
-> der Index, des Indexes, ...; die Indexe (pl.)
->
-> I'd vote the former.
->
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> > Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes=
+:
+> > +                # Sort the SHA-1 and compare them
+> > +                echo "$(sort -u "$todo".oldsha1)" >"$todo".oldsha1
+> > +                echo "$(sort -u "$todo".newsha1)" >"$todo".newsha1
+>=20
+> Useless uses of echo.
+>=20
+> echo $(foo) -> foo
 
-I'd vote for the former, too, for that reason.
+In this case it is not true, because of the infile and outfile being
+identical. However sort does have a -o (-output) that I missed that
+allows avoiding using echo or writing in another file; I'm correcting
+with this.
 
->>  #: builtin/fsck.c:613
->>  msgid "make index objects head nodes"
->> -msgstr "Objekte in der Staging-Area pr=C3=BCfen"
->> +msgstr "Index-Objekte im Index pr=C3=BCfen"
->
-> Maybe "Alle Index-Objekte als head betrachten."? I don't know how we
-> translate "head object". But the point is that this option makes fsck
-> walk from the index objects, i.e. check their whole object ancestry, =
-nit
-> just those objects.
->
+> You should test also that
+>=20
+> git rebase --edit-todo # playing with $EDITOR to restore the original=
+ lines.
+> git rebase --continue
+>=20
+> actually continues. You did have problems with this in early
+> implementations, so it's not straightforward, so it deserves a test.
 
-There are actually two messages using "head nodes". That's why I
-didn't fix it here. Currently we don't have a translation for "head nod=
-es".
-What about translating
-"make index objects head nodes" with
-"Index-Objekte in Erreichbarkeitspr=C3=BCfung einbeziehen"
-and "make reflogs head nodes (default)" with
-"Reflogs in Erreichbarkeitspr=C3=BCfung einbeziehen (Standard)"
+In this patch, the error is dealt with a die_abort and not die, thus
+there is no rebase --edit-todo or rebase --continue possible
+afterward.
 
-What do you think?
+> You should check the output of git rebase -i too.
 
->>  #: git-am.sh:53
->>  msgid "You need to set your committer info first"
->> @@ -10478,8 +10474,7 @@ msgstr ""
->>  #: git-am.sh:142
->>  msgid "Using index info to reconstruct a base tree..."
->>  msgstr ""
->> -"Verwende Informationen aus der Staging-Area, um einen Basisverzeic=
-hnis "
->> -"nachzustellen"
->> +"Verwende Informationen aus dem Index, um einen Basisverzeichnis na=
-chzustellen"
->
-> "ein", not "einen" (unrelated fix)
->
+Checking that the warning was correctly displayed like in the test for
+"warn" if I understood correctly. About that, is checking that the
+first line is "Warning: some commits may have been dropped
+accidentally." (like in the test for "warn") enough, or should I check
+that the commit displayed as removed is the correct one?
 
-Thanks. This is already fixed by you in
-http://article.gmane.org/gmane.comp.version-control.git/269346
-I based this commit on master branch without your patches being applied=
-=2E
-In the future I'll base the patches on my latest version, not on master=
-=2E
+The other points have been corrected, or their correction is in
+progress.
+
+Thanks,
+
+R=C3=A9mi
