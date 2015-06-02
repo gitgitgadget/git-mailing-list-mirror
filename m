@@ -1,110 +1,142 @@
-From: "Gondek, Andreas" <Andreas.Gondek@dwpbank.de>
-Subject: AW: Getting the full path of a conflicting file within a custom
- merge driver?
-Date: Tue, 2 Jun 2015 10:57:29 +0000
-Message-ID: <D8780C527EB1E642B3150E6D705B46D468837AA7@DWPWHMS531.dwpbank.local>
-References: <D8780C527EB1E642B3150E6D705B46D468837861@DWPWHMS531.dwpbank.local>
- <xmqqr3pv74ww.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 12:57:39 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] gitk: Alter the ordering for the "Tags and heads" view
+Date: Tue,  2 Jun 2015 07:11:10 -0400
+Message-ID: <1433243470-93392-2-git-send-email-rappazzo@gmail.com>
+References: <1433243470-93392-1-git-send-email-rappazzo@gmail.com>
+Cc: paulus@samba.org, Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 02 13:11:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yzjt4-0005cF-Uc
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 12:57:39 +0200
+	id 1Yzk6T-0007D4-2L
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 13:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850AbbFBK5f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 06:57:35 -0400
-Received: from mail2.dwpbank.de ([145.253.155.115]:27644 "EHLO
-	mail2.dwpbank.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751772AbbFBK5d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 06:57:33 -0400
-X-IronPort-AV: E=Sophos;i="5.13,539,1427752800"; 
-   d="scan'208";a="797491"
-Received: from DWPWHMS531.dwpbank.local ([169.254.2.243]) by
- DWPFRMS530.dwpbank.local ([169.254.3.86]) with mapi id 14.03.0195.001; Tue, 2
- Jun 2015 12:57:30 +0200
-Thread-Topic: Getting the full path of a conflicting file within a custom
- merge driver?
-Thread-Index: AdCcgiEmcewjfbrsSCO3jW4YkOAV1wACGBAaACXhz6A=
-In-Reply-To: <xmqqr3pv74ww.fsf@gitster.dls.corp.google.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.101.236.155]
-x-c2processedorg: 25ee705c-9766-409d-8ffd-513701a730da
+	id S1754295AbbFBLLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 07:11:24 -0400
+Received: from mail-vn0-f46.google.com ([209.85.216.46]:42127 "EHLO
+	mail-vn0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751891AbbFBLLX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 07:11:23 -0400
+Received: by vnbg129 with SMTP id g129so19853783vnb.9
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 04:11:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Q7ceqGMvFcp+bpx4jHdy1TJwMdkQhEjbcQ1WaASlPho=;
+        b=B0ddmhSvhxKRzx/Fjy/NzgMcWcgKG+y3k/Fb7b4zNzTa5NWOae0SXqPRXeSFThl07N
+         l7TgV03+RMMqjfbAi4glVLb90XDu2kAEZWcNIxlliC7R02UtMvIofu/jZn2pFVO2G24f
+         k4DxtaqTZGdLJJ5FRj+nJcsL/rtA/7uG/rm+/T0kzQghgrP0bCFa+8A+t6DafaEXRg6W
+         uxdDCMrQU/GkZaZLG5RsSZBLXhjAahXccwxN7muJL19fnVTkSEdP47VRayBnxCQNR6zd
+         wCiX1Z5HrqQdvz51Fl/u9OCZjPCnyoj/V77STBU8/AlJ4XqZOcmLmX8mRFCcPTjU6a20
+         z6xA==
+X-Received: by 10.52.142.49 with SMTP id rt17mr13991756vdb.50.1433243480348;
+        Tue, 02 Jun 2015 04:11:20 -0700 (PDT)
+Received: from MRappazzo-2.local.info (ool-18e49664.dyn.optonline.net. [24.228.150.100])
+        by mx.google.com with ESMTPSA id hq1sm26403056vdb.24.2015.06.02.04.11.19
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 02 Jun 2015 04:11:19 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2
+In-Reply-To: <1433243470-93392-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270520>
 
-Hi,
+In the "Tags and heads" view, the list of refs is globally sorted.
+The list of local refs (heads) is separated by the remote refs.  This
+change re-orders the view toi be: local refs, remote refs tracked by
+local refs, remote refs, tags, and then other refs
 
-thank you for responding this fast. I would suggest providing this info=
-rmation as an additional parameter (like %A %O %B and %L) maybe %P. I t=
-hink this would cost about 2 lines of code und wouldn't be any performa=
-nce issue I assume. If I got it right in the source code, the informati=
-on is present in the place where the parameters for the merge driver ar=
-e prepared.
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+ gitk-git/gitk | 48 ++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
-Greetings,
-
-Andreas Gondek
-Applications
-________________________________
-
-Deutsche WertpapierService Bank AG
-ITTAS
-Derendorfer Allee 2
-40476 D=FCsseldorf
-Tel.: +49 69 5099 9503
-=46ax: +49 69 5099 85 9503
-E-Mail: Andreas.Gondek@dwpbank.de
-http://www.dwpbank.de
-
-Deutsche WertpapierService Bank AG | Wildunger Stra=DFe 14 | 60487 Fran=
-kfurt am Main=20
-Sitz der AG: Frankfurt am Main, HRB 56913 | USt.-ID: DE 813759005=20
-Vorstand: Thomas Klanten, Dr. Christian Tonnesen
-Aufsichtsrat: Wilfried Groos (Vors.)
-
------Urspr=FCngliche Nachricht-----
-Von: Junio C Hamano [mailto:jch2355@gmail.com] Im Auftrag von Junio C H=
-amano
-Gesendet: Montag, 1. Juni 2015 18:46
-An: Gondek, Andreas
-Cc: git@vger.kernel.org
-Betreff: Re: Getting the full path of a conflicting file within a custo=
-m merge driver?
-
-"Gondek, Andreas" <Andreas.Gondek@dwpbank.de> writes:
-
-> I'm wondering if there is no option to find out the full path of a=20
-> conflicting file from within a custom merge driver? If I understand=20
-> this correctly, Git only provides the name of the 3 temporary local=20
-> files and the size of the limiter. But is there any possibility to ge=
-t=20
-> the path of the file via a Git command, that I can run from within th=
-e=20
-> merge driver? Maybe as part of the repository's status?
-
-Short answer is "no", as the merge driver interface was originally desi=
-gned for a backend that can do its job with only the contents of the th=
-ree variants without any other information.  Imagine the interface to t=
-hings like "merge" from the RCS suite where it takes three variants as =
-the input---for them, the same three-tuple of original, mine and theirs=
- contents should merge to identical result no matter where in the worki=
-ng tree the conflicts happened.
-
-Having said that, I do not think it is unreasonable to feed more inform=
-ation to external merge driver, perhaps by adding a new environment var=
-iable GIT_MERGE_CONFLICTED_PATH exported when the driver is run, or som=
-ething.
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 9a2daf3..431a6a1 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -9879,35 +9879,71 @@ proc refill_reflist {} {
+     global curview
+ 
+     if {![info exists showrefstop] || ![winfo exists $showrefstop]} return
+-    set refs {}
++    set localrefs {}
++    set remoterefs {}
++    set locally_tracked_remote_refs {}
++    set tagrefs {}
++    set otherrefs {}
+     foreach n [array names headids] {
+-	if {[string match $reflistfilter $n]} {
++	if {![string match "remotes/*" $n] && [string match $reflistfilter $n]} {
++	    if {[commitinview $headids($n) $curview]} {
++		lappend localrefs [list $n H]
++		catch {set remote_name [exec git config --get branch.$n.remote]}
++		if {$remote_name ne ""} {
++		    catch {set remote_ref [exec git config --get branch.$n.merge]}
++		    set remote_ref [string map {"refs/heads/" ""} $remote_ref]
++		    set locally_tracked_remote_ref "remotes/$remote_name/$remote_ref"
++		    catch {set exists [exec git rev-parse --verify $locally_tracked_remote_ref]}
++		    if {$exists ne ""} {
++			if {[lsearch $locally_tracked_remote_refs [list $locally_tracked_remote_ref H]] < 0} {
++			    lappend locally_tracked_remote_refs [list $locally_tracked_remote_ref H]
++			}
++		    }
++		    set exists ""
++		}
++	    } else {
++    		interestedin $headids($n) {run refill_reflist}
++	    }
++	}
++    }
++    set locally_tracked_remote_refs [lsort -index 0 $locally_tracked_remote_refs]
++    set localrefs [lsort -index 0 $localrefs]
++       
++    foreach n [array names headids] {
++	if {[string match "remotes/*" $n] && [string match $reflistfilter $n]} {
+ 	    if {[commitinview $headids($n) $curview]} {
+-		lappend refs [list $n H]
++		if {[lsearch $locally_tracked_remote_refs [list $n H]] < 0} {
++		    lappend remoterefs [list $n H]
++        	}
+ 	    } else {
+ 		interestedin $headids($n) {run refill_reflist}
+ 	    }
+ 	}
+     }
++    set remoterefs [lsort -index 0 $remoterefs]
++
+     foreach n [array names tagids] {
+ 	if {[string match $reflistfilter $n]} {
+ 	    if {[commitinview $tagids($n) $curview]} {
+-		lappend refs [list $n T]
++		lappend tagrefs [list $n T]
+ 	    } else {
+ 		interestedin $tagids($n) {run refill_reflist}
+ 	    }
+ 	}
+     }
++    set tagrefs [lsort -index 0 $tagrefs]
++
+     foreach n [array names otherrefids] {
+ 	if {[string match $reflistfilter $n]} {
+ 	    if {[commitinview $otherrefids($n) $curview]} {
+-		lappend refs [list $n o]
++		lappend otherrefs [list "$n" o]
+ 	    } else {
+ 		interestedin $otherrefids($n) {run refill_reflist}
+ 	    }
+ 	}
+     }
+-    set refs [lsort -index 0 $refs]
++    set otherrefs [lsort -index 0 $otherrefs]
++    lappend refs {*}$localrefs {*}$locally_tracked_remote_refs {*}$remoterefs {*}$tagrefs {*}$otherrefs
+     if {$refs eq $reflist} return
+ 
+     # Update the contents of $showrefstop.list according to the
+-- 
+2.4.2
