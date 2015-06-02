@@ -1,111 +1,82 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFCv2 04/16] upload-pack-2: Implement the version 2 of upload-pack
-Date: Tue, 2 Jun 2015 16:08:12 -0700
-Message-ID: <CAGZ79kbe+1okiUL5bGcfykyn7MmhALF+3ANY9k-ycadk0RNAuw@mail.gmail.com>
-References: <1433203338-27493-1-git-send-email-sbeller@google.com>
-	<1433203338-27493-5-git-send-email-sbeller@google.com>
-	<xmqqfv6a2ayx.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Not a BUG: For first push to a bare repo, using "--tags" prevents creation of master branch
+Date: Tue, 02 Jun 2015 16:48:35 -0700
+Message-ID: <xmqq6175zn70.fsf_-_@gitster.dls.corp.google.com>
+References: <CABRuA+iVRZR9SxvYVCO5zd0hZEbn6tioyP6dZ5xSbaAeNF4w+w@mail.gmail.com>
+	<vpqbnh4hro7.fsf@anie.imag.fr>
+	<xmqq617bflzh.fsf@gitster.dls.corp.google.com>
+	<vpq4mmvs7zx.fsf@anie.imag.fr>
+	<xmqqeglze5cu.fsf@gitster.dls.corp.google.com>
+	<vpqoal3p8wo.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 01:08:20 2015
+Content-Type: text/plain
+Cc: Michael Darling <darlingm@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 03 01:48:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzvIB-0000NV-AK
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 01:08:19 +0200
+	id 1YzvvH-0005DZ-TV
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 01:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750704AbbFBXIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 19:08:15 -0400
-Received: from mail-qc0-f177.google.com ([209.85.216.177]:32873 "EHLO
-	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378AbbFBXIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 19:08:13 -0400
-Received: by qcmi9 with SMTP id i9so66526833qcm.0
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 16:08:12 -0700 (PDT)
+	id S1751911AbbFBXsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 19:48:39 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:33890 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105AbbFBXsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 19:48:37 -0400
+Received: by iecwk5 with SMTP id wk5so938689iec.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 16:48:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=azKTCFiFptyVsC+12YfYSPK/COMZqmgyomaetS245iw=;
-        b=hp9gHUjoFvm97PzS6sDRpyJEP85rY9dd4q489nwqqnIms2pVT2ykFYIg4ljBwkRvHF
-         HCHnx9JgB3EamNJvjNdMbmD1dAA5HCSe3L6HIkbQfKVvWdpMpOPiKLOu6OWICYtui5gG
-         ipgX4+uilAawFn+E64bv0YdLdghBKhsee32QYYf6oQfoRls2sc7HkfK+7nK9eI+VEyaK
-         0xJKG3UxJQxVCOzL0/pCanxIFD4ZY9Kis6UZYdMJ/051VOVvkdmX+E1lPiiqrCH5LXHF
-         5RMjn931aD9trM4BH776szorjAs9sF1I+3EMMFmzCt4CPsc9qXtFV8YDx12cyIwbwQfD
-         Uyzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=azKTCFiFptyVsC+12YfYSPK/COMZqmgyomaetS245iw=;
-        b=UMrPXHY+OWZcwH3byu6Zp7Ukww/RwxAQ9oIhs1kNWqCsDMoD2ibxPasD1Ydxqe1pKp
-         qUUzR4YivvHRwPoWW0yR/rDPsul2yA25RWboUTUg9tHfaLbpVEkimzzazBnqr+Z68wCk
-         V+fDI/W2vxq1VB9Bdj6tLBdprXBCWAAsBfi8exQjvom3zDDod6dl9/LpyYl91YDqblMy
-         pgwKsavPeHoq0AyRLX9yBakf4j05CqezNJkvDsJHs00Byp/BNkZefEFb2WZXzedtidHb
-         Jhz8q1VhrFLixdKhnqN6LAMqqObWEV92YLBzD1yzgxhi0YblTkkVj+Y7lfbxVdISBJ8b
-         rLfQ==
-X-Gm-Message-State: ALoCoQnI/4WZQO+lnuMjOiYgGWqh8lqYxw1ZjYEO1Q97Zn95m9OWT6tzdHk8LjHKYYEDEgagOf4v
-X-Received: by 10.55.22.143 with SMTP id 15mr53273998qkw.85.1433286492592;
- Tue, 02 Jun 2015 16:08:12 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Tue, 2 Jun 2015 16:08:12 -0700 (PDT)
-In-Reply-To: <xmqqfv6a2ayx.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=rpeb2hJp0czOAM6yCqVStP3T2VyD9O5dgQiKwjoIR+U=;
+        b=ckzlGgYzS1g1EXCuoQUamM3xGaIqruvnCJIjjcWdUSxa2iElvm7gjbwOlHUkSQ/ZXr
+         gdErsgXC8UsC6X1obDUtqkMaVc1UmPpMwtk4/loGch0/KKUL1hcB6Vd5kQnpGkLr/WzE
+         TLMGyoT3GYdlo/SwoNnZvfb59rQjNl/XdXCoIQEWK+5KnhSAAEesiKgHnpr1reaseWDg
+         ksQop2TS6Q53LGc0cPdtUnWUpC2yXGTA37iAV/DJt8Wis7Kr772/52Uy/YqaIJ5XAy62
+         IQ80R1Ya944xg+ZfOrjny77L3FUcj/h82rcLMSJE7MxgA/evhaAkFYz0vRc+wWwtLj01
+         /0qw==
+X-Received: by 10.43.40.130 with SMTP id tq2mr37718124icb.46.1433288917375;
+        Tue, 02 Jun 2015 16:48:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3140:53f3:e8c0:89b0])
+        by mx.google.com with ESMTPSA id rt5sm11036051igb.8.2015.06.02.16.48.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 02 Jun 2015 16:48:36 -0700 (PDT)
+In-Reply-To: <vpqoal3p8wo.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
+	29 May 2015 19:53:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270620>
 
-On Tue, Jun 2, 2015 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Subject: [RFCv2 04/16] upload-pack-2: Implement the version 2 of upload-pack
->
-> Nit; s/I/i/, to match others in the series, I think.
->
->> In upload-pack-2 we send each capability in its own packet buffer.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> Notes:
->>     Moved the capabilities into a struct containing all the capabilities,
->>     and then we selectively cancel out unwanted capabilities.
->
->> diff --git a/upload-pack-2.c b/upload-pack-2.c
->> new file mode 120000
->> index 0000000..e30a871
->> --- /dev/null
->> +++ b/upload-pack-2.c
->> @@ -0,0 +1 @@
->> +upload-pack.c
->> \ No newline at end of file
->
-> Yuck.
->
-> Can't we do an equivalent without this symbolic link, i.e. a new
-> Makefile rule to compile upload-pack.c in two different ways to two
-> different object files?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Ok I changed that and it works now (only one upload-pack.c file no
-upload-pack-2.c and no corresponding object either.)
-
-However we don't want to have the version used in upload pack depending
-on the file name at run time, which is why I am reverting to this state
-and depending on the file name at compile time. Instead of a symlink we
-could use an option passed into the compiler as well, but I am not sure if
-that is as easy to add to the Makefile as this way.
-
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> The way this patch is organized makes it unclear which part is what
-> was added for v2 and which part is shared with v1 (and changes can
-> be possible breakage to the existing code), leading to a patch that
-> is hard to review.
+>> I recall "fetch --tags" was updated to become your "--tags-also" by
+>> e66ef7ae (Merge branch 'mh/fetch-tags-in-addition-to-normal-refs',
+>> 2013-12-12).  Perhaps we should do the same on the push side.
+>
+> Would we still have a way to push tags only with this?
+>
+> fetch and push are a bit different: it's almost never a bad idea to run
+> fetch (I see remote-tracking as a kind of cache, and fetch is the way to
+> refresh this cache), but pushing too much can be harmful. Not a strong
+> objection, but I'm not sure that this change is 100% safe for everyone.
 
-ok :(
+Whether the user is familiar with "git fetch --tags" or not, "git
+push --tags" that is not spelled as "git push 'tags/*'" does look
+like an option that augments what the command normally does, and the
+"mistaken" (non-)bug report was very understandable. 
 
-Changed in a reroll.
+After having thought about this, I would say that it would not add
+much value to the system if we add it as "git push --tags-also".  We
+should either keep the current semantics as-is, or we replace "git
+push --tags" to make it similar to what "git fetch --tags" does, I
+think.
