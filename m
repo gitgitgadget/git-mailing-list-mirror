@@ -1,128 +1,125 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 2/3] for-each-ref: report broken references correctly
-Date: Tue,  2 Jun 2015 17:57:26 +0200
-Message-ID: <1433260647-18181-3-git-send-email-mhagger@alum.mit.edu>
-References: <1433260647-18181-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Anders Kaseorg <andersk@mit.edu>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 17:58:07 2015
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate "index" as "Index"
+Date: Tue, 2 Jun 2015 18:07:39 +0200
+Message-ID: <CAN0XMOLavKP6kSQpArGjnqSPePuvP-WR=LxngBRo17RT6ZiSTw@mail.gmail.com>
+References: <1432925644-26231-1-git-send-email-ralf.thielow@gmail.com>
+	<556C0BFD.3060806@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	Phillip Sz <phillip.szelat@gmail.com>,
+	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Jun 02 18:08:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzoZe-0004QF-A9
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 17:57:54 +0200
+	id 1YzojJ-0003NX-Ps
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 18:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932691AbbFBP5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 11:57:49 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42312 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759109AbbFBP5o (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 11:57:44 -0400
-X-AuditID: 12074413-f79386d000000d23-d3-556dd2764744
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 76.F6.03363.672DD655; Tue,  2 Jun 2015 11:57:42 -0400 (EDT)
-Received: from michael.fritz.box (p4FC966E3.dip0.t-ipconnect.de [79.201.102.227])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t52FvbBW010977
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 2 Jun 2015 11:57:41 -0400
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1433260647-18181-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqFt2KTfUoPe4mMWZvnCLrivdTBYN
-	vVeYLW6vmM9s8aOlh9li8+Z2Fgc2j7/vPzB5LNhU6tF05iizx7PePYweFy8pe3zeJBfAFsVt
-	k5RYUhacmZ6nb5fAnfFxeWTBWrGKi/dXMTcwbhTqYuTkkBAwkbjRvp0RwhaTuHBvPVsXIxeH
-	kMBlRokrb7YzQzgnmCSmXfjJDlLFJqArsainmQnEFhFQk5jYdogFxGYW2Mwo0fkwCMQWFvCQ
-	WPv6PVgNi4CqxPq5i4BqODh4BVwknj8whFgmJ3H++E9mEJtTwFWi91IXWLkQUMnb8z9YJjDy
-	LmBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka66Xm1mil5pSuokREmDCOxh3nZQ7xCjAwajE
-	w8vwKSdUiDWxrLgy9xCjJAeTkijvjeO5oUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeAU3AOV4
-	UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK85y4CNQoWpaanVqRl5pQg
-	pJk4OEGGc0mJFKfmpaQWJZaWZMSD4iK+GBgZICkeoL1zQdp5iwsSc4GiEK2nGBWlxHlLQBIC
-	IImM0jy4sbC08YpRHOhLYV4ZkCoeYMqB634FNJgJaHC7QA7I4JJEhJRUA6PJk755PRHh8xe3
-	b0wWqFOynF4lx/d5gdRXVXfRX3v/3D5aFCzrwnq4h0m0bG3m1lmLv66bLHtSK3xmglGZsUHL
-	fPFTPz93JMmUfJsYqPVmlvLDjZGel5lYFMue1bNo/JlQWZfRorJ0jUNdssqZh3Mf 
+	id S1759479AbbFBQHp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 12:07:45 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:35001 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758947AbbFBQHk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 12:07:40 -0400
+Received: by wgme6 with SMTP id e6so144108862wgm.2
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 09:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=WXmax9k9lMAEUXn3DMrJ7fdT2c5E7F/zunMJV4cSU0g=;
+        b=mynkcljEtfM3r3GqQLVFMCQxbAcQAXfRVyxXx8UXuSUfcGoQptH5L+mIRA4NWmjRVV
+         3XGhi0VUkNbI+VJ3EGs6+KJZPNKqmj3RL/fxHTb0t7JD8pMPspzJ0rmtlvPak5cR44Vx
+         wNoY/ZTU9JIrPygs3q966aBDmoIV0PRo/xra+XyNz/xJHEvKEMS6Cce1tYpCkU3i+izN
+         Z5h6gHUoDLDXJ299p/Gd9PNJTrX3ncACxxWZNUivnwDBFG0Ki1Yq9Ik3qKdReQCPfYeb
+         x6ttnCglSeWTbsNewMOdo1UEzFTmJ2otq0AdsDNDj4Vr1Cg/zlrKqW4aCS4hl/917x6y
+         T6ew==
+X-Received: by 10.194.5.103 with SMTP id r7mr50872318wjr.47.1433261259226;
+ Tue, 02 Jun 2015 09:07:39 -0700 (PDT)
+Received: by 10.194.152.197 with HTTP; Tue, 2 Jun 2015 09:07:39 -0700 (PDT)
+In-Reply-To: <556C0BFD.3060806@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270560>
 
-If there is a loose reference file with invalid contents, "git
-for-each-ref" incorrectly reports the problem as being a missing
-object with name NULL_SHA1:
+Am 1. Juni 2015 um 09:38 schrieb  <git@drmicha.warpmail.net>:
+> Ralf Thielow venit, vidit, dixit 29.05.2015 20:54:
+>>  #: sequencer.c:501
+>>  #, c-format
+>> @@ -1294,12 +1294,12 @@ msgstr "leere Menge von Commits =C3=BCbergeb=
+en"
+>>  #: sequencer.c:661
+>>  #, c-format
+>>  msgid "git %s: failed to read the index"
+>> -msgstr "git %s: Fehler beim Lesen der Staging-Area"
+>> +msgstr "git %s: Fehler beim Lesen des Indexes"
+>
+> Now we have to decide whether we flex "Index" like a foreign word in
+> German or like a German word:
+>
+> der Index, des Index, ...; die Indizes (pl.)
+>
+> or
+>
+> der Index, des Indexes, ...; die Indexe (pl.)
+>
+> I'd vote the former.
+>
 
-    $ echo '12345678' >.git/refs/heads/nonsense
-    $ git for-each-ref
-    fatal: missing object 0000000000000000000000000000000000000000 for refs/heads/nonsense
+I'd vote for the former, too, for that reason.
 
-With an explicit "--format" string, it can even report that the
-reference validly points at NULL_SHA1:
+>>  #: builtin/fsck.c:613
+>>  msgid "make index objects head nodes"
+>> -msgstr "Objekte in der Staging-Area pr=C3=BCfen"
+>> +msgstr "Index-Objekte im Index pr=C3=BCfen"
+>
+> Maybe "Alle Index-Objekte als head betrachten."? I don't know how we
+> translate "head object". But the point is that this option makes fsck
+> walk from the index objects, i.e. check their whole object ancestry, =
+nit
+> just those objects.
+>
 
-    $ git for-each-ref --format='%(objectname) %(refname)'
-    0000000000000000000000000000000000000000 refs/heads/nonsense
-    $ echo $?
-    0
+There are actually two messages using "head nodes". That's why I
+didn't fix it here. Currently we don't have a translation for "head nod=
+es".
+What about translating
+"make index objects head nodes" with
+"Index-Objekte in Erreichbarkeitspr=C3=BCfung einbeziehen"
+and "make reflogs head nodes (default)" with
+"Reflogs in Erreichbarkeitspr=C3=BCfung einbeziehen (Standard)"
 
-This has been broken since
+What do you think?
 
-    b7dd2d2 for-each-ref: Do not lookup objects when they will not be used (2009-05-27)
+>>  #: git-am.sh:53
+>>  msgid "You need to set your committer info first"
+>> @@ -10478,8 +10474,7 @@ msgstr ""
+>>  #: git-am.sh:142
+>>  msgid "Using index info to reconstruct a base tree..."
+>>  msgstr ""
+>> -"Verwende Informationen aus der Staging-Area, um einen Basisverzeic=
+hnis "
+>> -"nachzustellen"
+>> +"Verwende Informationen aus dem Index, um einen Basisverzeichnis na=
+chzustellen"
+>
+> "ein", not "einen" (unrelated fix)
+>
 
-, which changed for-each-ref from using for_each_ref() to using
-git_for_each_rawref() in order to avoid looking up the referred-to
-objects unnecessarily. (When "git for-each-ref" is given a "--format"
-string that doesn't include information about the pointed-to object,
-it does not look up the object at all, which makes it considerably
-faster. Iterating with DO_FOR_EACH_INCLUDE_BROKEN is essential to this
-optimization because otherwise for_each_ref() would itself need to
-check whether the object exists as part of its brokenness test.)
-
-But for_each_rawref() includes broken references in the iteration, and
-"git for-each-ref" doesn't itself reject references with REF_ISBROKEN.
-The result is that broken references are processed *as if* they had
-the value NULL_SHA1, which is the value stored in entries for broken
-references.
-
-Change "git for-each-ref" to emit warnings for references that are
-REF_ISBROKEN but to otherwise skip them.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- builtin/for-each-ref.c         | 5 +++++
- t/t6301-for-each-ref-errors.sh | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 83f9cf9..13d2172 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -851,6 +851,11 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
- 		  return 0;
- 	}
- 
-+	if (flag & REF_ISBROKEN) {
-+		  warning("ignoring broken ref %s", refname);
-+		  return 0;
-+	}
-+
- 	if (*cb->grab_pattern) {
- 		const char **pattern;
- 		int namelen = strlen(refname);
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index cf25244..72d2397 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -14,7 +14,7 @@ test_expect_success setup '
- 	git for-each-ref --format="%(objectname) %(refname)" >brief-list
- '
- 
--test_expect_failure 'Broken refs are reported correctly' '
-+test_expect_success 'Broken refs are reported correctly' '
- 	r=refs/heads/bogus &&
- 	: >.git/$r &&
- 	test_when_finished "rm -f .git/$r" &&
--- 
-2.1.4
+Thanks. This is already fixed by you in
+http://article.gmane.org/gmane.comp.version-control.git/269346
+I based this commit on master branch without your patches being applied=
+=2E
+In the future I'll base the patches on my latest version, not on master=
+=2E
