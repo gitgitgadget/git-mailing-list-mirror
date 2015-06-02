@@ -1,119 +1,60 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [RFCv2 00/16] Protocol version 2
-Date: Mon,  1 Jun 2015 17:02:02 -0700
-Message-ID: <1433203338-27493-1-git-send-email-sbeller@google.com>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: git-repack keeps running out of memory
+Date: Mon, 01 Jun 2015 20:04:22 -0400
+Message-ID: <556CF306.6000308@ubuntu.com>
+References: <556CA6C8.6000804@ubuntu.com> <xmqqlhg35ky2.fsf@gitster.dls.corp.google.com> <556CAD64.8000208@ubuntu.com> <20150601205854.GA21144@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 02:05:22 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 02 02:11:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzZfA-0000hv-SQ
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:02:37 +0200
+	id 1YzZnn-0006Db-C4
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754164AbbFBACd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2015 20:02:33 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:36524 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753065AbbFBACb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 20:02:31 -0400
-Received: by ieclw1 with SMTP id lw1so26285401iec.3
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=YY7khVWwmQ4OW6eT3cr+AmR+RJ41HK7FcRN0xRxI3qU=;
-        b=NPaT1J21JNvjwWc3ksVqF6InAHhRxl0eIs6MFheBuBPGMNbSfQtRi4t+FTUqHc6cRE
-         Rx5FJHqY64eZ7gZwGr7maG5rqQFEChQY7iHRplZjza5M9+b2kyikjFPhNKZ2oZ8ariLX
-         278Yx6wRhsvJhes1pAdhtnzyqSp0SN7ZeTFPrkReyjKZAjBon2iJ2Meyeu8Yp0z2yqo1
-         JypK38kYaY9GMA2wzU6zywxx8SL2miz9nG6zwJIH7nnlTaQ4z9jb4BUo9l+g277nkGXW
-         Hw/5WRurAXIuBx2I08rFHD7B1W4hcHBcuPYdXM+nIow5TItrL9t49SSiCmy+bnxeavpK
-         FKhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=YY7khVWwmQ4OW6eT3cr+AmR+RJ41HK7FcRN0xRxI3qU=;
-        b=dmPFfEubsDAV+KC+fDVBst8Dy3pe//grq3sd5aLLAlrYnSPB7MDYsauFIERaVrf7jF
-         tOu9vU+JmVtU4iwMiQTYi1vYncD2/Y9tY8aEnJ6XH8jDjKWAOlQAtKZBsjhmB/l8aW11
-         A1iyUyGgZRCUOprRqVuZ/rAQB2GdwU0F89xmoBVZ2T4VLVsuj17jEe6mYy/1fOi/5T0L
-         x5Z7UwgVL8PR/Ctu6WwhQXyyUXMOQUfDnKF9zbOEwmVMMLCB+lPhT7DKEqa4rare392l
-         8diuELT+1PQYOqsa/3oPUqYkfw0CCw9Sb+e2AFjp/mGKLnOGITQm+UZQnZI9EH7BWX6f
-         IHXw==
-X-Gm-Message-State: ALoCoQk8wNW4dg7AkxhpYFcO30GFglwqthd4ZzyGAUXwBLsxXrl4EBeHaRMJzaza4brYtMEZaw5Q
-X-Received: by 10.107.9.223 with SMTP id 92mr30546462ioj.71.1433203350684;
-        Mon, 01 Jun 2015 17:02:30 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:3900:deed:b754:addb])
-        by mx.google.com with ESMTPSA id g3sm8910010igi.10.2015.06.01.17.02.29
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Jun 2015 17:02:30 -0700 (PDT)
-X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
+	id S1754295AbbFBAL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 20:11:27 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.232]:60448 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753437AbbFBAL0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2015 20:11:26 -0400
+Received: from [72.238.77.169] ([72.238.77.169:42218] helo=[192.168.1.142])
+	by cdptpa-oedge03 (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 4F/B0-04997-603FC655; Tue, 02 Jun 2015 00:04:22 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <20150601205854.GA21144@peff.net>
+X-RR-Connecting-IP: 107.14.168.142:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270500>
 
-patches 1-4 are for the uploading side (upload-pack)
-and 5-13 for the fetching side.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-patches 14-16 are documentation and the tiny test.
+On 06/01/2015 04:58 PM, Jeff King wrote:
+> How many processors do you have? The window-memory is per-thread.
+> Try with --threads=1.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-  upload-pack: make client capability parsing code a separate function
+Ahh, right... 8... that explains it ;)
 
-Stefan Beller (15):
-  stringlist: add from_space_separated_string
-  connect: rewrite feature parsing to work on string_list
-  upload-pack-2: Implement the version 2 of upload-pack
-  remote.h: Change get_remote_heads return to void
-  remote.h: add new struct for options
-  transport: add infrastructure to support a protocol version number
-  transport: select transport version via command line or config
-  remote.h: add get_remote_capabilities, request_capabilities
-  transport: connect_setup appends protocol version number
-  remote: have preselect_capabilities
-  transport: get_refs_via_connect exchanges capabilities before refs.
-  fetch-pack: use the configured transport protocol
-  t5544: add a test case for the new protocol
-  Documentation/technical/pack-protocol: Mention http as possible
-    protocol
-  Document protocol version 2
 
- .gitignore                                        |   1 +
- Documentation/technical/pack-protocol.txt         |  85 ++++++++++--
- Documentation/technical/protocol-capabilities.txt |  15 ---
- Makefile                                          |   2 +
- builtin/fetch-pack.c                              |  22 +++-
- builtin/fetch.c                                   |   6 +
- builtin/receive-pack.c                            |  13 +-
- connect.c                                         | 154 ++++++++++++++=
-+-------
- connect.h                                         |   2 +-
- fetch-pack.c                                      | 109 ++++++++------=
--
- fetch-pack.h                                      |   1 +
- remote.c                                          |   2 +
- remote.h                                          |  28 +++-
- string-list.c                                     |  12 ++
- string-list.h                                     |   1 +
- t/t5544-fetch-2.sh                                |  40 ++++++
- transport-helper.c                                |   1 +
- transport.c                                       |  60 ++++++++-
- transport.h                                       |  11 ++
- upload-pack-2.c                                   |   1 +
- upload-pack.c                                     | 151 ++++++++++++++=
-+------
- 21 files changed, 535 insertions(+), 182 deletions(-)
- create mode 100755 t/t5544-fetch-2.sh
- create mode 120000 upload-pack-2.c
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---=20
-2.4.1.345.gab207b6.dirty
+iQEcBAEBCgAGBQJVbPMBAAoJENRVrw2cjl5R2rkH/0qa9HerYM7Bw5qfcV3zahFz
+5g/NGoW3M9IutqqLiyDzAQboj62+TzrEuM/fo7BgZrKYBsA7/4SNdJMmabaUb5Kr
+rtW1qfpErIHUQUY0wAxBwXX7gpihB3HTYRsZAX+7Itfae7bw8r3krj/L1Ty2nj3Y
+QLIm9uwijiBNpHoF9Jnl6gbklaVFbBBfdGH2uPLzoso5YdlJ0L6o4VDmeD55njjx
+30cOLDwInQ4zxdGKBH1SaIXGq+2Vi1txLrzYaaEOA+NW9+Rp7J9Anqcv/IH5yyX/
+y9H0yDXXP/3gPwTHvYiRTVWMjAvjxSdc4n4ZgySLBPTruW1utxjPdaTSffm2xsg=
+=wza7
+-----END PGP SIGNATURE-----
