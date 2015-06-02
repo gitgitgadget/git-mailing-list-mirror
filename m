@@ -1,181 +1,171 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/WIP PATCH 11/11] Document protocol version 2
-Date: Mon, 1 Jun 2015 16:40:54 -0700
-Message-ID: <CAGZ79kYD--dZ_V=_X_Eo31KYTKXt2njuf56XqRRdaTJeLhDjaQ@mail.gmail.com>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
-	<1432677675-5118-12-git-send-email-sbeller@google.com>
-	<xmqqsiafazr7.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kbELvZ6otnNwGHsgiC9EjgS2vrDGU2KCgF2c_Azm=-rWg@mail.gmail.com>
-	<xmqqk2vraw6p.fsf@gitster.dls.corp.google.com>
-	<20150529222120.GB15678@peff.net>
-	<CAGZ79kaRTLX7eBCOA=yQHVwcN-H-o_aZFfQ1gw7Nx-NC82pbag@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 02 01:44:26 2015
+Subject: [RFCv2 07/16] transport: add infrastructure to support a protocol version number
+Date: Mon,  1 Jun 2015 17:02:09 -0700
+Message-ID: <1433203338-27493-8-git-send-email-sbeller@google.com>
+References: <1433203338-27493-1-git-send-email-sbeller@google.com>
+Cc: pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 02 02:04:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzZKH-00062H-8D
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 01:41:01 +0200
+	id 1YzZfX-0000j9-5w
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004AbbFAXk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 19:40:56 -0400
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:36734 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753922AbbFAXkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 19:40:55 -0400
-Received: by qgf2 with SMTP id 2so53551121qgf.3
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 16:40:55 -0700 (PDT)
+	id S1754584AbbFBACz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 20:02:55 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36041 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754385AbbFBACl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 20:02:41 -0400
+Received: by igbpi8 with SMTP id pi8so74556008igb.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fvPeiG66UxbWEVu4wfuGQClv/s6mXOnSnpkwjVusJLI=;
-        b=cc18lGMd6PB+bEPUg271WT0Dn3Bc3y97I120CN7ve+yLJcA4sNxUblqOHYetcUGCWx
-         oV/PCwvK5amxcvr91JtJctVkUK0N9R8GX4iwezNLqY8ICK1ajWxfeses5Aj1P/bPbsj5
-         XzYSFUFMT9gX8zdRQblFWyxzNV9KP7aIosygdTrkt+8NXgiLHuNVQL7Wyo2zDc9Yv2Fo
-         rqYLcL3CsqmmHF23jSexiFYS3B8nv462ZeAh3eTJjLDfa5lSFIlGxDgdviMf0rBkCGiZ
-         gFLfqkzzf3HCGLy9t9tdPtkZ1n5asANtJaYPzR3W7AIOJDvuR/7bAg3zDhra2aiXvZzF
-         IyTg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/muTZNka5VYbScpIg0MOw39XbCNZVTUJxoLHYZMYJms=;
+        b=cW9KfGw01DxA1Uo/1yaEhGPIA2RZk0SaGOHCxXldpDDzVsalrmP7zDJZZOC+WHFt2d
+         FmesCjlaPgvb9yVZXJKXqNWgmP8JmFTjWTiZ3YQ/Kq1RuApDWUep1lqODGXzT1hmBktG
+         M4wP77SFGrqKyp2vCnrgnV+Px5dtFNB+NzlKsN4AVY/KibBs/8wm9WqPz2jyGqgfy8f8
+         HEe38P/2FD782Sfr2fNtWtzFLzp+hk9rTdPIiCig8pAJb1uoJrDVwqb41sjy0ST1ZUGk
+         hsLlh27yq40Rm3RWfreecKY4pzmrSAQmNAs/jjG8yIWx8vbTxu4sNLGsqrANsvKNMmri
+         7B2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=fvPeiG66UxbWEVu4wfuGQClv/s6mXOnSnpkwjVusJLI=;
-        b=PNj5TfcSWXOQDzAlTo+pKSmEZY2ipAJllAHFoGYV2/EMiUfpA7/hQupsfEGEBh6KnK
-         N5YJ+oNkvDLW7JixsMejBx3+QfaqfI3UUzErHcG8CyTeRSxq9HFFm+afvVZ9eIXCvEdu
-         MV5Qm6xog3N0bW2iaw+OEn2Q2gg7wlC+1eSIc9PsvwkbzY46tsh41Q9L14QfafKh7p5E
-         yos/oTGZRrwd2sgLCqu5DA37+PPsC4y9gqE7HVuOWsunqJms7S/biZ/gnU4HdeNEvrI1
-         bGxIKACWP+zjF2kiqvlJPbH3DnvDk5rAZnFBVBJCwT7ZHOTNPaWSglA5JBZqGYlVqLyN
-         Fk/g==
-X-Gm-Message-State: ALoCoQlpWwMtA2TedYSlOEJU8qu/C3d/N26ZDGR1aF8KxFv5NfCmpo/eACprx8CA6ew3EuQz0xFP
-X-Received: by 10.140.133.9 with SMTP id 9mr26785789qhf.5.1433202054908; Mon,
- 01 Jun 2015 16:40:54 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Mon, 1 Jun 2015 16:40:54 -0700 (PDT)
-In-Reply-To: <CAGZ79kaRTLX7eBCOA=yQHVwcN-H-o_aZFfQ1gw7Nx-NC82pbag@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/muTZNka5VYbScpIg0MOw39XbCNZVTUJxoLHYZMYJms=;
+        b=HKcLlx9BfJfnuq2J7DZjZkrErtTHE6cOqHdTTlk0Dx+NFLks2mWKEJs7HdLOqKSk03
+         OGvmJc/GtMe4ydtopdW6ACpykxz/9BP8BR2E8labhLme1MMf2CrqM+Gvp7uVZsUNppjV
+         dLLdN+s0y0p8B0BJ3EHwMMw8+4njFBwGTsasU5SqKhw5QzaTO3GlO/F8MvSPzLqNkge0
+         L7ShcglUWiJsz6kduO9ZYs1LVkAeT4QJCC4Q171sSVmphlMd+xfICqsytdsjL9RMshM7
+         Kt1zEjszYmCecJolLCUndKxhZxekgQLMEY9bfjHJTZmI9LXR8ujpL7iYQkLWnkbYUaKF
+         1DXA==
+X-Gm-Message-State: ALoCoQkCvk1c7owIzD2JDyjZCUUPVSDd5H9c0c7Z4jBCpAIqOQUn9aXgQgqQfFiEmQinMx+CH6IE
+X-Received: by 10.107.15.149 with SMTP id 21mr31454918iop.44.1433203360840;
+        Mon, 01 Jun 2015 17:02:40 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:3900:deed:b754:addb])
+        by mx.google.com with ESMTPSA id av6sm8896241igc.17.2015.06.01.17.02.40
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Jun 2015 17:02:40 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
+In-Reply-To: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270483>
 
-On Mon, Jun 1, 2015 at 4:14 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, May 29, 2015 at 3:21 PM, Jeff King <peff@peff.net> wrote:
->> On Fri, May 29, 2015 at 02:52:14PM -0700, Junio C Hamano wrote:
->>
->>> > Currently we can do a = as part of the line after the first ref, such as
->>> >
->>> >     symref=HEAD:refs/heads/master agent=git/2:2.4.0
->>> >
->>> > so I thought we want to keep this.
->>>
->>> I do not understand that statement.
->>>
->>> Capability exchange in v2 is one packet per cap, so the above
->>> example would be expressed as:
->>>
->>>       symref=HEAD:refs/heads/master
->>>         agent=git/2:2.4.0
->>>
->>> right?  Your "keyvaluepair" is limited to [a-z0-9-_=]*, and neither
->>> of the above two can be expressed with that, which was why I said
->>> you need two different set of characters before and after "=".  Left
->>> hand side of "=" is tightly limited and that is OK.  Right hand side
->>> may contain characters like ':', '.' and '/', so your alphabet need
->>> to be more lenient, even in v1 (which I would imagine would be "any
->>> octet other than SP, LF and NUL").
->
-> I think the recent issue with the push certificates shows that having arbitrary
-> data after the = is a bad idea. So we need to be very cautious when to allow
-> which data after the =.
->
-> I'll try split up the patch.
->
->>
->> Yes. See git_user_agent_sanitized(), for example, which allows basically
->> any printable ASCII except for SP.
->>
->> I think the v2 capabilities do not even need to have that restriction.
->> It can allow arbitrary binary data, because it has an 8bit-clean framing
->> mechanism (pkt-lines). Of course, that means such capabilities cannot be
->> represented in a v1 conversation (whose framing mechanism involves SP
->> and NUL). But it's probably acceptable to introduce new capabilities
->> which are only available in a v2 conversation. Old clients that do not
->> understand v2 would not understand the capability either. It does
->> require new clients implementing the capability to _also_ implement v2
->> if they have not done so, but I do not mind pushing people in that
->> direction.
->>
->> The initial v2 client implementation should probably do a few cautionary
->> things, then:
->>
->>   1. Do _not_ fold the per-pkt capabilities into a v1 string; that loses
->>      the robust framing. I suggested string_list earlier, but probably
->>      we want a list of ptr/len pair, so that it can remain NUL-clean.
->>
->>   2. Avoid holding on to unknown packets longer than necessary. Some
->>      capability pkt-lines may be arbitrarily large (up to 64K). If we do
->>      not understand them during the v2 read of the capabilities, there
->>      is no point hanging on to them. It's not _wrong_ to do so, but just
->>      inefficient; if we know that clients will just throw away unknown
->>      packets, then we can later introduce new packets with large data,
->>      without worrying about wasting the client's resources.
->>
->>      I suspect it's not that big a deal either way, though. I have no
->>      plans for sending a bunch of large packets, and anyway network
->>      bandwidth is probably more precious than client memory.
->
-> That's very sensible thoughts after rereading this email. The version
-> I'll be sending out today will not follow those suggestions though. :(
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Thinking about this further, maybe it is a good idea to restrict the
-capabilities
-advertising to alphabetical order?
+Notes:
+    This patch has been split up into 2 parts.
+    This first part only introduces the infrastructure
+    without exposing it to the user at all (no command line
+    option nor a repository configuration option).
+    
+    The exposure to the user will be added in a later second
+    patch. This allows us some time in between to build all
+    the features we want without the requirement to be
+    functional.
 
-The exchange would look like this:
+ remote.h           |  2 ++
+ transport-helper.c |  1 +
+ transport.c        | 15 +++++++++++++++
+ transport.h        |  5 +++++
+ 4 files changed, 23 insertions(+)
 
-server:
-  for capability in list:
-      pkt_write(capability)
-  pkt_flush
-
-client:
-  do
-    line = recv_pkt()
-    parse_capability(line)
-  while line != flush
-
-with parse_capability checking if we know the capability and maybe setting some
-internal field if we know this capability.
-
-Now if we assume the number of capabilities grows over time a lot (someone may
-"abuse" it for a cool feature, similar to the refs currently. Nobody
-thought about
-having so many refs in advance)
-
-So how does parse_capability scale w.r.t the number of capabilities?
-If parse_capability is just a linear search then it is O(n) and with n
-capabilities
-the client faces an O(n^2) computation which is bad. So if we were to require
-alphabetic capabilities, you could internally keep track and the whole operation
-is O(n). I just wonder if this is premature optimization or some thought we need
-to think of.
-
-To prevent this problem from popping up, it must be easier to
-introduce a new phase
-after the capabilities exchange than to just abuse the capabilities
-phase for whatever
-you plan on doing.
-
-Thanks,
-Stefan
-
->
->>
->> -Peff
+diff --git a/remote.h b/remote.h
+index 16cacfe..3767bed 100644
+--- a/remote.h
++++ b/remote.h
+@@ -50,6 +50,8 @@ struct remote {
+ 	const char *receivepack;
+ 	const char *uploadpack;
+ 
++	int transport_version;
++
+ 	/*
+ 	 * for curl remotes only
+ 	 */
+diff --git a/transport-helper.c b/transport-helper.c
+index 5d99a6b..ab3cd5b 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -247,6 +247,7 @@ static int disconnect_helper(struct transport *transport)
+ }
+ 
+ static const char *unsupported_options[] = {
++	TRANS_OPT_TRANSPORTVERSION,
+ 	TRANS_OPT_UPLOADPACK,
+ 	TRANS_OPT_RECEIVEPACK,
+ 	TRANS_OPT_THIN,
+diff --git a/transport.c b/transport.c
+index f080e93..651f0ac 100644
+--- a/transport.c
++++ b/transport.c
+@@ -479,6 +479,16 @@ static int set_git_option(struct git_transport_options *opts,
+ 	} else if (!strcmp(name, TRANS_OPT_PUSH_CERT)) {
+ 		opts->push_cert = !!value;
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_TRANSPORTVERSION)) {
++		if (!value)
++			opts->transport_version = DEFAULT_TRANSPORT_VERSION;
++		else {
++			char *end;
++			opts->transport_version = strtol(value, &end, 0);
++			if (*end)
++				die("transport: invalid transport version option '%s'", value);
++		}
++		return 0;
+ 	}
+ 	return 1;
+ }
+@@ -970,6 +980,8 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->connect = connect_git;
+ 		ret->disconnect = disconnect_git;
+ 		ret->smart_options = &(data->options);
++		ret->smart_options->transport_version =
++			DEFAULT_TRANSPORT_VERSION;
+ 
+ 		data->conn = NULL;
+ 		data->got_remote_heads = 0;
+@@ -988,6 +1000,9 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->smart_options->receivepack = "git-receive-pack";
+ 		if (remote->receivepack)
+ 			ret->smart_options->receivepack = remote->receivepack;
++		if (remote->transport_version)
++			ret->smart_options->transport_version =
++				remote->transport_version;
+ 	}
+ 
+ 	return ret;
+diff --git a/transport.h b/transport.h
+index 18d2cf8..6095d7a 100644
+--- a/transport.h
++++ b/transport.h
+@@ -14,6 +14,7 @@ struct git_transport_options {
+ 	unsigned update_shallow : 1;
+ 	unsigned push_cert : 1;
+ 	int depth;
++	int transport_version;
+ 	const char *uploadpack;
+ 	const char *receivepack;
+ 	struct push_cas_option *cas;
+@@ -162,6 +163,10 @@ struct transport *transport_get(struct remote *, const char *);
+ /* Send push certificates */
+ #define TRANS_OPT_PUSH_CERT "pushcert"
+ 
++/* Use a new version of the git protocol */
++#define TRANS_OPT_TRANSPORTVERSION "transportversion"
++#define DEFAULT_TRANSPORT_VERSION 1
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
+-- 
+2.4.1.345.gab207b6.dirty
