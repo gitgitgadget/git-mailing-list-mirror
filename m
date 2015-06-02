@@ -1,102 +1,110 @@
-From: Zenaan Harkness <zen@freedbms.net>
-Subject: Re: git branch <refspec>
-Date: Tue, 2 Jun 2015 20:22:31 +1000
-Message-ID: <CAOsGNSQistVzM5vqueOUku9ZOR5dTOFJEtb8X1VwRezLr692Gw@mail.gmail.com>
-References: <CAOsGNSTtWnawxmpL7SByUBZ-XUNdDd5nKNuudGQi-S3BjCHcdg@mail.gmail.com>
+From: "Gondek, Andreas" <Andreas.Gondek@dwpbank.de>
+Subject: AW: Getting the full path of a conflicting file within a custom
+ merge driver?
+Date: Tue, 2 Jun 2015 10:57:29 +0000
+Message-ID: <D8780C527EB1E642B3150E6D705B46D468837AA7@DWPWHMS531.dwpbank.local>
+References: <D8780C527EB1E642B3150E6D705B46D468837861@DWPWHMS531.dwpbank.local>
+ <xmqqr3pv74ww.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 12:23:51 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 02 12:57:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzjLC-0005SF-8x
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 12:22:38 +0200
+	id 1Yzjt4-0005cF-Uc
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 12:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbbFBKWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 06:22:34 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:34328 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753073AbbFBKWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 06:22:32 -0400
-Received: by obew15 with SMTP id w15so124595446obe.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 03:22:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=QH0MJAH3rnM7JxYXMLG0P7+fzfsIm5CmGNuqgCyVHzk=;
-        b=L9mou7QMxQiD60lf6ZgKi80SNEwsucEvPs6appLm7wSQaDgXB8dyOdoF1iC4lexuua
-         k/JFPfmHKNPqCDNO/XS1biVzFHNYgJLPBE/r2BdwZOmv0aIp785WDmVacXBHElPw0DVF
-         lKsDdC3Uy0myt0fGSfcmQ0MN2nm6SU9zSb20cmNb8yrn9q4GellnPLaTL9sRVim6EciK
-         xOd0RDXxZwruJODVWVCQXXaiB4b96OWH1PiQDCcwflyXA0S3jKz/U+TEJryQKKJ4+t5c
-         FslzjsKInNO1Hr6chZgD+TDT5H+tIOc8wpithE3LEKkRs0D/sK3DbGSw5PWyAgwD0yeX
-         56mw==
-X-Received: by 10.60.176.37 with SMTP id cf5mr22114333oec.19.1433240551905;
- Tue, 02 Jun 2015 03:22:31 -0700 (PDT)
-Received: by 10.182.121.198 with HTTP; Tue, 2 Jun 2015 03:22:31 -0700 (PDT)
-In-Reply-To: <CAOsGNSTtWnawxmpL7SByUBZ-XUNdDd5nKNuudGQi-S3BjCHcdg@mail.gmail.com>
-X-Google-Sender-Auth: jdkQLN4MN6wb5GotA-K7RJooC2I
+	id S1754850AbbFBK5f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 06:57:35 -0400
+Received: from mail2.dwpbank.de ([145.253.155.115]:27644 "EHLO
+	mail2.dwpbank.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751772AbbFBK5d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 06:57:33 -0400
+X-IronPort-AV: E=Sophos;i="5.13,539,1427752800"; 
+   d="scan'208";a="797491"
+Received: from DWPWHMS531.dwpbank.local ([169.254.2.243]) by
+ DWPFRMS530.dwpbank.local ([169.254.3.86]) with mapi id 14.03.0195.001; Tue, 2
+ Jun 2015 12:57:30 +0200
+Thread-Topic: Getting the full path of a conflicting file within a custom
+ merge driver?
+Thread-Index: AdCcgiEmcewjfbrsSCO3jW4YkOAV1wACGBAaACXhz6A=
+In-Reply-To: <xmqqr3pv74ww.fsf@gitster.dls.corp.google.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.101.236.155]
+x-c2processedorg: 25ee705c-9766-409d-8ffd-513701a730da
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270519>
 
-On 6/2/15, Zenaan Harkness <zen@freedbms.net> wrote:
-> <refspec> - git's guilty little secret. Let's milk the guilt.
->
-> git branch <refspec> ought work in a similar way to
-> git fetch <refspec>
->
-> One syntax to rule them all. Or something.
->
-> I just learned how git fetch uses refspecs and how this can just as
-> well apply to tags to create "remote tags" (refs/rtags/remote_name/*),
-> finally grokking the ridiculously simple yet powerful refspec concept
-> - it really is generic.
->
-> And now combining two remotes such as postgresql and postgresql-xc
-> (which share substantial code and parent commits), or (a bit out of
-> date now, but) the openmoko-kernel and linux mainline, becomes
-> simpler/saner when "inventing" rtags as explained here:
-> http://stackoverflow.com/questions/22108391/git-checkout-a-remote-tag
+Hi,
 
-Regarding this stackoverflow article and "rtags", what I'm now doing
-is, for postgresql mainline "origin" and postresql-xc "pgxc" remotes:
-[remote "origin"]
-  url = git://git.postgresql.org/git/postgresql.git
-  fetch = +refs/*:refs/*
-  fetch = +refs/*:refs/remotes/origin/*
-[remote "pgxc"]
-  url = https://github.com/postgres-x2/postgres-x2.git
-  fetch = +refs/*:refs/remotes/origin/*
+thank you for responding this fast. I would suggest providing this info=
+rmation as an additional parameter (like %A %O %B and %L) maybe %P. I t=
+hink this would cost about 2 lines of code und wouldn't be any performa=
+nce issue I assume. If I got it right in the source code, the informati=
+on is present in the place where the parameters for the merge driver ar=
+e prepared.
 
-so that origin is my normal --mirror, but also with origin and pgxc
-having everything (!) under refs/remotes/$name/*
+Greetings,
 
-This allows for those who want multiple related remotes in the one
-mirror to include 'interesting' refs from each remote in a way that
-does not clash, e.g. github's refs/pull/* pull requests.
+Andreas Gondek
+Applications
+________________________________
 
-This only leads to the "how to minimize typing without extra
-porcelain", and of course a symlink here can help:
-cd refs/
-ln -s remotes r
+Deutsche WertpapierService Bank AG
+ITTAS
+Derendorfer Allee 2
+40476 D=FCsseldorf
+Tel.: +49 69 5099 9503
+=46ax: +49 69 5099 85 9503
+E-Mail: Andreas.Gondek@dwpbank.de
+http://www.dwpbank.de
 
-or perhaps even better :
-ln -s remotes/* .
+Deutsche WertpapierService Bank AG | Wildunger Stra=DFe 14 | 60487 Fran=
+kfurt am Main=20
+Sitz der AG: Frankfurt am Main, HRB 56913 | USt.-ID: DE 813759005=20
+Vorstand: Thomas Klanten, Dr. Christian Tonnesen
+Aufsichtsrat: Wilfried Groos (Vors.)
 
-Using +refs/*:refs/remotes/origin/*  feels better than e.g.:
-refs/rtags/origin/*
-refs/rpull/origin/*
-refs/rtags/pgxc/*
-refs/rpull/pgxc/*
-refs/blah?/origin/*
-refs/blah?/pgxc/*
-althogh these forms might simplify porcelain (e.g. tab completion)
-which needs to work with all refs of a particular 'type'.
+-----Urspr=FCngliche Nachricht-----
+Von: Junio C Hamano [mailto:jch2355@gmail.com] Im Auftrag von Junio C H=
+amano
+Gesendet: Montag, 1. Juni 2015 18:46
+An: Gondek, Andreas
+Cc: git@vger.kernel.org
+Betreff: Re: Getting the full path of a conflicting file within a custo=
+m merge driver?
 
-Zenaan
+"Gondek, Andreas" <Andreas.Gondek@dwpbank.de> writes:
+
+> I'm wondering if there is no option to find out the full path of a=20
+> conflicting file from within a custom merge driver? If I understand=20
+> this correctly, Git only provides the name of the 3 temporary local=20
+> files and the size of the limiter. But is there any possibility to ge=
+t=20
+> the path of the file via a Git command, that I can run from within th=
+e=20
+> merge driver? Maybe as part of the repository's status?
+
+Short answer is "no", as the merge driver interface was originally desi=
+gned for a backend that can do its job with only the contents of the th=
+ree variants without any other information.  Imagine the interface to t=
+hings like "merge" from the RCS suite where it takes three variants as =
+the input---for them, the same three-tuple of original, mine and theirs=
+ contents should merge to identical result no matter where in the worki=
+ng tree the conflicts happened.
+
+Having said that, I do not think it is unreasonable to feed more inform=
+ation to external merge driver, perhaps by adding a new environment var=
+iable GIT_MERGE_CONFLICTED_PATH exported when the driver is run, or som=
+ething.
