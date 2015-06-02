@@ -1,17 +1,15 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFCv2 1/2] git-rebase -i: add command "drop" to remove a commit
-Date: Tue, 02 Jun 2015 10:14:17 -0700
-Message-ID: <xmqqk2vm3udy.fsf@gitster.dls.corp.google.com>
-References: <1433152643-4292-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<1433152643-4292-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<xmqqvbf7757q.fsf@gitster.dls.corp.google.com>
-	<563732680.250935.1433180720935.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqoakz1dke.fsf@anie.imag.fr>
-	<150689518.4344.1433229813195.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqa8wiwo33.fsf@anie.imag.fr>
+Subject: Re: [PATCH/RFCv2 2/2] git rebase -i: warn about removed commits
+Date: Tue, 02 Jun 2015 10:17:26 -0700
+Message-ID: <xmqqfv6a3u8p.fsf@gitster.dls.corp.google.com>
+References: <1433159523-6596-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1433159523-6596-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<vpq7frmy5nl.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Galan =?utf-8?Q?R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>,
 	Git List <git@vger.kernel.org>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
@@ -21,62 +19,66 @@ Cc: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Philip Oakley <philipoakley@iee.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Stephen Kelly <steveire@gmail.com>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 02 19:14:31 2015
+X-From: git-owner@vger.kernel.org Tue Jun 02 19:17:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yzplm-0000Tk-IM
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 19:14:30 +0200
+	id 1Yzpoj-0002h2-ND
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 19:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759706AbbFBROX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 13:14:23 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:36328 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759696AbbFBROU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 13:14:20 -0400
-Received: by ieclw1 with SMTP id lw1so42919375iec.3
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 10:14:19 -0700 (PDT)
+	id S1759743AbbFBRRa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 13:17:30 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:34909 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759324AbbFBRR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 13:17:28 -0400
+Received: by iesa3 with SMTP id a3so138261530ies.2
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 10:17:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=2YC0lqgVO6RHYtGjnAq+saDJuTvhXSx4Soerm362/IM=;
-        b=QSmp6Al5MaG0Oc35avMj6bPMdvYPhoIKYUUzq26NKbjJ98PaYooiFnKq3mtsJ3+D3l
-         DZoKVfbKAR9wBgdDkrOGaThSZzU/vuP8MSw2eLWY9L2oNCNvuDX9mqbp9NJw6YQpwrmu
-         YcRAL2OxBamuoOdapjVNOLuB3KTtZw70UAq+AWBjEV60/x5yLGaqacI1seltVxXAESp+
-         ieT3kLnPg/TOl0kEmdUtPC4/WA48adhtfJ4756b+CcLsVzE2NzSx9Uom1OZ37OYpiLgs
-         BqiGa2LW4n9dzdLwXaQ33js9eESPhn1wpGyEays67pz75XMXcW2+uz7lcLphuKgSFD+0
-         OZFw==
-X-Received: by 10.43.173.70 with SMTP id ob6mr940129icc.45.1433265259622;
-        Tue, 02 Jun 2015 10:14:19 -0700 (PDT)
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=0KfTZMiAE1/K3n/UhLibt5kXkuCyqCRJgtT3NVZhNp4=;
+        b=Aahx3x20TutHRniTLGAq1QEiVunsFeo64pKbVEZ4BoMAxJVoNjfJH+LEtX5rAmSkfp
+         JYpsaxW6SP70VmfB+TPYwjVedrZrfVA98ZDuHQhcfBE3XojhU0bnRNraUA/6C0Pf9Ibj
+         9CekLLfUhCCWZIN3RC05TSMnosN7BZzcv20BAzONBa53J4ROfzuM3b0/+2XEH3a7on1y
+         HfbKlxIptfRTqIk6lRtmHOZPD5pyeFawNm/lP+A52IOxQo2CnsPL1SNAdKu8/Aols42P
+         Z4icbvlaxcrDFa4/RqMPE5m5fWMhQiI+n1/aJJ1PNSojr8WCakSlmRb6eB+N4wpXqd/a
+         WXgw==
+X-Received: by 10.107.168.164 with SMTP id e36mr34203545ioj.87.1433265448017;
+        Tue, 02 Jun 2015 10:17:28 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:f9ca:66ee:8cb4:7220])
-        by mx.google.com with ESMTPSA id z195sm12885408iod.33.2015.06.02.10.14.18
+        by mx.google.com with ESMTPSA id rr5sm10348698igb.7.2015.06.02.10.17.27
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Jun 2015 10:14:18 -0700 (PDT)
-In-Reply-To: <vpqa8wiwo33.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	02 Jun 2015 09:45:20 +0200")
+        Tue, 02 Jun 2015 10:17:27 -0700 (PDT)
+In-Reply-To: <vpq7frmy5nl.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	02 Jun 2015 08:40:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270565>
 
 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Discussions on this list often lead to "Oh, BTW, shall we do XYZ also?",
-> but you shouldn't take this kind of remark as blocking (as long as XYZ
-> is not incompatible with your patch, which is the case here).
+> Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+>
+>> Check if commits were removed (i.e. a line was deleted) and print
+>> warnings or abort git rebase according to the value of the
+>> configuration variable rebase.checkLevel.
+>
+> checkLevel does not seem to be a good name, because it doesn't say
+> _what_ is checked. I don't have really good proposal in mind, but may=
+be
+>
+> rebase.todoListCheckLevel
+> rebase.missinLinesCheckLevel
 
-Yeah, thanks for clarification.  As long as what is given to 'drop'
-is checked when it matters (e.g. when the code in patch 2/2 tries
-see if some commits in the original list are no longer there in
-order to warn sees "drop foo bar" where "foo" is obviously not an
-object name in the original list, that should be checked), it is
-fine.  And I agree 1/2 is not the place to do so, even though it may
-be easier from the implementation point of view (which is why I
-mentioned the possibility in the review of that patch).
+Yeah, with s/sin/sing/, but the above makes more sense.  It may be
+that we probably do not even need "Level" there in the name.
