@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFCv2 09/16] remote.h: add get_remote_capabilities, request_capabilities
-Date: Mon,  1 Jun 2015 17:02:11 -0700
-Message-ID: <1433203338-27493-10-git-send-email-sbeller@google.com>
+Subject: [RFCv2 12/16] transport: get_refs_via_connect exchanges capabilities before refs.
+Date: Mon,  1 Jun 2015 17:02:14 -0700
+Message-ID: <1433203338-27493-13-git-send-email-sbeller@google.com>
 References: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Cc: pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
 	Stefan Beller <sbeller@google.com>
@@ -12,128 +12,144 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzZfV-0000j9-KK
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:02:58 +0200
+	id 1YzZfe-0000ju-62
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 02:03:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754503AbbFBACt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2015 20:02:49 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:35454 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754425AbbFBACo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2015 20:02:44 -0400
-Received: by igbyr2 with SMTP id yr2so74911520igb.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:44 -0700 (PDT)
+	id S1754589AbbFBADB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2015 20:03:01 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:34410 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754326AbbFBACu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2015 20:02:50 -0400
+Received: by ieczm2 with SMTP id zm2so121552785iec.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2015 17:02:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zNq0u9MYjpxipqCpN7w3mjmuJFocEUfLGrve1B4NQMc=;
-        b=BbIS+mHHgwMfzWQ+Vw3NV+s1rhihhM2N0BPAP6NjtuSi+nyHG54MOsWXr8OPFkIXc9
-         GMow5Tgq60K0R9HaBrDut9xziHrW+YUVBOcowv1F6F9N+91RFK5Kxa/FCgMeR5zg1DK9
-         plqY+jNTDuCuUPoxKQS0PKwnZDfnNlKCz+GLdCgDntpTlFv/oczJ4ZcjMPJYDXcoJnIP
-         lyHnfCH981Rpl6fxK+Vw2FZwio2riRgTiG9hRrFMzKEw1zHEwVuUt57zacmqXQJuAtNM
-         wtvWBx9RvsIG1TWO6ZlsXBGQ3Z7XbfZiGxKwYC2SvBAOxqRpSTvtluDbY7cgYYtkSREi
-         8jRA==
+        bh=Xn4MICK1cIGTAZ78CYrZVOp9SrF8PmkKTTv+46uy0rQ=;
+        b=Xzm3gjSMHwUtwF35LQvakeuWW4MzquYqQQmU1x/Qi5CLI+pdM4jX0AR3ycsIX3B0ox
+         Pd3vyhDLqwi+N6nlY3uWNkqP5P9vODl18itcwvFBc5zmqi5Xa8DmVY5bERfepCDKk6b8
+         asDDlu9o05BPTjBe+OwcYjD1NJhhgsirg4o3JOIPogTgQ3KMb1ua2oaSpUV5M4A9tudx
+         ZBfPn5Lgq/c8/wND7Ztj0C17BfS+ILOo5KNqLUWOVAYWgxVQsyOr1UZNY6odpk4Jtoae
+         nbRfzzeD1CG654gKnXb/cQEowIL/wz7emZp0Veoxzt+OsxtLvLjjrnc7/ktYosZORueG
+         Fclg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zNq0u9MYjpxipqCpN7w3mjmuJFocEUfLGrve1B4NQMc=;
-        b=CD+xqd0d0UrblJgXhmVhAxTfNmqAvwCyAEANeBl1WyVZ/D9GWg1cwUO5JJfHIjq2Q2
-         AqmelnogB6IcmOqqGhlq0phVh3Kc2EbrAAlZN0kyK8fXEWbtDFGnhIwJpBc3u90h4edH
-         gOK/u0eZueeGUDknyh4u0C57z8p5CKA/dah+/QM9Ph47rZes5S75OB9euZ17N8B+R+Rr
-         u0S5bvgc2iCvmc9vOi66HmPvJQ4x1ChPII93/3EYJjDszkhZxNQaKgKf5RToy+cxv3+T
-         SsRmd8qimWN7GUhDSGces5Wo0dmzGK3NgEb+nirASgr7F0e1EmeSWEL7wGic5Tme41tc
-         dt6g==
-X-Gm-Message-State: ALoCoQl14P6yAxgvo6OkYGXYI5gVG8GmA2mBc89ZmLK+l+R93pdrzhns/PPu3d7frrMf8GYMVBax
-X-Received: by 10.107.16.149 with SMTP id 21mr29798301ioq.53.1433203363981;
-        Mon, 01 Jun 2015 17:02:43 -0700 (PDT)
+        bh=Xn4MICK1cIGTAZ78CYrZVOp9SrF8PmkKTTv+46uy0rQ=;
+        b=iS8Cd8Mdjy13d4YXAMABIx+OQ5G2uMkRjxOcA2F6NJo3i/8C6BS9Gh02bihnyBE7yf
+         QXnCsGIPoDkaOibuSkzLdNZVn0nM193SZPpRMI7utjqJ7kFBYLfCjWxlGWVYB8aTyQo7
+         I+J7VQitwtO4ZV7lSSkRJxUdgODBBi0rVYYw5PC3Jhj1o07OV7Mauff4xAAn+a2FwWn4
+         HnHS4acjTNk8nv6kQ6IW6wQ+WD2966J1fON5V/D2U3NGQnaHRqoBNarOoToRIBh3Q/EK
+         00MO9VxlOEq9KkODuf1CHzCJ9btqKbKz7LNI7JMjHqGqvW8KI68wYRdibVIQT86HhpUV
+         MVxg==
+X-Gm-Message-State: ALoCoQkBR0Y3ANL+654TS7I6kLGBOjZFlvCNY8on9YXBr031gIJ/PDgv2YRWH2LaC48HWDOC9jD3
+X-Received: by 10.42.152.67 with SMTP id h3mr15481639icw.56.1433203368336;
+        Mon, 01 Jun 2015 17:02:48 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:3900:deed:b754:addb])
-        by mx.google.com with ESMTPSA id p8sm8906381iga.13.2015.06.01.17.02.43
+        by mx.google.com with ESMTPSA id l6sm8903982igx.10.2015.06.01.17.02.47
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Jun 2015 17:02:43 -0700 (PDT)
+        Mon, 01 Jun 2015 17:02:47 -0700 (PDT)
 X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 In-Reply-To: <1433203338-27493-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270497>
-
-Instead of calling get_remote_heads as a first command during the
-protocol exchange, we need to have fine grained control over the
-capability negotiation in version 2 of the protocol.
-
-Introduce get_remote_capabilities, which will just listen to
-capabilities of the remote and request_capabilities which will
-tell the selection of capabilities to the remote.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270498>
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- connect.c | 37 +++++++++++++++++++++++++++++++++++++
- remote.h  |  3 +++
- 2 files changed, 40 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index a2c777e..4ebe1dc 100644
---- a/connect.c
-+++ b/connect.c
-@@ -105,6 +105,43 @@ static void annotate_refs_with_symref_info(struct ref *ref)
- 	string_list_clear(&symref, 0);
- }
+Notes:
+    A minor issue I am unsure about here is the
+    line
+    	&& transport->smart_options->transport_version)
+    which could be prevented if we always set the transport_version
+    in make_remote to be the default remote version.
+    
+    The advantage of having it always set in make_remote would
+    be a cleaner mind model (the version set is always accurate)
+    as opposed to now (version may be 0, then the default
+    applies as we don't care enough to set a version)
+    
+    However I think the code may be more ugly if we were to
+    always set the version in make_remote as then we would need
+    to move the DEFAULT_TRANSPORT_VERSION define into remote.h
+    or somewhere else (transport.h is not included in remote.c,
+    I guess that's on purpose?)
+
+ transport.c | 28 ++++++++++++++++++++++++----
+ transport.h |  6 ++++++
+ 2 files changed, 30 insertions(+), 4 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index b49fc60..ba40677 100644
+--- a/transport.c
++++ b/transport.c
+@@ -523,14 +523,33 @@ static int connect_setup(struct transport *transport, int for_push, int verbose)
  
-+void get_remote_capabilities(int in, char *src_buf, size_t src_len)
-+{
-+	string_list_clear(&server_capabilities, 1);
-+	for (;;) {
-+		int len;
-+		char *line = packet_buffer;
-+
-+		len = packet_read(in, &src_buf, &src_len,
-+				  packet_buffer, sizeof(packet_buffer),
-+				  PACKET_READ_GENTLE_ON_EOF |
-+				  PACKET_READ_CHOMP_NEWLINE);
-+		if (len < 0)
-+			die_initial_contact(0);
-+
-+		if (!len)
-+			break;
-+
-+		string_list_append(&server_capabilities, line);
+ static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
+ {
++	struct transport_options options;
+ 	struct git_transport_data *data = transport->data;
+ 	struct ref *refs;
++	int version = DEFAULT_TRANSPORT_VERSION;
+ 
++	if (transport->smart_options
++	    && transport->smart_options->transport_version)
++		version = transport->smart_options->transport_version;
+ 	connect_setup(transport, for_push, 0);
+-	get_remote_heads(data->fd[0], NULL, 0, &refs,
+-			 for_push ? REF_NORMAL : 0,
+-			 &data->extra_have,
+-			 &data->shallow);
++	switch (version) {
++	case 2: /* first talk about capabilities, then get the heads */
++		get_remote_capabilities(data->fd[0], NULL, 0);
++		preselect_capabilities(&options);
++		if (transport->select_capabilities)
++			transport->select_capabilities(&options);
++		request_capabilities(data->fd[1], &options);
++		/* fall through */
++	case 1:
++		get_remote_heads(data->fd[0], NULL, 0, &refs,
++				 for_push ? REF_NORMAL : 0,
++				 &data->extra_have,
++				 &data->shallow);
++		break;
++	default:
++		die("BUG: Transport version %d not supported", version);
++		break;
 +	}
-+}
-+
-+int request_capabilities(int out, struct transport_options *options)
-+{
-+	if (options->multi_ack == 2)    packet_write(out, "multi_ack_detailed");
-+	if (options->multi_ack == 1)    packet_write(out, "multi_ack");
-+	if (options->no_done)           packet_write(out, "no-done");
-+	if (options->use_sideband == 2) packet_write(out, "side-band-64k");
-+	if (options->use_sideband == 1) packet_write(out, "side-band");
-+	if (options->use_thin_pack)     packet_write(out, "thin-pack");
-+	if (options->no_progress)       packet_write(out, "no-progress");
-+	if (options->include_tag)       packet_write(out, "include-tag");
-+	if (options->prefer_ofs_delta)  packet_write(out, "ofs-delta");
-+	if (options->agent_supported)   packet_write(out, "agent=%s",
-+						     git_user_agent_sanitized());
-+	packet_flush(out);
-+}
-+
- /*
-  * Read all the refs from the other end
-  */
-diff --git a/remote.h b/remote.h
-index 3767bed..61619c5 100644
---- a/remote.h
-+++ b/remote.h
-@@ -165,6 +165,9 @@ extern void get_remote_heads(int in, char *src_buf, size_t src_len,
- 			     struct sha1_array *extra_have,
- 			     struct sha1_array *shallow);
+ 	data->got_remote_heads = 1;
  
-+void get_remote_capabilities(int in, char *src_buf, size_t src_len);
-+int request_capabilities(int out, struct transport_options*);
-+
- int resolve_remote_symref(struct ref *ref, struct ref *list);
- int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1);
+ 	return refs;
+@@ -987,6 +1006,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
+ 		ret->set_option = NULL;
++		ret->select_capabilities = NULL;
+ 		ret->get_refs_list = get_refs_via_connect;
+ 		ret->fetch = fetch_refs_via_pack;
+ 		ret->push_refs = git_transport_push;
+diff --git a/transport.h b/transport.h
+index 6095d7a..3e63efc 100644
+--- a/transport.h
++++ b/transport.h
+@@ -74,6 +74,12 @@ struct transport {
+ 	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
  
+ 	/**
++	 * A callback to select protocol options. Must be set if
++	 * the caller wants to change transport options.
++	 */
++	void (*select_capabilities)(struct transport_options *);
++
++	/**
+ 	 * Push the objects and refs. Send the necessary objects, and
+ 	 * then, for any refs where peer_ref is set and
+ 	 * peer_ref->new_sha1 is different from old_sha1, tell the
 -- 
 2.4.1.345.gab207b6.dirty
