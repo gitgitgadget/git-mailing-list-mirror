@@ -1,231 +1,71 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v4 4/4] do not die on error of parsing fetchrecursesubmodules
- option
-Date: Tue, 2 Jun 2015 16:28:07 +0200
-Message-ID: <20150602142807.GE7713@book.hvoigt.net>
-References: <20150602142436.GA7713@book.hvoigt.net>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv3 1/2] git-rebase -i: add command "drop" to remove a
+ commit
+Date: Tue, 2 Jun 2015 16:32:27 +0200 (CEST)
+Message-ID: <49957049.34247.1433255547565.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1433252180-25591-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <vpqeglujisv.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 16:28:11 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 02 16:32:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YznAc-0003on-Dt
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 16:27:58 +0200
+	id 1YznF4-00070p-Nf
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 16:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759226AbbFBO1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 10:27:54 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.39]:46659 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759122AbbFBO1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 10:27:53 -0400
-Received: from [31.17.191.210] (helo=book.hvoigt.net)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1YznAV-0006IH-6W; Tue, 02 Jun 2015 16:27:51 +0200
-Content-Disposition: inline
-In-Reply-To: <20150602142436.GA7713@book.hvoigt.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S932252AbbFBOc3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2015 10:32:29 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:33168 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759265AbbFBOc1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Jun 2015 10:32:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 1B8553627;
+	Tue,  2 Jun 2015 16:32:25 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7QO9KVdQ7arE; Tue,  2 Jun 2015 16:32:25 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 025AC3623;
+	Tue,  2 Jun 2015 16:32:25 +0200 (CEST)
+In-Reply-To: <vpqeglujisv.fsf@anie.imag.fr>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git-rebase -i: add command "drop" to remove a commit
+Thread-Index: dr9yr2+WgobL04GzV3sNMtjeMswgSA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270550>
 
-We should not die when reading the submodule config cache since the user
-might not be able to get out of that situation when the configuration is
-part of the history.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> : writes
+> > +test_expect_success 'drop' '
+>=20
+> Please, be more descriptive in the first argument of
+> test_expect_success. It's usually a good thing to say not only what t=
+he
+> test stresses but also what the expected behavior is.
+>=20
+> test_expect_success 'drop actually drops the lines' '
 
-We should handle this condition later when the value is about to be
-used.
+=46or this one I've based myself on the first argument of some other
+tests that tests commands for git rebase -i :
+> t3404-rebase-interactive.sh:240
+> test_expect_success 'squash' '
+> t3404-rebase-interactive.sh:679
+> test_expect_success 'reword' '
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- builtin/fetch.c             |  1 +
- submodule-config.c          | 29 ++++++++++++++++++++++++++++-
- submodule-config.h          |  1 +
- submodule.c                 | 15 ---------------
- submodule.h                 |  2 +-
- t/t7411-submodule-config.sh | 35 +++++++++++++++++++++++++++++++++++
- 6 files changed, 66 insertions(+), 17 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7910419..faae548 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -11,6 +11,7 @@
- #include "run-command.h"
- #include "parse-options.h"
- #include "sigchain.h"
-+#include "submodule-config.h"
- #include "submodule.h"
- #include "connected.h"
- #include "argv-array.h"
-diff --git a/submodule-config.c b/submodule-config.c
-index fc7bf40..199692b 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -204,6 +204,30 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	return submodule;
- }
- 
-+static int parse_fetch_recurse(const char *opt, const char *arg,
-+			       int die_on_error)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (!strcmp(arg, "on-demand"))
-+			return RECURSE_SUBMODULES_ON_DEMAND;
-+
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		else
-+			return RECURSE_SUBMODULES_ERROR;
-+	}
-+}
-+
-+int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
-+{
-+	return parse_fetch_recurse(opt, arg, 1);
-+}
-+
- static void warn_multiple_config(const unsigned char *commit_sha1,
- 				 const char *name, const char *option)
- {
-@@ -255,6 +279,8 @@ static int parse_config(const char *var, const char *value, void *data)
- 		submodule->path = strbuf_detach(&path, NULL);
- 		cache_put_path(me->cache, submodule);
- 	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
-+		/* when parsing worktree configurations we can die early */
-+		int die_on_error = is_null_sha1(me->gitmodules_sha1);
- 		if (!me->overwrite &&
- 		    submodule->fetch_recurse != RECURSE_SUBMODULES_NONE) {
- 			warn_multiple_config(me->commit_sha1, submodule->name,
-@@ -262,7 +288,8 @@ static int parse_config(const char *var, const char *value, void *data)
- 			goto release_return;
- 		}
- 
--		submodule->fetch_recurse = parse_fetch_recurse_submodules_arg(var, value);
-+		submodule->fetch_recurse = parse_fetch_recurse(var, value,
-+								die_on_error);
- 	} else if (!strcmp(item.buf, "ignore")) {
- 		struct strbuf ignore = STRBUF_INIT;
- 		if (!me->overwrite && submodule->ignore != NULL) {
-diff --git a/submodule-config.h b/submodule-config.h
-index 5fe44ce..9061e4e 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -18,6 +18,7 @@ struct submodule {
- 	unsigned char gitmodules_sha1[20];
- };
- 
-+int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_submodule_config_option(const char *var, const char *value);
- const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name);
-diff --git a/submodule.c b/submodule.c
-index 97355eb..4822559 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -288,21 +288,6 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
--{
--	switch (git_config_maybe_bool(opt, arg)) {
--	case 1:
--		return RECURSE_SUBMODULES_ON;
--	case 0:
--		return RECURSE_SUBMODULES_OFF;
--	default:
--		if (!strcmp(arg, "on-demand"))
--			return RECURSE_SUBMODULES_ON_DEMAND;
--		/* TODO: remove the die for history parsing here */
--		die("bad %s argument: %s", opt, arg);
--	}
--}
--
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/submodule.h b/submodule.h
-index 547219d..5507c3d 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -5,6 +5,7 @@ struct diff_options;
- struct argv_array;
- 
- enum {
-+	RECURSE_SUBMODULES_ERROR = -3,
- 	RECURSE_SUBMODULES_NONE = -2,
- 	RECURSE_SUBMODULES_ON_DEMAND = -1,
- 	RECURSE_SUBMODULES_OFF = 0,
-@@ -21,7 +22,6 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 7229978..fc97c33 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -115,4 +115,39 @@ test_expect_success 'reading of local configuration' '
- 	)
- '
- 
-+cat >super/expect_fetchrecurse_die.err <<EOF
-+fatal: bad submodule.submodule.fetchrecursesubmodules argument: blabla
-+EOF
-+
-+test_expect_success 'local error in fetchrecursesubmodule dies early' '
-+	(cd super &&
-+		git config submodule.submodule.fetchrecursesubmodules blabla &&
-+		test_must_fail test-submodule-config \
-+			"" b \
-+			"" submodule \
-+				>actual.out 2>actual.err &&
-+		touch expect_fetchrecurse_die.out &&
-+		test_cmp expect_fetchrecurse_die.out actual.out  &&
-+		test_cmp expect_fetchrecurse_die.err actual.err  &&
-+		git config --unset submodule.submodule.fetchrecursesubmodules
-+	)
-+'
-+
-+test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
-+	(cd super &&
-+		git config -f .gitmodules \
-+			submodule.submodule.fetchrecursesubmodules blabla &&
-+		git add .gitmodules &&
-+		git config --unset -f .gitmodules \
-+			submodule.submodule.fetchrecursesubmodules &&
-+		git commit -m "add error in fetchrecursesubmodules" &&
-+		test-submodule-config \
-+			HEAD b \
-+			HEAD submodule \
-+				>actual &&
-+		test_cmp expect_error actual  &&
-+		git reset --hard HEAD^
-+	)
-+'
-+
- test_done
--- 
-2.4.2.391.g2979c89
+R=C3=A9mi
