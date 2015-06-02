@@ -1,68 +1,66 @@
-From: Mattias =?utf-8?b?VmFubmVyZ8OlcmQ=?= 
-	<mattias.vannergard@gmail.com>
-Subject: Re: FW: Query on git submodules
-Date: Tue, 2 Jun 2015 11:27:31 +0000 (UTC)
-Message-ID: <loom.20150602T132450-920@post.gmane.org>
-References: <4C328B7D13677A4EAF715D0755A6D7EE25C56C89@irsmsx110.ger.corp.intel.com> <4C328B7D13677A4EAF715D0755A6D7EE25C589BF@irsmsx110.ger.corp.intel.com> <20150526170125.GC31115@book.hvoigt.net> <4C328B7D13677A4EAF715D0755A6D7EE25C5AD9E@irsmsx110.ger.corp.intel.com> <loom.20150602T113612-540@post.gmane.org> <20150602111720.GB7442@book.hvoigt.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFCv2 13/16] fetch-pack: use the configured transport protocol
+Date: Tue, 2 Jun 2015 14:32:38 +0300
+Message-ID: <20150602113238.GA15140@LK-Perkele-VII>
+References: <1433203338-27493-1-git-send-email-sbeller@google.com>
+ <1433203338-27493-14-git-send-email-sbeller@google.com>
+ <CACsJy8AadHof8bxeD3jfZ-MKSBLXGdw23SeJLgp7sCy+N7n_GA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 13:29:49 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 02 13:41:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YzkO2-0000Zy-Je
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 13:29:38 +0200
+	id 1YzkZC-0000eR-QV
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jun 2015 13:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751891AbbFBL3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 07:29:35 -0400
-Received: from plane.gmane.org ([80.91.229.3]:52002 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753091AbbFBL3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 07:29:33 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YzkNk-0000Nq-U0
-	for git@vger.kernel.org; Tue, 02 Jun 2015 13:29:21 +0200
-Received: from 194.103.240.26 ([194.103.240.26])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 13:29:20 +0200
-Received: from mattias.vannergard by 194.103.240.26 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jun 2015 13:29:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.103.240.26 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36)
+	id S1754127AbbFBLlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2015 07:41:07 -0400
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:46573 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753216AbbFBLlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2015 07:41:05 -0400
+X-Greylist: delayed 504 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jun 2015 07:41:05 EDT
+Received: from LK-Perkele-VII (a91-155-194-207.elisa-laajakaista.fi [91.155.194.207])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 897BF1A26F5;
+	Tue,  2 Jun 2015 14:32:38 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AadHof8bxeD3jfZ-MKSBLXGdw23SeJLgp7sCy+N7n_GA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270526>
 
-Heiko Voigt <hvoigt <at> hvoigt.net> writes:
-
+On Tue, Jun 02, 2015 at 05:02:45PM +0700, Duy Nguyen wrote:
+> On Tue, Jun 2, 2015 at 7:02 AM, Stefan Beller <sbeller@google.com> wrote:
+> >  builtin/fetch-pack.c |  22 ++++++++++-
+> >  fetch-pack.c         | 109 +++++++++++++++++++++++++++------------------------
+> >  fetch-pack.h         |   1 +
+> >  3 files changed, 80 insertions(+), 52 deletions(-)
 > 
-> What exactly is the feature of using a tag instead of a commit id like 
-it
-> is currently the default? A tag should be nailed to a commit anyway or
-> does it change in your situation? In that case I would say it is a
-> branch.
-> 
-> Cheers Heiko
-> 
+> And the companion changes in transport-helper.c should be in this
+> patch as well to support smart http. I don't think there is any
+> problem with how you store the "version" (or "transport_version", you
+> should probably stick to one name) though.
+
+Looking at transport-helper.c, process_connect() looks to need patching,
+it handles smart transport establishment via remote helpers.
+
+Looking at the routine it calls, both the name and exec look to need
+patching.
+
+I think that if process_connect() succeeds, then connect_setup() will
+hit the "if (data->conn) return 0;" case and exit early.
+
+transport-helper.c doesn't look to have anything smart-http specific.
 
 
-Essentially, it is a commit, but an annotated tag is easier to read, 
-than the SHA-1.
-
-And, I don't want gerrit to track a tag, but I want gerrit to track a 
-branch.
-
-BR
-/Mattias
+-Ilari
