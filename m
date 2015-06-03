@@ -1,77 +1,64 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: Stash Feature
-Date: Wed, 03 Jun 2015 11:53:21 -0700
-Message-ID: <86lhg0vd26.fsf@red.stonehenge.com>
-References: <CAGmnFohE3ihA8T8srk1BpXg5z80tnjyUhdjFieXGYm=T0gkMUA@mail.gmail.com>
-	<20150603185358.a30d606cc0c475cb17a048c7@domain007.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Suggestion: make git checkout safer
+Date: Wed, 3 Jun 2015 15:06:16 -0400
+Message-ID: <20150603190616.GA28488@peff.net>
+References: <loom.20150603T104534-909@post.gmane.org>
+ <20150603090654.GD32000@peff.net>
+ <loom.20150603T110826-777@post.gmane.org>
+ <20150603093514.GF32000@peff.net>
+ <xmqqlhg0y9xj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Fabrizio Mancin <fabman08@gmail.com>, git@vger.kernel.org
-To: Konstantin Khomoutov <kostix+git@007spb.ru>
-X-From: git-owner@vger.kernel.org Wed Jun 03 21:01:41 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Ed Avis <eda@waniasset.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 21:06:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0Dui-0004an-PG
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 21:01:21 +0200
+	id 1Z0Dzh-0008I0-1M
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 21:06:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755663AbbFCTBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 15:01:16 -0400
-Received: from 001.lax.mailroute.net ([199.89.1.4]:50962 "EHLO
-	out-001.lax.mailroute.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932146AbbFCTBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 15:01:15 -0400
-X-Greylist: delayed 470 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2015 15:01:15 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by out-001.lax.mailroute.net (Postfix) with ESMTP id 3m1zsJ5fpNzhYC0;
-	Wed,  3 Jun 2015 18:53:24 +0000 (UTC)
-X-Virus-Scanned: by MailRoute
-Received: from out-001.lax.mailroute.net ([199.89.1.4])
-	by localhost (001.lax.mailroute.net [127.0.0.1]) (mroute_mailscanner, port 10026)
-	with LMTP id 9BmY0htwqyDI; Wed,  3 Jun 2015 18:53:23 +0000 (UTC)
-Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
-	by out-001.lax.mailroute.net (Postfix) with ESMTP id 3m1zsH5nRrzhYBw;
-	Wed,  3 Jun 2015 18:53:23 +0000 (UTC)
-Received: by red.stonehenge.com (Postfix, from userid 1001)
-	id 5718D1AAE; Wed,  3 Jun 2015 11:53:21 -0700 (PDT)
-x-mayan-date: Long count = 13.0.2.8.14; tzolkin = 1 Ix; haab = 2 Zotz
-In-Reply-To: <20150603185358.a30d606cc0c475cb17a048c7@domain007.com>
-	(Konstantin Khomoutov's message of "Wed, 3 Jun 2015 18:53:58 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (berkeley-unix)
+	id S1755866AbbFCTGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 15:06:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40681 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758602AbbFCTGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 15:06:19 -0400
+Received: (qmail 11910 invoked by uid 102); 3 Jun 2015 19:06:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 14:06:19 -0500
+Received: (qmail 23943 invoked by uid 107); 3 Jun 2015 19:06:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 15:06:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jun 2015 15:06:16 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqlhg0y9xj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270724>
 
->>>>> "Konstantin" == Konstantin Khomoutov <kostix+git@007spb.ru> writes:
+On Wed, Jun 03, 2015 at 10:32:40AM -0700, Junio C Hamano wrote:
 
-Konstantin> On Wed, 3 Jun 2015 17:22:57 +0200
-Konstantin> Fabrizio Mancin <fabman08@gmail.com> wrote:
+> "git checkout $paths" (and you can give "." for $paths to mean
+> "everything") is akin to "cp -R $elsewhere/$path ." to restore the
+> working tree copies from somewhere else.
+> 
+> "Ouch, 'git checkout .'  overwrote what was in my working tree" is
+> exactly the same kind of confusion as "I ran 'cp -r ../saved .' and
+> it overwrote everything".  As you said in your initial response,
+> that is what the command is meant for.
+> 
+> What does that similar command outside world, "cp", have for "more
+> safety"?  'cp -i' asks if the user wants to overwrite a file for
+> each path; perhaps a behaviour similar to that was the original
+> poster wanted to see?
 
->> I've a little request for you.
->> What about saving date-time on git stash save command and show it on
->> git stash show stash@{xxx}?
->> I think it is a useful poperty to save.
->> 
->> What do you think about it?
+Yeah, I'd say "cp -i" is the closest thing. I don't have a problem with
+adding that, but I'd really hate for it to be the default (just as I
+find distros which "alias rm='rm -i" annoying).
 
-Konstantin> This information is already there as a stash entry is
-Konstantin> internally represented as a commit (with one or more
-Konstantin> parents), and being a commit, it possess all the standard
-Konstantin> attributes of a commit, including the creation timestamp.
-
-git stash list can take a --format as well.  Here's a couple of my
-aliases:
-
-  sl = stash list --pretty='%gd: %h [%ar] %s'
-  stashed = stash list --pretty='%gd: %Cred%h%Creset %Cgreen[%ar]%Creset %s'
-
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-Still trying to think of something clever for the fourth line of this .sig
+-Peff
