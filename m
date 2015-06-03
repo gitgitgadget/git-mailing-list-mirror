@@ -1,98 +1,296 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: Suggestion: make git checkout safer
-Date: Wed, 03 Jun 2015 21:26:49 +0200
-Message-ID: <556F54F9.2050202@web.de>
-References: <loom.20150603T104534-909@post.gmane.org> <20150603090654.GD32000@peff.net> <loom.20150603T110826-777@post.gmane.org> <20150603093514.GF32000@peff.net> <loom.20150603T114527-151@post.gmane.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v4 1/4] implement submodule config cache for lookup of
+ submodule names
+Date: Wed, 3 Jun 2015 21:31:26 +0200
+Message-ID: <20150603193126.GA94875@book.hvoigt.net>
+References: <20150602142436.GA7713@book.hvoigt.net>
+ <20150602142538.GB7713@book.hvoigt.net>
+ <xmqqbngx3muj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Ed Avis <eda@waniasset.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 03 21:28:06 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 21:32:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0EJb-0006ad-LM
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 21:27:04 +0200
+	id 1Z0ENk-00018x-Qw
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 21:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754211AbbFCT1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 15:27:00 -0400
-Received: from mout.web.de ([212.227.17.11]:62759 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754097AbbFCT06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 15:26:58 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0M8Qtq-1ZLjP32dgQ-00vwHF; Wed, 03 Jun 2015 21:26:55
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <loom.20150603T114527-151@post.gmane.org>
-X-Provags-ID: V03:K0:R1ZZlxrGUr/44vAv/6tTdc/+CbrioBvn6iNqv7thADMnNI7EK+9
- c8o8mzgjAEgB6szcas+6Fvx1hgbxQUTOmCXCH2kHuPemz4xN0V+yJ/6zEaYO+92uK7Cm2t0
- yyAy7Uhy22+zd18KBDK8/ykNG1+uh3ZCy1t4oIlsQC9I0NGCd5DBJUGTrBTbTyiDAJPKP1q
- ay5jSwqBJMQZH3wCUMayw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1756418AbbFCTbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 15:31:17 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.25]:46150 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753AbbFCTbP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 15:31:15 -0400
+Received: from [188.108.236.160] (helo=book.hvoigt.net)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Z0ENa-0004aG-QL; Wed, 03 Jun 2015 21:31:11 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqqbngx3muj.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270729>
 
-On 2015-06-03 11.55, Ed Avis wrote:
-> Jeff King <peff <at> peff.net> writes:
+On Tue, Jun 02, 2015 at 12:57:08PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
 > 
->> I would say the more "usual" way to use checkout like this
->> is to give specific paths. I.e., run "git status", say "oh, I need to
->> restore the contents of 'foo', but not 'bar'", and run "git checkout
->> foo". That works regardless of the type of change to "foo" and "bar".
+> > This submodule configuration cache allows us to lazily read .gitmodules
+> > configurations by commit into a runtime cache which can then be used to
+> > easily lookup values from it. Currently only the values for path or name
+> > are stored but it can be extended for any value needed.
+> >
+> > It is expected that .gitmodules files do not change often between
+> > commits. Thats why we lookup the .gitmodules sha1 from a commit and then
+> > either lookup an already parsed configuration or parse and cache an
+> > unknown one for each sha1. The cache is lazily build on demand for each
+> > requested commit.
+> >
+> > This cache can be used for all purposes which need knowledge about
+> > submodule configurations. Example use cases are:
+> >
+> >  * Recursive submodule checkout needs lookup a submodule name from its
+> >    path when a submodule first appears. This needs be done before this
+> >    configuration exists in the worktree.
+> >
+> >  * The implementation of submodule support for 'git archive' needs to
+> >    lookup the submodule name to generate the archive when given a
+> >    revision that is not checked out.
+> >
+> >  * 'git fetch' when given the --recurse-submodules=on-demand option (or
+> >    configuration) needs to lookup submodule names by path from the
+> >    database rather than reading from the worktree. For new submodule it
+> >    needs to lookup the name from its path to allow cloning new
+> >    submodules into the .git folder so they can be checked out without
+> >    any network interaction when the user does a checkout of that
+> >    revision.
 > 
-> That seems fine - a specific file is named and you clearly want to alter
-> the contents of that file.  By analogy, 'rm foo' will silently delete it,
-> but if you specify a directory to delete recursively you need the -r flag.
-> OK, it's not a perfect analogy because the purpose of rm is to delete data
-> and nothing else ;-).
+> What is unclear to me after reading the above twice is what this
+> thing is meant to achieve.  Is it efficiency by doing lazy lookups
+> and caching to avoid asking the same thing more than once from
+> either the filesystem or read_sha1_file()?  Is it expected that
+> reading through this "cache" will be the _only_ way callers would
+> interact with the .gitmodules data, or is it an opt-in feature that
+> some callers that do not see the benefit (why they may want to
+> ignore is totally unclear, because what the "cache" system wants to
+> achieve is) can safely ignore and bypass?
+
+Maybe I should add a paragraph like this on top:
+
+  In a superproject some commands need to interact with submodules. They
+  need to query values from the .gitmodules file either from the
+  worktree of from certain revisions. At the moment this is quite hard
+  since a caller would need to read the .gitmodules file from the
+  history and then parse the values. We want to provide an API for this
+  so we have one place to get values from .gitmodules from any revision
+  (including the worktree).
+
+So yes it will be the only way callers would read .gitmodules data.
+Since you abstractly wrote "interact" I realize that I have not thought
+about writing values.
+
+> Because the above talks about looking up ".gitmodules from a
+> commit", I am guessing that the "commit" used as one of the lookup
+> keys throughout the system is a commit in the superproject, not from
+> submodules, but you may want to state that more explicitly.
+
+Yes. Well it is a commit in the current project which should be the
+superproject to other submodules. Assuming we have the additional
+paragraph above. Does that make it more clear?
+
+> What, if anything, should be done for .gitmodules that are not yet
+> committed?  Are there cases that the callers that usually interact
+> with .gitmodules via this "cache" system need to use .gitmodules
+> immediately after adding a new submodule but before committing that
+> change to the superproject?  Do they code something like this?
 > 
-> If my personal experience is anything to go by, newcomers may fall into the
-> habit of running 'git checkout .' to restore missing files.  In the old days
-> I would often delete a file and then run 'cvs update' or 'svn update' to
-> restore it.  That would fetch a fresh copy from the repository, and while
-> it might do some kind of diff/patch operation on modified files, it would
-> not simply throw away local changes.
+> 	if (cached)
+>         	read .gitmodules from the index and fabricate
+> 		struct submodule;
+> 	else if (worktree)
+>         	read .gitmodules from the working tree and fabricate
+> 		struct submodule;
+> 	else
+> 		call submodule_from_name("HEAD", ...) and receive
+>                 struct submodule;
 > 
-> 'git checkout .' seems like the analogous command, but it has much sharper
-> edges.  I still think it should be safer by default, but if you decide
-> against that then perhaps you need to create some way to restore missing
-> files and not overwrite others.  'git checkout --no-overwrite'?  Then it
-> could even be added to .gitconfig as the default for those who like it.
+> 	use the struct submodule to learn from the module;
 > 
-> I have to say that as a newcomer to git I do not like the idea of creating
-> a special undo log for git.  It would just be yet another concept to learn
-> and another thing to add to the list of 'where is git hiding my data this
-> time?'.  And the time when it would be useful - after some bungled operation
-> that lost data - is just the time when the user is already confused and
-> adding another semi-hidden stash of objects to the mix would befuddle them
-> further.  If there is to be a backup made of local changes that get lost,
-> and I agree it is a good idea, then it should be something stupid and
-> completely obvious, such as saving the old file as 'foo.before_checkout.1'.
+> Yes, I am wondering if submodule_from_name() should be extended to
+> allow the former two cases, so that the caller can make a single
+> call above and then use resulting "struct submodule" throughout its
+> code after doing so.
+
+Reading from the worktree is supported by passing in null_sha1 (as
+documented). That said it may also contain values from the local
+configuration (overlaid in the typical priority).
+
+The index case is the only one that is missing. I am not sure whether we
+will need that. The use cases I have described above do not require this
+(AFAICS). But you are right maybe it makes sense to keep this open so we
+can at least allow it. Since we already use the NULL pointer and the
+null_sha1 as special values we could either add another function pair
+and a separate internal cache for them or define some special sha1 value
+that is very unlikely to collide (e.g. an empty commit sha1 at epoch
+with some special author).
+
+Either way I think there is nothing blocking us from extending it but I
+would not do it now without any users.
+
+The current use cases are all about interrogating an existing history
+and the worktree. I currently see no need to interrogate .gitmodules
+directly after adding a submodule in the same process. We also should be
+able to add it later in case needed.
+
+> And I also am hoping that the answer to my
+> questions above to be "This is not just an opt-in 'cache' API, but
+> we want to make it the unified API for C code to learn about what is
+> in .gitmodule".
+
+Yes as stated above I am planning to make this the unified API for C
+code. If you look at the next two commits you see that I am already
+replacing the existing lookups from the worktree to use this cache.
+With this series all places that read .gitmodules values use this cache.
+Anything else would be a bug in my code :)
+
+> > diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+> > new file mode 100644
+> > index 0000000..2ff4907
+> > --- /dev/null
+> > +++ b/Documentation/technical/api-submodule-config.txt
+> > @@ -0,0 +1,46 @@
+> > +submodule config cache API
+> > +==========================
+> > +
+> > +The submodule config cache API allows to read submodule
+> > +configurations/information from specified revisions. Internally
+> > +information is lazily read into a cache that is used to avoid
+> > +unnecessary parsing of the same .gitmodule files. Lookups can be done by
+> > +submodule path or name.
+> > +
+> > +Usage
+> > +-----
+> > +
+> > +The caller can look up information about submodules by using the
+> > +`submodule_from_path()` or `submodule_from_name()` functions. They return
+> > +a `struct submodule` which contains the values. The API automatically
+> > +initializes and allocates the needed infrastructure on-demand.
+> > +
+> > +If the internal cache might grow too big or when the caller is done with
+> > +the API, all internally cached values can be freed with submodule_free().
+> > +
+> > +Data Structures
+> > +---------------
+> > +
+> > +`struct submodule`::
+> > +
+> > +	This structure is used to return the information about one
+> > +	submodule for a certain revision. It is returned by the lookup
+> > +	functions.
 > 
-This is what my Git says:
+> Hopefully this will not stay an opaque structure as we read later
+> patches ;-).
 
-git status
-On branch master
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
+Ok will add some documentation for the members here :)
 
-        modified:   A
-        deleted:    B
+> > +Functions
+> > +---------
+> > +
+> > +`void submodule_free()`::
+> > +
+> > +	Use these to free the internally cached values.
+> 
+> "These" meaning "this single function", or are there variants of it?
 
-(So it should be somewhat self-documenting)
+I think I had multiple free routines at some point. This seems like a
+leftover. Will change to "this".
 
+> > diff --git a/submodule-config.c b/submodule-config.c
+> > new file mode 100644
+> > index 0000000..97f4a04
+> > --- /dev/null
+> > +++ b/submodule-config.c
+> > @@ -0,0 +1,445 @@
+> > +#include "cache.h"
+> > +#include "submodule-config.h"
+> > +#include "submodule.h"
+> > +#include "strbuf.h"
+> > +
+> > +/*
+> > + * submodule cache lookup structure
+> > + * There is one shared set of 'struct submodule' entries which can be
+> > + * looked up by their sha1 blob id of the .gitmodule file and either
+> > + * using path or name as key.
+> > + * for_path stores submodule entries with path as key
+> > + * for_name stores submodule entries with name as key
+> > + */
+> > +struct submodule_cache {
+> > +	struct hashmap for_path;
+> > +	struct hashmap for_name;
+> > +};
+> > +
+> > +/*
+> > + * thin wrapper struct needed to insert 'struct submodule' entries to
+> > + * the hashmap
+> > + */
+> > +struct submodule_entry {
+> > +	struct hashmap_entry ent;
+> > +	struct submodule *config;
+> > +};
+> 
+> The above, and the singleton-ness of the "cache", implies that we
+> can have only one "struct submodule" for a given path (or a name).
+> Does that mean the subsystem implicitly is tied to a single commit
+> at the superproject level?
 
-I try to avoid things like "git reset --hard", and "git checkout .",
-and often use "git stash" instead.
+No the keys in the hashmap are a combination of the sha1 blob id of the
+.gitmodules file and its name or path respectively. I should make that
+more clear here.
 
-It may be that there is a chance to improve the documentation.
+> What happens when I call submodule_from_path() for a single
+> submodule at one commit in the superproject, and then ask about that
+> same submodule for another commit in the superproject, which may
+> have a different version of .gitmodules, by calling the same
+> function again?
+> 
+> 	Side note: I think I know the answer to these questions,
+> 	after reading the hash function.  for_path does not store
+> 	submodule entries with path as key.  It uses the commit and
+> 	the path as a combined key, so both HEAD:.gitmodules and
+> 	HEAD^:.gitmodules can be cached and looked up separatedly if
+> 	their contents are different.  The comment and field names
+> 	of "struct submodule_cache" may want to be improved.
 
-Just for curiosity:
-From where did you got the information to run "git checkout ." ?
+That is correct.
+
+> When do we evict the cache?  I am wondering what would happen when
+> you do "git log --recursive" at the superproject level, which may
+> grow the cache in an unbounded way without some eviction policy.
+
+I left this as an exercise for the caller to figure out ;-) I think we
+have to leave it to the caller how much of the cache he wants to use.
+The only thing I can currently think of, that might help, is that we
+could provide the caller with the amount of .gitmodules files read so he
+has some simple measure to determine when he wants to call
+submodule_free().
+
+All use-cases I currently have in mind are expected to use only a few
+.gitmodules. But only in the typical situation. There might be extreme
+cases were this is not true anymore. I am not sure how theoretical this
+is and thus not sure whether we should take countermeasures now.
+
+What would you expect "git log --recursive" to do?
+
+Cheers Heiko
