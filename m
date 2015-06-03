@@ -1,62 +1,65 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFC v3 4/4] git-am: add am.threeWay config variable
-Date: Wed, 3 Jun 2015 18:43:08 +0200 (CEST)
-Message-ID: <1224076916.87652.1433349788756.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1433266446-2845-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1433266446-2845-4-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <vpqvbf4da95.fsf@anie.imag.fr>
+From: Yauheni Zablotski <e.zablotski@gmail.com>
+Subject: bug "$message" literal in commit message
+Date: Wed, 3 Jun 2015 18:51:10 +0200
+Message-ID: <CAF-5DQ+WGhHq0OZZh+90iuD1qrffcYyuprzW9m7XC6NGXPZzSQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 03 18:43:36 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 03 18:51:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0BlG-0002zH-3H
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 18:43:26 +0200
+	id 1Z0Bsr-0000WX-7g
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 18:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758381AbbFCQnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 12:43:07 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:33787 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756355AbbFCQnE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 12:43:04 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 3303A27EF;
-	Wed,  3 Jun 2015 18:43:00 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6S9fr3fTK2K3; Wed,  3 Jun 2015 18:43:00 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 229C5277F;
-	Wed,  3 Jun 2015 18:43:00 +0200 (CEST)
-In-Reply-To: <vpqvbf4da95.fsf@anie.imag.fr>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git-am: add am.threeWay config variable
-Thread-Index: 8JzdPQd07kpvG+KykyvF5X/yuDlWug==
+	id S1756687AbbFCQvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 12:51:13 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:33765 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752361AbbFCQvL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 12:51:11 -0400
+Received: by labpy14 with SMTP id py14so13009077lab.0
+        for <git@vger.kernel.org>; Wed, 03 Jun 2015 09:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Fxts5JDZN+ZDorQ2ZoPjbY8FBQDwnjNqyu1T6l/upN4=;
+        b=y/pl26xxV0BZo1Fa5rUJUssmumIZRqic/iCzCdhcLDfDkQ0Vbdyr5NE6AmpcUsgNa0
+         aUXGOzhKETLmKkD8JF/kCr4i2s1Iy6ZLd8q0wQGZKj2efhXgMXlTztR4XZd+o9BQAML7
+         BaYCLC4rLEyb4tEZRGSyCQmbcSnNoXCrKQ1Pq7TmAd+CgavCYx3nNApDe99SaWZ/RtQA
+         iI/7V5gwyKnbH1vou32dU/a+tI+WJaMykyG2cOySQ/zYgTFA93LmXMOCC2EndOJBnXlc
+         wEbCFL6oPdJT4v0qqJx4htimZ89Dr5+QMVETjT85PDC/lFsJHmIshCqhb47Md4bxtGAs
+         LcCw==
+X-Received: by 10.112.55.70 with SMTP id q6mr31713309lbp.99.1433350270139;
+ Wed, 03 Jun 2015 09:51:10 -0700 (PDT)
+Received: by 10.112.149.71 with HTTP; Wed, 3 Jun 2015 09:51:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270698>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes
+Hello,
 
-> Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
-> 
-> > +am.threeWay::
-> > +        By default, git-am will fail if the patch does not apply cleanly.
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/270538
+I think I found a bug(or strange behavior) in the git.
+If commit message contains literal "$message" than that literal
+disappears from commit message.
 
-Ok sorry.
+For example:
+-------------
+user@comp ~/cc $ git commit -am "1$message1"
+[master (root-commit) d36a841] 1
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 1
 
-Thanks
+user@comp ~/cc $ git log
+commit d36a841ae25510ada80246a78225446083fcb3e1
+Author: user <e.zablotski@gmail.com>
+Date:   Wed Jun 3 18:21:45 2015 +0200
+
+    file
+----------------
+
+Sorry for having disturbed you
