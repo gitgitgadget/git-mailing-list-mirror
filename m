@@ -1,123 +1,135 @@
-From: edgar.hipp@netapsys.fr
-Subject: Re: Proposal for git stash : add --staged option
-Date: Wed, 03 Jun 2015 15:32:30 +0200
-Message-ID: <3abd6c1640b01ee2c53ef423723480b1@netapsys.fr>
-References: <96c00a316c79d9e5a85e199ba7d6f317@netapsys.fr>
- <0082a449b4d1723cb557ac353a04c3af@www.dscho.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 03 15:42:27 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v3 1/4] t6301: new tests of for-each-ref error handling
+Date: Wed,  3 Jun 2015 15:51:56 +0200
+Message-ID: <48c6ecbe5a963a9ba89e3c25fc6e075a52ebcdbd.1433339279.git.mhagger@alum.mit.edu>
+References: <cover.1433339279.git.mhagger@alum.mit.edu>
+Cc: Anders Kaseorg <andersk@mit.edu>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 15:52:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z08w5-0006z3-Ne
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 15:42:26 +0200
+	id 1Z095e-0005gd-60
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 15:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753131AbbFCNmF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 09:42:05 -0400
-Received: from smtp.netapsys.fr ([5.135.55.152]:34495 "EHLO mx01.netapsys.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752773AbbFCNmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 09:42:03 -0400
-X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2015 09:42:03 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mx01.netapsys.fr (Postfix) with ESMTP id DB87F3F4E6;
-	Wed,  3 Jun 2015 15:32:30 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mx01.netapsys.fr
-Received: from mx01.netapsys.fr ([127.0.0.1])
-	by localhost (mx01.netapsys.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kxHV_o7s-8Am; Wed,  3 Jun 2015 15:32:30 +0200 (CEST)
-Received: from webmail.ovh.netapsys.fr (unknown [5.135.55.138])
-	by mx01.netapsys.fr (Postfix) with ESMTPA id 9A5783EC1F;
-	Wed,  3 Jun 2015 15:32:30 +0200 (CEST)
-In-Reply-To: <0082a449b4d1723cb557ac353a04c3af@www.dscho.org>
-X-Sender: edgar.hipp@netapsys.fr
-User-Agent: Roundcube Webmail/1.0.5
+	id S1754463AbbFCNwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 09:52:08 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60758 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753872AbbFCNwG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 09:52:06 -0400
+X-AuditID: 12074411-f796c6d000000bc9-84-556f06857a65
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id F3.B8.03017.5860F655; Wed,  3 Jun 2015 09:52:05 -0400 (EDT)
+Received: from michael.fritz.box (p4FC96DFC.dip0.t-ipconnect.de [79.201.109.252])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t53Dq151005566
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 3 Jun 2015 09:52:04 -0400
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <cover.1433339279.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLIsWRmVeSWpSXmKPExsUixO6iqNvKlh9qcPmHnsWZvnCLrivdTBYN
+	vVeYLW6vmM9s8aOlh9li8+Z2Fgc2j7/vPzB5LNhU6tF05iizx7PePYweFy8pe3zeJBfAFsVt
+	k5RYUhacmZ6nb5fAnbHr6TG2gr2iFc+3P2drYHwv2MXIySEhYCLRtPYWM4QtJnHh3no2EFtI
+	4DKjRN8MOwj7BJPEgU/FIDabgK7Eop5mJhBbREBNYmLbIRYQm1lgM6NE58MgEFtYwF3i+6n1
+	jCA2i4CqxLvedjCbVyBK4tT2r1C75CTOH/8JZHNwcApYSOy5oQ1iCgmYS5w/KT+BkXcBI8Mq
+	RrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1TvdzMEr3UlNJNjJDgEtzBOOOk3CFGAQ5GJR5eh7C8
+	UCHWxLLiytxDjJIcTEqivGu+AIX4kvJTKjMSizPii0pzUosPMUpwMCuJ8L58B5TjTUmsrEot
+	yodJSXOwKInz8i1R9xMSSE8sSc1OTS1ILYLJynBwKEnwirPmhwoJFqWmp1akZeaUIKSZODhB
+	hnNJiRSn5qWkFiWWlmTEg2IivhgYFSApHqC9cSDtvMUFiblAUYjWU4y6HD8uNS5mEmLJy89L
+	lRLnjQQpEgApyijNg1sBSyWvGMWBPhbmTQGp4gGmIbhJr4CWMAEtaRfIAVlSkoiQkmpgnNFb
+	u297upShXWXOO85fO/Km+3w/eprzaOdFnRTuEgNmw1Ajbosdp/hNr01UtHBozP7VwdU9dW2e
+	dJrfAu+UHlYdTt6yySFPOKPzNnqHyN41fsY0NSRvk/6lwvMFhfal4g8iHS7n8J39 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270683>
 
-Hi again,
+Add tests that for-each-ref correctly reports broken loose reference
+files and references that point at missing objects. In fact, two of
+these tests fail, because (1) NULL_SHA1 is not recognized as an
+invalid reference value, and (2) for-each-ref doesn't respect
+REF_ISBROKEN. Fixes to come.
 
-just wanted to tell that I have created a solution by doing a few lines=
-=20
-of scripting:
+Note that when for-each-ref is run with a --format option that doesn't
+require the object to be looked up, then we should still notice if a
+loose reference file is corrupt or contains NULL_SHA1, but we don't
+notice if it points at a missing object because we don't do an object
+lookup. This is OK.
 
-git-cstash
-```
-#/bin/sh
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ t/t6301-for-each-ref-errors.sh | 56 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+ create mode 100755 t/t6301-for-each-ref-errors.sh
 
-git commit -m 'temporary, will be stashed soon'
-git stash --include-untracked
-git reset HEAD^1
-git stash
-git stash pop stash@{1}
-```
-
-Le 2015-04-22 11:25, Johannes Schindelin a =C3=A9crit=C2=A0:
-> Hi Edgar,
->=20
-> On 2015-04-22 10:30, edgar.hipp@netapsys.fr wrote:
->=20
->> When you have a lot of unstaged files, and would like to test what
->> happens if you undo some of the changes that you think are unecessar=
-y,
->> you would rather keep a copy of those changes somewhere.
->>=20
->> For example
->>=20
->> Changed but not updated:
->>     M config_test.xml
->>     M config_real.xml
->>=20
->> I have changed both config_test.xml and config_real.xml, but I think
->> the changes made in config_test.xml are unnecessary. However, I woul=
-d
->> still like to keep them somewhere in case it breaks something.
->>=20
->> In this case for example, I would like to be able to stash only the
->> file config_test.xml
->>=20
->> Eg:
->>=20
->> git add config_test.xml
->> git stash --staged
->>=20
->> So that after this, my git looks like this:
->>=20
->> Changed but not updated:
->>     M config_real.xml
->>=20
->> and my stash contains only the changes introduced in config_test.xml
->>=20
->> `git stash --keep-index` doesn't give the necessary control, because
->> it will still stash everything (and create unnecessary merge
->> complications if I change the files and apply the stash)
->=20
-> I often have the same problem. How about doing this:
->=20
-> ```sh
-> git add config_real.xml
-> git stash -k
-> git reset
-> ```
->=20
-> The difference between our approaches is that I keep thinking of the
-> staging area as the place to put changes I want to *keep*, not that I
-> want to forget for a moment.
->=20
-> Having said that, I am sympathetic to your cause, although I would
-> rather have `git stash [--patch] -- [<file>...]` that would be used
-> like `git add -p` except that the selected changes are *not* staged,
-> but stashed instead.
->=20
-> Ciao,
-> Johannes
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+new file mode 100755
+index 0000000..cf25244
+--- /dev/null
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='for-each-ref errors for broken refs'
++
++. ./test-lib.sh
++
++ZEROS=$_z40
++MISSING=abababababababababababababababababababab
++
++test_expect_success setup '
++	git commit --allow-empty -m "Initial" &&
++	git tag testtag &&
++	git for-each-ref >full-list &&
++	git for-each-ref --format="%(objectname) %(refname)" >brief-list
++'
++
++test_expect_failure 'Broken refs are reported correctly' '
++	r=refs/heads/bogus &&
++	: >.git/$r &&
++	test_when_finished "rm -f .git/$r" &&
++	echo "warning: ignoring broken ref $r" >broken-err &&
++	git for-each-ref >out 2>err &&
++	test_cmp full-list out &&
++	test_cmp broken-err err
++'
++
++test_expect_failure 'NULL_SHA1 refs are reported correctly' '
++	r=refs/heads/zeros &&
++	echo $ZEROS >.git/$r &&
++	test_when_finished "rm -f .git/$r" &&
++	echo "warning: ignoring broken ref $r" >zeros-err &&
++	git for-each-ref >out 2>err &&
++	test_cmp full-list out &&
++	test_cmp zeros-err err &&
++	git for-each-ref --format="%(objectname) %(refname)" >brief-out 2>brief-err &&
++	test_cmp brief-list brief-out &&
++	test_cmp zeros-err brief-err
++'
++
++test_expect_success 'Missing objects are reported correctly' '
++	r=refs/heads/missing &&
++	echo $MISSING >.git/$r &&
++	test_when_finished "rm -f .git/$r" &&
++	echo "fatal: missing object $MISSING for $r" >missing-err &&
++	test_must_fail git for-each-ref 2>err &&
++	test_cmp missing-err err &&
++	(
++		cat brief-list &&
++		echo "$MISSING $r"
++	) | sort -k 2 >missing-brief-expected &&
++	git for-each-ref --format="%(objectname) %(refname)" >brief-out 2>brief-err &&
++	test_cmp missing-brief-expected brief-out &&
++	test_must_be_empty brief-err
++'
++
++test_done
+-- 
+2.1.4
