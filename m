@@ -1,11 +1,11 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFCv2 2/2] git rebase -i: warn about removed commits
-Date: Wed, 3 Jun 2015 15:14:17 -0400
-Message-ID: <CAPig+cR=xKy-WSZSRgC8UbEbyY+=t7yDZo3O-2GquWXWWPrGVA@mail.gmail.com>
-References: <1433331859-24832-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<1433331859-24832-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv4 1/2] git-rebase -i: add command "drop" to remove a
+ commit
+Date: Wed, 3 Jun 2015 21:23:47 +0200 (CEST)
+Message-ID: <739894117.78611.1433359427863.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1433331859-24832-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <xmqq8uc0y8jw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
@@ -14,146 +14,137 @@ Cc: Git List <git@vger.kernel.org>,
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Galan_R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 03 21:14:43 2015
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 21:24:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0E7T-0005us-Av
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 21:14:31 +0200
+	id 1Z0EGR-0004It-QH
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 21:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755610AbbFCTOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 15:14:23 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33939 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754576AbbFCTOS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 15:14:18 -0400
-Received: by igbhj9 with SMTP id hj9so120231516igb.1
-        for <git@vger.kernel.org>; Wed, 03 Jun 2015 12:14:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=mSG4GV6cefITvwnMxEj2nC21fWttAPtVBxTsxa/dQbA=;
-        b=T9DqNsDAwZVACEiDhIZprw+WzV4yQ691WBA5kfrEdaPaudB9DmX2nUIbfmgQkDVUPC
-         rdEpkpCMunRbUINd95JijbkCrVVLWhVrV8+dYLyHv8TW93US8D4VUPqyvSw6+xoaBz2o
-         d85F+ZChWnjOb2YvBBoHVpkBBB9mExsraXaDQpM0aiXZ35I4A7pFPRXt853jlbYRKiKR
-         gcavxYkqX6vd7EubCRKd86TJ5KJXpNAxOQruUDxE60v2Yuh8P4phd0giMv07AsByoPns
-         HZl3Ldw7xMQiTt38v77ZYipJjnMejjQifGnKXZh9H+VYvqFLE38DAwu6K4HZfZc21ckT
-         uPYg==
-X-Received: by 10.107.31.134 with SMTP id f128mr24546913iof.19.1433358857828;
- Wed, 03 Jun 2015 12:14:17 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Wed, 3 Jun 2015 12:14:17 -0700 (PDT)
-In-Reply-To: <1433331859-24832-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-Google-Sender-Auth: c6L8Fc5kGGMHhpjYbGHn5-Yy7ys
+	id S1756422AbbFCTXn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 15:23:43 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:58735 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756310AbbFCTXm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 15:23:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 00BF7360B;
+	Wed,  3 Jun 2015 21:23:39 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VKNEW9VTS+36; Wed,  3 Jun 2015 21:23:38 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D7E753609;
+	Wed,  3 Jun 2015 21:23:38 +0200 (CEST)
+In-Reply-To: <xmqq8uc0y8jw.fsf@gitster.dls.corp.google.com>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git-rebase -i: add command "drop" to remove a commit
+Thread-Index: MRKmZZQkP4B6NT36zoryxBItMY1r0A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270726>
 
-On Wednesday, June 3, 2015, Galan R=C3=A9mi
-<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> Check if commits were removed (i.e. a line was deleted) and print
-> warnings or abort git rebase depending on the value of the
-> configuration variable rebase.missingCommits.
+Junio C Hamano <gitster@pobox.com> writes:
+> But what if you got this back after the user edits?
+>=20
+>     drop
+>     pick 2c9c1c5 gostak: distim doshes
+>     drop e3b601d pull: use git-rev-parse...
+>     edit eb2a8d9 pull: handle git-fetch'...
+>=20
+> [...]
+> Did the user tried to drop something else but the
+> object name has gone missing by mistake?
 
-A few comments below in addition to those already made by Matthieu...
+If the user tried to drop something but the SHA-1 has gone missing, it
+would be picked up by 2/2 if rebase.missingCommitsCheck is set to warn
+or error.
 
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interacti=
-ve.sh
-> index 8960083..f369d2c 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1112,4 +1112,67 @@ test_expect_success 'drop' '
->         test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
->  '
->
-> +cat >expect <<EOF
-> +Successfully rebased and updated refs/heads/tmp2.
-> +EOF
-> +
-> +test_expect_success 'rebase -i respects rebase.missingCommitsCheck=3D=
-ignore' '
-> +       test_config rebase.missingCommitsCheck ignore &&
-> +       test_when_finished "git checkout master &&
-> +               git branch -D tmp2" &&
+> Did the user wanted to drop the first one but made mistake while
+> editing 'pick' away into 'drop'?
 
-Strange indentation.
+I see your point here.
 
-> +       git checkout -b tmp2 master &&
-> +       set_fake_editor &&
-> +       FAKE_LINES=3D"1 2 3 4" \
-> +               git rebase -i --root 2>warning &&
+> Noticing and flagging malformed 'drop' lines (or line with any
+> command, for that matter) as such is part of that process to make
+> sure you collected the object names from the "after" image
+> correctly, which is the job of 2/2 in your series (if I am reading
+> the description of your series right).
 
-The file containing the actual output is usually spelled "actual".
+I agree on the fact that noticing and flagging malformed lines for the
+various commands is a part of the process to make sure the collected
+object names are correct.
+However, the original job of 2/2 was to avoid the silent loss of
+information caused by deleting a line by mistake, not to check the
+correctness of the whole todo-file (though I think that it is a good
+idea, to develop in another commit of this patch/in another patch).
+On the opposite, in some way it could be seen as some loss of informati=
+on, as your previous example suggests:
+> Did the user wanted to drop the first one but made mistake while
+> editing 'pick' away into 'drop'?
+We lose the information that the user wanted to drop the line and not
+pick it.
 
-> +       test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-> +       test_cmp warning expect
+Aside from that, checking specifically the 'drop' command beforehand
+(that's what happens in 2/2) while not doing any checking on the other
+commands (or checking on the fly) doesn't really makes sense, I think
+the commands should be treated equally on the matter of checking.
+In doing so, checking that the various commands exist, that they are
+followed by the correct argument and that their argument is of the
+right type (SHA-1 representing a commit for example), in top of
+checking that no commit is removed, without forgetting tests to make
+sure everything has the right behaviour, I am afraid that it would
+make this part of the patch far too long thus why I think it should be
+in another commit/patch.
 
-The arguments to test_cmp are usually reversed so that 'expect' comes
-before 'actual', which results in a more natural-feeling diff when
-test_cmp detects that the files differ.
+By the way
+> In the new world order to punish those who simply remove lines to
+> signal that they want the commits omitted from replaying
 
-These comments apply to remaining new tests, as well.
+Aside from liking the wording here, I don't think it can really be
+considered as a punishment since it is the user that chooses if he
+wants to be "punished" or not; I guess it can be considered BDSM
+though.
 
-> +'
-> +
-> +cat >expect <<EOF
-> +Warning: some commits may have been dropped accidentally.
-> +Dropped commits (newer to older):
-> + - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-> +
-> +To avoid this message, use "drop" to explicitly remove a commit.
-> +Use git --config rebase.missingCommitsCheck to change the level of w=
-arnings (ignore, warn, error).
-> +
-> +Successfully rebased and updated refs/heads/tmp2.
-> +EOF
-> +
-> +test_expect_success 'rebase -i respects rebase.missingCommitsCheck=3D=
-warn' '
-> +       test_config rebase.missingCommitsCheck warn &&
-> +       test_when_finished "git checkout master &&
-> +               git branch -D tmp2" &&
-> +       git checkout -b tmp2 master &&
-> +       set_fake_editor &&
-> +       FAKE_LINES=3D"1 2 3 4" \
-> +               git rebase -i --root 2>warning &&
-> +       test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-> +       test_cmp warning expect
-> +'
-> +
-> +cat >expect <<EOF
-> +Warning: some commits may have been dropped accidentally.
-> +Dropped commits (newer to older):
-> + - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-> + - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master~2)
-> +
-> +To avoid this message, use "drop" to explicitly remove a commit.
-> +Use git --config rebase.missingCommitsCheck to change the level of w=
-arnings (ignore, warn, error).
-> +
-> +Rebase aborted due to dropped commits.
-> +EOF
-> +
-> +test_expect_success 'rebase -i respects rebase.missingCommitsCheck=3D=
-error' '
-> +       test_config rebase.missingCommitsCheck error &&
-> +       test_when_finished "git checkout master &&
-> +               git branch -D tmp2" &&
-> +       git checkout -b tmp2 master &&
-> +       set_fake_editor &&
-> +       test_must_fail env FAKE_LINES=3D"1 2 4" \
-> +               git rebase -i --root 2>warning &&
-> +       test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-> +       test_cmp warning expect
-> +'
-> +
->  test_done
-> --
-> 2.4.2.389.geaf7ccf
+Junio C Hamano <gitster@pobox.com> writes:
+> > +        drop|d)
+> > +                if test -z $sha1
+> > +                then
+> > +                        warn "Missing SHA-1 in 'drop' command."
+> > +                        die "Please fix this using 'git rebase --e=
+dit-todo'."
+>=20
+> Is this a sensible piece of advice, though?  The user edited the
+> line away and it does not have the commit object name anymore.
+> How does she "fix" it in the editor?  The same puzzlement applies
+> to the other message.
+
+=46or a missing SHA-1, if it is a 'drop' that he forgot to remove after
+changing his mind, then it can be fixed.
+=46or an incorrect SHA-1, maybe he can find it back using git log or
+others commands of the kind, though I don't think this way of fixing
+things is user-friendly at all.
+However, as you point out, in most cases it will be a line edited
+away, I agree that the "fix it" doesn't really help.
+
+The only alternative I see right now (in 1/2) is aborting the rebase
+(die_abort) though it seems overkill, as the user I wouldn't want to
+lose all of the modifications I have done on the todo-list.
+
+Through this I see your point about checking in 2/2 since we would
+have more information (for example if he has an error because a drop
+has no SHA-1 or the SHA-1 is incorrect and at the same time an error
+because a SHA-1 has disappeared, it would make more sense to give him
+"fix it" since he would have most of the informations he needs to do
+so). However, right now, I think that my previous points about 2/2
+still stand.
+
+Thanks,
+R=C3=A9mi
