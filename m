@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Guillaume=20Pag=C3=A8s?= 
 	<guillaume.pages@ensimag.grenoble-inp.fr>
-Subject: [RFC/PATCH 1/2] status: give more information during rebase -i
-Date: Wed,  3 Jun 2015 10:35:44 +0200
-Message-ID: <1433320545-14244-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+Subject: [RFC/PATCH 2/2] status: fix tests to handle new verbose git status during rebase
+Date: Wed,  3 Jun 2015 10:35:45 +0200
+Message-ID: <1433320545-14244-2-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+References: <1433320545-14244-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -20,221 +21,511 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z049X-00061D-2j
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 10:35:59 +0200
+	id 1Z049b-00064k-La
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 10:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbbFCIfy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 04:35:54 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:59027 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753074AbbFCIfw (ORCPT
+	id S1753412AbbFCIf5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 04:35:57 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:60178 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753178AbbFCIfw (ORCPT
 	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 04:35:52 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 1E97648853;
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D1C4827B0;
 	Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z9rsQwNOwEPF; Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1cPtSnC7nLbQ; Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 02CF748846;
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id BFC5727A8;
 	Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id EA5F720E4;
-	Wed,  3 Jun 2015 10:35:49 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id B861E20E4;
+	Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ofECm+nI5ETV; Wed,  3 Jun 2015 10:35:49 +0200 (CEST)
+	with ESMTP id eGQRyo97Z-gX; Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
 Received: from guillaume-W35-37ET.grenet.fr (wificampus-029182.grenet.fr [130.190.29.182])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id B446220DF;
-	Wed,  3 Jun 2015 10:35:49 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 8925420DF;
+	Wed,  3 Jun 2015 10:35:50 +0200 (CEST)
 X-Mailer: git-send-email 2.4.2.340.g37f3f38
+In-Reply-To: <1433320545-14244-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270667>
-
-git status gives more information during rebase -i, about the list of
-command that are done during the rebase. It displays the two last
-commands executed and the two next lines to be executed. It also gives
-hints to find the whole files in .git directory.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270668>
 
 Signed-off-by: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-i=
 np.fr>
 ---
+ t/t7512-status-help.sh | 227 +++++++++++++++++++++++++++++++++++++++++=
++++++---
+ 1 file changed, 213 insertions(+), 14 deletions(-)
 
-At the moment it only gives information during an interactive rebase. I=
-t=20
-displays full sha1 identifiers, changing to short sha1 would be better.
-
- wt-status.c | 126 ++++++++++++++++++++++++++++++++++++++++++++++++++--=
---------
- 1 file changed, 106 insertions(+), 20 deletions(-)
-
-diff --git a/wt-status.c b/wt-status.c
-index 33452f1..8a32aea 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1026,13 +1026,104 @@ static int split_commit_in_progress(struct wt_=
-status *s)
- 	return split_in_progress;
- }
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 68ad2d7..242124f 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -134,9 +134,13 @@ test_expect_success 'prepare for rebase_i_conflict=
+s' '
+ test_expect_success 'status during rebase -i when conflicts unresolved=
+' '
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=3D$(git rev-parse --short rebase_i_conflicts) &&
++	LAST_COMMIT=3D$(git rev-parse rebase_i_conflicts_second) &&
+ 	test_must_fail git rebase -i rebase_i_conflicts &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (1 command(s) done):
++   pick $LAST_COMMIT one_second
++No command remaining.
+ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on=
+ '\''$ONTO'\''.
+   (fix conflicts and then run "git rebase --continue")
+   (use "git rebase --skip" to skip this patch)
+@@ -159,10 +163,14 @@ test_expect_success 'status during rebase -i afte=
+r resolving conflicts' '
+ 	git reset --hard rebase_i_conflicts_second &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=3D$(git rev-parse --short rebase_i_conflicts) &&
++	LAST_COMMIT=3D$(git rev-parse rebase_i_conflicts_second) &&
+ 	test_must_fail git rebase -i rebase_i_conflicts &&
+ 	git add main.txt &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (1 command(s) done):
++   pick $LAST_COMMIT one_second
++No command remaining.
+ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on=
+ '\''$ONTO'\''.
+   (all conflicts fixed: run "git rebase --continue")
 =20
-+void get_two_last_lines(char *filename,int * numlines, char ** lines)
-+{
-+	*numlines=3D0;
-+	struct strbuf buf =3D STRBUF_INIT;
-+	FILE *fp =3D fopen(git_path("%s", filename), "r");
-+	if (!fp) {
-+		strbuf_release(&buf);
-+		return;
-+	}
-+	while (strbuf_getline(&buf, fp, '\n')!=3DEOF){
-+		(*numlines)++;
-+		lines[0]=3Dlines[1];
-+		lines[1]=3Dstrbuf_detach(&buf, NULL);
-+	}
-+	if (!fclose(fp))
-+		strbuf_detach(&buf, NULL);
-+	else
-+		strbuf_release(&buf);
-+}
-+
-+void get_two_first_lines(char *filename,int * numlines, char ** lines)
-+{
-+	*numlines=3D0;
-+	struct strbuf buf =3D STRBUF_INIT;
-+	char *line;
-+	FILE *fp =3D fopen(git_path("%s", filename), "r");
-+	if (!fp) {
-+		strbuf_release(&buf);
-+		return;
-+	}
-+	while (strbuf_getline(&buf, fp, '\n')!=3DEOF){
-+		stripspace(&buf, 1);
-+		line =3D strbuf_detach(&buf, NULL);
-+		if (strcmp(line,"")=3D=3D0)
-+			continue;
-+		if (*numlines<2)
-+			lines[*numlines] =3D line;
-+		(*numlines)++;
-+	}
-+	if (!fclose(fp))
-+		strbuf_detach(&buf, NULL);
-+	else
-+		strbuf_release(&buf);
-+}
-+
-+void show_rebase_information(struct wt_status *s,
-+				    struct wt_status_state *state,
-+				    const char *color)
-+{
-+	if (state->rebase_interactive_in_progress){
-+		int i, begin;
-+		int numlines =3D0;
-+		char* lines[2];
-+		get_two_last_lines("rebase-merge/done", &numlines, lines);
-+		if (numlines=3D=3D0)
-+			status_printf_ln(s,color,"No command done.");
-+		else{
-+			status_printf_ln(s,color,
-+				"Last command(s) done (%d command(s) done):",
-+				numlines);
-+			begin =3D numlines > 1? 0 : 1;
-+			for (i =3D begin; i < 2; i++){
-+				status_printf_ln(s,color,"   %s",lines[i]);
-+			}
-+			if (numlines>2 && s->hints )
-+			   status_printf_ln(s,color,
-+				"  (see more at .git/rebase-merge/done)");
-+		}
-+		numlines =3D0;
-+		get_two_first_lines("rebase-merge/git-rebase-todo",
-+					 &numlines, lines);
-+		if (numlines=3D=3D0)
-+			status_printf_ln(s,color,
-+					 "No command remaining.");
-+		else{
-+
-+			status_printf_ln(s,color,
-+				"Next command(s) to do (%d remaining command(s)):",
-+				numlines);
-+			begin =3D numlines > 1? 0 : 1;
-+			for (i =3D 0; (i < 2 && i < numlines); i++){
-+				status_printf(s,color,"   %s",lines[i]);
-+			}
-+			if (s->hints )
-+			   status_printf_ln(s,color,
-+				"  (use git rebase --edit-todo to view and edit)");
-+		}
-+	}
-+}
-+
- static void show_rebase_in_progress(struct wt_status *s,
- 				struct wt_status_state *state,
- 				const char *color)
- {
- 	struct stat st;
+@@ -183,14 +191,20 @@ test_expect_success 'status when rebasing -i in e=
+dit mode' '
+ 	git checkout -b rebase_i_edit &&
+ 	test_commit one_rebase_i main.txt one &&
+ 	test_commit two_rebase_i main.txt two &&
++	COMMIT2=3D$(git rev-parse rebase_i_edit) &&
+ 	test_commit three_rebase_i main.txt three &&
++	COMMIT3=3D$(git rev-parse rebase_i_edit) &&
+ 	FAKE_LINES=3D"1 edit 2" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=3D$(git rev-parse --short HEAD~2) &&
+ 	git rebase -i HEAD~2 &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   pick $COMMIT2 two_rebase_i
++   edit $COMMIT3 three_rebase_i
++No command remaining.
+ You are currently editing a commit while rebasing branch '\''rebase_i_=
+edit'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -207,8 +221,11 @@ test_expect_success 'status when splitting a commi=
+t' '
+ 	git checkout -b split_commit &&
+ 	test_commit one_split main.txt one &&
+ 	test_commit two_split main.txt two &&
++	COMMIT2=3D$(git rev-parse split_commit) &&
+ 	test_commit three_split main.txt three &&
++	COMMIT3=3D$(git rev-parse split_commit) &&
+ 	test_commit four_split main.txt four &&
++	COMMIT4=3D$(git rev-parse split_commit) &&
+ 	FAKE_LINES=3D"1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+@@ -216,7 +233,13 @@ test_expect_success 'status when splitting a commi=
+t' '
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   pick $COMMIT2 two_split
++   edit $COMMIT3 three_split
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_split
++  (use git rebase --edit-todo to view and edit)
+ You are currently splitting a commit while rebasing branch '\''split_c=
+ommit'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
 =20
--	if (has_unmerged(s)) {
-+	show_rebase_information(s,state,color);
-+	if (has_unmerged(s) || state->rebase_in_progress || !stat(git_path("M=
-ERGE_MSG"), &st)) {
- 		if (state->branch)
- 			status_printf_ln(s, color,
- 					 _("You are currently rebasing branch '%s' on '%s'."),
-@@ -1042,25 +1133,17 @@ static void show_rebase_in_progress(struct wt_s=
-tatus *s,
- 			status_printf_ln(s, color,
- 					 _("You are currently rebasing."));
- 		if (s->hints) {
--			status_printf_ln(s, color,
--				_("  (fix conflicts and then run \"git rebase --continue\")"));
--			status_printf_ln(s, color,
--				_("  (use \"git rebase --skip\" to skip this patch)"));
--			status_printf_ln(s, color,
--				_("  (use \"git rebase --abort\" to check out the original branch)=
-"));
-+			if (has_unmerged(s)) {
-+				status_printf_ln(s, color,
-+						 _("  (fix conflicts and then run \"git rebase --continue\")"));
-+				status_printf_ln(s, color,
-+						 _("  (use \"git rebase --skip\" to skip this patch)"));
-+				status_printf_ln(s, color,
-+						 _("  (use \"git rebase --abort\" to check out the original bran=
-ch)"));
-+			} else
-+				status_printf_ln(s, color,
-+						 _("  (all conflicts fixed: run \"git rebase --continue\")"));
- 		}
--	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), =
-&st)) {
--		if (state->branch)
--			status_printf_ln(s, color,
--					 _("You are currently rebasing branch '%s' on '%s'."),
--					 state->branch,
--					 state->onto);
--		else
--			status_printf_ln(s, color,
--					 _("You are currently rebasing."));
--		if (s->hints)
--			status_printf_ln(s, color,
--				_("  (all conflicts fixed: run \"git rebase --continue\")"));
- 	} else if (split_commit_in_progress(s)) {
- 		if (state->branch)
- 			status_printf_ln(s, color,
-@@ -1327,7 +1410,10 @@ void wt_status_print(struct wt_status *s)
- 		else if (!strcmp(branch_name, "HEAD")) {
- 			branch_status_color =3D color(WT_STATUS_NOBRANCH, s);
- 			if (state.rebase_in_progress || state.rebase_interactive_in_progres=
-s) {
--				on_what =3D _("rebase in progress; onto ");
-+				if (state.rebase_interactive_in_progress)
-+					on_what =3D _("interactive rebase in progress; onto ");
-+				else
-+					on_what =3D _("rebase in progress; onto ");
- 				branch_name =3D state.onto;
- 			} else if (state.detached_from) {
- 				branch_name =3D state.detached_from;
+@@ -239,7 +262,9 @@ test_expect_success 'status after editing the last =
+commit with --amend during a
+ 	test_commit one_amend main.txt one &&
+ 	test_commit two_amend main.txt two &&
+ 	test_commit three_amend main.txt three &&
++	COMMIT3=3D$(git rev-parse amend_last) &&
+ 	test_commit four_amend main.txt four &&
++	COMMIT4=3D$(git rev-parse amend_last) &&
+ 	FAKE_LINES=3D"1 2 edit 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+@@ -247,7 +272,12 @@ test_expect_success 'status after editing the last=
+ commit with --amend during a
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (3 command(s) done):
++   pick $COMMIT3 three_amend
++   edit $COMMIT4 four_amend
++  (see more at .git/rebase-merge/done)
++No command remaining.
+ You are currently editing a commit while rebasing branch '\''amend_las=
+t'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -273,11 +303,20 @@ test_expect_success 'status: (continue first edit=
+) second edit' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -294,12 +333,21 @@ test_expect_success 'status: (continue first edit=
+) second edit and split' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently splitting a commit while rebasing branch '\''several=
+_edits'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -321,12 +369,21 @@ test_expect_success 'status: (continue first edit=
+) second edit and amend' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -343,12 +400,21 @@ test_expect_success 'status: (amend first edit) s=
+econd edit' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "a" &&
+ 	git rebase --continue &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -366,12 +432,21 @@ test_expect_success 'status: (amend first edit) s=
+econd edit and split' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "b" &&
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently splitting a commit while rebasing branch '\''several=
+_edits'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -393,13 +468,22 @@ test_expect_success 'status: (amend first edit) s=
+econd edit and amend' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "c" &&
+ 	git rebase --continue &&
+ 	git commit --amend -m "d" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -416,6 +500,9 @@ test_expect_success 'status: (split first edit) sec=
+ond edit' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+@@ -423,7 +510,13 @@ test_expect_success 'status: (split first edit) se=
+cond edit' '
+ 	git commit -m "e" &&
+ 	git rebase --continue &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -440,6 +533,9 @@ test_expect_success 'status: (split first edit) sec=
+ond edit and split' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+@@ -448,7 +544,13 @@ test_expect_success 'status: (split first edit) se=
+cond edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently splitting a commit while rebasing branch '\''several=
+_edits'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -470,6 +572,9 @@ test_expect_success 'status: (split first edit) sec=
+ond edit and amend' '
+ 	FAKE_LINES=3D"edit 1 edit 2 3" &&
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
++	COMMIT2=3D$(git rev-parse several_edits^^) &&
++	COMMIT3=3D$(git rev-parse several_edits^) &&
++	COMMIT4=3D$(git rev-parse several_edits) &&
+ 	ONTO=3D$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+@@ -478,7 +583,13 @@ test_expect_success 'status: (split first edit) se=
+cond edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "h" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   edit $COMMIT2 two_edits
++   edit $COMMIT3 three_edits
++Next command(s) to do (1 remaining command(s)):
++   pick $COMMIT4 four_edits
++  (use git rebase --edit-todo to view and edit)
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -745,4 +856,92 @@ EOF
+ 	test_i18ncmp expected actual
+ '
+=20
++test_expect_success 'prepare for different number of commits rebased' =
+'
++	git reset --hard master &&
++	git checkout -b several_commits &&
++	test_commit one_commit main.txt one &&
++	test_commit two_commit main.txt two &&
++	test_commit three_commit main.txt three &&
++	test_commit four_commit main.txt four
++'
++
++
++test_expect_success 'status: one command done nothing remaining' '
++	FAKE_LINES=3D" exec_exit_15" &&
++	export FAKE_LINES &&
++	test_when_finished "git rebase --abort" &&
++	ONTO=3D$(git rev-parse --short HEAD~3) &&
++	(git rebase -i HEAD~3 || true)&&
++	cat >expected <<EOF &&
++interactive rebase in progress; onto $ONTO
++Last command(s) done (1 command(s) done):
++   exec exit 15
++No command remaining.
++You are currently editing a commit while rebasing branch '\''several_c=
+ommits'\'' on '\''$ONTO'\''.
++  (use "git commit --amend" to amend the current commit)
++  (use "git rebase --continue" once you are satisfied with your change=
+s)
++
++nothing to commit (use -u to show untracked files)
++EOF
++	git status --untracked-files=3Dno >actual &&
++	test_i18ncmp expected actual
++'
++
++test_expect_success 'status: two commands done, two remainings' '
++	FAKE_LINES=3D"1 exec_exit_15 2 3" &&
++	export FAKE_LINES &&
++	test_when_finished "git rebase --abort" &&
++	ONTO=3D$(git rev-parse --short HEAD~3) &&
++	COMMIT4=3D$(git rev-parse HEAD) &&
++	COMMIT3=3D$(git rev-parse HEAD^) &&
++	COMMIT2=3D$(git rev-parse HEAD^^) &&
++	(git rebase -i HEAD~3 || true)&&
++	cat >expected <<EOF &&
++interactive rebase in progress; onto $ONTO
++Last command(s) done (2 command(s) done):
++   pick $COMMIT2 two_commit
++   exec exit 15
++Next command(s) to do (2 remaining command(s)):
++   pick $COMMIT3 three_commit
++   pick $COMMIT4 four_commit
++  (use git rebase --edit-todo to view and edit)
++You are currently editing a commit while rebasing branch '\''several_c=
+ommits'\'' on '\''$ONTO'\''.
++  (use "git commit --amend" to amend the current commit)
++  (use "git rebase --continue" once you are satisfied with your change=
+s)
++
++nothing to commit (use -u to show untracked files)
++EOF
++	git status --untracked-files=3Dno >actual &&
++	test_i18ncmp expected actual
++'
++
++test_expect_success 'status: more than two commands done, two remainin=
+gs' '
++	FAKE_LINES=3D"1 2 exec_exit_15 3 4" &&
++	export FAKE_LINES &&
++	test_when_finished "git rebase --abort" &&
++	ONTO=3D$(git rev-parse --short HEAD~4) &&
++	COMMIT4=3D$(git rev-parse HEAD) &&
++	COMMIT3=3D$(git rev-parse HEAD^) &&
++	COMMIT2=3D$(git rev-parse HEAD^^) &&
++	(git rebase -i HEAD~4 || true)&&
++	cat >expected <<EOF &&
++interactive rebase in progress; onto $ONTO
++Last command(s) done (3 command(s) done):
++   pick $COMMIT2 two_commit
++   exec exit 15
++  (see more at .git/rebase-merge/done)
++Next command(s) to do (2 remaining command(s)):
++   pick $COMMIT3 three_commit
++   pick $COMMIT4 four_commit
++  (use git rebase --edit-todo to view and edit)
++You are currently editing a commit while rebasing branch '\''several_c=
+ommits'\'' on '\''$ONTO'\''.
++  (use "git commit --amend" to amend the current commit)
++  (use "git rebase --continue" once you are satisfied with your change=
+s)
++
++nothing to commit (use -u to show untracked files)
++EOF
++	git status --untracked-files=3Dno >actual &&
++	test_i18ncmp expected actual
++'
++
+ test_done
 --=20
 2.4.2.340.g37f3f38
