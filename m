@@ -1,89 +1,119 @@
-From: chenxitwo <chenxitwo@126.com>
+From: David Lang <david@lang.hm>
 Subject: Re: Git: How to keep multiple bare repos in sync?
-Date: Wed, 3 Jun 2015 09:55:21 +0800
-Message-ID: <201506030955200885513@126.com>
-References: <2015051312090840845945@126.com>, 
-	<xmqq4mnhccti.fsf@gitster.dls.corp.google.com>, 
-	<2015051315014048836362@126.com>
-Reply-To: chenxitwo <chenxitwo@126.com>
+Date: Tue, 2 Jun 2015 21:10:58 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1506022104320.3147@nftneq.ynat.uz>
+References: <2015051312090840845945@126.com>,  <xmqq4mnhccti.fsf@gitster.dls.corp.google.com>,  <2015051315014048836362@126.com> <201506030955200885513@126.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="gb2312"
-Content-Transfer-Encoding: base64
-Cc: git <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 03:55:34 2015
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-1119848637-1433304658=:3147"
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: chenxitwo <chenxitwo@126.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 06:11:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yzxu0-0005pp-HB
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 03:55:32 +0200
+	id 1Z001S-0003d8-D3
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 06:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbbFCBz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2015 21:55:28 -0400
-Received: from m15-114.126.com ([220.181.15.114]:32980 "EHLO m15-114.126.com"
+	id S1751028AbbFCELQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 00:11:16 -0400
+Received: from mail.lang.hm ([64.81.33.126]:46090 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751564AbbFCBz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2015 21:55:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:Mime-Version:Message-ID; bh=06ssI
-	u8omlqocuVCyXe7j8sQKs7jNMP7n6IrM7OYaBY=; b=WSuqt84noG3RkfmC1pKVE
-	DChCkN9mzgjrBujEbPX2HHPtv5qALHqYXv6JRnSdac5LB4rSEZ/CWsWMdvbgnUcu
-	9f+JnuejTWWKNXSVZjrB1/agFWFNEf38mJ9ltUVt4Tw4zB857p0p526q6SrpcCSR
-	m30c3G+xSSOayHh7kBrJFs=
-Received: from eg080 (unknown [121.15.85.201])
-	by smtp7 (Coremail) with SMTP id DsmowABHJgeIXm5VtXd8BA--.25227S2;
-	Wed, 03 Jun 2015 09:55:21 +0800 (CST)
-X-Priority: 3
-X-Has-Attach: no
-X-Mailer: Foxmail 7.0.1.92[cn]
-X-CM-TRANSID: DsmowABHJgeIXm5VtXd8BA--.25227S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Aw1UZryktry5Cw47KF1kGrg_yoW8Cw4UpF
-	ZxK3Z7ur1kKrZ8CrWkXrWkta4jywsYy3y3C34ktrykXws0gryxGFyakFWFg3yxGrWvqr1Y
-	qr4DAFn8uan0vw7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jjjgxUUUUU=
-X-Originating-IP: [121.15.85.201]
-X-CM-SenderInfo: hfkh05plwz0qqrswhudrp/1tbiXAoO51R0Wdg5FQAAsy
+	id S1750743AbbFCELO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 00:11:14 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id t534AwDd023694;
+	Tue, 2 Jun 2015 21:10:58 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <201506030955200885513@126.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270624>
 
-SGkgS29ucmFkIFNjaGVyZXIsDQoJVGhhbmtzIGZvciB5b3VyIHJlcGx5Lg0KIA0KCUJ1dCBnaXQg
-bWlycm9yIGlzIGhlbHBsZXNzIGZvciBtZS4NCglJIGhhdmUgYW4gaWRlYSBhYm91dCB0d28gcmVw
-b3MnIHN5bmMuIEhvd2V2ZXIgdGhlcmUgaXMgYSBwcm9ibGVtIHdpdGggdGhpcyBpcyBob3cgdG8g
-cHJldmVudCBvdGhlciB1c3JzJyBwdXNoIG9wZXJhdGlvbi4NCiANCglEZXRhaWxzIGFzIGZvbGxv
-d3M6DQoJVGVhbSBBLCBCIGhhdmUgdGhlaXIgb3duIGdpdCBzZXJ2ZXIgcmVwb3MsIHJlc3BlY3Rp
-dmVseSByZXBvc19BLCByZXBvc19CLg0KCXN0ZXAxOiBUaGUgcmVwb3NfQSBsb2NraW5nIHJlcG9z
-X0IgV2hlbiByZXBvc19BIHJlY2VpdmVkIFRlYW1fQSByZXF1ZXN0cyB0byBwdXNoLCBhbmQgcmVw
-b3NfQiBjYW4ndCBhY2NlcHQgb3RoZXIgdXNlcnMnIHB1c2ggcmVxdWVzdC4gKHVzZSBwcmUtcmVj
-ZWl2ZSBob29rKQ0KCXN0ZXAyOiBBZnRlciB0aGUgcmVwb3NfQSBpcyB1cGRhdGVkLCB0aGUgcmVw
-b3NfQSB3aWxsIHNlbmQgcHVzaCByZXF1ZXN0IHRvIHRoZSByZXBvc19CLg0KCXN0ZXAzOiBBZnRl
-ciB0aGUgcmVwb3NfQiBpcyB1cGRhdGVkLCB0aGUgcmVwb3NfQSB3aWxsIHVubG9jayB0aGUgcmVw
-b3NfQi4NCiANCglQcm9ibGVtOiBIb3cgdG8gbG9jayBnaXQgcmVtb3RlIHJlcG9zIHRvIHByZXZl
-bnQgb3RoZXIgdXNycycgcHVzaCBvcGVyYXRpb24uDQogDQoNCg0KLS0tLS0tLS0tLS0tLS0NCmNo
-ZW54aXR3bw0KPm5vdCByZW1vdGUgc3luYy4gIA0KPg0KPldlIGhhdmUgdGhyZWUgdGVhbXMgdG8g
-cGFydGljaXBhdGUgaW4gdGhlIHNhbWUgcHJvamVjdCwgYW5kIGlzIGxvY2F0ZWQgaW4gZGlmZmVy
-ZW50IHBsYWNlcy4gQmFuZHdpZHRoIHRoYXQgYmV0d2VlbiB0aGUgdHdvIG9mIG91ciB0ZWFtcyBp
-cyBub3QgZW5vdWdoLiBUaHJlZSB0ZWFtcyBoYXZlIHRoZWlyIG93biBnaXQgc2VydmVyLiBMaWtl
-IHRoaXMga2luZCBvZiBzaXR1YXRpb24sIGhvdyBzaG91bGQgaGFuZGxlPw0KPg0KPg0KPg0KPmNo
-ZW54aXR3bw0KPg0KPkZyb206IEp1bmlvIEMgSGFtYW5vDQo+RGF0ZTogMjAxNS0wNS0xMyAxMjoz
-Nw0KPlRvOiBjaGVueGl0d28NCj5DQzogZ2l0DQo+U3ViamVjdDogUmU6IEdpdDogSG93IHRvIGtl
-ZXAgbXVsdGlwbGUgYmFyZSByZXBvcyBpbiBzeW5jPw0KPmNoZW54aXR3byA8Y2hlbnhpdHdvQDEy
-Ni5jb20+IHdyaXRlczoNCj4NCj4+IFRoZXJlIGFyZSB0aHJlZSBnaXQgc2VydmVyKGJhcmUgcmVw
-b3MpLCBidXQgaSBkb24ndCBrbm93IHRvIHNvbHZlIHRoZQ0KPj4gcHJvYmxlbSB0aGF0IGhvdyB0
-byBrZWVwIHRoZXNlIGdpdCBzZXJ2ZXJzIGluIHN5bmMuDQo+DQo+cnN5bmM/DQo+DQo+VGhlIHBy
-b2JsZW0gaXMgdW5kZXItc3BlY2lmaWVkLiAgSXMgdGhlcmUgb25lIG9mIHRoZW0gdGhhdCBpcw0K
-PmF1dGhvcml0YXRpdmUgYW5kIHRoYXQgdGhlIG90aGVyIG9uZXMgc2hvdWxkIG1hdGNoIGl0cyBw
-cm9ncmVzcz8NCj5JZiBzbywgcGVyaGFwcyBwdXNoIGZyb20gdGhlIGF1dGhvcml0YXRpdmUgb25l
-IHRvIHRoZSBvdGhlciB0d28NCj53aXRoICJwdXNoIC0tbWlycm9yIiAob3IgaGF2ZSB0aGUgb3Ro
-ZXIgb25lcyAiZmV0Y2ggLS1taXJyb3IiKT8NCj4NCj5JZiB5b3UgYXJlIGFsbG93aW5nIHBlb3Bs
-ZSB0byBwdXNoIGludG8gYW55IG9mIHRoZW0gcmFuZG9tbHksDQo+dGhlbiB0aGVyZSBpcyBubyBn
-ZW5lcmFsIHNvbHV0aW9uLiAgSWYgSSBwdXNoIGFuIHVwZGF0ZSB0byAnbWFzdGVyJw0KPm9mIGlu
-c3RhbmNlIEEgd2hpbGUgeW91IHVwZGF0ZSB0aGUgc2FtZSAnbWFzdGVyJyBicmFuY2ggb2YgaW5z
-dGFuY2UNCj5CLCBzb21lYm9keSBoYXMgdG8gcmVjb25jaWxlIHRoZSBkaXZlcmdlbmNlIGJldHdl
-ZW4gdGhlIHR3byBieQ0KPmNyZWF0aW5nIGEgbWVyZ2UsIGFuZCB0aGF0IGNhbiBwb3NzaWJseSBj
-b25mbGljdCwgbmVlZGluZyBodW1hbg0KPmludGVydmVudGlvbiB0byByZXNvbHZlLg==
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--680960-1119848637-1433304658=:3147
+Content-Type: TEXT/PLAIN; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Wed, 3 Jun 2015, chenxitwo wrote:
+
+> Hi Konrad Scherer,
+> 	Thanks for your reply.
+>
+> 	But git mirror is helpless for me.
+> 	I have an idea about two repos' sync. However there is a problem with this is how to prevent other usrs' push operation.
+>
+> 	Details as follows:
+> 	Team A, B have their own git server repos, respectively repos_A, repos_B.
+> 	step1: The repos_A locking repos_B When repos_A received Team_A requests to push, and repos_B can't accept other users' push request. (use pre-receive hook)
+> 	step2: After the repos_A is updated, the repos_A will send push request to the repos_B.
+> 	step3: After the repos_B is updated, the repos_A will unlock the repos_B.
+>
+> 	Problem: How to lock git remote repos to prevent other usrs' push operation.
+
+you can't lock the remote repos to prevent pushes to them.
+
+This is the problem that Junio was referring to when he said that if people are 
+pushing to all repos there is no general solution.
+
+What you will need to do is to have someone reconcile the differences between 
+the different repos periodically.
+
+However, stepping back a bit. Why is it that you say that you don't have enough 
+bandwidth between the sites? If you have the developers working with a local 
+clone on their workstation, the bandwidth needed after the initial clone should 
+be pretty low.
+
+In any case, the issue is how much the work of the different developers overlap 
+with each other. If they are all changing the same part of the code, you will 
+have a problem. But if they are working on different areas, then you can use the 
+branch and pull model where the developers do their development locally and then 
+push what they have ready to integrate into a local (at least same building) 
+repo and send a pull request to whoever is coordinating the changes, and they 
+then pull all the different changes and deal with reconciling conflicts between 
+them.
+
+David Lang
+
+>
+>
+> --------------
+> chenxitwo
+>> not remote sync.
+>>
+>> We have three teams to participate in the same project, and is located in different places. Bandwidth that between the two of our teams is not enough. Three teams have their own git server. Like this kind of situation, how should handle?
+>>
+>>
+>>
+>> chenxitwo
+>>
+>> From: Junio C Hamano
+>> Date: 2015-05-13 12:37
+>> To: chenxitwo
+>> CC: git
+>> Subject: Re: Git: How to keep multiple bare repos in sync?
+>> chenxitwo <chenxitwo@126.com> writes:
+>>
+>>> There are three git server(bare repos), but i don't know to solve the
+>>> problem that how to keep these git servers in sync.
+>>
+>> rsync?
+>>
+>> The problem is under-specified.  Is there one of them that is
+>> authoritative and that the other ones should match its progress?
+>> If so, perhaps push from the authoritative one to the other two
+>> with "push --mirror" (or have the other ones "fetch --mirror")?
+>>
+>> If you are allowing people to push into any of them randomly,
+>> then there is no general solution.  If I push an update to 'master'
+>> of instance A while you update the same 'master' branch of instance
+>> B, somebody has to reconcile the divergence between the two by
+>> creating a merge, and that can possibly conflict, needing human
+>> intervention to resolve.N嫥叉靣笡y???氊b瞂???千v豝???藓{.n???壏爦丕???洝塄}???财爖???j:+v墾???珣赙zZ+€???zf＂穐殘???啳嗃i???鄗???畐ア???櫒璀??????撷f
+--680960-1119848637-1433304658=:3147--
