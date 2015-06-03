@@ -1,135 +1,109 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 1/4] t6301: new tests of for-each-ref error handling
-Date: Wed,  3 Jun 2015 15:51:56 +0200
-Message-ID: <48c6ecbe5a963a9ba89e3c25fc6e075a52ebcdbd.1433339279.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 4/4] read_loose_refs(): treat NULL_SHA1 loose references as broken
+Date: Wed,  3 Jun 2015 15:51:59 +0200
+Message-ID: <eb79f7d96ec74445f7adf62757119273280e09c9.1433339279.git.mhagger@alum.mit.edu>
 References: <cover.1433339279.git.mhagger@alum.mit.edu>
 Cc: Anders Kaseorg <andersk@mit.edu>,
 	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 15:52:26 2015
+X-From: git-owner@vger.kernel.org Wed Jun 03 15:52:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z095e-0005gd-60
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 15:52:18 +0200
+	id 1Z095l-0005nx-JW
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 15:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463AbbFCNwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 09:52:08 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60758 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753872AbbFCNwG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 09:52:06 -0400
-X-AuditID: 12074411-f796c6d000000bc9-84-556f06857a65
+	id S1755216AbbFCNwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 09:52:19 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:48790 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755170AbbFCNwK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 09:52:10 -0400
+X-AuditID: 12074413-f79386d000000d23-7c-556f06891279
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id F3.B8.03017.5860F655; Wed,  3 Jun 2015 09:52:05 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id C1.1A.03363.9860F655; Wed,  3 Jun 2015 09:52:09 -0400 (EDT)
 Received: from michael.fritz.box (p4FC96DFC.dip0.t-ipconnect.de [79.201.109.252])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t53Dq151005566
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t53Dq154005566
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 3 Jun 2015 09:52:04 -0400
+	Wed, 3 Jun 2015 09:52:08 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <cover.1433339279.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLIsWRmVeSWpSXmKPExsUixO6iqNvKlh9qcPmHnsWZvnCLrivdTBYN
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqNvJlh9qsHiWvsWZvnCLrivdTBYN
 	vVeYLW6vmM9s8aOlh9li8+Z2Fgc2j7/vPzB5LNhU6tF05iizx7PePYweFy8pe3zeJBfAFsVt
-	k5RYUhacmZ6nb5fAnbHr6TG2gr2iFc+3P2drYHwv2MXIySEhYCLRtPYWM4QtJnHh3no2EFtI
-	4DKjRN8MOwj7BJPEgU/FIDabgK7Eop5mJhBbREBNYmLbIRYQm1lgM6NE58MgEFtYwF3i+6n1
-	jCA2i4CqxLvedjCbVyBK4tT2r1C75CTOH/8JZHNwcApYSOy5oQ1iCgmYS5w/KT+BkXcBI8Mq
-	RrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1TvdzMEr3UlNJNjJDgEtzBOOOk3CFGAQ5GJR5eh7C8
-	UCHWxLLiytxDjJIcTEqivGu+AIX4kvJTKjMSizPii0pzUosPMUpwMCuJ8L58B5TjTUmsrEot
-	yodJSXOwKInz8i1R9xMSSE8sSc1OTS1ILYLJynBwKEnwirPmhwoJFqWmp1akZeaUIKSZODhB
-	hnNJiRSn5qWkFiWWlmTEg2IivhgYFSApHqC9cSDtvMUFiblAUYjWU4y6HD8uNS5mEmLJy89L
-	lRLnjQQpEgApyijNg1sBSyWvGMWBPhbmTQGp4gGmIbhJr4CWMAEtaRfIAVlSkoiQkmpgnNFb
-	u297upShXWXOO85fO/Km+3w/eprzaOdFnRTuEgNmw1Ajbosdp/hNr01UtHBozP7VwdU9dW2e
-	dJrfAu+UHlYdTt6yySFPOKPzNnqHyN41fsY0NSRvk/6lwvMFhfal4g8iHS7n8J39 
+	k5RYUhacmZ6nb5fAnTHz2mS2gi0CFZ+W3WNpYPzI08XIySEhYCKx4+VfNghbTOLCvfVANheH
+	kMBlRonJT2czgiSEBE4wSXQ/Nwax2QR0JRb1NDOB2CICahIT2w6xgNjMApsZJTofBoHYwgKh
+	Ep8utTGD2CwCqhLrzh4Dq+cViJL4PKuVHWKZnMT54z+Bajg4OAUsJPbc0AYxhQTMJc6flJ/A
+	yLuAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka65Xm5miV5qSukmRkh4Ce9g3HVS7hCjAAej
+	Eg+vQ1heqBBrYllxZe4hRkkOJiVR3jVfgEJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeF++A8rx
+	piRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4xVnzQ4UEi1LTUyvSMnNK
+	ENJMHJwgw7mkRIpT81JSixJLSzLiQVERXwyMC5AUD9BeeZB23uKCxFygKETrKUZdjh+XGhcz
+	CbHk5eelSonzPmEBKhIAKcoozYNbAUsmrxjFgT4W5k0BGcUDTERwk14BLWECWtIukAOypCQR
+	ISXVwDglQObVjfdTlae0ameGC6ZW1wte+x73Jk5/U2bcBfe1+Xuer9rvJrPgi8I6q1s7Dvon
+	8KUq5m/+UnIpdncY85Vwfbf/z7heXWsrmp5YKt36psqcI18+SfpDod/ZuP3ijp1s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270684>
 
-Add tests that for-each-ref correctly reports broken loose reference
-files and references that point at missing objects. In fact, two of
-these tests fail, because (1) NULL_SHA1 is not recognized as an
-invalid reference value, and (2) for-each-ref doesn't respect
-REF_ISBROKEN. Fixes to come.
+NULL_SHA1 is used to indicate of "invalid SHA-1" throughout our code
+(and the code of other git implementations), so it is vastly more
+likely that a reference was set to this value due to a software bug
+than that NULL_SHA1 is the legitimate SHA-1 of an actual object.
+Therefore, if a loose reference has the value NULL_SHA1, consider it
+to be broken.
 
-Note that when for-each-ref is run with a --format option that doesn't
-require the object to be looked up, then we should still notice if a
-loose reference file is corrupt or contains NULL_SHA1, but we don't
-notice if it points at a missing object because we don't do an object
-lookup. This is OK.
+Amusingly, each of the other 2^160-1 possible SHA-1 values is exactly
+as unlikely as NULL_SHA1 to be the SHA-1 of an actual object. The
+difference is that most of those other values are also very unlikely
+to be written to a loose reference file by accident, whereas
+accidentally writing NULL_SHA1 to a loose reference file would be an
+easy mistake to make.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- t/t6301-for-each-ref-errors.sh | 56 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
- create mode 100755 t/t6301-for-each-ref-errors.sh
+ refs.c                         | 10 ++++++++++
+ t/t6301-for-each-ref-errors.sh |  2 +-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
+diff --git a/refs.c b/refs.c
+index 6736424..83af13d 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1324,6 +1324,16 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
+ 			if (!read_ok) {
+ 				hashclr(sha1);
+ 				flag |= REF_ISBROKEN;
++			} else if (is_null_sha1(sha1)) {
++				/*
++				 * It is so astronomically unlikely
++				 * that NULL_SHA1 is the SHA-1 of an
++				 * actual object that we consider its
++				 * appearance in a loose reference
++				 * file to be repo corruption
++				 * (probably due to a software bug).
++				 */
++				flag |= REF_ISBROKEN;
+ 			}
+ 
+ 			if (check_refname_format(refname.buf,
 diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-new file mode 100755
-index 0000000..cf25244
---- /dev/null
+index 72d2397..cdb67a0 100755
+--- a/t/t6301-for-each-ref-errors.sh
 +++ b/t/t6301-for-each-ref-errors.sh
-@@ -0,0 +1,56 @@
-+#!/bin/sh
-+
-+test_description='for-each-ref errors for broken refs'
-+
-+. ./test-lib.sh
-+
-+ZEROS=$_z40
-+MISSING=abababababababababababababababababababab
-+
-+test_expect_success setup '
-+	git commit --allow-empty -m "Initial" &&
-+	git tag testtag &&
-+	git for-each-ref >full-list &&
-+	git for-each-ref --format="%(objectname) %(refname)" >brief-list
-+'
-+
-+test_expect_failure 'Broken refs are reported correctly' '
-+	r=refs/heads/bogus &&
-+	: >.git/$r &&
-+	test_when_finished "rm -f .git/$r" &&
-+	echo "warning: ignoring broken ref $r" >broken-err &&
-+	git for-each-ref >out 2>err &&
-+	test_cmp full-list out &&
-+	test_cmp broken-err err
-+'
-+
-+test_expect_failure 'NULL_SHA1 refs are reported correctly' '
-+	r=refs/heads/zeros &&
-+	echo $ZEROS >.git/$r &&
-+	test_when_finished "rm -f .git/$r" &&
-+	echo "warning: ignoring broken ref $r" >zeros-err &&
-+	git for-each-ref >out 2>err &&
-+	test_cmp full-list out &&
-+	test_cmp zeros-err err &&
-+	git for-each-ref --format="%(objectname) %(refname)" >brief-out 2>brief-err &&
-+	test_cmp brief-list brief-out &&
-+	test_cmp zeros-err brief-err
-+'
-+
-+test_expect_success 'Missing objects are reported correctly' '
-+	r=refs/heads/missing &&
-+	echo $MISSING >.git/$r &&
-+	test_when_finished "rm -f .git/$r" &&
-+	echo "fatal: missing object $MISSING for $r" >missing-err &&
-+	test_must_fail git for-each-ref 2>err &&
-+	test_cmp missing-err err &&
-+	(
-+		cat brief-list &&
-+		echo "$MISSING $r"
-+	) | sort -k 2 >missing-brief-expected &&
-+	git for-each-ref --format="%(objectname) %(refname)" >brief-out 2>brief-err &&
-+	test_cmp missing-brief-expected brief-out &&
-+	test_must_be_empty brief-err
-+'
-+
-+test_done
+@@ -24,7 +24,7 @@ test_expect_success 'Broken refs are reported correctly' '
+ 	test_cmp broken-err err
+ '
+ 
+-test_expect_failure 'NULL_SHA1 refs are reported correctly' '
++test_expect_success 'NULL_SHA1 refs are reported correctly' '
+ 	r=refs/heads/zeros &&
+ 	echo $ZEROS >.git/$r &&
+ 	test_when_finished "rm -f .git/$r" &&
 -- 
 2.1.4
