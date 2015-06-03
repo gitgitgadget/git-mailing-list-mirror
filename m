@@ -1,101 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bug "$message" literal in commit message
-Date: Wed, 03 Jun 2015 11:16:40 -0700
-Message-ID: <xmqqzj4gwtbr.fsf@gitster.dls.corp.google.com>
-References: <CAF-5DQ+WGhHq0OZZh+90iuD1qrffcYyuprzW9m7XC6NGXPZzSQ@mail.gmail.com>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: Suggestion: make git checkout safer
+Date: Wed, 3 Jun 2015 14:18:32 -0400
+Message-ID: <004901d09e29$b38c2ba0$1aa482e0$@nexbridge.com>
+References: <loom.20150603T104534-909@post.gmane.org>	<20150603090654.GD32000@peff.net>	<loom.20150603T110826-777@post.gmane.org>	<20150603093514.GF32000@peff.net>	<loom.20150603T114527-151@post.gmane.org>	<xmqqh9qoy9sx.fsf@gitster.dls.corp.google.com>	<004801d09e25$a339b0f0$e9ad12d0$@nexbridge.com> <xmqq4mmoy84y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Yauheni Zablotski <e.zablotski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 20:17:15 2015
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Ed Avis'" <eda@waniasset.com>, <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 20:18:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0DDj-0005Fd-R7
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 20:16:56 +0200
+	id 1Z0DFR-0006Zn-Pc
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 20:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933470AbbFCSQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 14:16:46 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:38772 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933468AbbFCSQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 14:16:43 -0400
-Received: by igblz2 with SMTP id lz2so21190210igb.1
-        for <git@vger.kernel.org>; Wed, 03 Jun 2015 11:16:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=UpHF8VwSpYUQ3sCUFbzfIjX/KH9rSfJYoX1ZKEr+1Lg=;
-        b=XcOkHYS+I15QXWuvQkU4BNwUqqd4J2JhWpdSaGvTESVM8OaQbObyqskAUrTNINiDo+
-         gTcCXri9s1o4Ra/qbuJmzNYTDBe34hLiHBoM/igTGYm+hcPFunz+tV4blPqOS1KzlqOl
-         Z/dwntn96wy0pk6Xp25Rmkdn3ZEXPL28duq+YdRRYEDcCl3kJB7zrmSErq7IeuZVD3T5
-         zoPi6ZS7zZVMbjND34lmZRRNGpk7464kCGTOSICFlToxasMIdCP2BjC9fVgCbmksVe2u
-         5pxtHw1ZVp13cOQVGUFv0MJW3n2HucjeheMqVFWxa3QGmXatpvIw5wQBdfdZGm0JNZuy
-         Qgiw==
-X-Received: by 10.42.161.74 with SMTP id s10mr41529770icx.5.1433355401698;
-        Wed, 03 Jun 2015 11:16:41 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:9816:1e41:550:d20e])
-        by mx.google.com with ESMTPSA id k74sm15217858iok.30.2015.06.03.11.16.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 03 Jun 2015 11:16:41 -0700 (PDT)
-In-Reply-To: <CAF-5DQ+WGhHq0OZZh+90iuD1qrffcYyuprzW9m7XC6NGXPZzSQ@mail.gmail.com>
-	(Yauheni Zablotski's message of "Wed, 3 Jun 2015 18:51:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S933484AbbFCSSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 14:18:38 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:24546 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753381AbbFCSSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 14:18:36 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t53IIX0j071300
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Wed, 3 Jun 2015 14:18:34 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <xmqq4mmoy84y.fsf@gitster.dls.corp.google.com>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQFyrraQjGmtUr2vpXILQHIThAtgLQIf/ulTAYu9CKgCESeLnQKam63aApAPjtgB9hB1fAF3zP6KneRJCvA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270719>
 
-Yauheni Zablotski <e.zablotski@gmail.com> writes:
+On June 3, 2015 2:11 PM Junio C Hamano wrote:
+> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> > On June 3, 2015 1:35 PM Junio C Hamano wrote:
+> >> Is that really true?  It all depends on why you came to a situation
+> >> to have "missing files" in the first place, I would think, but "git
+> >> checkout $path" is "I messed up the version in the working tree at
+> >> $path, and want to restore them".  One particular kind of "I messed
+> >> up" may be "I deleted by mistake"
+> >> (hence making them "missing"), but is it so common to delete things
+> >> by mistake, as opposed to editing, making a mess and realizing that
+> >> the work so far was not improving things and wanting to restart from
+> >> scratch?
+> >
+> > When working in an IDE like ECLIPSE or MonoDevelop, accidentally
+> > hitting the DEL button or a drag-drop move is a fairly common trigger
+> > for the "Wait-No-Stop-Oh-Drats" process which includes running git
+> > checkout to recover.
+> 
+> That is an interesting tangent.  If you are lucky then the deleted file
+may be
+> unedited one, but I presume that you are not always lucky.  So perhaps
+"git
+> checkout" is not a solution to that particular IDE issue in the first
+place?
 
-> Hello,
->
-> I think I found a bug(or strange behavior) in the git.
-> If commit message contains literal "$message" than that literal
-> disappears from commit message.
->
-> For example:
-> -------------
-> user@comp ~/cc $ git commit -am "1$message1"
-> [master (root-commit) d36a841] 1
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 1
->
-> user@comp ~/cc $ git log
-> commit d36a841ae25510ada80246a78225446083fcb3e1
-> Author: user <e.zablotski@gmail.com>
-> Date:   Wed Jun 3 18:21:45 2015 +0200
->
->     file
-> ----------------
->
-> Sorry for having disturbed you
-
-Learn shell ;-)
-
-Instead of "git commit -am", try "echo" and repeat your exercise,
-and you would see:
-
-	$ echo "1$message1"
-        1
-
-If you prepare a shell variable message1 beforehand, e.g.
-
-	$ message1='This is the contents of message1 variable'
-        $ echo "1$message1"
-        1This is the contents of message1 variable
-
-Your shell interpolates the value of message1 variable if you write
-"$message1" on your command line, way before individual commands
-(e.g. echo and git above) that receive the string as its parameter
-sees them.
-
-Contrast the above with this invocation after understanding the
-above.
-
-	$ git commit -a -m '1$message1'
-	$ git log
+Agreed. That's why I like knowing what's in my sausages and commit often.
+Only lost a minor change once from this. I wonder what else is afoot. Ed,
+can you expand on the issue?
