@@ -1,89 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/4] read_loose_refs(): treat NULL_SHA1 loose
- references as broken
-Date: Wed, 3 Jun 2015 10:08:04 -0400
-Message-ID: <20150603140803.GA23901@peff.net>
-References: <cover.1433339279.git.mhagger@alum.mit.edu>
- <eb79f7d96ec74445f7adf62757119273280e09c9.1433339279.git.mhagger@alum.mit.edu>
+From: Fabrizio Mancin <fabman08@gmail.com>
+Subject: Stash Feature
+Date: Wed, 3 Jun 2015 17:22:57 +0200
+Message-ID: <CAGmnFohE3ihA8T8srk1BpXg5z80tnjyUhdjFieXGYm=T0gkMUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Anders Kaseorg <andersk@mit.edu>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 03 16:08:28 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 03 17:23:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z09L2-0000C6-Ai
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 16:08:12 +0200
+	id 1Z0AVV-0004nM-8M
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 17:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288AbbFCOII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 10:08:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40426 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755206AbbFCOIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 10:08:06 -0400
-Received: (qmail 30011 invoked by uid 102); 3 Jun 2015 14:08:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 09:08:06 -0500
-Received: (qmail 20256 invoked by uid 107); 3 Jun 2015 14:08:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 10:08:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jun 2015 10:08:04 -0400
-Content-Disposition: inline
-In-Reply-To: <eb79f7d96ec74445f7adf62757119273280e09c9.1433339279.git.mhagger@alum.mit.edu>
+	id S1756729AbbFCPXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 11:23:00 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:37483 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753747AbbFCPW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 11:22:58 -0400
+Received: by wifw1 with SMTP id w1so26448757wif.0
+        for <git@vger.kernel.org>; Wed, 03 Jun 2015 08:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=GFjeLMJnRxPtmKaYVERAGiy5GnEnOzxNC3DAp1LJZG8=;
+        b=YutUQnuTg2rANvQ4ap0RidMWOvhJJQvKE85qrEdHOSofFQUw/ujWwlZgXHDLjCRwlf
+         ai90BQvX1PhUiYVBNE+1vQ2u5YkiJda1rSkjdxyM9siLkhj5h3ZLLi8WlTXP4nhve0i6
+         nFt5R/vCzfxuKDCHNfzfb3rdKlYzYLdpchXGSp2xFx7w02Z9THBHs28bummcJ4satnXa
+         /8P1cwaSMqErS18uK4QZwg6OY++yTLHjOU72FPaLrw8ohdno6cVl/rM2A4x15L22+zfc
+         +i/+mQNeoSir4co8JL72SWpoUy0mglu4EwSihC4Vcx23TASbXEncMAy8JiQZLHg6zAFM
+         aCWw==
+X-Received: by 10.180.82.162 with SMTP id j2mr22494779wiy.54.1433344977174;
+ Wed, 03 Jun 2015 08:22:57 -0700 (PDT)
+Received: by 10.194.75.225 with HTTP; Wed, 3 Jun 2015 08:22:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270689>
 
-On Wed, Jun 03, 2015 at 03:51:59PM +0200, Michael Haggerty wrote:
+ Hi Guys,
 
-> NULL_SHA1 is used to indicate of "invalid SHA-1" throughout our code
+I've a little request for you.
+What about saving date-time on git stash save command and show it on
+git stash show stash@{xxx}?
+I think it is a useful poperty to save.
 
-s/of/an/ ?
+What do you think about it?
 
-> (and the code of other git implementations), so it is vastly more
-> likely that a reference was set to this value due to a software bug
-> than that NULL_SHA1 is the legitimate SHA-1 of an actual object.
-> Therefore, if a loose reference has the value NULL_SHA1, consider it
-> to be broken.
-> 
-> Amusingly, each of the other 2^160-1 possible SHA-1 values is exactly
-> as unlikely as NULL_SHA1 to be the SHA-1 of an actual object. The
-> difference is that most of those other values are also very unlikely
-> to be written to a loose reference file by accident, whereas
-> accidentally writing NULL_SHA1 to a loose reference file would be an
-> easy mistake to make.
-
-FWIW, I think this justification (and the comment below) reads better
-than what you had before.
-
-> diff --git a/refs.c b/refs.c
-> index 6736424..83af13d 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1324,6 +1324,16 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
->  			if (!read_ok) {
->  				hashclr(sha1);
->  				flag |= REF_ISBROKEN;
-> +			} else if (is_null_sha1(sha1)) {
-> +				/*
-> +				 * It is so astronomically unlikely
-> +				 * that NULL_SHA1 is the SHA-1 of an
-> +				 * actual object that we consider its
-> +				 * appearance in a loose reference
-> +				 * file to be repo corruption
-> +				 * (probably due to a software bug).
-> +				 */
-> +				flag |= REF_ISBROKEN;
-
-Nice. After reading the other thread, I did not think we needed to
-bother with more refactoring here, but I agree this end result flows
-nicely.
-
--Peff
+Thank you
+Fabrizio
