@@ -1,69 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Suggestion: make git checkout safer
-Date: Wed, 03 Jun 2015 10:35:26 -0700
-Message-ID: <xmqqh9qoy9sx.fsf@gitster.dls.corp.google.com>
-References: <loom.20150603T104534-909@post.gmane.org>
-	<20150603090654.GD32000@peff.net>
-	<loom.20150603T110826-777@post.gmane.org>
-	<20150603093514.GF32000@peff.net>
-	<loom.20150603T114527-151@post.gmane.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 18/19] pull --rebase: error on no merge candidate cases
+Date: Wed, 3 Jun 2015 10:38:13 -0700
+Message-ID: <CAGZ79kZN=1fzjSv-dSgq38CtEKTDxLMoPY8ToNfiEA8QDh3Xpg@mail.gmail.com>
+References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
+	<1433314143-4478-19-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Ed Avis <eda@waniasset.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 19:35:39 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 19:39:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0CZi-0008DL-EF
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 19:35:34 +0200
+	id 1Z0CcO-0001jR-F8
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 19:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241AbbFCRf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 13:35:29 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:36027 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753345AbbFCRf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 13:35:29 -0400
-Received: by ieclw1 with SMTP id lw1so18641378iec.3
-        for <git@vger.kernel.org>; Wed, 03 Jun 2015 10:35:28 -0700 (PDT)
+	id S1755349AbbFCRiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 13:38:16 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:34284 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754913AbbFCRiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 13:38:15 -0400
+Received: by qkoo18 with SMTP id o18so9774960qko.1
+        for <git@vger.kernel.org>; Wed, 03 Jun 2015 10:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=LdM2cecImny5C6TkIm0ArwvJLSiuardPjCe2d+yB39E=;
-        b=UwP2AxSdJjqt2k4lTEjpdHF9qKWr3ycXieSXPsXPE4g74u8mSSlxfYy36lN1RxZBy3
-         TXfsmdI/xPHdzj7yihGch5Nk4E3t6scmyBrZEzU1DIFLgct5+RubmzmwvKPC1a53/SsV
-         z/hKdmnbNGLp3mN7x5Yk3olvzdJWRD1ODaRa7/VCtTkL4FHPiWdxIoeX33unvUoZXMpF
-         EfbDoasi63GWw4eCrELnKcEeczkxiWBoxtvwyQBdZBN8pb7ZKSme7Cup+JrkK6VAZOwN
-         DbH9iv1ZV0FhOb739BHvioU6orqEdydDRAPAUzVs5hv08epxkVaVcB1+iV6mmhAnqiou
-         WSsw==
-X-Received: by 10.107.25.199 with SMTP id 190mr20453279ioz.11.1433352928624;
-        Wed, 03 Jun 2015 10:35:28 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3140:53f3:e8c0:89b0])
-        by mx.google.com with ESMTPSA id r4sm12622570igh.9.2015.06.03.10.35.27
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 03 Jun 2015 10:35:28 -0700 (PDT)
-In-Reply-To: <loom.20150603T114527-151@post.gmane.org> (Ed Avis's message of
-	"Wed, 3 Jun 2015 09:55:05 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=TF5EevIsNzz9iziR7vOYGrGTQ8mDUZPlbDR3zelNx4I=;
+        b=XIR6LGj2WcDWYhSFbZIYuheFWL5PRoxEZ7SvSrjtf5N9WF9IJgFGlMtewyvVIZL7u2
+         7YLITA/kIE54vBxxkqy7lbjnfyfAsF1MaRnrsNbEFfYHAUcgphV6la/kS8MVnH9syCXK
+         sNASuByYSQpQAH0z/jwGpGvr6brIE882mLfmdVNV8D5MJVCiiBy70l8frqtbycgPZXfv
+         Pn440w0K+lW0pgrEy3spMIyXm5rlEZxiOFCJW7CzUGIvAR/Cm5S71Xa4lRS+adh59mZl
+         43Ej3Y1T+YfTKVpn+E2RY0TkNcIdjIwwiGCzgGgylg4Dz8mCtLPDjBpH8YDHRSV4Ovze
+         GyXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=TF5EevIsNzz9iziR7vOYGrGTQ8mDUZPlbDR3zelNx4I=;
+        b=ilUSIIgwQhyTwvb3iSK/TZ7IyaXnGaeP1vog/YbI/xvk2s5mK1DfDtswne/r371LfZ
+         bUViIdllhVEIA61gPpvsUzxy6BAQ0Y8gecn9gZCGcbxcZGpdTvNcgpvutJWNlXgeMuqZ
+         B3LzInKBaXr0KvvpCj2VZFhu6h9x6JluVevSVeyry3UvEXG74/RG83mpS0315rWPaAFs
+         mAeIivIRibggdc9YMFuql/atCmJnVWpxwEbCtcTcq1RiTSwvMjW1yTM2gM9KSyXK5VkL
+         5+dOq3Ynl2aC8O08h6UZraC/AVuUn6IkUSQljQDmUvJx0UldObPXT9zxNCteB2Zbucf1
+         k38w==
+X-Gm-Message-State: ALoCoQn2Ug7HRVkL0RmQjo2uacSOoH++ojtv5Fdu9/1EmC1FrndspI/CmkoDPAvAh8YU+3X9p7yT
+X-Received: by 10.55.42.82 with SMTP id q79mr61703041qkh.84.1433353094111;
+ Wed, 03 Jun 2015 10:38:14 -0700 (PDT)
+Received: by 10.140.43.117 with HTTP; Wed, 3 Jun 2015 10:38:13 -0700 (PDT)
+In-Reply-To: <1433314143-4478-19-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270707>
 
-Ed Avis <eda@waniasset.com> writes:
+On Tue, Jun 2, 2015 at 11:49 PM, Paul Tan <pyokagan@gmail.com> wrote:
+> Tweak the error messages printed by die_no_merge_candidates() to take
+> into account that we may be "rebasing against" rather than "merging
+> with".
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>
+> Notes:
+>     v2
+>
+>     * Decided to use fprintf_ln() for the sake of code consistency, and for
+>       the added trailing newline.
+>
+>  builtin/pull.c | 15 ++++++++++++---
+>  1 file changed, 12 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index f5d437a..4e1ab5b 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -439,7 +439,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+>         const char *remote = curr_branch ? curr_branch->remote_name : NULL;
+>
+>         if (*refspecs) {
+> -               fprintf_ln(stderr, _("There are no candidates for merging among the refs that you just fetched."));
+> +               if (opt_rebase)
+> +                       fprintf_ln(stderr, _("There is no candidate for rebasing against among the refs that you just fetched."));
+> +               else
+> +                       fprintf_ln(stderr, _("There are no candidates for merging among the refs that you just fetched."));
+>                 fprintf_ln(stderr, _("Generally this means that you provided a wildcard refspec which had no\n"
+>                                         "matches on the remote end."));
+>         } else if (repo && curr_branch && (!remote || strcmp(repo, remote))) {
+> @@ -449,7 +452,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+>                         repo);
+>         } else if (!curr_branch) {
+>                 fprintf_ln(stderr, _("You are not currently on a branch."));
+> -               fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
+> +               if (opt_rebase)
+> +                       fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
+> +               else
+> +                       fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
 
-> If my personal experience is anything to go by, newcomers may fall into the
-> habit of running 'git checkout .' to restore missing files.
 
-Is that really true?  It all depends on why you came to a situation
-to have "missing files" in the first place, I would think, but "git
-checkout $path" is "I messed up the version in the working tree at
-$path, and want to restore them".  One particular kind of "I messed
-up" may be "I deleted by mistake" (hence making them "missing"), but
-is it so common to delete things by mistake, as opposed to editing,
-making a mess and realizing that the work so far was not improving
-things and wanting to restart from scratch?
+Now that you're using fprintf you could make use of its formatting
+capabilities, but then it occurred to me
+it's translated strings, so it's most likely better to not make it
+concise but rather easier for the translators
+by having each sentence written out in full.
+
+>                 fprintf_ln(stderr, _("See git-pull(1) for details."));
+>                 fprintf(stderr, "\n");
+>                 fprintf_ln(stderr, "    git pull <remote> <branch>");
+> @@ -461,7 +467,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+>                         remote_name = "<remote>";
+>
+>                 fprintf_ln(stderr, _("There is no tracking information for the current branch."));
+> -               fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
+> +               if (opt_rebase)
+> +                       fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
+> +               else
+> +                       fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
+>                 fprintf_ln(stderr, _("See git-pull(1) for details."));
+>                 fprintf(stderr, "\n");
+>                 fprintf_ln(stderr, "    git pull <remote> <branch>");
+> --
+> 2.1.4
+>
