@@ -1,76 +1,54 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC v3 2/4] git-am.txt: add configuration section in git
- am documentation
-Date: Wed, 03 Jun 2015 07:50:36 +0200
-Message-ID: <556E95AC.7040305@web.de>
-References: <1433266446-2845-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1433266446-2845-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+From: Tummala Dhanvi <dhanvicse@gmail.com>
+Subject: Minor bug report
+Date: Wed, 3 Jun 2015 11:24:19 +0530
+Message-ID: <CAMOUyJ_2snCaKcWNoOgH7aoHrdbUsCucqu_W_J3aH9_QQe1jEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 03 07:51:01 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 03 07:54:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z01Zp-0001qn-Jg
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 07:50:57 +0200
+	id 1Z01dd-0004jm-Gh
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 07:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbbFCFux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 01:50:53 -0400
-Received: from mout.web.de ([212.227.17.11]:63390 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750736AbbFCFuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 01:50:51 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0Ljaiq-1ZWtQ70Aky-00bYnb; Wed, 03 Jun 2015 07:50:47
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <1433266446-2845-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-X-Provags-ID: V03:K0:5AZN4c6sEuYe44P1OUPnSd8TuZ2AP14HmNmPq1/GOu35MUH2Fmx
- b95xdXwcK4aQLkQOtHml/GZsU4HD0v60CcgBh4g77dG6i0iXO850JFclNhBxau0p/MzDssa
- pAIsQmPBb8jw3PlyehV0VfoIAYTyzNqjGk+uilRQ5lNMD6dCgC3vNsbLqj62oxCdVxCuKEZ
- JDS7S5HCkxvbRy2QrHwHg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751794AbbFCFyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 01:54:44 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:34040 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752744AbbFCFyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 01:54:40 -0400
+Received: by iecwk5 with SMTP id wk5so5228633iec.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2015 22:54:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=WTRRH+foRTq8gprmB+OjtmXVPEBhlR0GAmg2BzkZsFk=;
+        b=UBzo+z2q5e47On3WO6NMEzNrJP9Y99F+pSH+I4MSymhf1pUKTrI7IHhIEzPxNEjsD0
+         DojyK2j2iL6/CAsZrurqVa6TzCXcfiLndDhBMTiWN8J4UwfwTqCkEBCt14SNQ398t5Z/
+         kNnWr+QiBr4yPzDr/tN+zRFuhGCamQAYYFm0453tWFuXaRaa0e2VMnudhoRVehCEFXmQ
+         B2ayQjd9N1mPQPtxd8GyoawXCUO6AQcuFeA73HF1JJyJ7rivgexLLqPzhMgLOUmjqr/0
+         JoZal0iX5Hp5npJ7DYgfIMeBjmfK+razuEXvp9ET5rkY9q4/CgLE91FOlDn7fM91up69
+         +y9w==
+X-Received: by 10.107.134.153 with SMTP id q25mr37374887ioi.27.1433310879975;
+ Tue, 02 Jun 2015 22:54:39 -0700 (PDT)
+Received: by 10.50.132.97 with HTTP; Tue, 2 Jun 2015 22:54:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270629>
 
-On 06/02/2015 07:34 PM, Remi Lespinet wrote:
-> []
-> Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-> ---
->   Documentation/git-am.txt | 16 +++++++++++++---
->   1 file changed, 13 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 0d8ba48..d412f6b 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -24,6 +24,16 @@ Splits mail messages in a mailbox into commit log message,
->   authorship information and patches, and applies them to the
->   current branch.
->   
-> +CONFIGURATION
-> +-------------
-> +
-> +am.keepcr::
-> +	If true, git-am will call git-mailsplit for patches in mbox format
-> +	with parameter '--keep-cr'. In this case git-mailsplit will
-> +	not remove `\r` from lines ending with `\r\n`. Can be overridden
-> +	by giving '--no-keep-cr' from the command line.
-(This documentation assumes that am.keepcr is true)
-Would it be clearer to put the "overridden" into one line and write like 
-this:
+When we do create a new empty git repo using git init or create a
+orphan branch and do a git log then I am getting an error saying that
+fatal: bad default revision 'HEAD'
 
-Can be overridden by giving '--no-keep-cr' or '--keep-cr' from the command line.
+Well the error should have been something like no commits to show
+either the branch is orphan / you didn't make any commits in the new
+repo
+
+I would like to fix the trival bug myself can some one point me in the
+right direction to fix it
