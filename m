@@ -1,123 +1,142 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 19/19] pull: remove redirection to git-pull.sh
-Date: Wed, 3 Jun 2015 10:49:54 -0700
-Message-ID: <CAGZ79kaR_MFgbo6F9=1s9h5OtXSDu6526iKT_hVcUCq9vpf8-A@mail.gmail.com>
-References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
-	<1433314143-4478-20-git-send-email-pyokagan@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFCv2 1/2] git-rebase -i: add command "drop" to remove a commit
+Date: Wed, 03 Jun 2015 10:52:14 -0700
+Message-ID: <xmqqd21cy90x.fsf@gitster.dls.corp.google.com>
+References: <1433152643-4292-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1433152643-4292-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<xmqqvbf7757q.fsf@gitster.dls.corp.google.com>
+	<563732680.250935.1433180720935.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpqoakz1dke.fsf@anie.imag.fr>
+	<150689518.4344.1433229813195.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpqa8wiwo33.fsf@anie.imag.fr>
+	<xmqqk2vm3udy.fsf@gitster.dls.corp.google.com>
+	<787870724.57987.1433322837954.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 19:50:01 2015
+	Stefan Beller <sbeller@google.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 03 19:52:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0Cng-00023Y-Ih
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 19:50:00 +0200
+	id 1Z0Cpz-0003ih-LH
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 19:52:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755802AbbFCRt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 13:49:57 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:32923 "EHLO
-	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753831AbbFCRtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 13:49:55 -0400
-Received: by qkhg32 with SMTP id g32so9969583qkh.0
-        for <git@vger.kernel.org>; Wed, 03 Jun 2015 10:49:54 -0700 (PDT)
+	id S1753831AbbFCRwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 13:52:19 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:37067 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753284AbbFCRwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 13:52:17 -0400
+Received: by igbsb11 with SMTP id sb11so20773172igb.0
+        for <git@vger.kernel.org>; Wed, 03 Jun 2015 10:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+JCVM89r9KOamnZgvl+aj48AhE4kIAJzbK8CUNpn51k=;
-        b=k+wNblefitKfvkW6XBsALkreE2SIzG0qL3RTQrrW6A2XDqZTGbAg1/E5yJ5VSA8Tif
-         W9EmBQICGeW79KRlswLFsALM5Mwtab97E7YOyBJbCO3uu5JdDI29qGXksYSpOjBNZO4g
-         5FAfkAa5dZ7OfVmVmpMFHQu5YLSX9Ezhj8TbRomOL2D6bqtbtXMIqDMop305ghzBB8jo
-         /Kjx+UHhsrLm1/TYUBLuhCI5PFYL6VXvWl24sEh0dG+DCVGuXadPOAqGL66PbUp6Jw8f
-         Zg+NqD/t+XZIh9CfghK7pXnxsY5FRz9DMTyCODCAT3jgsA6qUQWWWsX1dy5tIdZa4AR8
-         Z+bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=+JCVM89r9KOamnZgvl+aj48AhE4kIAJzbK8CUNpn51k=;
-        b=EithpIGx3Sa8fi7u9++TLowo0FXG+hTvYoXBgf8hpXKVpGh4VrAJGJvVwoPSGb7RMV
-         IE6b5KzYAICZfebr+CKrs6xqSnHWX/dVEidJHoCQAIVfnFOKR2jC7ADbANQNv/Q1zy3G
-         W+TzqXVGWluWeAXVQvYcdWp5Ylp9JgmjAjS+xrcyamfDze3jIsy2B57sBeSlmUVX0XCs
-         C+wizKlxM9QHd7GVEyaAZ1nU1CDmp+oPqnc3wIeHe5GqSIXBKT3qts/ploTleUgYq46W
-         LUcrK79CNvCXrj+iJ2T8H6NeiMiuwoM6+MRwW9c/Kca/p1wWHBLytigNgzLpCQ80jPRg
-         Mmpw==
-X-Gm-Message-State: ALoCoQmTx8jn3MW8X/L7dx2dzIsIJKJ2X8GosQN/868dlu7Wlv5M67J3aeCt5td/GNd4GGNmlUAK
-X-Received: by 10.140.132.17 with SMTP id 17mr39555422qhe.36.1433353794636;
- Wed, 03 Jun 2015 10:49:54 -0700 (PDT)
-Received: by 10.140.43.117 with HTTP; Wed, 3 Jun 2015 10:49:54 -0700 (PDT)
-In-Reply-To: <1433314143-4478-20-git-send-email-pyokagan@gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=NBN6q+0+6LcW/RFjWKrEj/Ogpqnu9efp/oNNiBHzF9w=;
+        b=b+XO/ywjKnp0GPDA6Qc/vSc6XOJ7K9T3yUrH7lldCVVjMl1Xyw2EBqrcRPFvfyQHpN
+         7udH3m5VAU5V0YqIR9W84866/abnQ8uIHPvg4HgKr8LxQ+Sfo26LMGfJj693c9uz2mEe
+         Y9cZyECn+PMjpQV7xJgsXIPLHOvxVKYUxgsOeBqm2cNeRC5bRxg2f504KT2QeotYCdTa
+         IOQjsyhyhBpwfSnx+CHW6cV8v5Fsu0CwwMBb4eUORjsTrTCpljb14p5F543sG+mjqN6+
+         UfnvZ+cEn0jXKFNxPIcHLZvVX9+5H9uu2mKRsh+aoP4Y3of1P2zcQtsL8Le4tjDk+ZxT
+         zQ5w==
+X-Received: by 10.107.136.197 with SMTP id s66mr42880343ioi.65.1433353936830;
+        Wed, 03 Jun 2015 10:52:16 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3140:53f3:e8c0:89b0])
+        by mx.google.com with ESMTPSA id u38sm15173871ioi.0.2015.06.03.10.52.15
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Jun 2015 10:52:16 -0700 (PDT)
+In-Reply-To: <787870724.57987.1433322837954.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Remi Galan Alfonso's message of "Wed, 3 Jun 2015 11:13:57 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270712>
 
-On Tue, Jun 2, 2015 at 11:49 PM, Paul Tan <pyokagan@gmail.com> wrote:
-> At the beginning of the rewrite of git-pull.sh to C, we introduced a
-> redirection to git-pull.sh if the environment variable
-> _GIT_USE_BUILTIN_PULL was not defined in order to not break test scripts
-> that relied on a functional git-pull.
->
-> Now that all of git-pull's functionality has been re-implemented in
-> builtin/pull.c, remove this redirection, and retire the old git-pull.sh
-> into contrib/examples/.
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+writes:
 
-The whole series was a pleasant read.
+> Junio C Hamano <gitster@pobox.com> writes: 
+>> As long as what is given to 'drop' 
+>> is checked when it matters (e.g. when the code in patch 2/2 tries 
+>> see if some commits in the original list are no longer there in 
+>> order to warn sees "drop foo bar" where "foo" is obviously not an 
+>> object name in the original list, that should be checked), it is 
+>> fine. And I agree 1/2 is not the place to do so, even though it may 
+>> be easier from the implementation point of view (which is why I 
+>> mentioned the possibility in the review of that patch). 
+>
+> I disagree, I think that that either the checking for the 'drop' 
+> command should either be in the 1/2 where it is introduced or in the 
+> function check_commits introduced by 2/2 but in a separate 
+> commit/patch. 
+> The 2/2 checks if there are removed commits to have the possibility to 
+> avoid silent loss of information. It is not its role to check if the 
+> SHA-1 following 'drop' are correct.
 
-Thanks,
-Stefan
+Suppose you started from this insn sheet:
 
-> ---
->  Makefile                                    | 1 -
->  builtin/pull.c                              | 7 -------
->  git-pull.sh => contrib/examples/git-pull.sh | 0
->  3 files changed, 8 deletions(-)
->  rename git-pull.sh => contrib/examples/git-pull.sh (100%)
->
-> diff --git a/Makefile b/Makefile
-> index 2057a9d..67cef1c 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -474,7 +474,6 @@ SCRIPT_SH += git-merge-octopus.sh
->  SCRIPT_SH += git-merge-one-file.sh
->  SCRIPT_SH += git-merge-resolve.sh
->  SCRIPT_SH += git-mergetool.sh
-> -SCRIPT_SH += git-pull.sh
->  SCRIPT_SH += git-quiltimport.sh
->  SCRIPT_SH += git-rebase.sh
->  SCRIPT_SH += git-remote-testgit.sh
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 4e1ab5b..dad49cf 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -805,13 +805,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->         unsigned char orig_head[GIT_SHA1_RAWSZ], curr_head[GIT_SHA1_RAWSZ];
->         unsigned char rebase_fork_point[GIT_SHA1_RAWSZ];
->
-> -       if (!getenv("_GIT_USE_BUILTIN_PULL")) {
-> -               const char *path = mkpath("%s/git-pull", git_exec_path());
-> -
-> -               if (sane_execvp(path, (char**) argv) < 0)
-> -                       die_errno("could not exec %s", path);
-> -       }
-> -
->         if (!getenv("GIT_REFLOG_ACTION"))
->                 set_reflog_message(argc, argv);
->
-> diff --git a/git-pull.sh b/contrib/examples/git-pull.sh
-> similarity index 100%
-> rename from git-pull.sh
-> rename to contrib/examples/git-pull.sh
-> --
-> 2.1.4
->
+    pick 2c9c1c5 gostak: distim doshes
+    pick e3b601d pull: use git-rev-parse...
+    pick eb2a8d9 pull: handle git-fetch'...
+
+and then after letting the user edit, you got this back:
+
+    pick 2c9c1c5 gostak: distim doshes
+    drop e3b601d pull: use git-rev-parse...
+    edit eb2a8d9 pull: handle git-fetch'...
+
+In the new world order to punish those who simply remove lines to
+signal that they want the commits omitted from replaying, you would
+want to see all commit object names that was in the original insn
+sheet appear in the post-edit insn sheet.  I'd presume that the way
+to do so is to collect all the object names from each insn sheet and
+compute the set difference.  The first one has three commit object
+names, the same three commit object names appear in the second one,
+and all is well.
+
+But what if you got this back after the user edits?
+
+    drop
+    pick 2c9c1c5 gostak: distim doshes
+    drop e3b601d pull: use git-rev-parse...
+    edit eb2a8d9 pull: handle git-fetch'...
+
+As a part of "collecting object names from the list before and after
+editing into two separate sets, and computing the set difference in
+order to notice potential mistakes", you would need to make sure
+that you got these two sets collected _correctly_, but you do not
+know from the above sample input what the user wanted to do with the
+first line.  Did the user tried to drop something else but the
+object name has gone missing by mistake?  Did the user wanted to
+drop the first one but made mistake while editing 'pick' away into
+'drop'?
+
+Noticing and flagging malformed 'drop' lines (or line with any
+command, for that matter) as such is part of that process to make
+sure you collected the object names from the "after" image
+correctly, which is the job of 2/2 in your series (if I am reading
+the description of your series right).
+
+So logically I would think 2/2 is where the verification should
+happen, but doing it as a part of 1/2 may be easier to do.  The end
+result would not make a difference, and that is why I said it would
+be OK either way.
+
+I am puzzled as to what you are disagreeing with, and why.
