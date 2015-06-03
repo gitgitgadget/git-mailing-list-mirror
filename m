@@ -1,158 +1,94 @@
-From: =?UTF-8?q?Guillaume=20Pag=C3=A8s?= 
-	<guillaume.pages@ensimag.grenoble-inp.fr>
-Subject: [PATCH 4/4] status: add new tests for status during rebase -i
-Date: Thu,  4 Jun 2015 00:00:25 +0200
-Message-ID: <1433368825-24617-4-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-References: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 04 00:01:09 2015
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH 1/2] test for '!' handling in rev-parse's named commits
+Date: Wed, 3 Jun 2015 23:44:59 +0100
+Message-ID: <CAAKF_uYrjBsVY8YOmRtMU8jB5rA57r+-N_KboqwWL3YRRqeKAg@mail.gmail.com>
+References: <1433364854-30088-1-git-send-email-wmpalmer@gmail.com>
+ <1433364854-30088-2-git-send-email-wmpalmer@gmail.com> <xmqqbngwwjbd.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 00:45:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0GiQ-00030K-P7
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 00:00:51 +0200
+	id 1Z0HPb-0000cN-FI
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 00:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753284AbbFCWAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 18:00:48 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:34798 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753154AbbFCWAk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 18:00:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 4170F281C;
-	Thu,  4 Jun 2015 00:00:39 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fnOpElQvBDoF; Thu,  4 Jun 2015 00:00:39 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 2588E27E9;
-	Thu,  4 Jun 2015 00:00:39 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 1E5B120E4;
-	Thu,  4 Jun 2015 00:00:39 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ga5LgFy4ZWGr; Thu,  4 Jun 2015 00:00:39 +0200 (CEST)
-Received: from localhost.localdomain (pas38-h02-176-189-96-8.dsl.sta.abo.bbox.fr [176.189.96.8])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id A12A320DF;
-	Thu,  4 Jun 2015 00:00:38 +0200 (CEST)
-X-Mailer: git-send-email 2.4.2.342.g726a850
-In-Reply-To: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+	id S1754109AbbFCWpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 18:45:23 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:33456 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753998AbbFCWpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 18:45:21 -0400
+Received: by wiwd19 with SMTP id d19so3164948wiw.0
+        for <git@vger.kernel.org>; Wed, 03 Jun 2015 15:45:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=IpB6ecUdHyUzowVzAKNe/XBBzvXDa2Q3kc/sBQdOBuo=;
+        b=Uw7lICZ2JUeJPCQ23ak5MLVhl8G9aNXGjSXuFxfQFeX07ZJUyATtc1TXqIzuOiImSs
+         Bpn3QmkDm/zQxcne0uLjc4Ye+ETkioWJB34poXG/tQ6tJnXFviFg5Pf2mfkdmnz849qp
+         F8qy8dPjYr4u8OETiNkwVlCskKpuR3h26CIJBHmmp2beU6+DSW16UFTmaeIhpZilL4zD
+         jfacN1xF+Aczmd37WSngX7HF7TqN1awUOfQzlayfuHuKRnK/KQmrhC4yenJ7WzY2UvbH
+         yT3ED6lEBiK/CATk9saQ/qd6PspRLOTb/mGBqWKX+oO7pw3mlkqD84BN2Wa8zuupvyo4
+         SjpA==
+X-Received: by 10.180.83.6 with SMTP id m6mr46104765wiy.72.1433371520232; Wed,
+ 03 Jun 2015 15:45:20 -0700 (PDT)
+Received: by 10.28.170.73 with HTTP; Wed, 3 Jun 2015 15:44:59 -0700 (PDT)
+In-Reply-To: <xmqqbngwwjbd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270747>
 
----
- t/t7512-status-help.sh | 88 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+On Wed, Jun 3, 2015 at 10:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The /! sequence being reserved does not mean it was planned to be
+> used only for a single thing in the future, though.
+>
+> (snip)
+>
+> cf. http://thread.gmane.org/gmane.comp.version-control.git/40460/focus=40477
+>
 
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 4dd201a..dff912b 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -856,4 +856,92 @@ EOF
- 	test_i18ncmp expected actual
- '
- 
-+test_expect_success 'prepare for different number of commits rebased' '
-+	git reset --hard master &&
-+	git checkout -b several_commits &&
-+	test_commit one_commit main.txt one &&
-+	test_commit two_commit main.txt two &&
-+	test_commit three_commit main.txt three &&
-+	test_commit four_commit main.txt four
-+'
-+
-+
-+test_expect_success 'status: one command done nothing remaining' '
-+	FAKE_LINES=" exec_exit_15" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	ONTO=$(git rev-parse --short HEAD~3) &&
-+	(git rebase -i HEAD~3 || true)&&
-+       cat >expected <<EOF &&
-+interactive rebase in progress; onto $ONTO
-+Last command(s) done (1 command(s) done):
-+   exec exit 15
-+No command remaining.
-+You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
-+  (use "git commit --amend" to amend the current commit)
-+  (use "git rebase --continue" once you are satisfied with your changes)
-+
-+nothing to commit (use -u to show untracked files)
-+EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'status: two commands done, two remainings' '
-+	FAKE_LINES="1 exec_exit_15 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	ONTO=$(git rev-parse --short HEAD~3) &&
-+	COMMIT4=$(git rev-parse HEAD) &&
-+	COMMIT3=$(git rev-parse HEAD^) &&
-+	COMMIT2=$(git rev-parse HEAD^^) &&
-+	(git rebase -i HEAD~3 || true)&&
-+       cat >expected <<EOF &&
-+interactive rebase in progress; onto $ONTO
-+Last command(s) done (2 command(s) done):
-+   pick $COMMIT2 two_commit
-+   exec exit 15
-+Next command(s) to do (2 remaining command(s)):
-+   pick $COMMIT3 three_commit
-+   pick $COMMIT4 four_commit
-+  (use git rebase --edit-todo to view and edit)
-+You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
-+  (use "git commit --amend" to amend the current commit)
-+  (use "git rebase --continue" once you are satisfied with your changes)
-+
-+nothing to commit (use -u to show untracked files)
-+EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'status: more than two commands done, two remainings' '
-+	FAKE_LINES="1 2 exec_exit_15 3 4" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	ONTO=$(git rev-parse --short HEAD~4) &&
-+	COMMIT4=$(git rev-parse HEAD) &&
-+	COMMIT3=$(git rev-parse HEAD^) &&
-+	COMMIT2=$(git rev-parse HEAD^^) &&
-+	(git rebase -i HEAD~4 || true)&&
-+	cat >expected <<EOF &&
-+interactive rebase in progress; onto $ONTO
-+Last command(s) done (3 command(s) done):
-+   pick $COMMIT2 two_commit
-+   exec exit 15
-+  (see more at .git/rebase-merge/done)
-+Next command(s) to do (2 remaining command(s)):
-+   pick $COMMIT3 three_commit
-+   pick $COMMIT4 four_commit
-+  (use git rebase --edit-todo to view and edit)
-+You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
-+  (use "git commit --amend" to amend the current commit)
-+  (use "git rebase --continue" once you are satisfied with your changes)
-+
-+nothing to commit (use -u to show untracked files)
-+EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
- test_done
--- 
-2.4.2.342.g3cebd9b
+Thank you for that additional context, which I didn't see previously.
+
+> Using "/!Message" to match commits that do not match Message
+> directly goes against that extensivility design.
+>
+> We need to always remind ourselves that our latest shiny new toy
+> will not be the final new feature.  There always will be need to add
+> yet another new thing, and we need to keep the door open for them.
+>
+> Perhaps
+>
+>         /!-string       -> find commit without "string"
+>
+> or something?
+>
+
+What I'm thinking now is that "@^{/foo}" can be thought of as a
+potential "shorthand-form" of what could be "@^{/!(m=foo)}", in which
+case "@^{/!-foo}" could similarly be thought of as a potential
+shorthand-form of what could be "@^{/!(m-foo)}".
+
+So with that in mind, I agree that a syntax of "@^{/!-foo}" could indeed give
+me the results I'm looking for, while leaving room for the previously
+mentioned forms of future extension.
+
+I don't know if I consider those potential extensions to be commendable
+as a unified (and chain-able) syntax for finding revisions in the graph,
+or to be needless clutter which would only add "yet another way to specify
+the same thing". I mean, I like the idea of being able to specify that
+I want "The third parent of the first commit authored by Fred which is
+also an ancestor of a commit which touched a file in the libraries
+subdirectory", it sounds like maybe it would be good to be able to do
+that sort of thing without bringing xargs and shell expansion into the
+picture... but I certainly don't have a clue what it might be good for!
+
+In any case, it sounds like we have a good way forward for this smaller
+change, at least. I'll re-submit with the suggested syntax.
