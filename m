@@ -1,84 +1,85 @@
-From: David Deutsch <dd212303@gmail.com>
-Subject: Spontaneous "changes" upon checking out a commit
-Date: Wed, 3 Jun 2015 07:57:12 -0400
-Message-ID: <CAE-vyzgSqqidjsD7XByLY+T4G78yUtO-q3G63au4uNPO=1_tcQ@mail.gmail.com>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv4 2/2] git rebase -i: warn about removed commits
+Date: Wed, 3 Jun 2015 14:48:08 +0200 (CEST)
+Message-ID: <1592132582.69681.1433335688516.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1433331859-24832-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <1433331859-24832-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 03 13:57:30 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 03 14:48:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z07IN-0007bG-Ak
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 13:57:19 +0200
+	id 1Z085n-0002BY-N8
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 14:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754328AbbFCL5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 07:57:16 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:34262 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754297AbbFCL5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 07:57:14 -0400
-Received: by wibut5 with SMTP id ut5so99919605wib.1
-        for <git@vger.kernel.org>; Wed, 03 Jun 2015 04:57:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=7Z1PuLBksH50gvapj6ygJdKhbD93l2+FXB+inqhqJ5E=;
-        b=ThYlnOIpjGDyxhTTBzpiVpd+BMQvb7ozGb3gpp6PUQ0NZak1xdMvNL0jQPJvPYV3Sg
-         GnxP8a1aqwuTwB8hrVNveFIdaXqh1hjnhSKLqBqM3wohiVatEOFFpfHC8uAzk2UEITnm
-         HJfrRlGLYjBCcyZGaCxrry0Np4aglLM+gZXOzcEhID7hjVSEtOu1DssbNaGtXqsC9LpD
-         JNQ305VX42id4qSzwKgoAHiOLugZLgxUabzSkkbWwbsGZWxPftxL9I/OP2khtxJZhSDo
-         GTmswhdZlKdLhn7UxyqIqOaUpAlLhwj2EJdMmFGJehxmrD/+fIaqr7zbP7xWpvvgSiHP
-         7c5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to:content-type;
-        bh=7Z1PuLBksH50gvapj6ygJdKhbD93l2+FXB+inqhqJ5E=;
-        b=Z8k7NDyNHDeaAnQnSK2wznLrf+HSGbvtctpKlnvffUhL5fKw4KUVw6qBvCjoIwT2iO
-         nUb4teahUjW/MRe/wstL6q5aj6UDBKDK6dobSR9OjUEGAVNLCNbqClskAZ6N8zLxbq0P
-         fi5LJp/FaYIzUfH4Wf0dRF118HbEizhtYjWb0ITEdTqFZt0nqUxW6/nA8rkr5s1Knuy1
-         j6whHHH7P0ZZMNtO96cfwmBmJJESjD98teOyBtUmiAiyBkOsPq5bzY/PoPmN+EZlHLEz
-         TXrw46y22d7MSpFDKoHuXH5/1Iaqjvnwk7fsCikoRt6L+oEsEPYsem3/++m7wlabL07H
-         ML8A==
-X-Gm-Message-State: ALoCoQlmMSu+eEi4TtlbuX9nrlj+Yr4hAY5NiYMFHfNqvVpk6r/3A3brqBA2PCCcjrnxb9KU9z2j
-X-Received: by 10.194.172.72 with SMTP id ba8mr60502113wjc.136.1433332632743;
- Wed, 03 Jun 2015 04:57:12 -0700 (PDT)
-Received: by 10.27.12.170 with HTTP; Wed, 3 Jun 2015 04:57:12 -0700 (PDT)
-X-Google-Sender-Auth: uhA-YaULowDZ_r8lQCNRFF5d4Jw
+	id S1755927AbbFCMsR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 08:48:17 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:59044 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758721AbbFCMsF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 3 Jun 2015 08:48:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 15F8D3637;
+	Wed,  3 Jun 2015 14:48:01 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J-jTyezszXHg; Wed,  3 Jun 2015 14:48:01 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id F0C6A2B27;
+	Wed,  3 Jun 2015 14:48:00 +0200 (CEST)
+In-Reply-To: <1433331859-24832-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git rebase -i: warn about removed commits
+Thread-Index: 3r32SGfbiUuM5zMej/knlEronv7mDw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270681>
 
-When I checkout a particular commit in my repo and immediately do a
-git status, there is a file that show up as changed. If I look at the
-SHAs for my working copy and the copy in the index/repo, they are
-indeed different. The working copy has carriage returns, and while I
-*suspect* the copy in the index/repo does not have them, the output
-from git cat-file on the repo SHA does have them. In fact, if I
-redirect that output to a file and do a git hash-object of that file,
-I get back the the same SHA as the working copy.
+Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+> +                comm -2 -3 "$todo".oldsha1 "$todo".newsha1 >"$todo".=
+miss
+> +
+> +                # Make the list user-friendly
+> +                opt=3D"--no-walk=3Dsorted --format=3Doneline --abbre=
+v-commit --stdin"
+> +                git rev-list $opt <"$todo".miss >"$todo".miss+
+> +                mv "$todo".miss+ "$todo".miss
+> +
+> +                # Check missing commits
 
-Doing a git checkout on the file changes nothing, i.e. it is still
-marked as changed in git status. Trying to checkout another commit
-fails, as my "changes" to the file would be overwritten by the
-checkout. Doing a git diff on the file returns nothing.
+=46ound a bug here, got an error message from git rev-list if
+"$todo".miss is empty.
 
-The repo has a .gitattributes file, which starts out with "* text=auto
-!eol". Every file in the repo is explicitly listed in .gitattributes
-as -text, *except* the file that has the spontaneous "changes". The
-file's suffix is .cs, which I thought was automatically considered
-text anyway. On my machine, core.autocrlf is false.
+Now it looks like:
+> 		# Check missing commits
+> 		if test -s "$todo".miss
+> 		then
+> 			# Make the list user-friendly
+> 			opt=3D"--no-walk=3Dsorted --format=3Doneline --abbrev-commit --std=
+in"
+> 			git rev-list $opt <"$todo".miss >"$todo".miss+
+> 			mv "$todo".miss+ "$todo".miss
+>=20
+> 			warn "Warning: some commits may have been dropped" \
 
-This is running on Windows. Git version is 1.9.5.msysgit.1.
+Thus the empty case is tested by the test -s of the warnings.
 
-Does anyone know what might be going on here? It is almost as if git
-is adding the CRs to the file at checkout, but not "realizing" that
-when it comes to deciding if there are local changes.
+By the way, should I add --quiet to the options of the call to git
+rev-list?
 
-
-Thanks for any insight.
+R=C3=A9mi
