@@ -1,109 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFCv4 1/2] git-rebase -i: add command "drop" to remove a commit
-Date: Wed, 03 Jun 2015 11:02:27 -0700
-Message-ID: <xmqq8uc0y8jw.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv4 2/2] git rebase -i: warn about removed commits
+Date: Wed, 03 Jun 2015 20:06:16 +0200
+Message-ID: <vpqd21c8y5j.fsf@anie.imag.fr>
 References: <1433331859-24832-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1433331859-24832-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<vpq1thsbsko.fsf@anie.imag.fr>
+	<758899838.77480.1433354006473.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: Git List <git@vger.kernel.org>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
 	Louis-Alexandre Stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-To: Galan =?utf-8?Q?R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 03 20:02:36 2015
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 03 20:06:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0Czr-0002sX-3H
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 20:02:35 +0200
+	id 1Z0D3i-0005pZ-DX
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 20:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755450AbbFCSCb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2015 14:02:31 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:32790 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754863AbbFCSC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 14:02:29 -0400
-Received: by igbpi8 with SMTP id pi8so117813581igb.0
-        for <git@vger.kernel.org>; Wed, 03 Jun 2015 11:02:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=LjTrAgDo8xP2kLWXccZ9qgwke97RqUWFxndYAPhbyCs=;
-        b=ck+0P5+y5kkJKJmn0SLGZVyC4yVC/VkFo5tctJDK/pw6q5+aZS56sF/G7oIaAKBZme
-         5OpoGjnvkL7qPs88ivTYu41KlK9pVL59II24r69w8wSHi0JUY5lAp/2Ej7TwO7AQTeiK
-         ufyO79Rt6yLD30404sa9TWTV9YL49k70jQhTsPOlY8kYeUHBgWEzbZtdIiMcgMFO9Z2J
-         A3GRUISpgB7KNUKkW0JDZrWyXHiEs/OyngCa91GGFyKrstJ11q9U8WWFmJsmnc0XVAKJ
-         Q1oWnOVnWOtHL2CumPo7GobeG9FQtn+zD8uI/UixWZcveNs4zDLpJFs6BTo95TLackEM
-         CR9g==
-X-Received: by 10.50.61.161 with SMTP id q1mr6804609igr.12.1433354549102;
-        Wed, 03 Jun 2015 11:02:29 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:9816:1e41:550:d20e])
-        by mx.google.com with ESMTPSA id a139sm15188672ioa.14.2015.06.03.11.02.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 03 Jun 2015 11:02:28 -0700 (PDT)
-In-Reply-To: <1433331859-24832-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	("Galan =?utf-8?Q?R=C3=A9mi=22's?= message of "Wed, 3 Jun 2015 13:44:18
- +0200")
+	id S1756219AbbFCSGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 14:06:31 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33684 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751862AbbFCSG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 14:06:29 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t53I6EYl022611
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 3 Jun 2015 20:06:14 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t53I6Gtm011799;
+	Wed, 3 Jun 2015 20:06:16 +0200
+In-Reply-To: <758899838.77480.1433354006473.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Remi Galan Alfonso's message of "Wed, 3 Jun 2015 19:53:26 +0200
+	(CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Jun 2015 20:06:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t53I6EYl022611
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1433959576.2038@xP/8yH3Af8ZZRw4LTThvxA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270715>
 
-Galan R=C3=A9mi  <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
 
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index dc3133f..869cc60 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -152,6 +152,7 @@ Commands:
->   s, squash =3D use commit, but meld into previous commit
->   f, fixup =3D like "squash", but discard this commit's log message
->   x, exec =3D run command (the rest of the line) using shell
-> + d, drop =3D remove commit
-> =20
->  These lines can be re-ordered; they are executed from top to bottom.
-> =20
-> @@ -508,6 +509,23 @@ do_next () {
->  	"$comment_char"*|''|noop)
->  		mark_action_done
->  		;;
-> +	drop|d)
-> +		if test -z $sha1
-> +		then
-> +			warn "Missing SHA-1 in 'drop' command."
-> +			die "Please fix this using 'git rebase --edit-todo'."
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> You're using $1 and $2 only to redirect input and output. I would find
+>> it more elegant to write todo_list_to_sha_list as a filter, and do the
+>> redirection in the call site (to keep the option of using
+>> todo_list_to_sha_list in a pipe).
+>
+> If I understood correctly, then the calling line would look like:
+>> todo_list_to_sha_list <"$todo".backup >"$todo".oldsha1
+> ?
 
-Is this a sensible piece of advice, though?  The user edited the
-line away and it does not have the commit object name anymore.
-How does she "fix" it in the editor?  The same puzzlement applies
-to the other message.
+Yes.
 
-> +		sha1_verif=3D"$(git rev-parse --verify --quiet $sha1^{commit})"
-> +		if test -z $sha1_verif
+> Should I do the same for the function warn_file ?
+> Meaning
+>> warn_file <"$todo".miss
+> instead of
+>> warn_file "$todo".miss
 
-As you are not using the returned string at all, instead of wasting
-a shell variable, it would be better to decide to come into this
-block by using the exit status from rev-parse (it exits with
-non-zero status upon failure).
+If you do so, then warn_file won't be a good name anymore since you'd be
+able to read from a pipe too.
 
-> +		then
-> +			warn "'$sha1' is not a SHA-1 or does not represent" \
-> +				"a commit in 'drop' command."
-> +			die "Please fix this using 'git rebase --edit-todo'."
-> +		fi
-> +
-> +		mark_action_done
-> +		;;
->  	pick|p)
->  		comment_for_reflog pick
+Anyway, it's really a matter of personnal preference. I would keep
+warn_file as-is and change todo_list_to_sha_list, but feel free to
+ignore this point if you disagree.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
