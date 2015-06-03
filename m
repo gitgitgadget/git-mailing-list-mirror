@@ -1,83 +1,115 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] ewah/bitmap: silence warning about MASK macro
+Subject: [PATCH 1/2] ewah/bitmap: silence warning about MASK macro
  redefinition
-Date: Wed, 3 Jun 2015 02:38:13 -0400
-Message-ID: <20150603063812.GA21319@peff.net>
-References: <1433281675-24893-1-git-send-email-sunshine@sunshineco.com>
- <xmqqegltzriq.fsf@gitster.dls.corp.google.com>
- <20150603045117.GC15989@peff.net>
- <CAPig+cR3Xt5FNSYbDPhW=m5aEOMq8mCLRSe+mjYfVvdS0R382A@mail.gmail.com>
+Date: Wed, 3 Jun 2015 02:39:17 -0400
+Message-ID: <20150603063917.GA29008@peff.net>
+References: <20150603063812.GA21319@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 08:38:34 2015
+X-From: git-owner@vger.kernel.org Wed Jun 03 08:39:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z02Jp-0004AC-Dc
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 08:38:29 +0200
+	id 1Z02Ki-0004pB-P2
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jun 2015 08:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259AbbFCGiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2015 02:38:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40195 "HELO cloud.peff.net"
+	id S1752928AbbFCGjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2015 02:39:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40200 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750736AbbFCGiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2015 02:38:16 -0400
-Received: (qmail 7197 invoked by uid 102); 3 Jun 2015 06:38:15 -0000
+	id S1751945AbbFCGjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2015 02:39:20 -0400
+Received: (qmail 7301 invoked by uid 102); 3 Jun 2015 06:39:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 01:38:15 -0500
-Received: (qmail 16672 invoked by uid 107); 3 Jun 2015 06:38:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 01:39:20 -0500
+Received: (qmail 16703 invoked by uid 107); 3 Jun 2015 06:39:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 02:38:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jun 2015 02:38:13 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Jun 2015 02:39:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jun 2015 02:39:17 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPig+cR3Xt5FNSYbDPhW=m5aEOMq8mCLRSe+mjYfVvdS0R382A@mail.gmail.com>
+In-Reply-To: <20150603063812.GA21319@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270633>
 
-On Wed, Jun 03, 2015 at 02:28:10AM -0400, Eric Sunshine wrote:
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-> On Wed, Jun 3, 2015 at 12:51 AM, Jeff King <peff@peff.net> wrote:
-> > Subject: [PATCH] ewah: use less generic macro names
-> >
-> > The ewah/ewok.h header pollutes the global namespace with
-> > "BITS_IN_WORD", without any specific notion that we are
-> > talking about the bits in an eword_t. We can give this the
-> > more specific name "BITS_IN_EWORD".
-> >
-> > Likewise, ewah/bitmap.c uses the generic MASK and BLOCK
-> > macro names. These are local to the .c file, but we have the
-> > opposite problem: on PowerPC Mac OS X (10.5.8 "Leopard" with
-> > Xcode 3.1), system header /usr/include/ppc/param.h[1]
-> 
-> The [1] has no meaning anymore, so: s/\[1\]//
+On PowerPC Mac OS X (10.5.8 "Leopard" with Xcode 3.1),
+system header /usr/include/ppc/param.h[1] pollutes the
+preprocessor namespace with a macro generically named MASK.
+This conflicts with the same-named macro in ewah/bitmap.c.
+We can avoid this conflict by using a more specific name.
 
-Oops, I meant to include your footnote.
+[1]: Included indirectly via:
+     git-compat-util.h ->
+     sys/sysctl.h ->
+     sys/ucred.h ->
+     sys/param.h ->
+     machine/param.h ->
+     ppc/param.h
 
-> > I'm also happy to split it into two patches, and make Eric the author on
-> > the MASK part.
-> 
-> I don't mind being an author of a patch, so splitting works for me,
-> however, I'm also fine with whatever you and Junio prefer. (And, in
-> retrospect, I agree that renaming the macros here is preferable over
-> the #undef approach.)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ewah/bitmap.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-After reflecting, I think splitting it into two patches makes more
-sense. I mostly noticed that we were touching the same lines, but of
-course it is not a problem to have two related patches in order. :)
-
-So here is what I propose:
-
-  [1/2]: ewah/bitmap: silence warning about MASK macro redefinition
-  [2/2]: ewah: use less generic macro name
-
-I put yours first, because it solves an actual problem. We can drop 2/2
-if we decide it's just churn.
-
--Peff
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index 710e58c..2af94f6 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -20,8 +20,8 @@
+ #include "git-compat-util.h"
+ #include "ewok.h"
+ 
+-#define MASK(x) ((eword_t)1 << (x % BITS_IN_WORD))
+-#define BLOCK(x) (x / BITS_IN_WORD)
++#define EWAH_MASK(x) ((eword_t)1 << (x % BITS_IN_WORD))
++#define EWAH_BLOCK(x) (x / BITS_IN_WORD)
+ 
+ struct bitmap *bitmap_new(void)
+ {
+@@ -33,7 +33,7 @@ struct bitmap *bitmap_new(void)
+ 
+ void bitmap_set(struct bitmap *self, size_t pos)
+ {
+-	size_t block = BLOCK(pos);
++	size_t block = EWAH_BLOCK(pos);
+ 
+ 	if (block >= self->word_alloc) {
+ 		size_t old_size = self->word_alloc;
+@@ -45,22 +45,22 @@ void bitmap_set(struct bitmap *self, size_t pos)
+ 			(self->word_alloc - old_size) * sizeof(eword_t));
+ 	}
+ 
+-	self->words[block] |= MASK(pos);
++	self->words[block] |= EWAH_MASK(pos);
+ }
+ 
+ void bitmap_clear(struct bitmap *self, size_t pos)
+ {
+-	size_t block = BLOCK(pos);
++	size_t block = EWAH_BLOCK(pos);
+ 
+ 	if (block < self->word_alloc)
+-		self->words[block] &= ~MASK(pos);
++		self->words[block] &= ~EWAH_MASK(pos);
+ }
+ 
+ int bitmap_get(struct bitmap *self, size_t pos)
+ {
+-	size_t block = BLOCK(pos);
++	size_t block = EWAH_BLOCK(pos);
+ 	return block < self->word_alloc &&
+-		(self->words[block] & MASK(pos)) != 0;
++		(self->words[block] & EWAH_MASK(pos)) != 0;
+ }
+ 
+ struct ewah_bitmap *bitmap_to_ewah(struct bitmap *bitmap)
+-- 
+2.4.2.745.g0aa058d
