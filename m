@@ -1,95 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] index-pack: fix truncation of off_t in comparison
-Date: Thu, 04 Jun 2015 10:28:12 -0700
-Message-ID: <xmqqlhfzv0wj.fsf@gitster.dls.corp.google.com>
-References: <20150604123541.GA8888@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 04 19:28:35 2015
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v2 0/2] make commit --verbose work with --no-status
+Date: Fri,  5 Jun 2015 01:56:29 +0800
+Message-ID: <1433440591-30917-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 04 19:57:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0YwF-0003yS-RD
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 19:28:20 +0200
+	id 1Z0ZO4-0000RV-9O
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 19:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920AbbFDR2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 13:28:15 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:35243 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753459AbbFDR2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 13:28:15 -0400
-Received: by igbzc4 with SMTP id zc4so14075056igb.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2015 10:28:14 -0700 (PDT)
+	id S932101AbbFDR47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 13:56:59 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36146 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753745AbbFDR46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 13:56:58 -0400
+Received: by pabqy3 with SMTP id qy3so33899113pab.3
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 10:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=e94UXcXvVSakF0HUGJCgDbW1cm/vD8PH0PMYYghSBOo=;
-        b=gAqHk3UUiCYBbWtaTbtTuniDxMPTZnvvGm3BJlJc9OGPyB/SCPjqi1dX/wMSEPjQ6D
-         BMuF6jUNFprRNjIw1jEXkPZqZTrcbG225wn9iHOOUiRz9mW3FL9Jza1tT6ebWh7/wbRM
-         cvoq/gOpJ4KDQnGabVCAB/Dvb4sm+OQ+Nkk32LTzyLS9Z9FvLowlEOrObtNEs5qMkT8g
-         UYytVJpCvUx4Bt8SO0fi2rZl4kOTsj4H9ECa7MjXfh+873TjycOJf5wpuWi6Fe/ecA6U
-         4FX35M+dN4kLr2EFfbSeSJ9rDzhqr2AcqKSMpAOiN9SwKyJpy7PEqztK84Bx9h2PfWa5
-         O1MQ==
-X-Received: by 10.50.64.244 with SMTP id r20mr35117148igs.33.1433438894749;
-        Thu, 04 Jun 2015 10:28:14 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:9816:1e41:550:d20e])
-        by mx.google.com with ESMTPSA id d4sm14630344igl.1.2015.06.04.10.28.13
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Jun 2015 10:28:14 -0700 (PDT)
-In-Reply-To: <20150604123541.GA8888@peff.net> (Jeff King's message of "Thu, 4
-	Jun 2015 08:35:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id;
+        bh=ryWadFt5JrFYa8MHYXksgXaBCRUFQbJuCpah8EymX5w=;
+        b=mJ+vnkqRs0kjwaQieQF3fBvhoepfXWkBNPzgkXAUIu6durxl99Sf201MKS5TZ6GD/L
+         7Akt1xmZ6oruB5vbNze2bKu8e9MWpjtKQtZHCGsSZHzIRaUBZhcOkhUHIcXwk0Ow/rPP
+         /dFQ3qaKTdQwRhKZnDIdw2PLNIpaYfnUB0C1RLrcMozAzCydOXwmFUNe0hELeUVWeC7D
+         em3nf68HUJ9gKY+uRh4Yi4lazE9fvbCMUXvuMcaoCyuqo2B8R/19qvYvy4vYjBXHiKF9
+         F4FZbiPa9lbKsjvd14AxZNllB11pkhxnsmUhGF3Dam1jtcpbSLCdjPSTDLOIlXMuv5SC
+         V7Nw==
+X-Received: by 10.70.55.41 with SMTP id o9mr70452124pdp.80.1433440618225;
+        Thu, 04 Jun 2015 10:56:58 -0700 (PDT)
+Received: from localhost.localdomain ([202.156.104.43])
+        by mx.google.com with ESMTPSA id j9sm4453566pdm.53.2015.06.04.10.56.56
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 04 Jun 2015 10:56:57 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.581.g64f2558
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270789>
 
-Jeff King <peff@peff.net> writes:
+When running git-commit`, --verbose appends a diff to the prepared
+message, while --no-status omits git-status output; thus, one would
+expect --verbose --no-status to give a commit message with a diff of
+the commit without git-status output.
 
-> On top of nd/slim-index-pack-memory-usage, which introduced the bug (but
-> it is already in master).
+However, this is not what happens - the prepared commit message body is
+empty, entirely. (Needless to say, no diff is appended.) This patch
+series attempts to make this work, as one would expect.
 
-Thanks.
+[PATCH 1/2] extract setting of wt_status.commitable flag out of
+wt_status_print_updated()
 
-In this round, I decided to deliberately merge more iffy and larger
-topics to 'master' in early part of the cycle, and it seems to be
-paying off nicely ;-).
+Currently, the wt_status.commitable flag is set only when we call
+wt_status_print(). * Extract this logic, so that we don't have to go
+through the git-status output code just to set the flag.
 
-Will queue.
+* In fact, it is not set when --short or --porcelain are used. This
+  series does not attempt to fix the bug, though it should be trivial to
+  do so with this patch. See 9cbcc2a (demonstrate git-commit --dry-run
+  exit code behaviour, Feb 22 2014).
 
->  builtin/index-pack.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 3ed53e3..06dd973 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -616,7 +616,9 @@ static int compare_ofs_delta_bases(off_t offset1, off_t offset2,
->  	int cmp = type1 - type2;
->  	if (cmp)
->  		return cmp;
-> -	return offset1 - offset2;
-> +	return offset1 < offset2 ? -1 :
-> +	       offset1 > offset2 ?  1 :
-> +	       0;
->  }
->  
->  static int find_ofs_delta(const off_t offset, enum object_type type)
-> @@ -1051,7 +1053,9 @@ static int compare_ofs_delta_entry(const void *a, const void *b)
->  	const struct ofs_delta_entry *delta_a = a;
->  	const struct ofs_delta_entry *delta_b = b;
->  
-> -	return delta_a->offset - delta_b->offset;
-> +	return delta_a->offset < delta_b->offset ? -1 :
-> +	       delta_a->offset > delta_b->offset ?  1 :
-> +	       0;
->  }
->  
->  static int compare_ref_delta_entry(const void *a, const void *b)
+[PATCH 2/2] make commit --verbose work with --no-status
+
+Actual work here.
+
+-- 
+2.0.0.581.g64f2558
