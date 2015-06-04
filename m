@@ -1,102 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] status: give more information during rebase -i
-Date: Thu, 04 Jun 2015 10:19:00 -0700
-Message-ID: <xmqqtwunv1bv.fsf@gitster.dls.corp.google.com>
-References: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<1433368825-24617-3-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<vpqfv67zylq.fsf@anie.imag.fr>
+Subject: Re: [RFC] git-am: handling unborn branches
+Date: Thu, 04 Jun 2015 10:26:34 -0700
+Message-ID: <xmqqpp5bv0z9.fsf@gitster.dls.corp.google.com>
+References: <CACRoPnSmF0ym7ONnLAfL=o5ouSrP2Ucxdh40k6Ps-hnTsSUx4w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Guillaume =?utf-8?Q?Pag=C3=A8s?= 
-	<guillaume.pages@ensimag.grenoble-inp.fr>, git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 04 19:19:28 2015
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 19:26:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0YnM-0005i2-K6
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 19:19:08 +0200
+	id 1Z0Yug-0002q3-6Q
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 19:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565AbbFDRTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 13:19:04 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:34242 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753294AbbFDRTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 13:19:02 -0400
-Received: by iebmu5 with SMTP id mu5so5810470ieb.1
-        for <git@vger.kernel.org>; Thu, 04 Jun 2015 10:19:02 -0700 (PDT)
+	id S1752617AbbFDR0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 13:26:38 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:33422 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752348AbbFDR0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 13:26:37 -0400
+Received: by iebgx4 with SMTP id gx4so40893585ieb.0
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 10:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=dIRvqeaI8Cs/xEp223FF6BBJpj8/v4rZUDgJCJSTAA4=;
-        b=XJJHs4bblm5tq6a3Dfw9gMgjtU+rXaLwz7RkqUocSJR859Pkbhs0mDhCOLBIWWR309
-         /a53vdtosf4VmuKUI08v9Mcm4R1C+8csh8KEsvdy+1I5qMiR1PHMFYyTpenTFjLpTUAC
-         j2qvn2uCNcO61Hy6bA3pVOpwokIseYIyq4RuRSazHiiFuGjPvG4Z7htrqcXJky3EeE1M
-         NhLsuPH4PBDgllXxbsyB9obyxrP2pbUaMJkafYifSCaR0hjjRB4fmb3ArS0yhTIq0ZXs
-         Vr7FnI7NEVecVY1KORrHHAPKODZUIyTm1sid1U0xhQxX1Db5JmL58VemBUHpOtEKub3K
-         qKhg==
-X-Received: by 10.50.143.37 with SMTP id sb5mr35346111igb.44.1433438342389;
-        Thu, 04 Jun 2015 10:19:02 -0700 (PDT)
+        bh=a609piFdCl5pHhFa7It2L6XatSKWhH1DBnaUWBp2OxM=;
+        b=VrwiIJf6At6xaCRHDY+LJ3be9HiQoByWfjU3BtIpWjF0zDEBBO8m+QT6QMBFg7thYz
+         uyjV3cZHghZ+eAIoohOB6gzrbUqkmDrgDcf1ymSgEV0mFbtlCnr4EhsIY+zLx96M1u7s
+         q6InYBtJaYv/fxjOTdy9fvaoUqRxxitJx8w0MAHIinnqOXPu4sh7jAd4FCPqAggm+u/h
+         SRT2Bmx6sz7vtX6Hfqxmk7HGu64o/WX4hwxoFjQVgWXClPHbFlOXj7vqWoY+GwaW9pca
+         WVmy7rVFqme5LcILs6Lm7hc53X4jkrjwO+s2RmMFis7Ap3FUZM+UG44Gy7F+MHQfWXR3
+         +UxQ==
+X-Received: by 10.42.146.202 with SMTP id k10mr5727149icv.34.1433438796493;
+        Thu, 04 Jun 2015 10:26:36 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:9816:1e41:550:d20e])
-        by mx.google.com with ESMTPSA id f82sm1570730iod.44.2015.06.04.10.19.01
+        by mx.google.com with ESMTPSA id av6sm14616254igc.17.2015.06.04.10.26.35
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Jun 2015 10:19:01 -0700 (PDT)
-In-Reply-To: <vpqfv67zylq.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	04 Jun 2015 10:06:41 +0200")
+        Thu, 04 Jun 2015 10:26:35 -0700 (PDT)
+In-Reply-To: <CACRoPnSmF0ym7ONnLAfL=o5ouSrP2Ucxdh40k6Ps-hnTsSUx4w@mail.gmail.com>
+	(Paul Tan's message of "Thu, 4 Jun 2015 18:34:13 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270786>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Paul Tan <pyokagan@gmail.com> writes:
 
->> +void get_two_last_lines(char *filename, int *numlines, char **lines)
->> +{
->> +...
->> +}
->> +
->> +void get_two_first_lines(char *filename, int *numlines, char **lines)
->> +{
->> +...
->> +}
+> git-am generally supports applying patches to unborn branches.
+> However, there are 2 cases where git-am does not handle unborn
+> branches which I would like to address before the git-am rewrite to C:
 
-I had a handful of comments on these:
+> 1. am --skip
+>
+> For git am --skip, git-am.sh does a fast-forward checkout from HEAD to
+> HEAD, discarding unmerged entries, and then resets the index to HEAD
+> so that the index is not dirty.
+>
+>         git read-tree --reset -u HEAD HEAD
+>         orig_head=$(cat "$GIT_DIR/ORIG_HEAD")
+>         git reset HEAD
+>         git update-ref ORIG_HEAD $orig_head
+>
+> This requires a valid HEAD. Since git-am requires an empty index for
+> unborn branches in the patch application stage anyway, I think we
+> should discard all entires in the index if we are on an unborn branch?
 
- - Do we need two separate and overly specific functions like these,
-   i.e. "two" and "first/last"?
+Yes, and it should also remove the new files the failed application
+brought in to the working tree, if any, to match the "--skip" done
+in the normal case (i.e. when we already have a history to apply
+patches to), I would think.
 
- - Wouldn't people want to be able to configure the number of lines?
+> 2. am --abort
+>
+> For git am --abort, git-am.sh does something similar. It does a
+> fast-forward checkout from HEAD to ORIG_HEAD, discarding unmerged
+> entries, and then resets the index to ORIG_HEAD so that local changes
+> will be unstaged.
 
- - Do we really want get_two_{first,last}_LINES() functions?
+In general, the "apply to nothing" is more or less an afterthought
+and was not done as carefully as the rest of the program, so view
+whenever you see a strange behaviour as not a "strange spec" but
+likely to be a bug.  You would do OK if you imagine what should
+happen if you were doing the same operation on top of a commit that
+records an empty tree and try to match the behaviour to that case.
 
-   I am wondering if insn sheets these functions read include
-   comments, in which case get_n_{first,last}_commands() may be a
-   more correct name.
-
- - Wouldn't it be necessary for these functions to report the total
-   number of commands, instead of giving "void" back?  Otherwise how
-   would the caller produce summary like this:
-
-       An interactive rebase of 14 commits in progress.  You have
-       replayed 4 commits so far, the last few of which were:
-
-          da66b27 remote.c: provide per-branch pushremote name
-          f052154 remote.c: hoist branch.*.remote lookup out of
-
-       and 10 more commits to go, the next few of which are:
-
-          a9f9f8c remote.c: introduce branch_get_upstream helper
-          8770e6f remote.c: hoist read_config into remote_get_1
-       
-   Note that I am not suggesting the phrasing or presentation.  The
-   information content is what I am interested in.
+Thanks.
