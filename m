@@ -1,70 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] make commit --verbose work with --no-status
-Date: Thu, 04 Jun 2015 11:39:45 -0700
-Message-ID: <xmqqd21buxla.fsf@gitster.dls.corp.google.com>
-References: <1433440591-30917-1-git-send-email-rctay89@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Permission denied ONLY after pulling bundles
+Date: Thu, 4 Jun 2015 21:06:07 +0200
+Message-ID: <CAP8UFD1=96Y484GvG9ms2uiWm2uyWO0qE2Lh6SH2UwrwHpEF8w@mail.gmail.com>
+References: <CAJeiYQGUsB-9XYdnqDgoSy5JU-EVTbf-1OuTU5BGfpT9q6xKbg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 20:39:58 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, dario.ligorio@selex-es.com
+To: Rossella Barletta <rossella.barletta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 21:06:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0a3V-0007nx-08
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 20:39:53 +0200
+	id 1Z0aT3-0002y1-8E
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 21:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617AbbFDSjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 14:39:48 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:35305 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752501AbbFDSjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 14:39:47 -0400
-Received: by igbzc4 with SMTP id zc4so15611553igb.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2015 11:39:47 -0700 (PDT)
+	id S1752335AbbFDTGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 15:06:11 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:38375 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751632AbbFDTGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 15:06:09 -0400
+Received: by wibdt2 with SMTP id dt2so59664299wib.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 12:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=PXY8Ocpdi+WLUIC9cC3bAHyGpwHd1XKMUUWQLNF/d0A=;
-        b=XXA34rtaNgXnz7m1WoO83ilW48oVvTN9HPsLnGWcfo8f0S9T01XubSjrdA3lFPTLNa
-         eO4hKeS8JRbJgbzqpAn6jfrvEYAblmIO10HO51OFZZQhR3YkkYFYPKPuyIDw2dOSszjS
-         +NsMk2A8sEhKcSOY10wVnexF8tjYngj5oqTbZV9SXf1F567Gsi2R6mCJntsLxNrUCTgr
-         0AbzjsOmxDja8QUgvm3V2QhqXX7cCWy8DxAn5z70AqgToWrs1qo7zzblOU/92BpPgN7O
-         dMezy2p3x+I2rtz3i7WuCUCdr3bHqYuVHtdYQzRDpPeA7dvgwu77ZnV1rShJUlgdJsyI
-         e27g==
-X-Received: by 10.43.167.137 with SMTP id ne9mr5874115icc.7.1433443187065;
-        Thu, 04 Jun 2015 11:39:47 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:8c50:e66f:fc40:1825])
-        by mx.google.com with ESMTPSA id k74sm1703177iok.30.2015.06.04.11.39.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Jun 2015 11:39:46 -0700 (PDT)
-In-Reply-To: <1433440591-30917-1-git-send-email-rctay89@gmail.com> (Tay Ray
-	Chuan's message of "Fri, 5 Jun 2015 01:56:29 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mD+YZ3/DpWexOxuK4cj190wKGXqmBRce5G6ziqcyBbg=;
+        b=uGxkOEuV8x3N4+xUCVpvS4An+a+LvCkEVqHPD9W/eSp3f8xLt0eXRuxsE9atMIbw6c
+         f+ck4Q2N1uHCksHs6+XuH0UdEp0zzAEGxFalyvfJl6B5oRrzr8/WsJ6BR5Wsoz3wdD4u
+         FzSNYnenVkoWPgEtoHLJGeoeeeUM/I+DCvduH2MJRsQKgRCDgekIz9tbaU304bQ3j4Ef
+         vjoIN37AwJ5l5X2UIbV5VAR98BegcHG3931mJmGtCVDN+Lemv7lhuIHvC5P3CUmU3Fs7
+         JNzFZfyTDrNSQgXIV7zCIAxNGgboxf8Nqg2ViKe7yBrnX0joEeqagsA0+MEztVeuQ8di
+         oYuA==
+X-Received: by 10.194.95.132 with SMTP id dk4mr75256323wjb.88.1433444767806;
+ Thu, 04 Jun 2015 12:06:07 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Thu, 4 Jun 2015 12:06:07 -0700 (PDT)
+In-Reply-To: <CAJeiYQGUsB-9XYdnqDgoSy5JU-EVTbf-1OuTU5BGfpT9q6xKbg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270794>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Hi,
 
-> When running git-commit`, --verbose appends a diff to the prepared
-> message, while --no-status omits git-status output.
-
-The --verbose option is called --verbose and not --diff or --patch
-for a reason, though.  The default is to show extra information as
-comments, and verbose tells us to make that extra information more
-verbose.  We call that extra information "status", so it is natural
-for "--no-status" to drop that extra information.
-
-> ; thus, one would
-> expect --verbose --no-status to give a commit message with a diff of
-> the commit without git-status output.
+On Thu, Jun 4, 2015 at 3:04 PM, Rossella Barletta
+<rossella.barletta@gmail.com> wrote:
+> Dear git group,
 >
-> However, this is not what happens
+>
+> I would like to ask your help for a problem that we cannot fix in any way.
+>
+> We have a git repository in folder on Windows.
+>
+> Then we use VMware player on CentOS_6 on which we create a clone of
+> the git repository, after of course having mounted the directory in
+> which the repository is.
+>
+> So the repository is on windows and the clone on Linux.
+>
+> We are able to perfom all the git operations we need, except for the
+> pull .bundle, which is successful in itself but prevent us from
+> pushing after that.
 
-And for a good reason, I would think.
+It is not very clear how the bundle has been made, and on which
+machine you made it and you pulled from it.
+
+> As we try to push after pulling a .bundle in a branch we get the error message
+>
+> NODE1:fdp> git push
+> Counting objects: 1977, done.
+> Delta compression using up to 2 threads.
+> Compressing objects: 100% (423/423), done.
+> fatal: write error: Permission denied00 KiB | 158 KiB/s
+> error: pack-objects died of signal 13
+> error: pack-objects died with strange error
+
+Can you have a look at the machine you push to and see if some file or
+directory permissions changed between before and after you made the
+bundle or you pulled the bundle?
+
+> We have checked all the permissions, changed the users, recreated the
+> clone but nothing worked.
+
+What do you mean by checked all the permissions?
+You mean that permissions haven't changed at all since before you
+pulled the first bundle?
+
+> The push operation works perfectly until we pull a bundle. After
+> pulling a bundle we are not able to push anymore.We tryed to delete
+> the branches, recreate others and all works perfectly, also the
+> push.As we pull the .bundle we cannot get the permission to do the
+> push anymore.
+>
+> What has this to do with the bundle?
+
+Did you try to everything (cloning, creating a bundle, pulling it and
+pushing on the same machine to see if it makes a difference? Also did
+you try with another smaller fake repository?
+
+If you can reproduce with a smaller fake repo on just one machine it
+could help us reproduce on one of our machine and have a look.
+
+And could you tell us which version of git (using git --version) you
+are using on both machines?
+
+Thanks,
+Christian.
