@@ -1,98 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] log: diagnose empty HEAD more clearly
-Date: Thu, 4 Jun 2015 04:45:06 -0400
-Message-ID: <20150604084505.GC5771@peff.net>
-References: <CAMOUyJ_2snCaKcWNoOgH7aoHrdbUsCucqu_W_J3aH9_QQe1jEw@mail.gmail.com>
- <20150603062005.GA20580@peff.net>
- <CAPc5daU9VdndgkMFNmtiwhVdwyGQgDbFX3rrrsEEEUVewgs-dw@mail.gmail.com>
- <20150603081432.GA32000@peff.net>
- <xmqqpp5cyabx.fsf@gitster.dls.corp.google.com>
- <556FFEB8.4050407@atlas-elektronik.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Suggestion: make git checkout safer
+Date: Thu, 4 Jun 2015 05:01:00 -0400
+Message-ID: <CAEBDL5XcEWpXeVjYb9spvy1QHbODbuvcXxFRp7_-hq=RNemyXA@mail.gmail.com>
+References: <loom.20150603T104534-909@post.gmane.org>
+	<20150603090654.GD32000@peff.net>
+	<loom.20150603T110826-777@post.gmane.org>
+	<20150603093514.GF32000@peff.net>
+	<xmqqlhg0y9xj.fsf@gitster.dls.corp.google.com>
+	<20150603190616.GA28488@peff.net>
+	<xmqqiob4wkem.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tummala Dhanvi <dhanvicse@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 10:45:22 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Ed Avis <eda@waniasset.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 11:02:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0Qm4-0002qj-7B
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 10:45:16 +0200
+	id 1Z0R2T-0006x1-Cj
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 11:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbbFDIpM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2015 04:45:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41012 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751799AbbFDIpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 04:45:09 -0400
-Received: (qmail 17361 invoked by uid 102); 4 Jun 2015 08:45:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Jun 2015 03:45:09 -0500
-Received: (qmail 30056 invoked by uid 107); 4 Jun 2015 08:45:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Jun 2015 04:45:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Jun 2015 04:45:06 -0400
-Content-Disposition: inline
-In-Reply-To: <556FFEB8.4050407@atlas-elektronik.com>
+	id S1752074AbbFDJCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 05:02:09 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:34673 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751976AbbFDJBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 05:01:01 -0400
+Received: by iecwk5 with SMTP id wk5so31095338iec.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 02:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=IH+nxXR9mYIy1RKrrH1gZTFJTPW3auHVb2vm5Z6+DP8=;
+        b=X5KdtGTJqMsgGE/Hk2OGX/G2IuCHH9HcNClH/04lYH1BSNiy962alsmpx2RVmEN+US
+         bfXVUuwoy+YaLLycIKU+p24SyUdPHjU4ryP6nZgqdLFaXXN3mv4uMqshA3CwlEjXrQw6
+         idOzDDUzvdzQy/AKukPRcxGgAI29/sAe119gPtFuOpMWLW99tu8sErornWrOKd+SVUUT
+         qvMZQch5VclY9eA92RDIkSvqUbEKHa6VQzvenoBtHnkfwhGWEinr3pps+nvyA7SrFVY2
+         jeU9Yr9HUvA2AWBC9mOHDUF5F60IA78F2fh7FxNiSVqStoaZi2JGrXPbAH+M2y+ebnJs
+         anSg==
+X-Received: by 10.43.148.72 with SMTP id kf8mr3209606icc.76.1433408460482;
+ Thu, 04 Jun 2015 02:01:00 -0700 (PDT)
+Received: by 10.107.129.85 with HTTP; Thu, 4 Jun 2015 02:01:00 -0700 (PDT)
+In-Reply-To: <xmqqiob4wkem.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: QxwvYbI05SF2Veg71teHjt_gXdo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270763>
 
-On Thu, Jun 04, 2015 at 09:31:04AM +0200, Stefan N=C3=A4we wrote:
+On Wed, Jun 3, 2015 at 5:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+[snip]
+> [Footnote]
+>
+> *1* In the context of this discussion, after screwing up the change
+>     in hello.c, instead of expressing the wish to recover and to
+>     start from scratch in two separate commands, i.e.
+>
+>         rm hello.c && update-from-scm
+>
+>     they will learn to use a single command that is designed for
+>     that purpose, i.e.
+>
+>         checkout-from-scm hello.c
+>
+>     without the "rm" step, which _is_ an artificial workaround for
+>     their other SCMs that do not update from the repository unless
+>     they remove the files.
 
-> > +	if (!rev->pending.nr && !opt->def)
-> > +		die("you do not have a commit yet on your branch");
->=20
-> I am not a native english speaker but shouldn't this be:
->=20
->   "you do not have a commit on your branch yet"
+Just to be clear, Subversion doesn't require you to remove the file to
+restore it (I'm sure most of you know that, but just in case others
+didn't).  There is a one-step way to restore the file:
 
-Both are fine, as is:
+    svn revert hello.c
 
-  "you do not yet have a commit on your branch"
+Unfortunately, revert in the Git sense is about reverting commits, so
+there's a bit of friction between Subversion and Git's terminology.
+OTOH, once the team was educated how to think about it, "git checkout
+<path>" has been pretty natural to use.
 
-though I think yours is slightly more clear.
-
-If you are wondering at the reason, "yet" is an adverb modifying "have"=
-=2E
-So it may come before or after the verb. If we substitute a simpler ver=
-b
-(that does not need a direct object "a commit") and drop the
-prepositional phrase ("on your branch"), we can do either:
-
-  - you do not yet program
-
-  - you do not program yet
-
-If we add back in the prepositional phrase (which is really acting as a=
-n
-adverbial phrase, modifying the verb here), we can do it in either
-order:
-
-  - you do not program yet in the office
-
-  - you do not program in the office yet
-
-But the latter makes it more clear that the "yet" applies to "in the
-office".
-
-You can also add back in the object of the verb:
-
-  - you do not yet program computers
-
-but you would not want:
-
-  - you do not program yet computers
-
-because it splits the verb from its object.
-
-</grammar rant>
-
--Peff
+-John
