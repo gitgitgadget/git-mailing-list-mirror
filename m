@@ -1,73 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC v4 3/3] git-am: add am.threeWay config variable
-Date: Thu, 04 Jun 2015 17:11:47 +0200
-Message-ID: <vpqeglrik3w.fsf@anie.imag.fr>
-References: <1433430295-10805-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<1433430295-10805-3-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH mh/lockfile-retry] lockfile: replace random() by rand()
+Date: Thu, 4 Jun 2015 08:57:57 -0700
+Message-ID: <CAPc5daXsvYppq0=2EU=Ah=MMWtva4_Q8325h7g1phGiDx0RAgg@mail.gmail.com>
+References: <55695770.2040303@kdbg.org> <xmqq7frqat0m.fsf@gitster.dls.corp.google.com>
+ <55700F10.8030806@kdbg.org> <557039AE.3020107@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 04 17:12:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 04 17:58:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0WoQ-0005I0-7h
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 17:12:06 +0200
+	id 1Z0XXE-0006PB-Jz
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 17:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752669AbbFDPMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 11:12:00 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43122 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752108AbbFDPL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 11:11:59 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t54FBj4J023747
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 4 Jun 2015 17:11:45 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t54FBlTb000456;
-	Thu, 4 Jun 2015 17:11:47 +0200
-In-Reply-To: <1433430295-10805-3-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	(Remi Lespinet's message of "Thu, 4 Jun 2015 17:04:55 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 04 Jun 2015 17:11:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t54FBj4J023747
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434035508.74954@fyc979BvYfp1hSwcihw8Hw
+	id S1752187AbbFDP6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 11:58:19 -0400
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:36153 "EHLO
+	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752131AbbFDP6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 11:58:18 -0400
+Received: by oihb142 with SMTP id b142so34447657oih.3
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 08:58:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=Up7eGUt1bUYubPAYO2Q+EKq0PkJCG6sDHU7K07+Tiok=;
+        b=QKhscfBnIVuozKkWCFAf88Yo1cSbXzK2MztO7gwvpd2sEMY/tawvLGpqmh96+yKkyy
+         VEUGTHdz/ZdS+ystUhAjBq+30Y5VOaOiUI833OwJG7Zc+px6BnaVa2w20ymUjC7eII5T
+         WRQUHAFE/z++wSLJZ/7iGBsBOO8J+s9q16sthpVgJpc/t8KKOjErtEaWKLCu2jj3HoKG
+         6neuaTLV9Fgs0H3xO/QxGFMqGfMLzbCo6uHu95XXAqQavLrV3+tHIjuaxuW/xsJc1Vff
+         NCFP96yIJieCQU18zGOLoIDAsRfLsfdeBetf8xjvU0oL/u4VtlnUtcxzbFsKw2bZvu28
+         VaLw==
+X-Received: by 10.182.230.12 with SMTP id su12mr18409039obc.0.1433433498399;
+ Thu, 04 Jun 2015 08:58:18 -0700 (PDT)
+Received: by 10.202.202.131 with HTTP; Thu, 4 Jun 2015 08:57:57 -0700 (PDT)
+In-Reply-To: <557039AE.3020107@alum.mit.edu>
+X-Google-Sender-Auth: 6gYv7BtoILXMCgmIyHjPkmkHiq8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270781>
 
-Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+On Thu, Jun 4, 2015 at 4:42 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 06/04/2015 10:40 AM, Johannes Sixt wrote:
+> We *certainly* don't require high-quality random numbers for this
+> application. Regarding portability, there is one definite point in favor
+> of rand() (it's available on Windows) vs. Junio's recollection that
+> random() might have portability advantages, presumably on other platforms.
 
-> @@ -90,10 +90,13 @@ default.   You can use `--no-utf8` to override this.
->  
->  -3::
->  --3way::
-> +--no-3way::
->  	When the patch does not apply cleanly, fall back on
->  	3-way merge if the patch records the identity of blobs
->  	it is supposed to apply to and we have those blobs
-> -	available locally.
-> +	available locally. `--no-3way` can be used to override
-> +	am.threeWay configuration variable. For more information,
-> +	see am.threeWay in git-config(1).
+I agree that anything is OK in this codepath. I just suspected that whichever
+one we pick, there would be somebody who says "oh, my system lacks it",
+and we will end up adding one of compat/{rand,random}.c to emulate.
 
-... in linkgit:git-config[1].
+And when I anticipated that future, my inclination was to prefer random(),
+not rand(), used in the code, not the other way around. Yes, both are in
+POSIX, but I was getting the impression that rand() is on its way out
+(and rand_r() is already marked as obsolete).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Maybe the easiest thing would be to switch to using rand() and see if
+> the OS/2 and VMS users complain ;-)
+
+We can certainly go that route and I am fine with that as the solution for
+today, as long as somebody will remember this discussion when that
+complaint comes, and make compat/random.c, and switch the
+in-code use to random(), instead of sticking to use of rand() in code.
