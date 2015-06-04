@@ -1,86 +1,100 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Suggestion: make git checkout safer
-Date: Thu, 4 Jun 2015 05:01:00 -0400
-Message-ID: <CAEBDL5XcEWpXeVjYb9spvy1QHbODbuvcXxFRp7_-hq=RNemyXA@mail.gmail.com>
-References: <loom.20150603T104534-909@post.gmane.org>
-	<20150603090654.GD32000@peff.net>
-	<loom.20150603T110826-777@post.gmane.org>
-	<20150603093514.GF32000@peff.net>
-	<xmqqlhg0y9xj.fsf@gitster.dls.corp.google.com>
-	<20150603190616.GA28488@peff.net>
-	<xmqqiob4wkem.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: [RFC] git-am: handling unborn branches
+Date: Thu, 4 Jun 2015 18:34:13 +0800
+Message-ID: <CACRoPnSmF0ym7ONnLAfL=o5ouSrP2Ucxdh40k6Ps-hnTsSUx4w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Ed Avis <eda@waniasset.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 11:02:15 2015
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 04 12:34:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0R2T-0006x1-Cj
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 11:02:13 +0200
+	id 1Z0STd-0004R9-0z
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 12:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbbFDJCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 05:02:09 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:34673 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976AbbFDJBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 05:01:01 -0400
-Received: by iecwk5 with SMTP id wk5so31095338iec.1
-        for <git@vger.kernel.org>; Thu, 04 Jun 2015 02:01:00 -0700 (PDT)
+	id S1751335AbbFDKeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 06:34:16 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:33682 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbbFDKeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 06:34:15 -0400
+Received: by labpy14 with SMTP id py14so28659706lab.0
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 03:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=IH+nxXR9mYIy1RKrrH1gZTFJTPW3auHVb2vm5Z6+DP8=;
-        b=X5KdtGTJqMsgGE/Hk2OGX/G2IuCHH9HcNClH/04lYH1BSNiy962alsmpx2RVmEN+US
-         bfXVUuwoy+YaLLycIKU+p24SyUdPHjU4ryP6nZgqdLFaXXN3mv4uMqshA3CwlEjXrQw6
-         idOzDDUzvdzQy/AKukPRcxGgAI29/sAe119gPtFuOpMWLW99tu8sErornWrOKd+SVUUT
-         qvMZQch5VclY9eA92RDIkSvqUbEKHa6VQzvenoBtHnkfwhGWEinr3pps+nvyA7SrFVY2
-         jeU9Yr9HUvA2AWBC9mOHDUF5F60IA78F2fh7FxNiSVqStoaZi2JGrXPbAH+M2y+ebnJs
-         anSg==
-X-Received: by 10.43.148.72 with SMTP id kf8mr3209606icc.76.1433408460482;
- Thu, 04 Jun 2015 02:01:00 -0700 (PDT)
-Received: by 10.107.129.85 with HTTP; Thu, 4 Jun 2015 02:01:00 -0700 (PDT)
-In-Reply-To: <xmqqiob4wkem.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: QxwvYbI05SF2Veg71teHjt_gXdo
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=V7i6DkCP6InXjWwCogu60Tn+eNF5ZrX06Pee/+m3u1Y=;
+        b=0Y5gDns40RDE2cinUTYLpLMaUn2Oo2bckyWfcZTH7xOefpZeiBLdSGCUXSmBqK/rCx
+         mi7W6HXdMpFB7jjdIOjNZzDpNu7LTOCFRPs5cDE5TwIRFrLiiAeQR1b/5V1t+GzGDDRH
+         HTCmEvzMRdzwoudJpJAakr3I6oaguDyIK9S5Czkz1f/JgC075smZvKajowyLldusJa1A
+         pNAQy4rn1ebCJnFGzRl9xWkUZRU8eX+ROw4Gv00V+f6ROoa7eoGR4MlZkDuLvFI8Kvhj
+         hVvOld80yzg+2PBTv45hwQJ2YqjxRIjMhA3JbWTVhknV9SZI/Aj+it6LNoulVyOabr8G
+         YUuA==
+X-Received: by 10.152.164.193 with SMTP id ys1mr7434285lab.65.1433414053517;
+ Thu, 04 Jun 2015 03:34:13 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 4 Jun 2015 03:34:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270764>
 
-On Wed, Jun 3, 2015 at 5:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-[snip]
-> [Footnote]
->
-> *1* In the context of this discussion, after screwing up the change
->     in hello.c, instead of expressing the wish to recover and to
->     start from scratch in two separate commands, i.e.
->
->         rm hello.c && update-from-scm
->
->     they will learn to use a single command that is designed for
->     that purpose, i.e.
->
->         checkout-from-scm hello.c
->
->     without the "rm" step, which _is_ an artificial workaround for
->     their other SCMs that do not update from the repository unless
->     they remove the files.
+Hi,
 
-Just to be clear, Subversion doesn't require you to remove the file to
-restore it (I'm sure most of you know that, but just in case others
-didn't).  There is a one-step way to restore the file:
+git-am generally supports applying patches to unborn branches.
+However, there are 2 cases where git-am does not handle unborn
+branches which I would like to address before the git-am rewrite to C:
 
-    svn revert hello.c
+1. am --skip
 
-Unfortunately, revert in the Git sense is about reverting commits, so
-there's a bit of friction between Subversion and Git's terminology.
-OTOH, once the team was educated how to think about it, "git checkout
-<path>" has been pretty natural to use.
+For git am --skip, git-am.sh does a fast-forward checkout from HEAD to
+HEAD, discarding unmerged entries, and then resets the index to HEAD
+so that the index is not dirty.
 
--John
+        git read-tree --reset -u HEAD HEAD
+        orig_head=$(cat "$GIT_DIR/ORIG_HEAD")
+        git reset HEAD
+        git update-ref ORIG_HEAD $orig_head
+
+This requires a valid HEAD. Since git-am requires an empty index for
+unborn branches in the patch application stage anyway, I think we
+should discard all entires in the index if we are on an unborn branch?
+
+Or, the current behavior of git-am.sh will print some scary errors
+about the missing HEAD, but will then continue on to the next patch.
+If the index is not clean, it will then error out. Should we preserve
+this behavior? (without the errors about the missing HEAD)
+
+2. am --abort
+
+For git am --abort, git-am.sh does something similar. It does a
+fast-forward checkout from HEAD to ORIG_HEAD, discarding unmerged
+entries, and then resets the index to ORIG_HEAD so that local changes
+will be unstaged.
+
+        if safe_to_abort
+        then
+            git read-tree --reset -u HEAD ORIG_HEAD
+            git reset ORIG_HEAD
+        fi
+        rm -fr "$dotest"
+
+This, however, requires a valid HEAD and ORIG_HEAD. If we don't have a
+HEAD or ORIG_HEAD (because we were on an unborn branch when we started
+git am), what should we do? (Note: safe_to_abort returns true if we
+git am with no HEAD because $dotest/abort-safety will not exist)
+Should we discard all entires in the index as well? (Since we might
+think of the "original HEAD" as an empty tree?)
+
+Or, the current behavior of git-am.sh will print some scary errors
+about the missing HEAD and ORIG_HEAD, but will not touch the index at
+all, and still delete the rebase-apply directory. Should we preserve
+this behavior (without the errors)?
+
+Thanks,
+Paul
