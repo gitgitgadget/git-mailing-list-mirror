@@ -1,8 +1,7 @@
 From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFC v4 2/3] t4150-am: refactor am -3 tests
-Date: Thu,  4 Jun 2015 17:04:54 +0200
-Message-ID: <1433430295-10805-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-References: <1433430295-10805-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC v4 1/3] git-am.sh: fix initialization of the threeway variable
+Date: Thu,  4 Jun 2015 17:04:53 +0200
+Message-ID: <1433430295-10805-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Cc: git@vger.kernel.org,
 	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
@@ -12,116 +11,69 @@ Cc: git@vger.kernel.org,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 17:05:26 2015
+X-From: git-owner@vger.kernel.org Thu Jun 04 17:05:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0Who-000076-GV
+	id 1Z0Whn-000076-UG
 	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 17:05:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753723AbbFDPFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 11:05:08 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:42204 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753338AbbFDPFC (ORCPT
+	id S932176AbbFDPFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 11:05:07 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:45703 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753348AbbFDPFC (ORCPT
 	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 11:05:02 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id AC6D448867;
-	Thu,  4 Jun 2015 17:05:00 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1VMzGEW3waxy; Thu,  4 Jun 2015 17:05:00 +0200 (CEST)
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 55A95283B;
+	Thu,  4 Jun 2015 17:04:59 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8T8STJjKb-11; Thu,  4 Jun 2015 17:04:59 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9382448864;
-	Thu,  4 Jun 2015 17:05:00 +0200 (CEST)
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 453FE2798;
+	Thu,  4 Jun 2015 17:04:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 8B59B20E4;
-	Thu,  4 Jun 2015 17:05:00 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 37ADA20E4;
+	Thu,  4 Jun 2015 17:04:59 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IPsC2W7Lp1YE; Thu,  4 Jun 2015 17:05:00 +0200 (CEST)
+	with ESMTP id LmsNCWhlb3uh; Thu,  4 Jun 2015 17:04:59 +0200 (CEST)
 Received: from Groseille.grenet.fr (wificampus-030200.grenet.fr [130.190.30.200])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 6B6FE20DF;
-	Thu,  4 Jun 2015 17:05:00 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id EB14F20DF;
+	Thu,  4 Jun 2015 17:04:58 +0200 (CEST)
 X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1433430295-10805-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270779>
 
-Create a setup for git am -3 in a separate test instead of creating
-this setup each time.
+Initialization for the threeway variable was missing. This caused
+a behavior change for command lines like:
 
-This prepares for the next commit which will use this setup as well.
+	threeway=t git am ...
+
+This commit adds initialization for this variable.
 
 Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
 ---
- t/t4150-am.sh | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ git-am.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 306e6f3..6ced98c 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -274,15 +274,21 @@ test_expect_success 'am --keep-non-patch really keeps the non-patch part' '
- 	grep "^\[foo\] third" actual
- '
+diff --git a/git-am.sh b/git-am.sh
+index 761befb..c460dd0 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -378,6 +378,7 @@ committer_date_is_author_date=
+ ignore_date=
+ allow_rerere_autoupdate=
+ gpg_sign_opt=
++threeway=
  
-+test_expect_success 'setup am -3' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout -b base3way master2 &&
-+	sed -n -e "3,\$p" msg >file &&
-+	head -n 9 msg >>file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m "copied stuff"
-+'
-+
- test_expect_success 'am -3 falls back to 3-way merge' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
--	git checkout -b lorem2 master2 &&
--	sed -n -e "3,\$p" msg >file &&
--	head -n 9 msg >>file &&
--	git add file &&
--	test_tick &&
--	git commit -m "copied stuff" &&
-+	git checkout -b lorem2 base3way &&
- 	git am -3 lorem-move.patch &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git diff --exit-code lorem
-@@ -291,12 +297,7 @@ test_expect_success 'am -3 falls back to 3-way merge' '
- test_expect_success 'am -3 -p0 can read --no-prefix patch' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
--	git checkout -b lorem3 master2 &&
--	sed -n -e "3,\$p" msg >file &&
--	head -n 9 msg >>file &&
--	git add file &&
--	test_tick &&
--	git commit -m "copied stuff" &&
-+	git checkout -b lorem3 base3way &&
- 	git am -3 -p0 lorem-zero.patch &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git diff --exit-code lorem
-@@ -338,12 +339,7 @@ test_expect_success 'am -3 can rename a file after falling back to 3-way merge'
- test_expect_success 'am -3 -q is quiet' '
- 	rm -fr .git/rebase-apply &&
- 	git checkout -f lorem2 &&
--	git reset master2 --hard &&
--	sed -n -e "3,\$p" msg >file &&
--	head -n 9 msg >>file &&
--	git add file &&
--	test_tick &&
--	git commit -m "copied stuff" &&
-+	git reset base3way --hard &&
- 	git am -3 -q lorem-move.patch >output.out 2>&1 &&
- 	! test -s output.out
- '
+ if test "$(git config --bool --get am.messageid)" = true
+ then
 -- 
 1.9.1
