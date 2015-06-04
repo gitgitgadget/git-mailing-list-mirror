@@ -1,80 +1,54 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH/RFC v3 2/4] git-am.txt: add configuration section in git
- am documentation
-Date: Thu, 4 Jun 2015 15:26:09 +0200 (CEST)
-Message-ID: <316411029.123320.1433424369822.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1433266446-2845-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1433266446-2845-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <vpq4mmoep9y.fsf@anie.imag.fr> <840759634.89013.1433352813283.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 04 15:26:14 2015
+From: Carl Brooks <bruuksy@gmail.com>
+Subject: Patch alerts
+Date: Thu, 4 Jun 2015 15:12:55 +0100
+Message-ID: <8C197DB9-F167-4738-8518-896771E42A4E@gmail.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 04 16:13:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0V9n-0003TW-VB
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 15:26:04 +0200
+	id 1Z0VtJ-00039d-1R
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 16:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbbFDNZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 09:25:59 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:46368 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752081AbbFDNZ6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 09:25:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 8622448862;
-	Thu,  4 Jun 2015 15:25:56 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VyGj3V9JatVC; Thu,  4 Jun 2015 15:25:56 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 6E1114863D;
-	Thu,  4 Jun 2015 15:25:56 +0200 (CEST)
-In-Reply-To: <840759634.89013.1433352813283.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git-am.txt: add configuration section in git am documentation
-Thread-Index: tlh7BUUWCsXpzzm9aeuwOcgjOgJjhNP5G1DY
+	id S1753487AbbFDONA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 10:13:00 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:36488 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752605AbbFDOM7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 10:12:59 -0400
+Received: by wibdq8 with SMTP id dq8so126340353wib.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 07:12:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:mime-version:subject
+         :message-id:date:to;
+        bh=2mP+yMmDoPCyaNjXl+XcO6+XGofVusqas+/g3j/6ixk=;
+        b=QchbYN5GArbays2OrmiVOJeY+Q5ZKoezYQbENnTi7OqFQRrOo1IWFGxG8M2Z3k1dkT
+         63VftlA7BQRb41bev9QbuvAbp2c8MzQyhEsYycwD3zDUmQ7FzkIuOJt7DuXNsFCalgfq
+         4xUFW1TOn5bVqTKv1tL5l1gNqPvEcLVlIAF2+RDQ8chMKLlqr3708dEqCkR9V7FBqmtb
+         0sR0swVy0qK4+8Mmdbh9DOJK86dSFiQvcY8XWE2Q2kHwwNAWzCm875E99KvRBRbbBzev
+         vSlL6gtqC+f1KqpxGjzxejuyeMTMegOagcYuXIJO1DchrWiu3X6bCfNqg0g1NKL+poZ9
+         BGAA==
+X-Received: by 10.194.84.179 with SMTP id a19mr70079749wjz.29.1433427178098;
+        Thu, 04 Jun 2015 07:12:58 -0700 (PDT)
+Received: from [192.168.0.206] (78-141-20-234.xdsl.murphx.net. [78.141.20.234])
+        by mx.google.com with ESMTPSA id o4sm9822780wib.5.2015.06.04.07.12.56
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 04 Jun 2015 07:12:57 -0700 (PDT)
+X-Mailer: iPhone Mail (12F70)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270776>
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes
-> > > +CONFIGURATION
-> > > +-------------
-> > > +
-> > > +am.keepcr::
-> > > +        If true, git-am will call git-mailsplit for patches in mbox format
-> >
-> > `git am`
-> > `git mailsplit`
-> >
-> > > +        with parameter '--keep-cr'. In this case git-mailsplit will
-> >
-> > Likewise
-> >
-> > > +        not remove `\r` from lines ending with `\r\n`. Can be overridden
-> > > +        by giving '--no-keep-cr' from the command line.
-> >
-> > That should be backquote, not forward-quote, right?
-> >
-> > I know it's not your code since it's a cut-and-paste from config.txt,
-> > but that illustrates my point above: we used to have one place with
-> > wrong quotes, and we'd have two after the patch.
-> 
-> Ok I'll correct it in a minor patch
+Hello, is there anywhere on the web that displays git's latest security alerts
 
-Actually I don't think that this is a good idea to correct
-that (since there's many occurences of forward-quoted options in
-git-config.txt). I'll just remove the configuration part in
-the git am documentation.
+Sent from iPhone
