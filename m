@@ -1,48 +1,63 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: Suggestion: make git checkout safer
-Date: Thu, 04 Jun 2015 22:14:36 +0200
-Message-ID: <5570B1AC.2060108@web.de>
-References: <loom.20150603T104534-909@post.gmane.org> <20150603090654.GD32000@peff.net> <loom.20150603T110826-777@post.gmane.org> <20150603093514.GF32000@peff.net> <loom.20150603T114527-151@post.gmane.org> <20150603194756.GB29730@vps892.directvps.nl> <loom.20150604T124827-124@post.gmane.org>
+From: Remi LESPINET <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [RFC] send-email aliases when editing patches or using --xx-cmd
+Date: Thu, 04 Jun 2015 22:17:51 +0200
+Message-ID: <87pp5b1b4g.fsf@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Ed Avis <eda@waniasset.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 04 22:14:47 2015
+Content-Type: text/plain
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 04 22:18:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0bXJ-0004Da-Mi
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 22:14:46 +0200
+	id 1Z0baV-0006ia-4a
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 22:18:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752616AbbFDUOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 16:14:41 -0400
-Received: from mout.web.de ([212.227.15.3]:64608 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752789AbbFDUOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 16:14:40 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0M0Qxx-1ZLika0s85-00uX5L; Thu, 04 Jun 2015 22:14:37
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <loom.20150604T124827-124@post.gmane.org>
-X-Provags-ID: V03:K0:rJqBNnEd8BVFnei4LKbGGyBRkYmQLeGakoOnGYeD3RITsMiRuql
- HU54upHBGsjwdbykjC2Fmcq1oo+nisRQwcsV+uHWHDUrDiJLMmMJVH/r7z0sFajdL6XSje9
- S+cSFTt6GGzqrffh7UlCIrSAOh46ox4eIeKLf28YsuPcS3e864ySFyS9Zg9AIrHgyTrSdZY
- ii0WjaqlXF9O1/UkBv1iw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752341AbbFDUR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 16:17:58 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:59590 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752282AbbFDUR5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 16:17:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 174FF4886B;
+	Thu,  4 Jun 2015 22:17:54 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id y+G1OObQDf1R; Thu,  4 Jun 2015 22:17:54 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id F0D4748864;
+	Thu,  4 Jun 2015 22:17:53 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id EC25320E4;
+	Thu,  4 Jun 2015 22:17:53 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 53SpMzIbgu4E; Thu,  4 Jun 2015 22:17:53 +0200 (CEST)
+Received: from Groseille (AGrenoble-652-1-407-223.w90-42.abo.wanadoo.fr [90.42.42.223])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id BC14F20DF;
+	Thu,  4 Jun 2015 22:17:52 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270797>
 
-On 2015-06-04 13.00, Ed Avis wrote:
-> 
->     >Updates files in the working tree to match...
-I think that this had been written with
-"git checkout <branch>" in mind, which is different
-from "git checkout -- <paths>" (or "git checkout .")
 
-Do you think you can write a patch to improve the documentation ?
+Hi,
+
+Working on git-send-email, I've seen that there's no aliases support
+when manually adding a recipient in a 'To' or 'Cc' field in a patch
+and for the --to-cmd and --cc-cmd.
+
+I would like to add this support, and I wonder if there are reasons
+not to do it.
+
+Thanks.
