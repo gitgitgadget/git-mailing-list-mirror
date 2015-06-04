@@ -1,86 +1,88 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH mh/lockfile-retry] lockfile: replace random() by rand()
-Date: Thu, 04 Jun 2015 13:42:38 +0200
-Message-ID: <557039AE.3020107@alum.mit.edu>
-References: <55695770.2040303@kdbg.org> <xmqq7frqat0m.fsf@gitster.dls.corp.google.com> <55700F10.8030806@kdbg.org>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/WIP 1/8] wrapper: implement xopen()
+Date: Thu, 4 Jun 2015 20:05:22 +0800
+Message-ID: <CACRoPnRn5ynmt1UXct6BzXpr_aioAtLpXfwjZKMBUs4-sGP63A@mail.gmail.com>
+References: <1432733618-25629-1-git-send-email-pyokagan@gmail.com>
+	<1432733618-25629-2-git-send-email-pyokagan@gmail.com>
+	<55661513.8000306@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 13:42:52 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jun 04 14:05:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0TXu-0004R8-0T
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 13:42:50 +0200
+	id 1Z0Tu0-0004gX-Pb
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 14:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbbFDLmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 07:42:45 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:46187 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753194AbbFDLmo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 07:42:44 -0400
-X-AuditID: 1207440d-f79026d000000bad-4c-557039b158d8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 85.13.02989.1B930755; Thu,  4 Jun 2015 07:42:41 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97676.dip0.t-ipconnect.de [79.201.118.118])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t54BgctP000466
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 4 Jun 2015 07:42:40 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <55700F10.8030806@kdbg.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1N1oWRBq8K2J16LrSjeTRUPvFWaL
-	J3PvMjswezx81cXucfGSssfnTXIBzFHcNkmJJWXBmel5+nYJ3Bkt11IKLnJV7D1yhKmB8RRH
-	FyMnh4SAicSeKe9ZIGwxiQv31rN1MXJxCAlcZpR48WAvI4Rznkni/uXnrCBVvALaEqe/NzOB
-	2CwCqhItt5rYQGw2AV2JRT0gcQ4OUYEgidcvcyHKBSVOznwCtkBEwEXi39LvYOXMAloSdy7d
-	ZQSxhQW8Jd5f3wBmCwkUSTyZ9gzM5hTQkPi34iwjyEhmoPFta2QgWuUlmrfOZp7AKDALyYZZ
-	CFWzkFQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrpJebWaKXmlK6iREStLw7GP+vkznE
-	KMDBqMTDa3EsP1SINbGsuDL3EKMkB5OSKK+YTkGoEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHe
-	U3pAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBK+TBVCjYFFqempF
-	WmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChG44uBUQqS4gHauxGknbe4IDEXKArReopRUUqc
-	1wgkIQCSyCjNgxsLS0WvGMWBvhTmjQSp4gGmMbjuV0CDmYAGX2cFG1ySiJCSamCse/bhO8+j
-	hSFOpyazvsrcafEi3sRQ7fL+HfNf+GXl37brnPxQn11DPmaR0eYalbUsGwVNHkyRuLxppi3T
-	xl1xjHz8jm1OG8M972uZP7zdcnSnvdPkA8xfnBMkRd7fus7jO2VZX/LWtZHF8cxd 
+	id S1753294AbbFDMFf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2015 08:05:35 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:33068 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752930AbbFDMFX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 08:05:23 -0400
+Received: by lbcue7 with SMTP id ue7so25832750lbc.0
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 05:05:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oHo7fNFbteNlRsaM/CSGbDLrjsR9KL0wFoW8hE1F8SI=;
+        b=s7Zr+JQKuuAw+IzEGiEwUZwJ2YDzzc5ZaqZFd67VwAylSZndWtpgMkNr7cHFPGa1BE
+         v3cv8fezfLkPPbWmyPZ6B1tHyUe1rI878mkMR2sFwinFSXovwF96Dcg+t/gLz1eY4hMX
+         8dbs6ta9KdtFOWnLT50J3kvEPIfIdZVBY/bJSXkamFbbFuqpBb8Wj7eXe1JEV5OvLDR6
+         d1P6pVSuT5dHr8xox8/IiAzLLW+9xcU3Ee1XNnBdrzg+uRLQOIFE60Z4o/Hj9P/h6jYg
+         OGNAy3SckjRQFbp4VLqpmfn9tf72bbLFamH85D1zQxJrr0hlDu1RIlbnUdSUz+Ft+Kpl
+         X4Rw==
+X-Received: by 10.112.182.4 with SMTP id ea4mr32248036lbc.35.1433419522132;
+ Thu, 04 Jun 2015 05:05:22 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 4 Jun 2015 05:05:22 -0700 (PDT)
+In-Reply-To: <55661513.8000306@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270769>
 
-On 06/04/2015 10:40 AM, Johannes Sixt wrote:
-> Am 30.05.2015 um 19:12 schrieb Junio C Hamano:
->> Johannes Sixt <j6t@kdbg.org> writes:
->>
->>> There you have it: Look the other way for a while, and people start
->>> using exotic stuff... ;)
->>
->> Is it exotic to have random/srandom?  Both are in POSIX and 4BSD;
->> admittedly rand/srand are written down in C89 and later, so they
->> might be more portable, but I recall the prevailing wisdom is to
->> favor random over rand for quality of randomness and portability, so
->> I am wondering if it may be a better approach to keep the code as-is
->> and do a compat/random.c based on either rand/srand (or use posix
->> sample implementation [*1*]).
-> 
-> For our purposes here, the linear congruence of rand() is certainly
-> sufficient. At this time, compatibility functions for random/srandom
-> would just mean a lot of work for little gain.
+On Thu, May 28, 2015 at 3:03 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 2015-05-27 15.33, Paul Tan wrote:
+>> +/**
+>> + * xopen() is the same as open(), but it die()s if the open() fails=
+=2E
+>> + */
+>> +int xopen(const char *path, int flags, mode_t mode)
+>> +{
+>> +     int fd;
+>> +
+>> +     assert(path);
+>> +     fd =3D open(path, flags, mode);
+>> +     if (fd < 0) {
+>> +             if ((flags & O_WRONLY) || (flags & O_RDWR))
+>> +                     die_errno(_("could not open '%s' for writing")=
+, path);
+> This is only partly true:
+> it could be either "writing" or "read write".
 
-We *certainly* don't require high-quality random numbers for this
-application. Regarding portability, there is one definite point in favor
-of rand() (it's available on Windows) vs. Junio's recollection that
-random() might have portability advantages, presumably on other platforms.
+Ah right, I see now that the POSIX spec allows for, and encourages
+O_RDONLY | O_WRONLY =3D=3D O_RDWR.
 
-Maybe the easiest thing would be to switch to using rand() and see if
-the OS/2 and VMS users complain ;-)
+> I don't know if the info "for reading" or "for writing" is needed/hel=
+pful at all,
+> or if a simple "could not open" would be enough.
 
-Michael
+Yeah, I agree that it may not be helpful, but I noticed that most
+error messages in git are of the form "unable to open X for writing",
+"unable to open X for reading", "could not create X" etc. Or rather I
+thought I noticed, but it now seems to me that there are quite a lot
+of uses of "could not open X" as well.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+I guess I will remove the distinction.
+
+Thanks,
+Paul
