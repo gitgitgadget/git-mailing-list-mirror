@@ -1,88 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [WIP PATCH 1/3] git bisect old/new
-Date: Thu, 04 Jun 2015 10:20:22 +0200
-Message-ID: <vpqiob3yjeh.fsf@anie.imag.fr>
-References: <1433404753-12039-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: Minor bug report
+Date: Thu, 4 Jun 2015 04:21:25 -0400
+Message-ID: <20150604082125.GA5771@peff.net>
+References: <CAMOUyJ_2snCaKcWNoOgH7aoHrdbUsCucqu_W_J3aH9_QQe1jEw@mail.gmail.com>
+ <20150603062005.GA20580@peff.net>
+ <CAPc5daU9VdndgkMFNmtiwhVdwyGQgDbFX3rrrsEEEUVewgs-dw@mail.gmail.com>
+ <1433345954.21083.14.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com, remi.lespinet@ensimag.grenoble-inp.fr,
-	louis--alexandre@ensimag.grenoble-inp.fr,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 04 10:20:41 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tummala Dhanvi <dhanvicse@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Thu Jun 04 10:21:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0QOC-0001L4-Li
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 10:20:37 +0200
+	id 1Z0QPE-00029c-Fx
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 10:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbbFDIUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 04:20:32 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47222 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752391AbbFDIU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 04:20:28 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t548KMQW028336
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 4 Jun 2015 10:20:22 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t548KMsN022856;
-	Thu, 4 Jun 2015 10:20:22 +0200
-In-Reply-To: <1433404753-12039-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	(Antoine Delaite's message of "Thu, 4 Jun 2015 09:59:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 04 Jun 2015 10:20:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t548KMQW028336
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434010824.73288@y508k3+FsyluQG+aw5kDgA
+	id S1752664AbbFDIVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 04:21:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40992 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751636AbbFDIV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 04:21:28 -0400
+Received: (qmail 16340 invoked by uid 102); 4 Jun 2015 08:21:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Jun 2015 03:21:28 -0500
+Received: (qmail 29884 invoked by uid 107); 4 Jun 2015 08:21:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Jun 2015 04:21:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Jun 2015 04:21:25 -0400
+Content-Disposition: inline
+In-Reply-To: <1433345954.21083.14.camel@kaarsemaker.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270758>
 
-Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
+On Wed, Jun 03, 2015 at 05:39:14PM +0200, Dennis Kaarsemaker wrote:
 
-> @@ -732,18 +736,25 @@ static void handle_bad_merge_base(void)
->  	if (is_expected_rev(current_bad_oid)) {
->  		char *bad_hex = oid_to_hex(current_bad_oid);
->  		char *good_hex = join_sha1_array_hex(&good_revs, ' ');
-> -
-> -		fprintf(stderr, "The merge base %s is bad.\n"
-> -			"This means the bug has been fixed "
-> -			"between %s and [%s].\n",
-> -			bad_hex, bad_hex, good_hex);
-> -
-> +		if (!strcmp(bisect_bad,"bad")) {
+> On di, 2015-06-02 at 23:48 -0700, Junio C Hamano wrote:
+> > 
+> > I am kind of surprised after reading these two threads that my
+> > take on this issue has changed over time, as my knee-jerk
+> > reaction before reading them was the opposite, something
+> > along the lines of "This is only immediately after 'git init'; why
+> > bother?". Or depending on my mood, that "How stupid do you
+> > have to be..." sounds exactly like a message I may advocate
+> > for us to send. Perhaps I grew more bitter with age.
+> 
+> The "fatal: Failed to resolve 'HEAD' as a valid ref." message, closely
+> related to the "fatal: bad default revision 'HEAD'" message that started
+> this thread just came by in #git with the following situation:
+> 
+> $ git init
+> $ git add .
+> # Oops, didn't want to add foo.xyz
+> $ git reset foo.xyz
+> fatal: Failed to resolve 'HEAD' as a valid ref.
+> 
+> The solution there is simple, git rm --cached, but I think git could
+> produce more helpful messages when a repo is empty.
 
-space after comma.
+Yeah, I think there are a lot of places we could handle unborn branches
+better. We've slowly been smoothing these rough edges over the years
+(usually by using the empty tree when we wanted HEAD to be a tree-ish).
 
-> @@ -954,6 +994,9 @@ int bisect_next_all(const char *prefix, int no_checkout)
->  	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
->  	       steps, (steps == 1 ? "" : "s"));
->  
-> +	free((char*)bisect_bad);
-> +	free((char*)bisect_good);
+Patches welcome. :)
 
-Already noted last time I think: these must not be freed as they are
-pointing to static strings.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
