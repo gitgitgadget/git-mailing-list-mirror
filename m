@@ -1,81 +1,183 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [GSoC] Week 1: Unification of 'for-each-ref', 'tag -l' and 'branch
- -l'
-Date: Thu, 04 Jun 2015 13:05:22 +0530
-Message-ID: <556FFFBA.4030004@gmail.com>
-References: <556DDC21.5050801@gmail.com> <vpqh9qoepv1.fsf@anie.imag.fr> <20150603210833.GA32181@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 04 09:35:41 2015
+From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+Subject: [PATCH 2/3] bisect: use name_(bad|good) instead of bisect_(bad|good)
+Date: Thu,  4 Jun 2015 09:59:12 +0200
+Message-ID: <1433404753-12039-2-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+References: <1433404753-12039-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+Cc: thomasxnguy@gmail.com, valentinduperray@gmail.com,
+	remi.lespinet@ensimag.grenoble-inp.fr,
+	antoine.delaite@ensimag.grenoble-inp.fr,
+	louis--alexandre@ensimag.grenoble-inp.fr,
+	matthieu.moy@grenoble-inp.fr,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 04 09:59:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0Pgf-0002Vh-Ar
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 09:35:37 +0200
+	id 1Z0Q3q-0002nF-GH
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jun 2015 09:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536AbbFDHfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 03:35:32 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:36862 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752486AbbFDHf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2015 03:35:29 -0400
-Received: by pdjm12 with SMTP id m12so25130136pdj.3
-        for <git@vger.kernel.org>; Thu, 04 Jun 2015 00:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=5E0POYdiioI+WwwObQz8z/BXbhXCAnEjOgynlbNBtNc=;
-        b=AKnaWVzr3N/sn3BwrSLQ967/AHr0M36GiUeRb6OMxb8Mojg8+eg2Tmu5eMXrD26AVN
-         l6w3YcJAnNi11/bEqdBXXUYLW1Hu7wdrDrFMPM5696x78uxkAZFI1R8S2iN078vCJxL/
-         F4hgxhHPLjmA2u3QN+86STk9bkiUnPMNm8e/yvdsUB0GbmQx+wSWy8BP7jbdN7mEx5dY
-         KlSe7EsyqcKGv18AGFeC5S0CpEI63lmOfmnsceyTp1d6ekTiFvYdcQU/dIL8ZAdSvW56
-         3wMzF7gn6SanvCYSqpAAVlNcTqNXmZMey0ZxJUkZN0up9fYbVfL7OCeAagLnnc+n4Bnr
-         oa9A==
-X-Received: by 10.66.168.11 with SMTP id zs11mr67908255pab.138.1433403328412;
-        Thu, 04 Jun 2015 00:35:28 -0700 (PDT)
-Received: from [192.168.0.109] ([103.227.99.94])
-        by mx.google.com with ESMTPSA id jx5sm2752533pbc.85.2015.06.04.00.35.25
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jun 2015 00:35:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150603210833.GA32181@peff.net>
+	id S1752534AbbFDH7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 03:59:31 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:60973 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750805AbbFDH7Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 03:59:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 0BEE827F1;
+	Thu,  4 Jun 2015 09:59:22 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dYg+4NZUEZ+T; Thu,  4 Jun 2015 09:59:21 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id EF89A27EF;
+	Thu,  4 Jun 2015 09:59:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id EB33F20DC;
+	Thu,  4 Jun 2015 09:59:21 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Xg1TCvmjbmcM; Thu,  4 Jun 2015 09:59:21 +0200 (CEST)
+Received: from pcserveur.ensimag.fr (ensipcserveur.imag.fr [129.88.240.65])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id D9C9320D4;
+	Thu,  4 Jun 2015 09:59:21 +0200 (CEST)
+X-Mailer: git-send-email 1.7.1
+In-Reply-To: <1433404753-12039-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270752>
 
-On 06/04/2015 02:38 AM, Jeff King wrote:
-> On Wed, Jun 03, 2015 at 06:08:50PM +0200, Matthieu Moy wrote:
->
-> > Karthik Nayak <karthik.188@gmail.com> writes:
-> >
-> >> Matthieu Moy suggested that I work on the unification of these
-> >> commands let both the implementations stay where the user can select
-> >> the implementation to be used
-> >
-> > Just to be clear: my advice is the above with "user" = "caller of the
-> > API", not "human being using Git". In other words, "git branch
-> > --contains" and "git tag --contains" would still be using two different
-> > algorithms, but the user wouldn't notice (except for performance).
->
-> Yeah, I think that is sensible. It should be a "feature" of the
-> ref-filter that can hopefully go away one day (when we have a sensible
-> implementation that works for both; this is something I've been meaning
-> to push forward, but Karthik should not have to wait on me).
->
-> -Peff
->
-Sounds good, Thanks Jeff.
+From: Christian Couder <chriscool@tuxfamily.org>
 
+Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+---
+ bisect.c | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index d6c19fd..68417bb 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -21,8 +21,8 @@ static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
+ static const char *argv_update_ref[] = {"update-ref", "--no-deref", "BISECT_HEAD", NULL, NULL};
+ 
+-static const char *bisect_bad;
+-static const char *bisect_good;
++static const char *name_bad;
++static const char *name_good;
+ 
+ /* Remember to update object flag allocation in object.h */
+ #define COUNTED		(1u<<16)
+@@ -406,7 +406,7 @@ struct commit_list *find_bisection(struct commit_list *list,
+ static int register_ref(const char *refname, const unsigned char *sha1,
+ 			int flags, void *cb_data)
+ {
+-	if (!strcmp(refname, bisect_bad)) {
++	if (!strcmp(refname, name_bad)) {
+ 		current_bad_oid = xmalloc(sizeof(*current_bad_oid));
+ 		hashcpy(current_bad_oid->hash, sha1);
+ 	} else if (starts_with(refname, "good-") ||
+@@ -638,7 +638,7 @@ static void exit_if_skipped_commits(struct commit_list *tried,
+ 		return;
+ 
+ 	printf("There are only 'skip'ped commits left to test.\n"
+-	       "The first %s commit could be any of:\n", bisect_bad);
++	       "The first %s commit could be any of:\n", name_bad);
+ 	print_commit_list(tried, "%s\n", "%s\n");
+ 	if (bad)
+ 		printf("%s\n", oid_to_hex(bad));
+@@ -736,7 +736,7 @@ static void handle_bad_merge_base(void)
+ 	if (is_expected_rev(current_bad_oid)) {
+ 		char *bad_hex = oid_to_hex(current_bad_oid);
+ 		char *good_hex = join_sha1_array_hex(&good_revs, ' ');
+-		if (!strcmp(bisect_bad,"bad")) {
++		if (!strcmp(name_bad,"bad")) {
+ 			fprintf(stderr, "The merge base %s is bad.\n"
+ 				"This means the bug has been fixed "
+ 				"between %s and [%s].\n",
+@@ -753,8 +753,7 @@ static void handle_bad_merge_base(void)
+ 	fprintf(stderr, "Some %s revs are not ancestor of the %s rev.\n"
+ 		"git bisect cannot work properly in this case.\n"
+ 		"Maybe you mistook %s and %s revs?\n",
+-		bisect_good, bisect_bad, bisect_good,
+-		bisect_bad);
++		name_good, name_bad, name_good, name_bad);
+ 	exit(1);
+ }
+ 
+@@ -769,7 +768,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+ 		"So we cannot be sure the first %s commit is "
+ 		"between %s and %s.\n"
+ 		"We continue anyway.",
+-		bad_hex, good_hex, bisect_bad, mb_hex, bad_hex);
++		bad_hex, good_hex, name_bad, mb_hex, bad_hex);
+ 	free(good_hex);
+ }
+ 
+@@ -850,7 +849,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ 	int fd;
+ 
+ 	if (!current_bad_oid)
+-		die("a %s revision is needed", bisect_bad);
++		die("a %s revision is needed", name_bad);
+ 
+ 	/* Check if file BISECT_ANCESTORS_OK exists. */
+ 	if (!stat(filename, &st) && S_ISREG(st.st_mode))
+@@ -913,13 +912,13 @@ void read_bisect_terms(void)
+ 	FILE *fp = fopen(filename, "r");
+ 
+ 	if (!fp) {
+-		bisect_bad = "bad";
+-		bisect_good = "good";
++		name_bad = "bad";
++		name_good = "good";
+ 	} else {
+ 	strbuf_getline(&str, fp, '\n');
+-	bisect_bad = strbuf_detach(&str, NULL);
++	name_bad = strbuf_detach(&str, NULL);
+ 	strbuf_getline(&str, fp, '\n');
+-	bisect_good = strbuf_detach(&str, NULL);
++	name_good = strbuf_detach(&str, NULL);
+ 	}
+ 	strbuf_release(&str);
+ 	fclose(fp);
+@@ -965,8 +964,8 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 
+ 		printf("%s was both %s and %s\n",
+ 		       oid_to_hex(current_bad_oid),
+-		       bisect_good,
+-		       bisect_bad);
++		       name_good,
++		       name_bad);
+ 		exit(1);
+ 	}
+ 
+@@ -982,7 +981,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	if (!hashcmp(bisect_rev, current_bad_oid->hash)) {
+ 		exit_if_skipped_commits(tried, current_bad_oid);
+ 		printf("%s is the first %s commit\n", bisect_rev_hex,
+-			bisect_bad);
++			name_bad);
+ 		show_diff_tree(prefix, revs.commits->item);
+ 		/* This means the bisection process succeeded. */
+ 		exit(10);
+@@ -994,8 +993,8 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
+ 	       steps, (steps == 1 ? "" : "s"));
+ 
+-	free((char*)bisect_bad);
+-	free((char*)bisect_good);
++	free((char*)name_bad);
++	free((char*)name_good);
+ 
+ 	return bisect_checkout(bisect_rev_hex, no_checkout);
+ }
 -- 
-Regards,
-Karthik
+2.4.1.173.gd47f443.dirty
