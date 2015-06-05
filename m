@@ -1,73 +1,74 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2 0/2] make commit --verbose work with --no-status
-Date: Fri, 5 Jun 2015 20:40:01 +0800
-Message-ID: <CALUzUxqeadRii1o0-yo=QaZCqoAzGk+aVq=y1-11dJvK=em0qw@mail.gmail.com>
-References: <1433440591-30917-1-git-send-email-rctay89@gmail.com> <xmqqd21buxla.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] receive-pack: Create a HEAD ref for ref namespace
+Date: Fri, 05 Jun 2015 14:55:35 +0200
+Message-ID: <55719C47.6030600@drmicha.warpmail.net>
+References: <1433193883-11577-1-git-send-email-johannes@kyriasis.com> <ef4dae3e-3ae8-4727-9448-80f801e1dbdf@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 14:40:46 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?Sm9oYW5uZXMgTMO2dGhiZXJn?= <johannes@kyriasis.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 05 14:56:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0qvE-00063M-T5
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 14:40:29 +0200
+	id 1Z0rA8-0000WO-Ve
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 14:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494AbbFEMkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 08:40:24 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36418 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550AbbFEMkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 08:40:23 -0400
-Received: by igbpi8 with SMTP id pi8so14489104igb.1
-        for <git@vger.kernel.org>; Fri, 05 Jun 2015 05:40:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=S7lYQJMTjPwKccfkAfcAY28Tdy1QEptMuUp3XyOmCj0=;
-        b=O7R/joLOyBaswLALt2zUVOyh9phWexD2mLPS6SUgp31+l0d0MvcXiuLyofjhFkq+gu
-         YkOz5V3hWf3dSzjT6nqbN06scz8msUwNmQQMqbe9Cvvgfnyr+/EA2xqEKMpNmH+M29s1
-         jEsmd5bcDzayQsldYy5KRxUrHKhOw/VUnxk3PtpreS61rzE3D9clbWvxyNpgM1uhfDs9
-         P2ofE8HSuoPE2F7yZFhVfHoWlk7fNRhD5LO3P3i2eEOhkPP7Hdi3NvtDqndnBDdMvIZ5
-         k1G06uBTB7rLlZkNngFmnYDKfMVJeL/pHxf/TjlpoqFjbfTfgVvCzQi4e/wzjrnLYRpD
-         17cw==
-X-Received: by 10.42.28.135 with SMTP id n7mr9902044icc.41.1433508022397; Fri,
- 05 Jun 2015 05:40:22 -0700 (PDT)
-Received: by 10.64.246.103 with HTTP; Fri, 5 Jun 2015 05:40:01 -0700 (PDT)
-In-Reply-To: <xmqqd21buxla.fsf@gitster.dls.corp.google.com>
+	id S1754700AbbFEMzm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2015 08:55:42 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:58645 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753110AbbFEMzh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2015 08:55:37 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id E8AF5219AF
+	for <git@vger.kernel.org>; Fri,  5 Jun 2015 08:55:36 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Fri, 05 Jun 2015 08:55:36 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=9Eo/LaHqP19grx+Ww0AJjSd/07Y=; b=VizBuD
+	YgC0rNzLRGX+lFcfl+1RTPFRCzq6Ni3JMy38PeUJje2RYNr1T/MmeOgSci89K/RP
+	SyB9d8Ik2XjuKXaL2hvsqeKDVV4rZVy2M19bKNGH6BHzAL3TS/8qCMDIvkAWH+I1
+	qAhoERj7f7iGrjlWL/RU7O5fo1XuaYD1l5u88=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=9Eo/LaHqP19grx+
+	Ww0AJjSd/07Y=; b=MSHNYrdv4j6gCWaojHXdF4fi1BYpOX5Mtvlrfd7WIhZN/i6
+	IfSlk1n9QPaBURhCj4ExRvB9OadGkVW8gW4T5CflqNh+l0zmvgfoVVPmkrbXrFCi
+	voAxn8fBLUlDd/MnAAFebWBYUbH8l8exA4QX6OUsAw1r/dQQjsi/kJPdrLaI=
+X-Sasl-enc: H0oyNUJKClnIMKjln2zKB+2VhCs+rwmVYMBwHh9d+PCo 1433508936
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 7035C68009B;
+	Fri,  5 Jun 2015 08:55:36 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <ef4dae3e-3ae8-4727-9448-80f801e1dbdf@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270831>
 
-Hi Junio,
+Johannes L=C3=B6thberg venit, vidit, dixit 05.06.2015 13:53:
+> Ping.
+>=20
+> --
+> Sincerely,=20
+> Johannes L=C3=B6thberg=20
+> (Sent from my phone.)
+>=20
 
-On Fri, Jun 5, 2015 at 2:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Tay Ray Chuan <rctay89@gmail.com> writes:
->
-> > When running git-commit`, --verbose appends a diff to the prepared
-> > message, while --no-status omits git-status output.
->
-> The --verbose option is called --verbose and not --diff or --patch
-> for a reason, though.  The default is to show extra information as
-> comments, and verbose tells us to make that extra information more
-> verbose.  We call that extra information "status", so it is natural
-> for "--no-status" to drop that extra information.
+It appears your patch proposes to fix a problem. It's a good idea to
+expose the problem by writing a test so that one can check that the fix
+actually fixes the problem.
 
-Thanks for the explanation. Now I can appreciate why git-commit works this way.
+(Also, your patch duplicates the line "struct strbuf namespaced_head_bu=
+f
+=3D STRBUF_INIT;")
 
-Would it be a good idea to have a --diff-only option to include diff,
-but not status output? Or perhaps a --diff option, while leaving it to
-the user to specify if status output is to be included with
---no-status, which would open the doors for mixing and matching status
-formatting control, eg. with --short.
-
--- 
-Cheers,
-Ray Chuan
+Michael
