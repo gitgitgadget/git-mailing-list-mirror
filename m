@@ -1,78 +1,101 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: fix translation of "head nodes"
-Date: Fri,  5 Jun 2015 19:45:00 +0200
-Message-ID: <1433526300-10936-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Suggestion: make git checkout safer
+Date: Fri, 05 Jun 2015 11:03:52 -0700
+Message-ID: <xmqqd21arq0n.fsf@gitster.dls.corp.google.com>
+References: <loom.20150603T104534-909@post.gmane.org>
+	<20150603090654.GD32000@peff.net>
+	<loom.20150603T110826-777@post.gmane.org>
+	<20150603093514.GF32000@peff.net>
+	<loom.20150603T114527-151@post.gmane.org>
+	<20150603194756.GB29730@vps892.directvps.nl>
+	<loom.20150604T124827-124@post.gmane.org> <5570B1AC.2060108@web.de>
+	<loom.20150605T113129-339@post.gmane.org>
+	<CAPig+cTK4pXgweoGZc1-nj41aYo0bEK6Zrsc9291xQr5v8=p8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@drmicha.warpmail.net, tr@thomasrast.ch, jk@jk.gs,
-	stimming@tuhh.de, phillip.szelat@gmail.com,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 05 19:45:38 2015
+Content-Type: text/plain
+Cc: Ed Avis <eda@waniasset.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 20:04:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0vgB-0000Yf-6R
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:45:15 +0200
+	id 1Z0vyJ-0006OO-GR
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 20:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754711AbbFERpK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2015 13:45:10 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:33008 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751909AbbFERpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 13:45:09 -0400
-Received: by wgez8 with SMTP id z8so62176826wge.0
-        for <git@vger.kernel.org>; Fri, 05 Jun 2015 10:45:08 -0700 (PDT)
+	id S1754628AbbFESDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 14:03:55 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:33266 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752466AbbFESDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 14:03:54 -0400
+Received: by igbpi8 with SMTP id pi8so21100380igb.0
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 11:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=eFyN4M5S+0a7bqJDOPVl80mNUh+WNC6nMStKPPMLu28=;
-        b=ZPwAQ/b5Qd3ski+qkbVlIc5pSDgLZNJPlO0QHqZIjosUcTz14J0XbhFhtno2ZA1jDk
-         J6YqyulgAyw6Jxe/U5Gb3abk+qP0Sm9FImcEJEblFTLvcMuYi72yB5pZfFoxOwHYm4Od
-         Qk2PUZkiIFImPKBwB5VIBCylRYO07T7XMqoht5CH3n/AcWMB7UIf9ffkugjAmTkNlvRC
-         q9FJg3Gwb+iFnhHat2aD4kkMRtJdokmSh/M5x+zGd6Xvqp5b1aHTIUaGbdFDo6CeOE8i
-         tZr1ryX0Cs6w5xHkQvaYlCw41/Y/TtO29Pu8wy3vy/F9mcir+9coDLlKDiTG+VsYf97F
-         +6yQ==
-X-Received: by 10.194.157.168 with SMTP id wn8mr8215909wjb.79.1433526308372;
-        Fri, 05 Jun 2015 10:45:08 -0700 (PDT)
-Received: from localhost (dslb-092-078-236-214.092.078.pools.vodafone-ip.de. [92.78.236.214])
-        by mx.google.com with ESMTPSA id n1sm4280949wix.0.2015.06.05.10.45.07
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=dvfDZOPOAEKYHqmhmk9zuuyFByKEknNjcOXhYlvcPLo=;
+        b=ratVIi121Nc35eondsW5DgZryUq6pN9vuclVRTDv+ivxKouidj9YLqEWdIgTrbyibW
+         m0yU+xjoGc38+LmTRLY0cT/m28FlSz8A1C2FTEtr4v3bYNrGKQFOg9+cxXi6USDEbDMg
+         4rHefsTQk7a1ljikn4fKfL9dHUB4+RWBcd/M93tSNjCItR6f/SXGOzRbZDO+GX2O7LPx
+         87NWhawDO8r7MCTE70xf9Bv9Gt8qgXF2sl9prpnkyW2bqhllh4lTGNACd3tAbYh4ciA6
+         7bFfdbg3y/0OtkVnzi0ghY6LbukgQNS1/0ty4390cFWeCbiHzvg4pQTMc//vqWr3pOuE
+         owlA==
+X-Received: by 10.107.154.70 with SMTP id c67mr5987684ioe.22.1433527433981;
+        Fri, 05 Jun 2015 11:03:53 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1d0d:eed3:5800:fefa])
+        by mx.google.com with ESMTPSA id 72sm2455162ioj.27.2015.06.05.11.03.52
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Jun 2015 10:45:07 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2.599.gb39b3fc
+        Fri, 05 Jun 2015 11:03:53 -0700 (PDT)
+In-Reply-To: <CAPig+cTK4pXgweoGZc1-nj41aYo0bEK6Zrsc9291xQr5v8=p8g@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 5 Jun 2015 13:44:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270869>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-diff --git a/po/de.po b/po/de.po
-index 7d603c2..945bd13 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -5679,11 +5679,11 @@ msgstr "Hauptwurzeln melden"
-=20
- #: builtin/fsck.c:613
- msgid "make index objects head nodes"
--msgstr "Objekte in der Staging-Area pr=C3=BCfen"
-+msgstr "Index-Objekte in Erreichbarkeitspr=C3=BCfung einbeziehen"
-=20
- #: builtin/fsck.c:614
- msgid "make reflogs head nodes (default)"
--msgstr "die Reflogs pr=C3=BCfen (Standard)"
-+msgstr "Reflogs in Erreichbarkeitspr=C3=BCfung einbeziehen (Standard)"
-=20
- #: builtin/fsck.c:615
- msgid "also consider packs and alternate objects"
---=20
-2.4.2.599.gb39b3fc
+> ...
+> Again:
+>
+>     ...`hello.c` will also be restored,...
+>
+>>  because the file globbing is used to match entries in the index
+>>  (not in the working tree by the shell).
+
+Thanks for a thorough review.  I agree with all the comments and
+suggestions you gave.  Also, Ed, thanks for an attempt to improve
+the documentation.
+
+I think the biggest problem with this patch is that the tone of the
+updated text is geared a lot more towards venting the initial
+frustration of the writer than helping the readers of the document.
+
+By explaining what the behaviour is meant to solve and help, the
+readers would get useful information (e.g. "this is to be used to
+restore pristine contents").  The same thing said in the negative
+way only serve to unnecessarily repel readers (e.g. "this will
+unconditionally overwrite and lose contents").
+
+Technically, they are the descriptions of the same thing---in order
+to restore pristine contents to the workng tree, you have to discard
+the botched changes you made in the working tree, and that is done
+"unconditionally" by "overwriting" and "losing contents".  But
+saying it in the negative way does not serve as a useful warning.
+
+The readers are intelligent, and they will understand (and will even
+appreciate) that a request to replace their botched contents in the
+working tree out of the index is done unconditionally without being
+asked an unnecessary "are you sure?" and done by overwriting the
+files, losing the botched contents from there, once they are
+explained why they want to "git checkout $paths", what the operation
+is meant to be used for.
+
+Perhaps taking a deep breath and waiting for a few days for the head
+to coll down and frustrations to dissipate may be a good thing to do
+;-)
