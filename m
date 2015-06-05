@@ -1,86 +1,78 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Ed Avis <eda@waniasset.com>
 Subject: Re: Suggestion: make git checkout safer
-Date: Fri, 5 Jun 2015 14:37:21 -0400
-Message-ID: <CAPig+cTuajnDGdVs18zLd_ngcA=3TZnCn9iNutB9J0FVU1HqrA@mail.gmail.com>
-References: <loom.20150603T104534-909@post.gmane.org>
-	<20150603090654.GD32000@peff.net>
-	<loom.20150603T110826-777@post.gmane.org>
-	<20150603093514.GF32000@peff.net>
-	<loom.20150603T114527-151@post.gmane.org>
-	<20150603194756.GB29730@vps892.directvps.nl>
-	<loom.20150604T124827-124@post.gmane.org>
-	<5570B1AC.2060108@web.de>
-	<loom.20150605T113129-339@post.gmane.org>
-	<CAPig+cTK4pXgweoGZc1-nj41aYo0bEK6Zrsc9291xQr5v8=p8g@mail.gmail.com>
+Date: Fri, 5 Jun 2015 18:46:41 +0000 (UTC)
+Message-ID: <loom.20150605T203544-871@post.gmane.org>
+References: <loom.20150603T104534-909@post.gmane.org> <20150603090654.GD32000@peff.net> <loom.20150603T110826-777@post.gmane.org> <20150603093514.GF32000@peff.net> <loom.20150603T114527-151@post.gmane.org> <20150603194756.GB29730@vps892.directvps.nl> <loom.20150604T124827-124@post.gmane.org> <5570B1AC.2060108@web.de> <loom.20150605T113129-339@post.gmane.org> <CAPig+cTK4pXgweoGZc1-nj41aYo0bEK6Zrsc9291xQr5v8=p8g@mail.gmail.com> <xmqqd21arq0n.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Ed Avis <eda@waniasset.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 20:37:36 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 05 20:47:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0wUi-0006ka-Bz
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 20:37:28 +0200
+	id 1Z0weL-0005q8-Ru
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 20:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754795AbbFEShX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2015 14:37:23 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:36214 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754721AbbFEShV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2015 14:37:21 -0400
-Received: by ieclw1 with SMTP id lw1so63859939iec.3
-        for <git@vger.kernel.org>; Fri, 05 Jun 2015 11:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=xeYepFGsv2ID4VOp/vmUienUSmSWYhL3zqB3YTuomuY=;
-        b=hznwZIyVRxqgKhaFZZkyib4MDDzBBlyaOpOyC1cCsutXR5o7fMyu/Uc89xwTt5kQyL
-         iwHZxfLHzCBrDXn4gl/+tvt3LmtOXV5vyxfkNHBxPQoQyJwLiiDJA4IV4jljBNa6l1kp
-         YadCHcS950S4vgVyPggtIkQK2AUlUjcxTZaKvvl2S7WYn9E6B+M7KNAnPlREN2y0ccpe
-         WdKYKzvIEut1kTpO5iIShA5PcsFmt3Uimszl3EeV13Olqf26VvfjWqOF/cDjNrlTKdmW
-         n56idK1wnoT52evm+W+C7yUz4IRlO3wVXGWX5SgM0eKb5lhaO2ed+cBEpi6G/vEjApm1
-         oi6g==
-X-Received: by 10.50.66.174 with SMTP id g14mr17512976igt.7.1433529441314;
- Fri, 05 Jun 2015 11:37:21 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 5 Jun 2015 11:37:21 -0700 (PDT)
-In-Reply-To: <CAPig+cTK4pXgweoGZc1-nj41aYo0bEK6Zrsc9291xQr5v8=p8g@mail.gmail.com>
-X-Google-Sender-Auth: epoNpmNjeCHj7dPRmFH7Ry-rp6Y
+	id S1754924AbbFESrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 14:47:21 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46848 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752050AbbFESrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 14:47:19 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Z0wdv-0005We-5J
+	for git@vger.kernel.org; Fri, 05 Jun 2015 20:46:59 +0200
+Received: from dsl-217-155-72-22.zen.co.uk ([217.155.72.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 20:46:59 +0200
+Received: from eda by dsl-217-155-72-22.zen.co.uk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 20:46:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 217.155.72.22 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0) Gecko/20100101 Firefox/38.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270871>
 
-On Fri, Jun 5, 2015 at 1:44 PM, Eric Sunshine <sunshine@sunshineco.com>=
- wrote:
-> On Fri, Jun 5, 2015 at 5:32 AM, Ed Avis <eda@waniasset.com> wrote:
->> Torsten B=C3=B6gershausen <tboegi <at> web.de> writes:
->>>Do you think you can write a patch to improve the documentation ?
->>
->> Here is my attempt, but it is only a starting point.
->>
->> diff --git a/Documentation/git-checkout.txt b/Documentation/git-chec=
-kout.txt
->> index d263a56..ee25354 100644
->> --- a/Documentation/git-checkout.txt
->> +++ b/Documentation/git-checkout.txt
->> @@ -3,7 +3,7 @@ git-checkout(1)
->>
->>  NAME
->>  ----
->> -git-checkout - Checkout a branch or paths to the working tree
->> +git-checkout - Overwrite working tree files with a given branch
->
-> I agree with Duy's suggestion of "switch branches or reset working
+I'm not attached to the wording changes posted earlier.  As I said, it is
+only a starting point.
 
-I meant, but forgot to say, that I'd probably replace "reset" with
-"restore" in Duy's suggestion.
+I do feel that 'git checkout PATH' is rather a dangerous operation, and
+moreover a surprisingly dangerous one, since 'git checkout BRANCH' is
+careful not to lose local changes, as are other common commands like
+'git pull'.  In the documentation patch I tried to highlight the
+distinction between the two rather different, and perhaps even
+Jekyll-and-Hyde-like, modes of this command.
 
-> tree files" since it explains the high-level purpose of the command,
-> whereas your wording gives details of the low-level operation without
-> conveying the high-level purpose.
+But rather than adding heavyhanded and redundant warnings to the
+documentation it would be better for the command not to be quite so
+sharp-edged.  There is already a --force option for one mode, which could
+easily be made to apply to the other too (so local changes will not be
+discarded unless --force is given).  Is the only argument against it that
+'git checkout is intended to overwrite changes'?  That seems a little
+circular since the question is whether its intended behaviour could change
+to something a little safer.  Surely a sensible Huffman-coding of git
+commands would give longer and harder-to-type names like 'git checkout
+--force .' to relatively dangerous operations?
+
+Or indeed, split out the two different modes into two separate commands.
+The job of reverting file contents seems like something for 'git clean'.
+
+I've said all I have to say but I would like to ask, in the hope of becoming
+a better git user: if 'git checkout .' is not a safe way to restore missing
+files in the working tree, what is the recommended way to do that?
+
+Thanks all for your comments and guidance.
+
+-- 
+Ed Avis <eda@waniasset.com>
