@@ -1,172 +1,89 @@
-From: =?UTF-8?q?Johannes=20L=C3=B6thberg?= <johannes@kyriasis.com>
-Subject: [PATCH v3] receive-pack: Create a HEAD ref for ref namespace
-Date: Fri,  5 Jun 2015 19:02:11 +0200
-Message-ID: <1433523731-25172-1-git-send-email-johannes@kyriasis.com>
-References: <1433193883-11577-1-git-send-email-johannes@kyriasis.com>
+From: David Deutsch <dd212303@gmail.com>
+Subject: Re: Spontaneous "changes" upon checking out a commit
+Date: Fri, 5 Jun 2015 16:59:00 +0000 (UTC)
+Message-ID: <loom.20150605T185726-583@post.gmane.org>
+References: <CAE-vyzgSqqidjsD7XByLY+T4G78yUtO-q3G63au4uNPO=1_tcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Johannes=20L=C3=B6thberg?= <johannes@kyriasis.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 05 19:02:30 2015
+X-From: git-owner@vger.kernel.org Fri Jun 05 19:05:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0v0g-0003cV-8n
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:02:22 +0200
+	id 1Z0v3V-0005qY-Nx
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:05:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733AbbFERCS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2015 13:02:18 -0400
-Received: from theos.kyriasis.com ([212.71.254.33]:52984 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692AbbFERCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 13:02:17 -0400
-Received: from theos.kyriasis.com (localhost [127.0.0.1]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 22948e7c;
-	for <git@vger.kernel.org>;
-	Fri, 5 Jun 2015 17:02:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=theos; bh=kXiw3h4iZBf
-	0la7y5lV7Q1K9k5c=; b=mk4x9FuQTU0T3XsG7xSLKJ5mY3gxpvTL5fWMZd0R54a
-	HfB2Di8AuccRqsUaN1eMPogdZvfeUle8KLcT2kiJuNPOP+AYWArFsRg3ciUAx9PO
-	p9pfoUQqRHZwspHdNfgGxTvRbW16GoTTcirC/UPQ6l7AltI8eCbcFmEUtp4eRKXg
-	=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=theos; b=cmzUi
-	tBNI7qA79h9ayupcUzx7z8gvBvSAQUJcUgUUYiJ2AcCYSYxF8P/L0V+CzQAkUmcx
-	5GmP1m6lIxcfeP+AR4Yv2gLkUjfTN41ZEAGcY0QuzdYERybrPUmcpgb/9TA+guas
-	rkXyi6jp+fYxr4t2YzhjMlnBQJPkzDdlq6Xo9k=
-Received: from leeloo.kyriasis.com (m77-218-250-201.cust.tele2.se [77.218.250.201]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 9060f118;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Fri, 5 Jun 2015 17:02:15 +0000 (UTC)
-X-Mailer: git-send-email 2.4.2
-In-Reply-To: <1433193883-11577-1-git-send-email-johannes@kyriasis.com>
+	id S1423118AbbFERFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 13:05:13 -0400
+Received: from plane.gmane.org ([80.91.229.3]:39675 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422809AbbFERFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 13:05:11 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Z0v3J-0005fR-7Y
+	for git@vger.kernel.org; Fri, 05 Jun 2015 19:05:05 +0200
+Received: from GENSCAPE-IN.bar1.Boston1.Level3.net ([4.16.9.122])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 19:05:05 +0200
+Received: from dd212303 by GENSCAPE-IN.bar1.Boston1.Level3.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 19:05:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 4.16.9.122 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270859>
 
-Each ref namespace have their own separate branches, tags, and HEAD, so
-when pushing to a namespace we need to make sure that there exists a
-HEAD ref for the namespace, otherwise you will not be able to check out
-the repo after cloning from a namespace
+David Deutsch <dd212303 <at> gmail.com> writes:
 
-Signed-off-by: Johannes L=C3=B6thberg <johannes@kyriasis.com>
----
-since v2:
-  * Added test case in t5509
-  * Check that the remote refs get set properly in the test
+> 
+> When I checkout a particular commit in my repo and immediately do a
+> git status, there is a file that show up as changed. If I look at the
+> SHAs for my working copy and the copy in the index/repo, they are
+> indeed different. The working copy has carriage returns, and while I
+> *suspect* the copy in the index/repo does not have them, the output
+> from git cat-file on the repo SHA does have them. In fact, if I
+> redirect that output to a file and do a git hash-object of that file,
+> I get back the the same SHA as the working copy.
+> 
+> Doing a git checkout on the file changes nothing, i.e. it is still
+> marked as changed in git status. Trying to checkout another commit
+> fails, as my "changes" to the file would be overwritten by the
+> checkout. Doing a git diff on the file returns nothing.
+> 
+> The repo has a .gitattributes file, which starts out with "* text=auto
+> !eol". Every file in the repo is explicitly listed in .gitattributes
+> as -text, *except* the file that has the spontaneous "changes". The
+> file's suffix is .cs, which I thought was automatically considered
+> text anyway. On my machine, core.autocrlf is false.
+> 
+> This is running on Windows. Git version is 1.9.5.msysgit.1.
+> 
+> Does anyone know what might be going on here? It is almost as if git
+> is adding the CRs to the file at checkout, but not "realizing" that
+> when it comes to deciding if there are local changes.
+> 
+> Thanks for any insight.
+> 
 
- builtin/receive-pack.c           | 12 +++++++++-
- t/t5509-fetch-push-namespaces.sh | 49 ++++++++++++++++++++++++++++++++=
-+++++++-
- 2 files changed, 59 insertions(+), 2 deletions(-)
+OK, so I am pretty sure I have this figured out. Contrary to my belief, 
+the file in the repo did have CRs in it, and was thus exactly equal to 
+my working copy. However, since "* text = auto" was specified in 
+.gitattributes, the "clean" version git status uses would have its CRs 
+stripped, i.e. upon commit. So, git considers the files different. 
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index d2ec52b..0c18c92 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -864,7 +864,9 @@ static const char *update(struct command *cmd, stru=
-ct shallow_info *si)
- {
- 	const char *name =3D cmd->ref_name;
- 	struct strbuf namespaced_name_buf =3D STRBUF_INIT;
--	const char *namespaced_name, *ret;
-+	struct strbuf namespaced_head_buf =3D STRBUF_INIT;
-+	const char *namespaced_name, *ret, *namespace;
-+	const char *namespaced_head_path;
- 	unsigned char *old_sha1 =3D cmd->old_sha1;
- 	unsigned char *new_sha1 =3D cmd->new_sha1;
-=20
-@@ -981,6 +983,14 @@ static const char *update(struct command *cmd, str=
-uct shallow_info *si)
- 		return NULL; /* good */
- 	}
- 	else {
-+		namespace =3D get_git_namespace();
-+		if (strcmp(namespace, "refs/namespaces/")) {
-+			strbuf_addf(&namespaced_head_buf, "%s%s", namespace, "HEAD");
-+			namespaced_head_path =3D strbuf_detach(&namespaced_head_buf, NULL);
-+
-+			create_symref(namespaced_head_path, namespaced_name, NULL);
-+		}
-+
- 		struct strbuf err =3D STRBUF_INIT;
- 		if (shallow_update && si->shallow_ref[cmd->index] &&
- 		    update_shallow_ref(cmd, si))
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-name=
-spaces.sh
-index cc0b31f..7bc3a1f 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -1,6 +1,7 @@
- #!/bin/sh
-=20
--test_description=3D'fetch/push involving ref namespaces'
-+test_description=3D'fetch/push/clone involving ref namespaces'
-+
- . ./test-lib.sh
-=20
- test_expect_success setup '
-@@ -82,4 +83,50 @@ test_expect_success 'mirroring a repository using a =
-ref namespace' '
- 	)
- '
-=20
-+test_expect_success 'cloning from ref namespace' '
-+	rm -rf initial bare clone &&
-+	git init initial &&
-+	git init --bare bare &&
-+	(
-+		cd initial &&
-+		echo "commit one" >file &&
-+		git add file &&
-+		git commit -m "commit one" &&
-+		git push ../bare master &&
-+
-+		echo refs/heads/master >expect &&
-+		git -C ../bare symbolic-ref HEAD >actual &&
-+		test_cmp expect actual &&
-+
-+		git rev-parse HEAD >expect &&
-+		git -C ../bare rev-parse HEAD >actual &&
-+		test_cmp expect actual &&
-+
-+		echo "commit two" >>file &&
-+		git add file &&
-+		git commit -m "commit two" &&
-+		GIT_NAMESPACE=3Dnew_namespace git push ../bare master &&
-+
-+		echo "ref: refs/namespaces/new_namespace/refs/heads/master" >expect =
-&&
-+		test_cmp expect ../bare/refs/namespaces/new_namespace/HEAD  &&
-+
-+		(
-+			printf "%s commit\t%s\n" $(git rev-parse master^) \
-+			                         refs/heads/master &&
-+			printf "%s commit\t%s\n" $(git rev-parse master) \
-+			                         refs/namespaces/new_namespace/HEAD &&
-+			printf "%s commit\t%s\n" $(git rev-parse master) \
-+			                         refs/namespaces/new_namespace/refs/heads/m=
-aster
-+		) >expect &&
-+		git -C ../bare for-each-ref refs/ >actual &&
-+		test_cmp expect actual
-+	) &&
-+	GIT_NAMESPACE=3Dnew_namespace git clone bare clone &&
-+	(
-+		cd clone &&
-+		git show
-+	)
-+'
-+
-+
- test_done
---=20
-2.4.2
+An interesting thing to note is that while I was able to reproduce this 
+with a test repository using * text = auto in .gitattributes, I could 
+not reproduce it if I did not have that line, even while setting 
+core.autocrlf to true. The documentation implies the behavior should be 
+the same, but that is obviously not the case.
