@@ -1,95 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] utf8: NO_ICONV: silence uninitialized variable warning
-Date: Fri, 5 Jun 2015 05:23:09 -0400
-Message-ID: <20150605092309.GA11855@peff.net>
-References: <1433486536-23447-1-git-send-email-sunshine@sunshineco.com>
+From: Ed Avis <eda@waniasset.com>
+Subject: Re: Suggestion: make git checkout safer
+Date: Fri, 5 Jun 2015 09:32:27 +0000 (UTC)
+Message-ID: <loom.20150605T113129-339@post.gmane.org>
+References: <loom.20150603T104534-909@post.gmane.org> <20150603090654.GD32000@peff.net> <loom.20150603T110826-777@post.gmane.org> <20150603093514.GF32000@peff.net> <loom.20150603T114527-151@post.gmane.org> <20150603194756.GB29730@vps892.directvps.nl> <loom.20150604T124827-124@post.gmane.org> <5570B1AC.2060108@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 11:24:01 2015
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 05 11:33:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0nqS-0006zU-1u
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 11:23:20 +0200
+	id 1Z0o0M-00061R-6l
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 11:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035AbbFEJXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 05:23:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41530 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753518AbbFEJXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 05:23:13 -0400
-Received: (qmail 23188 invoked by uid 102); 5 Jun 2015 09:23:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Jun 2015 04:23:13 -0500
-Received: (qmail 7416 invoked by uid 107); 5 Jun 2015 09:23:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Jun 2015 05:23:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Jun 2015 05:23:09 -0400
-Content-Disposition: inline
-In-Reply-To: <1433486536-23447-1-git-send-email-sunshine@sunshineco.com>
+	id S932337AbbFEJd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 05:33:28 -0400
+Received: from plane.gmane.org ([80.91.229.3]:36009 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753902AbbFEJdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 05:33:25 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Z0nza-0005U4-Ui
+	for git@vger.kernel.org; Fri, 05 Jun 2015 11:32:47 +0200
+Received: from 80.169.169.174 ([80.169.169.174])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 11:32:46 +0200
+Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 11:32:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:38.0) Gecko/20100101 Firefox/38.0 Cyberfox/38.0.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270819>
+X-Spam-Report: 5.4 points;
+ *  2.6 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  2.8 BASE64_LENGTH_79_INF BODY: BASE64_LENGTH_79_INF
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270820>
 
-On Fri, Jun 05, 2015 at 02:42:16AM -0400, Eric Sunshine wrote:
-
-> The last argument of reencode_string_len() is an 'int *' which is
-> assigned the length of the converted string. When NO_ICONV is defined,
-> however, reencode_string_len() is stubbed out by the macro:
-> 
->     #define reencode_string_len(a,b,c,d,e) NULL
-> 
-> which never assigns a value to the final argument. When called like
-> this:
-> 
->     int n;
->     char *s = reencode_string_len(..., &n);
->     if (s)
->         do_something(s, n);
-> 
-> some compilers complain that 'n' is used uninitialized within the
-> conditional.
-
-Hmm, this sounded familiar to me. And indeed:
-
-  http://article.gmane.org/gmane.comp.version-control.git/264095
-
-but I guess we never pushed that topic forward.
-
-> -#define reencode_string_len(a,b,c,d,e) NULL
-> +static inline char *reencode_string_len(const char *a, int b,
-> +					const char *c, const char *d, int *e)
-> +{ if (e) *e = 0; return NULL; }
->  #endif
-
-In the non-NO_ICONV code path we do not set "e" when returning NULL, so
-this actually behaves differently than the real function. I'm not
-puzzled that the compiler behaves differently (after all, it must assume
-that the out-parameter is filled in when it is passed to an extern
-function, but with the noop here it can easily see that it is not).
-
-But I am puzzled that the compiler, when given the full code, does not
-realize that "s" in your example is always NULL, and the conditional is
-dead code.
-
-In the patch linked above, I just initialized the variables in the
-callers. Your patch here just unconditionally sets the outsz parameter.
-That is certainly fine when NO_ICONV is set (and nicer, because it
-contains the fix to one spot), but I wonder if it means we are papering
-over a problem in the normal code path. I.e., now that we give the
-compiler the extra information about the implementation of
-reencode_string_len, it knows to complain.
-
-But I just cannot see any way for it to be a problem. The simple code
-example you gave above is quite accurate.
-
-So I think your patch is the best option, but it might be good to give
-one more look at the callers to be sure we are not missing something.
-
--Peff
+VG9yc3RlbiBCw7ZnZXJzaGF1c2VuIDx0Ym9lZ2kgPGF0PiB3ZWIuZGU+IHdyaXRlczoKCj5EbyB5b3UgdGhpbmsgeW91IGNhbiB3cml0ZSBhIHBhdGNoIHRvIGltcHJvdmUgdGhlIGRvY3VtZW50YXRpb24gPwoKSGVyZSBpcyBteSBhdHRlbXB0LCBidXQgaXQgaXMgb25seSBhIHN0YXJ0aW5nIHBvaW50LgoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LWNoZWNrb3V0LnR4dCBiL0RvY3VtZW50YXRpb24vZ2l0LWNoZWNrb3V0LnR4dAppbmRleCBkMjYzYTU2Li5lZTI1MzU0IDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2dpdC1jaGVja291dC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9naXQtY2hlY2tvdXQudHh0CkBAIC0zLDcgKzMsNyBAQCBnaXQtY2hlY2tvdXQoMSkKCiBOQU1FCiAtLS0tCi1naXQtY2hlY2tvdXQgLSBDaGVja291dCBhIGJyYW5jaCBvciBwYXRocyB0byB0aGUgd29ya2luZyB0cmVlCitnaXQtY2hlY2tvdXQgLSBPdmVyd3JpdGUgd29ya2luZyB0cmVlIGZpbGVzIHdpdGggYSBnaXZlbiBicmFuY2gKCiBTWU5PUFNJUwogLS0tLS0tLS0KQEAgLTE3LDEwICsxNywxMSBAQCBTWU5PUFNJUwoKIERFU0NSSVBUSU9OCiAtLS0tLS0t
+ LS0tLQotVXBkYXRlcyBmaWxlcyBpbiB0aGUgd29ya2luZyB0cmVlIHRvIG1hdGNoIHRoZSB2ZXJzaW9uIGluIHRoZSBpbmRleAotb3IgdGhlIHNwZWNpZmllZCB0cmVlLiAgSWYgbm8gcGF0aHMgYXJlIGdpdmVuLCAnZ2l0IGNoZWNrb3V0JyB3aWxsCi1hbHNvIHVwZGF0ZSBgSEVBRGAgdG8gc2V0IHRoZSBzcGVjaWZpZWQgYnJhbmNoIGFzIHRoZSBjdXJyZW50Ci1icmFuY2guCitVcGRhdGVzLCBjcmVhdGVzLCBvciBvdmVyd3JpdGVzIGZpbGVzIGluIHRoZSB3b3JraW5nIHRyZWUgdG8gbWF0Y2ggdGhlCit2ZXJzaW9uIGluIHRoZSBpbmRleCBvciB0aGUgc3BlY2lmaWVkIHRyZWUuICBJZiBubyBwYXRocyBhcmUgZ2l2ZW4sCisnZ2l0IGNoZWNrb3V0JyB3aWxsIGFsc28gdXBkYXRlIGBIRUFEYCB0byBzZXQgdGhlIHNwZWNpZmllZCBicmFuY2ggYXMKK3RoZSBjdXJyZW50IGJyYW5jaCwgYW5kIHdpbGwga2VlcCBsb2NhbCBjaGFuZ2VzLiAgSWYgcGF0aHMgYXJlIGdpdmVuLAorJ2dpdCBjaGVja291dCcgd2lsbCB1bmNvbmRpdGlvbmFsbHkgb3ZlcndyaXRlIGxvY2FsIGNoYW5nZXMuCgogJ2dpdCBjaGVja291dCcgPGJyYW5jaD46OgogICAgICAgIFRvIH
+ ByZXBhcmUgZm9yIHdvcmtpbmcgb24gPGJyYW5jaD4sIHN3aXRjaCB0byBpdCBieSB1cGRhdGluZwpAQCAtODEsMjEgKzgyLDI0IEBAIE9taXR0aW5nIDxicmFuY2g+IGRldGFjaGVzIEhFQUQgYXQgdGhlIHRpcCBvZiB0aGUKY3VycmVudCBicmFuY2guCiAnZ2l0IGNoZWNrb3V0JyBbLXB8LS1wYXRjaF0gWzx0cmVlLWlzaD5dIFstLV0gPHBhdGhzcGVjPi4uLjo6CgogICAgICAgIFdoZW4gPHBhdGhzPiBvciBgLS1wYXRjaGAgYXJlIGdpdmVuLCAnZ2l0IGNoZWNrb3V0JyBkb2VzICpub3QqCi0gICAgICAgc3dpdGNoIGJyYW5jaGVzLiAgSXQgdXBkYXRlcyB0aGUgbmFtZWQgcGF0aHMgaW4gdGhlIHdvcmtpbmcgdHJlZQotICAgICAgIGZyb20gdGhlIGluZGV4IGZpbGUgb3IgZnJvbSBhIG5hbWVkIDx0cmVlLWlzaD4gKG1vc3Qgb2Z0ZW4gYQotICAgICAgIGNvbW1pdCkuICBJbiB0aGlzIGNhc2UsIHRoZSBgLWJgIGFuZCBgLS10cmFja2Agb3B0aW9ucyBhcmUKLSAgICAgICBtZWFuaW5nbGVzcyBhbmQgZ2l2aW5nIGVpdGhlciBvZiB0aGVtIHJlc3VsdHMgaW4gYW4gZXJyb3IuICBUaGUKLSAgICAgICA8dHJlZS1pc2g+IGFyZ3VtZW50IGNhbiBiZSB1c2Vk
+ IHRvIHNwZWNpZnkgYSBzcGVjaWZpYyB0cmVlLWlzaAotICAgICAgIChpLmUuICBjb21taXQsIHRhZyBvciB0cmVlKSB0byB1cGRhdGUgdGhlIGluZGV4IGZvciB0aGUgZ2l2ZW4KLSAgICAgICBwYXRocyBiZWZvcmUgdXBkYXRpbmcgdGhlIHdvcmtpbmcgdHJlZS4KLSsKLVRoZSBpbmRleCBtYXkgY29udGFpbiB1bm1lcmdlZCBlbnRyaWVzIGJlY2F1c2Ugb2YgYSBwcmV2aW91cyBmYWlsZWQgbWVyZ2UuCi1CeSBkZWZhdWx0LCBpZiB5b3UgdHJ5IHRvIGNoZWNrIG91dCBzdWNoIGFuIGVudHJ5IGZyb20gdGhlIGluZGV4LCB0aGUKLWNoZWNrb3V0IG9wZXJhdGlvbiB3aWxsIGZhaWwgYW5kIG5vdGhpbmcgd2lsbCBiZSBjaGVja2VkIG91dC4KLVVzaW5nIGAtZmAgd2lsbCBpZ25vcmUgdGhlc2UgdW5tZXJnZWQgZW50cmllcy4gIFRoZSBjb250ZW50cyBmcm9tIGEKLXNwZWNpZmljIHNpZGUgb2YgdGhlIG1lcmdlIGNhbiBiZSBjaGVja2VkIG91dCBvZiB0aGUgaW5kZXggYnkKLXVzaW5nIGAtLW91cnNgIG9yIGAtLXRoZWlyc2AuICBXaXRoIGAtbWAsIGNoYW5nZXMgbWFkZSB0byB0aGUgd29ya2luZyB0cmVlCi1maWxlIGNhbiBiZSBkaXNjYXJkZWQgdG8gcm
+ UtY3JlYXRlIHRoZSBvcmlnaW5hbCBjb25mbGljdGVkIG1lcmdlIHJlc3VsdC4KKyAgICAgICBzd2l0Y2ggYnJhbmNoZXMuICBJdCBvdmVyd3JpdGVzIHRoZSBuYW1lZCBwYXRocyBpbiB0aGUgd29ya2luZworICAgICAgIHRyZWUgZnJvbSB0aGUgaW5kZXggZmlsZSBvciBmcm9tIGEgbmFtZWQgPHRyZWUtaXNoPiAobW9zdAorICAgICAgIG9mdGVuIGEgY29tbWl0KS4gIFVubGlrZSBvdGhlciBtb2RlcywgbG9jYWwgbW9kaWZpY2F0aW9ucyB0bworICAgICAgIHRoZSBmaWxlcyBpbiB0aGUgd29ya2luZyB0cmVlIGFyZSAqbm90KiBrZXB0LgorCisgICAgICAgIEluIHRoaXMgY2FzZSwgdGhlIGAtYmAgYW5kIGAtLXRyYWNrYCBvcHRpb25zIGFyZSBtZWFuaW5nbGVzcworICAgICAgIGFuZCBnaXZpbmcgZWl0aGVyIG9mIHRoZW0gcmVzdWx0cyBpbiBhbiBlcnJvci4gIFRoZSA8dHJlZS1pc2g+CisgICAgICAgYXJndW1lbnQgY2FuIGJlIHVzZWQgdG8gc3BlY2lmeSBhIHNwZWNpZmljIHRyZWUtaXNoIChpLmUuCisgICAgICAgY29tbWl0LCB0YWcgb3IgdHJlZSkgdG8gdXBkYXRlIHRoZSBpbmRleCBmb3IgdGhlIGdpdmVuIHBhdGhzCisgICAgICAgYmVmb3Jl
+ IHVwZGF0aW5nIHRoZSB3b3JraW5nIHRyZWUuICArIFRoZSBpbmRleCBtYXkgY29udGFpbgorICAgICAgIHVubWVyZ2VkIGVudHJpZXMgYmVjYXVzZSBvZiBhIHByZXZpb3VzIGZhaWxlZCBtZXJnZS4gIEJ5CisgICAgICAgZGVmYXVsdCwgaWYgeW91IHRyeSB0byBjaGVjayBvdXQgc3VjaCBhbiBlbnRyeSBmcm9tIHRoZSBpbmRleCwKKyAgICAgICB0aGUgY2hlY2tvdXQgb3BlcmF0aW9uIHdpbGwgZmFpbCBhbmQgbm90aGluZyB3aWxsIGJlIGNoZWNrZWQKKyAgICAgICBvdXQuICBVc2luZyBgLWZgIHdpbGwgaWdub3JlIHRoZXNlIHVubWVyZ2VkIGVudHJpZXMuICBUaGUKKyAgICAgICBjb250ZW50cyBmcm9tIGEgc3BlY2lmaWMgc2lkZSBvZiB0aGUgbWVyZ2UgY2FuIGJlIGNoZWNrZWQgb3V0CisgICAgICAgb2YgdGhlIGluZGV4IGJ5IHVzaW5nIGAtLW91cnNgIG9yIGAtLXRoZWlyc2AuICBXaXRoIGAtbWAsCisgICAgICAgY2hhbmdlcyBtYWRlIHRvIHRoZSB3b3JraW5nIHRyZWUgZmlsZSBjYW4gYmUgZGlzY2FyZGVkIHRvCisgICAgICAgcmUtY3JlYXRlIHRoZSBvcmlnaW5hbCBjb25mbGljdGVkIG1lcmdlIHJlc3VsdC4KCiBPUFRJT05TCiAtLS0tLS
+ 0tCkBAIC0xMTAsNyArMTE0LDkgQEAgT1BUSU9OUwogICAgICAgIGxvY2FsIGNoYW5nZXMuCiArCiBXaGVuIGNoZWNraW5nIG91dCBwYXRocyBmcm9tIHRoZSBpbmRleCwgZG8gbm90IGZhaWwgdXBvbiB1bm1lcmdlZAotZW50cmllczsgaW5zdGVhZCwgdW5tZXJnZWQgZW50cmllcyBhcmUgaWdub3JlZC4KK2VudHJpZXM7IGluc3RlYWQsIHVubWVyZ2VkIGVudHJpZXMgYXJlIGlnbm9yZWQuICAoTm90ZSB0aGF0IHdoZW4KK2NoZWNraW5nIG91dCBwYXRocywgbG9jYWwgY2hhbmdlcyBhcmUgdGhyb3duIGF3YXkgd2hldGhlciBvciBub3QKK3RoaXMgZmxhZyBpcyBnaXZlbi4pCgogLS1vdXJzOjoKIC0tdGhlaXJzOjoKQEAgLTQ4MSwxMCArNDg3LDEwIEBAICQgZ2l0IGNoZWNrb3V0IGhlbGxvLmMgICAgICAgICAgICA8Mz4KIC0tLS0tLS0tLS0tLQogKwogPDE+IHN3aXRjaCBicmFuY2gKLTwyPiB0YWtlIGEgZmlsZSBvdXQgb2YgYW5vdGhlciBjb21taXQKLTwzPiByZXN0b3JlIGhlbGxvLmMgZnJvbSB0aGUgaW5kZXgKKzwyPiB0YWtlIGEgZmlsZSBvdXQgb2YgYW5vdGhlciBjb21taXQsIG92ZXJ3cml0aW5nIGFueSBsb2NhbCBjaGFuZ2VzCis8Mz4gcmVz
+ dG9yZSBoZWxsby5jIGZyb20gdGhlIGluZGV4ICh3b3VsZCBvdmVyd3JpdGUgaXQgaWYgaXQgZXhpc3RlZCkKICsKLUlmIHlvdSB3YW50IHRvIGNoZWNrIG91dCBfYWxsXyBDIHNvdXJjZSBmaWxlcyBvdXQgb2YgdGhlIGluZGV4LAorSWYgeW91IHdhbnQgdG8gcmV2ZXJ0IF9hbGxfIEMgc291cmNlIGZpbGVzIG91dCBvZiB0aGUgaW5kZXgsCiB5b3UgY2FuIHNheQogKwogLS0tLS0tLS0tLS0tCkBAIC00OTIsNyArNDk4LDcgQEAgJCBnaXQgY2hlY2tvdXQgLS0gJyouYycKIC0tLS0tLS0tLS0tLQogKwogTm90ZSB0aGUgcXVvdGVzIGFyb3VuZCBgKi5jYC4gIFRoZSBmaWxlIGBoZWxsby5jYCB3aWxsIGFsc28gYmUKLWNoZWNrZWQgb3V0LCBldmVuIHRob3VnaCBpdCBpcyBubyBsb25nZXIgaW4gdGhlIHdvcmtpbmcgdHJlZSwKK2NyZWF0ZWQsIGV2ZW4gdGhvdWdoIGl0IGlzIG5vIGxvbmdlciBpbiB0aGUgd29ya2luZyB0cmVlLAogYmVjYXVzZSB0aGUgZmlsZSBnbG9iYmluZyBpcyB1c2VkIHRvIG1hdGNoIGVudHJpZXMgaW4gdGhlIGluZGV4CiAobm90IGluIHRoZSB3b3JraW5nIHRyZWUgYnkgdGhlIHNoZWxsKS4KCg==
