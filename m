@@ -1,95 +1,98 @@
-From: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-Subject: [PATCH 1/2] git-bisect.sh : create a file if the bisection is in old/new mode, named "BISECT_OLDNEWMODE", so it can easily be seen outside the program without having to read BISECT_TERMS. This will have to be changed in further versions if new terms are introduced.
-Date: Fri,  5 Jun 2015 18:34:20 +0200
-Message-ID: <1433522061-14532-1-git-send-email-stuberl@ensimag.grenoble-inp.fr>
-Cc: remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	remi.lespinet@ensimag.grenoble-inp.fr,
-	matthieu.moy@grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	antoine.delaite@ensimag.grenoble-inp.fr, j_franck7@msn.com,
-	valentinduperray@gmail.com, thomasxnguy@gmail.com,
-	lucienkong@hotmail.com, chriscool@tuxfamily.org,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 05 18:34:54 2015
+From: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] status: give more information during rebase -i
+Date: Fri, 5 Jun 2015 18:35:51 +0200 (CEST)
+Message-ID: <261867654.193546.1433522151490.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr> <1433368825-24617-3-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr> <vpqfv67zylq.fsf@anie.imag.fr> <xmqqtwunv1bv.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 18:36:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0uZo-0002QE-Ug
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 18:34:37 +0200
+	id 1Z0uaq-00035O-A0
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 18:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422747AbbFEQec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 12:34:32 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:54351 "EHLO
+	id S1422740AbbFEQff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 12:35:35 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:46394 "EHLO
 	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1422669AbbFEQeb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2015 12:34:31 -0400
+	by vger.kernel.org with ESMTP id S1422745AbbFEQfe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2015 12:35:34 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 1C3FE2873;
-	Fri,  5 Jun 2015 18:34:29 +0200 (CEST)
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 1801D2870;
+	Fri,  5 Jun 2015 18:35:32 +0200 (CEST)
 Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9L7E1ATb5ODl; Fri,  5 Jun 2015 18:34:29 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 099BA2870;
-	Fri,  5 Jun 2015 18:34:29 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id F07F620E4;
-	Fri,  5 Jun 2015 18:34:28 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jyE90Jgx2jT6; Fri,  5 Jun 2015 18:34:28 +0200 (CEST)
-Received: from ensipc253.imag.fr (ensipc253.imag.fr [129.88.241.113])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C601820DF;
-	Fri,  5 Jun 2015 18:34:28 +0200 (CEST)
-X-Mailer: git-send-email 1.7.1
+	with ESMTP id alM9FFy8Rooa; Fri,  5 Jun 2015 18:35:32 +0200 (CEST)
+Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 0670D284D;
+	Fri,  5 Jun 2015 18:35:32 +0200 (CEST)
+In-Reply-To: <xmqqtwunv1bv.fsf@gitster.dls.corp.google.com>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF37 (Linux)/8.0.9_GA_6191)
+Thread-Topic: status: give more information during rebase -i
+Thread-Index: Cqu+ry5L2v2BbsHK8hIcj2g2XyZdzw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270853>
 
+Junio C Hamano <gitster@pobox.com> writes
 
-Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
----
- git-bisect.sh |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+>Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes: 
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 109bd65..d3d19cb 100644
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -183,6 +183,10 @@ bisect_start() {
- 	then
- 		echo "$BISECT_BAD" >"$GIT_DIR/BISECT_TERMS" &&
- 		echo "$BISECT_GOOD" >>"$GIT_DIR/BISECT_TERMS"
-+		if test "$BISECT_BAD" = "new"
-+		then
-+			echo "" > "$GIT_DIR/BISECT_OLDNEWMODE"
-+		fi
- 	fi &&
- 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
- 	#
-@@ -416,6 +420,7 @@ bisect_clean_state() {
- 	rm -f "$GIT_DIR/BISECT_NAMES" &&
- 	rm -f "$GIT_DIR/BISECT_RUN" &&
- 	rm -f "$GIT_DIR/BISECT_TERMS" &&
-+	rm -f "$GIT_DIR/BISECT_OLDNEWMODE" &&
- 	# Cleanup head-name if it got left by an old version of git-bisect
- 	rm -f "$GIT_DIR/head-name" &&
- 	git update-ref -d --no-deref BISECT_HEAD &&
-@@ -544,7 +549,8 @@ check_and_set_terms () {
- 			if test ! -s "$GIT_DIR/BISECT_TERMS"
- 			then
- 				echo "new" >"$GIT_DIR/BISECT_TERMS" &&
--				echo "old" >>"$GIT_DIR/BISECT_TERMS"
-+				echo "old" >>"$GIT_DIR/BISECT_TERMS" &&
-+				echo "" > "$GIT_DIR/BISECT_OLDNEWMODE"
- 			fi
- 			BISECT_BAD="new"
- 			BISECT_GOOD="old" ;;
--- 
-1.7.1
+>>> +void get_two_last_lines(char *filename, int *numlines, char **lines) 
+>>> +{ 
+>>> +... 
+>>> +} 
+>>> + 
+>>> +void get_two_first_lines(char *filename, int *numlines, char **lines) 
+>>> +{ 
+>>> +... 
+>>> +} 
+
+>I had a handful of comments on these: 
+
+>- Do we need two separate and overly specific functions like these, 
+>i.e. "two" and "first/last"? 
+
+>- Wouldn't people want to be able to configure the number of lines? 
+
+>- Do we really want get_two_{first,last}_LINES() functions? 
+
+>I am wondering if insn sheets these functions read include 
+>comments, in which case get_n_{first,last}_commands() may be a 
+>more correct name. 
+
+>- Wouldn't it be necessary for these functions to report the total 
+>number of commands, instead of giving "void" back? Otherwise how 
+>would the caller produce summary like this: 
+
+I felt that was not the right way to do so. What do you think of a
+function like that:
+
+/*
+ * Puts nb_commands commands from filename in lines,
+ * returns the total number of commands in the file
+ * ignores comments and empty lines
+ * lines needs to be at least of size nb_commands
+ * part: 0 get last commands
+ * 	 1 get first commands
+ */
+
+int get_commands(char *filename, int nb_commands, char **lines, int part)
+
+Maybe part is not the best word to choose to take the beginning or the end
+of the file. I also hesitate about adding a parameter to ignore or not the 
+comments.
