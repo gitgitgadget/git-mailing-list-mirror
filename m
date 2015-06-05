@@ -1,103 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] status: give more information during rebase -i
-Date: Fri, 05 Jun 2015 10:11:12 -0700
-Message-ID: <xmqqpp5arsgf.fsf@gitster.dls.corp.google.com>
-References: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<1433368825-24617-3-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
-	<vpqfv67zylq.fsf@anie.imag.fr>
-	<xmqqtwunv1bv.fsf@gitster.dls.corp.google.com>
-	<261867654.193546.1433522151490.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH v2 0/2] make commit --verbose work with --no-status
+Date: Fri, 05 Jun 2015 10:13:16 -0700
+Message-ID: <xmqqlhfyrscz.fsf@gitster.dls.corp.google.com>
+References: <1433440591-30917-1-git-send-email-rctay89@gmail.com>
+	<xmqqd21buxla.fsf@gitster.dls.corp.google.com>
+	<CALUzUxqeadRii1o0-yo=QaZCqoAzGk+aVq=y1-11dJvK=em0qw@mail.gmail.com>
+	<xmqqbnguta69.fsf@gitster.dls.corp.google.com>
+	<CALUzUxrFvE-SDW0q2P08vR7rc4GHdpm24y7dk+kUdyGGwmqwOQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 05 19:11:23 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 19:13:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0v9M-0001vL-BI
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:11:20 +0200
+	id 1Z0vBL-0003Tm-EO
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951AbbFERLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 13:11:15 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:37491 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751991AbbFERLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 13:11:14 -0400
-Received: by igbsb11 with SMTP id sb11so19421581igb.0
-        for <git@vger.kernel.org>; Fri, 05 Jun 2015 10:11:14 -0700 (PDT)
+	id S1752154AbbFERNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 13:13:19 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:38551 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751702AbbFERNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 13:13:18 -0400
+Received: by igblz2 with SMTP id lz2so19347850igb.1
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 10:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=IJcbgahK06D0A90VJ1BCfjVGImT/IE7Dp6FhSXdcv9Q=;
-        b=lDWBVv5lWHz0CUQ2+HbuT0DrQ61F49ByA4EhGRz8vKfixTxwAfssPLBV526RLqjRlu
-         KU16+hXXUS9SyqTwoep6qT23oFV0/NXfmudORJGms/Fh+AeePanOZFtqA7kTOdtYiiA2
-         fPe1u/10A7C7zbTk16VZHOgRuFF6nt6aE9bD4fx/bZIp64+4mSltetr1DuogkmhLZJT3
-         pOh20V2Rrbga785A2D6gkKcuZiVMpccX0YSCwhHVQUfEXPa3E89EG3i+IIm0qAs1z0bD
-         zlIHLk4PLiQmSfjewxNPW3hr2+5yFi0iI7i++87Hxn6YvqtLljUBK5vRCg+StYiKPpJ7
-         dtjw==
-X-Received: by 10.50.136.134 with SMTP id qa6mr42444551igb.26.1433524274182;
-        Fri, 05 Jun 2015 10:11:14 -0700 (PDT)
+        bh=bGJCStggRkOGhi1y0efnWMrxJRAh7tTddD2mMtdByq0=;
+        b=PDTOxwbY3jc8lIII1nEBWw0djZ3bYaZyNg5aVC8z9oM+DI16necma/armHw8LvVllz
+         rLerwo3yHJgywlMH/YZNy/qRCdmFt78IBLfWgxS/mYY4pC+z26s474srHJMEGd0x+oIM
+         jhpBipcV2NkkXEk+oPlEcW3zn037BFV74jYyYOJliZSS+cnjIgK4xWelZaDciLZ2pZwY
+         w433Z4Nr8zE6N9Syf2E9L8O3TNHJzop2nM+mpS8pgBziMGbCMjH9JrrgUSlFV//PsIt2
+         YfZ4NsWahWbQqTc9fJSm9ner2jPTvvWI52w7s2VPw8gUS2IYfIxA2jwdVDIt4AlCmPIA
+         LiSw==
+X-Received: by 10.107.135.162 with SMTP id r34mr4988504ioi.13.1433524398060;
+        Fri, 05 Jun 2015 10:13:18 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:8c50:e66f:fc40:1825])
-        by mx.google.com with ESMTPSA id g1sm3505733iog.4.2015.06.05.10.11.13
+        by mx.google.com with ESMTPSA id o2sm1684002igr.9.2015.06.05.10.13.17
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Jun 2015 10:11:13 -0700 (PDT)
-In-Reply-To: <261867654.193546.1433522151490.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Guillaume Pages's message of "Fri, 5 Jun 2015 18:35:51 +0200 (CEST)")
+        Fri, 05 Jun 2015 10:13:17 -0700 (PDT)
+In-Reply-To: <CALUzUxrFvE-SDW0q2P08vR7rc4GHdpm24y7dk+kUdyGGwmqwOQ@mail.gmail.com>
+	(Tay Ray Chuan's message of "Sat, 6 Jun 2015 00:48:35 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270862>
 
-Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr> writes:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> I felt that was not the right way to do so. What do you think of a
-> function like that:
+>> All of the above assumes that showing only the patch and not other
+>> hints to help situation awareness while making a commit is a useful
+>> thing in the first place.  I am undecided on that point myself.
 >
-> /*
->  * Puts nb_commands commands from filename in lines,
->  * returns the total number of commands in the file
->  * ignores comments and empty lines
->  * lines needs to be at least of size nb_commands
->  * part: 0 get last commands
->  * 	 1 get first commands
->  */
->
-> int get_commands(char *filename, int nb_commands, char **lines, int part)
->
-> Maybe part is not the best word to choose to take the beginning or the end
-> of the file. I also hesitate about adding a parameter to ignore or not the 
-> comments.
+> Hmm, perhaps such functionality should be off-loaded to a third-party
+> wrapper. (I'd not be surprised if most wrappers already have this.)
 
-If I were doing the caller of these two functions, then instead of
-adding these specialized helpers, I'd probably structure that caller
-this way:
-
-	struct strbuf buf = STRBUF_INIT;
-	struct string_list have_done = STRING_LIST_INIT_DUP;
-	struct string_list yet_to_do = STRING_LIST_INIT_DUP;
-	int have_done_nr, yet_to_do_nr;
-
-	strbuf_read_file(&buf, ".../done", 0);
-	stripspace(&buf, 1);
-        have_done_nr = string_list_split(&have_done, buf.buf, '\n', -1);
-	strbuf_release(&buf);
-
-	strbuf_read_file(&buf, ".../todo", 0);
-	stripspace(&buf, 1);
-        yet_to_do_nr = string_list_split(&yet_to_do, buf.buf, '\n', -1);
-	strbuf_release(&buf);
-
-Then have_done.items[have_done_nr - 1].string would be the last one
-that we have replayed, and yet_to_do.items[0].string would be the
-next one we are going to replay.
+If you believe that parenthesised comment to be true, then that
+would be a sign that such a feature is desirable, no?  Substantiate
+it and let's relieve the third-party wrappers of that burden, then.
