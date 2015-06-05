@@ -1,101 +1,103 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: [PATCH v3] receive-pack: Create a HEAD ref for ref namespace
-Date: Fri, 5 Jun 2015 19:08:06 +0200
-Message-ID: <20150605170806.GA28379@leeloo.kyriasis.com>
-References: <1433193883-11577-1-git-send-email-johannes@kyriasis.com>
- <1433523731-25172-1-git-send-email-johannes@kyriasis.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] status: give more information during rebase -i
+Date: Fri, 05 Jun 2015 10:11:12 -0700
+Message-ID: <xmqqpp5arsgf.fsf@gitster.dls.corp.google.com>
+References: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+	<1433368825-24617-3-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+	<vpqfv67zylq.fsf@anie.imag.fr>
+	<xmqqtwunv1bv.fsf@gitster.dls.corp.google.com>
+	<261867654.193546.1433522151490.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uAKRQypu60I7Lcqm"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 05 19:08:22 2015
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 05 19:11:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0v6K-00080p-Q4
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:08:13 +0200
+	id 1Z0v9M-0001vL-BI
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932750AbbFERIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 13:08:09 -0400
-Received: from theos.kyriasis.com ([212.71.254.33]:53006 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932123AbbFERIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 13:08:07 -0400
-Received: from theos.kyriasis.com (localhost [127.0.0.1]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id a25e0158;
-	for <git@vger.kernel.org>;
-	Fri, 5 Jun 2015 17:08:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=t5rNhmb+XeL9UaROsG2auPgM6V0=; b=DRgDxC
-	z0TS7kkowNRdDjQd4GQk1Bcf5mkhfircshng/6agW0u0BJMcXSdBR2TSDbtZarz6
-	7YpUJoW041dYel1QsfnoiThowTN3ZueChenH+0KUrjTdZ09OB2flM9fJFIeg7WKq
-	/BCYQmMN/CQzicIW9qDQJqXEsqw49gE+sd0so=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=R5nUKICEdlbbtvFQNyvoNkBiACkTTgcU
-	xi5XMZ274WmRFBf3S5Im8diSSJnoKWD51mupTaCb5FXIOAPEMIYsM9s4L0QQgygq
-	IlrzvBToUvs9x4HF1gjNm8OWN9sf4c8hH4MbWKGzqbjQxfqxv4bMdWK0Z/CyIu5D
-	XLge/g3oZOM=
-Received: from leeloo.kyriasis.com (m77-218-250-201.cust.tele2.se [77.218.250.201]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id b8bc624e;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	for <git@vger.kernel.org>;
-	Fri, 5 Jun 2015 17:08:06 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1433523731-25172-1-git-send-email-johannes@kyriasis.com>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+	id S1754951AbbFERLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 13:11:15 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:37491 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751991AbbFERLO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 13:11:14 -0400
+Received: by igbsb11 with SMTP id sb11so19421581igb.0
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 10:11:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=IJcbgahK06D0A90VJ1BCfjVGImT/IE7Dp6FhSXdcv9Q=;
+        b=lDWBVv5lWHz0CUQ2+HbuT0DrQ61F49ByA4EhGRz8vKfixTxwAfssPLBV526RLqjRlu
+         KU16+hXXUS9SyqTwoep6qT23oFV0/NXfmudORJGms/Fh+AeePanOZFtqA7kTOdtYiiA2
+         fPe1u/10A7C7zbTk16VZHOgRuFF6nt6aE9bD4fx/bZIp64+4mSltetr1DuogkmhLZJT3
+         pOh20V2Rrbga785A2D6gkKcuZiVMpccX0YSCwhHVQUfEXPa3E89EG3i+IIm0qAs1z0bD
+         zlIHLk4PLiQmSfjewxNPW3hr2+5yFi0iI7i++87Hxn6YvqtLljUBK5vRCg+StYiKPpJ7
+         dtjw==
+X-Received: by 10.50.136.134 with SMTP id qa6mr42444551igb.26.1433524274182;
+        Fri, 05 Jun 2015 10:11:14 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:8c50:e66f:fc40:1825])
+        by mx.google.com with ESMTPSA id g1sm3505733iog.4.2015.06.05.10.11.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 05 Jun 2015 10:11:13 -0700 (PDT)
+In-Reply-To: <261867654.193546.1433522151490.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Guillaume Pages's message of "Fri, 5 Jun 2015 18:35:51 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270861>
 
+Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr> writes:
 
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I felt that was not the right way to do so. What do you think of a
+> function like that:
+>
+> /*
+>  * Puts nb_commands commands from filename in lines,
+>  * returns the total number of commands in the file
+>  * ignores comments and empty lines
+>  * lines needs to be at least of size nb_commands
+>  * part: 0 get last commands
+>  * 	 1 get first commands
+>  */
+>
+> int get_commands(char *filename, int nb_commands, char **lines, int part)
+>
+> Maybe part is not the best word to choose to take the beginning or the end
+> of the file. I also hesitate about adding a parameter to ignore or not the 
+> comments.
 
-I should also look into why the other tests in t5509 fail later.
+If I were doing the caller of these two functions, then instead of
+adding these specialized helpers, I'd probably structure that caller
+this way:
 
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
+	struct strbuf buf = STRBUF_INIT;
+	struct string_list have_done = STRING_LIST_INIT_DUP;
+	struct string_list yet_to_do = STRING_LIST_INIT_DUP;
+	int have_done_nr, yet_to_do_nr;
 
---uAKRQypu60I7Lcqm
-Content-Type: application/pgp-signature; name="signature.asc"
+	strbuf_read_file(&buf, ".../done", 0);
+	stripspace(&buf, 1);
+        have_done_nr = string_list_split(&have_done, buf.buf, '\n', -1);
+	strbuf_release(&buf);
 
------BEGIN PGP SIGNATURE-----
+	strbuf_read_file(&buf, ".../todo", 0);
+	stripspace(&buf, 1);
+        yet_to_do_nr = string_list_split(&yet_to_do, buf.buf, '\n', -1);
+	strbuf_release(&buf);
 
-iQQcBAEBCgAGBQJVcddzAAoJEJAcHDIOsNRdjw8f/RC68kIlet3UhBFHQ8C6YuQP
-QX5akywLoQBpbjO+38yGhhQIJhNqC8EP8msV1AaKov062nfVLWHAO53cWm4qxJrE
-wAc3qithx1kFxV9MmgrTY3W3sXMLkpQs4XtEZ2JAQz0vs3FjS6JFmtmzVZND1dcD
-BBvose+MEk0YZDIvegsuA+y+nl72WCo4SucWIONQKokGJP6yta3OMofVQpnqtV6m
-/y8Wfqcp0icBFoVHnR0VDQMVl7nEgOwFk617c7RzNuLN48NJZPgwArcbpbAXi+Xu
-ffkASwxMrUp3j+mZ3l7OhtufliBR9MHQiEYOEFyM7NDVKhM4t5HdlsSJdKOQZWox
-t01uTf31fM8WBYcBN6/1Q7DwY2lgKjg8VvLKyCT7el5mGqNBF0pON2/A2kqOme1e
-qdN5spMkSMYKJlP4eDHGwiWSDk0PsT8yjaZlYwe7xLrzZg+FwhJ+nQqP06j34Q6q
-1qKv58QFhUJCOJlBiKdsCSH7O+AlsqPqbx3IEBpbVaPmXMWFGAliyqLNAXU+/+WX
-EewiJYHUzYVepTHXybuhkHAnyQUz39CkgyrXgDXS09fvT3DgWzRUvid/zQhz5hWJ
-QQG/eqXQPM7wPCh5yrsm0Ms1T3j+eVh0mzbYHJ3EWdUsE/7ymOA2zAbGDk2VSeys
-BghS7OXGDtmfAiVV0zNub2kHxVJPUb+6NIvwl5X6KcG22cqgA0cx+r7IyBcX8zj3
-VNlE9dkI3QCcola3rTtgC0MI8XuRSg+R60iSnCcfS2dk4VbGZYEgfZ2W2ZU5ELvM
-M/XRgqgjSSGvkf4J+NPWBaMp0nWKNT2ixo/zw5hysBUwfUcp5X0QRuWTgvVDq7Yu
-mx/6dDjiGTLmwPtlgKTe/zsr6Gy32R3jfsMC10AQ68v2PmYcdILJQ3uVN6/4c6SA
-sStcVCwRtew0Y5onU0jjWwCmg52FWp+V0YfapD6ScHQtZ0RXevuh7DqIl0SeqTkl
-86D+5LWZ6yDIKkzHOtE3jwV49p7f+Q8Ih+eQ+HE5A6cqZIT+RlP7XRNumZx0zfEI
-LxEFd/o/loocanvS73X1mFkJ55pVoTbsekJQVpYwSNmzgL10MxHvFOpQVWXxK4qb
-aYb+LbE4mQB0z8tSj5vWz8X6dsNjXCPfedqpmB//GoNCdFzPSCG4+777EexnUmSB
-9fuPku5TRNLbJLlarGJVOudses4kI8gqL86ZEOXBO6PdkuxevjvlvK6CcslFP4hz
-d7BeySsPnAd6pYgpGKKo2D7CHjhyjK0Qsbl95YsYGuc0Kx2iHTuqEoN3tQHxOLFv
-xbBK4YD7ANsVxr0r3s+KI0QJw6/xn4BIhp8uvchp5ZMPqTtC1QCKDl1+kPY6xxU=
-=kuMM
------END PGP SIGNATURE-----
-
---uAKRQypu60I7Lcqm--
+Then have_done.items[have_done_nr - 1].string would be the last one
+that we have replayed, and yet_to_do.items[0].string would be the
+next one we are going to replay.
