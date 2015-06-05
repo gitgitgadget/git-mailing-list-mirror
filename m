@@ -1,83 +1,172 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2 0/2] make commit --verbose work with --no-status
-Date: Sat, 6 Jun 2015 00:48:35 +0800
-Message-ID: <CALUzUxrFvE-SDW0q2P08vR7rc4GHdpm24y7dk+kUdyGGwmqwOQ@mail.gmail.com>
-References: <1433440591-30917-1-git-send-email-rctay89@gmail.com>
- <xmqqd21buxla.fsf@gitster.dls.corp.google.com> <CALUzUxqeadRii1o0-yo=QaZCqoAzGk+aVq=y1-11dJvK=em0qw@mail.gmail.com>
- <xmqqbnguta69.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Johannes=20L=C3=B6thberg?= <johannes@kyriasis.com>
+Subject: [PATCH v3] receive-pack: Create a HEAD ref for ref namespace
+Date: Fri,  5 Jun 2015 19:02:11 +0200
+Message-ID: <1433523731-25172-1-git-send-email-johannes@kyriasis.com>
+References: <1433193883-11577-1-git-send-email-johannes@kyriasis.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 18:49:05 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Johannes=20L=C3=B6thberg?= <johannes@kyriasis.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 05 19:02:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0unl-0001rq-Mq
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 18:49:02 +0200
+	id 1Z0v0g-0003cV-8n
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423178AbbFEQs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 12:48:58 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:32986 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754766AbbFEQs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 12:48:56 -0400
-Received: by iebgx4 with SMTP id gx4so61630982ieb.0
-        for <git@vger.kernel.org>; Fri, 05 Jun 2015 09:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=K5tWAYilvXVaX2FxPlhHzKMVZRI7Ibmhp4WGcYUTjAM=;
-        b=TeuuSEuBls97ucsoNffbXyLgXwQZqJyemcYu4ktZWS3rlOefvx1l8hNBSvo0TaDWDQ
-         YHlSbi1POf2KSphhBYiE4m5k0ue2rk7Zr8+UVDu0ssnsTZE3gecXDYCWczT+ATxtkMNi
-         jQWl0UPcZNw1fnVRT3GwoW2rOXl3desGxVGu46kv2bE+MnvDg3pHSPN6Dy9QvS0PQqVw
-         DX5/jVoce3hB6jodYM3ZUf7RKdbMFFjqAmGJ/odkbzfixstIp/UIS6t0Rk7UYAS4OJWS
-         5uaxN0xomd2/12KijWqVRZa0ltqj+IebJOYlWb9LRmtRUPkLzwSVoT5DP8BbktAGtdq1
-         olFA==
-X-Received: by 10.107.135.78 with SMTP id j75mr4314588iod.67.1433522936224;
- Fri, 05 Jun 2015 09:48:56 -0700 (PDT)
-Received: by 10.64.246.103 with HTTP; Fri, 5 Jun 2015 09:48:35 -0700 (PDT)
-In-Reply-To: <xmqqbnguta69.fsf@gitster.dls.corp.google.com>
+	id S1754733AbbFERCS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2015 13:02:18 -0400
+Received: from theos.kyriasis.com ([212.71.254.33]:52984 "EHLO
+	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751692AbbFERCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 13:02:17 -0400
+Received: from theos.kyriasis.com (localhost [127.0.0.1]);
+	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 22948e7c;
+	for <git@vger.kernel.org>;
+	Fri, 5 Jun 2015 17:02:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; s=theos; bh=kXiw3h4iZBf
+	0la7y5lV7Q1K9k5c=; b=mk4x9FuQTU0T3XsG7xSLKJ5mY3gxpvTL5fWMZd0R54a
+	HfB2Di8AuccRqsUaN1eMPogdZvfeUle8KLcT2kiJuNPOP+AYWArFsRg3ciUAx9PO
+	p9pfoUQqRHZwspHdNfgGxTvRbW16GoTTcirC/UPQ6l7AltI8eCbcFmEUtp4eRKXg
+	=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=theos; b=cmzUi
+	tBNI7qA79h9ayupcUzx7z8gvBvSAQUJcUgUUYiJ2AcCYSYxF8P/L0V+CzQAkUmcx
+	5GmP1m6lIxcfeP+AR4Yv2gLkUjfTN41ZEAGcY0QuzdYERybrPUmcpgb/9TA+guas
+	rkXyi6jp+fYxr4t2YzhjMlnBQJPkzDdlq6Xo9k=
+Received: from leeloo.kyriasis.com (m77-218-250-201.cust.tele2.se [77.218.250.201]);
+	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 9060f118;
+	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
+	Fri, 5 Jun 2015 17:02:15 +0000 (UTC)
+X-Mailer: git-send-email 2.4.2
+In-Reply-To: <1433193883-11577-1-git-send-email-johannes@kyriasis.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270858>
 
-On Sat, Jun 6, 2015 at 12:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Tay Ray Chuan <rctay89@gmail.com> writes:
->
->> Would it be a good idea to have a --diff-only option to include diff,
->> but not status output? Or perhaps a --diff option, while leaving it to
->> the user to specify if status output is to be included with
->> --no-status, which would open the doors for mixing and matching status
->> formatting control, eg. with --short.
->
-> The name "--diff-only" does not sound right, as people would wonder
-> what should happen when you give "--status --diff-only".
->
-> Perhaps you would need to do some careful thinking, similar to what
-> we did when deciding the "diff" and "log" options.
->
-> We originally had "--patch" and then "--patch-with-stat" to "diff"
-> and "log", but soon after that people found that "show only stat
-> without the patch text" is a useful thing to do.  We retrofitted the
-> command line parser to take "--patch" and "--stat" as orthogonal but
-> inter-related options, which was a successful conversion that did
-> not break backward compatibility (These days people would not even
-> know that these strangely combined forms "--patch-with-stat" and
-> "--patch-with-raw" even exist).
->
-> All of the above assumes that showing only the patch and not other
-> hints to help situation awareness while making a commit is a useful
-> thing in the first place.  I am undecided on that point myself.
+Each ref namespace have their own separate branches, tags, and HEAD, so
+when pushing to a namespace we need to make sure that there exists a
+HEAD ref for the namespace, otherwise you will not be able to check out
+the repo after cloning from a namespace
 
-Hmm, perhaps such functionality should be off-loaded to a third-party
-wrapper. (I'd not be surprised if most wrappers already have this.)
+Signed-off-by: Johannes L=C3=B6thberg <johannes@kyriasis.com>
+---
+since v2:
+  * Added test case in t5509
+  * Check that the remote refs get set properly in the test
 
--- 
-Cheers,
-Ray Chuan
+ builtin/receive-pack.c           | 12 +++++++++-
+ t/t5509-fetch-push-namespaces.sh | 49 ++++++++++++++++++++++++++++++++=
++++++++-
+ 2 files changed, 59 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index d2ec52b..0c18c92 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -864,7 +864,9 @@ static const char *update(struct command *cmd, stru=
+ct shallow_info *si)
+ {
+ 	const char *name =3D cmd->ref_name;
+ 	struct strbuf namespaced_name_buf =3D STRBUF_INIT;
+-	const char *namespaced_name, *ret;
++	struct strbuf namespaced_head_buf =3D STRBUF_INIT;
++	const char *namespaced_name, *ret, *namespace;
++	const char *namespaced_head_path;
+ 	unsigned char *old_sha1 =3D cmd->old_sha1;
+ 	unsigned char *new_sha1 =3D cmd->new_sha1;
+=20
+@@ -981,6 +983,14 @@ static const char *update(struct command *cmd, str=
+uct shallow_info *si)
+ 		return NULL; /* good */
+ 	}
+ 	else {
++		namespace =3D get_git_namespace();
++		if (strcmp(namespace, "refs/namespaces/")) {
++			strbuf_addf(&namespaced_head_buf, "%s%s", namespace, "HEAD");
++			namespaced_head_path =3D strbuf_detach(&namespaced_head_buf, NULL);
++
++			create_symref(namespaced_head_path, namespaced_name, NULL);
++		}
++
+ 		struct strbuf err =3D STRBUF_INIT;
+ 		if (shallow_update && si->shallow_ref[cmd->index] &&
+ 		    update_shallow_ref(cmd, si))
+diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-name=
+spaces.sh
+index cc0b31f..7bc3a1f 100755
+--- a/t/t5509-fetch-push-namespaces.sh
++++ b/t/t5509-fetch-push-namespaces.sh
+@@ -1,6 +1,7 @@
+ #!/bin/sh
+=20
+-test_description=3D'fetch/push involving ref namespaces'
++test_description=3D'fetch/push/clone involving ref namespaces'
++
+ . ./test-lib.sh
+=20
+ test_expect_success setup '
+@@ -82,4 +83,50 @@ test_expect_success 'mirroring a repository using a =
+ref namespace' '
+ 	)
+ '
+=20
++test_expect_success 'cloning from ref namespace' '
++	rm -rf initial bare clone &&
++	git init initial &&
++	git init --bare bare &&
++	(
++		cd initial &&
++		echo "commit one" >file &&
++		git add file &&
++		git commit -m "commit one" &&
++		git push ../bare master &&
++
++		echo refs/heads/master >expect &&
++		git -C ../bare symbolic-ref HEAD >actual &&
++		test_cmp expect actual &&
++
++		git rev-parse HEAD >expect &&
++		git -C ../bare rev-parse HEAD >actual &&
++		test_cmp expect actual &&
++
++		echo "commit two" >>file &&
++		git add file &&
++		git commit -m "commit two" &&
++		GIT_NAMESPACE=3Dnew_namespace git push ../bare master &&
++
++		echo "ref: refs/namespaces/new_namespace/refs/heads/master" >expect =
+&&
++		test_cmp expect ../bare/refs/namespaces/new_namespace/HEAD  &&
++
++		(
++			printf "%s commit\t%s\n" $(git rev-parse master^) \
++			                         refs/heads/master &&
++			printf "%s commit\t%s\n" $(git rev-parse master) \
++			                         refs/namespaces/new_namespace/HEAD &&
++			printf "%s commit\t%s\n" $(git rev-parse master) \
++			                         refs/namespaces/new_namespace/refs/heads/m=
+aster
++		) >expect &&
++		git -C ../bare for-each-ref refs/ >actual &&
++		test_cmp expect actual
++	) &&
++	GIT_NAMESPACE=3Dnew_namespace git clone bare clone &&
++	(
++		cd clone &&
++		git show
++	)
++'
++
++
+ test_done
+--=20
+2.4.2
