@@ -1,126 +1,130 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Pack files, standards compliance, and efficiency
-Date: Fri, 5 Jun 2015 19:59:58 +0000
-Message-ID: <20150605195958.GC356121@vauxhall.crustytoothpaste.net>
-References: <20150605014120.GE305479@vauxhall.crustytoothpaste.net>
- <20150605094545.GB11855@peff.net>
- <CACsJy8CnWo=s1onqY33K+DwFmB1baQ-uwu9Fbwm+UB30kDTwQw@mail.gmail.com>
- <20150605103639.GB19033@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] git-bisect.sh : create a file if the bisection is in
+ old/new mode, named "BISECT_OLDNEWMODE", so it can easily be seen outside the
+ program without having to read BISECT_TERMS. This will have to be changed in
+ further versions if new terms are introduced.
+Date: Fri, 5 Jun 2015 16:03:15 -0400
+Message-ID: <CAPig+cQnrKEx_=WHw5gjA9SVtDObXWOJ3augZbhvNUuD8o19aA@mail.gmail.com>
+References: <1433522061-14532-1-git-send-email-stuberl@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="osDK9TLjxFScVI/L"
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 05 22:00:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	=?UTF-8?Q?Galan_R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	j_franck7@msn.com, valentinduperray@gmail.com,
+	thomasxnguy@gmail.com, lucienkong@hotmail.com,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 05 22:03:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0xmj-0001qC-3d
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 22:00:09 +0200
+	id 1Z0xpp-0004I5-1V
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 22:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbbFEUAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2015 16:00:04 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:34151 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751603AbbFEUAD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2015 16:00:03 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:a919:bb7f:1b0f:9a5b])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8BBD62808F;
-	Fri,  5 Jun 2015 20:00:01 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Content-Disposition: inline
-In-Reply-To: <20150605103639.GB19033@peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1751742AbbFEUDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 16:03:17 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:34153 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444AbbFEUDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 16:03:16 -0400
+Received: by iebmu5 with SMTP id mu5so30021567ieb.1
+        for <git@vger.kernel.org>; Fri, 05 Jun 2015 13:03:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=oNrWaPe05rmrOeAsQxmJr1aQ7G+FVkMgQFJoP2I62QU=;
+        b=jSQ8BZo9wolRSyQhbfD0akNc+vF2AkvPTG2r+Hh4trY9MClH4OdFQcP4pb4+oxkNff
+         hQUGwLAeuHOQm2pjoxvRE23lps8AxNfOfif6vIemAZr95fjvpE/J3/jXCZ2UmN8UD5kf
+         5HP6cQHBUA1xcToUykki+emvnu9yW0ZazIYCGH5dNKC8d6Qo510BYDsM0VH++ZyswjtU
+         Zm34GJBIBov+dbCrz4tutyT4C4xHyuCy0++XKetKrCYa42ho2M5Y79bfg/3CkQqpqgm4
+         t0NK8lu8exNVuu57tw3IabkVRG4FgIoreMYLlFvJqeeosb2ex0v1k/u1jMvGXNDf1Da9
+         ezvA==
+X-Received: by 10.42.166.200 with SMTP id p8mr6864725icy.25.1433534595462;
+ Fri, 05 Jun 2015 13:03:15 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 5 Jun 2015 13:03:15 -0700 (PDT)
+In-Reply-To: <1433522061-14532-1-git-send-email-stuberl@ensimag.grenoble-inp.fr>
+X-Google-Sender-Auth: D5pcFBAcLmmFHKQgwyJm_CLVuAk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270886>
 
+On Fri, Jun 5, 2015 at 12:34 PM, Louis Stuber
+<stuberl@ensimag.grenoble-inp.fr> wrote:
+> git-bisect.sh : create a file if the bisection is in old/new mode,
+> named "BISECT_OLDNEWMODE", so it can easily be seen outside the
+> program without having to read BISECT_TERMS. This will have to be
+> changed in further versions if new terms are introduced.
 
---osDK9TLjxFScVI/L
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Documentation/SubmittingPatches contains instructions for how to write
+a good commit message. The first line should be a very brief
+high-level overview of the change, followed by a blank line, followed
+by one or more paragraphs justifying and explaining the change. Also,
+wrap the commit message to 70-72 columns.
 
-On Fri, Jun 05, 2015 at 06:36:39AM -0400, Jeff King wrote:
-> On Fri, Jun 05, 2015 at 05:14:25PM +0700, Duy Nguyen wrote:
->=20
-> > I'm more concerned about breaking object_id abstraction than C
-> > standard. Let's think a bit about future. I suppose we need to support
-> > both sha-1 and sha-512, at least at the source code level.
->=20
-> I think that's going to be a much bigger issue, because we are casting
-> out of a defined, on-disk data structure here. So I'd rather defer any
-> code changes around this until we see what the new data structure (and
-> the new code) look like.
+This commit message doesn't do a very good job of explaining the
+problem this change is trying to solve or justifying why this solution
+is preferable. Justification is particularly important considering the
+ominous-sounding final sentence of the commit message (which itself
+seems to imply that this is not a very good change).
 
-My plan is to change the data as little as possible.  I want to set
-core.repositoryformatversion to 1 and create core.hashalgorithm =3D
-sha-256 or sha-512 or whatever.  If core.repositoryformatversion is 0,
-then core.hashalgorithm is assumed to be sha-1.
+> Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+> Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+> ---
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index 109bd65..d3d19cb 100644
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -183,6 +183,10 @@ bisect_start() {
+>         then
+>                 echo "$BISECT_BAD" >"$GIT_DIR/BISECT_TERMS" &&
+>                 echo "$BISECT_GOOD" >>"$GIT_DIR/BISECT_TERMS"
+> +               if test "$BISECT_BAD" = "new"
 
-Packs will get a version number bump to 5 and acquire a 32-byte
-NUL-padded algorithm descriptor after the version field.  The network
-protocol will acquire a capability hash=3Dsha-256.  git init will get a
---hash option, without which it will initialize SHA-1.
+Nit: Unnecessary quotes around "new" make the code a bit more noisy,
+thus slightly more difficult to read.
 
-I don't intend to change the contents of struct object_id any, since I
-don't intend to allow mixed hashes in one repository (git fast-import is
-your friend).  I plan to read the format version and hash algorithm as
-soon as possible after startup and initialize a variable with the hash
-length.  The length of the struct's hash member will expand to handle
-whatever the maximum supported hash size is, but data will only be
-compared and modified up to the hash length of the appropriate
-algorithm.
+> +               then
+> +                       echo "" > "$GIT_DIR/BISECT_OLDNEWMODE"
 
-This does lead to the possibility of increased memory usage, which is
-why I plan to initially only support SHA-512/256.  It's 32 bytes, like
-SHA-256, but it performs much better on 64-bit systems (SHA-1: 291
-MiB/s, SHA-256: 144 MiB/s, SHA-512/256: 242 MiB/s) for messages =E2=89=A5 55
-bytes, and most systems these days are 64 bit.
+Style: Drop space after redirection operator.
 
-That's what I've been thinking, at least, but if people have better
-ideas, I'm open to hearing them.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+If only the file's existence is important, but not its content, then
+you could phrase this more concisely without the 'echo'. Just use the
+redirection operator without any command in front of it: >"$somefile"
 
---osDK9TLjxFScVI/L
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Same comments apply below.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVcf+9AAoJEL9TXYEfUvaL3uYQAI9h7OaMf4RG2xP6tLr53c0O
-XLma0fm5xeyvyH7uSrlIGzftMMZwRzvow2K8TGxemOIw6n6/y1gChM2GEGRJ2ZLs
-n4ctdWQHxIn1B1v8ASZTdWmRc6ne+wc5fZKxMthT7L5uuNbC9xLO9VdJs0Egvu9C
-rxiFGH3O/zRtZ/edneIuT/OI23q+rPdfO6RuRX9PJISCJIeWxEnuHyIcrGA12zGY
-emK/BH2DntX9COmhNdjWSw2GMtlQWCl//w+4oFR08CSzv0p2HM8r5KnoRtmD54jo
-WkgOKB00DqLTDurlX328dG84wDr9fbXJRXe141t9ELsjVj6FVARSkAA3/bUqqi4v
-oPPqUtRP/fbzyim6B8IWcFYRId3pT+Xpvejseo8wUAoG2neGRopyWNIE6YQlATIy
-yd6LWe+0CcL02YxuZdjrVVRH3/sgStWHKkaAp0VBDYIZ+7RvH1uLsN+7qYGYajmA
-IFPhNStJl2kGmK7ikYGxLon4WcpGx2mVz4hLKQrJhQIq8UZzTZv/3I/5a+A7d3VB
-Y9F2xeDUimToN38oxa7lkGqlnHdtHdMHJ13kysIiO3kmyX153i+9Mvh5RolgZ6It
-X+cbbk2Vy3whbvHDN5FRSHKcpVR/ZjyNK4OxMVbkRRM6Dmm0cNIIZwW69POrBLNL
-jnrxrOl944QfctHX6p9n
-=yyPV
------END PGP SIGNATURE-----
-
---osDK9TLjxFScVI/L--
+> +               fi
+>         fi &&
+>         echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+>         #
+> @@ -416,6 +420,7 @@ bisect_clean_state() {
+>         rm -f "$GIT_DIR/BISECT_NAMES" &&
+>         rm -f "$GIT_DIR/BISECT_RUN" &&
+>         rm -f "$GIT_DIR/BISECT_TERMS" &&
+> +       rm -f "$GIT_DIR/BISECT_OLDNEWMODE" &&
+>         # Cleanup head-name if it got left by an old version of git-bisect
+>         rm -f "$GIT_DIR/head-name" &&
+>         git update-ref -d --no-deref BISECT_HEAD &&
+> @@ -544,7 +549,8 @@ check_and_set_terms () {
+>                         if test ! -s "$GIT_DIR/BISECT_TERMS"
+>                         then
+>                                 echo "new" >"$GIT_DIR/BISECT_TERMS" &&
+> -                               echo "old" >>"$GIT_DIR/BISECT_TERMS"
+> +                               echo "old" >>"$GIT_DIR/BISECT_TERMS" &&
+> +                               echo "" > "$GIT_DIR/BISECT_OLDNEWMODE"
+>                         fi
+>                         BISECT_BAD="new"
+>                         BISECT_GOOD="old" ;;
+> --
+> 1.7.1
