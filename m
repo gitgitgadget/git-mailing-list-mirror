@@ -1,149 +1,159 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
 Subject: Re: [PATCH v3] receive-pack: Create a HEAD ref for ref namespace
-Date: Fri, 05 Jun 2015 10:19:32 -0700
-Message-ID: <xmqqh9qmrs2j.fsf@gitster.dls.corp.google.com>
+Date: Fri, 5 Jun 2015 19:27:36 +0200
+Message-ID: <20150605172736.GA30419@leeloo.kyriasis.com>
 References: <1433193883-11577-1-git-send-email-johannes@kyriasis.com>
-	<1433523731-25172-1-git-send-email-johannes@kyriasis.com>
+ <1433523731-25172-1-git-send-email-johannes@kyriasis.com>
+ <xmqqh9qmrs2j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes =?utf-8?Q?L=C3=B6thberg?= <johannes@kyriasis.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 19:20:13 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 05 19:27:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0vHQ-0007hW-3c
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:19:40 +0200
+	id 1Z0vPE-0004uc-Ob
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 19:27:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932766AbbFERTf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2015 13:19:35 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33950 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754418AbbFERTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2015 13:19:34 -0400
-Received: by igbhj9 with SMTP id hj9so20357809igb.1
-        for <git@vger.kernel.org>; Fri, 05 Jun 2015 10:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=OzK0wzW8hAT9epJ8PjLw3vs7ifbAUYQ3eaiAaXxg/Ck=;
-        b=H0b6E//qo5Lf0GMxdmr4YEqcsyBJuw29Zb+v8dFstnC32vjpBMo4OkOboGzTYL3jIg
-         CSvJkMIDEFF+Ah/PpnXYVB+X+3HQKOGM74Q0i5Fu0WSXB4P+NATYtr9GlUuIu7OkE7Ij
-         hOAUqDyGqrdOppYdRigqtQMDf5BhesOxP+Rl93GR2IOfQVs4LYJZu4vVonWPig2IHFEz
-         7LM43vAAbw0EZc5296y3+T7xr0xDZjtjCHbI+JpA4XgDOHN+aizr5DGIz+WwxZT7ktdo
-         RQQ4vTWfQ20vQmu7WArCslm+9E67UbTxlke/VCGV7FHx1356aH21nmWQ2uCt3g5NPWn3
-         DoOw==
-X-Received: by 10.107.128.134 with SMTP id k6mr3247549ioi.7.1433524774215;
-        Fri, 05 Jun 2015 10:19:34 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:8c50:e66f:fc40:1825])
-        by mx.google.com with ESMTPSA id z25sm3521967ioi.20.2015.06.05.10.19.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Jun 2015 10:19:33 -0700 (PDT)
-In-Reply-To: <1433523731-25172-1-git-send-email-johannes@kyriasis.com>
-	("Johannes =?utf-8?Q?L=C3=B6thberg=22's?= message of "Fri, 5 Jun 2015
- 19:02:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932747AbbFER1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2015 13:27:40 -0400
+Received: from theos.kyriasis.com ([212.71.254.33]:53066 "EHLO
+	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754927AbbFER1j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2015 13:27:39 -0400
+Received: from theos.kyriasis.com (localhost [127.0.0.1]);
+	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 88b745f6;
+	for <git@vger.kernel.org>;
+	Fri, 5 Jun 2015 17:27:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
+	:to:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=theos; bh=CcmV37XhQdr1wybsRB4IibGWwXU=; b=bfZ7IE
+	Ve8GQw9dW+uu07IqrcGvgxT6iCyx2L75JXHKxdxdg25/8rs1FWW87TmwcGqjcSqk
+	SJN6E0iAtsfrNJhv1rCTgyoFBywGKKhnKivC/cGa0KcP89okL4AYilwLIoYheTog
+	XCfPPEKyAJRaoMqZ4qiAfaE1HPrg+DVH8CCic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=theos; b=mj3kTCOoEyyhYE74DJ+n5IhoDPE60kTK
+	losetQmuJj7pogAyTP1ww18UnnoLaa5394ucwUmC6yo01IZ7yFQsqZB93sryqT8q
+	nltHPQrqLVDI/oMnuMC+HfcuO8IPk6opLIo1oDT4Vs2VplcwkL+yUHdgxjYMt+DV
+	sA4awLPa+LA=
+Received: from leeloo.kyriasis.com (m77-218-250-201.cust.tele2.se [77.218.250.201]);
+	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 57564e24;
+	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
+	for <git@vger.kernel.org>;
+	Fri, 5 Jun 2015 17:27:37 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <xmqqh9qmrs2j.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23.1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270864>
 
-Johannes L=C3=B6thberg <johannes@kyriasis.com> writes:
 
-> diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-na=
-mespaces.sh
-> index cc0b31f..7bc3a1f 100755
-> --- a/t/t5509-fetch-push-namespaces.sh
-> +++ b/t/t5509-fetch-push-namespaces.sh
-> @@ -1,6 +1,7 @@
->  #!/bin/sh
-> =20
-> -test_description=3D'fetch/push involving ref namespaces'
-> +test_description=3D'fetch/push/clone involving ref namespaces'
-> +
+--k+w/mQv8wyuph6w0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-OK ;-)
+On 05/06, Junio C Hamano wrote:
+>Johannes L=C3=B6thberg <johannes@kyriasis.com> writes:
+>
+>> +
+>> +		echo "ref: refs/namespaces/new_namespace/refs/heads/master" >expect &&
+>> +		test_cmp expect ../bare/refs/namespaces/new_namespace/HEAD  &&
+>
+>Use "symbolic-ref refs/namespaces/new_namespace/HEAD"; HEAD is not
+>required to be expressed as a textual symref.
+>
 
->  . ./test-lib.sh
-> =20
->  test_expect_success setup '
-> @@ -82,4 +83,50 @@ test_expect_success 'mirroring a repository using =
-a ref namespace' '
->  	)
->  '
-> =20
-> +test_expect_success 'cloning from ref namespace' '
-> +	rm -rf initial bare clone &&
-> +	git init initial &&
-> +	git init --bare bare &&
-> +	(
-> +		cd initial &&
-> +		echo "commit one" >file &&
-> +		git add file &&
-> +		git commit -m "commit one" &&
-> +		git push ../bare master &&
-> +
-> +		echo refs/heads/master >expect &&
-> +		git -C ../bare symbolic-ref HEAD >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		git rev-parse HEAD >expect &&
-> +		git -C ../bare rev-parse HEAD >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		echo "commit two" >>file &&
-> +		git add file &&
-> +		git commit -m "commit two" &&
-> +		GIT_NAMESPACE=3Dnew_namespace git push ../bare master &&
-> +
-> +		echo "ref: refs/namespaces/new_namespace/refs/heads/master" >expec=
-t &&
-> +		test_cmp expect ../bare/refs/namespaces/new_namespace/HEAD  &&
+Gotcha.
 
-Use "symbolic-ref refs/namespaces/new_namespace/HEAD"; HEAD is not
-required to be expressed as a textual symref.
+>> +
+>> +		(
+>> +			printf "%s commit\t%s\n" $(git rev-parse master^) \
+>> +			                         refs/heads/master &&
+>> +			printf "%s commit\t%s\n" $(git rev-parse master) \
+>> +			                         refs/namespaces/new_namespace/HEAD &&
+>> +			printf "%s commit\t%s\n" $(git rev-parse master) \
+>> +			                         refs/namespaces/new_namespace/refs/heads/ma=
+ster
+>> +		) >expect &&
+>
+>Use of 'printf' is clever and I like it.  Have you considered
+>letting it do the iteration as well?  I.e.
+>
+>	printf "%s commit\t%s\n" \
+>        	one two \
+>                three four \
+>                five six \
+>	>expect &&
+>
+>might be easier to read.
+>
 
-> +
-> +		(
-> +			printf "%s commit\t%s\n" $(git rev-parse master^) \
-> +			                         refs/heads/master &&
-> +			printf "%s commit\t%s\n" $(git rev-parse master) \
-> +			                         refs/namespaces/new_namespace/HEAD &&
-> +			printf "%s commit\t%s\n" $(git rev-parse master) \
-> +			                         refs/namespaces/new_namespace/refs/heads=
-/master
-> +		) >expect &&
+Didn't think about that actually. Will do.
 
-Use of 'printf' is clever and I like it.  Have you considered
-letting it do the iteration as well?  I.e.
+>> +		git -C ../bare for-each-ref refs/ >actual &&
+>> +		test_cmp expect actual
+>> +	) &&
+>> +	GIT_NAMESPACE=3Dnew_namespace git clone bare clone &&
+>> +	(
+>> +		cd clone &&
+>> +		git show
+>
+>We can accept any random commit at HEAD as long as it exists at this
+>point?  Don't we need to make sure that a ref whose tip is still "one"
+>is not propagated to this new clone?
+>
 
-	printf "%s commit\t%s\n" \
-        	one two \
-                three four \
-                five six \
-	>expect &&
+Oh crap, I just remembered that I forgot to address that part, sorry.
 
-might be easier to read.
+>> +	)
+>> +'
+>> +
+>> +
+>>  test_done
 
-> +		git -C ../bare for-each-ref refs/ >actual &&
-> +		test_cmp expect actual
-> +	) &&
-> +	GIT_NAMESPACE=3Dnew_namespace git clone bare clone &&
-> +	(
-> +		cd clone &&
-> +		git show
+--=20
+Sincerely,
+  Johannes L=C3=B6thberg
+  PGP Key ID: 0x50FB9B273A9D0BB5
+  https://theos.kyriasis.com/~kyrias/
 
-We can accept any random commit at HEAD as long as it exists at this
-point?  Don't we need to make sure that a ref whose tip is still "one"
-is not propagated to this new clone?
+--k+w/mQv8wyuph6w0
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +	)
-> +'
-> +
-> +
->  test_done
+-----BEGIN PGP SIGNATURE-----
+
+iQQcBAEBCgAGBQJVcdwFAAoJEJAcHDIOsNRdYI4f/3lGdSp9kwed5mphyx/7d2Cs
+1OkL3uCOFRdMzcO8ly7TMDc615M3K5K++yqfNdxoJP7gxaWeEekZPQnUC4TO/KjB
+9yc7ifzMxkD0+6FNYfFDm1yt4la3JacK85rLZC8j1DtYcS/RXL8+gNkb/tlgkXyu
+AIMO/xowafz98CpjVgLYQg1v9Gd+c/xPrTQllmXGl9tgmusJqY+EDia6VqWCjdZL
+mXWMyDivs/CMvNpMSum9GK8M5c/p3n4ZYafPlbho+FyFnKLaI+9xDyg/G///Q9vE
+TK2+Mt9nC58RfUgjFDPrdCtsclZED5SUWOOqMHXxVFZNbULvJ+xVOKfogxqqBbbO
+Rq41+boAHFx5Fa+sC25yAkhvePh+vLqK7XoO0c1O+SMsKwmVQfLImTJsVM4/tR4G
+92pH9NWcuHL+J4HgtWDE7d3KLwOeKqOBpNEOzLh/k7u6mvDP9Jmz3ZwbWKdaV2+F
+hzrVJG0EY7XK+fnvk4rJteSS8p6KPsGR2mPY5FpqpQJ6c8dpb/+FeCKI24pA++IW
+6TX2KExJ2PbtjTvNrQEMA1zJ0Ep49yiSmQlI7orxI7ddhx+RNcv/08GW1HZXp41L
+A4GPKbv97iKxHmYcqmx06xj72v88BWpGnYKXJ6uQRXWEdEnTT+a144Mf//OkGH9r
+PyuIaaiLZhkm5qY75MwT6JJVAQS6lSATzplb0YY2wBJzmIKD+4oBPGOTVajdFIUp
+ODPcptj2zD1Rx0GWylK6a/R3EhTqTHXtWF5fgUoLEbdPzrlqaNekyOeav6naokQy
+W6iW00IH1Atd13VjVmjh5KI2g+171OatqHKTThE8K7DhxxLln/O1X7ZQJjCTD788
+z0GvYNxNs+/cisFg1JS8rRBzy67gsLkNG0gUE45oTGlk9PSj8ydK1W1CWBgcr/qo
+WgfTWV2SzqlX0W07wTkP0NIi7eEmtidU+f/sAO6dGxIn/OZV9ochnnHKIuDvPGii
+o2mPhq3stG1kD9sBU2lEIFD1TEGFD2xSKKm2XHN7wGfyi51ThN+s3WShYzEQL97m
+g0fFLXQsyF9gf/r9VrNvTvQbfjMUGZ78LTPQlALndJDXmfnQZJ766k4guX+CAo4Q
+Qrtu9Q846UpI1e4aJ5GJcriOqCM5NiNvbc/xFsuFM7Nle/JuBl5pJUB7dqVu4f2b
+TbahSsZxJYqHNqPg8m8AUHbxNhgoCvlwEDVCYJCPjrPEFc6UR7Ro33vgy9+WnnUi
+LxXonvkwUlcYtHw3y7lwrprmRKS/2DjBhUfCEBkH3V7p0w33dQMQGepXWydgDBBW
+jhDAPOlLCBOMhShN2P/gON+lGV1kXpqcV+CSLan0kousyy4QGKifJIoHBpfjdQ0=
+=c/qf
+-----END PGP SIGNATURE-----
+
+--k+w/mQv8wyuph6w0--
