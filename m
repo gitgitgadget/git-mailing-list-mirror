@@ -1,126 +1,113 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH v5 2/3] t4150-am: refactor am -3 tests
-Date: Fri,  5 Jun 2015 01:24:43 +0200
-Message-ID: <1433460284-20240-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-References: <1433460284-20240-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+From: Allen Hubbe <allenbh@gmail.com>
+Subject: Re: [RFC] send-email aliases when editing patches or using --xx-cmd
+Date: Thu, 4 Jun 2015 20:38:11 -0400
+Message-ID: <CAJ80savyruj7rcwGRY6AURJWnm26AyQFjssJmpjuYcv5jEBqkQ@mail.gmail.com>
+References: <87pp5b1b4g.fsf@ensimag.grenoble-inp.fr>
+	<CAGZ79ka89omT3wKqV-J4eyAz+xDXDS+OBcXDDFsO=4kk1HBBpQ@mail.gmail.com>
+	<CAPig+cQbOnaNg8dkbFoRrUN47oEAxUNjRXhMK1HSgCLi6ZxHyQ@mail.gmail.com>
+	<299923407.139591.1433458411117.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
 	Louis-Alexandre Stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 05 01:25:25 2015
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 05 02:38:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z0eVY-00006S-1Z
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 01:25:08 +0200
+	id 1Z0feM-0003tF-KX
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jun 2015 02:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253AbbFDXZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2015 19:25:00 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:56880 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753714AbbFDXY6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2015 19:24:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 58A6B4886B;
-	Fri,  5 Jun 2015 01:24:56 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XebU3vM815ay; Fri,  5 Jun 2015 01:24:56 +0200 (CEST)
-Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 39BAA48864;
-	Fri,  5 Jun 2015 01:24:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id 32CAE20DC;
-	Fri,  5 Jun 2015 01:24:56 +0200 (CEST)
-Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vqRBZmw+wchc; Fri,  5 Jun 2015 01:24:56 +0200 (CEST)
-Received: from Groseille.home (AGrenoble-652-1-407-223.w90-42.abo.wanadoo.fr [90.42.42.223])
-	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 5062A20D4;
-	Fri,  5 Jun 2015 01:24:55 +0200 (CEST)
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1433460284-20240-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	id S1753860AbbFEAiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2015 20:38:14 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36537 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184AbbFEAiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2015 20:38:12 -0400
+Received: by igbpi8 with SMTP id pi8so3990700igb.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2015 17:38:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WGdxtULmsvVzDnucz2G/vpF39/By+Ec8hUSUzjpHifA=;
+        b=EXSXXs6HNdb/nMOcHTd1VHnwPT6+PvhigoR0whXK7WcuMf7Fipwk1ATx6WWj6kWMpz
+         cgPxIRLoZAhsEQEKC4+g43NQ2gc+CDBHLTVrXzNnMPtD+A7Tm60qpTF63JC8GT8a6WGQ
+         d2S7tHpv4bwiH6jEdwlqHi6I4+cr5R2rvbSSH1lFRrGbSbr93LALlC/gC5JBOdAZh1Oh
+         SxifjJKCg0ioyPvOSsGc7HaO9BGJZ8k7yKH0D/E7fZFflY9iKl1SX9RxF3aVRWyf7DrK
+         4BX3Unfp80B7g/IhGf+fdkMMKKpVvGWBfx7YCXgc7ZVRUVc8JZsXBGUxnaeMiiKgLquY
+         X+iA==
+X-Received: by 10.50.111.131 with SMTP id ii3mr37357833igb.47.1433464691874;
+ Thu, 04 Jun 2015 17:38:11 -0700 (PDT)
+Received: by 10.79.84.6 with HTTP; Thu, 4 Jun 2015 17:38:11 -0700 (PDT)
+In-Reply-To: <299923407.139591.1433458411117.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270808>
 
-Create a setup for git am -3 in a separate test instead of creating
-this setup each time.
+On Thu, Jun 4, 2015 at 6:53 PM, Remi Lespinet
+<remi.lespinet@ensimag.grenoble-inp.fr> wrote:
+> On Thu, Jun 4, 2015 at 1:17 PM, Remi LESPINET
+> <remi.lespinet@ensimag.grenoble-inp.fr> wrote:
+>>
+>> Hi,
+>>
+>> Working on git-send-email, I've seen that there's no aliases support
+>> when manually adding a recipient in a 'To' or 'Cc' field in a patch
+>> and for the --to-cmd and --cc-cmd.
+>>
+>> I would like to add this support, and I wonder if there are reasons
+>> not to do it.
+>>
+>> Thanks.
+>
+> I just realize that I totally messed up, Of course I don't want to add
+> To or Cc fields to patches.
+>
+> In fact I want to add aliases support for --to-cmd and --cc-cmd options.
+> But the modification depends on wheter we can use aliases in fields
+> used by send-email (such as author or signoff-by..) when manually
+> editing a patch or not.
+>
+> Sorry for this mistake :(
 
-This prepares for the next commit which will use this setup as well.
+You are right that Signed-off-by: myAlias wouldn't make sense, but is
+that really what you intended to propose?  It's definitely not a good
+idea to write patches that way, but on the other hand, if git happens
+to accept an alias there, what's the harm?  Git will send an email...
+the patch will be rejected.
 
-Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
----
- t/t4150-am.sh | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+Also, I believe git-send-email looks for signed-off-by, regardless of
+the presence or output of to-cmd (around line 1490 -- "Now parse the
+message body").
 
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 306e6f3..6ced98c 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -274,15 +274,21 @@ test_expect_success 'am --keep-non-patch really keeps the non-patch part' '
- 	grep "^\[foo\] third" actual
- '
- 
-+test_expect_success 'setup am -3' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout -b base3way master2 &&
-+	sed -n -e "3,\$p" msg >file &&
-+	head -n 9 msg >>file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m "copied stuff"
-+'
-+
- test_expect_success 'am -3 falls back to 3-way merge' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
--	git checkout -b lorem2 master2 &&
--	sed -n -e "3,\$p" msg >file &&
--	head -n 9 msg >>file &&
--	git add file &&
--	test_tick &&
--	git commit -m "copied stuff" &&
-+	git checkout -b lorem2 base3way &&
- 	git am -3 lorem-move.patch &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git diff --exit-code lorem
-@@ -291,12 +297,7 @@ test_expect_success 'am -3 falls back to 3-way merge' '
- test_expect_success 'am -3 -p0 can read --no-prefix patch' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
--	git checkout -b lorem3 master2 &&
--	sed -n -e "3,\$p" msg >file &&
--	head -n 9 msg >>file &&
--	git add file &&
--	test_tick &&
--	git commit -m "copied stuff" &&
-+	git checkout -b lorem3 base3way &&
- 	git am -3 -p0 lorem-zero.patch &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git diff --exit-code lorem
-@@ -338,12 +339,7 @@ test_expect_success 'am -3 can rename a file after falling back to 3-way merge'
- test_expect_success 'am -3 -q is quiet' '
- 	rm -fr .git/rebase-apply &&
- 	git checkout -f lorem2 &&
--	git reset master2 --hard &&
--	sed -n -e "3,\$p" msg >file &&
--	head -n 9 msg >>file &&
--	git add file &&
--	test_tick &&
--	git commit -m "copied stuff" &&
-+	git reset base3way --hard &&
- 	git am -3 -q lorem-move.patch >output.out 2>&1 &&
- 	! test -s output.out
- '
--- 
-1.9.1
+Something like to-cmd is much more general than just looking for
+Signed-off-by, etc, or scanning a patch for things that look like
+email addresses.  The to-cmd can also look for keywords in the patch,
+like component names, and return an array of maintainer email
+addresses for those components, for instance.  It might be the case
+that none of the emails returned by the to-cmd are actually ever
+explicitly mentioned in the patch.  In my workspace, I might indeed
+write a script, specify it as the to-cmd, and have the script return
+an array of email addresses according to whatever criteria I can
+imagine.  What's the harm if, in my script, in my own workspace, I
+return an array of email aliases in the to_cmd, instead?
+
+Now, as long as the to-cmd is already a script, executed by the
+computer, there's really very little to gain in using email aliases
+versus whole email addresses.  A script can emit a whole properly
+formatted email address just as easily as it can emit an email alias.
+
+Your proposal is just a different use for email aliases, which is
+independent from where the aliases come from.  There is no conflict
+with any of the email alias parsers.
