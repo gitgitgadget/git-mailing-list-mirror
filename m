@@ -1,132 +1,117 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [RFC/PATCH 4/9] parse-options: add parse_opt_merge_filter()
-Date: Sun,  7 Jun 2015 01:34:07 +0530
-Message-ID: <1433621052-5588-4-git-send-email-karthik.188@gmail.com>
+Subject: [RFC/PATCH 6/9] for-each-ref: add '--merged' and '--no-merged' options
+Date: Sun,  7 Jun 2015 01:34:09 +0530
+Message-ID: <1433621052-5588-6-git-send-email-karthik.188@gmail.com>
 References: <5573520A.90603@gmail.com>
  <1433621052-5588-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 06 22:04:45 2015
+X-From: git-owner@vger.kernel.org Sat Jun 06 22:04:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1KKc-0002Lu-Fc
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 22:04:38 +0200
+	id 1Z1KKi-0002b1-Rp
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 22:04:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932504AbbFFUEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2015 16:04:32 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:34852 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932432AbbFFUE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2015 16:04:28 -0400
-Received: by pdbnf5 with SMTP id nf5so74255157pdb.2
-        for <git@vger.kernel.org>; Sat, 06 Jun 2015 13:04:28 -0700 (PDT)
+	id S932559AbbFFUEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2015 16:04:38 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:34878 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932473AbbFFUEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2015 16:04:33 -0400
+Received: by pdbnf5 with SMTP id nf5so74255693pdb.2
+        for <git@vger.kernel.org>; Sat, 06 Jun 2015 13:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BqfxqaFGcNcClb3eerEYsSdXjjTnLMpvYim7GGJ+vu8=;
-        b=t36amxch3B1LoAqccn088/G5AqHOwm1WMYgxRo4wcb5SrTQpAiip8xO9/Dk4/UDYwK
-         eejsMcK09mkiqq79UmB3v6cYySt60q+7ciAEebCjuSSmDbBX7VmSYsn8EsWyan6QBAfO
-         PpvJMI5pJ8JtEq5XPxEYH27eJ64KERxmzPSE3Mh7mUTYsd6ihvCKWlRbBucZ44gLP594
-         GJ6Sv6wpt0f9p6BH+AngMH/c4Aky29vwFrBp2As0nH9JL/dgKgSatmVJ1e5UudYGnrXd
-         rWQ7057Fpr299wnYS+nW88HV/FQt+lDLOTlvVvJEUzidTMpeDjxE2S9ynZT5xwT/xRTs
-         Om9Q==
-X-Received: by 10.68.213.198 with SMTP id nu6mr16304045pbc.60.1433621068035;
-        Sat, 06 Jun 2015 13:04:28 -0700 (PDT)
+        bh=8jnRNvaS7JrPzG8tx+DDJ/JJhFVzdRr8ohAAidzMV00=;
+        b=hwnTLDYXXZbJjr9qJfgy1sz5qUTgT4+2JzBZZ0g/zPsgMbuL3cOFk2xn+scpeguMD2
+         JA39dTavzgsm7kTyUAc3Sv8sXAg5xZoQH04eshC9Ra7BeIDte6HXjAtOpgIswj62DN88
+         5MU7hmSDHGqhXWWvBqnhmkZCuckl3FIERs+uiUX6Q6vzpRC1xb/UmBYBzdeUFfisA8uu
+         xzL4cgzhRKQdGLsvZCTkXV8/kHKf3BiZPKtqcihZwl5HtUCClWHZzX7o25ROYY262jNE
+         aHGDzDbGGjTkWQv9dMW46+moi+MXviyVwyjOx4bIYSim7raZPKlKFPZCoGZN0e59QOhG
+         R3mg==
+X-Received: by 10.69.17.68 with SMTP id gc4mr16135678pbd.7.1433621073156;
+        Sat, 06 Jun 2015 13:04:33 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id q5sm10333703pde.56.2015.06.06.13.04.25
+        by mx.google.com with ESMTPSA id q5sm10333703pde.56.2015.06.06.13.04.31
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 06 Jun 2015 13:04:27 -0700 (PDT)
+        Sat, 06 Jun 2015 13:04:32 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2
 In-Reply-To: <1433621052-5588-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270950>
 
-Add 'parse_opt_merge_filter()' to parse '--merged' and '--no-merged'
-options and write MACROS for the same.
+Add the '--merged' and '--no-merged' options provided by 'ref-filter'.
+The '--merged' option lets the user to only list refs merged into the
+named commit. The '--no-merged' option lets the user to only list refs
+not merged into the named commit.
+
+Add documentation for the same.
 
 Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- parse-options-cb.c | 22 ++++++++++++++++++++++
- parse-options.h    | 11 +++++++++++
- 2 files changed, 33 insertions(+)
+ Documentation/git-for-each-ref.txt | 10 +++++++++-
+ builtin/for-each-ref.c             |  3 +++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index a4d294d..1969803 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -4,6 +4,7 @@
- #include "commit.h"
- #include "color.h"
- #include "string-list.h"
-+#include "ref-filter.h"
- #include "sha1-array.h"
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index e9f6a8a..74f24f4 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
+ 		   [(--sort=<key>)...] [--format=<format>] [<pattern>...]
+-		   [--points-at <object>]
++		   [--points-at <object>] [(--merged | --no-merged) <object>]
  
- /*----- some often used options -----*/
-@@ -109,6 +110,27 @@ int parse_opt_points_at(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
+ DESCRIPTION
+ -----------
+@@ -66,6 +66,14 @@ OPTIONS
+ --points-at <object>::
+ 	Only list tags of the given object.
  
-+int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
-+{
-+	struct ref_filter *rf = opt->value;
-+	unsigned char sha1[20];
++--merged [<commit>]::
++	Only list refs whose tips are reachable from the
++	specified commit (HEAD if not specified).
 +
-+	rf->merge = opt->long_name[0] == 'n'
-+		? REF_FILTER_MERGED_OMIT
-+		: REF_FILTER_MERGED_INCLUDE;
++--no-merged [<commit>]::
++	Only list refs whose tips are not reachable from the
++	specified commit (HEAD if not specified).
 +
-+	if (!arg)
-+		arg = "HEAD";
-+	if (get_sha1(arg, sha1))
-+		die(_("malformed object name %s"), arg);
-+
-+	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
-+	if (!rf->merge_commit)
-+		return opterror(opt, "must point to a commit", 0);
-+
-+	return 0;
-+}
-+
- int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
- {
- 	int *target = opt->value;
-diff --git a/parse-options.h b/parse-options.h
-index 3ae16a1..7bcf0f3 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -221,6 +221,7 @@ extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
- extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
- extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
- extern int parse_opt_points_at(const struct option *, const char *, int);
-+extern int parse_opt_merge_filter(const struct option *, const char *, int);
- extern int parse_opt_with_commit(const struct option *, const char *, int);
- extern int parse_opt_tertiary(const struct option *, const char *, int);
- extern int parse_opt_string_list(const struct option *, const char *, int);
-@@ -243,5 +244,15 @@ extern int parse_opt_noop_cb(const struct option *, const char *, int);
- 	OPT_COLOR_FLAG(0, "color", (var), (h))
- #define OPT_COLUMN(s, l, v, h) \
- 	{ OPTION_CALLBACK, (s), (l), (v), N_("style"), (h), PARSE_OPT_OPTARG, parseopt_column_callback }
-+#define OPT_NO_MERGED(filter, h) \
-+	{ OPTION_CALLBACK, 0, "no-merged", (filter), N_("commit"), (h), \
-+	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
-+	  parse_opt_merge_filter, (intptr_t) "HEAD" \
-+	}
-+#define OPT_MERGED(filter, h) \
-+	{ OPTION_CALLBACK, 0, "merged", (filter), N_("commit"), (h), \
-+	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
-+	  parse_opt_merge_filter, (intptr_t) "HEAD" \
-+	}
+ FIELD NAMES
+ -----------
  
- #endif
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index b9d180a..82605ed 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -8,6 +8,7 @@
+ static char const * const for_each_ref_usage[] = {
+ 	N_("git for-each-ref [<options>] [<pattern>]"),
+ 	N_("git for-each-ref [--points-at <object>]"),
++	N_("git for-each-ref [(--merged | --no-merged) <object>]"),
+ 	NULL
+ };
+ 
+@@ -38,6 +39,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK(0, "points-at", &ref_cbdata.filter.points_at,
+ 			     N_("object"), N_("print only tags of the object"),
+ 			     parse_opt_points_at),
++		OPT_MERGED(&ref_cbdata.filter, N_("print only merged refs")),
++		OPT_NO_MERGED(&ref_cbdata.filter, N_("print only not merged refs")),
+ 		OPT_END(),
+ 	};
+ 
 -- 
 2.4.2
