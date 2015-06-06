@@ -1,70 +1,78 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [WIP/PATCH v5 0/10] create ref-filter from for-each-ref
-Date: Sat, 06 Jun 2015 16:56:22 +0530
-Message-ID: <5572D8DE.7090007@gmail.com>
-References: <55729B78.1070207@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 06 13:27:06 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: [PATCH 0/6] am --skip/--abort: improve index/worktree cleanup
+Date: Sat,  6 Jun 2015 19:46:06 +0800
+Message-ID: <1433591172-27077-1-git-send-email-pyokagan@gmail.com>
+Cc: Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 06 13:46:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1CFI-0002en-GD
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 13:26:37 +0200
+	id 1Z1CYW-0004ya-FI
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 13:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbbFFL02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2015 07:26:28 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33736 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751148AbbFFL00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2015 07:26:26 -0400
-Received: by padev16 with SMTP id ev16so8103751pad.0
-        for <git@vger.kernel.org>; Sat, 06 Jun 2015 04:26:26 -0700 (PDT)
+	id S1751722AbbFFLqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2015 07:46:24 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:34081 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751191AbbFFLqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2015 07:46:23 -0400
+Received: by pdbki1 with SMTP id ki1so69833300pdb.1
+        for <git@vger.kernel.org>; Sat, 06 Jun 2015 04:46:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=39EMxwJYmI7LcIgg0N3S5RC3n9bu78p/VmarCCz6W1w=;
-        b=lXfh9OOGN7LW98I6kYI6LpRFrUP7kYwBGJqQOKdba+/9pwEwQF3+gbWSbQ0JPQWade
-         ABDXcEyW+fCzcqgqbeIadHXB6IdrYBLYH2mS2yUPbdlYQB9IrfK0Exd6y/8Oy11IyKuc
-         e/cPgbePIbcXfPtHDHAq6pslFeLn/BNId7T/Kevz55Il8rM3UjYMe5L7trB5mfGVMGiy
-         ysKC7eCEScrfK5mm010kb4rWEnfCH6ELgNtgu1ia5hJX4CNQ2eGZUTO9elEMJeNLGhC7
-         JBbBwpApofrnTr4jG4BUrwu/5AfDpyqZTcYvlMflQ4u+f215fUtEX472NxuSRS1rUcG/
-         oaaA==
-X-Received: by 10.66.194.201 with SMTP id hy9mr13707154pac.140.1433589986277;
-        Sat, 06 Jun 2015 04:26:26 -0700 (PDT)
-Received: from [192.168.0.101] ([106.51.130.23])
-        by mx.google.com with ESMTPSA id p9sm9374291pds.92.2015.06.06.04.26.23
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Jun 2015 04:26:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <55729B78.1070207@gmail.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=UXfQHzHV6YkbJxtbGgx6p9LEKm3dTgZocyc/vj+Jh5k=;
+        b=Ggzi3I9CgWyINU/e/ToUUGlL5SmTS239J6p0uhflHiJtx1t5G6PLhv3L5L8frg+tms
+         eDy1DNIqU+/nS9VoqrBXMOyfMNU5xnt6EOwWt/o7RmUvg5G73IaVxAftjbMUeBtFnH8w
+         xaDq8K4pvefd94vj98H4VKhQHhAc80q+BwQPIiUJmfRjpa7D/MtlV+y4Tw/BUSDD/MI4
+         dtfsKWPJ2OwZEjAQVqK3lMLjRgtkOTB03lYoJEqL7Vig0emfZ6NBvq+Aog3ARJpeTLtH
+         PLk+evxeNz+TSqx/Q7AvsMOXyWFxHewIaZWtA8sdocpZGiuaG93MtKN39Fh9HYjAouFw
+         9s6Q==
+X-Received: by 10.70.134.70 with SMTP id pi6mr13537127pdb.100.1433591183273;
+        Sat, 06 Jun 2015 04:46:23 -0700 (PDT)
+Received: from yoshi.pyokagan.tan ([116.86.132.138])
+        by mx.google.com with ESMTPSA id on3sm9344587pbc.69.2015.06.06.04.46.20
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 06 Jun 2015 04:46:22 -0700 (PDT)
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270915>
 
-On 06/06/2015 12:34 PM, Karthik Nayak wrote:
-> Version for of this patch can be found here :
-> http://www.mail-archive.com/git@vger.kernel.org/msg70280.html
->
-> Changes in this version:
-> *    Rename functions to better suit the code.
-> *    implement filter_refs()
-> *    use FLEX_ARRAY for refname
-> *    other small changes
+Currently git-am attempts to clean up the index/worktree when skipping or
+aborting, but does not do it very well:
 
-I request that this series be ignored, will push again. I hadn't rebased 
-on master (latest), there'll be merge conflicts.
-Sorry for the inconvenience.
+* While it discards conflicted index entries, it does not remove any other
+  modifications made to the index due to a previous threeway merge.
+
+* It expects HEAD/ORIG_HEAD to exist, and thus does not clean up the index when
+  on an unborn branch.
+
+This patch series addresses the above two general problems by making the calls
+to git-read-tree aware of the differences between our current index and
+HEAD/ORIG_HEAD, and by explictly defining what happens when we are on an unborn
+branch.
+
+
+Paul Tan (6):
+  am --skip: revert changes introduced by failed 3way merge
+  am -3: support 3way merge on unborn branch
+  am --skip: support skipping while on unborn branch
+  am --abort: revert changes introduced by failed 3way merge
+  am --abort: support aborting to unborn branch
+  am --abort: keep unrelated commits on unborn branch
+
+ git-am.sh           | 31 ++++++++++++++------
+ t/t4151-am-abort.sh | 81 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 104 insertions(+), 8 deletions(-)
 
 -- 
-Regards,
-Karthik
+2.1.4
