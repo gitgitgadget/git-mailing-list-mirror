@@ -1,158 +1,99 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 01/11] for-each-ref: extract helper functions out of grab_single_ref()
-Date: Sat,  6 Jun 2015 19:18:06 +0530
-Message-ID: <1433598496-31287-1-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v6 02/11] for-each-ref: clean up code
+Date: Sat,  6 Jun 2015 19:18:07 +0530
+Message-ID: <1433598496-31287-2-git-send-email-karthik.188@gmail.com>
 References: <5572F904.1080608@gmail.com>
+ <1433598496-31287-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 06 15:48:31 2015
+X-From: git-owner@vger.kernel.org Sat Jun 06 15:48:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1ESa-0004a8-NP
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 15:48:29 +0200
+	id 1Z1ESk-0004hm-1l
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 15:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752505AbbFFNsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2015 09:48:25 -0400
-Received: from mail-pd0-f193.google.com ([209.85.192.193]:35271 "EHLO
-	mail-pd0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751422AbbFFNsX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2015 09:48:23 -0400
-Received: by pdbht2 with SMTP id ht2so12409624pdb.2
-        for <git@vger.kernel.org>; Sat, 06 Jun 2015 06:48:22 -0700 (PDT)
+	id S932262AbbFFNse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2015 09:48:34 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34513 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751422AbbFFNsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2015 09:48:32 -0400
+Received: by pabli10 with SMTP id li10so11569866pab.1
+        for <git@vger.kernel.org>; Sat, 06 Jun 2015 06:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZvrjlVlgvbqPIPwH8PYRBxKjNf9I8zxLFEjbq4ZbmLc=;
-        b=dkgEesiSS24qoNRw5sgcHpex4ZQaiN8i9BgvHyNiMOv+AbUvxKc6YX5B2OC8qBlUWY
-         4lj2lKakJDP4RriJJrzy+jWicQE3hYh8HN2HZZwcvWSCukpBK756EW4kNDnqS86fbOc3
-         Bj+5goPml23i5Bh453V5WTP3fZFikEsMGD/yDiWe3IpyMH9cDNe+WpDeybi79TmbhqCY
-         WPMQc6dUjlcs0Jz/SQo+YO9D3A+66zJkkaXhYSW0584NLKAQEVJD2c+ixoLjD39OyFPY
-         kWeAUjJpoj/CIJIN9sdQlsDSmmpIfzxb+e86ijTKz7qawJkFdOTOeD/CPGD0x41qYcPU
-         t2og==
-X-Received: by 10.68.68.193 with SMTP id y1mr6677338pbt.169.1433598502806;
-        Sat, 06 Jun 2015 06:48:22 -0700 (PDT)
+        bh=17MgCifyqjbq+3Eb5BhXV/nacPodwI5pAwBmaCD7vzE=;
+        b=Q5q5k6/hXciyKiBTmREBiQpTEpuvSJwiOhCdjanmfPXuw77BcC7dynGjg7CM9NBego
+         Jmexcb9L1XckSHfN9WO/J6IZSMX3M7vSSFwtr7mA0HHVYxF8h22uHU4v2xjk2Ii4pZF8
+         G3t2E34d7xZF24equgMQpqN387IoeLuHq7EeIZ9wQBf0r/5IZSA6T+HjQx6zLsr9szPE
+         9N4sXvDZFVl32BlOfBetcTmcSLSiEvBP3DO39ssvPPzKwKGSQwTAxwD64fjHEYZETugW
+         IGYsU7cMuE2lIsPS76XwubPW9jWhmQH02jFUiMicbX9AdBoxSvQrD7jJ1XcEbORq4SWs
+         OpJQ==
+X-Received: by 10.70.92.34 with SMTP id cj2mr14401731pdb.116.1433598512498;
+        Sat, 06 Jun 2015 06:48:32 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id p9sm9715427pds.92.2015.06.06.06.48.20
+        by mx.google.com with ESMTPSA id p9sm9715427pds.92.2015.06.06.06.48.30
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 06 Jun 2015 06:48:21 -0700 (PDT)
+        Sat, 06 Jun 2015 06:48:31 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2
-In-Reply-To: <5572F904.1080608@gmail.com>
+In-Reply-To: <1433598496-31287-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270924>
 
-Extract two helper functions out of grab_single_ref(). Firstly,
-new_refinfo() which is used to allocate memory for a new refinfo
-structure and copy the objectname, refname and flag to it.
-Secondly, match_name_as_path() which when given an array of patterns
-and the refname checks if the refname matches any of the patterns
-given while the pattern is a pathname, also while supporting wild
-characters.
+In 'grab_single_ref()' remove the extra count variable 'cnt' and
+use the variable 'grab_cnt' of structure 'grab_ref_cbdata' directly
+instead.
 
-This is a preperatory patch for restructuring 'for-each-ref' and
-eventually moving most of it to 'ref-filter' to provide the
-functionality to similar commands via public API's.
+Change comment in 'struct ref_sort' to reflect changes in code.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/for-each-ref.c | 63 ++++++++++++++++++++++++++++++++------------------
- 1 file changed, 40 insertions(+), 23 deletions(-)
+ builtin/for-each-ref.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index f7e51a7..f939fd3 100644
+index f939fd3..406de88 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -851,6 +851,43 @@ struct grab_ref_cbdata {
+@@ -27,7 +27,7 @@ struct atom_value {
+ 
+ struct ref_sort {
+ 	struct ref_sort *next;
+-	int atom; /* index into used_atom array */
++	int atom; /* index into 'struct atom_value *' array */
+ 	unsigned reverse : 1;
  };
  
- /*
-+ * Given a refname, return 1 if the refname matches with one of the patterns
-+ * while the pattern is a pathname like 'refs/tags' or 'refs/heads/master'
-+ * and so on, else return 0. Supports use of wild characters.
-+ */
-+static int match_name_as_path(const char **pattern, const char *refname)
-+{
-+	int namelen = strlen(refname);
-+	for (; *pattern; pattern++) {
-+		const char *p = *pattern;
-+		int plen = strlen(p);
-+
-+		if ((plen <= namelen) &&
-+		    !strncmp(refname, p, plen) &&
-+		    (refname[plen] == '\0' ||
-+		     refname[plen] == '/' ||
-+		     p[plen-1] == '/'))
-+			return 1;
-+		if (!wildmatch(p, refname, WM_PATHNAME, NULL))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+/* Allocate space for a new refinfo and copy the objectname and flag to it */
-+static struct refinfo *new_refinfo(const char *refname,
-+				   const unsigned char *objectname,
-+				   int flag)
-+{
-+	struct refinfo *ref = xcalloc(1, sizeof(struct refinfo));
-+	ref->refname = xstrdup(refname);
-+	hashcpy(ref->objectname, objectname);
-+	ref->flag = flag;
-+
-+	return ref;
-+}
-+
-+/*
-  * A call-back given to for_each_ref().  Filter refs and keep them for
-  * later object processing.
-  */
-@@ -866,35 +903,15 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
- 		  return 0;
- 	}
+@@ -896,7 +896,6 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
+ {
+ 	struct grab_ref_cbdata *cb = cb_data;
+ 	struct refinfo *ref;
+-	int cnt;
  
--	if (*cb->grab_pattern) {
--		const char **pattern;
--		int namelen = strlen(refname);
--		for (pattern = cb->grab_pattern; *pattern; pattern++) {
--			const char *p = *pattern;
--			int plen = strlen(p);
--
--			if ((plen <= namelen) &&
--			    !strncmp(refname, p, plen) &&
--			    (refname[plen] == '\0' ||
--			     refname[plen] == '/' ||
--			     p[plen-1] == '/'))
--				break;
--			if (!wildmatch(p, refname, WM_PATHNAME, NULL))
--				break;
--		}
--		if (!*pattern)
--			return 0;
--	}
-+	if (*cb->grab_pattern && !match_name_as_path(cb->grab_pattern, refname))
-+		return 0;
- 
- 	/*
- 	 * We do not open the object yet; sort may only need refname
- 	 * to do its job and the resulting list may yet to be pruned
- 	 * by maxcount logic.
+ 	if (flag & REF_BAD_NAME) {
+ 		  warning("ignoring ref with broken name %s", refname);
+@@ -913,10 +912,8 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
  	 */
--	ref = xcalloc(1, sizeof(*ref));
--	ref->refname = xstrdup(refname);
--	hashcpy(ref->objectname, oid->hash);
--	ref->flag = flag;
-+	ref = new_refinfo(refname, oid->hash, flag);
+ 	ref = new_refinfo(refname, oid->hash, flag);
  
- 	cnt = cb->grab_cnt;
- 	REALLOC_ARRAY(cb->grab_array, cnt + 1);
+-	cnt = cb->grab_cnt;
+-	REALLOC_ARRAY(cb->grab_array, cnt + 1);
+-	cb->grab_array[cnt++] = ref;
+-	cb->grab_cnt = cnt;
++	REALLOC_ARRAY(cb->grab_array, cb->grab_cnt + 1);
++	cb->grab_array[cb->grab_cnt++] = ref;
+ 	return 0;
+ }
+ 
 -- 
 2.4.2
