@@ -1,126 +1,60 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Submodules as first class citizens (was Re: Moving to subtrees for plugins?)
-Date: Sat, 6 Jun 2015 13:49:14 -0400
-Message-ID: <CABURp0og9i9S3_ZWf5Ce9LT785QJo4H-TVtFaKUTXr2N7FB+ew@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Jens Lehmann <Jens.Lehmann@web.de>
-To: lucamilanesio <luca.milanesio@gmail.com>, 
-	Repo Discussion <repo-discuss@googlegroups.com>, Git <git@vger.kernel.org>
-X-From: repo-discuss+bncBDYMHBPJ3QORBLXFZSVQKGQE3GZVC5A@googlegroups.com Sat Jun 06 19:49:38 2015
-Return-path: <repo-discuss+bncBDYMHBPJ3QORBLXFZSVQKGQE3GZVC5A@googlegroups.com>
-Envelope-to: gcvr-repo-discuss@m.gmane.org
-Received: from mail-vn0-f61.google.com ([209.85.216.61])
+From: Simon <josthi@gmail.com>
+Subject: Git on tomcat via LDAP
+Date: Sat, 6 Jun 2015 20:34:45 +0100
+Message-ID: <DFA58178-5FB2-4C9D-91A6-5A2D1B3E0BE6@gmail.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 06 21:35:01 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <repo-discuss+bncBDYMHBPJ3QORBLXFZSVQKGQE3GZVC5A@googlegroups.com>)
-	id 1Z1IDx-0007UV-5A
-	for gcvr-repo-discuss@m.gmane.org; Sat, 06 Jun 2015 19:49:37 +0200
-Received: by vnbg129 with SMTP id g129sf24206234vnb.0
-        for <gcvr-repo-discuss@m.gmane.org>; Sat, 06 Jun 2015 10:49:36 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z1Jru-0007LG-Bz
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jun 2015 21:34:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932126AbbFFTey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2015 15:34:54 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:35347 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752858AbbFFTex convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2015 15:34:53 -0400
+Received: by wiga1 with SMTP id a1so49582158wig.0
+        for <git@vger.kernel.org>; Sat, 06 Jun 2015 12:34:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=Z+fYzSE6SqyA14qyk2MwaV4qrxTgWR4+g7F0UKTAGGQ=;
-        b=vk45ZGfxObrTVqd0F/Zri1uC+BoqGwyjNHl6blW/kQgFc/o0p5cE6wb5oDJKO/xLUZ
-         sNw/e1A1ve2UMsvUeB37U+8tB5xNGysq/EAUijjVvwtVtTvsDfi7tWo0gjgI31gaKt8T
-         haXPNPXi9HXFEqo/MQVTTydLeLzx6T63ZjY0O7iV81ZbJmlpT43IzLdh+BJLMQYYIjnb
-         WiPQVl6qSBREgBmFgR5uhfNy8qzo0EuwK3xVNTWX4BuhCXCanXos02QrmNxREoWbqhlf
-         Pq8Ckywj9VME4esD16orXHrv979KkZuKU7G515c7K7RrAyPtCC4BBmW4+OxR7Zf5wVru
-         iMaQ==
-X-Received: by 10.140.21.111 with SMTP id 102mr115073qgk.4.1433612976365;
-        Sat, 06 Jun 2015 10:49:36 -0700 (PDT)
-X-BeenThere: repo-discuss@googlegroups.com
-Received: by 10.140.38.116 with SMTP id s107ls2173486qgs.20.gmail; Sat, 06 Jun
- 2015 10:49:34 -0700 (PDT)
-X-Received: by 10.129.41.204 with SMTP id p195mr8267105ywp.7.1433612974682;
-        Sat, 06 Jun 2015 10:49:34 -0700 (PDT)
-Received: from mail-yh0-x22b.google.com (mail-yh0-x22b.google.com. [2607:f8b0:4002:c01::22b])
-        by gmr-mx.google.com with ESMTPS id z7si553468yhc.2.2015.06.06.10.49.34
-        for <repo-discuss@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Jun 2015 10:49:34 -0700 (PDT)
-Received-SPF: pass (google.com: domain of phil.hord@gmail.com designates 2607:f8b0:4002:c01::22b as permitted sender) client-ip=2607:f8b0:4002:c01::22b;
-Received: by yhan67 with SMTP id n67so28613545yha.3
-        for <repo-discuss@googlegroups.com>; Sat, 06 Jun 2015 10:49:34 -0700 (PDT)
-X-Received: by 10.129.106.133 with SMTP id f127mr7298108ywc.8.1433612974564;
- Sat, 06 Jun 2015 10:49:34 -0700 (PDT)
-Received: by 10.37.106.198 with HTTP; Sat, 6 Jun 2015 10:49:14 -0700 (PDT)
-X-Original-Sender: phil.hord@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of phil.hord@gmail.com designates 2607:f8b0:4002:c01::22b
- as permitted sender) smtp.mail=phil.hord@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list repo-discuss@googlegroups.com; contact repo-discuss+owners@googlegroups.com
-List-ID: <repo-discuss.googlegroups.com>
-X-Google-Group-Id: 540870184241
-List-Post: <http://groups.google.com/group/repo-discuss/post>, <mailto:repo-discuss@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:repo-discuss+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/repo-discuss
-Sender: repo-discuss@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/repo-discuss/subscribe>, <mailto:repo-discuss+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+540870184241+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/repo-discuss/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270939>
-
-On Fri, Jun 5, 2015, 2:58 AM lucamilanesio <luca.milanesio@gmail.com> wrote=
-:
->>
->> Some devs of my Team complained that with submodules it is
->> difficult to see the =E2=80=9Cfull picture=E2=80=9D of the difference
->> between two SHA1 on the root project, as the submodules
->> would just show as different SHA1s. When you Google
->> =E2=80=9Csubtree submodules=E2=80=9D you find other opinions as well:
->>
->> Just to mention a few:
->> -
->> https://codingkilledthecat.wordpress.com/2012/04/28/why-y
->> our-company-shouldnt-use-git-submodules/ -
->> http://blogs.atlassian.com/2013/05/alternatives-to-git-su
->> bmodule-git-subtree/
->>
->> To be honest with you, I am absolutely fine with
->> submodules as I can easily leave with the =E2=80=9Cextra pain=E2=80=9D o=
-f
->> diffing by hand recursively on submodules. But it is true
->> that it may happen to either forget to do a git submodule
->> update or otherwise forget you are in a detached branch
->> and start committing =E2=80=9Con the air=E2=80=9D without a branch.
-
-...
-
-> Ideally, as a "git clone --recursive" already exists, I would like to
-> see a "git diff --recursive" that goes through the submodules as well :-)
->
-> Something possibly to propose to the Git mailing list?
+        d=gmail.com; s=20120113;
+        h=content-type:content-transfer-encoding:subject:from:message-id:date
+         :to:mime-version;
+        bh=PyVxgfTgQUuxH2wqP9lGQWPJbk38jUJ0QN6+mQa1dzM=;
+        b=idLteiYnYtE/b61eU35GipfG2+lHmnCT03o7ypRHViMi57eIEVS2HwraTu1CpZGmKo
+         l4J2TgaTS4plIaYN/25SbD6W92vxW3YFCqZutPvriJMC4/ovui9AG+C8CCWjB3306dEz
+         MvK+ls2rLEYdQLPBsTKSwxEbTv4ooKN5l2bCnMpCEBz4pf02GZ0GMjpAfpXqDS+2wO0H
+         4B1hOgKDMCme2bGAEaRoqs61202N0KnfIa5cYHGM8zD/7yvrA4sJShV6dMop+G6DWZUi
+         4rb/aaoH2QN9c/m01RH502OtUG6q7mwhtjCSEgBZ4w3n4XE9+irg1iZJBkO+DBB3d41m
+         OxBQ==
+X-Received: by 10.194.79.73 with SMTP id h9mr17123961wjx.125.1433619291559;
+        Sat, 06 Jun 2015 12:34:51 -0700 (PDT)
+Received: from [192.168.0.3] ([90.206.104.103])
+        by mx.google.com with ESMTPSA id ej5sm16428984wjd.22.2015.06.06.12.34.49
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 06 Jun 2015 12:34:50 -0700 (PDT)
+X-Mailer: iPhone Mail (11D257)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270940>
 
 
-I've worked on git diff --recursive a bit myself, along with some
-simpler use cases (git ls-tree --recursive) as POCs. I think some of
-the needs there begin to have ui implications which could be
-high-friction. I really want to finish it someday, but I've been too
-busy lately at $job, and now my experiments are all rather stale.
+Hi All,
 
-It would be a good discussion to have over at the git list (copied).
-Heiko and Jens have laid some new groundwork in this area and it may
-be a good time to revisit it.  Or maybe they've even moved deeper than
-that; I have been distracted for well over a year now.
+I am Simon working for VISA. I am new to Git and planning to migrate the projects from ClearCase.
 
-Phil
+Could anyone share the steps to configure git over http on Tomcat and enable the authentication through ldap to access the repositories?
 
---=20
---=20
-To unsubscribe, email repo-discuss+unsubscribe@googlegroups.com
-More info at http://groups.google.com/group/repo-discuss?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-Repo and Gerrit Discussion" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to repo-discuss+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Cheers,
+Simon
+Sent from my iPhone
