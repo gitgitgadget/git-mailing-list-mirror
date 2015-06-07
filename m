@@ -1,110 +1,177 @@
-From: Ariel Faigon <github.2009@yendor.com>
-Subject: PATCH [git/contrib] Avoid failing to create
- ${__git_tcsh_completion_script} when 'set noclobber' is in effect  (af7333c)
-Date: Sun, 7 Jun 2015 12:54:51 -0700
-Message-ID: <20150607195451.GA23551@yendor.com>
-References: <arielf/git/commit/af7333c176401601d67ea67cb961332ee4ef3574@github.com>
- <arielf/git/commit/af7333c176401601d67ea67cb961332ee4ef3574/11557888@github.com>
-Reply-To: github.2009@yendor.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCHv2 1/3] git-p4: additional testing of --changes-block-size
+Date: Sun,  7 Jun 2015 22:35:03 +0100
+Message-ID: <1433712905-7508-2-git-send-email-luke@diamand.org>
+References: <55747A05.3070704@diamand.org>
+ <1433712905-7508-1-git-send-email-luke@diamand.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Lex Spoon <lex@lexspoon.org>,
+	Luke Diamand <luke@diamand.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 07 21:55:00 2015
+X-From: git-owner@vger.kernel.org Sun Jun 07 23:36:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1geo-00011g-IW
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jun 2015 21:54:58 +0200
+	id 1Z1iEo-0007IA-GZ
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jun 2015 23:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751532AbbFGTyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2015 15:54:54 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:45471 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751422AbbFGTyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2015 15:54:53 -0400
-Received: from homiemail-a38.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id B6CE98DD07
-	for <git@vger.kernel.org>; Sun,  7 Jun 2015 12:54:52 -0700 (PDT)
-Received: from homiemail-a38.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a38.g.dreamhost.com (Postfix) with ESMTP id 5B16D10AFC2
-	for <git@vger.kernel.org>; Sun,  7 Jun 2015 12:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=yendor.com; h=date:from:to
-	:subject:message-id:reply-to:references:mime-version
-	:content-type:in-reply-to; s=yendor.com; bh=wr/O1AjN9MddFjCEmUo+
-	BvJfMqU=; b=NUvN6IFmMqo5k9vvVxoGn+YHcrpUoBhYJGIDXXbvVtrlM8+eBCwz
-	UGKzjZkKN3ISfx4qVUzWoqe5XfBx2WRgonIyDARGXYhJ58UxdE6AhOJudfi9i0In
-	+U8ksmU4SKt0rrhFYIkRPUjXEQEpI+h15sOJPVYxYivuFfDThvFTUog=
-Received: from go (c-67-188-70-105.hsd1.ca.comcast.net [67.188.70.105])
-	(Authenticated sender: catch-all@yendor.com)
-	by homiemail-a38.g.dreamhost.com (Postfix) with ESMTPA id 4913A10AFA5
-	for <git@vger.kernel.org>; Sun,  7 Jun 2015 12:54:52 -0700 (PDT)
-Received: by go (Postfix, from userid 1000)
-	id E023A1BF7F1C; Sun,  7 Jun 2015 12:54:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <arielf/git/commit/af7333c176401601d67ea67cb961332ee4ef3574/11557888@github.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751621AbbFGVgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2015 17:36:00 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:33704 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751530AbbFGVf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2015 17:35:57 -0400
+Received: by wiwd19 with SMTP id d19so67515852wiw.0
+        for <git@vger.kernel.org>; Sun, 07 Jun 2015 14:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vO8NcHJyPWYP1mLB0bTwh/NHwckIAEutwSag4XHNqJI=;
+        b=E2UrliXtRRmCspb0XCqYcieEJgVptFWZh6XbqeZ/ZSHDFYvKLQAyvbNh/SCWaVfB7a
+         5TV7tn7Cb5l8+D8PC1Fo0u6YlnzgAtPkb+MKDZq50tpVZWHh96KkNX95ULnFE5nhD/y0
+         2ljtKsRfOUxsFrvxJ1826L+zNacr5m3nrUNu0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vO8NcHJyPWYP1mLB0bTwh/NHwckIAEutwSag4XHNqJI=;
+        b=DgFvwocIRc2iQAJ6oaqtH8JzUJ3hptB9Iz88QyDfK/yppEBipWB5E278AT7edgR4eQ
+         rZ+t4Yo43E21SNhfoCfvzV+l/BVQpWGLGQPhz2+x55X1za/rDTGLj1N3N9CldKck6teR
+         L8u2rAr5JJzhP0qz+ybjLifOsVbOTxwtTfiRWKYWDeNyvajzOVVBxM4BO0g4ZyvQxeM5
+         4PVCrK8GFcPkc53PdMZS2VZvlUrHAuHly0fMVICYB9+6J79aTxhNZW6Gkvc5cyuaSirp
+         SfeQM2Crdlt0t9u4aadwlyr9tC0lDQNOB8tRn/fADP4fOLICOlypggP+S1lU67LfG4Wb
+         xM3A==
+X-Gm-Message-State: ALoCoQlNSyN9Z14AyAqlFxqG46yL4Jlnkc3+AN11zfXWTr2iwQ+ylc7dihl0m5EmS5LghwuVRbkH
+X-Received: by 10.194.82.38 with SMTP id f6mr25264107wjy.16.1433712955919;
+        Sun, 07 Jun 2015 14:35:55 -0700 (PDT)
+Received: from ethel.local.diamand.org. (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by mx.google.com with ESMTPSA id w11sm1140489wjr.48.2015.06.07.14.35.54
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 07 Jun 2015 14:35:55 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.502.gb11c5ab
+In-Reply-To: <1433712905-7508-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270980>
 
+Add additional tests of some corner-cases of the
+--changes-block-size git-p4 parameter.
 
-Junio,
+Also reduce the number of p4 changes created during the
+tests, so that they complete faster.
 
-This is my 1st time doing this, sorry.
-I hope this satisfies the git Sign Off procedure.
-
-Problem Description:
-
-tcsh users who happen to have 'set noclobber' elsewhere in their ~/.tcshrc or ~/.cshrc startup files get a 'File exist' error, and the tcsh completion file doesn't get generated/updated.  Adding a `!` in the redirect works correctly for both clobber and noclobber users.
-
-Developer's Certificate of Origin 1.1
-
-        By making a contribution to this project, I certify that:
-
-        (a) The contribution was created in whole or in part by me and I
-            have the right to submit it under the open source license
-            indicated in the file; or
-
-        (b) The contribution is based upon previous work that, to the best
-            of my knowledge, is covered under an appropriate open source
-            license and I have the right under that license to submit that
-            work with modifications, whether created in whole or in part
-            by me, under the same open source license (unless I am
-            permitted to submit under a different license), as indicated
-            in the file; or
-
-        (c) The contribution was provided directly to me by some other
-            person who certified (a), (b) or (c) and I have not modified
-            it.
-
-        (d) I understand and agree that this project and the contribution
-            are public and that a record of the contribution (including all
-            personal information I submit with it, including my sign-off) is
-            maintained indefinitely and may be redistributed consistent with
-            this project or the open source license(s) involved.
-
- Signed-off-by: Ariel Faigon <github.2009@yendor.com>
-
- git patch follows.
-
+Signed-off-by: Luke Diamand <luke@diamand.org>
+Acked-by: Lex Spoon <lex@lexspoon.org>
 ---
- contrib/completion/git-completion.tcsh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t9818-git-p4-block.sh | 56 +++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 47 insertions(+), 9 deletions(-)
 
-diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
-index 6104a42..4a790d8 100644
---- a/contrib/completion/git-completion.tcsh
-+++ b/contrib/completion/git-completion.tcsh
-@@ -41,7 +41,7 @@ if ( ! -e ${__git_tcsh_completion_original_script} ) then
- 	exit
- endif
+diff --git a/t/t9818-git-p4-block.sh b/t/t9818-git-p4-block.sh
+index 153b20a..79765a4 100755
+--- a/t/t9818-git-p4-block.sh
++++ b/t/t9818-git-p4-block.sh
+@@ -8,18 +8,21 @@ test_expect_success 'start p4d' '
+ 	start_p4d
+ '
  
--cat << EOF > ${__git_tcsh_completion_script}
-+cat << EOF >! ${__git_tcsh_completion_script}
- #!bash
- #
- # This script is GENERATED and will be overwritten automatically.
+-test_expect_success 'Create a repo with ~100 changes' '
++test_expect_success 'Create a repo with many changes' '
+ 	(
+-		cd "$cli" &&
++		client_view "//depot/included/... //client/included/..." \
++			    "//depot/excluded/... //client/excluded/..." &&
++		mkdir -p "$cli/included" "$cli/excluded" &&
++		cd "$cli/included" &&
+ 		>file.txt &&
+ 		p4 add file.txt &&
+ 		p4 submit -d "Add file.txt" &&
+-		for i in $(test_seq 0 9)
++		for i in $(test_seq 0 5)
+ 		do
+ 			>outer$i.txt &&
+ 			p4 add outer$i.txt &&
+ 			p4 submit -d "Adding outer$i.txt" &&
+-			for j in $(test_seq 0 9)
++			for j in $(test_seq 0 5)
+ 			do
+ 				p4 edit file.txt &&
+ 				echo $i$j >file.txt &&
+@@ -30,33 +33,68 @@ test_expect_success 'Create a repo with ~100 changes' '
+ '
+ 
+ test_expect_success 'Clone the repo' '
+-	git p4 clone --dest="$git" --changes-block-size=10 --verbose //depot@all
++	git p4 clone --dest="$git" --changes-block-size=7 --verbose //depot/included@all
+ '
+ 
+ test_expect_success 'All files are present' '
+ 	echo file.txt >expected &&
+ 	test_write_lines outer0.txt outer1.txt outer2.txt outer3.txt outer4.txt >>expected &&
+-	test_write_lines outer5.txt outer6.txt outer7.txt outer8.txt outer9.txt >>expected &&
++	test_write_lines outer5.txt >>expected &&
+ 	ls "$git" >current &&
+ 	test_cmp expected current
+ '
+ 
+ test_expect_success 'file.txt is correct' '
+-	echo 99 >expected &&
++	echo 55 >expected &&
+ 	test_cmp expected "$git/file.txt"
+ '
+ 
+ test_expect_success 'Correct number of commits' '
+ 	(cd "$git" && git log --oneline) >log &&
+-	test_line_count = 111 log
++	wc -l log &&
++	test_line_count = 43 log
+ '
+ 
+ test_expect_success 'Previous version of file.txt is correct' '
+ 	(cd "$git" && git checkout HEAD^^) &&
+-	echo 97 >expected &&
++	echo 53 >expected &&
+ 	test_cmp expected "$git/file.txt"
+ '
+ 
++# Test git-p4 sync, with some files outside the client specification.
++
++p4_add_file() {
++	(cd "$cli" &&
++		>$1 &&
++		p4 add $1 &&
++		p4 submit -d "Added a file" $1
++	)
++}
++
++test_expect_success 'Add some more files' '
++	for i in $(test_seq 0 10)
++	do
++		p4_add_file "included/x$i" &&
++		p4_add_file "excluded/x$i"
++	done &&
++	for i in $(test_seq 0 10)
++	do
++		p4_add_file "excluded/y$i"
++	done
++'
++
++# This should pick up the 10 new files in "included", but not be confused
++# by the additional files in "excluded"
++test_expect_success 'Syncing files' '
++	(
++		cd "$git" &&
++		git p4 sync --changes-block-size=7 &&
++		git checkout p4/master &&
++		ls -l x* > log &&
++		test_line_count = 11 log
++	)
++'
++
+ test_expect_success 'kill p4d' '
+ 	kill_p4d
+ '
+-- 
+2.4.1.502.gb11c5ab
