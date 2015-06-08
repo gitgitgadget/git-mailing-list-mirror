@@ -1,87 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 3/3] git-p4: fixing --changes-block-size handling
-Date: Mon, 8 Jun 2015 15:32:46 -0700
-Message-ID: <CAPc5daUFM+46tdPPmRTRu17UvDbyCGrhx_BDEnSepBMgS2r4ag@mail.gmail.com>
-References: <55747A05.3070704@diamand.org> <1433712905-7508-1-git-send-email-luke@diamand.org>
- <1433712905-7508-4-git-send-email-luke@diamand.org> <CALM2SnZShkETQoQuNc8e0GsPWzODQACzwjh1qCGeajiN+5sjaw@mail.gmail.com>
- <xmqqk2vecho1.fsf@gitster.dls.corp.google.com> <CALM2Snb9nxT9_shhsGBJ6nuSOninKbKC-+GXKwmd=rkuLuLXzw@mail.gmail.com>
- <xmqqy4juazkz.fsf@gitster.dls.corp.google.com> <5575E264.6040601@diamand.org>
+From: Ariel Faigon <github.2009@yendor.com>
+Subject: [PATCH 1/1]: git-completion.tcsh fails w/ noclobber
+Date: Mon, 8 Jun 2015 16:01:33 -0700
+Message-ID: <20150608230133.GA14473@yendor.com>
+Reply-To: github.2009@yendor.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Lex Spoon <lex@lexspoon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Tue Jun 09 00:33:36 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 01:01:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z25bg-0000YC-9t
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 00:33:24 +0200
+	id 1Z263I-000271-Qy
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 01:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932362AbbFHWdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 18:33:09 -0400
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:35241 "EHLO
-	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932330AbbFHWdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 18:33:08 -0400
-Received: by oihd6 with SMTP id d6so866613oih.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 15:33:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Iay+X24Z/ugQf2k7STU1yKw6h9wIDIz+qlGXzHjsucI=;
-        b=AST8jFxxDeCYLpg8yvfYBcguDlXGnOAAyFmKzSZF1OzUus/O5/HK2Os8PI6RK0GZRZ
-         T5Gy0JZi3ZXj9N1Ok8x+ca9poXzJEYEQyotF5SRhUgfU/pjSEot6J7JnqLTw/9Gc+vzK
-         ilOGxI7EAnGN1PwqdNJ0JvtaxJsg5gopRrx2opW2J/8vdwmF2qxj5lz+OCtvdhjW5/cU
-         maelfdL1v5Vn1VbESKxh3zUexXMl4noMwILe1DYNL+o22nL+dyfV7+OvzQ15yxDTnRQW
-         uVDR1YHfjOeXD2hI8lFM/+2hr5/uczFLFnwUN2Xif2dB0GqwQQ7E0mEU/F1s8U17aORr
-         wTdA==
-X-Received: by 10.202.98.193 with SMTP id w184mr15366901oib.96.1433802787367;
- Mon, 08 Jun 2015 15:33:07 -0700 (PDT)
-Received: by 10.202.202.131 with HTTP; Mon, 8 Jun 2015 15:32:46 -0700 (PDT)
-In-Reply-To: <5575E264.6040601@diamand.org>
-X-Google-Sender-Auth: teX0XqC2wYESFJWikFlmFfVUPA8
+	id S932760AbbFHXBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 19:01:47 -0400
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:45239 "EHLO
+	homiemail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753245AbbFHXBe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 19:01:34 -0400
+X-Greylist: delayed 97602 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Jun 2015 19:01:34 EDT
+Received: from homiemail-a9.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a9.g.dreamhost.com (Postfix) with ESMTP id 2EC7462606D
+	for <git@vger.kernel.org>; Mon,  8 Jun 2015 16:01:34 -0700 (PDT)
+Received: from go (c-67-188-70-105.hsd1.ca.comcast.net [67.188.70.105])
+	(Authenticated sender: catch-all@yendor.com)
+	by homiemail-a9.g.dreamhost.com (Postfix) with ESMTPA id 0FBD262606A
+	for <git@vger.kernel.org>; Mon,  8 Jun 2015 16:01:34 -0700 (PDT)
+Received: by go (Postfix, from userid 1000)
+	id D6DA51C04028; Mon,  8 Jun 2015 16:01:33 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271143>
 
-On Mon, Jun 8, 2015 at 11:43 AM, Luke Diamand <luke@diamand.org> wrote:
-> On 08/06/15 18:18, Junio C Hamano wrote:
->>
->> Lex Spoon <lex@lexspoon.org> writes:
->>
->>> Precisely, Junio, that's what I had in mind. The patch with the two
->>> lines deleted LGTM.
->>
->>
->> Thanks, will do.
->
->
-> I don't think we're quite there yet unfortunately.
->
-> The current version of git-p4 will let you do things like:
->
-> $ git p4 clone //depot@1,2015/05/31
->
-> i.e. get all the revisions between revision 1 and the end of last month.
->
-> Because my change tries to batch up the revisions, it fails when presented
-> with this.
->
-> There aren't any test cases for this, but it's documented (briefly) in the
-> manual page.
->
-> I think that although the current code looks really nice and clean, it's
-> going to have to pick up a bit more complexity to handle non-numerical
-> revisions. I don't think it's possible to do batching at the same time.
->
-> It shouldn't be too hard though; I'll look at it later this week.
+tcsh users who happen to have 'set noclobber' elsewhere in their ~/.tcshrc or ~/.cshrc startup files get a 'File exist' error, and the tcsh completion file doesn't get generated/updated.  Adding a `!` in the redirect works correctly for both clobber (default) and 'set noclobber' users.
 
-[jch: adding git@ back]
+Helped-by: Junio C Hamano <notifications@github.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: Ariel Faigon <github.2009@yendor.com>
+---
 
-Thanks.
+ contrib/completion/git-completion.tcsh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
+index 6104a42..4a790d8 100644
+--- a/contrib/completion/git-completion.tcsh
++++ b/contrib/completion/git-completion.tcsh
+@@ -41,7 +41,7 @@ if ( ! -e ${__git_tcsh_completion_original_script} ) then
+ 	exit
+ endif
+ 
+-cat << EOF > ${__git_tcsh_completion_script}
++cat << EOF >! ${__git_tcsh_completion_script}
+ #!bash
+ #
+ # This script is GENERATED and will be overwritten automatically.
