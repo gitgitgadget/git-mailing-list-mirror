@@ -1,113 +1,72 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 1/2] fsck_handle_reflog_sha1(): new function
-Date: Mon,  8 Jun 2015 15:40:04 +0200
-Message-ID: <1c6f5540fe974016c1547163c7b891707019154d.1433769878.git.mhagger@alum.mit.edu>
-References: <cover.1433769878.git.mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 15:40:45 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC v2 5/5] send-email: refactor address list process
+Date: Mon, 08 Jun 2015 16:16:29 +0200
+Message-ID: <vpqk2ve9tfm.fsf@anie.imag.fr>
+References: <1433609976-1868-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1433609976-1868-5-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 08 16:16:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1xI3-0002r1-NW
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 15:40:36 +0200
+	id 1Z1xrA-0000R5-0E
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 16:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758AbbFHNk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 09:40:29 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:49676 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752436AbbFHNkY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 09:40:24 -0400
-X-AuditID: 12074412-f79066d000000bc5-be-55759b3a30a5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 56.B8.03013.A3B95755; Mon,  8 Jun 2015 09:40:10 -0400 (EDT)
-Received: from michael.fritz.box (p4FC977B6.dip0.t-ipconnect.de [79.201.119.182])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t58De6NC022064
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 8 Jun 2015 09:40:09 -0400
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <cover.1433769878.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqGs1uzTU4OYUDYuuK91MFg29V5gt
-	+pd3sVncXjGf2eJHSw+zA6vH3/cfmDw+fIzzeNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M76dXsVSsJi3YuHGk2wNjC+4uhg5OCQETCSWvuPpYuQEMsUkLtxbz9bFyMUhJHCZUeL4
-	hi+sIAkhgRNMEvOuKoHYbAK6Eot6mplAbBEBNYmJbYdYQBqYBeYzSjxufcUIkhAWsJF4tXoz
-	M4jNIqAqse1yI9ggXoEoieNbZrJCbJOTOH/8J1gNp4CFxNGmfYwQy8wlJvzexzKBkXcBI8Mq
-	RrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0zvdzMEr3UlNJNjJCAEtrBuP6k3CFGAQ5GJR7eA4tK
-	QoVYE8uKK3MPMUpyMCmJ8tb3lYYK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFNng6U401JrKxK
-	LcqHSUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4H04E6hRsCg1PbUiLTOnBCHNxMEJ
-	MpxLSqQ4NS8ltSixtCQjHhQZ8cXA2ABJ8QDtVZ4Fsre4IDEXKArReopRUUqc9w3IXAGQREZp
-	HtxYWJp4xSgO9KUwrxNIOw8wxcB1vwIazAQ0+PvXYpDBJYkIKakGxiNGuT478y8bcvBMbpV7
-	JBryksU9pKfz5xX/46V1q88flfPc9GgH97wb8oknQ5/MZhNl8wu2TO1S0/mUWh+4vUazP/CC
-	cBvXmVvVdhurpdwsuaxmr7B/+Fpyo8vcOKn55i+nrOv25f8xf5paX6jCyZmzz+2J 
+	id S1752275AbbFHOQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 10:16:37 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35448 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753236AbbFHOQc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 10:16:32 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t58EGRDA004559
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Jun 2015 16:16:27 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58EGTJx005882;
+	Mon, 8 Jun 2015 16:16:29 +0200
+In-Reply-To: <1433609976-1868-5-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	(Remi Lespinet's message of "Sat, 6 Jun 2015 18:59:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jun 2015 16:16:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t58EGRDA004559
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434377788.40444@VityLrWgDJXqxmxOELGnrg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271033>
 
-New function, extracted from fsck_handle_reflog_ent(). The extra
-is_null_sha1() test for the new reference is currently unnecessary, as
-reflogs are deleted when the reference itself is deleted. But it
-doesn't hurt, either.
+Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- builtin/fsck.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+> Simplify code by creating a function to transform list of email lists
+> (comma separated, with aliases ...)  into a simple list of valid email
+> addresses.
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 4e8e2ee..b1b6c60 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -451,28 +451,29 @@ static void fsck_dir(int i, char *path)
- 
- static int default_refs;
- 
--static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
--		const char *email, unsigned long timestamp, int tz,
--		const char *message, void *cb_data)
-+static void fsck_handle_reflog_sha1(unsigned char *sha1)
- {
- 	struct object *obj;
- 
--	if (verbose)
--		fprintf(stderr, "Checking reflog %s->%s\n",
--			sha1_to_hex(osha1), sha1_to_hex(nsha1));
--
--	if (!is_null_sha1(osha1)) {
--		obj = lookup_object(osha1);
-+	if (!is_null_sha1(sha1)) {
-+		obj = lookup_object(sha1);
- 		if (obj) {
- 			obj->used = 1;
- 			mark_object_reachable(obj);
- 		}
- 	}
--	obj = lookup_object(nsha1);
--	if (obj) {
--		obj->used = 1;
--		mark_object_reachable(obj);
--	}
-+}
-+
-+static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+		const char *email, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
-+{
-+	if (verbose)
-+		fprintf(stderr, "Checking reflog %s->%s\n",
-+			sha1_to_hex(osha1), sha1_to_hex(nsha1));
-+
-+	fsck_handle_reflog_sha1(osha1);
-+	fsck_handle_reflog_sha1(nsha1);
- 	return 0;
- }
- 
+I would have found the series easier to read if this refactoring came
+earlier (and then PATCH 2/5 would fix the bug as a positive side effect
+of the refactoring). I think it's too late to change this, though.
+
+>  I'm not sure about the name of the function...
+
+process_address_list() sounds good to me.
+
+The whole series looks good to me now.
+
 -- 
-2.1.4
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
