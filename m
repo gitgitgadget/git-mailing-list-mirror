@@ -1,97 +1,124 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] fsck: report errors if reflog entries point at
- invalid objects
-Date: Mon, 08 Jun 2015 18:00:09 +0200
-Organization: gmx
-Message-ID: <c5720357601be135485ef546cae7ffdb@www.dscho.org>
-References: <cover.1433769878.git.mhagger@alum.mit.edu>
- <2ba9ee48a062b049c8b64fed4caba32c42f03031.1433769878.git.mhagger@alum.mit.edu>
- <e9d2f8cc371aa41e5d9095abd3cb7edb@www.dscho.org>
- <5575B03C.6040008@alum.mit.edu>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH] git-rebase--interactive.sh: add config option for custom
+Date: Mon, 8 Jun 2015 12:01:26 -0400
+Message-ID: <CANoM8SXM=gk9jpi7PJQh6dVeg=Nbg9bJD0eoU=Y-76vHBsHjcw@mail.gmail.com>
+References: <0000014dd0a821f6-a4ffca2d-d242-4e96-aeec-7a52186c5df1-000000@eu-west-1.amazonses.com>
+ <xmqqsia2cj8c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 08 18:00:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 18:01:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1zTX-0002Px-PE
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:00:36 +0200
+	id 1Z1zUm-0003c2-3M
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264AbbFHQAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 12:00:32 -0400
-Received: from mout.gmx.net ([212.227.17.21]:63144 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753259AbbFHQAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 12:00:30 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MCOdh-1Yssna2ECH-0098eV; Mon, 08 Jun 2015 18:00:11
- +0200
-In-Reply-To: <5575B03C.6040008@alum.mit.edu>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:hsajUv+ttM7qMqAT3XfcJm49IRcO8WYEk7MZVmtceb8pJf1Dpr7
- SBkgQRHPjGUxO7C2JFcYoqoHBrD6TQFgNYbVSvuMqxkugQfMivkUZjCxJe0MnvWEKHuim/Y
- I85MsDoaBtrzKcxjGs/a66rP9eT3XCMFHxzxq1BV7O8BLKQ2B/39ePleShjTvj6jXtUabfA
- oQAGPhT3jkpIBadg73fRQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fUfhiIvKAw4=:u+GdmGDYqF2uoMoMDwJHi3
- 9xqKbPuW7SsNtoq7Ki146NQP5QIggvK5Oyywpx1JNQdkRFMLKRjPfjU2pdXVZRr7DbMi/jEp/
- xYFzlpWSSLhiyasI6PV65b4AVtaH3EIrJPxxOQpfGrjowivMbang22Jwn6/j8PliEaK0KiImK
- zumtQk7XetsQWa8jKXyYuv3cT4aw1uwKNFsSIrMs7nqBas8r+Kzq21HK9B7EPBMxzS04qySSK
- a/unobxdJjEZm86KwaS9XmxqQYs41tIeKHmqmuxZxbbYYZAo3IqvfpuzMudigqBrHowRIOmuN
- QR8MhlnlQOqww+PzTxh4HFFa5YDhCSayFwmQjZodY6QR2mCVj36wEAxVv0lHosVQJEc4YVcvm
- pGRC5mep5snhmtAj35APTklocqWv6SKXwCutJnHLewQ7d48i3FyiknKwoduW+Dllp0BcdnyOx
- Y1yoAMFKYz6rnoYb7QWbJV0k0/OITop+zAlUhboE7D8CTqR4lJTB50zMNoDUnuFWMk3ZARiDx
- KRAXAbgKwxV8ptI3MCgfxZQMbgnN+7ZMHQQTrjJWqRiCFXwffeXy53R7m3iN+7PJ/yuRP+Q6G
- khiX4h3VLink+anzJd8uqXLfn0xNK8+F9ssbc4xuHswHFXxSlEr2VOgjcRwEhcLKLS5zx/p3g
- QfVGVsuuFNOhvvq9n3VS+fenhQuiS3K8K0/dY1bxH2Exo5mIs3BYY+S3dDAUMS1vdmMI=
+	id S1753146AbbFHQBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 12:01:47 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:36797 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752216AbbFHQBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 12:01:46 -0400
+Received: by obbqz1 with SMTP id qz1so83696807obb.3
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 09:01:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BvOvr4rP9J6o50Kjhsp829oYHC1aB/NSyCQNcbA/5JM=;
+        b=SXlEa0XB4B+2/YXVHU+2KGjJOvsUtB7oT0lIRaO0UJQdZxC7xqz+0ZYSIbx4VYoG13
+         HRr6sKEl8fGqfrjshlfP8EzW8PbLripHCS/jAZBjXixnWaee9Ia6UFHdQMZFD6wujPa5
+         WwKd/W+grnEkWbcpO13erJ/jSm+vgCGd/LUrRY8rO1Ol/UUOaHfnjXHvNdh3Tabv103c
+         Xf90gOxjthAMS1AsbeQaKgWKAOsbFDMV+tZvzvCDyRVxXsF1lt9vfsKCbsOvFnpmwrWF
+         +SLjq+P31N1P2x4oJz0fRQyLNdSgHNxMWUbOmiU8J+beAtPFi0eEyHEKcubbICKltNbd
+         r7cg==
+X-Received: by 10.202.227.15 with SMTP id a15mr14512017oih.59.1433779306350;
+ Mon, 08 Jun 2015 09:01:46 -0700 (PDT)
+Received: by 10.202.204.20 with HTTP; Mon, 8 Jun 2015 09:01:26 -0700 (PDT)
+In-Reply-To: <xmqqsia2cj8c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271060>
 
-Hi Michael,
-
-On 2015-06-08 17:09, Michael Haggerty wrote:
-> On 06/08/2015 04:27 PM, Johannes Schindelin wrote:
->> On 2015-06-08 08:40, Michael Haggerty wrote:
->>> Previously, if a reflog entry's old or new SHA-1 was not resolvable
->>> to an object, that SHA-1 was silently ignored. Instead, report such
->>> cases as errors.
+On Mon, Jun 8, 2015 at 11:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Rappazzo <rappazzo@gmail.com> writes:
+>
+>> A config option 'rebase.instructionFormat' can override the
+>> default 'oneline' format of the rebase instruction list.
 >>
->> I like the idea, but I am a bit uncertain whether it would constitute
->> "too backwards-incompatible" a change to make this an error. I think
->> it could be argued both ways: it *is* an improvement, but it could
->> also possibly disrupt scripts that work pretty nicely at the moment.
-> 
-> What kind of script are you worried about?
+>> Since the list is parsed using the left, right or boundary mark plus
+>> the sha1, they are prepended to the instruction format.
+>>
+>> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+>> ---
+>
+> Thanks.  Roberto's gizmo seems to be working OK ;-)
 
-I was concerned about scripts that work on repositories whose reflogs become inconsistent for whatever reason (that happened a lot to me in the past, IIRC it had something to do with bare repositories and/or shared object databases).
+Will see if the pull request -> email contraption will allow me to put
+[patch v2] in there.  I also need to see if it can make a [patch 0/1]
 
-Now, if I was to run a script in, say, cron to verify that all of my repositories (possibly on a network drive, for shared team use), I could imagine that I actually want to error out if the reflogs become inconsistent. But then, I could also imagine that I care more about the script being quiet when everything is okay except for the reflogs. 
+>
+>>  git-rebase--interactive.sh | 9 ++++++++-
+>>  1 file changed, 8 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index dc3133f..cc79b81 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -977,7 +977,14 @@ else
+>>       revisions=$onto...$orig_head
+>>       shortrevisions=$shorthead
+>>  fi
+>> -git rev-list $merges_option --pretty=oneline --reverse --left-right --topo-order \
+>> +format=$(git config --get rebase.instructionFormat)
+>> +if test -z "$format"
+>> +then
+>> +   format="%s"
+>
+> Style.  One indent level in our shell scripts is one HT, not a few spaces.
+>
+>> +fi
+>> +# the 'rev-list .. | sed' requires %m to parse; the instruction requires %h to parse
+>> +format="%m%h ${format}"
+>
+> I think you want %H not %h here.  If you check how the default
+> "--pretty=online" is shown, you would see something like this:
+>
+>     >1e9676ec0a771de06abca3009eb4bdc5a4ae3312 lockfile: replace ...
+>     >2024d3176536fd437b4c0a744161e96bc150a24e help.c: wrap wait-...
+>
+>> +git rev-list $merges_option --pretty="${format}" --reverse --left-right --topo-order \
+>>       $revisions ${restrict_revision+^$restrict_revision} | \
+>>       sed -n "s/^>//p" |
 
-> * This change only causes fsck to output an extra line (and exit with
->   a a non-zero retcode).
+I will make the changes from above, and resubmit a patch.
 
-It is that non-zero exit status that would make my hypothetical cron script start to fail.
+>
+> This is optional, but I still wonder why the command line cannot be
+> more like this, though:
+>
+>         format=$(git config --get rebase.insnFormat)
+>         git log --format="%H ${format-%s}" --reverse --right-only --topo-order \
+>                 $revisions ${restrict_revision+^$restrict_revision} |
+>         while read -r sha1 junk
+>         do
+>                 ...
+>
+> That way we can optimize one "sed" process away.
+>
+> If this is a good idea, it needs to be a separate follow-up patch
+> that changes "%m filtered by sed" to "use --right-only".  I do not
+> think such a change breaks anything, but I do not deal with complex
+> histories myself, so...
+>
 
-> * Repair is only a
-> 
->       git reflog expire --expire-unreachable=now --all
-> 
->   away, I think.
-
-True.
-
-Plus, as I mentioned, it could be considered a bug fix that fsck now reports this problem.
-
-The more I think about it, the more I think it is actually a bug fix.
-
-Thanks,
-Dscho
+As far as I can tell, the rev-list will return multiple lines when not
+using 'oneline'.  The 'sed -n' will join the lines back together.  I
+will take a look at moving it to 'git log' for a future change.  I
+have a huge codebase with tons of branches to experiment with.
