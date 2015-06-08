@@ -1,122 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 4/9] parse-options: add parse_opt_merge_filter()
-Date: Mon, 08 Jun 2015 12:20:30 -0700
-Message-ID: <xmqqvbey9fcx.fsf@gitster.dls.corp.google.com>
-References: <5573520A.90603@gmail.com>
-	<1433621052-5588-1-git-send-email-karthik.188@gmail.com>
-	<1433621052-5588-4-git-send-email-karthik.188@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: PATCH [git/contrib] Avoid failing to create ${__git_tcsh_completion_script}
+ when 'set noclobber' is in effect (af7333c)
+Date: Mon, 8 Jun 2015 21:31:23 +0200
+Message-ID: <CAP8UFD0mmHAbXtcJZNhnhGtTv82zQV3j+OcSSa_xeLrEJzCqyA@mail.gmail.com>
+References: <arielf/git/commit/af7333c176401601d67ea67cb961332ee4ef3574@github.com>
+	<arielf/git/commit/af7333c176401601d67ea67cb961332ee4ef3574/11557888@github.com>
+	<20150607195451.GA23551@yendor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 21:20:48 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: github.2009@yendor.com
+X-From: git-owner@vger.kernel.org Mon Jun 08 21:31:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z22bA-0002cc-P2
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 21:20:41 +0200
+	id 1Z22lt-0003z6-Bf
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 21:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbbFHTUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 15:20:36 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:37147 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbbFHTUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 15:20:35 -0400
-Received: by igbsb11 with SMTP id sb11so41674igb.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 12:20:35 -0700 (PDT)
+	id S1753268AbbFHTbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 15:31:31 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:33184 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753059AbbFHTbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 15:31:25 -0400
+Received: by wgez8 with SMTP id z8so111104364wge.0
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 12:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=k1yr1f0L7Asjd2aEIfTlPmejbehRqmP7quRR4CN5+v0=;
-        b=pa1mkBPl3B6mqVUI2Gl/QUI+pJXSfkpAUOhiSKzuQeURixaCPINPBWfSc3fGt9rcZP
-         JkbhB5VYvC4Kweagqrc4PaUVEiDk6GpuiDyrIgMin8eu/0eBQ3eu+R2Mcf9yQyM4pjFK
-         Qy347hatVWDborVdZlw3UaY9r2Xy4fcpUXWJqR8fur0JHQbBMQGDRf9bOgsfO87sUgkV
-         SytTS0k+K/kMuHIaHO1NFRBa+ObOvjKV0O8o7/PrvNigLF/eC0wWTCone1kL5zcxLkoF
-         /OpNGdsVyWKO2vxK0mQBzl4vaVQTptHYFPDy2aiO0cbBlasnHfKB736q2la0PiCY2fT6
-         cIqQ==
-X-Received: by 10.43.178.195 with SMTP id ox3mr25906647icc.10.1433791234976;
-        Mon, 08 Jun 2015 12:20:34 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:498e:2bf8:6933:5b2b])
-        by mx.google.com with ESMTPSA id 17sm2331687ioq.39.2015.06.08.12.20.34
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 12:20:34 -0700 (PDT)
-In-Reply-To: <1433621052-5588-4-git-send-email-karthik.188@gmail.com> (Karthik
-	Nayak's message of "Sun, 7 Jun 2015 01:34:07 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=J0F01MW8XWloGfHgBV+6NJYNFQnjRX8RZg5Q9n8Y79Q=;
+        b=WvMawTsujkRH7NXIPKPm02Q+K8my39WLNktnSgvtAX4ZhHZz+1B5MoVtI9WOiixuiw
+         7x8hDFHC2fH3RNzt9/y9A+WgIKEvYcFF99sd1GZj8YRaZbp9Gx763CvmqsZL0GRU94dY
+         Gg2YFXeMWFlFT7rxZLoUfsRBHTeCh/8NISJiqQWGRxM/fY6VXHjDbCgRGhdPJ+BGoNvr
+         W9AYXH6QnPhIWYThnc5xd1ejgBv/etc4BXp/1WsaOuUDJ9SKVWQ44KXq13LUi0lZV4YN
+         PT8NAEa56NyJ8mxZ4rgKya2Qv7gEsAV5TgXvjrZ/4imaQg2+bFbAvzX4Mi4kxaseHtB9
+         sWyA==
+X-Received: by 10.180.88.99 with SMTP id bf3mr1208494wib.75.1433791883724;
+ Mon, 08 Jun 2015 12:31:23 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Mon, 8 Jun 2015 12:31:23 -0700 (PDT)
+In-Reply-To: <20150607195451.GA23551@yendor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271115>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Please use a subject that is shorter and looks more like others on this list.
 
-> +int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
-> +{
-> +	struct ref_filter *rf = opt->value;
-> +	unsigned char sha1[20];
-> +
-> +	rf->merge = opt->long_name[0] == 'n'
-> +		? REF_FILTER_MERGED_OMIT
-> +		: REF_FILTER_MERGED_INCLUDE;
-> +
-> +	if (!arg)
-> +		arg = "HEAD";
-> +	if (get_sha1(arg, sha1))
-> +		die(_("malformed object name %s"), arg);
-> +
-> +	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
-> +	if (!rf->merge_commit)
-> +		return opterror(opt, "must point to a commit", 0);
-> +
-> +	return 0;
-> +}
+On Sun, Jun 7, 2015 at 9:54 PM, Ariel Faigon <github.2009@yendor.com> wrote:
+>
+> Junio,
+>
+> This is my 1st time doing this, sorry.
+> I hope this satisfies the git Sign Off procedure.
 
-Again, this smells too specific to live as a part of parse-options
-infrastructure.  If we want to have two helper callbacks, one that
-gives the results in an sha1-array (because there is no guarantee
-that you want only commits) and in a commit-list, I am fine with
-having parse_opt_object_name() and parse_opt_with_commit().  Perhaps
-rename the latter which was named too specifically to something more
-sensible (e.g. parse_opt_commit_object_name()) and use it from the
-caller you wanted to use parse_opt_merge_filter()?  The caller, if
-it is not prepared to see more than one commits specified, may have
-to check if (!list || !list->next) { die("I want one and only one") }
-or something, though.
+The above lines should not be there, otherwise they will be in the
+commit message and will not be useful there.
 
-Having it in ref-filter.h as parse_opt_merge_filter() is fine,
-though.  After all, you would be sharing it with for-each-ref,
-branch and tag and nobody else anyway.
+> Problem Description:
 
-> diff --git a/parse-options.h b/parse-options.h
-> index 3ae16a1..7bcf0f3 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -221,6 +221,7 @@ extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
->  extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
->  extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
->  extern int parse_opt_points_at(const struct option *, const char *, int);
-> +extern int parse_opt_merge_filter(const struct option *, const char *, int);
->  extern int parse_opt_with_commit(const struct option *, const char *, int);
->  extern int parse_opt_tertiary(const struct option *, const char *, int);
->  extern int parse_opt_string_list(const struct option *, const char *, int);
-> @@ -243,5 +244,15 @@ extern int parse_opt_noop_cb(const struct option *, const char *, int);
->  	OPT_COLOR_FLAG(0, "color", (var), (h))
->  #define OPT_COLUMN(s, l, v, h) \
->  	{ OPTION_CALLBACK, (s), (l), (v), N_("style"), (h), PARSE_OPT_OPTARG, parseopt_column_callback }
-> +#define OPT_NO_MERGED(filter, h) \
-> +	{ OPTION_CALLBACK, 0, "no-merged", (filter), N_("commit"), (h), \
-> +	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
-> +	  parse_opt_merge_filter, (intptr_t) "HEAD" \
-> +	}
-> +#define OPT_MERGED(filter, h) \
-> +	{ OPTION_CALLBACK, 0, "merged", (filter), N_("commit"), (h), \
-> +	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
-> +	  parse_opt_merge_filter, (intptr_t) "HEAD" \
-> +	}
+Please loose the above header.
 
-Likewise.
+> tcsh users who happen to have 'set noclobber' elsewhere in their ~/.tcshrc or ~/.cshrc startup files get a 'File exist' error,
+
+When do they get that error?
+
+> and the tcsh completion file doesn't get generated/updated.  Adding a `!` in the redirect works correctly for both clobber and noclobber users.
+>
+> Developer's Certificate of Origin 1.1
+>
+>         By making a contribution to this project, I certify that:
+>
+>         (a) The contribution was created in whole or in part by me and I
+>             have the right to submit it under the open source license
+>             indicated in the file; or
+>
+>         (b) The contribution is based upon previous work that, to the best
+>             of my knowledge, is covered under an appropriate open source
+>             license and I have the right under that license to submit that
+>             work with modifications, whether created in whole or in part
+>             by me, under the same open source license (unless I am
+>             permitted to submit under a different license), as indicated
+>             in the file; or
+>
+>         (c) The contribution was provided directly to me by some other
+>             person who certified (a), (b) or (c) and I have not modified
+>             it.
+>
+>         (d) I understand and agree that this project and the contribution
+>             are public and that a record of the contribution (including all
+>             personal information I submit with it, including my sign-off) is
+>             maintained indefinitely and may be redistributed consistent with
+>             this project or the open source license(s) involved.
+
+You don't need to copy the Developer's Certificate of Origin in your
+patch even if it's the first time. Your signed-off-by below is enough.
+
+>  Signed-off-by: Ariel Faigon <github.2009@yendor.com>
+>
+>  git patch follows.
+
+Please put nothing after your signed-off-by and before the three dashes below.
+
+> ---
+
+Here, just after the three dashes, is the right place to put personnal
+comments and stuff that should not go into the commit message.
+
+>  contrib/completion/git-completion.tcsh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
+> index 6104a42..4a790d8 100644
+> --- a/contrib/completion/git-completion.tcsh
+> +++ b/contrib/completion/git-completion.tcsh
+> @@ -41,7 +41,7 @@ if ( ! -e ${__git_tcsh_completion_original_script} ) then
+>         exit
+>  endif
+>
+> -cat << EOF > ${__git_tcsh_completion_script}
+> +cat << EOF >! ${__git_tcsh_completion_script}
+>  #!bash
+>  #
+>  # This script is GENERATED and will be overwritten automatically.
+
+Thanks,
+Christian.
