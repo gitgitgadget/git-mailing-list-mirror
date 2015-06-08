@@ -1,71 +1,112 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 0/2] fsck: don't ignore broken reflog entries
-Date: Mon,  8 Jun 2015 15:40:03 +0200
-Message-ID: <cover.1433769878.git.mhagger@alum.mit.edu>
+Subject: [PATCH 2/2] fsck: report errors if reflog entries point at invalid objects
+Date: Mon,  8 Jun 2015 15:40:05 +0200
+Message-ID: <2ba9ee48a062b049c8b64fed4caba32c42f03031.1433769878.git.mhagger@alum.mit.edu>
+References: <cover.1433769878.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 15:40:37 2015
+X-From: git-owner@vger.kernel.org Mon Jun 08 15:40:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1xI4-0002r1-AN
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 15:40:36 +0200
+	id 1Z1xI3-0002r1-3Y
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 15:40:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbbFHNkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 09:40:32 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50290 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752372AbbFHNkX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 09:40:23 -0400
-X-AuditID: 1207440d-f79026d000000bad-9d-55759b396ad8
+	id S1752746AbbFHNk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 09:40:26 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:62840 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752340AbbFHNkW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 09:40:22 -0400
+X-AuditID: 1207440f-f79236d000000c5e-37-55759b3bc6f3
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A1.02.02989.93B95755; Mon,  8 Jun 2015 09:40:09 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id ED.71.03166.B3B95755; Mon,  8 Jun 2015 09:40:11 -0400 (EDT)
 Received: from michael.fritz.box (p4FC977B6.dip0.t-ipconnect.de [79.201.119.182])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t58De6NB022064
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t58De6ND022064
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 8 Jun 2015 09:40:07 -0400
+	Mon, 8 Jun 2015 09:40:10 -0400
 X-Mailer: git-send-email 2.1.4
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqGs5uzTUYEOHgkXXlW4mi4beK8wW
-	/cu72Cxur5jPbPGjpYfZgdXj7/sPTB4fPsZ5POvdw+hx8ZKyx+dNcgGsUdw2SYklZcGZ6Xn6
-	dgncGfvPH2Yr2MJS8fnJepYGxlPMXYycHBICJhLvXp1kg7DFJC7cWw9kc3EICVxmlNjT1ckE
-	4Zxgktj5YBJYFZuArsSinmYmEFtEQE1iYtshFpAiZoH5jBKPW18xgiSEBWwltnXeAFvBIqAq
-	MfXlP7A4r4C5xMWTZ6BWy0mcP/6TeQIj9wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFukZ6
-	uZkleqkppZsYIUHCu4Px/zqZQ4wCHIxKPLwHFpWECrEmlhVX5h5ilORgUhLlre8rDRXiS8pP
-	qcxILM6ILyrNSS0+xCjBwawkwps8HSjHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQ
-	WgSTleHgUJLgrZoJ1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPCvb4YmC4g6R4
-	gPaWgrTzFhck5gJFIVpPMepy3JnyfxGTEEtefl6qlDjvBpAiAZCijNI8uBWwlPCKURzoY2Fe
-	p1lAVTzAdAI36RXQEiagJd+/FoMsKUlESEk1MHYc6ZVKfuii8K+X75TI1mlT1A4YWMf3JE9u
-	PLDrXrGQy97G4wwdimnHN5jztrMzfhLxt+Qr7P+su7D+sMpJz6j4+Faj3IC8uv9Jcq2i59+v
-	8y7qNetZwCmkLS9+TNP8udDMy1t37nt+r3BFt4HSabNJzxk/8T8qPDZz5UT3GWnt 
+In-Reply-To: <cover.1433769878.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqGs9uzTU4NRUC4uuK91MFg29V5gt
+	+pd3sVncXjGf2eJHSw+zA6vH3/cfmDw+fIzzeNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
+	7RK4M06fWsJY0MJX8XHfTLYGxk3cXYycHBICJhLPZv1hhbDFJC7cW88GYgsJXGaUuHchqIuR
+	C8g+wSRx+eoesASbgK7Eop5mJhBbREBNYmLbIRaQImaB+YwSj1tfMYIkhAWCJR7uX8cMYrMI
+	qEocXLwBrJlXIEpi+d2DTBDb5CTOH/8JVsMpYCFxtGkfI8Rmc4kJv/exTGDkXcDIsIpRLjGn
+	NFc3NzEzpzg1Wbc4OTEvL7VI10QvN7NELzWldBMjJKT4dzB2rZc5xCjAwajEw3tgUUmoEGti
+	WXFl7iFGSQ4mJVHe+r7SUCG+pPyUyozE4oz4otKc1OJDjBIczEoivMnTgXK8KYmVValF+TAp
+	aQ4WJXFe9SXqfkIC6YklqdmpqQWpRTBZGQ4OJQnehzOBGgWLUtNTK9Iyc0oQ0kwcnCDDuaRE
+	ilPzUlKLEktLMuJBsRFfDIwOkBQP0F7lWSB7iwsSc4GiEK2nGBWlxHk3gMwVAElklObBjYUl
+	ileM4kBfCvOygLTzAJMMXPcroMFMQIO/fy0GGVySiJCSamDscn5mebHIT2D64WX8Rn2Nvt69
+	/Qq2ee58/H3JZgFv+48caH73lO9FtHJuGPMTFs/Yf4uuL51uLb2nhZlLwJ25f/aXvKnJH7ra
+	eC92r/3utqtyzXlfV07+D4oPFl1kfHSW4eaLGwkG0x+Fs92r+e709tmp2Ltswjsr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271031>
 
 Previously, if a reflog entry's old or new SHA-1 was not resolvable to
 an object, that SHA-1 was silently ignored. Instead, report such cases
 as errors.
 
-This patch series is also available from my GitHub account [1], branch
-"fsck-reflog-entries".
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ builtin/fsck.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-Michael
-
-[1] https://github.com/mhagger/git
-
-Michael Haggerty (2):
-  fsck_handle_reflog_sha1(): new function
-  fsck: report errors if reflog entries point at invalid objects
-
- builtin/fsck.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
-
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index b1b6c60..2679793 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -451,7 +451,7 @@ static void fsck_dir(int i, char *path)
+ 
+ static int default_refs;
+ 
+-static void fsck_handle_reflog_sha1(unsigned char *sha1)
++static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1)
+ {
+ 	struct object *obj;
+ 
+@@ -460,6 +460,9 @@ static void fsck_handle_reflog_sha1(unsigned char *sha1)
+ 		if (obj) {
+ 			obj->used = 1;
+ 			mark_object_reachable(obj);
++		} else {
++			error("%s: invalid reflog entry %s", refname, sha1_to_hex(sha1));
++			errors_found |= ERROR_REACHABLE;
+ 		}
+ 	}
+ }
+@@ -468,19 +471,21 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 		const char *email, unsigned long timestamp, int tz,
+ 		const char *message, void *cb_data)
+ {
++	const char *refname = cb_data;
++
+ 	if (verbose)
+ 		fprintf(stderr, "Checking reflog %s->%s\n",
+ 			sha1_to_hex(osha1), sha1_to_hex(nsha1));
+ 
+-	fsck_handle_reflog_sha1(osha1);
+-	fsck_handle_reflog_sha1(nsha1);
++	fsck_handle_reflog_sha1(refname, osha1);
++	fsck_handle_reflog_sha1(refname, nsha1);
+ 	return 0;
+ }
+ 
+ static int fsck_handle_reflog(const char *logname, const struct object_id *oid,
+ 			      int flag, void *cb_data)
+ {
+-	for_each_reflog_ent(logname, fsck_handle_reflog_ent, NULL);
++	for_each_reflog_ent(logname, fsck_handle_reflog_ent, (void *)logname);
+ 	return 0;
+ }
+ 
 -- 
 2.1.4
