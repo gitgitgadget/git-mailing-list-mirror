@@ -1,78 +1,66 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/2] fsck_handle_reflog_sha1(): new function
-Date: Mon, 08 Jun 2015 17:17:11 +0200
-Message-ID: <5575B1F7.8030400@alum.mit.edu>
-References: <cover.1433769878.git.mhagger@alum.mit.edu>	<1c6f5540fe974016c1547163c7b891707019154d.1433769878.git.mhagger@alum.mit.edu> <xmqqwpzeck72.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [WIP/PATCH v5 05/10] for-each-ref: introduce 'ref_array_clear()'
+Date: Mon, 08 Jun 2015 20:48:34 +0530
+Message-ID: <5575B24A.8040004@gmail.com>
+References: <55729B78.1070207@gmail.com> <1433574581-23980-1-git-send-email-karthik.188@gmail.com> <1433574581-23980-5-git-send-email-karthik.188@gmail.com> <vpqvbey6yli.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 17:17:35 2015
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 08 17:18:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1ynt-0004wj-Oz
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 17:17:34 +0200
+	id 1Z1yp2-00064G-6P
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 17:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932604AbbFHPRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 11:17:30 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:59467 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932599AbbFHPR2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 11:17:28 -0400
-X-AuditID: 12074413-f79386d000000d23-4e-5575b1f981f4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 81.B9.03363.9F1B5755; Mon,  8 Jun 2015 11:17:13 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC977B6.dip0.t-ipconnect.de [79.201.119.182])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t58FHBf1026831
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 8 Jun 2015 11:17:12 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <xmqqwpzeck72.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqPtzY2moweN/qhZdV7qZLBp6rzBb
-	9C/vYrP40dLD7MDi8eFjnMez3j2MHhcvKXt83iQXwBLFbZOUWFIWnJmep2+XwJ2x+vkjloJT
-	rBU9uy+wNTDuZuli5OSQEDCR+DB1KzuELSZx4d56ti5GLg4hgcuMEgd6m5ghnPNMEodn/QZy
-	ODh4BbQlbqyRAmlgEVCVaFy1CWwQm4CuxKKeZiaQElGBIInXL3NBwrwCghInZz4BKxERUJOY
-	2HYIzGYWyJXonHSHGcQWFnCQWLjlOxPEqq2MEovP72IFSXAKWEucu/mCEaJBT2LH9V+sELa8
-	xPa3c5gnMArMQrJjFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfLzSzRS00p
-	3cQICWbhHYy7TsodYhTgYFTi4T2wqCRUiDWxrLgy9xCjJAeTkijvvPWloUJ8SfkplRmJxRnx
-	RaU5qcWHGCU4mJVEeJOnA+V4UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwc
-	ShK87zcANQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDIjW+GBirICkeoL0fQNp5
-	iwsSc4GiEK2nGHU57kz5v4hJiCUvPy9VSpz3K0iRAEhRRmke3ApY6nrFKA70sTBvIUgVDzDt
-	wU16BbSECWjJ96/FIEtKEhFSUg2ME/iL82YvMKq55/yUk/t3rPy7+T3iL7ufbpFf/jxzpqeX
-	vcxbEevamvKchQ4m/EF2n+coaTS9abMM29YebOS59IPwhvWsd7ffDZa1ylKo2f+g 
+	id S1752906AbbFHPSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 11:18:41 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:35742 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752665AbbFHPSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 11:18:39 -0400
+Received: by pdbnf5 with SMTP id nf5so107137793pdb.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 08:18:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=sCJCMGWBc4XxvTCSrG6sGUA5WI4A19CyjOqCEY8vXKU=;
+        b=YhtodQMxVR0JkBwHJsocMi6yh56AOfTpunMlG9sn3dzEk4uL35VF0oVazHqf2lgUmb
+         aBXCHk4fQ/89QYCYckJ2jtQjgfvEahRfRCk+4AzX/jnyrjdvRCB+dmWxe7+D1TryF8Pl
+         dwZ0JAIFdV+vdSSbOKFzWm3sqUS+6ZVMTn/5cV08jEG7TGtauvTFo+X6fxuhxj85jZ0z
+         gKIhZvbJzcLrZmO1xmFyomjE1pwm5kzOWeBlyqFtjMUoi/5hbKAszRCQCaRmE3cWOrRj
+         JJnz6o+TjAkeQaRt4gCUf+VyWcPa608tkhTNS242WOUGv49l0lQn6i3Dpxavw1ezf+jM
+         Svwg==
+X-Received: by 10.66.63.8 with SMTP id c8mr31189173pas.122.1433776718810;
+        Mon, 08 Jun 2015 08:18:38 -0700 (PDT)
+Received: from [192.168.0.100] ([106.51.130.23])
+        by mx.google.com with ESMTPSA id mq2sm2928118pbb.16.2015.06.08.08.18.36
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jun 2015 08:18:38 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <vpqvbey6yli.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271046>
 
-On 06/08/2015 05:07 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> New function, extracted from fsck_handle_reflog_ent(). The extra
->> is_null_sha1() test for the new reference is currently unnecessary, as
->> reflogs are deleted when the reference itself is deleted. But it
->> doesn't hurt, either.
-> 
-> I think we would crash with today's code in such a situation, but
-> wouldn't we want to diagnose a 0{40} object name on the "new" side
-> of the reflog entry as an error in the endgame state?
-
-Good point. new_sha1 == NULL_SHA1 should be diagnosed and reported with
-a distinct error message.
-
-> [...]
-
-Michael
+On 06/08/2015 08:23 PM, Matthieu Moy wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+> > +/* Free all memory allocated for ref_array */
+> > +void ref_array_clear(struct ref_array *array)
+>
+> Is this a private function? If so, then add static. If not, you probably
+> want to export it in a .h file.
+>
+It is in ref-filter.h.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Regards,
+Karthik
