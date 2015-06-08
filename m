@@ -1,98 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-rebase--interactive.sh: add config option for custom
-Date: Mon, 08 Jun 2015 10:29:58 -0700
-Message-ID: <xmqqtwuiaz1l.fsf@gitster.dls.corp.google.com>
-References: <0000014dd0a821f6-a4ffca2d-d242-4e96-aeec-7a52186c5df1-000000@eu-west-1.amazonses.com>
-	<xmqqsia2cj8c.fsf@gitster.dls.corp.google.com>
-	<CANoM8SXM=gk9jpi7PJQh6dVeg=Nbg9bJD0eoU=Y-76vHBsHjcw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH 2/9] ref-filter: implement '--points-at' option
+Date: Mon, 08 Jun 2015 19:31:14 +0200
+Message-ID: <vpqwpzertst.fsf@anie.imag.fr>
+References: <5573520A.90603@gmail.com>
+	<1433621052-5588-1-git-send-email-karthik.188@gmail.com>
+	<1433621052-5588-2-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Mike Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 19:30:08 2015
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:31:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z20sB-00029a-HA
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:30:07 +0200
+	id 1Z20tP-0003NC-8w
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:31:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022AbbFHRaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 13:30:03 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36667 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869AbbFHRaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 13:30:01 -0400
-Received: by igbpi8 with SMTP id pi8so67119718igb.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 10:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Fi0mo8gKN6ERHfMMDeXXu2fK1reb4gNyFW5QEPBlIJI=;
-        b=ThxhFyifw+vqxrNK8826Zoz5KFMu8ZgerfGJRTsyVv1pAyGswVib6pDHkFA+5XSPCU
-         rLFkYEqYvuxKe3EyNH1QEnjoUbNRT/zFuxLkXTlfay5jZ9W11gfGQWlOZW+58LQDyoiI
-         hB7rqubEZAhD4izCA6e8OYagxj204krOB2eDGQQRiSZ1KEF1WF0b6k7teESW9rNlE3SO
-         gCVdRPaScjEvEDrh61M3d4Gufdn/oDSCs11kb2X0s7ltmMJp8Sm/TPXHzUV/CstENkZi
-         7Snp01SX52zRibpRTvAYFY6Z6YrNUv7pNTzL5shBwnw058xno1GD33+7UHMRIqjYNpbZ
-         O+0g==
-X-Received: by 10.107.134.67 with SMTP id i64mr21319854iod.90.1433784600381;
-        Mon, 08 Jun 2015 10:30:00 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:498e:2bf8:6933:5b2b])
-        by mx.google.com with ESMTPSA id 72sm2139774ioj.27.2015.06.08.10.29.59
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 10:29:59 -0700 (PDT)
-In-Reply-To: <CANoM8SXM=gk9jpi7PJQh6dVeg=Nbg9bJD0eoU=Y-76vHBsHjcw@mail.gmail.com>
-	(Mike Rappazzo's message of "Mon, 8 Jun 2015 12:01:26 -0400")
+	id S1750869AbbFHRbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 13:31:19 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:55772 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751424AbbFHRbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 13:31:18 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t58HVCug020928
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Jun 2015 19:31:12 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58HVEF2009844;
+	Mon, 8 Jun 2015 19:31:14 +0200
+In-Reply-To: <1433621052-5588-2-git-send-email-karthik.188@gmail.com> (Karthik
+	Nayak's message of "Sun, 7 Jun 2015 01:34:05 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 08 Jun 2015 19:31:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t58HVCug020928
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434389473.35783@EEo1550bq4o4B/x5j9fEPw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271091>
 
-Mike Rappazzo <rappazzo@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On Mon, Jun 8, 2015 at 11:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> This is optional, but I still wonder why the command line cannot be
->> more like this, though:
->>
->>         format=$(git config --get rebase.insnFormat)
->>         git log --format="%H ${format-%s}" --reverse --right-only --topo-order \
->>                 $revisions ${restrict_revision+^$restrict_revision} |
->>         while read -r sha1 junk
->>         do
->>                 ...
->>
->> That way we can optimize one "sed" process away.
->>
->> If this is a good idea, it needs to be a separate follow-up patch
->> that changes "%m filtered by sed" to "use --right-only".  I do not
->> think such a change breaks anything, but I do not deal with complex
->> histories myself, so...
->
-> As far as I can tell, the rev-list will return multiple lines when not
-> using 'oneline'.  The 'sed -n' will join the lines back together.
+> +/*
+> + * Given a ref (sha1, refname) see if it points to a one of the sha1s
+> + * in a sha1_array.
+> + */
+> +static int match_points_at(struct sha1_array *points_at, const unsigned char *sha1,
+> +			   const char *refname)
+> +{
+> +	struct object *obj;
+> +
+> +	if (!points_at || !points_at->nr)
+> +		return 1;
+> +
+> +	if (sha1_array_lookup(points_at, sha1) >= 0)
+> +		return 1;
+> +
+> +	obj = parse_object_or_die(sha1, refname);
+> +	if (obj->type == OBJ_TAG &&
+> +	    sha1_array_lookup(points_at, ((struct tag *)obj)->tagged->sha1) >= 0)
+> +		return 1;
+> +
+> +	return 0;
+> +}
 
-There is no joining going on.
+There's a similar function in builtin/tag.c that you are not removing.
+You should justify why you are doing this code duplication in the commit
+message (or not do code duplication). It might make sense to add a
+comment next to match_points_at in tag.c saying stg like "this is
+duplicated from ..., will be removed later".
 
-To "rev-list", a custom --pretty/--format is a signal to trigger its
-"verbose" mode, and it shows a "commit <object-name>" line and then
-the line in the format specified, e.g.
-
-  $ git rev-list --pretty='%m%H %<(35,trunc)%s' --right-only --reverse ...2024d3
-  commit 1e9676ec0a771de06abca3009eb4bdc5a4ae3312
-  >1e9676ec0a771de06abca3009eb4bdc5a4ae3312 lockfile: replace random() by ran..
-  commit 2024d3176536fd437b4c0a744161e96bc150a24e
-  >2024d3176536fd437b4c0a744161e96bc150a24e help.c: wrap wait-only poll() inv..
-  ...
-
-Because of that, "format=%m | sed -n s/>//p" would be one way to
-make sure that all lines we care about are prefixed by '>' so that
-we can pick them while discarding anything else.  So you do need
-filtering unless switch to "log", even if you used --right-only.
-
-That is why I didn't use "rev-list" in the message you are
-responding to.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
