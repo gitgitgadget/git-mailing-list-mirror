@@ -1,67 +1,71 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: release address not working
-Date: Mon, 8 Jun 2015 15:17:06 +0200
-Message-ID: <CAEcj5uWCdf7_NNE2v8Ly2EE-1oEiN2bJs5ogBEDSZxYttOjyiw@mail.gmail.com>
-References: <CA+e85DLH=K8n3xcZnfyF85Rwyqnc_5amrZE1P_++E+k+NN18xA@mail.gmail.com>
-	<CA+e85DKhpyo2wsRY=LNzOyhemjj48ewS50+eQkfcPjoDD4KZyA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>
-To: =?UTF-8?Q?Mustafa_Kerim_Y=C4=B1lmaz?= <mkysoft@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 15:17:18 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/2] fsck: don't ignore broken reflog entries
+Date: Mon,  8 Jun 2015 15:40:03 +0200
+Message-ID: <cover.1433769878.git.mhagger@alum.mit.edu>
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 15:40:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1wvR-0006Iv-Kz
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 15:17:14 +0200
+	id 1Z1xI4-0002r1-AN
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 15:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836AbbFHNRJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 09:17:09 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:33875 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630AbbFHNRI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 09:17:08 -0400
-Received: by lbcmx3 with SMTP id mx3so80487400lbc.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 06:17:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=lFS9nXkv07jqx87cXsU/6KgFgF0ew/gc+Mu5vN7R8so=;
-        b=RIfAOKRcfCU1wusLDjuMjCleSwgHh37u05S9bSQGT5A0bAqLU/9cck1tlj3y3Gy7o8
-         76m3H1EV0YYOcmwfDkzbexv41oVDpmCIKOJSLyWqDUJdK1Vojy6+QblMp4uvBXnflXer
-         ceeTHjm5ULXFFbah59eCsYD5z5y8zCD6bNNM7g+sjuYjtDS3sfuFe+w5yoWe1BjzXDby
-         tF7uvhhOifVMn2FpOdCcHNZAF50GtjFl+SemQdxwpTT5Qn2B4iAJ/lXvZeLU1l49Gbvy
-         eG3K++JmgHs17IKgJbadqKYUTbCm7/nSUWlioR0BL9286ialUroTzhqlvxd+6VmO6nY/
-         37vg==
-X-Received: by 10.152.203.162 with SMTP id kr2mr16755286lac.68.1433769426347;
- Mon, 08 Jun 2015 06:17:06 -0700 (PDT)
-Received: by 10.25.20.76 with HTTP; Mon, 8 Jun 2015 06:17:06 -0700 (PDT)
-In-Reply-To: <CA+e85DKhpyo2wsRY=LNzOyhemjj48ewS50+eQkfcPjoDD4KZyA@mail.gmail.com>
+	id S1752769AbbFHNkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 09:40:32 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50290 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752372AbbFHNkX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 09:40:23 -0400
+X-AuditID: 1207440d-f79026d000000bad-9d-55759b396ad8
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A1.02.02989.93B95755; Mon,  8 Jun 2015 09:40:09 -0400 (EDT)
+Received: from michael.fritz.box (p4FC977B6.dip0.t-ipconnect.de [79.201.119.182])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t58De6NB022064
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 8 Jun 2015 09:40:07 -0400
+X-Mailer: git-send-email 2.1.4
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqGs5uzTUYEOHgkXXlW4mi4beK8wW
+	/cu72Cxur5jPbPGjpYfZgdXj7/sPTB4fPsZ5POvdw+hx8ZKyx+dNcgGsUdw2SYklZcGZ6Xn6
+	dgncGfvPH2Yr2MJS8fnJepYGxlPMXYycHBICJhLvXp1kg7DFJC7cWw9kc3EICVxmlNjT1ckE
+	4Zxgktj5YBJYFZuArsSinmYmEFtEQE1iYtshFpAiZoH5jBKPW18xgiSEBWwltnXeAFvBIqAq
+	MfXlP7A4r4C5xMWTZ6BWy0mcP/6TeQIj9wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFukZ6
+	uZkleqkppZsYIUHCu4Px/zqZQ4wCHIxKPLwHFpWECrEmlhVX5h5ilORgUhLlre8rDRXiS8pP
+	qcxILM6ILyrNSS0+xCjBwawkwps8HSjHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQ
+	WgSTleHgUJLgrZoJ1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPCvb4YmC4g6R4
+	gPaWgrTzFhck5gJFIVpPMepy3JnyfxGTEEtefl6qlDjvBpAiAZCijNI8uBWwlPCKURzoY2Fe
+	p1lAVTzAdAI36RXQEiagJd+/FoMsKUlESEk1MHYc6ZVKfuii8K+X75TI1mlT1A4YWMf3JE9u
+	PLDrXrGQy97G4wwdimnHN5jztrMzfhLxt+Qr7P+su7D+sMpJz6j4+Faj3IC8uv9Jcq2i59+v
+	8y7qNetZwCmkLS9+TNP8udDMy1t37nt+r3BFt4HSabNJzxk/8T8qPDZz5UT3GWnt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271030>
 
-On Sun, Jun 7, 2015 at 12:13 PM, Mustafa Kerim Y=C4=B1lmaz <mkysoft@gma=
-il.com> wrote:
-> I try to download from this url:
-> https://github.com/msysgit/msysgit/releases/download/Git-1.9.5-previe=
-w20150319/Git-1.9.5-preview20150319.exe
->
-> It is redirect to amazon aws with url but not responsed:
-> https://s3.amazonaws.com/github-cloud/releases/325827/8ddeba82-ce92-1=
-1e4-9812-db61045d243b.exe?response-content-disposition=3Dattachment%3B%=
-20filename%3DGit-1.9.5-preview20150319.exe&response-content-type=3Dappl=
-ication/octet-stream&AWSAccessKeyId=3DAKIAISTNZFOVBIJMK3TQ&Expires=3D14=
-33671774&Signature=3DQn3RvEVrb01Gm9wPJ7s6DObwAdM%3D
->
+Previously, if a reflog entry's old or new SHA-1 was not resolvable to
+an object, that SHA-1 was silently ignored. Instead, report such cases
+as errors.
 
-You'll get a working download at http://git-scm.com/download/win
+This patch series is also available from my GitHub account [1], branch
+"fsck-reflog-entries".
 
-Also note that a preview of the imminent Git 2.x release for Windows
-is available for download on http://git-for-windows.github.io/
+Michael
+
+[1] https://github.com/mhagger/git
+
+Michael Haggerty (2):
+  fsck_handle_reflog_sha1(): new function
+  fsck: report errors if reflog entries point at invalid objects
+
+ builtin/fsck.c | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
+
+-- 
+2.1.4
