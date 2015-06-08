@@ -1,111 +1,85 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH 1/2] git-bisect.sh : create a file if the bisection is in old/new mode, named "BISECT_OLDNEWMODE", so it can easily be seen outside the program without having to read BISECT_TERMS. This will have to be changed in further versions if new terms are introduced.
-Date: Mon, 08 Jun 2015 13:48:32 +0200
-Message-ID: <vpq616yctf3.fsf@anie.imag.fr>
+Date: Mon, 08 Jun 2015 13:54:57 +0200
+Message-ID: <vpqvbeybejy.fsf@anie.imag.fr>
 References: <1433522061-14532-1-git-send-email-stuberl@ensimag.grenoble-inp.fr>
-	<CAPig+cQnrKEx_=WHw5gjA9SVtDObXWOJ3augZbhvNUuD8o19aA@mail.gmail.com>
+	<CAP8UFD1OSSxfQOLggRv-VjE-8U=Vg7X5oe_UeFi4_yqOfXvgPA@mail.gmail.com>
+	<1179544255.257552.1433703835857.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>,
-	Galan =?iso-8859-1?Q?R=E9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	j_franck7@msn.com, valentinduperray@gmail.com,
-	thomasxnguy@gmail.com, lucienkong@hotmail.com,
+	j franck7 <j_franck7@msn.com>,
+	Valentin Duperray <valentinduperray@gmail.com>,
+	Thomas Nguy <thomasxnguy@gmail.com>, lucienkong@hotmail.com,
 	Christian Couder <chriscool@tuxfamily.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 13:49:27 2015
+To: Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 08 13:55:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1vXu-0007To-MP
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 13:48:51 +0200
+	id 1Z1ve3-0004hF-4r
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 13:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665AbbFHLsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 07:48:47 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58596 "EHLO shiva.imag.fr"
+	id S1752647AbbFHLzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 07:55:07 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58873 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752392AbbFHLsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 07:48:45 -0400
+	id S1752013AbbFHLzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 07:55:04 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t58BmUN2000307
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t58Bsujn003043
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 8 Jun 2015 13:48:31 +0200
+	Mon, 8 Jun 2015 13:54:56 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58BmWk6002137;
-	Mon, 8 Jun 2015 13:48:32 +0200
-In-Reply-To: <CAPig+cQnrKEx_=WHw5gjA9SVtDObXWOJ3augZbhvNUuD8o19aA@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 5 Jun 2015 16:03:15 -0400")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58BsvI2002441;
+	Mon, 8 Jun 2015 13:54:57 +0200
+In-Reply-To: <1179544255.257552.1433703835857.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Louis-Alexandre Stuber's message of "Sun, 7 Jun 2015 21:03:55 +0200
+	(CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jun 2015 13:48:32 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jun 2015 13:54:57 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t58BmUN2000307
+X-MailScanner-ID: t58Bsujn003043
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434368915.4806@LeGJJWfYizUtA9bU93x8kg
+MailScanner-NULL-Check: 1434369297.61422@dRI/3gQ0LkT0GD+KadmStA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271027>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Please, don't top-post on this list.
 
-> On Fri, Jun 5, 2015 at 12:34 PM, Louis Stuber
-> <stuberl@ensimag.grenoble-inp.fr> wrote:
->> git-bisect.sh :
+Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr> writes:
 
-No space before : in english.
-
->> create a file if the bisection is in old/new mode, named
->> "BISECT_OLDNEWMODE", so it can easily be seen outside the program
->> without having to read BISECT_TERMS. This will have to be changed in
->> further versions if new terms are introduced.
+> Thank you for the feedback. We are trying to apply all of your suggestions, but we would prefer to rebase the history before doing some of them (like renaming variables).
 >
-> Documentation/SubmittingPatches contains instructions for how to write
-> a good commit message.
+> About the BISECT_OLDNEWMODE file: The current implementation changes almost nothing to revision.c. We thought it was better, even if it needs a new file. The code for bisect uses BISECT_TERMS because 3 states are
+> possible: 'bad/good mode', 'old/new mode', or 'no bisection started'
+> (if BISECT_TERMS doesn't exist).
 
-For french-speaking people, and Ensimag students in particular, I'd add
+I don't think it's the main reason. The point is to make the code
+generic: once the bisection has started and the terms are chosen, the
+possible states for a commit are not really bad/good or old/new, but
+'first line in BISECT_TERMS/second line in BISECT_TERMS'.
 
-  http://ensiwiki.ensimag.fr/index.php/%C3%89crire_de_bons_messages_de_commit_avec_Git
-
-> Also, wrap the commit message to 70-72 columns.
-
-As much as possible, the summary line should even be shorter (so that
-"git log --oneline" fits on a 80-chars terminal).
-
-> This commit message doesn't do a very good job of explaining the
-> problem this change is trying to solve or justifying why this solution
-> is preferable.
-
-Actually, the commit message explains one reason why this is not a good
-solution: the idea of having $GIT_DIR/BISECT_TERMS was to keep the
-solution generic.
-
-Had the initial codebase been better factored, this patch series would
-have been really trivial, but we hardcoded "good" and "bad" in many
-places, and now changing it is hard. Introducing BISECT_TERMS is a step
-forward, it avoids hardcoding the terms here and there in the code.
-To me, introducing BISECT_OLDNEWMODE is a step backward, it's one more
-place where we hardcode the terms.
-
-> Justification is particularly important considering the
-> ominous-sounding final sentence of the commit message (which itself
-> seems to imply that this is not a very good change).
-
-Ah, indeed, we're saying the same thing.
-
->> -                               echo "old" >>"$GIT_DIR/BISECT_TERMS"
->> +                               echo "old" >>"$GIT_DIR/BISECT_TERMS" &&
->> +                               echo "" > "$GIT_DIR/BISECT_OLDNEWMODE"
-
-No space after > (noted by Eric elsewhere)
+> But the other files (like revision.c) don't need all these
+> informations, so we thought it would be good to check if a file exists
+> instead of reusing BISECT_TERMS, which would require reading its
+> content.
+>
+> ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+> De: "Christian Couder" <christian.couder@gmail.com>
+> ...
 
 -- 
 Matthieu Moy
