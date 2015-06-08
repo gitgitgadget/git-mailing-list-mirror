@@ -1,84 +1,65 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] fsck: report errors if reflog entries point at
- invalid objects
-Date: Mon, 08 Jun 2015 19:08:09 +0200
-Organization: gmx
-Message-ID: <9adde72489de0b1ad66bd2c4730b18e9@www.dscho.org>
-References: <cover.1433769878.git.mhagger@alum.mit.edu>
- <2ba9ee48a062b049c8b64fed4caba32c42f03031.1433769878.git.mhagger@alum.mit.edu>
- <e9d2f8cc371aa41e5d9095abd3cb7edb@www.dscho.org>
- <5575B03C.6040008@alum.mit.edu>
- <c5720357601be135485ef546cae7ffdb@www.dscho.org>
- <20150608165643.GA6863@peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v6 09/11] ref-filter: move code from 'for-each-ref'
+Date: Mon, 08 Jun 2015 19:08:33 +0200
+Message-ID: <vpq4mmiw2jy.fsf@anie.imag.fr>
+References: <1433598496-31287-9-git-send-email-karthik.188@gmail.com>
+	<1433673294-16243-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 08 19:08:20 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:08:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z20X6-00072j-73
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:08:20 +0200
+	id 1Z20XT-0007RZ-0E
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:08:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbbFHRIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 13:08:16 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64224 "EHLO mout.gmx.net"
+	id S1751424AbbFHRIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 13:08:39 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:40003 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751158AbbFHRIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 13:08:14 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LaooK-1ZUUeA2ebY-00kQ1G; Mon, 08 Jun 2015 19:08:10
- +0200
-In-Reply-To: <20150608165643.GA6863@peff.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:ueKNgtZLNCOv/kFeyiymw3sUCxTYWEKWSov3VjWZOEODizoAhtT
- bh5CR7NZZC5mV8VbzN6+R9BG7Xx9lbZCy0xdu1+jMMWNYs2SLP4w0Yyi+AdGMBoSm3O6x88
- 4C8rMJF2bRZV3Z/sHQyefFwh5VCz0uNKpUbzOfels38sM62baWOYSp73F0GiQmT4RIFizWG
- RoUOmKvlVO3sIeDZrIuEQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751317AbbFHRIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 13:08:38 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t58H8VmY009335
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Jun 2015 19:08:32 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58H8X03009406;
+	Mon, 8 Jun 2015 19:08:33 +0200
+In-Reply-To: <1433673294-16243-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Sun, 7 Jun 2015 16:04:54 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jun 2015 19:08:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t58H8VmY009335
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434388113.81876@m5L8443jYp/IOVH3OAj6Og
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271083>
 
-Hi Peff,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-On 2015-06-08 18:56, Jeff King wrote:
-> On Mon, Jun 08, 2015 at 06:00:09PM +0200, Johannes Schindelin wrote:
-> 
->> >> I like the idea, but I am a bit uncertain whether it would constitute
->> >> "too backwards-incompatible" a change to make this an error. I think
->> >> it could be argued both ways: it *is* an improvement, but it could
->> >> also possibly disrupt scripts that work pretty nicely at the moment.
->> >
->> > What kind of script are you worried about?
->>
->> I was concerned about scripts that work on repositories whose reflogs
->> become inconsistent for whatever reason (that happened a lot to me in
->> the past, IIRC it had something to do with bare repositories and/or
->> shared object databases).
-> 
-> I think these repositories are already broken. You cannot run `git gc`
-> in such a repository, as it will barf when trying to walk the reflog
-> tips during `git repack`.
-> 
-> We run into this exact situation at GitHub because of our shared object
-> databases. Our per-fork repack code basically has to do:
-> 
->   if ! git repack ...; then
->     git reflog expire --expire-unreachable=all --all &&
->     git repack ... ||
->     die "ok, it really is broken"
->   fi
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -1129,7 +56,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>  
+>  	memset(&ref_cbdata, 0, sizeof(ref_cbdata));
+>  	ref_cbdata.filter.name_patterns = argv;
+> -	for_each_rawref(ref_filter_handler, &ref_cbdata);
+> +	filter_refs(for_each_rawref, &ref_cbdata);
 
-Good point. So if I needed any more convincing that Michael's patch is a bug fix (as opposed to a backwards-incompatible change), this did it.
+This seems unrelated from the rest of the patch. And you haven't
+introduced filter_refs yet!
 
-Ciao,
-Dscho
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
