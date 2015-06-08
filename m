@@ -1,90 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] utf8.c: print warning about disabled iconv
-Date: Mon, 08 Jun 2015 09:16:16 -0700
-Message-ID: <xmqqfv62ch0v.fsf@gitster.dls.corp.google.com>
-References: <1433624551-20730-1-git-send-email-max@max630.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] status: give more information during rebase -i
+Date: Mon, 08 Jun 2015 18:17:49 +0200
+Message-ID: <vpqeglm41jm.fsf@anie.imag.fr>
+References: <1433775308-5451-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Mon Jun 08 18:16:25 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Junio Hamano <gitster@pobox.com>
+To: Guillaume =?iso-8859-1?Q?Pag=E8s?= 
+	<guillaume.pages@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 08 18:18:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1ziq-00007M-Bo
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:16:24 +0200
+	id 1Z1zkg-0001xc-Fp
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752913AbbFHQQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 12:16:21 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:34994 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752333AbbFHQQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 12:16:19 -0400
-Received: by igbzc4 with SMTP id zc4so65638758igb.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 09:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Ag8JPo5oZVmQEvE4x/9pTEA10txGaktLV4b00SGomFA=;
-        b=IRooD2w5so64tVzpqHPv1+4iMS1BxtlHO0IDofcF+xK245iYa5UPU8bsi9vsHYMV2a
-         bmoEeXENOnozesKfvgAWZ6HF8uYY27eNhWySuh6DDqvjFUvG9iVVH1EVYg9h2+aXN+Ie
-         JPitIyimE+jNPWpM9dyei9DReAv+jM8i3bV7ECvuazQnqj9lc41h9fIMIXhQ7vfShldK
-         D3E3QgrzLlVbiuD5NRq/WT1AlT24PRM2/pEfdftKYFk+lDpcjS7CRNipGupQ2gbA+IWH
-         l5xG8osw2BWf0ZKmAGQg0lLw7vLyDldWj7Lx9HvEuRsaad/qqoLYstp1rOLfVIlfy+wf
-         gDqw==
-X-Received: by 10.50.20.200 with SMTP id p8mr14444076ige.28.1433780178643;
-        Mon, 08 Jun 2015 09:16:18 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:d91a:edb1:b738:fb03])
-        by mx.google.com with ESMTPSA id d81sm2010868ioe.12.2015.06.08.09.16.17
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 09:16:17 -0700 (PDT)
-In-Reply-To: <1433624551-20730-1-git-send-email-max@max630.net> (Max
-	Kirillov's message of "Sun, 7 Jun 2015 00:02:31 +0300")
+	id S1752643AbbFHQSL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 12:18:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38825 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753368AbbFHQR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 12:17:56 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t58GHmVB001716
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Jun 2015 18:17:48 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58GHn9K008505;
+	Mon, 8 Jun 2015 18:17:49 +0200
+In-Reply-To: <1433775308-5451-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr>
+	("Guillaume \=\?iso-8859-1\?Q\?Pag\=E8s\=22's\?\= message of "Mon, 8 Jun 2015
+ 16:55:07 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jun 2015 18:17:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t58GHmVB001716
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434385070.2652@BAd2e9zaHA3NKAJGvaCAxA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271065>
 
-Max Kirillov <max@max630.net> writes:
+Please, include a version number in the subject. git send-email -v2 doe=
+s
+this for you.
 
-> It is an allowed compile-time option to build git without iconv
-> support. Resulting build almost always functions correctly, and
-> never displays that it is missing anything, but reencode_string_len()
-> just never modifies its input.
+Guillaume Pag=E8s <guillaume.pages@ensimag.grenoble-inp.fr> writes:
 
-Correct.
+> +static void show_rebase_information(struct wt_status *s,
+> +				    struct wt_status_state *state,
+> +				    const char *color)
+> +{
+> +	if (state->rebase_interactive_in_progress) {
+> +		int i, begin;
+> +		int lines_to_show_nr =3D 2;
+> +
+> +		struct strbuf buf =3D STRBUF_INIT;
+> +		struct string_list have_done =3D STRING_LIST_INIT_DUP;
+> +		struct string_list yet_to_do =3D STRING_LIST_INIT_DUP;
+> +
+> +		strbuf_read_file(&buf, git_path("rebase-merge/done"), 0);
+> +		stripspace(&buf, 1);
+> +		have_done.nr =3D string_list_split(&have_done, buf.buf, '\n', -1);
+> +		string_list_remove_empty_items(&have_done, 1);
+> +		strbuf_release(&buf);
 
-> This gives undesirable result that
-> returned data or even data written into repository is incorrect
-> and user is not aware about it.
+I'd release buf one line earlier (meaning "I'm done with buf, now let's
+talk about something else"), but it's OK like this too
 
-I do not necessarily agree with that.  The user knows what s/he is
-doing, data written to or shown from the repository is correct as
-far as the user is concerned, and the user takes the full
-respoinsibility when compiling out certain features.
+> +		strbuf_read_file(&buf, git_path("rebase-merge/git-rebase-todo"), 0=
+);
+> +		stripspace(&buf, 1);
+> +		string_list_split(&yet_to_do, buf.buf, '\n', -1);
+> +		string_list_remove_empty_items(&yet_to_do, 1);
+> +		strbuf_release(&buf);
 
-> +	if (!same_encoding(in_encoding, out_encoding) && !noiconv_warning_shown) {
-> +		warning("Iconv support is disabled at compile time. It is likely that\nincorrect data will be printed or stored in repository.\nConsider using other build for this task.");
-> +		noiconv_warning_shown = 1;
-> +	}
+Nice. Much simpler than the previous iteration.
 
-I actually am OK if the user gets exactly the same warning between
-the two cases:
+> +		if (have_done.nr =3D=3D 0)
+> +			status_printf_ln(s, color, _("No commands done."));
+> +		else{
 
- - iconv failed to convert in the real reencode_string_len()
+Missing space before {
 
- - we compiled out iconv() and real conversion was asked.
+> +			status_printf_ln(s, color,
+> +				Q_("Last command done (%d command done):",
+> +					"Last commands done (%d commands done):",
+> +					have_done.nr),
+> +				have_done.nr);
+> +			begin =3D (have_done.nr > lines_to_show_nr) ? have_done.nr-lines_=
+to_show_nr : 0;
 
-and this patch is about the latter; I do not think it is reasonable
-to give noise only for the latter but not for the former.  The
-latter is expected by users who compile out the feature, but the
-former is not and deserves the wranings more, so the patch is
-backwards in that sense.
+Missing space around '-'
 
-Thanks.
+> +			for (i =3D begin; i < have_done.nr; i++) {
+> +				status_printf_ln(s, color, "   %s", have_done.items[i].string);
+> +			}
+
+Useless braces.
+
+> +			if (have_done.nr > lines_to_show_nr && s->hints)
+> +			   status_printf_ln(s, color,
+
+Indentation with space (open in Emacs, M-x whitespace-mode RET to see
+this kind of things).
+
+> +				_("  (see more in file %s)"), git_path("rebase-merge/done"));
+> +		}
+> +		if (yet_to_do.nr =3D=3D 0)
+> +			status_printf_ln(s, color,
+> +					 _("No commands remaining."));
+> +		else{
+> +
+> +			status_printf_ln(s, color,
+> +				Q_("Next command to do (%d remaining command):",
+> +					"Next commands to do (%d remaining commands):",
+> +					yet_to_do.nr),
+> +				yet_to_do.nr);
+> +			for (i =3D 0; i < lines_to_show_nr && i < yet_to_do.nr; i++) {
+> +				status_printf_ln(s, color, "   %s", yet_to_do.items[i].string);
+> +			}
+
+Useless braces.
+
+> +			if (s->hints)
+> +			   status_printf_ln(s, color,
+
+Indentation with space again.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
