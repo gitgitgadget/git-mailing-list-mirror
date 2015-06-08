@@ -1,54 +1,78 @@
-From: Lex Spoon <lex@lexspoon.org>
-Subject: Re: [PATCHv2 3/3] git-p4: fixing --changes-block-size handling
-Date: Sun, 7 Jun 2015 18:58:15 -0400
-Message-ID: <CALM2SnZShkETQoQuNc8e0GsPWzODQACzwjh1qCGeajiN+5sjaw@mail.gmail.com>
-References: <55747A05.3070704@diamand.org>
-	<1433712905-7508-1-git-send-email-luke@diamand.org>
-	<1433712905-7508-4-git-send-email-luke@diamand.org>
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] git-rebase--interactive.sh: add config option for custom
+Date: Mon, 8 Jun 2015 00:53:09 +0000
+Message-ID: <0000014dd0a821f6-a4ffca2d-d242-4e96-aeec-7a52186c5df1-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Mon Jun 08 00:58:28 2015
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2_516384226.1433724789212"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 08 03:11:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1jWM-0001YJ-Fj
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 00:58:26 +0200
+	id 1Z1lai-0006Hr-Q5
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 03:11:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639AbbFGW6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2015 18:58:17 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33665 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196AbbFGW6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2015 18:58:16 -0400
-Received: by padev16 with SMTP id ev16so25901374pad.0
-        for <git@vger.kernel.org>; Sun, 07 Jun 2015 15:58:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ZU0Aux6hpa6xUHvy582afWizKBgS3SV0m/I2PFoTAxM=;
-        b=VyQ8oe8IqL4czY+pYBgGSNlVvw33PLIWGyIm0JnxL+NgASejbB5jeAtRXrpuu6nEFm
-         geCTZW42UKgWjFQlH0MmdThR1CHKpQYCQZDob85SOPKTGlfi5/abDj9uXvioKGBXRXXd
-         XLU5VGffK7LrZzNgwS9l/KzV/D8e/Z9YE1/u+qpNrRaAhCSdo9cZT1FICRcq+yy/LbmD
-         1gmmIy3IyGfiTVeS2j5t6+BV9nyNErb7O6W0M21zbidERSnm9+9NAinpxBHovTGvYQu5
-         uTw9fGsDX5G0vXrd2lJ/lZv6oB78K7fRd3vNCvG+EIA4Bpx/UFAGXRAp+q753KH0jc7f
-         PYYQ==
-X-Received: by 10.70.135.168 with SMTP id pt8mr24466611pdb.8.1433717895675;
- Sun, 07 Jun 2015 15:58:15 -0700 (PDT)
-Received: by 10.70.25.132 with HTTP; Sun, 7 Jun 2015 15:58:15 -0700 (PDT)
-In-Reply-To: <1433712905-7508-4-git-send-email-luke@diamand.org>
-X-Google-Sender-Auth: qlG1sOydhf9Y8puaUc_gluW4Tqw
+	id S1751296AbbFHBK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2015 21:10:56 -0400
+Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:52043
+	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750769AbbFHBKy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Jun 2015 21:10:54 -0400
+X-Greylist: delayed 1063 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Jun 2015 21:10:54 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1433724789;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Date:Feedback-ID;
+	bh=xiYQ7uTeGo8Kg/rs0wDIrxSjoIFjko4QOSv+F35yH7g=;
+	b=oQliUzAoA0RWRrFCBdFh0wlWf1z2EV/HC3/4RTfND672Qk5sQUb7Lx8gy7twfX8D
+	lOri8QwmRAkcWFKSppatURzc2iCbQi4SK6odjFHRfIyISE8sodKdpJLLh09B0dxpqB1
+	LNc4kCph5NxJWwoHAnWVVeI51mRDPODipSivezjw=
+X-SES-Outgoing: 2015.06.08-54.240.6.246
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270987>
 
-Unless I am reading something wrong, the "new_changes" variable could
-be dropped now. It was needed for the -m version for detecting the
-smallest change number that was returned. Otherwise it looks good to
-me.
+------=_Part_2_516384226.1433724789212
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+A config option 'rebase.instructionFormat' can override the
+default 'oneline' format of the rebase instruction list.
+
+Since the list is parsed using the left, right or boundary mark plus
+the sha1, they are prepended to the instruction format.
+
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+ git-rebase--interactive.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index dc3133f..cc79b81 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -977,7 +977,14 @@ else
+ 	revisions=$onto...$orig_head
+ 	shortrevisions=$shorthead
+ fi
+-git rev-list $merges_option --pretty=oneline --reverse --left-right --topo-order \
++format=$(git config --get rebase.instructionFormat)
++if test -z "$format"
++then
++   format="%s"
++fi
++# the 'rev-list .. | sed' requires %m to parse; the instruction requires %h to parse
++format="%m%h ${format}"
++git rev-list $merges_option --pretty="${format}" --reverse --left-right --topo-order \
+ 	$revisions ${restrict_revision+^$restrict_revision} | \
+ 	sed -n "s/^>//p" |
+ while read -r sha1 rest
+
+---
+https://github.com/git/git/pull/146
+------=_Part_2_516384226.1433724789212--
