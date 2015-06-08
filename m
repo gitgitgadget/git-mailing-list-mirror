@@ -1,109 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] read-cache: fix untracked cache invalidation when split-index is used
-Date: Mon, 08 Jun 2015 09:49:02 -0700
-Message-ID: <xmqq7frecfi9.fsf@gitster.dls.corp.google.com>
-References: <xmqq1thodop8.fsf@gitster.dls.corp.google.com>
-	<1433673652-27720-1-git-send-email-pclouds@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 06/13] delete_refs(): convert error message to lower case
+Date: Mon, 8 Jun 2015 09:51:42 -0700
+Message-ID: <CAGZ79kbT3x=CxKwwxk8qsfNh5ee-0i2Toe4sY584CkjbadDGjA@mail.gmail.com>
+References: <cover.1433763494.git.mhagger@alum.mit.edu>
+	<49bd60449c003c8a7fd060095fe743bb9efaba99.1433763494.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, t.gummerer@gmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 18:49:12 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 08 18:51:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z20EY-0005u8-Si
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:49:11 +0200
+	id 1Z20H6-0008T0-Qg
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472AbbFHQtG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 12:49:06 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:37572 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869AbbFHQtE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 12:49:04 -0400
-Received: by igbsb11 with SMTP id sb11so61545581igb.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 09:49:04 -0700 (PDT)
+	id S1752363AbbFHQvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 12:51:44 -0400
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:34888 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100AbbFHQvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 12:51:43 -0400
+Received: by yhak3 with SMTP id k3so38029699yha.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 09:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=5KBFOORhAai/36TloFwnaS1TR6K42bcKgPdD2ye66WY=;
-        b=CfQtGxXjvIYMMunWBFtWi8/zmM53MmzzPGebwfVZaMS/IYJDAzUZeBR+65RgA1MeGM
-         WKpFQ7MuDZck9bdT3g+jG1+WBRArLDHMbWsRAtA3wjgpT2yUf9euHB+JNu+UFTbQ+R68
-         8NWSV3aIdtN2cv6HdfnKRlq5Xogp6Q+4mwrxkCc5qxsU4xrT1YwQH9OG7zdb8KKMwwRv
-         pUeREnBCLVBzWumZCzIEAV8oV/37zSAFBwXdbSg6qUnLry1CrZYSGMg+94yvOXk/7ZbM
-         ZLrFImf35yB45vMrzATX1msXU7MWjCsAu38EGXvhWwDhSejE73Xz3fLdsBsNvjXs7QlN
-         Vhaw==
-X-Received: by 10.107.137.42 with SMTP id l42mr20811073iod.60.1433782144140;
-        Mon, 08 Jun 2015 09:49:04 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:d91a:edb1:b738:fb03])
-        by mx.google.com with ESMTPSA id k81sm2065776iod.31.2015.06.08.09.49.03
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 09:49:03 -0700 (PDT)
-In-Reply-To: <1433673652-27720-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 7 Jun
- 2015 17:40:52 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=d/9xTA9Hv/kp4em6eK/ykY/HTp2gDUb+ZCkpB27pXtM=;
+        b=nVLuoeLVWtvzLBYFVXeEKqfSVFMmYKPA4nYTI2OaPb3Sjn8E+FQPTPLxRVPsWOzDy6
+         8EFsc4ByB8xTjkwbNiFRBe+Ls08bKtpoJOWYvo1hT2C1561svhG5ij9uIa80IghOFJ6B
+         KTfcropBk3wLYqnpfpOlRXwr7h+SF1Er/HRcLLLdMjudSrfW63DOt2UL34r7/pIkOBZ6
+         AR6NGxG9KK55emHpXaXQ2WbwLjUu60J4FZPm3LD6BcRsjaeGpm5fN6agJfmfICMp8tXS
+         bc85VT+gA+XL6ykooeB/QwTM2jnPXNZublsQGAQEeYp3jR7cOaWzC7+JJgwOh/pTYhSg
+         AwDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=d/9xTA9Hv/kp4em6eK/ykY/HTp2gDUb+ZCkpB27pXtM=;
+        b=UBCo9kRf8/hn9eZnlG0MRwYTkaYGnHie42vVZbY7DXr29UV1LJjLLDbW7RLuUu1eXi
+         lslX3lRWffl/6HGz2CQ4/7Cbf+aihMh5/Hl4R8mz0GVcdEp0SEAlIlOAoKfXWjBFNE/U
+         gs//6cfZe9ksBHZg3CPq7QzuP7HJzGPKLu/FKE450HzZWw2uUzHVDFGS2unTeSPIvq2K
+         IqfUEQCVV02lGNbcPkVG90ofK1hdMiwF3yo3RNOtXd2H2R4iUd69mKFzMW+hpCFkZCWc
+         uMFDn7aISaNxbh7gS05TVOz6LjPoZb8IwwfjokWouRtvj4tvqgAj+owNqXJe4YuiPM+/
+         7Lxg==
+X-Gm-Message-State: ALoCoQkoZj8vzegMNEq+b7rrkRngWqD1UYwUdpN4oaNXJi3OSzvJ8jnJMYOMrNXfr46D2dJrhipt
+X-Received: by 10.170.43.16 with SMTP id 16mr19643291ykl.119.1433782302415;
+ Mon, 08 Jun 2015 09:51:42 -0700 (PDT)
+Received: by 10.37.101.197 with HTTP; Mon, 8 Jun 2015 09:51:42 -0700 (PDT)
+In-Reply-To: <49bd60449c003c8a7fd060095fe743bb9efaba99.1433763494.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271074>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Mon, Jun 8, 2015 at 4:45 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> This string is going to have to be re-internationalized anyway because
+> of the previous commit. So while we're at it, we might as well convert
+> it to lower case as per our usual practice.
 
-> Before this change, t7063.17 fails. The actual action though happens =
-at
-> t7063.16 where the entry "two" is added back to index after being
-> removed in the .13. Here we expect a directory invalidate at .16 and
-> none at .17 where untracked cache is refreshed. But things do not go =
-as
-> expected when GIT_TEST_SPLIT_INDEX is set.
+Although the previous patch and this are addressing two slightly
+different things,
+we may want to squash this into the previous without dropping any of
+the commit message?
+(It might make reviewing easier, I'd assume)
+
 >
-> The different behavior that happens at .16 when split index is used: =
-the
-> entry "two", when deleted at .13, is simply marked "deleted". When .1=
-6
-> executes, the entry resurfaces from the version in base index. This
-> happens in merge_base_index() where add_index_entry() is called to ad=
-d
-> "two" back from the base index.
->
-> This is where the bug comes from. The add_index_entry() is called wit=
-h
-> ADD_CACHE_KEEP_CACHE_TREE flag because this version of "two" is not n=
-ew,
-> it does not break either cache-tree or untracked cache. The code shou=
-ld
-> check this flag and not invalidate untracked cache. This causes a sec=
-ond
-> invalidation violates test expectation. The fix is obvious.
->
-> Noticed-by: Thomas Gummerer <t.gummerer@gmail.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > ---
->  PS. perhaps I should rename ADD_CACHE_KEEP_CACHE_TREE to
->  ADD_CACHE_KEEP_CACHE, or add a new flag .._KEEP_UNTRACKED_CACHE to
->  avoid confusion.
-
-That may not be a bad idea, indeed.
-
->  Untracked cache, split index and the last part (*) all aim at a
->  smaller user audience with large work trees. They are not really wha=
-t
->  a common user needs, but I hope they do have users.
-
-I do hope that this can be made for everybody, though.  Any project
-will get larger, not smaller, over time and these two (I am not sure
-what you refer to as 'last part', though) are meant to support
-projects with larger working trees better.  After all, that is why I
-merged the untracked-cache series reasonably early to 'master' in
-this cycle to give us time to shake out little issues like this one.
-I think we killed two so far since it has been merged to 'master',
-so the plan is working rather nicely ;-).
-
-Thanks.
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 2a2a06d..a10aba8 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2827,7 +2827,7 @@ int delete_refs(struct string_list *refnames)
+>                 const char *refname = refnames->items[i].string;
+>
+>                 if (delete_ref(refname, NULL, 0))
+> -                       result |= error(_("Could not remove reference %s"), refname);
+> +                       result |= error(_("could not remove reference %s"), refname);
+>         }
+>
+>         return result;
+> --
+> 2.1.4
+>
