@@ -1,114 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-rebase--interactive.sh: add config option for custom
-Date: Mon, 08 Jun 2015 08:28:35 -0700
-Message-ID: <xmqqsia2cj8c.fsf@gitster.dls.corp.google.com>
-References: <0000014dd0a821f6-a4ffca2d-d242-4e96-aeec-7a52186c5df1-000000@eu-west-1.amazonses.com>
+Subject: Re: [PATCH] commit: cope with scissors lines in commit message
+Date: Mon, 08 Jun 2015 08:36:34 -0700
+Message-ID: <xmqqoakqciv1.fsf@gitster.dls.corp.google.com>
+References: <1433727639-5927-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 17:28:53 2015
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Jun 08 17:36:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1yyj-0006nY-J7
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 17:28:45 +0200
+	id 1Z1z6Q-0005Xf-6c
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 17:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbbFHP2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 11:28:38 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:33795 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750762AbbFHP2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 11:28:37 -0400
-Received: by iebmu5 with SMTP id mu5so65250272ieb.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 08:28:36 -0700 (PDT)
+	id S1752105AbbFHPgi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 11:36:38 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:34861 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896AbbFHPgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 11:36:36 -0400
+Received: by iesa3 with SMTP id a3so100710556ies.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 08:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=1OuS7dvzE7HiegnuI+W07OlD0977s4JS6dnY2xR6J14=;
-        b=qdQqrUV7KSqGid9u6/E/SuUG2SEfrDDQm3KAG4kIHNIRw7k3TuuV59DM6RJEqis7Tf
-         KJd3vLqaOrRVYuFONH0c55X5ADd5H2UWinEn+glj4WX7pU8gKczWgkS7VSPYsdIUCBmT
-         r78jPLba4cq9rRyogGl1IYnVumtxb5PZsMuSkp/Ni6wBOLkmuCkHGq/RzKxZmIdimSYJ
-         TfhHLS9cnhdsPWnau5KRDWhap3iroD/sBpN/Fn0hRYS3wprLeywcEF6SDlROU8KmCjhH
-         JNUPgpWBmMU+I+ATSfmGdIstL7iES8WRFA9+EUPuvk3d2jiOJoIRuYCv/F2HwAm03aqh
-         gfFw==
-X-Received: by 10.50.64.243 with SMTP id r19mr14060314igs.5.1433777316709;
-        Mon, 08 Jun 2015 08:28:36 -0700 (PDT)
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=sh2GvUqCb4lq9SCxbE4K5RJRNbz4akFEBRwm/ybkqKM=;
+        b=Tw7TcqmjigkwWlN1wp725iTeZv4k7V0RZLut78dddhBcswv3azgT9R22XEQsVcvj8O
+         Q+SDpsTSD4U7lKwCZbDmmEy0UG1rEuftnsUpxxlwmsTJbS0HejEFbAVym+pDWgKiTNC+
+         AoWDJPs1XTVL0o1fqtQ+rUZfoT3FerYwGWEwb3v4aAAnb8msrleMHkMWSDavJq/L+3pB
+         GwLzrQIBUq0X1qs/csGRv5XZtzZB1otjb4x2qzlqeKmIsOpD+3YXu7pdz/JL7b8Iqtj5
+         dr165xrUjeora2JOiNbvmQXlKMjuRv/VDM4NylGlwurSlqgG8WQv9YLqnWJuUiQSTE9c
+         duRA==
+X-Received: by 10.50.80.19 with SMTP id n19mr14152632igx.30.1433777796377;
+        Mon, 08 Jun 2015 08:36:36 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:d91a:edb1:b738:fb03])
-        by mx.google.com with ESMTPSA id qs10sm539216igb.14.2015.06.08.08.28.36
+        by mx.google.com with ESMTPSA id g1sm1939992iog.4.2015.06.08.08.36.35
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 08:28:36 -0700 (PDT)
-In-Reply-To: <0000014dd0a821f6-a4ffca2d-d242-4e96-aeec-7a52186c5df1-000000@eu-west-1.amazonses.com>
-	(Michael Rappazzo's message of "Mon, 8 Jun 2015 00:53:09 +0000")
+        Mon, 08 Jun 2015 08:36:35 -0700 (PDT)
+In-Reply-To: <1433727639-5927-1-git-send-email-szeder@ira.uka.de> ("SZEDER
+	=?utf-8?Q?G=C3=A1bor=22's?= message of "Mon, 8 Jun 2015 03:40:39 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271052>
 
-Michael Rappazzo <rappazzo@gmail.com> writes:
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-> A config option 'rebase.instructionFormat' can override the
-> default 'oneline' format of the rebase instruction list.
+> The diff and submodule shortlog appended to the commit message templa=
+te
+> by 'git commit --verbose' are not stripped when the commit message
+> contains an indented scissors line.
 >
-> Since the list is parsed using the left, right or boundary mark plus
-> the sha1, they are prepended to the instruction format.
+> When cleaning up a commit message with 'git commit --verbose' or
+> '--cleanup=3Dscissors' the code is careful and triggers only on a pur=
+e
+> scissors line, i.e. a line containing nothing but a comment character=
+, a
+> space, and the scissors cut.  This is good, because people can embed
+> scissor lines in the commit message while using 'git commit --verbose=
+',
+> and the text they write after their indented scissors line doesn't ge=
+t
+> deleted.
 >
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
-> ---
+> While doing so, however, the cleanup function only looks at the first
+> line matching the scissors pattern and if it doesn't start at the
+> beginning of the line, then the function just returns without perform=
+ing
+> any cleanup.  This is bad, because a "real" scissors line added by 'g=
+it
+> commit --verbose' might follow, and in that case the diff and submodu=
+le
+> shortlog get included in the commit message.
 
-Thanks.  Roberto's gizmo seems to be working OK ;-)
+Yikes; this is not just "bad" but simply "wrong".  Thanks for
+noticing.
 
->  git-rebase--interactive.sh | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index dc3133f..cc79b81 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -977,7 +977,14 @@ else
->  	revisions=$onto...$orig_head
->  	shortrevisions=$shorthead
->  fi
-> -git rev-list $merges_option --pretty=oneline --reverse --left-right --topo-order \
-> +format=$(git config --get rebase.instructionFormat)
-> +if test -z "$format"
-> +then
-> +   format="%s"
+>  void wt_status_truncate_message_at_cut_line(struct strbuf *buf)
+>  {
+> -	const char *p;
+> +	const char *p =3D buf->buf;
+>  	struct strbuf pattern =3D STRBUF_INIT;
+> =20
+>  	strbuf_addf(&pattern, "%c %s", comment_line_char, cut_line);
+> -	p =3D strstr(buf->buf, pattern.buf);
+> -	if (p && (p =3D=3D buf->buf || p[-1] =3D=3D '\n'))
+> -		strbuf_setlen(buf, p - buf->buf);
+> +	while ((p =3D strstr(p, pattern.buf))) {
+> +		if (p =3D=3D buf->buf || p[-1] =3D=3D '\n') {
+> +			strbuf_setlen(buf, p - buf->buf);
+> +			break;
+> +		}
+> +		p++;
+> +	}
 
-Style.  One indent level in our shell scripts is one HT, not a few spaces.
+I however wonder if we should make strstr() do more work for us.
 
-> +fi
-> +# the 'rev-list .. | sed' requires %m to parse; the instruction requires %h to parse
-> +format="%m%h ${format}"
+	strbuf_addf(&pattern, "\n%c %s", comment_line_char, cut_line);
+	if (starts_with(buf->buf, pattern.buf + 1))
+		strbuf_setlen(buf, 0);
+	else if ((p =3D strstr(buf->buf, pattern.buf)) !=3D NULL)
+        	strbuf_setlen(buf, p - buf->buf + 1);
+	strbuf_release(&pattern);
 
-I think you want %H not %h here.  If you check how the default
-"--pretty=online" is shown, you would see something like this:
-
-    >1e9676ec0a771de06abca3009eb4bdc5a4ae3312 lockfile: replace ...
-    >2024d3176536fd437b4c0a744161e96bc150a24e help.c: wrap wait-...
-
-> +git rev-list $merges_option --pretty="${format}" --reverse --left-right --topo-order \
->  	$revisions ${restrict_revision+^$restrict_revision} | \
->  	sed -n "s/^>//p" |
-
-This is optional, but I still wonder why the command line cannot be
-more like this, though:
-
-	format=$(git config --get rebase.insnFormat)
-	git log --format="%H ${format-%s}" --reverse --right-only --topo-order \
-	  	$revisions ${restrict_revision+^$restrict_revision} |
-        while read -r sha1 junk
-        do
-        	...
-
-That way we can optimize one "sed" process away.
-
-If this is a good idea, it needs to be a separate follow-up patch
-that changes "%m filtered by sed" to "use --right-only".  I do not
-think such a change breaks anything, but I do not deal with complex
-histories myself, so...
+perhaps?
