@@ -1,76 +1,78 @@
-From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v2] git-rebase--interactive.sh: add config option for custom instruction format
-Date: Mon,  8 Jun 2015 17:00:02 -0400
-Message-ID: <1433797202-97425-2-git-send-email-rappazzo@gmail.com>
-References: <1433797202-97425-1-git-send-email-rappazzo@gmail.com>
-Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jun 08 23:00:33 2015
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH] utf8.c: print warning about disabled iconv
+Date: Tue, 9 Jun 2015 00:07:05 +0300
+Message-ID: <20150608210705.GA22850@wheezy.local>
+References: <1433624551-20730-1-git-send-email-max@max630.net>
+ <xmqqfv62ch0v.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 23:07:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z249e-0007jo-9Q
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 23:00:22 +0200
+	id 1Z24Fx-0005Km-JQ
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 23:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbbFHVAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 17:00:15 -0400
-Received: from mail-vn0-f44.google.com ([209.85.216.44]:34943 "EHLO
-	mail-vn0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751472AbbFHVAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 17:00:11 -0400
-Received: by vnbf129 with SMTP id f129so9434505vnb.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 14:00:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P8ZkCqDoxUeZkxmskS1il1JjIr5HLrXflnnXQbU//3M=;
-        b=xCFnhOoza5XktQ4WfHj4/jW8c/riflrCFE03kRcXfLUgQRaH5RW8YCr2Iwn8+8YXtq
-         J9nnntHqAF6kXFeYVnW+05AlYGMVYVx9Ny7AGaP/DdWdDXm/7jH6eMTsDUyeEAogWZFZ
-         T0wk0SbftrlCUt5xHpr1k69aWQe+PyrPeP1aYKmIwUNjranToHZwrP5yiTN6Yj5eUGr2
-         QvCwcOUgC3xCcfsI0sWTw7K53m5bUJ5LNZS6FRwiDru7PmLtXaV5vm9r7Q3b7eqw4qNS
-         7iGL2PTtRtgQmT+i2ZXmofj7DOmxEiwpegsJRzEvOOgT+KIxo/XNPCnqQa8/Lt9BR4x1
-         OJAw==
-X-Received: by 10.52.69.178 with SMTP id f18mr27016167vdu.83.1433797211136;
-        Mon, 08 Jun 2015 14:00:11 -0700 (PDT)
-Received: from MRappazzo-2.local.info (ool-4572900c.dyn.optonline.net. [69.114.144.12])
-        by mx.google.com with ESMTPSA id st8sm4320277vdb.4.2015.06.08.14.00.09
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Jun 2015 14:00:10 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2
-In-Reply-To: <1433797202-97425-1-git-send-email-rappazzo@gmail.com>
+	id S1752750AbbFHVGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 17:06:49 -0400
+Received: from p3plsmtpa09-09.prod.phx3.secureserver.net ([173.201.193.238]:41608
+	"EHLO p3plsmtpa09-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751888AbbFHVGs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 17:06:48 -0400
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa09-09.prod.phx3.secureserver.net with 
+	id dx6f1q00U5B68XE01x6luV; Mon, 08 Jun 2015 14:06:47 -0700
+Content-Disposition: inline
+In-Reply-To: <xmqqfv62ch0v.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271133>
 
-A config option 'rebase.instructionFormat' can override the
-default 'oneline' format of the rebase instruction list.
+Hi.
 
-Since the list is parsed using the left, right or boundary mark plus
-the sha1, they are prepended to the instruction format.
+On Mon, Jun 08, 2015 at 09:16:16AM -0700, Junio C Hamano wrote:
+> Max Kirillov <max@max630.net> writes:
 
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
----
- git-rebase--interactive.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+>> This gives undesirable result that returned data or even
+>> data written into repository is incorrect and user is not
+>> aware about it.
+> 
+> I do not necessarily agree with that.  The user knows what
+> s/he is doing, data written to or shown from the
+> repository is correct as far as the user is concerned, and
+> the user takes the full respoinsibility when compiling out
+> certain features.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index dc3133f..b92375e 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -977,7 +977,9 @@ else
- 	revisions=$onto...$orig_head
- 	shortrevisions=$shorthead
- fi
--git rev-list $merges_option --pretty=oneline --reverse --left-right --topo-order \
-+format=$(git config --get rebase.instructionFormat)
-+# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
-+git rev-list $merges_option --format="%m%H ${format-%s}" --reverse --left-right --topo-order \
- 	$revisions ${restrict_revision+^$restrict_revision} | \
- 	sed -n "s/^>//p" |
- while read -r sha1 rest
+User, in theory, can be not the same person who builds, or
+can be not aware that the case needs recoding. It actually
+started when I compiled git without iconv support and got
+about 10 failed tests, and only 2 of them mentioned i18n in
+their name.
+
+Compiling out other features is not exactly the same. If
+user compiles out curl, for example, git will not be able to
+push or fetch through http, but it is not going to pretend
+to be working, it will fail visibly.
+
+> I actually am OK if the user gets exactly the same warning between
+> the two cases:
+> 
+>  - iconv failed to convert in the real reencode_string_len()
+> 
+>  - we compiled out iconv() and real conversion was asked.
+
+Does 'exactly the same' mean the same text? Shouldn't it
+describe the reason? I can see 2 possible failures in case
+of real iconv: unknown or unsupported encoding and invalid
+input. Wouldn't them better to be detailed in warning?
+
 -- 
-2.4.2
+Max
