@@ -1,68 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/9] add options to ref-filter
-Date: Mon, 08 Jun 2015 12:34:08 -0700
-Message-ID: <xmqqmw0a9eq7.fsf@gitster.dls.corp.google.com>
-References: <5573520A.90603@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Suggestion: group files in GIT
+Date: Mon, 8 Jun 2015 21:48:59 +0200
+Message-ID: <CAP8UFD24qiRzfPSkCppV-yPkoTVuwkJ+FDUGsv0Zrf66yOedOg@mail.gmail.com>
+References: <CABEDGg8-B1QzkDas1dCcC7QivfOJuaGydki3OpON2T2WFVttFg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 21:34:36 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?UTF-8?B?S29ucsOhZCBMxZFyaW5jemk=?= <klorinczi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 21:49:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z22oR-0006RM-Gt
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 21:34:23 +0200
+	id 1Z232i-0002oS-AJ
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 21:49:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452AbbFHTeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 15:34:15 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33931 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753427AbbFHTeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 15:34:10 -0400
-Received: by iebmu5 with SMTP id mu5so247015ieb.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 12:34:10 -0700 (PDT)
+	id S1752643AbbFHTtD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 15:49:03 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:34730 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752355AbbFHTtB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 15:49:01 -0400
+Received: by wibut5 with SMTP id ut5so97037512wib.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 12:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=D3xiGtTwOJPAM3i61lqv2OMsqbVUf6zV/xKdBG/+woU=;
-        b=oR8CNdbILLPzchbGWIrx8jSqBxcNKOszfB4E+7R6uM5wEowqQrbQtIPB68EuRTcipF
-         IrEirUZVJ+wYveaK18n1y4knS87pD89jgUys/atGt4rs+cWlHlT4NpY22F1olOUOJEKs
-         v11KbWdbPWL/h9pDfk2xWS4uvf69MTwxu0evvV6/x8JwhE5QUtPc8jeHaLyCgQUZ5pCF
-         CjoyN84Ksk+tauc8ZYIbZC0rTHrGkbWS7um5pRiCBHBiVCC4WhcuiYtGAsOPvUYlMFLo
-         6DMECBIP8iUiZyu1gpVrbqKX5xw3q+ZAKKZleTAWxBkCWFvhcThzn0tidGP11aZ2sZvY
-         fJLw==
-X-Received: by 10.50.66.174 with SMTP id g14mr15569707igt.7.1433792050081;
-        Mon, 08 Jun 2015 12:34:10 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:498e:2bf8:6933:5b2b])
-        by mx.google.com with ESMTPSA id lq3sm990433igb.3.2015.06.08.12.34.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 12:34:09 -0700 (PDT)
-In-Reply-To: <5573520A.90603@gmail.com> (Karthik Nayak's message of "Sun, 07
-	Jun 2015 01:33:22 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KKYK7kjPqpHTi/UcOAF3jIBrIpYUroQiQGz4xh/I8ps=;
+        b=uYr7wh+H3wIqReFnK8fgL+hsnEpheTd1abQ0K+jg/uIfdF4iIX5bZiZ3gz/473Q7L5
+         FX8YyHokx0yMUnpVF+6nuIjDdRxggeMGvKibAicn3g5uUPtbeoj9ZBabl4hU1lDeaOGw
+         LAjT4puuBRjTUKtvis0ZP5qT0+S12+cephiD0njDDqqeNbaOd+ogMyxnyaA0mAllhp0X
+         Ew6a/oHWMXt+3E+IOJh8DdnSLL36cf2xuZ/gsF2+1RriINlhN2ACFGvwE6x9ATvdqzHJ
+         koynFcukRS4pgNwN4eOoC1IOWFuCAieX2lPXbl6h1L9mgGJYv96CDeZbq4DB3HkkuZAM
+         aCNQ==
+X-Received: by 10.194.2.68 with SMTP id 4mr26171221wjs.82.1433792940029; Mon,
+ 08 Jun 2015 12:49:00 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Mon, 8 Jun 2015 12:48:59 -0700 (PDT)
+In-Reply-To: <CABEDGg8-B1QzkDas1dCcC7QivfOJuaGydki3OpON2T2WFVttFg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271118>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
-> This is a follow up series to the one posted here
-> http://thread.gmane.org/gmane.comp.version-control.git/270922
+On Mon, Jun 8, 2015 at 10:50 AM, Konr=C3=A1d L=C5=91rinczi <klorinczi@g=
+mail.com> wrote:
+> I would like to group some files, so I can list group files together,
+> list group changes together, filter by group for staging, also order
+> by group.
+> It seems, there is no such feature in GIT I would need, so I send it
+> as suggestion.
 >
-> This patch series adds '--ponints-at', '--merged', '--no-merged' and
-> '--contain' options to 'ref-filter' and uses these options in
-> for-each-ref'.
+> We can call this feature as "Group files" or "Label files" (labeling
+> is used in Gmail, so this may be also a naming alternative).
+>
+>
+> Example file list I would like to group together into [group1]:
+> theme/header.php
+> theme/footer.php
+> theme/body.php
+> lib/theme.php
 
-The structure of the series looked sensible (I stopped at around
-7/9, though, for now); even though a few style violations were
-somewhat irritating, overall it was a pleasant read.
+Can't you use a shell variable like:
 
-Thanks.
+group1=3D"theme/header.php theme/footer.php theme/body.php lib/theme.ph=
+p"
+
+?
+
+> They are in different directories, but mostly belongs together, so if
+> I group them, then I can work easier with them.
+>
+>
+> - I could select a file group for staging, so only the changes in the
+> group would be added to stage.
+
+git add $group1
+
+> Changed files in the group:
+> [group1]/theme/header.php
+> [group1]/lib/theme.php
+>
+>
+> - I could list files filtered by a group. Files filtered by [group1]:
+> [group1]/theme/header.php
+> [group1]/theme/footer.php
+> [group1]/theme/body.php
+> [group1]/lib/theme.php
+
+ls -l $group1
+
+> - I could order file list to list group files first, then directory f=
+iles.
+> [group1]/theme/header.php
+> [group1]/theme/footer.php
+> [group1]/theme/body.php
+> [group1]/lib/theme.php
+> other/files.php
+
+I am not sure I see what you want to do with that.
