@@ -1,103 +1,117 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 07/13] prune_remote(): use delete_refs()
-Date: Mon, 8 Jun 2015 09:57:04 -0700
-Message-ID: <CAGZ79kYcO95M6DsPa71uckOcOKs-mkz2P+NtEKx5qYfOcDw99g@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Improve "refs" module encapsulation
+Date: Mon, 8 Jun 2015 10:03:39 -0700
+Message-ID: <CAGZ79kbEzrAB+Jmt8vcv2FfTsPNKY0a343ARpM8o9y0+tMiQ7g@mail.gmail.com>
 References: <cover.1433763494.git.mhagger@alum.mit.edu>
-	<2ce5b2c64d002ce649c2192bacdf505c4921caa6.1433763494.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 08 18:57:11 2015
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:03:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z20MI-00055f-Ou
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 18:57:11 +0200
+	id 1Z20Sg-0002i0-Md
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752949AbbFHQ5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 12:57:07 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:34712 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751627AbbFHQ5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 12:57:05 -0400
-Received: by ykfl8 with SMTP id l8so54899645ykf.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 09:57:04 -0700 (PDT)
+	id S1751627AbbFHRDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 13:03:42 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:34498 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbbFHRDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 13:03:40 -0400
+Received: by yhid80 with SMTP id d80so33014449yhi.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2015 10:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=/aOGqcPl6dBb6k1EwHmkXEbDI7FHBO7vORVSV0xClIw=;
-        b=SufVU6s4aBZPsmbFJcrwVzDIJ422hU82KU5C68KfxjC+VGFX+3zG/HJGG0PHN7tyRe
-         frqgZ3PJEokpos2OgLW/GAzUa2d1TW1kXVnhFLh8AcSUwWR3/T9luSbzC8f5L7IobWlA
-         LI4xba6QIv2z6vlzMXEAtfE9AlACL3iV/e5aigOxEXEbB5Myk6zCxEW5jKuwt4II65dk
-         Xj/Du4pjYP9zjv2PJA0oyvPpOlu0Fob349cYOgVdu/rkOV/r2mzdIO5t8Gmo5e7Vs8C9
-         nGygjOcrPuDq0WN4zNrE9vN7++rQgcdvs+CjvnoVrIXABq/SiHU4gUYJeXfnNMNNV6WB
-         7HkA==
+        bh=6qpUm85PcQudDTefHwGGF03DLphsvnI62sB3bM4RGsc=;
+        b=Xa1ttq2PCqwWeEh2hztz7nACesXv2TUCpkel9qpIgi7XAFkgevgzBZaRCOiqHbkXWk
+         d6CDTUbScHQRnzFy009kHU2nvh0wV3ULpag2IA/c2GGfdmw8fQxWnK/TeO3Am5TVGklN
+         1wzqfWQDHc8J4E7R/sLjx98SE7MLIWHx0ldQUtH7ZdCKqePrAUNgtq9MwYDTBFLFchGW
+         hGd9aC0880dWQL8X+yk6lRGuMJyWMRLd0RPOmuIcj8IzjesY1CAnYbzyr8UZVvOrjlW5
+         yW80yoAFZzBn0zPs0bon47y8KK0bcGFI6Ja54GhykH1vGuC8SrQl0zXl4/S265hRMVTI
+         m2eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=/aOGqcPl6dBb6k1EwHmkXEbDI7FHBO7vORVSV0xClIw=;
-        b=gHwmY/EaEZPQQx6hbOKr9zrLTTl1axzJGnDit1MCbkTgge0prSPc61Tj2kf3HdX3us
-         7ixBsqOtdJyQX69ZlIdBYhZA4bIx+yDj3GYCcYNfINsTxuhc2iI2k/6XG3KHLd5ko9y7
-         4Tf+9VRe8bDGFhT1Yw+4n94PWUs64ZbeCoYKgXPvZzIHflBBF3m/8PcMbdwAFwSt9NZB
-         hwWhbClc8W0650rz5EiRvO23R3uFcGPXzPA8ZgIrQ08T+uPZi2g0aZplWaB1RpWDYche
-         UmSrz/LX3HDVYT76jpAWd3jWIpSdAJ93tr9Rp9WaK2bB9TwHCJjBmDAtV+9s3Dh9Cjiw
-         ED6w==
-X-Gm-Message-State: ALoCoQkd497fjvSbS1+k5AJQKR/hzBNM8+RB00lHblIx/hbb7/m2HJbi7miPaNHOz7X4YRArcz8+
-X-Received: by 10.13.238.71 with SMTP id x68mr17436914ywe.129.1433782624742;
- Mon, 08 Jun 2015 09:57:04 -0700 (PDT)
-Received: by 10.37.101.197 with HTTP; Mon, 8 Jun 2015 09:57:04 -0700 (PDT)
-In-Reply-To: <2ce5b2c64d002ce649c2192bacdf505c4921caa6.1433763494.git.mhagger@alum.mit.edu>
+        bh=6qpUm85PcQudDTefHwGGF03DLphsvnI62sB3bM4RGsc=;
+        b=Pq7K+jJK8OvwVsfFn07XjeAHJqzylbQ4YtTtiVbUz4VPtPJjVczqpN7cZujLYX1/JH
+         ndMvEQ2iv18CBiQ9NrTuseZnIXz3WAOQAZRvtfdsPkcFqWenHmyNDj1LJKYPLtxw7v+f
+         DayHyG2IvFqGSLtRYB1lvFsRf/79ULG9BEgOVJEkpruwJrHj5zzS2/3uDl+kOScXOCfv
+         HGRKIHbF344++S5QwKtI8b3xkQDGCpeK9NS30NhmvlDSIo0EgM8XuprHubpst2nBCWkm
+         1r+Ha2Pivhi3oVKPMJAk6U4iNYQBpyb1K9IWCJSt/sMHnxqwiO7hYvvQj5IDKxtnhLTY
+         Oo8g==
+X-Gm-Message-State: ALoCoQmz8Q7C9d7p4D5EnFmgBDvUEdsyqaR7M4ixFPFvCnC1gSQg5rcjdU+UDzWeTtL3OV+TL8y8
+X-Received: by 10.170.112.18 with SMTP id e18mr19526548ykb.101.1433783020022;
+ Mon, 08 Jun 2015 10:03:40 -0700 (PDT)
+Received: by 10.37.101.197 with HTTP; Mon, 8 Jun 2015 10:03:39 -0700 (PDT)
+In-Reply-To: <cover.1433763494.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271079>
 
 On Mon, Jun 8, 2015 at 4:45 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> This will result in errors being emitted for references that can't be
-> deleted, but that is a good thing.
+> Add functions to the reference API to
+>
+> * Delete a bunch of references at once, but *without* failing the
+>   whole transaction if one of the deletions fails. This functionality
+>   is used by `git remote remove` and `git remote prune`.
+>
+> * Create initial references during `git clone`. (During clone,
+>   references are written directly to the `packed-refs` file without
+>   any locking.)
+>
+> Also move the remaining "refs" function declarations from `cache.h` to
+> `refs.h`.
+>
+> This improves the encapsulation of the refs module. Especially, it
+> means that code outside of the refs module should no longer need to
+> care about the distinction between loose and packed references.
+>
+> These patches are also available from my GitHub account [1] as branch
+> "init-delete-refs-api".
+>
+> [1] https://github.com/mhagger/git
 
-This sounds a bit like hand-waving to me. "Trust me, I'm an engineer!".
-
-
+Thw whole series looks good to me.
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  builtin/remote.c | 11 ++---------
->  1 file changed, 2 insertions(+), 9 deletions(-)
+> Michael Haggerty (13):
+>   delete_ref(): move declaration to refs.h
+>   remove_branches(): remove temporary
+>   delete_ref(): handle special case more explicitly
+>   delete_refs(): new function for the refs API
+>   delete_refs(): improve error message
+>   delete_refs(): convert error message to lower case
+>   prune_remote(): use delete_refs()
+>   repack_without_refs(): make function private
+>   initial_ref_transaction_commit(): function for initial ref creation
+>   refs: remove some functions from the module's public interface
+>   initial_ref_transaction_commit(): check for duplicate refs
+>   initial_ref_transaction_commit(): check for ref D/F conflicts
+>   refs: move the remaining ref module declarations to refs.h
 >
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index c8dc724..cc3c741 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -1314,19 +1314,12 @@ static int prune_remote(const char *remote, int dry_run)
->                 string_list_append(&refs_to_prune, item->util);
->         string_list_sort(&refs_to_prune);
+>  archive.c               |   1 +
+>  builtin/blame.c         |   1 +
+>  builtin/clone.c         |  19 ++++-
+>  builtin/fast-export.c   |   1 +
+>  builtin/fmt-merge-msg.c |   1 +
+>  builtin/init-db.c       |   1 +
+>  builtin/log.c           |   1 +
+>  builtin/remote.c        |  33 +-------
+>  cache.h                 |  68 ----------------
+>  refs.c                  | 167 +++++++++++++++++++++++++++++++++++---
+>  refs.h                  | 210 +++++++++++++++++++++++++++++++-----------------
+>  remote-testsvn.c        |   1 +
+>  12 files changed, 316 insertions(+), 188 deletions(-)
 >
-> -       if (!dry_run) {
-> -               struct strbuf err = STRBUF_INIT;
-> -               if (repack_without_refs(&refs_to_prune, &err))
-> -                       result |= error("%s", err.buf);
-> -               strbuf_release(&err);
-> -       }
-> +       if (!dry_run)
-> +               result |= delete_refs(&refs_to_prune);
->
->         for_each_string_list_item(item, &states.stale) {
->                 const char *refname = item->util;
->
-> -               if (!dry_run)
-> -                       result |= delete_ref(refname, NULL, 0);
-> -
->                 if (dry_run)
->                         printf_ln(_(" * [would prune] %s"),
->                                abbrev_ref(refname, "refs/remotes/"));
 > --
 > 2.1.4
 >
