@@ -1,76 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP/PATCH v5 05/10] for-each-ref: introduce 'ref_array_clear()'
-Date: Mon, 08 Jun 2015 10:05:19 -0700
-Message-ID: <xmqq3822cer4.fsf@gitster.dls.corp.google.com>
-References: <55729B78.1070207@gmail.com>
-	<1433574581-23980-1-git-send-email-karthik.188@gmail.com>
-	<1433574581-23980-5-git-send-email-karthik.188@gmail.com>
-	<vpqvbey6yli.fsf@anie.imag.fr> <5575B25A.6020608@gmail.com>
-	<vpqbngq2mkw.fsf@anie.imag.fr>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] fsck: report errors if reflog entries point at
+ invalid objects
+Date: Mon, 08 Jun 2015 19:08:09 +0200
+Organization: gmx
+Message-ID: <9adde72489de0b1ad66bd2c4730b18e9@www.dscho.org>
+References: <cover.1433769878.git.mhagger@alum.mit.edu>
+ <2ba9ee48a062b049c8b64fed4caba32c42f03031.1433769878.git.mhagger@alum.mit.edu>
+ <e9d2f8cc371aa41e5d9095abd3cb7edb@www.dscho.org>
+ <5575B03C.6040008@alum.mit.edu>
+ <c5720357601be135485ef546cae7ffdb@www.dscho.org>
+ <20150608165643.GA6863@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 08 19:05:29 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:08:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z20UK-0004MT-5T
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:05:28 +0200
+	id 1Z20X6-00072j-73
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 19:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbbFHRFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 13:05:24 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:35911 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753197AbbFHRFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2015 13:05:22 -0400
-Received: by ieclw1 with SMTP id lw1so102617095iec.3
-        for <git@vger.kernel.org>; Mon, 08 Jun 2015 10:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=hIzxeG35rUUeQiuGUVhtCvwLVtlyd5YhHvWVKjS4tUs=;
-        b=mTwTnGbc6SY2PIuM33SRZ02apT8hwRwHydHeOu3hcFuMoYHuSQEadYjSa3RPl7ziH/
-         Q1XmG6l1uzVVa7kX2LD7nNa08jK49aoRdnvaBIyLr1E8XogR1amoBcGNIR2v68z00iWa
-         uSZTSyMaoMU21OOIMM63p9HwuTobJ2cQFANQCiPQi/nRWwGsnuDwEFaHfHgTXyaLqiGn
-         OchP/OHPLKq7Iac4d25JOaqIiIGNMgiZ+e22wtC3Ao+gcRiLfJPR7UhWFt+r66/4D1YM
-         H+FD0kK1Vgwk6rRBisiX0lgC6ch+SdnEQo+0qTB99Gix72WOuC8yHLwrnICuplney2zG
-         IUBw==
-X-Received: by 10.107.135.68 with SMTP id j65mr13459023iod.91.1433783121367;
-        Mon, 08 Jun 2015 10:05:21 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:d91a:edb1:b738:fb03])
-        by mx.google.com with ESMTPSA id j3sm722344ige.0.2015.06.08.10.05.20
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jun 2015 10:05:20 -0700 (PDT)
-In-Reply-To: <vpqbngq2mkw.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	08 Jun 2015 18:26:23 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752220AbbFHRIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 13:08:16 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64224 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751158AbbFHRIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 13:08:14 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LaooK-1ZUUeA2ebY-00kQ1G; Mon, 08 Jun 2015 19:08:10
+ +0200
+In-Reply-To: <20150608165643.GA6863@peff.net>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:ueKNgtZLNCOv/kFeyiymw3sUCxTYWEKWSov3VjWZOEODizoAhtT
+ bh5CR7NZZC5mV8VbzN6+R9BG7Xx9lbZCy0xdu1+jMMWNYs2SLP4w0Yyi+AdGMBoSm3O6x88
+ 4C8rMJF2bRZV3Z/sHQyefFwh5VCz0uNKpUbzOfels38sM62baWOYSp73F0GiQmT4RIFizWG
+ RoUOmKvlVO3sIeDZrIuEQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271082>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi Peff,
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On 06/08/2015 08:23 PM, Matthieu Moy wrote:
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>> > +/* Free all memory allocated for ref_array */
->>> > +void ref_array_clear(struct ref_array *array)
->>>
->>> Is this a private function? If so, then add static. If not, you probably
->>> want to export it in a .h file.
->>>
->> It is in ref-filter.h.
->
-> Ah, OK. It comes later in the series.
+On 2015-06-08 18:56, Jeff King wrote:
+> On Mon, Jun 08, 2015 at 06:00:09PM +0200, Johannes Schindelin wrote:
+> 
+>> >> I like the idea, but I am a bit uncertain whether it would constitute
+>> >> "too backwards-incompatible" a change to make this an error. I think
+>> >> it could be argued both ways: it *is* an improvement, but it could
+>> >> also possibly disrupt scripts that work pretty nicely at the moment.
+>> >
+>> > What kind of script are you worried about?
+>>
+>> I was concerned about scripts that work on repositories whose reflogs
+>> become inconsistent for whatever reason (that happened a lot to me in
+>> the past, IIRC it had something to do with bare repositories and/or
+>> shared object databases).
+> 
+> I think these repositories are already broken. You cannot run `git gc`
+> in such a repository, as it will barf when trying to walk the reflog
+> tips during `git repack`.
+> 
+> We run into this exact situation at GitHub because of our shared object
+> databases. Our per-fork repack code basically has to do:
+> 
+>   if ! git repack ...; then
+>     git reflog expire --expire-unreachable=all --all &&
+>     git repack ... ||
+>     die "ok, it really is broken"
+>   fi
 
-Confused I am; if it comes later not in the same patch then it is
-not OK, is it?
+Good point. So if I needed any more convincing that Michael's patch is a bug fix (as opposed to a backwards-incompatible change), this did it.
+
+Ciao,
+Dscho
