@@ -1,105 +1,112 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 08/13] repack_without_refs(): make function private
-Date: Mon,  8 Jun 2015 13:45:42 +0200
-Message-ID: <7140f87b1c1d42108e875163344bdec668d221fa.1433763494.git.mhagger@alum.mit.edu>
-References: <cover.1433763494.git.mhagger@alum.mit.edu>
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 13:46:55 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] git-bisect.sh : create a file if the bisection is in old/new mode, named "BISECT_OLDNEWMODE", so it can easily be seen outside the program without having to read BISECT_TERMS. This will have to be changed in further versions if new terms are introduced.
+Date: Mon, 08 Jun 2015 13:48:32 +0200
+Message-ID: <vpq616yctf3.fsf@anie.imag.fr>
+References: <1433522061-14532-1-git-send-email-stuberl@ensimag.grenoble-inp.fr>
+	<CAPig+cQnrKEx_=WHw5gjA9SVtDObXWOJ3augZbhvNUuD8o19aA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Galan =?iso-8859-1?Q?R=E9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	j_franck7@msn.com, valentinduperray@gmail.com,
+	thomasxnguy@gmail.com, lucienkong@hotmail.com,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 13:49:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z1vVt-0005gt-8Z
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 13:46:45 +0200
+	id 1Z1vXu-0007To-MP
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jun 2015 13:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798AbbFHLqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 07:46:40 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:58253 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752436AbbFHLqG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 07:46:06 -0400
-X-AuditID: 12074413-f79386d000000d23-3b-5575807aa9b2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 37.32.03363.A7085755; Mon,  8 Jun 2015 07:46:02 -0400 (EDT)
-Received: from michael.fritz.box (p4FC977B6.dip0.t-ipconnect.de [79.201.119.182])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t58Bjop5017042
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 8 Jun 2015 07:46:01 -0400
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <cover.1433763494.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqFvVUBpq8HqzsUXXlW4mi4beK8wW
-	t1fMZ7b40dLDbLF5czuLA6vH3/cfmDwWbCr1eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M6bMecdU8IOn4sn7a8wNjGu5uhg5OSQETCTev21nhbDFJC7cW8/WxcjFISRwmVHiUPtD
-	KOcEk8T+9QvYQKrYBHQlFvU0M4HYIgJqEhPbDrGAFDELdDBKXFi+jR0kISzgLHHv7ElmEJtF
-	QFWi4dpjsAZegSiJQ48fs0Osk5M4f/wnWA2ngIXE3f8XwBYICZhLfNzWzjiBkXcBI8MqRrnE
-	nNJc3dzEzJzi1GTd4uTEvLzUIl1zvdzMEr3UlNJNjJCgEt7BuOuk3CFGAQ5GJR7eA4tKQoVY
-	E8uKK3MPMUpyMCmJ8naVlYYK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFlsgDK8aYkVlalFuXD
-	pKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeD/WATUKFqWmp1akZeaUIKSZODhBhnNJ
-	iRSn5qWkFiWWlmTEg6IjvhgYHyApHqC9KvUge4sLEnOBohCtpxgVpcR5H4PMFQBJZJTmwY2F
-	pYpXjOJAXwrz6oK08wDTDFz3K6DBTECDv38tBhlckoiQkmpg3PA8eE3AZmFGwaSaGZahP2ee
-	i+SVLcuYzL/p4BKJF6H7F/TxR55b2znl+cJ1G5g+7LVRny2gkF0jIpvh/ElTz1Oqd56PX6Je
-	woPXpp89/01R3hTZfm7tDh3ZC926kv8TjCfM/GVtzLRcbgpjdyPrrErfDZz+pqKS 
+	id S1752665AbbFHLsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2015 07:48:47 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58596 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752392AbbFHLsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2015 07:48:45 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t58BmUN2000307
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Jun 2015 13:48:31 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t58BmWk6002137;
+	Mon, 8 Jun 2015 13:48:32 +0200
+In-Reply-To: <CAPig+cQnrKEx_=WHw5gjA9SVtDObXWOJ3augZbhvNUuD8o19aA@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 5 Jun 2015 16:03:15 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jun 2015 13:48:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t58BmUN2000307
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434368915.4806@LeGJJWfYizUtA9bU93x8kg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271026>
 
-It is no longer called from outside of the refs module. Also move its
-docstring and change it to imperative voice.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c |  9 ++++++++-
- refs.h | 11 -----------
- 2 files changed, 8 insertions(+), 12 deletions(-)
+> On Fri, Jun 5, 2015 at 12:34 PM, Louis Stuber
+> <stuberl@ensimag.grenoble-inp.fr> wrote:
+>> git-bisect.sh :
 
-diff --git a/refs.c b/refs.c
-index a10aba8..dc17984 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2724,7 +2724,14 @@ int pack_refs(unsigned int flags)
- 	return 0;
- }
- 
--int repack_without_refs(struct string_list *refnames, struct strbuf *err)
-+/*
-+ * Rewrite the packed-refs file, omitting any refs listed in
-+ * 'refnames'. On error, leave packed-refs unchanged, write an error
-+ * message to 'err', and return a nonzero value.
-+ *
-+ * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
-+ */
-+static int repack_without_refs(struct string_list *refnames, struct strbuf *err)
- {
- 	struct ref_dir *packed;
- 	struct string_list_item *refname;
-diff --git a/refs.h b/refs.h
-index 9b75b9f..3420c98 100644
---- a/refs.h
-+++ b/refs.h
-@@ -154,17 +154,6 @@ extern void rollback_packed_refs(void);
-  */
- int pack_refs(unsigned int flags);
- 
--/*
-- * Rewrite the packed-refs file, omitting any refs listed in
-- * 'refnames'. On error, packed-refs will be unchanged, the return
-- * value is nonzero, and a message about the error is written to the
-- * 'err' strbuf.
-- *
-- * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
-- */
--extern int repack_without_refs(struct string_list *refnames,
--			       struct strbuf *err);
--
- extern int ref_exists(const char *);
- 
- extern int is_branch(const char *refname);
+No space before : in english.
+
+>> create a file if the bisection is in old/new mode, named
+>> "BISECT_OLDNEWMODE", so it can easily be seen outside the program
+>> without having to read BISECT_TERMS. This will have to be changed in
+>> further versions if new terms are introduced.
+>
+> Documentation/SubmittingPatches contains instructions for how to write
+> a good commit message.
+
+For french-speaking people, and Ensimag students in particular, I'd add
+
+  http://ensiwiki.ensimag.fr/index.php/%C3%89crire_de_bons_messages_de_commit_avec_Git
+
+> Also, wrap the commit message to 70-72 columns.
+
+As much as possible, the summary line should even be shorter (so that
+"git log --oneline" fits on a 80-chars terminal).
+
+> This commit message doesn't do a very good job of explaining the
+> problem this change is trying to solve or justifying why this solution
+> is preferable.
+
+Actually, the commit message explains one reason why this is not a good
+solution: the idea of having $GIT_DIR/BISECT_TERMS was to keep the
+solution generic.
+
+Had the initial codebase been better factored, this patch series would
+have been really trivial, but we hardcoded "good" and "bad" in many
+places, and now changing it is hard. Introducing BISECT_TERMS is a step
+forward, it avoids hardcoding the terms here and there in the code.
+To me, introducing BISECT_OLDNEWMODE is a step backward, it's one more
+place where we hardcode the terms.
+
+> Justification is particularly important considering the
+> ominous-sounding final sentence of the commit message (which itself
+> seems to imply that this is not a very good change).
+
+Ah, indeed, we're saying the same thing.
+
+>> -                               echo "old" >>"$GIT_DIR/BISECT_TERMS"
+>> +                               echo "old" >>"$GIT_DIR/BISECT_TERMS" &&
+>> +                               echo "" > "$GIT_DIR/BISECT_OLDNEWMODE"
+
+No space after > (noted by Eric elsewhere)
+
 -- 
-2.1.4
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
