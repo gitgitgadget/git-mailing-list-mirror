@@ -1,83 +1,73 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 1/9] tag: libify parse_opt_points_at()
-Date: Tue, 09 Jun 2015 17:20:55 +0530
-Message-ID: <5576D31F.90603@gmail.com>
-References: <5573520A.90603@gmail.com>	<1433621052-5588-1-git-send-email-karthik.188@gmail.com> <xmqq4mmiauu0.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/13] prune_remote(): use delete_refs()
+Date: Tue, 9 Jun 2015 07:53:46 -0400
+Message-ID: <20150609115343.GA2777@peff.net>
+References: <cover.1433763494.git.mhagger@alum.mit.edu>
+ <2ce5b2c64d002ce649c2192bacdf505c4921caa6.1433763494.git.mhagger@alum.mit.edu>
+ <CAGZ79kYcO95M6DsPa71uckOcOKs-mkz2P+NtEKx5qYfOcDw99g@mail.gmail.com>
+ <20150608171202.GB6863@peff.net>
+ <5576C4E5.4080107@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 13:51:42 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 09 13:54:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2I4B-0001xI-CE
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 13:51:39 +0200
+	id 1Z2I6Y-0004OD-Kl
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 13:54:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932908AbbFILvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 07:51:10 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:34278 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932843AbbFILvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 07:51:04 -0400
-Received: by pdbki1 with SMTP id ki1so13494006pdb.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 04:51:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=9Nq//lyv2ZKpg/vJ31TMkRh8uoDMpY+JKAdodvdz0Zo=;
-        b=vm7cK2KGJPmv6G/uGmA7iUUjLkgo6LgrMjMEGIRz4f6xZbZ+tGNINoLYrPilWOG4ug
-         I6qvJcrC6eCzU5cJ9S7HAZKLPDpGExnHS5K+JgBRuA/3JEmJXHVjKlZLYQqf+5DqfbKX
-         pVmtGovt4fFKafObbla+F9O3ajPqLwKqWukzoAyzhVqNTDE3409LljVqebvhwwZFleVw
-         A2ceXJ+ynJxAEsZKtx2Dk6gd7MOhHcRPgNLpDbzVhPiJ5X6nImwN7MVi+8juJDYPvQgZ
-         aDgpMsGOcwLVzh/3w3VPEhbcHh2hetEoM8pnNq8M26HFyyrsTXX8jEkq8UXOrF+5oevA
-         MFqg==
-X-Received: by 10.68.204.133 with SMTP id ky5mr38377292pbc.67.1433850661777;
-        Tue, 09 Jun 2015 04:51:01 -0700 (PDT)
-Received: from [192.168.0.100] ([106.51.130.23])
-        by mx.google.com with ESMTPSA id cf1sm5451381pdb.41.2015.06.09.04.50.59
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jun 2015 04:51:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqq4mmiauu0.fsf@gitster.dls.corp.google.com>
+	id S933266AbbFILx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 07:53:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43282 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933262AbbFILxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 07:53:51 -0400
+Received: (qmail 1866 invoked by uid 102); 9 Jun 2015 11:53:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Jun 2015 06:53:50 -0500
+Received: (qmail 13746 invoked by uid 107); 9 Jun 2015 11:53:53 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Jun 2015 07:53:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jun 2015 07:53:46 -0400
+Content-Disposition: inline
+In-Reply-To: <5576C4E5.4080107@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271166>
 
-On 06/09/2015 12:30 AM, Junio C Hamano wrote:
->
-> This feels way too specialized to live as part of parse_options
-> infrastructure.
->
-> The existing caller(s) may want to use this callback for parsing
-> "points-at" option they have, but is that the only plausible use of
-> this callback?  It looks to be usable by any future caller that
-> wants to take and accumulate any object names into an sha1-array, so
-> perhaps rename it to be a bit more generic to represent its nature
-> better?
->
-> 	parse_opt_object_name()
->
-> or something?
+On Tue, Jun 09, 2015 at 12:50:13PM +0200, Michael Haggerty wrote:
 
-This makes sense! Will change.
+> The new code (in delete_refs()) allows delete_ref() to emit its error,
+> but then follows it up with
+> 
+>     error(_("could not remove reference %s"), refname)
+> 
+> The "could not remove reference" error originally came from a similar
+> message in remove_branches() (from builtin/remote.c).
+> 
+> I *think* this is an improvement, because the error from delete_ref()
+> (which usually comes from ref_transaction_commit()) can be pretty
+> low-level, like
+> 
+>     Cannot lock ref '%s': unable to resolve reference %s: %s
+> 
+> where the last "%s" is the original strerror.
+> 
+> I would be happy to change the behavior if somebody has a concrete wish.
+> At the same time I don't think we need to sweat the details too much,
+> because these errors should only ever be seen in the case of a broken
+> repository or a race between two processes; i.e., only in pretty rare
+> and anomalous situations.
 
->
-> I also wonder if we can (and want to) refactor the users of
-> with-commit callback.  Have them use this to obtain an sha1-array
-> and then convert what they received into a commit-list themselves.
->
+Thanks for the explanation. I agree it probably doesn't matter much
+either way.
 
-But wouldn't that be too much of an overhead to iterate through the
-sha1-array and convert it to a commit-list?
-
--- 
-Regards,
-Karthik
+-Peff
