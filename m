@@ -1,100 +1,154 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 3/4] bisect: simplify the add of new bisect terms
-Date: Tue, 9 Jun 2015 10:39:16 +0200
-Message-ID: <CAP8UFD1EwRx=yF0ogiAjZdLf6idU+d1_YAsubHKRcXb866_8hw@mail.gmail.com>
-References: <1433794930-5158-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433794930-5158-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<vpqbngpl5zu.fsf@anie.imag.fr>
+From: Qb <tholag@gmail.com>
+Subject: Re: Release candidate of Git for Windows 2.x is out
+Date: Tue, 9 Jun 2015 01:43:24 -0700 (PDT)
+Message-ID: <aa3467c7-bf83-4ccb-be64-929b944806ba@googlegroups.com>
+References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	git <git@vger.kernel.org>, remi.lespinet@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Nguy <thomasxnguy@gmail.com>,
-	Valentin Duperray <valentinduperray@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 09 10:39:31 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_154_130913683.1433839404421"
+Cc: git-for-windows@googlegroups.com, git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBDOKBSUU7UKRB5OO3KVQKGQEKRYKSVY@googlegroups.com Tue Jun 09 10:44:48 2015
+Return-path: <msysgit+bncBDOKBSUU7UKRB5OO3KVQKGQEKRYKSVY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ie0-f190.google.com ([209.85.223.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2F4E-0007A5-NE
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 10:39:31 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526AbbFIIjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 04:39:21 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:34578 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118AbbFIIjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 04:39:17 -0400
-Received: by wgv5 with SMTP id 5so7279732wgv.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 01:39:16 -0700 (PDT)
+	(envelope-from <msysgit+bncBDOKBSUU7UKRB5OO3KVQKGQEKRYKSVY@googlegroups.com>)
+	id 1Z2F9C-0003Q0-8C
+	for gcvm-msysgit@m.gmane.org; Tue, 09 Jun 2015 10:44:38 +0200
+Received: by ierx19 with SMTP id x19sf3847149ier.1
+        for <gcvm-msysgit@m.gmane.org>; Tue, 09 Jun 2015 01:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/Xfs2dA14jzOYW5ogOPlha8PciDTCG4eDPK4xV16ToA=;
-        b=zIOjSP5z4GnrmocIGD3rCkqO25U+++xmvEgib08Qub6205a61t53JSei6Zd79MdRFK
-         UJi98R+g2kDa5NHieQeHNJiJOvh0qDHBtdUeogO+1Ph4CYfHJoIqr8RijdHxxolcS2C8
-         E66ov1+IrnjmzYzEuEG7NSg88gkRv3G+jWe4zoGwvI5pi2pC2oplQrdaN1CSn77QeZ1K
-         jLEVg5puH/Ri+lyeb5jyxNbXiZ2sQdjp1xXH3AbCrm8PxwXgjO2UwTwctzh3UjuxUUgX
-         BfuqgnkbZQ6MySVIrFUHOITrdLsGj2z74erPEl2wDKZeL3PCRxhnbTpFOECYSEzlXBLl
-         fqEg==
-X-Received: by 10.194.95.132 with SMTP id dk4mr40936459wjb.88.1433839156341;
- Tue, 09 Jun 2015 01:39:16 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Tue, 9 Jun 2015 01:39:16 -0700 (PDT)
-In-Reply-To: <vpqbngpl5zu.fsf@anie.imag.fr>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271152>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=2VGjQ2uILbbylC+gpLG8UFCNwqJhXWlp3vmVsdcFGBs=;
+        b=GZkOK/6u13aBCJ/O/41mX4Q2bweaSsX7ejEZLRP7E2K5ydyDMnj4o0QCLAsZQEJuAR
+         WvLToaoqQnsPnvJwk9+owTpqWOwiV7/rnqZZV2+eHYvYPUmSrezBJUPurPkDydbVFOrQ
+         0qfgBRHSLTBcVmjnfwfT3lj2raSmR0mxg6sofXdSOauHfvIt15m2ij2yAYMlR+KLxGsY
+         8XpsA/Z1ieInHEWiVCqMUtPdqgCnInMBv6Wjf5U2GAw+bqlJH6nsql2PUs1kc+i76pcw
+         jrR6fwH2fCnbkw5LgW19A7rfOiTu5s9n/sfu6ToFbUkcFCa0g6v2wdcDHbVxJAybv+Sx
+         XTQQ==
+X-Received: by 10.50.79.137 with SMTP id j9mr255073igx.15.1433839477439;
+        Tue, 09 Jun 2015 01:44:37 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.66.147 with SMTP id f19ls1392073igt.43.canary; Tue, 09 Jun
+ 2015 01:44:37 -0700 (PDT)
+X-Received: by 10.70.96.41 with SMTP id dp9mr29114207pdb.13.1433839477075;
+        Tue, 09 Jun 2015 01:44:37 -0700 (PDT)
+Received: by 10.50.225.2 with SMTP id rg2msigc;
+        Tue, 9 Jun 2015 01:43:24 -0700 (PDT)
+X-Received: by 10.140.18.194 with SMTP id 60mr245242qgf.12.1433839404602;
+        Tue, 09 Jun 2015 01:43:24 -0700 (PDT)
+In-Reply-To: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+X-Original-Sender: tholag@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271153>
 
-On Tue, Jun 9, 2015 at 9:01 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->> Subject: Re: [PATCH 3/4] bisect: simplify the add of new bisect terms
->
-> s/add/addition/
->
-> Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
->
->> +static const char *name_bad;
->> +static const char *name_good;
->
-> Same remark as PATCH 2.
+------=_Part_154_130913683.1433839404421
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_155_1243015653.1433839404421"
 
-As for patch 2, I think "name_bad" and "name_good" are better than
-"name_new" and "name_old".
+------=_Part_155_1243015653.1433839404421
+Content-Type: text/plain; charset=UTF-8
 
-[...]
+Dear Johannes,
+I'm trying the release candidate on Win 8.1. Everything's working now, but 
+when I clone a repository
 
->> +             name_bad = "bad";
->> +             name_good = "good";
->> +     } else {
->> +             strbuf_getline(&str, fp, '\n');
->> +             name_bad = strbuf_detach(&str, NULL);
->> +             strbuf_getline(&str, fp, '\n');
->> +             name_good = strbuf_detach(&str, NULL);
->> +     }
->
-> I would have kept just
->
->         name_bad = "bad";
->         name_good = "good";
->
-> in this patch, and introduce BISECT_TERMS in a separate one.
+git clone http://...../name.git CustomFolder
 
-Yeah I agree that it is more logical to have first a patch that does
-on bisect.c the same thing as patch 2 does on git-bisect.sh.
+it creates CustomFolder with the checkout files, but the .git folder is 
+created inside CustomFolder\CustomFolder\
 
-For example the patch series could be for now:
+Dir layout
+\
+\CustomFolder
+\CustomFolder\files.....
+\CustomFolder\CustomFolder\.git  <---- wrong additional level
+ 
+so any other command doesn't work because it cannot find the .git folder.
+If I move the CustomFolder\CustomFolder\.git to CustomFolder\.git 
+everything works correctly.
 
-1) bisect: typo fix
-2) bisect: replace hardcoded "bad|good" with variables
-3) git-bisect: replace hardcoded "bad|good" with variables
-4) bisect: simplify adding new terms
-5) bisect: add old/new terms
+Let me know if it's enough data,
+Qb
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
+
+------=_Part_155_1243015653.1433839404421
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Dear Johannes,<br>I'm trying the release candidate on Win =
+8.1. Everything's working now, but when I clone a repository<br><br>git clo=
+ne http://...../name.git CustomFolder<br><br>it creates CustomFolder with t=
+he checkout files, but the .git folder is created inside CustomFolder\Custo=
+mFolder\<br><br>Dir layout<br>\<br>\CustomFolder<br>\CustomFolder\files....=
+.<br>\CustomFolder\CustomFolder\.git&nbsp; &lt;---- wrong additional level<=
+br>&nbsp;<br>so any other command doesn't work because it cannot find the .=
+git folder.<br>If I move the CustomFolder\CustomFolder\.git to CustomFolder=
+\.git everything works correctly.<br><br>Let me know if it's enough data,<b=
+r>Qb<br></div>
+
+<p></p>
+
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for Windows&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+------=_Part_155_1243015653.1433839404421--
+------=_Part_154_130913683.1433839404421--
