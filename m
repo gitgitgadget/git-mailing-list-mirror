@@ -1,134 +1,86 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 4/9] parse-options: add parse_opt_merge_filter()
-Date: Tue, 09 Jun 2015 18:06:38 +0530
-Message-ID: <5576DDD6.3020205@gmail.com>
-References: <5573520A.90603@gmail.com>	<1433621052-5588-1-git-send-email-karthik.188@gmail.com>	<1433621052-5588-4-git-send-email-karthik.188@gmail.com> <xmqqvbey9fcx.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/4] bisect: replace hardcoded "bad|good" by variables
+Date: Tue, 09 Jun 2015 14:39:48 +0200
+Message-ID: <vpqtwuh9ht7.fsf@anie.imag.fr>
+References: <1433794930-5158-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+	<1433794930-5158-2-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+	<vpqtwuhl6s0.fsf@anie.imag.fr>
+	<CAP8UFD1mWaXwJwFLcw2f4Qj1v_Ves1UHEH7qkk8yq6WhjLeZGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 14:37:26 2015
+Content-Type: text/plain
+Cc: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	git <git@vger.kernel.org>, remi.lespinet@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	Christian Couder <chriscool@tuxfamily.org>,
+	thomasxnguy@gmail.com, valentinduperray@gmail.com
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 14:40:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2ImP-0004bD-A4
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 14:37:21 +0200
+	id 1Z2IpG-0007TI-Uv
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 14:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933508AbbFIMgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 08:36:51 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34550 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933480AbbFIMgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 08:36:45 -0400
-Received: by payr10 with SMTP id r10so13176810pay.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 05:36:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=f05SOGgMwvaA+foBL7JTGtRAIHwWfFbToUZyP+SJ8RY=;
-        b=otcdDwEOgzAjdLptKOC3NvxZ9t/cuuuBY93/nud/8oyBLqAzzTW09lltth6DbdGfCg
-         z1WOpuYnrZ4j+TUYkD5f31MsKo2ogseqyxZsXihO5atHPJCg0ZNXP8p+3ABBK0nqEkh3
-         autUZnycKYLUzcUujS3vp4gavlIC7jaqv+yHtnD/s6J6NZsz6OXfA1zh53UWNFIaGWs2
-         Td6emANAWgErNFrPibaoQ63+qtqZ1arKr+GagtcwU27fu8lnmOaQMNnvzPgs46ffjAkr
-         rx/nH31cjAm9APmkDRtVQWc9q6gEK5gZNTSEpI+tItcjF3evzxcrzdojeKrkn/9ntm6R
-         Xb9g==
-X-Received: by 10.68.192.34 with SMTP id hd2mr38324439pbc.5.1433853404897;
-        Tue, 09 Jun 2015 05:36:44 -0700 (PDT)
-Received: from [192.168.0.100] ([106.51.130.23])
-        by mx.google.com with ESMTPSA id ud3sm5577898pbc.10.2015.06.09.05.36.42
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jun 2015 05:36:43 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqqvbey9fcx.fsf@gitster.dls.corp.google.com>
+	id S1753916AbbFIMkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 08:40:11 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50291 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753214AbbFIMjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 08:39:55 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t59CdkZk003072
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 9 Jun 2015 14:39:47 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t59Cdmng028739;
+	Tue, 9 Jun 2015 14:39:48 +0200
+In-Reply-To: <CAP8UFD1mWaXwJwFLcw2f4Qj1v_Ves1UHEH7qkk8yq6WhjLeZGQ@mail.gmail.com>
+	(Christian Couder's message of "Tue, 9 Jun 2015 10:12:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 09 Jun 2015 14:39:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t59CdkZk003072
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434458389.02221@Ao6bLCQviUf0dCFq9i/S1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271172>
 
-On 06/09/2015 12:50 AM, Junio C Hamano wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> +int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
->> +{
->> +	struct ref_filter *rf = opt->value;
->> +	unsigned char sha1[20];
->> +
->> +	rf->merge = opt->long_name[0] == 'n'
->> +		? REF_FILTER_MERGED_OMIT
->> +		: REF_FILTER_MERGED_INCLUDE;
->> +
->> +	if (!arg)
->> +		arg = "HEAD";
->> +	if (get_sha1(arg, sha1))
->> +		die(_("malformed object name %s"), arg);
->> +
->> +	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
->> +	if (!rf->merge_commit)
->> +		return opterror(opt, "must point to a commit", 0);
->> +
->> +	return 0;
->> +}
->
-> Again, this smells too specific to live as a part of parse-options
-> infrastructure.  If we want to have two helper callbacks, one that
-> gives the results in an sha1-array (because there is no guarantee
-> that you want only commits) and in a commit-list, I am fine with
-> having parse_opt_object_name() and parse_opt_with_commit().  Perhaps
-> rename the latter which was named too specifically to something more
-> sensible (e.g. parse_opt_commit_object_name()) and use it from the
-> caller you wanted to use parse_opt_merge_filter()?  The caller, if
-> it is not prepared to see more than one commits specified, may have
-> to check if (!list || !list->next) { die("I want one and only one") }
-> or something, though.
->
-> Having it in ref-filter.h as parse_opt_merge_filter() is fine,
-> though.  After all, you would be sharing it with for-each-ref,
-> branch and tag and nobody else anyway.
- >
+Christian Couder <christian.couder@gmail.com> writes:
 
-I guess it's better left in ref-filter.h. We could like you said make
-it depend on parse_opt_with_commit() but that again means we need to 
-check if more than one commits are specified. So I think it would be 
-better to have it in ref-filter.h
->
->> diff --git a/parse-options.h b/parse-options.h
->> index 3ae16a1..7bcf0f3 100644
->> --- a/parse-options.h
->> +++ b/parse-options.h
->> @@ -221,6 +221,7 @@ extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
->>   extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
->>   extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
->>   extern int parse_opt_points_at(const struct option *, const char *, int);
->> +extern int parse_opt_merge_filter(const struct option *, const char *, int);
->>   extern int parse_opt_with_commit(const struct option *, const char *, int);
->>   extern int parse_opt_tertiary(const struct option *, const char *, int);
->>   extern int parse_opt_string_list(const struct option *, const char *, int);
->> @@ -243,5 +244,15 @@ extern int parse_opt_noop_cb(const struct option *, const char *, int);
->>   	OPT_COLOR_FLAG(0, "color", (var), (h))
->>   #define OPT_COLUMN(s, l, v, h) \
->>   	{ OPTION_CALLBACK, (s), (l), (v), N_("style"), (h), PARSE_OPT_OPTARG, parseopt_column_callback }
->> +#define OPT_NO_MERGED(filter, h) \
->> +	{ OPTION_CALLBACK, 0, "no-merged", (filter), N_("commit"), (h), \
->> +	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
->> +	  parse_opt_merge_filter, (intptr_t) "HEAD" \
->> +	}
->> +#define OPT_MERGED(filter, h) \
->> +	{ OPTION_CALLBACK, 0, "merged", (filter), N_("commit"), (h), \
->> +	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
->> +	  parse_opt_merge_filter, (intptr_t) "HEAD" \
->> +	}
->
-> Likewise.
->
+> "old/new" is not more generic than "good/bad".
 
-This too would be better off in ref-filter.h
+I disagree with this. In any case, we're looking for a pair of commits
+where one is a direct parent of the other. So in the end, there's always
+the old behavior and the new behavior in the end.
+
+In natural language, I can write "terms good/bad correspond to the
+situation where the new behavior is a bug and the old behavior was
+correct" and "terms fixed/unfixed correspond to the situation where the
+new behavior does not have a bug and the old one does", so I can
+describe several pairs of terms with old/new. When looking for a bugfix,
+saying "NAME_GOOD=new" seems backward. I would read this as "the good
+behavior is to be new", while I would expect "the new behavior is to be
+good".
+
+> and as "good/bad" is older and is the default we should keep that in
+> the names.
+
+I agree with this part though. If people working with the bisect
+codebase (which includes you) are more comfortable with good/bad, that's
+a valid reason to keep it.
+
+IOW, I still think old/new is more generic, but that is not a strong
+objection and should not block the patch.
 
 -- 
-Regards,
-Karthik
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
