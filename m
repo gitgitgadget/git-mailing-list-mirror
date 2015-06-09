@@ -1,167 +1,119 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 01/13] delete_ref(): move declaration to refs.h
-Date: Tue, 9 Jun 2015 09:42:15 -0700
-Message-ID: <CAGZ79kagxZLxFdf4QmiQr7qP6bPm_vZC8FbhmndC6O=AARrrNw@mail.gmail.com>
-References: <cover.1433763494.git.mhagger@alum.mit.edu>
-	<2eea274d60e355e4944ca9ed400e6c2132b4ed32.1433763494.git.mhagger@alum.mit.edu>
-	<CAGZ79kYy3zUezRzAG3Uo7bDbLgJ7srj3F1k-ama1C44ZdbHr=Q@mail.gmail.com>
-	<5576BBB1.5020903@alum.mit.edu>
+Subject: Re: On undoing a forced push
+Date: Tue, 9 Jun 2015 09:55:58 -0700
+Message-ID: <CAGZ79kYLGV0mp2JzT8p4ZK2_zsbMiYD_yjp4boTMx=bygAYrMw@mail.gmail.com>
+References: <20150609121221.GA14126@lanh>
+	<5576F2DC.7040603@gmail.com>
+	<012a980b0b9f1aa394e2b3701e4e6f97@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Content-Transfer-Encoding: 8BIT
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:42:23 2015
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 09 18:56:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2MbV-0004nw-Hp
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:42:21 +0200
+	id 1Z2Mon-0000OS-Hh
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404AbbFIQmQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2015 12:42:16 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:36391 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753194AbbFIQmP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:42:15 -0400
-Received: by yked142 with SMTP id d142so10945487yke.3
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 09:42:15 -0700 (PDT)
+	id S1753287AbbFIQ4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 12:56:01 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:36185 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474AbbFIQz7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:55:59 -0400
+X-Greylist: delayed 87134 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jun 2015 12:55:59 EDT
+Received: by yked142 with SMTP id d142so11096758yke.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 09:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=3URlHMZ5XsWlKJF4TAp+IbzIPAIxkfmIaNfUJ7P34qY=;
-        b=AoNK/Few7E4+z5f/9iRu04Uior5A53HabCPv1HhuP2rY8C+o7mVpnLXPeiOpt1VsZp
-         8f3Dle55QY6bjmmnkjK+Y28zeWu2DDxK+keTMEYSbHKCgjXl+NlNWlh2vHhmCfRIGiLQ
-         /4thXTlmItPy1N1aBfZCEKfjOlHzxaQpNVnA/gf8Iuvd80o+TbqdJCHpr6WI9dXLjXkt
-         eUWgcuF0rsL1p0XLPHu/ZgCbb95ViDdGHIaZ/1Y0V2Cr99DWD+1OSnmg3g5BNB6ZSTWw
-         NnZBLDqHuBxqYyRwMn8oQddagBlhtgL/U7dLhI52XA76orOpe+fWO4pwGSoyV7SUWtRj
-         CGug==
+        bh=l2SJlqOkXlvlzl/kxI/N6Mj0B3zKguXb5/LTgB+2+70=;
+        b=Ren/6ad/ZugvXS+5BBgMAcZIr3RBSYxZOWAJbRYUQRevZXlKAjY+hKCXkopzFFYbgq
+         vzrT5BwBn24x3ONzM243eaPFqSKI1iXjq+FV5GiQ7+Q3HrqbBY0jf48BdD99x7zOqwUz
+         stEB6jOPxP/4gv/2Og/NF8bJbcxOMZSdR+ZDbpsEtkDwT3fQZpN+DHsr97SlOt8YHs7K
+         HNd1RvU88AiFP4IdJ4rb/gKPwNPhMLyX4a4NLHa2qt/aOrw1mSynnhPZwqJP3efEbKXK
+         OZerIQ2yo2WW+TB+cwhylFTkb/8CSS/a/NKtUwwEHeTUTvX6QKN5Ed9d2w1KrHTjshuh
+         KEPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=3URlHMZ5XsWlKJF4TAp+IbzIPAIxkfmIaNfUJ7P34qY=;
-        b=bSIlc7FKJ4t9z3Lhi21cMUac2DBUjXi2Ri3k2QeV0F1Og+S3fnJc9w4tlyFdxtXAtP
-         Io/uFbNvsWq59t9q6Ry3z3+43ygTMhJUj2Yubhj+oKZXK6vCe5KkEmDEnK/t2wY3XqR9
-         EfErFMZM+iyRt9+ehksCb7gpJo5iKG6KrtR5d+g02A/9jCl3jLpkCYl6ACBlNxyytF/b
-         oRTxp22/BuH75pOgGGh2QPIf9lbe28slstjB/ehZbNO4PpVr+iePlEIet4IA3oiBF1cq
-         gmFh4G2IB+1B0rNw+Ba+9zu6iLdetnTnexdbyhzpdBF3y+wmTeA+yAete7HWx8wm9QAj
-         2SZQ==
-X-Gm-Message-State: ALoCoQmQnOramXWyAzD1DFSjEvnVuuw+wIMT7LW8o60zTh1KXRA8ViM47bu1OH7KsU77jKTl73aF
-X-Received: by 10.170.117.142 with SMTP id j136mr26649120ykb.56.1433868135134;
- Tue, 09 Jun 2015 09:42:15 -0700 (PDT)
-Received: by 10.37.101.197 with HTTP; Tue, 9 Jun 2015 09:42:15 -0700 (PDT)
-In-Reply-To: <5576BBB1.5020903@alum.mit.edu>
+        bh=l2SJlqOkXlvlzl/kxI/N6Mj0B3zKguXb5/LTgB+2+70=;
+        b=J2MhbrKGfF0riNyMLNlU8zmqfzJs1NruebNr5vs0wf30N/yYui8pgO0Fu1ze5Hs6MK
+         om5L1sCtezCCgA7gSZPQZLKUkXsJOyEYdDvdcZlDWYVcRlPmG9BqUGHnQmYcLMFb/ttc
+         PkM9ZkfdTuBPiLfTnaTpVr0dS1owymFPCn/nSazXBTyoEmNLzwOHKEuGxK9oTPQSk/D+
+         mceG8zkXchI8YRMF3K4MMKHHAcDqoM2F9ZGiMbH6KB27ExlDDHRxZaZtuHXrEPP/vYpx
+         jSWEIMpSdqx7BvpePwAC12ijKz8snMP+5o6UrI36ILpBN3XjS7XsOMVDPBWWufTWiMKM
+         PG7Q==
+X-Gm-Message-State: ALoCoQncGTDEeKzf4mfiA8IaU3YxqBt8shjFvzlH/xFS3UIHT960JyGPnvid8zSRbm4Xm3VIwHxT
+X-Received: by 10.170.43.16 with SMTP id 16mr26478583ykl.119.1433868958485;
+ Tue, 09 Jun 2015 09:55:58 -0700 (PDT)
+Received: by 10.37.101.197 with HTTP; Tue, 9 Jun 2015 09:55:58 -0700 (PDT)
+In-Reply-To: <012a980b0b9f1aa394e2b3701e4e6f97@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271202>
 
-On Tue, Jun 9, 2015 at 3:10 AM, Michael Haggerty <mhagger@alum.mit.edu>=
- wrote:
-> On 06/08/2015 06:43 PM, Stefan Beller wrote:
->> On Mon, Jun 8, 2015 at 4:45 AM, Michael Haggerty <mhagger@alum.mit.e=
-du> wrote:
->>> [...]
->>> +/*
->>> + * Delete the specified reference. If old_sha1 is non-NULL and not
->>> + * NULL_SHA1, then verify that the current value of the reference =
-is
->>> + * old_sha1 before deleting it.
+On Tue, Jun 9, 2015 at 9:29 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi,
+>
+> On 2015-06-09 16:06, Sitaram Chamarty wrote:
+>> On 06/09/2015 05:42 PM, Duy Nguyen wrote:
+>>> From a thread on Hacker News. It seems that if a user does not have
+>>> access to the remote's reflog and accidentally forces a push to a ref,
+>>> how does he recover it? In order to force push again to revert it
+>>> back, he would need to know the remote's old SHA-1. Local reflog does
+>>> not help because remote refs are not updated during a push.
+>>>
+>>> This patch prints the latest SHA-1 before the forced push in full. He
+>>> then can do
+>>>
+>>>     git push <remote> +<old-sha1>:<ref>
+>>>
+>>> He does not even need to have the objects that <old-sha1> refers
+>>> to. We could simply push an empty pack and the the remote will happily
+>>> accept the force, assuming garbage collection has not happened. But
+>>> that's another and a little more complex patch.
 >>
->> And here I wondered what the distinction between NULL and non-NULL,
->> but NULL_SHA1
->> is and digging into the code, there is none. (As you can also see in
->> this patch above with
->>     (old_sha1 && !is_null_sha1(old_sha1)) ? old_sha1 : NULL,
->> but when digging deeper, the !is_null_sha1(old_sha1) is an arbitrary
->> limitation (i.e.
->> ref_transaction_delete and ref_transaction_update don't differ betwe=
-en
->> those two cases.)
+>> If I am not mistaken, we actively prevent people from downloading an
+>> unreferenced SHA (such as would happen if you overwrote refs that
+>> contained sensitive information like passwords).
 >>
->> The distinction comes in at lock_ref_sha1_basic, where I think we ma=
-y
->> want to get rid of
->> the is_null_sha1 check and depend on NULL/non-NULL as the difference
->> for valid and invalid
->> sha1's?
+>> Wouldn't allowing the kind of push you just described, require negating
+>> that protection?
 >
-> I'm having a little trouble understanding your comment.
+> I believe that to be the case.
 >
-> The convention for ref_transaction_update() and friends is that
->
-> * old_sha1 =3D=3D NULL
->
->   We don't care whether the reference existed prior to the
->   update, nor what its value was.
->
-> * *old_sha1 is NULL_SHA1
->
->   (by which I mean that old_sha1 points at 20 zero bytes; I hope
->   that's clear even though NULL_SHA1 is not actually defined
->   anywhere): The reference must *not* have existed prior to the
->   update.
+> Sorry to chime in so late in the discussion, but I think that the `--force-with-lease` option is what you are looking for. It allows you to force-push *but only* if the forced push would overwrite the ref we expect, i.e. (simplified, but you get the idea) `git push --force-with-lease <remote> <ref>` will *only* succeed if the remote's <ref> agrees with the local `refs/remotes/<remote>/<ref>`.
 
-Ok that's what I was missing.
+Yeah that was my first thought as well. It's unfortunate that
+--force-with-lease is not as well known though (it wasn't there first,
+so many people picked it up and "it's good enough" to not pickup other
+--force-with-foo options).
+
+Maybe we should add the option receive.denyNonFastForwards =
+onlyWithLease instead?
+
+Thanks,
+Stefan
 
 >
-> * old_sha1 has some other value
+> If you use `--force-with-lease`, you simply cannot force-forget anything on the remote side that you cannot undo (because you have everything locally you need to undo it).
 >
->   The reference must have had that value prior to the update.
->
-> lock_ref_sha1_basic() distinguishes between { NULL vs. NULL_SHA1 vs.
-> other values } in the same way that ref_transaction_update() does.
->
-> The delete_ref() function doesn't follow the same convention. It trea=
-ts
-> NULL and NULL_SHA1 identically, as "don't care".
->
-> It probably makes sense to change delete_ref() use the same conventio=
-n
-> as ref_transaction_update(), but there are quite a few callers and I
-> didn't have the energy to review them all as part of this patch serie=
-s.
-> So I left it unchanged and just documented the status quo better.
->
->> That said, do we want to add another sentence to the doc here saying
->> non-NULL and not
->> NULL_SHA1 are treated the same or is it clear enough?
->> With or without this question addressed:
->> Reviewed-by: Stefan Beller <sbeller@google.com>
->
-> In set notation,
->
->     "non-NULL" =3D
->         "non-NULL and not NULL_SHA1" =E2=88=AA
->         "non-NULL and equal to NULL_SHA1"
->
-> The latter two are *not* treated the same, so I don't see how we can
-> claim that "non-NULL" and "not NULL_SHA1" are treated the same. I mus=
-t
-> be misunderstanding you.
->
-> Would it help if I changed the comment to
->
->     Delete the specified reference. If old_sha1 is non-NULL and not
->     NULL_SHA1, then verify that the current value of the reference is
->     old_sha1 before deleting it. If old_sha1 is NULL or NULL_SHA1,
->     delete the reference it it exists, regardless of its old value.
->
-> ?
-
-This is very clear to me.
-
->
-> Michael
->
+> Ciao,
+> Johannes
 > --
-> Michael Haggerty
-> mhagger@alum.mit.edu
->
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
