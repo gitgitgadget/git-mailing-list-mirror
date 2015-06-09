@@ -1,82 +1,100 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: How to compile without iconv?
-Date: Tue, 09 Jun 2015 20:46:18 +0200
-Message-ID: <5577347A.5080107@web.de>
-References: <CAGUt3y4RgtkP35XstHGQ=T3zkb_akZSRS=q227wMehVzmu9MDA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/13] delete_refs(): improve error message
+Date: Tue, 09 Jun 2015 11:47:56 -0700
+Message-ID: <xmqq38207m77.fsf@gitster.dls.corp.google.com>
+References: <cover.1433763494.git.mhagger@alum.mit.edu>
+	<9f6f3432467c2b12329c16a46c52670f772993e5.1433763494.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Sascha Ziemann <ceving@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 20:46:33 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 09 20:48:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2OXc-0006Fl-C7
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 20:46:28 +0200
+	id 1Z2OZC-0007fv-No
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 20:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932420AbbFISqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 14:46:24 -0400
-Received: from mout.web.de ([212.227.17.12]:62576 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752372AbbFISqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 14:46:23 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0Lb1wz-1ZUpak1Bph-00kfhT; Tue, 09 Jun 2015 20:46:19
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <CAGUt3y4RgtkP35XstHGQ=T3zkb_akZSRS=q227wMehVzmu9MDA@mail.gmail.com>
-X-Provags-ID: V03:K0:Z2pZKVBWnF1QxSbh7R9Fs78Hgs27heP89xe7aSs7nzSLmrpmGtU
- Jit0/bCwH/I5mAt7fNXb7NbmObeA/0y5L0R44uIXCU6f8Kh6Gk0il0xiJHh1WY+TwMx6uRl
- iZDbg49/KmbZrS0hrv4Nf0ZB/TCnUxcLNzct5ygqKBAfRHDGLnGK/iIBR53r0aLurlmKsfU
- R5K6EwxZVMwYbzm9ond4Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uQ8TSFbqd6c=:vs2vvh8V8ygi5L8vl5MGzs
- jNMpnKSMT+YF1vLaxK0GbOevs9d4NdmUCwg71CHePQiZXVNc/xyzAW9qv9TS1+KhXkczWF42g
- 0jKfDq7jYTFPlJYQ1UboxEFn1Bou4RnBg5PxOPCCIAgkuBc/JrjciYaNQkgYNGrY4WB4HF6PB
- 1hXZLDF6s7WXxejV03iIadlX3aFITcKRRm+fvAt/uNcvFTBm2YGFrwF9XlwP17CJBg9kutZeD
- QrfIwxd7mtccw2mErehzKVE3o80AgLrY6PSaz89arM2pR+1lS6zgDQhsk9ARkbPP4ZdHYrYcT
- i11JpFFfCnL5d4nsxkFlMzeDBwr94zkSaho+ViWoh6zLZ/rIm+uPSqB3OZxrODdix2sbkBYHW
- D4WACH+2AX3gPs0Eyyr1x2/Qp30ZxcR3Mf24zZk25xneBz4AGS2RAXbPft4ZA5cxfUryvd9i/
- tYVBzeUdVahiNvgaQBM3M1TIMqJ25qtQOJTApYZlKekJnOEp5gfwaffsFwq0EgkBp6+dKxolt
- IKuonFp9jhSlsBHUCZkUIt6hfBTz4gWmpREJZ4YDU5bUsvF0aRvF4rB520nq31o9bNtcAF997
- S/h38QzjIlsyizAyKOylnFiDl6FSIg/WPOEnJC0jKy9Q7akKnxCCdSBdLLx4rVxmifBEBgusq
- Gp7J/vqmcmZSFbeY+5Rh3evYw8G3PxnF748wVxEDVsd9+95kWy0Z2+i1zeN03/UxyFho=
+	id S932927AbbFISsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 14:48:02 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:34453 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753888AbbFISsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 14:48:01 -0400
+Received: by igdh15 with SMTP id h15so2924841igd.1
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 11:48:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-type;
+        bh=zM+hfyia32HP71GXvWc/AT3cXxAbfKKUPENY8m/M93Y=;
+        b=G1ypRW1QGrkyzbaRQlhTZTwjPuAD4FxyBFNO0JdgvZBKFPc+NAFNsXISHZIQt87/iq
+         eGP5n34MfzppGTA7DgCnP2w7MShTaAwj5pvL3LEFTSlTKCmSXF8NR2tUKypjykDAqiS3
+         1k4M8H4GOsdqggvwCyh9NwOp+FXkj8D/Kqo0uuP/ksJzxdV60CQe40iDyofAsiu30wWt
+         d91KAFFNU7iF4mlxiTdEZfxzCi7ScgOzJWxMYPULWT/wKbtJEgr6ElbPwlEGkZiEfZnf
+         jhSOQAOogveLlc+YgS7pllRHRjSLf+mkQg9mxnsB2WK6ynzdOkH9+51JspVQBIcKlVjM
+         BQzA==
+X-Received: by 10.50.17.104 with SMTP id n8mr22072625igd.21.1433875679031;
+        Tue, 09 Jun 2015 11:47:59 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
+        by mx.google.com with ESMTPSA id ot6sm1678280igb.11.2015.06.09.11.47.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 09 Jun 2015 11:47:57 -0700 (PDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271224>
 
-On 2015-06-09 16.07, Sascha Ziemann wrote:
-> I tried to compile git 2.4.3 on Solaris 10. I used the following configuration:
-> 
-> $ ./configure --without-iconv
-> 
-> $ grep -i iconv config.status
-> ac_cs_config="'--without-iconv'"
->   set X /bin/bash './configure'  '--without-iconv'
-> $ac_configure_extra_args --no-create --no-recursion
-> OLD_ICONV=UnfortunatelyYes
-> 
-> But when I try to compile it, I get an error that libiconv is missing:
-> 
->     LINK git-credential-store
-> Undefined                       first referenced
->  symbol                             in file
-> libintl_gettext                     libgit.a(lockfile.o)
-> libiconv_close                      libgit.a(utf8.o)
-> libiconv_open                       libgit.a(utf8.o)
-> libintl_ngettext                    libgit.a(date.o)
-> libiconv                            libgit.a(utf8.o)
-> ld: fatal: symbol referencing errors. No output written to git-credential-store
-> collect2: ld returned 1 exit status
-> gmake: *** [git-credential-store] Error 1
-> 
-> How can I work around this?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-It seems that you need to switch of gettext as well.
-(Somewhat untested, I don't have Solaris)
-What happens if you run the default Makefile (without configure)
+> Change the error message from
+>
+>     Could not remove branch %s
+>
+> to
+>
+>     Could not remove reference %s
+>
+> This change makes sense even for the existing caller, which uses the
+> function to delete remote-tracking branches.
 
-NO_ICONV=t NO_GETTEXT=t make
+I am 80% convinced ;-)
+
+The existing caller never used this for removing tags, so 'could not
+remove branch' was equally correct for it and was more specific than
+'could not remove reference'.  If you change it to 'could not remove
+that thing %s', it would still be correct for the existing caller;
+it would be even less specific for them, though ;-)
+
+The new callers you will add in later patch of course cannot live
+with 'could not remove branch', so I think that this is an
+acceptable compromise we can live with.  If somebody later wants to
+make the message more specific, they can add code that switches on
+the prefix of the ref when coming up with the error message (and use
+that code consistently in other error messages e.g. 'could not add
+reference').
+
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index c413282..2a2a06d 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2827,7 +2827,7 @@ int delete_refs(struct string_list *refnames)
+>  		const char *refname = refnames->items[i].string;
+>  
+>  		if (delete_ref(refname, NULL, 0))
+> -			result |= error(_("Could not remove branch %s"), refname);
+> +			result |= error(_("Could not remove reference %s"), refname);
+>  	}
+>  
+>  	return result;
