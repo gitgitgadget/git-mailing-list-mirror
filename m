@@ -1,128 +1,96 @@
-From: QbProg <tholag@gmail.com>
-Subject: Re: Re: Release candidate of Git for Windows 2.x is out
-Date: Tue, 9 Jun 2015 14:10:40 +0200
-Message-ID: <CAMZY0JP2U58LLLqjzSuqzUVjvYwUcfzZWG0x52WxGP3twD-dqg@mail.gmail.com>
-References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
-	<aa3467c7-bf83-4ccb-be64-929b944806ba@googlegroups.com>
-	<56c307e1fd6320e55cc8a62f28f70f8f@www.dscho.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: On undoing a forced push
+Date: Tue, 9 Jun 2015 19:12:21 +0700
+Message-ID: <20150609121221.GA14126@lanh>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; boundary=001a11c3ccd89faa80051814a545
-Cc: msysgit@googlegroups.com, git-for-windows@googlegroups.com, 
-	git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: msysgit+bncBDOKBSUU7UKRBQNP3OVQKGQE6RIN6SI@googlegroups.com Tue Jun 09 14:10:42 2015
-Return-path: <msysgit+bncBDOKBSUU7UKRBQNP3OVQKGQE6RIN6SI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f188.google.com ([209.85.217.188])
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 14:12:14 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDOKBSUU7UKRBQNP3OVQKGQE6RIN6SI@googlegroups.com>)
-	id 1Z2IMb-0003VR-Pi
-	for gcvm-msysgit@m.gmane.org; Tue, 09 Jun 2015 14:10:41 +0200
-Received: by lbio15 with SMTP id o15sf3965460lbi.0
-        for <gcvm-msysgit@m.gmane.org>; Tue, 09 Jun 2015 05:10:41 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z2IO4-000569-Fs
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 14:12:12 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753886AbbFIMMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 08:12:08 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:36757 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753809AbbFIMMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 08:12:06 -0400
+Received: by pabqy3 with SMTP id qy3so12662530pab.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 05:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-spam-checked-in-group:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe;
-        bh=/HDrolHeE+mW1hhamTm9oJIaIPJeoIocBwWrc6NRMK8=;
-        b=IMe4ULod6MOSqEarHLLWaKcklnsnt/0c1QkU+zGOPzXDYM6uQlsU5Poj/Lxt7kLovA
-         L6O2h/vcWIICCKU1WPo9LLxDtaMISr114+hLQrjasEjHZxjPr+AIvPKZFcduGHizf4G4
-         fJ2YfZuuiPnRqytD3eeUKDcBnek2/DP7c8qxiPotNmCZg0ZOkaGoQpJY4vZ8gUjFO98I
-         RrBIFjXu+DKLRQXgmVZ4QfkPeJncgPvgeuZskyrFvqDTMO96Rms/lxy+kSDY7+dFlL/D
-         lvEe5zqAzOnA9c8fYD+Gs94impcLVhbZsupjA1BGYFhQdz1F+778vFe/kZkuqabklJyo
-         VNHg==
-X-Received: by 10.180.97.7 with SMTP id dw7mr97665wib.1.1433851841359;
-        Tue, 09 Jun 2015 05:10:41 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.109.70 with SMTP id hq6ls1166074wib.18.canary; Tue, 09 Jun
- 2015 05:10:40 -0700 (PDT)
-X-Received: by 10.180.106.10 with SMTP id gq10mr17033659wib.0.1433851840758;
-        Tue, 09 Jun 2015 05:10:40 -0700 (PDT)
-Received: from mail-la0-x22d.google.com (mail-la0-x22d.google.com. [2a00:1450:4010:c03::22d])
-        by gmr-mx.google.com with ESMTPS id su3si525498lbb.1.2015.06.09.05.10.40
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=8K6qVPE1yUODuJgrTo+1qkpdnYoVoL+850YHTJuGfsk=;
+        b=SW/Z99fOwXn21bX+THg2rTa3mTBku+DZ/GJ/Q78Hjcw0N/TX3OM3f0OqjHxPKqHF3N
+         8z514vzo2MUaQXUGZLd5XMdezMUkFzoM6kyezv13Y3Oro/wZvg0BI4vdhMwcvIC4yJ+m
+         e75QjaZEfSjNbUZxmAgBWR8m2bt2ndP6GlBQBo5R4a1+dlwjScM8vmp8l+3EQ5BHFo+K
+         Ngah0hdqy4a5g/F2DwL0KPtk3EUiAmCuI7yhqb+E1f/YXlC7ESCDqkcP5lKZd3rfyotu
+         6OBswTNH0/vOYZ/JTvefV31+YKbAewgQ2TyaXBflf/Sf2yhDfxYYEsVkRXxHbCyWNA/e
+         8yfg==
+X-Received: by 10.68.99.197 with SMTP id es5mr38723671pbb.131.1433851926028;
+        Tue, 09 Jun 2015 05:12:06 -0700 (PDT)
+Received: from lanh ([115.73.5.228])
+        by mx.google.com with ESMTPSA id bn5sm5491678pbc.82.2015.06.09.05.12.03
+        for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jun 2015 05:10:40 -0700 (PDT)
-Received-SPF: pass (google.com: domain of tholag@gmail.com designates 2a00:1450:4010:c03::22d as permitted sender) client-ip=2a00:1450:4010:c03::22d;
-Received: by mail-la0-x22d.google.com with SMTP id w7so10501937lae.1;
-        Tue, 09 Jun 2015 05:10:40 -0700 (PDT)
-X-Received: by 10.112.219.70 with SMTP id pm6mr16972300lbc.41.1433851840668;
- Tue, 09 Jun 2015 05:10:40 -0700 (PDT)
-Received: by 10.112.53.138 with HTTP; Tue, 9 Jun 2015 05:10:40 -0700 (PDT)
-In-Reply-To: <56c307e1fd6320e55cc8a62f28f70f8f@www.dscho.org>
-X-Original-Sender: tholag@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of tholag@gmail.com designates 2a00:1450:4010:c03::22d as
- permitted sender) smtp.mail=tholag@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271169>
+        Tue, 09 Jun 2015 05:12:05 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 09 Jun 2015 19:12:21 +0700
+Content-Disposition: inline
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271170>
 
---001a11c3ccd89faa80051814a545
-Content-Type: text/plain; charset=UTF-8
+>From a thread on Hacker News. It seems that if a user does not have
+access to the remote's reflog and accidentally forces a push to a ref,
+how does he recover it? In order to force push again to revert it
+back, he would need to know the remote's old SHA-1. Local reflog does
+not help because remote refs are not updated during a push.
 
-Hello,
-I reproduce it using the windows command prompt (cmd.exe) using any
-repository. I tryed with bash and it works correctly.
-Qb
+This patch prints the latest SHA-1 before the forced push in full. He
+then can do
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+    git push <remote> +<old-sha1>:<ref>
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+He does not even need to have the objects that <old-sha1> refers
+to. We could simply push an empty pack and the the remote will happily
+accept the force, assuming garbage collection has not happened. But
+that's another and a little more complex patch.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Is there any other way to undo a forced push?
 
---001a11c3ccd89faa80051814a545
-Content-Type: text/html; charset=UTF-8
-
-<div dir="ltr"><div><div>Hello,<br></div>I reproduce it using the windows command prompt (cmd.exe) using any repository. I tryed with bash and it works correctly.<br></div>Qb<br><div class="gmail_extra"><br></div></div>
-
-<p></p>
-
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href="https://github.com/msysgit/msysgit/wiki">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href="http://groups.google.com/group/msysgit?hl=en_US?hl=en">http://groups.google.com/group/msysgit?hl=en_US?hl=en</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &quot;Git for Windows&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an email to <a href="mailto:msysgit+unsubscribe@googlegroups.com">msysgit+unsubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href="https://groups.google.com/d/optout">https://groups.google.com/d/optout</a>.<br />
-
---001a11c3ccd89faa80051814a545--
+-- 8< --
+diff --git a/transport.c b/transport.c
+index f080e93..6bd6a64 100644
+--- a/transport.c
++++ b/transport.c
+@@ -657,16 +657,17 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 			"[new branch]"),
+ 			ref, ref->peer_ref, NULL, porcelain);
+ 	else {
+-		char quickref[84];
++		char quickref[104];
+ 		char type;
+ 		const char *msg;
+ 
+-		strcpy(quickref, status_abbrev(ref->old_sha1));
+ 		if (ref->forced_update) {
++			strcpy(quickref, sha1_to_hex(ref->old_sha1));
+ 			strcat(quickref, "...");
+ 			type = '+';
+ 			msg = "forced update";
+ 		} else {
++			strcpy(quickref, status_abbrev(ref->old_sha1));
+ 			strcat(quickref, "..");
+ 			type = ' ';
+ 			msg = NULL;
+-- 8< --
