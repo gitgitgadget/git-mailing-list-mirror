@@ -1,88 +1,93 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: git lock files (Was: GIT for Microsoft Access projects)
-Date: Tue, 9 Jun 2015 21:50:59 +0300
-Message-ID: <20150609215059.dcbacca5d9fa3f7eb1683cb9@domain007.com>
-References: <1433870383-7631-1-git-send-email-sbeller@google.com>
-	<20150609132144.ANWJW.73271.root@txifep04>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-completion.tcsh: fix redirect with noclobber
+Date: Tue, 09 Jun 2015 11:20:19 -0700
+Message-ID: <xmqqtwug7nh8.fsf@gitster.dls.corp.google.com>
+References: <20150609172515.GA20638@yendor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	kostix+git@007spb.ru, sitaramc@gmail.com
-To: <hackerp@suddenlink.net>
-X-From: git-owner@vger.kernel.org Tue Jun 09 20:51:15 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Ariel Faigon <github.2009@yendor.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 20:51:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2OcE-0001pB-Rr
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 20:51:15 +0200
+	id 1Z2Ocf-00028j-BL
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 20:51:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbbFISvK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2015 14:51:10 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:45039 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753896AbbFISvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 14:51:09 -0400
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id t59IoxkN012972;
-	Tue, 9 Jun 2015 21:51:00 +0300
-In-Reply-To: <20150609132144.ANWJW.73271.root@txifep04>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+	id S1754017AbbFISvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 14:51:37 -0400
+Received: from mail-ie0-f196.google.com ([209.85.223.196]:35989 "EHLO
+	mail-ie0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472AbbFISvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 14:51:36 -0400
+Received: by ierx19 with SMTP id x19so3290051ier.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 11:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=i/2/fkU99Y3IJai18R7l4xkQXh3CgOvYKCh2UYygJjk=;
+        b=lFk60J3/oV8Mg7Ev1hsLcE00k1h+rcUNSjTNwjaeTMxfyVDfyTBJxIPTWfQTzaSdrk
+         RniooOyhZciGM/XYlCtlkpbsUC4cCeLp1L2b3urO35nPC+YPChOzPy6PZ6RftzOox8jF
+         rN4O8JBnXkrvAgcQwU00Mmcim7ORsKf3QiEN0o++KvmpAGpHO4QqITENMWKGVUbuSih6
+         f8wC/4t2mbMY3GsqEUWM/DTbxmcj41MHkLk+NerK06Ib2QYKi7x8XwPmdNFIDa4LfvK6
+         46kPHH5dfwpPDas0aBZjwLmeg1H2FK7ppIBx/bxmQyz0g6Eqo1aLzuSqouqQVbRoacQV
+         dLIw==
+X-Received: by 10.50.79.167 with SMTP id k7mr162819igx.32.1433874021516;
+        Tue, 09 Jun 2015 11:20:21 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
+        by mx.google.com with ESMTPSA id o9sm4388379ioe.35.2015.06.09.11.20.20
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 09 Jun 2015 11:20:20 -0700 (PDT)
+In-Reply-To: <20150609172515.GA20638@yendor.com> (Ariel Faigon's message of
+	"Tue, 9 Jun 2015 10:25:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271228>
 
-On Tue, 9 Jun 2015 13:21:44 -0500
-<hackerp@suddenlink.net> wrote:
+Ariel Faigon <github.2009@yendor.com> writes:
 
-> Thanks folks, I am digesting all you have said.
->=20
-> Now the command line I can do (I'm a programmer) but the secretary
-> here I doubt.
->=20
-> So is there at GUI interface for this? Does it work on Windows
-> systems?
+> tcsh users who happen to have 'set noclobber' elsewhere in their
+> ~/.tcshrc or ~/.cshrc startup files get a 'File exist' error, and
+> the tcsh completion file doesn't get generated/updated.
+>
+> Adding a `!` in the redirect works correctly for both clobber (default)
+> and 'set noclobber' users.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Reviewed-by: Christian Couder <christian.couder@gmail.com>
+> Signed-off-by: Ariel Faigon <github.2009@yendor.com>
+> ---
 
-That's why I asked whether the thing you do really want is a document
-management system, not a version control system.
+Thanks for enduring three iterations for a single-liner.  This
+versio will show nicely in "git log -p" output ;-)
 
-Yes, Git works on Windows thanks to folks behind the Git for Windows
-project (often and errorneously called "msysGit" in the internets)
-and yes there do exist mature Windows GUI front-ends to it, with
-TortoiseGit and Git Extensions being supposedly the most visible picks.
+In case anybody is wondering, that "Helped-by: notifications@github"
+was merely because I said "this change makes sense, care to send it
+over to us at git@vger?" from github UI on Ariel's commit.  I do not
+deserve helped-by for merely encouraging participation.
 
-But there's such thing as an irreducible complexity: while these tools
-strive to be user-friendly, and TortoiseGit even tries to make you
-think you're using Subversion rather than Git, they won't hide all the
-underlying complexity of a DVCS tool, which Git is, from the user.
+Will queue.  Thanks again.
 
-So... I bet for your random user, it would be much easier to switch to
-the browser window and upload another version of their document there,
-with a short note describing what they do and why.  This is how a
-typical DMS works.  You won't get all that awesomness Git gives you to
-fiddle with your source code files but in return you'll get a system
-which requires next to zero training for any layman to use it.
-
-Please rememeber about [1].  Many of the statements that post does are
-outdated but its essense remains to be true when it comes to handing
-off Git to users not possessing ninja-level computer skills.
-I especially recommend to think through this particular passage:
-
-| They often struggle to use version control at all; are you now going
-| to teach them the difference between =E2=80=9Cpull=E2=80=9D and =E2=80=
-=9Cupdate=E2=80=9D, between
-| =E2=80=9Ccommit=E2=80=9D and =E2=80=9Cpush=E2=80=9D? Look me in the e=
-yes and say that with a straight
-| face.
-
-I also wonder how do you intend to explain them why they can't push
-because someone else had just did that, and what to do about this, and
-why.  (And whose version should win, in the end, as the files you
-intend to work with are not subject for merging in the usual sense of
-this word -- when it comes to plain text files.)
-
-1. http://blog.red-bean.com/sussman/?p=3D79
+>
+>  contrib/completion/git-completion.tcsh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
+> index 6104a42..4a790d8 100644
+> --- a/contrib/completion/git-completion.tcsh
+> +++ b/contrib/completion/git-completion.tcsh
+> @@ -41,7 +41,7 @@ if ( ! -e ${__git_tcsh_completion_original_script} ) then
+>  	exit
+>  endif
+>  
+> -cat << EOF > ${__git_tcsh_completion_script}
+> +cat << EOF >! ${__git_tcsh_completion_script}
+>  #!bash
+>  #
+>  # This script is GENERATED and will be overwritten automatically.
