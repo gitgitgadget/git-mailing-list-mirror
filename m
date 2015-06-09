@@ -1,68 +1,69 @@
-From: Sascha Ziemann <ceving@gmail.com>
-Subject: How to compile without iconv?
-Date: Tue, 9 Jun 2015 16:07:25 +0200
-Message-ID: <CAGUt3y4RgtkP35XstHGQ=T3zkb_akZSRS=q227wMehVzmu9MDA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: gitscm vs. git-scm
+Date: Tue, 9 Jun 2015 10:21:28 -0400
+Message-ID: <20150609142127.GA7894@peff.net>
+References: <5576E2FE.4090105@drmicha.warpmail.net>
+ <vpq382181wh.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 16:07:43 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 09 16:22:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2KBf-0004Dt-Gq
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 16:07:31 +0200
+	id 1Z2KPc-0000UF-15
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 16:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbbFIOH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 10:07:27 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:38624 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753345AbbFIOH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 10:07:26 -0400
-Received: by igblz2 with SMTP id lz2so12152292igb.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 07:07:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=/H/ydrzb8z8JoAIuKcy+f9cMQ3lFv6yVxsk8KGLk7RQ=;
-        b=kmI/Hp+E8aojJy1zoOCilOsgW274NRMJ1smS8S/g7xZG8Sz7fZWIIbLJgfhkjEy2Jg
-         wHTlcg6hPf8ccXgeSqNWFZbyc/kvktr+Un/I75AtkbJ3QhIrrCRmVUjz5AjKmAiDr0Iq
-         Ghdz37qHo7T2MIuc3cIb6j1DOdQNLb0EqzfvXwcBZAmJ8E9BMuvyjOj4RNmPgDqL6YDx
-         L5lWXuG8ivX4dqXsfyFl60iZpom6TOPKiuG1Ev/6eNDo7bx5fIz0O9fhy3SuYow+6wEb
-         ye1Y0g03ABXAK31k3T0JLCy3RWr0/2e+1/h+8iK0ikaIxyY9v5D5ObnbuSZqwcxJqdbp
-         S6sw==
-X-Received: by 10.107.18.92 with SMTP id a89mr26433176ioj.14.1433858845996;
- Tue, 09 Jun 2015 07:07:25 -0700 (PDT)
-Received: by 10.79.92.6 with HTTP; Tue, 9 Jun 2015 07:07:25 -0700 (PDT)
+	id S932919AbbFIOVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 10:21:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43356 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932792AbbFIOVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 10:21:33 -0400
+Received: (qmail 8952 invoked by uid 102); 9 Jun 2015 14:21:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Jun 2015 09:21:32 -0500
+Received: (qmail 15232 invoked by uid 107); 9 Jun 2015 14:21:35 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Jun 2015 10:21:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jun 2015 10:21:28 -0400
+Content-Disposition: inline
+In-Reply-To: <vpq382181wh.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271182>
 
-I tried to compile git 2.4.3 on Solaris 10. I used the following configuration:
+On Tue, Jun 09, 2015 at 03:08:46PM +0200, Matthieu Moy wrote:
 
-$ ./configure --without-iconv
+> I guess gitscm.com should just redirect to git-scm.com (sending the
+> Location: field, and/or with stg like
+> <meta http-equiv="Refresh" content="0; URL=http://git-scm.com" />
 
-$ grep -i iconv config.status
-ac_cs_config="'--without-iconv'"
-  set X /bin/bash './configure'  '--without-iconv'
-$ac_configure_extra_args --no-create --no-recursion
-OLD_ICONV=UnfortunatelyYes
+We (the git project) don't own gitscm.com. I don't recognize the name on
+the whois:
 
-But when I try to compile it, I get an error that libiconv is missing:
+  $ whois gitscm.com | grep ^Registrant
+  Registrant Name: Jimmy Ho
+  Registrant Organization: Jimhoyd LLC
+  Registrant Street: PO Box 182
+  Registrant City: Walnut Creek
+  Registrant State/Province: California
+  Registrant Postal Code: 94597
+  Registrant Country: United States
+  Registrant Phone: +1.4158468899
+  Registrant Phone Ext: 
+  Registrant Fax: 
+  Registrant Fax Ext: 
+  Registrant Email: support@jimhoyd.com
 
-    LINK git-credential-store
-Undefined                       first referenced
- symbol                             in file
-libintl_gettext                     libgit.a(lockfile.o)
-libiconv_close                      libgit.a(utf8.o)
-libiconv_open                       libgit.a(utf8.o)
-libintl_ngettext                    libgit.a(date.o)
-libiconv                            libgit.a(utf8.o)
-ld: fatal: symbol referencing errors. No output written to git-credential-store
-collect2: ld returned 1 exit status
-gmake: *** [git-credential-store] Error 1
+Doesn't seem like a domain squatter, as it redirects to git-scm.com
+(albeit weirdly) and does not seem to inject ads or other crap.
 
-How can I work around this?
+-Peff
