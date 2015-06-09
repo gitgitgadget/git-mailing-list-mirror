@@ -1,78 +1,72 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: On undoing a forced push
-Date: Tue, 09 Jun 2015 18:29:34 +0200
-Organization: gmx
-Message-ID: <012a980b0b9f1aa394e2b3701e4e6f97@www.dscho.org>
-References: <20150609121221.GA14126@lanh> <5576F2DC.7040603@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:29:51 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH 5/8] add_sought_entry_mem: convert to struct object_id
+Date: Tue,  9 Jun 2015 16:28:33 +0000
+Message-ID: <1433867316-663554-6-git-send-email-sandals@crustytoothpaste.net>
+References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 18:29:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2MPM-0001p9-OR
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:29:49 +0200
+	id 1Z2MP8-0001Qc-Mm
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932544AbbFIQ3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 12:29:45 -0400
-Received: from mout.gmx.net ([212.227.15.18]:63596 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932420AbbFIQ3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 12:29:38 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M3igT-1ZJtM61kw5-00rHtB; Tue, 09 Jun 2015 18:29:35
- +0200
-In-Reply-To: <5576F2DC.7040603@gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:/x6JDSbCVMCA+LKwNoF7Zyh8Is4eLMr3rZXjMao/8ERPduY6fIj
- UqhbvrHzHfrnNSjnynSKqKaW39GNz2vSqqWtaEIzaJPhvIH97i01+U2VwqrZnZQdA4sgGQy
- GlQz5Py69H9ba6fbkfPMBLSUre/r590+ZeC1rCZEQDZsPCrHhZoPrmPFXQcwSiVl1K2oHR+
- Hjtmi+CeuzHGcWQVwenzg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S932099AbbFIQ31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 12:29:27 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:38343 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753187AbbFIQ3S (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:29:18 -0400
+Received: from vauxhall.crustytoothpaste.net (107-1-110-101-ip-static.hfc.comcastbusiness.net [107.1.110.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4CD5A28092;
+	Tue,  9 Jun 2015 16:29:17 +0000 (UTC)
+X-Mailer: git-send-email 2.4.0
+In-Reply-To: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
+X-Spam-Score: -1.5 BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271198>
 
-Hi,
+Convert this function to use struct object_id.  Use parse_oid_hex to
+avoid having to hard-code the number of bytes to be parsed.
 
-On 2015-06-09 16:06, Sitaram Chamarty wrote:
-> On 06/09/2015 05:42 PM, Duy Nguyen wrote:
->> From a thread on Hacker News. It seems that if a user does not have
->> access to the remote's reflog and accidentally forces a push to a ref,
->> how does he recover it? In order to force push again to revert it
->> back, he would need to know the remote's old SHA-1. Local reflog does
->> not help because remote refs are not updated during a push.
->>
->> This patch prints the latest SHA-1 before the forced push in full. He
->> then can do
->>
->>     git push <remote> +<old-sha1>:<ref>
->>
->> He does not even need to have the objects that <old-sha1> refers
->> to. We could simply push an empty pack and the the remote will happily
->> accept the force, assuming garbage collection has not happened. But
->> that's another and a little more complex patch.
-> 
-> If I am not mistaken, we actively prevent people from downloading an
-> unreferenced SHA (such as would happen if you overwrote refs that
-> contained sensitive information like passwords).
-> 
-> Wouldn't allowing the kind of push you just described, require negating
-> that protection?
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/fetch-pack.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-I believe that to be the case.
-
-Sorry to chime in so late in the discussion, but I think that the `--force-with-lease` option is what you are looking for. It allows you to force-push *but only* if the forced push would overwrite the ref we expect, i.e. (simplified, but you get the idea) `git push --force-with-lease <remote> <ref>` will *only* succeed if the remote's <ref> agrees with the local `refs/remotes/<remote>/<ref>`.
-
-If you use `--force-with-lease`, you simply cannot force-forget anything on the remote side that you cannot undo (because you have everything locally you need to undo it).
-
-Ciao,
-Johannes
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 19215b3..f3b89a9 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -14,12 +14,14 @@ static void add_sought_entry_mem(struct ref ***sought, int *nr, int *alloc,
+ 				 const char *name, int namelen)
+ {
+ 	struct ref *ref = xcalloc(1, sizeof(*ref) + namelen + 1);
+-	unsigned char sha1[20];
++	struct object_id oid;
++	int hexlen;
+ 
+-	if (namelen > 41 && name[40] == ' ' && !get_sha1_hex(name, sha1)) {
+-		hashcpy(ref->old_oid.hash, sha1);
+-		name += 41;
+-		namelen -= 41;
++	if ((hexlen = parse_oid_hex(name, namelen, &oid)) && namelen > hexlen + 1 &&
++		name[hexlen] == ' ') {
++		oidcpy(&ref->old_oid, &oid);
++		name += hexlen + 1;
++		namelen -= hexlen + 1;
+ 	}
+ 
+ 	memcpy(ref->name, name, namelen);
+-- 
+2.4.0
