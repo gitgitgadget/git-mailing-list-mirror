@@ -1,69 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: On undoing a forced push
-Date: Tue, 09 Jun 2015 15:17:10 +0200
-Message-ID: <vpqtwuh6my1.fsf@anie.imag.fr>
-References: <20150609121221.GA14126@lanh>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: gitscm vs. git-scm
+Date: Tue, 09 Jun 2015 15:47:52 +0200
+Message-ID: <5576EE88.6050607@drmicha.warpmail.net>
+References: <5576E2FE.4090105@drmicha.warpmail.net> <vpq382181wh.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 15:17:30 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 09 15:48:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2JPE-0000Qs-Pn
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 15:17:29 +0200
+	id 1Z2Jsn-0003LG-0x
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 15:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375AbbFINR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 09:17:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37314 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753046AbbFINRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 09:17:14 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t59DH9MO007141
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 9 Jun 2015 15:17:09 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t59DHAWx029965;
-	Tue, 9 Jun 2015 15:17:10 +0200
-In-Reply-To: <20150609121221.GA14126@lanh> (Duy Nguyen's message of "Tue, 9
-	Jun 2015 19:12:21 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 09 Jun 2015 15:17:09 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t59DH9MO007141
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434460630.25498@9xhtG1PyXwgMyZaLWlUOqQ
+	id S1751477AbbFINr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 09:47:57 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:57614 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750946AbbFINrz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 09:47:55 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id D20ED20B1A
+	for <git@vger.kernel.org>; Tue,  9 Jun 2015 09:47:54 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 09 Jun 2015 09:47:54 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=BHcv9bKnnkbljcUZ7Rj7HlmF/1c=; b=OsDqVN
+	BIAiLz4a+PXusVJPwNp1za84HF0KR8nf2Ily6WxFOhcoprR76H43lgdOr7Din6+q
+	so8p0mj1ZmsjEGoZEddeHsMi2BbzSypyXc2koHGc/DQt/+wLhxwv4XsKRIYoe+KN
+	A8SPrWueWuzUzFuLpUrQh41DdbFDD8+XwKOYE=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=BHcv9bKnnkbljcU
+	Z7Rj7HlmF/1c=; b=sY5we1gxV0lxWhOvR54zqXUOWrVoreVfORl1Jk+fIpfxFqZ
+	49wP2padfxPTpTgI5cEWZfbSQ5JrY94O4Jpt8aKHJAdhBtdE8MiKb+e7D2CenQgt
+	AJ/lgpAqQNJg9V0/zR++2uqu8cXg08cBNoc/Sej5qv4C3xkUobLhasA1d9dM=
+X-Sasl-enc: LCCrL40TwrczAlhDb9b2S2VWJ3VCx5UWscMdLs4JIN8w 1433857674
+Received: from localhost.localdomain (unknown [130.75.173.50])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1BDA06800FC;
+	Tue,  9 Jun 2015 09:47:53 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <vpq382181wh.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271178>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Matthieu Moy venit, vidit, dixit 09.06.2015 15:08:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Hi there,
+>>
+>> I (mis-) remembered the git site address and noticed that gitscm.com
+>> returns empty while git-scm.com is our beloved home. I thought, though,
+>> that we have a couple domains with redirects but I may be misremembering
+>> that also. Or DNS is "hicking up".
+> 
+> Not the DNS. gitscm.com is returning a whole window frame containing
+> git-scm.com, but then the frame doesn't load (at least in Firefox). The
+> inspector tells me:
+> 
+> Load denied by X-Frame-Options: http://git-scm.com/ does not permit cross-origin framing.
+> 
+> I guess gitscm.com should just redirect to git-scm.com (sending the
+> Location: field, and/or with stg like
+> <meta http-equiv="Refresh" content="0; URL=http://git-scm.com" />
+> )
+> 
+> Frames are so 2000 ;-).
+> 
 
-> From a thread on Hacker News. It seems that if a user does not have
-> access to the remote's reflog and accidentally forces a push to a ref,
-> how does he recover it? In order to force push again to revert it
-> back, he would need to know the remote's old SHA-1. Local reflog does
-> not help because remote refs are not updated during a push.
+Ooo, frames. That's my second encounter with zombies today.
 
-More precisely, the remote-tracking ref is updated, and so is its
-reflog, but the reflog entry usually does not help, because it documents
-the old and new sha1 of the remote-tracking ref, not of the remote ref
-itself. Typically, if a coworker pushed some code that I did not pull,
-and I force-push to the same branch, my reflog won't have the sha1 of my
-coworker's code.
+[Should have hit CTRL+U myself, sorry.]
 
-> This patch prints the latest SHA-1 before the forced push in full.
-
-Sounds like a good idea to me.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michael
