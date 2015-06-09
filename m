@@ -1,69 +1,85 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 1/1]: git-completion.tcsh fails w/ noclobber
-Date: Tue, 9 Jun 2015 11:25:43 +0200
-Message-ID: <CAP8UFD0s4ea5CPYUV1FWbi_eeK=V9a+a6MW75o9RwtyQ7RzhNg@mail.gmail.com>
-References: <20150608230133.GA14473@yendor.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] git-rebase--interactive.sh: add config option for
+ custom instruction format
+Date: Tue, 09 Jun 2015 11:36:57 +0200
+Organization: gmx
+Message-ID: <9a61f06b14f58a0bd2b687e2aef2b805@www.dscho.org>
+References: <1433797202-97425-1-git-send-email-rappazzo@gmail.com>
+ <1433797202-97425-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git <git@vger.kernel.org>
-To: github.2009@yendor.com
-X-From: git-owner@vger.kernel.org Tue Jun 09 11:25:56 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 11:37:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2Fn9-00076m-2g
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 11:25:55 +0200
+	id 1Z2Fy3-0000oh-17
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 11:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbbFIJZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 05:25:46 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:37686 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752865AbbFIJZo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 05:25:44 -0400
-Received: by wifx6 with SMTP id x6so9769253wif.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 02:25:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=0+qqWYzPkZz7Yu3txgxcSUeW3sF/KGfGIvw0LGcgGwg=;
-        b=P5wX6+cpc4Ed+tYgEDcwMoSMoqSHy7h4qxaxOvbeqMCeew2zMjinQGfom6Dyq+HvI0
-         DvcZI0SoN0aMAT7OlQ/OLkRMN2Pr5jGJp6j+i0spESwoAX9VJPMBwPxG1GFi3HUuwoLR
-         j+88J88fLMYw2/mxNFXj+fExMs8MtskCSitbGuK7pQoOqGhzhH+vaslsd0P8XYGBMKtR
-         iqWL0csxV0s3gKDYMlEvWlsPIQ5l/FfdnAet8+0IH22cVnUHU6gP6+WFg4632i2XunlL
-         rrOUlC5I7Ohkse2jLzCiWn2SlkKN+57BUtkrz9HbHudSxhglxJ5YU4I7k8ejkYMHZvLk
-         vXBw==
-X-Received: by 10.194.237.34 with SMTP id uz2mr41017763wjc.155.1433841943171;
- Tue, 09 Jun 2015 02:25:43 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Tue, 9 Jun 2015 02:25:43 -0700 (PDT)
-In-Reply-To: <20150608230133.GA14473@yendor.com>
+	id S1753292AbbFIJhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 05:37:05 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57550 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752214AbbFIJhB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 05:37:01 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MfEMs-1Yhxx21JbW-00OqY1; Tue, 09 Jun 2015 11:36:58
+ +0200
+In-Reply-To: <1433797202-97425-2-git-send-email-rappazzo@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:MBe3plUe/XaGdI2ZVEJ4KWYo62LSPEQWK3/4Dz3FnaavVmtSOYw
+ MF+l5hJoOH22nfuiSp+MDFCuxLZZRtyhbyl/3apELMSaNaui0gWDs5wrNuZs5C+aUJZLXPS
+ rLgybVcL0MwZVWKPGf6kWwGcwBajCO9sZ8JaU8CiY5R9S7X9k/mzpR4/HAeddGjkzlO+lHr
+ AfFgSehimJiS/z+uIzULA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gE48lI09f5o=:OVLcpUFI4HNyl+KBka0t0U
+ FNoO6mb4kEuzSbFexZmDTtZo4lLZ7zTr21wMar+WYJU6EHaZO4230abQvF9Ng/zRR2VQmF0Io
+ s0QnEb9icqIOHhnH/+Q5pVH3sCG0OEaIkveOYz+onjKq0wSqGgLEmKG8Xranoc2OWpgzW4JC0
+ StgZ9Uk3co/1VrOW0leqqVItyy6dmHmb05ZohNWZPGf3k4lJ7JpgNvPWiajG9fHh+dOixJW+W
+ rYXI+g57rLxPVhjuv0FA+LdQUSqeZ/BMmzJ3Q9Kb+mxmAxkXAZSeTtGI61udnO+aaULuJi6aY
+ v14f52Ltvl23rmEx3ZQcoIYoS2WeCLSEvh67l1Xh0kI72a+dZ+w8xYTmf0ZUQvmwqzZmI6t8z
+ DY8rx8FLIiAUeJemr/f1lXNzo+P10Odp7PHQbn4PZsLfFkLBHc+glZPo2Vqbg0Ak4wKFlihdE
+ 6XurPhFDnS3GH3EWSwG8zdz/l/HtDn7gU/cmVIKPxuAGum4/JPyz2m4fboXTth20YOufnfNt7
+ lyVi2IkdAaLN3gsIUxfaRxtn75YqdrQkzGuYQ6bEAeQcGpJowOVchFyjOwFFyze60VLJhAy5I
+ 1M1qPeGsHCoUe3UOEBBut69gI/Rnh6Wz3w11dWxvCmWnqDQWLf2H+QVzTOwehgpklu6MfFkV8
+ VHpp1GrhhDAmAmM4UTia/J1kMWZe9voYmdyxEGqpxza4Fw3U4p+ip9tv79w3RhBwhFKs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271158>
 
-The subject is better but still not quite there. I suggest:
+Hi,
 
-[PATCH] git-completion.tcsh: fix redirect with noclobber
+On 2015-06-08 23:00, Michael Rappazzo wrote:
 
-On Tue, Jun 9, 2015 at 1:01 AM, Ariel Faigon <github.2009@yendor.com> wrote:
-> tcsh users who happen to have 'set noclobber' elsewhere in their ~/.tcshrc or ~/.cshrc startup files get a 'File exist' error, and the tcsh completion file doesn't get generated/updated.  Adding a `!` in the redirect works correctly for both clobber (default) and 'set noclobber' users.
->
-> Helped-by: Junio C Hamano <notifications@github.com>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index dc3133f..b92375e 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -977,7 +977,9 @@ else
+>  	revisions=$onto...$orig_head
+>  	shortrevisions=$shorthead
+>  fi
+> -git rev-list $merges_option --pretty=oneline --reverse --left-right
+> --topo-order \
+> +format=$(git config --get rebase.instructionFormat)
+> +# the 'rev-list .. | sed' requires %m to parse; the instruction
+> requires %H to parse
+> +git rev-list $merges_option --format="%m%H ${format-%s}" --reverse
+> --left-right --topo-order \
 
-The email address look wrong. If he really helped you, he probably
-emailed you using another address.
+These two lines are too long (longer than 80 columns)...
 
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
+Besides, are you sure you don't want to substitute an empty 'rebase.instructionFormat' by '%s'? I would have expected to read `${format:-%s}` (note the colon), but then, this was Junio's suggestion... Junio, what do you think, should we not rather substitute empty values by `%s` as if the config setting was unset?
 
-"Mentored-by:" is used by Google Summer of Code students. If someone
-helps you and you want to acknowledge that, you can add an
-"Helped-by:" trailer (unless your helper tells you that you can add a
-"Reviewed-by:" or maybe a "Signed-off-by:").
+>  	$revisions ${restrict_revision+^$restrict_revision} | \
+>  	sed -n "s/^>//p" |
+>  while read -r sha1 rest
 
-> Signed-off-by: Ariel Faigon <github.2009@yendor.com>
-> ---
+Ciao,
+Johannes
