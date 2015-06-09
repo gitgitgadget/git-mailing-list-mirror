@@ -1,63 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-rebase--interactive.sh: add config option for custom instruction format
-Date: Tue, 09 Jun 2015 12:23:27 -0700
-Message-ID: <xmqqmw0865zk.fsf@gitster.dls.corp.google.com>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v2] git-rebase--interactive.sh: add config option for
+ custom instruction format
+Date: Tue, 9 Jun 2015 15:38:54 -0400
+Message-ID: <CANoM8SVXmYJn7wbxcPuBSUa-X8v0nggpv_vC8LtPgaBwMtP0HQ@mail.gmail.com>
 References: <1433797202-97425-1-git-send-email-rappazzo@gmail.com>
-	<1433797202-97425-2-git-send-email-rappazzo@gmail.com>
-	<9a61f06b14f58a0bd2b687e2aef2b805@www.dscho.org>
+ <1433797202-97425-2-git-send-email-rappazzo@gmail.com> <9a61f06b14f58a0bd2b687e2aef2b805@www.dscho.org>
+ <xmqqmw0865zk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Rappazzo <rappazzo@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 09 21:23:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 21:39:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2P7W-0004fL-KD
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 21:23:34 +0200
+	id 1Z2PMn-0001NS-CH
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 21:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbFITXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 15:23:31 -0400
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:34984 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752117AbbFITX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 15:23:29 -0400
-Received: by igdj8 with SMTP id j8so3186733igd.2
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 12:23:29 -0700 (PDT)
+	id S1753738AbbFITjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 15:39:16 -0400
+Received: from mail-ob0-f196.google.com ([209.85.214.196]:34826 "EHLO
+	mail-ob0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932161AbbFITjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 15:39:15 -0400
+Received: by obbnt9 with SMTP id nt9so3205780obb.2
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 12:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=yL45BxXAlACviqBwH6ghZOLgkGPhfm5GnmYscicn4+s=;
-        b=Ks1E9S1Sqm4b0U+3c7j0OAMImXBfJpvUw8Lx5Mc17Lh0RSYINnrZiS1nU/oVDyF1OC
-         ELdxBENoFWY/in+dFqj7xedRVqORf7o64cMKPwoLtJ3otyXmnV83dRWfxiKe/hN9ZJte
-         pEFhMWVhhIUc1G0H9g0NLYr3TwYdb1nJo/ip8SuQLQk+7xv4czXQobXq4hldrvR+0iJJ
-         D3MizNvBT8U5mDGsj3/Iw22dagVXyN8mVRD42RomC5NpEPc5sWGrSkiVARfKt2oznVHv
-         YUy71jop74E6VuIrs3ON0D+xAXT0c0Bkemtkxuy2ODkucjzJCjgtXGruIy2IyqJGpPpG
-         ghtg==
-X-Received: by 10.42.30.208 with SMTP id w16mr446217icc.88.1433877809050;
-        Tue, 09 Jun 2015 12:23:29 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
-        by mx.google.com with ESMTPSA id s5sm1742823igh.6.2015.06.09.12.23.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Jun 2015 12:23:28 -0700 (PDT)
-In-Reply-To: <9a61f06b14f58a0bd2b687e2aef2b805@www.dscho.org> (Johannes
-	Schindelin's message of "Tue, 09 Jun 2015 11:36:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mNUS3Jy2fNzIfoOiAbeP3bhmw9VZaGQWvOvvK4IOTxI=;
+        b=FDLxWJ+rLUy5oYoMGGb80vBKIz9asOQtOQsabq00BprIgUIglpCci0Dk5lKFu7CWU8
+         YxsU6PjqeWtrZHMIPlT9xqSLTSgH+Y+3WJ82CFeHDssNCfMVc+hBgKyl6iab2y5zQY3L
+         MtR0aYPEZ27OugpI+vZuoCn0YAsLUx4qWcB6r36Se/Ix624zcKxPswCjFEVvvjhkIt2n
+         ppCzLVY4g2O1nIayd9snha/0xC8DRjzlZ66F0KGuHZMAGj50bnV7yrvNEy3NOey4qmiE
+         DKk4Or5sb0m79q+lulrB6vJda64LRvYJZ5jf9kmDkFqIqukOJIco8wXdzzlIqhpKgvm9
+         cdAQ==
+X-Received: by 10.202.212.147 with SMTP id l141mr17474868oig.89.1433878754715;
+ Tue, 09 Jun 2015 12:39:14 -0700 (PDT)
+Received: by 10.202.204.20 with HTTP; Tue, 9 Jun 2015 12:38:54 -0700 (PDT)
+In-Reply-To: <xmqqmw0865zk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271236>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+I have since reworked this script to support the short hash in the
+custom format as a special case:
 
-> Besides, are you sure you don't want to substitute an empty
-> rebase.instructionFormat' by '%s'? I would have expected to read
-> ${format:-%s}` (note the colon), but then, this was Junio's
-> suggestion...
+-git rev-list $merges_option --pretty=oneline --reverse --left-right
+--topo-order \
++format=$(git config --get rebase.instructionFormat)
++no_format=$?
++if test ${no_format} -ne 0
++then
++ format="%H %s"
++elif test "${format:0:3}" != "%H " && test "${format:0:3}" != "%h "
++then
++ format="%H ${format}"
++fi
++# the 'rev-list .. | sed' requires %m to parse; the instruction
+requires %H to parse
++git rev-list $merges_option --format="%m${format}" \
++ --reverse --left-right --topo-order \
 
-That was me simply being sloppy myself, expecting people not to copy
-and paste literally without thinking.  Thanks for noticing.
+I also use the $no_format variable later on in the autosquash
+re-ordering, and have the tests passing.  I want to add some new tests
+on the custom format, and will send a new patch when that is complete.
+
+On Tue, Jun 9, 2015 at 3:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>
+>> Besides, are you sure you don't want to substitute an empty
+>> rebase.instructionFormat' by '%s'? I would have expected to read
+>> ${format:-%s}` (note the colon), but then, this was Junio's
+>> suggestion...
+>
+> That was me simply being sloppy myself, expecting people not to copy
+> and paste literally without thinking.  Thanks for noticing.
