@@ -1,154 +1,82 @@
-From: Qb <tholag@gmail.com>
-Subject: Re: Release candidate of Git for Windows 2.x is out
-Date: Tue, 9 Jun 2015 01:43:24 -0700 (PDT)
-Message-ID: <aa3467c7-bf83-4ccb-be64-929b944806ba@googlegroups.com>
-References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 6/6] am --abort: keep unrelated commits on unborn branch
+Date: Tue, 9 Jun 2015 16:54:54 +0800
+Message-ID: <CACRoPnT4CcJxQtTCzbOVRhHmN4MvzBx1S6x53CRuwFF9e+N4SQ@mail.gmail.com>
+References: <1433591172-27077-1-git-send-email-pyokagan@gmail.com>
+	<1433591172-27077-7-git-send-email-pyokagan@gmail.com>
+	<xmqq4mmi9cwb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_154_130913683.1433839404421"
-Cc: git-for-windows@googlegroups.com, git@vger.kernel.org
-To: msysgit@googlegroups.com
-X-From: msysgit+bncBDOKBSUU7UKRB5OO3KVQKGQEKRYKSVY@googlegroups.com Tue Jun 09 10:44:48 2015
-Return-path: <msysgit+bncBDOKBSUU7UKRB5OO3KVQKGQEKRYKSVY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ie0-f190.google.com ([209.85.223.190])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDOKBSUU7UKRB5OO3KVQKGQEKRYKSVY@googlegroups.com>)
-	id 1Z2F9C-0003Q0-8C
-	for gcvm-msysgit@m.gmane.org; Tue, 09 Jun 2015 10:44:38 +0200
-Received: by ierx19 with SMTP id x19sf3847149ier.1
-        for <gcvm-msysgit@m.gmane.org>; Tue, 09 Jun 2015 01:44:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:x-original-sender:precedence:mailing-list
-         :list-id:list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=2VGjQ2uILbbylC+gpLG8UFCNwqJhXWlp3vmVsdcFGBs=;
-        b=GZkOK/6u13aBCJ/O/41mX4Q2bweaSsX7ejEZLRP7E2K5ydyDMnj4o0QCLAsZQEJuAR
-         WvLToaoqQnsPnvJwk9+owTpqWOwiV7/rnqZZV2+eHYvYPUmSrezBJUPurPkDydbVFOrQ
-         0qfgBRHSLTBcVmjnfwfT3lj2raSmR0mxg6sofXdSOauHfvIt15m2ij2yAYMlR+KLxGsY
-         8XpsA/Z1ieInHEWiVCqMUtPdqgCnInMBv6Wjf5U2GAw+bqlJH6nsql2PUs1kc+i76pcw
-         jrR6fwH2fCnbkw5LgW19A7rfOiTu5s9n/sfu6ToFbUkcFCa0g6v2wdcDHbVxJAybv+Sx
-         XTQQ==
-X-Received: by 10.50.79.137 with SMTP id j9mr255073igx.15.1433839477439;
-        Tue, 09 Jun 2015 01:44:37 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.66.147 with SMTP id f19ls1392073igt.43.canary; Tue, 09 Jun
- 2015 01:44:37 -0700 (PDT)
-X-Received: by 10.70.96.41 with SMTP id dp9mr29114207pdb.13.1433839477075;
-        Tue, 09 Jun 2015 01:44:37 -0700 (PDT)
-Received: by 10.50.225.2 with SMTP id rg2msigc;
-        Tue, 9 Jun 2015 01:43:24 -0700 (PDT)
-X-Received: by 10.140.18.194 with SMTP id 60mr245242qgf.12.1433839404602;
-        Tue, 09 Jun 2015 01:43:24 -0700 (PDT)
-In-Reply-To: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
-X-Original-Sender: tholag@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271153>
-
-------=_Part_154_130913683.1433839404421
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_155_1243015653.1433839404421"
-
-------=_Part_155_1243015653.1433839404421
 Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 10:55:11 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z2FJO-0004Mh-Qi
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 10:55:11 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752460AbbFIIzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 04:55:01 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:34015 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933035AbbFIIy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 04:54:56 -0400
+Received: by laew7 with SMTP id w7so7205600lae.1
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 01:54:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UvxbudoWd42bJd8FX5vgmxYkBxiw/HXrXwo0h9bbT48=;
+        b=Ds6FegNKeZuVYxyRom1SJe9bnhaLosYlDM+oS+Tb2ZtuUiZxO7wg6zynqPfEQkCPbY
+         KNuKAZisYEPtRuM/XUP9vkhQfBXCBwaYbpDSoLMAUz/QGQTwrvV9+Y2i1DJLS/ZG0Ys6
+         /kFgz2pffycmtHwxC9AN2QdIbx5Ab3PQaQXqqpDzNHrjXgDKLhKmPC/DoxE0Ymj8y+kW
+         0koVDozHwHTHoXsbcKfmEk14ZvZfcbJpUxgxMykdCQvK+GPRphnSQrmatbhCRr6EohuN
+         wRehxotr0wws60FOJ7OHQ5UR+izFeaFdSyT+GqtwdSXyOsBhWVKQUlp7totCKsawnNil
+         dXvQ==
+X-Received: by 10.152.164.193 with SMTP id ys1mr21374503lab.65.1433840094231;
+ Tue, 09 Jun 2015 01:54:54 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 9 Jun 2015 01:54:54 -0700 (PDT)
+In-Reply-To: <xmqq4mmi9cwb.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271154>
 
-Dear Johannes,
-I'm trying the release candidate on Win 8.1. Everything's working now, but 
-when I clone a repository
+On Tue, Jun 9, 2015 at 4:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> Since 7b3b7e3 (am --abort: keep unrelated commits since the last failure
+>> and warn, 2010-12-21), git-am would refuse to rewind HEAD if commits
+>> were made since the last git-am failure. This check was implemented in
+>> safe_to_abort(), which checked to see if HEAD's hash matched the
+>> abort-safety file.
+>>
+>> However, this check was skipped if the abort-safety file was empty,
+>> which can happen if git-am failed while on an unborn branch.
+>
+> Shouldn't we then be checking that the HEAD is still unborn if this
+> file is found and says that there was no history in the beginning,
+> in order to give the "am on top of unborn" workflow the same degree
+> of safety?
 
-git clone http://...../name.git CustomFolder
+We do already check to see if the HEAD is still unborn:
 
-it creates CustomFolder with the checkout files, but the .git folder is 
-created inside CustomFolder\CustomFolder\
+        abort_safety=$(cat "$dotest/abort-safety")
+        if test "z$(git rev-parse --verify -q HEAD)" = "z$abort_safety"
+        then
+            return 0
+        fi
+        gettextln "You seem to have moved HEAD since the last 'am' failure.
+    Not rewinding to ORIG_HEAD" >&2
 
-Dir layout
-\
-\CustomFolder
-\CustomFolder\files.....
-\CustomFolder\CustomFolder\.git  <---- wrong additional level
- 
-so any other command doesn't work because it cannot find the .git folder.
-If I move the CustomFolder\CustomFolder\.git to CustomFolder\.git 
-everything works correctly.
+If HEAD is unborn, then git rev-parse will not print anything, so we
+would be comparing an empty string to an empty string.
 
-Let me know if it's enough data,
-Qb
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
-
-------=_Part_155_1243015653.1433839404421
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Dear Johannes,<br>I'm trying the release candidate on Win =
-8.1. Everything's working now, but when I clone a repository<br><br>git clo=
-ne http://...../name.git CustomFolder<br><br>it creates CustomFolder with t=
-he checkout files, but the .git folder is created inside CustomFolder\Custo=
-mFolder\<br><br>Dir layout<br>\<br>\CustomFolder<br>\CustomFolder\files....=
-.<br>\CustomFolder\CustomFolder\.git&nbsp; &lt;---- wrong additional level<=
-br>&nbsp;<br>so any other command doesn't work because it cannot find the .=
-git folder.<br>If I move the CustomFolder\CustomFolder\.git to CustomFolder=
-\.git everything works correctly.<br><br>Let me know if it's enough data,<b=
-r>Qb<br></div>
-
-<p></p>
-
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
-i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
-br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
-//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &=
-quot;Git for Windows&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
-ubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
-s://groups.google.com/d/optout</a>.<br />
-
-------=_Part_155_1243015653.1433839404421--
-------=_Part_154_130913683.1433839404421--
+Thanks,
+Paul
