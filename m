@@ -1,158 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/19] parse-options-cb: implement parse_opt_pass_argv_array()
-Date: Tue, 09 Jun 2015 16:16:45 -0700
-Message-ID: <xmqqr3pkwjz6.fsf@gitster.dls.corp.google.com>
-References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
-	<1433314143-4478-3-git-send-email-pyokagan@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: On undoing a forced push
+Date: Wed, 10 Jun 2015 06:24:26 +0700
+Message-ID: <CACsJy8BDhuk8efFrCPH4FWxbFt-3iqrS6AMLeQso5YPUHmTZwg@mail.gmail.com>
+References: <20150609121221.GA14126@lanh> <5576F2DC.7040603@gmail.com> <012a980b0b9f1aa394e2b3701e4e6f97@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 01:16:58 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 10 01:25:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2SlJ-0004yw-ND
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 01:16:54 +0200
+	id 1Z2StC-0003ZW-1D
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 01:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752884AbbFIXQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 19:16:48 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37729 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753223AbbFIXQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 19:16:47 -0400
-Received: by igbsb11 with SMTP id sb11so21732119igb.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 16:16:47 -0700 (PDT)
+	id S1754011AbbFIXY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 19:24:57 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:35889 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752970AbbFIXY5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 19:24:57 -0400
+Received: by ieclw1 with SMTP id lw1so23579915iec.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 16:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ajmB7RGShmSvQSgr/VUSMLm/HjcU/cIWTmZf6/tw9Pc=;
-        b=gWC2+xaPLAgGMoPcMsXpRHT5P4R2awozqS8hvcaMx6thwQIvG+flKXM+rM0B1KeJgt
-         zsBnzlk6GqJ/L43NOTaIHb92GcpsFmstIs8LBZqGKX7Qelnu6JuqBD9NcAGsgvMeYkzV
-         RRnxKDd9cuMTzbcuQE8HmYU5Ts6+W5+aP8ckORIV5lwuQ/xTJ4ey+w5pWqEfCQstdp4i
-         mRTpS7cnKzG8f1cbXGTM6n5khdRjpGx9vWjOxFfZ7e/FDSfSe3mO9hLNarA/mSY5m79H
-         z1RZKNCY9MIdLcL2WiGV7kDS15PIzr1fhze4ad4uRT4quDcskE5q4GLwo2KX6p1nAqhj
-         b07A==
-X-Received: by 10.107.135.162 with SMTP id r34mr266613ioi.13.1433891807142;
-        Tue, 09 Jun 2015 16:16:47 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
-        by mx.google.com with ESMTPSA id eg3sm2155290igb.0.2015.06.09.16.16.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Jun 2015 16:16:46 -0700 (PDT)
-In-Reply-To: <1433314143-4478-3-git-send-email-pyokagan@gmail.com> (Paul Tan's
-	message of "Wed, 3 Jun 2015 14:48:46 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tpYQX7NWd8Ag7JUUg0TCcl7RZfRFi83ZECt3fvOd0cY=;
+        b=bWSHU25SUtg8YygQMpl0CI5l37+iIvkLE+dLfq/3WOlomLXqjDANrNbT6w7J9I2ZxT
+         pzimitVu0QjdpDet+YOIKuhScrZWP4ygOodm46IesMB2kkwdehEHEA7tNVF/1Kj/+zSi
+         jdxGnLZiwfwNBur6t61ZwTGJhNqpg6HwuKOOGggLfWosXmnrkwYx5oahTwrobpJ8LTPE
+         4U+FcZO2DlCyZeSabic/XV00GhCGclTSkmYej1fsWHOzHkFdstrgvPNxHjbXdDyhkXM4
+         lLrqvEEa2roi/6BGUPmbwdMyObNzprqH3bLg77ctRv3sXbaZxtiM9crpDC03B6OGX3kR
+         MT1w==
+X-Received: by 10.50.7.68 with SMTP id h4mr1853888iga.40.1433892296514; Tue,
+ 09 Jun 2015 16:24:56 -0700 (PDT)
+Received: by 10.107.6.9 with HTTP; Tue, 9 Jun 2015 16:24:26 -0700 (PDT)
+In-Reply-To: <012a980b0b9f1aa394e2b3701e4e6f97@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271241>
 
-Paul Tan <pyokagan@gmail.com> writes:
-
-> Certain git commands, such as git-pull, are simply wrappers around other
-> git commands like git-fetch, git-merge and git-rebase. As such, these
-> wrapper commands will typically need to "pass through" command-line
-> options of the commands they wrap.
+On Tue, Jun 9, 2015 at 11:29 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Sorry to chime in so late in the discussion, but I think that the `--force-with-lease` option is what you are looking for. It allows you to force-push *but only* if the forced push would overwrite the ref we expect, i.e. (simplified, but you get the idea) `git push --force-with-lease <remote> <ref>` will *only* succeed if the remote's <ref> agrees with the local `refs/remotes/<remote>/<ref>`.
 >
-> Implement the parse_opt_pass_argv_array() parse-options callback, which
-> will reconstruct all the provided command-line options into an
-> argv_array, such that it can be passed to another git command. This is
-> useful for passing command-line options that can be specified multiple
-> times.
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
->
-> Notes:
->     v2
->     
->     * This function is a requirement for the rewrite of git-am to handle
->       passing git-apply's options to git-apply. Since it would be
->       implemented anyway I thought it would be good if git-pull could take
->       advantage of it as well to handle --strategy and --strategy-option.
->
->  parse-options-cb.c | 32 ++++++++++++++++++++++++++++++++
->  parse-options.h    |  1 +
->  2 files changed, 33 insertions(+)
->
-> diff --git a/parse-options-cb.c b/parse-options-cb.c
-> index 5b1dbcf..7330506 100644
-> --- a/parse-options-cb.c
-> +++ b/parse-options-cb.c
-> @@ -4,6 +4,7 @@
->  #include "commit.h"
->  #include "color.h"
->  #include "string-list.h"
-> +#include "argv-array.h"
->  
->  /*----- some often used options -----*/
->  
-> @@ -163,3 +164,34 @@ int parse_opt_pass_strbuf(const struct option *opt, const char *arg, int unset)
->  
->  	return 0;
->  }
-> +
-> +/**
-> + * For an option opt, recreate the command-line option, appending it to
-> + * opt->value which must be a argv_array. This is useful when we need to pass
-> + * the command-line option, which can be specified multiple times, to another
-> + * command.
-> + */
+> If you use `--force-with-lease`, you simply cannot force-forget anything on the remote side that you cannot undo (because you have everything locally you need to undo it).
 
-Almost the same comment as 01/19 applies to this comment.
+Yeah I recall Junio did something about pushes.. I was about to
+suggest that we promote force-with-lease to default --force and
+current --force becomes --force --force. But there's this from commit
+2233ad4 (Merge branch 'jc/push-cas' - 2013-09-09) that makes me
+hesitate
 
-I think it makes good sense to have two variants, one that lets the
-last one win and pass only that last one (i.e. 01/19) and the other
-that accumulates them into an argv_array (i.e. this one).  But it
-feels iffy, given that the "acculate" version essentially creates an
-array of (char *), to make "the last one wins, leaving a single
-string" to use strbuf.  I'd find it much more understandable if 01/19
-took (char **) as opt->value instead of a strbuf.
+    The logic to choose the default implemented here is fragile
+    (e.g. "git fetch" after seeing a failure will update the
+    remote-tracking branch and will make the next "push" pass,
+    defeating the safety pretty easily).  It is suitable only for the
+    simplest workflows, and it may hurt users more than it helps them.
 
-In any case, these two need to be added as a related pair to the API
-documentation.
-
-Thanks.
-
-> +int parse_opt_pass_argv_array(const struct option *opt, const char *arg, int unset)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	struct argv_array *opt_value = opt->value;
-> +
-> +	if (opt->long_name) {
-> +		strbuf_addstr(&sb, unset ? "--no-" : "--");
-> +		strbuf_addstr(&sb, opt->long_name);
-> +		if (arg) {
-> +			strbuf_addch(&sb, '=');
-> +			strbuf_addstr(&sb, arg);
-> +		}
-> +	} else if (opt->short_name && !unset) {
-> +		strbuf_addch(&sb, '-');
-> +		strbuf_addch(&sb, opt->short_name);
-> +		if (arg)
-> +			strbuf_addstr(&sb, arg);
-> +	} else
-> +		return -1;
-> +
-> +	argv_array_push(opt_value, sb.buf);
-> +	strbuf_release(&sb);
-> +	return 0;
-> +}
-> diff --git a/parse-options.h b/parse-options.h
-> index 1d21398..b663f87 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -225,6 +225,7 @@ extern int parse_opt_tertiary(const struct option *, const char *, int);
->  extern int parse_opt_string_list(const struct option *, const char *, int);
->  extern int parse_opt_noop_cb(const struct option *, const char *, int);
->  extern int parse_opt_pass_strbuf(const struct option *, const char *, int);
-> +extern int parse_opt_pass_argv_array(const struct option *, const char *, int);
->  
->  #define OPT__VERBOSE(var, h)  OPT_COUNTUP('v', "verbose", (var), (h))
->  #define OPT__QUIET(var, h)    OPT_COUNTUP('q', "quiet",   (var), (h))
+Either way I still want to provide an escape hatch for --force as it's
+good to reduce the number of unrecoverable operations down.
+-- 
+Duy
