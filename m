@@ -1,155 +1,167 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 0/8] object_id part 2
-Date: Tue,  9 Jun 2015 16:28:28 +0000
-Message-ID: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:29:58 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 01/13] delete_ref(): move declaration to refs.h
+Date: Tue, 9 Jun 2015 09:42:15 -0700
+Message-ID: <CAGZ79kagxZLxFdf4QmiQr7qP6bPm_vZC8FbhmndC6O=AARrrNw@mail.gmail.com>
+References: <cover.1433763494.git.mhagger@alum.mit.edu>
+	<2eea274d60e355e4944ca9ed400e6c2132b4ed32.1433763494.git.mhagger@alum.mit.edu>
+	<CAGZ79kYy3zUezRzAG3Uo7bDbLgJ7srj3F1k-ama1C44ZdbHr=Q@mail.gmail.com>
+	<5576BBB1.5020903@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 09 18:42:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2MPM-0001p9-6L
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:29:48 +0200
+	id 1Z2MbV-0004nw-Hp
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932454AbbFIQ3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 12:29:38 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:38323 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753418AbbFIQ3S (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:29:18 -0400
-Received: from vauxhall.crustytoothpaste.net (107-1-110-101-ip-static.hfc.comcastbusiness.net [107.1.110.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A49B02808F;
-	Tue,  9 Jun 2015 16:29:11 +0000 (UTC)
-X-Mailer: git-send-email 2.4.0
-X-Spam-Score: -1.5 BAYES_00
+	id S1753404AbbFIQmQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2015 12:42:16 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:36391 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753194AbbFIQmP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:42:15 -0400
+Received: by yked142 with SMTP id d142so10945487yke.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 09:42:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3URlHMZ5XsWlKJF4TAp+IbzIPAIxkfmIaNfUJ7P34qY=;
+        b=AoNK/Few7E4+z5f/9iRu04Uior5A53HabCPv1HhuP2rY8C+o7mVpnLXPeiOpt1VsZp
+         8f3Dle55QY6bjmmnkjK+Y28zeWu2DDxK+keTMEYSbHKCgjXl+NlNWlh2vHhmCfRIGiLQ
+         /4thXTlmItPy1N1aBfZCEKfjOlHzxaQpNVnA/gf8Iuvd80o+TbqdJCHpr6WI9dXLjXkt
+         eUWgcuF0rsL1p0XLPHu/ZgCbb95ViDdGHIaZ/1Y0V2Cr99DWD+1OSnmg3g5BNB6ZSTWw
+         NnZBLDqHuBxqYyRwMn8oQddagBlhtgL/U7dLhI52XA76orOpe+fWO4pwGSoyV7SUWtRj
+         CGug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3URlHMZ5XsWlKJF4TAp+IbzIPAIxkfmIaNfUJ7P34qY=;
+        b=bSIlc7FKJ4t9z3Lhi21cMUac2DBUjXi2Ri3k2QeV0F1Og+S3fnJc9w4tlyFdxtXAtP
+         Io/uFbNvsWq59t9q6Ry3z3+43ygTMhJUj2Yubhj+oKZXK6vCe5KkEmDEnK/t2wY3XqR9
+         EfErFMZM+iyRt9+ehksCb7gpJo5iKG6KrtR5d+g02A/9jCl3jLpkCYl6ACBlNxyytF/b
+         oRTxp22/BuH75pOgGGh2QPIf9lbe28slstjB/ehZbNO4PpVr+iePlEIet4IA3oiBF1cq
+         gmFh4G2IB+1B0rNw+Ba+9zu6iLdetnTnexdbyhzpdBF3y+wmTeA+yAete7HWx8wm9QAj
+         2SZQ==
+X-Gm-Message-State: ALoCoQmQnOramXWyAzD1DFSjEvnVuuw+wIMT7LW8o60zTh1KXRA8ViM47bu1OH7KsU77jKTl73aF
+X-Received: by 10.170.117.142 with SMTP id j136mr26649120ykb.56.1433868135134;
+ Tue, 09 Jun 2015 09:42:15 -0700 (PDT)
+Received: by 10.37.101.197 with HTTP; Tue, 9 Jun 2015 09:42:15 -0700 (PDT)
+In-Reply-To: <5576BBB1.5020903@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271201>
 
-This is another series of conversions to struct object_id.
+On Tue, Jun 9, 2015 at 3:10 AM, Michael Haggerty <mhagger@alum.mit.edu>=
+ wrote:
+> On 06/08/2015 06:43 PM, Stefan Beller wrote:
+>> On Mon, Jun 8, 2015 at 4:45 AM, Michael Haggerty <mhagger@alum.mit.e=
+du> wrote:
+>>> [...]
+>>> +/*
+>>> + * Delete the specified reference. If old_sha1 is non-NULL and not
+>>> + * NULL_SHA1, then verify that the current value of the reference =
+is
+>>> + * old_sha1 before deleting it.
+>>
+>> And here I wondered what the distinction between NULL and non-NULL,
+>> but NULL_SHA1
+>> is and digging into the code, there is none. (As you can also see in
+>> this patch above with
+>>     (old_sha1 && !is_null_sha1(old_sha1)) ? old_sha1 : NULL,
+>> but when digging deeper, the !is_null_sha1(old_sha1) is an arbitrary
+>> limitation (i.e.
+>> ref_transaction_delete and ref_transaction_update don't differ betwe=
+en
+>> those two cases.)
+>>
+>> The distinction comes in at lock_ref_sha1_basic, where I think we ma=
+y
+>> want to get rid of
+>> the is_null_sha1 check and depend on NULL/non-NULL as the difference
+>> for valid and invalid
+>> sha1's?
+>
+> I'm having a little trouble understanding your comment.
+>
+> The convention for ref_transaction_update() and friends is that
+>
+> * old_sha1 =3D=3D NULL
+>
+>   We don't care whether the reference existed prior to the
+>   update, nor what its value was.
+>
+> * *old_sha1 is NULL_SHA1
+>
+>   (by which I mean that old_sha1 points at 20 zero bytes; I hope
+>   that's clear even though NULL_SHA1 is not actually defined
+>   anywhere): The reference must *not* have existed prior to the
+>   update.
 
-This series converts more of the refs code and struct object to use
-struct object_id.  It introduces two additional helper functions.  One
-is has_object_file, which is the equivalent of has_sha1_file.  The name
-was chosen to be slightly more logical than has_oid_file, although it
-can be changed if desired.
+Ok that's what I was missing.
 
-The second helper function is parse_oid_hex.  It works much like
-get_oid_hex, but it takes an optional length argument and returns the
-number of bytes parsed on success (40) and 0 on error.  It's designed to
-be more useful in conditionals and to enable us to avoid having to write
-GIT_SHA1_HEXSZ in favor of simply using the return value.
+>
+> * old_sha1 has some other value
+>
+>   The reference must have had that value prior to the update.
+>
+> lock_ref_sha1_basic() distinguishes between { NULL vs. NULL_SHA1 vs.
+> other values } in the same way that ref_transaction_update() does.
+>
+> The delete_ref() function doesn't follow the same convention. It trea=
+ts
+> NULL and NULL_SHA1 identically, as "don't care".
+>
+> It probably makes sense to change delete_ref() use the same conventio=
+n
+> as ref_transaction_update(), but there are quite a few callers and I
+> didn't have the energy to review them all as part of this patch serie=
+s.
+> So I left it unchanged and just documented the status quo better.
+>
+>> That said, do we want to add another sentence to the doc here saying
+>> non-NULL and not
+>> NULL_SHA1 are treated the same or is it clear enough?
+>> With or without this question addressed:
+>> Reviewed-by: Stefan Beller <sbeller@google.com>
+>
+> In set notation,
+>
+>     "non-NULL" =3D
+>         "non-NULL and not NULL_SHA1" =E2=88=AA
+>         "non-NULL and equal to NULL_SHA1"
+>
+> The latter two are *not* treated the same, so I don't see how we can
+> claim that "non-NULL" and "not NULL_SHA1" are treated the same. I mus=
+t
+> be misunderstanding you.
+>
+> Would it help if I changed the comment to
+>
+>     Delete the specified reference. If old_sha1 is non-NULL and not
+>     NULL_SHA1, then verify that the current value of the reference is
+>     old_sha1 before deleting it. If old_sha1 is NULL or NULL_SHA1,
+>     delete the reference it it exists, regardless of its old value.
+>
+> ?
 
-The final piece in this series is the conversion of struct object to use
-struct object_id.  This is a necessarily large patch because of the
-large number of places this code is used.
+This is very clear to me.
 
-brian m. carlson (8):
-  refs: convert some internal functions to use object_id
-  sha1_file: introduce has_object_file helper.
-  Convert struct ref to use object_id.
-  Add a utility function to make parsing hex values easier.
-  add_sought_entry_mem: convert to struct object_id
-  parse_fetch: convert to use struct object_id
-  ref_newer: convert to use struct object_id
-  Convert struct object to object_id
-
- archive.c                |   6 +--
- bisect.c                 |  10 ++---
- branch.c                 |   2 +-
- builtin/blame.c          |  46 ++++++++++----------
- builtin/branch.c         |   2 +-
- builtin/checkout.c       |  24 +++++------
- builtin/clone.c          |  18 ++++----
- builtin/commit-tree.c    |   4 +-
- builtin/commit.c         |   8 ++--
- builtin/describe.c       |  20 ++++-----
- builtin/diff-tree.c      |  12 +++---
- builtin/diff.c           |  12 +++---
- builtin/fast-export.c    |  34 +++++++--------
- builtin/fetch-pack.c     |  14 ++++---
- builtin/fetch.c          |  54 ++++++++++++------------
- builtin/fmt-merge-msg.c  |   6 +--
- builtin/for-each-ref.c   |  12 +++---
- builtin/fsck.c           |  34 +++++++--------
- builtin/grep.c           |   6 +--
- builtin/index-pack.c     |  10 ++---
- builtin/log.c            |  24 +++++------
- builtin/ls-remote.c      |   2 +-
- builtin/merge-base.c     |   8 ++--
- builtin/merge-tree.c     |   6 +--
- builtin/merge.c          |  60 +++++++++++++--------------
- builtin/name-rev.c       |  12 +++---
- builtin/notes.c          |   2 +-
- builtin/pack-objects.c   |  16 +++----
- builtin/receive-pack.c   |   2 +-
- builtin/reflog.c         |   4 +-
- builtin/remote.c         |  12 +++---
- builtin/replace.c        |   2 +-
- builtin/reset.c          |   6 +--
- builtin/rev-list.c       |  18 ++++----
- builtin/rev-parse.c      |   4 +-
- builtin/shortlog.c       |   2 +-
- builtin/show-branch.c    |   8 ++--
- builtin/tag.c            |   4 +-
- builtin/unpack-objects.c |  10 ++---
- bundle.c                 |  10 ++---
- cache-tree.c             |   2 +-
- cache.h                  |  12 ++++++
- combine-diff.c           |   4 +-
- commit.c                 |  32 +++++++-------
- connect.c                |   2 +-
- decorate.c               |   2 +-
- diff-lib.c               |   2 +-
- fetch-pack.c             |  24 +++++------
- fsck.c                   |  10 ++---
- hex.c                    |   7 ++++
- http-backend.c           |   2 +-
- http-push.c              |  88 +++++++++++++++++++--------------------
- http.c                   |   2 +-
- line-log.c               |   6 +--
- list-objects.c           |   4 +-
- log-tree.c               |  32 +++++++-------
- merge-blobs.c            |   4 +-
- merge-recursive.c        |  22 +++++-----
- merge.c                  |   2 +-
- notes-merge.c            |  24 +++++------
- object.c                 |   8 ++--
- object.h                 |   2 +-
- pack-bitmap-write.c      |  16 +++----
- pack-bitmap.c            |  34 +++++++--------
- patch-ids.c              |   6 +--
- pretty.c                 |  18 ++++----
- refs.c                   | 106 +++++++++++++++++++++++------------------------
- remote-curl.c            |  21 +++++-----
- remote.c                 |  68 +++++++++++++++---------------
- remote.h                 |   8 ++--
- revision.c               |  48 ++++++++++-----------
- send-pack.c              |  16 +++----
- sequencer.c              |  38 ++++++++---------
- server-info.c            |   2 +-
- sha1_file.c              |   5 +++
- sha1_name.c              |  20 ++++-----
- shallow.c                |   6 +--
- submodule.c              |   8 ++--
- tag.c                    |  10 ++---
- test-match-trees.c       |   2 +-
- transport-helper.c       |  18 ++++----
- transport.c              |  32 +++++++-------
- transport.h              |   8 ++--
- tree.c                   |  10 ++---
- upload-pack.c            |  26 ++++++------
- walker.c                 |  18 ++++----
- wt-status.c              |   2 +-
- 87 files changed, 706 insertions(+), 679 deletions(-)
-
--- 
-2.4.0
+>
+> Michael
+>
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
+>
