@@ -1,100 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/13] delete_refs(): improve error message
-Date: Tue, 09 Jun 2015 11:47:56 -0700
-Message-ID: <xmqq38207m77.fsf@gitster.dls.corp.google.com>
-References: <cover.1433763494.git.mhagger@alum.mit.edu>
-	<9f6f3432467c2b12329c16a46c52670f772993e5.1433763494.git.mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 09 20:48:08 2015
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH v3 6/7] send-email: suppress leading and trailing whitespaces in addresses
+Date: Tue,  9 Jun 2015 20:50:03 +0200
+Message-ID: <1433875804-16007-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 20:50:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2OZC-0007fv-No
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 20:48:07 +0200
+	id 1Z2ObU-0001BB-4c
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 20:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932927AbbFISsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 14:48:02 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:34453 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753888AbbFISsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 14:48:01 -0400
-Received: by igdh15 with SMTP id h15so2924841igd.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 11:48:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-type;
-        bh=zM+hfyia32HP71GXvWc/AT3cXxAbfKKUPENY8m/M93Y=;
-        b=G1ypRW1QGrkyzbaRQlhTZTwjPuAD4FxyBFNO0JdgvZBKFPc+NAFNsXISHZIQt87/iq
-         eGP5n34MfzppGTA7DgCnP2w7MShTaAwj5pvL3LEFTSlTKCmSXF8NR2tUKypjykDAqiS3
-         1k4M8H4GOsdqggvwCyh9NwOp+FXkj8D/Kqo0uuP/ksJzxdV60CQe40iDyofAsiu30wWt
-         d91KAFFNU7iF4mlxiTdEZfxzCi7ScgOzJWxMYPULWT/wKbtJEgr6ElbPwlEGkZiEfZnf
-         jhSOQAOogveLlc+YgS7pllRHRjSLf+mkQg9mxnsB2WK6ynzdOkH9+51JspVQBIcKlVjM
-         BQzA==
-X-Received: by 10.50.17.104 with SMTP id n8mr22072625igd.21.1433875679031;
-        Tue, 09 Jun 2015 11:47:59 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
-        by mx.google.com with ESMTPSA id ot6sm1678280igb.11.2015.06.09.11.47.56
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Jun 2015 11:47:57 -0700 (PDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932075AbbFISuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 14:50:18 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:36888 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933072AbbFISuN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 14:50:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 1CF5D27F1;
+	Tue,  9 Jun 2015 20:50:12 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zcx4UHVupfZF; Tue,  9 Jun 2015 20:50:12 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 06CBA270D;
+	Tue,  9 Jun 2015 20:50:12 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id F0A6420E2;
+	Tue,  9 Jun 2015 20:50:11 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zpthmBnoMlA5; Tue,  9 Jun 2015 20:50:11 +0200 (CEST)
+Received: from Groseille.home (AGrenoble-652-1-286-96.w82-122.abo.wanadoo.fr [82.122.169.96])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 1391120DC;
+	Tue,  9 Jun 2015 20:50:10 +0200 (CEST)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271225>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Remove leading and trailing whitespaces when sanitizing addresses so
+that git send-email give the same output when passing arguments like
+" jdoe@example.com   " or "\t jdoe@example.com " as with
+"jdoe@example.com".
 
-> Change the error message from
->
->     Could not remove branch %s
->
-> to
->
->     Could not remove reference %s
->
-> This change makes sense even for the existing caller, which uses the
-> function to delete remote-tracking branches.
+The next commit will introduce a test for this aswell.
 
-I am 80% convinced ;-)
+Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+---
+ git-send-email.perl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-The existing caller never used this for removing tags, so 'could not
-remove branch' was equally correct for it and was more specific than
-'could not remove reference'.  If you change it to 'could not remove
-that thing %s', it would still be correct for the existing caller;
-it would be even less specific for them, though ;-)
-
-The new callers you will add in later patch of course cannot live
-with 'could not remove branch', so I think that this is an
-acceptable compromise we can live with.  If somebody later wants to
-make the message more specific, they can add code that switches on
-the prefix of the ref when coming up with the error message (and use
-that code consistently in other error messages e.g. 'could not add
-reference').
-
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/refs.c b/refs.c
-> index c413282..2a2a06d 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2827,7 +2827,7 @@ int delete_refs(struct string_list *refnames)
->  		const char *refname = refnames->items[i].string;
->  
->  		if (delete_ref(refname, NULL, 0))
-> -			result |= error(_("Could not remove branch %s"), refname);
-> +			result |= error(_("Could not remove reference %s"), refname);
->  	}
->  
->  	return result;
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ea03308..3d144bd 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -978,6 +978,9 @@ sub sanitize_address {
+ 	# remove garbage after email address
+ 	$recipient =~ s/(.*>).*$/$1/;
+ 
++	# remove leading and trailing whitespace
++	$recipient =~ s/^\s+|\s+$//g;
++
+ 	my ($recipient_name, $recipient_addr) = ($recipient =~ /^(.*?)\s*(<.*)/);
+ 
+ 	if (not $recipient_name) {
+-- 
+1.9.1
