@@ -1,100 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/19] pull: pass verbosity, --progress flags to fetch and merge
-Date: Tue, 09 Jun 2015 16:36:45 -0700
-Message-ID: <xmqqioawwj1u.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 09/19] pull: error on no merge candidates
+Date: Tue, 09 Jun 2015 16:56:33 -0700
+Message-ID: <xmqqeglkwi4u.fsf@gitster.dls.corp.google.com>
 References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
-	<1433314143-4478-7-git-send-email-pyokagan@gmail.com>
+	<1433314143-4478-10-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stephen Robin <stephen.robin@gmail.com>
 To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 01:36:55 2015
+X-From: git-owner@vger.kernel.org Wed Jun 10 01:56:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2T4f-0005la-Ez
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 01:36:53 +0200
+	id 1Z2TNt-0006WH-7v
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 01:56:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbbFIXgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 19:36:50 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:36510 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751700AbbFIXgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 19:36:48 -0400
-Received: by igbpi8 with SMTP id pi8so23308332igb.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 16:36:47 -0700 (PDT)
+	id S1753745AbbFIX4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 19:56:37 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37152 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752669AbbFIX4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 19:56:35 -0400
+Received: by igbsb11 with SMTP id sb11so22202684igb.0
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 16:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=0Pff3jYfPfv6NVmJFEplLfdI8pc7/ZHI2XzRsJiqaZg=;
-        b=mJumK2wWT28ZpMAMdYLQm6ZdgnQ/ARAJs+2b0TLfIKq2RZKqpm/DtxDQWS8DB6OQrh
-         JZj7bXzuqFxnonAAC4/mo70ir5U9R6Re5Awsg6ozT0EsvUDF2m+ncWGi+nuZkk8LCw9E
-         PQ+u5YnZvtZPUb7Kx2DhgeMkgLPYcvfKlD+MDen5jUPNATM3+RLh3hfp+19U4Hcyl8GO
-         8S6GvO5nK1Tui7XrtgsXG9VyaPtn9NvM4iT3pSSNxsprb32jFE6MKHn+7jzxm1cZnVH/
-         kcae7fIwUHjS4dxMNVh49rmof9GIOIEKF3neDkJHtrjnCbZQIq0Mv5AapgDJJvjnXv29
-         XMxw==
-X-Received: by 10.107.130.101 with SMTP id e98mr357421iod.80.1433893007545;
-        Tue, 09 Jun 2015 16:36:47 -0700 (PDT)
+        bh=ArLYGsSZwFa0uCBrpoVndx58CJvTCJx+ZYGl03H+HLA=;
+        b=F9YNu0t3Yt8ul4RisfuGJTNEDnH/FPZlZWFM1AB4cSXPfOeCBv7z7qrNo8a5JsxHFc
+         J+kCBW2NMgASwtpsyWhJpS3N7rJuYf1jIzAPNmQScy8Wu+eDjGEtZDBEpxC+e0B62mhi
+         LDuAdtNpeTipSMIsgg+tI4HW+V4jbs82UtdjkzjWqiIUKK4NyefH8FTY+61O2Ftkbs0h
+         fQ9fkLWoYQvUYtwH8+zUO2YPNKbcvfn0RVb8EmXS9cjflueE9jEbn5NfKpPQux5nBcow
+         JIakXw6+Uj2WUqaawHiPjqcksYZt39mC/mdSJAT+WRb/ly+spfQ/5a2xilWWyoUWTm65
+         b8Fg==
+X-Received: by 10.107.15.149 with SMTP id 21mr486340iop.44.1433894195283;
+        Tue, 09 Jun 2015 16:56:35 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
-        by mx.google.com with ESMTPSA id x3sm2206960igl.2.2015.06.09.16.36.46
+        by mx.google.com with ESMTPSA id av6sm2228927igc.17.2015.06.09.16.56.34
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Jun 2015 16:36:46 -0700 (PDT)
-In-Reply-To: <1433314143-4478-7-git-send-email-pyokagan@gmail.com> (Paul Tan's
-	message of "Wed, 3 Jun 2015 14:48:50 +0800")
+        Tue, 09 Jun 2015 16:56:34 -0700 (PDT)
+In-Reply-To: <1433314143-4478-10-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Wed, 3 Jun 2015 14:48:53 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271244>
 
 Paul Tan <pyokagan@gmail.com> writes:
 
-> Re-implement support for this flag by introducing the option callback
-> handler parse_opt_passthru(). This callback is used to pass the
-> "--progress" or "--no-progress" command-line switch to git-fetch and
-> git-merge.
+>  /**
+> + * Appends merge candidates from FETCH_HEAD that are not marked not-for-merge
+> + * into merge_heads.
+> + */
 
-Forgot to rephrase?  parse-opt-passthru() is a good name for "pass
-the single string, last one wins", but is implemented in another
-patch.
+Hmph, I vaguely recall doing that in C elsewhere already, even
+though I do not remember where offhand...
 
-	Use parse_opt_passthru() implemented earlier to pass the
-	"--[no-]progress" command line options to git-fetch and
-	git-merge.
-
-or something like that.
-
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 0ca23a3..c9c2cc0 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -16,11 +16,35 @@ static const char * const pull_usage[] = {
->  	NULL
->  };
->  
-> +/* Shared options */
-> +static int opt_verbosity;
-> +static struct strbuf opt_progress = STRBUF_INIT;
+> +static void get_merge_heads(struct sha1_array *merge_heads)
+> +{
+> +	const char *filename = git_path("FETCH_HEAD");
+> +	FILE *fp;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	unsigned char sha1[GIT_SHA1_RAWSZ];
 > +
->  static struct option pull_options[] = {
-> +	/* Shared options */
-> +	OPT__VERBOSITY(&opt_verbosity),
-> +	{ OPTION_CALLBACK, 0, "progress", &opt_progress, NULL,
-> +	  N_("force progress reporting"),
-> +	  PARSE_OPT_NOARG, parse_opt_pass_strbuf},
-> +
->  	OPT_END()
->  };
+> +	if (!(fp = fopen(filename, "r")))
+> +		die_errno(_("could not open '%s' for reading"), filename);
+> +	while(strbuf_getline(&sb, fp, '\n') != EOF) {
 
-Seeing this use case convinces me that the new parse-opt callback
-parse-opt-pass-single-string-last-one-wins() in 01/19 should not be
-strbuf based interface but should be (const char *) based one.
+Missing SP after "while"
 
-Other than that the change looks nicely done.  So far, the series
-has been a very pleasant read up to this step.
+> +		if (get_sha1_hex(sb.buf, sha1))
+> +			continue;  /* invalid line: does not start with SHA1 */
+> +		if (starts_with(sb.buf + GIT_SHA1_HEXSZ, "\tnot-for-merge"))
+
+Look for "\tnot-for-merge\t" instead?
+
+The patch overall looks good.  Thanks.
