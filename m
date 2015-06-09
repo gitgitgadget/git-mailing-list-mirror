@@ -1,41 +1,41 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2] commit: cope with scissors lines in commit message
-Date: Tue,  9 Jun 2015 02:24:21 +0200
-Message-ID: <1433809461-9823-1-git-send-email-szeder@ira.uka.de>
-References: <20150608183019.Horde.Kp4b2pClPLqAJp3LacT_fA1@webmail.informatik.kit.edu>
+Subject: [PATCH v3] commit: cope with scissors lines in commit message
+Date: Tue,  9 Jun 2015 02:28:34 +0200
+Message-ID: <1433809714-10865-1-git-send-email-szeder@ira.uka.de>
+References: <1433809461-9823-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 02:25:28 2015
+X-From: git-owner@vger.kernel.org Tue Jun 09 02:28:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z27M5-0007bk-0r
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 02:25:25 +0200
+	id 1Z27PP-0002sm-KP
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 02:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753680AbbFIAZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 20:25:19 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:38970 "EHLO
+	id S1753369AbbFIA2r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 20:28:47 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:38998 "EHLO
 	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932569AbbFIAZJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 20:25:09 -0400
+	by vger.kernel.org with ESMTP id S1752896AbbFIA2q (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 20:28:46 -0400
 Received: from x590e5e8c.dyn.telefonica.de ([89.14.94.140] helo=localhost.localdomain)
 	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1Z27Li-0007al-RK; Tue, 09 Jun 2015 02:25:04 +0200
-X-Mailer: git-send-email 2.4.3.384.g605df7b
-In-Reply-To: <20150608183019.Horde.Kp4b2pClPLqAJp3LacT_fA1@webmail.informatik.kit.edu>
+	iface 141.3.10.81 id 1Z27PG-0007qZ-9a; Tue, 09 Jun 2015 02:28:43 +0200
+X-Mailer: git-send-email 2.4.3.384.g5790712
+In-Reply-To: <1433809461-9823-1-git-send-email-szeder@ira.uka.de>
 X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1433809504.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1433809723.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271145>
 
 The diff and submodule shortlog appended to the commit message template
 by 'git commit --verbose' are not stripped when the commit message
@@ -46,7 +46,8 @@ When cleaning up a commit message with 'git commit --verbose' or
 scissors line, i.e. a line containing nothing but a comment character, =
 a
 space, and the scissors cut.  This is good, because people can embed
-scissor lines in the commit message while using 'git commit --verbose',
+scissors lines in the commit message while using 'git commit --verbose'=
+,
 and the text they write after their indented scissors line doesn't get
 deleted.
 
@@ -66,13 +67,7 @@ of the line, yet be careful to catch scissors on the first line as well=
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
-Changes besides incorporating Junio's suggestion and updating the commi=
-t
-message accordingly:
-
- * Instead of adding a new test, modify the existing one to check
-   handling indented scissors lines.
- * Add a test to check scissors on the first line
+=46ixed a typo in the commit message.
 =20
  t/t7502-commit.sh | 24 +++++++++++++++++++++++-
  wt-status.c       |  9 +++++----
