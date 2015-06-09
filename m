@@ -1,32 +1,32 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 4/8] Add a utility function to make parsing hex values easier.
-Date: Tue,  9 Jun 2015 16:28:32 +0000
-Message-ID: <1433867316-663554-5-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH 7/8] ref_newer: convert to use struct object_id
+Date: Tue,  9 Jun 2015 16:28:35 +0000
+Message-ID: <1433867316-663554-8-git-send-email-sandals@crustytoothpaste.net>
 References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:29:35 2015
+X-From: git-owner@vger.kernel.org Tue Jun 09 18:29:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2MP8-0001Qc-4j
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:29:34 +0200
+	id 1Z2MP9-0001Qc-9p
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 18:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980AbbFIQ3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 12:29:25 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:38341 "EHLO
+	id S932297AbbFIQ3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 12:29:32 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:38353 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751649AbbFIQ3R (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:29:17 -0400
+	by vger.kernel.org with ESMTP id S932075AbbFIQ3U (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 12:29:20 -0400
 Received: from vauxhall.crustytoothpaste.net (107-1-110-101-ip-static.hfc.comcastbusiness.net [107.1.110.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 860E828093;
-	Tue,  9 Jun 2015 16:29:16 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B6C6828096;
+	Tue,  9 Jun 2015 16:29:18 +0000 (UTC)
 X-Mailer: git-send-email 2.4.0
 In-Reply-To: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -1.5 BAYES_00
@@ -34,58 +34,96 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271195>
 
-get_oid_hex is already available for parsing hex object IDs into struct
-object_id, but parsing code still must hard-code the number of bytes
-read.  Introduce parse_oid_hex, which accepts an optional length, and
-also returns the number of bytes parsed on success, or 0 on failure.
-This makes it easier for code not to assume fixed values when parsing,
-and to move to larger hash functions in the future.
+Convert ref_newer and its caller to use struct object_id instead of
+unsigned char *.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 9 +++++++++
- hex.c   | 7 +++++++
- 2 files changed, 16 insertions(+)
+ builtin/remote.c | 2 +-
+ http-push.c      | 4 ++--
+ remote.c         | 8 ++++----
+ remote.h         | 2 +-
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index fa1f067..f3b829f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1012,6 +1012,15 @@ extern int for_each_abbrev(const char *prefix, each_abbrev_fn, void *);
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
- extern int get_oid_hex(const char *hex, struct object_id *sha1);
+diff --git a/builtin/remote.c b/builtin/remote.c
+index fa4d04c..0efc388 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -411,7 +411,7 @@ static int get_push_ref_states(const struct ref *remote_refs,
+ 		else if (is_null_oid(&ref->old_oid))
+ 			info->status = PUSH_STATUS_CREATE;
+ 		else if (has_object_file(&ref->old_oid) &&
+-			 ref_newer(ref->new_oid.hash, ref->old_oid.hash))
++			 ref_newer(&ref->new_oid, &ref->old_oid))
+ 			info->status = PUSH_STATUS_FASTFORWARD;
+ 		else
+ 			info->status = PUSH_STATUS_OUTOFDATE;
+diff --git a/http-push.c b/http-push.c
+index d054fdb..0e688a7 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1899,8 +1899,8 @@ int main(int argc, char **argv)
+ 		    !is_null_oid(&ref->old_oid) &&
+ 		    !ref->force) {
+ 			if (!has_object_file(&ref->old_oid) ||
+-			    !ref_newer(ref->peer_ref->new_oid.hash,
+-				       ref->old_oid.hash)) {
++			    !ref_newer(&ref->peer_ref->new_oid,
++				       &ref->old_oid)) {
+ 				/*
+ 				 * We do not have the remote ref, or
+ 				 * we know that the remote ref is not
+diff --git a/remote.c b/remote.c
+index 706d2fb..675cb23 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1626,7 +1626,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 			else if (!lookup_commit_reference_gently(ref->old_oid.hash, 1) ||
+ 				 !lookup_commit_reference_gently(ref->new_oid.hash, 1))
+ 				reject_reason = REF_STATUS_REJECT_NEEDS_FORCE;
+-			else if (!ref_newer(ref->new_oid.hash, ref->old_oid.hash))
++			else if (!ref_newer(&ref->new_oid, &ref->old_oid))
+ 				reject_reason = REF_STATUS_REJECT_NONFASTFORWARD;
+ 		}
  
-+/*
-+ * Like get_oid_hex, but accepts an optional length argument, which may be -1
-+ * if the string is terminated by a non-hex character.  As with get_oid_hex,
-+ * reading stops if a NUL is encountered.  Returns the number of characters
-+ * read (40) on success and 0 on failure.  This is designed to be easier to
-+ * use for parsing data than get_oid_hex.
-+ */
-+extern int parse_oid_hex(const char *hex, int len, struct object_id *oid);
-+
- extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
- extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as sha1_to_hex */
- extern int read_ref_full(const char *refname, int resolve_flags,
-diff --git a/hex.c b/hex.c
-index 899b74a..ba196d7 100644
---- a/hex.c
-+++ b/hex.c
-@@ -61,6 +61,13 @@ int get_oid_hex(const char *hex, struct object_id *oid)
- 	return get_sha1_hex(hex, oid->hash);
+@@ -1982,7 +1982,7 @@ static void unmark_and_free(struct commit_list *list, unsigned int mark)
+ 	}
  }
  
-+int parse_oid_hex(const char *hex, int len, struct object_id *oid)
-+{
-+	if (len != -1 && len < GIT_SHA1_HEXSZ)
-+		return 0;
-+	return get_sha1_hex(hex, oid->hash) ? GIT_SHA1_HEXSZ : 0;
-+}
-+
- char *sha1_to_hex(const unsigned char *sha1)
+-int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
++int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
  {
- 	static int bufno;
+ 	struct object *o;
+ 	struct commit *old, *new;
+@@ -1993,12 +1993,12 @@ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
+ 	 * Both new and old must be commit-ish and new is descendant of
+ 	 * old.  Otherwise we require --force.
+ 	 */
+-	o = deref_tag(parse_object(old_sha1), NULL, 0);
++	o = deref_tag(parse_object(old_oid->hash), NULL, 0);
+ 	if (!o || o->type != OBJ_COMMIT)
+ 		return 0;
+ 	old = (struct commit *) o;
+ 
+-	o = deref_tag(parse_object(new_sha1), NULL, 0);
++	o = deref_tag(parse_object(new_oid->hash), NULL, 0);
+ 	if (!o || o->type != OBJ_COMMIT)
+ 		return 0;
+ 	new = (struct commit *) o;
+diff --git a/remote.h b/remote.h
+index 163ea5e..4a039ba 100644
+--- a/remote.h
++++ b/remote.h
+@@ -150,7 +150,7 @@ extern struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 				     struct sha1_array *shallow);
+ 
+ int resolve_remote_symref(struct ref *ref, struct ref *list);
+-int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1);
++int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
+ 
+ /*
+  * Remove and free all but the first of any entries in the input list
 -- 
 2.4.0
