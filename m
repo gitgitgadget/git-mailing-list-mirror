@@ -1,74 +1,68 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: On undoing a forced push
-Date: Tue, 09 Jun 2015 19:36:20 +0530
-Message-ID: <5576F2DC.7040603@gmail.com>
-References: <20150609121221.GA14126@lanh>
+From: Sascha Ziemann <ceving@gmail.com>
+Subject: How to compile without iconv?
+Date: Tue, 9 Jun 2015 16:07:25 +0200
+Message-ID: <CAGUt3y4RgtkP35XstHGQ=T3zkb_akZSRS=q227wMehVzmu9MDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 16:06:36 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 16:07:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2KAg-0003I0-JU
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 16:06:30 +0200
+	id 1Z2KBf-0004Dt-Gq
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 16:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328AbbFIOG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 10:06:27 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:34457 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753345AbbFIOGZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 10:06:25 -0400
-Received: by pdbki1 with SMTP id ki1so15988916pdb.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 07:06:25 -0700 (PDT)
+	id S932374AbbFIOH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 10:07:27 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:38624 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753345AbbFIOH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 10:07:26 -0400
+Received: by igblz2 with SMTP id lz2so12152292igb.1
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 07:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=qEyuV9R11RYp/RXZ1JMRbdlVM+PKvtWRlJG2nRVuSTc=;
-        b=tX0AKjz/o6Rhk5QldwnRPH6mf2m/tSwkOspZgr+wJJma3TdB1YNynr805H+shLxuFl
-         LRlsKyC0qOBdfefQqTJY5RGdQRRKof+lUqCAgoqO4/1fXiPYkAAIbMZM2CQ21gBd+IRN
-         /DPjYZz70VJ4nVfSn2xJk0dovgbiUcuIe0dIUeUvMt8OZJ9OQNw8jN4+9Dfw5Io55l1i
-         zndZb0NvePQr4NLu84FHaxR/30Iq3VWicInPmqxb7UpVvtwze/JCeDVPkJVUWP4/5cL8
-         CNtY7KpwkgNB7JjRFt/trNaR9WB5BDMxw/XMjICMSCC6C9htP6NXmYOvXLU6glbrszI3
-         qkmg==
-X-Received: by 10.68.176.131 with SMTP id ci3mr39941552pbc.146.1433858785152;
-        Tue, 09 Jun 2015 07:06:25 -0700 (PDT)
-Received: from sita-lt.atc.tcs.com ([117.195.191.155])
-        by mx.google.com with ESMTPSA id l1sm5795583pdp.71.2015.06.09.07.06.22
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jun 2015 07:06:24 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150609121221.GA14126@lanh>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=/H/ydrzb8z8JoAIuKcy+f9cMQ3lFv6yVxsk8KGLk7RQ=;
+        b=kmI/Hp+E8aojJy1zoOCilOsgW274NRMJ1smS8S/g7xZG8Sz7fZWIIbLJgfhkjEy2Jg
+         wHTlcg6hPf8ccXgeSqNWFZbyc/kvktr+Un/I75AtkbJ3QhIrrCRmVUjz5AjKmAiDr0Iq
+         Ghdz37qHo7T2MIuc3cIb6j1DOdQNLb0EqzfvXwcBZAmJ8E9BMuvyjOj4RNmPgDqL6YDx
+         L5lWXuG8ivX4dqXsfyFl60iZpom6TOPKiuG1Ev/6eNDo7bx5fIz0O9fhy3SuYow+6wEb
+         ye1Y0g03ABXAK31k3T0JLCy3RWr0/2e+1/h+8iK0ikaIxyY9v5D5ObnbuSZqwcxJqdbp
+         S6sw==
+X-Received: by 10.107.18.92 with SMTP id a89mr26433176ioj.14.1433858845996;
+ Tue, 09 Jun 2015 07:07:25 -0700 (PDT)
+Received: by 10.79.92.6 with HTTP; Tue, 9 Jun 2015 07:07:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271181>
 
-On 06/09/2015 05:42 PM, Duy Nguyen wrote:
-> From a thread on Hacker News. It seems that if a user does not have
-> access to the remote's reflog and accidentally forces a push to a ref,
-> how does he recover it? In order to force push again to revert it
-> back, he would need to know the remote's old SHA-1. Local reflog does
-> not help because remote refs are not updated during a push.
-> 
-> This patch prints the latest SHA-1 before the forced push in full. He
-> then can do
-> 
->     git push <remote> +<old-sha1>:<ref>
-> 
-> He does not even need to have the objects that <old-sha1> refers
-> to. We could simply push an empty pack and the the remote will happily
-> accept the force, assuming garbage collection has not happened. But
-> that's another and a little more complex patch.
+I tried to compile git 2.4.3 on Solaris 10. I used the following configuration:
 
-If I am not mistaken, we actively prevent people from downloading an
-unreferenced SHA (such as would happen if you overwrote refs that
-contained sensitive information like passwords).
+$ ./configure --without-iconv
 
-Wouldn't allowing the kind of push you just described, require negating
-that protection?
+$ grep -i iconv config.status
+ac_cs_config="'--without-iconv'"
+  set X /bin/bash './configure'  '--without-iconv'
+$ac_configure_extra_args --no-create --no-recursion
+OLD_ICONV=UnfortunatelyYes
+
+But when I try to compile it, I get an error that libiconv is missing:
+
+    LINK git-credential-store
+Undefined                       first referenced
+ symbol                             in file
+libintl_gettext                     libgit.a(lockfile.o)
+libiconv_close                      libgit.a(utf8.o)
+libiconv_open                       libgit.a(utf8.o)
+libintl_ngettext                    libgit.a(date.o)
+libiconv                            libgit.a(utf8.o)
+ld: fatal: symbol referencing errors. No output written to git-credential-store
+collect2: ld returned 1 exit status
+gmake: *** [git-credential-store] Error 1
+
+How can I work around this?
