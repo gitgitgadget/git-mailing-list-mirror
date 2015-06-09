@@ -1,212 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/4] bisect: simplify the add of new bisect terms
-Date: Tue, 09 Jun 2015 09:01:57 +0200
-Message-ID: <vpqbngpl5zu.fsf@anie.imag.fr>
-References: <1433794930-5158-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433794930-5158-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+From: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH 1/4] status: factor two rebase-related messages together
+Date: Tue, 9 Jun 2015 09:33:35 +0200 (CEST)
+Message-ID: <968122035.288953.1433835215140.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1433368825-24617-1-git-send-email-guillaume.pages@ensimag.grenoble-inp.fr> <xmqqbngp97yp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr, chriscool@tuxfamily.org,
-	thomasxnguy@gmail.com, valentinduperray@gmail.com
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 09 09:02:14 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 09:33:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2DXz-0005g6-Jv
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 09:02:07 +0200
+	id 1Z2E28-0007Sa-VA
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 09:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753697AbbFIHCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 03:02:03 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38286 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751672AbbFIHCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 03:02:01 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5971urg000461
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 9 Jun 2015 09:01:56 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5971vA3017960;
-	Tue, 9 Jun 2015 09:01:57 +0200
-In-Reply-To: <1433794930-5158-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	(Antoine Delaite's message of "Mon, 8 Jun 2015 22:22:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 09 Jun 2015 09:01:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5971urg000461
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434438117.25678@XEcC27uPjEUnZthgQYLy3w
+	id S932353AbbFIHdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 03:33:08 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:42797 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932181AbbFIHc7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2015 03:32:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D24C23609;
+	Tue,  9 Jun 2015 09:32:56 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ZTYpoD5i1VLT; Tue,  9 Jun 2015 09:32:56 +0200 (CEST)
+Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D704A488A3;
+	Tue,  9 Jun 2015 09:32:55 +0200 (CEST)
+In-Reply-To: <xmqqbngp97yp.fsf@gitster.dls.corp.google.com>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF37 (Linux)/8.0.9_GA_6191)
+Thread-Topic: status: factor two rebase-related messages together
+Thread-Index: sUzq/497S8gWBWVkZ0l07ahb8v9i3Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271149>
 
-> Subject: Re: [PATCH 3/4] bisect: simplify the add of new bisect terms
+"Junio C Hamano" <gitster@pobox.com> writes:
 
-s/add/addition/
+>Hmmm, it obviously does not break anything but it is not obvious why 
+>this is a good change. 
 
-Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
+>Is it that you wanted to have a single instance of "if on a branch, 
+>we say 'you are rebasing that branch', otherwise we say 'you are 
+>rebasing'"? Even then, I am not sure if this code movement was the 
+>best way to do so (an obvious alternative is to use a shared helper 
+>function and call from the two arms of if/elseif/... chain). 
 
-> +static const char *name_bad;
-> +static const char *name_good;
+I made this change because at first sight, this piece of code was 
+difficult to read for me. There was two long branches very similar
+and I had to spot the differences, and the actual differences were
+at the very end of the branches so I had to check back what the
+condition was about. It seems now much more natural to me: the part
+in common of both branches is in OR-condition and the differences 
+between branches are gathered with the test on the variable they
+depend.
 
-Same remark as PATCH 2.
-
->  	} else if (starts_with(refname, "good-")) {
-
-Did you forget this one?
-
-> -
-> -		fprintf(stderr, "The merge base %s is bad.\n"
-> -			"This means the bug has been fixed "
-> -			"between %s and [%s].\n",
-> -			bad_hex, bad_hex, good_hex);
-> -
-> +		if (!strcmp(name_bad, "bad")) {
-> +			fprintf(stderr, "The merge base %s is bad.\n"
-> +				"This means the bug has been fixed "
-> +				"between %s and [%s].\n",
-> +				bad_hex, bad_hex, good_hex);
-> +		}
-
-You need an "else" here. Maybe it comes later, but as a reviewer, I want
-to check that you did not forget it now (because I don't trust myself to
-remember that it must be added later).
-
-> @@ -890,6 +894,31 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
->  }
->  
->  /*
-> + * The terms used for this bisect session are stocked in
-> + * BISECT_TERMS: it can be bad/good or new/old.
-> + * We read them and stock them to adapt the messages
-
-s/stock/store/ (two instances)
-
-> + * accordingly. Default is bad/good.
-> + */
-> +void read_bisect_terms(void)
-> +{
-> +	struct strbuf str = STRBUF_INIT;
-> +	const char *filename = git_path("BISECT_TERMS");
-> +	FILE *fp = fopen(filename, "r");
-> +
-> +	if (!fp) {
-
-I think you would want to error out if errno is not ENOENT.
-
-> +		name_bad = "bad";
-> +		name_good = "good";
-> +	} else {
-> +		strbuf_getline(&str, fp, '\n');
-> +		name_bad = strbuf_detach(&str, NULL);
-> +		strbuf_getline(&str, fp, '\n');
-> +		name_good = strbuf_detach(&str, NULL);
-> +	}
-
-I would have kept just
-
-	name_bad = "bad";
-	name_good = "good";
-
-in this patch, and introduce BISECT_TERMS in a separate one.
-
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -77,6 +77,7 @@ bisect_start() {
->  	orig_args=$(git rev-parse --sq-quote "$@")
->  	bad_seen=0
->  	eval=''
-> +	start_bad_good=0
->  	if test "z$(git rev-parse --is-bare-repository)" != zfalse
->  	then
->  		mode=--no-checkout
-> @@ -101,6 +102,9 @@ bisect_start() {
->  				die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
->  				break
->  			}
-> +
-> +			start_bad_good=1
-> +
-
-Why do you need this variable? It seems to me that you are hardcoding
-once more that terms can be either "good/bad" or "old/new", which you
-tried to eliminate from the previous round.
-
-> +	if test $start_bad_good -eq 1 -a ! -s "$GIT_DIR/BISECT_TERMS"
-
-Avoid test -a (not strictly POSIX, and sometimes ambiguous). Use
-
-test ... && test ...
-
-instead.
-
-> +	then
-> +		echo "$NAME_BAD" >"$GIT_DIR/BISECT_TERMS" &&
-> +		echo "$NAME_GOOD" >>"$GIT_DIR/BISECT_TERMS"
-> +	fi &&
-
-Why not do this unconditionnally? Whether terms are good/bad or old/new,
-you can write them to BISECT_TERMS.
-
-> -			gettextln "You need to give me at least one good and one bad revision.
-> -(You can use \"git bisect bad\" and \"git bisect good\" for that.)" >&2
-> +			gettextln "You need to give me at least one $(bisect_voc bad) and one $(bisect_voc good) revision.
-> +(You can use \"git bisect $(bisect_voc bad)\" and \"git bisect $(bisect_voc good)\" for that.)" >&2
-
-I suspect you broke the i18n here too.
-
-> +get_terms () {
-> +	if test -s "$GIT_DIR/BISECT_TERMS"
-> +	then
-> +		NAME_BAD="$(sed -n 1p "$GIT_DIR/BISECT_TERMS")"
-> +		NAME_GOOD="$(sed -n 2p "$GIT_DIR/BISECT_TERMS")"
-> +	fi
-> +}
-> +
-> +check_and_set_terms () {
-> +	cmd="$1"
-> +	case "$cmd" in
-> +	bad|good)
-> +		if test -s "$GIT_DIR/BISECT_TERMS" -a "$cmd" != "$NAME_BAD" -a "$cmd" != "$NAME_GOOD"
-> +		then
-> +			die "$(eval_gettext "Invalid command : you're currently in a \$NAME_BAD/\$NAME_GOOD bisect.")"
-
-No space before :
-
-> +		fi
-> +		case "$cmd" in
-> +		bad|good)
-> +			if test ! -s "$GIT_DIR/BISECT_TERMS"
-> +			then
-> +				echo "bad" >"$GIT_DIR/BISECT_TERMS" &&
-> +				echo "good" >>"$GIT_DIR/BISECT_TERMS"
-> +			fi
-> +			NAME_BAD="bad"
-> +			NAME_GOOD="good" ;;
-> +		esac ;;
-> +	esac
-> +}
-> +
-> +bisect_voc () {
-> +	case "$1" in
-> +	bad) echo "bad" ;;
-> +	good) echo "good" ;;
-> +	esac
-> +}
-
-It's weird to have these hardcoded "bad"/"good" when you already have
-BISECT_TERMS in the same patch.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+By the way, I agree that this change is not absolutely necessary.
