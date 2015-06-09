@@ -1,64 +1,148 @@
-From: Ariel Faigon <github.2009@yendor.com>
-Subject: [PATCH 1/1]: git-completion.tcsh fails w/ noclobber
-Date: Mon, 8 Jun 2015 16:01:33 -0700
-Message-ID: <20150608230133.GA14473@yendor.com>
-Reply-To: github.2009@yendor.com
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH v2] commit: cope with scissors lines in commit message
+Date: Tue,  9 Jun 2015 02:24:21 +0200
+Message-ID: <1433809461-9823-1-git-send-email-szeder@ira.uka.de>
+References: <20150608183019.Horde.Kp4b2pClPLqAJp3LacT_fA1@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 01:01:57 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 02:25:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z263I-000271-Qy
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 01:01:57 +0200
+	id 1Z27M5-0007bk-0r
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jun 2015 02:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932760AbbFHXBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2015 19:01:47 -0400
-Received: from homie.mail.dreamhost.com ([208.97.132.208]:45239 "EHLO
-	homiemail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753245AbbFHXBe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 19:01:34 -0400
-X-Greylist: delayed 97602 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Jun 2015 19:01:34 EDT
-Received: from homiemail-a9.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a9.g.dreamhost.com (Postfix) with ESMTP id 2EC7462606D
-	for <git@vger.kernel.org>; Mon,  8 Jun 2015 16:01:34 -0700 (PDT)
-Received: from go (c-67-188-70-105.hsd1.ca.comcast.net [67.188.70.105])
-	(Authenticated sender: catch-all@yendor.com)
-	by homiemail-a9.g.dreamhost.com (Postfix) with ESMTPA id 0FBD262606A
-	for <git@vger.kernel.org>; Mon,  8 Jun 2015 16:01:34 -0700 (PDT)
-Received: by go (Postfix, from userid 1000)
-	id D6DA51C04028; Mon,  8 Jun 2015 16:01:33 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753680AbbFIAZT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2015 20:25:19 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:38970 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932569AbbFIAZJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2015 20:25:09 -0400
+Received: from x590e5e8c.dyn.telefonica.de ([89.14.94.140] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
+	iface 141.3.10.81 id 1Z27Li-0007al-RK; Tue, 09 Jun 2015 02:25:04 +0200
+X-Mailer: git-send-email 2.4.3.384.g605df7b
+In-Reply-To: <20150608183019.Horde.Kp4b2pClPLqAJp3LacT_fA1@webmail.informatik.kit.edu>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1433809504.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271144>
 
-tcsh users who happen to have 'set noclobber' elsewhere in their ~/.tcshrc or ~/.cshrc startup files get a 'File exist' error, and the tcsh completion file doesn't get generated/updated.  Adding a `!` in the redirect works correctly for both clobber (default) and 'set noclobber' users.
+The diff and submodule shortlog appended to the commit message template
+by 'git commit --verbose' are not stripped when the commit message
+contains an indented scissors line.
 
-Helped-by: Junio C Hamano <notifications@github.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Signed-off-by: Ariel Faigon <github.2009@yendor.com>
+When cleaning up a commit message with 'git commit --verbose' or
+'--cleanup=3Dscissors' the code is careful and triggers only on a pure
+scissors line, i.e. a line containing nothing but a comment character, =
+a
+space, and the scissors cut.  This is good, because people can embed
+scissor lines in the commit message while using 'git commit --verbose',
+and the text they write after their indented scissors line doesn't get
+deleted.
+
+While doing so, however, the cleanup function only looks at the first
+line matching the scissors pattern and if it doesn't start at the
+beginning of the line, then the function just returns without performin=
+g
+any cleanup.  This is wrong, because a "real" scissors line added by
+'git commit --verbose' might follow, and in that case the diff and
+submodule shortlog get included in the commit message.
+
+=46ix this by changing the scissors pattern to match only at the beginn=
+ing
+of the line, yet be careful to catch scissors on the first line as well=
+=2E
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
+Changes besides incorporating Junio's suggestion and updating the commi=
+t
+message accordingly:
 
- contrib/completion/git-completion.tcsh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ * Instead of adding a new test, modify the existing one to check
+   handling indented scissors lines.
+ * Add a test to check scissors on the first line
+=20
+ t/t7502-commit.sh | 24 +++++++++++++++++++++++-
+ wt-status.c       |  9 +++++----
+ 2 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/completion/git-completion.tcsh b/contrib/completion/git-completion.tcsh
-index 6104a42..4a790d8 100644
---- a/contrib/completion/git-completion.tcsh
-+++ b/contrib/completion/git-completion.tcsh
-@@ -41,7 +41,7 @@ if ( ! -e ${__git_tcsh_completion_original_script} ) then
- 	exit
- endif
- 
--cat << EOF > ${__git_tcsh_completion_script}
-+cat << EOF >! ${__git_tcsh_completion_script}
- #!bash
- #
- # This script is GENERATED and will be overwritten automatically.
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 2e0d557243..b39e313ac2 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -229,14 +229,36 @@ test_expect_success 'cleanup commit messages (sci=
+ssors option,-F,-e)' '
+ 	cat >text <<EOF &&
+=20
+ # to be kept
++
++  # ------------------------ >8 ------------------------
++# to be kept, too
+ # ------------------------ >8 ------------------------
+ to be removed
++# ------------------------ >8 ------------------------
++to be removed, too
++EOF
++
++	cat >expect <<EOF &&
++# to be kept
++
++  # ------------------------ >8 ------------------------
++# to be kept, too
+ EOF
+-	echo "# to be kept" >expect &&
+ 	git commit --cleanup=3Dscissors -e -F text -a &&
+ 	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
+ 	test_cmp expect actual
++'
+=20
++test_expect_success 'cleanup commit messages (scissors option,-F,-e, s=
+cissors on first line)' '
++
++	echo >>negative &&
++	cat >text <<EOF &&
++# ------------------------ >8 ------------------------
++to be removed
++EOF
++	git commit --cleanup=3Dscissors -e -F text -a --allow-empty-message &=
+&
++	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
++	test_must_be_empty actual
+ '
+=20
+ test_expect_success 'cleanup commit messages (strip option,-F)' '
+diff --git a/wt-status.c b/wt-status.c
+index c56c78fb6f..eaed4fed32 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -825,10 +825,11 @@ void wt_status_truncate_message_at_cut_line(struc=
+t strbuf *buf)
+ 	const char *p;
+ 	struct strbuf pattern =3D STRBUF_INIT;
+=20
+-	strbuf_addf(&pattern, "%c %s", comment_line_char, cut_line);
+-	p =3D strstr(buf->buf, pattern.buf);
+-	if (p && (p =3D=3D buf->buf || p[-1] =3D=3D '\n'))
+-		strbuf_setlen(buf, p - buf->buf);
++	strbuf_addf(&pattern, "\n%c %s", comment_line_char, cut_line);
++	if (starts_with(buf->buf, pattern.buf + 1))
++		strbuf_setlen(buf, 0);
++	else if ((p =3D strstr(buf->buf, pattern.buf)))
++		strbuf_setlen(buf, p - buf->buf + 1);
+ 	strbuf_release(&pattern);
+ }
+=20
+--=20
+2.4.3.384.g605df7b
