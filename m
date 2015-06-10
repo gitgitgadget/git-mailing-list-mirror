@@ -1,112 +1,105 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 2/8] sha1_file: introduce has_object_file helper.
-Date: Wed, 10 Jun 2015 13:55:55 +0000
-Message-ID: <20150610135555.GD664685@vauxhall.crustytoothpaste.net>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
- <1433867316-663554-3-git-send-email-sandals@crustytoothpaste.net>
- <CACsJy8DHJ415euwo3gMTtuQx+5RopzBg+mssZ8TVstGJcdWSqg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] index-pack: avoid excessive re-reading of pack directory
+Date: Wed, 10 Jun 2015 10:00:26 -0400
+Message-ID: <20150610140024.GA9395@peff.net>
+References: <CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
+ <CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
+ <7FAE15F0A93C0144AD8B5FBD584E1C5519759641@C111KXTEMBX51.ERF.thomson.com>
+ <CACsJy8BULBJ=cL1+4TFX_7tYSCFL3MNEz1Ay0YGqx8W_8=nwAg@mail.gmail.com>
+ <20150522071224.GA10734@peff.net>
+ <CACsJy8Bb1O7QZtiPWdzYwYgOdV0dLDgD3Xu_YaWNUbsuTqJB5g@mail.gmail.com>
+ <7FAE15F0A93C0144AD8B5FBD584E1C55197764FE@C111KXTEMBX51.ERF.thomson.com>
+ <20150605121817.GA22125@peff.net>
+ <20150605122921.GA7586@peff.net>
+ <CAJo=hJv6O66yFC_O_4aeL2JxBOtk2f+k1wGt3VW7dk71Q1ov3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cPi+lWm09sJ+d57q"
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 15:56:13 2015
+Content-Type: text/plain; charset=utf-8
+Cc: steve.norman@thomsonreuters.com,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jun 10 16:00:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2gUE-0005Bo-5r
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 15:56:10 +0200
+	id 1Z2gYV-0007mK-OG
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 16:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812AbbFJN4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 09:56:05 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:39289 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933687AbbFJN4B (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2015 09:56:01 -0400
-Received: from vauxhall.crustytoothpaste.net (107-1-110-101-ip-static.hfc.comcastbusiness.net [107.1.110.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 596932808F;
-	Wed, 10 Jun 2015 13:55:59 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+	id S933596AbbFJOAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 10:00:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44060 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933508AbbFJOAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 10:00:30 -0400
+Received: (qmail 23754 invoked by uid 102); 10 Jun 2015 14:00:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Jun 2015 09:00:30 -0500
+Received: (qmail 26767 invoked by uid 107); 10 Jun 2015 14:00:33 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Jun 2015 10:00:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jun 2015 10:00:26 -0400
 Content-Disposition: inline
-In-Reply-To: <CACsJy8DHJ415euwo3gMTtuQx+5RopzBg+mssZ8TVstGJcdWSqg@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -1.5 BAYES_00
+In-Reply-To: <CAJo=hJv6O66yFC_O_4aeL2JxBOtk2f+k1wGt3VW7dk71Q1ov3A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271288>
 
+On Tue, Jun 09, 2015 at 08:46:24PM -0700, Shawn Pearce wrote:
 
---cPi+lWm09sJ+d57q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > This patch introduces a "quick" flag to has_sha1_file which
+> > callers can use when they would prefer high performance at
+> > the cost of false negatives during repacks. There may be
+> > other code paths that can use this, but the index-pack one
+> > is the most obviously critical, so we'll start with
+> > switching that one.
+> 
+> Hilarious. We did this in JGit back in ... uhm before 2009. :)
+> 
+> But its Java. So of course we had to do optimizations.
 
-On Wed, Jun 10, 2015 at 04:59:58PM +0700, Duy Nguyen wrote:
-> On Tue, Jun 9, 2015 at 11:28 PM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > diff --git a/sha1_file.c b/sha1_file.c
-> > index 7e38148..09f7f03 100644
-> > --- a/sha1_file.c
-> > +++ b/sha1_file.c
-> > @@ -3173,6 +3173,11 @@ int has_sha1_file(const unsigned char *sha1)
+This is actually how Git did it up until v1.8.4.2, in 2013. I changed it
+then because the old way was racy (and git could flakily report refs as
+broken and skip them during repacks!).
+
+If you are doing it the "quick" way everywhere in JGit, you may want to
+reexamine the possibility for races. :)
+
+> > @@ -3169,6 +3169,8 @@ int has_sha1_file(const unsigned char *sha1)
+> >                 return 1;
+> >         if (has_loose_object(sha1))
+> >                 return 1;
+> > +       if (flags & HAS_SHA1_QUICK)
+> > +               return 0;
+> >         reprepare_packed_git();
 > >         return find_pack_entry(sha1, &e);
-> >  }
-> >
-> > +int has_object_file(const struct object_id *oid)
-> > +{
-> > +       return has_sha1_file(oid->hash);
-> > +}
-> > +
->=20
-> This version could be "static inline" and placed in cache.h. Though it
-> may be premature optimization. On top of my head I can't recall any
-> place where has_sha1_file() is used so many times for this extra call
-> to become significant overhead.
+> 
+> Something else we do is readdir() over the loose objects and store
+> them in a map in memory. That way we avoid stat() calls during that
+> has_loose_object() path. This is apparently a win enough of the time
+> that we always do that when receiving a pack over the wire (client or
+> server).
 
-I planned on merging the two into has_object_file when has_sha1_file has
-no more callers, so it's more of an incidental artifact that one calls
-the other rather than a long-term goal.  In the branch I'm working on
-now, I'm down to 27 callers, so it may be rather soon that it goes away.
+Yeah, I thought about that while writing this. It would be a win as long
+as you have a small number of loose objects and were going to make a
+large number of requests (otherwise you are traversing even though
+nobody is going to look it up). According to perf, though, loose object
+lookups are not a large expenditure[1].
 
-Of course, if the consensus is that the performance increase is worth it
-in the mean time, I can certainly just move it back when they merge.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+I'm also hesitant to go that route because it's basically caching, which
+introduces new opportunities for race conditions when the cache is stale
+(we do the same thing with loose refs, and we have indeed run into races
+there).
 
---cPi+lWm09sJ+d57q
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+-Peff
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVeEHqAAoJEL9TXYEfUvaL7f4P/0/1lywwGv4lZgxk/L6GiQxt
-ykNQLS1OGAas4x8Q/eXC5RswrwBzk6vQW5oi5qh+wukvdYCbVhv1MH/rjp4KY+zm
-6+Vf986MU9DHIXwbMPo6rDzfaL7gNMYIYaJRhBkllzvdCSr0rtXv4gNzZGGXyKzU
-qYU5kroLpK7JnB8cYyTWCfnWu4r7PAnRX8xMLuDs/6wFXzwcciY0X+p6vyuiAwsN
-g3PF39MePrJZHtuRP3q/XQBM+a3jVx1Jd4Tdp9ohpzcocRLwy0dkdJjx5NDaPV04
-7a1oMmen2JkFcEJbtEouf9FwXnF4SJGeJ+wtlTB8gBXhl6H9ufsBV+P50N2xKIia
-oRGMEkYFJJe/FBFmlwQg6gMO3R8/NxoUvFUSsC5lu5LL1gi/yyT2Fjp2eDh7gYno
-vwP3d84P2PCDH4V7tUbvwOj3+cvJu57pZwKKkGva7jrbTKOl8btk13Ps7rYWYn/v
-CD+6wHbc/JfK4/HmKQnWU1x7RLXhnqBi3qqOZ9JnouPwxNMJzi/V7nhqxI7Y0CXA
-GwioiFfUvxVjZSlkd9ErbLPh1dH+D6BgrH/ex5n3WkyjId/gfS2Rcot1nFOVpS9k
-4nMUVQwOxcyrwl4XFteSthnibsm3A9fzN6d58LBJhJYQtCcal4nZ1NJJaYFKWdqz
-Z5JELDADRov3ZM3Zr7Qh
-=5Hox
------END PGP SIGNATURE-----
-
---cPi+lWm09sJ+d57q--
+[1] As measured mostly by __d_lookup_rcu calls. Of course, my patch
+    gives a 5% improvement over the original, and we were not spending
+    5% of the time there originally. I suspect part of the problem is
+    that we do the lookup under a lock, so the longer we spend there,
+    the more contention we have between threads, and the less
+    parallelism. Indeed, I just did a quick repeat of my tests with
+    pack.threads=1, and the size of the improvement shrinks.
