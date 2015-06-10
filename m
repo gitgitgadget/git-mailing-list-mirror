@@ -1,233 +1,79 @@
-From: =?UTF-8?q?Galan=20R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFCv5 3/3] git rebase -i: add static check for commands and SHA-1
-Date: Wed, 10 Jun 2015 12:10:35 +0200
-Message-ID: <1433931035-20011-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-References: <1433931035-20011-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [RFC/PATCH 3/9] for-each-ref: add '--points-at' option
+Date: Wed, 10 Jun 2015 17:01:16 +0530
+Message-ID: <55782004.3080600@gmail.com>
+References: <5573520A.90603@gmail.com> <1433621052-5588-1-git-send-email-karthik.188@gmail.com> <1433621052-5588-3-git-send-email-karthik.188@gmail.com> <xmqqzj4a9fpn.fsf@gitster.dls.corp.google.com> <5576D591.6030704@gmail.com> <xmqqvbew66q9.fsf@gitster.dls.corp.google.com> <vpqeglkc8qh.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Galan=20R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 10 12:10:56 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 10 13:31:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2cyF-0004AS-Jx
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 12:10:55 +0200
+	id 1Z2eEG-0008CO-5N
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 13:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933121AbbFJKKt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2015 06:10:49 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:40155 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754199AbbFJKKo (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2015 06:10:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id A92AF2A48;
-	Wed, 10 Jun 2015 12:10:42 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QIlbmcZL-FRB; Wed, 10 Jun 2015 12:10:42 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 8D75729B9;
-	Wed, 10 Jun 2015 12:10:42 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 85DBC20E4;
-	Wed, 10 Jun 2015 12:10:42 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 70RwSxxUR30z; Wed, 10 Jun 2015 12:10:42 +0200 (CEST)
-Received: from galanalr-Dell-System-Inspiron-N7110.grenet.fr (eduroam-032245.grenet.fr [130.190.32.245])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 250D820DD;
-	Wed, 10 Jun 2015 12:10:42 +0200 (CEST)
-X-Mailer: git-send-email 2.4.2.496.geaaf631
-In-Reply-To: <1433931035-20011-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	id S1754139AbbFJLbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 07:31:23 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:34332 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752611AbbFJLbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 07:31:21 -0400
+Received: by payr10 with SMTP id r10so33317170pay.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 04:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=OY8atTCgjPNR1xAY6kLRZQagEhOVnFiPTLh3BXRKk0g=;
+        b=QcVyuI4/yUx8pLqD975yNJP6dWLwUPvaiPfTmSe1mcy7RxENqyjO93ri73B44+B6VV
+         q+lDutvxztIHIxlAcpytwBNyvJN5TuBL7E32nhlou6+5ubohnmZle6Ip8hjc6qxdIiig
+         c19rpNAOK2XDXKHUzytcATAx7T4fT7WJcH2Bln75yy1NdsPTASHsGdmxS+RpCTrzqfvy
+         wiFSwiyqsf/vBY+lK6fccfGqSix376aQoG8NgZY0uDcoUmfbBEnt6p4DL3qDJDdXjOFv
+         8tMg0T988u35CsF33WmnR/2pZp6pO2bYjRaTad+GgqZ0FbksPTOUDeJoACJqweqXTrt5
+         nfKA==
+X-Received: by 10.70.40.131 with SMTP id x3mr4974908pdk.83.1433935881385;
+        Wed, 10 Jun 2015 04:31:21 -0700 (PDT)
+Received: from [192.168.0.100] ([106.51.130.23])
+        by mx.google.com with ESMTPSA id i1sm8400320pdm.19.2015.06.10.04.31.19
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 10 Jun 2015 04:31:20 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <vpqeglkc8qh.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271284>
 
-Check before the start of the rebasing if the commands exists, and for
-the commands expecting a SHA-1, check if the SHA-1 is present and
-corresponds to a commit. In case of error, print the error, stop git
-rebase and prompt the user to fix with 'git rebase --edit-todo' or to
-abort.
+On 06/10/2015 01:09 PM, Matthieu Moy wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Don't do that.  Always start your function like so:
+> >
+> >     type funcname(args)
+> >          {
+> >              declarations;
+> >
+> >                  first statement;
+> >         ...
+>
+> Hint: create a file config.mak with this content:
+>
+> $ cat config.mak
+> CFLAGS += -Wdeclaration-after-statement -Wall -Werror
+>
+> and gcc will prevent you from doing this mistake again.
+>
 
-This allows to avoid doing half of a rebase before finding an error
-and giving back what's left of the todo list to the user and prompt
-him to fix when it might be too late for him to do so (he might have
-to abort and restart the rebase).
+Thanks a lot!
+Your tips are brilliant.
 
-Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp=
-=2Efr>
----
- git-rebase--interactive.sh    | 63 +++++++++++++++++++++++++++++++++++=
-++++++++
- t/lib-rebase.sh               |  5 ++++
- t/t3404-rebase-interactive.sh | 40 +++++++++++++++++++++++++++
- 3 files changed, 108 insertions(+)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 68a71d0..226a8a8 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -834,6 +834,47 @@ add_exec_commands () {
- 	mv "$1.new" "$1"
- }
-=20
-+# prints the bad commits and bad commands
-+# from the todolist in stdin
-+check_bad_cmd_and_sha () {
-+	git stripspace --strip-comments |
-+	while read -r command sha1 rest
-+	do
-+		case $command in
-+		''|noop|x|"exec")
-+			;;
-+		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
-+			if test -z $sha1
-+			then
-+				echo "$command $rest" >>"$todo".badsha
-+			else
-+				sha1_verif=3D"$(git rev-parse --verify --quiet $sha1^{commit})"
-+				if test -z $sha1_verif
-+				then
-+					echo "$command $sha1 $rest" \
-+						>>"$todo".badsha
-+				fi
-+			fi
-+			;;
-+		*)
-+			if test -z $sha1
-+			then
-+				echo "$command" >>"$todo".badcmd
-+			else
-+				commit=3D"$(git rev-list --oneline -1 --ignore-missing $sha1 2>/de=
-v/null)"
-+				if test -z "$commit"
-+				then
-+					echo "$command $sha1 $rest" \
-+						>>"$todo".badcmd
-+				else
-+					echo "$command $commit" >>"$todo".badcmd
-+				fi
-+			fi
-+			;;
-+		esac
-+	done
-+}
-+
- # Print the list of the SHA-1 of the commits
- # from stdin to stdout
- todo_list_to_sha_list () {
-@@ -913,6 +954,28 @@ check_todo_list () {
- 		;;
- 	esac
-=20
-+	check_bad_cmd_and_sha <"$todo"
-+
-+	if test -s "$todo".badsha
-+	then
-+		raiseError=3Dt
-+
-+		warn "Warning: the SHA-1 is missing or isn't" \
-+			"a commit in the following line(s):"
-+		warn_file "$todo".badsha
-+		warn
-+	fi
-+
-+	if test -s "$todo".badcmd
-+	then
-+		raiseError=3Dt
-+
-+		warn "Warning: the command isn't recognized" \
-+			"in the following line(s):"
-+		warn_file "$todo".badcmd
-+		warn
-+	fi
-+
- 	if test $raiseError =3D t
- 	then
- 		# Checkout before the first commit of the
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index fdbc900..9a96e15 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -54,6 +54,11 @@ set_fake_editor () {
- 			echo '# comment' >> "$1";;
- 		">")
- 			echo >> "$1";;
-+		bad)
-+			action=3D"badcmd";;
-+		fakesha)
-+			echo "$action XXXXXXX False commit" >> "$1"
-+			action=3Dpick;;
- 		*)
- 			sed -n "${line}s/^pick/$action/p" < "$1".tmp >> "$1"
- 			action=3Dpick;;
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index a92ae19..d691b1c 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1184,4 +1184,44 @@ test_expect_success 'rebase -i respects rebase.m=
-issingCommitsCheck =3D error' '
- 	test B =3D $(git cat-file commit HEAD^ | sed -ne \$p)
- '
-=20
-+cat >expect <<EOF
-+Warning: the command isn't recognized in the following line(s):
-+ - badcmd $(git rev-list --oneline -1 master~1)
-+
-+You can fix this with 'git rebase --edit-todo'.
-+Or you can abort the rebase with 'git rebase --abort'.
-+EOF
-+
-+test_expect_success 'static check of bad command' '
-+	test_rebase_end tmp2 &&
-+	set_fake_editor &&
-+	test_must_fail env FAKE_LINES=3D"1 2 3 bad 4 5" \
-+		git rebase -i --root 2>actual &&
-+	test_cmp expect actual &&
-+	FAKE_LINES=3D"1 2 3 drop 4 5" git rebase --edit-todo &&
-+	git rebase --continue &&
-+	test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-+	test C =3D $(git cat-file commit HEAD^ | sed -ne \$p)
-+'
-+
-+cat >expect <<EOF
-+Warning: the SHA-1 is missing or isn't a commit in the following line(=
-s):
-+ - edit XXXXXXX False commit
-+
-+You can fix this with 'git rebase --edit-todo'.
-+Or you can abort the rebase with 'git rebase --abort'.
-+EOF
-+
-+test_expect_success 'static check of bad SHA-1' '
-+	test_config rebase.missingCommitsCheck error &&
-+	test_rebase_end tmp2 &&
-+	set_fake_editor &&
-+	test_must_fail env FAKE_LINES=3D"1 2 edit fakesha 3 4 5 #" \
-+		git rebase -i --root 2>actual &&
-+	test_cmp expect actual &&
-+	FAKE_LINES=3D"1 2 4 5 6" git rebase --edit-todo &&
-+	git rebase --continue &&
-+	test E =3D $(git cat-file commit HEAD | sed -ne \$p)
-+'
-+
- test_done
---=20
-2.4.2.496.gdc9319a
+-- 
+Regards,
+Karthik
