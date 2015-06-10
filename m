@@ -1,7 +1,7 @@
 From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Subject: [PATCH v2 6/7] revision: fix rev-list --bisect in old/new mode
-Date: Wed, 10 Jun 2015 21:01:57 +0200
-Message-ID: <1433962918-6536-2-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+Subject: [PATCH v2 7/7] bisect: allows any terms set by user
+Date: Wed, 10 Jun 2015 21:01:58 +0200
+Message-ID: <1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
 References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
 Cc: remi.lespinet@ensimag.grenoble-inp.fr,
 	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
@@ -9,8 +9,7 @@ Cc: remi.lespinet@ensimag.grenoble-inp.fr,
 	guillaume.pages@ensimag.grenoble-inp.fr,
 	antoine.delaite@ensimag.grenoble-inp.fr,
 	Matthieu.Moy@grenoble-inp.fr, chriscool@tuxfamily.org,
-	thomasxnguy@gmail.com, valentinduperray@gmail.com,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+	thomasxnguy@gmail.com, valentinduperray@gmail.com
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Jun 10 21:02:14 2015
 Return-path: <git-owner@vger.kernel.org>
@@ -18,32 +17,32 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2lGO-0003XA-9z
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 21:02:12 +0200
+	id 1Z2lGP-0003XA-8f
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 21:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754295AbbFJTCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 15:02:06 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:48091 "EHLO
+	id S932289AbbFJTCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 15:02:09 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:48702 "EHLO
 	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753044AbbFJTCB (ORCPT
+	by vger.kernel.org with ESMTP id S1753288AbbFJTCB (ORCPT
 	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2015 15:02:01 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id E1809286E;
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id F24A92864;
 	Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
 Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eoKdvAakAK0i; Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
+	with ESMTP id 29L5bVmpNgCD; Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
 Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CABED2864;
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id DF5332852;
 	Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id BDC1020E7;
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id DA28620D6;
 	Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
 Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1wbI61DSWLv3; Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
+	with ESMTP id P9A-R5viqNba; Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
 Received: from pcserveur.ensimag.fr (ensipcserveur.imag.fr [129.88.240.65])
-	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 7E24D20E2;
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id 8B5A920E5;
 	Wed, 10 Jun 2015 21:01:58 +0200 (CEST)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
@@ -51,67 +50,170 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271345>
 
-From: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+Introduction of the git bisect terms function.
+The user can set its own terms.
 
-Calling git rev-list --bisect when an old/new mode bisection was started
-shows the help notice. This has been fixed by reading BISECT_TERMS in
-revision.c to find the correct bisect refs path (which was always
-refs/bisect/bad (or good) before and can be refs/bisect/new (old) now).
+List of known commands not available :
+`git bisect replay`
+`git bisect terms term1 term2
+then
+git bisect start bad_rev good_rev`
 
-Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
 Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
 ---
- revision.c |   16 ++++++++++++++--
- 1 files changed, 14 insertions(+), 2 deletions(-)
+ Documentation/git-bisect.txt |   19 ++++++++++++++++++
+ git-bisect.sh                |   44 ++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 55 insertions(+), 8 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 7ddbaa0..a332270 100644
---- a/revision.c
-+++ b/revision.c
-@@ -21,6 +21,9 @@
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 3c3021a..ef0c03c 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -133,6 +133,25 @@ You must run `git bisect start` without commits as argument and run
+ `git bisect new <rev>`/`git bisect old <rev>...` after to add the
+ commits.
  
- volatile show_early_output_fn_t show_early_output;
- 
-+static const char *name_bad;
-+static const char *name_good;
++Alternative terms: use your own terms
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
- char *path_name(const struct name_path *path, const char *name)
- {
- 	const struct name_path *p;
-@@ -2073,14 +2076,22 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 	ctx->argc -= n;
- }
- 
-+extern void read_bisect_terms(const char **bad, const char **good);
++If the builtins terms bad/good and new/old do not satisfy you, you can
++set your own terms.
 +
- static int for_each_bad_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
--	return for_each_ref_in_submodule(submodule, "refs/bisect/bad", fn, cb_data);
-+	char bisect_refs_path[256];
-+	strcpy(bisect_refs_path, "refs/bisect/");
-+	strcat(bisect_refs_path, name_bad);
-+	return for_each_ref_in_submodule(submodule, bisect_refs_path, fn, cb_data);
++------------------------------------------------
++git bisect terms term1 term2
++------------------------------------------------
++
++This command has to be used before a bisection has started.
++The term1 must be associated with the latest revisions and term2 with the
++ancestors of term1.
++
++Only the first bisection following the 'git bisect terms' will use the terms.
++If you mistyped one of the terms you can do again 'git bisect terms term1
++term2'.
++
++
+ Bisect visualize
+ ~~~~~~~~~~~~~~~~
+ 
+diff --git a/git-bisect.sh b/git-bisect.sh
+index c012f5d..22d65b1 100644
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-USAGE='[help|start|bad|good|new|old|skip|next|reset|visualize|replay|log|run]'
++USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
+ LONG_USAGE='git bisect help
+ 	print this long help message.
+ git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
+@@ -11,6 +11,8 @@ git bisect (bad|new) [<rev>]
+ git bisect (good|old) [<rev>...]
+ 	mark <rev>... known-good revisions/
+ 		revisions before change in a given property.
++git bisect terms term1 term2
++	set up term1 and term2 as bisection terms.
+ git bisect skip [(<rev>|<range>)...]
+ 	mark <rev>... untestable revisions.
+ git bisect next
+@@ -79,9 +81,16 @@ bisect_start() {
+ 	orig_args=$(git rev-parse --sq-quote "$@")
+ 	bad_seen=0
+ 	eval=''
+-	# start_bad_good is used to detect if we did a 
+-	# 'git bisect start bad_rev good_rev'
+-	start_bad_good=0
++	# terms_defined is used to detect if we did a
++	# 'git bisect start bad_rev good_rev' or if the user
++	# defined his own terms with git bisect terms
++	terms_defined=0
++	if test -s "$GIT_DIR/TERMS_DEFINED"
++	then
++		terms_defined=1
++		get_terms
++		rm -rf "$GIT_DIR/TERMS_DEFINED"
++	fi
+ 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
+ 	then
+ 		mode=--no-checkout
+@@ -107,7 +116,7 @@ bisect_start() {
+ 				break
+ 			}
+ 
+-			start_bad_good=1
++			terms_defined=1
+ 
+ 			case $bad_seen in
+ 			0) state=$NAME_BAD ; bad_seen=1 ;;
+@@ -180,7 +189,7 @@ bisect_start() {
+ 	} &&
+ 	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
+ 	eval "$eval true" &&
+-	if test $start_bad_good -eq 1 && test ! -s "$GIT_DIR/BISECT_TERMS"
++	if test $terms_defined -eq 1 && test ! -s "$GIT_DIR/BISECT_TERMS"
+ 	then
+ 		echo "$NAME_BAD" >"$GIT_DIR/BISECT_TERMS" &&
+ 		echo "$NAME_GOOD" >>"$GIT_DIR/BISECT_TERMS"
+@@ -419,6 +428,7 @@ bisect_clean_state() {
+ 	rm -f "$GIT_DIR/BISECT_NAMES" &&
+ 	rm -f "$GIT_DIR/BISECT_RUN" &&
+ 	rm -f "$GIT_DIR/BISECT_TERMS" &&
++	rm -f "$GIT_DIR/TERMS_DEFINED" &&
+ 	# Cleanup head-name if it got left by an old version of git-bisect
+ 	rm -f "$GIT_DIR/head-name" &&
+ 	git update-ref -d --no-deref BISECT_HEAD &&
+@@ -529,7 +539,8 @@ get_terms () {
+ check_and_set_terms () {
+ 	cmd="$1"
+ 	case "$cmd" in
+-	bad|good|new|old)
++	skip) ;;
++	*)
+ 		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$NAME_BAD" && test "$cmd" != "$NAME_GOOD"
+ 		then
+ 			die "$(eval_gettext "Invalid command: you're currently in a \$NAME_BAD/\$NAME_GOOD bisect.")"
+@@ -562,6 +573,21 @@ bisect_voc () {
+ 	esac
  }
  
- static int for_each_good_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
--	return for_each_ref_in_submodule(submodule, "refs/bisect/good", fn, cb_data);
-+	char bisect_refs_path[256];
-+	strcpy(bisect_refs_path, "refs/bisect/");
-+	strcat(bisect_refs_path, name_good);
-+	return for_each_ref_in_submodule(submodule, bisect_refs_path, fn, cb_data);
- }
- 
- static int handle_revision_pseudo_opt(const char *submodule,
-@@ -2109,6 +2120,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 		handle_refs(submodule, revs, *flags, for_each_branch_ref_submodule);
- 		clear_ref_exclusion(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--bisect")) {
-+		read_bisect_terms(&name_bad, &name_good);
- 		handle_refs(submodule, revs, *flags, for_each_bad_bisect_ref);
- 		handle_refs(submodule, revs, *flags ^ (UNINTERESTING | BOTTOM), for_each_good_bisect_ref);
- 		revs->bisect = 1;
++bisect_terms () {
++	test $# -eq 2 ||
++	die "You need to give me at least two arguments"
++
++	if ! test -s "$GIT_DIR/BISECT_START"
++	then
++		echo $1 >"$GIT_DIR/BISECT_TERMS" &&
++		echo $2 >>"$GIT_DIR/BISECT_TERMS" &&
++		echo "1" > "$GIT_DIR/TERMS_DEFINED"
++	else
++		die "A bisection has already started, please use "\
++		"'git bisect reset' to restart and change the terms"
++	fi
++}
++
+ case "$#" in
+ 0)
+ 	usage ;;
+@@ -574,7 +600,7 @@ case "$#" in
+ 		git bisect -h ;;
+ 	start)
+ 		bisect_start "$@" ;;
+-	bad|good|new|old)
++	bad|good|new|old|$NAME_BAD|$NAME_GOOD)
+ 		bisect_state "$cmd" "$@" ;;
+ 	skip)
+ 		bisect_skip "$@" ;;
+@@ -591,6 +617,8 @@ case "$#" in
+ 		bisect_log ;;
+ 	run)
+ 		bisect_run "$@" ;;
++	terms)
++		bisect_terms "$@" ;;
+ 	*)
+ 		usage ;;
+ 	esac
 -- 
 1.7.1
