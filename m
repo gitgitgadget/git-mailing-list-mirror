@@ -1,77 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 7/7] send-email: suppress leading and trailing whitespaces before alias expansion
-Date: Wed, 10 Jun 2015 17:28:48 +0200
-Message-ID: <vpqoaknr39r.fsf@anie.imag.fr>
-References: <1433875804-16007-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<1433875804-16007-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-	<vpqa8w89d5x.fsf@anie.imag.fr>
-	<1281238070.338321.1433928615479.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<xmqqa8w7oarl.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 4/4] bisect: add the terms old/new
+Date: Wed, 10 Jun 2015 17:47:13 +0200
+Message-ID: <CAP8UFD0-R1UqSDbEeTKq_gX+uFw2egZetgziqaUiRqdivHvhPA@mail.gmail.com>
+References: <1839018688.331427.1433920317370.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpq7frcast5.fsf@anie.imag.fr>
+	<xmqqwpzbmvr3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	git <git@vger.kernel.org>,
+	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	louis--alexandre stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Nguy <thomasxnguy@gmail.com>,
+	Valentin Duperray <valentinduperray@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 17:42:51 2015
+X-From: git-owner@vger.kernel.org Wed Jun 10 17:47:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2i9O-0007qS-SA
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 17:42:47 +0200
+	id 1Z2iDy-0002Ot-Dz
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 17:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965265AbbFJPh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 11:37:29 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46077 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754365AbbFJP3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 11:29:00 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5AFSk3k026794
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 10 Jun 2015 17:28:46 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5AFSm78024874;
-	Wed, 10 Jun 2015 17:28:48 +0200
-In-Reply-To: <xmqqa8w7oarl.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 10 Jun 2015 08:15:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 10 Jun 2015 17:28:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5AFSk3k026794
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434554929.36746@H8LZjP1Ovaiyygk510F5SA
+	id S965834AbbFJPrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 11:47:21 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:35464 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965103AbbFJPrQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 11:47:16 -0400
+Received: by wiga1 with SMTP id a1so52954158wig.0
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 08:47:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+HL5CzoWgE74JGZLt7wjiPhFDzawbPXcbedO7XR/jD4=;
+        b=FKRaYUBduf19shBgIfWZeyAGkI2RSTnPzftLhXdTH0ZhFwpZMr6kcPrXeqfvQmfp1r
+         Ctx2fzgGB0uyS37e5NeMYr7ZRGdn0Y0tCLnrBtYQW1SZFXxvJTuEtM2np6fxTl2mQ+dv
+         /CchHfDzzIY20zgt9V39p0Q08afS3JSL/K4QarDck1EAEY20i/FNDrraJgWh1KlQBF8G
+         BZ+w/VvFBQRQp02IS8PHzZre6aOgv5+RJqcn7uBw0qyD91FRrj7/mktPAwAp7REZ1fd9
+         3g6TqSU3UYczLpbO25s0Hvzhzi5BNEOV9aSrv4Wf6Ml7XAvoPtplTg4FeuHMRvTvacMd
+         44ZA==
+X-Received: by 10.194.2.68 with SMTP id 4mr7253611wjs.82.1433951233949; Wed,
+ 10 Jun 2015 08:47:13 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Wed, 10 Jun 2015 08:47:13 -0700 (PDT)
+In-Reply-To: <xmqqwpzbmvr3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271309>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+On Wed, Jun 10, 2015 at 5:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
->> I agree, I'd like to put it right after split_at_commas in a separate
->> function "trim_list". Is it a good idea even if the function is one
->> line long ?
+>> "Somebody else did it like that" is not a good justification. Especially
+>> when the previous code was not merged: the code wasn't finished.
+>>
+>> But I actually disagree with the fact that it was not the idea. The
+>> point of having the terms in BISECT_TERMS was precisely to be generic
+>> enough. Had the goal been just to distinguish good/bad and old/new, we
+>> would have needed only one bit of information, and encoding it with the
+>> existance/non-existance of a file would have been sufficient (as you
+>> tried to do in addition to BISECT_TERMS).
+>>
+>>> For now we just rebased, corrected and finishing to implement
+>>> functionalities.
+>>
+>> functionalities is one thing, but the code should be maintainable to be
+>> merged in git.git. Git would not be where it is if Junio was merging
+>> patches based on "it works, we'll see if the code is good enough later"
+>> kinds of judgments ;-).
+>>
+>> Moving from "one hardcoded pair of terms" to "two hardcoded pairs of
+>> terms" is a nice feature, but hardly a step in the right direction wrt
+>> maintainability.
 >
-> Hmph, if I have "A, B, C" and call a function that gives an array of
-> addresses, treating the input as comma-separated addresses, I would
-> expect ("A", "B", "C") to be returned from that function, instead of
-> having to later trim the whitespace around what is returned.
+> Nicely put.  From that point of view, the variable names and the
+> underlying machinery in general should call these two "new" vs
+> "old".  I.e. name_new=bad name_old=good would be the default, not
+> name_bad=bad name_good=good.
 
-It is actually doing this. But if you have " A,B,C  ", then you'll get
-" A", "B", "C  ". But once you're trimming around commas, trimming
-leading and trailing spaces fits well with split itself.
+I don't think this would improve maintainability, at least not for me.
+The doc currently uses "good/bad" everywhere.
+For example the description is:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+   This command uses git rev-list --bisect to help drive the binary search
+   process to find which change introduced a bug, given an old "good" commit
+   object name and a later "bad" commit object name.
+
+And this is logical if the default is "good/bad". If we use name_new
+and name_old in the code, we make it harder for us to see if the doc
+matches the code.
+
+And unless we rewrite a lot of them, the tests too will mostly be
+still using "good/bad" so it will make it harder to maintain them too.
