@@ -1,172 +1,72 @@
-From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Subject: [PATCH 2/4] bisect: replace hardcoded "bad|good" by variables
-Date: Wed, 10 Jun 2015 09:10:37 +0200 (CEST)
-Message-ID: <1809967391.331411.1433920237669.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <308677275.323594.1433875347392.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 02/19] parse-options-cb: implement parse_opt_pass_argv_array()
+Date: Wed, 10 Jun 2015 15:11:01 +0800
+Message-ID: <CACRoPnRVjNseXPOxKe4_3rnKXmAYeA80iCHY3o8euWA=EUX6hA@mail.gmail.com>
+References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
+	<1433314143-4478-3-git-send-email-pyokagan@gmail.com>
+	<xmqqr3pkwjz6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 10 09:10:01 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 10 09:11:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2a9A-0007yT-Kw
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 09:10:01 +0200
+	id 1Z2aAO-0000XE-Hd
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 09:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933378AbbFJHJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 03:09:57 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:50465 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933347AbbFJHJz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2015 03:09:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id E757B48875;
-	Wed, 10 Jun 2015 09:09:52 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Pf3eAnTxBPYb; Wed, 10 Jun 2015 09:09:52 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id CD4E048800;
-	Wed, 10 Jun 2015 09:09:52 +0200 (CEST)
-In-Reply-To: <308677275.323594.1433875347392.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - GC43 (Win)/8.0.9_GA_6191)
-Thread-Topic: bisect: replace hardcoded "bad|good" by variables
-Thread-Index: 2Z6PGLPLUR55iEBgtZUsWjYEKotTDQ==
+	id S933438AbbFJHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 03:11:10 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:35428 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964800AbbFJHLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 03:11:03 -0400
+Received: by labko7 with SMTP id ko7so26665451lab.2
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 00:11:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=70GBQtrKXj928TuqSk6LUtwgt6L0jqzRn9mktjMg1Xk=;
+        b=haKOeSm4DpGFluNu0uVhAFbGifp5osVZEJcL4ldIGowu0ae2ChTsC54iCfiB2S1Bjo
+         a9w+9Vc/OFwJ1Ris98YH1WgSlY6ZNpVglcxFB0bLFoPwKY24SsyYfh9LEGIDpNlJrBaD
+         Q8OGY84KDwULY9oaaQdxNayRvljeVTNnp5CBFNstTRsWYLS1QuAvTELnNXWPVzyZyFS9
+         D6WwyRY8pzEbqKWNbug82Oq56Y6JAXcnB3Wn2ISt2W+kwyJuG7pejtk6TPX7sGUgCpup
+         eGQ4ARJlRXMQOfR+c7MPQEAsUmzAaOt97T+0Nedc8GJuEAAuRL9B8jV9TbQzu7dFiiRF
+         /Ssg==
+X-Received: by 10.152.22.99 with SMTP id c3mr1769482laf.32.1433920261512; Wed,
+ 10 Jun 2015 00:11:01 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Wed, 10 Jun 2015 00:11:01 -0700 (PDT)
+In-Reply-To: <xmqqr3pkwjz6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271259>
 
-Hi, 
+On Wed, Jun 10, 2015 at 7:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Almost the same comment as 01/19 applies to this comment.
+>
+> I think it makes good sense to have two variants, one that lets the
+> last one win and pass only that last one (i.e. 01/19) and the other
+> that accumulates them into an argv_array (i.e. this one).  But it
+> feels iffy, given that the "acculate" version essentially creates an
+> array of (char *), to make "the last one wins, leaving a single
+> string" to use strbuf.  I'd find it much more understandable if 01/19
+> took (char **) as opt->value instead of a strbuf.
 
-Thanks for the review, 
-(sorry if you received this twice)
+I don't see how it feels iffy. The purpose of using strbufs (and
+argv_arrays) is to avoid error-prone manual memory management.
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote: 
+> In any case, these two need to be added as a related pair to the API
+> documentation.
 
->> +static const char *name_bad; 
->> +static const char *name_good; 
-> 
->Same remark as PATCH 2. 
+Okay, I guess I could also add their macro functions as well.
 
-After the discussion you had with Christian I think we will 
-keep name_bad/good for now. 
-
->> - 
->> - fprintf(stderr, "The merge base %s is bad.\n" 
->> - "This means the bug has been fixed " 
->> - "between %s and [%s].\n", 
->> - bad_hex, bad_hex, good_hex); 
->> - 
->> + if (!strcmp(name_bad, "bad")) { 
->> + fprintf(stderr, "The merge base %s is bad.\n" 
->> + "This means the bug has been fixed " 
->> + "between %s and [%s].\n", 
->> + bad_hex, bad_hex, good_hex); 
->> + } 
-> 
->You need an "else" here. Maybe it comes later, but as a reviewer, I want 
->to check that you did not forget it now (because I don't trust myself to 
->remember that it must be added later). 
-
-Should I put an else {} with nothing in beetween? 
-
->> + name_bad = "bad"; 
->> + name_good = "good"; 
->> + } else { 
->> + strbuf_getline(&str, fp, '\n'); 
->> + name_bad = strbuf_detach(&str, NULL); 
->> + strbuf_getline(&str, fp, '\n'); 
->> + name_good = strbuf_detach(&str, NULL); 
->> + } 
-> 
->I would have kept just 
-> 
-> name_bad = "bad"; 
-> name_good = "good"; 
-> 
->in this patch, and introduce BISECT_TERMS in a separate one. 
-
-Should not I introduce BISECT_TERMS in bisect.c and git-bisect.sh 
-with the same commit? I did some rebase though and now name_bad and 
-name_good appears in the first commit, and read_bisect_terms in the 
-second. 
-
->> --- a/git-bisect.sh 
->> +++ b/git-bisect.sh 
->> @@ -77,6 +77,7 @@ bisect_start() { 
->> orig_args=$(git rev-parse --sq-quote "$@") 
->> bad_seen=0 
->> eval='' 
->> + start_bad_good=0 
->> if test "z$(git rev-parse --is-bare-repository)" != zfalse 
->> then 
->> mode=--no-checkout 
->> @@ -101,6 +102,9 @@ bisect_start() { 
->> die "$(eval_gettext "'\$arg' does not appear to be a valid revision")" 
->> break 
->> } 
->> + 
->> + start_bad_good=1 
->> + 
-> 
->Why do you need this variable? It seems to me that you are hardcoding 
->once more that terms can be either "good/bad" or "old/new", which you 
->tried to eliminate from the previous round. 
-
-I answered to Junio on this too, it is because our function which create 
-the bisect_terms file is not called after 
-'git bisect start bad_rev good_rev'. 
-
->> + then 
->> + echo "$NAME_BAD" >"$GIT_DIR/BISECT_TERMS" && 
->> + echo "$NAME_GOOD" >>"$GIT_DIR/BISECT_TERMS" 
->> + fi && 
-> 
->Why not do this unconditionnally? Whether terms are good/bad or old/new, 
->you can write them to BISECT_TERMS. 
-
-Because after a git bisect start we don't yet what terms are used. 
-This line is only for the case 'git bisect start bad_rev good_rev'. 
-
->> + fi 
->> + case "$cmd" in 
->> + bad|good) 
->> + if test ! -s "$GIT_DIR/BISECT_TERMS" 
->> + then 
->> + echo "bad" >"$GIT_DIR/BISECT_TERMS" && 
->> + echo "good" >>"$GIT_DIR/BISECT_TERMS" 
->> + fi 
->> + NAME_BAD="bad" 
->> + NAME_GOOD="good" ;; 
->> + esac ;; 
->> + esac 
->> +} 
->> + 
->> +bisect_voc () { 
->> + case "$1" in 
->> + bad) echo "bad" ;; 
->> + good) echo "good" ;; 
->> + esac 
->> +} 
-> 
->It's weird to have these hardcoded "bad"/"good" when you already have 
->BISECT_TERMS in the same patch. 
-
-bisect_voc is used to display what commands the user can do, thus the 
-builtins tags. I did not find a way to not hardcode them. 
-
-The other points have been taken into account. 
+Thanks,
+Paul
