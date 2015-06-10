@@ -1,74 +1,100 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: On undoing a forced push
-Date: Wed, 10 Jun 2015 09:43:34 +0700
-Message-ID: <CACsJy8D32vjn=GuJj60hFKMwgqbV6L1G9OyEBguCD4c0Nb_kjQ@mail.gmail.com>
-References: <20150609121221.GA14126@lanh> <20150609150035.GA102463@vauxhall.crustytoothpaste.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] index-pack: avoid excessive re-reading of pack directory
+Date: Tue, 9 Jun 2015 20:46:24 -0700
+Message-ID: <CAJo=hJv6O66yFC_O_4aeL2JxBOtk2f+k1wGt3VW7dk71Q1ov3A@mail.gmail.com>
+References: <7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com>
+ <CACsJy8AMhEKe-eM7jvYcEx+7ZmfvdD+p1s4VYHjKuAwZsDWc-w@mail.gmail.com>
+ <CACsJy8Cs6GcRQ-kgnSqwxP4MPHfds9qiir1_O1hc5cZ+0QP-EA@mail.gmail.com>
+ <7FAE15F0A93C0144AD8B5FBD584E1C5519759641@C111KXTEMBX51.ERF.thomson.com>
+ <CACsJy8BULBJ=cL1+4TFX_7tYSCFL3MNEz1Ay0YGqx8W_8=nwAg@mail.gmail.com>
+ <20150522071224.GA10734@peff.net> <CACsJy8Bb1O7QZtiPWdzYwYgOdV0dLDgD3Xu_YaWNUbsuTqJB5g@mail.gmail.com>
+ <7FAE15F0A93C0144AD8B5FBD584E1C55197764FE@C111KXTEMBX51.ERF.thomson.com>
+ <20150605121817.GA22125@peff.net> <20150605122921.GA7586@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 10 04:44:15 2015
+Cc: steve.norman@thomsonreuters.com,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 10 05:46:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2Vzv-0005Va-Uf
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 04:44:12 +0200
+	id 1Z2Wya-0003Uo-Hc
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 05:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752884AbbFJCoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2015 22:44:07 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:36426 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753000AbbFJCoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2015 22:44:05 -0400
-Received: by igbpi8 with SMTP id pi8so25681615igb.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2015 19:44:05 -0700 (PDT)
+	id S1753280AbbFJDqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2015 23:46:47 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:36055 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246AbbFJDqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2015 23:46:46 -0400
+Received: by wigg3 with SMTP id g3so34513495wig.1
+        for <git@vger.kernel.org>; Tue, 09 Jun 2015 20:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=nW4rFvSpUKGcwpmmvZUZhvdpoFXfzPvM6Fy8EGPwjN4=;
-        b=l2c1KyVzYpe3qlZZyRYCg9hxVZa3MZwnm3APcQruw11YAuG4fcIOYpD3mFTTk2x+uQ
-         MjrmfUulTbgrBiRbhB2CVOb1yL6u59KcAGPJMMaAtIAVTmik9a+wA9GAUoaNtT//wiSH
-         jMrn4aFrWvieqCOHjkA7MOAT3/XOdsgf7SbJNpkDPSN+GgUiYHICFGXqcEXZ20Jm8utj
-         /5q4JWl+fPB+KJXL4tmUbqU7AGW1c3q+TbhHuEG83SeHO6whZjq9VvtM5VXOA1iQxsus
-         hgUVIzdUNdpTQlxH6r4sC43EGDKVJnLYAQd91z3UDfi/0F0/rRPapU7FDJ1/CvsH40K2
-         mjBw==
-X-Received: by 10.50.142.68 with SMTP id ru4mr2572631igb.41.1433904245244;
- Tue, 09 Jun 2015 19:44:05 -0700 (PDT)
-Received: by 10.107.6.9 with HTTP; Tue, 9 Jun 2015 19:43:34 -0700 (PDT)
-In-Reply-To: <20150609150035.GA102463@vauxhall.crustytoothpaste.net>
+         :cc:content-type;
+        bh=LFWnh6Z4JUROlKedzg8mhXgRJFCHg0Zl9PZkSl/8qKM=;
+        b=QsC7OkDTjP+bFKQEIklVPk6rbwCoG3GD9kyWkuc4WbjEyKHhgwvJBJASAvi3ha6GrX
+         GJ5QXSLLXnZpNkrZK15htga825UXoJxBlAsNR1iYeOXfwxq+S9iuGC+30NzaE8r4jutI
+         KL3RJxOnZpZDY5Ypply4exKwAKdFILTPVhkJA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=LFWnh6Z4JUROlKedzg8mhXgRJFCHg0Zl9PZkSl/8qKM=;
+        b=ZW7fnMI1GjMhN5tb9MwvZdkmRQMJo6dDFEF2qfuYeJNgf62/AsYh2urH1lF8z0vHCu
+         0tqV8oZzcdvSdsK7TpgucR8WM444v7kbiciahHl3xAc6UakzYt2DwlKWBlp6d7yST0D1
+         vm2tne9Fm9gS8mp1YrXqYQAA6V2PUZo9QjxtOCW4YH1aRUpxzyVDSRNn5mQk6iJPf7XD
+         k3wXHL74DzjTehWutPe9Mn9x/hhYTToz0sLOm/Sy4tVPs21Jq/nW4d2q+uAyIzeGEqRu
+         qBbpZu6S58R8Y2lcXuupSPgIcGTkp36RTfksEVHcs3B0atAEkiUspQuQOMsFuQ4swpaE
+         H3gw==
+X-Gm-Message-State: ALoCoQlODzwNe8ldw/7kLUCOuoUWlChlSXae7/OvFR7aKKWhde3gd/CIn9s6F3wCmDgfIsDEc//1
+X-Received: by 10.180.198.199 with SMTP id je7mr3908842wic.34.1433908004981;
+ Tue, 09 Jun 2015 20:46:44 -0700 (PDT)
+Received: by 10.28.49.134 with HTTP; Tue, 9 Jun 2015 20:46:24 -0700 (PDT)
+In-Reply-To: <20150605122921.GA7586@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271254>
 
-On Tue, Jun 9, 2015 at 10:00 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Tue, Jun 09, 2015 at 07:12:21PM +0700, Duy Nguyen wrote:
->> diff --git a/transport.c b/transport.c
->> index f080e93..6bd6a64 100644
->> --- a/transport.c
->> +++ b/transport.c
->> @@ -657,16 +657,17 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
->>                       "[new branch]"),
->>                       ref, ref->peer_ref, NULL, porcelain);
->>       else {
->> -             char quickref[84];
->> +             char quickref[104];
+On Fri, Jun 5, 2015 at 5:29 AM, Jeff King <peff@peff.net> wrote:
 >
-> You've increased this by 20, but you're adding 40 characters to the
-> strcpy.  Are you sure that's enough?
+> However, some code paths make a large number of
+> has_sha1_file checks which are _not_ expected to return 1.
+> The collision test in index-pack.c is such a case. On a
+> local system, this can cause a performance slowdown of
+> around 5%. But on a system with high-latency system calls
+> (like NFS), it can be much worse.
 >
-> Also, you might consider writing this in terms of GIT_SHA1_HEXSZ, as it
-> will be more obvious that this depends on that value.  If you don't now,
-> I will later.
+> This patch introduces a "quick" flag to has_sha1_file which
+> callers can use when they would prefer high performance at
+> the cost of false negatives during repacks. There may be
+> other code paths that can use this, but the index-pack one
+> is the most obviously critical, so we'll start with
+> switching that one.
 
-It's a demonstration patch and I didn't pay much attention. I think
-converting this quickref to strbuf may be better though, when you
-convert this file to object_id.
--- 
-Duy
+Hilarious. We did this in JGit back in ... uhm before 2009. :)
+
+But its Java. So of course we had to do optimizations.
+
+
+> @@ -3169,6 +3169,8 @@ int has_sha1_file(const unsigned char *sha1)
+>                 return 1;
+>         if (has_loose_object(sha1))
+>                 return 1;
+> +       if (flags & HAS_SHA1_QUICK)
+> +               return 0;
+>         reprepare_packed_git();
+>         return find_pack_entry(sha1, &e);
+
+Something else we do is readdir() over the loose objects and store
+them in a map in memory. That way we avoid stat() calls during that
+has_loose_object() path. This is apparently a win enough of the time
+that we always do that when receiving a pack over the wire (client or
+server).
