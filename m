@@ -1,70 +1,166 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/8] sha1_file: introduce has_object_file helper.
-Date: Wed, 10 Jun 2015 16:59:58 +0700
-Message-ID: <CACsJy8DHJ415euwo3gMTtuQx+5RopzBg+mssZ8TVstGJcdWSqg@mail.gmail.com>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net> <1433867316-663554-3-git-send-email-sandals@crustytoothpaste.net>
+From: =?UTF-8?q?Galan=20R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFCv5 1/3] git-rebase -i: add command "drop" to remove a commit
+Date: Wed, 10 Jun 2015 12:10:33 +0200
+Message-ID: <1433931035-20011-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Wed Jun 10 12:00:35 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Galan=20R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 10 12:10:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2coE-0005dt-TM
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 12:00:35 +0200
+	id 1Z2cy7-00046T-24
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 12:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbbFJKAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 06:00:31 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:37914 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754186AbbFJKA3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 06:00:29 -0400
-Received: by igblz2 with SMTP id lz2so29777067igb.1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2015 03:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JXIhXsoV3qIh+EHMmDzs3KTmV6vKW1uSsVbhDxoO3MM=;
-        b=Ya1ImE6bLRnjBOlan/o44RHPCijuSZ4XBAiPPtpBM4NN40cmqaWHfDuFLO51XeRmXu
-         6jaURtmxjkUzffCRBNCQxbTTDJuLb1wDXrQMD4AiBIOlKP7BVNKOS3YqA8GiWK4qMd/O
-         JwYMzTBewPYoBT7aSOKrSCcvlD3vPaGyuFQkdNT7GXLGL82w5o0Mzz3K9X5DAk34z+EA
-         F8jCuS36/4+lfcNuAdoaLq9iPSR0nkLJS8lck60VK7LWzznMIfwfTNzvfLtSy65RE7Es
-         J4zRT/msKfvLylnKk5Q6sDnyxchz63ErA1NxYdVLyd5JmnwQSz0xkNl4vioMKjabXiQt
-         i8LA==
-X-Received: by 10.50.7.68 with SMTP id h4mr4727215iga.40.1433930429113; Wed,
- 10 Jun 2015 03:00:29 -0700 (PDT)
-Received: by 10.107.6.9 with HTTP; Wed, 10 Jun 2015 02:59:58 -0700 (PDT)
-In-Reply-To: <1433867316-663554-3-git-send-email-sandals@crustytoothpaste.net>
+	id S1754186AbbFJKKn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2015 06:10:43 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:55639 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753997AbbFJKKl (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2015 06:10:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 5C81B276A;
+	Wed, 10 Jun 2015 12:10:39 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id n6BG7fjHBKcl; Wed, 10 Jun 2015 12:10:39 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 403D12561;
+	Wed, 10 Jun 2015 12:10:39 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 3452720E4;
+	Wed, 10 Jun 2015 12:10:39 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Uyh8C64Dnvu2; Wed, 10 Jun 2015 12:10:39 +0200 (CEST)
+Received: from galanalr-Dell-System-Inspiron-N7110.grenet.fr (eduroam-032245.grenet.fr [130.190.32.245])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C962120DD;
+	Wed, 10 Jun 2015 12:10:38 +0200 (CEST)
+X-Mailer: git-send-email 2.4.2.496.geaaf631
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271281>
 
-On Tue, Jun 9, 2015 at 11:28 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 7e38148..09f7f03 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -3173,6 +3173,11 @@ int has_sha1_file(const unsigned char *sha1)
->         return find_pack_entry(sha1, &e);
->  }
->
-> +int has_object_file(const struct object_id *oid)
-> +{
-> +       return has_sha1_file(oid->hash);
-> +}
-> +
+Instead of removing a line to remove the commit, you can use the
+command "drop" (just like "pick" or "edit"). It has the same effect as
+deleting the line (removing the commit) except that you keep a visual
+trace of your actions, allowing a better control and reducing the
+possibility of removing a commit by mistake.
 
-This version could be "static inline" and placed in cache.h. Though it
-may be premature optimization. On top of my head I can't recall any
-place where has_sha1_file() is used so many times for this extra call
-to become significant overhead.
--- 
-Duy
+Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp=
+=2Efr>
+---
+ In t3404, test_rebase_end is introduced, mainly because it will be
+ reused in future tests (in 2/3 and 3/3).
+
+ Documentation/git-rebase.txt  |  3 +++
+ git-rebase--interactive.sh    |  3 ++-
+ t/lib-rebase.sh               |  4 ++--
+ t/t3404-rebase-interactive.sh | 16 ++++++++++++++++
+ 4 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
+t
+index 1d01baa..34bd070 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -514,6 +514,9 @@ rebasing.
+ If you just want to edit the commit message for a commit, replace the
+ command "pick" with the command "reword".
+=20
++To drop a commit, replace the command "pick" with "drop", or just
++delete the matching line.
++
+ If you want to fold two or more commits into one, replace the command
+ "pick" for the second and subsequent commits with "squash" or "fixup".
+ If the commits had different authors, the folded commit will be
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index dc3133f..72abf90 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -152,6 +152,7 @@ Commands:
+  s, squash =3D use commit, but meld into previous commit
+  f, fixup =3D like "squash", but discard this commit's log message
+  x, exec =3D run command (the rest of the line) using shell
++ d, drop =3D remove commit
+=20
+ These lines can be re-ordered; they are executed from top to bottom.
+=20
+@@ -505,7 +506,7 @@ do_next () {
+ 	rm -f "$msg" "$author_script" "$amend" "$state_dir"/stopped-sha || ex=
+it
+ 	read -r command sha1 rest < "$todo"
+ 	case "$command" in
+-	"$comment_char"*|''|noop)
++	"$comment_char"*|''|noop|drop|d)
+ 		mark_action_done
+ 		;;
+ 	pick|p)
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 6bd2522..fdbc900 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -14,7 +14,7 @@
+ #       specified line.
+ #
+ #   "<cmd> <lineno>" -- add a line with the specified command
+-#       ("squash", "fixup", "edit", or "reword") and the SHA1 taken
++#       ("squash", "fixup", "edit", "reword" or "drop") and the SHA1 t=
+aken
+ #       from the specified line.
+ #
+ #   "exec_cmd_with_args" -- add an "exec cmd with args" line.
+@@ -46,7 +46,7 @@ set_fake_editor () {
+ 	action=3Dpick
+ 	for line in $FAKE_LINES; do
+ 		case $line in
+-		squash|fixup|edit|reword)
++		squash|fixup|edit|reword|drop)
+ 			action=3D"$line";;
+ 		exec*)
+ 			echo "$line" | sed 's/_/ /g' >> "$1";;
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+=2Esh
+index ac429a0..ecd277c 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1102,4 +1102,20 @@ test_expect_success 'rebase -i commits that over=
+write untracked files (no ff)' '
+ 	test $(git cat-file commit HEAD | sed -ne \$p) =3D I
+ '
+=20
++test_rebase_end () {
++	test_when_finished "git checkout master &&
++	git branch -D $1 &&
++	test_might_fail git rebase --abort" &&
++	git checkout -b $1 master
++}
++
++test_expect_success 'drop' '
++	test_rebase_end dropTest &&
++	set_fake_editor &&
++	FAKE_LINES=3D"1 drop 2 3 drop 4 5" git rebase -i --root &&
++	test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
++	test C =3D $(git cat-file commit HEAD^ | sed -ne \$p) &&
++	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
++'
++
+ test_done
+--=20
+2.4.2.496.gdc9319a
