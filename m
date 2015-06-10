@@ -1,87 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-checkout.txt: Document "git checkout <pathspec>" better
-Date: Wed, 10 Jun 2015 09:38:25 -0700
-Message-ID: <xmqq7frbmsce.fsf@gitster.dls.corp.google.com>
-References: <5575F948.4060400@web.de>
-	<xmqqioavob7n.fsf@gitster.dls.corp.google.com>
-	<loom.20150610T170737-586@post.gmane.org>
+From: Christopher Dunn <cdunn2001@gmail.com>
+Subject: Re: format-patch and submodules
+Date: Wed, 10 Jun 2015 12:04:03 -0500
+Message-ID: <CAD2z=MBSAzENvj1-WUMzrXznvudjCc3vyvYQQ+wMnPC3G3Go2Q@mail.gmail.com>
+References: <CAD2z=MAu1qrr9=wwBnOJZZ3JCJOsmFWi=gDgKMQKU3_P-01e3g@mail.gmail.com>
+	<557735E6.8040906@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Ed Avis <eda@waniasset.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 18:38:38 2015
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 10 19:04:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2j1P-0006uN-9P
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 18:38:35 +0200
+	id 1Z2jQB-0004xZ-VI
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 19:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966194AbbFJQic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 12:38:32 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:32866 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965309AbbFJQi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 12:38:29 -0400
-Received: by iebgx4 with SMTP id gx4so38215790ieb.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2015 09:38:28 -0700 (PDT)
+	id S1754294AbbFJREH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 13:04:07 -0400
+Received: from mail-vn0-f43.google.com ([209.85.216.43]:36820 "EHLO
+	mail-vn0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752367AbbFJREE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 13:04:04 -0400
+Received: by vnbg1 with SMTP id g1so9161059vnb.3
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 10:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=mSgJWTa1zrvl5onE674bS00QIrE/Tm+xG/XOKX67tIk=;
-        b=oTYg7A563QSoB0avo4iuKOubD9A1wfxbLfEudrKO6Mu2cbsgoACPg/rBnwKGRtc+y5
-         AnZGQpCcM0T59N8DHjEcNl6FCKWk526P3DAhBKnX5v3Ibfekn/pxRfkuqs0cpERYZdYj
-         gdfrW1zufr+vJ9CByKDi6x9qu8lLRVUGuVq4Uzzt8ktWeSlXrO/v4Xy5b1Hv14HyOHDs
-         TlLlQHNA3pCmS9lpYVcbAwPNPmxdVVQ8+WsSV0Nznhho5RnuLiuww95cnaxYyHYTwBh/
-         q3Oj7lnRfCVzOff75Ic2Rk7k4bYrvzRdQ37B0LVDATNonnjpK4oSYJgFsXrs8s96tmxN
-         LJlA==
-X-Received: by 10.43.171.70 with SMTP id nt6mr5665083icc.73.1433954308512;
-        Wed, 10 Jun 2015 09:38:28 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
-        by mx.google.com with ESMTPSA id f126sm6324185ioe.21.2015.06.10.09.38.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Jun 2015 09:38:27 -0700 (PDT)
-In-Reply-To: <loom.20150610T170737-586@post.gmane.org> (Ed Avis's message of
-	"Wed, 10 Jun 2015 15:11:57 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5JucbVKwjOYQJzVNUX7B3U1U47jldKnoBkPWz8M06sE=;
+        b=esE8y0elM5cJkwO0YWztwrBjfuNFv6nhbiJHxVMXQR8F0G1BHuBxwn5/Taa/O4GGrf
+         2o5gmozkDWM5+v9zavFcXZ2csDTVhPWS02+MaF+yCcs1IkAzzHLr/ouCL725fC5CO9kC
+         dlP3/QST4nYWJ3cuX60iWLDDgM+YO9Q6+pER/6sTtfLEe1EalfIOIcEOgHJBhFx3t8b8
+         jcLexzYBKYjcYo5rWU9cpSOjnI2fY0NPebQpyxjQF9W5lGiU+ZI02UnuEE3lHyIqNRCi
+         8RD1qXxbJu7W7+8YGaLNhkj7M6hYRRWyquY4/L8CMThsjR+rPHF3yg77dpw124veB3s9
+         PEIA==
+X-Received: by 10.53.0.226 with SMTP id bb2mr8108425vdd.4.1433955844050; Wed,
+ 10 Jun 2015 10:04:04 -0700 (PDT)
+Received: by 10.52.98.134 with HTTP; Wed, 10 Jun 2015 10:04:03 -0700 (PDT)
+In-Reply-To: <557735E6.8040906@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271328>
 
-Ed Avis <eda@waniasset.com> writes:
+Sorry. I thought empty patches were made to work in other cases.
 
-> 'restore' may be more consistent with git's internal terminology.
-> But from an outsider's perspective, 'revert' rather than 'restore' is in my
-> view much clearer and more consistent with other version control systems:
-> for example 'svn revert' is what you use to revert files in the working copy.
+'git-p4' needs to skip these. Wrong mailing list then.
 
-The reason why I said "restore" is because it does *not* have any
-"internal terminology" connotation.
-
-On the other hand, "revert" that means "create a counter-effect
-commit" is not "internal".  "git revert" is a part of end-user
-facing command.
-
-The only people that will be helped by using "revert" there will be
-the ones who haven't learned "git revert".  And it will make it
-harder for them to learn "git revert".  It is unfortunate that other
-systems use the word "revert" in a different way, and that is why we
-should avoid using that word when describing "checkout".
-
-> The original issue was that I naively expected that 'git checkout PATH' would
-> indeed just 'restore' some files, that is, create them when they are missing.
-> ...
-> If 'revert' is not a suitable verb because of the existing git-revert, then
-> I suggest that 'overwrite' or 'replace' might better convey the idea of what
-> the command does.
-
-Git is about "contents", not "files".  You modify a file, and
-restore its contents to its pristine state.  It is not "restore the
-file", as Git is not about "files".
-
-I think "overwrite is better" is primarily coming from not thinking
-in terms of "Git tracks contents, not files".
+On Tue, Jun 9, 2015 at 1:52 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Am 05.06.2015 um 01:20 schrieb Christopher Dunn:
+>>
+>> (Seen in git versions: 2.1.0 and 1.9.3 et al.)
+>>
+>> $ git format-patch --stdout X^..X | git apply check -
+>> fatal: unrecognized input
+>>
+>> This fails when the commit consists of nothing but a submodule change
+>> (as in 'git add submodule foo'), but it passes when a file change is
+>> added to the same commit.
+>>
+>> There used to be a similar problem for empty commits, but that was
+>> fixed around git-1.8:
+>>
+>>
+>> http://stackoverflow.com/questions/20775132/cannot-apply-git-patch-replacing-a-file-with-a-link
+>>
+>> Now, 'git format-patch' outputs nothing for an empty commit. I suppose
+>> that needs to be the behavior also when only submodules are changed,
+>> since in that case there is no 'diff' section from 'format-patch'.
+>>
+>> Use-case: git-p4
+>>
+>> Of course, we do not plan to add the submodule into Perforce, but we
+>> would like this particular command to behave the same whether there
+>> are other diffs or not.
+>
+>
+> Hmm, I'm not sure that this is a bug. It looks to me like doing a
+>
+> $ git format-patch --stdout X^..X | git apply check -
+>
+> when nothing is changed except submodules and expecting it to work
+> is the cause of the problem.
+>
+> I get the same error when I do:
+>
+> $git format-patch --stdout master..master | git apply --check -
+> fatal: unrecognized input
+>
+> No submodules involved, just an empty patch.
+>
+> I assume you want to ignore all submodule changes, so you should
+> check if e.g. "git diff --ignore-submodules X^..X" returns anything
+> before applying that? (From the command you ran I assume you might
+> be able to drop the --ignore-submodules because you already did set
+> "diff.ignoreSubmodules" to "all"?)
