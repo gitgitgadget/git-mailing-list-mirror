@@ -1,97 +1,140 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/4] bisect: simplify the add of new bisect terms
-Date: Wed, 10 Jun 2015 17:25:58 +0200
-Message-ID: <vpqvbevr3eh.fsf@anie.imag.fr>
-References: <1433794930-5158-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433794930-5158-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<vpqbngpl5zu.fsf@anie.imag.fr>
-	<550645264.367778.1433881052933.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<xmqq1thkwg5r.fsf@gitster.dls.corp.google.com>
-	<1926405730.374352.1433920537226.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqk2vcat2t.fsf@anie.imag.fr>
-	<xmqqegljoayp.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 15/19] pull: teach git pull about --rebase
+Date: Wed, 10 Jun 2015 23:35:18 +0800
+Message-ID: <CACRoPnSgVPVDTC=nY6FQHoVRPF1HZhRYXaKoQ1oJrJCoG1W8xg@mail.gmail.com>
+References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
+	<1433314143-4478-16-git-send-email-pyokagan@gmail.com>
+	<xmqqk2vcuy10.fsf@gitster.dls.corp.google.com>
+	<CACRoPnR5shi800KZ_Do5V469ZgZYAzUZKy9mNYNNRPF6HFqs_w@mail.gmail.com>
+	<xmqqmw07oc72.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com, jch2355@gmail.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stephen Robin <stephen.robin@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 17:26:48 2015
+X-From: git-owner@vger.kernel.org Wed Jun 10 17:35:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2htt-0006mq-04
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 17:26:45 +0200
+	id 1Z2i2N-0003eE-7Z
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 17:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933523AbbFJP0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 11:26:38 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46020 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933738AbbFJP0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 11:26:10 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5AFPuN9026480
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 10 Jun 2015 17:25:56 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5AFPwPD024853;
-	Wed, 10 Jun 2015 17:25:58 +0200
-In-Reply-To: <xmqqegljoayp.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 10 Jun 2015 08:10:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 10 Jun 2015 17:25:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5AFPuN9026480
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434554758.93669@diODLkj5nYtqFu2alJcYGQ
+	id S965218AbbFJPf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 11:35:26 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:34741 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964806AbbFJPfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 11:35:20 -0400
+Received: by laew7 with SMTP id w7so35808317lae.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 08:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jS2RNcuAHBuYV/Ue/4TdohgX/HWZGwLgyQZaNsc9ZGM=;
+        b=l6F8dr6lH71QYAesP3bAvXpb5TyeC58VCHKzbSuJ/emy+qkJMyshfYenngq4ErHNfa
+         CRW5IAMZ0O0KUH8S2V+3XjJiuxJuMmfuMWhbobvWrEua37kG+w7+m76Y3etmwO97YjxT
+         VQ+5j0WeIRerXjnM1JaDNUXNOXTM8M9IvmZwSUN4ut7D3fJU9vyMtpoSK9tW2HpoXTIr
+         2DQ6zfTVNFcmdYVr1xFr0H342YmEjnH+aRpH9W1R8+s1CS1bq4Y0LLB6PhmVx8B8L0rP
+         1QNuVMEvIV1VpmFLXVxYAgqoSvGa2D6VNqqpAdTGRPp/Jy33x3E2Bt62gbL1sOLzrWcZ
+         s4cQ==
+X-Received: by 10.112.182.4 with SMTP id ea4mr4805532lbc.35.1433950518367;
+ Wed, 10 Jun 2015 08:35:18 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Wed, 10 Jun 2015 08:35:18 -0700 (PDT)
+In-Reply-To: <xmqqmw07oc72.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271307>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Wed, Jun 10, 2015 at 10:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
 >
->> Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr> writes:
+>>> Hmph, it is somewhat surprising that we do not have such a helper
+>>> already. Wouldn't we need this logic to implement $branch@{upstream}
+>>> syntax?
 >>
->>>> That is very different from ENOENT, which is an expected error when
->>>> you are not using a customized terms.
->>>
->>> But in the current state, we are going to create bisect_terms even if
->>> the bisection is in bad/good mode.
+>> Right, the @{upstream} syntax is implemented by branch_get_upstream()
+>> in remote.c. It, however, does not check to see if the branch's remote
+>> matches what is provided on the command-line, so we still have to
+>> implement this check ourselves, which means this helper function is
+>> still required.
 >>
->> Which means that in normal cases, you'll either succeed to open it, or
->> get ENOENT. We're talking about unexcepted cases (you don't have
->> permission to read it because it's not your file, because you messed up
->> with a chmod, or whatever reason).
+>> I guess we could still use branch_get_upstream() in this function though.
 >
-> I think both I and you misunderstood what they wanted to do, which
-> is to write out good and bad into terms file even though these are
-> not customized, and then always read from terms file to learn what
-> words are used for good and bad.
+> It is entirely expected that existing function may not do exactly
+> what the new caller you introduce might want to do, or may do more
+> than what it wants.  That is where refactoring of existing code
+> comes in.
+>
+> It somewhat feels strange that you have to write more than "shim"
+> code to glue existing helpers and API functions together to
+> re-implement what a scripted Porcelain is already doing, though.
+> It can't be that git-pull.sh implements this logic as shell script,
+> and it must be asking existing code in Git to do what the callers
+> you added for this function would want to do, right?
 
-Yes, indeed.
+Not git-pull.sh, but get_remote_merge_branch() git-parse-remote.sh.
+The shell code that get_upstream_branch() in this patch implements is:
 
-> But I do not think it is a good idea to penalize the normal case by
-> writing the terms file and reading them back from it when the user
-> is bisecting with good/bad in the first place, so....
+    0|1)
+        origin="$1"
+        default=$(get_default_remote)
+        test -z "$origin" && origin=$default
+        curr_branch=$(git symbolic-ref -q HEAD) &&
+        [ "$origin" = "$default" ] &&
 
-No strong opinion on that, but creating one file doesn't cost much, and
-one advantage of writing it unconditionally is that it unifies bad/good
-and old/new more in the code. Just the creation of BISECT_TERMS becomes
-a special-case.
+^ This here is where it checks to see if the branch's configured
+remote matches the remote provided on the command line.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+        echo $(git for-each-ref --format='%(upstream)' $curr_branch)
+        ;;
+
+^ While here it calls git to get the upstream branch, which is
+implemented by branch_get_upstream() on the C side.
+
+So yes, we can use branch_get_upstream(), but we still need to
+implement some code on top.
+
+Just to add on, the shell code that get_tracking_branch() in this
+patch implements is:
+
+    *)
+        repo=$1
+        shift
+        ref=$1
+        # FIXME: It should return the tracking branch
+        #        Currently only works with the default mapping
+        case "$ref" in
+        +*)
+        ref=$(expr "z$ref" : 'z+\(.*\)')
+        ;;
+        esac
+        expr "z$ref" : 'z.*:' >/dev/null || ref="${ref}:"
+        remote=$(expr "z$ref" : 'z\([^:]*\):')
+        case "$remote" in
+        '' | HEAD ) remote=HEAD ;;
+        heads/*) remote=${remote#heads/} ;;
+        refs/heads/*) remote=${remote#refs/heads/} ;;
+        refs/* | tags/* | remotes/* ) remote=
+        esac
+        [ -n "$remote" ] && case "$repo" in
+        .)
+            echo "refs/heads/$remote"
+            ;;
+        *)
+            echo "refs/remotes/$repo/$remote"
+            ;;
+        esac
+
+so it's more or less a direct translation of the shell script, and we
+can be sure it will have the same behavior. I'm definitely in favor of
+switching this to use remote_find_tracking(), the question is whether
+we want to do it in this patch or in a future patch on top.
+
+Thanks,
+Paul
