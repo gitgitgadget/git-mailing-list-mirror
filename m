@@ -1,133 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 7/7] bisect: allows any terms set by user
-Date: Wed, 10 Jun 2015 15:19:20 -0700
-Message-ID: <xmqq7frbi4uv.fsf@gitster.dls.corp.google.com>
-References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<xmqqk2vbi7rf.fsf@gitster.dls.corp.google.com>
+From: Christopher Dunn <cdunn2001@gmail.com>
+Subject: Re: format-patch and submodules
+Date: Wed, 10 Jun 2015 17:41:51 -0500
+Message-ID: <CAD2z=MD3+63jL3Qqm-sj-7VnSB8ayhK_NjZV-qf+nyfuPdUk3Q@mail.gmail.com>
+References: <CAD2z=MAu1qrr9=wwBnOJZZ3JCJOsmFWi=gDgKMQKU3_P-01e3g@mail.gmail.com>
+	<557735E6.8040906@web.de>
+	<CAD2z=MBSAzENvj1-WUMzrXznvudjCc3vyvYQQ+wMnPC3G3Go2Q@mail.gmail.com>
+	<5578A8AC.2090704@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	Matthieu.Moy@grenoble-inp.fr, chriscool@tuxfamily.org,
-	thomasxnguy@gmail.com, valentinduperray@gmail.com
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 11 00:19:29 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Thu Jun 11 00:42:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2oLI-0000lr-3a
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 00:19:28 +0200
+	id 1Z2oh7-00045P-LH
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 00:42:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbbFJWTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 18:19:24 -0400
-Received: from mail-ie0-f194.google.com ([209.85.223.194]:33370 "EHLO
-	mail-ie0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752688AbbFJWTW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 18:19:22 -0400
-Received: by ierx19 with SMTP id x19so7477826ier.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2015 15:19:22 -0700 (PDT)
+	id S1754300AbbFJWly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 18:41:54 -0400
+Received: from mail-vn0-f44.google.com ([209.85.216.44]:37341 "EHLO
+	mail-vn0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbbFJWlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 18:41:52 -0400
+Received: by vnbg62 with SMTP id g62so10423037vnb.4
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 15:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=cJIbgfFs9XYbs6sHEVwRZwYHovc3YoHTdNDbEicqLl4=;
-        b=Grr9UBYQKfmiZtadtqX3D2Xe5lg48aZXNiKgrjD6BXd5XA8GsP+MDEVDIBjrIUDRe9
-         PFJCpan/js9yGs+2uIf/meZKZJIflUD5MVPg9HTgBMjhMZ0bZmoTL+WdTmoCUTuHhLdj
-         qWbCKVIa4BjXJ293OJVb2mfrOjoWqCRE0iJRgaPMQsV2PuHyuM9bqjaE2X2ejx0sLC4w
-         LtZY2Ur3HE59pqJT5Labn/YVfR8ONM1F/mo4ef5EklgFQPX//Rvk8I6h8c5T/ajzLULJ
-         anUqqm29Vrzq5iYBntcv7VS6ezPkbGVRcU0V1O3/WnG0Na6MF4/5X/41Jr9escnH191H
-         BZUw==
-X-Received: by 10.107.168.164 with SMTP id e36mr7164083ioj.87.1433974762051;
-        Wed, 10 Jun 2015 15:19:22 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
-        by mx.google.com with ESMTPSA id l1sm6880658ioe.32.2015.06.10.15.19.20
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Jun 2015 15:19:21 -0700 (PDT)
-In-Reply-To: <xmqqk2vbi7rf.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 10 Jun 2015 14:16:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ov977JzzmncuEzQlmSHuyAB9J1MoDu4JTes3MmoxPKg=;
+        b=fzg5f9yf+cv4AG2dyx0Sx63Q+/qt5WfxVpBB50/LqdNJjEive8bJ3g899wrDk3ah81
+         G9AOTXFs8old7kngHTp7UtfQIOONjY8RJyKrSFSQ8baHjJJrRJ9YhQVFk2JkaXAw5yJ7
+         +BjeOitHcF0t7ZjPQUqOQH9nAMbJKbGAmIPpLKAsreO/5hlvwsztLty0ovKa1ion/0Ti
+         SK7brrFETpPYICTIde/rfnQuCi9gpr0QIRJIn9L9sQIbYsKIVAOHgRIq13jfXuq47Cnv
+         kvSk6EOjQdNE4XZVFs2sKsAJw04quavlsXf7KMMs2AJI0aVeeeoB1ZWR69Tz/URTa+iF
+         Vvxg==
+X-Received: by 10.52.169.136 with SMTP id ae8mr10703403vdc.2.1433976111155;
+ Wed, 10 Jun 2015 15:41:51 -0700 (PDT)
+Received: by 10.52.98.134 with HTTP; Wed, 10 Jun 2015 15:41:51 -0700 (PDT)
+In-Reply-To: <5578A8AC.2090704@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271363>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Well, now it gets more complicated. I want git-p4 to ignore submodules
+completely. But it fails only *only* the submodules changed. (At
+least, my version fails. I'll try to diff against latest.)
 
-> I like this change very much; it removes the mysteriously misnamed
-> start-bad-good variable (because you do not really _care_ that
-> 'start' was what implicitly decided that good/bad pair is the term
-> we use in this session; what you care is that the terms are already
-> known or not).
+But to debug this, I had to add a dry-run mode to git-p4. And I am
+using a version of git-p4 which uses 'git-notes' rather than
+re-writing history. If you want, you can try my version:
+
+  https://github.com/pb-cdunn/git-p4
+
+On Wed, Jun 10, 2015 at 4:14 PM, Luke Diamand <luke@diamand.org> wrote:
+> On 10/06/15 18:04, Christopher Dunn wrote:
+>>
+>> Sorry. I thought empty patches were made to work in other cases.
+>>
+>> 'git-p4' needs to skip these. Wrong mailing list then.
 >
-> That is another reason why I think it would be a better organization
-> for the patch series to do without the intermediate "we now add new/old
-> as another hardcoded values on top of the traditional bad/good".
 >
-> That is, I would think a reasonable progression of the series would
-> look more like these three steps:
+> Possibly the right mailing list - can you explain what you mean here w.r.t
+> git-p4 please?
 >
->  - preliminary clean-up steps (e.g. "correct 'mistook'");
+> Thanks!
+> Luke
 >
->  - use $name_new and $name_old throughout the code, giving them
->    'bad' and 'good' as hardcoded values; finally
 >
->  - add 'bisect terms' support.
-
-Just in case I confused readers with a message that apparently
-conflicts with what I said in the ancient thread:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/199758/focus=200025
-
-I am admitting that I was wrong.  Or perhaps I was right back then,
-but the world has changed ;-).
-
-We have been hearing "bisect bad/good" is hard to use for the last 3
-years since that thread discussed this topic, and that made me
-realize that addition of single new/old may not be good enough, and
-we should bite the bullet to support 'bisect terms' properly, making
-bad/good and new/old even less special (contrary to what I said back
-then in that thread "we only need these two pairs"), following the
-suggestion by Phil Hord in that thread.
-
-And the suggested three-step approach above reflects that new world
-order in my mind.  We admit that the machinery should have been
-built around a value-agnostic "old vs new" in the first place, but
-unfortunately it wasn't.  So we belatedly update the system to use
-these two terms internally to express the logic by naming the
-variables name_old and name_new after these two value-agnostic
-concepts, and then support the traditional "good vs bad" as a mere
-default values for the names of old and new states.
-
-One thing I forgot to say in the review of this patch:
-
-> +bisect_terms () {
-> +	test $# -eq 2 ||
-> +	die "You need to give me at least two arguments"
-> +
-> +	if ! test -s "$GIT_DIR/BISECT_START"
-> +	then
-> +		echo $1 >"$GIT_DIR/BISECT_TERMS" &&
-> +		echo $2 >>"$GIT_DIR/BISECT_TERMS" &&
-> +		echo "1" > "$GIT_DIR/TERMS_DEFINED"
-> +	else
-> +		die "A bisection has already started, please use "\
-> +		"'git bisect reset' to restart and change the terms"
-> +	fi
-> +}
-> +
-
-I think "git bisect terms" is a good way to help a user to recall
-what two names s/he decided to use for the current session.  So
-dying 'already started' with suggestion for 'reset' is OK, but at
-the same time, helping the user to continue the current bisection by
-giving a message along the lines of "You are hunting for a commit
-that is at the boundary of the old state (you are calling it
-'$NAME_OLD') and the new state ('$NAME_NEW')" would be a good idea.
-
-Thanks.
+>
+>
+>>
+>> On Tue, Jun 9, 2015 at 1:52 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>>
+>>> Am 05.06.2015 um 01:20 schrieb Christopher Dunn:
+>>>>
+>>>>
+>>>> (Seen in git versions: 2.1.0 and 1.9.3 et al.)
+>>>>
+>>>> $ git format-patch --stdout X^..X | git apply check -
+>>>> fatal: unrecognized input
+>>>>
+>>>> This fails when the commit consists of nothing but a submodule change
+>>>> (as in 'git add submodule foo'), but it passes when a file change is
+>>>> added to the same commit.
+>>>>
+>>>> There used to be a similar problem for empty commits, but that was
+>>>> fixed around git-1.8:
+>>>>
+>>>>
+>>>>
+>>>> http://stackoverflow.com/questions/20775132/cannot-apply-git-patch-replacing-a-file-with-a-link
+>>>>
+>>>> Now, 'git format-patch' outputs nothing for an empty commit. I suppose
+>>>> that needs to be the behavior also when only submodules are changed,
+>>>> since in that case there is no 'diff' section from 'format-patch'.
+>>>>
+>>>> Use-case: git-p4
+>>>>
+>>>> Of course, we do not plan to add the submodule into Perforce, but we
+>>>> would like this particular command to behave the same whether there
+>>>> are other diffs or not.
+>>>
+>>>
+>>>
+>>> Hmm, I'm not sure that this is a bug. It looks to me like doing a
+>>>
+>>> $ git format-patch --stdout X^..X | git apply check -
+>>>
+>>> when nothing is changed except submodules and expecting it to work
+>>> is the cause of the problem.
+>>>
+>>> I get the same error when I do:
+>>>
+>>> $git format-patch --stdout master..master | git apply --check -
+>>> fatal: unrecognized input
+>>>
+>>> No submodules involved, just an empty patch.
+>>>
+>>> I assume you want to ignore all submodule changes, so you should
+>>> check if e.g. "git diff --ignore-submodules X^..X" returns anything
+>>> before applying that? (From the command you ran I assume you might
+>>> be able to drop the --ignore-submodules because you already did set
+>>> "diff.ignoreSubmodules" to "all"?)
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
+>
