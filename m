@@ -1,167 +1,190 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 15/19] pull: teach git pull about --rebase
-Date: Wed, 10 Jun 2015 15:55:26 +0800
-Message-ID: <CACRoPnR5shi800KZ_Do5V469ZgZYAzUZKy9mNYNNRPF6HFqs_w@mail.gmail.com>
-References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
-	<1433314143-4478-16-git-send-email-pyokagan@gmail.com>
-	<xmqqk2vcuy10.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/4] bisect: replace hardcoded "bad|good" by variables
+Date: Wed, 10 Jun 2015 09:55:29 +0200
+Message-ID: <vpqr3pkatfy.fsf@anie.imag.fr>
+References: <1809967391.331411.1433920237669.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 09:55:35 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	louis--alexandre stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
+	valentinduperray@gmail.com
+To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 10 09:55:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2arF-0002So-3X
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 09:55:33 +0200
+	id 1Z2arL-0002W0-Ah
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 09:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933145AbbFJHz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 03:55:29 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:33226 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754152AbbFJHz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 03:55:28 -0400
-Received: by wiwd19 with SMTP id d19so39570704wiw.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2015 00:55:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zRZDeQr2wGSP8XPwZEzVGvXG6RTwTkv+ilBYn7y3Js4=;
-        b=uMYmtn5fd5BDY3Gxw8g5T7rV51dDe09NUT8lhBc6YnNqcWOPvAG1u3xsFOaI3U4eCw
-         l5pn2+hUaxCH3VQ9ano797dq6RqD8S2HmaPzlzlpllvW+Y4jfGbmvXDeay4PNw3icaAs
-         NtRYio8w1QxdVOWOwjSNgoZ/1maT1bjsqcDbxj3+m1BPfvbQrbaFcPgKYU4ocqtQXnve
-         fM5AClkPldqIaCBgbfW4Z08pBEtCNMnk5c5LbkLicO6o5VBK4qDhRYwaD2MEiIcYwM+J
-         6+Afbkq23gorDjLA+JDKKXklNpPBU6Iecvu53hu4SvMd6+i2ImgOsMrv6F9ymVGSjeW2
-         UgUA==
-X-Received: by 10.180.103.227 with SMTP id fz3mr5738573wib.45.1433922926487;
- Wed, 10 Jun 2015 00:55:26 -0700 (PDT)
-Received: by 10.194.85.113 with HTTP; Wed, 10 Jun 2015 00:55:26 -0700 (PDT)
-In-Reply-To: <xmqqk2vcuy10.fsf@gitster.dls.corp.google.com>
+	id S1754168AbbFJHzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 03:55:35 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34932 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752639AbbFJHzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 03:55:33 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5A7tSBR004309
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 10 Jun 2015 09:55:28 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5A7tTLa013783;
+	Wed, 10 Jun 2015 09:55:29 +0200
+In-Reply-To: <1809967391.331411.1433920237669.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Antoine Delaite's message of "Wed, 10 Jun 2015 09:10:37 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 10 Jun 2015 09:55:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5A7tSBR004309
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434527729.7341@40Sw39WdltWaCIugc4Q5hA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271270>
 
-On Wed, Jun 10, 2015 at 9:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Tan <pyokagan@gmail.com> writes:
+Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
+
+>>> - 
+>>> - fprintf(stderr, "The merge base %s is bad.\n" 
+>>> - "This means the bug has been fixed " 
+>>> - "between %s and [%s].\n", 
+>>> - bad_hex, bad_hex, good_hex); 
+>>> - 
+>>> + if (!strcmp(name_bad, "bad")) { 
+>>> + 	fprintf(stderr, "The merge base %s is bad.\n" 
+>>> + 	"This means the bug has been fixed " 
+>>> + 	"between %s and [%s].\n", 
+>>> + 	bad_hex, bad_hex, good_hex); 
+>>> + } 
+>> 
+>>You need an "else" here. Maybe it comes later, but as a reviewer, I want 
+>>to check that you did not forget it now (because I don't trust myself to 
+>>remember that it must be added later). 
 >
->> +enum rebase_type {
->> +     REBASE_INVALID = -1,
->> +     REBASE_FALSE = 0,
->> +     REBASE_TRUE,
->> +     REBASE_PRESERVE
->> +};
->> +
->> +/**
->> + * Parses the value of --rebase, branch.*.rebase or pull.rebase. If value is a
->> + * false value, returns REBASE_FALSE. If value is a true value, returns
->> + * REBASE_TRUE. If value is "preserve", returns REBASE_PRESERVE. Otherwise,
->> + * returns -1 to signify an invalid value.
->> + */
->> +static enum rebase_type parse_config_rebase(const char *value)
->> +{
->> +     int v = git_config_maybe_bool("pull.rebase", value);
->> +     if (!v)
->> +             return REBASE_FALSE;
->> +     else if (v >= 0)
->> +             return REBASE_TRUE;
+> Should I put an else {} with nothing in beetween? 
+
+What you want to avoid is a senario where the if branch is not taken
+silently in the future. Two ways to avoid that:
+
+if (!strcmp(name_bad, "bad")) {
+	// special case for good/bad
+} else {
+	die("BUG: terms %s/%s not managed", name_bad, name_good);
+}
+
+Think of someone trying to debug the code later: if you encounter a
+die("BUG: ..."), gdb will immediately tell you what's going one.
+Debugging the absence of something is much more painful.
+
+Alternatively:
+
+if (!strcmp(name_bad, "bad")) {
+	// special case for good/bad
+} else {
+	fprintf("very generic message not saying \"which means that ...\"");
+}
+
+In both cases, adding a new pair of terms should look like
+
+ if (!strcmp(name_bad, "bad")) {
+ 	// special case for good/bad
++} else if(!strcmp(name_bad, "<new-term>")) {
++	// special case for <new-term>
+ } else {
+ 	die("BUG: terms %s/%s not managed", name_bad, name_good);
+ }
+
+I have a slight preference for the "else" with a generic message. It
+will be dead code for now, but may turn useful if we ever allow
+arbitrary pairs of terms.
+
 >
-> It is somewhat misleading to say "v >= 0" when you already use !v to
-> signal something else.  Perhaps "else if (v > 0)" is better?
-
-Ah, right.
-
->> +/**
->> + * Returns remote's upstream branch for the current branch. If remote is NULL,
->> + * the current branch's configured default remote is used. Returns NULL if
->> + * `remote` does not name a valid remote, HEAD does not point to a branch,
->> + * remote is not the branch's configured remote or the branch does not have any
->> + * configured upstream branch.
->> + */
->> +static char *get_upstream_branch(const char *remote)
->> +{
->> +     struct remote *rm;
->> +     struct branch *curr_branch;
->> +
->> +     rm = remote_get(remote);
->> +     if (!rm)
->> +             return NULL;
->> +
->> +     curr_branch = branch_get("HEAD");
->> +     if (!curr_branch)
->> +             return NULL;
->> +
->> +     if (curr_branch->remote != rm)
->> +             return NULL;
->> +
->> +     if (!curr_branch->merge_nr)
->> +             return NULL;
->> +
->> +     return xstrdup(curr_branch->merge[0]->dst);
->> +}
+>>> + name_bad = "bad"; 
+>>> + name_good = "good"; 
+>>> + } else { 
+>>> + strbuf_getline(&str, fp, '\n'); 
+>>> + name_bad = strbuf_detach(&str, NULL); 
+>>> + strbuf_getline(&str, fp, '\n'); 
+>>> + name_good = strbuf_detach(&str, NULL); 
+>>> + } 
+>> 
+>>I would have kept just 
+>> 
+>> name_bad = "bad"; 
+>> name_good = "good"; 
+>> 
+>>in this patch, and introduce BISECT_TERMS in a separate one. 
 >
-> Hmph, it is somewhat surprising that we do not have such a helper
-> already. Wouldn't we need this logic to implement $branch@{upstream}
-> syntax?
+> Should not I introduce BISECT_TERMS in bisect.c and git-bisect.sh 
+> with the same commit?
 
-Right, the @{upstream} syntax is implemented by branch_get_upstream()
-in remote.c. It, however, does not check to see if the branch's remote
-matches what is provided on the command-line, so we still have to
-implement this check ourselves, which means this helper function is
-still required.
+Make sure you have a bisectable history. If you use two commits, you
+should make sure that the intermediate step is consistant. If the change
+is small enough, it's probably better to have a single commit. No strong
+opinion on that (at least not before I see the code).
 
-I guess we could still use branch_get_upstream() in this function though.
-
->> +/**
->> + * Derives the remote tracking branch from the remote and refspec.
->> + *
->> + * FIXME: The current implementation assumes the default mapping of
->> + * refs/heads/<branch_name> to refs/remotes/<remote_name>/<branch_name>.
->> + */
->> +static char *get_tracking_branch(const char *remote, const char *refspec)
->> +{
+> I did some rebase though and now name_bad and name_good appears in the
+> first commit, and read_bisect_terms in the second.
 >
-> This does smell like an incomplete reimplementation of what
-> get_fetch_map() knows how to do.
-
-Yeah, this is just a direct rewrite of get_remote_merge_branch() in
-git-parse-remote.sh. Johannes pointed out[1] that
-remote_find_tracking() in remote.c does the exact same thing without
-the assumption of the default fetch refmap. However, this would be a
-separate modification on its own, so it may be better to do it in a
-separate patch with regression tests. (e.g. what should we do if the
-refspec dst is provided?)
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/269258/focus=269350
-
->> +/**
->> + * Given the repo and refspecs, sets fork_point to the point at which the
->> + * current branch forked from its remote tracking branch. Returns 0 on success,
->> + * -1 on failure.
->> + */
->> +static int get_rebase_fork_point(unsigned char fork_point[GIT_SHA1_RAWSZ],
->> +             const char *repo, const char *refspec)
->> +{
->> +...
->> +}
+>>> --- a/git-bisect.sh 
+>>> +++ b/git-bisect.sh 
+>>> @@ -77,6 +77,7 @@ bisect_start() { 
+>>> orig_args=$(git rev-parse --sq-quote "$@") 
+>>> bad_seen=0 
+>>> eval='' 
+>>> + start_bad_good=0 
+>>> if test "z$(git rev-parse --is-bare-repository)" != zfalse 
+>>> then 
+>>> mode=--no-checkout 
+>>> @@ -101,6 +102,9 @@ bisect_start() { 
+>>> die "$(eval_gettext "'\$arg' does not appear to be a valid revision")" 
+>>> break 
+>>> } 
+>>> + 
+>>> + start_bad_good=1 
+>>> + 
+>> 
+>>Why do you need this variable? It seems to me that you are hardcoding 
+>>once more that terms can be either "good/bad" or "old/new", which you 
+>>tried to eliminate from the previous round. 
 >
-> This function looks OK (the two get_*_branch() helpers it uses I am
-> not sure about though).
+> I answered to Junio on this too, it is because our function which create 
+> the bisect_terms file is not called after 
+> 'git bisect start bad_rev good_rev'.
+
+Then the variable name is not good. If the variable is there to mean "we
+did not define the terms yet", then bisect_terms_defined={0,1} would be
+much better (probably not the best possible name, though).
+
+>>> +bisect_voc () { 
+>>> + case "$1" in 
+>>> + bad) echo "bad" ;; 
+>>> + good) echo "good" ;; 
+>>> + esac 
+>>> +} 
+>> 
+>>It's weird to have these hardcoded "bad"/"good" when you already have 
+>>BISECT_TERMS in the same patch. 
 >
-> Same comment on "fork_point[]" parameter's type applies here,
-> though.  While I do not mind if you used "struct object_id" to
-> represent these object names, if you are sticking to the traditional
-> "unsigned char [20]", then these should be "unsigned char *" to be
-> consistent with others.
+> bisect_voc is used to display what commands the user can do, thus the 
+> builtins tags. I did not find a way to not hardcode them.
 
-Okay.
+Well, if you really want to say good/bad, then using just good/bad would
+be simpler than $(bisect_voc good)/$(bisect_voc bad), no? bisect_voc is
+just the identitity function (or returns the empty string for input
+other than good/bad).
 
-Thanks,
-Paul
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
