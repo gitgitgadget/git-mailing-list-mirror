@@ -1,12 +1,13 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH/RFCv5 3/3] git rebase -i: add static check for commands
- and SHA-1
-Date: Wed, 10 Jun 2015 17:56:44 +0200 (CEST)
-Message-ID: <58099623.334723.1433951804504.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1433931035-20011-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <1433931035-20011-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <vpq8ubrtws0.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv5 2/3] git rebase -i: warn about removed commits
+Date: Wed, 10 Jun 2015 17:55:48 +0200
+Message-ID: <vpqlhfr4kxn.fsf@anie.imag.fr>
+References: <1433931035-20011-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1433931035-20011-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<vpqvbevty1f.fsf@anie.imag.fr>
+	<1634653813.334490.1433951239962.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: Git List <git@vger.kernel.org>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
@@ -15,111 +16,66 @@ Cc: Git List <git@vger.kernel.org>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
 X-From: git-owner@vger.kernel.org Wed Jun 10 17:56:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2iMN-0007TU-7I
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 17:56:11 +0200
+	id 1Z2iMM-0007TU-KE
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 17:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965580AbbFJP4I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2015 11:56:08 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:35312 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965281AbbFJP4B convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 11:56:01 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id DBC672861;
-	Wed, 10 Jun 2015 17:55:58 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JaaUJ5BQvvk3; Wed, 10 Jun 2015 17:55:58 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id C946B2850;
-	Wed, 10 Jun 2015 17:55:58 +0200 (CEST)
-In-Reply-To: <vpq8ubrtws0.fsf@anie.imag.fr>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git rebase -i: add static check for commands and SHA-1
-Thread-Index: QHmKzt7qr5YtTDuxhEAWp2Ps239OFA==
+	id S965330AbbFJP4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 11:56:05 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46637 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964854AbbFJPz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 11:55:58 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5AFtl3S031537
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 10 Jun 2015 17:55:47 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5AFtmk8025403;
+	Wed, 10 Jun 2015 17:55:48 +0200
+In-Reply-To: <1634653813.334490.1433951239962.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Remi Galan Alfonso's message of "Wed, 10 Jun 2015 17:47:19 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 10 Jun 2015 17:55:47 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5AFtl3S031537
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434556550.60356@ppkSvPhBhWM5QEm5xjYZgw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271312>
 
-> > +        git stripspace --strip-comments |
-> > +        while read -r command sha1 rest
-> > +        do
-> > +                case $command in
-> > +                ''|noop|x|"exec")
-> > +                        ;;
-> > +                pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
-> > +                        if test -z $sha1
-> > +                        then
-> > +                                echo "$command $rest" >>"$todo".ba=
-dsha
-> > +                        else
-> > +                                sha1_verif=3D"$(git rev-parse --ve=
-rify --quiet $sha1^{commit})"
-> > +                                if test -z $sha1_verif
-> > +                                then
-> > +                                        echo "$command $sha1 $rest=
-" \
-> > +                                                >>"$todo".badsha
->=20
-> When you reach the right end of your screen because of indentation,
-> cutting lines with \ is rarely the best option. Having 5 levels of
-> indentation is a sign that you should make more functions.
+Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
 
-Yeah, I wasn't overly happy with that either, I will try to add some
-functions (your example seems like a good way of refactoring).
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> > +                        warn_file "$todo".miss
+>> 
+>> I would find it more elegant with less intermediate files, like
+>> 
+>> git rev-list $opt <"$todo".miss | while read -r line
+>> do
+>>         warn " - $line"
+>> done
+>
+> I am not really sure since I also use warn_file to display the bad
+> commands and SHA-1 in 3/3.
 
-> > +                                commit=3D"$(git rev-list --oneline=
- -1 --ignore-missing $sha1 2>/dev/null)"
-> > +                                if test -z "$commit"
-> > +                                then
-> > +                                        echo "$command $sha1 $rest=
-" \
-> > +                                                >>"$todo".badcmd
-> > +                                else
-> > +                                        echo "$command $commit" >>=
-"$todo".badcmd
-> > +                                fi
-> > +                        fi
->=20
-> What are you trying to do here? It seems that you are trying to recov=
-er
-> the line, but the line is your input, you shouldn't have to recompute
-> it.
->=20
-> Why isn't printf '%s %s %s' "$command" "$sha1" "$rest" sufficient in =
-all
-> cases?
+I noticed this later indeed. But had the function been eg. warn_pipe,
+you could have written
 
-It is mainly because here the SHA-1 is a long one (40 chars), however
-I agree that computing short_sha1 and then printf '%s %s %s'
-"$command" "$short_sha1" "$rest" should be good in this case.
+git rev-list $opt <"$todo".miss | warn_pipe
 
-> Maybe it would be better to read line by line (to avoid loosing
-> whitespace information for example), like
->=20
->         while read -r line
->         do
->                 printf '%s' "$line" | read -r cmd sha1 rest
->                 case $sha1 in
->                         ...
->=20
-> or maybe it's overkill.
-
-Could be a good idea, though I am not completely convinced about it
-yet.
-
-Noted for the other points.
-
-Thanks,
-R=C3=A9mi
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
