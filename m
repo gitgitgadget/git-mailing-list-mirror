@@ -1,61 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 03/14] lockfile: remove some redundant functions
-Date: Wed, 10 Jun 2015 20:27:56 +0200
-Message-ID: <557881AC.3020800@kdbg.org>
-References: <cover.1433751986.git.mhagger@alum.mit.edu>	<0d17c04842bef618ecd474c56f2dbcf6a613a379.1433751986.git.mhagger@alum.mit.edu> <xmqqtwuflawx.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/14] Introduce a tempfile module
+Date: Wed, 10 Jun 2015 11:34:16 -0700
+Message-ID: <xmqqa8w7l8ev.fsf@gitster.dls.corp.google.com>
+References: <cover.1433751986.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 10 20:28:08 2015
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 10 20:34:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2kjO-0001kJ-JI
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 20:28:06 +0200
+	id 1Z2kpU-0005CS-Bu
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 20:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933599AbbFJS2C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 14:28:02 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:5688 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932676AbbFJS2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 14:28:00 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3m6Gyj2lbzz5tlK;
-	Wed, 10 Jun 2015 20:27:57 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 32E045296;
-	Wed, 10 Jun 2015 20:27:56 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqqtwuflawx.fsf@gitster.dls.corp.google.com>
+	id S1754278AbbFJSeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 14:34:20 -0400
+Received: from mail-ie0-f193.google.com ([209.85.223.193]:35382 "EHLO
+	mail-ie0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305AbbFJSeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 14:34:18 -0400
+Received: by iery20 with SMTP id y20so246315ier.2
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 11:34:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Mx3O8S63jaNDUaPpiYpX6C0c9ouddsgIyNJlcYwXycA=;
+        b=DoYQXP0GMXOU/zW20bF4qw6Thl8r7WKFvyngO3ekvemT+J/PWL7ZdZCMbzYhwvRft0
+         6KXy/kl0ZkXUwvDnhQWZ5DAGnopLpQ+z8r+OjB94c54aczMpt/gW2XKJVxG4FOCnE8X/
+         TM1DMeY9fyQYjPXZxgh6tpjcCpcVpwV9oAVoD9dz/zyqDTE8S2Lac2iYT1rEctjnJj2R
+         avDtqJWfsFQmXtlQFA0js3Cv0g5lchsr5ehzn0Ld7AmPmkHob7RykwezHBZfel6EWo6n
+         ySd8A0mSxcFQZjRZGJMIF1Smv8DSil3HZAGilt+EesxrdnZgtMj58DbqazkulQLNqCqu
+         lVow==
+X-Received: by 10.42.81.201 with SMTP id a9mr6600900icl.9.1433961257602;
+        Wed, 10 Jun 2015 11:34:17 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
+        by mx.google.com with ESMTPSA id d81sm6516499ioe.12.2015.06.10.11.34.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 10 Jun 2015 11:34:17 -0700 (PDT)
+In-Reply-To: <cover.1433751986.git.mhagger@alum.mit.edu> (Michael Haggerty's
+	message of "Mon, 8 Jun 2015 11:07:31 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271340>
 
-Am 10.06.2015 um 19:40 schrieb Junio C Hamano:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> Remove the following functions and rewrite their callers to use the
->> equivalent tempfile functions directly:
->>
->> * fdopen_lock_file() -> fdopen_tempfile()
->> * reopen_lock_file() -> reopen_tempfile()
->> * close_lock_file() -> close_tempfile()
->
-> Hmph,
->
-> My knee-jerk reaction was "I thought lockfile abstraction was
-> fine---why do we expose the implementation detail of the lockfile,
-> which is now happen to be implemented on top of the tempfile API, to
-> the callers?"
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Just for the record, I had exactly the same reaction, and I find this 
-transition against the spirit of a self-contained lockfile API.
+> These patches are also available from my GitHub repo [2], branch
+> "tempfile".
 
--- Hannes
+Overall the series made a lot of sense.
+
+On a few points I raised:
+
+ - I still think that exposing the implementation detail of the
+   lockfile API that it builds on tempfile API is going backwards.
+   I wonder if a few helper functions added to the lockfile
+   API to hide it, e.g. instead of letting the caller say
+   "lk->tempfile.fd", have them call "lockfile_fd(lk)", would make
+   things even more clean.
+
+ - The tempfile API could be built on yet another layer of
+   clean_on_exit_file API to unconfuse me on "register_tempfile()",
+   but I do not think it is worth it only for two existing callers
+   (gc and credential).
+
+Thanks.
