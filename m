@@ -1,86 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 11/19] pull: check if in unresolved merge state
-Date: Wed, 10 Jun 2015 07:38:33 -0700
-Message-ID: <xmqqr3pjocgm.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 15/19] pull: teach git pull about --rebase
+Date: Wed, 10 Jun 2015 07:44:17 -0700
+Message-ID: <xmqqmw07oc72.fsf@gitster.dls.corp.google.com>
 References: <1433314143-4478-1-git-send-email-pyokagan@gmail.com>
-	<1433314143-4478-12-git-send-email-pyokagan@gmail.com>
-	<xmqqsia0uzaa.fsf@gitster.dls.corp.google.com>
+	<1433314143-4478-16-git-send-email-pyokagan@gmail.com>
+	<xmqqk2vcuy10.fsf@gitster.dls.corp.google.com>
+	<CACRoPnR5shi800KZ_Do5V469ZgZYAzUZKy9mNYNNRPF6HFqs_w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stephen Robin <stephen.robin@gmail.com>
 To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 16:38:47 2015
+X-From: git-owner@vger.kernel.org Wed Jun 10 16:44:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2h9S-0003i5-Uy
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 16:38:47 +0200
+	id 1Z2hFD-0007Nu-BO
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jun 2015 16:44:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933052AbbFJOig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 10:38:36 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:38741 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754078AbbFJOif (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 10:38:35 -0400
-Received: by igblz2 with SMTP id lz2so34953284igb.1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2015 07:38:35 -0700 (PDT)
+	id S1754314AbbFJOof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 10:44:35 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:36654 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754197AbbFJOoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 10:44:19 -0400
+Received: by igbpi8 with SMTP id pi8so37176101igb.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 07:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=HUz87RwdKBcQyCqbFCq2kH0ErY/9zczx7bOZKjkwhsk=;
-        b=rr71IxqbnK0S660qXyeOIRzPXKZihmrN+0YiRJZVcZlrsdsuvSYtIWbdaKyhCNSgb4
-         NCOhzbq/8cTbWTBJZaiaKczNvZrN+XoqvwrfHpydkHxIq7r79nFTQ1RoWFjgur7XPpuv
-         mcXWsiht1bhcSNV8pDeUC1/kYguXau8ytyxIMSYJgCe0iyuTitD1YBjWc7M4PHua0KZG
-         sXBjLYcXDPG9IcV8p4tW6/lEr0aaA+lOaUR5BSqe5BHVskpk/i7GlP7YW8YleBIopXNK
-         L8HuDGM4jrb0x7rhT2DVr8qIFs33rND5Rai6c+crp/UHfxBLcznc23KKqW/5KlMkLHTm
-         aD0A==
-X-Received: by 10.43.133.137 with SMTP id hy9mr5117392icc.74.1433947115073;
-        Wed, 10 Jun 2015 07:38:35 -0700 (PDT)
+        bh=oQrCyNUKLvCACo8OGmfzaqrbsAytMtn9hJX0NtH5V18=;
+        b=CmDZxVZ44gG7F7qpd/TEBovebUDIIKkdc9EuY/aFH4hStoUiueQ3D5hS3QXUHSIEGI
+         O4ap53nuk7DCkWOcOIzDToqGUkrEFhm7BeXQDzSwVNLReB+/QzMmXL7amjZNKCl3Y1as
+         8KtZ24sYicSTsgZbkbfjSj9p0JPVSlnYkrCR0w607IoQ7gCNqT8VUyuQOmIbElaiWrDC
+         J3agd7wnDhFVxefbwIYLT8y36kCXpFuMpq6upiDiYKzNdoZqGKKbGgehq8s42F9m+iPL
+         LSnzG2Tk68jUURVhp7n+RX+zlFXqb8+Oa31oOzLwajSWswFIzxDVyKIfytWjEadoQA1i
+         hb+A==
+X-Received: by 10.50.108.7 with SMTP id hg7mr2238381igb.37.1433947458737;
+        Wed, 10 Jun 2015 07:44:18 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:b116:bf29:c748:758b])
-        by mx.google.com with ESMTPSA id g12sm6130912ioe.28.2015.06.10.07.38.34
+        by mx.google.com with ESMTPSA id j20sm3387683igt.5.2015.06.10.07.44.17
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Jun 2015 07:38:34 -0700 (PDT)
-In-Reply-To: <xmqqsia0uzaa.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 09 Jun 2015 18:29:01 -0700")
+        Wed, 10 Jun 2015 07:44:18 -0700 (PDT)
+In-Reply-To: <CACRoPnR5shi800KZ_Do5V469ZgZYAzUZKy9mNYNNRPF6HFqs_w@mail.gmail.com>
+	(Paul Tan's message of "Wed, 10 Jun 2015 15:55:26 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271291>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Paul Tan <pyokagan@gmail.com> writes:
 
-> Paul Tan <pyokagan@gmail.com> writes:
+>> Hmph, it is somewhat surprising that we do not have such a helper
+>> already. Wouldn't we need this logic to implement $branch@{upstream}
+>> syntax?
 >
->> @@ -422,6 +423,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->>  
->>  	parse_repo_refspecs(argc, argv, &repo, &refspecs);
->>  
->> +	git_config(git_default_config, NULL);
->> +
->> +	if (read_cache_unmerged())
->> +		die_resolve_conflict("Pull");
->> +
->> +	if (file_exists(git_path("MERGE_HEAD")))
->> +		die_conclude_merge();
->> +
->>  	if (!opt_ff.len)
->>  		config_get_ff(&opt_ff);
+> Right, the @{upstream} syntax is implemented by branch_get_upstream()
+> in remote.c. It, however, does not check to see if the branch's remote
+> matches what is provided on the command-line, so we still have to
+> implement this check ourselves, which means this helper function is
+> still required.
 >
-> Hmph.
->
-> If you are going to do the git_config() call yourself, it might make
-> more sense to define git_pull_config() callback and parse the pull.ff
-> yourself, updating the use of the lazy git_config_get_value() API you
-> introduced in patch 10/19.
->
-> The above "might" is stronger than my usual "might"; I am undecided
-> yet before reading the remainder of the series.
+> I guess we could still use branch_get_upstream() in this function though.
 
-Let me clarify the above with s/stronger/with much less certainty/;
+It is entirely expected that existing function may not do exactly
+what the new caller you introduce might want to do, or may do more
+than what it wants.  That is where refactoring of existing code
+comes in.
+
+It somewhat feels strange that you have to write more than "shim"
+code to glue existing helpers and API functions together to
+re-implement what a scripted Porcelain is already doing, though.
+It can't be that git-pull.sh implements this logic as shell script,
+and it must be asking existing code in Git to do what the callers
+you added for this function would want to do, right?  That suggests
+that we must have enough logic already in C.
