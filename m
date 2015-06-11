@@ -1,79 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 7/7] bisect: allows any terms set by user
-Date: Thu, 11 Jun 2015 08:03:16 -0700
-Message-ID: <xmqq616ugudn.fsf@gitster.dls.corp.google.com>
-References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<xmqqk2vbi7rf.fsf@gitster.dls.corp.google.com>
-	<vpqoakmoaz7.fsf@anie.imag.fr>
+From: Gabriel <gabrielperren@gmail.com>
+Subject: Re: Minor issue: bad Spanish translation
+Date: Thu, 11 Jun 2015 12:12:17 -0300
+Message-ID: <1434035537.29259.0@smtp.gmail.com>
+References: <CALBDAwCWbfH-9089Kv=ZJD1wmf076_JCS4G8wzH3BQPhGoWRig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr, chriscool@tuxfamily.org,
-	thomasxnguy@gmail.com, valentinduperray@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 11 17:03:25 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 11 17:12:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z340q-0007aK-Jb
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:03:24 +0200
+	id 1Z349d-0004pz-UF
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755033AbbFKPDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 11:03:20 -0400
-Received: from mail-ie0-f194.google.com ([209.85.223.194]:33077 "EHLO
-	mail-ie0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755028AbbFKPDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 11:03:18 -0400
-Received: by ierx19 with SMTP id x19so2444622ier.0
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 08:03:18 -0700 (PDT)
+	id S1752315AbbFKPMZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2015 11:12:25 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:32910 "EHLO
+	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752260AbbFKPMY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 11:12:24 -0400
+Received: by qkhg32 with SMTP id g32so4403545qkh.0
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 08:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=9RRyx+RhdEg9bSA9N1KZXQqzotNWODHR9HM+eK0pR5o=;
-        b=CN6cdQTdwFZia5Z4p5oBMMkWgUydpHxZcDTvIFg/9KPX62OD7z6k6Z5djF8Kv80xjI
-         gPUYjO6Jwc2g7J3+kkpYYDESuMCJHWBZHKEPkO/mQEC7ty9h3kD8enosNlZ7ZMWMEWSU
-         sLMPZKAlsfLW6AcPgwv45h7z1HIYJNXcgpJ6m6iujnE02+4/ilztOfDQP3EUf0LMGF1W
-         IOvKmZpxsLVLnZ6usf2ZTvuMpg09d6U5kgbmZ2Z5G/uKKhLnd+QohLGaKkn69dyjNB2d
-         8mdqJeRyO3kMOFNnALkhfVuXUpILNbhTvlIyaQd022KdGRuRlecCyjJCLD8n6ngMee6L
-         II1Q==
-X-Received: by 10.50.138.70 with SMTP id qo6mr34874503igb.15.1434034998414;
-        Thu, 11 Jun 2015 08:03:18 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
-        by mx.google.com with ESMTPSA id o2sm687435igr.9.2015.06.11.08.03.17
+        h=date:from:subject:to:cc:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=4ViwYfqlFMQ3E6+lb8qe6tV8VUnGqPKybyjJHDMoz0c=;
+        b=YMgQVTtSmROMTqFftqY7/MyCqVRMSAEJuu068PSRy1xDA8HxbzDhoIV1ToQJt3fwrT
+         BL6wQHIUcb7iXQY9dE3k/4Z+/6vEsBIraPLGvlPH4N4VstjilCe9uBeSngNFkA5RCdYF
+         PJFS04ykxRxJc+UzqMtdj0RXijpMoCTRd84D5NQvDVKNYCRuo7y+bzzT/TpNifW3qD0Z
+         nuP8zBDc/mGb25HqGNEn6JcdOTMQSsWHWawxaa/Lykh8ncaJUYEnGEdgo2qbqWBZrI0Z
+         dt6u2F7PGHTnXtlFO7X5NZc2ohhM3hMGzP5ky2cBopheq4hMWCe1+TWj+r1uG7sfo5XG
+         EIdQ==
+X-Received: by 10.55.19.140 with SMTP id 12mr19793504qkt.64.1434035543402;
+        Thu, 11 Jun 2015 08:12:23 -0700 (PDT)
+Received: from [192.168.1.100] ([181.170.86.23])
+        by mx.google.com with ESMTPSA id u95sm364080qge.16.2015.06.11.08.12.21
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 11 Jun 2015 08:03:17 -0700 (PDT)
-In-Reply-To: <vpqoakmoaz7.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	11 Jun 2015 11:22:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        Thu, 11 Jun 2015 08:12:22 -0700 (PDT)
+In-Reply-To: <CALBDAwCWbfH-9089Kv=ZJD1wmf076_JCS4G8wzH3BQPhGoWRig@mail.gmail.com>
+X-Mailer: geary/0.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271415>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi Johannes,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
->>
->>> -USAGE='[help|start|bad|good|new|old|skip|next|reset|visualize|replay|log|run]'
->>> +USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
->>
->> I think this patch makes the whole series go in the right direction.
->>
->> I wonder if you can skip the "we only support new/old if you are not
->> doing bog-standard bad/good" step and start from this "bisect terms"
->> one, though.
->
-> While I think we should not hardcode too much in the code, I also think
-> it makes sense to have hardcoded old/new in the user-interface. 
+I tried following your instructions but I can locate the sentence where=
+=20
+the bad translation is. Please see here:=20
+http://stackoverflow.com/questions/30783818/find-instance-of-string-in-=
+git-core-with-git-grep
 
-OK.
+Any advice?
+
+Cheers,
+Gabriel
+
+El jue, 11 de jun 2015 a las 12:10 , Gabriel Perren=20
+<gabrielperren@gmail.com> escribi=C3=B3:
+> Hi Johannes,
+>=20
+> I tried following your instructions but I can locate the sentence=20
+> where the bad translation is. Please see here:=20
+> http://stackoverflow.com/questions/30783818/find-instance-of-string-i=
+n-git-core-with-git-grep
+>=20
+> Any advice?
+>=20
+> Cheers,
+> Gabriel
+>=20
+> 2015-06-10 11:57 GMT-03:00 Johannes Schindelin=20
+> <johannes.schindelin@gmx.de>:
+>> Hi Gabriel,
+>>=20
+>> On 2015-06-10 16:51, Gabriel wrote:
+>> > Where it says:
+>> >
+>> > Su rama est=C3=A1 delante de <<origin/master<< para 6 commits.
+>> >
+>> > it should say:
+>> >
+>> > Su rama est=C3=A1 delante de <<origin/master<< por 6 commits.
+>> >
+>> > Notice "para" --> "por".
+>>=20
+>> Good catch.
+>>=20
+>> You could earn eternal fame by cloning Git itself (e.g. via `git=20
+>> clone https://github.com/git/git), finding the respective files with=
+=20
+>> `git grep`, patching them, making a commit and following the guide=20
+>> lines in Documentation/SubmittingPatches to contribute the fix via=20
+>> this mailing list[*1*]. That way, you would enter the illustrious=20
+>> group of core Git developers.
+>>=20
+>> Ciao,
+>> Johannes
+>>=20
+>> Footnote *1*: If you are more comfortable with GitHub's Pull=20
+>> Requests than with sending patches via email, you could use=20
+>> https://submitgit.herokuapp.com/ to turn a Pull Request into an=20
+>> appropriately formatted mail to the mailing list.
+>=20
