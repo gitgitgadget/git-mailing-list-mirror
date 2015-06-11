@@ -1,84 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/8] object_id part 2
-Date: Wed, 10 Jun 2015 17:21:33 -0700
-Message-ID: <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
-	<xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
-	<20150610235114.GA786544@vauxhall.crustytoothpaste.net>
-	<20150611000251.GB786544@vauxhall.crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Thu Jun 11 02:21:43 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v3] git-rebase--interactive.sh: add config option for custom instruction format
+Date: Wed, 10 Jun 2015 21:30:43 -0400
+Message-ID: <1433986244-76038-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: gitset@pobox.com, johannes.schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Thu Jun 11 03:47:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2qFZ-000434-QG
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 02:21:42 +0200
+	id 1Z2raF-0004a4-TX
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 03:47:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751663AbbFKAVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 20:21:38 -0400
-Received: from mail-ie0-f195.google.com ([209.85.223.195]:33283 "EHLO
-	mail-ie0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbbFKAVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2015 20:21:37 -0400
-Received: by ierx19 with SMTP id x19so8021940ier.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2015 17:21:36 -0700 (PDT)
+	id S1752479AbbFKBrC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2015 21:47:02 -0400
+Received: from mail-vn0-f65.google.com ([209.85.216.65]:35070 "EHLO
+	mail-vn0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850AbbFKBrB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2015 21:47:01 -0400
+X-Greylist: delayed 942 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jun 2015 21:47:01 EDT
+Received: by vnbf190 with SMTP id f190so7087033vnb.2
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 18:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=o2kvzyq6tnA97jlYM4dtN6BJXqVjNR48Ak77G2bpKxE=;
-        b=vMIZPgo7TFgukfn0++T6ti6+7gDypP+AIg46RgN9CqeX8ga1GQ+cmhd9BSTFEuJfCS
-         iC0+LNubPbndj1Z/3bj2QufgFlVgUlTzAk1VBrreXRhyFAdRS82fPAAIlQRCIh+fzSOe
-         YnY1Z9GZjqDqskZ54WSjvnfQuxfPqV0emfOEur+6eEfEPKMsjkvztWN5X5bRAJfpY1OT
-         IjiRCEQ6OY5A0BKh2xXtVwVkfva2bj614DTzZ19lPt4yNhlAWAsVIz42uv5HE3BV1bcm
-         QyU+70y8XHYYiRpThWAa8Bgg7DDDFcMAowzljJsYULfmx5ilDYV7et/VDn5nmMFvnumm
-         SxTQ==
-X-Received: by 10.42.214.79 with SMTP id gz15mr7656015icb.86.1433982096283;
-        Wed, 10 Jun 2015 17:21:36 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
-        by mx.google.com with ESMTPSA id 140sm7067920ion.16.2015.06.10.17.21.34
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Jun 2015 17:21:34 -0700 (PDT)
-In-Reply-To: <20150611000251.GB786544@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 11 Jun 2015 00:02:52 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id;
+        bh=4ABBZR7fq2WyGIjnSM329QG+Zc+A8bV8OawlZRMlxdw=;
+        b=1KDxdm1gFEGvgkJXCkz7kzj5Izmi1HIna8FvRpi5QKERjC2DnJN3x26Pm2xWxcQ/ff
+         rqvcaICAltVsUUk5HTD0ebalf7EkgIW/SNG5f9Ug9SFyVPfMlENJde58/LKEot+9y4YV
+         6TIbMw9FxBDF9OyCkbZ2lTtjWbKYY+66s0w1G17iTbbrcR80na1pvmaJ+fUTMbp9EIqD
+         KJc1WS1HX4dMVCir7qTdPBuOCeBvwsIKTw8kUIb+zrprdoCpb+3BbWlh3qOyWMw1QUZm
+         ztjvywUVJvQay39ZnakIfwsX78xZPC5vsGuMMMCXN52PdkA/sO89N/GKbFA+awHl2inx
+         Zuog==
+X-Received: by 10.52.114.42 with SMTP id jd10mr11607602vdb.90.1433986279210;
+        Wed, 10 Jun 2015 18:31:19 -0700 (PDT)
+Received: from MRappazzo-2.local.info (ool-18e49664.dyn.optonline.net. [24.228.150.100])
+        by mx.google.com with ESMTPSA id jk10sm12888072vdb.13.2015.06.10.18.31.18
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 10 Jun 2015 18:31:18 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271371>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Difference between v2 and v3 of this patch:
 
-> On Wed, Jun 10, 2015 at 11:51:14PM +0000, brian m. carlson wrote:
->> On Wed, Jun 10, 2015 at 03:50:32PM -0700, Junio C Hamano wrote:
->> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->> > >   Convert struct object to object_id
->> > 
->> > It seems that the last one didn't make it...
->> 
->> It appears the mail was too large for vger.  Unfortunately for
->> bisectability reasons, it is necessarily large.  I'll resubmit the patch
->> with less context.
->
-> Unfortunately, the only patch I can generate that falls under to 100 KB
-> limit is with -U0, which isn't very useful.  How do you want to proceed?
-> The branch is available at [0], or I can send the -U0 patch, or I can
-> split it into unbisectable pieces.
->
-> [0] https://github.com/bk2204/git.git object-id-part2
+    - Fixed autosquash
+    - Added documentation on the config options
+    - Added two tests to t3414 (rebase-autosquash)
 
-No approach other than just letting reviewers fetch from there and
-taking a look is reasonable, I would think.
+Michael Rappazzo (1):
+  git-rebase--interactive.sh: add config option for custom instruction
+    format
 
-Did you create this manually, or is it a mechanical scripted rewrite
-followed by manual clean-up?  If the latter, it may help people by
-posting the mechanical recipe _and_ a patch that shows the manual
-clean-up.  That is something we can reasonably review and discuss.
+ Documentation/git-rebase.txt |  7 +++++++
+ git-rebase--interactive.sh   | 34 ++++++++++++++++++++++++++++------
+ t/t3415-rebase-autosquash.sh | 33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+), 6 deletions(-)
+
+-- 
+2.4.2
