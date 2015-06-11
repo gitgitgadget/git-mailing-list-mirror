@@ -1,160 +1,91 @@
-From: Bernd Naumann <bernd@kr217.de>
-Subject: Looking for feedback and help with a git-mirror for local usage
-Date: Thu, 11 Jun 2015 22:44:08 +0200
-Message-ID: <5579F318.7050503@kr217.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow to control the namespace for replace refs
+Date: Thu, 11 Jun 2015 13:55:01 -0700
+Message-ID: <xmqqvbeudkyi.fsf@gitster.dls.corp.google.com>
+References: <1433987235-17385-1-git-send-email-mh@glandium.org>
+	<xmqqlhfqhmil.fsf@gitster.dls.corp.google.com>
+	<20150611051339.GA3637@glandium.org>
+	<xmqq1thigtsd.fsf@gitster.dls.corp.google.com>
+	<20150611204611.GA10114@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 22:51:57 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jun 11 22:55:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z39S6-0004MF-2N
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 22:51:54 +0200
+	id 1Z39VI-0006Gt-GP
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 22:55:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932564AbbFKUvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 16:51:49 -0400
-Received: from zero.kr217.de ([88.198.92.197]:42883 "EHLO zero.kr217.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752554AbbFKUvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 16:51:48 -0400
-X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Jun 2015 16:51:48 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zero.kr217.de (Postfix) with ESMTP id 6EB2C294111
-	for <git@vger.kernel.org>; Thu, 11 Jun 2015 22:44:09 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at zero.kr217.de
-Received: from zero.kr217.de ([127.0.0.1])
-	by localhost (zero.kr217.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2rxKrXWPEfRt for <git@vger.kernel.org>;
-	Thu, 11 Jun 2015 22:44:08 +0200 (CEST)
-Received: from [192.168.255.236] (ping01.stura.uni-weimar.de [141.54.160.24])
-	(Authenticated sender: bernd@kr217.de)
-	by zero.kr217.de (Postfix) with ESMTPSA id BF4D92940E7
-	for <git@vger.kernel.org>; Thu, 11 Jun 2015 22:44:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+	id S1030235AbbFKUzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 16:55:08 -0400
+Received: from mail-ie0-f195.google.com ([209.85.223.195]:35114 "EHLO
+	mail-ie0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752096AbbFKUzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 16:55:06 -0400
+Received: by iebtr6 with SMTP id tr6so5163426ieb.2
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 13:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=9CN/qtdowkL0C3YI+HsaNFsGGpk8XXRagPSJt7zKeWQ=;
+        b=QpmrYUjBP6l4XpbkwAdlR13bMVIb+vhb3UM/SptEruuASIhow/22SAXWj995adV/kV
+         49UDoD/dpm3T58nRFjaguGHNVzvNgPjiPZwC/IF65tS7vNbBnacnC5PR3mBotigiT1Ip
+         Lzc+6wUREwQmrmrLWSC0nCw4FBy7aMeYYFZbv1PkQ/0CTJtYXj0KKeRzU6y1U5hmnY7Q
+         zjiSsv9WPArxuDMgJer2zCsxG2ERl5QRsfXut9Y6KvWrHbetcNx5coLujM6WE4aaj6fD
+         msWYwxHTeTQf6Az5b7rIUe1WjQBBTFpnQCac93yYueED9S8/u64UMjdDbB0iPWTK6zXX
+         9IcQ==
+X-Received: by 10.43.140.5 with SMTP id iy5mr13188465icc.77.1434056103366;
+        Thu, 11 Jun 2015 13:55:03 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ac40:153c:ed59:12ce])
+        by mx.google.com with ESMTPSA id h128sm1124878ioh.38.2015.06.11.13.55.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Jun 2015 13:55:02 -0700 (PDT)
+In-Reply-To: <20150611204611.GA10114@glandium.org> (Mike Hommey's message of
+	"Fri, 12 Jun 2015 05:46:11 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271464>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Mike Hommey <mh@glandium.org> writes:
 
-Hello,
+> On Thu, Jun 11, 2015 at 08:16:02AM -0700, Junio C Hamano wrote:
+>> Mike Hommey <mh@glandium.org> writes:
+>> 
+>> > I do agree that this is all confusing, but allow me to point out that
+>> > it's already plenty confusing: "namespace" is a term that has been used to
+>> > designate a generic kind of namespace *and* refs/namespaces. See for
+>> > example:
+>> >
+>> > https://github.com/git/git/blob/master/Documentation/git-describe.txt#L39
+>> > https://github.com/git/git/blob/master/Documentation/git-fetch.txt#L113
+>> > https://github.com/git/git/blob/master/Documentation/git-filter-branch.txt#L36
+>> > (note how this one is specifically about refs/replace/)
+>> > there are many more.
+>> 
+>> "One more breakage does not hurt" is not something we want to see.
+>
+> I won't disagree here, but we are in desperate need for a word for those
+> namespaces that aren't refs/namespaces, and stick to it (independently
+> of the replace patch), but I've never seen one.
 
-I have came up with an idea
-# Yep I know, exactly that kind of e-mail everyone wants to read ;)
-and I'm working currently on a shell-prototype to face the following
-situation and problem and need some feedback/advise:
+I actually don't agree with you ;-)
 
+All these examples you cited above are merely talking about
+hierarchy and they do not have any desperate need for a new word.
 
-I often build in example 'openwrt' with various build-scripts which
-depends heavily on a fresh or clean environment and they omit many
-sources via `git clone`, which results sometimes in over 100 MB of
-traffic just for one build. /* Later needed .tar.gz source archives
-are stored in a symlinked download directory which is supported by
-'openwrt/.config' since a few months... to reduce network traffic. */
+They do not even need a technical term; they needed a way of saying
+"subdirectory" without limiting their reference to loose refs.  If
+there weren't packed-refs, they would have said ".git/refs/heads and
+its subdirectories" and that would have been perfectly fine.
 
-My connection to the internet is not the fastest in world and
-sometimes unstable, so I wanted to have some kind of local bare
-repository mirror, which is possible with `git clone --mirror`.
-
-- From these repositories I can later clone from, by calling `git clone
-- --reference /path/to.git <url>`, but I do not wish to edit all the
-build-scripts and Makefiles.
-
-
-So I wrote a git wrapper script (`$HOME/bin/git`), which checks if
-`git` was called with 'clone', and if so, then it will first clones
-the repository as a mirror and then clones from that local mirror. If
-the mirror already exists, then it will only be updated (`git remote
-update`). This works for now.
-
-/*
-  To be able to have multiple identical named repositories,
-  the script builds paths like:
-
-  ~/var/cache/gitmirror $ find . -name "*.git"
-
-  ./github.com/openwrt-management/packages.git
-  ./github.com/openwrt/packages.git
-  ./github.com/openwrt-routing/packages.git
-  ./nbd.name/packages.git
-  ./git.openwrt.org/packages.git
-  ./git.openwrt.org/openwrt.git
-
-It strips the schema from the url and replaces ":" with "/" in case a
-port is specified or a svn link is provided. The remaining should be a
-valid linux file and directory structure, if I guess correctly!?
-*/
-
-Ok, so far, so good, but the implementation of the current
-shell-prototype looks way too hacky [0] and I have found some edge
-cases on which my script will fail:
-  The script depends on the fact that the last, or at least the second
-last argument is a valid git-url, but the following is a valid call, too
-:
-
-  `git --no-pager \
-   clone git@github.com:openwrt/packages.git openwrt-packages --depth 1`
-
-But this is not valid:
-
-`git clone https://github.com/openwrt/packages.git --reference
-packages.git packages-2`
-or
-`git clone --verbose https://github.com/openwrt/packages.git
-packages-2 --reference packages.git`
-
-
-I found out that git-clone actually also can only make a guess what is
-the url and what not.
-
-
-
-However, now I'm looking for a way to write something like a submodul
-for git which will check for a *new* git-config value like
-"user.mirror" (or something...) which points to a directory, and will
-be used to clone from, and in case of 'fetch', 'pull' or 'remote
-update' update the mirror first, and then the update of the current
-working directory is gotten from that mirror. (And in case of 'push'
-the mirror would be updated from the working dir, of course.)
-
-
-I would like to hear some toughs on that, and how I could start to
-build this submodul, or if someone more talented, then I am, is willed
-to spent some time on that. If requested/wished I could send a link to
-the shell-prototype.
-
-
-[0] For a reason I have to do ugly things like
-`$( eval exec /usr/bin/git clone --mirror $REPO_URL ) 2>&1 >/dev/null`
-cause otherwise in case of just `eval exec` the script stops after
-execution, and without `eval exec` arguments with spaces will
-interpreted as seperated arguments, which is no good, because of failing
-.
-
-
-Thanks for your time!
-Yours faithfully, Bernd
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVefMYAAoJEEYW3OihUKBPJkAP/iiFBoHnJXloX0SRQHjEUBDf
-C5PQ/42IZTB5ghM959IBA0QZ4p4BEFcwu8q7xKKE2FtiUzAAb1hRiXZOV7S7DZ1s
-iPDCOk8hTp9eqSLgfDL6WX7ztGByFoT9GodwpTFBLU31RvooWO1BYc/jrd3lMA4k
-4lk+8SM1dOffJm0g+A4YCsE59P7Rn/t0iJYepaN7cXVMdgKvuZ0iVi9CvHAipPUG
-xuCwNYCM6tcOvnjZH/Nqa57+l5LfQ7qIA6YBlG77wOwDHgX+GPkYAqq+xOq28aP0
-+W7duf32SgkQBwSTnfntYd4G+QZqIktP30Ik0e8hCcU37ECcEP2s28CebY2825/n
-FaZEutK3sE+lk47j89ndvPdtpHybchUi/0zNftPY0ngU6Yc/0YMMq9KeYM6kt6+s
-8coSvt5AQLhgR+NMQhXF4nKtfcvt9B+xZtag6Re/zA8AwIrBFFvu7dGkvG9aydDe
-Zwvt4/ddYxEouEPhwr4+KmmM2ll8tHoBcJJYr+xoqQlE/nSPfF/gvsQVqciijp4b
-afyStwFYGHPo68pMvEZx+xXYaAhkKSAvaN5vupy1e5765E0F5DWOV5P026L45D7V
-yKFVa/eYZc/iJjQcjzpch9mq/Jiblht6XXR1YDlHg5PoKE3Chs8EjYp0wyPWqGS0
-lrCPzhwrMLVmmksF0wcN
-=P4eQ
------END PGP SIGNATURE-----
+The "ref namespace" I mentioned in my first response is the only
+special one, I would think, so if we reword everybody else to say
+hierarchy instead of namespace, we are perfectly fine, I think.
