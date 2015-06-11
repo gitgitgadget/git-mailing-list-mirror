@@ -1,90 +1,88 @@
-From: BGaudreault Brian <BGaudreault@edrnet.com>
-Subject: RE: proxy_windows_386.exe Firewall Notification
-Date: Thu, 11 Jun 2015 19:57:44 +0000
-Message-ID: <BLUPR0701MB1969F0D63174D70566496694D7BC0@BLUPR0701MB1969.namprd07.prod.outlook.com>
-References: <BLUPR0701MB196906E314F2F1083B5DEC2BD7BC0@BLUPR0701MB1969.namprd07.prod.outlook.com>
- <20150611224305.ac126629f69dbb915bdc8851@domain007.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] clone: check if server supports shallow clones
+Date: Thu, 11 Jun 2015 13:44:35 -0700
+Message-ID: <xmqqzj46dlfw.fsf@gitster.dls.corp.google.com>
+References: <1433961320-1366-1-git-send-email-adgar@google.com>
+	<20150610190512.GB22800@peff.net>
+	<CACsJy8CiwiWgf2CarNNN5NgN7QbRB8oxGMmxF+VX8T=ZV2M1ow@mail.gmail.com>
+	<20150611143204.GA3343@peff.net>
+	<CALkbG6+vRqKwmBjK9jwSph4iUUbqPjiuNdHEeT3nvFhFJ0VpEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Konstantin Khomoutov <kostix+git@007spb.ru>
-X-From: git-owner@vger.kernel.org Thu Jun 11 22:18:46 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Edgar <adgar@google.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 22:44:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z38vx-0001Tu-5W
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 22:18:41 +0200
+	id 1Z39LI-0008IR-Iy
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 22:44:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755209AbbFKUSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 16:18:18 -0400
-Received: from mail-bl2on0082.outbound.protection.outlook.com ([65.55.169.82]:65408
-	"EHLO na01-bl2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S933244AbbFKUNe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 16:13:34 -0400
-Received: from BLUPR0701MB1969.namprd07.prod.outlook.com (25.163.121.20) by
- BLUPR0701MB1971.namprd07.prod.outlook.com (25.163.121.22) with Microsoft SMTP
- Server (TLS) id 15.1.184.17; Thu, 11 Jun 2015 19:57:44 +0000
-Received: from BLUPR0701MB1969.namprd07.prod.outlook.com ([25.163.121.20]) by
- BLUPR0701MB1969.namprd07.prod.outlook.com ([25.163.121.20]) with mapi id
- 15.01.0184.014; Thu, 11 Jun 2015 19:57:44 +0000
-Thread-Topic: proxy_windows_386.exe Firewall Notification
-Thread-Index: AdCkbWnQka317D+AQMy6hcSJKdL0RAAEWvGAAAB1QmA=
-In-Reply-To: <20150611224305.ac126629f69dbb915bdc8851@domain007.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: 007spb.ru; dkim=none (message not signed)
- header.d=none;
-x-originating-ip: [12.188.185.200]
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1971;
-x-microsoft-antispam-prvs: <BLUPR0701MB1971A867D1020AE410CC765AD7BC0@BLUPR0701MB1971.namprd07.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(5005006)(520003)(3002001);SRVR:BLUPR0701MB1971;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1971;
-x-forefront-prvs: 0604AFA86B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(377454003)(61484003)(51704005)(24454002)(13464003)(86362001)(40100003)(92566002)(122556002)(80792005)(33656002)(74316001)(46102003)(62966003)(77156002)(2900100001)(102836002)(5003600100002)(2950100001)(189998001)(5002640100001)(19580405001)(19580395003)(5001960100002)(76576001)(5001920100001)(99286002)(106116001)(2656002)(87936001)(76176999)(50986999)(54356999)(66066001)(460985005);DIR:OUT;SFP:1101;SCL:1;SRVR:BLUPR0701MB1971;H:BLUPR0701MB1969.namprd07.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-X-OriginatorOrg: edrnet.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2015 19:57:44.0988
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c5294837-2991-446b-82ba-9a6e606fbfae
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLUPR0701MB1971
+	id S1755523AbbFKUok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 16:44:40 -0400
+Received: from mail-ig0-f196.google.com ([209.85.213.196]:33106 "EHLO
+	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752904AbbFKUoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 16:44:37 -0400
+Received: by igdj8 with SMTP id j8so4672752igd.0
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 13:44:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Cyat5OLzgSwxHOSsNisjhCLNsXmx7iIYhnY5dTD8hOY=;
+        b=RF9SZcX/fmy8T9i2ztUxcDz+lvHQst1tQV8qkzj3L+uQ/zwuXAFCTNLbkWDchZqCsU
+         fHSiIlz7mQNL/ZgkD0Qo/iHpL9pij9hno8rqJTTpoEksQZ6pCJJYYm+KzD71wh7dwOxk
+         vHvcNFOX2YjpOG6gj43YObUWuxUGNe6NhTH4jQRo0ESWglE6ZxaysbeJoUgTA6P/Tw2u
+         06Zw00XsLTT3Mtox4mnbuMcZ/89ygkWlIITFS5GIQe5wEnQszOdq2xlcvOVatVoxmFlb
+         howJLiLuS6ldeE/16g5/L2MExqBrn5Fw4AjwHe974ieprKQFAxuQiLa3JCn1encHSzgS
+         p3Mg==
+X-Received: by 10.107.130.218 with SMTP id m87mr13530101ioi.62.1434055476780;
+        Thu, 11 Jun 2015 13:44:36 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ac40:153c:ed59:12ce])
+        by mx.google.com with ESMTPSA id k74sm1109187iok.30.2015.06.11.13.44.35
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Jun 2015 13:44:35 -0700 (PDT)
+In-Reply-To: <CALkbG6+vRqKwmBjK9jwSph4iUUbqPjiuNdHEeT3nvFhFJ0VpEg@mail.gmail.com>
+	(Michael Edgar's message of "Thu, 11 Jun 2015 14:18:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271461>
 
-Lol, sorry.  I meant to post in the Vagrant forums.  Too many projects going on at the same time!
+Michael Edgar <adgar@google.com> writes:
 
------Original Message-----
-From: Konstantin Khomoutov [mailto:kostix+git@007spb.ru] 
-Sent: Thursday, June 11, 2015 3:43 PM
-To: BGaudreault Brian
-Cc: git@vger.kernel.org
-Subject: Re: proxy_windows_386.exe Firewall Notification
+> On Thu, Jun 11, 2015 at 10:32 AM, Jeff King <peff@peff.net> wrote:
+>> On Thu, Jun 11, 2015 at 08:02:33PM +0700, Duy Nguyen wrote:
+>>
+>>> > I see that do_fetch_pack checks server_supports("shallow"). Is that
+>>> > enough to cover all fetch cases? And if it is, why does it not cover the
+>>> > matching clone cases?
+>>>
+>>> I think this replacement check would do
+>>>
+>>> if ((args->depth > 0 || is_repository_shallow()) && !server_supports("shallow"))
+>>>         die("Server does not support shallow clients");
+>>
+>> Oh, indeed, there is the depth flag I was looking for. :)
+>>
+>> And from some rudimentary testing, I believe that:
+>>
+>>   git init
+>>   git fetch --depth=1 ...
+>>
+>> is currently broken in the same way as clone (we are not shallow yet, so
+>> it does not complain when the server does not support it). I think the
+>> patch above fixes both that and the clone case.
+>
+> Shall I send that out as a revised patch for review? (This is my first
+> stab at a Git
+> patch)
 
-On Thu, 11 Jun 2015 17:46:58 +0000
-BGaudreault Brian <BGaudreault@edrnet.com> wrote:
-
-> Hello, when connecting to a Vagrant Shared VM via SSH, I'm getting a 
-> Windows Firewall prompt about 'proxy_windows_386.exe' (in C:\Program
-> Files\hashicorp\vagrant\embedded\gems\gems\vagrant-share-1.1.0
-> \localbin\), which looks like a malware-type name.  Here's the
-> message: "Windows Security Alert.  Windows Firewall has blocked some 
-> features of this app.  Windows Firewall has blocked some features of 
-> proxy_windows_386.exe on all public and private networks.".
-> 
-> So I did a quick search for this file name on the Internet as well as 
-> the Git-SCM.com/community site and haven't found any clear 
-> explinations about what this file is and if it's safe.  If this is a 
-> legitimate safe file, I think it's important that this is clearly 
-> documented in the Git documentation.  Can someone verify the details 
-> about this file?
-
-I fail to get how did you manage to connect "proxy_windows_386.exe"
-with Git.  Care to elaborate on this?
+Surely, and thanks.  Hopefully one or both of them will Ack it and
+all there is left for me to do will be to pick it up ;-)
