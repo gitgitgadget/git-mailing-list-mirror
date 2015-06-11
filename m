@@ -1,105 +1,85 @@
-From: Gary England <GEngland@myvrx.com>
-Subject: Bug report: Unhandled Exception
-Date: Thu, 11 Jun 2015 19:21:59 +0000
-Message-ID: <DM2PR06MB4936C92C10128BD37E4ABC1D1BC0@DM2PR06MB493.namprd06.prod.outlook.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fetch-pack: optionally save packs to disk
+Date: Thu, 11 Jun 2015 12:33:17 -0700
+Message-ID: <xmqq8ubqf3b6.fsf@gitster.dls.corp.google.com>
+References: <1434044676-2942-1-git-send-email-augie@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 11 21:22:17 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Augie Fackler <augie@google.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 21:33:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z383K-0002Gl-Ls
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 21:22:15 +0200
+	id 1Z38EJ-0000SS-1V
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 21:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbbFKTWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 15:22:10 -0400
-Received: from zixgateway01.myvrx.com ([192.41.40.104]:35670 "EHLO
-	zixgateway01.myvrx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752266AbbFKTWG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 15:22:06 -0400
-Received: from 127.0.0.1 (ZixVPM [127.0.0.1])
-	by Outbound.myvrx.com (Proprietary) with SMTP id C6AAD51C85
-	for <git@vger.kernel.org>; Thu, 11 Jun 2015 13:21:12 -0600 (MDT)
-Received: from na01-bn1-obe.outbound.protection.outlook.com (mail-bn1blp0186.outbound.protection.outlook.com [207.46.163.186])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by zixgateway01.myvrx.com (Proprietary) with ESMTPS id BB92D51C63
-	for <git@vger.kernel.org>; Thu, 11 Jun 2015 13:21:10 -0600 (MDT)
-Received: from DM2PR06MB493.namprd06.prod.outlook.com (10.141.159.143) by
- DM2PR06MB493.namprd06.prod.outlook.com (10.141.159.143) with Microsoft SMTP
- Server (TLS) id 15.1.190.14; Thu, 11 Jun 2015 19:21:59 +0000
-Received: from DM2PR06MB493.namprd06.prod.outlook.com ([10.141.159.143]) by
- DM2PR06MB493.namprd06.prod.outlook.com ([10.141.159.143]) with mapi id
- 15.01.0190.013; Thu, 11 Jun 2015 19:21:59 +0000
-Thread-Topic: Bug report: Unhandled Exception
-Thread-Index: AQHQpHvjXwz0ypi5fUG3gxOiHquz0Q==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;
-x-originating-ip: [50.79.71.233]
-x-microsoft-exchange-diagnostics: 1;DM2PR06MB493;3:A3ja2c7dL4AHb+tAMMUS5vlSeaF/V0RtRY8ql0/xF3NSAIebvgY9fdry39VHCJM05jaPpi7GvHLnKP5uAsAzszcHDT1hw2mnwwmALz0Zg79qJDp6GK/esiXg34T2XTXMD37V9QJ30vzuJOXjq6alrg==;10:Z/lcl8aqXUh3o43yeoeqr1GEykMBE4xVafXzpgQH9XEOAixUZrxJRw5CVlJ5FeiJK26JCGczIE1egXr0+3R+rRAlTLCF/xNmIFjFLooXzJk=;6:xKv9ZOS0SOzQyc78y+DhEjv/cy8Y1MfLXzhkqZz+jkBvIFY3hy8XUYkLq79ADZNH
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:DM2PR06MB493;
-x-microsoft-antispam-prvs: <DM2PR06MB49380532B7FB742F8E5AB3ED1BC0@DM2PR06MB493.namprd06.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(5005006)(520003)(3002001);SRVR:DM2PR06MB493;BCL:0;PCL:0;RULEID:;SRVR:DM2PR06MB493;
-x-forefront-prvs: 0604AFA86B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(377424004)(252514010)(164054003)(86362001)(102836002)(189998001)(33656002)(50986999)(15974865002)(62966003)(77156002)(450100001)(19580395003)(19580405001)(2900100001)(2656002)(76576001)(87936001)(5001960100002)(54356999)(107886002)(77096005)(110136002)(92566002)(106116001)(80792005)(2501003)(46102003)(74316001)(2351001)(5003600100002)(229853001)(66066001)(40100003)(5002640100001)(122556002)(460985005)(18886075002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM2PR06MB493;H:DM2PR06MB493.namprd06.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-X-OriginatorOrg: myvrx.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2015 19:21:59.2137
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6161f9fd-e776-4f16-b146-64e3f1184f0b
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM2PR06MB493
-X-VPM-MSG-ID: 2b340165-1e45-431f-b47c-f48ce3b8930e
-X-VPM-HOST: zixgateway01.myvrx.com
-X-VPM-GROUP-ID: 3cf70084-e109-4823-affd-dd84f58c3eb6
-X-VPM-ENC-REGIME: Plaintext
-X-VPM-CERT-FLAG: 0
-X-VPM-IS-HYBRID: 0
+	id S1752917AbbFKTd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 15:33:28 -0400
+Received: from mail-ie0-f194.google.com ([209.85.223.194]:36489 "EHLO
+	mail-ie0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751370AbbFKTd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 15:33:27 -0400
+Received: by ierx19 with SMTP id x19so4559889ier.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 12:33:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=uytpT9/uQMAN+xFyWiUym5iETnooKwNRKT2YbXHO1DU=;
+        b=Po6ut0ousX+Qe2e3hBQEEsSPs5D6zozl0TtFaxWv1ybpMYsMVvmRcXoegRqaCPXFgc
+         X7B/cw3nvvIwW2BM46c5WA6aeNlF3cEh+Dm+5KTMQ9OC7xplPRxrhNbuy+HmIiGq3C4K
+         qt5CLMPNL7qBo/2v7oc4XNBQIizgDAK/s4KbNuyva2oFAFP8hD1mbELQF/fHJk73SMjl
+         3A8dHwv2CNL8blR5klubyQA6rDactuAcdEeDKwG+N7J41F7qjFvE0HX17Psr0Blw/BUF
+         zAluZGBgUJl3oOA8gVbn7UtFLN8sRkqUD6I+8g+o53Dfn8d4LPkzZCAEyhFiFVNsjBMU
+         LO4g==
+X-Received: by 10.107.128.134 with SMTP id k6mr7123961ioi.7.1434051199280;
+        Thu, 11 Jun 2015 12:33:19 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ac40:153c:ed59:12ce])
+        by mx.google.com with ESMTPSA id f15sm987845iof.36.2015.06.11.12.33.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Jun 2015 12:33:18 -0700 (PDT)
+In-Reply-To: <1434044676-2942-1-git-send-email-augie@google.com> (Augie
+	Fackler's message of "Thu, 11 Jun 2015 13:44:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271456>
 
-Hello,
+Augie Fackler <augie@google.com> writes:
 
-Using git version 1.9.2-preview20140411, in Git Bash for Windows, performing a "git pull --rebase", received an unhandled exception. Here is the stack trace:
+> @@ -708,9 +708,8 @@ static int get_pack(struct fetch_pack_args *args,
+>  	cmd.argv = argv;
+>  	av = argv;
+>  	*hdr_arg = 0;
+> +	struct pack_header header;
 
+decl-after-stmt here...
 
-MSYS-1.0.12 Build:2012-07-05 14:56
-Exception: STATUS_ACCESS_VIOLATION at eip=00418DAA
-eax=680A38E4 ebx=685704CC ecx=00542E38 edx=00000154 esi=00000000 edi=685700D4
-ebp=0028FE90 esp=0028FE6C program=C:\Program Files (x86)\Git\bin\cat.exe
-cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
-Stack trace:
-Frame     Function  Args
-0028FE90  00418DAA  (685700D4, 00000154, 00000003, 004144EA)
-0028FEE0  0041466B  (00000000, 01805AB1, 0028FF20, 00405894)
-0028FF00  00414C5F  (00401BB0, 00401000, FFFFD000, 00000000)
-0028FF20  00414C98  (00000000, 00000000, FFFFF801, 00000000)
-0028FF50  004057A4  (00401BB0, 9B30881F, FFFF9E16, 00000000)
-0028FF80  0040103D  (7FFDE000, 76F87BE0, 005E63FC, 0028FFDC)
-0028FF94  76F87C04  (7FFDE000, 00045F96, 00000000, 00000000)
-0028FFDC  7752AD1F  (FFFFFFFF, 77510236, 00000000, 00000000)
-0028FFEC  7752ACEA  (00401000, 7FFDE000, 00000000, 78746341)
-End of stack trace
+>  	if (!args->keep_pack && unpack_limit) {
+> -		struct pack_header header;
+> -
+>  		if (read_pack_header(demux.out, &header))
+>  			die("protocol error: bad pack header");
+>  		snprintf(hdr_arg, sizeof(hdr_arg),
+> @@ -762,7 +761,44 @@ static int get_pack(struct fetch_pack_args *args,
+>  		*av++ = "--strict";
+>  	*av++ = NULL;
+>  
+> -	cmd.in = demux.out;
+> +	savepath = getenv("GIT_SAVE_FETCHED_PACK_TO");
+> +	if (savepath) {
+> +		struct child_process cmd2 = CHILD_PROCESS_INIT;
+> +		const char *argv2[22];
+> +		int pipefds[2];
+> +		int e;
+> +		const char **av2;
 
+Have a blank after decl block before the first statement here.
 
-The rebase succeeded, so maybe this isn't of much concern, or maybe it's something specific to my machine. It's the first time I have ever received an unhandled exception while using git. Either way, wanted to let you guys know what happened. Let me know if you need any further information, or if this is the appropriate channel to report this bug.
-
-Thanks,
-
-Gary England
-Software Engineer
- 
-VRx |P.O. Box 9780, Salt Lake City, UT 84109
-Office: 801.990.9981|Fax: 801.449.3090
-E-mail: gengland@myvrx.com|Website: www.myvrx.com
+> +		cmd2.argv = argv2;
+> +		av2 = argv2;
