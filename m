@@ -1,69 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] clone: check if server supports shallow clones
-Date: Thu, 11 Jun 2015 10:32:07 -0400
-Message-ID: <20150611143204.GA3343@peff.net>
-References: <1433961320-1366-1-git-send-email-adgar@google.com>
- <20150610190512.GB22800@peff.net>
- <CACsJy8CiwiWgf2CarNNN5NgN7QbRB8oxGMmxF+VX8T=ZV2M1ow@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mike Edgar <adgar@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 16:32:22 2015
+From: Panagiotis Astithas <pastith@gmail.com>
+Subject: [PATCH] Fix power checking on OS X
+Date: Thu, 11 Jun 2015 17:37:25 +0300
+Message-ID: <1434033445-35903-1-git-send-email-pastith@gmail.com>
+Cc: vmiklos@frugalware.org, jon.delStrother@bestbefore.tv,
+	jrnieder@gmail.com, Panagiotis Astithas <pastith@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 16:37:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z33Wj-0005Z5-C6
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 16:32:17 +0200
+	id 1Z33cB-0000VC-2u
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 16:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750833AbbFKOcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 10:32:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44832 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751052AbbFKOcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 10:32:11 -0400
-Received: (qmail 27659 invoked by uid 102); 11 Jun 2015 14:32:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Jun 2015 09:32:10 -0500
-Received: (qmail 6755 invoked by uid 107); 11 Jun 2015 14:32:14 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Jun 2015 10:32:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jun 2015 10:32:07 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CiwiWgf2CarNNN5NgN7QbRB8oxGMmxF+VX8T=ZV2M1ow@mail.gmail.com>
+	id S1754776AbbFKOhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 10:37:50 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:35852 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751047AbbFKOhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 10:37:48 -0400
+Received: by wgbgq6 with SMTP id gq6so6440178wgb.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 07:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=tnt/C6nerFWPwLEkloBPS3Tle09s/UBR+XRLuPPM4E0=;
+        b=RLUfw+VQ42lrYZBBktXdNTlUmJv8IzXJ8JGJRJEuzGGYaLsvxADJyQ6MjMYH6nYVNs
+         4HyBskf2meulxHZ9B19+69JBbOM02cFkKfIaCmO0O6hhZXIpiTUZDi8USOQgvkChHEf/
+         AKL/Rp8hk8wlw45fVFxTgtNblYEMJi5EAE5ZveGnmdw6n6HQ8nKvjPrHjp4b0RUcxxc1
+         JZ0wQME6ISgiROD4TnP9HwToZoqePF7NWcXNuUwy4QraS9cadayL9W2StA2PHmphJk8P
+         QWlVnYn1LEtcsqhbBIrs96mF/4uJ5IKHnF6S+0C2/WTAQo9hISdSmbNeed1ox12Fdu5m
+         Jikg==
+X-Received: by 10.194.157.168 with SMTP id wn8mr16762274wjb.79.1434033467546;
+        Thu, 11 Jun 2015 07:37:47 -0700 (PDT)
+Received: from localhost.localdomain (130.43.92.115.dsl.dyn.forthnet.gr. [130.43.92.115])
+        by mx.google.com with ESMTPSA id pg1sm1364109wjb.39.2015.06.11.07.37.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 11 Jun 2015 07:37:46 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271409>
 
-On Thu, Jun 11, 2015 at 08:02:33PM +0700, Duy Nguyen wrote:
+The output of "pmset -g batt" changed at some point from
+"Currently drawing from 'AC Power'" to the slightly different
+"Now drawing from 'AC Power'". Starting the match from "drawing"
+makes the check work in both old and new versions of OS X.
 
-> > I see that do_fetch_pack checks server_supports("shallow"). Is that
-> > enough to cover all fetch cases? And if it is, why does it not cover the
-> > matching clone cases?
-> 
-> I think this replacement check would do
-> 
-> if ((args->depth > 0 || is_repository_shallow()) && !server_supports("shallow"))
->         die("Server does not support shallow clients");
+Signed-off-by: Panagiotis Astithas <pastith@gmail.com>
+---
+ contrib/hooks/pre-auto-gc-battery | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Oh, indeed, there is the depth flag I was looking for. :)
-
-And from some rudimentary testing, I believe that:
-
-  git init
-  git fetch --depth=1 ...
-
-is currently broken in the same way as clone (we are not shallow yet, so
-it does not complain when the server does not support it). I think the
-patch above fixes both that and the clone case.
-
-Of course it's hard to add to the test suite, since we do not have a way
-of hitting a server that does not understand shallow (I simply fudged
-server_supports() to return false on the client).
-
--Peff
+diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
+index 9d0c2d1..6a2cdeb 100755
+--- a/contrib/hooks/pre-auto-gc-battery
++++ b/contrib/hooks/pre-auto-gc-battery
+@@ -33,7 +33,7 @@ elif grep -q "AC Power \+: 1" /proc/pmu/info 2>/dev/null
+ then
+ 	exit 0
+ elif test -x /usr/bin/pmset && /usr/bin/pmset -g batt |
+-	grep -q "Currently drawing from 'AC Power'"
++	grep -q "drawing from 'AC Power'"
+ then
+ 	exit 0
+ fi
+-- 
+2.4.1
