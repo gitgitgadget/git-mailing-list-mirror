@@ -1,149 +1,88 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v7 08/12] for-each-ref: rename variables called sort to sorting
-Date: Thu, 11 Jun 2015 21:39:59 +0530
-Message-ID: <1434039003-10928-8-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v7 02/12] for-each-ref: clean up code
+Date: Thu, 11 Jun 2015 21:39:53 +0530
+Message-ID: <1434039003-10928-2-git-send-email-karthik.188@gmail.com>
 References: <5579B253.4020804@gmail.com>
  <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 18:23:04 2015
+X-From: git-owner@vger.kernel.org Thu Jun 11 18:28:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z35Fv-0005Tb-8s
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 18:23:03 +0200
+	id 1Z35Lb-0000dP-6F
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 18:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754342AbbFKQW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 12:22:58 -0400
-Received: from mail-pd0-f195.google.com ([209.85.192.195]:32874 "EHLO
-	mail-pd0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752441AbbFKQW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 12:22:56 -0400
-Received: by pdev10 with SMTP id v10so2237933pde.0
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 09:22:56 -0700 (PDT)
+	id S1754704AbbFKQ2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 12:28:50 -0400
+Received: from mail-pd0-f196.google.com ([209.85.192.196]:35983 "EHLO
+	mail-pd0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752716AbbFKQ2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 12:28:49 -0400
+Received: by pdev10 with SMTP id v10so2258836pde.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 09:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2r/NGeHQ4QhPJx7J/mZiNIC8VYPJqvG9vogOlyxWfg8=;
-        b=NLezzwQWWhnN/EqYAi+ThjRjSOw91zr0T22mpnUZmfmEsC7FGXbu1A/pY56uwBjggU
-         BsoY9C9/fskk3JfFUyUfZt0xjU8qtOkSubUp5N5nYPp8C/468nsLqeXoeoUSY9lncwB1
-         J4Qtxkz8ynYUVL4DF05Gm0v7XrbzdsQ0RSykqZFlx1+pRBdjfBlpLw3DAAnKTEYQHfjn
-         u455nQRAhUh5TQVva8CmzM+Ghf8tQU5jp0x7x/T7BouJ21YT2nipbm7d6ITmgBUTYGrh
-         Lulm63Y8Q8pGszsABRk/NRhVTrdLsrNW5vfAthXaiAO059XE7k7aI7KoVxOXqPtzpPlJ
-         UA2Q==
-X-Received: by 10.66.157.71 with SMTP id wk7mr15689024pab.99.1434039042614;
-        Thu, 11 Jun 2015 09:10:42 -0700 (PDT)
+        bh=nagjmFpy9WL+g9mn9q/lpu6se4cWeH1r8xiuZy0fJxQ=;
+        b=nIG++5bonYU7MIf3z9rhHb940jO9BAFWgHnE41xZ3Yl2s/hp00D+PP79yaFPCRoQzm
+         8wygeX84V02B/H/zjH/+8k9dqSUc+B4rpIif1mgqUwARei8BumIz94UpcSdt+LgPSjfQ
+         Wd4X6NqpLjMlRY+1/bAmxm66ka9/XjPKNG7tqvd9PQfBKlU77VN2ABnb+Uy19FOoBOWR
+         AZ3oF1xlUBJpckOwYzpzlsF+EaNuJ+OCu1QbrbKJ9I86u82TvExEPzHQ3A2BszFhdj5H
+         OkL8CKPYvv8b3zTHpX+M7stEmeLGRSRlSegsiuQcJP+QgRu/EgFacQSPK8alcOwd+7ji
+         +TAw==
+X-Received: by 10.66.65.134 with SMTP id x6mr15534187pas.129.1434039015749;
+        Thu, 11 Jun 2015 09:10:15 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id f4sm1132981pdc.95.2015.06.11.09.10.40
+        by mx.google.com with ESMTPSA id f4sm1132981pdc.95.2015.06.11.09.10.13
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Jun 2015 09:10:42 -0700 (PDT)
+        Thu, 11 Jun 2015 09:10:15 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2
 In-Reply-To: <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271437>
 
-Rename all the variables called sort to sorting to match the
-function/structure name changes made in the previous patch.
+In 'grab_single_ref()' remove the extra count variable 'cnt' and
+use the variable 'grab_cnt' of structure 'grab_ref_cbdata' directly
+instead.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/for-each-ref.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ builtin/for-each-ref.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 4a6eaba..3cf456a 100644
+index 67c8b62..0dd2df2 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -985,9 +985,9 @@ static int compare_refs(const void *a_, const void *b_)
+@@ -897,7 +897,6 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
+ {
+ 	struct grab_ref_cbdata *cb = cb_data;
+ 	struct refinfo *ref;
+-	int cnt;
+ 
+ 	if (flag & REF_BAD_NAME) {
+ 		  warning("ignoring ref with broken name %s", refname);
+@@ -914,10 +913,8 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
+ 	 */
+ 	ref = new_refinfo(refname, oid->hash, flag);
+ 
+-	cnt = cb->grab_cnt;
+-	REALLOC_ARRAY(cb->grab_array, cnt + 1);
+-	cb->grab_array[cnt++] = ref;
+-	cb->grab_cnt = cnt;
++	REALLOC_ARRAY(cb->grab_array, cb->grab_cnt + 1);
++	cb->grab_array[cb->grab_cnt++] = ref;
  	return 0;
  }
  
--void ref_array_sort(struct ref_sorting *sort, struct ref_array *array)
-+void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
- {
--	ref_sorting = sort;
-+	ref_sorting = sorting;
- 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
- }
- 
-@@ -1089,16 +1089,16 @@ struct ref_sorting *ref_default_sorting(void)
- {
- 	static const char cstr_name[] = "refname";
- 
--	struct ref_sorting *sort = xcalloc(1, sizeof(*sort));
-+	struct ref_sorting *sorting = xcalloc(1, sizeof(*sorting));
- 
--	sort->next = NULL;
--	sort->atom = parse_ref_filter_atom(cstr_name, cstr_name + strlen(cstr_name));
--	return sort;
-+	sorting->next = NULL;
-+	sorting->atom = parse_ref_filter_atom(cstr_name, cstr_name + strlen(cstr_name));
-+	return sorting;
- }
- 
- int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
- {
--	struct ref_sorting **sort_tail = opt->value;
-+	struct ref_sorting **sorting_tail = opt->value;
- 	struct ref_sorting *s;
- 	int len;
- 
-@@ -1106,8 +1106,8 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
- 		return -1;
- 
- 	s = xcalloc(1, sizeof(*s));
--	s->next = *sort_tail;
--	*sort_tail = s;
-+	s->next = *sorting_tail;
-+	*sorting_tail = s;
- 
- 	if (*arg == '-') {
- 		s->reverse = 1;
-@@ -1127,7 +1127,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	const char *format = "%(objectname) %(objecttype)\t%(refname)";
--	struct ref_sorting *sort = NULL, **sort_tail = &sort;
-+	struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 	int maxcount = 0, quote_style = 0;
- 	struct ref_filter_cbdata ref_cbdata;
- 
-@@ -1144,7 +1144,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_GROUP(""),
- 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
- 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
--		OPT_CALLBACK(0 , "sort", sort_tail, N_("key"),
-+		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			    N_("field name to sort on"), &parse_opt_ref_sorting),
- 		OPT_END(),
- 	};
-@@ -1161,8 +1161,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	if (verify_ref_format(format))
- 		usage_with_options(for_each_ref_usage, opts);
- 
--	if (!sort)
--		sort = ref_default_sorting();
-+	if (!sorting)
-+		sorting = ref_default_sorting();
- 
- 	/* for warn_ambiguous_refs */
- 	git_config(git_default_config, NULL);
-@@ -1171,7 +1171,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	ref_cbdata.filter.name_patterns = argv;
- 	for_each_rawref(ref_filter_handler, &ref_cbdata);
- 
--	ref_array_sort(sort, &ref_cbdata.array);
-+	ref_array_sort(sorting, &ref_cbdata.array);
- 
- 	if (!maxcount || ref_cbdata.array.nr < maxcount)
- 		maxcount = ref_cbdata.array.nr;
 -- 
 2.4.2
