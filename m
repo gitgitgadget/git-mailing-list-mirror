@@ -1,131 +1,135 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 2/2] pull: allow dirty tree when rebase.autostash enabled
-Date: Thu, 11 Jun 2015 21:34:08 +0800
-Message-ID: <CACRoPnQ0+h2g2cUJk+8zSkcHjoHjezAGC=5pTjn8aFsgB0GrQA@mail.gmail.com>
-References: <1433282157-8171-1-git-send-email-me@ikke.info>
-	<1433625145-29668-1-git-send-email-me@ikke.info>
-	<1433625145-29668-2-git-send-email-me@ikke.info>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] git-rebase--interactive.sh: add config option for
+ custom instruction format
+Date: Thu, 11 Jun 2015 15:40:07 +0200
+Organization: gmx
+Message-ID: <dabb4e8e3a864b26c002e9ef966bdf85@www.dscho.org>
+References: <1433986244-76038-1-git-send-email-rappazzo@gmail.com>
+ <1433986244-76038-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Junio C. Hamano" <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Kevin Daudt <compufreak@gmail.com>
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Thu Jun 11 15:34:23 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: gitset@pobox.com, git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 15:40:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z32ca-0007Sr-Rb
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 15:34:17 +0200
+	id 1Z32iU-0002CG-I8
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 15:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752436AbbFKNeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 09:34:13 -0400
-Received: from mail-lb0-f195.google.com ([209.85.217.195]:36605 "EHLO
-	mail-lb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248AbbFKNeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 09:34:10 -0400
-Received: by lbiv13 with SMTP id v13so1394284lbi.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 06:34:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vBZJrxYU+1P+hEsia7nt0WZZNff60KHNmJZ1BJGJLfs=;
-        b=0jkRDxo2OpkI8PncR45ZM4ZXPMxOfNM+JfFG7i17377TFrCOrrh7il2A1GHD2vOq+4
-         hPZXVaMtqC2f/m4A8zzR/0COUJa++2DDFSH7BEFfIrohyqFPugXMwZWYrFH5TGXI4XqT
-         XqhnQdp6dFdsvMGcVh5MBN4Pjz1iUZvCMEfkyY+HARQFa6pYl20Z0LP2kN5wG0yet6IG
-         CJAqXEffyTRagDxwDhje30AWqd6Rc9JYg/Mh3vHTkblFwyLmlliEGZNC7nPr9J8gcBke
-         /BGlpr1RJIG6XlFoEgy6pAPBFTCTffGxf8qX79fDd12HKw8z70khteLU4IiZALk6tIy5
-         1Bzw==
-X-Received: by 10.152.164.193 with SMTP id ys1mr10030062lab.65.1434029649006;
- Thu, 11 Jun 2015 06:34:09 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Thu, 11 Jun 2015 06:34:08 -0700 (PDT)
-In-Reply-To: <1433625145-29668-2-git-send-email-me@ikke.info>
+	id S1754629AbbFKNkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 09:40:17 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50131 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751605AbbFKNkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 09:40:13 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MZTP3-1Yk7kb1uxh-00LDuC; Thu, 11 Jun 2015 15:40:08
+ +0200
+In-Reply-To: <1433986244-76038-2-git-send-email-rappazzo@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:EkmuHgTWiX/vPDZc47vNZYJENgQeC0hyDtg+PLa0FAwaxaTepe+
+ Rm6f61Lp+O3GpLJrez+sqn7GHuZFI5mIk5KekTAlpL6bFTeCjsaA/miH2yXtOh1jM8tiG1T
+ K8mQJtFngSlWJ1CKwcB2FeaP0mI6gI85npcuxi5Yq/cEDyt2g4kraYIIQh9nC2brSplXlAK
+ mbeIpTVou3C2TXgo3qxbw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TNkjYIQDGm8=:uPKGjDWAn0tiljKD//eTJJ
+ quLnACWjOJ5Xf0s/4lNQGOSfsq/KAKyScITo6AvnP2qArV2cQInDL5y3D/+fiD0JTWPWA1TaD
+ ClxyiTXrjf6kIphKFxyariGFZRys3XiBLrvZOWZxCRjoCWHB9pxkMctHfh+uszAMgMT9dbI+l
+ YDxQDZs075p7ZTs8qA9/lVuya9KlgI2QTsOBhPIW8Am2vD6g2M5jIzU6NautFWYGu0bys0rZ5
+ 9u9J3nfVLNtIjz6mwd8//nF51epx3aKwPcWjs8HZmbiEz7e1DNlxVvqPWniId6Vj8GF7fDyqo
+ Dz4/theBhGOWIFw2V26+rLDrFHlWV2z71Kp8YaG6Cia7RA76uipds+VCPdIROPPp0PecDDeac
+ MCsN2W+OL5u8qYn/ySjV6uV59MI3mRT6q6RvaXx2otjQCl6+bkVsNsoRl39gS38aRMAoCp5Ch
+ 209KzMuN4FiAubaguqZ4Hd9VKpi32VTdbIE8Wm75juBmRdP3P0wQoLgGVnOuULHiaM/Z00DTg
+ 21pM4wJJE7zc9ePhR4GRJg7Qiv21sB6eWxEmFpwrt5gXfDVj468/4kdUkoIUYX8pHohVpoJmA
+ 63uxjcqZSi46CxcYFH1pZiiufaYWMBY5XJiV1/CYmC2gKNunzTBh+yA3BH1NGaQuTqE5xqpwu
+ ZsC58eYf1qtSJBT82bMKenO7C+LMOGzNLFEcBxHNTgudxXEuG53vGPmAc3RWAf35vUik=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271406>
 
-On Sun, Jun 7, 2015 at 5:12 AM, Kevin Daudt <me@ikke.info> wrote:
-> From: Kevin Daudt <compufreak@gmail.com>
->
-> rebase learned to stash changes when it encounters a dirty work tree, but
-> git pull --rebase does not.
->
-> Only verify if the working tree is dirty when rebase.autostash is not
-> enabled.
->
-> Signed-off-by: Kevin Daudt <me@ikke.info>
+Hi Michael,
 
-Ehh? The sign-off does not match the author of the patch.
+On 2015-06-11 03:30, Michael Rappazzo wrote:
 
-> Helped-by: Paul Tan <pyokagan@gmail.com>
-> ---
->  git-pull.sh     |  5 ++++-
->  t/t5520-pull.sh | 12 ++++++++++++
->  2 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 0917d0d..f0a3b6e 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -239,7 +239,10 @@ test true = "$rebase" && {
->                         die "$(gettext "updating an unborn branch with changes added to the index")"
->                 fi
->         else
-> -               require_clean_work_tree "pull with rebase" "Please commit or stash them."
-> +               if [ $(git config --bool --get rebase.autostash || echo false) = false ]
-> +               then
-> +                       require_clean_work_tree "pull with rebase" "Please commit or stash them."
-> +               fi
->         fi
->         oldremoteref= &&
->         test -n "$curr_branch" &&
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 925ad49..d06119f 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -135,6 +135,18 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
->         test_cmp file expect
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index dc3133f..6d14315 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -740,10 +740,19 @@ collapse_todo_ids() {
+>  # "pick sha1 fixup!/squash! msg" appears in it so that the latter
+>  # comes immediately after the former, and change "pick" to
+>  # "fixup"/"squash".
+> +#
+> +# Note that if the config has specified a custom instruction format
+> +# each log message will be re-retrieved in order to normalize the 
+> +# autosquash arrangement
+>  rearrange_squash () {
+>  	# extract fixup!/squash! lines and resolve any referenced sha1's
+> -	while read -r pick sha1 message
+> +	while read -r pick sha1 todo_message
+>  	do
+> +		message=${todo_message}
+
+Why not just leave the `read -r pick sha1 message` as-is and simply write
+
+		# For "autosquash":
+		test -z "$format" ||
+		message="$(git log -n 1 --format="%s" $sha1)"
+
+here?
+
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 41370ab..1ef96eb 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -250,4 +250,37 @@ test_expect_success 'squash! fixup!' '
+>  	test_auto_fixup_fixup squash fixup
 >  '
->
-> +test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
-> +       test_config branch.to-rebase.rebase true &&
+>  
+> +test_expect_success 'autosquash with custom inst format matching on sha1' '
+> +	git reset --hard base &&
+> +	git config --add rebase.instructionFormat "[%an @ %ar] %s"  &&
+> +	echo 1 >file1 &&
+> +	git add -u &&
+> +	test_tick &&
+> +	git commit -m "squash! $(git rev-parse --short HEAD^)" &&
+> +	git tag final-shasquash-instFmt &&
+> +	test_tick &&
+> +	git rebase --autosquash -i HEAD^^^ &&
 
-Ok, though I wonder why not just a git pull --rebase...
+We usually write HEAD~3 instead of HEAD^^^...
 
-> +       test_config rebase.autostash true &&
-> +       git checkout HEAD -- file &&
-
-Why not git reset --hard before-rebase? If we don't reset HEAD, then
-how would we know if we actually did a rebase?
-
-> +       echo dirty > new_file &&
-
-style: echo dirty >new_file &&
-
-> +       git add new_file &&
-> +       git pull . copy &&
-> +       test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
-
-Okay, although it would be better to use "test_cmp_rev HEAD^ copy"
-because it prints out the hashes if they are different.
-
-> +       test $(cat new_file) = dirty &&
-
-"$(cat new_file)" should be quoted to prevent field splitting.
-
-> +       test "$(cat file)" = "modified again"
+> +	git log --oneline >actual &&
+> +	test_line_count = 3 actual &&
+> +	git diff --exit-code final-shasquash-instFmt &&
+> +	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+> +	test 1 = $(git cat-file commit HEAD^ | grep squash | wc -l)
 > +'
 > +
->  test_expect_success 'pull.rebase' '
->         git reset --hard before-rebase &&
->         test_config pull.rebase true &&
-> --
-> 2.4.2
+> +test_expect_success 'autosquash with custom inst format matching on comment' '
+> +	git reset --hard base &&
+> +	git config --add rebase.instructionFormat "[%an @ %ar] %s"  &&
+> +	echo 1 >file1 &&
+> +	git add -u &&
+> +	test_tick &&
+> +	git commit -m "squash! $(git log -n 1 --format=%s HEAD^)" &&
+> +	git tag final-comment-squash-instFmt &&
+> +	test_tick &&
+> +	git rebase --autosquash -i HEAD^^^ &&
+> +	git log --oneline >actual &&
+> +	test_line_count = 3 actual &&
+> +	git diff --exit-code final-comment-squash-instFmt &&
+> +	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+> +	test 1 = $(git cat-file commit HEAD^ | grep squash | wc -l)
+> +'
 
-Thanks,
-Paul
+That is copied almost verbatim, except for the commit message. The code would be easier to maintain if it did not repeat so much code e.g. by refactoring out a function that takes the commit message as a parameter.
+
+Ciao,
+Johannes
