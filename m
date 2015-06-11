@@ -1,113 +1,85 @@
-From: Gabriel <gabrielperren@gmail.com>
-Subject: Re: Minor issue: bad Spanish translation
-Date: Thu, 11 Jun 2015 12:12:17 -0300
-Message-ID: <1434035537.29259.0@smtp.gmail.com>
-References: <CALBDAwCWbfH-9089Kv=ZJD1wmf076_JCS4G8wzH3BQPhGoWRig@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow to control the namespace for replace refs
+Date: Thu, 11 Jun 2015 08:16:02 -0700
+Message-ID: <xmqq1thigtsd.fsf@gitster.dls.corp.google.com>
+References: <1433987235-17385-1-git-send-email-mh@glandium.org>
+	<xmqqlhfqhmil.fsf@gitster.dls.corp.google.com>
+	<20150611051339.GA3637@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 11 17:12:30 2015
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jun 11 17:16:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z349d-0004pz-UF
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:12:30 +0200
+	id 1Z34DD-00076J-23
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbbFKPMZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2015 11:12:25 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:32910 "EHLO
-	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752260AbbFKPMY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 11:12:24 -0400
-Received: by qkhg32 with SMTP id g32so4403545qkh.0
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 08:12:23 -0700 (PDT)
+	id S1752367AbbFKPQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 11:16:07 -0400
+Received: from mail-ig0-f196.google.com ([209.85.213.196]:34396 "EHLO
+	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752019AbbFKPQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 11:16:05 -0400
+Received: by igdh15 with SMTP id h15so2309797igd.1
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 08:16:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:subject:to:cc:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=4ViwYfqlFMQ3E6+lb8qe6tV8VUnGqPKybyjJHDMoz0c=;
-        b=YMgQVTtSmROMTqFftqY7/MyCqVRMSAEJuu068PSRy1xDA8HxbzDhoIV1ToQJt3fwrT
-         BL6wQHIUcb7iXQY9dE3k/4Z+/6vEsBIraPLGvlPH4N4VstjilCe9uBeSngNFkA5RCdYF
-         PJFS04ykxRxJc+UzqMtdj0RXijpMoCTRd84D5NQvDVKNYCRuo7y+bzzT/TpNifW3qD0Z
-         nuP8zBDc/mGb25HqGNEn6JcdOTMQSsWHWawxaa/Lykh8ncaJUYEnGEdgo2qbqWBZrI0Z
-         dt6u2F7PGHTnXtlFO7X5NZc2ohhM3hMGzP5ky2cBopheq4hMWCe1+TWj+r1uG7sfo5XG
-         EIdQ==
-X-Received: by 10.55.19.140 with SMTP id 12mr19793504qkt.64.1434035543402;
-        Thu, 11 Jun 2015 08:12:23 -0700 (PDT)
-Received: from [192.168.1.100] ([181.170.86.23])
-        by mx.google.com with ESMTPSA id u95sm364080qge.16.2015.06.11.08.12.21
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=PqLCtyGWhHjqtbtHJtWH6oANa6JkHVXXkzangBGVr4U=;
+        b=SpdKWcs5Z/qe9+rI3jHRDnI9JHxTZkLHYH2sIktAzO74irhud5FnQy+jDDEGpTc/y9
+         iAM1lqTFLzXK3s2TD6JC9K+wE4DuZJ9kpKYBj5FqCtIfi7T2bw4YIZLv1AY4F5llpf4I
+         RStqCbImV1mZ27tHOJiSc0F/HL4aYxggxFK5YSScRRtAm7Hror/0+lpV78V52wIKNeqH
+         ZhABVOlio+hlaxlzHGiQECfAeT8QIK9ZvhBYeo04ezvaCliGPxKKNE17ljyaim3Jk2b7
+         Y51uuYaZI0dRDeboXVatUC0vu2i9ncUSoo9HNxnml2A8kxkSnBuRPExpdCijxwBbrXpy
+         +XZw==
+X-Received: by 10.50.6.76 with SMTP id y12mr13712308igy.31.1434035764520;
+        Thu, 11 Jun 2015 08:16:04 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
+        by mx.google.com with ESMTPSA id o9sm540327ioe.35.2015.06.11.08.16.03
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 11 Jun 2015 08:12:22 -0700 (PDT)
-In-Reply-To: <CALBDAwCWbfH-9089Kv=ZJD1wmf076_JCS4G8wzH3BQPhGoWRig@mail.gmail.com>
-X-Mailer: geary/0.8.3
+        Thu, 11 Jun 2015 08:16:03 -0700 (PDT)
+In-Reply-To: <20150611051339.GA3637@glandium.org> (Mike Hommey's message of
+	"Thu, 11 Jun 2015 14:13:40 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271416>
 
-Hi Johannes,
+Mike Hommey <mh@glandium.org> writes:
 
-I tried following your instructions but I can locate the sentence where=
-=20
-the bad translation is. Please see here:=20
-http://stackoverflow.com/questions/30783818/find-instance-of-string-in-=
-git-core-with-git-grep
+> I do agree that this is all confusing, but allow me to point out that
+> it's already plenty confusing: "namespace" is a term that has been used to
+> designate a generic kind of namespace *and* refs/namespaces. See for
+> example:
+>
+> https://github.com/git/git/blob/master/Documentation/git-describe.txt#L39
+> https://github.com/git/git/blob/master/Documentation/git-fetch.txt#L113
+> https://github.com/git/git/blob/master/Documentation/git-filter-branch.txt#L36
+> (note how this one is specifically about refs/replace/)
+> there are many more.
 
-Any advice?
+"One more breakage does not hurt" is not something we want to see.
 
-Cheers,
-Gabriel
+> _REF kind of implies _one_ specific ref....
 
-El jue, 11 de jun 2015 a las 12:10 , Gabriel Perren=20
-<gabrielperren@gmail.com> escribi=C3=B3:
-> Hi Johannes,
->=20
-> I tried following your instructions but I can locate the sentence=20
-> where the bad translation is. Please see here:=20
-> http://stackoverflow.com/questions/30783818/find-instance-of-string-i=
-n-git-core-with-git-grep
->=20
-> Any advice?
->=20
-> Cheers,
-> Gabriel
->=20
-> 2015-06-10 11:57 GMT-03:00 Johannes Schindelin=20
-> <johannes.schindelin@gmx.de>:
->> Hi Gabriel,
->>=20
->> On 2015-06-10 16:51, Gabriel wrote:
->> > Where it says:
->> >
->> > Su rama est=C3=A1 delante de <<origin/master<< para 6 commits.
->> >
->> > it should say:
->> >
->> > Su rama est=C3=A1 delante de <<origin/master<< por 6 commits.
->> >
->> > Notice "para" --> "por".
->>=20
->> Good catch.
->>=20
->> You could earn eternal fame by cloning Git itself (e.g. via `git=20
->> clone https://github.com/git/git), finding the respective files with=
-=20
->> `git grep`, patching them, making a commit and following the guide=20
->> lines in Documentation/SubmittingPatches to contribute the fix via=20
->> this mailing list[*1*]. That way, you would enter the illustrious=20
->> group of core Git developers.
->>=20
->> Ciao,
->> Johannes
->>=20
->> Footnote *1*: If you are more comfortable with GitHub's Pull=20
->> Requests than with sending patches via email, you could use=20
->> https://submitgit.herokuapp.com/ to turn a Pull Request into an=20
->> appropriately formatted mail to the mailing list.
->=20
+I thought about suggesting GIT_REPLACE_REFS for that exact reason,
+but decided against it, because (1) if you are using replace, then
+you know you are not using a single ref but a group of refs in a
+single hierarchy already, and (2) if you do not know what replace
+and notes are, GIT_REPLACE_REFS and GIT_NOTES_REF look just being
+inconsistent (even though the intention of the difference is to be
+more logical).  s/S/_BASE/ would make that better, though.
+
+> As for exposing a pref, I'm not entirely sure it makes sense to.
+
+I don't see an immediate need for it, and it is easy to add later,
+so let's limit the scope of the initial adoption of the feature.
+
+Thanks.
