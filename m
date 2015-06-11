@@ -1,139 +1,116 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP v2 08/19] am: apply patch with git-apply
-Date: Thu, 11 Jun 2015 18:21:54 +0800
-Message-ID: <1434018125-31804-9-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/WIP v2 10/19] am: refresh the index at start
+Date: Thu, 11 Jun 2015 18:21:56 +0800
+Message-ID: <1434018125-31804-11-git-send-email-pyokagan@gmail.com>
 References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 12:22:47 2015
+X-From: git-owner@vger.kernel.org Thu Jun 11 12:22:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2zdF-0007ox-Vc
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 12:22:46 +0200
+	id 1Z2zdL-0007sw-VK
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 12:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbbFKKWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 06:22:43 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35487 "EHLO
+	id S1752823AbbFKKWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 06:22:50 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:35999 "EHLO
 	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752759AbbFKKWl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 06:22:41 -0400
-Received: by pacyx8 with SMTP id yx8so1835430pac.2
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 03:22:40 -0700 (PDT)
+	with ESMTP id S1752841AbbFKKWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 06:22:45 -0400
+Received: by pabqy3 with SMTP id qy3so1789577pab.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 03:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sbNrVODHG5w5DI9bLZCYf1j4Bd1H/u9zolnKH8CtT+g=;
-        b=FiK1hmyFs+TDOvlf1pYDi8fPo4Mp35+yziY4JjK9ZrOQvUiUtLlaJq4ZdX3F83sx18
-         AuoaVwajsqpllqpeDWq9/pJExqCOCb1Vcwi0lnnm/1yShZi1usZFPk6VvFNy53aWyUOj
-         ZnJBFW0gRXbCb9wBuE+zdLMk/pTe5hzl4+5oG2SERO3KVKjNskbrHQD6wyJ7LwdmBJIl
-         Yvw+NZpKtS3sSvtftWx8eUPNMY6uC+xfOSy5i+ReZIoog+JLcZfrNxxIqy0+Fg+ECNl3
-         gugzAlOK3svFRRw5ctCjlAWhcRW3GVo2zevZQdyWT9fr9r2QDp7aMptca2BsfQ8rW6it
-         Dxgw==
-X-Received: by 10.68.221.6 with SMTP id qa6mr13786151pbc.62.1434018160376;
-        Thu, 11 Jun 2015 03:22:40 -0700 (PDT)
+        bh=XZvBEU6IpYpRYFICaLKu50q5AAIlsxKb3Xvtv4BHTUs=;
+        b=XLXEk738gxq3lvwaE3gnO5/lk3hUeLxUL7T/d3WAvPsk7UBCtmrHNfz9Cnv0XRUc6+
+         9YsZ1itve6waWPkjW6x72aoZ28f0k8gnvc1Ra/1tnpCxFw9z3PrKu7eNimhIOE5nxwk2
+         vpW8OPGfYNLbpHn3t8+ahkG8qFr9k/uPfXYIpzwwkjIT+9DjWstJUdpu0y2EK/kSia78
+         jazmGgn+8gMuXFlDDqOco1fpRyfNBYq2PC4JjmokxtlvbfrNTYHalgVNvLD8kZzOUA8f
+         2Not9SsJWOu2QHLR4hZyg4/1WP2kxwjVZxRTg8at2LZiDnh6GLuGDkbvAvT9PJKs48k5
+         5yjw==
+X-Received: by 10.70.133.36 with SMTP id oz4mr13805461pdb.65.1434018165408;
+        Thu, 11 Jun 2015 03:22:45 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id q4sm300488pdo.42.2015.06.11.03.22.36
+        by mx.google.com with ESMTPSA id q4sm300488pdo.42.2015.06.11.03.22.43
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Jun 2015 03:22:38 -0700 (PDT)
+        Thu, 11 Jun 2015 03:22:44 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271389>
 
-Implement applying the patch to the index using git-apply.
+If a file is unchanged but stat-dirty, git-apply may erroneously fail to
+apply patches, thinking that they conflict with a dirty working tree.
+
+As such, since 2a6f08a (am: refresh the index at start and --resolved,
+2011-08-15), git-am will refresh the index before applying patches.
+Re-implement this behavior.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ builtin/am.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index a1db474..b725a74 100644
+index ecc6d29..417bfde 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -27,6 +27,18 @@ static int is_empty_file(const char *filename)
- 	return !st.st_size;
- }
+@@ -13,6 +13,7 @@
+ #include "cache-tree.h"
+ #include "refs.h"
+ #include "commit.h"
++#include "lockfile.h"
  
-+/**
-+ * Returns the first line of msg
-+ */
-+static const char *firstline(const char *msg)
-+{
-+	static struct strbuf sb = STRBUF_INIT;
-+
-+	strbuf_reset(&sb);
-+	strbuf_add(&sb, msg, strchrnul(msg, '\n') - msg);
-+	return sb.buf;
-+}
-+
- enum patch_format {
- 	PATCH_FORMAT_UNKNOWN = 0,
- 	PATCH_FORMAT_MBOX
-@@ -512,6 +524,29 @@ static int parse_patch(struct am_state *state, const char *patch)
- 	return 0;
- }
- 
-+/*
-+ * Applies current patch with git-apply. Returns 0 on success, -1 otherwise.
-+ */
-+static int run_apply(const struct am_state *state)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+
-+	cp.git_cmd = 1;
-+
-+	argv_array_push(&cp.args, "apply");
-+	argv_array_push(&cp.args, "--index");
-+	argv_array_push(&cp.args, am_path(state, "patch"));
-+
-+	if (run_command(&cp))
-+		return -1;
-+
-+	/* Reload index as git-apply will have modified it. */
-+	discard_cache();
-+	read_cache();
-+
-+	return 0;
-+}
-+
  /**
-  * Applies all queued patches.
+  * Returns 1 if the file is empty or does not exist, 0 otherwise.
+@@ -457,6 +458,20 @@ static const char *msgnum(const struct am_state *state)
+ }
+ 
+ /**
++ * Refresh and write index.
++ */
++static void refresh_and_write_cache(void)
++{
++	static struct lock_file lock_file;
++
++	hold_locked_index(&lock_file, 1);
++	refresh_cache(REFRESH_QUIET);
++	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++		die(_("unable to write index file"));
++	rollback_lock_file(&lock_file);
++}
++
++/**
+  * Parses `patch` using git-mailinfo. state->msg will be set to the patch
+  * message. state->author_name, state->author_email, state->author_date will be
+  * set to the patch author's name, email and date respectively. The patch's
+@@ -597,6 +612,8 @@ static void do_commit(const struct am_state *state)
   */
-@@ -529,7 +564,25 @@ static void am_run(struct am_state *state)
- 		write_author_script(state);
- 		write_file(am_path(state, "final-commit"), 1, "%s", state->msg.buf);
+ static void am_run(struct am_state *state)
+ {
++	refresh_and_write_cache();
++
+ 	while (state->cur <= state->last) {
+ 		const char *patch = am_path(state, msgnum(state));
  
--		/* TODO: Patch application not implemented yet */
-+		printf_ln(_("Applying: %s"), firstline(state->msg.buf));
-+
-+		if (run_apply(state) < 0) {
-+			int value;
-+
-+			printf_ln(_("Patch failed at %s %s"), msgnum(state),
-+					firstline(state->msg.buf));
-+
-+			if (!git_config_get_bool("advice.amworkdir", &value) && !value)
-+				printf_ln(_("The copy of the patch that failed is found in: %s"),
-+						am_path(state, "patch"));
-+
-+			exit(128);
-+		}
-+
-+		/*
-+		 * TODO: After the patch has been applied to the index with
-+		 * git-apply, we need to make commit as well.
-+		 */
+@@ -678,6 +695,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
  
- next:
- 		am_next(state);
+ 	argc = parse_options(argc, argv, prefix, am_options, am_usage, 0);
+ 
++	if (read_index_preload(&the_index, NULL) < 0)
++		die(_("failed to read the index"));
++
+ 	if (am_in_progress(&state))
+ 		am_load(&state);
+ 	else {
 -- 
 2.1.4
