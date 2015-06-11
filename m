@@ -1,88 +1,94 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v7 02/12] for-each-ref: clean up code
-Date: Thu, 11 Jun 2015 21:39:53 +0530
-Message-ID: <1434039003-10928-2-git-send-email-karthik.188@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 11/12] for-each-ref: introduce filter_refs()
+Date: Thu, 11 Jun 2015 19:00:12 +0200
+Message-ID: <vpq1thixjs3.fsf@anie.imag.fr>
 References: <5579B253.4020804@gmail.com>
- <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 18:28:56 2015
+	<1434039003-10928-1-git-send-email-karthik.188@gmail.com>
+	<1434039003-10928-11-git-send-email-karthik.188@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 19:00:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z35Lb-0000dP-6F
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 18:28:55 +0200
+	id 1Z35q2-0002dv-E8
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 19:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754704AbbFKQ2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 12:28:50 -0400
-Received: from mail-pd0-f196.google.com ([209.85.192.196]:35983 "EHLO
-	mail-pd0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752716AbbFKQ2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 12:28:49 -0400
-Received: by pdev10 with SMTP id v10so2258836pde.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 09:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nagjmFpy9WL+g9mn9q/lpu6se4cWeH1r8xiuZy0fJxQ=;
-        b=nIG++5bonYU7MIf3z9rhHb940jO9BAFWgHnE41xZ3Yl2s/hp00D+PP79yaFPCRoQzm
-         8wygeX84V02B/H/zjH/+8k9dqSUc+B4rpIif1mgqUwARei8BumIz94UpcSdt+LgPSjfQ
-         Wd4X6NqpLjMlRY+1/bAmxm66ka9/XjPKNG7tqvd9PQfBKlU77VN2ABnb+Uy19FOoBOWR
-         AZ3oF1xlUBJpckOwYzpzlsF+EaNuJ+OCu1QbrbKJ9I86u82TvExEPzHQ3A2BszFhdj5H
-         OkL8CKPYvv8b3zTHpX+M7stEmeLGRSRlSegsiuQcJP+QgRu/EgFacQSPK8alcOwd+7ji
-         +TAw==
-X-Received: by 10.66.65.134 with SMTP id x6mr15534187pas.129.1434039015749;
-        Thu, 11 Jun 2015 09:10:15 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id f4sm1132981pdc.95.2015.06.11.09.10.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Jun 2015 09:10:15 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2
-In-Reply-To: <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
+	id S1753624AbbFKRAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 13:00:17 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34102 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750958AbbFKRAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 13:00:16 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5BH09WV031205
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 11 Jun 2015 19:00:09 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5BH0COm016320;
+	Thu, 11 Jun 2015 19:00:12 +0200
+In-Reply-To: <1434039003-10928-11-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Thu, 11 Jun 2015 21:40:02 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 11 Jun 2015 19:00:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5BH09WV031205
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434646810.5211@73M/jzpT/wHok2yAVYWHxg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271438>
 
-In 'grab_single_ref()' remove the extra count variable 'cnt' and
-use the variable 'grab_cnt' of structure 'grab_ref_cbdata' directly
-instead.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/for-each-ref.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+> +	filter_refs(&array, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN, &filter);
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 67c8b62..0dd2df2 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -897,7 +897,6 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
- {
- 	struct grab_ref_cbdata *cb = cb_data;
- 	struct refinfo *ref;
--	int cnt;
- 
- 	if (flag & REF_BAD_NAME) {
- 		  warning("ignoring ref with broken name %s", refname);
-@@ -914,10 +913,8 @@ static int grab_single_ref(const char *refname, const struct object_id *oid,
- 	 */
- 	ref = new_refinfo(refname, oid->hash, flag);
- 
--	cnt = cb->grab_cnt;
--	REALLOC_ARRAY(cb->grab_array, cnt + 1);
--	cb->grab_array[cnt++] = ref;
--	cb->grab_cnt = cnt;
-+	REALLOC_ARRAY(cb->grab_array, cb->grab_cnt + 1);
-+	cb->grab_array[cb->grab_cnt++] = ref;
- 	return 0;
- }
- 
+I think it is more common to have options at the end, so I'd write it as
+
+filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+
+(changing the declaration too, obviously)
+
+I really like the way cmd_for_each_ref looks like now.
+
+> @@ -905,6 +905,28 @@ void ref_array_clear(struct ref_array *array)
+>  	array->nr = array->alloc = 0;
+>  }
+>  
+> +/*
+> + * API for filtering a set of refs. Based on the type of refs the user
+> + * has requested, we iterate through those refs and apply filters
+> + * as per the given ref_filter structure and finally store the
+> + * filtered refs in the ref_array structure.
+> + */
+> +int filter_refs(struct ref_array *array, unsigned int type, struct ref_filter *filter)
+> +{
+> +	struct ref_filter_cbdata ref_cbdata;
+> +
+> +	ref_cbdata.array = array;
+> +	ref_cbdata.filter = filter;
+> +
+> +	if (type & (FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN))
+> +		return for_each_rawref(ref_filter_handler, &ref_cbdata);
+> +	else if (type & FILTER_REFS_ALL)
+> +		return for_each_ref(ref_filter_handler, &ref_cbdata);
+> +	else
+> +		die("filter_refs: invalid type");
+> +	return 0;
+> +}
+
+I thought you would make a helper function that would return a pointer
+to either for_each_rawref or for_each_ref (or another later), but that
+would probably be overkill.
+
 -- 
-2.4.2
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
