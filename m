@@ -1,215 +1,67 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 3/8] Convert struct ref to use object_id.
-Date: Thu, 11 Jun 2015 17:41:17 +0200
-Message-ID: <5579AC1D.6000606@alum.mit.edu>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net> <1433867316-663554-4-git-send-email-sandals@crustytoothpaste.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Minor issue: bad Spanish translation
+Date: Thu, 11 Jun 2015 08:47:21 -0700
+Message-ID: <xmqqsi9yfdrq.fsf@gitster.dls.corp.google.com>
+References: <CALBDAwCWbfH-9089Kv=ZJD1wmf076_JCS4G8wzH3BQPhGoWRig@mail.gmail.com>
+	<1434035537.29259.0@smtp.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?B?eQ==?= 
-	<pclouds@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 17:41:45 2015
+To: Gabriel <gabrielperren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 17:47:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z34bt-0005Ph-Oo
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:41:42 +0200
+	id 1Z34hX-0000U6-62
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319AbbFKPli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 11:41:38 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:45123 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752046AbbFKPlg (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 11:41:36 -0400
-X-AuditID: 1207440d-f79c76d000000bf7-08-5579ac200ef9
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 12.C1.03063.02CA9755; Thu, 11 Jun 2015 11:41:20 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97261.dip0.t-ipconnect.de [79.201.114.97])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5BFfInV000588
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 11 Jun 2015 11:41:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <1433867316-663554-4-git-send-email-sandals@crustytoothpaste.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqKuwpjLU4MBiK4uuK91MFt1T3jJa
-	/GjpYbZom/mDyYHFY/nNv0weO2fdZfd41ruH0ePzJrkAlihum6TEkrLgzPQ8fbsE7oz/s+6z
-	F/xUr3i9o6aB8YlcFyMnh4SAiUT/riPMELaYxIV769m6GLk4hAQuM0pcn9rBCpIQEjjPJPFg
-	mgOIzSugLTF1RhtLFyMHB4uAqsTyGfwgYTYBXYlFPc1MIGFRgSCJ1y9zIaoFJU7OfMICYosI
-	eEnMfzQDbCKzQLXEv2tf2UBsYQFbif6f7YwQa/sZJR7tvQbWwCngJ/FuYyszyExmAXWJ9fOE
-	IHrlJZq3zmaewCgwC8mKWQhVs5BULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6SXm1mi
-	l5pSuokREsi8Oxj/r5M5xCjAwajEw1txoiJUiDWxrLgy9xCjJAeTkihvtmtlqBBfUn5KZUZi
-	cUZ8UWlOavEhRgkOZiUR3s3LgHK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZ
-	GQ4OJQlekdVAjYJFqempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgCI0vBsYoSIoHaK8s
-	SDtvcUFiLlAUovUUo6KUOO/7VUAJAZBERmke3FhYenrFKA70pTDvWZAqHmBqg+t+BTSYCWjw
-	QuZykMEliQgpqQbGJPWkXUd/30j6dKcnxCXzxKriSbEvTu14dmmnVKGnYPmuNs6rD+9ucbx7
-	N6B2/oZnBo88qy291t63TZ+s+zF45+mu6zz7fJW1av2qLhh8evQx3ft3ks/JCzVf 
+	id S1753595AbbFKPr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 11:47:26 -0400
+Received: from mail-ie0-f195.google.com ([209.85.223.195]:36431 "EHLO
+	mail-ie0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754433AbbFKPrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 11:47:24 -0400
+Received: by ierx19 with SMTP id x19so2799913ier.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 08:47:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=NRJmZYrZRsHWNq1squSQ/E099IZ8xNfadb0J7FfeV78=;
+        b=YiUU7E9s91eI3mVohRFSaReVctVM+tFlBQr+JRkBW08LQXsBVKsRPV/8LrkZdcBi7L
+         hr3ymAS4TYvcocqB4Y/o4CXJBfXj6syC/031Zk5qnxgIzsz1G0qcDtQ6/qMFe4p7Yi+P
+         9AoRZNuMQKdx9K4eotndix2RANtjcXlpjk2lo42n9ceAJU3dvcAKpbJvF+H4Yd5m/RuS
+         mahFWw3A6cmeoTs/D3b0l2fK1cqaa7uMUtmIQRmGRJaBlJ6pxkBorQ1x/YhiPGe6N0LW
+         EBFAH+SRnvWn9IQ023apMFxOBBe0RQYEbcxDaC/2AqisTs7uMBpThcW06ePYFF+mfeW8
+         AeGw==
+X-Received: by 10.107.39.209 with SMTP id n200mr12168121ion.59.1434037643271;
+        Thu, 11 Jun 2015 08:47:23 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
+        by mx.google.com with ESMTPSA id k81sm590716iod.31.2015.06.11.08.47.22
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Jun 2015 08:47:22 -0700 (PDT)
+In-Reply-To: <1434035537.29259.0@smtp.gmail.com> (Gabriel's message of "Thu,
+	11 Jun 2015 12:12:17 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271421>
 
-I visually inspected patches 1 and 2 without finding any problems.
+Gabriel <gabrielperren@gmail.com> writes:
 
-Regarding this patch, I saw a few functions where you could convert
-local variables to "struct object_id" and then change function calls
-like hashcpy() to oidcpy(). See below. I'm not sure if it makes sense to
-do that in this same patch.
+> Hi Johannes,
+>
+> I tried following your instructions but I can locate the sentence
+> where the bad translation is. Please see here:
+> http://stackoverflow.com/questions/30783818/find-instance-of-string-in-git-core-with-git-grep
+>
+> Any advice?
 
-For that matter, it seems to me that it should be possible to change
-*all* local
-
-    unsigned char $variable[20];
-
-to
-
-    struct object_id $variable;
-
-without having to change any external interfaces. I wonder whether it
-would be advisable to make that change early in this transition? It
-would have the advantage that during later refactorings, where, e.g., a
-function needs a "struct object_id *" parameter, you would often already
-have one handy.
-
-Michael
-
-On 06/09/2015 06:28 PM, brian m. carlson wrote:
-> Use struct object_id in three fields in struct ref and convert all the
-> necessary places that use it.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/clone.c        | 16 +++++++-------
->  builtin/fetch-pack.c   |  4 ++--
->  builtin/fetch.c        | 50 +++++++++++++++++++++----------------------
->  builtin/ls-remote.c    |  2 +-
->  builtin/receive-pack.c |  2 +-
->  builtin/remote.c       | 12 +++++------
->  connect.c              |  2 +-
->  fetch-pack.c           | 18 ++++++++--------
->  http-push.c            | 46 +++++++++++++++++++--------------------
->  http.c                 |  2 +-
->  remote-curl.c          | 10 ++++-----
->  remote.c               | 58 +++++++++++++++++++++++++-------------------------
->  remote.h               |  6 +++---
->  send-pack.c            | 16 +++++++-------
->  transport-helper.c     | 18 ++++++++--------
->  transport.c            | 32 ++++++++++++++--------------
->  transport.h            |  8 +++----
->  walker.c               |  2 +-
->  18 files changed, 152 insertions(+), 152 deletions(-)
-> 
-> [...]
-> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-> index 4a6b340..19215b3 100644
-> --- a/builtin/fetch-pack.c
-> +++ b/builtin/fetch-pack.c
-> @@ -17,7 +17,7 @@ static void add_sought_entry_mem(struct ref ***sought, int *nr, int *alloc,
->  	unsigned char sha1[20];
->  
->  	if (namelen > 41 && name[40] == ' ' && !get_sha1_hex(name, sha1)) {
-> -		hashcpy(ref->old_sha1, sha1);
-> +		hashcpy(ref->old_oid.hash, sha1);
->  		name += 41;
->  		namelen -= 41;
->  	}
-
-Variable "sha1" in this function could become "struct object_id".
-
-> [...]
-> diff --git a/connect.c b/connect.c
-> index c0144d8..f8b10eb 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -165,7 +165,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
->  		if (!check_ref(name, flags))
->  			continue;
->  		ref = alloc_ref(buffer + 41);
-> -		hashcpy(ref->old_sha1, old_sha1);
-> +		hashcpy(ref->old_oid.hash, old_sha1);
->  		*list = ref;
->  		list = &ref->next;
->  		got_at_least_one_head = 1;
-
-old_sha1 in this function could become "struct object_id". Also, this
-function has a few "20" and "41" and "42" hard-coded literals.
-
-> [...]
-> diff --git a/remote-curl.c b/remote-curl.c
-> index af7b678..80cb4c7 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> [...]
-> @@ -814,7 +814,7 @@ static void parse_fetch(struct strbuf *buf)
->  				die("protocol error: expected sha/ref, got %s'", p);
->  
->  			ref = alloc_ref(name);
-> -			hashcpy(ref->old_sha1, old_sha1);
-> +			hashcpy(ref->old_oid.hash, old_sha1);
->  
->  			*list = ref;
->  			list = &ref->next;
-
-old_sha1 in this code block could be converted to "struct object_id".
-
-> diff --git a/remote.c b/remote.c
-> index 26504b7..706d2fb 100644
-> --- a/remote.c
-> +++ b/remote.c
-> [...]
-> @@ -1131,7 +1131,7 @@ static int try_explicit_object_name(const char *name,
->  
->  	if (match) {
->  		*match = alloc_ref(name);
-> -		hashcpy((*match)->new_sha1, sha1);
-> +		hashcpy((*match)->new_oid.hash, sha1);
->  	}
->  	return 0;
->  }
-
-The "sha1" variable in this function could become a "struct object_id".
-
-> [...]
-> @@ -2181,7 +2181,7 @@ static int one_local_ref(const char *refname, const struct object_id *oid,
->  
->  	len = strlen(refname) + 1;
->  	ref = xcalloc(1, sizeof(*ref) + len);
-> -	hashcpy(ref->new_sha1, oid->hash);
-> +	hashcpy(ref->new_oid.hash, oid->hash);
-
-This could become oidcopy().
-
->  	memcpy(ref->name, refname, len);
->  	**local_tail = ref;
->  	*local_tail = &ref->next;
-> [...]
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 5d99a6b..4ca3e80 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> [...]
-> @@ -883,7 +883,7 @@ static int push_refs_with_export(struct transport *transport,
->  		if (private && !get_sha1(private, sha1)) {
->  			strbuf_addf(&buf, "^%s", private);
->  			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
-> -			hashcpy(ref->old_sha1, sha1);
-> +			hashcpy(ref->old_oid.hash, sha1);
->  		}
->  		free(private);
->  
-
-sha1 in this function could become "struct object_id".
-
-> [...]
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Perhaps you are seeing a bad translation in software that is not
+ours?  I do not think we have es.po for the Git itself.  gitk has
+one but I do not think it gives that message.
