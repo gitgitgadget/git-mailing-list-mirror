@@ -1,117 +1,215 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation clarification on git-checkout regarding ours/theirs
-Date: Thu, 11 Jun 2015 08:37:27 -0700
-Message-ID: <xmqqwpzafe88.fsf@gitster.dls.corp.google.com>
-References: <1434022766-45397-1-git-send-email-simon.eu@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 3/8] Convert struct ref to use object_id.
+Date: Thu, 11 Jun 2015 17:41:17 +0200
+Message-ID: <5579AC1D.6000606@alum.mit.edu>
+References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net> <1433867316-663554-4-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, "Simon A. Eugster" <simon.eugster@eps.ch>
-To: "Simon A. Eugster" <simon.eu@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 17:37:36 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?B?eQ==?= 
+	<pclouds@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 17:41:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z34Xv-0002un-Gc
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:37:35 +0200
+	id 1Z34bt-0005Ph-Oo
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 17:41:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbbFKPhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 11:37:31 -0400
-Received: from mail-ie0-f194.google.com ([209.85.223.194]:36664 "EHLO
-	mail-ie0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750698AbbFKPha (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 11:37:30 -0400
-Received: by ierx19 with SMTP id x19so2717258ier.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 08:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=8qROeUYX57aRFxSHRdzplTvKZXQwN2EazTV0Lqg70BY=;
-        b=lvKr6mBNeqHwhzgS5IVquQvBFTGmNu3U1Oi3926QKZSBq29GquEsrpgDXIwhQGgCNO
-         sH19g5ux8ae3MXhe176SPVGA7Yk4ASq5U7ttkArdjb4zTK6yksFjKzf47uNepuOHaIJ0
-         h4a59Lkna/jXXqNd9X4zEmZqlMzjOLKkkyVXBx0wrGeORe6p//mzImysTgrVK9lSWvy2
-         V4PxsL+D/fLp76BzvDBCVLGWqCztOnrpTIJhUNc9YFyjt3oO4hNFH9pqkz70punGZk4c
-         lmRH09QQDusyD8BJ6b2Jl0+jI9l39UhpTQaThOlEKv+yBytCqHff3oF/DAwviSofIKGt
-         k8aQ==
-X-Received: by 10.107.169.157 with SMTP id f29mr12146093ioj.74.1434037049700;
-        Thu, 11 Jun 2015 08:37:29 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
-        by mx.google.com with ESMTPSA id j20sm742062igt.16.2015.06.11.08.37.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 11 Jun 2015 08:37:29 -0700 (PDT)
-In-Reply-To: <1434022766-45397-1-git-send-email-simon.eu@gmail.com> (Simon
-	A. Eugster's message of "Thu, 11 Jun 2015 13:39:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752319AbbFKPli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 11:41:38 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:45123 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752046AbbFKPlg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 11:41:36 -0400
+X-AuditID: 1207440d-f79c76d000000bf7-08-5579ac200ef9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 12.C1.03063.02CA9755; Thu, 11 Jun 2015 11:41:20 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97261.dip0.t-ipconnect.de [79.201.114.97])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5BFfInV000588
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 11 Jun 2015 11:41:19 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <1433867316-663554-4-git-send-email-sandals@crustytoothpaste.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqKuwpjLU4MBiK4uuK91MFt1T3jJa
+	/GjpYbZom/mDyYHFY/nNv0weO2fdZfd41ruH0ePzJrkAlihum6TEkrLgzPQ8fbsE7oz/s+6z
+	F/xUr3i9o6aB8YlcFyMnh4SAiUT/riPMELaYxIV769m6GLk4hAQuM0pcn9rBCpIQEjjPJPFg
+	mgOIzSugLTF1RhtLFyMHB4uAqsTyGfwgYTYBXYlFPc1MIGFRgSCJ1y9zIaoFJU7OfMICYosI
+	eEnMfzQDbCKzQLXEv2tf2UBsYQFbif6f7YwQa/sZJR7tvQbWwCngJ/FuYyszyExmAXWJ9fOE
+	IHrlJZq3zmaewCgwC8mKWQhVs5BULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6SXm1mi
+	l5pSuokREsi8Oxj/r5M5xCjAwajEw1txoiJUiDWxrLgy9xCjJAeTkihvtmtlqBBfUn5KZUZi
+	cUZ8UWlOavEhRgkOZiUR3s3LgHK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZ
+	GQ4OJQlekdVAjYJFqempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgCI0vBsYoSIoHaK8s
+	SDtvcUFiLlAUovUUo6KUOO/7VUAJAZBERmke3FhYenrFKA70pTDvWZAqHmBqg+t+BTSYCWjw
+	QuZykMEliQgpqQbGJPWkXUd/30j6dKcnxCXzxKriSbEvTu14dmmnVKGnYPmuNs6rD+9ucbx7
+	N6B2/oZnBo88qy291t63TZ+s+zF45+mu6zz7fJW1av2qLhh8evQx3ft3ks/JCzVf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271420>
 
-"Simon A. Eugster" <simon.eu@gmail.com> writes:
+I visually inspected patches 1 and 2 without finding any problems.
 
-> From: "Simon A. Eugster" <simon.eugster@eps.ch>
->
-> Signed-off-by: Simon A. Eugster <simon.eugster@eps.ch>
+Regarding this patch, I saw a few functions where you could convert
+local variables to "struct object_id" and then change function calls
+like hashcpy() to oidcpy(). See below. I'm not sure if it makes sense to
+do that in this same patch.
+
+For that matter, it seems to me that it should be possible to change
+*all* local
+
+    unsigned char $variable[20];
+
+to
+
+    struct object_id $variable;
+
+without having to change any external interfaces. I wonder whether it
+would be advisable to make that change early in this transition? It
+would have the advantage that during later refactorings, where, e.g., a
+function needs a "struct object_id *" parameter, you would often already
+have one handy.
+
+Michael
+
+On 06/09/2015 06:28 PM, brian m. carlson wrote:
+> Use struct object_id in three fields in struct ref and convert all the
+> necessary places that use it.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  Documentation/git-checkout.txt | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index d263a56..5c3ef86 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -115,7 +115,11 @@ entries; instead, unmerged entries are ignored.
->  --ours::
->  --theirs::
->  	When checking out paths from the index, check out stage #2
-> -	('ours') or #3 ('theirs') for unmerged paths.
-> +	('ours', HEAD) or #3 ('theirs', MERGE_HEAD) for unmerged paths.
-> ++
-> +After a `git pull --rebase`, for example, 'ours' points to the remote
-> +version and 'theirs' points to the local version. See linkgit:git-merge[1]
-> +for details about stages #2 and #3.
+>  builtin/clone.c        | 16 +++++++-------
+>  builtin/fetch-pack.c   |  4 ++--
+>  builtin/fetch.c        | 50 +++++++++++++++++++++----------------------
+>  builtin/ls-remote.c    |  2 +-
+>  builtin/receive-pack.c |  2 +-
+>  builtin/remote.c       | 12 +++++------
+>  connect.c              |  2 +-
+>  fetch-pack.c           | 18 ++++++++--------
+>  http-push.c            | 46 +++++++++++++++++++--------------------
+>  http.c                 |  2 +-
+>  remote-curl.c          | 10 ++++-----
+>  remote.c               | 58 +++++++++++++++++++++++++-------------------------
+>  remote.h               |  6 +++---
+>  send-pack.c            | 16 +++++++-------
+>  transport-helper.c     | 18 ++++++++--------
+>  transport.c            | 32 ++++++++++++++--------------
+>  transport.h            |  8 +++----
+>  walker.c               |  2 +-
+>  18 files changed, 152 insertions(+), 152 deletions(-)
+> 
+> [...]
+> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> index 4a6b340..19215b3 100644
+> --- a/builtin/fetch-pack.c
+> +++ b/builtin/fetch-pack.c
+> @@ -17,7 +17,7 @@ static void add_sought_entry_mem(struct ref ***sought, int *nr, int *alloc,
+>  	unsigned char sha1[20];
+>  
+>  	if (namelen > 41 && name[40] == ' ' && !get_sha1_hex(name, sha1)) {
+> -		hashcpy(ref->old_sha1, sha1);
+> +		hashcpy(ref->old_oid.hash, sha1);
+>  		name += 41;
+>  		namelen -= 41;
+>  	}
 
-I think it is a good idea to mention that it takes a switching of
-viewpoint [*1*] when reading ours/theirs during "git rebase" (and by
-extension "git pull --rebase").
+Variable "sha1" in this function could become "struct object_id".
 
-But I am afraid that it may be detrimental to say 'for example' and
-mentioning _only that_ for two reasons:
+> [...]
+> diff --git a/connect.c b/connect.c
+> index c0144d8..f8b10eb 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -165,7 +165,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+>  		if (!check_ref(name, flags))
+>  			continue;
+>  		ref = alloc_ref(buffer + 41);
+> -		hashcpy(ref->old_sha1, old_sha1);
+> +		hashcpy(ref->old_oid.hash, old_sha1);
+>  		*list = ref;
+>  		list = &ref->next;
+>  		got_at_least_one_head = 1;
 
- - it does not make it clear what is said in that paragraph is an
-   exception, which would mislead those who are doing "git pull"
-   without rebase (for them, --ours is their own work, --theirs is
-   what they are pulling from outside).
+old_sha1 in this function could become "struct object_id". Also, this
+function has a few "20" and "41" and "42" hard-coded literals.
 
- - it does not make it clear that the paragraph is giving a
-   warning---many people who think they know what they are doing
-   would stop reading carefully after seeing 'for example', so those
-   who do use 'rebase' (either 'git rebase' or 'git pull --rebase')
-   would miss the subtlety.
+> [...]
+> diff --git a/remote-curl.c b/remote-curl.c
+> index af7b678..80cb4c7 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> [...]
+> @@ -814,7 +814,7 @@ static void parse_fetch(struct strbuf *buf)
+>  				die("protocol error: expected sha/ref, got %s'", p);
+>  
+>  			ref = alloc_ref(name);
+> -			hashcpy(ref->old_sha1, old_sha1);
+> +			hashcpy(ref->old_oid.hash, old_sha1);
+>  
+>  			*list = ref;
+>  			list = &ref->next;
 
-Perhaps rephrasing it to make it clear that this describes a warning
-about an exception may be needed?  Starting the paragraph like so,
-perhaps:
+old_sha1 in this code block could be converted to "struct object_id".
 
-    Note that during `git rebase` and `git pull -rebase`, 'ours' and
-    'theirs' may appear to be swapped (i.e. 'ours' is the history
-    from the remote or the history onto which you are rebasing, and
-    'theirs' is the history of your private work).  This is for such
-    and such reasons...
+> diff --git a/remote.c b/remote.c
+> index 26504b7..706d2fb 100644
+> --- a/remote.c
+> +++ b/remote.c
+> [...]
+> @@ -1131,7 +1131,7 @@ static int try_explicit_object_name(const char *name,
+>  
+>  	if (match) {
+>  		*match = alloc_ref(name);
+> -		hashcpy((*match)->new_sha1, sha1);
+> +		hashcpy((*match)->new_oid.hash, sha1);
+>  	}
+>  	return 0;
+>  }
 
+The "sha1" variable in this function could become a "struct object_id".
 
-[Footnote]
+> [...]
+> @@ -2181,7 +2181,7 @@ static int one_local_ref(const char *refname, const struct object_id *oid,
+>  
+>  	len = strlen(refname) + 1;
+>  	ref = xcalloc(1, sizeof(*ref) + len);
+> -	hashcpy(ref->new_sha1, oid->hash);
+> +	hashcpy(ref->new_oid.hash, oid->hash);
 
-*1* The reason why ours/theirs appear to be swapped during a rebase
-is because you are temporarily assuming the role of the keeper of
-the canonical history while doing so.  A rebase is to treat the
-history that came from the remote as the canonical one, and then
-treat what you did as the "third party" work that need to be
-integrated into the canonical history.  That makes what you obtained
-from the remote "ours" (i.e. the shared history of our project we
-collectively own) and yoru work "theirs" (i.e. other people's work
-to be integrated into "our" shared history, but you happen to be
-that "other people" in this case).
+This could become oidcopy().
+
+>  	memcpy(ref->name, refname, len);
+>  	**local_tail = ref;
+>  	*local_tail = &ref->next;
+> [...]
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 5d99a6b..4ca3e80 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> [...]
+> @@ -883,7 +883,7 @@ static int push_refs_with_export(struct transport *transport,
+>  		if (private && !get_sha1(private, sha1)) {
+>  			strbuf_addf(&buf, "^%s", private);
+>  			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
+> -			hashcpy(ref->old_sha1, sha1);
+> +			hashcpy(ref->old_oid.hash, sha1);
+>  		}
+>  		free(private);
+>  
+
+sha1 in this function could become "struct object_id".
+
+> [...]
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
