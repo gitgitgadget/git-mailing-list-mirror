@@ -1,239 +1,173 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP v2 14/19] am: implement --abort
-Date: Thu, 11 Jun 2015 18:22:00 +0800
-Message-ID: <1434018125-31804-15-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/WIP v2 15/19] am: implement quiet option
+Date: Thu, 11 Jun 2015 18:22:01 +0800
+Message-ID: <1434018125-31804-16-git-send-email-pyokagan@gmail.com>
 References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 12:23:12 2015
+X-From: git-owner@vger.kernel.org Thu Jun 11 12:23:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2zdd-000861-UH
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 12:23:10 +0200
+	id 1Z2zdi-00088k-DC
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 12:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753816AbbFKKXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 06:23:05 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33839 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753506AbbFKKW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 06:22:58 -0400
-Received: by payr10 with SMTP id r10so1876499pay.1
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 03:22:57 -0700 (PDT)
+	id S1753999AbbFKKXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 06:23:08 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:35081 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753174AbbFKKW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 06:22:59 -0400
+Received: by pdbnf5 with SMTP id nf5so1992115pdb.2
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 03:22:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hhOIiceLmDk9mW4O8K8dedD+8nO1nZcCNOSdLk4FbNo=;
-        b=y6y57S4TftZ8AzCpSmRhNqEpMlen2/0F+21bM643YzTaL0ZvqMH3pfUUKjlL1jQOCX
-         +leMR+wHNo/5IitOrAYF4k5HG506pBE4o2p+w7aeIyFcfiAJMZBbEpKIFzPP0oQASNlE
-         K1k8X3G9n/Ing3a+KjT1srqDRDEY/UnH/gmKhKdP2Bv8hFrV3CpbhsHKwQJlHtczZDe9
-         KFO6l38hdCTdELW2T6nqKXrs0oczwDTEEaNh7/1f7P1z1MpF0RoZE8WXZQOui5qHVuTV
-         mKCl3bRogeIPBlrDzBbZAJJcbXyJPc+FZP/hXhAt9zf5E4x1XB+7zyMx+3MEfgINQT4j
-         qYZQ==
-X-Received: by 10.70.134.231 with SMTP id pn7mr13816315pdb.97.1434018177145;
-        Thu, 11 Jun 2015 03:22:57 -0700 (PDT)
+        bh=wyRqcotE8W7vk64fj4/zsXW0KIh/+/3bQoJmOruvLt0=;
+        b=ubHHwcXjYs2pEffq4n1DPRBr+QEad5SktxREbPcx8MnguBZxskijoQ3wwhTuZAKoKT
+         B3d3LcJwjuu9E9iJYuTkjQySKTs/sLiXmBaaq6FlZjl1sYxYFh8ToslawN4CDFtgsMFu
+         HHJ0K/pL9Vi/4eQnoDN5LjNqWdesGNueNIbaBv7UJsuuQXZAe+2PyisnUEsX0nZzF88k
+         pTXXAD0c8qTghbTIrvg2PvNVptABTyyUiP9FRrngvRcH8U4hg13ttTJZUMXXLuy0z2+X
+         eZGWPCezb3cehlEtd57cTjPMz8/erwPm9wsyuKsJHznd4Z3p/wM80tUVC5Qk+8E6DObh
+         E6mQ==
+X-Received: by 10.66.120.161 with SMTP id ld1mr13516948pab.73.1434018179273;
+        Thu, 11 Jun 2015 03:22:59 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id q4sm300488pdo.42.2015.06.11.03.22.54
+        by mx.google.com with ESMTPSA id q4sm300488pdo.42.2015.06.11.03.22.57
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Jun 2015 03:22:56 -0700 (PDT)
+        Thu, 11 Jun 2015 03:22:58 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271396>
 
-Since 3e5057a (git am --abort, 2008-07-16), git-am supported the --abort
-option that will rewind HEAD back to the original commit. Re-implement
-this feature through am_abort().
-
-Since 7b3b7e3 (am --abort: keep unrelated commits since the last failure
-and warn, 2010-12-21), to prevent commits made since the last failure
-from being lost, git-am will not rewind HEAD back to the original
-commit if HEAD moved since the last failure. Re-implement this through
-safe_to_abort().
+Since 0e987a1 (am, rebase: teach quiet option, 2009-06-16), git-am
+supported the --quiet option and GIT_QUIET environment variable, and
+when told to be quiet, would only speak on failure. Re-implement this by
+introducing the say() function, which works like fprintf_ln(), but would
+only write to the stream when state->quiet is false.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 95 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 92 insertions(+), 3 deletions(-)
+ builtin/am.c | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 1434e68..cdc07ab 100644
+index cdc07ab..795b672 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -409,6 +409,8 @@ static int split_patches(struct am_state *state, enum patch_format patch_format,
- static void am_setup(struct am_state *state, enum patch_format patch_format,
- 		struct string_list *paths)
- {
-+	unsigned char curr_head[20];
-+
- 	if (!patch_format)
- 		patch_format = detect_patch_format(paths);
+@@ -68,6 +68,8 @@ struct am_state {
  
-@@ -428,6 +430,14 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	write_file(am_path(state, "next"), 1, "%d", state->cur);
- 
- 	write_file(am_path(state, "last"), 1, "%d", state->last);
+ 	/* number of digits in patch filename */
+ 	int prec;
 +
-+	if (!get_sha1("HEAD", curr_head)) {
-+		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
-+		update_ref("am", "ORIG_HEAD", curr_head, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	} else {
-+		write_file(am_path(state, "abort-safety"), 1, "%s", "");
-+		delete_ref("ORIG_HEAD", NULL, 0);
-+	}
- }
++	int quiet;
+ };
  
  /**
-@@ -436,6 +446,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+@@ -75,6 +77,8 @@ struct am_state {
   */
- static void am_next(struct am_state *state)
+ static void am_state_init(struct am_state *state)
  {
-+	unsigned char head[GIT_SHA1_RAWSZ];
++	const char *quiet;
 +
- 	state->cur++;
- 	write_file(am_path(state, "next"), 1, "%d", state->cur);
+ 	memset(state, 0, sizeof(*state));
  
-@@ -446,6 +458,11 @@ static void am_next(struct am_state *state)
- 
- 	strbuf_reset(&state->msg);
- 	unlink(am_path(state, "final-commit"));
+ 	strbuf_init(&state->dir, 0);
+@@ -83,6 +87,10 @@ static void am_state_init(struct am_state *state)
+ 	strbuf_init(&state->author_date, 0);
+ 	strbuf_init(&state->msg, 0);
+ 	state->prec = 4;
 +
-+	if (!get_sha1("HEAD", head))
-+		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(head));
-+	else
-+		write_file(am_path(state, "abort-safety"), 1, "%s", "");
++	quiet = getenv("GIT_QUIET");
++	if (quiet && *quiet)
++		state->quiet = 1;
  }
  
  /**
-@@ -655,10 +672,14 @@ static void am_run(struct am_state *state)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	unlink(am_path(state, "dirtyindex"));
-+
- 	refresh_and_write_cache();
- 
--	if (index_has_changes(&sb))
-+	if (index_has_changes(&sb)) {
-+		write_file(am_path(state, "dirtyindex"), 1, "t");
- 		die(_("Dirty index: cannot apply patches (dirty: %s)"), sb.buf);
-+	}
- 
- 	strbuf_release(&sb);
- 
-@@ -834,6 +855,67 @@ static void am_skip(struct am_state *state)
- 	am_run(state);
+@@ -106,6 +114,22 @@ static inline const char *am_path(const struct am_state *state, const char *path
  }
  
-+static int safe_to_abort(const struct am_state *state)
+ /**
++ * If state->quiet is false, calls fprintf(fp, fmt, ...), and appends a newline
++ * at the end.
++ */
++static void say(const struct am_state *state, FILE *fp, const char *fmt, ...)
 +{
-+	struct strbuf sb = STRBUF_INIT;
-+	unsigned char abort_safety[20], head[20];
++	va_list ap;
 +
-+	if (file_exists(am_path(state, "dirtyindex")))
-+		return 0;
-+
-+	if (read_state_file(&sb, am_path(state, "abort-safety"), 40, 1) > 0) {
-+		if (get_sha1_hex(sb.buf, abort_safety))
-+			die(_("could not parse %s"), am_path(state, "abort_safety"));
-+	} else
-+		hashclr(abort_safety);
-+
-+	if (get_sha1("HEAD", head))
-+		hashclr(head);
-+
-+	if (!hashcmp(head, abort_safety))
-+		return 1;
-+
-+	error(_("You seem to have moved HEAD since the last 'am' failure.\n"
-+		"Not rewinding to ORIG_HEAD"));
-+
-+	return 0;
++	va_start(ap, fmt);
++	if (!state->quiet) {
++		vfprintf(fp, fmt, ap);
++		putc('\n', fp);
++	}
++	va_end(ap);
 +}
 +
 +/**
-+ * Aborts the current am session if it is safe to do so.
-+ */
-+static void am_abort(struct am_state *state)
-+{
-+	unsigned char curr_head[20], orig_head[20];
-+	int has_curr_head, has_orig_head;
-+	const char *curr_branch;
-+
-+	if (!safe_to_abort(state)) {
-+		am_destroy(state);
-+		return;
-+	}
-+
-+	curr_branch = resolve_refdup("HEAD", 0, curr_head, NULL);
-+	has_curr_head = !is_null_sha1(curr_head);
-+	if (!has_curr_head)
-+		hashcpy(curr_head, EMPTY_TREE_SHA1_BIN);
-+
-+	has_orig_head = !get_sha1("ORIG_HEAD", orig_head);
-+	if (!has_orig_head)
-+		hashcpy(orig_head, EMPTY_TREE_SHA1_BIN);
-+
-+	clean_index(curr_head, orig_head);
-+
-+	if (has_orig_head)
-+		update_ref("am --abort", "HEAD", orig_head,
-+				has_curr_head ? curr_head : NULL, 0,
-+				UPDATE_REFS_DIE_ON_ERR);
-+	else if (curr_branch)
-+		delete_ref(curr_branch, NULL, REF_NODEREF);
-+
-+	am_destroy(state);
-+}
-+
- /**
-  * parse_options() callback that validates and sets opt->value to the
-  * PATCH_FORMAT_* enum value corresponding to `arg`.
-@@ -852,7 +934,8 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
- enum resume_mode {
- 	RESUME_FALSE = 0,
- 	RESUME_RESOLVED,
--	RESUME_SKIP
-+	RESUME_SKIP,
-+	RESUME_ABORT
- };
+  * Returns 1 if there is an am session in progress, 0 otherwise.
+  */
+ static int am_in_progress(const struct am_state *state)
+@@ -250,6 +274,9 @@ static void am_load(struct am_state *state)
  
- static struct am_state state;
-@@ -861,7 +944,7 @@ static enum resume_mode opt_resume;
+ 	read_state_file(&state->msg, am_path(state, "final-commit"), 0, 0);
  
- static const char * const am_usage[] = {
- 	N_("git am [options] [(<mbox>|<Maildir>)...]"),
--	N_("git am [options] (--continue | --skip)"),
-+	N_("git am [options] (--continue | --skip | --abort)"),
- 	NULL
- };
++	read_state_file(&sb, am_path(state, "quiet"), 2, 1);
++	state->quiet = !strcmp(sb.buf, "t");
++
+ 	strbuf_release(&sb);
+ }
  
-@@ -877,6 +960,9 @@ static struct option am_options[] = {
- 	OPT_CMDMODE(0, "skip", &opt_resume,
- 		N_("skip the current patch"),
- 		RESUME_SKIP),
-+	OPT_CMDMODE(0, "abort", &opt_resume,
-+		N_("restore the original branch and abort the patching operation."),
-+		RESUME_ABORT),
- 	OPT_END()
- };
+@@ -431,6 +458,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
  
-@@ -927,6 +1013,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 	case RESUME_SKIP:
- 		am_skip(&state);
- 		break;
-+	case RESUME_ABORT:
-+		am_abort(&state);
-+		break;
- 	default:
- 		die("BUG: invalid resume value");
+ 	write_file(am_path(state, "last"), 1, "%d", state->last);
+ 
++	write_file(am_path(state, "quiet"), 1, state->quiet ? "t" : "f");
++
+ 	if (!get_sha1("HEAD", curr_head)) {
+ 		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
+ 		update_ref("am", "ORIG_HEAD", curr_head, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+@@ -644,7 +673,7 @@ static void do_commit(const struct am_state *state)
+ 		commit_list_insert(lookup_commit(parent), &parents);
+ 	} else {
+ 		ptr = NULL;
+-		fprintf_ln(stderr, _("applying to an empty history"));
++		say(state, stderr, _("applying to an empty history"));
  	}
+ 
+ 	author = fmt_ident(state->author_name.buf, state->author_email.buf,
+@@ -695,7 +724,7 @@ static void am_run(struct am_state *state)
+ 		write_author_script(state);
+ 		write_file(am_path(state, "final-commit"), 1, "%s", state->msg.buf);
+ 
+-		printf_ln(_("Applying: %s"), firstline(state->msg.buf));
++		say(state, stdout, _("Applying: %s"), firstline(state->msg.buf));
+ 
+ 		if (run_apply(state) < 0) {
+ 			int value;
+@@ -726,7 +755,7 @@ next:
+  */
+ static void am_resolve(struct am_state *state)
+ {
+-	printf_ln(_("Applying: %s"), firstline(state->msg.buf));
++	say(state, stdout, _("Applying: %s"), firstline(state->msg.buf));
+ 
+ 	if (!index_has_changes(NULL)) {
+ 		printf_ln(_("No changes - did you forget to use 'git add'?\n"
+@@ -949,6 +978,7 @@ static const char * const am_usage[] = {
+ };
+ 
+ static struct option am_options[] = {
++	OPT__QUIET(&state.quiet, N_("be quiet")),
+ 	OPT_CALLBACK(0, "patch-format", &opt_patch_format, N_("format"),
+ 		N_("format the patch(es) are in"), parse_opt_patchformat),
+ 	OPT_CMDMODE(0, "continue", &opt_resume,
 -- 
 2.1.4
