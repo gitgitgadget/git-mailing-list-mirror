@@ -1,64 +1,90 @@
-From: BGaudreault Brian <BGaudreault@edrnet.com>
-Subject: proxy_windows_386.exe Firewall Notification
-Date: Thu, 11 Jun 2015 17:46:58 +0000
-Message-ID: <BLUPR0701MB196906E314F2F1083B5DEC2BD7BC0@BLUPR0701MB1969.namprd07.prod.outlook.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v7 05/12] for-each-ref: introduce new structures for better
+ organisation
+Date: Fri, 12 Jun 2015 00:51:36 +0530
+Message-ID: <5579DFC0.6030002@gmail.com>
+References: <5579B253.4020804@gmail.com> <1434039003-10928-1-git-send-email-karthik.188@gmail.com> <1434039003-10928-5-git-send-email-karthik.188@gmail.com> <vpqwpzarvl6.fsf@anie.imag.fr> <5579CBE0.3050301@gmail.com> <vpq4mmeqcrr.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 11 21:20:53 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 11 21:21:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z381v-0001O7-GR
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 21:20:47 +0200
+	id 1Z382y-0001z2-Mu
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 21:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755328AbbFKTUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 15:20:19 -0400
-Received: from mail-bl2on0055.outbound.protection.outlook.com ([65.55.169.55]:53280
-	"EHLO na01-bl2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753589AbbFKTUF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2015 15:20:05 -0400
-X-Greylist: delayed 5585 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Jun 2015 15:20:05 EDT
-Received: from BLUPR0701MB1969.namprd07.prod.outlook.com (25.163.121.20) by
- BLUPR0701MB1971.namprd07.prod.outlook.com (25.163.121.22) with Microsoft SMTP
- Server (TLS) id 15.1.184.17; Thu, 11 Jun 2015 17:46:58 +0000
-Received: from BLUPR0701MB1969.namprd07.prod.outlook.com ([25.163.121.20]) by
- BLUPR0701MB1969.namprd07.prod.outlook.com ([25.163.121.20]) with mapi id
- 15.01.0184.014; Thu, 11 Jun 2015 17:46:58 +0000
-Thread-Topic: proxy_windows_386.exe Firewall Notification
-Thread-Index: AdCkbWnQka317D+AQMy6hcSJKdL0RA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;
-x-originating-ip: [12.188.185.200]
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1971;
-x-microsoft-antispam-prvs: <BLUPR0701MB19711938DB7CF5CAFCA5758DD7BC0@BLUPR0701MB1971.namprd07.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(5005006)(520003)(3002001);SRVR:BLUPR0701MB1971;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1971;
-x-forefront-prvs: 0604AFA86B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(164054003)(110136002)(5001960100002)(107886002)(76576001)(5001920100001)(189998001)(5002640100001)(19580395003)(54356999)(50986999)(66066001)(2656002)(106116001)(87936001)(2501003)(80792005)(33656002)(86362001)(40100003)(92566002)(122556002)(2900100001)(5003600100002)(102836002)(2351001)(74316001)(46102003)(77156002)(450100001)(62966003)(229853001)(460985005);DIR:OUT;SFP:1101;SCL:1;SRVR:BLUPR0701MB1971;H:BLUPR0701MB1969.namprd07.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-X-OriginatorOrg: edrnet.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2015 17:46:58.6614
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c5294837-2991-446b-82ba-9a6e606fbfae
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLUPR0701MB1971
+	id S1755353AbbFKTVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 15:21:41 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:35898 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755350AbbFKTVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 15:21:41 -0400
+Received: by pablj1 with SMTP id lj1so3555141pab.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 12:21:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=yFU5pY6rF42TsgIu7wpQVytWUpWGMR0emX1aosPeVxY=;
+        b=RM4YJcjur+rIf0YADuEwei4PaliQyHxNR69agG8Fkv6CVBBbYLFd2k45MB+A5DO5Aw
+         OMey4Eespp9Ct1DmgolDnq0GY3eaNw92+cYjWuld2MSxeedOAwiux5vUiooGkLsRdnHq
+         xlWxS6//699JH9WMe0ykVd4981A1H15l5UNw06bof7Pr9AHkRkgjZzBTKDZNeSqPSXz8
+         SKh5r+h0Y8LZi27JFy5vPjNEkuKzxKKViB2lLI0fva0AjyOwVXvF/Oo93EshtbYy31iL
+         XBdfFlDwS6hHyeBxEVnTQwtAAwKCRE+55xF2c8mM7VlRdIzACtFyAWPQNybBNGuuYodf
+         9hTw==
+X-Received: by 10.68.197.161 with SMTP id iv1mr17308453pbc.0.1434050500795;
+        Thu, 11 Jun 2015 12:21:40 -0700 (PDT)
+Received: from [192.168.0.101] ([106.51.130.23])
+        by mx.google.com with ESMTPSA id fy5sm1426640pdb.93.2015.06.11.12.21.38
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Jun 2015 12:21:39 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <vpq4mmeqcrr.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271454>
 
-Hello, when connecting to a Vagrant Shared VM via SSH, I'm getting a Windows Firewall prompt about 'proxy_windows_386.exe' (in C:\Program Files\hashicorp\vagrant\embedded\gems\gems\vagrant-share-1.1.0\localbin\), which looks like a malware-type name.  Here's the message: "Windows Security Alert.  Windows Firewall has blocked some features of this app.  Windows Firewall has blocked some features of proxy_windows_386.exe on all public and private networks.".
+On 06/12/2015 12:43 AM, Matthieu Moy wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+> > On 06/11/2015 11:11 PM, Matthieu Moy wrote:
+> >> Karthik Nayak <karthik.188@gmail.com> writes:
+> >>
+> >>> +struct ref_filter_cbdata {
+> >>> +    struct ref_array array;
+> >>> +    struct ref_filter filter;
+> >>> +};
+> >>
+> >> I didn't notice this at first, but why introduce the structure like this
+> >> when you are going to turn it into pointers later in PATCH 7:
+> > Here it is serving to for-each-ref, so I kept it this way so as to ensure
+> > that currently as per this patch
+> >
+> > struct ref_filter_cbdata ref_cbdata;
+> >
+> > would be the only declaration needed in for-each-ref.c
+> > If I made them pointers here I would need to have
+> >
+> > struct ref_filter_cbdata ref_cbdata;
+> > struct ref_filter filter;
+> > struct ref_array array;
+> > ref_cbdata.filter = &filter;
+> > ref_cbdata.array = &array;
+>
+> ... but after PATCH 7, filter and array are passed to ref_filter so you
+> don't have this overhead anyway. Makes sense.
+>
+Yes, there we wouldn't have a ref_cbdata in 'for-each-ref'.
+But this would be taken care of in 'filter_refs()'.
+"Makes sense." Not sure if you're agreeing with me or you want me to re-roll.
 
-So I did a quick search for this file name on the Internet as well as the Git-SCM.com/community site and haven't found any clear explinations about what this file is and if it's safe.  If this is a legitimate safe file, I think it's important that this is clearly documented in the Git documentation.  Can someone verify the details about this file?
-
-Thanks,
-BRIAN
+-- 
+Regards,
+Karthik
