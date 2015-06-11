@@ -1,226 +1,302 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Submodules as first class citizens (was Re: Moving to subtrees
- for plugins?)
-Date: Thu, 11 Jun 2015 12:11:28 -0400
-Message-ID: <CABURp0qf3TCB5ofKG4=MHz1VP4_g8Es8=s9aefW4Sr2b6ZCz_A@mail.gmail.com>
-References: <CABURp0og9i9S3_ZWf5Ce9LT785QJo4H-TVtFaKUTXr2N7FB+ew@mail.gmail.com>
- <D2BB8369-E552-4AC3-967E-8F963206E03C@gmail.com> <5573E40A.3020502@gmail.com> <5577330E.3060803@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@gmail.com>, Luca Milanesio <luca.milanesio@gmail.com>, 
-	Repo Discussion <repo-discuss@googlegroups.com>, Git <git@vger.kernel.org>, 
-	Heiko Voigt <hvoigt@hvoigt.net>, Phil Hord <hordp@cisco.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: repo-discuss+bncBDYMHBPJ3QORBRPG42VQKGQECH26GWA@googlegroups.com Thu Jun 11 18:11:54 2015
-Return-path: <repo-discuss+bncBDYMHBPJ3QORBRPG42VQKGQECH26GWA@googlegroups.com>
-Envelope-to: gcvr-repo-discuss@m.gmane.org
-Received: from mail-ie0-f187.google.com ([209.85.223.187])
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v7 07/12] for-each-ref: rename some functions and make them public
+Date: Thu, 11 Jun 2015 21:39:58 +0530
+Message-ID: <1434039003-10928-7-git-send-email-karthik.188@gmail.com>
+References: <5579B253.4020804@gmail.com>
+ <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 18:22:47 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <repo-discuss+bncBDYMHBPJ3QORBRPG42VQKGQECH26GWA@googlegroups.com>)
-	id 1Z3556-0007CL-FA
-	for gcvr-repo-discuss@m.gmane.org; Thu, 11 Jun 2015 18:11:52 +0200
-Received: by ierx19 with SMTP id x19sf3475413ier.1
-        for <gcvr-repo-discuss@m.gmane.org>; Thu, 11 Jun 2015 09:11:51 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z35Fe-0005IW-Ai
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 18:22:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753457AbbFKQWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 12:22:41 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:32986 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752681AbbFKQWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 12:22:40 -0400
+Received: by pablj1 with SMTP id lj1so2509582pab.0
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 09:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-spam-checked-in-group:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe;
-        bh=GYghGJtEb4RNEfmKtKXSnC0ezQx3826qOQJ6mjUSUWo=;
-        b=ow4NRV5Kzrm8hr8dbwGJVrL0aYCC3CmnF44PDGsaau9wAzbleaT1s8acSuPE8tFflt
-         Fe3oDHgsoS0AFq2f/SzK/hfR2XTyenX3e6ZP9Que+kelvhUOCghRwBE05KrsbMTwxtTd
-         XBNhK0EVxoWb0Fuhai7uXnRCbX5gMjyxiFIL+X+xQ8fxGDPlvlTuZfQK1OTb62nriQuK
-         TMSZMeCEOM1aNHEiOWO0wSdRw4OijTaX6S+FrpZ5wZys8rE/4efto4GRUQndX5Df3UIr
-         h9DIz6U/wvV3hl/WjydDpRksrJKRkiIyUkCv1Dvd2U1V5YK0b9hnlyNTzQcbrMRjDmCS
-         rsAA==
-X-Received: by 10.182.186.7 with SMTP id fg7mr23661obc.40.1434039111802;
-        Thu, 11 Jun 2015 09:11:51 -0700 (PDT)
-X-BeenThere: repo-discuss@googlegroups.com
-Received: by 10.182.168.79 with SMTP id zu15ls687680obb.89.gmail; Thu, 11 Jun
- 2015 09:11:49 -0700 (PDT)
-X-Received: by 10.182.214.104 with SMTP id nz8mr11894233obc.37.1434039109174;
-        Thu, 11 Jun 2015 09:11:49 -0700 (PDT)
-Received: from mail-yk0-x243.google.com (mail-yk0-x243.google.com. [2607:f8b0:4002:c07::243])
-        by gmr-mx.google.com with ESMTPS id s127si17481ywc.6.2015.06.11.09.11.49
-        for <repo-discuss@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Jun 2015 09:11:49 -0700 (PDT)
-Received-SPF: pass (google.com: domain of phil.hord@gmail.com designates 2607:f8b0:4002:c07::243 as permitted sender) client-ip=2607:f8b0:4002:c07::243;
-Received: by mail-yk0-x243.google.com with SMTP id 131so676659ykp.1
-        for <repo-discuss@googlegroups.com>; Thu, 11 Jun 2015 09:11:49 -0700 (PDT)
-X-Received: by 10.170.91.131 with SMTP id i125mr12723972yka.12.1434039109013;
- Thu, 11 Jun 2015 09:11:49 -0700 (PDT)
-Received: by 10.37.106.198 with HTTP; Thu, 11 Jun 2015 09:11:28 -0700 (PDT)
-In-Reply-To: <5577330E.3060803@web.de>
-X-Original-Sender: phil.hord@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of phil.hord@gmail.com designates 2607:f8b0:4002:c07::243
- as permitted sender) smtp.mail=phil.hord@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list repo-discuss@googlegroups.com; contact repo-discuss+owners@googlegroups.com
-List-ID: <repo-discuss.googlegroups.com>
-X-Spam-Checked-In-Group: repo-discuss@googlegroups.com
-X-Google-Group-Id: 540870184241
-List-Post: <http://groups.google.com/group/repo-discuss/post>, <mailto:repo-discuss@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:repo-discuss+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/repo-discuss
-Sender: repo-discuss@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/repo-discuss/subscribe>, <mailto:repo-discuss+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+540870184241+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/repo-discuss/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271434>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Rpk1dTf5d532/vAYGz+FPad2ouq7dzSMZ09wHU9BmdY=;
+        b=mpLmGyNhbCv/TAoVvQVhyocbBbr3OWDBBWoaLklFMNQO4HzWTLySRdIBogW1mnXDDt
+         FKZJtG7jTxHn6wPcd4I9/uiuwUJg8PlN8nyr7d8kh+Dg9qQ/R5MYGrB76Kg96X1D9h4C
+         1lmzZDMN+9kn3pSVjrk2QRiIAcncnARErBCIbUxANAOJUcMev0wtD/V3xyWyyrJ2fcEN
+         01PJXXGbwzQ6z39b/3vFVCoT41jQ/vOTi0m27OIT1lGZFS8vvfYm8FE+U2+yZNXZi+kG
+         qw1r/2me0vfj5PruIracpyK31dgAgesylZR8wg2xPbF+64oQ+sUnWcVIvtBr5prhPnhD
+         fd9g==
+X-Received: by 10.70.109.199 with SMTP id hu7mr16030817pdb.71.1434039039449;
+        Thu, 11 Jun 2015 09:10:39 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23])
+        by mx.google.com with ESMTPSA id f4sm1132981pdc.95.2015.06.11.09.10.37
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 11 Jun 2015 09:10:38 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2
+In-Reply-To: <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271435>
 
-On Tue, Jun 9, 2015 at 2:40 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 07.06.2015 um 08:26 schrieb Stefan Beller:
->>
->> On 06.06.2015 12:53, Luca Milanesio wrote:
->>>>
->>>> On 6 Jun 2015, at 18:49, Phil Hord <phil.hord@gmail.com> wrote:
->>>> On Fri, Jun 5, 2015, 2:58 AM lucamilanesio <luca.milanesio@gmail.com>
->>>> wrote:
->>>>>
->>>>> Ideally, as a "git clone --recursive" already exists, I would like to
->>>>> see a "git diff --recursive" that goes through the submodules as well
->>>>> :-)
->>>>>
->>>>> Something possibly to propose to the Git mailing list?
->
->
-> Such an option makes lots of sense to me (though "--recurse-submodules"
-> should be its name for consistency reasons). This could be an alias for
-> "--submodule=full", as the "--submodule" option controls the format of
-> submodule diffs.
+Rename some of the functions and make them publicly available.
+This is a preparatory step for moving code from 'for-each-ref'
+to 'ref-filter' to make meaningful, targeted services available to
+other commands via public APIs.
 
-To me, --recurse-submodules means submodules are still not first-class
-citizens.  But let's put that aside for a moment; I don't care about
-the switch name too much as long as I can configure
-'diff.recurse-submodules = true'.
+Functions renamed are:
+parse_atom()		-> 	parse_ref_filter_atom()
+verify_format()		-> 	verify_ref_format()
+get_value()		-> 	get_ref_atom_value()
+grab_single_ref()	-> 	ref_filter_handler()
+sort_refs()		->	ref_array_sort()
+show_ref()		->	show_ref_array_item()
+default_sort()		->	ref_default_sorting()
+opt_parse_sort()	->	parse_opt_ref_sorting()
+cmp_ref_sort()		->	cmp_ref_sorting()
 
-[The following is rather long.  I'm sorry for that.  Feel free to look
-away when it gets too vague.]
+Rename 'struct ref_sort' to 'struct ref_sorting' in this context.
 
-Let me set up a submodule like so:
+Based-on-patch-by: Jeff King <peff@peff.net>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ builtin/for-each-ref.c | 68 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
-  $ git init /tmp/Super && cd /tmp/Super
-  Super$ git submodule add https://github.com/gitster/git.git Foo
-
-I wish to be able to grep from Super and find matches in all my submodules.
-
-  Super$ git grep --recurse-submodules base--int
-  Foo/.gitignore:/git-rebase--interactive
-  Foo/Makefile:SCRIPT_LIB += git-rebase--interactive
-
-But I want this to work naturally across git-module boundaries, so I
-want this also to work (grepping a super-project from within a
-submodule):
-
-  Super$ cd Foo
-  Foo$ git grep --recurse-submodules base--int ..
-  .gitignore:/git-rebase--interactive
-  Makefile:SCRIPT_LIB += git-rebase--interactive
-
-I expect some groans from the audience here, because I think if the
-syntax above worked, then so would this:
-
-  $ cd /tmp
-  tmp$ git grep base--int /tmp/Super/Foo
-  /tmp/Super/Foo/.gitignore:/git-rebase--interactive
-  /tmp/Super/Foo/Makefile:SCRIPT_LIB += git-rebase--interactive
-
-This usage has nothing to do with submodules, really, except that it
-allows git commands to reach into foreign git directories by virtue of
-the path supplied as some argument instead of via $GITDIR, and in
-doing so it helps solve some git submodules use cases of mine.
-
-But if that did not turn your stomach, try this one:
-
-  $ cd /tmp/Super
-  Super$ printf "Some submodule data">Foo/data.txt
-  Super$ git add Foo/data.txt
-  fatal: Pathspec 'Foo/data.txt' is in submodule 'Foo'
-  Super$ git add --recurse-submodules Foo/data.txt
-
-Some notes on this usage:
-
-1. --recurse-submodules seems like a reasonable name for this switch,
-especially when you consider the 'git add --recurse-submodules .' use
-case.
-
-2. This recursive 'git add' seems dangerous to me unless git-status
-also shows all the changed/untracked files in submodules as well if
-the --recurse-submodules switch is included.  This would support the
-expectation that 'git add .' is going to add the files shown by 'git
-status .'
-
-3. Configuring --recurse-submodules as the default mode for 'git add'
-but not for 'git status' seems reckless enough that I think there
-should not be separate options for these two commands.  There are
-probably many other "cross-command" scenarios with similar coupling.
-
-Moving on, as we have :/ to mean 'workdir root', I wonder how you
-would spell "super-project workdir root".  Maybe it would be ::/
-
-I realize the kinds of features I'm talking about require extensive
-code changes in Git.  For example, consider the meaning of this:
-
-  Super$ git diff --recurse-submodules origin/next origin/master
-
-Since I created Super just a few minutes ago and it has no remote
-named 'origin', this command seems meaningless to me.  But suppose
-that origin/next and origin/master did exist in my Super project.
-Then, I would expect in my wishlist Git, that
-
-A.  Super$ git diff --recurse-submodules origin/next origin/master
-This would include differences in Foo between origin/master:Foo and
-origin/next:Foo; that is, the commits referenced from those gitlinks
-in Super.
-
-B.  Super$ git diff --recurse-submodules origin/next HEAD
-This would include differences in Foo between origin/master:Foo and
-HEAD:Foo; that is, the commits referenced from those gitlinks in
-Super.
-
-C.  Super$ git diff --recurse-submodules origin/next
-This would include differences in Foo between origin/master:Foo and
-the current Foo workdir.
-
-D.  Super$ cd Foo && git diff origin/next
-This would include differences in Foo between the Foo submodule's
-origin/master and the current Foo workdir.
-
-Now, C and D seem confusingly similar to me and technically very
-different.  I could understand the results, but I could easily be led
-astray, especially if I am writing a script.  But I still think it is
-reasonable and correct.
-
-I think this could have dire consequences for some commands like 'git
-apply'. But I think it is reasonable for git apply to reject such
-cross-project diffs, at least in the beginning.  :-)
-
-While I am thinking about it, let me also mention these cases:
-E.  Super$ git diff --recurse-submodules origin/next origin/master -- Foo
-I think 'origin/next' and 'origin/master' here are referring to
-Super's refs, but I can imagine an implementer choosing to use Foo's
-instead.
-
-F.  Super$ cd Foo
-      Foo$ git diff --recurse-submodules origin/next origin/master -- ..
-If this worked, I would think 'origin/next' and 'origin/master' here
-must refer to Super's refs even though I began in Foo.  This one is so
-ambiguous I think I would have to call this an error.  More
-specifically, I think it would have to be rewritten like this next one
-(G).
-
-G.  Super$ cd Foo
-      Foo$ git -C .. diff --recurse-submodules origin/next origin/master
-That is, at least for 'git diff', the <path> parameter at the end is
-only used to filter the results; it is not used to find the git-dir.
-
-But look at me speaking in the present tense.  How silly.  I live too
-much in my own imagination.
-
-Phil
-
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 58396b2..4a6eaba 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -25,8 +25,8 @@ struct atom_value {
+ 	unsigned long ul; /* used for sorting when not FIELD_STR */
+ };
+ 
+-struct ref_sort {
+-	struct ref_sort *next;
++struct ref_sorting {
++	struct ref_sorting *next;
+ 	int atom; /* index into 'struct atom_value *' array */
+ 	unsigned reverse : 1;
+ };
+@@ -113,7 +113,7 @@ static int need_color_reset_at_eol;
+ /*
+  * Used to parse format string and sort specifiers
+  */
+-static int parse_atom(const char *atom, const char *ep)
++int parse_ref_filter_atom(const char *atom, const char *ep)
+ {
+ 	const char *sp;
+ 	int i, at;
+@@ -190,7 +190,7 @@ static const char *find_next(const char *cp)
+  * Make sure the format string is well formed, and parse out
+  * the used atoms.
+  */
+-static int verify_format(const char *format)
++int verify_ref_format(const char *format)
+ {
+ 	const char *cp, *sp;
+ 
+@@ -202,7 +202,7 @@ static int verify_format(const char *format)
+ 		if (!ep)
+ 			return error("malformed format string %s", sp);
+ 		/* sp points at "%(" and ep points at the closing ")" */
+-		at = parse_atom(sp + 2, ep);
++		at = parse_ref_filter_atom(sp + 2, ep);
+ 		cp = ep + 1;
+ 
+ 		if (skip_prefix(used_atom[at], "color:", &color))
+@@ -409,7 +409,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	/*
+ 	 * We got here because atomname ends in "date" or "date<something>";
+ 	 * it's not possible that <something> is not ":<format>" because
+-	 * parse_atom() wouldn't have allowed it, so we can assume that no
++	 * parse_ref_filter_atom() wouldn't have allowed it, so we can assume that no
+ 	 * ":" means no format is specified, and use the default.
+ 	 */
+ 	formatp = strchr(atomname, ':');
+@@ -849,7 +849,7 @@ static void populate_value(struct ref_array_item *ref)
+  * Given a ref, return the value for the atom.  This lazily gets value
+  * out of the object by calling populate value.
+  */
+-static void get_value(struct ref_array_item *ref, int atom, struct atom_value **v)
++static void get_ref_atom_value(struct ref_array_item *ref, int atom, struct atom_value **v)
+ {
+ 	if (!ref->value) {
+ 		populate_value(ref);
+@@ -900,8 +900,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
+  * A call-back given to for_each_ref().  Filter refs and keep them for
+  * later object processing.
+  */
+-static int grab_single_ref(const char *refname, const struct object_id *oid,
+-			   int flag, void *cb_data)
++int ref_filter_handler(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	struct ref_filter_cbdata *ref_cbdata = cb_data;
+ 	struct ref_filter *filter = &ref_cbdata->filter;
+@@ -947,14 +946,14 @@ void ref_array_clear(struct ref_array *array)
+ 	array->nr = array->alloc = 0;
+ }
+ 
+-static int cmp_ref_sort(struct ref_sort *s, struct ref_array_item *a, struct ref_array_item *b)
++static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, struct ref_array_item *b)
+ {
+ 	struct atom_value *va, *vb;
+ 	int cmp;
+ 	cmp_type cmp_type = used_atom_type[s->atom];
+ 
+-	get_value(a, s->atom, &va);
+-	get_value(b, s->atom, &vb);
++	get_ref_atom_value(a, s->atom, &va);
++	get_ref_atom_value(b, s->atom, &vb);
+ 	switch (cmp_type) {
+ 	case FIELD_STR:
+ 		cmp = strcmp(va->s, vb->s);
+@@ -971,24 +970,24 @@ static int cmp_ref_sort(struct ref_sort *s, struct ref_array_item *a, struct ref
+ 	return (s->reverse) ? -cmp : cmp;
+ }
+ 
+-static struct ref_sort *ref_sort;
++static struct ref_sorting *ref_sorting;
+ static int compare_refs(const void *a_, const void *b_)
+ {
+ 	struct ref_array_item *a = *((struct ref_array_item **)a_);
+ 	struct ref_array_item *b = *((struct ref_array_item **)b_);
+-	struct ref_sort *s;
++	struct ref_sorting *s;
+ 
+-	for (s = ref_sort; s; s = s->next) {
+-		int cmp = cmp_ref_sort(s, a, b);
++	for (s = ref_sorting; s; s = s->next) {
++		int cmp = cmp_ref_sorting(s, a, b);
+ 		if (cmp)
+ 			return cmp;
+ 	}
+ 	return 0;
+ }
+ 
+-static void sort_refs(struct ref_sort *sort, struct ref_array *array)
++void ref_array_sort(struct ref_sorting *sort, struct ref_array *array)
+ {
+-	ref_sort = sort;
++	ref_sorting = sort;
+ 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
+ }
+ 
+@@ -1056,7 +1055,7 @@ static void emit(const char *cp, const char *ep)
+ 	}
+ }
+ 
+-static void show_ref(struct ref_array_item *info, const char *format, int quote_style)
++void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+ {
+ 	const char *cp, *sp, *ep;
+ 
+@@ -1066,7 +1065,7 @@ static void show_ref(struct ref_array_item *info, const char *format, int quote_
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+ 			emit(cp, sp);
+-		get_value(info, parse_atom(sp + 2, ep), &atomv);
++		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+ 		print_value(atomv, quote_style);
+ 	}
+ 	if (*cp) {
+@@ -1085,21 +1084,22 @@ static void show_ref(struct ref_array_item *info, const char *format, int quote_
+ 	putchar('\n');
+ }
+ 
+-static struct ref_sort *default_sort(void)
++/*  If no sorting option is given, use refname to sort as default */
++struct ref_sorting *ref_default_sorting(void)
+ {
+ 	static const char cstr_name[] = "refname";
+ 
+-	struct ref_sort *sort = xcalloc(1, sizeof(*sort));
++	struct ref_sorting *sort = xcalloc(1, sizeof(*sort));
+ 
+ 	sort->next = NULL;
+-	sort->atom = parse_atom(cstr_name, cstr_name + strlen(cstr_name));
++	sort->atom = parse_ref_filter_atom(cstr_name, cstr_name + strlen(cstr_name));
+ 	return sort;
+ }
+ 
+-static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
++int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
+ {
+-	struct ref_sort **sort_tail = opt->value;
+-	struct ref_sort *s;
++	struct ref_sorting **sort_tail = opt->value;
++	struct ref_sorting *s;
+ 	int len;
+ 
+ 	if (!arg) /* should --no-sort void the list ? */
+@@ -1114,7 +1114,7 @@ static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
+ 		arg++;
+ 	}
+ 	len = strlen(arg);
+-	s->atom = parse_atom(arg, arg+len);
++	s->atom = parse_ref_filter_atom(arg, arg+len);
+ 	return 0;
+ }
+ 
+@@ -1127,7 +1127,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+ 	const char *format = "%(objectname) %(objecttype)\t%(refname)";
+-	struct ref_sort *sort = NULL, **sort_tail = &sort;
++	struct ref_sorting *sort = NULL, **sort_tail = &sort;
+ 	int maxcount = 0, quote_style = 0;
+ 	struct ref_filter_cbdata ref_cbdata;
+ 
+@@ -1145,7 +1145,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
+ 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
+ 		OPT_CALLBACK(0 , "sort", sort_tail, N_("key"),
+-			    N_("field name to sort on"), &opt_parse_sort),
++			    N_("field name to sort on"), &parse_opt_ref_sorting),
+ 		OPT_END(),
+ 	};
+ 
+@@ -1158,25 +1158,25 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		error("more than one quoting style?");
+ 		usage_with_options(for_each_ref_usage, opts);
+ 	}
+-	if (verify_format(format))
++	if (verify_ref_format(format))
+ 		usage_with_options(for_each_ref_usage, opts);
+ 
+ 	if (!sort)
+-		sort = default_sort();
++		sort = ref_default_sorting();
+ 
+ 	/* for warn_ambiguous_refs */
+ 	git_config(git_default_config, NULL);
+ 
+ 	memset(&ref_cbdata, 0, sizeof(ref_cbdata));
+ 	ref_cbdata.filter.name_patterns = argv;
+-	for_each_rawref(grab_single_ref, &ref_cbdata);
++	for_each_rawref(ref_filter_handler, &ref_cbdata);
+ 
+-	sort_refs(sort, &ref_cbdata.array);
++	ref_array_sort(sort, &ref_cbdata.array);
+ 
+ 	if (!maxcount || ref_cbdata.array.nr < maxcount)
+ 		maxcount = ref_cbdata.array.nr;
+ 	for (i = 0; i < maxcount; i++)
+-		show_ref(ref_cbdata.array.items[i], format, quote_style);
++		show_ref_array_item(ref_cbdata.array.items[i], format, quote_style);
+ 	ref_array_clear(&ref_cbdata.array);
+ 	return 0;
+ }
 -- 
+2.4.2
