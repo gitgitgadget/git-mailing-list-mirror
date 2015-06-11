@@ -1,122 +1,115 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/8] object_id part 2
-Date: Thu, 11 Jun 2015 03:31:08 +0000
-Message-ID: <20150611033107.GA789892@vauxhall.crustytoothpaste.net>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
- <20150610235114.GA786544@vauxhall.crustytoothpaste.net>
- <20150611000251.GB786544@vauxhall.crustytoothpaste.net>
- <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow to control the namespace for replace refs
+Date: Wed, 10 Jun 2015 21:55:30 -0700
+Message-ID: <xmqqlhfqhmil.fsf@gitster.dls.corp.google.com>
+References: <1433987235-17385-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 05:31:34 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jun 11 06:55:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z2tDJ-0004z1-9P
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 05:31:33 +0200
+	id 1Z2uWg-00045w-UL
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 06:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703AbbFKDb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2015 23:31:29 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:39883 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751643AbbFKDb2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2015 23:31:28 -0400
-Received: from vauxhall.crustytoothpaste.net (107-1-110-191-ip-static.hfc.comcastbusiness.net [107.1.110.191])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BF9842808F;
-	Thu, 11 Jun 2015 03:31:24 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Content-Disposition: inline
-In-Reply-To: <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -1.5 BAYES_00
+	id S1750979AbbFKEzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 00:55:35 -0400
+Received: from mail-ie0-f194.google.com ([209.85.223.194]:33929 "EHLO
+	mail-ie0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742AbbFKEzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 00:55:33 -0400
+Received: by iebtr6 with SMTP id tr6so614937ieb.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2015 21:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=i8ng8h5D0ouzf99bN8ABFncrShZzCb39CPr5NhIQozE=;
+        b=kaO6kCehP4KSep1/lv35DNxcbREjOTK6cOl/2aDO9b/5Eaf1hn+tXHu0NqC1IbT4+n
+         DNqbS7683cwtaTE6TFaNYc/IAWOmzrmnjZMa3vmjuedpY1kM1rM2gPoeaYQBWfpydps6
+         TOoUH7Xr32nWhTGEyo0kkcwD7bJ/tuRcpKvTEL60Iyk6N5V8bnAJP8Qp8ADBenpkCPky
+         yoQ5OLdaN77sjfT+jxAAhqnRDFaEgCskQvWGHlW0k0iz4bAUD78mj4hsdWG0kBpP69n0
+         42xJz181/TUowz7YHf9s4pFJVG0WkVlJOd8UVANN1+zLmsWCDGqHQbQlWZafXGlQ9vGY
+         pUiQ==
+X-Received: by 10.107.155.74 with SMTP id d71mr8684586ioe.29.1433998532958;
+        Wed, 10 Jun 2015 21:55:32 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:683f:a599:6eb8:1b1d])
+        by mx.google.com with ESMTPSA id e10sm4692462igy.11.2015.06.10.21.55.30
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 10 Jun 2015 21:55:31 -0700 (PDT)
+In-Reply-To: <1433987235-17385-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Thu, 11 Jun 2015 10:47:15 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271375>
 
+Mike Hommey <mh@glandium.org> writes:
 
---17pEHd4RhPHOinZp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It can be useful to have grafts or replace refs for specific use-cases while
+> keeping the default "view" of the repository pristine (or with a different
+> set of grafts/replace refs).
+>
+> It is possible to use a different graft file with GIT_GRAFT_FILE, but while
+> replace refs are more powerful, they don't have an equivalent override.
+>
+> Add a GIT_REPLACE_NAMESPACE environment variable to control where git is
+> going to look for replace refs.
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>
+> I'm not sure if I need to care about avoiding strlen in log-tree.c, or if I
+> should handle the lack of a / at the end of GIT_REPLACE_NAMESPACE.
 
-On Wed, Jun 10, 2015 at 05:21:33PM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> > [0] https://github.com/bk2204/git.git object-id-part2
->=20
-> No approach other than just letting reviewers fetch from there and
-> taking a look is reasonable, I would think.
->=20
-> Did you create this manually, or is it a mechanical scripted rewrite
-> followed by manual clean-up?  If the latter, it may help people by
-> posting the mechanical recipe _and_ a patch that shows the manual
-> clean-up.  That is something we can reasonably review and discuss.
+First, let me agree with you that being able to say "I usually use
+refs/replace/ hierarchy as my object replacement database, but for
+this particular invocation of Git (or 'all Git invocations from this
+subprocess' for that matter), I want to use refs/replace-2/ hierarchy
+instead" is a good thing.
 
-It's mostly manual, but some pieces (the is_null_sha1 and sha1_to_hex
-conversions) were scripted using the embedded Ruby interpreter in Vim.
-The script I used to do that is below.
+I however doubt that it is a good idea to use the word "namespace"
+anywhere in the name for that mechanism.  Let me explain, and please
+listen with skepticism, as I do not use the ref namespace mechanism
+myself---it is entirely possible that my understanding of how the
+ref namespace mechanism is meant to be used is faulty, and if that
+is the case please correct me.
 
-  def refactor(s)
-    methods =3D %w(is_null_sha1 sha1_to_hex).map do |m|
-      [m, m.sub('sha1', 'oid')]
-    end.to_h
-    s.sub(/\A(.*)(is_null_sha1|sha1_to_hex)\(([^)]+)(\.|->)sha1\)(.*)\z/) do
-      [$1, methods[$2], "(&#{$3}#{$4}oid)", $5].join('')
-    end
-  end
- =20
-  def replace_line(method)
-    func =3D Object.method(method)
-    VIM::Buffer.current.line =3D func.call(VIM::Buffer.current.line)
-  end
+The ref namespace mechanism is to be used when you want to serve one
+or more "virtual repositories" via upload-pack/receive-pack server
+side programs from a single repository.  By having two hierarchies,
+each of which is similar to the usual HEAD, refs/heads/, refs/tags/,
+etc., under refs/namespaces/a and refs/namespaces/b, you can allow
+two instances of upload-pack to serve two "virtual repositories".
 
-It was invoked as replace_line(:refactor), so it basically modified each
-relevant line by passing it through refactor.
+What is in refs/namespaces/a/{HEAD,refs/heads/*,refs/tags/*,...} is
+exposed by one instance of upload-pack to its clients as if they are
+the entire world (i.e. HEAD,refs/heads/*,refs/tags/*,...), the other
+one does the same to its clients from refs/namespaces/b/*.  And they
+do share the same object store (thereby allowing you to implement a
+cheap "forks" without having to worry about object borrowing).
 
-Sorry for choosing a language that's less familiar to the list: if I had
-known you'd want to see it, I would have used Perl.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+The usual server side housekeeping such as "gc" can and must be
+arranged to happen without limiting them to either namespace, so
+that anything reachable by any ref from either "virtual repository"
+will be retained.
 
---17pEHd4RhPHOinZp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Now, does the "For this invocation, please use refs/replace-2/ as
+the object replacement database" feature have anything common to the
+ref namespace mechanism?  I do not see any commonality, and that is
+why I do not think it is a good idea to use that word.  It will
+confuse the users and the developers alike.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
+To me, this mechanism looks very similar to the way you specify a
+non-default notes tree is to be used with the --notes=<ref>
+parameter, core.notesRef configuration and GIT_NOTES_REF environment
+variable.  Modeling after that, perhaps using core.replaceRef and
+GIT_REPLACE_REF would be more appropriate, I think.
 
-iQIcBAEBCgAGBQJVeQD7AAoJEL9TXYEfUvaLmowQAMJHpVYyGeUXXjJzUvE0O2v6
-FmcSmMDhRniO5NfZoU3jsH0MACp75WzYl9QT+NatKXYLR4Mf0lv7iwEYyqPVFLIG
-Jai+1iOhviSeF1wvDCUPLQ/jyT3ASoYWeOpwYJOV5ffFz1tdgBOVD8tLMeUwv51K
-QEo0JIPHdC29S44KdzTUowgPnBmy4mPpQY7tK1JCORbfsuehoxBpgkvxWV/piw2i
-Ogl/2P6C0TueMIgPNEYzMDqIdWqJwFXadZAviPYitDKCXQckhafDcllssPIFfPeC
-mxr+PccSL5uUsma8OmUfRka0VETbk4BmwlipzjwdmEgWIxk3EfRzulBJN+GwM2Np
-yEM98dOS7oP6HZo6lAFbtEWu/b49Req/1aa0G1K23Aiy6gx+Zbk8Ih6qT6PevwK9
-n4ZViYGrvldN7k2kWjbEdhiMdXbAmEI6Dr8hxDXjxeWkjYgV9CsNLrNd6LKGl4tP
-czPn9EPhjx1sIdDuTcUi6htkyZndThVYPnRwQb7boU6nUkMSIV8lLWHE88SUO8Es
-IZmPgYYBWJ0fHNuJsvw+Lglkg4ZQbr0kHDMIfjvpKgTqvcPG+OdbWyvh8cbqJ5Gi
-50IbyTFJ9Q9zB0CUHVyofMmf846Nw0UOPs9JAEL0RayagR9eDzqTZ3f5tvnCa5zj
-ntzvTY45wEBCLgU7yFYH
-=7FpL
------END PGP SIGNATURE-----
-
---17pEHd4RhPHOinZp--
+Thanks.
