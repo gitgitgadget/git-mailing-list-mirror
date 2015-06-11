@@ -1,195 +1,269 @@
-From: Augie Fackler <augie@google.com>
-Subject: [PATCH] fetch-pack: optionally save packs to disk
-Date: Thu, 11 Jun 2015 13:44:36 -0400
-Message-ID: <1434044676-2942-1-git-send-email-augie@google.com>
-Cc: Augie Fackler <augie@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 19:45:00 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH/WIP v2 05/19] am: split out mbox/maildir patches with git-mailsplit
+Date: Thu, 11 Jun 2015 10:45:27 -0700
+Message-ID: <CAGZ79kYUK=UhfR1CQREH9GLNuo_7=AmcGwMw15_f_zYFZLarsw@mail.gmail.com>
+References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
+	<1434018125-31804-6-git-send-email-pyokagan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 19:45:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z36XC-0004Mn-Ux
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 19:44:59 +0200
+	id 1Z36Xq-0004kI-CD
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 19:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933515AbbFKRoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 13:44:46 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:38867 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754658AbbFKRom (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 13:44:42 -0400
-Received: by igblz2 with SMTP id lz2so9911134igb.1
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 10:44:41 -0700 (PDT)
+	id S933679AbbFKRpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 13:45:33 -0400
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:33473 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933688AbbFKRp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 13:45:29 -0400
+Received: by yhpn97 with SMTP id n97so5074844yhp.0
+        for <git@vger.kernel.org>; Thu, 11 Jun 2015 10:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=HaWoMP+z8ZdpLe5KmlMemJxRdyj1LG+PyF0BBkEezCw=;
-        b=gp0MWxrdeW/7n51iPSNr/pyfCmZB4QMmPloDls332/jdAt00whEc2+QKW3oCGp6td9
-         Ngir7HNAp8K/MnjOg8oGdCLykX9feBcC+Er/3HvGgxJt06AlxoNbDA9m3c2k1iD/t79o
-         NRl9MrYOKUfEFLfiRJC3VY/MvPq8+9YYxmrE8lUryPj6egYEb79Jj47Mp2a6g3Xmw+8L
-         /5mHGP5eyyuvSY6bUQSEOsEPjSQ7jOceSEZQ9ZfmyvcjbJykMuJcrJ80JpIo2tobAUDE
-         hbEelH2Bv4OhunQ2FkZ+Ca9esKtEKQffF1vIu3JWWZ4BMJZHDpbscV4+GDfrOsHTvvXm
-         wbcg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=pG9fl/RPwMvwI2IMrmLNG9sLWj5LYgOkue+pcPCFO8Y=;
+        b=bX4UyHhzhHLqDz09CtgIp7EmFdcMAzpacPNUH0dTLfLfiACGizQ4hrB5vC3yU8+U8l
+         Rao0MXrIYXnUhAHx0hviAJ24rVDMHVi/+44Z3qVMl4U5zKmfBIVRYeUaxiQITkpOrgm6
+         gFDOOLIUqzshqbg5FZ+4dUD9m43lUQ3cox+bd5J/IcFfi30wiR3cVu+JMx5E2xUSUQJe
+         M/shUFOR7b9AGAY3PEshmGMVtiPRGGDLuLVbZFDEnlaH5hnZQK3IwqvofgorYurCRLwa
+         vGlzTrV6uO1LD7logtwffVmCDD1BzvBWs+KNg0Sbe4Lsdy6rENGApdn3QWLkHCTKLhRm
+         7/Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=HaWoMP+z8ZdpLe5KmlMemJxRdyj1LG+PyF0BBkEezCw=;
-        b=JWJO9mXPrcNeff3Ef+3WYr3RTUoW6AoEQ7PT/Mpnv4EmHWysEdarjKbvq3YKLevSiK
-         nm9GKS3VqJAjX0Cnk3zeaztEiGcYavLmg4phsUAExW8Xv3BK9SDXgQTdlcGbfb67HsBl
-         K8V0H0OIIEJ8c2AXCZwgL3CzLLh8/qIKwL61H+XbBvkZSFTgtUjYCmSQEsgqht9iFzHg
-         s7T976EoYx6ggDmX6WwI3X+HLz6gT4m8nQWhX9hCh05Id2AGmZDLW0W7PiaTvLd0U3pK
-         5pei1zOYLNCmXN2ojvw8721829mruzk+eo+qH472uCe7Epjz0ggcCrL3n4FnddLxlSWf
-         a26w==
-X-Gm-Message-State: ALoCoQmnjsnmhuTQmAvsLxHrgqMubuVwBk5G0X5VkYx29LvagQt1AmX4X2n8LXB8SVqcljnPNX2a
-X-Received: by 10.42.48.9 with SMTP id q9mr9044879icf.21.1434044681435;
-        Thu, 11 Jun 2015 10:44:41 -0700 (PDT)
-Received: from arthedain.pit.corp.google.com ([172.29.6.88])
-        by mx.google.com with ESMTPSA id x4sm796698iod.26.2015.06.11.10.44.40
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Jun 2015 10:44:40 -0700 (PDT)
-X-Mailer: git-send-email 2.4.3.369.gda395ba.dirty
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=pG9fl/RPwMvwI2IMrmLNG9sLWj5LYgOkue+pcPCFO8Y=;
+        b=WXDYvyp2tSSIZ6v2KwsRn2E9D/ZaUd4ejhYqCzf5/0/FLIZb+wNN3Ka1D/a3il05Mk
+         g5wqnHxjabOKLL+8jO2olp1lhxOrssOZHGgisduDoxEuEs+7ywrIKETQzIid9Z5/oW+n
+         zS+e9QKLPnFK78kgANsg4WqgnEsjHNIpZAV50pscJnmaHplS4XJzIyCULYRyRkPTe803
+         2TgPmyDh9djiIiy3vzSy0YIKYM/t5jnTp1ranb1tbN0on919z2iNcoVsk4YWEd1l9LSZ
+         oKBr7m+X337s4JQxdf6xpBoAal+HGyAoGIS3fnO7ZKb94BVkwA/owqAANeO38XuJlq7x
+         pNIw==
+X-Gm-Message-State: ALoCoQl+Gv1q9E34rDimdRPC1SXXqpjKa1PWk3r2hTQfdRQoYbDQCukdKhBlYDqhjIYHp1el6Wb8
+X-Received: by 10.13.213.212 with SMTP id x203mr13171081ywd.174.1434044728026;
+ Thu, 11 Jun 2015 10:45:28 -0700 (PDT)
+Received: by 10.37.101.197 with HTTP; Thu, 11 Jun 2015 10:45:27 -0700 (PDT)
+In-Reply-To: <1434018125-31804-6-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271445>
 
-When developing server software, it's often helpful to save a
-potentially-bogus pack for later analysis. This makes that trivial,
-instead of painful. This is made a little complicated by the fact that
-in some cases (like cloning from smart-http, but not from a local repo)
-the fetch code reads the pack header before sending the pack to
-index-pack (which then gets a --pack_header flag). The included tests
-cover both of these cases.
+On Thu, Jun 11, 2015 at 3:21 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> git-am.sh supports mbox, stgit and mercurial patches. Re-implement
+> support for splitting out mbox/maildirs using git-mailsplit, while also
+> implementing the framework required to support other patch formats in
+> the future.
+>
+> Re-implement support for the --patch-format option (since a5a6755
+> (git-am foreign patch support: introduce patch_format, 2009-05-27)) to
+> allow the user to choose between the different patch formats.
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>
+> Notes:
+>     v2
+>
+>     * Declare int opt_patchformat as static.
+>
+>     * Fix up indentation style for the switch()
+>
+>  builtin/am.c | 107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 103 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/am.c b/builtin/am.c
+> index f061d21..5198a8e 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -8,6 +8,12 @@
+>  #include "exec_cmd.h"
+>  #include "parse-options.h"
+>  #include "dir.h"
+> +#include "run-command.h"
+> +
+> +enum patch_format {
+> +       PATCH_FORMAT_UNKNOWN = 0,
+> +       PATCH_FORMAT_MBOX
+> +};
+>
+>  struct am_state {
+>         /* state directory path */
+> @@ -16,6 +22,9 @@ struct am_state {
+>         /* current and last patch numbers, 1-indexed */
+>         int cur;
+>         int last;
+> +
+> +       /* number of digits in patch filename */
+> +       int prec;
+>  };
+>
+>  /**
+> @@ -26,6 +35,7 @@ static void am_state_init(struct am_state *state)
+>         memset(state, 0, sizeof(*state));
+>
+>         strbuf_init(&state->dir, 0);
+> +       state->prec = 4;
+>  }
+>
+>  /**
+> @@ -111,13 +121,67 @@ static void am_destroy(const struct am_state *state)
+>  }
+>
+>  /**
+> + * Splits out individual patches from `paths`, where each path is either a mbox
+> + * file or a Maildir. Return 0 on success, -1 on failure.
+> + */
+> +static int split_patches_mbox(struct am_state *state, struct string_list *paths)
+> +{
+> +       struct child_process cp = CHILD_PROCESS_INIT;
+> +       struct string_list_item *item;
+> +       struct strbuf last = STRBUF_INIT;
+> +
+> +       cp.git_cmd = 1;
+> +       argv_array_push(&cp.args, "mailsplit");
+> +       argv_array_pushf(&cp.args, "-d%d", state->prec);
+> +       argv_array_pushf(&cp.args, "-o%s", state->dir.buf);
+> +       argv_array_push(&cp.args, "-b");
+> +       argv_array_push(&cp.args, "--");
+> +
+> +       for_each_string_list_item(item, paths)
+> +               argv_array_push(&cp.args, item->string);
+> +
+> +       if (capture_command(&cp, &last, 8))
+> +               return -1;
+> +
+> +       state->cur = 1;
+> +       state->last = strtol(last.buf, NULL, 10);
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * Splits out individual patches, of patch_format, contained within paths.
+> + * These patches will be stored in the state directory, with each patch's
+> + * filename being its index, padded to state->prec digits. state->cur will be
+> + * set to the index of the first patch, and state->last will be set to the
+> + * index of the last patch. Returns 0 on success, -1 on failure.
+> + */
+> +static int split_patches(struct am_state *state, enum patch_format patch_format,
+> +               struct string_list *paths)
+> +{
+> +       switch (patch_format) {
+> +       case PATCH_FORMAT_MBOX:
+> +               return split_patches_mbox(state, paths);
+> +       default:
+> +               die("BUG: invalid patch_format");
+> +       }
+> +       return -1;
+> +}
+> +
+> +/**
+>   * Setup a new am session for applying patches
+>   */
+> -static void am_setup(struct am_state *state)
+> +static void am_setup(struct am_state *state, enum patch_format patch_format,
+> +               struct string_list *paths)
+>  {
+>         if (mkdir(state->dir.buf, 0777) < 0 && errno != EEXIST)
+>                 die_errno(_("failed to create directory '%s'"), state->dir.buf);
+>
+> +       if (split_patches(state, patch_format, paths) < 0) {
+> +               am_destroy(state);
+> +               die(_("Failed to split patches."));
+> +       }
+> +
+>         write_file(am_path(state, "next"), 1, "%d", state->cur);
+>
+>         write_file(am_path(state, "last"), 1, "%d", state->last);
+> @@ -138,13 +202,33 @@ static void am_next(struct am_state *state)
+>   */
+>  static void am_run(struct am_state *state)
+>  {
+> -       while (state->cur <= state->last)
+> +       while (state->cur <= state->last) {
+> +
+> +               /* TODO: Patch application not implemented yet */
+> +
+>                 am_next(state);
+> +       }
 
-To use the new feature, set GIT_SAVE_FETCHED_PACK_TO to a file path and
-git-fetch will do the rest. The resulting pack can be examined with
-git-index-pack or similar tools (although if it's corrupt, custom tools
-can be especially helpful.)
----
- fetch-pack.c                | 44 ++++++++++++++++++++++++++++++++++++++++----
- t/t5551-http-fetch-smart.sh | 12 ++++++++++++
- t/t5601-clone.sh            |  9 +++++++++
- 3 files changed, 61 insertions(+), 4 deletions(-)
+When reviewing the previous patch I did look at this loop for awhile confused,
+if you want to apply patches in am_next(state) and thought there might be
+a better approach.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a912935..fe6ba58 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -684,7 +684,7 @@ static int get_pack(struct fetch_pack_args *args,
- 	const char *argv[22];
- 	char keep_arg[256];
- 	char hdr_arg[256];
--	const char **av, *cmd_name;
-+	const char **av, *cmd_name, *savepath;
- 	int do_keep = args->keep_pack;
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	int ret;
-@@ -708,9 +708,8 @@ static int get_pack(struct fetch_pack_args *args,
- 	cmd.argv = argv;
- 	av = argv;
- 	*hdr_arg = 0;
-+	struct pack_header header;
- 	if (!args->keep_pack && unpack_limit) {
--		struct pack_header header;
--
- 		if (read_pack_header(demux.out, &header))
- 			die("protocol error: bad pack header");
- 		snprintf(hdr_arg, sizeof(hdr_arg),
-@@ -762,7 +761,44 @@ static int get_pack(struct fetch_pack_args *args,
- 		*av++ = "--strict";
- 	*av++ = NULL;
- 
--	cmd.in = demux.out;
-+	savepath = getenv("GIT_SAVE_FETCHED_PACK_TO");
-+	if (savepath) {
-+		struct child_process cmd2 = CHILD_PROCESS_INIT;
-+		const char *argv2[22];
-+		int pipefds[2];
-+		int e;
-+		const char **av2;
-+		cmd2.argv = argv2;
-+		av2 = argv2;
-+		*av2++ = "tee";
-+		if (*hdr_arg) {
-+			/* hdr_arg being nonempty means we already read the
-+			 * pack header from demux, so we need to drop a pack
-+			 * header in place for tee to append to, otherwise
-+			 * we'll end up with a broken pack on disk.
-+			 */
-+			int fp;
-+			struct sha1file *s;
-+			fp = open(savepath, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-+			s = sha1fd_throughput(fp, savepath, NULL);
-+			sha1write(s, &header, sizeof(header));
-+			sha1flush(s);
-+			close(fp);
-+			/* -a is supported by both GNU and BSD tee */
-+			*av2++ = "-a";
-+		}
-+		*av2++ = savepath;
-+		*av2++ = NULL;
-+		cmd2.in = demux.out;
-+		e = pipe(pipefds);
-+		if (e != 0)
-+			die("couldn't make pipe to save pack");
-+		cmd2.out = pipefds[1];
-+		cmd.in = pipefds[0];
-+		if (start_command(&cmd2))
-+			die("couldn't start tee to save a pack");
-+	} else
-+		cmd.in = demux.out;
- 	cmd.git_cmd = 1;
- 	if (start_command(&cmd))
- 		die("fetch-pack: unable to fork off %s", cmd_name);
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 58207d8..bf4640d 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -82,11 +82,23 @@ test_expect_success 'fetch changes via http' '
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'fetch changes via http and save pack' '
-+	echo content >>file &&
-+	git commit -a -m two &&
-+	git push public &&
-+	GIT_SAVE_FETCHED_PACK_TO=saved.pack &&
-+	export GIT_SAVE_FETCHED_PACK_TO &&
-+	(cd clone && git pull) &&
-+	git index-pack clone/saved.pack
-+'
-+
- cat >exp <<EOF
- GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 200
- POST /smart/repo.git/git-upload-pack HTTP/1.1 200
- GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 200
- POST /smart/repo.git/git-upload-pack HTTP/1.1 200
-+GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 200
-+POST /smart/repo.git/git-upload-pack HTTP/1.1 200
- EOF
- test_expect_success 'used upload-pack service' '
- 	sed -e "
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index bfdaf75..73f9e1c 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -40,6 +40,15 @@ test_expect_success C_LOCALE_OUTPUT 'output from clone' '
- 	test $(grep Clon output | wc -l) = 1
- '
- 
-+test_expect_success 'clone allows saving a pack' '
-+	rm -fr dst saved.pack &&
-+	GIT_SAVE_FETCHED_PACK_TO=saved.pack &&
-+	export GIT_SAVE_FETCHED_PACK_TO &&
-+	git clone -n "file://$(pwd)/src" dst >output 2>&1 &&
-+	test -e saved.pack &&
-+	git index-pack saved.pack
-+'
-+
- test_expect_success 'clone does not keep pack' '
- 
- 	rm -fr dst &&
--- 
-2.4.3.369.gda395ba.dirty
+Maybe you want to move this chunk with the TODO into the previous patch,
+so it's clear after reading the documentation of am_run, that the actual am is
+missing there.
+
+
+>
+>         am_destroy(state);
+>  }
+>
+> +/**
+> + * parse_options() callback that validates and sets opt->value to the
+> + * PATCH_FORMAT_* enum value corresponding to `arg`.
+> + */
+> +static int parse_opt_patchformat(const struct option *opt, const char *arg, int unset)
+> +{
+> +       int *opt_value = opt->value;
+> +
+> +       if (!strcmp(arg, "mbox"))
+> +               *opt_value = PATCH_FORMAT_MBOX;
+> +       else
+> +               return -1;
+> +       return 0;
+> +}
+> +
+>  static struct am_state state;
+> +static int opt_patch_format;
+>
+>  static const char * const am_usage[] = {
+>         N_("git am [options] [(<mbox>|<Maildir>)...]"),
+> @@ -152,6 +236,8 @@ static const char * const am_usage[] = {
+>  };
+>
+>  static struct option am_options[] = {
+> +       OPT_CALLBACK(0, "patch-format", &opt_patch_format, N_("format"),
+> +               N_("format the patch(es) are in"), parse_opt_patchformat),
+>         OPT_END()
+>  };
+>
+> @@ -173,8 +259,21 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>
+>         if (am_in_progress(&state))
+>                 am_load(&state);
+> -       else
+> -               am_setup(&state);
+> +       else {
+> +               struct string_list paths = STRING_LIST_INIT_DUP;
+> +               int i;
+> +
+> +               for (i = 0; i < argc; i++) {
+> +                       if (is_absolute_path(argv[i]) || !prefix)
+> +                               string_list_append(&paths, argv[i]);
+> +                       else
+> +                               string_list_append(&paths, mkpath("%s/%s", prefix, argv[i]));
+> +               }
+> +
+> +               am_setup(&state, opt_patch_format, &paths);
+> +
+> +               string_list_clear(&paths, 0);
+> +       }
+>
+>         am_run(&state);
+>
+> --
+> 2.1.4
+>
