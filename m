@@ -1,72 +1,104 @@
-From: Panagiotis Astithas <pastith@gmail.com>
-Subject: [PATCH] Fix power checking on OS X
-Date: Thu, 11 Jun 2015 17:37:25 +0300
-Message-ID: <1434033445-35903-1-git-send-email-pastith@gmail.com>
-Cc: vmiklos@frugalware.org, jon.delStrother@bestbefore.tv,
-	jrnieder@gmail.com, Panagiotis Astithas <pastith@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 16:37:56 2015
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] git-rebase--interactive.sh: add config option for
+ custom instruction format
+Date: Thu, 11 Jun 2015 16:40:35 +0200
+Organization: gmx
+Message-ID: <fc77a32f3e571e012591f992ba37bf5a@www.dscho.org>
+References: <1433986244-76038-1-git-send-email-rappazzo@gmail.com>
+ <1433986244-76038-2-git-send-email-rappazzo@gmail.com>
+ <dabb4e8e3a864b26c002e9ef966bdf85@www.dscho.org>
+ <CANoM8SW13UYazBQgXn6BSDa-rz+jqj19CO3b0K82CV5Ab6HmKw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Mike Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 16:41:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z33cB-0000VC-2u
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 16:37:55 +0200
+	id 1Z33fh-0002mH-T0
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jun 2015 16:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754776AbbFKOhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2015 10:37:50 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:35852 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbbFKOhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2015 10:37:48 -0400
-Received: by wgbgq6 with SMTP id gq6so6440178wgb.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2015 07:37:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=tnt/C6nerFWPwLEkloBPS3Tle09s/UBR+XRLuPPM4E0=;
-        b=RLUfw+VQ42lrYZBBktXdNTlUmJv8IzXJ8JGJRJEuzGGYaLsvxADJyQ6MjMYH6nYVNs
-         4HyBskf2meulxHZ9B19+69JBbOM02cFkKfIaCmO0O6hhZXIpiTUZDi8USOQgvkChHEf/
-         AKL/Rp8hk8wlw45fVFxTgtNblYEMJi5EAE5ZveGnmdw6n6HQ8nKvjPrHjp4b0RUcxxc1
-         JZ0wQME6ISgiROD4TnP9HwToZoqePF7NWcXNuUwy4QraS9cadayL9W2StA2PHmphJk8P
-         QWlVnYn1LEtcsqhbBIrs96mF/4uJ5IKHnF6S+0C2/WTAQo9hISdSmbNeed1ox12Fdu5m
-         Jikg==
-X-Received: by 10.194.157.168 with SMTP id wn8mr16762274wjb.79.1434033467546;
-        Thu, 11 Jun 2015 07:37:47 -0700 (PDT)
-Received: from localhost.localdomain (130.43.92.115.dsl.dyn.forthnet.gr. [130.43.92.115])
-        by mx.google.com with ESMTPSA id pg1sm1364109wjb.39.2015.06.11.07.37.45
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Jun 2015 07:37:46 -0700 (PDT)
-X-Mailer: git-send-email 2.4.1
+	id S1754800AbbFKOl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2015 10:41:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61829 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752301AbbFKOku (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2015 10:40:50 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LpObx-1ZYWKU49ZN-00fE0f; Thu, 11 Jun 2015 16:40:36
+ +0200
+In-Reply-To: <CANoM8SW13UYazBQgXn6BSDa-rz+jqj19CO3b0K82CV5Ab6HmKw@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:/MXNQ41D41hxdNlrGZ7x5N/4U++aAEFtkNrYfkUlPmlh6fRBnHD
+ 4AGWoaHtO1j7bA/yZjTm5+NAalI+mPmmJIoduUAruZvqrde0Ui5WntCl8lXtrc12JQ5h1RQ
+ 3c38uWB4MZPX0lD28pNsbCxhpK0wWL3feuauuoAHLg8ZjgO0uQt3vvtizStUumsyKGwghwP
+ 91OyCbaTjI19vWts5CrDg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271410>
 
-The output of "pmset -g batt" changed at some point from
-"Currently drawing from 'AC Power'" to the slightly different
-"Now drawing from 'AC Power'". Starting the match from "drawing"
-makes the check work in both old and new versions of OS X.
+Hi Mike,
 
-Signed-off-by: Panagiotis Astithas <pastith@gmail.com>
----
- contrib/hooks/pre-auto-gc-battery | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 2015-06-11 16:02, Mike Rappazzo wrote:
+> On Thu, Jun 11, 2015 at 9:40 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>>
+>> On 2015-06-11 03:30, Michael Rappazzo wrote:
+>>
+>>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>>> index dc3133f..6d14315 100644
+>>> --- a/git-rebase--interactive.sh
+>>> +++ b/git-rebase--interactive.sh
+>>> @@ -740,10 +740,19 @@ collapse_todo_ids() {
+>>>  # "pick sha1 fixup!/squash! msg" appears in it so that the latter
+>>>  # comes immediately after the former, and change "pick" to
+>>>  # "fixup"/"squash".
+>>> +#
+>>> +# Note that if the config has specified a custom instruction format
+>>> +# each log message will be re-retrieved in order to normalize the
+>>> +# autosquash arrangement
+>>>  rearrange_squash () {
+>>>       # extract fixup!/squash! lines and resolve any referenced sha1's
+>>> -     while read -r pick sha1 message
+>>> +     while read -r pick sha1 todo_message
+>>>       do
+>>> +             message=${todo_message}
+>>
+>> Why not just leave the `read -r pick sha1 message` as-is and simply write
+>>
+>>                 # For "autosquash":
+>>                 test -z "$format" ||
+>>                 message="$(git log -n 1 --format="%s" $sha1)"
+>>
+>> here?
+> 
+> I did notice that I am not using '$todo_message' in the first loop at
+> all, so I will adjust it.  In the second loop, I do use both the
+> original and the reformatted.  I will apply your suggestion there if
+> applicable.
 
-diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
-index 9d0c2d1..6a2cdeb 100755
---- a/contrib/hooks/pre-auto-gc-battery
-+++ b/contrib/hooks/pre-auto-gc-battery
-@@ -33,7 +33,7 @@ elif grep -q "AC Power \+: 1" /proc/pmu/info 2>/dev/null
- then
- 	exit 0
- elif test -x /usr/bin/pmset && /usr/bin/pmset -g batt |
--	grep -q "Currently drawing from 'AC Power'"
-+	grep -q "drawing from 'AC Power'"
- then
- 	exit 0
- fi
--- 
-2.4.1
+It might make sense to use
+
+                 if test -z "$format"
+                 then
+                         oneline="$message"
+                 else
+                         oneline="$(git log -n 1 --format="%s" $sha1)"
+                 fi
+
+in the instances where you need to compare against the original oneline, and then only adjust the "message" variable name in places that require the original oneline.
+
+>> [The two test functions are] copied almost verbatim, except for the commit message. The code would be easier to maintain if it did not repeat so much code e.g. by refactoring out a function that takes the commit message as a parameter.
+> 
+> Makes sense.  I'll implement that.
+
+Thank you,
+Johannes
