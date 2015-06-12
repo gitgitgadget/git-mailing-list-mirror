@@ -1,97 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 01/12] for-each-ref: extract helper functions out of grab_single_ref()
-Date: Fri, 12 Jun 2015 10:30:32 -0700
-Message-ID: <xmqq616sesw7.fsf@gitster.dls.corp.google.com>
-References: <5579B253.4020804@gmail.com>
-	<1434039003-10928-1-git-send-email-karthik.188@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: git push keeps writing after server failure
+Date: Fri, 12 Jun 2015 10:31:33 -0700
+Message-ID: <CAJo=hJvzjnLFhF4REBzX=pgFamBfu7hZeZidy_8Rmi_DwwR4Nw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 19:30:47 2015
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 12 19:32:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3Sn1-0003Yu-2y
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 19:30:47 +0200
+	id 1Z3SoB-00040g-Uj
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 19:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755179AbbFLRam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 13:30:42 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:37254 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752524AbbFLRae (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 13:30:34 -0400
-Received: by igbsb11 with SMTP id sb11so15327500igb.0
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 10:30:34 -0700 (PDT)
+	id S1752638AbbFLRbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 13:31:55 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:33525 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881AbbFLRby (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 13:31:54 -0400
+Received: by wiwd19 with SMTP id d19so24200328wiw.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 10:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=OlNYlF+wXbDZHll0FjEaWNUovDnCdq+MB1yFFKrN6UI=;
-        b=y0J4Gu35Xv494w7HJEW0SQuReoZeWZwtD0fyU2IWdNC8lEDuAJPESJvuYzTBT46OtU
-         nLpe0MaPzDZXMOlVE3U+fhYxQYlSwfbFAVsPX/Gg8sfF9UkEYgKroQRr+AK8aaY6L96s
-         FL9FG7+BX6yOwUnDbwZZvshN4jedcNiNs3ywU6Y613U+R5txTGDpaWWlbOfUOMNATu4m
-         V2YvOibwJ+MB4+C9ubxf/m6Hu5w/1IjVW8zksQF0wQncwrUnxSZbaTtZ4ZT0n4jeC2aN
-         +UvD+BwJfTVn/b0+zueA3LqlXe5MCP0CvGkzpzjWy4dDyS7AWL/YyjKqd8IukibKG37L
-         7nqA==
-X-Received: by 10.43.84.73 with SMTP id aj9mr17714447icc.69.1434130233987;
-        Fri, 12 Jun 2015 10:30:33 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a12d:7c00:b954:bc66])
-        by mx.google.com with ESMTPSA id g1sm2875116iog.4.2015.06.12.10.30.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Jun 2015 10:30:33 -0700 (PDT)
-In-Reply-To: <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Thu, 11 Jun 2015 21:39:52 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=spearce.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=DqDFVXHbhlAG8G4imOenjQgVV52l6Mw6aI1hrmS3Arc=;
+        b=I3UPgW26ALzaBR0fOZ/0XUjxHX5NLCmT530SU4TRoo3WVpsH+IroexEFLYpR817F3Z
+         PKdI2IuhrOLSZjKVdJBMca7PYXJhiZoaOcodRXJYF/HNB47KKTSrrUQAiF2AQFGPHxkn
+         zdBSiazWkJN0TycvqVHZuySSvMYFYk/oUnQjc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=DqDFVXHbhlAG8G4imOenjQgVV52l6Mw6aI1hrmS3Arc=;
+        b=jP3buhbtTJyD4SDauwoV86UgOEQGI4W0XfBPeHCGnZxkiJxMwTVzLwk/Nnv20jT3YE
+         ctVDWaTi8lgDs8aSkBei0/2srZJSolwTlYAvU6Q1/TczfmCgsI4DzzqBl10IUxKXQ5+3
+         x4BJuHOvstl/DOdymTbXXyh9T2meUTWVVdGen640qbO/aTZnA7fw9E+PzPX4HpKYkWBo
+         wwp4DPyY+Wr61tynmEfawHlbAqbpNZtNw0PitTpG0idUCJnDIOZrr8WMCUA2jBwYxDsd
+         cpAzg2KBfuroKiFRcj+1XNSmw37PKh3CIwbvLcIllby5Bw6uX4eBi7YfqruSs4PbUZBp
+         xvKA==
+X-Gm-Message-State: ALoCoQliEHs14gobkV5qjhB31TkCXJGwm9FUeyuj7Y42aFaNH5+cluREls7M+sZELQ1KsvXPDRrj
+X-Received: by 10.180.14.193 with SMTP id r1mr8845175wic.47.1434130313759;
+ Fri, 12 Jun 2015 10:31:53 -0700 (PDT)
+Received: by 10.28.49.134 with HTTP; Fri, 12 Jun 2015 10:31:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271501>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+I did something stupid like trying to push a copy of WebKit[1] into my
+GitHub account. This is ~5.2 GiB of data, which GitHub prefers not to
+accept. Ok ...
 
-> Extract two helper functions out of grab_single_ref(). Firstly,
-> new_refinfo() which is used to allocate memory for a new refinfo
-> structure and copy the objectname, refname and flag to it.
-> Secondly, match_name_as_path() which when given an array of patterns
-> and the refname checks if the refname matches any of the patterns
-> given while the pattern is a pathname, also supports wildcard
-> characters.
->
-> This is a preperatory patch for restructuring 'for-each-ref' and
-> eventually moving most of it to 'ref-filter' to provide the
-> functionality to similar commands via public API's.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  builtin/for-each-ref.c | 64 ++++++++++++++++++++++++++++++++------------------
->  1 file changed, 41 insertions(+), 23 deletions(-)
->
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index f7e51a7..67c8b62 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -851,6 +851,44 @@ struct grab_ref_cbdata {
->  };
->  
->  /*
-> + * Return 1 if the refname matches with one of the patterns,
+$ git push --all git@github.com:spearce/wk.git
+Counting objects: 2752427, done.
+Delta compression using up to 12 threads.
+Compressing objects: 100% (442684/442684), done.
+remote: fatal: pack exceeds maximum allowed size
+Writing objects: 100% (2752427/2752427), 5.28 GiB | 8.86 MiB/s, done.
+Total 2752427 (delta 2225007), reused 2752427 (delta 2225007)
+fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
 
-s/with //;
+Notice GitHub prints "remote: fatal: pack exceeds maximum allowed
+size". That interrupted my "Writing objects" progress meter, and then
+git push just kept going and wrote really really fast (170 MiB/s!)
+until the entire pack was sent.
 
-> + * otherwise 0.  The patterns can be literal prefix (e.g. a
-> + * refname "refs/heads/master" matches a pattern "refs/heads/")
-> + * or a wildcard (e.g. the same ref matches "refs/heads/m*",too).
-> + */
+A similar thing happens on https:// if the remote HTTP server goes
+away in the middle of sending the pack. Except its slower to send the
+remainder of the pack before git push finally terminates with an
+error.
 
-I know this was my bad suggestion, but "refs/heads/m" can be thought
-of as a "literal prefix" that may match "refs/heads/master"; we do
-not want to make that match, so perhaps "literal" is a bad way to
-say this.  "A pattern can be a path prefix or a worldcard"?
+Shouldn't git push realize its stream is broken and stop writing when
+the peer is all like "uh, no, I'm not going to do that, but thanks for
+trying"?
+
+
+[1] https://webkit.googlesource.com/WebKit/
