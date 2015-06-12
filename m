@@ -1,81 +1,74 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] git-checkout.txt: Document "git checkout <pathspec>"
- better
-Date: Fri, 12 Jun 2015 22:41:26 +0200
-Message-ID: <557B43F6.9070502@web.de>
-References: <5575F948.4060400@web.de> <xmqqioavob7n.fsf@gitster.dls.corp.google.com> <20150612044906.GA17424@odin.ulthar.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] git-rebase--interactive.sh: add config option for custom instruction format
+Date: Fri, 12 Jun 2015 13:56:35 -0700
+Message-ID: <xmqqa8w4d4sc.fsf@gitster.dls.corp.google.com>
+References: <1434075808-43453-1-git-send-email-rappazzo@gmail.com>
+	<1434075808-43453-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, eda@waniasset.com,
-	Duy Nguyen <pclouds@gmail.com>
-To: Scott Schmit <i.grok@comcast.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 22:41:43 2015
+Content-Type: text/plain
+Cc: johannes.schindelin@gmx.de, git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 22:56:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3Vll-0003el-Lh
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 22:41:42 +0200
+	id 1Z3W0I-0001bx-S9
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 22:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbbFLUlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 16:41:36 -0400
-Received: from mout.web.de ([212.227.15.4]:53611 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751850AbbFLUlf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 16:41:35 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MHp7t-1Z29Fq3uPt-003ef1; Fri, 12 Jun 2015 22:41:28
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150612044906.GA17424@odin.ulthar.us>
-X-Provags-ID: V03:K0:GgKTACFPW+o/rRVvf8c7WZi5T1Fa/S0ygE7vVHxNj6ga6spnVl9
- 05odtcZxvxbIsmfwmgNxDVzbHBAqpPqgaNAW1YkC9UJTpzvZJUnp+PZtgyosdttO6hu34kf
- r8lEgMg4ZjxvDZKgA9omK/mnwHTXnl8qpq2TDflz3/SZM2HDjlysHAci7QFJE49X70LboGe
- 1O2cY7xVK7vnpis8KJSBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iVsNYg9B0nI=:J1KHhQ7EUhS1fETu0czu27
- nWJbyyY69OwdUfW9cWEOedq+VkQHfJWR1nkP4Uce81cfhGSGel4lIrK+q3HoQd88nTC8OP21v
- 8FRCfoGzgGFgBR1SppeNXRVpA3DAW3k7U2gJWwnCnEUpJ9O74GOAfMgqNWQb7IxUd21L9/V1T
- K1fsQ56kbtYUN6DnUZMJTbfoVVB/ZNNcu9hZAyyOHM+E+1nHnXXhulh5GSlyL1DMLyXwMr0/z
- JvzIHDG8rCAdKgY+uLWx1mM7F0/GLpUCG+H2L89IZdwcDMA4UwrkXtnmbA7iGoN2oZ60GSuDi
- xM9Xl3JLaofUxFab1yMvT2n4DHZEeP0gGXBbQm2r+uulJLOxc/REbb8g5+RNcbxU0dvS6IPvo
- uAJxgKHUVIYjcprXjMmCnXY8KnGCOZfDHLGijiQQVjbrncaibRbk5tuYl7oZJ5G6M7Kq0Fbc5
- FwOvjiFYCXBHs/6zLL1d6aaoTnSQXqrsl58clH4adkgvJTb3udnB0sGKfeoLreRGrnhvQX0kX
- BnG4/hToHaEthSb7ei+TjfbRZq/FM4Y8XdHyO6dljQgDsEK79UqVdJamQ3BjcZtkrys1G5hs2
- p8E/K/doZ0zrGvGF4Zp3Km6tuBkm9XamgpwtGTsGCRCwgEIKDnIygKQ3i2e6Mvq+m6mp+XudY
- evw4aztSR5Uoh4hg6XeuIa1jk/9RMCpY89sHVI6T8JOBdvbm+l9T10fmHuguguhl/pEg=
+	id S1752956AbbFLU4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 16:56:38 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35212 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751198AbbFLU4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 16:56:37 -0400
+Received: by igbzc4 with SMTP id zc4so19403478igb.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 13:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=mCY5LCCoafOFzCDz0StM+/dPCRO57DlXUowye66zL0o=;
+        b=PRdj7N57+Z6Q3cwr8kPkBXQXr1irL60j9V32m72r4wNif4OyrqzGhrW6rPc/HmzMh/
+         DAe7MZ0XaeAPMg+yvfwvczL6Zq2EUW9zvMCv7d/XqHAhpjxEAWIJuD3nEUB9Ani4I0Kq
+         KQF374O4MBv8kjTG2IImRdFQIF4pOXG9tn14fklrAd5CAa62HHqX1OdYvF1HWU7MzMFM
+         P3Ikp+lWEgAZGaYCck/RzE+JsGkgXwCBMbOmPps0CL/71WB020XSMuqtL9PR7LXBSYdS
+         oWz2cNAEdToWvYoIvr6DokX7Rwoqwd7yJUjMvoszBRp2iEe24E6FZPl8KznYuE4HDZ7O
+         9gCQ==
+X-Received: by 10.42.175.74 with SMTP id az10mr1243835icb.55.1434142597339;
+        Fri, 12 Jun 2015 13:56:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a12d:7c00:b954:bc66])
+        by mx.google.com with ESMTPSA id p17sm1911098igr.15.2015.06.12.13.56.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 12 Jun 2015 13:56:36 -0700 (PDT)
+In-Reply-To: <1434075808-43453-2-git-send-email-rappazzo@gmail.com> (Michael
+	Rappazzo's message of "Thu, 11 Jun 2015 22:23:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271521>
 
-On 2015-06-12 06.49, Scott Schmit wrote:
-> 'git checkout' with <paths> or `--patch` is used to restore modified or
-> deleted paths to their original contents from the index or replace paths
-> with the contents from a named <tree-ish> (most often a commit-ish)
-> instead of switching branches.
--------------------
-I will probably send a patch, the next days or so.
-It feels as if we can split the long sentence, and differntiate
-between the "restore" and "copy content from other tree-sh".
-How about this:
+Michael Rappazzo <rappazzo@gmail.com> writes:
 
+> A config option 'rebase.instructionFormat' can override the
+> default 'oneline' format of the rebase instruction list.
+>
+> Since the list is parsed using the left, right or boundary mark plus
+> the sha1, they are prepended to the instruction format.
+>
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  Documentation/git-rebase.txt |  7 +++++++
+>  git-rebase--interactive.sh   | 20 +++++++++++++++++---
+>  t/t3415-rebase-autosquash.sh | 21 +++++++++++++++++++++
+>  3 files changed, 45 insertions(+), 3 deletions(-)
 
-'git checkout' [--] <pathspec>...::
-	'git checkout' with <paths> is used to restore modified or
-	deleted paths to their original contents from the index.
+Thanks, will replace.
 
-'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
-	'git checkout' with [<tree-ish>] and <paths> or `--patch` is used
-	to replace <paths> with the contents from a named <tree-ish>
-	(most often a commit-ish) instead of switching branches.
-	In this case, the `-b` and `--track` options are
-	meaningless and giving either of them results in an error.  The
-	<tree-ish> argument can be used to specify a specific tree-ish
-	(i.e.  commit, tag or tree) to update the index for the given
-	paths before updating the working tree.
-+
+The autosquash part somehow makes me feel uneasy, though.  The
+feature fundamentally has to have %s as the first thing in the
+format to work, but by making the format overridable, you are
+potentially breaking that feature, aren't you?
