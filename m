@@ -1,115 +1,81 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/8] object_id part 2
-Date: Fri, 12 Jun 2015 20:30:54 +0000
-Message-ID: <20150612203054.GA29305@vauxhall.crustytoothpaste.net>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
- <20150610235114.GA786544@vauxhall.crustytoothpaste.net>
- <20150611000251.GB786544@vauxhall.crustytoothpaste.net>
- <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
- <xmqq4mmef22j.fsf@gitster.dls.corp.google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] git-checkout.txt: Document "git checkout <pathspec>"
+ better
+Date: Fri, 12 Jun 2015 22:41:26 +0200
+Message-ID: <557B43F6.9070502@web.de>
+References: <5575F948.4060400@web.de> <xmqqioavob7n.fsf@gitster.dls.corp.google.com> <20150612044906.GA17424@odin.ulthar.us>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 22:31:08 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, eda@waniasset.com,
+	Duy Nguyen <pclouds@gmail.com>
+To: Scott Schmit <i.grok@comcast.net>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 22:41:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3VbV-0007xW-Hm
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 22:31:05 +0200
+	id 1Z3Vll-0003el-Lh
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 22:41:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbbFLUbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 16:31:00 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:41648 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751896AbbFLUa7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2015 16:30:59 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:81d4:30df:5b4f:7cad])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9D7CB2808F;
-	Fri, 12 Jun 2015 20:30:58 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Content-Disposition: inline
-In-Reply-To: <xmqq4mmef22j.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1753229AbbFLUlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 16:41:36 -0400
+Received: from mout.web.de ([212.227.15.4]:53611 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751850AbbFLUlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 16:41:35 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0MHp7t-1Z29Fq3uPt-003ef1; Fri, 12 Jun 2015 22:41:28
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <20150612044906.GA17424@odin.ulthar.us>
+X-Provags-ID: V03:K0:GgKTACFPW+o/rRVvf8c7WZi5T1Fa/S0ygE7vVHxNj6ga6spnVl9
+ 05odtcZxvxbIsmfwmgNxDVzbHBAqpPqgaNAW1YkC9UJTpzvZJUnp+PZtgyosdttO6hu34kf
+ r8lEgMg4ZjxvDZKgA9omK/mnwHTXnl8qpq2TDflz3/SZM2HDjlysHAci7QFJE49X70LboGe
+ 1O2cY7xVK7vnpis8KJSBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iVsNYg9B0nI=:J1KHhQ7EUhS1fETu0czu27
+ nWJbyyY69OwdUfW9cWEOedq+VkQHfJWR1nkP4Uce81cfhGSGel4lIrK+q3HoQd88nTC8OP21v
+ 8FRCfoGzgGFgBR1SppeNXRVpA3DAW3k7U2gJWwnCnEUpJ9O74GOAfMgqNWQb7IxUd21L9/V1T
+ K1fsQ56kbtYUN6DnUZMJTbfoVVB/ZNNcu9hZAyyOHM+E+1nHnXXhulh5GSlyL1DMLyXwMr0/z
+ JvzIHDG8rCAdKgY+uLWx1mM7F0/GLpUCG+H2L89IZdwcDMA4UwrkXtnmbA7iGoN2oZ60GSuDi
+ xM9Xl3JLaofUxFab1yMvT2n4DHZEeP0gGXBbQm2r+uulJLOxc/REbb8g5+RNcbxU0dvS6IPvo
+ uAJxgKHUVIYjcprXjMmCnXY8KnGCOZfDHLGijiQQVjbrncaibRbk5tuYl7oZJ5G6M7Kq0Fbc5
+ FwOvjiFYCXBHs/6zLL1d6aaoTnSQXqrsl58clH4adkgvJTb3udnB0sGKfeoLreRGrnhvQX0kX
+ BnG4/hToHaEthSb7ei+TjfbRZq/FM4Y8XdHyO6dljQgDsEK79UqVdJamQ3BjcZtkrys1G5hs2
+ p8E/K/doZ0zrGvGF4Zp3Km6tuBkm9XamgpwtGTsGCRCwgEIKDnIygKQ3i2e6Mvq+m6mp+XudY
+ evw4aztSR5Uoh4hg6XeuIa1jk/9RMCpY89sHVI6T8JOBdvbm+l9T10fmHuguguhl/pEg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271520>
+
+On 2015-06-12 06.49, Scott Schmit wrote:
+> 'git checkout' with <paths> or `--patch` is used to restore modified or
+> deleted paths to their original contents from the index or replace paths
+> with the contents from a named <tree-ish> (most often a commit-ish)
+> instead of switching branches.
+-------------------
+I will probably send a patch, the next days or so.
+It feels as if we can split the long sentence, and differntiate
+between the "restore" and "copy content from other tree-sh".
+How about this:
 
 
---J2SCkAp4GZ/dPZZf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+'git checkout' [--] <pathspec>...::
+	'git checkout' with <paths> is used to restore modified or
+	deleted paths to their original contents from the index.
 
-On Thu, Jun 11, 2015 at 01:00:04PM -0700, Junio C Hamano wrote:
-> Fetched that branch, built and found out that it does not pass the
-> tests, at least these (there may be others I do not usually run that
-> are broken by this series; I dunno), so I'll discard what I fetched
-> for now X-<.
->=20
-> Test Summary Report
-> -------------------
-> t5540-http-push-webdav.sh  (Wstat: 256 Tests: 19 Failed: 12)
->   Failed tests:  4-10, 12-15, 17
->   Non-zero exit status: 1
-> t5539-fetch-http-shallow.sh (Wstat: 256 Tests: 3 Failed: 2)
->   Failed tests:  2-3
->   Non-zero exit status: 1
-> t5541-http-push-smart.sh   (Wstat: 256 Tests: 34 Failed: 27)
->   Failed tests:  3-17, 22-29, 31-34
->   Non-zero exit status: 1
-> t5551-http-fetch-smart.sh  (Wstat: 256 Tests: 26 Failed: 17)
->   Failed tests:  4-14, 16, 19-20, 22, 24-25
->   Non-zero exit status: 1
-> t5550-http-fetch-dumb.sh   (Wstat: 256 Tests: 29 Failed: 12)
->   Failed tests:  3, 7-16, 19
->   Non-zero exit status: 1
-
-While I did run the tests between each commit, I hadn't noticed they
-were failing because I don't have Apache installed on my laptop, so they
-were silently skipped.  I'll resubmit with that fixed.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---J2SCkAp4GZ/dPZZf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVe0F+AAoJEL9TXYEfUvaLlp8QAMipKPcPE9OIgAU6impEL1de
-dDzhA4qt1f6ggbSEF3QRw4cxLP9kYpdrph78pqqHNyfrvp2W3MzHG4R7Io2XImsB
-jjYjJ90vbO51X74bepc0dVw3I5pF4NzooEbxrOR78xspns+TaNwBto9QZt+tomC5
-OSN3FQL5gdEKotpF8tmYOXsS7e+FGQUB0qLjRFxaaRIsz37kVJL2NaAkJHJMJYm6
-Oqr14u/s9Mt4G8xEk7UHj+t4vdmzynrsazgh6CetxUAy8rMeadmBz4PefQWZvIeM
-e7lV2MKLU9pg/QFKAnu8FZNbPBDZ5txT/edCT1TlwOezvfe/Wy/5l6Td0ySZCFNc
-rP8yoOkUhoRvuZ2GKhFgDFsBYV5bRyPBQymU1TmdqTzCUtbSV/86FZ1EHo+garDu
-JBFogiw2z2JXVCY5Bu+6vbfPt0GVOxhS8Gpg9F6pHAQe69theiJHHuzc8mYDcycx
-hD582CXo/xlc4CNf21/HAKJCd8CYsqFwwIyPENnBvIGdzJZ/bPmky015hIfMnFro
-d8D8e7f3XWtysn0U1bez+7z+u6mWXtuSZgo6sxvSdQXTUZAp4RYmipoGscGZT2Iu
-idkPX8EtSAqoJLphUKG00SUkAlyV02/0rkw2pCJM+c6CJBB+h93EdwYyzw8659VP
-HlIQDmuqshUnQykm8kfh
-=qpGd
------END PGP SIGNATURE-----
-
---J2SCkAp4GZ/dPZZf--
+'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
+	'git checkout' with [<tree-ish>] and <paths> or `--patch` is used
+	to replace <paths> with the contents from a named <tree-ish>
+	(most often a commit-ish) instead of switching branches.
+	In this case, the `-b` and `--track` options are
+	meaningless and giving either of them results in an error.  The
+	<tree-ish> argument can be used to specify a specific tree-ish
+	(i.e.  commit, tag or tree) to update the index for the given
+	paths before updating the working tree.
++
