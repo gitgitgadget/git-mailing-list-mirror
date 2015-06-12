@@ -1,73 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/8] object_id part 2
-Date: Fri, 12 Jun 2015 15:14:25 -0700
-Message-ID: <xmqqvbesbmm6.fsf@gitster.dls.corp.google.com>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
-	<xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
-	<20150610235114.GA786544@vauxhall.crustytoothpaste.net>
-	<20150611000251.GB786544@vauxhall.crustytoothpaste.net>
-	<xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
-	<xmqq4mmef22j.fsf@gitster.dls.corp.google.com>
-	<20150612203054.GA29305@vauxhall.crustytoothpaste.net>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v4] git-rebase--interactive.sh: add config option for
+ custom instruction format
+Date: Fri, 12 Jun 2015 18:15:44 -0400
+Message-ID: <CANoM8SXQq_zbRui7SHDDAnrgf2VUdCkkJJ7_RHLu355JUzdNxA@mail.gmail.com>
+References: <1434075808-43453-1-git-send-email-rappazzo@gmail.com>
+ <1434075808-43453-2-git-send-email-rappazzo@gmail.com> <xmqqa8w4d4sc.fsf@gitster.dls.corp.google.com>
+ <CANoM8SW-N6_yJ0kgGDuGWB+RS-0d54D4FtaRbKqhsf0_fSeMdw@mail.gmail.com> <xmqqzj44bn1l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sat Jun 13 00:14:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 00:16:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3XDc-0007s6-Lu
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 00:14:33 +0200
+	id 1Z3XFD-00008e-Ed
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 00:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbbFLWO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 18:14:28 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:35980 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752436AbbFLWO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 18:14:27 -0400
-Received: by iecrd14 with SMTP id rd14so895917iec.3
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 15:14:27 -0700 (PDT)
+	id S1755021AbbFLWQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 18:16:07 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:35317 "EHLO
+	mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459AbbFLWQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 18:16:05 -0400
+Received: by oiax69 with SMTP id x69so5843207oia.2
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 15:16:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=+YfobwMNCewlnjx0670ijnEbJYh1wzdaOSwUtbW2Rbo=;
-        b=ajRwzord1u9ApQKr6GP9S8veJ1nrGsAtS6tNHoDzPo4ypRdzr8zeMIXomaHumKMFiu
-         erMTKUintuypxUsGDsvOLTCKqIcUd8fdDVk8SeoGx/LF+XzkG5mt3RSGUZJZwr5chu88
-         PcFfjv5kbZKPPV60xWgxoudyRfvWYLx6vK/cetCN+2X7rK/PEWx0golUwrGxa6tZZoZ3
-         2voC2NymzMKbeWlHvK7GTgeAcpANl29fFz9y0uYkqkJ0WbU+FhDc8+0piuWwxzla+18s
-         /hseV7kyck/cg5SiYo9ZME/699bfHfGO0GqRyyAgGuC/fiEaBAGpf5lwj5yboZJNncI8
-         fBvA==
-X-Received: by 10.42.144.131 with SMTP id b3mr18850713icv.35.1434147267099;
-        Fri, 12 Jun 2015 15:14:27 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a12d:7c00:b954:bc66])
-        by mx.google.com with ESMTPSA id eg3sm2347844igb.0.2015.06.12.15.14.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Jun 2015 15:14:26 -0700 (PDT)
-In-Reply-To: <20150612203054.GA29305@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 12 Jun 2015 20:30:54 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6XwkGAijkdYwfOFQnaxT6Q2dPNqVl8xm8Kxq674yj90=;
+        b=ICCt8HzF7oy16Ky6IdBEHYd216NpVAw6jw6LwXPWE7SlKSqJbHSlmfrcN04jq1Mzb0
+         OZ2EIYP6JrVP41QindV3dW3hOQZFee32Mi8M9aEEmXnOKPiZHgs9rAKmCWKdg/unWHEJ
+         KpI3UeMbt7ASCKG4Km8/XlVxPgvATnPhgxJBFgPgx9nphZgtRb5LzMYGeLExuxvKzqFG
+         Q/FJSB77vSWzibbErkJIT/Z/FDGO3Irp15UMMX0fUsM9qd6EGhBR671ZKURzNrnu3Ftn
+         dXIZ4AEtrQ5EOEBuLrlzmbfInF8Si4tOxkcJigBmd3WfKGHJNpjOK+5wWQopzNuuN9nR
+         +9WQ==
+X-Received: by 10.202.188.139 with SMTP id m133mr13328069oif.73.1434147364724;
+ Fri, 12 Jun 2015 15:16:04 -0700 (PDT)
+Received: by 10.202.204.20 with HTTP; Fri, 12 Jun 2015 15:15:44 -0700 (PDT)
+In-Reply-To: <xmqqzj44bn1l.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271535>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Fri, Jun 12, 2015 at 6:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> But because you overwrite the $message variable you read from the
+> original insn sheet (which uses the custom format) and compute $rest
+> based on the default "%s" and store that in "$1.sq", lines in
+> "$1.sq" do not know anything about the custom format, do they?
+>
+> And then they are injected to appropriate places in "$1.rearranged".
+> Moved lines in the the rearranged result would end up written in the
+> default "%s" format, no?
+>
+> That was the part that made me uneasy.
+>
+> I do not think that is a bug worth fixing, but I view it as a sign
+> that fundamentally the autosquash and the idea of configurable
+> format do not mesh well with each other.
 
-> While I did run the tests between each commit, I hadn't noticed they
-> were failing because I don't have Apache installed on my laptop, so they
-> were silently skipped.  I'll resubmit with that fixed.
+My understanding of the rearrange_squash function is this:
+There are two loops.  The first loop collects the commits which should
+be moved (squashed).  The second loop re-constructs the instruction
+list using the info from the first loop.
 
-It is somewhat strange that _only_ http part had failures like this,
-and is unnerving, too, given that a few people seem to have given at
-least a cursory read over the patches and didn't spot anything
-obviously wrong.
+In the second loop, I changed it to recalculate the presented message
+when the re-ordered commit is added:
 
-Was that because there was a single manual botch, or was that merely
-that other parts of the system do not have sufficient test coverage?
++       if test -n "${format}"
++       then
++            msg_content=$(git log -n 1 --format="${format}" ${squash})
+
+
+That is the "$rest".
+
+I have patched my locally installed `git-rebase--interactive` with
+these changes, and I did see the proper rearrangement of commits with
+the custom formatted message.
