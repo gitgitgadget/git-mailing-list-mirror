@@ -1,108 +1,97 @@
-From: Augie Fackler <augie@google.com>
-Subject: Re: [PATCH v2] fetch-pack: optionally save packs to disk
-Date: Fri, 12 Jun 2015 13:02:43 -0400
-Message-ID: <CAHcr6HYv+3z+QLFqwKxVFNOu0Nk4pfWeVhGe_bxu6Fn=wruD8Q@mail.gmail.com>
-References: <CAGZ79kaS4utvDbXOo7emmSUH6M-8LY-oA65Ss3PLDkFModkbSg@mail.gmail.com>
-	<1434049168-10613-1-git-send-email-augie@google.com>
-	<557A7ABA.2000404@kdbg.org>
-	<xmqqmw05dkxz.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 01/12] for-each-ref: extract helper functions out of grab_single_ref()
+Date: Fri, 12 Jun 2015 10:30:32 -0700
+Message-ID: <xmqq616sesw7.fsf@gitster.dls.corp.google.com>
+References: <5579B253.4020804@gmail.com>
+	<1434039003-10928-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 19:02:50 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 19:30:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3SLy-0000lR-3v
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 19:02:50 +0200
+	id 1Z3Sn1-0003Yu-2y
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 19:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755812AbbFLRCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 13:02:46 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:35909 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222AbbFLRCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 13:02:45 -0400
-Received: by wigg3 with SMTP id g3so22478787wig.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 10:02:44 -0700 (PDT)
+	id S1755179AbbFLRam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 13:30:42 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:37254 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752524AbbFLRae (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 13:30:34 -0400
+Received: by igbsb11 with SMTP id sb11so15327500igb.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 10:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=KNCUGLNqERS5hNBB3enQruRAO137FNaAv9mD4wtMnc4=;
-        b=WTTaWlGqNPKruEVdtT1Ll+Bgez8thiyLpgZCRjA8bEFSODtYq/nUuNJ5Z63Jz60Bxj
-         IY6pDps7lNsscrk7bRTkQ3BJdWR8ouV2CVGI3B36lx1eXzFxn6yIA8jvfE70fochUCTb
-         z2FjxGYF8fpHIrt/UvwXJTRyCI8+RlD5YEypDEs9vKHQ/gBoGIesDBhHxGSMwbWDTi9I
-         ECpragiVVhc2BD/Az1/3FCbvfIqU5pa7r5990VjoZreECFOhLXI1iMAk9MD7cDLDLVFj
-         LWX/DgUmtKVhDk4v5w1BhCczuFWCgyo2PlNd61me5cyrD8xSSNBhL3JtjFRs7Eg1aD7v
-         ElcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=KNCUGLNqERS5hNBB3enQruRAO137FNaAv9mD4wtMnc4=;
-        b=QUlrR15zgdXa2fUvmRKK0YFqeK4p4x9++W1ot32E/fVmMRqk6R6YOqbxmf5v1ZGzvt
-         hzptF0FCmBf7cZLU5dLwlPqb+2YRhH5NXHF6SI/hXX/3kE+yON3Y0Gk3Qky5/n2QZUjK
-         11SMB5i7JqguhyizHDryPGqK/evGcUBm8XP+6i2y7vWzfhn4d5Wssur44APrWC2s66Sr
-         NhI4UolCWOkOPyRlxeedo6WSdBcHQ+hygxfCUG5Hv+mke/TfD6FeLytHG+XBAr0GeHds
-         FgjbzjkdbLG9i9o2SmlNNiWlb016PXZdnNMScJhrfusPzVke2tkF//wB+puFmplsyhpw
-         c6oQ==
-X-Gm-Message-State: ALoCoQm14cK/F6YqmC/jwfpiYP47SD8lDGojf73IAY30/Hu4t/TVV6rjHKaTlvCWcFRSi/WaGdEq
-X-Received: by 10.194.185.236 with SMTP id ff12mr28513733wjc.134.1434128563886;
- Fri, 12 Jun 2015 10:02:43 -0700 (PDT)
-Received: by 10.28.146.143 with HTTP; Fri, 12 Jun 2015 10:02:43 -0700 (PDT)
-In-Reply-To: <xmqqmw05dkxz.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=OlNYlF+wXbDZHll0FjEaWNUovDnCdq+MB1yFFKrN6UI=;
+        b=y0J4Gu35Xv494w7HJEW0SQuReoZeWZwtD0fyU2IWdNC8lEDuAJPESJvuYzTBT46OtU
+         nLpe0MaPzDZXMOlVE3U+fhYxQYlSwfbFAVsPX/Gg8sfF9UkEYgKroQRr+AK8aaY6L96s
+         FL9FG7+BX6yOwUnDbwZZvshN4jedcNiNs3ywU6Y613U+R5txTGDpaWWlbOfUOMNATu4m
+         V2YvOibwJ+MB4+C9ubxf/m6Hu5w/1IjVW8zksQF0wQncwrUnxSZbaTtZ4ZT0n4jeC2aN
+         +UvD+BwJfTVn/b0+zueA3LqlXe5MCP0CvGkzpzjWy4dDyS7AWL/YyjKqd8IukibKG37L
+         7nqA==
+X-Received: by 10.43.84.73 with SMTP id aj9mr17714447icc.69.1434130233987;
+        Fri, 12 Jun 2015 10:30:33 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a12d:7c00:b954:bc66])
+        by mx.google.com with ESMTPSA id g1sm2875116iog.4.2015.06.12.10.30.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 12 Jun 2015 10:30:33 -0700 (PDT)
+In-Reply-To: <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Thu, 11 Jun 2015 21:39:52 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271500>
 
-On Fri, Jun 12, 2015 at 11:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> What is the problem with the current fetch-pack implementation? Does
->> it remove a bogus packfile after download? Does it abort during
->> download when it detects a broken packfile? Does --keep not do what
->> you need?
->
-> Doesn't the incoming data still go through the fattening process,
-> though?  You will not be able to inspect the byte-for-byte identical
-> stream that came out of the server end whose packfile generation
-> logic is suspect.
->
-> For the purpose of debugging your own new server implementation, it
-> might be a better approach to capture the pack as it comes out at
-> the server end, instead of doing it at the fetch-pack end as it
-> comes in. But the approach to add this "dump" at the fetch-pack side
-> is that it gives us a tool to diagnose problems that come from
-> broken server (re)implementations by other people we cannot debug,
-> i.e. "you are spewing this corrupt pack against this request; here
-> is a dump we took to help you go fix your server".
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-*nod* that's an important part of it. Also, in the small-pull case,
-the pack data gets sent to unpack-objects anyway, so git is never
-saving the packfile anywhere in that case (I think it's for a pull of
-less than 100 objects, which characterizes most of my reduced test
-cases for weirdness.)
-
+> Extract two helper functions out of grab_single_ref(). Firstly,
+> new_refinfo() which is used to allocate memory for a new refinfo
+> structure and copy the objectname, refname and flag to it.
+> Secondly, match_name_as_path() which when given an array of patterns
+> and the refname checks if the refname matches any of the patterns
+> given while the pattern is a pathname, also supports wildcard
+> characters.
 >
->> Instead of your approach (which forks off tee to dump a copy of the
->> packfile), would it not be simpler to add an option --debug-pack
->> (probably not the best name) that skips the cleanup step when a broken
->> packfile is detected and prints the name of the downloaded packfile?
+> This is a preperatory patch for restructuring 'for-each-ref' and
+> eventually moving most of it to 'ref-filter' to provide the
+> functionality to similar commands via public API's.
 >
-> As long as we need to debug a thin pack that comes from the other
-> end, that approach is not sufficient, I am afraid.
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  builtin/for-each-ref.c | 64 ++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 41 insertions(+), 23 deletions(-)
 >
-> I anticipated that you'd have problem with its use of "tee".  It
-> probably can do this internally with async interface, perhaps,
-> instead?
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index f7e51a7..67c8b62 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -851,6 +851,44 @@ struct grab_ref_cbdata {
+>  };
+>  
+>  /*
+> + * Return 1 if the refname matches with one of the patterns,
 
-I'd be happy to make such changes if that's the consensus and someone
-can give me pointers. My C is admittedly pretty rusty from non-use,
-and I'm not at all familiar with git's codebase, but I'll at least
-try.
+s/with //;
 
-Thanks!
+> + * otherwise 0.  The patterns can be literal prefix (e.g. a
+> + * refname "refs/heads/master" matches a pattern "refs/heads/")
+> + * or a wildcard (e.g. the same ref matches "refs/heads/m*",too).
+> + */
+
+I know this was my bad suggestion, but "refs/heads/m" can be thought
+of as a "literal prefix" that may match "refs/heads/master"; we do
+not want to make that match, so perhaps "literal" is a bad way to
+say this.  "A pattern can be a path prefix or a worldcard"?
