@@ -1,146 +1,108 @@
-From: Scott Schmit <i.grok@comcast.net>
-Subject: Re: [PATCH] git-checkout.txt: Document "git checkout <pathspec>"
- better
-Date: Fri, 12 Jun 2015 00:49:06 -0400
-Message-ID: <20150612044906.GA17424@odin.ulthar.us>
-References: <5575F948.4060400@web.de>
- <xmqqioavob7n.fsf@gitster.dls.corp.google.com>
+From: Anish R Athalye <aathalye@mit.edu>
+Subject: git_config_set(?) adding and removing creates extraneous lines
+Date: Fri, 12 Jun 2015 04:59:06 +0000
+Message-ID: <26A24781-3981-44B6-8174-09532D93774C@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=Windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, eda@waniasset.com,
-	Duy Nguyen <pclouds@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 06:57:40 2015
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 12 07:04:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3H28-0002Dv-Ed
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 06:57:36 +0200
+	id 1Z3H8q-0005g9-6P
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 07:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbbFLE5X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2015 00:57:23 -0400
-Received: from resqmta-po-01v.sys.comcast.net ([96.114.154.160]:59270 "EHLO
-	resqmta-po-01v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750722AbbFLE5W (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2015 00:57:22 -0400
-X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Jun 2015 00:57:22 EDT
-Received: from resomta-po-02v.sys.comcast.net ([96.114.154.226])
-	by resqmta-po-01v.sys.comcast.net with comcast
-	id fGp51q0014tLnxL01GpBUE; Fri, 12 Jun 2015 04:49:11 +0000
-Received: from odin.ulthar.us ([IPv6:2001:470:8c86:0:225:64ff:fe8b:c2f2])
-	by resomta-po-02v.sys.comcast.net with comcast
-	id fGp81q0052Ekl4801Gp9Ck; Fri, 12 Jun 2015 04:49:10 +0000
-Received: from odin.ulthar.us (localhost [127.0.0.1])
-	by odin.ulthar.us (8.14.8/8.14.5) with ESMTP id t5C4n7fA017813;
-	Fri, 12 Jun 2015 00:49:07 -0400
-Received: (from draco@localhost)
-	by odin.ulthar.us (8.14.8/8.14.8/Submit) id t5C4n68A017812;
-	Fri, 12 Jun 2015 00:49:06 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqioavob7n.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1434084551;
-	bh=ozIviwQi7wuHwdIjNXpNTdm2+PUVo8Ta4wEHmxEaD54=;
-	h=Received:Received:Received:Received:Date:From:To:Subject:
-	 Message-ID:MIME-Version:Content-Type;
-	b=PHAgkJcKaECwwpb+mkZ9eG169Cvi+HLzHYYbj0C0kAzIxhVjnUmbBSltRanfRR/du
-	 Mh4i3j9M4W9tMxqicXsWkWjr0Pz3iq3akeexX6cDgUPvQiuuBdpIm4FikSA+gDN/0q
-	 Jjh5UNlMvHISHyTHn4MGLRIArJdVPN3g9HVde0xOfNGjWpDEaK5a7OlswP/fh5d+of
-	 lNdlR9CDpMS//HTuXY2NjF5O08IZlaNCeT6TKWN5ySB0nIC/OxI/4Q2COWWn9DyPIp
-	 Y/AghsmGdqHk7aA7sscCrUIEsSYrAIsI/MtKR98M4Y3ptLhObGOTqC/cBvlUNJOzS+
-	 yxq701RasgXZA==
+	id S1752063AbbFLFE1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2015 01:04:27 -0400
+Received: from dmz-mailsec-scanner-4.mit.edu ([18.9.25.15]:58606 "EHLO
+	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751037AbbFLFEY convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 01:04:24 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Jun 2015 01:04:24 EDT
+X-AuditID: 1209190f-f79936d000000d16-ca-557a671c36ae
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+	(using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by dmz-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id F9.A9.03350.C176A755; Fri, 12 Jun 2015 00:59:08 -0400 (EDT)
+Received: from outgoing-exchange-3.mit.edu (outgoing-exchange-3.mit.edu [18.9.28.13])
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id t5C4x8H6008643
+	for <git@vger.kernel.org>; Fri, 12 Jun 2015 00:59:08 -0400
+Received: from OC11EXEDGE3.EXCHANGE.MIT.EDU (oc11exedge3.exchange.mit.edu [18.9.3.21])
+	by outgoing-exchange-3.mit.edu (8.13.8/8.12.4) with ESMTP id t5C4x7MC000741
+	for <git@vger.kernel.org>; Fri, 12 Jun 2015 00:59:08 -0400
+Received: from OC11EXCAS21.exchange.mit.edu (18.9.1.46) by
+ OC11EXEDGE3.EXCHANGE.MIT.EDU (18.9.3.21) with Microsoft SMTP Server (TLS) id
+ 14.3.158.1; Fri, 12 Jun 2015 00:59:03 -0400
+Received: from OC11EXPO29.exchange.mit.edu ([169.254.1.147]) by
+ OC11EXCAS21.exchange.mit.edu ([18.9.1.46]) with mapi id 14.03.0158.001; Fri,
+ 12 Jun 2015 00:59:07 -0400
+Thread-Topic: git_config_set(?) adding and removing creates extraneous lines
+Thread-Index: AQHQpMyCpxEi6wsBvU2tbTOSmFpk6w==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [76.217.209.111]
+Content-ID: <B9B0176D7107594A985C3D80597C737B@exchange.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrHKsWRmVeSWpSXmKPExsUixCmqrCuTXhVq8H63hUXXlW4mB0aPz5vk
+	AhijuGxSUnMyy1KL9O0SuDJ23ZrGWNDHVfFtew9TA+Nj9i5GTg4JAROJR98msUDYYhIX7q1n
+	62Lk4hASWMwksXL5CxYI5xajxIk/+6Cch4wSc961MoK0CAlsZ5R4ecITIrGaUeLRv6dsIAk2
+	AQ2JV3vesHYxcnCICOhL9F0QBQkLC7hLzJ0/H2y1iICPxL83T5khbD2J1UtawVpZBFQlzi36
+	DDafV8BKYsfr12A1jEDnfT+1hgnEZhYQl7j1ZD4TxNmCEotm72GGeeHfrodsELaSxPbtu5kh
+	6g0k3p+bD2XbSzTP3Qc1R1ti2UKI+bxAc07OfMIygVF8FpIVs5C0z0LSPgtJ+ywk7QsYWVcx
+	yqbkVunmJmbmFKcm6xYnJ+blpRbpmujlZpbopaaUbmIER5sk/w7GbweVDjEKcDAq8fAmaFWF
+	CrEmlhVX5h5ilORgUhLlnZ8CFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCa2ILlONNSaysSi3K
+	h0lJc7AoifNu+sEXIiSQnliSmp2aWpBaBJOV4eBQkuBdkQrUKFiUmp5akZaZU4KQZuLgBBnO
+	AzT8H8hi3uKCxNzizHSI/ClGRSlxXmmQZgGQREZpHlwvLBm+YhQHekWY9yZIFQ8wkcJ1vwIa
+	zAQ0eCFzOcjgkkSElFQDo8zSb7Uhnb8+njeROmxWZ9hqfHRTQsf6S3Gsa0taJgZ8ftY5z7qh
+	9uHH5FsfN74TkTp82uv0y3U5qetOiifNk0v2vltvuN93SfG1I+l/J3ltW/b5f3lN 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271470>
 
-On Wed, Jun 10, 2015 at 08:05:32AM -0700, Junio C Hamano wrote:
-> Torsten B=F6gershausen <tboegi@web.de> writes:
->=20
-> > git checkout <pathspec> can be used to revert changes in the workin=
-g tree.
->=20
-> I somehow thought that concensus in the recent thread was that
-> "restore", not "revert", is the more appropriate wording?
->=20
-> And I think that is indeed sensible because "revert" (or "reset")
-> already means something else in Git (and in other systems), while
-> "restore" does not have a confusing connotation.  It can only mean
-> "overwrite with a pristine copy", which is what the command is
-> about.
->=20
-> > -git-checkout - Checkout a branch or paths to the working tree
-> > +git-checkout - Switch branches or reverts changes in the working t=
-ree
->=20
-> Two verbs in different moods; either "switch branches or restore
-> changes" or "switches branches or restores changes" would fix that,
-> and judging from "git help" output, I think we want to go with the
-> former, i.e. "switch branches or restore changes".
->=20
-> > =20
-> >  SYNOPSIS
-> >  --------
-> > @@ -83,7 +83,8 @@ Omitting <branch> detaches HEAD at the tip of the=
- current branch.
-> >  	When <paths> or `--patch` are given, 'git checkout' does *not*
-> >  	switch branches.  It updates the named paths in the working tree
-> >  	from the index file or from a named <tree-ish> (most often a
-> > -	commit).  In this case, the `-b` and `--track` options are
-> > +	commit).  Changes in files are discarded and deleted files are
-> > +	restored.
->=20
-> I see we are suffering from the common disease of giving one
-> explanation and then realizing that first explanation can be
-> misread, clarifying it by more explanation, after reading the
-> updated text three times.  Let's instead try to clarify the first
-> explanation to make it harder to misread.
->=20
-> In this case, "updates X from Y" is what causes misunderstanding, as
-> "updates" does not necessarily mean "restores with the original".
->=20
-> How about this?
->=20
->   	'git checkout' with <paths> or `--patch` is used to restore
->         modified or deleted paths to their original contents from
->         the index file or from a named <tree-ish> (most often a
->         commit) without switching branches.
+Hi all,
 
-I think these changes would improve the above:
+This is a very minor bug I noticed (perhaps not even worth fixing becau=
+se it=92s not harmful), but I thought that I=92d point it out.
 
-s/index file/index/
-- index file is implementation; the glossary only defines "index"
+I found that if I used `git branch --edit-description` to add and remov=
+e descriptions a couple times, it would accumulate extra lines in my `.=
+git/config` instead of removing lines altogether or combining things wh=
+ere appropriate.
 
-s/or from/or replace paths with the contents from/
-- the latter case isn't always restoration, if <tree-ish> doesn't come
-  from an ancestor of HEAD (so I don't like "restore" in the summary
-  either)
+To reproduce:
 
-s/without switching/instead of switching/
-- 'without' implies it makes sense to restore/replace with switching
-  branches, but we've chosen not to.  (I then waste time trying to
-  understand that)
+    git init
+    git commit --allow-empty -m "Initial commit=94
+    git branch --edit-description master # and type in some text
+    git branch --edit-description master # and remove all the text
+    git branch --edit-description master # and type in some text again
 
-s/commit/commit-ish/
-- tags are also tree-ishes, though you could argue this case is less
-  "often"
+Now, when running `tail -n 3 .git/config`, you see:
 
-leaving:
+    [branch "master"]
+    [branch "master"]
+            description =3D asdf\n
 
-'git checkout' with <paths> or `--patch` is used to restore modified or
-deleted paths to their original contents from the index or replace path=
-s
-with the contents from a named <tree-ish> (most often a commit-ish)
-instead of switching branches.
+This doesn=92t seem right. And if the steps are repeated, the junk accu=
+mulates.
+Btw, the output of `git --version` is "git version 2.2.1=94.
 
-does a sha1 count as "named"? Maybe s/named //.
 
---=20
-Scott Schmit
+Is this something that we want to fix?
+
+If yes, and if someone can point me in the right direction, I=92d be ha=
+ppy to try to work on it and send in a patch. I think the issue is in t=
+he implementation of `git_config_set` and company, but I haven=92t real=
+ly investigated it very deeply.
+
+
+
+Regards,
+Anish
