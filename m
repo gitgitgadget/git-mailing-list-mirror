@@ -1,78 +1,76 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v7 03/12] for-each-ref: change comment in ref_sort
-Date: Fri, 12 Jun 2015 23:59:42 +0530
-Message-ID: <557B2516.7020609@gmail.com>
-References: <5579B253.4020804@gmail.com>
- <1434039003-10928-1-git-send-email-karthik.188@gmail.com>
- <1434039003-10928-3-git-send-email-karthik.188@gmail.com>
- <xmqqy4joddul.fsf@gitster.dls.corp.google.com> <557B1B60.9020002@gmail.com>
- <xmqqpp50dcqy.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git push keeps writing after server failure
+Date: Fri, 12 Jun 2015 14:50:16 -0400
+Message-ID: <20150612185016.GA25214@peff.net>
+References: <CAJo=hJvzjnLFhF4REBzX=pgFamBfu7hZeZidy_8Rmi_DwwR4Nw@mail.gmail.com>
+ <20150612181256.GB9242@peff.net>
+ <20150612182045.GA23698@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 20:30:22 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 12 20:50:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3Tic-0002AU-P7
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 20:30:19 +0200
+	id 1Z3U25-00025B-LP
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 20:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751222AbbFLS3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 14:29:47 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:35518 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750698AbbFLS3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 14:29:46 -0400
-Received: by pabli10 with SMTP id li10so7980635pab.2
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 11:29:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=KXEV+SwZsZ2G2K/DxSqgeJ3PTQPtY4TrCDcEx1H71Fc=;
-        b=w0RikqnJG2/QhIqr94mgfPSBAC86tjC3NwkHTgEBIcCW0KTNSJbGtoG9smykGnnSHU
-         3wMIh6qA3gKwynkNU7Wfe3MNuC9OIJqSLrHHno/xRC2L2gDQ9czlAJ8KG9pDRM3eCkO/
-         8Ofe7/It1D/vwGoryCCtm6/5zSCH+AeSv0kwcdWf1mLAXrfwwnYSYEXLGY3yKUSJpz3X
-         BXRgqpZiKmdZWN2aoCi8s9f647BMSHINffFUqi1wJ7g4na7QKYLDOOdGph4y/VJ4TrpJ
-         cNWbCcQJYu3WkWHIJiPybqqxiTuSG0YU5ruucv4oETvmm5ONLqLr8IOGxkdNcctzqxg3
-         cg4A==
-X-Received: by 10.70.92.4 with SMTP id ci4mr25404721pdb.33.1434133786363;
-        Fri, 12 Jun 2015 11:29:46 -0700 (PDT)
-Received: from [192.168.0.101] ([106.51.130.23])
-        by mx.google.com with ESMTPSA id ot3sm4355570pbb.4.2015.06.12.11.29.44
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Jun 2015 11:29:45 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-In-Reply-To: <xmqqpp50dcqy.fsf@gitster.dls.corp.google.com>
+	id S1755928AbbFLSuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 14:50:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45373 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755884AbbFLSuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 14:50:19 -0400
+Received: (qmail 3747 invoked by uid 102); 12 Jun 2015 18:50:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 Jun 2015 13:50:19 -0500
+Received: (qmail 16838 invoked by uid 107); 12 Jun 2015 18:50:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 Jun 2015 14:50:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jun 2015 14:50:16 -0400
+Content-Disposition: inline
+In-Reply-To: <20150612182045.GA23698@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271512>
 
-On 06/12/2015 11:34 PM, Junio C Hamano wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>> What change since 9f613dd do you have in mind, exactly, though?
->>
->> Well initially the atoms were indexed into used_atom array, which
->> later was removed. Hence the comment becomes obsolete.
->
-> Later in which commit?  In builtin/for-each-ref.c in the version
-> after applying patches 1-3 of this series on top of master, I still
-> see used_atom[] array there, so...?
->
+On Fri, Jun 12, 2015 at 02:20:45PM -0400, Jeff King wrote:
 
-Uh! My bad.
-Ignore this! I think I got confused, On having a look now that patch is
-not needed. Sorry.
+> > > Notice GitHub prints "remote: fatal: pack exceeds maximum allowed
+> > > size". That interrupted my "Writing objects" progress meter, and then
+> > > git push just kept going and wrote really really fast (170 MiB/s!)
+> > > until the entire pack was sent.
+> > 
+> > Sounds like it's writing to a closed fd, then. Which makes sense; I
+> > think we should hang up the socket after writing the "fatal" message
+> > above.
+> 
+> For reference, here's the patch implementing the max-size check on the
+> server. It's on my long list of patches to clean up and send to the
+> list; I never did this one because of the unpack-objects caveat
+> mentioned below.
 
--- 
-Regards,
-Karthik
+I did a little more digging on this.
+
+With the max-size patch, we seem to reliably notice the problem and die
+of EPIPE (you can bump receive.maxsize to something reasonable like 1m).
+Pushing to GitHub[1], though, sometimes dies and sometimes ends up
+pushing the whole pack over the ssh session. It seems racy.
+
+I've confirmed in both cases that the receive-pack process dies on our
+server. So presumably the problem is in between; it might be an ssh
+weirdness, or it might be a problem with our proxy layer. I'll open an
+issue internally to look at that.
+
+-Peff
+
+[1] I can tweak the max-size on a per-repo basis, which is how I did my
+    testing without waiting for 2G to transfer. If anybody is interested
+    in diagnosing the client side of this, I am happy to drop the
+    max-size on a test repo for you. But AFAICT it is not a client
+    problem at all.
