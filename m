@@ -1,67 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 03/12] for-each-ref: change comment in ref_sort
-Date: Fri, 12 Jun 2015 11:04:37 -0700
-Message-ID: <xmqqpp50dcqy.fsf@gitster.dls.corp.google.com>
-References: <5579B253.4020804@gmail.com>
-	<1434039003-10928-1-git-send-email-karthik.188@gmail.com>
-	<1434039003-10928-3-git-send-email-karthik.188@gmail.com>
-	<xmqqy4joddul.fsf@gitster.dls.corp.google.com>
-	<557B1B60.9020002@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git push keeps writing after server failure
+Date: Fri, 12 Jun 2015 14:12:56 -0400
+Message-ID: <20150612181256.GB9242@peff.net>
+References: <CAJo=hJvzjnLFhF4REBzX=pgFamBfu7hZeZidy_8Rmi_DwwR4Nw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 20:04:45 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 12 20:13:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3TJs-00005V-OV
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 20:04:45 +0200
+	id 1Z3TRw-0003NC-7z
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 20:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754918AbbFLSEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 14:04:41 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:36455 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753027AbbFLSEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 14:04:39 -0400
-Received: by igbpi8 with SMTP id pi8so16865551igb.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 11:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=1oKGHp97q9OZiJ/GXFhy7r3eRdJ7Zquk3R1cfItmYxs=;
-        b=qbYQKkn4/3wzgRcX8xBnv/XspD4XKkd/ab/F87FK86BzUT4t5ZhLvG5Yu6oC2xYHXu
-         f5pSiUxbiaAHtET2Sm0W5OqThZ9tTecxcYnN3ewrFEqEU7TBMaOXSyVUKRd+0friPL/k
-         O/Cl4MvKIRO11DNnXyLd49Zqv0zh6iU8+nfZNr+azgJ0d7Eg8bKRu/GDt3XgAzdSZC9p
-         TT+wPYBf7+sMIgXpV97ienHxbDoQ0481T8sqVcs5ik1O0FV2uDoDXZQPYngxV0gWlcBo
-         L1qgNOr71ytxczNSSG06KKQxlwm1nqwc/hioWQyDsmmUvy6omZ4eGCwnbY+kJkoYK7V9
-         JCsA==
-X-Received: by 10.43.1.193 with SMTP id nr1mr17866248icb.67.1434132278975;
-        Fri, 12 Jun 2015 11:04:38 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a12d:7c00:b954:bc66])
-        by mx.google.com with ESMTPSA id b73sm2555928iob.25.2015.06.12.11.04.38
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Jun 2015 11:04:38 -0700 (PDT)
-In-Reply-To: <557B1B60.9020002@gmail.com> (Karthik Nayak's message of "Fri, 12
-	Jun 2015 23:18:16 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754497AbbFLSM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 14:12:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45359 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750898AbbFLSM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 14:12:58 -0400
+Received: (qmail 2073 invoked by uid 102); 12 Jun 2015 18:12:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 Jun 2015 13:12:58 -0500
+Received: (qmail 16667 invoked by uid 107); 12 Jun 2015 18:13:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 Jun 2015 14:13:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jun 2015 14:12:56 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJvzjnLFhF4REBzX=pgFamBfu7hZeZidy_8Rmi_DwwR4Nw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271508>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, Jun 12, 2015 at 10:31:33AM -0700, Shawn Pearce wrote:
 
->> What change since 9f613dd do you have in mind, exactly, though?
->
-> Well initially the atoms were indexed into used_atom array, which
-> later was removed. Hence the comment becomes obsolete.
+> I did something stupid like trying to push a copy of WebKit[1] into my
+> GitHub account. This is ~5.2 GiB of data, which GitHub prefers not to
+> accept. Ok ...
 
-Later in which commit?  In builtin/for-each-ref.c in the version
-after applying patches 1-3 of this series on top of master, I still
-see used_atom[] array there, so...?
+Heh, yeah. We cap it at 2G, and if you are going to have a WebKit fork,
+we prefer you fork the actual WebKit repo so it shares objects (though
+if you have a need to create a new fork network, let me know).
+
+> $ git push --all git@github.com:spearce/wk.git
+> Counting objects: 2752427, done.
+> Delta compression using up to 12 threads.
+> Compressing objects: 100% (442684/442684), done.
+> remote: fatal: pack exceeds maximum allowed size
+> Writing objects: 100% (2752427/2752427), 5.28 GiB | 8.86 MiB/s, done.
+> Total 2752427 (delta 2225007), reused 2752427 (delta 2225007)
+> fatal: The remote end hung up unexpectedly
+> fatal: The remote end hung up unexpectedly
+> 
+> Notice GitHub prints "remote: fatal: pack exceeds maximum allowed
+> size". That interrupted my "Writing objects" progress meter, and then
+> git push just kept going and wrote really really fast (170 MiB/s!)
+> until the entire pack was sent.
+
+Sounds like it's writing to a closed fd, then. Which makes sense; I
+think we should hang up the socket after writing the "fatal" message
+above.
+
+> Shouldn't git push realize its stream is broken and stop writing when
+> the peer is all like "uh, no, I'm not going to do that, but thanks for
+> trying"?
+
+Hrm. I have this old patch, which was originally written so that "kill
+$(pidof git-push)" did not let a rogue pack-objects continue writing.
+
+I'm not sure if that's what is going on here, though. I think we connect
+pack-objects directly to the socket. So it sounds more like
+"pack-objects --stdout" needs to know to stop writing when writes to the
+socket fail.
+
+-- >8 --
+Date: Sun, 3 Apr 2011 20:53:08 -0400
+Subject: [PATCH] send-pack: kill pack-objects helper on signal or exit
+
+We spawn an external pack-objects process to actually send
+objects to the remote side. If we are killed by a signal
+during this process, the pack-objects will keep running and
+complete the push, which may surprise the user. We should
+take it down when we go down.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ send-pack.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/send-pack.c b/send-pack.c
+index 2a64fec..bdf723b 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -67,6 +67,7 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
+ 	po.in = -1;
+ 	po.out = args->stateless_rpc ? -1 : fd;
+ 	po.git_cmd = 1;
++	po.clean_on_exit = 1;
+ 	if (start_command(&po))
+ 		die_errno("git pack-objects failed");
+ 
+-- 
+2.4.2.752.geeb594a
