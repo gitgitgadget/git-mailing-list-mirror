@@ -1,115 +1,78 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/8] object_id part 2
-Date: Fri, 12 Jun 2015 22:27:13 +0000
-Message-ID: <20150612222713.GD29305@vauxhall.crustytoothpaste.net>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
- <20150610235114.GA786544@vauxhall.crustytoothpaste.net>
- <20150611000251.GB786544@vauxhall.crustytoothpaste.net>
- <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
- <xmqq4mmef22j.fsf@gitster.dls.corp.google.com>
- <20150612203054.GA29305@vauxhall.crustytoothpaste.net>
- <xmqqvbesbmm6.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Allow to control where the replace refs are looked for
+Date: Fri, 12 Jun 2015 15:29:45 -0700
+Message-ID: <xmqqmw04blwm.fsf@gitster.dls.corp.google.com>
+References: <xmqq1thigtsd.fsf@gitster.dls.corp.google.com>
+	<1434058499-15018-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="W5WqUoFLvi1M7tJE"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 00:27:23 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Jun 13 00:29:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3XQ2-0004fj-Nx
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 00:27:23 +0200
+	id 1Z3XSS-0005mU-PC
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 00:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754815AbbFLW1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 18:27:18 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:41739 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754692AbbFLW1R (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2015 18:27:17 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:81d4:30df:5b4f:7cad])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A65492808F;
-	Fri, 12 Jun 2015 22:27:16 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Content-Disposition: inline
-In-Reply-To: <xmqqvbesbmm6.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1754967AbbFLW3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 18:29:49 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:33435 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754923AbbFLW3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 18:29:47 -0400
+Received: by igbpi8 with SMTP id pi8so20806690igb.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 15:29:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=gqCVMUiYcaNTq8PhGJ/AZr8qXccKpj4LOXUWcXjd4nU=;
+        b=n8cva1YGBpFHZ+/4LzStUPrnTITJWppKfFfWTcOtw6Dm8z/IyYKGaKWHi8iOV7oAww
+         /pUUKZmBU4/5Ci8a4Q5J4lB6ETmvpB05DPHOwHv9GEkD5MeEKMOACbJsTLIyiqzp50u1
+         0RonsjL/ERDB+QO7i1eOnPtbzJkDp0uxVk4XV0bAhlqSAibZATVAxTFqvMXLyHPCYe3U
+         LUmxkT36easiAhdTwsBbWrv8l+xes/dpATx6ys8mwV6uLEpw1dEC7J5pcEIo0kmbzIbY
+         ChqIPNnJAwmQoQVf6OYlk86q0a8HWDlZZHJACCXD9JWZgFGye6W0sglsc8lZOeAj+u+Y
+         9r3Q==
+X-Received: by 10.107.31.134 with SMTP id f128mr21058614iof.19.1434148187239;
+        Fri, 12 Jun 2015 15:29:47 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a12d:7c00:b954:bc66])
+        by mx.google.com with ESMTPSA id b74sm2146194ioe.6.2015.06.12.15.29.46
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 12 Jun 2015 15:29:46 -0700 (PDT)
+In-Reply-To: <1434058499-15018-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Fri, 12 Jun 2015 06:34:59 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271539>
 
+Mike Hommey <mh@glandium.org> writes:
 
---W5WqUoFLvi1M7tJE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It can be useful to have grafts or replace refs for specific use-cases while
+> keeping the default "view" of the repository pristine (or with a different
+> set of grafts/replace refs).
+>
+> It is possible to use a different graft file with GIT_GRAFT_FILE, but while
+> replace refs are more powerful, they don't have an equivalent override.
+>
+> Add a GIT_REPLACE_REF_BASE environment variable to control where git is
+> going to look for replace refs.
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>  builtin/replace.c | 6 +++---
+>  cache.h           | 2 ++
+>  environment.c     | 6 ++++++
+>  log-tree.c        | 5 +++--
+>  refs.c            | 3 ++-
+>  5 files changed, 16 insertions(+), 6 deletions(-)
 
-On Fri, Jun 12, 2015 at 03:14:25PM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > While I did run the tests between each commit, I hadn't noticed they
-> > were failing because I don't have Apache installed on my laptop, so they
-> > were silently skipped.  I'll resubmit with that fixed.
->=20
-> It is somewhat strange that _only_ http part had failures like this,
-> and is unnerving, too, given that a few people seem to have given at
-> least a cursory read over the patches and didn't spot anything
-> obviously wrong.
->=20
-> Was that because there was a single manual botch, or was that merely
-> that other parts of the system do not have sufficient test coverage?
+Thanks.
 
-It appears that I broke the change in "parse_fetch: convert to use
-struct object_id" which modifies remote-curl.c, so I think it's a single
-manual botch.  I'm going to rework that patch anyway since Michael said
-that he didn't like the idea of parse_oid_hex as it stands, so it will
-end up being mostly moot.
-
-I mostly introduced it in an effort to avoid having to use
-GIT_SHA1_HEXSZ repeatedly throughout small blocks of code, but since we
-don't use assignments in conditionals, it doesn't seem useful as it
-currently stands.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---W5WqUoFLvi1M7tJE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVe1zAAAoJEL9TXYEfUvaLmD8QAIvns4cSNagALcWwb4Esn+gf
-oeDcstBuRY+EE45ohnGvGbNaexnWOtNpED7eirR08c9hcd4zbNh6RnJpRF4wgvVi
-TARglqgf8pgIcYT3UKsFIpKmZ1pAa0MXFEJ4zT4R+71MEXLhpHRDslIcufqxSEnf
-hetwj5p3p2N48qNH9rc3GQLc3EmKLSQ38vPS0SmFTE+2LYiq+CcG2+z985fSRBIG
-3/HGUC2P/CKk3qVINvRUIYDmJLsh+WW0qOlod6puGU09tIAUXCrGqryKCdPL+Qn0
-Zrp2BLbwH8ck/AsRrHQ7gbQ8x7cXoYHyoBpqat+YAUGGpLobzP9e2fMyS8vUJrSb
-4+7PyPjmFUIDuoyXkhjukGEYlBs4U+mG69xXV7rJlE4quaQcG7PGi69hv7EyIs3P
-9g8MGRyfabMwiMjcsahmKZRO/RGZbxKWBaFF7YyvhEs1LGEkyJsZGAbTiF8pCsI7
-xTL/KYPB/askADDcwCTOZgsDxAu8AaQZdVOu8ltwxRMjPPqmXXsQZ6NmL80JfR8V
-4sOuQIlz4hP6Ob9E5qXhfEXK0g0G3vdi40GWHCuC2RGFYJAudhgGgZJVV6WrG5q5
-VHccIgJipeRVXL2uIUANwIMnde6c6m0O9Tz5uVJo8bzaF8bHcYb3Ixe+SsRg3f6e
-4yguzypbbDLFwricWelD
-=kWVi
------END PGP SIGNATURE-----
-
---W5WqUoFLvi1M7tJE--
+"git am" seems to be seeing a patch based on a stale base.  What
+branch did you base this on?
