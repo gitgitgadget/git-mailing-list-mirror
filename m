@@ -1,206 +1,123 @@
-From: Bernd Naumann <bernd@kr217.de>
-Subject: Re: Need some help on patching buildin-files // was: Looking for
- feedback and help with a git-mirror for local usage
-Date: Fri, 12 Jun 2015 12:52:44 +0200
-Message-ID: <557AB9FC.30102@kr217.de>
-References: <5579F318.7050503@kr217.de>
+From: "Andres G. Aragoneses" <knocte@gmail.com>
+Subject: RFC: reverse history tree, for faster & background clones
+Date: Fri, 12 Jun 2015 13:26:42 +0200
+Message-ID: <mlefli$h6v$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 12 12:52:57 2015
+X-From: git-owner@vger.kernel.org Fri Jun 12 13:26:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3MZx-0000ai-H3
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 12:52:54 +0200
+	id 1Z3N6u-0001J2-G6
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 13:26:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753632AbbFLKws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 06:52:48 -0400
-Received: from zero.kr217.de ([88.198.92.197]:42333 "EHLO zero.kr217.de"
+	id S1751846AbbFLL0w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2015 07:26:52 -0400
+Received: from plane.gmane.org ([80.91.229.3]:51522 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753486AbbFLKwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 06:52:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zero.kr217.de (Postfix) with ESMTP id A5905294111
-	for <git@vger.kernel.org>; Fri, 12 Jun 2015 12:52:46 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at zero.kr217.de
-Received: from zero.kr217.de ([127.0.0.1])
-	by localhost (zero.kr217.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B9yTuOrkXpeq for <git@vger.kernel.org>;
-	Fri, 12 Jun 2015 12:52:45 +0200 (CEST)
-Received: from [192.168.254.12] (x4d07fd76.dyn.telefonica.de [77.7.253.118])
-	(Authenticated sender: bernd@kr217.de)
-	by zero.kr217.de (Postfix) with ESMTPSA id CA4B429410A
-	for <git@vger.kernel.org>; Fri, 12 Jun 2015 12:52:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <5579F318.7050503@kr217.de>
+	id S1750894AbbFLL0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 07:26:51 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Z3N6m-0001Dy-TY
+	for git@vger.kernel.org; Fri, 12 Jun 2015 13:26:49 +0200
+Received: from 46.24.152.62 ([46.24.152.62])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 13:26:48 +0200
+Received: from knocte by 46.24.152.62 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Jun 2015 13:26:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 46.24.152.62
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271480>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello git devs,
 
-Hello again,
+I'm toying with an idea of an improvement I would like to work on, but=20
+not sure if it would be desirable enough to be considered good to merge=
+=20
+in the end, so I'm requesting your opinions before I work on it.
 
-After digging the code I may have got a clue where to start but I
-would  still appreciate some help from a developer, cause I have never
-learned to write C. (Some basics at school which happened over a
-decade ago.)
+AFAIU git stores the contents of a repo as a sequence of patches in the=
+=20
+=2Egit metadata folder. So then let's look at an example to illustrate =
+my=20
+point more easily.
 
-Currently I have questions on:
+Repo foo contains the following 2 commits:
 
-* How to patch clone: would cmd_clone() a good place? Or are there
-other calls which might be better. I think about to insert the check
-if a mirror will be setup or just updated, right after dest_exists.
+1 file, first commit, with the content:
++First Line
++Second Line
++Third Line
 
-* Is it correct that a new config key just get specified via a config
-file or by cmd_init_db()? So later, a check on that value is enough?
-Would be the section 'user' a good place for this key or is it
-something that would get a own/new section?
+2nd and last commit:
+  First Line
+  Second Line
+-Third Line
++Last Line
 
-* Have I missed a relevant file?
+Simple enough, right?
 
-git/git.c
-git/builtin/clone.c
-git/builtin/fetch.c
-git/builtin/push.c
-git/buildin/remote.c
-along with the translation and Documentation, of course.
+But, what if we decided to store it backwards in the metadata?
+
+So first commit would be:
+1 file, first commit, with the content:
++First Line
++Second Line
++Last Line
+
+2nd commit:
+  First Line
+  Second Line
+-Last Line
++Third Line
 
 
-If you have some comments on that, please share these with me, and if
-you are interested in helping me to got this implemented, I would
-appreciate that :)
+This would bring some advantages, as far as I understand:
 
-Sincere regards,
-Bernd
+1. `git clone --depth 1` would be way faster, and without the need of=20
+on-demand compressing of packfiles in the server side, correct me if I'=
+m=20
+wrong?
+2. `git clone` would be able to allow a "fast operation, complete in th=
+e=20
+background" mode that would allow you to download the first snapshot of=
+=20
+the repo very quickly, so that the user would be able to start working=20
+on his working directory very quickly, while a "background job" keeps=20
+retreiving the history data in the background.
+3. Any more advantages you see?
 
 
-On 06/11/2015 10:44 PM, Bernd Naumann wrote:
-> Hello,
-> 
-> I have came up with an idea # Yep I know, exactly that kind of 
-> e-mail everyone wants to read ;) and I'm working currently on a 
-> shell-prototype to face the following situation and problem and 
-> need some feedback/advise:
-> 
-> 
-> I often build in example 'openwrt' with various build-scripts which
-> depends heavily on a fresh or clean environment and they omit many
-> sources via `git clone`, which results sometimes in over 100 MB of
-> traffic just for one build. /* Later needed .tar.gz source archives
-> are stored in a symlinked download directory which is supported by
-> 'openwrt/.config' since a few months... to reduce network traffic.
-> */
-> 
-> My connection to the internet is not the fastest in world and 
-> sometimes unstable, so I wanted to have some kind of local bare 
-> repository mirror, which is possible with `git clone --mirror`.
-> 
-> From these repositories I can later clone from, by calling `git 
-> clone --reference /path/to.git <url>`, but I do not wish to edit 
-> all the build-scripts and Makefiles.
-> 
-> 
-> So I wrote a git wrapper script (`$HOME/bin/git`), which checks if
->  `git` was called with 'clone', and if so, then it will first 
-> clones the repository as a mirror and then clones from that local 
-> mirror. If the mirror already exists, then it will only be updated 
-> (`git remote update`). This works for now.
-> 
-> /* To be able to have multiple identical named repositories, the 
-> script builds paths like:
-> 
-> ~/var/cache/gitmirror $ find . -name "*.git"
-> 
-> ./github.com/openwrt-management/packages.git 
-> ./github.com/openwrt/packages.git 
-> ./github.com/openwrt-routing/packages.git ./nbd.name/packages.git 
-> ./git.openwrt.org/packages.git ./git.openwrt.org/openwrt.git
-> 
-> It strips the schema from the url and replaces ":" with "/" in
-> case a port is specified or a svn link is provided. The remaining
-> should be a valid linux file and directory structure, if I guess 
-> correctly!? */
-> 
-> Ok, so far, so good, but the implementation of the current 
-> shell-prototype looks way too hacky [0] and I have found some edge
->  cases on which my script will fail: The script depends on the
-> fact that the last, or at least the second last argument is a
-> valid git-url, but the following is a valid call, too :
-> 
-> `git --no-pager \ clone git@github.com:openwrt/packages.git 
-> openwrt-packages --depth 1`
-> 
-> But this is not valid:
-> 
-> `git clone https://github.com/openwrt/packages.git --reference 
-> packages.git packages-2` or `git clone --verbose 
-> https://github.com/openwrt/packages.git packages-2 --reference 
-> packages.git`
-> 
-> 
-> I found out that git-clone actually also can only make a guess
-> what is the url and what not.
-> 
-> 
-> 
-> However, now I'm looking for a way to write something like a 
-> submodul for git which will check for a *new* git-config value like
-> "user.mirror" (or something...) which points to a directory, and
-> will be used to clone from, and in case of 'fetch', 'pull' or 
-> 'remote update' update the mirror first, and then the update of
-> the current working directory is gotten from that mirror. (And in
-> case of 'push' the mirror would be updated from the working dir,
-> of course.)
-> 
-> 
-> I would like to hear some toughs on that, and how I could start to
->  build this submodul, or if someone more talented, then I am, is 
-> willed to spent some time on that. If requested/wished I could
-> send a link to the shell-prototype.
-> 
-> 
-> [0] For a reason I have to do ugly things like `$( eval exec 
-> /usr/bin/git clone --mirror $REPO_URL ) 2>&1 >/dev/null` cause 
-> otherwise in case of just `eval exec` the script stops after 
-> execution, and without `eval exec` arguments with spaces will 
-> interpreted as seperated arguments, which is no good, because of 
-> failing .
-> 
-> 
-> Thanks for your time! Yours faithfully, Bernd -- To unsubscribe 
-> from this list: send the line "unsubscribe git" in the body of a 
-> message to majordomo@vger.kernel.org More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> 
+I'm aware that this would have also downsides, but IMHO the benefits=20
+would outweigh them. The ones I see:
+1. Everytime a commit is made, a big change of the history-metadata tre=
+e=20
+would need to happen. (Well but this is essentially equivalent to=20
+enabling an INDEX in a DB, you make WRITES more expensive in order to=20
+improve the speed of READS.)
+2. Locking issues? I imagine that rewriting the indexes would open=20
+longer time windows to have locking issues, but I'm not an expert in=20
+this, please expand.
+3. Any more downsides you see?
 
-- -- 
-Bernd Naumann <bernd@kr217.de>
 
-PGP:   0xA150A04F via pool.sks-keyservers.net
-XMPP:  bn@weimarnetz.de
+I would be glad for any feedback you have. Thanks, and have a great day=
+!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+   Andr=C3=A9s
 
-iQIcBAEBAgAGBQJVern8AAoJEEYW3OihUKBPLPYP/2RYrqH7qtH9ZVCc+dN6kEMb
-KzEFiSF7Vg7EIcSYIeyw7SS8M/3QyBHmdClq6Gcgby7yAYuSsXcY4V0xja12cI2g
-glH+5kXfZg11shJdi530GGLNVyTaLhhNUxqmrB56FHP31nOeFGEYzLhDs16mh4z8
-2YiN4wT62O8R/yjRReaeRBe2cTniga1ZeDVFgYGE2atWmGOb2DLEfDyxAWIUeu0r
-RfLF7NPb5ZLAlSBfifmMeRJ7Fu8Ewf0m3ESZoBlD3+CW68k7vefTo+iVvmRJnkEl
-0p89IJMCdPEwTsXwXUMnI0xcofM9tLthGQ+x482rQTxUYvkzQnjT2vBc/DTe08Ok
-+xS4JaZl+22IlyRt8KFJOLHhZfuZgYOlGqoHqxbIPZyNvR+AtuGRSGdGEJoc2ACb
-aij+smTlN3k8X3DZVGPNlsNaFCRVgGin2Yad4pOIk/mlkR6xx3LfFB6qv8mSoj0z
-kmFDPAdYWlGps+hPeM76Ql9UN+wgcD+1y2TpMJGyUy4YoGmOQq4TWO1JMUVjWWie
-ie5Yf/JD8fopmrV3BM2sT7gLmi75zpsc3Em/i6S5zUIhZ0v+UfNE5dSim0KcAgyS
-I0apoXZZw3UjaTilmd3h/ecuTa1lBygNucnGnDfm3NAGYDWjy0LR8Mu7+2rBogvk
-JCF1hf3qka80GEwsZqu+
-=3nO1
------END PGP SIGNATURE-----
+--=20
