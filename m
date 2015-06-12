@@ -1,65 +1,70 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: Bug when doing make test using root user
-Date: Fri, 12 Jun 2015 21:17:13 +0800
-Message-ID: <CACRoPnSeVWpj0-=Ei39UsKfe7m7UwkRFChkb7KAGoZRoZs23rw@mail.gmail.com>
-References: <28c940a4a806c8da130403068cf4c0ef@lenhof.eu.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: strange result of `git describe` while bisecting
+Date: Fri, 12 Jun 2015 15:17:40 +0200
+Message-ID: <87ioatvzez.fsf@igel.home>
+References: <20150612130027.GA19711@frolo.macqel>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jean-Yves LENHOF <jean-yves@lenhof.eu.org>
-X-From: git-owner@vger.kernel.org Fri Jun 12 15:17:24 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Philippe De Muyter <phdm@macq.eu>
+X-From: git-owner@vger.kernel.org Fri Jun 12 15:17:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3Opn-00065b-Rt
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 15:17:24 +0200
+	id 1Z3OqD-0006Il-7g
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jun 2015 15:17:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755489AbbFLNRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 09:17:19 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:34494 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755250AbbFLNRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 09:17:14 -0400
-Received: by lbcmx3 with SMTP id mx3so19907461lbc.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 06:17:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HLPKrdzzEb6O2jGkWlT00eDo7zVaN+RFZdTNkzCCA3o=;
-        b=h1prEHHmuBiYf166ZmfONvwlSh1Xs2lg7i6muNQk7Adjei8BAUz+Jml4mj8KMeH1lg
-         azPXdSXxb7j3ovmz0YPEvCvnq4QwWbwv/jI2OmPz3+1ZKqXyJb51bgQfSzSteQSdl5kI
-         a41VSXkyNrNsLRQESH2EQdQji/U9HzMSjLqiAw/wVn/zIOGkW8bQv4PzMEONrpLpvom1
-         K8P6TbFXOZ4sotHLnBZvLhFYYbSJn8TIpRSjywqaG067K6SHl5rlHknY4Zh/2ywaZNpc
-         kWqx5uLstOLFEX18Q/N8uGSchNp8HC4rq1bZ8KREEFzovc0tsBVg1/wmXPoIk1jsUqrF
-         OClQ==
-X-Received: by 10.112.142.232 with SMTP id rz8mr14633621lbb.74.1434115033312;
- Fri, 12 Jun 2015 06:17:13 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Fri, 12 Jun 2015 06:17:13 -0700 (PDT)
-In-Reply-To: <28c940a4a806c8da130403068cf4c0ef@lenhof.eu.org>
+	id S1755390AbbFLNRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2015 09:17:44 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:58546 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753633AbbFLNRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 09:17:43 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3m7Mzn5Cpfz3hjNm;
+	Fri, 12 Jun 2015 15:17:41 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3m7Mzn4SRkzvjDK;
+	Fri, 12 Jun 2015 15:17:41 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id rkCqWpDcCCF0; Fri, 12 Jun 2015 15:17:40 +0200 (CEST)
+X-Auth-Info: +Y2zi77mboBlwztCCXT8ojgfXomwqMGKeRwTgGgAXwdH8/rVZ9pgCG2HdV26Dy9M
+Received: from igel.home (ppp-46-244-170-253.dynamic.mnet-online.de [46.244.170.253])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Fri, 12 Jun 2015 15:17:40 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 8FC252C2480; Fri, 12 Jun 2015 15:17:40 +0200 (CEST)
+X-Yow: Are you selling NYLON OIL WELLS??  If so, we can use TWO DOZEN!!
+In-Reply-To: <20150612130027.GA19711@frolo.macqel> (Philippe De Muyter's
+	message of "Fri, 12 Jun 2015 15:00:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271486>
 
-On Fri, Jun 12, 2015 at 5:43 PM, Jean-Yves LENHOF
-<jean-yves@lenhof.eu.org> wrote:
-> Hi,
->
-> I tried to compile git 2.4.3 using root on a server. It failed on test 41 of
-> t0302-credential-store.sh
-> In fact even if we remove read access on a directory, root still can acces
-> this directory.
-> Using a not privilegied user make the test work.
-> Perhaps the test should be adapted to this corner case.
-> Trace below.
+Philippe De Muyter <phdm@macq.eu> writes:
 
-Right, the test should have the SANITY prereq.
+> I am bisecting the kernel tree between v3.17 and v3.18, and 'git describe'
+> is used by the kernel compilation process.  Why do I get a version
+> v3.17-rc7-1626-ga4b4a2b, that seems outside of [v3.17..v3.18] ?
 
-Thanks for reporting.
+Because your are testing a side branch that is based on v3.17-rc7.
 
-Regards,
-Paul
+3.17-rc7 --- 3.17 ------- 3.18
+           \           /
+            \----- * -/
+                   ^
+You are here ------^
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
