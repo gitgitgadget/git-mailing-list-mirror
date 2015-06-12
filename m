@@ -1,85 +1,91 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH v4] git-rebase--interactive.sh: add config option for
- custom instruction format
-Date: Fri, 12 Jun 2015 18:15:44 -0400
-Message-ID: <CANoM8SXQq_zbRui7SHDDAnrgf2VUdCkkJJ7_RHLu355JUzdNxA@mail.gmail.com>
-References: <1434075808-43453-1-git-send-email-rappazzo@gmail.com>
- <1434075808-43453-2-git-send-email-rappazzo@gmail.com> <xmqqa8w4d4sc.fsf@gitster.dls.corp.google.com>
- <CANoM8SW-N6_yJ0kgGDuGWB+RS-0d54D4FtaRbKqhsf0_fSeMdw@mail.gmail.com> <xmqqzj44bn1l.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Johannes=20L=C3=B6thberg?= <johannes@kyriasis.com>
+Subject: [PATCH v2] upload-pack: Fail if cloning empty namespace
+Date: Sat, 13 Jun 2015 00:17:16 +0200
+Message-ID: <1434147436-21272-1-git-send-email-johannes@kyriasis.com>
+References: <1434140115-3139-1-git-send-email-johannes@kyriasis.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 00:16:12 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Johannes=20L=C3=B6thberg?= <johannes@kyriasis.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 13 00:17:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3XFD-00008e-Ed
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 00:16:11 +0200
+	id 1Z3XGT-0000dw-3h
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 00:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755021AbbFLWQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2015 18:16:07 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:35317 "EHLO
-	mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbbFLWQF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2015 18:16:05 -0400
-Received: by oiax69 with SMTP id x69so5843207oia.2
-        for <git@vger.kernel.org>; Fri, 12 Jun 2015 15:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6XwkGAijkdYwfOFQnaxT6Q2dPNqVl8xm8Kxq674yj90=;
-        b=ICCt8HzF7oy16Ky6IdBEHYd216NpVAw6jw6LwXPWE7SlKSqJbHSlmfrcN04jq1Mzb0
-         OZ2EIYP6JrVP41QindV3dW3hOQZFee32Mi8M9aEEmXnOKPiZHgs9rAKmCWKdg/unWHEJ
-         KpI3UeMbt7ASCKG4Km8/XlVxPgvATnPhgxJBFgPgx9nphZgtRb5LzMYGeLExuxvKzqFG
-         Q/FJSB77vSWzibbErkJIT/Z/FDGO3Irp15UMMX0fUsM9qd6EGhBR671ZKURzNrnu3Ftn
-         dXIZ4AEtrQ5EOEBuLrlzmbfInF8Si4tOxkcJigBmd3WfKGHJNpjOK+5wWQopzNuuN9nR
-         +9WQ==
-X-Received: by 10.202.188.139 with SMTP id m133mr13328069oif.73.1434147364724;
- Fri, 12 Jun 2015 15:16:04 -0700 (PDT)
-Received: by 10.202.204.20 with HTTP; Fri, 12 Jun 2015 15:15:44 -0700 (PDT)
-In-Reply-To: <xmqqzj44bn1l.fsf@gitster.dls.corp.google.com>
+	id S1754927AbbFLWRZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2015 18:17:25 -0400
+Received: from theos.kyriasis.com ([212.71.254.33]:50671 "EHLO
+	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754826AbbFLWRY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2015 18:17:24 -0400
+Received: from theos.kyriasis.com (localhost [127.0.0.1]);
+	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 08921bbb;
+	for <git@vger.kernel.org>;
+	Fri, 12 Jun 2015 22:17:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; s=theos; bh=mMo69H7kWFo
+	i5T3FPLNG3ZwWe7k=; b=KvLmgv652jaI7VGBpMN9UAFuFO+6MJG717pHqYIXEO2
+	JUtQrbzIjbH6XTHxgt2CJSOmTFgCPsB9XnUGkqTPNHfPvU+E7SPpb70glHP2dx17
+	tGxYwKZ0xQK2lJ97TqaD1C2j5+Hoo/AH9bs9Qys6x8eixBIpzXmJDkpRyIeiXFEs
+	=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=theos; b=nwJt+
+	GehSFn1RLRrxFfxLX8T479LYQxSgcwxyxgW+4uE0UUxqJI3zFV5nj8FikdhuoX7U
+	2RIlqeAZyDywoJBIKI5NVqd0ysi0listXXa/H/N6C2e/Z0DClxlgMrOUPKMupDuK
+	ZtQaxOotsDd3GHmbFqLK8CqAs6K3400rpHf6PQ=
+Received: from leeloo.kyriasis.com (m77-218-249-155.cust.tele2.se [77.218.249.155]);
+	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id f0b1121e;
+	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
+	Fri, 12 Jun 2015 22:17:22 +0000 (UTC)
+X-Mailer: git-send-email 2.4.2
+In-Reply-To: <1434140115-3139-1-git-send-email-johannes@kyriasis.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271536>
 
-On Fri, Jun 12, 2015 at 6:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> But because you overwrite the $message variable you read from the
-> original insn sheet (which uses the custom format) and compute $rest
-> based on the default "%s" and store that in "$1.sq", lines in
-> "$1.sq" do not know anything about the custom format, do they?
->
-> And then they are injected to appropriate places in "$1.rearranged".
-> Moved lines in the the rearranged result would end up written in the
-> default "%s" format, no?
->
-> That was the part that made me uneasy.
->
-> I do not think that is a bug worth fixing, but I view it as a sign
-> that fundamentally the autosquash and the idea of configurable
-> format do not mesh well with each other.
+Git should fail to clone if trying to clone from an non-existing
+ref namespace, since it's the same as a non-existing repository
 
-My understanding of the rearrange_squash function is this:
-There are two loops.  The first loop collects the commits which should
-be moved (squashed).  The second loop re-constructs the instruction
-list using the info from the first loop.
+Signed-off-by: Johannes L=C3=B6thberg <johannes@kyriasis.com>
+---
 
-In the second loop, I changed it to recalculate the presented message
-when the re-ordered commit is added:
+Changes since v1:
 
-+       if test -n "${format}"
-+       then
-+            msg_content=$(git log -n 1 --format="${format}" ${squash})
+* Fixed the namespace check, since I apparently forgot to check with a
+  bare repo in my last test. D'oh.
 
+Two other options for this would be to either add a=20
+get_git_namespace_len() function and use that, or a is_namespaced()=20
+functon. But since it's only used here for now at least it feels simple=
+r=20
+to not bloat the codabase with another function which has no other use.
 
-That is the "$rest".
+ upload-pack.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-I have patched my locally installed `git-rebase--interactive` with
-these changes, and I did see the proper rearrangement of commits with
-the custom formatted message.
+diff --git a/upload-pack.c b/upload-pack.c
+index 89e832b..99fb271 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -778,6 +778,10 @@ static void upload_pack(void)
+=20
+ 	head_ref_namespaced(find_symref, &symref);
+=20
++	if (strcmp(get_git_namespace(), "") && !symref.items) {
++		die("git upload-pack: tried to clone from empty namespace");
++	}
++
+ 	if (advertise_refs || !stateless_rpc) {
+ 		reset_timeout();
+ 		head_ref_namespaced(send_ref, &symref);
+--=20
+2.4.2
