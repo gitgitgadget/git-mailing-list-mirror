@@ -1,103 +1,145 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 01/11] t6301: for-each-ref tests for ref-filter APIs
-Date: Sun, 14 Jun 2015 01:48:16 +0530
-Message-ID: <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v2 04/11] for-each-ref: add '--points-at' option
+Date: Sun, 14 Jun 2015 01:48:19 +0530
+Message-ID: <1434226706-3764-4-git-send-email-karthik.188@gmail.com>
 References: <CAOLa=ZRA7jVhs-NixjP+EFqfBNwLEfU-WgEMMQzb5NC+HZDYiw@mail.gmail.com>
+ <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 13 22:18:41 2015
+X-From: git-owner@vger.kernel.org Sat Jun 13 22:18:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3rt2-0003GV-Rm
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:18:41 +0200
+	id 1Z3rtB-0003KI-Em
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:18:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751970AbbFMUSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 16:18:37 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:33631 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751184AbbFMUSg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2015 16:18:36 -0400
-Received: by pdjn11 with SMTP id n11so45020175pdj.0
-        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:18:35 -0700 (PDT)
+	id S1752343AbbFMUSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 16:18:47 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35191 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbbFMUSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2015 16:18:44 -0400
+Received: by pacyx8 with SMTP id yx8so41102661pac.2
+        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lRH8RQCxoIQ+V77IHCGD3V8yVa+daW2u/tjuEgw8SAM=;
-        b=P1zI2Y7mcbhy+NTIMFPEZsHz1JH1YOcenMk3K7uxQgY7Q9TWx/f39+CTCCc2p5Si3I
-         ZdECPPGDLJY/WWgKIfhjPvQKkSaJ7pzHCN+m3mrZM/A1+NxtAn7WWs8HhsO3Ce9aQBQf
-         ZMTz9v3AHz/V6+lMaQT9XtVh2e1doqSKHz9XJCNblfLgyfOwEJkzGI363CvSitCKQQ4I
-         oDFa3m07sp35QCNLheQdKSGwo0rV7biCUAUVXoKDDC/Ex8a2VrIbizLqdjcTgkcI5dBQ
-         wpnSeUKYbG0uk1Fm1NmWMUKUvUFiKzXZKDU2+X7payq3D+0mBAHDc13zUU0RK1Rn23m7
-         iq7Q==
-X-Received: by 10.70.125.129 with SMTP id mq1mr34696930pdb.19.1434226715569;
-        Sat, 13 Jun 2015 13:18:35 -0700 (PDT)
+        bh=78pwJr5mscvwIjxK3luYlnrVGRzSXXMFmhOb8YX9fJg=;
+        b=FbBZm/fN38LLHjJHW4SmDsUcS4yNIYdzTNl4oq9RDJFTm+gkslicSQ2pYuFjmX92O8
+         zy0WuWGubJGoFpKwVlxB3UDTP+C8mQ0NXX4j7In9ZtwhqLSpMPEdvJJ/qoXeNOhypq4Z
+         W9X6vxv6CHDOkQZ1HIWe2XJvICPqnFcUc2Vyt5XPyWFesN6fu4pgDSjZsrdzDcG33Swc
+         m69Epto4a1ouvWBBfcvgkmMgVTBDaVdjsDbhjnBsjrTdF7cJfIspu3BoEzCPCBoqT/hb
+         mKyi1nbSgCQnB/L8bG/1D+sxDwTY3Tgf63FhaDllR7KskisftjflHFBG91p7Jvlb+DDT
+         42ZA==
+X-Received: by 10.70.22.235 with SMTP id h11mr34425688pdf.135.1434226724128;
+        Sat, 13 Jun 2015 13:18:44 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.18.33
+        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.18.42
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 13 Jun 2015 13:18:34 -0700 (PDT)
+        Sat, 13 Jun 2015 13:18:43 -0700 (PDT)
 X-Mailer: git-send-email 2.4.3.435.g2403634.dirty
-In-Reply-To: <CAOLa=ZRA7jVhs-NixjP+EFqfBNwLEfU-WgEMMQzb5NC+HZDYiw@mail.gmail.com>
+In-Reply-To: <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271579>
 
-Add tests for for-each-ref which utilizes the ref-filter APIs.
+Add the '--points-at' option provided by 'ref-filter'. The
+option lets the user to pick only refs which point to a particular
+commit.
+
+Add documentation and tests for the same.
 
 Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t6301-for-each-ref-filter.sh | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
- create mode 100644 t/t6301-for-each-ref-filter.sh
+ Documentation/git-for-each-ref.txt |  3 +++
+ builtin/for-each-ref.c             |  9 +++++++--
+ t/t6301-for-each-ref-filter.sh     | 10 ++++++++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 7f8d9a5..0524ac4 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
+ 		   [(--sort=<key>)...] [--format=<format>] [<pattern>...]
++		   [--points-at <object>]
+ 
+ DESCRIPTION
+ -----------
+@@ -62,6 +63,8 @@ OPTIONS
+ 	the specified host language.  This is meant to produce
+ 	a scriptlet that can directly be `eval`ed.
+ 
++--points-at <object>::
++	Only list refs of the given object.
+ 
+ FIELD NAMES
+ -----------
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 7919206..2dee149 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -7,6 +7,7 @@
+ 
+ static char const * const for_each_ref_usage[] = {
+ 	N_("git for-each-ref [<options>] [<pattern>]"),
++	N_("git for-each-ref [--points-at <object>]"),
+ 	NULL
+ };
+ 
+@@ -34,9 +35,15 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
+ 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
+ 			    N_("field name to sort on"), &parse_opt_ref_sorting),
++		OPT_CALLBACK(0, "points-at", &filter.points_at,
++			     N_("object"), N_("print only refs of the object"),
++			     parse_opt_object_name),
+ 		OPT_END(),
+ 	};
+ 
++	memset(&array, 0, sizeof(array));
++	memset(&filter, 0, sizeof(filter));
++
+ 	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
+ 	if (maxcount < 0) {
+ 		error("invalid --count argument: `%d'", maxcount);
+@@ -55,8 +62,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	/* for warn_ambiguous_refs */
+ 	git_config(git_default_config, NULL);
+ 
+-	memset(&array, 0, sizeof(array));
+-	memset(&filter, 0, sizeof(filter));
+ 	filter.name_patterns = argv;
+ 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+ 	ref_array_sort(sorting, &array);
 diff --git a/t/t6301-for-each-ref-filter.sh b/t/t6301-for-each-ref-filter.sh
-new file mode 100644
-index 0000000..5bd49b3
---- /dev/null
+index 5bd49b3..3a1c3f6 100644
+--- a/t/t6301-for-each-ref-filter.sh
 +++ b/t/t6301-for-each-ref-filter.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+
-+test_description='test for-each-refs usage of ref-filter APIs'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-gpg.sh
-+
-+test_expect_success 'setup some history and refs' '
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	git checkout -b side &&
-+	test_commit four &&
-+	git checkout master &&
-+	git update-ref refs/odd/spot master
-+'
-+test_expect_success 'filtering by leading name' '
+@@ -32,4 +32,14 @@ test_expect_success 'filtering with fnmatch' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'filtering with --points-at' '
 +	cat >expect <<-\EOF &&
 +	refs/heads/master
-+	refs/heads/side
-+	EOF
-+	git for-each-ref --format="%(refname)" refs/heads >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'filtering with fnmatch' '
-+	cat >expect <<-\EOF &&
++	refs/odd/spot
 +	refs/tags/three
-+	refs/tags/two
 +	EOF
-+	git for-each-ref --format="%(refname)" refs/tags/t* >actual &&
++	git for-each-ref --format="%(refname)" --points-at=master >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_done
+ test_done
 -- 
 2.4.3.435.g2403634.dirty
