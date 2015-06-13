@@ -1,105 +1,179 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 07/12] repack_without_refs(): make function private
-Date: Sat, 13 Jun 2015 16:42:10 +0200
-Message-ID: <4857117df34d5d554688cae25a8e005aac20842d.1434206062.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 09/12] refs: remove some functions from the module's public interface
+Date: Sat, 13 Jun 2015 16:42:12 +0200
+Message-ID: <0ecf1eb194018d069348722ef679de3ef807af88.1434206062.git.mhagger@alum.mit.edu>
 References: <cover.1434206062.git.mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 16:42:51 2015
+X-From: git-owner@vger.kernel.org Sat Jun 13 16:42:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3me0-0007iJ-BU
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 16:42:48 +0200
+	id 1Z3me4-0007iJ-6e
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 16:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768AbbFMOmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 10:42:36 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:59754 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752516AbbFMOm3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 10:42:29 -0400
-X-AuditID: 12074411-f796c6d000000bc9-de-557c4153f92c
+	id S1753856AbbFMOms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 10:42:48 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:51272 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753599AbbFMOma (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 10:42:30 -0400
+X-AuditID: 1207440e-f79fc6d000000caf-f9-557c4156888f
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 7F.41.03017.3514C755; Sat, 13 Jun 2015 10:42:27 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 5D.2D.03247.6514C755; Sat, 13 Jun 2015 10:42:30 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB10EE.dip0.t-ipconnect.de [93.219.16.238])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5DEgGpV026136
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5DEgGpX026136
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 13 Jun 2015 10:42:26 -0400
+	Sat, 13 Jun 2015 10:42:29 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <cover.1434206062.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqBvsWBNqcGSRgUXXlW4mi4beK8wW
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqBvmWBNq8Oo9t0XXlW4mi4beK8wW
 	t1fMZ7b40dLDbLF5czuLA6vH3/cfmDwWbCr1eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4MxpXfmYu+MFT8arlImsD41quLkZODgkBE4mDn2+xQ9hiEhfurWfrYuTiEBK4zCixZPUF
-	FgjnBJPEhXlfGEGq2AR0JRb1NDOB2CICahIT2w6BFTELdDBKXFi+DWyUsICbxKQjM8CKWARU
-	Jea2XQZr5hWIknh2+SULxDo5ifPHfzJ3MXJwcApYSLxsygQJCwmYS7xd0c46gZF3ASPDKka5
-	xJzSXN3cxMyc4tRk3eLkxLy81CJdU73czBK91JTSTYyQkBLcwTjjpNwhRgEORiUe3ozY6lAh
-	1sSy4srcQ4ySHExKoryRe4BCfEn5KZUZicUZ8UWlOanFhxglOJiVRHgFtWtChXhTEiurUovy
-	YVLSHCxK4rx8S9T9hATSE0tSs1NTC1KLYLIyHBxKErzSDkCNgkWp6akVaZk5JQhpJg5OkOFc
-	UiLFqXkpqUWJpSUZ8aDYiC8GRgdIigdo70yQdt7igsRcoChE6ylGRSlx3nCQhABIIqM0D24s
-	LFG8YhQH+lKY1wOkigeYZOC6XwENZgIa3N5TBTK4JBEhJdXAuDWd91wk++Wdn34ti42rnPx5
-	anHJkSkTJ94XNeGJmDThoLh4Mt+8+TOvFT9IPc8ZIKEw5xPPnePLQnbxb5Gd4vNOwHCm7l/Z
-	h8XG6VF60cecJJS/XTw3hfHFk/3XLEpb/fU33Vx5aLd5PfO8S9lSkiwLTnVw2Syq 
+	7RK4M44/OMBc8Eepou1eC3MD4x6ZLkZODgkBE4kXf/ayQdhiEhfurQeyuTiEBC4zSnz9tAPK
+	OcEk8aVzFiNIFZuArsSinmYmEFtEQE1iYtshFpAiZoEORokLy7exgySEBSIkzj//ywpiswio
+	SnQ+hrB5BaIklixqhlonJ3H++E/mLkYODk4BC4mXTZkgYSEBc4m3K9pZJzDyLmBkWMUol5hT
+	mqubm5iZU5yarFucnJiXl1qka6yXm1mil5pSuokRElJ8Oxjb18scYhTgYFTi4c2IrQ4VYk0s
+	K67MPcQoycGkJMobuQcoxJeUn1KZkVicEV9UmpNafIhRgoNZSYRXULsmVIg3JbGyKrUoHyYl
+	zcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMF7zR6oUbAoNT21Ii0zpwQhzcTBCTKcS0qk
+	ODUvJbUosbQkIx4UG/HFwOgASfEA7X0I0s5bXJCYCxSFaD3FqCglznsLJCEAksgozYMbC0sU
+	rxjFgb4U5j0PUsUDTDJw3a+ABjMBDW7vqQIZXJKIkJJqYNRKZlSU0T/4N+/rt/X1/6clGTxa
+	G7nR43+OfvEZfrWz1e+ezbOMtrR8yn9hYUz5lpNK2aGhG1hiD8/67Kl3ZrHfba/ABPMaDj7/
+	y5MC5GbIbpudwDgzsd5DLbzrSEdgetXM/++Wv2H4kez6f91s83Q5DuMiE+E6gUtr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271555>
 
-It is no longer called from outside of the refs module. Also move its
-docstring and change it to imperative voice.
+The following functions are no longer used from outside the refs
+module:
+
+* lock_packed_refs()
+* add_packed_ref()
+* commit_packed_refs()
+* rollback_packed_refs()
+
+So make these functions private.
+
+This is an important step, because it means that nobody outside of the
+refs module needs to know the difference between loose and packed
+references.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |  9 ++++++++-
- refs.h | 11 -----------
- 2 files changed, 8 insertions(+), 12 deletions(-)
+ refs.c | 31 ++++++++++++++++++++++++-------
+ refs.h | 30 ------------------------------
+ 2 files changed, 24 insertions(+), 37 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 5386077..832d628 100644
+index 05e5d42..a715524 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2724,7 +2724,14 @@ int pack_refs(unsigned int flags)
+@@ -1314,7 +1314,13 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
+ 	return get_packed_ref_dir(get_packed_ref_cache(refs));
+ }
+ 
+-void add_packed_ref(const char *refname, const unsigned char *sha1)
++/*
++ * Add a reference to the in-memory packed reference cache.  This may
++ * only be called while the packed-refs file is locked (see
++ * lock_packed_refs()).  To actually write the packed-refs file, call
++ * commit_packed_refs().
++ */
++static void add_packed_ref(const char *refname, const unsigned char *sha1)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+@@ -2503,8 +2509,12 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
  	return 0;
  }
  
--int repack_without_refs(struct string_list *refnames, struct strbuf *err)
+-/* This should return a meaningful errno on failure */
+-int lock_packed_refs(int flags)
 +/*
-+ * Rewrite the packed-refs file, omitting any refs listed in
-+ * 'refnames'. On error, leave packed-refs unchanged, write an error
-+ * message to 'err', and return a nonzero value.
-+ *
-+ * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
++ * Lock the packed-refs file for writing. Flags is passed to
++ * hold_lock_file_for_update(). Return 0 on success. On errors, set
++ * errno appropriately and return a nonzero value.
 + */
-+static int repack_without_refs(struct string_list *refnames, struct strbuf *err)
++static int lock_packed_refs(int flags)
  {
- 	struct ref_dir *packed;
- 	struct string_list_item *refname;
+ 	static int timeout_configured = 0;
+ 	static int timeout_value = 1000;
+@@ -2534,10 +2544,12 @@ int lock_packed_refs(int flags)
+ }
+ 
+ /*
+- * Commit the packed refs changes.
+- * On error we must make sure that errno contains a meaningful value.
++ * Write the current version of the packed refs cache from memory to
++ * disk. The packed-refs file must already be locked for writing (see
++ * lock_packed_refs()). Return zero on success. On errors, set errno
++ * and return a nonzero value
+  */
+-int commit_packed_refs(void)
++static int commit_packed_refs(void)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+@@ -2566,7 +2578,12 @@ int commit_packed_refs(void)
+ 	return error;
+ }
+ 
+-void rollback_packed_refs(void)
++/*
++ * Rollback the lockfile for the packed-refs file, and discard the
++ * in-memory packed reference cache.  (The packed-refs file will be
++ * read anew if it is needed again after this function is called.)
++ */
++static void rollback_packed_refs(void)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
 diff --git a/refs.h b/refs.h
-index 1a5d44a..5f3bea7 100644
+index 9602889..cd87f2f 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -154,17 +154,6 @@ extern void rollback_packed_refs(void);
-  */
- int pack_refs(unsigned int flags);
+@@ -111,36 +111,6 @@ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refn
+ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames);
  
--/*
-- * Rewrite the packed-refs file, omitting any refs listed in
-- * 'refnames'. On error, packed-refs will be unchanged, the return
-- * value is nonzero, and a message about the error is written to the
-- * 'err' strbuf.
-- *
-- * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
+ /*
+- * Lock the packed-refs file for writing.  Flags is passed to
+- * hold_lock_file_for_update().  Return 0 on success.
+- * Errno is set to something meaningful on error.
 - */
--extern int repack_without_refs(struct string_list *refnames,
--			       struct strbuf *err);
+-extern int lock_packed_refs(int flags);
 -
- extern int ref_exists(const char *);
- 
- extern int is_branch(const char *refname);
+-/*
+- * Add a reference to the in-memory packed reference cache.  This may
+- * only be called while the packed-refs file is locked (see
+- * lock_packed_refs()).  To actually write the packed-refs file, call
+- * commit_packed_refs().
+- */
+-extern void add_packed_ref(const char *refname, const unsigned char *sha1);
+-
+-/*
+- * Write the current version of the packed refs cache from memory to
+- * disk.  The packed-refs file must already be locked for writing (see
+- * lock_packed_refs()).  Return zero on success.
+- * Sets errno to something meaningful on error.
+- */
+-extern int commit_packed_refs(void);
+-
+-/*
+- * Rollback the lockfile for the packed-refs file, and discard the
+- * in-memory packed reference cache.  (The packed-refs file will be
+- * read anew if it is needed again after this function is called.)
+- */
+-extern void rollback_packed_refs(void);
+-
+-/*
+  * Flags for controlling behaviour of pack_refs()
+  * PACK_REFS_PRUNE: Prune loose refs after packing
+  * PACK_REFS_ALL:   Pack _all_ refs, not just tags and already packed refs
 -- 
 2.1.4
