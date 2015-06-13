@@ -1,131 +1,446 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 11/12] initial_ref_transaction_commit(): check for ref D/F conflicts
-Date: Sat, 13 Jun 2015 16:42:14 +0200
-Message-ID: <95cc41220378be062b4f8406f2e1adf6da529abc.1434206062.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 12/12] refs: move the remaining ref module declarations to refs.h
+Date: Sat, 13 Jun 2015 16:42:15 +0200
+Message-ID: <79947baebd702f8e9fe9b667e2eeb69afa73094b.1434206062.git.mhagger@alum.mit.edu>
 References: <cover.1434206062.git.mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 16:43:07 2015
+X-From: git-owner@vger.kernel.org Sat Jun 13 16:43:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3meI-0007yB-Oj
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 16:43:07 +0200
+	id 1Z3meK-0007yB-2V
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 16:43:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858AbbFMOmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 10:42:52 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:59070 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752176AbbFMOmd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 10:42:33 -0400
-X-AuditID: 1207440d-f79c76d000000bf7-10-557c4158dc8b
+	id S1753742AbbFMOm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 10:42:57 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:62250 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753103AbbFMOmf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 10:42:35 -0400
+X-AuditID: 12074412-f79066d000000bc5-43-557c41593130
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id C5.BE.03063.8514C755; Sat, 13 Jun 2015 10:42:32 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 26.39.03013.9514C755; Sat, 13 Jun 2015 10:42:33 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB10EE.dip0.t-ipconnect.de [93.219.16.238])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5DEgGpZ026136
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5DEgGpa026136
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 13 Jun 2015 10:42:31 -0400
+	Sat, 13 Jun 2015 10:42:32 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <cover.1434206062.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqBvhWBNq8HiWqkXXlW4mi4beK8wW
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqBvpWBNq8GChmUXXlW4mi4beK8wW
 	t1fMZ7b40dLDbLF5czuLA6vH3/cfmDwWbCr1eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M54/bmIq2CxW8bD9MGMD42vBLkZODgkBE4lbr+czQdhiEhfurWcDsYUELjNKvDld0sXI
-	BWSfYJK4NfMnWBGbgK7Eop5mMFtEQE1iYtshFpAiZoEORokLy7exgySEBcIlTnbPA7NZBFQl
-	Fn76ygpi8wpESTxsnMIMsU1O4vzxn0A2BwengIXEy6ZMiMXmEm9XtLNOYORdwMiwilEuMac0
-	Vzc3MTOnODVZtzg5MS8vtUjXSC83s0QvNaV0EyMkoHh3MP5fJ3OIUYCDUYmHNyO2OlSINbGs
-	uDL3EKMkB5OSKG/kHqAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV5B7ZpQId6UxMqq1KJ8mJQ0
-	B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBO81e6BGwaLU9NSKtMycEoQ0EwcnyHAuKZHi
-	1LyU1KLE0pKMeFBkxBcDYwMkxQO0V94BZG9xQWIuUBSi9RSjopQ4rwRIQgAkkVGaBzcWliZe
-	MYoDfSnM6wFSxQNMMXDdr4AGMwENbu+pAhlckoiQkmpgFNbILZpz8Grmlg/Z7Oct86/eW3Ti
-	14UF25/tO/Nt46vcjTdeh7V36zFkVbvdmVG8Y4Kkxu+G5xMn9/Cd2NcfxK6j+nYGuzLr/JDl
-	EtVauQqNe3h7nnId0/+++W+JmPoVc+fvPAktaktfuN74Xri88u4OJ4bes+fendm1 
+	7RK4M3a9OM9YcKe2omf3BbYGxklpXYycHBICJhIPF71khrDFJC7cW8/WxcjFISRwmVHi8qc/
+	7BDOCSaJHTc2soBUsQnoSizqaWYCsUUE1CQmth1iASliFuhglLiwfBs7SEJYIERiwYm1jCA2
+	i4CqxNeNh9lAbF6BKImHn5rZINbJSZw//hNoNQcHp4CFxMumTJCwkIC5xNsV7awTGHkXMDKs
+	YpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI108vNLNFLTSndxAgJKaEdjOtPyh1iFOBgVOLhzYit
+	DhViTSwrrsw9xCjJwaQkyhu5ByjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhFdQuyZUiDclsbIq
+	tSgfJiXNwaIkzvtzsbqfkEB6YklqdmpqQWoRTFaGg0NJglfaAahRsCg1PbUiLTOnBCHNxMEJ
+	MpxLSqQ4NS8ltSixtCQjHhQb8cXA6ABJ8QDtlQdp5y0uSMwFikK0nmJUlBLnDQdJCIAkMkrz
+	4MbCEsUrRnGgL4V5z9sDVfEAkwxc9yugwUxAg9t7qkAGlyQipKQaGA/raTg93mLcVuZUMGfi
+	NpvHW253n5hpWTXV481E/9krL5/T62FPPvMtNO/KOsPgOZe7WJlsnI61Zv1rmrRG4rfZFe8D
+	HzY37116WD2E16rqMNuepCXbfou2y59YaLix99uFB8GMm3J/nnbi3yVZd/+4wRxr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271557>
 
-In initial_ref_transaction_commit(), check for D/F conflicts (i.e.,
-the type of conflict that exists between "refs/foo" and
-"refs/foo/bar") among the references being created and between the
-references being created and any hypothetical existing references.
+Some functions from the refs module were still declared in cache.h.
+Move them to refs.h.
 
-Ideally, there shouldn't *be* any existing references when this
-function is called. But, at least in the case of the "testgit" remote
-helper, "clone" can be called after the remote-tracking "HEAD" and
-"master" branches have already been created. So let's just do the
-full-blown check.
+Add some parameter names where they were missing.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ archive.c               |   1 +
+ builtin/blame.c         |   1 +
+ builtin/fast-export.c   |   1 +
+ builtin/fmt-merge-msg.c |   1 +
+ builtin/init-db.c       |   1 +
+ builtin/log.c           |   1 +
+ cache.h                 |  66 -----------------------
+ refs.c                  |   6 ++-
+ refs.h                  | 139 +++++++++++++++++++++++++++++++++++++-----------
+ remote-testsvn.c        |   1 +
+ 10 files changed, 118 insertions(+), 100 deletions(-)
 
+diff --git a/archive.c b/archive.c
+index d37c41d..936a594 100644
+--- a/archive.c
++++ b/archive.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "refs.h"
+ #include "commit.h"
+ #include "tree-walk.h"
+ #include "attr.h"
+diff --git a/builtin/blame.c b/builtin/blame.c
+index b3e948e..1c998cb 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "cache.h"
++#include "refs.h"
+ #include "builtin.h"
+ #include "blob.h"
+ #include "commit.h"
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index b8182c2..d23f3be 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -5,6 +5,7 @@
+  */
+ #include "builtin.h"
+ #include "cache.h"
++#include "refs.h"
+ #include "commit.h"
+ #include "object.h"
+ #include "tag.h"
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 05f4c26..4ba7f28 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "cache.h"
++#include "refs.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 4335738..49df78d 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -4,6 +4,7 @@
+  * Copyright (C) Linus Torvalds, 2005
+  */
+ #include "cache.h"
++#include "refs.h"
+ #include "builtin.h"
+ #include "exec_cmd.h"
+ #include "parse-options.h"
+diff --git a/builtin/log.c b/builtin/log.c
+index e67671e..3caa917 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -5,6 +5,7 @@
+  *		 2006 Junio Hamano
+  */
+ #include "cache.h"
++#include "refs.h"
+ #include "color.h"
+ #include "commit.h"
+ #include "diff.h"
+diff --git a/cache.h b/cache.h
+index be92121..1c00098 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1009,76 +1009,10 @@ extern int get_oid_hex(const char *hex, struct object_id *sha1);
+ 
+ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+ extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as sha1_to_hex */
+-extern int read_ref_full(const char *refname, int resolve_flags,
+-			 unsigned char *sha1, int *flags);
+-extern int read_ref(const char *refname, unsigned char *sha1);
+ 
+-/*
+- * Resolve a reference, recursively following symbolic refererences.
+- *
+- * Store the referred-to object's name in sha1 and return the name of
+- * the non-symbolic reference that ultimately pointed at it.  The
+- * return value, if not NULL, is a pointer into either a static buffer
+- * or the input ref.
+- *
+- * If the reference cannot be resolved to an object, the behavior
+- * depends on the RESOLVE_REF_READING flag:
+- *
+- * - If RESOLVE_REF_READING is set, return NULL.
+- *
+- * - If RESOLVE_REF_READING is not set, clear sha1 and return the name of
+- *   the last reference name in the chain, which will either be a non-symbolic
+- *   reference or an undefined reference.  If this is a prelude to
+- *   "writing" to the ref, the return value is the name of the ref
+- *   that will actually be created or changed.
+- *
+- * If the RESOLVE_REF_NO_RECURSE flag is passed, only resolves one
+- * level of symbolic reference.  The value stored in sha1 for a symbolic
+- * reference will always be null_sha1 in this case, and the return
+- * value is the reference that the symref refers to directly.
+- *
+- * If flags is non-NULL, set the value that it points to the
+- * combination of REF_ISPACKED (if the reference was found among the
+- * packed references), REF_ISSYMREF (if the initial reference was a
+- * symbolic reference), REF_BAD_NAME (if the reference name is ill
+- * formed --- see RESOLVE_REF_ALLOW_BAD_NAME below), and REF_ISBROKEN
+- * (if the ref is malformed or has a bad name). See refs.h for more detail
+- * on each flag.
+- *
+- * If ref is not a properly-formatted, normalized reference, return
+- * NULL.  If more than MAXDEPTH recursive symbolic lookups are needed,
+- * give up and return NULL.
+- *
+- * RESOLVE_REF_ALLOW_BAD_NAME allows resolving refs even when their
+- * name is invalid according to git-check-ref-format(1).  If the name
+- * is bad then the value stored in sha1 will be null_sha1 and the two
+- * flags REF_ISBROKEN and REF_BAD_NAME will be set.
+- *
+- * Even with RESOLVE_REF_ALLOW_BAD_NAME, names that escape the refs/
+- * directory and do not consist of all caps and underscores cannot be
+- * resolved. The function returns NULL for such ref names.
+- * Caps and underscores refers to the special refs, such as HEAD,
+- * FETCH_HEAD and friends, that all live outside of the refs/ directory.
+- */
+-#define RESOLVE_REF_READING 0x01
+-#define RESOLVE_REF_NO_RECURSE 0x02
+-#define RESOLVE_REF_ALLOW_BAD_NAME 0x04
+-extern const char *resolve_ref_unsafe(const char *ref, int resolve_flags, unsigned char *sha1, int *flags);
+-extern char *resolve_refdup(const char *ref, int resolve_flags, unsigned char *sha1, int *flags);
+-
+-extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
+-extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+ extern int interpret_branch_name(const char *str, int len, struct strbuf *);
+ extern int get_sha1_mb(const char *str, unsigned char *sha1);
+ 
+-/*
+- * Return true iff abbrev_name is a possible abbreviation for
+- * full_name according to the rules defined by ref_rev_parse_rules in
+- * refs.c.
+- */
+-extern int refname_match(const char *abbrev_name, const char *full_name);
+-
+-extern int create_symref(const char *ref, const char *refs_heads_master, const char *logmsg);
+ extern int validate_headref(const char *ref);
+ 
+ extern int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
 diff --git a/refs.c b/refs.c
-index dfe9090..340d67f 100644
+index 340d67f..37a679a 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -4062,9 +4062,19 @@ cleanup:
+@@ -1732,9 +1732,11 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
  	return ret;
  }
  
-+static int ref_present(const char *refname,
-+		       const struct object_id *oid, int flags, void *cb_data)
-+{
-+	struct string_list *affected_refnames = cb_data;
-+
-+	return string_list_has_string(affected_refnames, refname);
-+}
-+
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err)
+-char *resolve_refdup(const char *ref, int resolve_flags, unsigned char *sha1, int *flags)
++char *resolve_refdup(const char *refname, int resolve_flags,
++		     unsigned char *sha1, int *flags)
  {
-+	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
-+	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
- 	int ret = 0, i;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
-@@ -4084,12 +4094,36 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 		goto cleanup;
- 	}
+-	return xstrdup_or_null(resolve_ref_unsafe(ref, resolve_flags, sha1, flags));
++	return xstrdup_or_null(resolve_ref_unsafe(refname, resolve_flags,
++						  sha1, flags));
+ }
  
-+	/*
-+	 * It's really undefined to call this function in an active
-+	 * repository or when there are existing references: we are
-+	 * only locking and changing packed-refs, so (1) any
-+	 * simultaneous processes might try to change a reference at
-+	 * the same time we do, and (2) any existing loose versions of
-+	 * the references that we are setting would have precedence
-+	 * over our values. But some remote helpers create the remote
-+	 * "HEAD" and "master" branches before calling this function,
-+	 * so here we really only check that none of the references
-+	 * that we are creating already exists.
-+	 */
-+	if (for_each_rawref(ref_present, &affected_refnames))
-+		die("BUG: initial ref transaction called with existing refs");
+ /* The argument to filter_refs */
+diff --git a/refs.h b/refs.h
+index cd87f2f..c9a3388 100644
+--- a/refs.h
++++ b/refs.h
+@@ -2,6 +2,98 @@
+ #define REFS_H
+ 
+ /*
++ * Resolve a reference, recursively following symbolic refererences.
++ *
++ * Store the referred-to object's name in sha1 and return the name of
++ * the non-symbolic reference that ultimately pointed at it.  The
++ * return value, if not NULL, is a pointer into either a static buffer
++ * or the input ref.
++ *
++ * If the reference cannot be resolved to an object, the behavior
++ * depends on the RESOLVE_REF_READING flag:
++ *
++ * - If RESOLVE_REF_READING is set, return NULL.
++ *
++ * - If RESOLVE_REF_READING is not set, clear sha1 and return the name of
++ *   the last reference name in the chain, which will either be a non-symbolic
++ *   reference or an undefined reference.  If this is a prelude to
++ *   "writing" to the ref, the return value is the name of the ref
++ *   that will actually be created or changed.
++ *
++ * If the RESOLVE_REF_NO_RECURSE flag is passed, only resolves one
++ * level of symbolic reference.  The value stored in sha1 for a symbolic
++ * reference will always be null_sha1 in this case, and the return
++ * value is the reference that the symref refers to directly.
++ *
++ * If flags is non-NULL, set the value that it points to the
++ * combination of REF_ISPACKED (if the reference was found among the
++ * packed references), REF_ISSYMREF (if the initial reference was a
++ * symbolic reference), REF_BAD_NAME (if the reference name is ill
++ * formed --- see RESOLVE_REF_ALLOW_BAD_NAME below), and REF_ISBROKEN
++ * (if the ref is malformed or has a bad name). See refs.h for more detail
++ * on each flag.
++ *
++ * If ref is not a properly-formatted, normalized reference, return
++ * NULL.  If more than MAXDEPTH recursive symbolic lookups are needed,
++ * give up and return NULL.
++ *
++ * RESOLVE_REF_ALLOW_BAD_NAME allows resolving refs even when their
++ * name is invalid according to git-check-ref-format(1).  If the name
++ * is bad then the value stored in sha1 will be null_sha1 and the two
++ * flags REF_ISBROKEN and REF_BAD_NAME will be set.
++ *
++ * Even with RESOLVE_REF_ALLOW_BAD_NAME, names that escape the refs/
++ * directory and do not consist of all caps and underscores cannot be
++ * resolved. The function returns NULL for such ref names.
++ * Caps and underscores refers to the special refs, such as HEAD,
++ * FETCH_HEAD and friends, that all live outside of the refs/ directory.
++ */
++#define RESOLVE_REF_READING 0x01
++#define RESOLVE_REF_NO_RECURSE 0x02
++#define RESOLVE_REF_ALLOW_BAD_NAME 0x04
 +
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
++extern const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
++				      unsigned char *sha1, int *flags);
++
++extern char *resolve_refdup(const char *refname, int resolve_flags,
++			    unsigned char *sha1, int *flags);
++
++extern int read_ref_full(const char *refname, int resolve_flags,
++			 unsigned char *sha1, int *flags);
++extern int read_ref(const char *refname, unsigned char *sha1);
++
++extern int ref_exists(const char *refname);
++
++extern int is_branch(const char *refname);
++
++/*
++ * If refname is a non-symbolic reference that refers to a tag object,
++ * and the tag can be (recursively) dereferenced to a non-tag object,
++ * store the SHA1 of the referred-to object to sha1 and return 0.  If
++ * any of these conditions are not met, return a non-zero value.
++ * Symbolic references are considered unpeelable, even if they
++ * ultimately resolve to a peelable tag.
++ */
++extern int peel_ref(const char *refname, unsigned char *sha1);
++
++/**
++ * Resolve refname in the nested "gitlink" repository that is located
++ * at path.  If the resolution is successful, return 0 and set sha1 to
++ * the name of the object; otherwise, return a non-zero value.
++ */
++extern int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1);
++
++/*
++ * Return true iff abbrev_name is a possible abbreviation for
++ * full_name according to the rules defined by ref_rev_parse_rules in
++ * refs.c.
++ */
++extern int refname_match(const char *abbrev_name, const char *full_name);
++
++extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
++extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
++
++/*
+  * A ref_transaction represents a collection of ref updates
+  * that should succeed or fail together.
+  *
+@@ -78,15 +170,15 @@ typedef int each_ref_fn(const char *refname,
+  * modifies the reference also returns a nonzero value to immediately
+  * stop the iteration.
+  */
+-extern int head_ref(each_ref_fn, void *);
+-extern int for_each_ref(each_ref_fn, void *);
+-extern int for_each_ref_in(const char *, each_ref_fn, void *);
+-extern int for_each_tag_ref(each_ref_fn, void *);
+-extern int for_each_branch_ref(each_ref_fn, void *);
+-extern int for_each_remote_ref(each_ref_fn, void *);
+-extern int for_each_replace_ref(each_ref_fn, void *);
+-extern int for_each_glob_ref(each_ref_fn, const char *pattern, void *);
+-extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
++extern int head_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
++extern int for_each_tag_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_branch_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_remote_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_replace_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
++extern int for_each_glob_ref_in(each_ref_fn fn, const char *pattern, const char* prefix, void *cb_data);
  
- 		if ((update->flags & REF_HAVE_OLD) &&
- 		    !is_null_sha1(update->old_sha1))
- 			die("BUG: initial ref transaction with old_sha1 set");
-+		if (verify_refname_available(update->refname,
-+					     &affected_refnames, NULL,
-+					     loose_refs, err) ||
-+		    verify_refname_available(update->refname,
-+					     &affected_refnames, NULL,
-+					     packed_refs, err)) {
-+			ret = TRANSACTION_NAME_CONFLICT;
-+			goto cleanup;
-+		}
- 	}
+ extern int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
+ extern int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
+@@ -99,14 +191,14 @@ extern int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn,
+ extern int head_ref_namespaced(each_ref_fn fn, void *cb_data);
+ extern int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
  
- 	if (lock_packed_refs(0)) {
++/* can be used to learn about broken ref and symref */
++extern int for_each_rawref(each_ref_fn fn, void *cb_data);
++
+ static inline const char *has_glob_specials(const char *pattern)
+ {
+ 	return strpbrk(pattern, "?*[");
+ }
+ 
+-/* can be used to learn about broken ref and symref */
+-extern int for_each_rawref(each_ref_fn, void *);
+-
+ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname);
+ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames);
+ 
+@@ -124,20 +216,6 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
+  */
+ int pack_refs(unsigned int flags);
+ 
+-extern int ref_exists(const char *);
+-
+-extern int is_branch(const char *refname);
+-
+-/*
+- * If refname is a non-symbolic reference that refers to a tag object,
+- * and the tag can be (recursively) dereferenced to a non-tag object,
+- * store the SHA1 of the referred-to object to sha1 and return 0.  If
+- * any of these conditions are not met, return a non-zero value.
+- * Symbolic references are considered unpeelable, even if they
+- * ultimately resolve to a peelable tag.
+- */
+-extern int peel_ref(const char *refname, unsigned char *sha1);
+-
+ /*
+  * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
+  * REF_NODEREF: act on the ref directly, instead of dereferencing
+@@ -206,17 +284,13 @@ extern int for_each_reflog(each_ref_fn, void *);
+ extern int check_refname_format(const char *refname, int flags);
+ 
+ extern const char *prettify_refname(const char *refname);
++
+ extern char *shorten_unambiguous_ref(const char *refname, int strict);
+ 
+ /** rename ref, return 0 on success **/
+ extern int rename_ref(const char *oldref, const char *newref, const char *logmsg);
+ 
+-/**
+- * Resolve refname in the nested "gitlink" repository that is located
+- * at path.  If the resolution is successful, return 0 and set sha1 to
+- * the name of the object; otherwise, return a non-zero value.
+- */
+-extern int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1);
++extern int create_symref(const char *ref, const char *refs_heads_master, const char *logmsg);
+ 
+ enum action_on_err {
+ 	UPDATE_REFS_MSG_ON_ERR,
+@@ -367,6 +441,7 @@ int update_ref(const char *msg, const char *refname,
+ 	       unsigned int flags, enum action_on_err onerr);
+ 
+ extern int parse_hide_refs_config(const char *var, const char *value, const char *);
++
+ extern int ref_is_hidden(const char *);
+ 
+ enum expire_reflog_flags {
+diff --git a/remote-testsvn.c b/remote-testsvn.c
+index 48bf6eb..f599c37 100644
+--- a/remote-testsvn.c
++++ b/remote-testsvn.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "refs.h"
+ #include "remote.h"
+ #include "strbuf.h"
+ #include "url.h"
 -- 
 2.1.4
