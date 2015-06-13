@@ -1,101 +1,66 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/8] object_id part 2
-Date: Sat, 13 Jun 2015 15:28:59 +0000
-Message-ID: <20150613152859.GE29305@vauxhall.crustytoothpaste.net>
-References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
- <20150610235114.GA786544@vauxhall.crustytoothpaste.net>
- <20150611000251.GB786544@vauxhall.crustytoothpaste.net>
- <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
- <xmqq4mmef22j.fsf@gitster.dls.corp.google.com>
- <20150612203054.GA29305@vauxhall.crustytoothpaste.net>
- <xmqqvbesbmm6.fsf@gitster.dls.corp.google.com>
- <20150612222713.GD29305@vauxhall.crustytoothpaste.net>
- <557BEDA9.30809@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lkTb+7nhmha7W+c3"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Jun 13 17:29:14 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v5] git-rebase--interactive.sh: add config option for custom instruction format
+Date: Sat, 13 Jun 2015 12:26:57 -0400
+Message-ID: <1434212818-94682-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: gitster@pobox.com, johannes.schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Sat Jun 13 18:27:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3nMw-0003A1-14
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 17:29:14 +0200
+	id 1Z3oHD-0003dH-El
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 18:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbbFMP3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 11:29:08 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:42477 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751057AbbFMP3F (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 11:29:05 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:81d4:30df:5b4f:7cad])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8E8D22808F;
-	Sat, 13 Jun 2015 15:29:04 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <557BEDA9.30809@alum.mit.edu>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1752495AbbFMQ1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 12:27:17 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:34652 "EHLO
+	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753518AbbFMQ1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2015 12:27:16 -0400
+Received: by qkdm188 with SMTP id m188so10569572qkd.1
+        for <git@vger.kernel.org>; Sat, 13 Jun 2015 09:27:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=J/hae1LNZt79r4Ogc1UPmMwNeVBbcjWYyee6y308+KE=;
+        b=UjncQd0mxCu2rvkaNNwsbfwzOHEXEonuMgaRM8eOyvF53udN1j50OyTrhuDWiAf57V
+         j2ZWrTBBuKc90ti0eigX8MRZ80ABoaULLXZuLFz2fgKSktx9ZsQGsmm/rp9URrQcKtK6
+         mAY0NLfxP0Op/02v4UKEb8CfldQBKeVmezXOv/7o8FfKY/FsUZgfCPFdw4Fnmckupbqw
+         Y2iRXfReo870f/oc4MU4b0BeMXPTI2ESkQMOaFpKGpVuvQmwqul2/R+UDXYC1ZPabcHF
+         i3oScMv+xolcE2Gz85impfWe3vUulv3KeHEAPTByernWWDIunTE8ZfP01KifhLEgBCV1
+         B7gQ==
+X-Received: by 10.140.135.6 with SMTP id 6mr27065598qhh.101.1434212835542;
+        Sat, 13 Jun 2015 09:27:15 -0700 (PDT)
+Received: from MRappazzo-2.local.info (ool-18e49664.dyn.optonline.net. [24.228.150.100])
+        by mx.google.com with ESMTPSA id 197sm3366478qhq.23.2015.06.13.09.27.14
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 13 Jun 2015 09:27:14 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271560>
+
+Difference between v4 and v5 of this patch:
+
+  - added documention in Documentation/config.txt
+  - renamed the new auto-rebase w/ config test to be less inaccurate
+
+Apologies for this, I should have caught these before.
 
 
---lkTb+7nhmha7W+c3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Michael Rappazzo (1):
+  git-rebase--interactive.sh: add config option for custom instruction
+    format
 
-On Sat, Jun 13, 2015 at 10:45:29AM +0200, Michael Haggerty wrote:
-> In the same email where I made those design suggestions, I also I
-> pointed out a bug in the implementation of parse_oid_hex(). Maybe that
-> is the reason for the test failures.
+ Documentation/config.txt     |  5 +++++
+ Documentation/git-rebase.txt |  7 +++++++
+ git-rebase--interactive.sh   | 20 +++++++++++++++++---
+ t/t3415-rebase-autosquash.sh | 21 +++++++++++++++++++++
+ 4 files changed, 50 insertions(+), 3 deletions(-)
 
-It probably is, although I either botched a conversion in the branch I'm
-working on as well, or the area for that code is lacking tests, since I
-don't think the tests are failing there.  In the latter case, I'll send
-a testsuite patch as part of my next series.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---lkTb+7nhmha7W+c3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVfEw7AAoJEL9TXYEfUvaLDqgQANAPmOA8jIJ/xEAA/NM4KycC
-Knk/rgfHoePbUqAFvKpS9KNL3lpwCp41WHtqJDggsk4unCChxwrcStELtDr+Ladp
-CdDA8l7i1zT6o84JmL8qkN/Y6T8V7a/KH/wQo7qZIWy657QoG9pS3M1pvXzMULNE
-VNotlAQgRnmkGlMOIAGUWemgWxsjUzKJE0zCVA+/LuulapeM24JB99ZOwBcg8wyb
-YZDqH5ZpG5MSDiCyG/RDynZTcW+vL6g/W5s+5HAgQDRN/y6wvDzGJ9tz3XkaAINI
-ue76vMrV02bjrzpC12xUs6lfAn/ilPxuf8vb2QFeR2CmFyUIVf9//FpGhBL1QKeM
-HLKt5AwnkXf1OaI7aT3gB+C7tinm88rlqnhEkt6T9WWlCO0H4cCcWGl5McvlCUSk
-knfz7NpuX/A0m/EwFcjD6eYMJsVCQg9rdYli3RkkKPnRy8CvVOyRu9Ne1BCiH0Vd
-yWTJUIPvO3glNlp7wdDuMbautf0UY9Zs7I4+A9yGRPhGu3iz9DpPvyXT/qVKNNuL
-3nyDewyAwWXkmZYCgRUMsQEpIXpjyq9E0yGeH3pFueEY8Q+lymqLkRVuJlSYFm+4
-zQinwJtsMo/xuvkRKUOxH47RDMhvdWmLodwo5FO/IEUgid9m2Dqcdf9Eiu578TFg
-krU5VWxIDR3pgYWxtPc2
-=FkT0
------END PGP SIGNATURE-----
-
---lkTb+7nhmha7W+c3--
+-- 
+2.4.2
