@@ -1,116 +1,120 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH (resend)] git-gui: make gc warning threshold match 'git gc
- --auto'
-Date: Sat, 13 Jun 2015 22:22:17 +0200
-Message-ID: <557C90F9.8000200@gmail.com>
+Subject: [PATCH] Documentation/i18n.txt: clarify character encoding support
+Date: Sat, 13 Jun 2015 22:24:01 +0200
+Message-ID: <557C9161.6020703@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>, Pat Thoyts <patthoyts@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 22:22:20 2015
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 13 22:24:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3rwa-0004rp-1U
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:22:20 +0200
+	id 1Z3ryH-0005ds-Le
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:24:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751462AbbFMUWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 16:22:16 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:38510 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751141AbbFMUWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2015 16:22:14 -0400
-Received: by wibdq8 with SMTP id dq8so43089432wib.1
-        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:22:13 -0700 (PDT)
+	id S1751198AbbFMUYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 16:24:00 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:33399 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119AbbFMUX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2015 16:23:58 -0400
+Received: by wiwd19 with SMTP id d19so43562316wiw.0
+        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:23:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:subject
          :content-type:content-transfer-encoding;
-        bh=YlmL+wPPpFfjBPyI9CXFzs13oAAAIwrsesyvrUCenjA=;
-        b=DNEFSsIrTGCwQD/26A6SYKgsuUypsl03AeUyOlDayXXm5pxDNH0pDuTZWrC/2tLkXC
-         YBGqE35DWZl7+tBL1ErhHWstgxrTkexsE4Sr4NUkMvJgpOFbhuoza4xpRCuGJm+Sxeu6
-         V69VIOpjtTqClGrgs7PiyXtFezk22sARpGLpJg0gLaLk8IOcRdCxiFRZJWAcXJIpBQSx
-         kRVyod6/y941oswMbQnDEkoZI9hoI0C1q9GqYpG1meZZHYNg6AJjZQ8itZLVr1HwdQYk
-         zF3vKad+ACLiMqEtN5dSMZO0L1SS1KMDiGxeH0BtasDvdQ/q2y+hh3U1XGWyJ8B5U7+s
-         RyDw==
-X-Received: by 10.194.222.137 with SMTP id qm9mr38234593wjc.43.1434226933436;
-        Sat, 13 Jun 2015 13:22:13 -0700 (PDT)
+        bh=9DTn8Ph0xn91krNfYPOg/+RBXGCwlbfvq+nFcdIEtuU=;
+        b=sTHVpSAikTkrjSs6R93yOPgBgxIiNNG0XelRd8DOHM53GUs1u1Y7RvFIWyN5ulX404
+         qRBwZkwXIqHpDomS2ctO7XzsvU+PsyJ4CHqFdGhhun6WkBhzfStpo+7KMfgOWQD9PjPV
+         W0u75oLWWQKKj4XkSMQbdeuANrQU3yLzCAsE+nb6pdBGIONh2gHmH2C/zIbJDAVLin51
+         ofep/sh2p5GRYRs9xoSc/+wdD6SjqK1PhX1STrv9IyYrc4mUSPuBBi74JdglFJMc3bP8
+         Xpquo5UFKcILb9TH5FjHs9u8rqvQOj3Zjj8SWRGWxJAuhOgLBRTqIQe6XC9HUHQaGO/8
+         u42g==
+X-Received: by 10.194.63.228 with SMTP id j4mr38196083wjs.38.1434227037461;
+        Sat, 13 Jun 2015 13:23:57 -0700 (PDT)
 Received: from [10.1.116.50] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id 12sm11689542wjw.17.2015.06.13.13.22.12
+        by mx.google.com with ESMTPSA id u7sm8635959wif.3.2015.06.13.13.23.56
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 Jun 2015 13:22:12 -0700 (PDT)
+        Sat, 13 Jun 2015 13:23:56 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271588>
 
-Date: Wed, 6 Aug 2014 20:43:46 +0200
+As a "distributed" VCS, git should better define the encodings of its core
+textual data structures, in particular those that are part of the network
+protocol.
 
-The number of loose objects at which git-gui shows a gc warning has
-historically been hardcoded to ~2000, or ~200 on Windows. The warning can
-only be disabled completely via gui.gcwarning=false.
+That git is encoding agnostic is only really true for blob objects. E.g.
+the 'non-NUL bytes' requirement of tree and commit objects excludes
+UTF-16/32, and the special meaning of '/' in the index file as well as
+space and linefeed in commit objects eliminates EBCDIC and other non-ASCII
+encodings.
 
-Especially on Windows, the hardcoded threshold is so ridiculously low that
-git-gui often complains even immediately after gc (due to loose objects
-only referenced by the reflog).
+Git expects bytes < 0x80 to be pure ASCII, thus CJK encodings that partly
+overlap with the ASCII range are problematic as well. E.g. fmt_ident()
+removes trailing 0x5C from user names on the assumption that it is ASCII
+'\'. However, there are over 200 GBK double byte codes that end in 0x5C.
 
-'git gc --auto' uses a much bigger threshold to check if gc is necessary.
-Additionally, the value can be configured via gc.auto (default 6700).
-There's no special case for Windows.
+UTF-8 as default encoding on Linux and respective path translations in the
+Mac and Windows versions have established UTF-8 NFC as de-facto standard
+for path names.
 
-Change git-gui so that it only warns if 'git gc --auto' would also do an
-automatic gc, i.e.:
- - calculate the threshold from the gc.auto setting (default 6700,
-   disabled if <= 0)
- - check directory .git/objects/17
-
-We still check four directories (14-17) if gc.auto is very small, to get a
-better estimate.
+Update the documentation in i18n.txt to reflect the current status-quo.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- git-gui/lib/database.tcl | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ Documentation/i18n.txt | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/git-gui/lib/database.tcl b/git-gui/lib/database.tcl
-index 1f187ed..212b195 100644
---- a/git-gui/lib/database.tcl
-+++ b/git-gui/lib/database.tcl
-@@ -89,19 +89,26 @@ proc do_fsck_objects {} {
- }
+diff --git a/Documentation/i18n.txt b/Documentation/i18n.txt
+index e9a1d5d..e5f6233 100644
+--- a/Documentation/i18n.txt
++++ b/Documentation/i18n.txt
+@@ -1,18 +1,28 @@
+-At the core level, Git is character encoding agnostic.
+-
+- - The pathnames recorded in the index and in the tree objects
+-   are treated as uninterpreted sequences of non-NUL bytes.
+-   What readdir(2) returns are what are recorded and compared
+-   with the data Git keeps track of, which in turn are expected
+-   to be what lstat(2) and creat(2) accepts.  There is no such
+-   thing as pathname encoding translation.
++Git is to some extent character encoding agnostic.
  
- proc hint_gc {} {
-+	global repo_config
-+	set auto_gc $repo_config(gc.auto)
-+	if {$auto_gc eq {}} {
-+		set auto_gc 6700
-+	} elseif {$auto_gc <= 0} {
-+		return
-+	}
+  - The contents of the blob objects are uninterpreted sequences
+    of bytes.  There is no encoding translation at the core
+    level.
+ 
+- - The commit log messages are uninterpreted sequences of non-NUL
+-   bytes.
++ - Pathnames are encoded in UTF-8 normalization form C. This
++   applies to tree objects, the index file, ref names and
++   config files (`.git/config` (see linkgit:git-config[1]),
++   linkgit:gitignore[5], linkgit:gitattributes[5] and
++   linkgit:gitmodules[5]).
++   The Mac and Windows versions automatically translate pathnames
++   to and from UTF-8 NFC in their readdir(2), lstat(2), creat(2)
++   etc. APIs. However, there is no such translation on other
++   platforms. If file system APIs don't use UTF-8 (which may be
++   file system specific), it is recommended to stick to pure
++   ASCII file names. While Git technically supports other
++   extended ASCII encodings at the core level, such repositories
++   will not be portable.
 +
- 	set ndirs 1
--	set limit 8
--	if {[is_Windows]} {
-+	set limit [expr {($auto_gc + 255) / 256}]
-+	if {$limit < 4} {
- 		set ndirs 4
--		set limit 1
- 	}
++ - Commit log messages are typically encoded in UTF-8, but other
++   extended ASCII encodings are also supported. This includes
++   ISO-8859-x, CP125x and many others, but _not_ UTF-16/32,
++   EBCDIC and CJK multi-byte encodings (GBK, Shift-JIS, Big5,
++   EUC-x, CP9xx etc.).
  
- 	set count [llength [glob \
- 		-nocomplain \
- 		-- \
--		[gitdir objects 4\[0-[expr {$ndirs-1}]\]/*]]]
-+		[gitdir objects 1\[[expr {8-$ndirs}]-7\]/*]]]
- 
--	if {$count >= $limit * $ndirs} {
-+	if {$count > $limit * $ndirs} {
- 		set objects_current [expr {$count * 256/$ndirs}]
- 		if {[ask_popup \
- 			[mc "This repository currently has approximately %i loose objects.
+ Although we encourage that the commit log messages are encoded
+ in UTF-8, both the core and Git Porcelain are designed not to
 -- 
 2.4.1.windows.1
