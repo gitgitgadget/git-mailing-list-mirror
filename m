@@ -1,97 +1,101 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 10/12] initial_ref_transaction_commit(): check for duplicate refs
-Date: Sat, 13 Jun 2015 16:42:13 +0200
-Message-ID: <73ebe2bdae4e7e38a2349db4c5be783085971b19.1434206062.git.mhagger@alum.mit.edu>
-References: <cover.1434206062.git.mhagger@alum.mit.edu>
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 16:43:08 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 0/8] object_id part 2
+Date: Sat, 13 Jun 2015 15:28:59 +0000
+Message-ID: <20150613152859.GE29305@vauxhall.crustytoothpaste.net>
+References: <1433867316-663554-1-git-send-email-sandals@crustytoothpaste.net>
+ <xmqq381zi3ev.fsf@gitster.dls.corp.google.com>
+ <20150610235114.GA786544@vauxhall.crustytoothpaste.net>
+ <20150611000251.GB786544@vauxhall.crustytoothpaste.net>
+ <xmqqpp53gkmq.fsf@gitster.dls.corp.google.com>
+ <xmqq4mmef22j.fsf@gitster.dls.corp.google.com>
+ <20150612203054.GA29305@vauxhall.crustytoothpaste.net>
+ <xmqqvbesbmm6.fsf@gitster.dls.corp.google.com>
+ <20150612222713.GD29305@vauxhall.crustytoothpaste.net>
+ <557BEDA9.30809@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lkTb+7nhmha7W+c3"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Jun 13 17:29:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3meJ-0007yB-BP
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 16:43:07 +0200
+	id 1Z3nMw-0003A1-14
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 17:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903AbbFMOmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 10:42:54 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:62250 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753715AbbFMOme (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 10:42:34 -0400
-X-AuditID: 12074412-f79066d000000bc5-3a-557c4157ed53
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 85.39.03013.7514C755; Sat, 13 Jun 2015 10:42:31 -0400 (EDT)
-Received: from michael.fritz.box (p5DDB10EE.dip0.t-ipconnect.de [93.219.16.238])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5DEgGpY026136
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 13 Jun 2015 10:42:30 -0400
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <cover.1434206062.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixO6iqBvuWBNq8PqLpEXXlW4mi4beK8wW
-	t1fMZ7b40dLDbLF5czuLA6vH3/cfmDwWbCr1eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M/5e62YsOMRV8XvmCbYGxlMcXYycHBICJhLz/mxhhrDFJC7cW88GYgsJXGaUWPTeq4uR
-	C8g+wSSxfM4CsASbgK7Eop5mJhBbREBNYmLbIRaQImaBDkaJC8u3sYMkhAVCJHavXM4IYrMI
-	qEpM6D0AFOfg4BWIktj1zQNimZzE+eM/mUHCnAIWEi+bMiH2mku8XdHOOoGRdwEjwypGucSc
-	0lzd3MTMnOLUZN3i5MS8vNQiXTO93MwSvdSU0k2MkHAS2sG4/qTcIUYBDkYlHt6M2OpQIdbE
-	suLK3EOMkhxMSqK8kXuAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4BbVrQoV4UxIrq1KL8mFS
-	0hwsSuK8Pxer+wkJpCeWpGanphakFsFkNTg4BGacmzudSYolLz8vVUmCV9oBaIhgUWp6akVa
-	Zk4JQikTByfIIi4pkeLUvJTUosTSkox4ULzEFwMjBiTFA3SDPEg7b3FBYi5QFKL1FKOilDhv
-	OEhCACSRUZoHNxaWPF4xigN9LMx73h6oigeYeOC6XwENZgIa3N5TBTK4JBEhJdXA2Kka0G6z
-	UjpiDrM0/zQptqyJDrWp//hb3ulqLYvaVdZxwPKb9Tzhw09YutW7/zq0unb/fnTC4ccsHbuP
-	0TMDL8vZynVwhLxecGsn47NrzybveDTR09JMc5GorPCJH0y/BcL+mVWqLY8Xkn08 
+	id S1751308AbbFMP3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 11:29:08 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:42477 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751057AbbFMP3F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2015 11:29:05 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:81d4:30df:5b4f:7cad])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8E8D22808F;
+	Sat, 13 Jun 2015 15:29:04 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <557BEDA9.30809@alum.mit.edu>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.19.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271559>
 
-Error out if the ref_transaction includes more than one update for any
-refname.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+--lkTb+7nhmha7W+c3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/refs.c b/refs.c
-index a715524..dfe9090 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4068,12 +4068,22 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 	int ret = 0, i;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
-+	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
- 
- 	assert(err);
- 
- 	if (transaction->state != REF_TRANSACTION_OPEN)
- 		die("BUG: commit called for transaction that is not open");
- 
-+	/* Fail if a refname appears more than once in the transaction: */
-+	for (i = 0; i < n; i++)
-+		string_list_append(&affected_refnames, updates[i]->refname);
-+	string_list_sort(&affected_refnames);
-+	if (ref_update_reject_duplicates(&affected_refnames, err)) {
-+		ret = TRANSACTION_GENERIC_ERROR;
-+		goto cleanup;
-+	}
-+
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-@@ -4106,6 +4116,7 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 
- cleanup:
- 	transaction->state = REF_TRANSACTION_CLOSED;
-+	string_list_clear(&affected_refnames, 0);
- 	return ret;
- }
- 
--- 
-2.1.4
+On Sat, Jun 13, 2015 at 10:45:29AM +0200, Michael Haggerty wrote:
+> In the same email where I made those design suggestions, I also I
+> pointed out a bug in the implementation of parse_oid_hex(). Maybe that
+> is the reason for the test failures.
+
+It probably is, although I either botched a conversion in the branch I'm
+working on as well, or the area for that code is lacking tests, since I
+don't think the tests are failing there.  In the latter case, I'll send
+a testsuite patch as part of my next series.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--lkTb+7nhmha7W+c3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.4 (GNU/Linux)
+
+iQIcBAEBCgAGBQJVfEw7AAoJEL9TXYEfUvaLDqgQANAPmOA8jIJ/xEAA/NM4KycC
+Knk/rgfHoePbUqAFvKpS9KNL3lpwCp41WHtqJDggsk4unCChxwrcStELtDr+Ladp
+CdDA8l7i1zT6o84JmL8qkN/Y6T8V7a/KH/wQo7qZIWy657QoG9pS3M1pvXzMULNE
+VNotlAQgRnmkGlMOIAGUWemgWxsjUzKJE0zCVA+/LuulapeM24JB99ZOwBcg8wyb
+YZDqH5ZpG5MSDiCyG/RDynZTcW+vL6g/W5s+5HAgQDRN/y6wvDzGJ9tz3XkaAINI
+ue76vMrV02bjrzpC12xUs6lfAn/ilPxuf8vb2QFeR2CmFyUIVf9//FpGhBL1QKeM
+HLKt5AwnkXf1OaI7aT3gB+C7tinm88rlqnhEkt6T9WWlCO0H4cCcWGl5McvlCUSk
+knfz7NpuX/A0m/EwFcjD6eYMJsVCQg9rdYli3RkkKPnRy8CvVOyRu9Ne1BCiH0Vd
+yWTJUIPvO3glNlp7wdDuMbautf0UY9Zs7I4+A9yGRPhGu3iz9DpPvyXT/qVKNNuL
+3nyDewyAwWXkmZYCgRUMsQEpIXpjyq9E0yGeH3pFueEY8Q+lymqLkRVuJlSYFm+4
+zQinwJtsMo/xuvkRKUOxH47RDMhvdWmLodwo5FO/IEUgid9m2Dqcdf9Eiu578TFg
+krU5VWxIDR3pgYWxtPc2
+=FkT0
+-----END PGP SIGNATURE-----
+
+--lkTb+7nhmha7W+c3--
