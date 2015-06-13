@@ -1,145 +1,143 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 04/11] for-each-ref: add '--points-at' option
-Date: Sun, 14 Jun 2015 01:48:19 +0530
-Message-ID: <1434226706-3764-4-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v2 05/11] ref-filter: add parse_opt_merge_filter()
+Date: Sun, 14 Jun 2015 01:48:20 +0530
+Message-ID: <1434226706-3764-5-git-send-email-karthik.188@gmail.com>
 References: <CAOLa=ZRA7jVhs-NixjP+EFqfBNwLEfU-WgEMMQzb5NC+HZDYiw@mail.gmail.com>
  <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 13 22:18:50 2015
+X-From: git-owner@vger.kernel.org Sat Jun 13 22:18:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3rtB-0003KI-Em
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:18:49 +0200
+	id 1Z3rtG-0003NG-Tn
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:18:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752343AbbFMUSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 16:18:47 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35191 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbbFMUSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2015 16:18:44 -0400
-Received: by pacyx8 with SMTP id yx8so41102661pac.2
-        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:18:44 -0700 (PDT)
+	id S1752244AbbFMUSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 16:18:49 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36555 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752336AbbFMUSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2015 16:18:48 -0400
+Received: by pabqy3 with SMTP id qy3so40970979pab.3
+        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=78pwJr5mscvwIjxK3luYlnrVGRzSXXMFmhOb8YX9fJg=;
-        b=FbBZm/fN38LLHjJHW4SmDsUcS4yNIYdzTNl4oq9RDJFTm+gkslicSQ2pYuFjmX92O8
-         zy0WuWGubJGoFpKwVlxB3UDTP+C8mQ0NXX4j7In9ZtwhqLSpMPEdvJJ/qoXeNOhypq4Z
-         W9X6vxv6CHDOkQZ1HIWe2XJvICPqnFcUc2Vyt5XPyWFesN6fu4pgDSjZsrdzDcG33Swc
-         m69Epto4a1ouvWBBfcvgkmMgVTBDaVdjsDbhjnBsjrTdF7cJfIspu3BoEzCPCBoqT/hb
-         mKyi1nbSgCQnB/L8bG/1D+sxDwTY3Tgf63FhaDllR7KskisftjflHFBG91p7Jvlb+DDT
-         42ZA==
-X-Received: by 10.70.22.235 with SMTP id h11mr34425688pdf.135.1434226724128;
-        Sat, 13 Jun 2015 13:18:44 -0700 (PDT)
+        bh=kIjp47O4qowXcD2eqkalOYP33F44O0Nf1VN0jb0DAxw=;
+        b=CCx50UvksT1jRaNy+CQIuorIxuHzW5VgAwPaQcZ9EN/Ud2+dEv6pzACkBOhFao0ljb
+         wSuuIa1WXMbIBQ1KZCnLvKc4fAXauPWZx+IgKAo4n1TAL0wVjnarSySjfj2zUBZPVPUD
+         BNcOOGUf/Y16prPhgFsJwdZKbEqicT+y55CykD6ulKpK5k3413rK/ZTMjrpNqK+KPP7+
+         bbY3+mQLFxYVlP9t9rBJ1al5JTQx4d5+cmXzFfmRYqFH/GTf54IW6Kk7B5aUGvosoDet
+         kd++24lRiTY9shGp6RNRtvOgxFZ8WCW5PWriFJutTDahPU+zBo8nY0O18WnkAeN/imHi
+         qYMA==
+X-Received: by 10.70.35.230 with SMTP id l6mr34745899pdj.26.1434226727357;
+        Sat, 13 Jun 2015 13:18:47 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.18.42
+        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.18.45
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 13 Jun 2015 13:18:43 -0700 (PDT)
+        Sat, 13 Jun 2015 13:18:46 -0700 (PDT)
 X-Mailer: git-send-email 2.4.3.435.g2403634.dirty
 In-Reply-To: <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271580>
 
-Add the '--points-at' option provided by 'ref-filter'. The
-option lets the user to pick only refs which point to a particular
-commit.
+Add 'parse_opt_merge_filter()' to parse '--merged' and '--no-merged'
+options and write MACROS for the same.
 
-Add documentation and tests for the same.
+This is copied from 'builtin/branch.c' which will eventually be removed
+when we port 'branch.c' to use ref-filter APIs.
 
 Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  3 +++
- builtin/for-each-ref.c             |  9 +++++++--
- t/t6301-for-each-ref-filter.sh     | 10 ++++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ builtin/branch.c |  4 ++++
+ ref-filter.c     | 21 +++++++++++++++++++++
+ ref-filter.h     | 14 ++++++++++++++
+ 3 files changed, 39 insertions(+)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 7f8d9a5..0524ac4 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--sort=<key>)...] [--format=<format>] [<pattern>...]
-+		   [--points-at <object>]
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b42e5b6..ddd90e6 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -745,6 +745,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 	strbuf_release(&newsection);
+ }
  
- DESCRIPTION
- -----------
-@@ -62,6 +63,8 @@ OPTIONS
- 	the specified host language.  This is meant to produce
- 	a scriptlet that can directly be `eval`ed.
- 
-+--points-at <object>::
-+	Only list refs of the given object.
- 
- FIELD NAMES
- -----------
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 7919206..2dee149 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -7,6 +7,7 @@
- 
- static char const * const for_each_ref_usage[] = {
- 	N_("git for-each-ref [<options>] [<pattern>]"),
-+	N_("git for-each-ref [--points-at <object>]"),
- 	NULL
++/*
++ * This function is duplicated in ref-filter. It will eventually be removed
++ * when we port branch.c to use ref-filter APIs.
++ */
+ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int unset)
+ {
+ 	merge_filter = ((opt->long_name[0] == 'n')
+diff --git a/ref-filter.c b/ref-filter.c
+index 591e281..6502179 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1125,3 +1125,24 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
+ 	s->atom = parse_ref_filter_atom(arg, arg+len);
+ 	return 0;
+ }
++
++int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
++{
++	struct ref_filter *rf = opt->value;
++	unsigned char sha1[20];
++
++	rf->merge = starts_with(opt->long_name, "no")
++		? REF_FILTER_MERGED_OMIT
++		: REF_FILTER_MERGED_INCLUDE;
++
++	if (!arg)
++		arg = "HEAD";
++	if (get_sha1(arg, sha1))
++		die(_("malformed object name %s"), arg);
++
++	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
++	if (!rf->merge_commit)
++		return opterror(opt, "must point to a commit", 0);
++
++	return 0;
++}
+diff --git a/ref-filter.h b/ref-filter.h
+index c2856b8..799e118 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -50,6 +50,18 @@ struct ref_filter_cbdata {
+ 	struct ref_filter *filter;
  };
  
-@@ -34,9 +35,15 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
- 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			    N_("field name to sort on"), &parse_opt_ref_sorting),
-+		OPT_CALLBACK(0, "points-at", &filter.points_at,
-+			     N_("object"), N_("print only refs of the object"),
-+			     parse_opt_object_name),
- 		OPT_END(),
- 	};
- 
-+	memset(&array, 0, sizeof(array));
-+	memset(&filter, 0, sizeof(filter));
++/*  Macros for checking --merged and --no-merged options */
++#define OPT_NO_MERGED(filter, h) \
++	{ OPTION_CALLBACK, 0, "no-merged", (filter), N_("commit"), (h), \
++	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
++	  parse_opt_merge_filter, (intptr_t) "HEAD" \
++	}
++#define OPT_MERGED(filter, h) \
++	{ OPTION_CALLBACK, 0, "merged", (filter), N_("commit"), (h), \
++	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
++	  parse_opt_merge_filter, (intptr_t) "HEAD" \
++	}
 +
- 	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
- 	if (maxcount < 0) {
- 		error("invalid --count argument: `%d'", maxcount);
-@@ -55,8 +62,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	/* for warn_ambiguous_refs */
- 	git_config(git_default_config, NULL);
+ /*
+  * API for filtering a set of refs. Based on the type of refs the user
+  * has requested, we iterate through those refs and apply filters
+@@ -71,5 +83,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
+ /*  Default sort option based on refname */
+ struct ref_sorting *ref_default_sorting(void);
++/*  Function to parse --merged and --no-merged options */
++int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
  
--	memset(&array, 0, sizeof(array));
--	memset(&filter, 0, sizeof(filter));
- 	filter.name_patterns = argv;
- 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
- 	ref_array_sort(sorting, &array);
-diff --git a/t/t6301-for-each-ref-filter.sh b/t/t6301-for-each-ref-filter.sh
-index 5bd49b3..3a1c3f6 100644
---- a/t/t6301-for-each-ref-filter.sh
-+++ b/t/t6301-for-each-ref-filter.sh
-@@ -32,4 +32,14 @@ test_expect_success 'filtering with fnmatch' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'filtering with --points-at' '
-+	cat >expect <<-\EOF &&
-+	refs/heads/master
-+	refs/odd/spot
-+	refs/tags/three
-+	EOF
-+	git for-each-ref --format="%(refname)" --points-at=master >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ #endif /*  REF_FILTER_H  */
 -- 
 2.4.3.435.g2403634.dirty
