@@ -1,132 +1,116 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 11/11] for-each-ref: add '--contains' option
-Date: Sun, 14 Jun 2015 01:48:26 +0530
-Message-ID: <1434226706-3764-11-git-send-email-karthik.188@gmail.com>
-References: <CAOLa=ZRA7jVhs-NixjP+EFqfBNwLEfU-WgEMMQzb5NC+HZDYiw@mail.gmail.com>
- <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 13 22:19:19 2015
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: [PATCH (resend)] git-gui: make gc warning threshold match 'git gc
+ --auto'
+Date: Sat, 13 Jun 2015 22:22:17 +0200
+Message-ID: <557C90F9.8000200@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Git List <git@vger.kernel.org>, Pat Thoyts <patthoyts@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 22:22:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3rtd-0003Xu-Gd
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:19:17 +0200
+	id 1Z3rwa-0004rp-1U
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:22:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbbFMUTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 16:19:14 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:36108 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745AbbFMUTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2015 16:19:09 -0400
-Received: by pdjm12 with SMTP id m12so44869906pdj.3
-        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:19:08 -0700 (PDT)
+	id S1751462AbbFMUWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 16:22:16 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:38510 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbbFMUWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2015 16:22:14 -0400
+Received: by wibdq8 with SMTP id dq8so43089432wib.1
+        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yrJr8+wI33OIfpd1qjjwCwbWHPoNrdlv3SKBuit5Rmg=;
-        b=uSuF95kFx7IeUsdi9oNMonHl6q13jEqAWGaMhYQucEjYuW4aoyMh+IFmHWMg4smG+c
-         TPd/4AdXy40t8fieSn0585MhMXDxdiLx6hwM6gA9byMZYBicvOEGJHP3PvsOzmsEYviS
-         +w/IiLhYIFkYTJqGgFAl/RzXs8I3kvLlN+X7g9UJPg2YQbRmPTtnf86wKNcHyUmBIewg
-         e56bd0FFLn851ErmS+cspdJnJGAw0AdU6jEPtAm1EjLSEv8W5MKV1+V35zo8uoJ6pMGL
-         QjnZnagrzd5GaE53fpy+tH9o48AanwAmkq8S6RCIHYpaEsvtshxq7VfmX+orQH8YfyUn
-         //yQ==
-X-Received: by 10.68.136.42 with SMTP id px10mr34693197pbb.19.1434226748751;
-        Sat, 13 Jun 2015 13:19:08 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.19.06
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 13 Jun 2015 13:19:08 -0700 (PDT)
-X-Mailer: git-send-email 2.4.3.435.g2403634.dirty
-In-Reply-To: <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=YlmL+wPPpFfjBPyI9CXFzs13oAAAIwrsesyvrUCenjA=;
+        b=DNEFSsIrTGCwQD/26A6SYKgsuUypsl03AeUyOlDayXXm5pxDNH0pDuTZWrC/2tLkXC
+         YBGqE35DWZl7+tBL1ErhHWstgxrTkexsE4Sr4NUkMvJgpOFbhuoza4xpRCuGJm+Sxeu6
+         V69VIOpjtTqClGrgs7PiyXtFezk22sARpGLpJg0gLaLk8IOcRdCxiFRZJWAcXJIpBQSx
+         kRVyod6/y941oswMbQnDEkoZI9hoI0C1q9GqYpG1meZZHYNg6AJjZQ8itZLVr1HwdQYk
+         zF3vKad+ACLiMqEtN5dSMZO0L1SS1KMDiGxeH0BtasDvdQ/q2y+hh3U1XGWyJ8B5U7+s
+         RyDw==
+X-Received: by 10.194.222.137 with SMTP id qm9mr38234593wjc.43.1434226933436;
+        Sat, 13 Jun 2015 13:22:13 -0700 (PDT)
+Received: from [10.1.116.50] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id 12sm11689542wjw.17.2015.06.13.13.22.12
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 Jun 2015 13:22:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271587>
 
-Add the '--contains' option provided by 'ref-filter'. The '--contains'
-option lists only refs which are contain the mentioned commit (HEAD if
-no commit is explicitly given).
+Date: Wed, 6 Aug 2014 20:43:46 +0200
 
-Add documentation and tests for the same.
+The number of loose objects at which git-gui shows a gc warning has
+historically been hardcoded to ~2000, or ~200 on Windows. The warning can
+only be disabled completely via gui.gcwarning=false.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Especially on Windows, the hardcoded threshold is so ridiculously low that
+git-gui often complains even immediately after gc (due to loose objects
+only referenced by the reflog).
+
+'git gc --auto' uses a much bigger threshold to check if gc is necessary.
+Additionally, the value can be configured via gc.auto (default 6700).
+There's no special case for Windows.
+
+Change git-gui so that it only warns if 'git gc --auto' would also do an
+automatic gc, i.e.:
+ - calculate the threshold from the gc.auto setting (default 6700,
+   disabled if <= 0)
+ - check directory .git/objects/17
+
+We still check four directories (14-17) if gc.auto is very small, to get a
+better estimate.
+
+Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- Documentation/git-for-each-ref.txt |  5 +++++
- builtin/for-each-ref.c             |  2 ++
- t/t6301-for-each-ref-filter.sh     | 13 +++++++++++++
- 3 files changed, 20 insertions(+)
+ git-gui/lib/database.tcl | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index d61a756..7a949f3 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- 'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--sort=<key>)...] [--format=<format>] [<pattern>...]
- 		   [--points-at <object>] [(--merged | --no-merged) <object>]
-+		   [--contains <object>]
+diff --git a/git-gui/lib/database.tcl b/git-gui/lib/database.tcl
+index 1f187ed..212b195 100644
+--- a/git-gui/lib/database.tcl
++++ b/git-gui/lib/database.tcl
+@@ -89,19 +89,26 @@ proc do_fsck_objects {} {
+ }
  
- DESCRIPTION
- -----------
-@@ -74,6 +75,10 @@ OPTIONS
- 	Only list refs whose tips are not reachable from the
- 	specified commit (HEAD if not specified).
- 
-+--contains [<commit>]::
-+	Only list tags which contain the specified commit (HEAD if not
-+	specified).
+ proc hint_gc {} {
++	global repo_config
++	set auto_gc $repo_config(gc.auto)
++	if {$auto_gc eq {}} {
++		set auto_gc 6700
++	} elseif {$auto_gc <= 0} {
++		return
++	}
 +
- FIELD NAMES
- -----------
+ 	set ndirs 1
+-	set limit 8
+-	if {[is_Windows]} {
++	set limit [expr {($auto_gc + 255) / 256}]
++	if {$limit < 4} {
+ 		set ndirs 4
+-		set limit 1
+ 	}
  
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 00913f4..8ccbb1c 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -9,6 +9,7 @@ static char const * const for_each_ref_usage[] = {
- 	N_("git for-each-ref [<options>] [<pattern>]"),
- 	N_("git for-each-ref [--points-at <object>]"),
- 	N_("git for-each-ref [(--merged | --no-merged) <object>]"),
-+	N_("git for-each-ref [--contains <object>]"),
- 	NULL
- };
+ 	set count [llength [glob \
+ 		-nocomplain \
+ 		-- \
+-		[gitdir objects 4\[0-[expr {$ndirs-1}]\]/*]]]
++		[gitdir objects 1\[[expr {8-$ndirs}]-7\]/*]]]
  
-@@ -41,6 +42,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 			     parse_opt_object_name),
- 		OPT_MERGED(&filter, N_("print only refs that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only refs that are not merged")),
-+		OPT_CONTAINS(&filter.with_commit, N_("print only refs which contain the commit")),
- 		OPT_END(),
- 	};
- 
-diff --git a/t/t6301-for-each-ref-filter.sh b/t/t6301-for-each-ref-filter.sh
-index 3ed97bd..17cf7b0 100644
---- a/t/t6301-for-each-ref-filter.sh
-+++ b/t/t6301-for-each-ref-filter.sh
-@@ -63,4 +63,17 @@ test_expect_success 'filtering with --no-merged' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'filtering with --contains' '
-+	cat >expect <<-\EOF &&
-+	refs/heads/master
-+	refs/heads/side
-+	refs/odd/spot
-+	refs/tags/four
-+	refs/tags/three
-+	refs/tags/two
-+	EOF
-+	git for-each-ref --format="%(refname)" --contains=two >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+-	if {$count >= $limit * $ndirs} {
++	if {$count > $limit * $ndirs} {
+ 		set objects_current [expr {$count * 256/$ndirs}]
+ 		if {[ask_popup \
+ 			[mc "This repository currently has approximately %i loose objects.
 -- 
-2.4.3.435.g2403634.dirty
+2.4.1.windows.1
