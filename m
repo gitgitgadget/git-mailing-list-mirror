@@ -1,113 +1,226 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 09/11] parse-options.h: add macros for '--contains' option
-Date: Sun, 14 Jun 2015 01:48:24 +0530
-Message-ID: <1434226706-3764-9-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v2 10/11] ref-filter: implement '--contains' option
+Date: Sun, 14 Jun 2015 01:48:25 +0530
+Message-ID: <1434226706-3764-10-git-send-email-karthik.188@gmail.com>
 References: <CAOLa=ZRA7jVhs-NixjP+EFqfBNwLEfU-WgEMMQzb5NC+HZDYiw@mail.gmail.com>
  <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 13 22:19:13 2015
+X-From: git-owner@vger.kernel.org Sat Jun 13 22:19:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z3rtY-0003Vr-M5
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:19:13 +0200
+	id 1Z3rtc-0003Xu-TD
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jun 2015 22:19:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbbFMUTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2015 16:19:08 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36630 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752551AbbFMUTE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2015 16:19:04 -0400
-Received: by pabqy3 with SMTP id qy3so40972786pab.3
-        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:19:03 -0700 (PDT)
+	id S1752787AbbFMUTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2015 16:19:11 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36640 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425AbbFMUTG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2015 16:19:06 -0400
+Received: by pabqy3 with SMTP id qy3so40973051pab.3
+        for <git@vger.kernel.org>; Sat, 13 Jun 2015 13:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EU7jJJHONmgY9Dz0iJ9iekvKSVkBNa8uo6qOxDv8vIE=;
-        b=bYBHi3CVqarY5opn8QR24kClbljYrqf6tBqq7qEk0ewopReN+h1djeXfyF4vm3NOWF
-         P/7RTJHnrWeBVQnp/TBg/F59zRcVBBwQkLA03q2aBscVoiwEuyAOraT/jmE3nbRL93j9
-         GtXOxUQ5q5Tj+FLtno8WkD7NL4OaSDENoetE4WeqGaozxJALO0ud99r7yRC4ZQvglAMd
-         hDosvmH+jF0ppmWKyP9ByRd14+m78a6IZZlZNE0qd5yscyjdk5TbJ4Jo8gQoK5I5BI0k
-         eOmP2wtLkFSmafh0F4AFo69bjw8Sx0iyJXGUG9tHlVep3EaywFH0szee//igzYZtxFDG
-         pScA==
-X-Received: by 10.70.56.4 with SMTP id w4mr34648438pdp.148.1434226743141;
-        Sat, 13 Jun 2015 13:19:03 -0700 (PDT)
+        bh=1SghvaGAWQPhz3+4WaYL28wruAKgeUIOV/oYFuQaHTs=;
+        b=bFO1grF0y1mNVFk2LwlK25qHkYXuQ8abbdxJzDB53ezv45vKHYGEznrknvmLgHUMfU
+         +1c4w1rqKoRL9fWr4KrYSuCckA/GziOadM7L+ExMrJ4fg7IgLJemURaUw34Rwkzukyej
+         5a42NULuQh27yLaF/ipzZixXSXfcybFl5uzanSIw6y9aZYpMBukYSw+y2GA2VT7308ra
+         4kp+PAu1qVxqQ+VLxtbZXw/jl7Dnn6Mw0PgqmitzFe0vy5ZTWNupIv+TXXJoC9ZHQf5s
+         tcFjljs1g5ohYORy3Wfvvh02rpPSUbxfivQ9WiP3PYlZXS8g5yRMwDp/vsmqjxEUdaWN
+         fRnQ==
+X-Received: by 10.68.198.36 with SMTP id iz4mr34370882pbc.167.1434226745759;
+        Sat, 13 Jun 2015 13:19:05 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.19.01
+        by mx.google.com with ESMTPSA id nw8sm7471590pdb.30.2015.06.13.13.19.03
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 13 Jun 2015 13:19:02 -0700 (PDT)
+        Sat, 13 Jun 2015 13:19:05 -0700 (PDT)
 X-Mailer: git-send-email 2.4.3.435.g2403634.dirty
 In-Reply-To: <1434226706-3764-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271585>
 
-Add a macro for using the '--contains' option in parse-options.h
-also include an optional '--with' option macro which performs the
-same action as '--contains'.
+'tag -l' and 'branch -l' have two different ways of finding
+out if a certain ref contains a commit. Implement both these
+methods in ref-filter and give the caller of ref-filter API
+the option to pick which implementation to be used.
 
-Make tag.c use this new macro
+'branch -l' uses 'is_descendant_of()' from commit.c which is
+left as the default implementation to be used.
+
+'tag -l' uses a more specific algorithm since ffc4b80. This
+implementation is used whenever the 'with_commit_tag_algo' bit
+is set in 'struct ref_filter'.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/tag.c   | 14 ++------------
- parse-options.h |  7 +++++++
- 2 files changed, 9 insertions(+), 12 deletions(-)
+ ref-filter.c | 112 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ ref-filter.h |   3 ++
+ 2 files changed, 114 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 2d6610a..767162e 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -595,23 +595,13 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+diff --git a/ref-filter.c b/ref-filter.c
+index 06328eb..40eb90e 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -818,6 +818,113 @@ static void get_ref_atom_value(struct ref_array_item *ref, int atom, struct atom
+ 	*v = &ref->value[atom];
+ }
  
- 		OPT_GROUP(N_("Tag listing options")),
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
-+		OPT_CONTAINS(&with_commit, N_("print only tags that contain the commit")),
-+		OPT_WITH(&with_commit, N_("print only tags that contain the commit")),
- 		{
- 			OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
- 			PARSE_OPT_NONEG, parse_opt_sort
- 		},
- 		{
--			OPTION_CALLBACK, 0, "contains", &with_commit, N_("commit"),
--			N_("print only tags that contain the commit"),
--			PARSE_OPT_LASTARG_DEFAULT,
--			parse_opt_commit_object_name, (intptr_t)"HEAD",
--		},
--		{
--			OPTION_CALLBACK, 0, "with", &with_commit, N_("commit"),
--			N_("print only tags that contain the commit"),
--			PARSE_OPT_HIDDEN | PARSE_OPT_LASTARG_DEFAULT,
--			parse_opt_commit_object_name, (intptr_t)"HEAD",
--		},
--		{
- 			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
- 			N_("print only tags of the object"), 0, parse_opt_object_name
- 		},
-diff --git a/parse-options.h b/parse-options.h
-index 8542d9c..d76e907 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -243,5 +243,12 @@ extern int parse_opt_noop_cb(const struct option *, const char *, int);
- 	OPT_COLOR_FLAG(0, "color", (var), (h))
- #define OPT_COLUMN(s, l, v, h) \
- 	{ OPTION_CALLBACK, (s), (l), (v), N_("style"), (h), PARSE_OPT_OPTARG, parseopt_column_callback }
-+#define _OPT_CONTAINS_OR_WITH(name, variable, help) \
-+	{ OPTION_CALLBACK, 0, name, (variable), N_("commit"), (help), \
-+	  PARSE_OPT_LASTARG_DEFAULT, \
-+	  parse_opt_commit_object_name, (intptr_t) "HEAD" \
++enum contains_result {
++	CONTAINS_UNKNOWN = -1,
++	CONTAINS_NO = 0,
++	CONTAINS_YES = 1
++};
++
++/*
++ * Mimicking the real stack, this stack lives on the heap, avoiding stack
++ * overflows.
++ *
++ * At each recursion step, the stack items points to the commits whose
++ * ancestors are to be inspected.
++ */
++struct contains_stack {
++	int nr, alloc;
++	struct contains_stack_entry {
++		struct commit *commit;
++		struct commit_list *parents;
++	} *contains_stack;
++};
++
++static int in_commit_list(const struct commit_list *want, struct commit *c)
++{
++	for (; want; want = want->next)
++		if (!hashcmp(want->item->object.sha1, c->object.sha1))
++			return 1;
++	return 0;
++}
++
++/*
++ * Test whether the candidate or one of its parents is contained in the list.
++ * Do not recurse to find out, though, but return -1 if inconclusive.
++ */
++static enum contains_result contains_test(struct commit *candidate,
++			    const struct commit_list *want)
++{
++	/* was it previously marked as containing a want commit? */
++	if (candidate->object.flags & TMP_MARK)
++		return 1;
++	/* or marked as not possibly containing a want commit? */
++	if (candidate->object.flags & UNINTERESTING)
++		return 0;
++	/* or are we it? */
++	if (in_commit_list(want, candidate)) {
++		candidate->object.flags |= TMP_MARK;
++		return 1;
 +	}
-+#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h)
-+#define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h)
++
++	if (parse_commit(candidate) < 0)
++		return 0;
++
++	return -1;
++}
++
++static void push_to_contains_stack(struct commit *candidate, struct contains_stack *contains_stack)
++{
++	ALLOC_GROW(contains_stack->contains_stack, contains_stack->nr + 1, contains_stack->alloc);
++	contains_stack->contains_stack[contains_stack->nr].commit = candidate;
++	contains_stack->contains_stack[contains_stack->nr++].parents = candidate->parents;
++}
++
++static enum contains_result contains_tag_algo(struct commit *candidate,
++		const struct commit_list *want)
++{
++	struct contains_stack contains_stack = { 0, 0, NULL };
++	int result = contains_test(candidate, want);
++
++	if (result != CONTAINS_UNKNOWN)
++		return result;
++
++	push_to_contains_stack(candidate, &contains_stack);
++	while (contains_stack.nr) {
++		struct contains_stack_entry *entry = &contains_stack.contains_stack[contains_stack.nr - 1];
++		struct commit *commit = entry->commit;
++		struct commit_list *parents = entry->parents;
++
++		if (!parents) {
++			commit->object.flags |= UNINTERESTING;
++			contains_stack.nr--;
++		}
++		/*
++		 * If we just popped the stack, parents->item has been marked,
++		 * therefore contains_test will return a meaningful 0 or 1.
++		 */
++		else switch (contains_test(parents->item, want)) {
++		case CONTAINS_YES:
++			commit->object.flags |= TMP_MARK;
++			contains_stack.nr--;
++			break;
++		case CONTAINS_NO:
++			entry->parents = parents->next;
++			break;
++		case CONTAINS_UNKNOWN:
++			push_to_contains_stack(parents->item, &contains_stack);
++			break;
++		}
++	}
++	free(contains_stack.contains_stack);
++	return contains_test(candidate, want);
++}
++
++static int commit_contains(struct ref_filter *filter, struct commit *commit)
++{
++	if (filter->with_commit_tag_algo)
++		return contains_tag_algo(commit, filter->with_commit);
++	return is_descendant_of(commit, filter->with_commit);
++}
+ /*
+  * Return 1 if the refname matches one of the patterns, otherwise 0.
+  * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+@@ -903,10 +1010,13 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	if (!match_points_at(&filter->points_at, oid->hash, refname))
+ 		return 0;
  
- #endif
+-	if (filter->merge_commit) {
++	if (filter->merge_commit || filter->with_commit) {
+ 		commit = lookup_commit_reference_gently(oid->hash, 1);
+ 		if (!commit)
+ 			return 0;
++		if (filter->with_commit &&
++		    !commit_contains(filter, commit))
++			return 0;
+ 	}
+ 
+ 	/*
+diff --git a/ref-filter.h b/ref-filter.h
+index 39d66b0..e614713 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -44,6 +44,7 @@ struct ref_array {
+ struct ref_filter {
+ 	const char **name_patterns;
+ 	struct sha1_array points_at;
++	struct commit_list *with_commit;
+ 
+ 	enum {
+ 		REF_FILTER_MERGED_NONE = 0,
+@@ -51,6 +52,8 @@ struct ref_filter {
+ 		REF_FILTER_MERGED_OMIT
+ 	} merge;
+ 	struct commit *merge_commit;
++
++	unsigned int with_commit_tag_algo: 1;
+ };
+ 
+ struct ref_filter_cbdata {
 -- 
 2.4.3.435.g2403634.dirty
