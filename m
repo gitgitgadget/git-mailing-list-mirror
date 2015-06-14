@@ -1,104 +1,110 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 01/11] t6301: for-each-ref tests for ref-filter APIs
-Date: Sun, 14 Jun 2015 14:02:54 +0530
-Message-ID: <CAOLa=ZRC+mZmXKJnrDFdM9oy4+WrWC0rg7kj_bpNCf=iRSVG2g@mail.gmail.com>
-References: <CAOLa=ZRA7jVhs-NixjP+EFqfBNwLEfU-WgEMMQzb5NC+HZDYiw@mail.gmail.com>
- <1434226706-3764-1-git-send-email-karthik.188@gmail.com> <vpqvbeqd7y5.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jun 14 10:33:36 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: [PATCH v3 00/19] Make git-pull a builtin
+Date: Sun, 14 Jun 2015 16:41:47 +0800
+Message-ID: <1434271326-11349-1-git-send-email-pyokagan@gmail.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Stephen Robin <stephen.robin@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 14 10:42:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z43MD-0002Tx-J7
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 10:33:33 +0200
+	id 1Z43Ut-00062j-2Y
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 10:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbbFNId2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2015 04:33:28 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:34729 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbbFNIdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2015 04:33:25 -0400
-Received: by obbsn1 with SMTP id sn1so46552439obb.1
-        for <git@vger.kernel.org>; Sun, 14 Jun 2015 01:33:24 -0700 (PDT)
+	id S1752066AbbFNIm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2015 04:42:26 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:34903 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751649AbbFNImX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2015 04:42:23 -0400
+Received: by pdbnf5 with SMTP id nf5so51485743pdb.2
+        for <git@vger.kernel.org>; Sun, 14 Jun 2015 01:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YmZASfQkDgkNKwO6L+6Tn0cI6NzraU0YdYbeWHdkcIg=;
-        b=xsIlePh/ClkvhrSbnaE6iEct4RcxrhhPHa9EZm1ePyvuBi3PQtveeBRGlPHVCMF9T3
-         xlUW+086NjU3OZ6r+BOguHbWRCKr/n7fh0nwFmYRgsouYqXvBu6s9DTFnt8QsH99+yIS
-         jlqN8IuooU0J2/vfgeMEnWYZxuwlLntoqh0S/rgISelCbOKQe1QkX/Ywk0R0AeTc4lFm
-         Mr8t35uJ3V4f/zYxBu2DMQpKh9ntkMj/oRFRXdWpjk6ASRPiOfPCuMhl4kQsFmlJzcc4
-         GbyqAwn6ekJ93vQG3yMGVLXXX2yB4F8m72T5zkWPN6tRzNOOLO0TlWPftPFsyMpbBD38
-         kYrQ==
-X-Received: by 10.202.92.68 with SMTP id q65mr18027117oib.11.1434270804441;
- Sun, 14 Jun 2015 01:33:24 -0700 (PDT)
-Received: by 10.182.28.5 with HTTP; Sun, 14 Jun 2015 01:32:54 -0700 (PDT)
-In-Reply-To: <vpqvbeqd7y5.fsf@anie.imag.fr>
+        h=from:to:cc:subject:date:message-id;
+        bh=kxErbxZjnW0w4t9yYUM4IVREem/tTONVl1BLwIMK9ho=;
+        b=rXfwxCyBMzy7cJagGBvXKozmT3es30aNSBRoi0MExOin0utxWGRyw3BCyp1b+wRAQY
+         G4LbJxHFx5qPVkFwC4QOAHRJLHpXh4OvTrGl/yACZ2CZIpwPYE32h9sP8ZMazm3YknO0
+         OH5Nm2JLEE/pouB0lTYrupSYECgFsvQtbKNU59yXTtpIDye1ob/IlhmXjmFlF6dycDEx
+         ItOQGMOD3/IsNPRrZWrwmdOtQiPHd4l9byoFPzb6IRbfUpKUIYRdfpSdtizx1ImKMGFQ
+         6NRk5+XQJUqyXu2dqjt6ADIvd0A/MVnNZbnCzMkXYr1rPXywE5jWUCSSNENFuiKSwVGK
+         JHFw==
+X-Received: by 10.66.63.70 with SMTP id e6mr20437912pas.62.1434271343393;
+        Sun, 14 Jun 2015 01:42:23 -0700 (PDT)
+Received: from yoshi.pyokagan.tan ([116.86.132.138])
+        by mx.google.com with ESMTPSA id kk6sm8622549pdb.94.2015.06.14.01.42.19
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 14 Jun 2015 01:42:21 -0700 (PDT)
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271614>
 
-On Sun, Jun 14, 2015 at 1:42 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> +test_expect_success 'setup some history and refs' '
->> +     test_commit one &&
->> +     test_commit two &&
->> +     test_commit three &&
->> +     git checkout -b side &&
->> +     test_commit four &&
->> +     git checkout master &&
->> +     git update-ref refs/odd/spot master
->
-> I think you want more corner-cases here. For example,
-> refs/headsfoo/master should not match refs/heads, and it's easy to write
-> an incorrect implementation for this => test.
+This is a re-roll of [v2]. Thanks Junio, Stefan for the reviews last round.
 
-Like you mentioned below, currently it's redundant with t6300 and its
-purpose is to add tests for new functionality we provide to for-each-ref
-via ref-filter. This is done in the next few patches in this series.
+Previous versions:
 
->
->> +'
->> +test_expect_success 'filtering by leading name' '
->
-> Blank line between tests please.
+[v1] http://thread.gmane.org/gmane.comp.version-control.git/269258
+[v2] http://thread.gmane.org/gmane.comp.version-control.git/270639
 
-Noted. Thanks.
+git-pull is a commonly executed command to check for new changes in the
+upstream repository and, if there are, fetch and integrate them into the
+current branch. Currently it is implemented by the shell script git-pull.sh.
+However, compared to C, shell scripts have certain deficiencies -- they need to
+spawn a lot of processes, introduce a lot of dependencies and cannot take
+advantage of git's internal caches.
 
->
->> +     cat >expect <<-\EOF &&
->> +     refs/heads/master
->> +     refs/heads/side
->> +     EOF
->> +     git for-each-ref --format="%(refname)" refs/heads >actual &&
->> +     test_cmp expect actual
->> +'
->
-> Isn't this test redundant with the content of t6300-for-each-ref.sh?
->
-> At this point, you've done only internal refactoring, so you shouldn't
-> need new tests (except to fix coverage holes in existing tests).
->
-> I guess you're adding this to build more tests on top, but the commit
-> message should clarify this.
->
+This series rewrites git-pull.sh into a C builtin, thus improving its
+performance and portability. It is part of my GSoC project to rewrite git-pull
+and git-am into builtins[1].
 
-I'll add a note to the commit message about how this test file is so
-that we can integrate
-more tests in the future for functionality given to for-each-ref via
-ref-filter APIs.
+[1] https://gist.github.com/pyokagan/1b7b0d1f4dab6ba3cef1
+
+
+Paul Tan (19):
+  parse-options-cb: implement parse_opt_passthru()
+  parse-options-cb: implement parse_opt_passthru_argv()
+  argv-array: implement argv_array_pushv()
+  pull: implement skeletal builtin pull
+  pull: implement fetch + merge
+  pull: pass verbosity, --progress flags to fetch and merge
+  pull: pass git-merge's options to git-merge
+  pull: pass git-fetch's options to git-fetch
+  pull: error on no merge candidates
+  pull: support pull.ff config
+  pull: check if in unresolved merge state
+  pull: fast-forward working tree if head is updated
+  pull: implement pulling into an unborn branch
+  pull: set reflog message
+  pull: teach git pull about --rebase
+  pull: configure --rebase via branch.<name>.rebase or pull.rebase
+  pull --rebase: exit early when the working directory is dirty
+  pull --rebase: error on no merge candidate cases
+  pull: remove redirection to git-pull.sh
+
+ Documentation/technical/api-argv-array.txt    |   3 +
+ Documentation/technical/api-parse-options.txt |  13 +
+ Makefile                                      |   2 +-
+ advice.c                                      |   8 +
+ advice.h                                      |   1 +
+ argv-array.c                                  |   6 +
+ argv-array.h                                  |   1 +
+ builtin.h                                     |   1 +
+ builtin/pull.c                                | 881 ++++++++++++++++++++++++++
+ git-pull.sh => contrib/examples/git-pull.sh   |   0
+ git.c                                         |   1 +
+ parse-options-cb.c                            |  69 ++
+ parse-options.h                               |   6 +
+ 13 files changed, 991 insertions(+), 1 deletion(-)
+ create mode 100644 builtin/pull.c
+ rename git-pull.sh => contrib/examples/git-pull.sh (100%)
 
 -- 
-Regards,
-Karthik Nayak
+2.1.4
