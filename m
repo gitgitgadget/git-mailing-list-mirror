@@ -1,114 +1,61 @@
-From: "Andres G. Aragoneses" <knocte@gmail.com>
-Subject: Re: RFC: reverse history tree, for faster & background clones
-Date: Sun, 14 Jun 2015 16:14:53 +0200
-Message-ID: <mlk28u$mm4$1@ger.gmane.org>
-References: <mlefli$h6v$1@ger.gmane.org>	 <1434108815.5381.3.camel@kaarsemaker.net> <mlegd8$t71$1@ger.gmane.org> <1434112410.5381.8.camel@kaarsemaker.net>
+From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+Subject: Re: [PATCH v7 2/5] setup: sanity check file size in read_gitfile_gently
+Date: Sun, 14 Jun 2015 19:21:44 +0200
+Message-ID: <CAMpP7NZ2tqZ5cv=9=gJqDZ5m0LOZtsHGvt-ntZcp6cBA6X5tqg@mail.gmail.com>
+References: <1433874279-30720-1-git-send-email-erik.elfstrom@gmail.com>
+	<1433874279-30720-3-git-send-email-erik.elfstrom@gmail.com>
+	<CAPig+cTQKxD9WRV3spVce=SfeECo4XR_ujZ1sGecuhTL-3DeRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 14 16:15:24 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Jun 14 19:21:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z48h0-0006jh-LB
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 16:15:23 +0200
+	id 1Z4BbT-0004ZO-MY
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 19:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbbFNOPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2015 10:15:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:40012 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751417AbbFNOPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2015 10:15:07 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Z48gi-0006cF-IB
-	for git@vger.kernel.org; Sun, 14 Jun 2015 16:15:04 +0200
-Received: from 46.24.152.62 ([46.24.152.62])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 14 Jun 2015 16:15:04 +0200
-Received: from knocte by 46.24.152.62 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 14 Jun 2015 16:15:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 46.24.152.62
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <1434112410.5381.8.camel@kaarsemaker.net>
+	id S1752866AbbFNRVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2015 13:21:47 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:35281 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752460AbbFNRVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2015 13:21:45 -0400
+Received: by obbgp2 with SMTP id gp2so50396202obb.2
+        for <git@vger.kernel.org>; Sun, 14 Jun 2015 10:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tdlUUf+wJW/ucZ8ywuuxrCi3piSru5mTgrW+C6odBf0=;
+        b=rXgZNpZLooL0BUyw1Jr3ZUv1s2z/XYrAObsxM9Qoznx6GROHpMYX64Sf/9UjWpsvMw
+         gJVLzfOavTfuGE8e0uVX1gR0eaOuD79KbGYc+AFw2GkG4827D6qlCLzkpwYOxBOIN+mV
+         RBKy/Tab8G/NeFMjHd9tikaKg9dpZAb/I9NZBcyQXENEbTJRL9jm2/kvb3Th8dAutlSZ
+         ItfCeCjTyOYd84M6uwT0ZCZy6Sf2aKVWChmb4Yh+p6jKQNE/YiBYFlTlF/WBPzBL2DFs
+         mjDBE9jhWOkaAwgPNbat77w+AbWOUcBXvkbFTVTF6D6xTwSf07z4Jadz5TxlhGR1RlMG
+         kGAg==
+X-Received: by 10.202.72.207 with SMTP id v198mr19431260oia.116.1434302504575;
+ Sun, 14 Jun 2015 10:21:44 -0700 (PDT)
+Received: by 10.182.116.35 with HTTP; Sun, 14 Jun 2015 10:21:44 -0700 (PDT)
+In-Reply-To: <CAPig+cTQKxD9WRV3spVce=SfeECo4XR_ujZ1sGecuhTL-3DeRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271641>
 
-On 12/06/15 14:33, Dennis Kaarsemaker wrote:
-> On vr, 2015-06-12 at 13:39 +0200, Andres G. Aragoneses wrote:
->> On 12/06/15 13:33, Dennis Kaarsemaker wrote:
->>> On vr, 2015-06-12 at 13:26 +0200, Andres G. Aragoneses wrote:
->>>
->>>> AFAIU git stores the contents of a repo as a sequence of patches in the
->>>> .git metadata folder.
->>>
->>> It does not, it stores full snapshots of files.
->>
->> In bare repos too?
+On Sun, Jun 14, 2015 at 5:42 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> Yes. A bare repo is nothing more than the .git dir of a non-bare repo
-> with the core.bare variable set to True :)
+> This variable name doesn't convey much about its purpose, and
+> introduces a bit of maintenance burden if the limit is some day
+> changed. Perhaps "sane_size_limit" or something even more descriptive
+> (and/or terse) would be better.
 >
->>>> 1. `git clone --depth 1` would be way faster, and without the need of
->>>> on-demand compressing of packfiles in the server side, correct me if I'm
->>>> wrong?
->>>
->>> You're wrong due to the misunderstanding of how git works :)
->>
->> Thanks for pointing this out, do you mind giving me a link of some docs
->> where I can correct my knowledge about this?
->
-> http://git-scm.com/book/en/v2/Git-Internals-Git-Objects should help.
 
-Wow, now I wonder if I should also propose a change to make git 
-optionally not store the full snapshots, so save disk space. Thanks for 
-pointing this out to me.
+Would you be happy with this change?
 
-
->>>> 2. `git clone` would be able to allow a "fast operation, complete in the
->>>> background" mode that would allow you to download the first snapshot of
->>>> the repo very quickly, so that the user would be able to start working
->>>> on his working directory very quickly, while a "background job" keeps
->>>> retreiving the history data in the background.
->>>
->>> This could actually be a good thing, and can be emulated now with git
->>> clone --depth=1 and subsequent fetches in the background to deepen the
->>> history. I can see some value in clone doing this by itself, first doing
->>> a depth=1 fetch, then launching itself into the background, giving you a
->>> worktree to play with earlier.
->>
->> You're right, didn't think about the feature that converts a --depth=1
->> repo to a normal one. Then a patch that would create a --progressive
->> flag (for instance, didn't think of a better name yet) for the `clone`
->> command would actually be trivial to create, I assume, because it would
->> just use `depth=1` and then retrieve the rest of the history in the
->> background, right?
->
-> A naive implementation that does just clone --depth=1 and then fetch
-> --unshallow would probably not be too hard, no. But whether that would
-> be the 'right' way of implementing it, I wouldn't know.
-
-Ok, anyone else that can give an insight here?
-
-I imagine that I would not get real feedback until I send a [PATCH]...
-
-I guess I would use a user-facing message like this one:
-
-Finished cloning the last snapshot of the repository.
-Auto downloading the rest of the history in background.
-
-(Since there's already a similar "background" feature already wrt 
-auto-packing the repository: `Auto packing the repository in background 
-for optimum performance. See "git help gc" for manual housekeeping.`.)
-
-Thanks
+-       static const int one_MB = 1 << 20;
++       static const int max_file_size = 1 << 20;  /* 1MB */
