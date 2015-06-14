@@ -1,107 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [ANNOUNCE] git-multimail 1.1.0-rc1
-Date: Sun, 14 Jun 2015 19:30:12 +0200
-Message-ID: <vpq4mmaci57.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 14 19:30:24 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH 0/3] Raw gpg output support for verify-commit and verify-tag
+Date: Sun, 14 Jun 2015 18:51:47 +0000
+Message-ID: <1434307910-705555-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Alex Zepeda <alex@inferiorhumanorgans.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 14 20:52:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4Bjh-0008I1-T4
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 19:30:22 +0200
+	id 1Z4D11-0003RX-Um
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 20:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961AbbFNRaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2015 13:30:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42770 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751982AbbFNRaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2015 13:30:15 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5EHU9Fu018584
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 14 Jun 2015 19:30:09 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5EHUCKC032566;
-	Sun, 14 Jun 2015 19:30:12 +0200
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 14 Jun 2015 19:30:09 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5EHU9Fu018584
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434907810.65017@NGmF5s9qTZmjSHBUFnhP+w
+	id S1752490AbbFNSwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2015 14:52:17 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:43776 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753199AbbFNSwL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jun 2015 14:52:11 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DCBA82808F;
+	Sun, 14 Jun 2015 18:52:09 +0000 (UTC)
+X-Mailer: git-send-email 2.4.0
+X-Spam-Score: -1 ALL_TRUSTED
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271643>
 
-Hi,
+Currently, verify-commit and verify-tag produce human-readable output.
+This is great for humans, and awful for machines.  It also lacks a lot
+of the information that GnuPG's --status-fd output provides.
 
-I'm happy to announce the first release candidate of git-multimail 1.1.
+For example, if you wanted to know
+* the hash algorithm;
+* whether the signature was made with a subkey; or
+* the OpenPGP signature version
+none of that information is available in the human-readable output.
 
-git-multimail is a tool to send notification emails for pushes to a git
-repository. It can be downloaded from
-https://github.com/git-multimail/git-multimail (the release itself can
-be seen here: https://github.com/git-multimail/git-multimail/releases ).
+We've had people in the past come to the list who require signed commits
+in their corporate environment.  It's not unreasonable to expect that
+they might want to programmatically verify signatures, including aspects
+of the signatures we don't currently expose.  It's also much nicer to
+parse the machine-readable output we already collect than hoping GnuPG
+doesn't change its output.
 
-The main new features are:
+This series introduces a --raw option for verify-commit and verify-tag.
+If it's used, they provide the gpg --status-fd output on standard error
+instead of the human-readable output.  The series also adds tests for
+verify-tag, since there were none; these are based off the ones for
+verify-commit.
 
-* When a single commit is pushed, omit the reference changed email.
-  Set multimailhook.combineWhenSingleCommit to false to disable this
-  new feature.
+In writing this series, I noticed an incompatibility between
+verify-commit and verify-tag.  If a valid signature is made with an
+untrusted key, verify-commit will exit 1, but verify-tag will exit 0.
+I'm unclear on what we can do about this now, short of adding another
+option.  This is because the two commands share little common code.
 
-* In gitolite environments, the pusher's email address can be used as
-  the From address by creating a specially formatted comment block in
-  gitolite.conf (see multimailhook.from in README).
+brian m. carlson (3):
+  verify-commit: add option to print raw gpg status information
+  verify-tag: add tests
+  verify-tag: add option to print raw gpg status information
 
-* Support for SMTP authentication and SSL/TLS encryption was added,
-  see smtpUser, smtpPass, smtpEncryption in README.
-
-* A new option scanCommitForCc was added to allow git-multimail to
-  search the commit message for 'Cc: ...' lines, and add the
-  corresponding emails in Cc.
-
-* If $USER is not set, use the variable $USERNAME. This is needed on
-  Windows platform to recognize the pusher.
-
-* The emailPrefix variable can now be set to an empty string to remove
-  the prefix.
-
-* A short tutorial was added in doc/gitolite.rst to set up
-  git-multimail with gitolite.
-
-* The post-receive file was renamed to post-receive.example. It has
-  always been an example (the standard way to call git-multimail is to
-  call git_multimail.py), but it was unclear to many users.
-
-* A new refchangeShowGraph option was added to make it possible to
-  include both a graph and a log in the summary emails.  The options
-  to control the graph formatting can be set via the new graphOpts
-  option.
-
-Internally, I've improved the testing system (plug travis-ci.org on the
-GitHub repository, check PEP8 conformance in the code and RST on the
-README). Hopefully, I didn't break too many things ;-).
-
-Next on the roadmap:
-
-* There's a long standing pull request (#52) to allow filtering out some
-  refs. We still need to figure out what the best way to do this is.
-
-* Once this is done, there are other pull requests on top of this to
-  support Atlassian Stash and Gerrit.
-
-* At some point, we'll need to start supporting Python 3.x, but I'd
-  rather focus on features for now.
-
-Please, test, report bugs, send patches ... and have fun!
+ Documentation/git-verify-commit.txt |   4 ++
+ Documentation/git-verify-tag.txt    |   4 ++
+ builtin/verify-commit.c             |  13 ++--
+ builtin/verify-tag.c                |  21 +++++--
+ t/t7030-verify-tag.sh               | 116 ++++++++++++++++++++++++++++++++++++
+ t/t7510-signed-commit.sh            |  32 ++++++++++
+ 6 files changed, 178 insertions(+), 12 deletions(-)
+ create mode 100755 t/t7030-verify-tag.sh
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.4.0
