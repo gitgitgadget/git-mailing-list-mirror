@@ -1,61 +1,107 @@
-From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: Re: [PATCH v7 2/5] setup: sanity check file size in read_gitfile_gently
-Date: Sun, 14 Jun 2015 19:21:44 +0200
-Message-ID: <CAMpP7NZ2tqZ5cv=9=gJqDZ5m0LOZtsHGvt-ntZcp6cBA6X5tqg@mail.gmail.com>
-References: <1433874279-30720-1-git-send-email-erik.elfstrom@gmail.com>
-	<1433874279-30720-3-git-send-email-erik.elfstrom@gmail.com>
-	<CAPig+cTQKxD9WRV3spVce=SfeECo4XR_ujZ1sGecuhTL-3DeRw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [ANNOUNCE] git-multimail 1.1.0-rc1
+Date: Sun, 14 Jun 2015 19:30:12 +0200
+Message-ID: <vpq4mmaci57.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Jun 14 19:21:52 2015
+Content-Type: text/plain
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 14 19:30:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4BbT-0004ZO-MY
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 19:21:52 +0200
+	id 1Z4Bjh-0008I1-T4
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 19:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866AbbFNRVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2015 13:21:47 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:35281 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752460AbbFNRVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2015 13:21:45 -0400
-Received: by obbgp2 with SMTP id gp2so50396202obb.2
-        for <git@vger.kernel.org>; Sun, 14 Jun 2015 10:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tdlUUf+wJW/ucZ8ywuuxrCi3piSru5mTgrW+C6odBf0=;
-        b=rXgZNpZLooL0BUyw1Jr3ZUv1s2z/XYrAObsxM9Qoznx6GROHpMYX64Sf/9UjWpsvMw
-         gJVLzfOavTfuGE8e0uVX1gR0eaOuD79KbGYc+AFw2GkG4827D6qlCLzkpwYOxBOIN+mV
-         RBKy/Tab8G/NeFMjHd9tikaKg9dpZAb/I9NZBcyQXENEbTJRL9jm2/kvb3Th8dAutlSZ
-         ItfCeCjTyOYd84M6uwT0ZCZy6Sf2aKVWChmb4Yh+p6jKQNE/YiBYFlTlF/WBPzBL2DFs
-         mjDBE9jhWOkaAwgPNbat77w+AbWOUcBXvkbFTVTF6D6xTwSf07z4Jadz5TxlhGR1RlMG
-         kGAg==
-X-Received: by 10.202.72.207 with SMTP id v198mr19431260oia.116.1434302504575;
- Sun, 14 Jun 2015 10:21:44 -0700 (PDT)
-Received: by 10.182.116.35 with HTTP; Sun, 14 Jun 2015 10:21:44 -0700 (PDT)
-In-Reply-To: <CAPig+cTQKxD9WRV3spVce=SfeECo4XR_ujZ1sGecuhTL-3DeRw@mail.gmail.com>
+	id S1751961AbbFNRaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2015 13:30:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42770 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751982AbbFNRaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2015 13:30:15 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5EHU9Fu018584
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 14 Jun 2015 19:30:09 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5EHUCKC032566;
+	Sun, 14 Jun 2015 19:30:12 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 14 Jun 2015 19:30:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5EHU9Fu018584
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434907810.65017@NGmF5s9qTZmjSHBUFnhP+w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271642>
 
-On Sun, Jun 14, 2015 at 5:42 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> This variable name doesn't convey much about its purpose, and
-> introduces a bit of maintenance burden if the limit is some day
-> changed. Perhaps "sane_size_limit" or something even more descriptive
-> (and/or terse) would be better.
->
+Hi,
 
-Would you be happy with this change?
+I'm happy to announce the first release candidate of git-multimail 1.1.
 
--       static const int one_MB = 1 << 20;
-+       static const int max_file_size = 1 << 20;  /* 1MB */
+git-multimail is a tool to send notification emails for pushes to a git
+repository. It can be downloaded from
+https://github.com/git-multimail/git-multimail (the release itself can
+be seen here: https://github.com/git-multimail/git-multimail/releases ).
+
+The main new features are:
+
+* When a single commit is pushed, omit the reference changed email.
+  Set multimailhook.combineWhenSingleCommit to false to disable this
+  new feature.
+
+* In gitolite environments, the pusher's email address can be used as
+  the From address by creating a specially formatted comment block in
+  gitolite.conf (see multimailhook.from in README).
+
+* Support for SMTP authentication and SSL/TLS encryption was added,
+  see smtpUser, smtpPass, smtpEncryption in README.
+
+* A new option scanCommitForCc was added to allow git-multimail to
+  search the commit message for 'Cc: ...' lines, and add the
+  corresponding emails in Cc.
+
+* If $USER is not set, use the variable $USERNAME. This is needed on
+  Windows platform to recognize the pusher.
+
+* The emailPrefix variable can now be set to an empty string to remove
+  the prefix.
+
+* A short tutorial was added in doc/gitolite.rst to set up
+  git-multimail with gitolite.
+
+* The post-receive file was renamed to post-receive.example. It has
+  always been an example (the standard way to call git-multimail is to
+  call git_multimail.py), but it was unclear to many users.
+
+* A new refchangeShowGraph option was added to make it possible to
+  include both a graph and a log in the summary emails.  The options
+  to control the graph formatting can be set via the new graphOpts
+  option.
+
+Internally, I've improved the testing system (plug travis-ci.org on the
+GitHub repository, check PEP8 conformance in the code and RST on the
+README). Hopefully, I didn't break too many things ;-).
+
+Next on the roadmap:
+
+* There's a long standing pull request (#52) to allow filtering out some
+  refs. We still need to figure out what the best way to do this is.
+
+* Once this is done, there are other pull requests on top of this to
+  support Atlassian Stash and Gerrit.
+
+* At some point, we'll need to start supporting Python 3.x, but I'd
+  rather focus on features for now.
+
+Please, test, report bugs, send patches ... and have fun!
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
