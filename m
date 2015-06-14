@@ -1,165 +1,102 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v3 17/19] pull --rebase: exit early when the working directory is dirty
-Date: Sun, 14 Jun 2015 16:42:04 +0800
-Message-ID: <1434271326-11349-18-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v3 18/19] pull --rebase: error on no merge candidate cases
+Date: Sun, 14 Jun 2015 16:42:05 +0800
+Message-ID: <1434271326-11349-19-git-send-email-pyokagan@gmail.com>
 References: <1434271326-11349-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Stephen Robin <stephen.robin@gmail.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 14 10:43:53 2015
+X-From: git-owner@vger.kernel.org Sun Jun 14 10:44:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z43WC-0006gG-Vq
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 10:43:53 +0200
+	id 1Z43WI-0006jy-0N
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jun 2015 10:43:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854AbbFNInr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2015 04:43:47 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:35237 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbbFNInT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2015 04:43:19 -0400
-Received: by pdbnf5 with SMTP id nf5so51493124pdb.2
-        for <git@vger.kernel.org>; Sun, 14 Jun 2015 01:43:18 -0700 (PDT)
+	id S1751246AbbFNInx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2015 04:43:53 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:33452 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbbFNInV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2015 04:43:21 -0400
+Received: by pdjn11 with SMTP id n11so51434002pdj.0
+        for <git@vger.kernel.org>; Sun, 14 Jun 2015 01:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pMVlu7/PT1J8aOYoizCk/NmDFZ+CJ0Q7uYgRF09JwOM=;
-        b=MsK2PqWbPfPRHhtVHzTQjuvWEm0rLfMSvQpyjw3ddxNVjJRFGVjmyJxxAVH4wv8rDL
-         7CadHA4M140er+S7OzncB8BL+LktStvrfrzFrn1EAMsl18NNnXA3iV/CY7YIGrFP0QFA
-         ChxTgQ2OSYSCsYDcotsphPs227CNuhpb3+0ZxIqLEpdxi5avE2oKeGOW7mMmIL1Eb2Zt
-         t+pyyI6Zx0aFtyK18hQwVnJ89OjVSxdMNi7O8V3pvRuy6HXT83wO0aMntDx8NnzOSIv3
-         c0jcrvHlNVQQ+KaHXlTDOCNrYYXdvYyayV3wKvATOM7Tli3sf4/JEz3pghTpx9pjaQhd
-         G1Aw==
-X-Received: by 10.66.222.161 with SMTP id qn1mr38566137pac.66.1434271398288;
-        Sun, 14 Jun 2015 01:43:18 -0700 (PDT)
+        bh=C++9veg7Rwj02IJwm4GlnMKZ5ISxj9sS9IRsEbTLj7I=;
+        b=ZoModWU6Aqvh6DSQuRYhxftWtuI2eDsoKyfvQuJZsI4nQEs/R6y7rvSf3lF9sFcDXB
+         D2bYQBFKtANfL8bAweqEDsOx1U/2Z6I8YqEjHPfJnO5wes5vTxHPLaQwgH7ebJcUNidM
+         nDenXnKwIXStj8bGfLkF69GUaS8afdsY/yraPkOyqKJMdVeIBkHWSN9huPvDuQBSWJrI
+         B/7wM0ab2X/tqCqgMDeY5Bu0xvVkDZmXT/XQruNsdmUQ/hh2bur7uPEra0eWionjqGvV
+         ++ZRECZtP4seA2F4ci4MuAUMCtRI8E7ZGMLxhY2maXuTCM4xgvU1fhstRpJdS+o++s9N
+         Kxgw==
+X-Received: by 10.70.52.103 with SMTP id s7mr37385568pdo.117.1434271401486;
+        Sun, 14 Jun 2015 01:43:21 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id kk6sm8622549pdb.94.2015.06.14.01.43.14
+        by mx.google.com with ESMTPSA id kk6sm8622549pdb.94.2015.06.14.01.43.18
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 14 Jun 2015 01:43:17 -0700 (PDT)
+        Sun, 14 Jun 2015 01:43:19 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1434271326-11349-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271632>
 
-Re-implement the behavior introduced by f9189cf (pull --rebase: exit
-early when the working directory is dirty, 2008-05-21).
+Tweak the error messages printed by die_no_merge_candidates() to take
+into account that we may be "rebasing against" rather than "merging
+with".
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/pull.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 76 insertions(+), 1 deletion(-)
+ builtin/pull.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index e4098d0..a379c1f 100644
+index a379c1f..b78c67c 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -14,6 +14,8 @@
- #include "remote.h"
- #include "dir.h"
- #include "refs.h"
-+#include "revision.h"
-+#include "lockfile.h"
+@@ -430,7 +430,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+ 	const char *remote = curr_branch ? curr_branch->remote_name : NULL;
  
- enum rebase_type {
- 	REBASE_INVALID = -1,
-@@ -295,6 +297,73 @@ static enum rebase_type config_get_rebase(void)
- }
- 
- /**
-+ * Returns 1 if there are unstaged changes, 0 otherwise.
-+ */
-+static int has_unstaged_changes(const char *prefix)
-+{
-+	struct rev_info rev_info;
-+	int result;
-+
-+	init_revisions(&rev_info, prefix);
-+	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
-+	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
-+	diff_setup_done(&rev_info.diffopt);
-+	result = run_diff_files(&rev_info, 0);
-+	return diff_result_code(&rev_info.diffopt, result);
-+}
-+
-+/**
-+ * Returns 1 if there are uncommitted changes, 0 otherwise.
-+ */
-+static int has_uncommitted_changes(const char *prefix)
-+{
-+	struct rev_info rev_info;
-+	int result;
-+
-+	if (is_cache_unborn())
-+		return 0;
-+
-+	init_revisions(&rev_info, prefix);
-+	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
-+	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
-+	add_head_to_pending(&rev_info);
-+	diff_setup_done(&rev_info.diffopt);
-+	result = run_diff_index(&rev_info, 1);
-+	return diff_result_code(&rev_info.diffopt, result);
-+}
-+
-+/**
-+ * If the work tree has unstaged or uncommitted changes, dies with the
-+ * appropriate message.
-+ */
-+static void die_on_unclean_work_tree(const char *prefix)
-+{
-+	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
-+	int do_die = 0;
-+
-+	hold_locked_index(lock_file, 0);
-+	refresh_cache(REFRESH_QUIET);
-+	update_index_if_able(&the_index, lock_file);
-+	rollback_lock_file(lock_file);
-+
-+	if (has_unstaged_changes(prefix)) {
-+		error(_("Cannot pull with rebase: You have unstaged changes."));
-+		do_die = 1;
-+	}
-+
-+	if (has_uncommitted_changes(prefix)) {
-+		if (do_die)
-+			error(_("Additionally, your index contains uncommitted changes."));
+ 	if (*refspecs) {
+-		fprintf_ln(stderr, _("There are no candidates for merging among the refs that you just fetched."));
++		if (opt_rebase)
++			fprintf_ln(stderr, _("There is no candidate for rebasing against among the refs that you just fetched."));
 +		else
-+			error(_("Cannot pull with rebase: Your index contains uncommitted changes."));
-+		do_die = 1;
-+	}
-+
-+	if (do_die)
-+		exit(1);
-+}
-+
-+/**
-  * Appends merge candidates from FETCH_HEAD that are not marked not-for-merge
-  * into merge_heads.
-  */
-@@ -750,9 +819,15 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (get_sha1("HEAD", orig_head))
- 		hashclr(orig_head);
++			fprintf_ln(stderr, _("There are no candidates for merging among the refs that you just fetched."));
+ 		fprintf_ln(stderr, _("Generally this means that you provided a wildcard refspec which had no\n"
+ 					"matches on the remote end."));
+ 	} else if (repo && curr_branch && (!remote || strcmp(repo, remote))) {
+@@ -440,7 +443,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+ 			repo);
+ 	} else if (!curr_branch) {
+ 		fprintf_ln(stderr, _("You are not currently on a branch."));
+-		fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
++		if (opt_rebase)
++			fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
++		else
++			fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
+ 		fprintf_ln(stderr, _("See git-pull(1) for details."));
+ 		fprintf(stderr, "\n");
+ 		fprintf_ln(stderr, "    git pull <remote> <branch>");
+@@ -452,7 +458,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+ 			remote_name = "<remote>";
  
--	if (opt_rebase)
-+	if (opt_rebase) {
-+		if (is_null_sha1(orig_head) && !is_cache_unborn())
-+			die(_("Updating an unborn branch with changes added to the index."));
-+
-+		die_on_unclean_work_tree(prefix);
-+
- 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
- 			hashclr(rebase_fork_point);
-+	}
- 
- 	if (run_fetch(repo, refspecs))
- 		return 1;
+ 		fprintf_ln(stderr, _("There is no tracking information for the current branch."));
+-		fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
++		if (opt_rebase)
++			fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
++		else
++			fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
+ 		fprintf_ln(stderr, _("See git-pull(1) for details."));
+ 		fprintf(stderr, "\n");
+ 		fprintf_ln(stderr, "    git pull <remote> <branch>");
 -- 
 2.1.4
