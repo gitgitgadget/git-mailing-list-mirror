@@ -1,122 +1,97 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH] Documentation/i18n.txt: clarify character encoding support
-Date: Mon, 15 Jun 2015 12:08:33 +0200
-Message-ID: <557EA421.5050706@gmail.com>
-References: <557C9161.6020703@gmail.com> <xmqqmw01ltid.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/WIP v2 04/19] am: implement patch queue mechanism
+Date: Mon, 15 Jun 2015 18:46:27 +0800
+Message-ID: <CACRoPnS3QwoWoebDpz_aBeoGx91pdP68f63Qp5KxLk9BCvc7DQ@mail.gmail.com>
+References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
+	<1434018125-31804-5-git-send-email-pyokagan@gmail.com>
+	<CAGZ79kbLneLygPiDtL+nqwsxdvZEhT95vj0z9MbN0QrqvAmebA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 12:08:41 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 12:46:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4RJo-0004YE-Sr
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 12:08:41 +0200
+	id 1Z4RuT-0002Gx-Qn
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 12:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754213AbbFOKIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 06:08:37 -0400
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:35954 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754117AbbFOKIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 06:08:35 -0400
-Received: by wgzl5 with SMTP id l5so39682111wgz.3
-        for <git@vger.kernel.org>; Mon, 15 Jun 2015 03:08:34 -0700 (PDT)
+	id S1754077AbbFOKq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 06:46:29 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:36758 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754046AbbFOKq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 06:46:28 -0400
+Received: by lacny3 with SMTP id ny3so35060681lac.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 03:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=YyIRmV8uPfm6PxlQtCwB4CAI1LQVVaKZV1axm0ZXeZA=;
-        b=D4VHadyK1UNMZxgaeZdgi1/s0ylSO2bIuO2BAxZKHI6bpv4Chlut8sySd+t7w2uvUs
-         34MKDjOLfW4SeUp87N4UIXg2og8Q/z3GxrWp9E9xwNDw8i3iRv7AnJzbsvf7sdHx4ehD
-         n2vfa48RDF+SeejI9f9H5LFG3XYFmAGdzHlng98+FSTLMfOvSNy7x9CwLOL2GvpnGWLJ
-         IeAjvi0WMlBeHE1W5iS+ZludLf3+dOj0yYoeyn1oJv+fGi4YqYK4Vf93mX37xbfhSS2h
-         NbBLiPr5kp8QxksyiMrP/IIwVNSme2n/tYk73lTMa4wHQFA+hqExojjC46V8/ilRCsoc
-         dH3g==
-X-Received: by 10.194.109.229 with SMTP id hv5mr51416291wjb.119.1434362914386;
-        Mon, 15 Jun 2015 03:08:34 -0700 (PDT)
-Received: from [10.1.116.51] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id v3sm15074443wix.8.2015.06.15.03.08.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jun 2015 03:08:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqqmw01ltid.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Z8uAktVZ3X+7FAaDHc0EyfVMA+iTiP6n/SWhRc515xA=;
+        b=0/bf9U+bV8xV8LyI3x7u8EYrWcL5+cfqCldEeF48hosuUPBria0Qh0bpR3IdGmAPcb
+         BIljpbs9IgcRS/61M2F7LRONFZoEogS5DkS9j8qfZc0Ek2M61+kRmgFYKGV+goV/G1m4
+         ljZQ0ZCN4z5upsoKqcfilTG94HCX06v1UZ0po+gQ016AD6b/kEULSBxoGzFlBhnF8Ynh
+         f7oqfXbX8YakCDjNu+TQlGLq9d2pywxTYv50e/6aKmPwq9n1S+FVGvsF/8YQ71G5ft75
+         wWVeYBK4fU3YhgWJ+2s4RNOJnHN8PqKU1VjcftIEmdd5kjh0Lc7ZioYjj5cu9wJO4jp2
+         Qx+g==
+X-Received: by 10.112.171.101 with SMTP id at5mr26861724lbc.66.1434365187391;
+ Mon, 15 Jun 2015 03:46:27 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Mon, 15 Jun 2015 03:46:27 -0700 (PDT)
+In-Reply-To: <CAGZ79kbLneLygPiDtL+nqwsxdvZEhT95vj0z9MbN0QrqvAmebA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271671>
 
-Am 15.06.2015 um 02:12 schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
-> 
->> diff --git a/Documentation/i18n.txt b/Documentation/i18n.txt
->> index e9a1d5d..e5f6233 100644
->> --- a/Documentation/i18n.txt
->> +++ b/Documentation/i18n.txt
->> @@ -1,18 +1,28 @@
->> -At the core level, Git is character encoding agnostic.
->> -
->> - - The pathnames recorded in the index and in the tree objects
->> -   are treated as uninterpreted sequences of non-NUL bytes.
->> -   What readdir(2) returns are what are recorded and compared
->> -   with the data Git keeps track of, which in turn are expected
->> -   to be what lstat(2) and creat(2) accepts.  There is no such
->> -   thing as pathname encoding translation.
->> +Git is to some extent character encoding agnostic.
-> 
-> I do not think the removal of the text makes much sense here unless
-> you add the equivalent to the new text below.
-> 
->>   - The contents of the blob objects are uninterpreted sequences
->>     of bytes.  There is no encoding translation at the core
->>     level.
->>  
->> - - The commit log messages are uninterpreted sequences of non-NUL
->> -   bytes.
->> + - Pathnames are encoded in UTF-8 normalization form C. This
-> 
-> That is true only on some systems like OSX (with HFS+) and Windows,
-> no?  BSDs in general and Linux do not do any such mangling IIRC.
+On Fri, Jun 12, 2015 at 1:39 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Jun 11, 2015 at 3:21 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>> Notes:
+>>     v2
+>>
+>>     * Declare struct am_state as static
+>>
+>>  builtin/am.c | 164 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 164 insertions(+)
+>>
+>> diff --git a/builtin/am.c b/builtin/am.c
+>> index 0ccbe33..f061d21 100644
+>> --- a/builtin/am.c
+>> +++ b/builtin/am.c
+>> @@ -6,6 +6,154 @@
+>>  #include "cache.h"
+>>  #include "builtin.h"
+>>  #include "exec_cmd.h"
+>> +#include "parse-options.h"
+>> +#include "dir.h"
+>> +
+>> +struct am_state {
+>
+> Did you mean to declare all the functions below to be static or the
+> struct as well?
 
-Modern Unices don't need any such mangling because UTF-8 NFC should
-be the default system encoding. I'm not sure for BSDs, but it has
-been the default on all major Linux distros for more than 10 years.
+Well, everything in this file, with the exception of the cmd_am()
+entry point, should have static linkage.
 
-> I
-> am OK with mangling described as a notable oddball to warn users,
-> though; i.e. not as a norm as your new text suggests but as an
-> exception.
-> 
+The changelog comment was referring to [1], but I should have made it
+clearer. Sorry if it was confusing.
 
-I would guess that non-UTF-8 Unices (or file systems) are the oddball
-case, which is why I described them last. But I could be wrong.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/270048/focus=270205
 
->> +   platforms. If file system APIs don't use UTF-8 (which may be
->> +   file system specific), it is recommended to stick to pure
->> +   ASCII file names.
-> 
-> Hmph, who endorsed such a recommendation?  It is recommended to
-> stick to whatever naming scheme that would not cause troubles to
-> project participants.  If your participants all want to (and can)
-> use ISO-8859-1, we do not discourage them from doing so.
-> 
+> Reading further, you declared it static below. I thought maybe it'd be
+> useful to have definition
+> and declaration up here, but having all declarations further below may
+> be even better.
 
-ISO-8859-x file names may be fine if you won't ever need to:
-- use git-web, JGit, gitk, git-gui...
-- exchange repos with "normal" (UTF-8) Unices, Mac and Windows systems
-- publish your work on a git hosting service (and expect file and
-  ref names to show up correctly in the web interface)
-- store the repo on Unicode-based file systems (JFS, Joliet, UDF,
-  exFat, NTFS, HFS, CIFS...)
+Right, I aimed to have a strict separation between "git-am: the
+functionality" and "git-am: the command-line interface", where the
+latter depends on the former, and not the other way round (or have
+circular dependencies). The former perhaps could even be moved into
+libgit.a in the future.
 
-These restrictions are not that obvious when you start a new git
-project, and while converting file names after the fact is possible
-(e.g. using the recodetree script we shipped with Git for Windows
-1.7.10), it will destroy history.
-
-Thus I think we should strongly discourage users from using anything
-but UTF-8.
+Thanks,
+Paul
