@@ -1,528 +1,72 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v5 3/4] use new config API for worktree configurations of submodules
-Date: Mon, 15 Jun 2015 23:06:13 +0200
-Message-ID: <db0f415068bcc0e6c45230098bc5e8b020218130.1434400625.git.hvoigt@hvoigt.net>
-References: <cover.1434400625.git.hvoigt@hvoigt.net>
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 23:06:56 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [RFC] Make git-update-ref invoke the update and post-update hooks
+Date: Mon, 15 Jun 2015 14:45:55 -0700
+Message-ID: <xmqqd20w7ii4.fsf@gitster.dls.corp.google.com>
+References: <CAEJ-0i-BB=5W-Ah3nkeLFCe5-4XW4CvYaDgdqv1mMp4UGF81qw@mail.gmail.com>
+	<xmqqpp4w7mco.fsf@gitster.dls.corp.google.com>
+	<CAEJ-0i8mfabWoLivX_ZJHRJBYFftoENWmHw5__CGphK54oOpug@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Brian Vandenberg <phantall@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 23:46:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4bap-00028z-G1
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 23:06:56 +0200
+	id 1Z4cCh-0005xl-Sa
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 23:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977AbbFOVGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 17:06:48 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.96]:42306 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752162AbbFOVGh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 17:06:37 -0400
-Received: from [178.11.201.3] (helo=localhost)
-	by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Z4baT-0001l5-Te; Mon, 15 Jun 2015 23:06:34 +0200
-X-Mailer: git-send-email 2.4.2.391.g2979c89
-In-Reply-To: <cover.1434400625.git.hvoigt@hvoigt.net>
-In-Reply-To: <cover.1434400625.git.hvoigt@hvoigt.net>
-References: <cover.1434400625.git.hvoigt@hvoigt.net>
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S932108AbbFOVp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 17:45:59 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:38059 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751809AbbFOVp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 17:45:57 -0400
+Received: by igblz2 with SMTP id lz2so1208957igb.1
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 14:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=EAAHAA843ey3V6ZtxIuRGniUaaygyxclpwKIDKeU0io=;
+        b=fB63M+uUkBO6KRI5mn6Un8Bq3x5YUpn14C95UQR6EoZ6x9pMddT3O+BNL7qO/vrT9D
+         LtDPsfsNuGg1anqRC3boCeaS+lNSI7TtOVc0U9rb5+WGvABYWYr9KE8Sk11xf0qY9g8h
+         tITPoXdkEAvdyQoeamuEH92yCbC+52HtY05baXg+LEG/3Skwk8XAEzkRy8Ux93ezyH8m
+         YmTCH+VeSPih4KSnXjwSRbVAVHw5j/oXlHldW8VRzoIyDEpQ4D1lwfpoJPPG2+gHCBXv
+         qwEOiOSHkJdkagY6lTNNomyYp1YdZ8+4KA+LmZE3T+1OWsUVT5tK6dA8RKv4N5MxfqKh
+         SxGw==
+X-Received: by 10.50.79.202 with SMTP id l10mr23821655igx.7.1434404757254;
+        Mon, 15 Jun 2015 14:45:57 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
+        by mx.google.com with ESMTPSA id eg3sm8496154igb.0.2015.06.15.14.45.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jun 2015 14:45:56 -0700 (PDT)
+In-Reply-To: <CAEJ-0i8mfabWoLivX_ZJHRJBYFftoENWmHw5__CGphK54oOpug@mail.gmail.com>
+	(Brian Vandenberg's message of "Mon, 15 Jun 2015 14:58:35 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271735>
 
-We remove the extracted functions and directly parse into and read out
-of the cache. This allows us to have one unified way of accessing
-submodule configuration values specific to single submodules. Regardless
-whether we need to access a configuration from history or from the
-worktree.
+Brian Vandenberg <phantall@gmail.com> writes:
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- Documentation/technical/api-submodule-config.txt |  19 ++-
- builtin/checkout.c                               |   1 +
- diff.c                                           |   1 +
- submodule-config.c                               |  12 ++
- submodule-config.h                               |   1 +
- submodule.c                                      | 160 ++++-------------------
- submodule.h                                      |   1 -
- t/t7411-submodule-config.sh                      |  37 +++++-
- test-submodule-config.c                          |  10 ++
- 9 files changed, 104 insertions(+), 138 deletions(-)
+> Would you be less doubtful about adding a lower-level hook for
+> update-ref?  Or in lieu of that, a config option that can affect the
+> behavior of its "-m" and "-d" options?
 
-diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
-index 2ff4907..2ea520a 100644
---- a/Documentation/technical/api-submodule-config.txt
-+++ b/Documentation/technical/api-submodule-config.txt
-@@ -10,10 +10,18 @@ submodule path or name.
- Usage
- -----
- 
-+To initialize the cache with configurations from the worktree the caller
-+typically first calls `gitmodules_config()` to read values from the
-+worktree .gitmodules and then to overlay the local git config values
-+`parse_submodule_config_option()` from the config parsing
-+infrastructure.
-+
- The caller can look up information about submodules by using the
- `submodule_from_path()` or `submodule_from_name()` functions. They return
- a `struct submodule` which contains the values. The API automatically
--initializes and allocates the needed infrastructure on-demand.
-+initializes and allocates the needed infrastructure on-demand. If the
-+caller does only want to lookup values from revisions the initialization
-+can be skipped.
- 
- If the internal cache might grow too big or when the caller is done with
- the API, all internally cached values can be freed with submodule_free().
-@@ -34,6 +42,11 @@ Functions
- 
- 	Use these to free the internally cached values.
- 
-+`int parse_submodule_config_option(const char *var, const char *value)`::
-+
-+	Can be passed to the config parsing infrastructure to parse
-+	local (worktree) submodule configurations.
-+
- `const struct submodule *submodule_from_path(const unsigned char *commit_sha1, const char *path)`::
- 
- 	Lookup values for one submodule by its commit_sha1 and path or
-@@ -43,4 +56,8 @@ Functions
- 
- 	The same as above but lookup by name.
- 
-+If given the null_sha1 as commit_sha1 the local configuration of a
-+submodule will be returned (e.g. consolidated values from local git
-+configuration and the .gitmodules file in the worktree).
-+
- For an example usage see test-submodule-config.c.
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2f92328..f1f168d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -18,6 +18,7 @@
- #include "xdiff-interface.h"
- #include "ll-merge.h"
- #include "resolve-undo.h"
-+#include "submodule-config.h"
- #include "submodule.h"
- #include "argv-array.h"
- #include "sigchain.h"
-diff --git a/diff.c b/diff.c
-index 7500c55..d0be279 100644
---- a/diff.c
-+++ b/diff.c
-@@ -13,6 +13,7 @@
- #include "utf8.h"
- #include "userdiff.h"
- #include "sigchain.h"
-+#include "submodule-config.h"
- #include "submodule.h"
- #include "ll-merge.h"
- #include "string-list.h"
-diff --git a/submodule-config.c b/submodule-config.c
-index 97f4a04..fc7bf40 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -424,6 +424,18 @@ static void ensure_cache_init(void)
- 	is_cache_init = 1;
- }
- 
-+int parse_submodule_config_option(const char *var, const char *value)
-+{
-+	struct parse_config_parameter parameter;
-+	parameter.cache = &cache;
-+	parameter.commit_sha1 = NULL;
-+	parameter.gitmodules_sha1 = null_sha1;
-+	parameter.overwrite = 1;
-+
-+	ensure_cache_init();
-+	return parse_config(var, value, &parameter);
-+}
-+
- const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index cd68030..5fe44ce 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -18,6 +18,7 @@ struct submodule {
- 	unsigned char gitmodules_sha1[20];
- };
- 
-+int parse_submodule_config_option(const char *var, const char *value);
- const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name);
- const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
-diff --git a/submodule.c b/submodule.c
-index c3b5f44..97355eb 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "submodule-config.h"
- #include "submodule.h"
- #include "dir.h"
- #include "diff.h"
-@@ -12,9 +13,6 @@
- #include "argv-array.h"
- #include "blob.h"
- 
--static struct string_list config_name_for_path;
--static struct string_list config_fetch_recurse_submodules_for_name;
--static struct string_list config_ignore_for_name;
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static struct string_list changed_submodule_paths;
- static int initialized_fetch_ref_tips;
-@@ -41,77 +39,6 @@ static int gitmodules_is_unmerged;
-  */
- static int gitmodules_is_modified;
- 
--static const char *get_name_for_path(const char *path)
--{
--	struct string_list_item *path_option;
--	if (path == NULL) {
--		if (config_name_for_path.nr > 0)
--			return config_name_for_path.items[0].util;
--		else
--			return NULL;
--	}
--	path_option = unsorted_string_list_lookup(&config_name_for_path, path);
--	if (!path_option)
--		return NULL;
--	return path_option->util;
--}
--
--static void set_name_for_path(const char *path, const char *name, int namelen)
--{
--	struct string_list_item *config;
--	config = unsorted_string_list_lookup(&config_name_for_path, path);
--	if (config)
--		free(config->util);
--	else
--		config = string_list_append(&config_name_for_path, xstrdup(path));
--	config->util = xmemdupz(name, namelen);
--}
--
--static const char *get_ignore_for_name(const char *name)
--{
--	struct string_list_item *ignore_option;
--	ignore_option = unsorted_string_list_lookup(&config_ignore_for_name, name);
--	if (!ignore_option)
--		return NULL;
--
--	return ignore_option->util;
--}
--
--static void set_ignore_for_name(const char *name, int namelen, const char *ignore)
--{
--	struct string_list_item *config;
--	char *name_cstr = xmemdupz(name, namelen);
--	config = unsorted_string_list_lookup(&config_ignore_for_name, name_cstr);
--	if (config) {
--		free(config->util);
--		free(name_cstr);
--	} else
--		config = string_list_append(&config_ignore_for_name, name_cstr);
--	config->util = xstrdup(ignore);
--}
--
--static int get_fetch_recurse_for_name(const char *name)
--{
--	struct string_list_item *fetch_recurse;
--	fetch_recurse = unsorted_string_list_lookup(&config_fetch_recurse_submodules_for_name, name);
--	if (!fetch_recurse)
--		return RECURSE_SUBMODULES_NONE;
--
--	return (intptr_t) fetch_recurse->util;
--}
--
--static void set_fetch_recurse_for_name(const char *name, int namelen, int fetch_recurse)
--{
--	struct string_list_item *config;
--	char *name_cstr = xmemdupz(name, namelen);
--	config = unsorted_string_list_lookup(&config_fetch_recurse_submodules_for_name, name_cstr);
--	if (!config)
--		config = string_list_append(&config_fetch_recurse_submodules_for_name, name_cstr);
--	else
--		free(name_cstr);
--	config->util = (void *)(intptr_t) fetch_recurse;
--}
--
- int is_staging_gitmodules_ok(void)
- {
- 	return !gitmodules_is_modified;
-@@ -125,7 +52,7 @@ int is_staging_gitmodules_ok(void)
- int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- {
- 	struct strbuf entry = STRBUF_INIT;
--	const char *path;
-+	const struct submodule *submodule;
- 
- 	if (!file_exists(".gitmodules")) /* Do nothing without .gitmodules */
- 		return -1;
-@@ -133,13 +60,13 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 	if (gitmodules_is_unmerged)
- 		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
- 
--	path = get_name_for_path(oldpath);
--	if (!path) {
-+	submodule = submodule_from_path(null_sha1, oldpath);
-+	if (!submodule || !submodule->name) {
- 		warning(_("Could not find section in .gitmodules where path=%s"), oldpath);
- 		return -1;
- 	}
- 	strbuf_addstr(&entry, "submodule.");
--	strbuf_addstr(&entry, path);
-+	strbuf_addstr(&entry, submodule->name);
- 	strbuf_addstr(&entry, ".path");
- 	if (git_config_set_in_file(".gitmodules", entry.buf, newpath) < 0) {
- 		/* Maybe the user already did that, don't error out here */
-@@ -159,7 +86,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- int remove_path_from_gitmodules(const char *path)
- {
- 	struct strbuf sect = STRBUF_INIT;
--	const char *path_option;
-+	const struct submodule *submodule;
- 
- 	if (!file_exists(".gitmodules")) /* Do nothing without .gitmodules */
- 		return -1;
-@@ -167,13 +94,13 @@ int remove_path_from_gitmodules(const char *path)
- 	if (gitmodules_is_unmerged)
- 		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
- 
--	path_option = get_name_for_path(path);
--	if (!path_option) {
-+	submodule = submodule_from_path(null_sha1, path);
-+	if (!submodule || !submodule->name) {
- 		warning(_("Could not find section in .gitmodules where path=%s"), path);
- 		return -1;
- 	}
- 	strbuf_addstr(&sect, "submodule.");
--	strbuf_addstr(&sect, path_option);
-+	strbuf_addstr(&sect, submodule->name);
- 	if (git_config_rename_section_in_file(".gitmodules", sect.buf, NULL) < 0) {
- 		/* Maybe the user already did that, don't error out here */
- 		warning(_("Could not remove .gitmodules entry for %s"), path);
-@@ -235,11 +162,10 @@ done:
- void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 					     const char *path)
- {
--	const char *name = get_name_for_path(path);
--	if (name) {
--		const char *ignore = get_ignore_for_name(name);
--		if (ignore)
--			handle_ignore_submodules_arg(diffopt, ignore);
-+	const struct submodule *submodule = submodule_from_path(null_sha1, path);
-+	if (submodule) {
-+		if (submodule->ignore)
-+			handle_ignore_submodules_arg(diffopt, submodule->ignore);
- 		else if (gitmodules_is_unmerged)
- 			DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
- 	}
-@@ -288,42 +214,6 @@ void gitmodules_config(void)
- 	}
- }
- 
--int parse_submodule_config_option(const char *var, const char *value)
--{
--	const char *name, *key;
--	int namelen;
--
--	if (parse_config_key(var, "submodule", &name, &namelen, &key) < 0 || !name)
--		return 0;
--
--	if (!strcmp(key, "path")) {
--		if (!value)
--			return config_error_nonbool(var);
--
--		set_name_for_path(value, name, namelen);
--
--	} else if (!strcmp(key, "fetchrecursesubmodules")) {
--		int fetch_recurse = parse_fetch_recurse_submodules_arg(var, value);
--
--		set_fetch_recurse_for_name(name, namelen, fetch_recurse);
--
--	} else if (!strcmp(key, "ignore")) {
--
--		if (!value)
--			return config_error_nonbool(var);
--
--		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
--		    strcmp(value, "all") && strcmp(value, "none")) {
--			warning("Invalid parameter \"%s\" for config option \"submodule.%s.ignore\"", value, var);
--			return 0;
--		}
--
--		set_ignore_for_name(name, namelen, value);
--		return 0;
--	}
--	return 0;
--}
--
- void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 				  const char *arg)
- {
-@@ -699,7 +589,7 @@ static void calculate_changed_submodule_paths(void)
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	/* No need to check if there are no submodules configured */
--	if (!get_name_for_path(NULL))
-+	if (!submodule_from_path(NULL, NULL))
- 		return;
- 
- 	init_revisions(&rev, NULL);
-@@ -746,7 +636,6 @@ int fetch_populated_submodules(const struct argv_array *options,
- 	int i, result = 0;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
--	const char *name_for_path;
- 	const char *work_tree = get_git_work_tree();
- 	if (!work_tree)
- 		goto out;
-@@ -771,23 +660,26 @@ int fetch_populated_submodules(const struct argv_array *options,
- 		struct strbuf submodule_git_dir = STRBUF_INIT;
- 		struct strbuf submodule_prefix = STRBUF_INIT;
- 		const struct cache_entry *ce = active_cache[i];
--		const char *git_dir, *name, *default_argv;
-+		const char *git_dir, *default_argv;
-+		const struct submodule *submodule;
- 
- 		if (!S_ISGITLINK(ce->ce_mode))
- 			continue;
- 
--		name = ce->name;
--		name_for_path = get_name_for_path(ce->name);
--		if (name_for_path)
--			name = name_for_path;
-+		submodule = submodule_from_path(null_sha1, ce->name);
-+		if (!submodule)
-+			submodule = submodule_from_name(null_sha1, ce->name);
- 
- 		default_argv = "yes";
- 		if (command_line_option == RECURSE_SUBMODULES_DEFAULT) {
--			int fetch_recurse_option = get_fetch_recurse_for_name(name);
--			if (fetch_recurse_option != RECURSE_SUBMODULES_NONE) {
--				if (fetch_recurse_option == RECURSE_SUBMODULES_OFF)
-+			if (submodule &&
-+			    submodule->fetch_recurse !=
-+						RECURSE_SUBMODULES_NONE) {
-+				if (submodule->fetch_recurse ==
-+						RECURSE_SUBMODULES_OFF)
- 					continue;
--				if (fetch_recurse_option == RECURSE_SUBMODULES_ON_DEMAND) {
-+				if (submodule->fetch_recurse ==
-+						RECURSE_SUBMODULES_ON_DEMAND) {
- 					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
- 						continue;
- 					default_argv = "on-demand";
-diff --git a/submodule.h b/submodule.h
-index 920fef3..547219d 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -20,7 +20,6 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 		const char *path);
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
--int parse_submodule_config_option(const char *var, const char *value);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
- int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- void show_submodule_summary(FILE *f, const char *path,
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 2602bc5..7229978 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -5,8 +5,8 @@
- 
- test_description='Test submodules config cache infrastructure
- 
--This test verifies that parsing .gitmodules configuration directly
--from the database works.
-+This test verifies that parsing .gitmodules configurations directly
-+from the database and from the worktree works.
- '
- 
- TEST_NO_CREATE_REPO=1
-@@ -82,4 +82,37 @@ test_expect_success 'error in one submodule config lets continue' '
- 	)
- '
- 
-+cat >super/expect_url <<EOF
-+Submodule url: 'git@somewhere.else.net:a.git' for path 'b'
-+Submodule url: 'git@somewhere.else.net:submodule.git' for path 'submodule'
-+EOF
-+
-+cat >super/expect_local_path <<EOF
-+Submodule name: 'a' for path 'c'
-+Submodule name: 'submodule' for path 'submodule'
-+EOF
-+
-+test_expect_success 'reading of local configuration' '
-+	(cd super &&
-+		old_a=$(git config submodule.a.url) &&
-+		old_submodule=$(git config submodule.submodule.url) &&
-+		git config submodule.a.url git@somewhere.else.net:a.git &&
-+		git config submodule.submodule.url git@somewhere.else.net:submodule.git &&
-+		test-submodule-config --url \
-+			"" b \
-+			"" submodule \
-+				>actual &&
-+		test_cmp expect_url actual &&
-+		git config submodule.a.path c &&
-+		test-submodule-config \
-+			"" c \
-+			"" submodule \
-+				>actual &&
-+		test_cmp expect_local_path actual &&
-+		git config submodule.a.url $old_a &&
-+		git config submodule.submodule.url $old_submodule &&
-+		git config --unset submodule.a.path c
-+	)
-+'
-+
- test_done
-diff --git a/test-submodule-config.c b/test-submodule-config.c
-index f3c3918..dab8c27 100644
---- a/test-submodule-config.c
-+++ b/test-submodule-config.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "submodule-config.h"
-+#include "submodule.h"
- 
- static void die_usage(int argc, char **argv, const char *msg)
- {
-@@ -8,6 +9,11 @@ static void die_usage(int argc, char **argv, const char *msg)
- 	exit(1);
- }
- 
-+static int git_test_config(const char *var, const char *value, void *cb)
-+{
-+	return parse_submodule_config_option(var, value);
-+}
-+
- int main(int argc, char **argv)
- {
- 	char **arg = argv;
-@@ -29,6 +35,10 @@ int main(int argc, char **argv)
- 	if (my_argc % 2 != 0)
- 		die_usage(argc, argv, "Wrong number of arguments.");
- 
-+	setup_git_directory();
-+	gitmodules_config();
-+	git_config(git_test_config, NULL);
-+
- 	while (*arg) {
- 		unsigned char commit_sha1[20];
- 		const struct submodule *submodule;
--- 
-2.4.2.391.g2979c89
+Not really.
+
+Those who want to bypass your policy can use "vi .git/packed-refs"
+and/or "rm .git/refs/heads/foo"; you would not propose to patch "rm"
+and "vi" to pay attention to git configuration, because they are not
+about "git" at all, and there are cases where these bare-metal level
+editing of repositories is necessary.  You would instead tell them
+"don't do that".
+
+When I say "update-ref is a low-level plumbing command that should
+not enforce policy", I am suggesting you to treat the command just
+like you would treat "rm" and "vi".
