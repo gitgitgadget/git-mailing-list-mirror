@@ -1,96 +1,80 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Submodules as first class citizens (was Re: Moving to subtrees
- for plugins?)
-Date: Mon, 15 Jun 2015 11:03:54 +0200
-Message-ID: <20150615090354.GA8048@book.hvoigt.net>
-References: <CABURp0og9i9S3_ZWf5Ce9LT785QJo4H-TVtFaKUTXr2N7FB+ew@mail.gmail.com>
- <D2BB8369-E552-4AC3-967E-8F963206E03C@gmail.com>
- <5573E40A.3020502@gmail.com>
- <5577330E.3060803@web.de>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/WIP v2 03/19] am: implement skeletal builtin am
+Date: Mon, 15 Jun 2015 17:49:57 +0800
+Message-ID: <CACRoPnR28kNvxk6sdYaNkPYx7wi=j4wCbaXYrx62AGhjpQiPVA@mail.gmail.com>
+References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
+	<1434018125-31804-4-git-send-email-pyokagan@gmail.com>
+	<xmqqzj42kkol.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	Repo Discussion <repo-discuss@googlegroups.com>,
-	Git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 15 11:04:25 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 11:50:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4QJc-00026k-GU
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 11:04:24 +0200
+	id 1Z4R1r-0005Y9-B3
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 11:50:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755710AbbFOJEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 05:04:14 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.26]:51857 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755698AbbFOJEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 05:04:04 -0400
-Received: from [178.11.201.3] (helo=book.hvoigt.net)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Z4QIc-0006Df-0X; Mon, 15 Jun 2015 11:03:22 +0200
-Content-Disposition: inline
-In-Reply-To: <5577330E.3060803@web.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754818AbbFOJuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 05:50:00 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:33945 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754744AbbFOJt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 05:49:58 -0400
+Received: by labbc20 with SMTP id bc20so17904592lab.1
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 02:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=z5Zbh+kbGOE4ZoOXXkQP+NWV0rfznZSr1xFQysrOabU=;
+        b=DBu9C0+yAoWckF+K3eatoaPN/V/P0tv51Kp675O9Y6p/rYci84Vawd8yMIP0wit8VK
+         uMXG0Cg0fKLD2vF4cLzY3cVGc2AkgmGNERWFNsOSOKfH1E6DgBPvLK10N4PaZmvu0pyC
+         1Br/Z2rjZjRySlHbreHLZ/+cAko73z0glR+TMORkxfo60FsUkVhNwzpDMpY/YjV5EGQ0
+         nvgeGV/nRTgOk2f7ctnqLd8YTH/q2WbskkerSLT9LQ8+tWP3HSNTXuBeK5imgKBuaa49
+         vA60haLb2bPUyfXsTQkabWf8zXw8CZPxyFsQoPHWrnpSFCVcSAnSXTUFxlA3LmndkRiK
+         TsUg==
+X-Received: by 10.112.27.238 with SMTP id w14mr26733830lbg.80.1434361797141;
+ Mon, 15 Jun 2015 02:49:57 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Mon, 15 Jun 2015 02:49:57 -0700 (PDT)
+In-Reply-To: <xmqqzj42kkol.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271668>
 
-On Tue, Jun 09, 2015 at 08:40:14PM +0200, Jens Lehmann wrote:
-> Am 07.06.2015 um 08:26 schrieb Stefan Beller:
-> >On 06.06.2015 12:53, Luca Milanesio wrote:
-> >>>On 6 Jun 2015, at 18:49, Phil Hord <phil.hord@gmail.com> wrote:
-> >>>On Fri, Jun 5, 2015, 2:58 AM lucamilanesio <luca.milanesio@gmail.com> wrote:
-> >>>>Ideally, as a "git clone --recursive" already exists, I would like to
-> >>>>see a "git diff --recursive" that goes through the submodules as well :-)
-> >>>>
-> >>>>Something possibly to propose to the Git mailing list?
-> 
-> Such an option makes lots of sense to me (though "--recurse-submodules"
-> should be its name for consistency reasons). This could be an alias for
-> "--submodule=full", as the "--submodule" option controls the format of
-> submodule diffs.
+On Mon, Jun 15, 2015 at 6:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>> diff --git a/git.c b/git.c
+>> index 44374b1..42328ed 100644
+>> --- a/git.c
+>> +++ b/git.c
+>> @@ -370,6 +370,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>>
+>>  static struct cmd_struct commands[] = {
+>>       { "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+>> +     { "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
+>
+> Would this, especially having RUN_SETUP, keep the same behaviour
+> when the command is run from a subdirectory of a working tree?
+> e.g.
+>
+>         save messages to ./inbox
+>         $ cd sub/dir
+>         $ git am ../../inbox
+>
 
-BTW, for long running topics (or low hanging fruits) we collect/link
-everything in the wiki of Jens git fork on github. This is the central
-page:
+Yes, in 05/19, where the splitting of patches is implemented, we
+prefix the mbox paths with the path to the working tree.
 
-https://github.com/jlehmann/git-submod-enhancements/wiki
+There are also tests in t4150 to catch this, introduced in bb034f8
+(am: read from the right mailbox when started from a subdirectory,
+2008-03-04).
 
-Maybe everyone that has work in the queue can add his work there (the work that
-takes more time) so we can avoid doubling any effort. Not everything there is
-up to date at the moment but I will look into it to remove outdated things.
-
-> >>>I've worked on git diff --recursive a bit myself, along with some
-> >>>simpler use cases (git ls-tree --recursive) as POCs. I think some of
-> >>>the needs there begin to have ui implications which could be
-> >>>high-friction. I really want to finish it someday, but I've been too
-> >>>busy lately at $job, and now my experiments are all rather stale.
-> >>>
-> >>>It would be a good discussion to have over at the git list (copied).
-> >>>Heiko and Jens have laid some new groundwork in this area and it may
-> >>>be a good time to revisit it.  Or maybe they've even moved deeper than
-> >>>that; I have been distracted for well over a year now.
-> >>>
-> >
-> >Glad you're working (or planning to) working on submodulues. This is
-> >also on my todo list for the next months as well.
-> 
-> More hands are always welcome!
-> 
-> >I'd review stuff in that area if you're looking for reviewers.
-> 
-> I'll be happy help too.
-
-Me too.
-
-Cheers Heiko
+Thanks,
+Paul
