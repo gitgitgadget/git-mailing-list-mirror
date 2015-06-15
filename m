@@ -1,107 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 05/12] delete_refs(): improve error message
-Date: Mon, 15 Jun 2015 11:29:00 -0700
-Message-ID: <xmqq7fr4akr7.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 12/12] refs: move the remaining ref module
+ declarations to refs.h
+Date: Mon, 15 Jun 2015 14:35:05 -0400
+Message-ID: <20150615183504.GB4041@peff.net>
 References: <cover.1434206062.git.mhagger@alum.mit.edu>
-	<64949bba1031b19abf86629267b8bc40666a4631.1434206062.git.mhagger@alum.mit.edu>
+ <79947baebd702f8e9fe9b667e2eeb69afa73094b.1434206062.git.mhagger@alum.mit.edu>
+ <xmqqfv5salh9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 15 20:29:10 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 20:35:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4Z89-0002QC-6y
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:29:09 +0200
+	id 1Z4ZE1-0006bN-EW
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754557AbbFOS3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 14:29:05 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:38861 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754171AbbFOS3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 14:29:03 -0400
-Received: by igblz2 with SMTP id lz2so56900816igb.1
-        for <git@vger.kernel.org>; Mon, 15 Jun 2015 11:29:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=UuehloRqYSYG0alW3KtVTohCxRgukq2MPn2jCW2HyCU=;
-        b=yW2csLp+odO3Sg5s+BwHrfU6QqNkiRXMGUwC61XmxJQXKoGYn5pB/J+D9+Uo7EK8Pj
-         xQDApfJTOlNnUStHxhpj4bHQYYwlDd2f1Kfm3fmsKy3MIDp7s9+eln2/X/RAI0N1Ywo7
-         fZAkJB/xSUbzMZu9HrwLrjqX/PBvBAZeXev6giuF1yqYA0wntz/CK7FI5c2QAcv2uvGq
-         mSlQ7iz0HONxYHRfiHkZV4tRUcILJ4fhCUsQeV82plub0iETPUh24tuxoaUH4wK7zwIq
-         hM6RQx3pVtnacarO45TqGblNxOVqIatC9WPKGVh2yiOW0z7AW9l6rarUFt1fz2FBSx9q
-         exHw==
-X-Received: by 10.107.152.14 with SMTP id a14mr35013565ioe.92.1434392942244;
-        Mon, 15 Jun 2015 11:29:02 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
-        by mx.google.com with ESMTPSA id f15sm9377016iof.36.2015.06.15.11.29.01
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Jun 2015 11:29:01 -0700 (PDT)
-In-Reply-To: <64949bba1031b19abf86629267b8bc40666a4631.1434206062.git.mhagger@alum.mit.edu>
-	(Michael Haggerty's message of "Sat, 13 Jun 2015 16:42:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755914AbbFOSfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 14:35:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46342 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754236AbbFOSfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 14:35:07 -0400
+Received: (qmail 1701 invoked by uid 102); 15 Jun 2015 18:35:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 13:35:07 -0500
+Received: (qmail 5991 invoked by uid 107); 15 Jun 2015 18:35:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 14:35:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jun 2015 14:35:05 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfv5salh9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271701>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Jun 15, 2015 at 11:13:22AM -0700, Junio C Hamano wrote:
 
-> Subject: Re: [PATCH v2 05/12] delete_refs(): improve error message
+> > @@ -78,15 +170,15 @@ typedef int each_ref_fn(const char *refname,
+> >   * modifies the reference also returns a nonzero value to immediately
+> >   * stop the iteration.
+> >   */
+> > -extern int head_ref(each_ref_fn, void *);
+> > +extern int head_ref(each_ref_fn fn, void *cb_data);
+> 
+> For example, between these two, what did we gain?
+> 
+> Because of their types, it already was clear what the two parameters
+> are in the original, without noisewords like "fn" (which obviously
+> stands for a "function", but that is clear due to "each_ref_fn").
 
-I'd call this "make error message more generic".
+I think the real benefit of naming parameters is that you can talk about
+"fn" and "cb_data" by name in the docstring[1]. Of course we do not do
+that here, so we could clearly wait until "if-and-when" we do so. But I
+do not think it is a big deal for our style guide to say "we always name
+parameters in declarations", and to bring things in line there (though
+perhaps it should be a separate patch in that case).
 
-> Change the error message from
->
->     Could not remove branch %s
->
-> to
->
->     could not remove reference %s
->
-> * s/branch/reference/. This change makes sense even for the existing
->   caller, which uses the function to delete remote-tracking
->   branches.
+[1] For instance, in the docstring here, which is just outside the
+    context, we use the awkward phrase "the specified callback
+    function". That would be much simpler as just `fn`, though having so
+    few parameters to these functions, it is fairly clear already.
 
-and replace this bullet with something like:
+> > -extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
+> > +extern int for_each_glob_ref_in(each_ref_fn fn, const char *pattern, const char* prefix, void *cb_data);
+> 
+> Likewise for addition of fn and cb_data.
+> 
+> If you really want to make unrelated changes to this file, what you
+> should fix is to update "const char* prefix" to "const char *prefix"
+> ;-)
 
-* Originally 'branch -d' was the only caller of this, but as part
-  of the refs API, we will allow it to be called on refs that is not
-  a branch or a remote-tracking branch.
+IMHO they are in the same boat (style fixes), and I would be happy to
+see both improved. :)
 
-as calling a remote-tracking branch a 'branch' is not incorrect
-per-se.  What would count as true improvement is ...
-
-> * Convert it to lower case, as per our usual convention.
-
-... this one.  If somebody eventually chooses to make the message
-finer grained by switching on the prefix refs/{what}, so that the
-user can differentiate between branches, remote-tracking branches,
-tags, etc., that would also count as improvement as well.
-
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/refs.c b/refs.c
-> index 6f62bd1..5386077 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2831,7 +2831,7 @@ int delete_refs(struct string_list *refnames)
->  		const char *refname = refnames->items[i].string;
->  
->  		if (delete_ref(refname, NULL, 0))
-> -			result |= error(_("Could not remove branch %s"), refname);
-> +			result |= error(_("could not remove reference %s"), refname);
->  	}
->  
->  	return result;
+-Peff
