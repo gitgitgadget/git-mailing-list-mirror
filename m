@@ -1,76 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 08/12] initial_ref_transaction_commit(): function for initial ref creation
-Date: Mon, 15 Jun 2015 11:53:04 -0700
-Message-ID: <xmqqioao952n.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 08/12] initial_ref_transaction_commit(): function for
+ initial ref creation
+Date: Mon, 15 Jun 2015 14:57:46 -0400
+Message-ID: <20150615185746.GB10080@peff.net>
 References: <cover.1434206062.git.mhagger@alum.mit.edu>
-	<19f421f504ae22538fd2a902840209c0799e67cb.1434206062.git.mhagger@alum.mit.edu>
+ <19f421f504ae22538fd2a902840209c0799e67cb.1434206062.git.mhagger@alum.mit.edu>
+ <xmqqy4jk95pw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 15 20:53:13 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 20:58:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4ZVR-0002id-1c
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:53:13 +0200
+	id 1Z4Za7-0006IQ-0H
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbbFOSxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 14:53:08 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:33479 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754514AbbFOSxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 14:53:06 -0400
-Received: by igbos3 with SMTP id os3so26345703igb.0
-        for <git@vger.kernel.org>; Mon, 15 Jun 2015 11:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=yRx+yeGORUcM+W2g0ZE5SgldTpLln680FEKamOH1kSo=;
-        b=DABzm2BUmgAw3uavJmAe7ycZWRoC64K0e74f5Qzve1dy5QA2fCPpcYnG0BooPkFfHR
-         RHeboew2IGZp/iJuZT9N+JQkpgJntIYuXOBsSTTGjpdD0KjEbBrmUfSEv+h4tzvQHI5D
-         cS+HZWjlwQbqX4gk4LLmfkY9aElAoCGkLYc1+MUX2ucmiDs66CFi6E3vKzoXIEkDIsx0
-         Fh1aaRXiRHIpHR4i3uCzT6OhfpvqjzNPdwnm67cUAzTvk2xXMupCTcKuRKe+4KALkBv4
-         TD5PnU8K3XDCOlUHeY3qnLaOFdPEDXWY2KJiVUnaCCtferkfTCdQl3iGkEM/ngxxxYZK
-         u0+Q==
-X-Received: by 10.50.43.196 with SMTP id y4mr22665003igl.14.1434394386435;
-        Mon, 15 Jun 2015 11:53:06 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
-        by mx.google.com with ESMTPSA id u35sm9406056iou.7.2015.06.15.11.53.05
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Jun 2015 11:53:05 -0700 (PDT)
-In-Reply-To: <19f421f504ae22538fd2a902840209c0799e67cb.1434206062.git.mhagger@alum.mit.edu>
-	(Michael Haggerty's message of "Sat, 13 Jun 2015 16:42:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755867AbbFOS5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 14:57:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46375 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754453AbbFOS5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 14:57:49 -0400
+Received: (qmail 3476 invoked by uid 102); 15 Jun 2015 18:57:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 13:57:48 -0500
+Received: (qmail 6289 invoked by uid 107); 15 Jun 2015 18:57:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 14:57:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jun 2015 14:57:46 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqy4jk95pw.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271708>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Jun 15, 2015 at 11:39:07AM -0700, Junio C Hamano wrote:
 
-> +	struct ref_transaction *t;
-> +	struct strbuf err = STRBUF_INIT;
-> +
-> +	t = ref_transaction_begin(&err);
-> +	if (!t)
-> +		die(err.buf);
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+> > It would seem to make sense to add a test here that there are no
+> > existing references, because that is how the function *should* be
+> > used. But in fact, the "testgit" remote helper appears to call it
+> > *after* having set up refs/remotes/<name>/HEAD and
+> > refs/remotes/<name>/master, so we can't be so strict.
+> 
+> Is "testgit" so hard to fix (or so sacred to break) that we want to
+> sacrifice the quality of this part that is nearer to the core?
 
-Yikes, and sorry for sending three messages without consolidating
-against the same patch, but
+I do not think "testgit" is sacred; it is there to serve the needs of
+git and not the other way around. But we do have to stop and think
+whether what "testgit" is doing is representative of what a real
+remote-helper might do.
 
-	die("%s", err.buf);
+It has been a while since I touched the remote-helper code (and it has
+always been under-documented and confusing, from my recollection), but I
+think it is not "testgit" that is making the refs, but rather that
+"import"-style helpers will feed a data stream to git-fast-import
+(actually the transport code does it on behalf of the remote).
 
-because
+So "fast-import" creates the refs, and then "clone" later wants to
+recreate them. IMHO this is not ideal[1]; we should have fast-import create
+the objects and report the ref tips, which can then be relayed to clone.
+But with the way the code works now, this is not about fixing "testgit",
+but rather would break any "import"-style helper.
 
-extern NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
+Take all of that with a grain of salt, though. I might be totally wrong
+about how this part of the code works.
 
-in its declaration causes -Werror=format-security to barf.
+-Peff
 
-Likewise for a few other instances of the same construct all in 
-the same file.
+[1] This may also be buggy for regular fetches. E.g., do we correctly
+    respect "--force" (or lack thereof) and "+"-refspecs when importing?
+    I am not sure, as I think we may pass enough information to the
+    helper to handle this itself. But certainly if the responsibility
+    for updating refs was always in the caller (clone or fetch), then it
+    would follow the regular code path and Just Work.
