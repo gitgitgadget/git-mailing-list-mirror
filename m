@@ -1,72 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC] send-email quote issues
-Date: Mon, 15 Jun 2015 15:52:04 +0200
-Message-ID: <vpqd20xxenv.fsf@anie.imag.fr>
-References: <330077615.505681.1434367014434.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqmw011a22.fsf@anie.imag.fr>
-	<999870154.509851.1434373434414.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: =?UTF-8?B?0J7Qu9C10LMg0JrQvtGF0YLQtdC90LrQvg==?= 
+	<kohtenko@gmail.com>
+Subject: Fwd: git svn die signal 6
+Date: Mon, 15 Jun 2015 16:54:35 +0300
+Message-ID: <CACbO7BMfDSqTAzNWKhLqgP+eTmsnFTmyDjt7WoZ7nMdJfp-sCg@mail.gmail.com>
+References: <CACbO7BMtsgu2eJHa4NBmeZ2-mTDk23NZhhf5f7MM7+_1X5+zsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 15 15:52:36 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 15 15:54:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4UoU-0005br-FW
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 15:52:34 +0200
+	id 1Z4UqX-0006cK-JA
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 15:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192AbbFONwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 09:52:30 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34869 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754130AbbFONw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 09:52:28 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5FDq2cl020992
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jun 2015 15:52:02 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5FDq44b020178;
-	Mon, 15 Jun 2015 15:52:04 +0200
-In-Reply-To: <999870154.509851.1434373434414.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Remi Lespinet's message of "Mon, 15 Jun 2015 15:03:54 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Jun 2015 15:52:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5FDq2cl020992
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434981125.10523@J3fLqeKeryydJJmiB/327Q
+	id S1754437AbbFONyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 09:54:38 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:32899 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbbFONyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 09:54:36 -0400
+Received: by obcej4 with SMTP id ej4so64539841obc.0
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 06:54:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=/cIaMwkfyupD30qCf1YKkzyHnWDEsuYblR87CCoDvC0=;
+        b=jeImas1uSEWe99VLyDxtqk84l4LGVebU2mnVXfaaMJ2N1+JHd4FBhfNJqp5o01aMsq
+         VumLduo/K9ikqK24i8629hGUxO8EfGVHp5eatsw1mLdZ9mMn4IxQnFzmbpd63vkqcm3O
+         ydHXVyCG2hbIoU56Au05SWX3HLzePdzo9k78x47l2I01rJzl6F2CqKrMv0MO4d3riLLC
+         ZFyDCJbl+WtjGYPomV5Rwsg8lBejsI692GbZpGEnfsMWfSf8Vqdga7rdVvhogMutQjxc
+         wJm3t04avbx+JqCMhbMZ4AuGx++jYdfC+9y+BUNYLf1TWcay7vehwnGFyQWE/RiXRAli
+         4XOg==
+X-Received: by 10.60.101.195 with SMTP id fi3mr23950505oeb.65.1434376476009;
+ Mon, 15 Jun 2015 06:54:36 -0700 (PDT)
+Received: by 10.76.41.202 with HTTP; Mon, 15 Jun 2015 06:54:35 -0700 (PDT)
+In-Reply-To: <CACbO7BMtsgu2eJHa4NBmeZ2-mTDk23NZhhf5f7MM7+_1X5+zsw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271685>
 
-Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+Hi great "git crew" member :)
+I found small, but annoying bug in 'git svn'. If you would try to make
+any commit with new files (or delete/modify files) which contain in
+name "@" sign - you'll see crash with minimum information about what's
+just happened. Such file names are very useful for iOS projects when
+you can add same pictures with different dimensions with suffix @2x or
+@3x. In guts, svn uses "@" sign for pin version of file and it's
+probably confused if this sign presented in file name. For committing
+such changes thru svn you would use "svn add 'image@3x.png'@". This
+will prevent such problem.
 
-> Ok, but I don't know what fixed means in these particular cases.
-> Actually the problem when we have a quote in a name is: Is this a
-> delimiter or is this an ascii char?
+I hope you can easily find out how to reproduce and fix this issue.
+Please, feel free to contact me for any details about this.
 
-To me, the answer should be: do whatever the RFC says in email headers.
-I'd expect anything that works in the To: header to work in the --to
-option of git send-email.
-
-If I read correctly, this is address-list in RFC 2822.
-
-Now, when the address list is invalid wrt the RFC, we can either reject
-it or try to guess.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Best regards
