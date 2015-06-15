@@ -1,97 +1,82 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH/WIP v2 04/19] am: implement patch queue mechanism
-Date: Mon, 15 Jun 2015 18:46:27 +0800
-Message-ID: <CACRoPnS3QwoWoebDpz_aBeoGx91pdP68f63Qp5KxLk9BCvc7DQ@mail.gmail.com>
-References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
-	<1434018125-31804-5-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kbLneLygPiDtL+nqwsxdvZEhT95vj0z9MbN0QrqvAmebA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 12:46:34 2015
+Subject: [PATCH v2 0/5] am: improve test coverage and touch up foreign patch parsing
+Date: Mon, 15 Jun 2015 19:08:08 +0800
+Message-ID: <1434366493-27155-1-git-send-email-pyokagan@gmail.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 15 13:08:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4RuT-0002Gx-Qn
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 12:46:34 +0200
+	id 1Z4SFz-0002h2-A2
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 13:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754077AbbFOKq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 06:46:29 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:36758 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754046AbbFOKq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 06:46:28 -0400
-Received: by lacny3 with SMTP id ny3so35060681lac.3
-        for <git@vger.kernel.org>; Mon, 15 Jun 2015 03:46:27 -0700 (PDT)
+	id S1753987AbbFOLIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 07:08:42 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:36467 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752083AbbFOLIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 07:08:41 -0400
+Received: by pabqy3 with SMTP id qy3so63538007pab.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 04:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Z8uAktVZ3X+7FAaDHc0EyfVMA+iTiP6n/SWhRc515xA=;
-        b=0/bf9U+bV8xV8LyI3x7u8EYrWcL5+cfqCldEeF48hosuUPBria0Qh0bpR3IdGmAPcb
-         BIljpbs9IgcRS/61M2F7LRONFZoEogS5DkS9j8qfZc0Ek2M61+kRmgFYKGV+goV/G1m4
-         ljZQ0ZCN4z5upsoKqcfilTG94HCX06v1UZ0po+gQ016AD6b/kEULSBxoGzFlBhnF8Ynh
-         f7oqfXbX8YakCDjNu+TQlGLq9d2pywxTYv50e/6aKmPwq9n1S+FVGvsF/8YQ71G5ft75
-         wWVeYBK4fU3YhgWJ+2s4RNOJnHN8PqKU1VjcftIEmdd5kjh0Lc7ZioYjj5cu9wJO4jp2
-         Qx+g==
-X-Received: by 10.112.171.101 with SMTP id at5mr26861724lbc.66.1434365187391;
- Mon, 15 Jun 2015 03:46:27 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Mon, 15 Jun 2015 03:46:27 -0700 (PDT)
-In-Reply-To: <CAGZ79kbLneLygPiDtL+nqwsxdvZEhT95vj0z9MbN0QrqvAmebA@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=L/EGoUXDB3X/LejMWzcxfpdaJFU9ip3Se5o70khYUt0=;
+        b=lQXvATcp3MnIbtonzHljrNhlGrvY0b/rUcZFcmPIlY3zfKzFXMX3R2V3yhzt8gCHhN
+         h2L3gvWboSdeIjXG1IfTJrf+F54k7Mag8kGjZzKecs6+MLNVfN5qnNhDL5b278jjcuTx
+         4yL5agIH7sW7INidQuwxSTLRkbXVuvhQgb6jpBpvFL57FDSurTIEKc55n5udm8roiOid
+         VN6H0qfaItaYZMrRkbCieA2mKf2elTS/HESeg7DFC3NkR1Y7mWybCiOfc6/V3eFJjdVp
+         g8LuQS8o1llp0MKXqHJtFwCD5pPPnYNR75c1nDhxzysUK9lHDR9clUywt2L5HD+co9CJ
+         iH9A==
+X-Received: by 10.66.230.168 with SMTP id sz8mr48483708pac.4.1434366521366;
+        Mon, 15 Jun 2015 04:08:41 -0700 (PDT)
+Received: from yoshi.pyokagan.tan ([116.86.132.138])
+        by mx.google.com with ESMTPSA id jt2sm11886795pbc.21.2015.06.15.04.08.32
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 15 Jun 2015 04:08:34 -0700 (PDT)
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271672>
 
-On Fri, Jun 12, 2015 at 1:39 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Jun 11, 2015 at 3:21 AM, Paul Tan <pyokagan@gmail.com> wrote:
->> Notes:
->>     v2
->>
->>     * Declare struct am_state as static
->>
->>  builtin/am.c | 164 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 164 insertions(+)
->>
->> diff --git a/builtin/am.c b/builtin/am.c
->> index 0ccbe33..f061d21 100644
->> --- a/builtin/am.c
->> +++ b/builtin/am.c
->> @@ -6,6 +6,154 @@
->>  #include "cache.h"
->>  #include "builtin.h"
->>  #include "exec_cmd.h"
->> +#include "parse-options.h"
->> +#include "dir.h"
->> +
->> +struct am_state {
->
-> Did you mean to declare all the functions below to be static or the
-> struct as well?
+This is a re-roll of [v1].
 
-Well, everything in this file, with the exception of the cmd_am()
-entry point, should have static linkage.
+Previous versions:
 
-The changelog comment was referring to [1], but I should have made it
-clearer. Sorry if it was confusing.
+[v1] http://thread.gmane.org/gmane.comp.version-control.git/271053
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/270048/focus=270205
+git-am is able to parse StGit and mercurial patches. However, there are no
+regression tests in the test suite for these patch formats, and there are some
+small bugs as well:
 
-> Reading further, you declared it static below. I thought maybe it'd be
-> useful to have definition
-> and declaration up here, but having all declarations further below may
-> be even better.
+* the mercurial and stgit patch parsers does not support reading from stdin
 
-Right, I aimed to have a strict separation between "git-am: the
-functionality" and "git-am: the command-line interface", where the
-latter depends on the former, and not the other way round (or have
-circular dependencies). The former perhaps could even be moved into
-libgit.a in the future.
+* the mercurial patch parser parsed the patch date wrongly and git-am is thus
+  unable to reconstruct the exact commit.
 
-Thanks,
-Paul
+Some patches are based on Chris' patch series[1], which I've credited accordingly.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/256502
+
+
+Paul Tan (5):
+  t4150: test applying StGit patch
+  am: teach StGit patch parser how to read from stdin
+  t4150: test applying StGit series
+  am: use gmtime() to parse mercurial patch date
+  am: teach mercurial patch parser how to read from stdin
+
+ git-am.sh     | 12 +++++----
+ t/t4150-am.sh | 82 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+), 5 deletions(-)
+
+-- 
+2.1.4
