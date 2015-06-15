@@ -1,83 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 12/12] refs: move the remaining ref module
- declarations to refs.h
-Date: Mon, 15 Jun 2015 14:35:05 -0400
-Message-ID: <20150615183504.GB4041@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 06/12] prune_remote(): use delete_refs()
+Date: Mon, 15 Jun 2015 11:35:28 -0700
+Message-ID: <xmqq381sakgf.fsf@gitster.dls.corp.google.com>
 References: <cover.1434206062.git.mhagger@alum.mit.edu>
- <79947baebd702f8e9fe9b667e2eeb69afa73094b.1434206062.git.mhagger@alum.mit.edu>
- <xmqqfv5salh9.fsf@gitster.dls.corp.google.com>
+	<aab9d191609b34fbfee0b68883a5b14fba2421ad.1434206062.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 20:35:14 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 15 20:35:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4ZE1-0006bN-EW
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:35:13 +0200
+	id 1Z4ZEN-0006sb-K0
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755914AbbFOSfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 14:35:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46342 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754236AbbFOSfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 14:35:07 -0400
-Received: (qmail 1701 invoked by uid 102); 15 Jun 2015 18:35:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 13:35:07 -0500
-Received: (qmail 5991 invoked by uid 107); 15 Jun 2015 18:35:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 14:35:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jun 2015 14:35:05 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqfv5salh9.fsf@gitster.dls.corp.google.com>
+	id S1755928AbbFOSfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 14:35:32 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:34825 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755843AbbFOSfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 14:35:30 -0400
+Received: by igbzc4 with SMTP id zc4so61376123igb.0
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 11:35:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=hqs+8khqwcQQ6naxDhtDYnf2IewJs3DT33JOGcqmz/c=;
+        b=Pju975ekaqNf6/JYF6Xo2/8+0i3Cua8Leu7Srftb4l7xUvtKPC7/hIgK7BImtLz9IT
+         wiJEC6kKtIB94VCa6Tx/dRdviW10bZUtqvpBqCUpEBZEIoQaqqmnD5RMXxt40RYPLVOr
+         jowFbbCIpn0FPVNrm4xlkqEx2+gf4j/0+kPh+BB5BBdg9EoGoyK+RktLpNJwlXmloaQN
+         2Cd2IMICZgHT49MTarisWWmoCu0nNJiPVu2DpAbdFhPi4q4/C3dFWvMeNDTL4f+tVovl
+         iXOocnbk2M890oLGnxWD562b9TR/pwZXKxgvA1x6G+6EljO+v001xBykF5UV2PnT5Xse
+         0PCA==
+X-Received: by 10.107.128.227 with SMTP id k96mr12314083ioi.7.1434393329939;
+        Mon, 15 Jun 2015 11:35:29 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
+        by mx.google.com with ESMTPSA id 9sm9384871iok.20.2015.06.15.11.35.29
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jun 2015 11:35:29 -0700 (PDT)
+In-Reply-To: <aab9d191609b34fbfee0b68883a5b14fba2421ad.1434206062.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Sat, 13 Jun 2015 16:42:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271702>
 
-On Mon, Jun 15, 2015 at 11:13:22AM -0700, Junio C Hamano wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> > @@ -78,15 +170,15 @@ typedef int each_ref_fn(const char *refname,
-> >   * modifies the reference also returns a nonzero value to immediately
-> >   * stop the iteration.
-> >   */
-> > -extern int head_ref(each_ref_fn, void *);
-> > +extern int head_ref(each_ref_fn fn, void *cb_data);
-> 
-> For example, between these two, what did we gain?
-> 
-> Because of their types, it already was clear what the two parameters
-> are in the original, without noisewords like "fn" (which obviously
-> stands for a "function", but that is clear due to "each_ref_fn").
+> This will result in errors being emitted for references that can't be
+> deleted, but that is a good thing.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  builtin/remote.c | 11 ++---------
+>  1 file changed, 2 insertions(+), 9 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index c8dc724..cc3c741 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -1314,19 +1314,12 @@ static int prune_remote(const char *remote, int dry_run)
+>  		string_list_append(&refs_to_prune, item->util);
+>  	string_list_sort(&refs_to_prune);
+>  
+> -	if (!dry_run) {
+> -		struct strbuf err = STRBUF_INIT;
+> -		if (repack_without_refs(&refs_to_prune, &err))
+> -			result |= error("%s", err.buf);
+> -		strbuf_release(&err);
+> -	}
+> +	if (!dry_run)
+> +		result |= delete_refs(&refs_to_prune);
+>  
+>  	for_each_string_list_item(item, &states.stale) {
+>  		const char *refname = item->util;
+>  
+> -		if (!dry_run)
+> -			result |= delete_ref(refname, NULL, 0);
+> -
+>  		if (dry_run)
+>  			printf_ln(_(" * [would prune] %s"),
+>  			       abbrev_ref(refname, "refs/remotes/"));
 
-I think the real benefit of naming parameters is that you can talk about
-"fn" and "cb_data" by name in the docstring[1]. Of course we do not do
-that here, so we could clearly wait until "if-and-when" we do so. But I
-do not think it is a big deal for our style guide to say "we always name
-parameters in declarations", and to bring things in line there (though
-perhaps it should be a separate patch in that case).
+The resulting code reads better by making the for-each-string-list-item
+loop only about reporting and not actually doing anything.
 
-[1] For instance, in the docstring here, which is just outside the
-    context, we use the awkward phrase "the specified callback
-    function". That would be much simpler as just `fn`, though having so
-    few parameters to these functions, it is fairly clear already.
-
-> > -extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
-> > +extern int for_each_glob_ref_in(each_ref_fn fn, const char *pattern, const char* prefix, void *cb_data);
-> 
-> Likewise for addition of fn and cb_data.
-> 
-> If you really want to make unrelated changes to this file, what you
-> should fix is to update "const char* prefix" to "const char *prefix"
-> ;-)
-
-IMHO they are in the same boat (style fixes), and I would be happy to
-see both improved. :)
-
--Peff
+But the log message puzzles me.  Didn't refs that cannot be deleted
+cause the original to fail?  After repacking without these refs, it
+called delete-ref, and a failure to delete or commit the deletion
+would have hit the error() down there, no?
