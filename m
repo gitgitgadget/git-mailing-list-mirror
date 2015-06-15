@@ -1,77 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 7/7] bisect: allows any terms set by user
-Date: Mon, 15 Jun 2015 10:56:15 +0200
-Message-ID: <vpq381t73kg.fsf@anie.imag.fr>
-References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<vpqy4jq2rjr.fsf@anie.imag.fr>
-	<323480549.485629.1434310820944.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<771291489.485827.1434312326536.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Submodules as first class citizens (was Re: Moving to subtrees
+ for plugins?)
+Date: Mon, 15 Jun 2015 11:03:54 +0200
+Message-ID: <20150615090354.GA8048@book.hvoigt.net>
+References: <CABURp0og9i9S3_ZWf5Ce9LT785QJo4H-TVtFaKUTXr2N7FB+ew@mail.gmail.com>
+ <D2BB8369-E552-4AC3-967E-8F963206E03C@gmail.com>
+ <5573E40A.3020502@gmail.com>
+ <5577330E.3060803@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 15 10:56:33 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <stefanbeller@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	Repo Discussion <repo-discuss@googlegroups.com>,
+	Git <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jun 15 11:04:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4QC0-00074Y-Gw
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 10:56:32 +0200
+	id 1Z4QJc-00026k-GU
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 11:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071AbbFOI4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 04:56:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54672 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751944AbbFOI4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 04:56:22 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5F8uEVh032441
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jun 2015 10:56:14 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5F8uFsN011223;
-	Mon, 15 Jun 2015 10:56:15 +0200
-In-Reply-To: <771291489.485827.1434312326536.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Antoine Delaite's message of "Sun, 14 Jun 2015 22:05:26 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Jun 2015 10:56:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5F8uEVh032441
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434963375.89038@lrUSPThF/JvfjzzByocv2g
+	id S1755710AbbFOJEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 05:04:14 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.26]:51857 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755698AbbFOJEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 05:04:04 -0400
+Received: from [178.11.201.3] (helo=book.hvoigt.net)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Z4QIc-0006Df-0X; Mon, 15 Jun 2015 11:03:22 +0200
+Content-Disposition: inline
+In-Reply-To: <5577330E.3060803@web.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271667>
 
-Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
+On Tue, Jun 09, 2015 at 08:40:14PM +0200, Jens Lehmann wrote:
+> Am 07.06.2015 um 08:26 schrieb Stefan Beller:
+> >On 06.06.2015 12:53, Luca Milanesio wrote:
+> >>>On 6 Jun 2015, at 18:49, Phil Hord <phil.hord@gmail.com> wrote:
+> >>>On Fri, Jun 5, 2015, 2:58 AM lucamilanesio <luca.milanesio@gmail.com> wrote:
+> >>>>Ideally, as a "git clone --recursive" already exists, I would like to
+> >>>>see a "git diff --recursive" that goes through the submodules as well :-)
+> >>>>
+> >>>>Something possibly to propose to the Git mailing list?
+> 
+> Such an option makes lots of sense to me (though "--recurse-submodules"
+> should be its name for consistency reasons). This could be an alias for
+> "--submodule=full", as the "--submodule" option controls the format of
+> submodule diffs.
 
-> To submit a v3 I would need answer about how we rebase the commit 
-> history and what do we do to simplify the life of the user with the 
-> terms (see my last mails). 
-> I was thinking of: 
-> -a config variable that would say :"as long as I don't reset keep 
-> the terms of the previous bisection" 
-> or we could decided that this is the default behaviour of bisect. 
->
-> -two config variables to choose default terms 
+BTW, for long running topics (or low hanging fruits) we collect/link
+everything in the wiki of Jens git fork on github. This is the central
+page:
 
-I'd say: keep it simple, try to close this series ASAP. It'll still be
-time to send another series once this one has settled.
+https://github.com/jlehmann/git-submod-enhancements/wiki
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Maybe everyone that has work in the queue can add his work there (the work that
+takes more time) so we can avoid doubling any effort. Not everything there is
+up to date at the moment but I will look into it to remove outdated things.
+
+> >>>I've worked on git diff --recursive a bit myself, along with some
+> >>>simpler use cases (git ls-tree --recursive) as POCs. I think some of
+> >>>the needs there begin to have ui implications which could be
+> >>>high-friction. I really want to finish it someday, but I've been too
+> >>>busy lately at $job, and now my experiments are all rather stale.
+> >>>
+> >>>It would be a good discussion to have over at the git list (copied).
+> >>>Heiko and Jens have laid some new groundwork in this area and it may
+> >>>be a good time to revisit it.  Or maybe they've even moved deeper than
+> >>>that; I have been distracted for well over a year now.
+> >>>
+> >
+> >Glad you're working (or planning to) working on submodulues. This is
+> >also on my todo list for the next months as well.
+> 
+> More hands are always welcome!
+> 
+> >I'd review stuff in that area if you're looking for reviewers.
+> 
+> I'll be happy help too.
+
+Me too.
+
+Cheers Heiko
