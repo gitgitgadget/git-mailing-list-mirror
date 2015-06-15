@@ -1,83 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile / racy-git.txt: clarify USE_NSEC prerequisites
-Date: Sun, 14 Jun 2015 17:07:05 -0700
-Message-ID: <xmqqr3pdltqu.fsf@gitster.dls.corp.google.com>
-References: <557C9526.6080000@gmail.com>
+Subject: Re: [PATCH] Documentation/i18n.txt: clarify character encoding support
+Date: Sun, 14 Jun 2015 17:12:10 -0700
+Message-ID: <xmqqmw01ltid.fsf@gitster.dls.corp.google.com>
+References: <557C9161.6020703@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Git List <git@vger.kernel.org>
 To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 02:07:21 2015
+X-From: git-owner@vger.kernel.org Mon Jun 15 02:12:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4Hvq-0007IA-Qy
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 02:07:19 +0200
+	id 1Z4I0f-0000Sq-QF
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 02:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386AbbFOAHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2015 20:07:10 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:36730 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806AbbFOAHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2015 20:07:08 -0400
-Received: by iecrd14 with SMTP id rd14so21153214iec.3
-        for <git@vger.kernel.org>; Sun, 14 Jun 2015 17:07:07 -0700 (PDT)
+	id S1752398AbbFOAMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2015 20:12:14 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:36348 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbbFOAMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2015 20:12:12 -0400
+Received: by igbiq7 with SMTP id iq7so7252918igb.1
+        for <git@vger.kernel.org>; Sun, 14 Jun 2015 17:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=YFeqq5+K4ZqnFtWmMFMHY664+GO2HJvJQAJGhCcABA4=;
-        b=Re7dUJT22oElc2hBuP8jNYKEUBXp5193ikuSYaPFTkbdo8qIsrsMAQ8wkh4bxjPDNu
-         VHqaneRoGkz7xhVXBbAgjfar72lgCPG790Ch/Jc7Mji78uI3F7jGXuKLRDkFAHbv5yU6
-         dfzz+TzUJVZb7CJYHWJun1eIvHtNX0aNGv7Vys7iC8SV3ExL8kpFUBa2BmfFyydOfOvM
-         Z+PHAoBDcAscW28hI2k/LtB/HXGbgOlePVgXII6/Hf8u6sIW1It6quhnEG/VNxUZM1X6
-         AY4ElCpE90gBqeHNb1Hz+fdhDBG9qvlWp78SWGZoOKq5v8DkwGAwqjpSG2DLMxhzVFjY
-         7g9Q==
-X-Received: by 10.50.43.194 with SMTP id y2mr17200180igl.35.1434326827519;
-        Sun, 14 Jun 2015 17:07:07 -0700 (PDT)
+        bh=46IhKO0gAbTO72S6lq0lzdrETUadbSzoEqqBWTaYGAs=;
+        b=V12BhLTa6eqeJxmrmaER0k7ebuzVuQscSMEwz9XtZw42bt8zNywHtRXSQf0fgeJf1A
+         HKGcXtLirmzD448KWJNXgCUBp3WyhTBN6w3lDSjtybvREDrPTCN3JeIvGUREW7vliHYO
+         ZZnoZh4cLtxEyZdk0TBWsUeYN6JAQ9Jdfa6gL0Vn3/4wCBjQX3JUOVF56KiWS4zfuy+4
+         4EYq2aZomAVMmmut/y1pyhC7DwOQEwX8nmcEkTS5ujrAOuZ+gCHTfMbWwua/L3pvzHsC
+         5pulcAnSprFx7E1Cq9DB4cfpJM8fwJYl6jLvRFOjcIFwwfX7k4uQduvg4/7vRPDAGwo9
+         jOpA==
+X-Received: by 10.50.8.3 with SMTP id n3mr146590iga.37.1434327131942;
+        Sun, 14 Jun 2015 17:12:11 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:8cf8:478e:8162:753f])
-        by mx.google.com with ESMTPSA id a82sm7672552ioe.22.2015.06.14.17.07.06
+        by mx.google.com with ESMTPSA id p193sm6779789ioe.34.2015.06.14.17.12.11
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 14 Jun 2015 17:07:06 -0700 (PDT)
-In-Reply-To: <557C9526.6080000@gmail.com> (Karsten Blees's message of "Sat, 13
-	Jun 2015 22:40:06 +0200")
+        Sun, 14 Jun 2015 17:12:11 -0700 (PDT)
+In-Reply-To: <557C9161.6020703@gmail.com> (Karsten Blees's message of "Sat, 13
+	Jun 2015 22:24:01 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271657>
 
 Karsten Blees <karsten.blees@gmail.com> writes:
 
->  members are also compared, but this is not enabled by default
-> -because in-core timestamps can have finer granularity than
-> +because on Linux, in-core timestamps can have finer granularity than
->  on-disk timestamps, resulting in meaningless changes when an
->  inode is evicted from the inode cache.  See commit 8ce13b0
->  of git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
->  ([PATCH] Sync in core time granularity with filesystems,
-> -2005-01-04).
+> diff --git a/Documentation/i18n.txt b/Documentation/i18n.txt
+> index e9a1d5d..e5f6233 100644
+> --- a/Documentation/i18n.txt
+> +++ b/Documentation/i18n.txt
+> @@ -1,18 +1,28 @@
+> -At the core level, Git is character encoding agnostic.
+> -
+> - - The pathnames recorded in the index and in the tree objects
+> -   are treated as uninterpreted sequences of non-NUL bytes.
+> -   What readdir(2) returns are what are recorded and compared
+> -   with the data Git keeps track of, which in turn are expected
+> -   to be what lstat(2) and creat(2) accepts.  There is no such
+> -   thing as pathname encoding translation.
+> +Git is to some extent character encoding agnostic.
 
-Hmm, the above makes one wonder if on systems other than Linux it
-may be better enabled by default.  Perhaps
+I do not think the removal of the text makes much sense here unless
+you add the equivalent to the new text below.
 
-	members are also compared.  On Linux, this is not enabled by
-	default because ...
+>   - The contents of the blob objects are uninterpreted sequences
+>     of bytes.  There is no encoding translation at the core
+>     level.
+>  
+> - - The commit log messages are uninterpreted sequences of non-NUL
+> -   bytes.
+> + - Pathnames are encoded in UTF-8 normalization form C. This
 
-would make the logic and text flow better?
+That is true only on some systems like OSX (with HFS+) and Windows,
+no?  BSDs in general and Linux do not do any such mangling IIRC.  I
+am OK with mangling described as a notable oddball to warn users,
+though; i.e. not as a norm as your new text suggests but as an
+exception.
 
->  # Define USE_NSEC below if you want git to care about sub-second file mtimes
-> -# and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
-> -# it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
-> -# randomly break unless your underlying filesystem supports those sub-second
-> -# times (my ext3 doesn't).
-> +# and ctimes. Note that you need recent glibc (at least 2.2.4) for this. On
-> +# Linux, kernel 2.6.11 or newer is required for reliable sub-second file times
-> +# on file systems with exactly 1 ns or 1 s resolution. If you intend to use Git
-> +# on other file systems (e.g. CEPH, CIFS, NTFS, UDF), don't enable USE_NSEC. See
-> +# Documentation/technical/racy-git.txt for details.
+> +   platforms. If file system APIs don't use UTF-8 (which may be
+> +   file system specific), it is recommended to stick to pure
+> +   ASCII file names.
 
-This looks good.
+Hmph, who endorsed such a recommendation?  It is recommended to
+stick to whatever naming scheme that would not cause troubles to
+project participants.  If your participants all want to (and can)
+use ISO-8859-1, we do not discourage them from doing so.
