@@ -1,69 +1,87 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH (resend)] git-gui: make gc warning threshold match 'git
- gc --auto'
-Date: Mon, 15 Jun 2015 18:41:40 +0200
-Message-ID: <20150615164140.GA8990@book.hvoigt.net>
-References: <557C90F9.8000200@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/WIP v2 03/19] am: implement skeletal builtin am
+Date: Mon, 15 Jun 2015 10:14:58 -0700
+Message-ID: <xmqqwpz4ao6l.fsf@gitster.dls.corp.google.com>
+References: <1434018125-31804-1-git-send-email-pyokagan@gmail.com>
+	<1434018125-31804-4-git-send-email-pyokagan@gmail.com>
+	<xmqqzj42kkol.fsf@gitster.dls.corp.google.com>
+	<CACRoPnR28kNvxk6sdYaNkPYx7wi=j4wCbaXYrx62AGhjpQiPVA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Pat Thoyts <patthoyts@gmail.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 18:41:56 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 19:15:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4XSM-0006I1-1d
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 18:41:54 +0200
+	id 1Z4XyV-0005af-7s
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 19:15:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754130AbbFOQlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 12:41:50 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.32]:58734 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752139AbbFOQls (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 12:41:48 -0400
-Received: from [178.11.201.3] (helo=book.hvoigt.net)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Z4XSD-00033u-FY; Mon, 15 Jun 2015 18:41:45 +0200
-Content-Disposition: inline
-In-Reply-To: <557C90F9.8000200@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754355AbbFORPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 13:15:01 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:34943 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752531AbbFORPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 13:15:00 -0400
+Received: by iesa3 with SMTP id a3so66948567ies.2
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 10:15:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=FEXoTbrO6nYXjuZN+pGuWR4mo2d40Ll2Du+9anC0tog=;
+        b=gwCzazYNuWjBemzUFb14nhcu7JmWcx6GbakEjNVyRBWoe7K3xR0HKVaXt+zJIJd9kR
+         dMuU/OekO2djvw5hns2ErAbKjkm3maYh4WJG38NYjBs/Gt6T0JU3RSyQ2oNJFvN29Mms
+         b31oMjOnVa3IFdtNQbRX24f3YrRBjlnLWkiVzJWsCnbMVhrM449odgzB8J8/UYwI8RRO
+         PMfK0yv1xSV6JjVc/QGDXpbWI+yjB3bXit6PTdtCApSh4P2vIVEWFqZsVrcNqka6y9r8
+         DhiBmgghnmUcdN9Y+1f2T8Ei10ccIFDC09dIaWP50lSZF0kawmWv1CloLgYPMiQQuXUU
+         FgNA==
+X-Received: by 10.107.16.216 with SMTP id 85mr23480096ioq.69.1434388500055;
+        Mon, 15 Jun 2015 10:15:00 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
+        by mx.google.com with ESMTPSA id k81sm9239777iod.31.2015.06.15.10.14.59
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jun 2015 10:14:59 -0700 (PDT)
+In-Reply-To: <CACRoPnR28kNvxk6sdYaNkPYx7wi=j4wCbaXYrx62AGhjpQiPVA@mail.gmail.com>
+	(Paul Tan's message of "Mon, 15 Jun 2015 17:49:57 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271690>
 
-On Sat, Jun 13, 2015 at 10:22:17PM +0200, Karsten Blees wrote:
-> Date: Wed, 6 Aug 2014 20:43:46 +0200
-> 
-> The number of loose objects at which git-gui shows a gc warning has
-> historically been hardcoded to ~2000, or ~200 on Windows. The warning can
-> only be disabled completely via gui.gcwarning=false.
-> 
-> Especially on Windows, the hardcoded threshold is so ridiculously low that
-> git-gui often complains even immediately after gc (due to loose objects
-> only referenced by the reflog).
-> 
-> 'git gc --auto' uses a much bigger threshold to check if gc is necessary.
-> Additionally, the value can be configured via gc.auto (default 6700).
-> There's no special case for Windows.
-> 
-> Change git-gui so that it only warns if 'git gc --auto' would also do an
-> automatic gc, i.e.:
->  - calculate the threshold from the gc.auto setting (default 6700,
->    disabled if <= 0)
->  - check directory .git/objects/17
-> 
-> We still check four directories (14-17) if gc.auto is very small, to get a
-> better estimate.
-> 
-> Signed-off-by: Karsten Blees <blees@dcon.de>
+Paul Tan <pyokagan@gmail.com> writes:
 
-Thanks, I like this!
+> On Mon, Jun 15, 2015 at 6:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Paul Tan <pyokagan@gmail.com> writes:
+>>> diff --git a/git.c b/git.c
+>>> index 44374b1..42328ed 100644
+>>> --- a/git.c
+>>> +++ b/git.c
+>>> @@ -370,6 +370,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>>>
+>>>  static struct cmd_struct commands[] = {
+>>>       { "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+>>> +     { "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
+>>
+>> Would this, especially having RUN_SETUP, keep the same behaviour
+>> when the command is run from a subdirectory of a working tree?
+>> e.g.
+>>
+>>         save messages to ./inbox
+>>         $ cd sub/dir
+>>         $ git am ../../inbox
+>>
+>
+> Yes, in 05/19, where the splitting of patches is implemented, we
+> prefix the mbox paths with the path to the working tree.
 
-Cheers Heiko
+I wasn't wondering about your new code.
+
+The scripted Porcelain is spawned after applying patches 1-3 from
+here, when you do not have _GIT_USE_BUILTIN_AM exported.  Haven't
+RUN_SETUP code did its thing by that time?
