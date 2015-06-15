@@ -1,98 +1,136 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 7/7] bisect: allows any terms set by user
-Date: Mon, 15 Jun 2015 10:37:23 +0200
-Message-ID: <vpqoakh74fw.fsf@anie.imag.fr>
-References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<vpqy4jq2rjr.fsf@anie.imag.fr>
-	<1155395826.552092.1434285546884.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<835646176.485512.1434310200681.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Jan-Philip Gehrcke <jgehrcke@googlemail.com>
+Subject: Should the --encoding argument to log/show commands make any guarantees
+ about their output?
+Date: Mon, 15 Jun 2015 10:50:26 +0200
+Message-ID: <557E91D2.3000908@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 15 10:37:42 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 15 10:50:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4Ptl-0008Ki-5t
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 10:37:41 +0200
+	id 1Z4Q6J-0004lD-DX
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 10:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212AbbFOIhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 04:37:31 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46157 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750887AbbFOIh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 04:37:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5F8bMu2027981
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jun 2015 10:37:23 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5F8bN9R010676;
-	Mon, 15 Jun 2015 10:37:23 +0200
-In-Reply-To: <835646176.485512.1434310200681.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Antoine Delaite's message of "Sun, 14 Jun 2015 21:30:00 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Jun 2015 10:37:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5F8bMu2027981
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1434962244.67883@Y6h9pg4yWC+YcxPYdxzKZQ
+	id S1753861AbbFOIuf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2015 04:50:35 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:36332 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754052AbbFOIud (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 04:50:33 -0400
+Received: by lbbqq2 with SMTP id qq2so48992697lbb.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 01:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=E02fBHUdCtaIQDKqTkW+iGB5d8w6M64rsjZrm31zqIo=;
+        b=qIOumFW0DwQt7Vje5mL3MHYlZbanVVbzjufKLbc+BZwW9C/mAXlP7+SqPwyo3h1MCB
+         5A4vmJkozn51ah+Y89zpC6OARtT322y+p1HE00c8kRp2vYJrA0Sxy7ykBFODXzylQ2il
+         WgoxF9U1naYfm82sBh7pF5ZDIDmH6UwJDj9EtXFUF6mINwV6/wtQhWDTrDBUciPIKLjI
+         rOcZzF9kqm40l83RZBM/JRn45ed4xgjjFkaNRQSGCS9UGFFL4nRD6qf01P6S33WfHosr
+         EeBKU9dsEXuYxUh+oMWNuUBfAgbDOVJ0O954e+0/BJGGZmvEdDMCmKhW/RmU5MqCBkVO
+         9h2w==
+X-Received: by 10.152.116.49 with SMTP id jt17mr12815577lab.82.1434358232113;
+        Mon, 15 Jun 2015 01:50:32 -0700 (PDT)
+Received: from [192.168.178.11] (ip92342367.dynamic.kabel-deutschland.de. [146.52.35.103])
+        by mx.google.com with ESMTPSA id f2sm2567370lah.39.2015.06.15.01.50.29
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Jun 2015 01:50:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271663>
 
-Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
+Hello,
 
-> Louis Stuber <louis--alexandre.stuber@ensimag.grenoble-inp.fr> writes: 
->
->>Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes: 
->> 
->>> Modifying in PATCH 7 some code that you introduced in PATCH 3 is 
->>> suspicious. Is there any reason you did not name the variable 
->>> "terms_defined" in the first place? (i.e. squash this hunk and the other 
->>> instance of start_bad_good into PATCH 3) 
->>> 
->>> (Whether this is a rethorical question is up to you ;-) ) 
->> 
->>In the previouses versions where we only want to introduce old/new, 
->>the terms can only be defined in bisect_start if the user typed 
->>start <bad> <good>. The name "start_bad_good" is not very explicit 
->>indeed, but isn't it more appropriate in this case than terms_defined ? 
->
-> I agree with Louis, but maybe a consistant commit history is more 
-> important. But if only the first patches (which implement old/new ) 
-> would come to be accepted the name of the variable would sounds strange. 
+I was surprised to see that the output of
 
-I would say terms_defined is OK even if only the first patches get
-merged. The reason why you need this variable is because you need to
-know whether the terms have been defined or not, and to me that's the
-most important.
+     git log --encoding=3Dutf-8 "--format=3Dformat:%b"
 
-I'd suggest something like this:
+can contain byte sequences that are invalid in UTF-8. Note: I am using=20
+git 2.1.4 and the %b format specifier represents the commit message bod=
+y.
 
-# terms_defined is 0 when the user did not define the terms explicitely
-# yet. This is the case when running 'git bisect start bad_rev good_rev'
-# before we see an explicit reference to a term.
-terms_defined=0
+I have seen this with the Linux git repository and the following test:
 
-Then PATCH 7/7 can add a mention of 'git bisect terms' just in the
-comment.
+     git log --encoding=3Dutf-8 "--format=3Dformat:%b" | python2 -c \
+         'import sys; [l.decode("utf-8") for l in sys.stdin]'
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Soon enough errors like this appears:
+
+     'utf8' codec can't decode byte 0xf6 in position 19
+
+The help message to the --encoding argument reads:
+
+> The commit objects record the encoding used for the log message in
+> their encoding header; this option can be used to tell the command to
+> re-code the commit log message in the encoding preferred by the user
+
+I realize that this message does not give any guarantee about the outpu=
+t=20
+of the command, in the sense that --encoding=3Dutf-8 produces valid UTF=
+-8=20
+data in all cases.
+
+However, I wonder what --encoding precisely does and if it has the=20
+behavior most users would expect.
+
+Let me describe what I think it currently does:
+
+The program attempts to re-code a log message, so it follows the chain
+
+	raw input -> unicode -> raw output
+
+=46or the first step, knowledge about the input encoding is required. T=
+his=20
+is retrieved from the encoding header of the commit object if present o=
+r=20
+(from the docs) "lack of this header implies that the commit log messag=
+e=20
+is encoded in UTF-8." If this step fails (if the entry contains a byte=20
+sequence that is invalid in the specified/assumed input codec), the=20
+procedure is aborted and the data is dumped as is (obviously without=20
+applying the requested output encoding).
+
+Is that correct?
+
+ From my point of view the most natural abstraction of a log *message*=20
+is *text*, not bytes. The same is true for author names. If I want to=20
+build a tool chain on top of log/show, this usually means that I want t=
+o=20
+work with text information. Hence, I want to retrieve text (a sequence=20
+of code points) from git show/log. Text must be transported in encoded=20
+form, sure, but it must not contain byte sequences that are invalid in=20
+this codec. Because otherwise it's just not text anymore.
+
+Hence, from my point of view, the rational that git show/log should be=20
+able to output *text* information means that they should not emit byte=20
+sequences that are invalid in the codec specified via the --encoding=20
+argument. In the current situation, the work of dealing with invalid=20
+byte sequences is just outsourced to software further below in the tool=
+=20
+chain (at some point a replacement character =EF=BF=BD should be displa=
+yed to=20
+the user instead of the invalid raw bytes).
+
+I am not entirely sure where this discussion should lead to. However, I=
+=20
+think that if the behavior of the software will not be changed, then th=
+e=20
+documentation for the --encoding option should be more precise and=20
+clarify what actually happens behind the scenes. What do you think?
+
+
+Cheers,
+
+
+Jan-Philip Gehrcke
