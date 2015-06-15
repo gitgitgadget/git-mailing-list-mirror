@@ -1,97 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 0/3] Raw gpg output support for verify-commit and verify-tag
-Date: Mon, 15 Jun 2015 10:22:36 +0200
-Message-ID: <557E8B4C.3030604@drmicha.warpmail.net>
-References: <1434307910-705555-1-git-send-email-sandals@crustytoothpaste.net> <xmqqd20ym1b0.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFCv5 3/3] git rebase -i: add static check for commands and SHA-1
+Date: Mon, 15 Jun 2015 10:25:44 +0200
+Message-ID: <vpqzj4174zb.fsf@anie.imag.fr>
+References: <1433931035-20011-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1433931035-20011-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<vpq8ubrtws0.fsf@anie.imag.fr>
+	<58099623.334723.1433951804504.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpqa8w71r80.fsf@anie.imag.fr>
+	<775816946.447663.1434237425837.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
-	=?ISO-8859-15?Q?Nguye=5E=7En_Th=E1i_Ngo=2Ec_Duy?= 
-	<pclouds@gmail.com>, Alex Zepeda <alex@inferiorhumanorgans.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Jun 15 10:22:49 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 15 10:26:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4PfK-0002oH-Oo
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 10:22:47 +0200
+	id 1Z4Pif-00047s-ML
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 10:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbbFOIWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 04:22:42 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:59596 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753467AbbFOIWk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2015 04:22:40 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 76AC620AAF
-	for <git@vger.kernel.org>; Mon, 15 Jun 2015 04:22:39 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 15 Jun 2015 04:22:39 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=5pOTOhhxec+VLy4rVJOm5h3Vzt4=; b=fPTUY+
-	xLsfD4ooE7QLAf3o/vRKvEb49XGIIjUgidCebLguiz4eQvkWuu3ZIyyQ+QLGPpA3
-	3scp5S+YMmE29dlOrXHqoQ1uURHzcKzeLztxf7W8WfqgDucE4bdh89BQLgJGGoGW
-	v5a1gWt+Z3V3k+vxa9Ur/d1Fl4Ubt78Zly9tk=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=5pOTOhhxec+VLy4
-	rVJOm5h3Vzt4=; b=KsesDCJjgVlsHk8NroyZ6uAEj+okRHMucc32z6/42CH4aXe
-	aGDnpYuXJBsgqZr2afNetnevrDdhA+UeefIsqwikGJ/f/oyUcBZx8mDkTEVrDv5P
-	86VfkM4myxg+i03mVRBNzvV+V4Pjs8rUaMC/xajLMJlouxJUq9m7kATzkrkI=
-X-Sasl-enc: Vrs+ICR2qUNsdIeMeqxTNOnYF2xln+tZp2YLStPybn8m 1434356559
-Received: from localhost.localdomain (unknown [130.75.173.51])
-	by mail.messagingengine.com (Postfix) with ESMTPA id BF3AE68007F;
-	Mon, 15 Jun 2015 04:22:37 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqqd20ym1b0.fsf@gitster.dls.corp.google.com>
+	id S1754150AbbFOI0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 04:26:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53704 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750885AbbFOI0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 04:26:03 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5F8Ph0H009281
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 15 Jun 2015 10:25:43 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5F8PiHU010273;
+	Mon, 15 Jun 2015 10:25:44 +0200
+In-Reply-To: <775816946.447663.1434237425837.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Remi Galan Alfonso's message of "Sun, 14 Jun 2015 01:17:05 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Jun 2015 10:25:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5F8Ph0H009281
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1434961547.61872@sTAJtNxXAxH1IfdJpZptMg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271661>
 
-Junio C Hamano venit, vidit, dixit 14.06.2015 23:23:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
->> Currently, verify-commit and verify-tag produce human-readable output.
->> This is great for humans, and awful for machines.  It also lacks a lot
->> of the information that GnuPG's --status-fd output provides.
->>
->> For example, if you wanted to know
->> * the hash algorithm;
->> * whether the signature was made with a subkey; or
->> * the OpenPGP signature version
->> none of that information is available in the human-readable output.
-> 
-> What this series wants to achieve makes a lot of sense to me.  One
-> comment I have after skimming the patfches is that I want the new
-> "raw" bit added not as a yet another parameter after "verbose", but
-> by turning the existing "verbose" into an "unsigned flag" flag word
-> (with "#define GPG_VERIFY_VERBOSE 01") and then defining use of a
-> new bit in the same flag word "#define GPG_VERIFY_RAW 01" or
-> something.  That way, over time other people add differnt things to
-> the interface, we would not have to end up with 47 different
-> parameters each of which signals a single bit.
-> 
-> Thanks.
+Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
 
-Back then the idea was to have verify-commit available *yesterday*
-(before any refactoring) since we needed a way to verify the new commit
-signatures programmatically.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+>> 
+>> > It is mainly because here the SHA-1 is a long one (40 chars)
+>> 
+>> OK, but then the minimum would be to add a comment saying that.
+>> 
+>> Now, this makes me wonder why you are doing the check after the sha1
+>> expansion and not before. Also, when running `git bisect --edit-todo`, I
+>> do get the short sha1. So, there's a piece of code doing what you want
+>> somewhere already. You may want to use it.
+>
+> Originally I did the whole checking after the expansion because I
+> though that it was a better idea to avoid doing it myself (Comparing
+> the whole SHA-1 instead of partial ones to find missing ones made more
+> sense for me since otherwise I would have to check if one is the
+> prefix of the other or expand to the same size before comparing).
 
-Maybe now would be a good time to do the refactoring between verify-tag
-and verify-commit that is still missing, and to add new features then
-(unless they are pressing matters or fixes).
+Checking the missing commits after expansion makes sense (but it is only
+a matter of adding "| git rev-list --no-walk --stdin" somewhere in the
+pipeline).
 
-BTW: verify-tag and verify-commit should treat untrusted good signatures
-in exactly the same way. Anything else is an error that needs to be fixed.
+But IMHO, checking the syntax errors is better done as early as possible
+if you want accurate error messages. This way you still have what the
+user typed available.
 
-Michael
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
