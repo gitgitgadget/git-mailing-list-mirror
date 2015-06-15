@@ -1,79 +1,168 @@
-From: Brian Vandenberg <phantall@gmail.com>
-Subject: Re: [PATCH] [RFC] Make git-update-ref invoke the update and
- post-update hooks
-Date: Mon, 15 Jun 2015 13:49:36 -0600
-Message-ID: <CAEJ-0i-BB=5W-Ah3nkeLFCe5-4XW4CvYaDgdqv1mMp4UGF81qw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Documentation on git-checkout --ours/--theirs improved
+Date: Mon, 15 Jun 2015 13:10:52 -0700
+Message-ID: <xmqq381s91gz.fsf@gitster.dls.corp.google.com>
+References: <xmqqwpzafe88.fsf@gitster.dls.corp.google.com>
+	<1434372447-51230-1-git-send-email-simon.eu@gmail.com>
+	<1434372447-51230-3-git-send-email-simon.eu@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 15 21:49:43 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Simon A. Eugster" <simon.eu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 22:11:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4aO6-0002Wc-Nl
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 21:49:43 +0200
+	id 1Z4aii-0001XN-KM
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 22:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756024AbbFOTtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 15:49:39 -0400
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:32781 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751948AbbFOTth (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 15:49:37 -0400
-Received: by yhpn97 with SMTP id n97so50306789yhp.0
-        for <git@vger.kernel.org>; Mon, 15 Jun 2015 12:49:37 -0700 (PDT)
+	id S1754005AbbFOUKz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2015 16:10:55 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:33070 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbbFOUKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 16:10:54 -0400
+Received: by igbos3 with SMTP id os3so28022744igb.0
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 13:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=0ZBGYnQsS6aYPFm/DbxO3+c6UUIaeWbfqk7VrX08/NI=;
-        b=jIvoPvY6EtXtMem6I4AVNh8EvFT2zBVzOK0rq0IwzA6yl4v1gB6FzXGI4RQY8cWBVv
-         pFSdWa50YKzfQHoadMr1hjacyYD0menDUPnu3ZUGxcJoKoHQ9Nu/gqRPo/YAJHChO1Zf
-         Lvho/6n9prh8wHiEiDOgEkEy+JpA98mCGNSwyG2pKCfHJI+xnI9rUoCTrRe5/ovrbzyX
-         0DmvRUMY68oCShyPpvvozSLYNdbp7V9UiF7dDueWF7j+9yLeVBNJQ3f6FEB5t8cIwUNX
-         nTN/YEJyVLPPif0muB+aJZTXN73f8Rt6yuRQredsXSQu+/XXwwXX4SW5BH6cGOGYQRnF
-         +Oog==
-X-Received: by 10.170.188.206 with SMTP id f197mr36130371yke.63.1434397776960;
- Mon, 15 Jun 2015 12:49:36 -0700 (PDT)
-Received: by 10.37.24.67 with HTTP; Mon, 15 Jun 2015 12:49:36 -0700 (PDT)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=EpgT1aGLYaKj8hTDynZwhw25Vucb8WONG07BNQVkIJY=;
+        b=b+YnvrkkbTnQzQoFv4XwITKMPY84/mHwuMtrOjJqPPAwj11Vgt7ONjGYJ0pkbjFTQW
+         RpCdpVTH4gH91kNAsiroHnWPbr7ELm4Z/IMP3Q6tryyuFv97vMYqtBtSXdxtGB41Ykeg
+         K8GCOYfpWZtsy8GRI177g4PmfyaMsy599OUDzgQGY1y5fKBj9rfSRSrikzcDabyb3QM4
+         X/JPjnCfTSRokzQkT4g34H+lFEqoHpQ0UCxgNAweSbMbinc6CrBSXnLbGrgp6EbmI20H
+         hW4fEMnD32tEs/VssfRlpML6o9SIEnwAz8MeF/xOTsuOC80FPC8jX19Chw9pbnWucpyI
+         Oh+g==
+X-Received: by 10.42.163.137 with SMTP id c9mr31633734icy.51.1434399053958;
+        Mon, 15 Jun 2015 13:10:53 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
+        by mx.google.com with ESMTPSA id o19sm8294711igs.18.2015.06.15.13.10.52
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jun 2015 13:10:53 -0700 (PDT)
+In-Reply-To: <1434372447-51230-3-git-send-email-simon.eu@gmail.com> (Simon
+	A. Eugster's message of "Mon, 15 Jun 2015 14:47:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271720>
 
-From: Junio C Hamano <junkio@cox.net>
-Date: 2006-10-08 15:00:32
-Petr Baudis <pasky@suse.cz> writes:
+"Simon A. Eugster" <simon.eu@gmail.com> writes:
 
->> Someone raised a concern that the update and post-update hooks are not
->> invoked at fetch time in the similar way as they are invoked at push
->> time, and the idea sort of makes sense. But this patch goes further - it
->> makes Git invoke those hooks each time a ref is updated in a repository
->> using the git-update-ref command, which I believe makes a lot of sense as
->> well - the behaviour is consistent with the current pushing behaviour
->> and you suddenly finally get a hook where you can properly notify even
->> about fast-forwards etc.
+> ---
 
->In principle I do not have problem with this approach per-se,
->but I wonder if we were to do this we might want to make
->receive-pack.c::update() and cmd_update_ref() call the same
->underlying function, and make that underlying function implement
->this "ask the hook if updating is ok" dance.  It might even make
->sense to have update-ref honor deny_non_fast_forwards for that
->matter (I am mildly doubtful of this last point, though).
+- Lack of explanation as to why this is a good thing.
+- Lack of sign-off.
 
-Was this rejected?
+Why is there still 1/2, if its effect is wholly annulled by a
+subsequent step 2/2?
 
-I'm tweaking the configuration on our master repo; among other things:
-I've enabled reflog and disabled altering history or deleting branches
-through receive-pack, instead requiring that someone make history
-alterations directly (using update-ref).
+>  Documentation/git-checkout.txt | 39 ++++++++++++++++++++++++++++++++=
++++----
+>  1 file changed, 35 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-check=
+out.txt
+> index 5c3ef86..ec0be28 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -116,10 +116,41 @@ entries; instead, unmerged entries are ignored.
+>  --theirs::
+>  	When checking out paths from the index, check out stage #2
+>  	('ours', HEAD) or #3 ('theirs', MERGE_HEAD) for unmerged paths.
+> -+
+> -After a `git pull --rebase`, for example, 'ours' points to the remot=
+e
+> -version and 'theirs' points to the local version. See linkgit:git-me=
+rge[1]
+> -for details about stages #2 and #3.
+> +	See linkgit:git-merge[1] for details about stages #2 and #3.
+> ++
+> +Note that during `git rebase` and `git pull --rebase`, 'theirs' chec=
+ks out
+> +the local version, and 'ours' the remote version or the history that=
+ is rebased
+> +against.
+> ++
+> +The reason ours/theirs appear to be swapped during a rebase is that =
+we
+> +define the remote history as the canonical history, on top of which =
+our
+> +private commits are applied on, as opposed to normal merging where t=
+he
+> +local history is the canonical one.
 
-update-ref can optionally accept a comment explaining why the history
-needed to be altered, but we would prefer to make it mandatory.  Hooks
-seem like a natural place to do that, but after running update-ref
-under strace/truss & looking through builtin/update-ref.c, it looks as
-though it doesn't make use of hooks.
+"We define" sounds a bit strange to me.
 
--Brian
+It is not "we" who define so.  Those who use "rebase" because they
+employ a shared central repository workflow are the ones that treat
+the history of their "remote repository" (which is their shared
+central repository) as the canonical one.
+
+
+	Note that during `git rebase` and `git pull --rebase`,
+	'ours' and 'theirs' may appear swapped; `--ours` gives the
+	version from the branch the changes are rebased onto, while
+	`--theirs` gives the version from the branch that holds your
+	work that is being rebased.
+
+	This is because `rebase` is used in a workflow that treats
+	the history at the remote as the shared canonical one, and
+	treat the work done on the branch you are rebasing as the
+	third-party work to be integrated, and while you are
+	rebasing, you are temporarily assuming the role of the
+	keeper of the canonical history.  As the keeper of the
+	canonical history, you would view the history from the
+	remote as `ours`, while what you did on your side branch as
+	`theirs`.
+
+
+
+> +During merging, we assume the role of the canonical history=E2=80=99=
+s keeper,
+> +which, in case of a rebase, is the remote history, and our private c=
+ommits
+> +look to the keeper as =E2=80=9Ctheir=E2=80=9D commits which need to =
+be integrated on top
+> +of =E2=80=9Cour=E2=80=9D work.
+> ++
+> +Normal merging:
+> +------------
+> +local ---------abC                  <-- canonical history
+> +                 | git checkout --ours
+> +                 v
+> +MERGE ---------abC
+> +                 ^
+> +                 | git checkout --theirs
+> +origin/master ---Xyz
+> +------------
+> +Rebasing:
+> +------------
+> +local -----------Abc
+> +                 | git checkout --theirs
+> +                 v
+> +REBASE --------xyZ
+> +                 ^
+> +                 | git checkout --ours
+> +origin/master -xyZ                    <-- canonical history
+> +------------
+
+I can see that an arrow with "canonical history" points at different
+things between the two pictures, but other than that, I am not sure
+what these are trying to illustrate.  Especially between abc and
+xyz, why does the former choose abc while the latter choooses xyz?
+Are these pictures meant to show what happens when the user says
+"checkout --ours" during a conflicted integration (whether it is a
+merge or a rebase)?
+
+Thanks.
+
+> =20
+>  -b <new_branch>::
+>  	Create a new branch named <new_branch> and start it at
