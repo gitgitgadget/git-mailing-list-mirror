@@ -1,147 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] Revert "stash: require a clean index to apply"
-Date: Mon, 15 Jun 2015 14:27:22 -0400
-Message-ID: <20150615182721.GA4041@peff.net>
-References: <5570F094.10007@quantopian.com>
- <20150607124001.GA11042@peff.net>
- <CADQvvWWpjZoXt7=8yAEt110pBTNtBfg7XfPOTbJRfPUH=J3OKw@mail.gmail.com>
- <20150610185635.GA22800@peff.net>
- <xmqq616vl6gm.fsf@gitster.dls.corp.google.com>
- <20150610192734.GA23715@peff.net>
- <xmqqsi9samx1.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 05/12] delete_refs(): improve error message
+Date: Mon, 15 Jun 2015 11:29:00 -0700
+Message-ID: <xmqq7fr4akr7.fsf@gitster.dls.corp.google.com>
+References: <cover.1434206062.git.mhagger@alum.mit.edu>
+	<64949bba1031b19abf86629267b8bc40666a4631.1434206062.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?Q?b=C3=A4r?= <crashcookie@gmail.com>,
-	Jonathan Kamens <jkamens@quantopian.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 20:27:31 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 15 20:29:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4Z6Y-0001Ii-SE
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:27:31 +0200
+	id 1Z4Z89-0002QC-6y
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jun 2015 20:29:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895AbbFOS10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 14:27:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46327 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754315AbbFOS1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 14:27:24 -0400
-Received: (qmail 1135 invoked by uid 102); 15 Jun 2015 18:27:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 13:27:24 -0500
-Received: (qmail 5855 invoked by uid 107); 15 Jun 2015 18:27:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Jun 2015 14:27:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jun 2015 14:27:22 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqsi9samx1.fsf@gitster.dls.corp.google.com>
+	id S1754557AbbFOS3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 14:29:05 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:38861 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754171AbbFOS3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2015 14:29:03 -0400
+Received: by igblz2 with SMTP id lz2so56900816igb.1
+        for <git@vger.kernel.org>; Mon, 15 Jun 2015 11:29:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=UuehloRqYSYG0alW3KtVTohCxRgukq2MPn2jCW2HyCU=;
+        b=yW2csLp+odO3Sg5s+BwHrfU6QqNkiRXMGUwC61XmxJQXKoGYn5pB/J+D9+Uo7EK8Pj
+         xQDApfJTOlNnUStHxhpj4bHQYYwlDd2f1Kfm3fmsKy3MIDp7s9+eln2/X/RAI0N1Ywo7
+         fZAkJB/xSUbzMZu9HrwLrjqX/PBvBAZeXev6giuF1yqYA0wntz/CK7FI5c2QAcv2uvGq
+         mSlQ7iz0HONxYHRfiHkZV4tRUcILJ4fhCUsQeV82plub0iETPUh24tuxoaUH4wK7zwIq
+         hM6RQx3pVtnacarO45TqGblNxOVqIatC9WPKGVh2yiOW0z7AW9l6rarUFt1fz2FBSx9q
+         exHw==
+X-Received: by 10.107.152.14 with SMTP id a14mr35013565ioe.92.1434392942244;
+        Mon, 15 Jun 2015 11:29:02 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
+        by mx.google.com with ESMTPSA id f15sm9377016iof.36.2015.06.15.11.29.01
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jun 2015 11:29:01 -0700 (PDT)
+In-Reply-To: <64949bba1031b19abf86629267b8bc40666a4631.1434206062.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Sat, 13 Jun 2015 16:42:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271700>
 
-On Mon, Jun 15, 2015 at 10:42:18AM -0700, Junio C Hamano wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> > I dunno. With respect to the original patch, I am OK if we just want to
-> > revert it. This area of stash seems a bit under-designed IMHO, but if
-> > people were happy enough with it before, I do not think the safety
-> > benefit from ed178ef is that great (it is not saving you from destroying
-> > working tree content, only the index state; the individual content blobs
-> > are still available from git-fsck).
-> 
-> Yeah, I agree.   Somebody care to do the log message?
+> Subject: Re: [PATCH v2 05/12] delete_refs(): improve error message
 
-Patch is below. It's a straight revert. The other option would be to
-allow it with "--force", and teach people to use that. I'm not sure it's
-worth the effort.
+I'd call this "make error message more generic".
 
-> This is a tangent, but I'd actually not just agree with "'stash -k'
-> is a bit under-designed" but also would say something stronger than
-> that, IMHO ;-)
+> Change the error message from
+>
+>     Could not remove branch %s
+>
+> to
+>
+>     could not remove reference %s
+>
+> * s/branch/reference/. This change makes sense even for the existing
+>   caller, which uses the function to delete remote-tracking
+>   branches.
 
-Yeah, I agree with everything you said here. :)
+and replace this bullet with something like:
 
--- >8 --
-Subject: Revert "stash: require a clean index to apply"
+* Originally 'branch -d' was the only caller of this, but as part
+  of the refs API, we will allow it to be called on refs that is not
+  a branch or a remote-tracking branch.
 
-This reverts commit ed178ef13a26136d86ff4e33bb7b1afb5033f908.
+as calling a remote-tracking branch a 'branch' is not incorrect
+per-se.  What would count as true improvement is ...
 
-That commit was an attempt to improve the safety of applying
-a stash, because the application process may create
-conflicted index entries, after which it is hard to restore
-the original index state.
+> * Convert it to lower case, as per our usual convention.
 
-Unfortunately, this hurts some common workflows around "git
-stash -k", like:
+... this one.  If somebody eventually chooses to make the message
+finer grained by switching on the prefix refs/{what}, so that the
+user can differentiate between branches, remote-tracking branches,
+tags, etc., that would also count as improvement as well.
 
-    git add -p       ;# (1) stage set of proposed changes
-    git stash -k     ;# (2) get rid of everything else
-    make test        ;# (3) make sure proposal is reasonable
-    git stash apply  ;# (4) restore original working tree
-
-If you "git commit" between steps (3) and (4), then this
-just works. However, if these steps are part of a pre-commit
-hook, you don't have that opportunity (you have to restore
-the original state regardless of whether the tests passed or
-failed).
-
-It's possible that we could provide better tools for this
-sort of workflow. In particular, even before ed178ef, it
-could fail with a conflict if there were conflicting hunks
-in the working tree and index (since the "stash -k" puts the
-index version into the working tree, and we then attempt to
-apply the differences between HEAD and the old working tree
-on top of that). But the fact remains that people have been
-using it happily for a while, and the safety provided by
-ed178ef is simply not that great. Let's revert it for now.
-In the long run, people can work on improving stash for this
-sort of workflow, but the safety tradeoff is not worth it in
-the meantime.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is directly on jk/stash-require-clean-index, but it should merge
-fine up to master.
-
- git-stash.sh     | 2 --
- t/t3903-stash.sh | 7 -------
- 2 files changed, 9 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index cc28368..d4cf818 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -442,8 +442,6 @@ apply_stash () {
- 	assert_stash_like "$@"
- 
- 	git update-index -q --refresh || die "$(gettext "unable to refresh index")"
--	git diff-index --cached --quiet --ignore-submodules HEAD -- ||
--		die "$(gettext "Cannot apply stash: Your index contains uncommitted changes.")"
- 
- 	# current index state
- 	c_tree=$(git write-tree) ||
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 0746eee..f179c93 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -45,13 +45,6 @@ test_expect_success 'applying bogus stash does nothing' '
- 	test_cmp expect file
- '
- 
--test_expect_success 'apply requires a clean index' '
--	test_when_finished "git reset --hard" &&
--	echo changed >other-file &&
--	git add other-file &&
--	test_must_fail git stash apply
--'
--
- test_expect_success 'apply does not need clean working directory' '
- 	echo 4 >other-file &&
- 	git stash apply &&
--- 
-2.4.3.699.g84b4da7
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 6f62bd1..5386077 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2831,7 +2831,7 @@ int delete_refs(struct string_list *refnames)
+>  		const char *refname = refnames->items[i].string;
+>  
+>  		if (delete_ref(refname, NULL, 0))
+> -			result |= error(_("Could not remove branch %s"), refname);
+> +			result |= error(_("could not remove reference %s"), refname);
+>  	}
+>  
+>  	return result;
