@@ -1,85 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 03/10] Convert struct ref to use object_id.
-Date: Mon, 15 Jun 2015 15:13:57 -0700
-Message-ID: <xmqq4mm87h7e.fsf@gitster.dls.corp.google.com>
-References: <1434233803-422442-1-git-send-email-sandals@crustytoothpaste.net>
-	<1434233803-422442-4-git-send-email-sandals@crustytoothpaste.net>
+From: Eric Raible <raible@nextest.com>
+Subject: Visualizing merge conflicts after the fact (using kdiff3)
+Date: Mon, 15 Jun 2015 18:17:17 -0700
+Message-ID: <557F791D.3080003@nextest.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Jun 16 00:14:19 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 16 03:22:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4ce3-0001b5-2r
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 00:14:19 +0200
+	id 1Z4faP-0006Hh-KA
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 03:22:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756048AbbFOWOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2015 18:14:14 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:38146 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755993AbbFOWN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2015 18:13:59 -0400
-Received: by igblz2 with SMTP id lz2so1632752igb.1
-        for <git@vger.kernel.org>; Mon, 15 Jun 2015 15:13:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=jDntLu8V1OEabYvqlMirYozUBwcQYZW2j9o8E1DQ0WM=;
-        b=PKivZ1zA677pusD0ovWXTKtE7ii93JvlvM00WJfmJjqPoHMrA+QXB1gKjssaPB9TdK
-         Ol6SI5YzW/qtFqX5fHFKpsf71uHR7WDJh0EphuUqWNvlV5yedEb/1W0QybnTcerSeAQ/
-         22BTuXVcDyB09Z/59fijOvSppjT1d5YGTqKhnfjjfy9sD5+Xwrr8LXt1RlGACvT2cwJV
-         HHLk3maXHQAsKMAgASaFazf4VuD1An1Oln2MOdrQoMyjQdhCsqyRIcAsYgQbgz2aG8Xa
-         Lgvy4Iz84F1+E26MIa8FLIa34ETdvPbXupe0FXr1mt9DVxfRugzGbJc4JVdY8BErNymi
-         piFw==
-X-Received: by 10.107.10.151 with SMTP id 23mr467144iok.89.1434406438753;
-        Mon, 15 Jun 2015 15:13:58 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:16f:c4ab:c37f:75f8])
-        by mx.google.com with ESMTPSA id i7sm8511358igt.18.2015.06.15.15.13.57
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Jun 2015 15:13:58 -0700 (PDT)
-In-Reply-To: <1434233803-422442-4-git-send-email-sandals@crustytoothpaste.net>
-	(brian m. carlson's message of "Sat, 13 Jun 2015 22:16:36 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754967AbbFPBWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2015 21:22:36 -0400
+Received: from exchange.domain1.nextest.com ([12.96.234.114]:48971 "EHLO
+	Hermes.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752479AbbFPBWf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2015 21:22:35 -0400
+X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jun 2015 21:22:35 EDT
+Received: from [131.101.149.78] (131.101.149.78) by HERMES.DOMAIN1.nextest.com
+ (131.101.21.61) with Microsoft SMTP Server id 8.3.327.1; Mon, 15 Jun 2015
+ 18:17:17 -0700
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271738>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+I'm running 1.9.5.msysgit.1, but this is a general git question...
 
-> Use struct object_id in three fields in struct ref and convert all the
-> necessary places that use it.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/clone.c        | 16 +++++++-------
->  builtin/fetch-pack.c   |  4 ++--
->  builtin/fetch.c        | 50 +++++++++++++++++++++----------------------
->  builtin/ls-remote.c    |  2 +-
->  builtin/receive-pack.c |  2 +-
->  builtin/remote.c       | 12 +++++------
->  connect.c              |  2 +-
->  fetch-pack.c           | 18 ++++++++--------
->  http-push.c            | 46 +++++++++++++++++++--------------------
->  http.c                 |  2 +-
->  remote-curl.c          | 10 ++++-----
->  remote.c               | 58 +++++++++++++++++++++++++-------------------------
->  remote.h               |  6 +++---
->  send-pack.c            | 16 +++++++-------
->  transport-helper.c     | 18 ++++++++--------
->  transport.c            | 32 ++++++++++++++--------------
->  transport.h            |  8 +++----
->  walker.c               |  2 +-
->  18 files changed, 152 insertions(+), 152 deletions(-)
+Upon returning from a vacation, I was looking at what people had been
+up to, and discovered on merge in which a colleague had resolved a merge
+incorrectly.  It turns out that he has pushed *many* merges over the past
+year which had conflicts in my code, and now I don't trust any of them.
 
-Whew.  This was a big patch.
+So naturally I want to check each of them for correctness.
 
-I've eyeballed it and did not find anything questionable.  Thanks.
+I know about "git log -p -cc SHA -- path", but it really doesn't
+show just the conflicts so there's just too much noise in that output.
+
+I use kdiff3 to resolve conflicts, so I'm looking for a way to
+visualize these already-resolved conflicts with that tool.
+As I said, there are many merges, so the prospect of checking
+out each sha, doing the merge, and then comparing the results
+is completely untenable.
+
+Can anyone help?  Surely other people have wanted to review how
+conflicts were resolved w/out looking at the noise of unconflicted
+changes, right?
+
+Thanks - Eric (raible at gmail )
