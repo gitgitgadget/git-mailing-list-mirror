@@ -1,60 +1,66 @@
-From: Albert Netymk <albertnetymk@gmail.com>
-Subject: git-describe manual page's one sentence summary is misleading
-Date: Tue, 16 Jun 2015 12:45:35 +0200
-Message-ID: <CAKEGsXTY_rstoK4Gcga6XqkqKCeOkXdL-TjAWUu0Cqi6mWW7bA@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v5 1/4] implement submodule config API for lookup of
+ .gitmodules values
+Date: Tue, 16 Jun 2015 12:54:03 +0200
+Message-ID: <20150616105403.GA8519@book.hvoigt.net>
+References: <cover.1434400625.git.hvoigt@hvoigt.net>
+ <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 12:46:11 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 12:54:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4oNb-0007Kz-VF
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 12:46:08 +0200
+	id 1Z4oVb-0005ge-Ni
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 12:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315AbbFPKp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 06:45:59 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:36058 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752563AbbFPKp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 06:45:57 -0400
-Received: by obctg8 with SMTP id tg8so8504205obc.3
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 03:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=+j7M/vPl0kSO+OjcGNZOiAxihM5TwwzUWNd4lribkpM=;
-        b=NJmD4Uc9WAsPzcm4BzjjgpUIiEIfIZhXeQWjyVh8ofx/Yh/Ny3m9OLVg5xBnSAiYC5
-         kGtooEYksteEDRrUSPVv1Vm7z8mjf4QuhK7yXH38iOe0wJhXqPUPRP3UYgFB9Kp2Mmk6
-         bF+OLXbD46LEoBC624S8gab0PMuua09wDuGoHg6+QtEnZdPG5Ga0ikm2EDeOYiMCEekw
-         C45j/dBqWB17gX1fVE+4nzbKrj4I0VYGDH1vmiCE8Q0gCWDLpNBHB9NqO3X6d++7FeH0
-         wNFIOjWkt3JOmR/RRY4DcBTTlyuS0zVViAroEKNlOIrsdzcWsMFEWr9No32C0Wk/KzvY
-         CebA==
-X-Received: by 10.202.177.68 with SMTP id a65mr26662558oif.64.1434451555972;
- Tue, 16 Jun 2015 03:45:55 -0700 (PDT)
-Received: by 10.202.174.5 with HTTP; Tue, 16 Jun 2015 03:45:35 -0700 (PDT)
+	id S1756432AbbFPKyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 06:54:15 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:50089 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756207AbbFPKyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 06:54:13 -0400
+Received: from [188.108.151.195] (helo=book.hvoigt.net)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Z4oVN-0004W6-6H; Tue, 16 Jun 2015 12:54:09 +0200
+Content-Disposition: inline
+In-Reply-To: <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271748>
 
-According to the man of git-describe, http://git-scm.com/docs/git-describe
+On Mon, Jun 15, 2015 at 11:06:11PM +0200, Heiko Voigt wrote:
+> In a superproject some commands need to interact with submodules. They
+> need to query values from the .gitmodules file either from the worktree
+> of from certain revisions. At the moment this is quite hard since a
+> caller would need to read the .gitmodules file from the history and then
+> parse the values. We want to provide an API for this so we have one
+> place to get values from .gitmodules from any revision (including the
+> worktree).
 
-git-describe - Show the most recent tag that is reachable from a commit
+I just realized that we are talking too much about .gitmodules here, where
+it probably should be "submodule configuration values". For revisions we
+only read from .gitmodules files but for the worktree we actually
+overlay those with local configurations from .git/config and friends. Not sure
+how we can name this though. "submodule configuration values" is kind of
+long compared to .gitmodules.
 
-It means that this command shows the name of the most recent tag.
+Does anyone have a better name? Or is it maybe to confusing, to abstract
+it too much and we should just keep it .gitmodules, since everyone knows
+that those values can be overridden by local configuration?
 
-However, actually, it construct a new tag name if the current commit
-is not tagged.
-
-I think, "git-describe - Describe a commit using the most recent tag
-reachable from it" is a better summary.
-
--- 
-Best Regards
-
-Yours faithfully
-Albert Netymk
+Cheers Heiko
