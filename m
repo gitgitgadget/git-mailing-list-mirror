@@ -1,106 +1,264 @@
-From: Augie Fackler <augie@google.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 3/3] pkt-line: support tracing verbatim pack contents
-Date: Tue, 16 Jun 2015 13:23:31 -0400
-Message-ID: <CAHcr6Hbajyx5RV10rv2PWEa9ZyzyxA7jCx=auKxpnv3xjSjq7Q@mail.gmail.com>
+Date: Tue, 16 Jun 2015 13:23:20 -0400
+Message-ID: <20150616172320.GE18667@peff.net>
 References: <20150612212526.GA25447@peff.net>
-	<20150612212827.GC25757@peff.net>
-	<CAHcr6HYvVR4uTmtegWHK0h+v_aVs4JVLsSwvjthGY3pb=-Q0yQ@mail.gmail.com>
-	<20150616171005.GB18667@peff.net>
-	<CAHcr6HYA=gpMTaJ5WOOmtEp+J4wBMz9D59fbByzsdBkPRf4CZQ@mail.gmail.com>
-	<20150616171849.GD18667@peff.net>
+ <20150612212827.GC25757@peff.net>
+ <CAHcr6HYvVR4uTmtegWHK0h+v_aVs4JVLsSwvjthGY3pb=-Q0yQ@mail.gmail.com>
+ <xmqqvben6214.fsf@gitster.dls.corp.google.com>
+ <20150616164310.GA18667@peff.net>
+ <CAHcr6HbKfE=B502t9hJt601-mco+PK9s4uViFW3AkHABubiF0w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 16 19:23:41 2015
+To: Augie Fackler <augie@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 19:23:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4uaI-0006TC-Lr
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 19:23:39 +0200
+	id 1Z4ua8-0006M7-Pv
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 19:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754883AbbFPRXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 13:23:35 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:35761 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750927AbbFPRXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 13:23:33 -0400
-Received: by wiga1 with SMTP id a1so115439563wig.0
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 10:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ke0okD0kmWf/6od8yfiXDomttig1NXmBSKEe9IH1g74=;
-        b=ixQcdOmSWP3f8DxXX49XsPnHmNvt4K3AN0a6lqoJYj+8TjBZtuldTV6E8VWsxt2cub
-         Lms4xj4VUZa0Wu++yCMcHVI++01T17MJD6ouHUzHAonp9jm4/iq9lczKDPw5D+/O4kwv
-         oFClDhIzTviFzJP7IxZwFRHxA5izXAbZG5sLFlcaAzVt3DrcsBckwWqt7SwOgLTWA8Jh
-         i3ColWfNf+HWgD97z1fR4UgsMLRczudStRbMVG2f9tBWtXBLnZH2I3WL3EGCpafWqCqR
-         PJB1agvy5jy/BH7cHH1O5WGQIUNZfD9wg6D63gZgbktdkgQus2GTe1EBjLdV71OEYFrB
-         n0LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ke0okD0kmWf/6od8yfiXDomttig1NXmBSKEe9IH1g74=;
-        b=Z5PUkNkZSpxKvvviVaAgqt0SWw9P1m+hdRhuncY0Ew8kfSqf6WMWPq3u6gWObz6jz3
-         sKL8jTsuEWkIq7pGZrOA9ix6j13YjleMxYWrrCYJp8prXkrBGK28teJYqPebKaNzINdd
-         3l3yFPGCpfz3IOkKP+BIEZOLBY/SRFJRsfNvPE75wa298Hcu4WHJV9HtPQcupMvUBDsi
-         H/feBtUuvxMBZKp11Li48sJZRd5LzbznFX0zEDNXVz4ahzwtaE3kpvfWb1GYsU8q5nn5
-         0qggWAEbq2fbu1VmACLU1VmAWvYbTg3Y/WfUCRWD67Kn/imp4GpOT+9w851R2m1e8qcV
-         yi/Q==
-X-Gm-Message-State: ALoCoQnryCKHmUHqOS6N6sUcerTA8Ao3PDjbhmU3fpUy88YsgDEV/yGd+IUU7f94UAVvvVKJRvWz
-X-Received: by 10.180.86.198 with SMTP id r6mr45909085wiz.70.1434475411987;
- Tue, 16 Jun 2015 10:23:31 -0700 (PDT)
-Received: by 10.28.146.143 with HTTP; Tue, 16 Jun 2015 10:23:31 -0700 (PDT)
-In-Reply-To: <20150616171849.GD18667@peff.net>
+	id S1756581AbbFPRXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 13:23:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46903 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752176AbbFPRXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 13:23:23 -0400
+Received: (qmail 14709 invoked by uid 102); 16 Jun 2015 17:23:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 12:23:22 -0500
+Received: (qmail 16922 invoked by uid 107); 16 Jun 2015 17:23:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 13:23:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2015 13:23:20 -0400
+Content-Disposition: inline
+In-Reply-To: <CAHcr6HbKfE=B502t9hJt601-mco+PK9s4uViFW3AkHABubiF0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271784>
 
-On Tue, Jun 16, 2015 at 1:18 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 16, 2015 at 01:14:03PM -0400, Augie Fackler wrote:
->
->> Yeah, not having it for the push side is a slight bummer, but in
->> general I haven't had problems debugging git clients pushing bogus
->> data in the same way that I've had problems with weirdness in new
->> server features.
->
-> Being in charge of a large git server farm, I think I have the opposite
-> problem. :)
+On Tue, Jun 16, 2015 at 12:52:46PM -0400, Augie Fackler wrote:
 
-I've got plenty of servers too, but we haven't typically seen
-push-time problems. Maybe we're lucky, and now that I've said
-something and tempted Murphy I'll suffer torment. :)
+> Yeah, I don't have one - I may have been making assumptions because I
+> knew something of the background on your implementation. i'd say let
+> it live and if people provide feedback later figure out a reword
+> (writing for humans is not a strong suit of mine, alas.)
 
->
->> > Here's a rough cut at the "trace stdin" idea I mentioned earlier (which
->> > is essentially an internal "tee"). You can collect the incoming pack
->> > like:
->>
->> Neat, but not sure I like the extra overhead of having to grab the
->> full trace and then reconstruct some arguments to be able to diagnose
->> the pack. Having the verbatim pack just land on disk is really handy,
->> because then any existing tools one has cooked up (my team has a few
->> weird one-off ones by now) just work without extra fussing or looking
->> up steps to reconstruct the whole file.
->
-> I guess there is really room for both. Just because you _can_ accomplish
-> the same thing with both does not mean we cannot have two ways to do it
-> (an easy way, and a harder, more flexible way).
+OK, let's leave it as-is, then.
 
-*nod* that might make the most sense - given that we both seem to have
-use cases in mind for verbatim packs on pulls, that seems like a good
-thing to have easy to deploy.
+> +1 on TRACE_PACKFILE - also makes it harder to accidentally leave off
+> the ET and get binary spew when one didn't expect that.
 
-(It still seems to me more likely to write custom servers than
-clients, but then again custom VCS servers has been my life for a
-while, so I likely have a weird perspective on things.)
+Here's a re-roll of 3/3, using TRACE_PACKFILE. I think the documentation
+is enough to allay my other concern (that the name does not imply it is
+about the network protocol).
 
->
-> -Peff
+-- >8 --
+Subject: pkt-line: support tracing verbatim pack contents
+
+When debugging the pack protocol, it is sometimes useful to
+store the verbatim pack that we sent or received on the
+wire. Looking at the on-disk result is often not helpful for
+a few reasons:
+
+  1. If the operation is a clone, we destroy the repo on
+     failure, leaving nothing on disk.
+
+  2. If the pack is small, we unpack it immediately, and the
+     full pack never hits the disk.
+
+  3. If we feed the pack to "index-pack --fix-thin", the
+     resulting pack has the extra delta bases added to it.
+
+We already have a GIT_TRACE_PACKET mechanism for tracing
+packets. Let's extend it with GIT_TRACE_PACKFILE to dump the
+verbatim packfile.
+
+There are a few other positive fallouts that come from
+rearranging this code:
+
+ - We currently disable the packet trace after seeing the
+   PACK header, even though we may get human-readable lines
+   on other sidebands; now we include them in the trace.
+
+ - We currently try to print "PACK ..." in the trace to
+   indicate that the packfile has started. But because we
+   disable packet tracing, we never printed this line. We
+   will now do so.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git.txt | 13 +++++++++++-
+ pkt-line.c            | 59 ++++++++++++++++++++++++++++++++++++++-------------
+ t/t5601-clone.sh      |  7 ++++++
+ trace.c               |  7 ++++++
+ trace.h               |  1 +
+ 5 files changed, 71 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 45b64a7..3453669 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -1000,9 +1000,20 @@ Unsetting the variable, or setting it to empty, "0" or
+ 	Enables trace messages for all packets coming in or out of a
+ 	given program. This can help with debugging object negotiation
+ 	or other protocol issues. Tracing is turned off at a packet
+-	starting with "PACK".
++	starting with "PACK" (but see 'GIT_TRACE_PACKFILE' below).
+ 	See 'GIT_TRACE' for available trace output options.
+ 
++'GIT_TRACE_PACKFILE'::
++	Enables tracing of packfiles sent or received by a
++	given program. Unlike other trace output, this trace is
++	verbatim: no headers, and no quoting of binary data. You almost
++	certainly want to direct into a file (e.g.,
++	`GIT_TRACE_PACKFILE=/tmp/my.pack`) rather than displaying it on
++	the terminal or mixing it with other trace output.
+++
++Note that this is currently only implemented for the client side
++of clones and fetches.
++
+ 'GIT_TRACE_PERFORMANCE'::
+ 	Enables performance related trace messages, e.g. total execution
+ 	time of each Git command.
+diff --git a/pkt-line.c b/pkt-line.c
+index e75af02..08a1427 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -4,16 +4,51 @@
+ char packet_buffer[LARGE_PACKET_MAX];
+ static const char *packet_trace_prefix = "git";
+ static struct trace_key trace_packet = TRACE_KEY_INIT(PACKET);
++static struct trace_key trace_pack = TRACE_KEY_INIT(PACKFILE);
+ 
+ void packet_trace_identity(const char *prog)
+ {
+ 	packet_trace_prefix = xstrdup(prog);
+ }
+ 
++static int packet_trace_pack(const char *buf, unsigned int len, int sideband)
++{
++	if (!sideband) {
++		trace_verbatim(&trace_pack, buf, len);
++		return 1;
++	} else if (len && *buf == '\1') {
++		trace_verbatim(&trace_pack, buf + 1, len - 1);
++		return 1;
++	} else {
++		/* it's another non-pack sideband */
++		return 0;
++	}
++}
++
+ static void packet_trace(const char *buf, unsigned int len, int write)
+ {
+ 	int i;
+ 	struct strbuf out;
++	static int in_pack, sideband;
++
++	if (!trace_want(&trace_packet) && !trace_want(&trace_pack))
++		return;
++
++	if (in_pack) {
++		if (packet_trace_pack(buf, len, sideband))
++			return;
++	} else if (starts_with(buf, "PACK") || starts_with(buf, "\1PACK")) {
++		in_pack = 1;
++		sideband = *buf == '\1';
++		packet_trace_pack(buf, len, sideband);
++
++		/*
++		 * Make a note in the human-readable trace that the pack data
++		 * started.
++		 */
++		buf = "PACK ...";
++		len = strlen(buf);
++	}
+ 
+ 	if (!trace_want(&trace_packet))
+ 		return;
+@@ -24,21 +59,15 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+ 	strbuf_addf(&out, "packet: %12s%c ",
+ 		    packet_trace_prefix, write ? '>' : '<');
+ 
+-	if (starts_with(buf, "PACK") || starts_with(buf, "\1PACK")) {
+-		strbuf_addstr(&out, "PACK ...");
+-		trace_disable(&trace_packet);
+-	}
+-	else {
+-		/* XXX we should really handle printable utf8 */
+-		for (i = 0; i < len; i++) {
+-			/* suppress newlines */
+-			if (buf[i] == '\n')
+-				continue;
+-			if (buf[i] >= 0x20 && buf[i] <= 0x7e)
+-				strbuf_addch(&out, buf[i]);
+-			else
+-				strbuf_addf(&out, "\\%o", buf[i]);
+-		}
++	/* XXX we should really handle printable utf8 */
++	for (i = 0; i < len; i++) {
++		/* suppress newlines */
++		if (buf[i] == '\n')
++			continue;
++		if (buf[i] >= 0x20 && buf[i] <= 0x7e)
++			strbuf_addch(&out, buf[i]);
++		else
++			strbuf_addf(&out, "\\%o", buf[i]);
+ 	}
+ 
+ 	strbuf_addch(&out, '\n');
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index bfdaf75..9b34f3c 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -496,4 +496,11 @@ test_expect_success 'shallow clone locally' '
+ 	( cd ddsstt && git fsck )
+ '
+ 
++test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
++	rm -rf dst.git &&
++	GIT_TRACE_PACKFILE=$PWD/tmp.pack git clone --no-local --bare src dst.git &&
++	git init --bare replay.git &&
++	git -C replay.git index-pack -v --stdin <tmp.pack
++'
++
+ test_done
+diff --git a/trace.c b/trace.c
+index 3c3bd8f..7393926 100644
+--- a/trace.c
++++ b/trace.c
+@@ -120,6 +120,13 @@ static int prepare_trace_line(const char *file, int line,
+ 	return 1;
+ }
+ 
++void trace_verbatim(struct trace_key *key, const void *buf, unsigned len)
++{
++	if (!trace_want(key))
++		return;
++	write_or_whine_pipe(get_trace_fd(key), buf, len, err_msg);
++}
++
+ static void print_trace_line(struct trace_key *key, struct strbuf *buf)
+ {
+ 	strbuf_complete_line(buf);
+diff --git a/trace.h b/trace.h
+index ae6a332..179b249 100644
+--- a/trace.h
++++ b/trace.h
+@@ -18,6 +18,7 @@ extern int trace_want(struct trace_key *key);
+ extern void trace_disable(struct trace_key *key);
+ extern uint64_t getnanotime(void);
+ extern void trace_command_performance(const char **argv);
++extern void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
+ 
+ #ifndef HAVE_VARIADIC_MACROS
+ 
+-- 
+2.4.3.699.g84b4da7
