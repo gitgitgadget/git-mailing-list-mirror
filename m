@@ -1,73 +1,80 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: rebase -i might leave =?UTF-8?Q?CHERRY=5FPICK=5FHEAD=20behind?=
-Date: Tue, 16 Jun 2015 16:56:43 +0200
-Organization: gmx
-Message-ID: <a1b485b913b374a1cf7f1bcd1e77532f@www.dscho.org>
-References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 01/11] t6301: for-each-ref tests for ref-filter APIs
+Date: Tue, 16 Jun 2015 17:21:51 +0200
+Message-ID: <vpqmvzz8yr4.fsf@anie.imag.fr>
+References: <CAOLa=ZQeZ=6mZcntR_BS_Wp0LXDzSUx9WTLXCTLxemb0e3SS0w@mail.gmail.com>
+	<1434464457-10749-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jun 16 16:57:00 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 17:22:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4sIK-00009O-4F
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 16:56:56 +0200
+	id 1Z4sgc-0005ph-UI
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 17:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745AbbFPO4w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2015 10:56:52 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54757 "EHLO mout.gmx.net"
+	id S1756019AbbFPPV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 11:21:58 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57363 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756723AbbFPO4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 10:56:47 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MAPoQ-1ZGNny0pDu-00BbFT; Tue, 16 Jun 2015 16:56:44
- +0200
-In-Reply-To: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:ripc4zLOT+YXPpP5MQl4m/+tQBjKkjvMU0UsSpKkOYWz1SulK4S
- C9KtTWaTOxabYk0xoRDkgff96g6Atk2D/nGNqK1lwzqXYbB6ZyXc8L4M0xq27izDNn0YGQC
- CpLSFmsrhXMLOEbjfA0ihN9upzzDuhnTsDP/S8dNrSa2Jxuq1KmTRODVRA29YW4ZWfDv3yo
- Kpfp9FlHwY1fjSgtFpzEQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754654AbbFPPV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 11:21:57 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5GFLn2j021057
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 16 Jun 2015 17:21:49 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5GFLpPi016463;
+	Tue, 16 Jun 2015 17:21:51 +0200
+In-Reply-To: <1434464457-10749-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Tue, 16 Jun 2015 19:50:47 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Jun 2015 17:21:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5GFLn2j021057
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435072911.48888@+5t9oGfddcsjz6f9JkeaZA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271768>
 
-Hi,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-On 2015-06-16 14:06, SZEDER G=C3=A1bor wrote:
+> Add tests for 'for-each-ref' which utilizes the ref-filter APIs.
+> Currently it's redundant with the tests in 't6300' but more tests
+> will be eventually added as we implement more options into
+> 'for-each-ref'.
 
-> When skipping an empty commit with 'git rebase --continue' a
-> CHERRY_PICK_HEAD file might be left behind.
+Actually, I'm not convinced that the actual tests have a real value
+(since as you say, it's redundant with t6300). Perhaps we can limit this
+commit to the setup.
 
-Yeah, I noticed that, too... it even survives the cleanup of the finish=
-ed rebase under certain circumstances.
+> +++ b/t/t6301-for-each-ref-filter.sh
+> @@ -0,0 +1,36 @@
+> +#!/bin/sh
+> +
+> +test_description='test for-each-refs usage of ref-filter APIs'
+> +
+> +. ./test-lib.sh
+> +. "$TEST_DIRECTORY"/lib-gpg.sh
 
-Maybe something like this?
+You are not using lib-gpg.sh, right?
 
--- snipsnap --
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index dc3133f..16e0a82 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -849,7 +849,11 @@ continue)
- 	# do we have anything to commit?
- 	if git diff-index --cached --quiet HEAD --
- 	then
--		: Nothing to commit -- skip this
-+		: Nothing to commit -- skip this commit
-+
-+		test ! -f "$GIT_DIR"/CHERRY_PICK_HEAD ||
-+		rm "$GIT_DIR"/CHERRY_PICK_HEAD ||
-+		die "Could not remove CHERRY_PICK_HEAD"
- 	else
- 		if ! test -f "$author_script"
- 		then
+If first thought it was an incorrect cut-and-paste, but I actually think
+that you need to setup a signed tag to properly test the --points-at
+option (it does not only list refs pointing directly at a commit, but
+also refs pointing at a tag pointing at the given commit).
+
+Such signed tag could be added here and used later in PATCH 04.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
