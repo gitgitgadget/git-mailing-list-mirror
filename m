@@ -1,66 +1,49 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH v5 1/4] implement submodule config API for lookup of
- .gitmodules values
-Date: Tue, 16 Jun 2015 12:54:03 +0200
-Message-ID: <20150616105403.GA8519@book.hvoigt.net>
-References: <cover.1434400625.git.hvoigt@hvoigt.net>
- <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
+From: "Raymond" <ts5@a.kfdsj.com>
+Subject: bt monopod selfie stick z07-5 now only $2.4/pc now
+Date: Tue, 16 Jun 2015 18:56:44 +0800
+Message-ID: <201506161856440474567@a.kfdsj.com>
+Reply-To: raymondpower@163.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 12:54:30 2015
+Content-Type: text/plain;
+	charset="GB2312"
+Content-Transfer-Encoding: base64
+To: "git" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 16 13:05:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4oVb-0005ge-Ni
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 12:54:24 +0200
+	id 1Z4ogj-000616-GO
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 13:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432AbbFPKyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 06:54:15 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.31.40]:50089 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756207AbbFPKyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 06:54:13 -0400
-Received: from [188.108.151.195] (helo=book.hvoigt.net)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Z4oVN-0004W6-6H; Tue, 16 Jun 2015 12:54:09 +0200
-Content-Disposition: inline
-In-Reply-To: <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1756209AbbFPLFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 07:05:48 -0400
+Received: from [103.228.130.225] ([103.228.130.225]:39150 "EHLO a.kfdsj.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754456AbbFPLFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 07:05:46 -0400
+X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jun 2015 07:05:46 EDT
+Received: from xzbdghkmp (unknown [183.13.57.188])
+	by a.kfdsj.com (Postfix) with ESMTPA id CA1926B9D
+	for <git@vger.kernel.org>; Tue, 16 Jun 2015 18:56:49 +0800 (CST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 a.kfdsj.com CA1926B9D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=a.kfdsj.com;
+	s=default; t=1434452209;
+	bh=6Var7Yf9/deEB7+C9tHfzdZw1KBfvdX3w6H/5vWxMhw=;
+	h=Date:From:Reply-To:To:Subject:From;
+	b=k06guD8uS0PL4BhyGOZR/VbOM4vfuPM38Fbn2laKd3GobAF4IIEtubilJZ0WvoBuI
+	 rSpdoVT7cBGtxuZXOA3KqE5BqAjp3nc1FetYGxJLBkbsHEvmWWCw17vnozId2XE9t5
+	 mBRA+reUD9uxYVwNz98ZK0cfCJCwsPt6QhX6Jh6Y=
+X-Mailer: Foxmail 6, 10, 201, 20 [cn]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271749>
 
-On Mon, Jun 15, 2015 at 11:06:11PM +0200, Heiko Voigt wrote:
-> In a superproject some commands need to interact with submodules. They
-> need to query values from the .gitmodules file either from the worktree
-> of from certain revisions. At the moment this is quite hard since a
-> caller would need to read the .gitmodules file from the history and then
-> parse the values. We want to provide an API for this so we have one
-> place to get values from .gitmodules from any revision (including the
-> worktree).
-
-I just realized that we are talking too much about .gitmodules here, where
-it probably should be "submodule configuration values". For revisions we
-only read from .gitmodules files but for the worktree we actually
-overlay those with local configurations from .git/config and friends. Not sure
-how we can name this though. "submodule configuration values" is kind of
-long compared to .gitmodules.
-
-Does anyone have a better name? Or is it maybe to confusing, to abstract
-it too much and we should just keep it .gitmodules, since everyone knows
-that those values can be overridden by local configuration?
-
-Cheers Heiko
+RGVhciANCkdvb2QgZGF5ICQxLjEvcGMgbW9ub3BvZCBzZWxmaWUgc3RpY2sgd2l0aCBjYWJsZSB0
+YWtlIHBvbGUsb25seSBmcm9tIHVzLHRoZSBhcmNwZWFrcyBmYWN0b3J5DQpQbGVhc2UgZmVlbCBm
+cmVlIHRvIGNvbnRhY3QgbWUgZm9yIG1vcmUgZGV0YWlscw0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMN
+ClJheQ0KYXJjcGVha3MuZW4uYWxpYmFiYS5jb20NClNreXBlOnNpeGl3ZW56aGkNCk1PQklMOis4
+NiAxODkyNDY0OTUzMg==
