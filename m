@@ -1,80 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 01/11] t6301: for-each-ref tests for ref-filter APIs
-Date: Tue, 16 Jun 2015 17:21:51 +0200
-Message-ID: <vpqmvzz8yr4.fsf@anie.imag.fr>
-References: <CAOLa=ZQeZ=6mZcntR_BS_Wp0LXDzSUx9WTLXCTLxemb0e3SS0w@mail.gmail.com>
-	<1434464457-10749-1-git-send-email-karthik.188@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 17:22:04 2015
+From: Joe Cridge <joe.cridge@me.com>
+Subject: Re: [PATCH] git-prompt.sh: Document GIT_PS1_STATESEPARATOR
+Date: Tue, 16 Jun 2015 15:27:56 +0100
+Message-ID: <0C3610F1-72BD-4C70-A1B9-9F352E7084BE@me.com>
+References: <20150616153238.Horde.tGSXailmVRSmoEen3NAoPw4@webmail.informatik.kit.edu>
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, rhansen@bbn.com,
+	felipe.contreras@gmail.com, artagnon@gmail.com
+To: =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Jun 16 17:28:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4sgc-0005ph-UI
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 17:22:03 +0200
+	id 1Z4smc-0003Ce-Si
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 17:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756019AbbFPPV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 11:21:58 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57363 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754654AbbFPPV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 11:21:57 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5GFLn2j021057
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 16 Jun 2015 17:21:49 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5GFLpPi016463;
-	Tue, 16 Jun 2015 17:21:51 +0200
-In-Reply-To: <1434464457-10749-1-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Tue, 16 Jun 2015 19:50:47 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Jun 2015 17:21:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5GFLn2j021057
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435072911.48888@+5t9oGfddcsjz6f9JkeaZA
+	id S1756581AbbFPP2K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2015 11:28:10 -0400
+Received: from st11p02mm-asmtp002.mac.com ([17.172.220.237]:55415 "EHLO
+	st11p02mm-asmtp002.mac.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756215AbbFPP2I convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 11:28:08 -0400
+X-Greylist: delayed 3604 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jun 2015 11:28:08 EDT
+Received: from joes-macbook-pro.home
+ (host86-177-153-10.range86-177.btcentralplus.com [86.177.153.10])
+ by st11p02mm-asmtp002.mac.com
+ (Oracle Communications Messaging Server 7.0.5.35.0 64bit (built Mar 31 2015))
+ with ESMTPSA id <0NQ100MRCK6K0T30@st11p02mm-asmtp002.mac.com> for
+ git@vger.kernel.org; Tue, 16 Jun 2015 14:28:00 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-06-16_05:2015-06-16,2015-06-16,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=2 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1506160247
+In-reply-to: <20150616153238.Horde.tGSXailmVRSmoEen3NAoPw4@webmail.informatik.kit.edu>
+X-Mailer: Apple Mail (2.2098)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271769>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+>> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/g=
+it-prompt.sh
+>> index f18aedc..366f0bc 100644
+>> --- a/contrib/completion/git-prompt.sh
+>> +++ b/contrib/completion/git-prompt.sh
+>> @@ -66,6 +66,10 @@
+>> #     git           always compare HEAD to @{upstream}
+>> #     svn           always compare HEAD to your SVN upstream
+>> #
+>> +# You can change the separator between the branch name and the abov=
+e
+>> +# state symbols by setting GIT_PS1_STATESEPARATOR. The default sepa=
+rator
+>> +# is SP.
+>=20
+> This is not a specification of a protocol or file or input/output for=
+mat, where we formally use SP and LF.  Perhaps we could spell out SP as=
+ a space here, for the sake of the "casual user"?
 
-> Add tests for 'for-each-ref' which utilizes the ref-filter APIs.
-> Currently it's redundant with the tests in 't6300' but more tests
-> will be eventually added as we implement more options into
-> 'for-each-ref'.
+Yes, I agree. Would it also be worth changing lines 25 and 29?
 
-Actually, I'm not convinced that the actual tests have a real value
-(since as you say, it's redundant with t6300). Perhaps we can limit this
-commit to the setup.
-
-> +++ b/t/t6301-for-each-ref-filter.sh
-> @@ -0,0 +1,36 @@
-> +#!/bin/sh
-> +
-> +test_description='test for-each-refs usage of ref-filter APIs'
-> +
-> +. ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-gpg.sh
-
-You are not using lib-gpg.sh, right?
-
-If first thought it was an incorrect cut-and-paste, but I actually think
-that you need to setup a signed tag to properly test the --points-at
-option (it does not only list refs pointing directly at a commit, but
-also refs pointing at a tag pointing at the given commit).
-
-Such signed tag could be added here and used later in PATCH 04.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+@@ 18,12 @@
+#    3b) Alternatively, for a slightly faster prompt, __git_ps1 can
+#        be used for PROMPT_COMMAND in Bash or for precmd() in Zsh
+#        with two parameters, <pre> and <post>, which are strings
+#        you would put in $PS1 before and after the status string
+#        generated by the git-prompt machinery.  e.g.
+#        Bash: PROMPT_COMMAND=3D'__git_ps1 "\u@\h:\w" "\\\$ "'
+#          will show username, at-sign, host, colon, cwd, then
+#          various status string, followed by dollar and SP, as
+#          your prompt.
+#        ZSH:  precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
+#          will show username, pipe, then various status string,
+#          followed by colon, cwd, dollar and SP, as your prompt.
