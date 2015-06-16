@@ -1,108 +1,142 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: GitHub Pull Request merge commands
-Date: Tue, 16 Jun 2015 11:33:45 +0200
-Message-ID: <20150616093345.GA28617@leeloo.kyriasis.com>
-References: <mloo9l$agl$6@ger.gmane.org>
+From: Jan-Philip Gehrcke <jgehrcke@googlemail.com>
+Subject: Re: Should the --encoding argument to log/show commands make any
+ guarantees about their output?
+Date: Tue, 16 Jun 2015 11:38:45 +0200
+Message-ID: <557FEEA5.2080006@googlemail.com>
+References: <557E91D2.3000908@googlemail.com> <557EFB94.3040104@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mP3DRpeJDSE+ciuQ"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 11:34:01 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 16 11:39:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4nFm-0001SB-4L
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 11:33:58 +0200
+	id 1Z4nKl-0005Ss-EC
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 11:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933252AbbFPJdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 05:33:52 -0400
-Received: from theos.kyriasis.com ([212.71.254.33]:34550 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932880AbbFPJds (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 05:33:48 -0400
-Received: from theos.kyriasis.com (localhost [127.0.0.1]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 0d49954e;
-	for <git@vger.kernel.org>;
-	Tue, 16 Jun 2015 09:33:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=VBN+u78bjMbKnHTYVw1NHFS3inM=; b=gCwrU8
-	ly+CCPt+Hs0LVNpLKU4A1UMfNUX8VAcmfgz6vQyz2UJ4n9HsnmRM8ingYiOKyyDr
-	o8KVHJCTlpPrA+xWeplwMCUE0vJGyU+DqjhI/tSNy8ZtBKOTV7Q76euEASyMNVaX
-	kq1BEJOzRxdWMT/tuAFji9s9uN0fc+KoqAgOI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=FnZKZ9HRJkhPixTXCehPxjg++bOipU2r
-	nGlg38yk2yQK6w5iShqekgdJaq6N+hTBJrw3A0pc8uUoTq+g6Lwf53tfVpTszeVR
-	qsHVP0FBgxBO5inUZn3cM6XUROmvA5acNZ1ALrlcBJ21CgkJ9ayEOXL3y/88oc3W
-	/XsRE8kX+7c=
-Received: from leeloo.kyriasis.com (47.67.24.31.in-addr.zone [31.24.67.47]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id b113e9c0;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	for <git@vger.kernel.org>;
-	Tue, 16 Jun 2015 09:33:46 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <mloo9l$agl$6@ger.gmane.org>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+	id S1757393AbbFPJjA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2015 05:39:00 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:33523 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756423AbbFPJit (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 05:38:49 -0400
+Received: by wgez8 with SMTP id z8so7955104wge.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2015 02:38:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=H+PsPgwBBf1x3pwAjFOmt2d80jbJNmWZUwEsBJmt70w=;
+        b=rg729nrMqo9kWcbE0rb1vDryHkpe6IAAJth3GOPh7RGZ5RP5l3dOAQb5LQNqIviHSu
+         Z9gT8/1iW7yqUW9n/q1Vo/hmIskk5o4ZJgEpf7ffvrqDbsDe7y57mk+fGbg85b5UImiV
+         DXSusKw6wMmAUP8ycYbQ4sR3sy5hCjSfE7IrgtYneKl0H5hFBI8FP/H9PEKXidoBWytQ
+         gAH7F0wp0ShMkrC0hgA6tZZv78QyLScVQipuKk0vvqOhOQwBiKJRVwSYZIGnv/SyOhki
+         dT6ZAjLsnACuMVDcWdDL+M14h2IJIGlmEuLX66kMf+wxA4DY4l/c9QZVx4k99YV/6OQa
+         E5bg==
+X-Received: by 10.180.97.7 with SMTP id dw7mr41820531wib.74.1434447528244;
+        Tue, 16 Jun 2015 02:38:48 -0700 (PDT)
+Received: from [192.168.178.11] (ip92342367.dynamic.kabel-deutschland.de. [146.52.35.103])
+        by mx.google.com with ESMTPSA id k2sm1675240wif.3.2015.06.16.02.38.46
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jun 2015 02:38:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <557EFB94.3040104@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271744>
+
+On 15.06.2015 18:21, Torsten B=C3=B6gershausen wrote:
+> On 2015-06-15 10.50, Jan-Philip Gehrcke wrote:
+>> Let me describe what I think it currently does:
+>>
+>> The program attempts to re-code a log message, so it follows the cha=
+in
+>>
+>>      raw input -> unicode -> raw output
+> Not sure what "raw input/output" means.
+> But there is only one reencode step involved, e.g.
+> input(8859) -> output(UTF-8)
+
+We surely agree. With "raw" I meant a sequence of bytes, and with=20
+"unicode" I meant the intermediate state in the process of re-encoding=20
+(which can be thought of as decoding and encoding with a transient=20
+intermediate state).
+
+> If the user ignores this warning, how should Git guess the encoding  =
+?
+
+I entirely appreciate that there is no satisfying solution to this very=
+=20
+problem.
+
+>> If this step fails (if the entry contains a byte sequence that is in=
+valid in the specified/assumed input codec),
+>> the procedure is aborted and the data is dumped as is (obviously wit=
+hout applying the requested output encoding).
+>>
+>> Is that correct?
+> Yes, see above.
+
+Thanks!
+
+>> Hence, from my point of view, the rational that git show/log should =
+be able to output *text* information means
+>> that they should not emit byte sequences that are invalid in the cod=
+ec specified via the --encoding argument.
+>> In the current situation, the work of dealing with invalid byte sequ=
+ences is just outsourced to software
+>> further below in the tool chain
+>> (at some point a replacement character =EF=BF=BD should be displayed=
+ to the user instead of the invalid raw bytes).
+>>
+>> I am not entirely sure where this discussion should lead to.
+> Yes, until someone writes a patch to improve either the documentation=
+ or the code,
+> nothing will be changed.
+>> However, I think that if the behavior of the software will not be ch=
+anged,
+>> then the documentation for the --encoding option should be more prec=
+ise and
+>> clarify what actually happens behind the scenes. What do you think?
+> Patches are more than welcome.
+
+I'd be willing to contribute, but of course there must be a discussion=20
+and an agreement before that, if there is need to change something at=20
+all, and what exactly.
+
+To this discussion I would like to contribute that I am of the opinion=20
+that there should be a command line option to make git show/log/friends=
+=20
+emit a byte stream that is guaranteed to be valid in a given codec.
+
+That would require detection and treatment of those cases where=20
+corrupted text resides in the repository (we cannot prevent it from=20
+entering the repository, as discussed). In these cases, one could emit =
+a=20
+replacement symbol (e.g. '?') per invalid byte subsequence (this seems=20
+to be more established than just swallowing the invalid byte sequence).
+
+What do you think?
+
+I think the --encoding option would have ideal semantics for described=20
+behavior.
+
+However, I guess maintaining backwards compatibility is an issue here.=20
+On the other hand, I realize that the --encoding option undergoes=20
+changes: the docs for git log in release 2.4.3 do not even list the=20
+--encoding option anymore. Why is that? I haven't found a corresponding=
+=20
+changelog/release notes entry.
 
 
---mP3DRpeJDSE+ciuQ
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks,
 
-On 16/06, Florian Lindner wrote:
->My question is, if davidsblom make further commits to his develop branch
->(after the pull request was issued) aren't these commits also included in
->the pull and therefore in the merge? If yes, isn't the idea to merge just
->the changes that the pull request was about? If not, why? ;-)
->
 
-A pull request is "about" all commits in the branch, which is why=20
-topic-branches should be used for PRs.
-
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
-
---mP3DRpeJDSE+ciuQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQQcBAEBCgAGBQJVf+12AAoJEJAcHDIOsNRderYgAJ6EpXKpFqc89iDe5v1zQIh+
-VPkkDLn5D9+Iszmav9QI6dMjJCgKFI7mpiPTcApfYoTZUBDGX3CsgwNgbIrVYfSX
-ZXJ3Qsp4OJSC0zNAWPNqNz/yqgyWGjh6zBGlrGldP1WPvwZO3U54NPpyXdS64S2y
-7hfahxHSroSq07ehJk3pg1+4WnkgyxicfwXI3JpfNLKjd7twjmo1C6/Y/zJ096EG
-89glZNxdIUr8u716TMmXRpuHwr0OT9YtFYRVQFYQ67synMOOqGnu29B25UVHVfIw
-Nwth7l6XA798Fq1wCGBVzK0noJzwaD+kQyc40Cw+DxFELF5Fh3e0duG/Vzoij2Px
-8lHuL+0xPzrg8D5o3R+pgxDBn7Oz7P5vSs46FGsjXrOhUvTx+cWy8xNQNGVzsdWi
-7Xz2fDfMSgXDyxhtFXM8vq8cuPH0mgtNMDXlEC9IZzT/LDcNlTT5Mtg07Od9AqRC
-wj5uZQn7+NmQqlwB8yKoBIYL4rEBLag8WfI6clJ0aztPj2xkXXNCaFg2KLAwrUA8
-Pq9GqfMysdi7NksqzKrLsHQB9IT24Nuh3EFFeWXtGCSENkqTCHbDGs5fnJH4J3rN
-d+lLW1hOR3zLJPC1Cla+J1h6Vr/T9zpy2QoiGAxoRO3Zj1PIwcyHhgXumuJGc0lt
-YTJ3BxCiUJgGLyl17PDAJoJkPogWzcEv92xqf5C7eJBG/Vyr93ehp50xMujD9YQH
-YCtTnKCNq6CJHuWOLW1/kLrDV0S9Df37xWpHRVcNDtFAcg3dmgvBrw7MhgO8HZOz
-HokHWj6hPMFqnCY1z7Aj3AQkEtJjg8AO71uMWTssncEzKBznLyodd4rpkUW9bkn/
-FZtad48uxvHElfPULWWo9B8aadht+kvFVyQo5SqR7MpquU3pcUnOg6Rk+2rqos+F
-UKgsLkyqEadC1Se6dksw6/cTP+sPO0UX5UV2kRK6yhkGuK1Zyc6g+EqFQ975A+hS
-n19jDgbvniJUvJtnu4HWFPLNpT4l4zUxZ604tdoCeDhUXgOjH5QMnDxUMOvw2ZFa
-9zEoEXmmxYUr8zSqHy5vI273JfxTLQw/fMmKgu76wXiHWghWSBCQ+Xs2zlcVm7sH
-5YBo16NCb1XKk+ATv9uWyeu5MjEI44OH6F5AMdyOY+rQ4hKewJJ36Xlbww6Pqvip
-QuR6vFStsumtz5tTANQbng3ELgPlFi4uc+GGvzE8gZV8h/hM3sgPwn+pMoFrEwtr
-zwEub17NyjpdBXK1SXQddpyol4lQtAt3IJArdm7yS4mV0+b4k5zMWCgZQO3mcE4P
-Li4AzNEhaz63TzzOnxVP88lffLzeLGB/5k45IT7MKVc91Zg6NxvkO/XOABND6GM=
-=//xY
------END PGP SIGNATURE-----
-
---mP3DRpeJDSE+ciuQ--
+Jan-Philip
