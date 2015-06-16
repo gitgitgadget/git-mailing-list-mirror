@@ -1,68 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix power checking on OS X
-Date: Tue, 16 Jun 2015 10:57:16 -0700
-Message-ID: <CAPc5daXuJWyi2Zc-Su9w1Rn38wjTkZNo4zML8m3Hq_EwoBjnfg@mail.gmail.com>
-References: <1434440167-1046-1-git-send-email-pastith@gmail.com>
- <xmqqr3pb5zl1.fsf@gitster.dls.corp.google.com> <CACvVhd6j_zWpvfXti1=U8iOaXE+oTUtmjrHu39VR12UNBxkY4A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH/RFC 0/3] add GIT_TRACE_STDIN
+Date: Tue, 16 Jun 2015 15:31:02 -0400
+Message-ID: <20150616193102.GA15856@peff.net>
+References: <20150612212526.GA25447@peff.net>
+ <20150612212827.GC25757@peff.net>
+ <CAHcr6HYvVR4uTmtegWHK0h+v_aVs4JVLsSwvjthGY3pb=-Q0yQ@mail.gmail.com>
+ <20150616171005.GB18667@peff.net>
+ <CAHcr6HYA=gpMTaJ5WOOmtEp+J4wBMz9D59fbByzsdBkPRf4CZQ@mail.gmail.com>
+ <20150616171849.GD18667@peff.net>
+ <CAHcr6Hbajyx5RV10rv2PWEa9ZyzyxA7jCx=auKxpnv3xjSjq7Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Panagiotis Astithas <pastith@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 19:58:17 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: Augie Fackler <augie@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 21:31:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4v7M-0003Aj-FQ
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 19:57:48 +0200
+	id 1Z4wZo-000645-H5
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 21:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754227AbbFPR5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 13:57:39 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:34048 "EHLO
-	mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbbFPR5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 13:57:37 -0400
-Received: by oigx81 with SMTP id x81so17068404oig.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 10:57:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=DNpVqxuyQJ8zmhABT1qog/z8Kjl4v9sl7LLgyoTrV4E=;
-        b=dzM8iz9zMWVjKk/WPg1o8Wv+yKFFrUc/1N9GyROiZoygBdM3ikQ24RieyAC0SF47yb
-         jC8w1VsyyszYYrBWMOiXPaKIBNOj2L1pKhtZoAj3hDNhPnPgjrjHWWfcoCiopjAE/kPQ
-         wVRJbcr6yCbFekqS8GaJkxmyjKUcz8N1kczstnLXFLm09PXOBgGL08F5vur+d31ff48E
-         PEJq1gnTRnNbZKOU8hrgwkmHhQQBHLyoSvIuKqWHzaBgaoyMJ2ePi3JH9tYrkSrrXYlp
-         qGyVz+4YGXz814PLLC7aUu1iaTtlEjLtp6T/F+DuPeGjP8v5IGeZ5a78oplQQDKoh0sk
-         mprA==
-X-Received: by 10.202.200.131 with SMTP id y125mr1213883oif.20.1434477457308;
- Tue, 16 Jun 2015 10:57:37 -0700 (PDT)
-Received: by 10.202.202.131 with HTTP; Tue, 16 Jun 2015 10:57:16 -0700 (PDT)
-In-Reply-To: <CACvVhd6j_zWpvfXti1=U8iOaXE+oTUtmjrHu39VR12UNBxkY4A@mail.gmail.com>
-X-Google-Sender-Auth: C6Vi9mwvmfaMBwj4Mk2wpJPMupw
+	id S1756849AbbFPTbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 15:31:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46990 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754384AbbFPTbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 15:31:05 -0400
+Received: (qmail 20097 invoked by uid 102); 16 Jun 2015 19:31:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 14:31:04 -0500
+Received: (qmail 18205 invoked by uid 107); 16 Jun 2015 19:31:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 15:31:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2015 15:31:02 -0400
+Content-Disposition: inline
+In-Reply-To: <CAHcr6Hbajyx5RV10rv2PWEa9ZyzyxA7jCx=auKxpnv3xjSjq7Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271788>
 
-Ah, thanks.  Not many people do that, so I was wondering what was going on ;-).
+On Tue, Jun 16, 2015 at 01:23:31PM -0400, Augie Fackler wrote:
 
-On Tue, Jun 16, 2015 at 10:35 AM, Panagiotis Astithas <pastith@gmail.com> wrote:
-> On Tue, Jun 16, 2015 at 8:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Panagiotis Astithas <pastith@gmail.com> writes:
->>
->>> The output of "pmset -g batt" changed at some point from
->>> "Currently drawing from 'AC Power'" to the slightly different
->>> "Now drawing from 'AC Power'". Starting the match from "drawing"
->>> makes the check work in both old and new versions of OS X.
->>>
->>> Signed-off-by: Panagiotis Astithas <pastith@gmail.com>
->>> ---
->>
->> Hmph, is there any difference between this one and the original one
->> that I already queued several days ago?
->
-> None, I was just following the process outlined in SubmittingPatches
-> that mentions a separate email after the discussion is over.
+> > I guess there is really room for both. Just because you _can_ accomplish
+> > the same thing with both does not mean we cannot have two ways to do it
+> > (an easy way, and a harder, more flexible way).
+> 
+> *nod* that might make the most sense - given that we both seem to have
+> use cases in mind for verbatim packs on pulls, that seems like a good
+> thing to have easy to deploy.
+
+My ulterior motive is that I actually already have a similar thing in
+place _just_ for pack-objects, and I'd like to get rid of my custom
+hack. :)
+
+In that case it is not about saving the packfile, but rather saving the
+parameters to create it (I was interested in finding out why git was
+spending so much CPU to serve some particular requests, and being able
+to run the same pack-generation repeatedly is helpful).
+
+Here are the patches I came up with:
+
+  [1/3]: trace: implement %p placeholder for filenames
+  [2/3]: trace: add pid to each output line
+  [3/3]: trace: add GIT_TRACE_STDIN
+
+They apply on top of the TRACE_PACKFILE patches, only because they also
+need the new trace_verbatim(). But I am not altogether happy with the
+result; see the comments I'll add to 3/3.
+
+-Peff
