@@ -1,114 +1,86 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: rebase -i might leave CHERRY_PICK_HEAD behind
-Date: Tue, 16 Jun 2015 14:06:12 +0200
-Message-ID: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 14:06:36 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Documentation/describe: improve one-line summary
+Date: Tue, 16 Jun 2015 15:16:38 +0200
+Message-ID: <1434460598-23201-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <CAKEGsXTY_rstoK4Gcga6XqkqKCeOkXdL-TjAWUu0Cqi6mWW7bA@mail.gmail.com>
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com, albertnetymk@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jun 16 15:16:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4pdQ-0001yq-7Z
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 14:06:32 +0200
+	id 1Z4qjX-0005UH-2X
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 15:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754422AbbFPMG0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2015 08:06:26 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:50799 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752622AbbFPMGO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 08:06:14 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1Z4pd6-0000Fu-8I
-	for <git@vger.kernel.org>; Tue, 16 Jun 2015 14:06:12 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1Z4pd6-0000qV-1W
-	for git@vger.kernel.org; Tue, 16 Jun 2015 14:06:12 +0200
-Received: from x590d3112.dyn.telefonica.de (x590d3112.dyn.telefonica.de
- [89.13.49.18]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Tue, 16 Jun 2015 14:06:12 +0200
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1434456372.
+	id S1754173AbbFPNQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 09:16:51 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53784 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752384AbbFPNQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 09:16:50 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5GDGfI5030091
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 16 Jun 2015 15:16:41 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5GDGgrC013088;
+	Tue, 16 Jun 2015 15:16:42 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1Z4qjK-0006i7-MC; Tue, 16 Jun 2015 15:16:42 +0200
+X-Mailer: git-send-email 2.4.1.171.g060e6ae.dirty
+In-Reply-To: <CAKEGsXTY_rstoK4Gcga6XqkqKCeOkXdL-TjAWUu0Cqi6mWW7bA@mail.gmail.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Jun 2015 15:16:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5GDGfI5030091
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1435065403.87663@HTzah40BrPDzq1H8B7v4SQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271751>
 
+git describe does not show 'the most recent tag that is reachable from a
+commit', but a descriptive name based on this tag. Fix the description to
+reflect that.
 
-Hi,
+Suggested-by: Albert Netymk <albertnetymk@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+> According to the man of git-describe, http://git-scm.com/docs/git-describe
+> 
+> git-describe - Show the most recent tag that is reachable from a commit
+> 
+> It means that this command shows the name of the most recent tag.
+> 
+> However, actually, it construct a new tag name if the current commit
+> is not tagged.
+> 
+> I think, "git-describe - Describe a commit using the most recent tag
+> reachable from it" is a better summary.
 
-When skipping an empty commit with 'git rebase --continue' a
-CHERRY_PICK_HEAD file might be left behind.
+Indeed. Here's a patch fixing this.
 
-What I did boils down to this:
+ Documentation/git-describe.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-     echo one >file
-     git add file
-     git commit -m first
-     echo two >file
-     git commit -a -m second
-     echo three >file
-     git commit -a -m third
-     git rebase -i HEAD^^
-     # change todo list to edit the "second" commit
-
-     echo three >file
-     git commit -a --amend
-     # this effectively makes the third commit an empty commit
-     # and rebase will ask what to do:
-     git rebase --continue
-     The previous cherry-pick is now empty, possibly due to conflict =20
-resolution.
-     If you wish to commit it anyway, use:
-
-         git commit --allow-empty
-
-     Otherwise, please use 'git reset'
-     rebase in progress; onto 7335bbe7a5
-     You are currently rebasing branch 'master' on '7335bbe7a5'.
-
-     nothing to commit, working directory clean
-     Could not apply d19f82ac6d467247117fd734ed039b03ef923c86... third
-
-     # I didn't want an empty commit, but didn't read that carefully, s=
-o I did:
-     git rebase --continue
-     Successfully rebased and updated refs/heads/master.
-     # and was rewarded for my lack of attention with the following =20
-bash prompt:
-     test/rebase-empty-continue (master|CHERRY-PICKING)$
-     # indeed:
-     ls -l .git/CHERRY_PICK_HEAD
-     -rw-r--r-- 1 szeder szeder 41 Jun 16 13:22 .git/CHERRY_PICK_HEAD
-
-On one hand, it's user error: it told me to run 'git reset' to achive
-what I want but I didn't.
-Note, however, how it told me about 'git reset': while 'git commit
---allow-empty' is greatly emphasized by indentation and empty lines
-before and after, 'git reset' blends in quite well into the rebase
-progress.  It was late, I was tired, and there was a questionable
-penalty on Copa Am=C3=A9rica as well ;), so I simply didn't notice.
-
-On the other hand,
-
-    1. 'git rebase' claimed that "Successfully rebased...", yet it left
-       cruft behind.  I think it shouldn't.
-    2. 'git rebase --continue' didn't complain by the lack of prior
-       'git reset' and finished doing exacly what I expected from it to
-       do (except leaving CHERRY_PICK_HEAD behind, of course).
-       Perhaps it should complain, like it does when the worktree is
-       dirty.
-       Alternatively, it could just continue to DWIM, as it does
-       already, but then it should remove CHERRY_PICK_HEAD as well.
-
-G=C3=A1bor
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index d20ca40..e045fc7 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -3,7 +3,7 @@ git-describe(1)
+ 
+ NAME
+ ----
+-git-describe - Show the most recent tag that is reachable from a commit
++git-describe - Describe a commit using the most recent tag reachable from it
+ 
+ 
+ SYNOPSIS
+-- 
+2.4.1.171.g060e6ae.dirty
