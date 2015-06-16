@@ -1,150 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] trace: add GIT_TRACE_STDIN
-Date: Tue, 16 Jun 2015 15:49:08 -0400
-Message-ID: <20150616194907.GA15988@peff.net>
-References: <20150616193102.GA15856@peff.net>
- <20150616193716.GC15931@peff.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: Should the --encoding argument to log/show commands make any
+ guarantees about their output?
+Date: Tue, 16 Jun 2015 22:04:03 +0200
+Message-ID: <55808133.6070802@web.de>
+References: <557E91D2.3000908@googlemail.com> <557EFB94.3040104@web.de> <557FEEA5.2080006@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Augie Fackler <augie@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 21:49:21 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Jan-Philip Gehrcke <jgehrcke@googlemail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7Y=?= =?UTF-8?B?Z2Vyc2hhdXNlbg==?= 
+	<tboegi@web.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 16 22:04:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4wrF-0006jx-1B
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 21:49:17 +0200
+	id 1Z4x5o-0004Fh-0u
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 22:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752741AbbFPTtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 15:49:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47025 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752365AbbFPTtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 15:49:11 -0400
-Received: (qmail 21022 invoked by uid 102); 16 Jun 2015 19:49:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 14:49:10 -0500
-Received: (qmail 18377 invoked by uid 107); 16 Jun 2015 19:49:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 15:49:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2015 15:49:08 -0400
-Content-Disposition: inline
-In-Reply-To: <20150616193716.GC15931@peff.net>
+	id S1756943AbbFPUEQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2015 16:04:16 -0400
+Received: from mout.web.de ([212.227.15.3]:65514 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752992AbbFPUEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 16:04:14 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0MT8cQ-1ZX6sh2Zew-00S5EK; Tue, 16 Jun 2015 22:04:09
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <557FEEA5.2080006@googlemail.com>
+X-Provags-ID: V03:K0:mnwj4pTQKoRABuftG4HIonKTVtc0rSfIaQqcZQyvPdG7TIcoAEQ
+ 1O+rNn54p6WsEY4FJszM8xMQToA9Qh6xD8kefRRTrwPjy7/9jwfkpg0nwA3dYI+6Nf0ovQx
+ jzHz/VIKc4DpN3VNU7MEsmWp7ag8rsXzJaeZ0YZe7XQUiAVHtCMeOfqj3qkzGeftQhwVg/o
+ Z7fd/G9ryjM4719LEPvmQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271793>
 
-On Tue, Jun 16, 2015 at 03:37:16PM -0400, Jeff King wrote:
+On 2015-06-16 11.38, Jan-Philip Gehrcke wrote:
+> On 15.06.2015 18:21, Torsten B=C3=B6gershausen wrote:
+>> On 2015-06-15 10.50, Jan-Philip Gehrcke wrote:
+>>> Let me describe what I think it currently does:
+>>>
+>>> The program attempts to re-code a log message, so it follows the ch=
+ain
+>>>
+>>>      raw input -> unicode -> raw output
+>> Not sure what "raw input/output" means.
+>> But there is only one reencode step involved, e.g.
+>> input(8859) -> output(UTF-8)
 
-> For instance:
-> 
->   GIT_TRACE=/tmp/processes.out \
->   GIT_TRACE_STDIN=/tmp/stdin.%p \
->   git daemon ...
-> 
-> After a fetch, processes.out will contain a line like:
-> 
->   15:19:08.275493 [pid=13196] git.c:348             trace:
->   built-in: git 'pack-objects' '--revs' '--thin' '--stdout'
->   '--progress' '--delta-base-offset'
-> 
-> And stdin.13196 (the pid picked from the above line) will
-> contain its stdin.
+I probably need to correct myself:
+pretty.c
+void format_commit_message(const struct commit *commit,
 
-So this is the part that I don't like. Collecting stdin is expensive,
-and the commands above would be totally inappropriate for a production
-server, for two reasons:
+The the message is converted from the commit encoding into UTF-8.
+When the log encoding is different from UTF-8,
+There is a second conversio (as you said).
+(But not in your case, here the second conversion is skipped)
 
-  1. It requires restarting git-daemon to turn on debugging.
+[snip]
 
-  2. It logs for _everything_. Every repo, and every process.
+>=20
+> I'd be willing to contribute, but of course there must be a discussio=
+n and an
+> agreement before that, if there is need to change something at all, a=
+nd what
+> exactly.
+[]
+> What do you think?
+See commit.c:
 
-I mentioned before that I have a similar patch for logging pack-objects.
-That is triggered via config, which solves both of these problems. What
-I'd really like is to be able to do:
+/*
+ * This verifies that the buffer is in proper utf8 format.
+ *
+ * If it isn't, it assumes any non-utf8 characters are Latin1,
+ * and does the conversion.
+ */
+static int verify_utf8(struct strbuf *buf)
 
-  git config trace.pack-objects.stdin fetches/stdin.%p
+>=20
+> I think the --encoding option would have ideal semantics for describe=
+d behavior.
+>=20
+> However, I guess maintaining backwards compatibility is an issue here=
+=2E On the
+> other hand, I realize that the --encoding option undergoes changes: t=
+he docs for
+> git log in release 2.4.3 do not even list the --encoding option anymo=
+re. Why is
+> that? I haven't found a corresponding changelog/release notes entry.
 
-in a particular repository, collect data for a few minutes, and then
-turn it back off.
+It still seems to work:
+git log --encoding ISO-8859-1 | xxd | grep gersha | less
+includes this line:
+7465 6e20 42f6 6765 7273 6861 7573 656e  ten B.gershausen
 
-The patch below implements that, but it doesn't quite work as you might
-hope. The problem is that we cannot read the repository config so early
-in the git.c startup; we do not even know if we have a repository yet.
-Pushing the config-reading later is too late; we may already have looked
-at GIT_TRACE_* and decided whether to trace (and possibly even written
-trace records!).
 
-It's possible we could hack around it by rearranging the startup
-sequence, but that sequence is notoriously fragile.
+So my suggestion (in short):
+move verify_utf8() from commit.c into utf8.c,
+make it non-static, and add a prototype in utf8.h
 
-Another option would be to stop trying to intercept stdin in git.c, and
-instead make this a feature of run-command.c. That is, right before we
-exec a process, tee its stdin there. That means that you cannot do:
+Use that function in pretty.c (and commit.c), test it.
+Make a patch out of it and send it to the list.
 
-  GIT_TRACE_STDIN=/tmp/foo.out git foo
-
-to collect the stdin of foo. But that is not really an interesting case
-anyway. You can run "tee" yourself if you want. The interesting cases
-are the ones where git is spawning a sub-process, and you want to
-intercept the data moving between the git processes.
-
--Peff
-
----
-diff --git a/git.c b/git.c
-index e7e58e3..cbb7e9b 100644
---- a/git.c
-+++ b/git.c
-@@ -675,6 +675,38 @@ static void trace_stdin(void)
- 	 */
- }
- 
-+static int trace_config_cb(const char *var, const char *value, void *data)
-+{
-+	const char *want_cmd = data;
-+	const char *have_cmd, *key;
-+	int have_len;
-+
-+	if (!parse_config_key(var, "trace", &have_cmd, &have_len, &key) &&
-+	    have_cmd &&
-+	    !strncmp(want_cmd, have_cmd, have_len) &&
-+	    want_cmd[have_len] == '\0') {
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_addstr(&buf, "GIT_TRACE_");
-+		while (*key)
-+			strbuf_addch(&buf, toupper(*key++));
-+		setenv(buf.buf, value, 0);
-+		strbuf_release(&buf);
-+	}
-+	return 0;
-+}
-+
-+static void load_trace_config(const char *cmd, const char **argv)
-+{
-+	/* XXX we don't know the cmd for sure until we parse the options */
-+	if (!strcmp(cmd, "git"))
-+		cmd = argv[1];
-+	else
-+		skip_prefix(cmd, "git-", &cmd);
-+
-+	if (cmd)
-+		git_config(trace_config_cb, (void *)cmd);
-+}
-+
- int main(int argc, char **av)
- {
- 	const char **argv = (const char **) av;
-@@ -698,6 +730,7 @@ int main(int argc, char **av)
- 
- 	git_setup_gettext();
- 
-+	load_trace_config(cmd, argv);
- 	trace_command_performance(argv);
- 	trace_stdin();
- 
+In the ideal world the patch will include a test case,
+but I don't know how easy it is to create such a commit.
