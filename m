@@ -1,140 +1,132 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 05/11] ref-filter: add parse_opt_merge_filter()
-Date: Tue, 16 Jun 2015 19:50:51 +0530
-Message-ID: <1434464457-10749-5-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v3 08/11] parse-option: rename parse_opt_with_commit()
+Date: Tue, 16 Jun 2015 19:50:54 +0530
+Message-ID: <1434464457-10749-8-git-send-email-karthik.188@gmail.com>
 References: <CAOLa=ZQeZ=6mZcntR_BS_Wp0LXDzSUx9WTLXCTLxemb0e3SS0w@mail.gmail.com>
  <1434464457-10749-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 16:26:57 2015
+X-From: git-owner@vger.kernel.org Tue Jun 16 16:27:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4rpE-0007jo-Tk
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 16:26:53 +0200
+	id 1Z4rpR-0007te-Rf
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 16:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbbFPO0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 10:26:48 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:33034 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884AbbFPO0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 10:26:47 -0400
-Received: by pdjn11 with SMTP id n11so15662425pdj.0
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 07:26:46 -0700 (PDT)
+	id S1754987AbbFPO1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 10:27:00 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:35961 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754791AbbFPO06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 10:26:58 -0400
+Received: by pabqy3 with SMTP id qy3so13802819pab.3
+        for <git@vger.kernel.org>; Tue, 16 Jun 2015 07:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zqeHNmf1cpONfxPED6bChpuzGkDsPS1jHWfojDoh9I8=;
-        b=pd64OXwJuIbLKoVJg4hKsKl09gFdERUr+5j/pXYCPkNsLbSw2de1SLEEfvsg3rfIju
-         XPPhKvzgHfmg9uF7zO2Z8NCjELiKIwFbO/mTHlFaHxZsla6FmTLJd4p1+Zhk8uGhu7i8
-         wUI+3QZnTfe+kq5qbsYn3kj7OtxF5hUXX60H939MBOUM6kAiEzrVL0B5afH9VMyxCSSk
-         A8PfWLZjRwvu/LYyll5IoURzX5g2UPON4MgyO9RkLwu0TNI2nS1Bq6ivTXvFeh8+b1wJ
-         XPBUSicT+XB2jGGUQfumMl9wXIzldrsAsG7huICrQJ158cUgDJDURiC5hBB3mXdRAfAB
-         K2Xw==
-X-Received: by 10.68.173.197 with SMTP id bm5mr1142343pbc.13.1434464806789;
-        Tue, 16 Jun 2015 07:26:46 -0700 (PDT)
+        bh=4iLnl4JxYkKNQ3L4VLN0ry0vaUMg8oRPSVjZ1hZqjPo=;
+        b=N/YFoCqwx6Jiwn56JbfT7LWJZb7DSrF5NtKcM+VIwAYcLoofqPsshz7iugSdV6UNcC
+         A58l0VUxKUMq6m/AUeyCAFLoDkTQH3NjVkCwHQ6CTnR/NJWp5/SmgzxvutOS2pNruSOp
+         mdSLUSOU4SgHEFDOfeo8OaFUhIofPUnw2Ko635isugYrp/ePjbdTDUCusIvdlYpQ7k0b
+         GcZLhwocqSFZPUc7HSxWw4kLOaZqCgeTLAbyw7zTMnn3H9k1gSdDPVbv9iVs5Zn3dFgz
+         5y/CVRGc+avT/HXA7coljJubF4cewvucgdoTY97it/ZWJo9qpatqSJ3HzIMU4wOsw03J
+         p1wg==
+X-Received: by 10.68.139.225 with SMTP id rb1mr1205005pbb.68.1434464818490;
+        Tue, 16 Jun 2015 07:26:58 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id s1sm1594145pda.54.2015.06.16.07.26.44
+        by mx.google.com with ESMTPSA id s1sm1594145pda.54.2015.06.16.07.26.56
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 16 Jun 2015 07:26:46 -0700 (PDT)
+        Tue, 16 Jun 2015 07:26:57 -0700 (PDT)
 X-Mailer: git-send-email 2.4.3.436.g722e2ce.dirty
 In-Reply-To: <1434464457-10749-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271761>
 
-Add 'parse_opt_merge_filter()' to parse '--merged' and '--no-merged'
-options and write MACROS for the same.
+Rename parse_opt_with_commit() to parse_opt_commit_object_name()
+to show that it can be used to obtain a list of commits and is
+not constricted to usage of '--contains' option.
 
-This is copied from 'builtin/branch.c' which will eventually be removed
-when we port 'branch.c' to use ref-filter APIs.
-
-Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/branch.c |  4 ++++
- ref-filter.c     | 21 +++++++++++++++++++++
- ref-filter.h     | 11 +++++++++++
- 3 files changed, 36 insertions(+)
+ builtin/branch.c   | 4 ++--
+ builtin/tag.c      | 4 ++--
+ parse-options-cb.c | 2 +-
+ parse-options.h    | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index b42e5b6..ddd90e6 100644
+index ddd90e6..ddd728e 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -745,6 +745,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	strbuf_release(&newsection);
- }
+@@ -828,13 +828,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			OPTION_CALLBACK, 0, "contains", &with_commit, N_("commit"),
+ 			N_("print only branches that contain the commit"),
+ 			PARSE_OPT_LASTARG_DEFAULT,
+-			parse_opt_with_commit, (intptr_t)"HEAD",
++			parse_opt_commit_object_name, (intptr_t)"HEAD",
+ 		},
+ 		{
+ 			OPTION_CALLBACK, 0, "with", &with_commit, N_("commit"),
+ 			N_("print only branches that contain the commit"),
+ 			PARSE_OPT_HIDDEN | PARSE_OPT_LASTARG_DEFAULT,
+-			parse_opt_with_commit, (intptr_t) "HEAD",
++			parse_opt_commit_object_name, (intptr_t) "HEAD",
+ 		},
+ 		OPT__ABBREV(&abbrev),
  
-+/*
-+ * This function is duplicated in ref-filter. It will eventually be removed
-+ * when we port branch.c to use ref-filter APIs.
-+ */
- static int opt_parse_merge_filter(const struct option *opt, const char *arg, int unset)
- {
- 	merge_filter = ((opt->long_name[0] == 'n')
-diff --git a/ref-filter.c b/ref-filter.c
-index 591e281..6502179 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1125,3 +1125,24 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
- 	s->atom = parse_ref_filter_atom(arg, arg+len);
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 280981f..2d6610a 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -603,13 +603,13 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			OPTION_CALLBACK, 0, "contains", &with_commit, N_("commit"),
+ 			N_("print only tags that contain the commit"),
+ 			PARSE_OPT_LASTARG_DEFAULT,
+-			parse_opt_with_commit, (intptr_t)"HEAD",
++			parse_opt_commit_object_name, (intptr_t)"HEAD",
+ 		},
+ 		{
+ 			OPTION_CALLBACK, 0, "with", &with_commit, N_("commit"),
+ 			N_("print only tags that contain the commit"),
+ 			PARSE_OPT_HIDDEN | PARSE_OPT_LASTARG_DEFAULT,
+-			parse_opt_with_commit, (intptr_t)"HEAD",
++			parse_opt_commit_object_name, (intptr_t)"HEAD",
+ 		},
+ 		{
+ 			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index de75411..8bec5e4 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -77,7 +77,7 @@ int parse_opt_verbosity_cb(const struct option *opt, const char *arg,
  	return 0;
  }
-+
-+int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
-+{
-+	struct ref_filter *rf = opt->value;
-+	unsigned char sha1[20];
-+
-+	rf->merge = starts_with(opt->long_name, "no")
-+		? REF_FILTER_MERGED_OMIT
-+		: REF_FILTER_MERGED_INCLUDE;
-+
-+	if (!arg)
-+		arg = "HEAD";
-+	if (get_sha1(arg, sha1))
-+		die(_("malformed object name %s"), arg);
-+
-+	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
-+	if (!rf->merge_commit)
-+		return opterror(opt, "must point to a commit", 0);
-+
-+	return 0;
-+}
-diff --git a/ref-filter.h b/ref-filter.h
-index c2856b8..ad2902b 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -50,6 +50,15 @@ struct ref_filter_cbdata {
- 	struct ref_filter *filter;
- };
  
-+/*  Macros for checking --merged and --no-merged options */
-+#define _OPT_MERGED_NO_MERGED(option, filter, h)				\
-+	{ OPTION_CALLBACK, 0, option, (filter), N_("commit"), (h), \
-+	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
-+	  parse_opt_merge_filter, (intptr_t) "HEAD" \
-+	}
-+#define OPT_MERGED(f, h) _OPT_MERGED_NO_MERGED("merged", f, h)
-+#define OPT_NO_MERGED(f, h) _OPT_MERGED_NO_MERGED("no-merged", f, h)
-+
- /*
-  * API for filtering a set of refs. Based on the type of refs the user
-  * has requested, we iterate through those refs and apply filters
-@@ -71,5 +80,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
- /*  Default sort option based on refname */
- struct ref_sorting *ref_default_sorting(void);
-+/*  Function to parse --merged and --no-merged options */
-+int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
- 
- #endif /*  REF_FILTER_H  */
+-int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
++int parse_opt_commit_object_name(const struct option *opt, const char *arg, int unset)
+ {
+ 	unsigned char sha1[20];
+ 	struct commit *commit;
+diff --git a/parse-options.h b/parse-options.h
+index 36c71fe..8542d9c 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -221,7 +221,7 @@ extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
+ extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
+ extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
+ extern int parse_opt_object_name(const struct option *, const char *, int);
+-extern int parse_opt_with_commit(const struct option *, const char *, int);
++extern int parse_opt_commit_object_name(const struct option *, const char *, int);
+ extern int parse_opt_tertiary(const struct option *, const char *, int);
+ extern int parse_opt_string_list(const struct option *, const char *, int);
+ extern int parse_opt_noop_cb(const struct option *, const char *, int);
 -- 
 2.4.3.436.g722e2ce.dirty
