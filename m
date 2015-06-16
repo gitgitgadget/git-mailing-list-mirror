@@ -1,142 +1,99 @@
-From: Jan-Philip Gehrcke <jgehrcke@googlemail.com>
-Subject: Re: Should the --encoding argument to log/show commands make any
- guarantees about their output?
-Date: Tue, 16 Jun 2015 11:38:45 +0200
-Message-ID: <557FEEA5.2080006@googlemail.com>
-References: <557E91D2.3000908@googlemail.com> <557EFB94.3040104@web.de>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Visualizing merge conflicts after the fact (using kdiff3)
+Date: Tue, 16 Jun 2015 11:43:02 +0200
+Organization: gmx
+Message-ID: <87b840d8c73fd7e4e7597e2fd835c703@www.dscho.org>
+References: <557F791D.3080003@nextest.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 11:39:08 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Raible <raible@nextest.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 11:43:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4nKl-0005Ss-EC
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 11:39:07 +0200
+	id 1Z4nOm-0000G6-K6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 11:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757393AbbFPJjA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2015 05:39:00 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:33523 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756423AbbFPJit (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 05:38:49 -0400
-Received: by wgez8 with SMTP id z8so7955104wge.0
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 02:38:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=H+PsPgwBBf1x3pwAjFOmt2d80jbJNmWZUwEsBJmt70w=;
-        b=rg729nrMqo9kWcbE0rb1vDryHkpe6IAAJth3GOPh7RGZ5RP5l3dOAQb5LQNqIviHSu
-         Z9gT8/1iW7yqUW9n/q1Vo/hmIskk5o4ZJgEpf7ffvrqDbsDe7y57mk+fGbg85b5UImiV
-         DXSusKw6wMmAUP8ycYbQ4sR3sy5hCjSfE7IrgtYneKl0H5hFBI8FP/H9PEKXidoBWytQ
-         gAH7F0wp0ShMkrC0hgA6tZZv78QyLScVQipuKk0vvqOhOQwBiKJRVwSYZIGnv/SyOhki
-         dT6ZAjLsnACuMVDcWdDL+M14h2IJIGlmEuLX66kMf+wxA4DY4l/c9QZVx4k99YV/6OQa
-         E5bg==
-X-Received: by 10.180.97.7 with SMTP id dw7mr41820531wib.74.1434447528244;
-        Tue, 16 Jun 2015 02:38:48 -0700 (PDT)
-Received: from [192.168.178.11] (ip92342367.dynamic.kabel-deutschland.de. [146.52.35.103])
-        by mx.google.com with ESMTPSA id k2sm1675240wif.3.2015.06.16.02.38.46
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jun 2015 02:38:47 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <557EFB94.3040104@web.de>
+	id S1754498AbbFPJnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 05:43:12 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51240 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754711AbbFPJnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 05:43:09 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LbuCq-1ZTuvi45Rc-00jJgU; Tue, 16 Jun 2015 11:43:03
+ +0200
+In-Reply-To: <557F791D.3080003@nextest.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:3vq9J66kldZTEwisKVUevSX9XI+9kmUAkommik4/h3AvXqxcuYN
+ OScXs7C2o2M0i2uSzbtBNsCPom0/xE5LZRKYjAeY7NxJ8oIiz4aIlb0g/EZVivHNjoDt5Gq
+ 9t1r7rM15gtICf4UXTy9ik/tS3gzMrq/krUom5i+8j0U3xHVkEDutEuPrUeazqVjvzqOubC
+ j7pYZ3DyEuslsHJ4Vfrxw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271745>
 
-On 15.06.2015 18:21, Torsten B=C3=B6gershausen wrote:
-> On 2015-06-15 10.50, Jan-Philip Gehrcke wrote:
->> Let me describe what I think it currently does:
->>
->> The program attempts to re-code a log message, so it follows the cha=
-in
->>
->>      raw input -> unicode -> raw output
-> Not sure what "raw input/output" means.
-> But there is only one reencode step involved, e.g.
-> input(8859) -> output(UTF-8)
+Hi Eric,
 
-We surely agree. With "raw" I meant a sequence of bytes, and with=20
-"unicode" I meant the intermediate state in the process of re-encoding=20
-(which can be thought of as decoding and encoding with a transient=20
-intermediate state).
+On 2015-06-16 03:17, Eric Raible wrote:
+> I'm running 1.9.5.msysgit.1, but this is a general git question...
+> 
+> Upon returning from a vacation, I was looking at what people had been
+> up to, and discovered on merge in which a colleague had resolved a merge
+> incorrectly.  It turns out that he has pushed *many* merges over the past
+> year which had conflicts in my code, and now I don't trust any of them.
+> 
+> So naturally I want to check each of them for correctness.
+> 
+> I know about "git log -p -cc SHA -- path", but it really doesn't
+> show just the conflicts so there's just too much noise in that output.
+> 
+> I use kdiff3 to resolve conflicts, so I'm looking for a way to
+> visualize these already-resolved conflicts with that tool.
+> As I said, there are many merges, so the prospect of checking
+> out each sha, doing the merge, and then comparing the results
+> is completely untenable.
+> 
+> Can anyone help?  Surely other people have wanted to review how
+> conflicts were resolved w/out looking at the noise of unconflicted
+> changes, right?
 
-> If the user ignores this warning, how should Git guess the encoding  =
-?
+If I was walking in your shoes, I would essentially recreate the merge conflicts and then use "git diff <merge-commit>" with the resolved merge in your current history.
 
-I entirely appreciate that there is no satisfying solution to this very=
-=20
-problem.
+Something like this:
 
->> If this step fails (if the entry contains a byte sequence that is in=
-valid in the specified/assumed input codec),
->> the procedure is aborted and the data is dumped as is (obviously wit=
-hout applying the requested output encoding).
->>
->> Is that correct?
-> Yes, see above.
+```bash
+mergecommit=$1
 
-Thanks!
+# probably should verify that the working directory is clean, yadda yadda
 
->> Hence, from my point of view, the rational that git show/log should =
-be able to output *text* information means
->> that they should not emit byte sequences that are invalid in the cod=
-ec specified via the --encoding argument.
->> In the current situation, the work of dealing with invalid byte sequ=
-ences is just outsourced to software
->> further below in the tool chain
->> (at some point a replacement character =EF=BF=BD should be displayed=
- to the user instead of the invalid raw bytes).
->>
->> I am not entirely sure where this discussion should lead to.
-> Yes, until someone writes a patch to improve either the documentation=
- or the code,
-> nothing will be changed.
->> However, I think that if the behavior of the software will not be ch=
-anged,
->> then the documentation for the --encoding option should be more prec=
-ise and
->> clarify what actually happens behind the scenes. What do you think?
-> Patches are more than welcome.
+# recreate merge conflicts on an unnamed branch (Git speak: detached HEAD)
+git checkout $mergecommit^
+git merge $mergecommit^2 ||
+die "This merge did not have any problem!"
 
-I'd be willing to contribute, but of course there must be a discussion=20
-and an agreement before that, if there is need to change something at=20
-all, and what exactly.
+# compare to the actual resolution as per the merge commit
+git diff $mergecommit
+```
 
-To this discussion I would like to contribute that I am of the opinion=20
-that there should be a command line option to make git show/log/friends=
-=20
-emit a byte stream that is guaranteed to be valid in a given codec.
+To list all the merge commits in the current branch, I would use the command-line:
 
-That would require detection and treatment of those cases where=20
-corrupted text resides in the repository (we cannot prevent it from=20
-entering the repository, as discussed). In these cases, one could emit =
-a=20
-replacement symbol (e.g. '?') per invalid byte subsequence (this seems=20
-to be more established than just swallowing the invalid byte sequence).
+```bash
+git rev-list --author="My Colleague" --parents HEAD |
+sed -n 's/ .* .*//p'
+```
 
-What do you think?
+(i.e. listing all the commits with their parents, then filtering just the ones having more than one parent, which would include octopus merges if your history has them.)
 
-I think the --encoding option would have ideal semantics for described=20
-behavior.
+Hopefully this gives you good ideas how to proceed.
 
-However, I guess maintaining backwards compatibility is an issue here.=20
-On the other hand, I realize that the --encoding option undergoes=20
-changes: the docs for git log in release 2.4.3 do not even list the=20
---encoding option anymore. Why is that? I haven't found a corresponding=
-=20
-changelog/release notes entry.
-
-
-Thanks,
-
-
-Jan-Philip
+Ciao,
+Johannes
