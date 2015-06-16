@@ -1,59 +1,62 @@
-From: Florian Aspart <florian.aspart@gmail.com>
-Subject: Using clean/smudge filters with difftool
-Date: Tue, 16 Jun 2015 16:11:03 +0200
-Message-ID: <CAGA3++LiX9NyK94RPiuiG83X8FSRN4EkaxMchir51hGSQY90Tw@mail.gmail.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: [PATCH v3 00/11] add options to for-each-ref
+Date: Tue, 16 Jun 2015 19:49:31 +0530
+Message-ID: <CAOLa=ZQeZ=6mZcntR_BS_Wp0LXDzSUx9WTLXCTLxemb0e3SS0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 16:18:17 2015
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 16 16:20:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4rgn-0001U7-PX
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 16:18:10 +0200
+	id 1Z4rii-0002qN-RH
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 16:20:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902AbbFPOSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 10:18:05 -0400
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:34946 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754547AbbFPOSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 10:18:03 -0400
-Received: by ykar6 with SMTP id r6so14374673yka.2
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 07:18:02 -0700 (PDT)
+	id S1756310AbbFPOUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 10:20:05 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:34637 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756180AbbFPOUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 10:20:02 -0400
+Received: by obbsn1 with SMTP id sn1so12306311obb.1
+        for <git@vger.kernel.org>; Tue, 16 Jun 2015 07:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=o1zU1RFLnqv/q+Owdx4dlKKGVd9NICaYdPcrcD0gev8=;
-        b=n0MkUJYgM7cAk2r/Bvjk89zQxvtGw1lnMjgU6gCDJgaK05lOmKmRV4UHwC/NmY7vX7
-         //vP67JctprnQuOIVoQwYfLfur4b5gJFq59TTyXmYB018KBzovlJbFZu5LwE3u39+NCO
-         9Mt4zi46CYzKQlyMhPl2xW2R2cyMuAGPIrRnBlhmDNuRCFSCnXmY26EbdoxNgjF9P/G1
-         s0KXGl9olMHupNgm2JbbIn3joB8o49KGsuHjU51u2mMzIf3hSOBfLzwwGF/U0HoLRgC7
-         /c71vTK5INScrFAmp4/cvMSJkbub2Gj4Y1br+rVMcjyblsQI1gg5E5D6uFDVqR7pkF6r
-         Vmzw==
-X-Received: by 10.129.87.133 with SMTP id l127mr741597ywb.2.1434463883841;
- Tue, 16 Jun 2015 07:11:23 -0700 (PDT)
-Received: by 10.37.114.85 with HTTP; Tue, 16 Jun 2015 07:11:03 -0700 (PDT)
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=cC9yiMM2zn6HZoxgL7qU+SpyDVXbUW5Q4fjHr+2qIQY=;
+        b=ieTpmU1kt4k+VWbseizjfM9amM8AGqEjJZrfIYUy7E8EN8S10JcOSUHgBJXAXQz0qM
+         JI0B5L5GsnAwBh0iMCsvCm/2j4uwGvYVAHKld2q89pz1aEsEDfleY+KQEWnzVnmmSlcO
+         i+B32swiSP9950En+V0wa3P9ZGSnVkYHeO1FJa4TyWOI27QuPi78jXgoi7QEuaBvWcSv
+         k3RFeaRQdlnwLAxaBYvZEAhetRUNjl7NpL+e/5XLsp+i3xYcsFPpGs5NQ+smnalCzq/H
+         qBRDnUbWYwLeryM1WA+kG+OwuhJopgAGhXJ/lv+X3Y8krsDXRlmRzIp6fRSJWRLEux9o
+         CD4g==
+X-Received: by 10.182.22.33 with SMTP id a1mr467625obf.41.1434464401757; Tue,
+ 16 Jun 2015 07:20:01 -0700 (PDT)
+Received: by 10.182.95.165 with HTTP; Tue, 16 Jun 2015 07:19:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271754>
 
-Hi everyone,
+This is continuation of the patch series 'Create ref-filter from for-each-ref'
+found at : http://thread.gmane.org/gmane.comp.version-control.git/271563
 
-I created a clean filter to apply on some files before commiting them.
-The filter works correctly when I commit the file and is also applied
-when I usethe iff command line tool.
-However, when using difftool with meld, the filter is not applied and
-the different versions of the files are compared without any
-filtering.
+The previous version of this series can be found at :
+http://thread.gmane.org/gmane.comp.version-control.git/271575
 
-Is there a way to apply the clean/smudge filters when comparing the
-working copy of a file to the HEAD version in a gui diff tool?
+Changes made:
+* Add PARSE_OPT_HIDDEN back in 09/11
+* Whitespace changes and added missing information in 01/11
+* Reduce redundancy in 05/11
 
-I'm using git version 2.4.3 under Ubuntu.
+Thanks to Junio C Hamano, Matthieu Moy, and Christian Couder for all
+the suggestions.
 
-Best,
-Florian
+-- 
+Regards,
+Karthik Nayak
