@@ -1,196 +1,161 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] trace: add GIT_TRACE_STDIN
-Date: Tue, 16 Jun 2015 17:20:40 -0400
-Message-ID: <20150616212039.GA11353@peff.net>
-References: <20150616193102.GA15856@peff.net>
- <20150616193716.GC15931@peff.net>
- <20150616194907.GA15988@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Augie Fackler <augie@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 23:20:53 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] mergetools: add config option to disable auto-merge
+Date: Tue, 16 Jun 2015 17:35:14 -0400
+Message-ID: <1434490514-36204-2-git-send-email-rappazzo@gmail.com>
+References: <1434490514-36204-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: davvid@gmail.com, ssaasen@atlassian.com, john@keeping.me.uk,
+	gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jun 16 23:35:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4yHo-0001ia-R9
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 23:20:49 +0200
+	id 1Z4yWJ-0007eV-Oq
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 23:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764AbbFPVUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 17:20:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47091 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754157AbbFPVUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 17:20:43 -0400
-Received: (qmail 24983 invoked by uid 102); 16 Jun 2015 21:20:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 16:20:43 -0500
-Received: (qmail 19255 invoked by uid 107); 16 Jun 2015 21:20:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Jun 2015 17:20:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2015 17:20:40 -0400
-Content-Disposition: inline
-In-Reply-To: <20150616194907.GA15988@peff.net>
+	id S1757498AbbFPVfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 17:35:42 -0400
+Received: from mail-qc0-f178.google.com ([209.85.216.178]:36754 "EHLO
+	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757479AbbFPVfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 17:35:31 -0400
+Received: by qcej3 with SMTP id j3so8638250qce.3
+        for <git@vger.kernel.org>; Tue, 16 Jun 2015 14:35:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/HsIFKsdDXLznYAEs3MNRKYTfURwmDaldJ7npf/EN2s=;
+        b=QdqEIyeqo/Jh8Vq1FdEtgVmEWbRBtFul6MC97zmugBaAuHMGPMTl2oKCwtGj80kwDl
+         W/WeV4PUg3+dhmCNnYNO9gkoNhn4f8badZhIfQAAjuKEFup1JJsgNxgJ2OkuyiFxqHsA
+         GeG78ug5uILv2CuG7O4nEJuvkNoYyIgaZc6CdM+jHMuIMY9i1elk1XPWQGBFHAd25aIA
+         Uzrl5X4bEVIWFlZiYD/2YeTJuMVEMSnGuB19oIT99lY3MRiKEealsRW8kxOaX5gkVPn0
+         OkZ1NSYvCAeDPzdjKAEvrS+ezNIdQG0rOAkhxL04hXb6NoLn7kZsEP7FiNKFL6KV+nUM
+         CFZQ==
+X-Received: by 10.55.26.165 with SMTP id l37mr5913157qkh.88.1434490531106;
+        Tue, 16 Jun 2015 14:35:31 -0700 (PDT)
+Received: from ool-45729003.dyn.optonline.net (ool-45729003.dyn.optonline.net. [69.114.144.3])
+        by mx.google.com with ESMTPSA id 139sm1100038qhx.22.2015.06.16.14.35.30
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 16 Jun 2015 14:35:30 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2
+In-Reply-To: <1434490514-36204-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271800>
 
-On Tue, Jun 16, 2015 at 03:49:07PM -0400, Jeff King wrote:
+For some mergetools, the current invocation of git mergetool will
+include an auto-merge flag.  By default the flag is included, however if
+the git config option 'merge.automerge' is set to 'false', then that
+flag will now be omitted.
 
-> Another option would be to stop trying to intercept stdin in git.c, and
-> instead make this a feature of run-command.c. That is, right before we
-> exec a process, tee its stdin there. That means that you cannot do:
-> 
->   GIT_TRACE_STDIN=/tmp/foo.out git foo
-> 
-> to collect the stdin of foo. But that is not really an interesting case
-> anyway. You can run "tee" yourself if you want. The interesting cases
-> are the ones where git is spawning a sub-process, and you want to
-> intercept the data moving between the git processes.
-
-Hmm. I guess we do not actually have to move the stdin interception
-there. We can just move the config-checking there, like the patch below.
-
-It basically just converts trace.foo.bar into GIT_TRACE_BAR when we are
-running "foo" as a git command.  This does work, but is perhaps
-potentially confusing to the user, because it only kicks in when _git_
-runs "foo". IOW, this works:
-
-  git config trace.upload-pack.foo /path/to/foo.out
-  git daemon
-
-and will trace as you expect. But then running:
-
-  git upload-pack
-
-yourself will do nothing.
-
-I dunno.
-
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
 ---
- run-command.c | 17 +++++++++++++++++
- trace.c       | 44 ++++++++++++++++++++++++++++++++++++++++++++
- trace.h       |  9 +++++++++
- 3 files changed, 70 insertions(+)
+ Documentation/config.txt        |  6 ++++++
+ Documentation/git-mergetool.txt | 19 +++++++++++++------
+ mergetools/araxis               |  4 +++-
+ mergetools/diffmerge            |  4 +++-
+ mergetools/kdiff3               |  4 +++-
+ 5 files changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 4d73e90..2febbb5 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -284,6 +284,23 @@ int start_command(struct child_process *cmd)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 43bb53c..658d8f7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1864,6 +1864,12 @@ mergetool.meld.hasOutput::
+ 	to `true` tells Git to unconditionally use the `--output` option,
+ 	and `false` avoids using `--output`.
  
- 	if (!cmd->argv)
- 		cmd->argv = cmd->args.argv;
-+	if (cmd->git_cmd) {
-+		/*
-+		 * Load any extra variables into env_array. But
-+		 * if we weren't going to use it (in favor of "env"),
-+		 * then consolidate the two. Make sure the original "env"
-+		 * goes after what we add, so that it can override.
-+		 *
-+		 * We cannot just keep two lists, because we may hand off the
-+		 * single list to a spawn() implementation.
-+		 */
-+		trace_config_for(cmd->argv[0], &cmd->env_array);
-+		if (cmd->env_array.argc && cmd->env) {
-+			for (; *cmd->env; cmd->env++)
-+				argv_array_push(&cmd->env_array, *cmd->env);
-+			cmd->env = NULL;
-+		}
-+	}
- 	if (!cmd->env)
- 		cmd->env = cmd->env_array.argv;
++mergetool.automerge::
++	When invoking a custom merge tool which includes an auto-merge
++	option, Git will include that option by default.  If this variable
++	is set to `false` then the auto-merge option is not used when 
++	invoking the custom merge tool.
++
+ mergetool.keepBackup::
+ 	After performing a merge, the original file with conflict markers
+ 	can be saved as a file with a `.orig` extension.  If this variable
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index e846c2e..3461d3a 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -79,16 +79,23 @@ success of the resolution after the custom tool has exited.
+ 	Prompt before each invocation of the merge resolution program
+ 	to give the user a chance to skip the path.
  
-diff --git a/trace.c b/trace.c
-index a7ec484..86c988e 100644
---- a/trace.c
-+++ b/trace.c
-@@ -24,6 +24,7 @@
+-TEMPORARY FILES
+----------------
+-`git mergetool` creates `*.orig` backup files while resolving merges.
+-These are safe to remove once a file has been merged and its
+-`git mergetool` session has completed.
+-
++CONFIGURATION OPTIONS
++---------------------
++mergetool.keepBackup::
++	`git mergetool` creates `*.orig` backup files while resolving merges.
++	These are safe to remove once a file has been merged and its
++	`git mergetool` session has completed.
+++
+ Setting the `mergetool.keepBackup` configuration variable to `false`
+ causes `git mergetool` to automatically remove the backup as files
+ are successfully merged.
  
- #include "cache.h"
- #include "quote.h"
-+#include "argv-array.h"
- 
- static size_t expand_trace_name(struct strbuf *out, const char *fmt,
- 				void *data)
-@@ -449,3 +450,46 @@ void trace_command_performance(const char **argv)
- 	sq_quote_argv(&command_line, argv, 0);
- 	command_start_time = getnanotime();
- }
++mergetool.automerge::
++	For some mergetools, the current invocation of git mergetool will
++	include an auto-merge flag.  By default the flag is included, however if
++	the git config option `merge.automerge` is set to `false`, then that
++	flag will be omitted.
 +
-+struct trace_config_data {
-+	const char *want_cmd;
-+	struct argv_array *out;
-+};
-+
-+static int trace_config_cb(const char *var, const char *value, void *vdata)
-+{
-+	struct trace_config_data *data = vdata;
-+	const char *have_cmd, *key;
-+	int have_len;
-+
-+	if (!parse_config_key(var, "trace", &have_cmd, &have_len, &key) &&
-+	    have_cmd &&
-+	    !strncmp(data->want_cmd, have_cmd, have_len) &&
-+	    data->want_cmd[have_len] == '\0') {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		strbuf_addstr(&buf, "GIT_TRACE_");
-+		while (*key)
-+			strbuf_addch(&buf, toupper(*key++));
-+
-+		/*
-+		 * Environment always takes precedence over config, so do not
-+		 * override existing variables. We cannot rely on setenv()'s
-+		 * overwrite flag here, because we may pass the list off to
-+		 * a spawn() implementation, which always overwrites.
-+		 */
-+		if (!getenv(buf.buf))
-+			argv_array_pushf(data->out, "%s=%s", buf.buf, value);
-+
-+		strbuf_release(&buf);
-+	}
-+	return 0;
-+}
-+
-+void trace_config_for(const char *cmd, struct argv_array *out)
-+{
-+	struct trace_config_data data;
-+	data.want_cmd = cmd;
-+	data.out = out;
-+	git_config(trace_config_cb, &data);
-+}
-diff --git a/trace.h b/trace.h
-index 179b249..83618e9 100644
---- a/trace.h
-+++ b/trace.h
-@@ -4,6 +4,8 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
- 
-+struct argv_array;
-+
- struct trace_key {
- 	const char * const key;
- 	int fd;
-@@ -20,6 +22,13 @@ extern uint64_t getnanotime(void);
- extern void trace_command_performance(const char **argv);
- extern void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
- 
-+/**
-+ * Load any trace-related config for git command "cmd", and insert the matching
-+ * environment variables into "out", which is suitable for use by run-command
-+ * and friends.
-+ */
-+void trace_config_for(const char *cmd, struct argv_array *out);
-+
- #ifndef HAVE_VARIADIC_MACROS
- 
- __attribute__((format (printf, 1, 2)))
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/mergetools/araxis b/mergetools/araxis
+index 64f97c5..00e63da 100644
+--- a/mergetools/araxis
++++ b/mergetools/araxis
+@@ -6,7 +6,9 @@ merge_cmd () {
+ 	touch "$BACKUP"
+ 	if $base_present
+ 	then
+-		"$merge_tool_path" -wait -merge -3 -a1 \
++		automerge="-merge"
++		test "$(git config --get --bool mergetool.automerge)" = false && automerge=''
++		"$merge_tool_path" -wait ${automerge} -3 -a1 \
+ 			"$BASE" "$LOCAL" "$REMOTE" "$MERGED" >/dev/null 2>&1
+ 	else
+ 		"$merge_tool_path" -wait -2 \
+diff --git a/mergetools/diffmerge b/mergetools/diffmerge
+index f138cb4..287489b 100644
+--- a/mergetools/diffmerge
++++ b/mergetools/diffmerge
+@@ -5,7 +5,9 @@ diff_cmd () {
+ merge_cmd () {
+ 	if $base_present
+ 	then
+-		"$merge_tool_path" --merge --result="$MERGED" \
++		automerge="--merge"
++		test "$(git config --get --bool mergetool.automerge)" = false && automerge=''
++		"$merge_tool_path" ${automerge} --result="$MERGED" \
+ 			"$LOCAL" "$BASE" "$REMOTE"
+ 	else
+ 		"$merge_tool_path" --merge \
+diff --git a/mergetools/kdiff3 b/mergetools/kdiff3
+index 793d129..8e1d063 100644
+--- a/mergetools/kdiff3
++++ b/mergetools/kdiff3
+@@ -7,7 +7,9 @@ diff_cmd () {
+ merge_cmd () {
+ 	if $base_present
+ 	then
+-		"$merge_tool_path" --auto \
++		automerge="--auto"
++		test "$(git config --get --bool mergetool.automerge)" = false && automerge=''
++		"$merge_tool_path" ${automerge} \
+ 			--L1 "$MERGED (Base)" \
+ 			--L2 "$MERGED (Local)" \
+ 			--L3 "$MERGED (Remote)" \
 -- 
-2.4.3.699.g84b4da7
+2.4.2
