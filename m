@@ -1,90 +1,98 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 05/11] ref-filter: add parse_opt_merge_filter()
-Date: Tue, 16 Jun 2015 22:00:20 +0530
-Message-ID: <CAOLa=ZS_gY-MuGJ86TFpHhMXNYJ1gHWQWyfv71gDCVm1sMXZNw@mail.gmail.com>
-References: <CAOLa=ZQeZ=6mZcntR_BS_Wp0LXDzSUx9WTLXCTLxemb0e3SS0w@mail.gmail.com>
- <1434464457-10749-1-git-send-email-karthik.188@gmail.com> <1434464457-10749-5-git-send-email-karthik.188@gmail.com>
- <vpqmvzz7hjq.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] pkt-line: support tracing verbatim pack contents
+Date: Tue, 16 Jun 2015 09:39:19 -0700
+Message-ID: <xmqqvben6214.fsf@gitster.dls.corp.google.com>
+References: <20150612212526.GA25447@peff.net>
+	<20150612212827.GC25757@peff.net>
+	<CAHcr6HYvVR4uTmtegWHK0h+v_aVs4JVLsSwvjthGY3pb=-Q0yQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 16 18:31:06 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: Augie Fackler <augie@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 18:39:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z4tlI-0008LC-Is
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 18:30:56 +0200
+	id 1Z4ttX-00072I-PI
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jun 2015 18:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751861AbbFPQaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 12:30:52 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:34298 "EHLO
-	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbbFPQau (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 12:30:50 -0400
-Received: by oigx81 with SMTP id x81so15321915oig.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2015 09:30:50 -0700 (PDT)
+	id S1752776AbbFPQjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 12:39:23 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:32870 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751404AbbFPQjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 12:39:22 -0400
+Received: by igbos3 with SMTP id os3so48191582igb.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2015 09:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hGi+0ckQw1h5KEgT7Hmlsks6XKsb/av3BclS11FOvfw=;
-        b=TvZ4cbiTuDPX6ZeDb5CNlLd/z/ASwMyl0+xQfXEiaT95lHBkSq6V8zgeRvw+HmuyJ/
-         yFFiIRjQukfNGINRyDXpf4bBy91VYfadJ18/zwgiDyvLkko7CJO7A+MQ9RPLrVcUeVK9
-         7oeI802OBBUGXidwAT0pLIRReQOGkIZJlsKoNub3y2NbfGxq4kUy0xyeycbH4MdVT9qZ
-         UIXACUoNzhRH+M9GAy/vwv0abUJybsgz+dx8pcyRTCbhTQNZVkJyrGrifL1EDubh2K1l
-         qr2Akt+DP60YVJ6Yy7HM4UdEDhe9y+yy9fKKaHzJHJngulq6UlHj6id1ISOk/bjnkBdJ
-         5hqQ==
-X-Received: by 10.202.73.198 with SMTP id w189mr927766oia.102.1434472250395;
- Tue, 16 Jun 2015 09:30:50 -0700 (PDT)
-Received: by 10.182.95.165 with HTTP; Tue, 16 Jun 2015 09:30:20 -0700 (PDT)
-In-Reply-To: <vpqmvzz7hjq.fsf@anie.imag.fr>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=V0JDcdw2mBtr06nLdeYIWlTRW49RoHoud4LZ7blKT/c=;
+        b=qmAndrNgKLHKRajQPrgqY35gCtXi6PpvxTDL3JJ8h9Ga1inq3NZfL/g/6znj13Vfxx
+         7Dn0zQgkJK8yDAnEblCQACRGvbAQdR9rdO9Ai+CNXKLdOeWTEi3SaosqJYQLeH8zuF3O
+         1Bze3iSti/K6XZvOD8gP4YdhsABNyBDcMfYKBppJj33VLPrntXMGMNuurFyAYsvYObzh
+         cDgVIucy5lXJbnvnNvBhhUL/HNCVy1gggCbtHHxSr96Tya8LutHuDH+xHMgBcNjJkN2H
+         x0lnLsrLAIrje0et9N0sriPlPysR8P8ivKW5IEliyhfxpqDAzsBDY2e5kVOvLjRyK30Z
+         7rbg==
+X-Received: by 10.107.135.138 with SMTP id r10mr1780480ioi.13.1434472761908;
+        Tue, 16 Jun 2015 09:39:21 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6c2b:219c:23d9:cf91])
+        by mx.google.com with ESMTPSA id u38sm836479ioi.0.2015.06.16.09.39.19
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 16 Jun 2015 09:39:20 -0700 (PDT)
+In-Reply-To: <CAHcr6HYvVR4uTmtegWHK0h+v_aVs4JVLsSwvjthGY3pb=-Q0yQ@mail.gmail.com>
+	(Augie Fackler's message of "Tue, 16 Jun 2015 11:38:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271777>
 
-On Tue, Jun 16, 2015 at 9:48 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+Augie Fackler <augie@google.com> writes:
+
+> On Fri, Jun 12, 2015 at 5:28 PM, Jeff King <peff@peff.net> wrote:
+>> When debugging the pack protocol, it is sometimes useful to
+>> store the verbatim pack that we sent or received on the
+>> wire. Looking at the on-disk result is often not helpful for
+>> a few reasons:
+>>
+>>   1. If the operation is a clone, we destroy the repo on
+>>      failure, leaving nothing on disk.
+>>
+>>   2. If the pack is small, we unpack it immediately, and the
+>>      full pack never hits the disk.
+>>
+>>   3. If we feed the pack to "index-pack --fix-thin", the
+>>      resulting pack has the extra delta bases added to it.
+>>
+>> We already have a GIT_TRACE_PACKET mechanism for tracing
+>> packets. Let's extend it with GIT_TRACE_PACK to dump the
+>> verbatim packfile.
 >
->> This is copied from 'builtin/branch.c' which will eventually be removed
->> when we port 'branch.c' to use ref-filter APIs.
+> FWIW, this also works for me - I have no preference between my patches
+> and Jeff's. I suspect yours are much better given that you have a clue
+> about git internals ;).
 >
-> Earlier in the series you took code from tag.c.
+> One bit of feedback is that it might be worth mentioning (though I
+> don't feel strongly) that GIT_TRACE_PACK works with or without
+> GIT_TRACE_PACKET - that wasn't immediately obvious to me, but it makes
+> sense once I read the code.
 >
-> I think you should focus on either merge or tag, get a ref-filter-based
-> replacement that passes the tests for it, and then consider the other.
-> The fact that the test pass for a rewritten command is important to
-> check the correctness of the these patches.
->
-> I'm not asking you to remove commits from this series though. Just
-> impatient to see one command fully replaced (actually, I see that you
-> have more commits than you sent in your branch, so I guess it will come
-> soon on the list) :-).
->
+> Thanks!
 
-The idea is to currently get ref-filter to support all options and port it over
-to for-each-ref which would be the first command to completely use ref-filter.
+Thanks, both.  I think this series makes sense.
 
-And like you said, the challenge is to then ensure tag.c and branch.c to use
-ref-filter and make them pass all tests.
-
-If you see my branch on Github, I have been pushing patches to port tag.c to
-use ref-filter. I just finish porting tag.c to use ref-filter. Now to
-include missing
-options in it, then I'll push the series to the list. (Must be quite a
-co-incidence
-cause I just pushed a patch for tag.c to completely use ref-filter )
-
-Like you mentioned tag.c and branch.c both have their own setup for which
-small changes need to be made in ref-filter. So taking one step at a time, I'll
-finish up with tag.c and end it with branch.c
-
--- 
-Regards,
-Karthik Nayak
+As to the documentation, I have a feeling that, unless the reader
+and/or the user intimately knows that TRACE_PACK is implemented by
+hooking into the same mechanism that TRACE_PACKET needs to, s/he
+would not even wonder if TRACE_PACKET needs to be enabled when
+asking for TRACE_PACK.  Yes, one is a proper substring of the other,
+but the similarity between the two stops there.  While I do not
+think it would hurt very much to mention that they are independent,
+I have a slight suspicion that it might make it more likely to get
+user confused.
