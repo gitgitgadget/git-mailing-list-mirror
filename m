@@ -1,93 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t3404: demonstrate CHERRY_PICK_HEAD bug
-Date: Wed, 17 Jun 2015 10:33:39 -0700
-Message-ID: <xmqqtwu66xzg.fsf@gitster.dls.corp.google.com>
-References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
-	<cover.1434528725.git.johannes.schindelin@gmx.de>
-	<f76ca5d0b6687a4d2ee4f587d8ba75a643a33c04.1434528725.git.johannes.schindelin@gmx.de>
+From: "Andres G. Aragoneses" <knocte@gmail.com>
+Subject: Re: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>"
+ better
+Date: Wed, 17 Jun 2015 19:53:06 +0200
+Message-ID: <mlsc62$8u5$1@ger.gmane.org>
+References: <558127CB.70603@web.de>	<CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>	<vpq8ubiwqo9.fsf@anie.imag.fr> <mlrmnt$te5$1@ger.gmane.org>	<vpqoaketusa.fsf@anie.imag.fr> <mlrn9r$9ho$1@ger.gmane.org>	<vpqtwu6sf4r.fsf@anie.imag.fr>	<xmqqoake4akt.fsf@gitster.dls.corp.google.com>	<xmqqd20u48at.fsf@gitster.dls.corp.google.com>	<5581A3A3.1070908@web.de> <vpqh9q6gsdt.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 17 19:33:48 2015
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 17 19:53:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5HDe-00024R-Rs
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:33:47 +0200
+	id 1Z5HWj-0003u6-IE
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756499AbbFQRdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 13:33:43 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:34896 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753980AbbFQRdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 13:33:42 -0400
-Received: by igbzc4 with SMTP id zc4so108675244igb.0
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 10:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=g5DYvvvl3PWpqAFX0coCAdorMhygTnpCpy42K9LTDGo=;
-        b=W/CddRdnVGefpzeX4sXZJv1QqYosOiNNGH+3Y7wUbPxTsZiX+h5aJkPFQH9xgOJ+qM
-         Dwb0sw+bu3G1zMeKMz4dbhgAjEn3vg9gKjnqpQH0wxjf7AnN5iMfO4kx303XiyOzJfys
-         GRHUi0Q8RdxeEj9baq39IERK/tCcPdKdxolatki7JlknMIsrydMknwkyCVf9HYp6e+l6
-         2YdpwYM3tqd4T9wAGKNiXtLwYOJLzOoD801/NqrRSj6vQx5Ca3sivOf+UY+bgt0vkng6
-         23dEOlXkFwwesYazSAe5xsEviY3LAEgq7PMbeRr2E0RZiNuhcPYKM96E26V7vrMaVm26
-         EMIg==
-X-Received: by 10.43.171.70 with SMTP id nt6mr1398085icc.73.1434562421355;
-        Wed, 17 Jun 2015 10:33:41 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id i4sm12478957igm.2.2015.06.17.10.33.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 10:33:40 -0700 (PDT)
-In-Reply-To: <f76ca5d0b6687a4d2ee4f587d8ba75a643a33c04.1434528725.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 17 Jun 2015 10:16:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756251AbbFQRxZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 13:53:25 -0400
+Received: from plane.gmane.org ([80.91.229.3]:35455 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755820AbbFQRxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 13:53:20 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Z5HWY-0003iy-6V
+	for git@vger.kernel.org; Wed, 17 Jun 2015 19:53:18 +0200
+Received: from 46.24.152.62 ([46.24.152.62])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 19:53:18 +0200
+Received: from knocte by 46.24.152.62 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 19:53:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 46.24.152.62
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <vpqh9q6gsdt.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271877>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On 17/06/15 19:24, Matthieu Moy wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>
+>> My v3 will probably use the original line:
+>> git-checkout - Checkout a branch or paths to the working tree
+>
+> I think mentionning "Switch branch" was a real improvement. For someo=
+ne
+> not familiar with the version control vocabulary, "checkout" does not
+> mean much (just looked in a dictionary, it talks about payment and
+> leaving a room in a hotel ...). And someone not understanding what
+> "checkout" means in this context won't be helped much reading the
+> description and getting "checkout" there.
+>
+> (Ironically, Junio did almost the same remark when I proposed to
+> document "git describe" as "Describe ...", but the word "describe" do=
+es
+> not have the ambiguity problem that "checkout" has)
+>
+>> 'git checkout <commit> -- <path>'
+>> will "copy" the version from another commit into the workspace.
+>
+> If <commit> exists, it means that the state of this path existed
+> somewhere in <path> in the past (well, modulo "git add -p" and other
+> ways to cheat with history).
+>
+> So, to me, "restore a previous version" does apply in this case. Perh=
+aps
+> "restore a recorded state into the worktree" (my favorite up to now I
+> think).
+>
+> But as you say, it copies into the workspace, so "copy a previous
+> version into the workspace" sounds good to me.
+>
+> Basically, I'm fine with anything starting with "Switch branches or",
+> but please do change the headline ;-).
+>
 
-> +test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
-> +	git checkout -b commit-to-skip &&
-> +	for double in X 3 1
-> +	do
-> +		seq 5 | sed "s/$double/&&/" >seq &&
-> +		git add seq &&
-> +		test_tick &&
-> +		git commit -m seq-$double
-> +	done &&
-> +	git tag seq-onto &&
-> +	git reset --hard HEAD~2 &&
-> +	git cherry-pick seq-onto &&
-> +	test_must_fail git rebase -i seq-onto &&
+Having read all this thread, I think it's really confusing that:
+1) We have this command named "checkout", as Matthieu points out.
+2) This command allows different distinct operations (one for when it=20
+receives a path, other for when it receives a branch, other for when it=
+=20
+receives a commit...).
 
-Shouldn't this explicitly specify what fake editor is to be used,
-instead of relying on whatever the last test happened to have used?
+So what I would propose is fix the root of the problem: split these=20
+command in several ones, and mark the "checkout" command as deprecated=20
+(it would still allow the same functions as before, but it would not be=
+=20
+documented, and would be announced as deprecated when used).
 
-I thought this deserved to go to older maintenance track, but the
-fake editor that was used last are different between branches, so
-"rebase -i" fails for a wrong reason (i.e. cannot spawn the editor)
-when queued on say maint-2.2.
+So then we could have a "git switch <branchname>" for switching to a=20
+different branch.
 
-> +	test -d .git/rebase-merge &&
-> +	git rebase --continue &&
-> +	git diff seq-onto &&
+Also a "git discard <path>" to discard local changes.
 
-I am puzzled with this "diff"; what is this about?  Is it a remnant
-from an earlier debugging session, or is it making sure seq-onto is
-a valid tree-ish?
+Etcetera.
 
-> +	test ! -d .git/rebase-merge &&
-> +	test ! -f .git/CHERRY_PICK_HEAD
-> +'
-> +
->  test_done
-
-Thanks.
+Comments?
