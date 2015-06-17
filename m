@@ -1,106 +1,73 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 2/2] rebase -i: do not leave a CHERRY_PICK_HEAD file
- behind
-Date: Wed, 17 Jun 2015 14:58:14 +0200
-Message-ID: <20150617145814.Horde.VFmyWwlQfspzMMXX3ZuSlQ4@webmail.informatik.kit.edu>
-References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
- <cover.1434528725.git.johannes.schindelin@gmx.de>
- <2751d249ba6315f0139ba8fd6aa6ff23c32c9e69.1434528725.git.johannes.schindelin@gmx.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Fwd: New Defects reported by Coverity Scan for git
+Date: Wed, 17 Jun 2015 20:54:56 +0700
+Message-ID: <CACsJy8D5_n3+yQ=7fRFMv6XU=s3vf0hoi4-7yDyYZSByK0zKsA@mail.gmail.com>
+References: <558151df465a5_4fafe3b3182568a@scan.mail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed; DelSp=Yes
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 17 14:58:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 15:55:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5CvA-0003T4-Ix
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 14:58:24 +0200
+	id 1Z5DoT-0002Aj-S9
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 15:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbbFQM6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 08:58:20 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:60997 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753116AbbFQM6S (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 08:58:18 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1Z5Cv1-00044Z-T8; Wed, 17 Jun 2015 14:58:15 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1Z5Cv0-00072N-LF; Wed, 17 Jun 2015 14:58:14 +0200
-Received: from x590d2ef6.dyn.telefonica.de (x590d2ef6.dyn.telefonica.de
- [89.13.46.246]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Wed, 17 Jun 2015 14:58:14 +0200
-In-Reply-To: <2751d249ba6315f0139ba8fd6aa6ff23c32c9e69.1434528725.git.johannes.schindelin@gmx.de>
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1434545895.
+	id S1755231AbbFQNz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 09:55:29 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:35002 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754990AbbFQNz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 09:55:27 -0400
+Received: by iesa3 with SMTP id a3so34211972ies.2
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 06:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LubwvjOyBb74zTE6cKuUvlnAJWy0ph6RO3wvyYahwlE=;
+        b=aPuQEXB4HxCa5wUvOcSIddnTGCKwbyM1AnZ5bLOgf7i9w4Fg9P031w2OCHaEiop92M
+         msSN9eokqaj/h/k8GsxKX8D/CexJ8wRnbn1zx7BFODXgWNRs7AWj+Lq9+drSS5mi177x
+         of48S/50iBhGZig6y8itJ7RZ1iJqwwaD9I5VeFX1lbhuy0GQ1w2lxiGgDCumwclmfsR4
+         HZvBekpti4VGUx6ZEM9Htc0zhl795zFd0skbhvXbwpGJOGxRftXcarYfNIE1m6NzE4yg
+         sORoprRp1NSq8c5e7dOQSRXYb0wKCnJkFfvpKYjakYiYUhLfYpvpmWY9nK9Ar0XrDmnh
+         jdXQ==
+X-Received: by 10.107.47.224 with SMTP id v93mr8241254iov.86.1434549326978;
+ Wed, 17 Jun 2015 06:55:26 -0700 (PDT)
+Received: by 10.107.6.226 with HTTP; Wed, 17 Jun 2015 06:54:56 -0700 (PDT)
+In-Reply-To: <558151df465a5_4fafe3b3182568a@scan.mail>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271838>
 
-Hi,
+I think Coverity caught this correctly.
 
-Quoting Johannes Schindelin <johannes.schindelin@gmx.de>:
-> When skipping commits whose changes were already applied via `git rebase
-> --continue`, we need to clean up said file explicitly.
->
-> The same is not true for `git rebase --skip` because that will execute
-> `git reset --hard` as part of the "skip" handling in git-rebase.sh, even
-> before git-rebase--interactive.sh is called.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+** CID 1306846:  Memory - illegal accesses  (USE_AFTER_FREE)
+/builtin/pull.c: 287 in config_get_rebase()
 
-Nice quick turnaround, thanks.
 
-So, with this change the 'git reset' won't be necessary at all, right?
-
-> ---
->  git-rebase--interactive.sh    | 6 +++++-
->  t/t3404-rebase-interactive.sh | 2 +-
->  2 files changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index dc3133f..16e0a82 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -849,7 +849,11 @@ continue)
->  	# do we have anything to commit?
->  	if git diff-index --cached --quiet HEAD --
->  	then
-> -		: Nothing to commit -- skip this
-> +		: Nothing to commit -- skip this commit
-
-"While at it", perhaps you could turn this into a proper comment with '#".
-Now that this if-branch starts to actually do something, there's no  
-reason to continue (ab)using the null command.
-
-> +
-> +		test ! -f "$GIT_DIR"/CHERRY_PICK_HEAD ||
-> +		rm "$GIT_DIR"/CHERRY_PICK_HEAD ||
-> +		die "Could not remove CHERRY_PICK_HEAD"
->  	else
->  		if ! test -f "$author_script"
->  		then
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 5d52775..241d4d1 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1102,7 +1102,7 @@ test_expect_success 'rebase -i commits that  
-> overwrite untracked files (no ff)' '
->  	test $(git cat-file commit HEAD | sed -ne \$p) = I
->  '
->
-> -test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
-> +test_expect_success 'rebase --continue removes CHERRY_PICK_HEAD' '
->  	git checkout -b commit-to-skip &&
->  	for double in X 3 1
->  	do
-> --
-> 2.3.1.windows.1.9.g8c01ab4
+________________________________________________________________________________________________________
+*** CID 1306846:  Memory - illegal accesses  (USE_AFTER_FREE)
+/builtin/pull.c: 287 in config_get_rebase()
+281
+282             if (curr_branch) {
+283                     char *key = xstrfmt("branch.%s.rebase",
+curr_branch->name);
+284
+285                     if (!git_config_get_value(key, &value)) {
+286                             free(key);
+>>>     CID 1306846:  Memory - illegal accesses  (USE_AFTER_FREE)
+>>>     Passing freed pointer "key" as an argument to "parse_config_rebase".
+287                             return parse_config_rebase(key, value, 1);
+288                     }
+289
+290                     free(key);
+291             }
+292
+-- 
+Duy
