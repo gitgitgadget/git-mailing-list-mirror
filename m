@@ -1,89 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Should the --encoding argument to log/show commands make any guarantees about their output?
-Date: Wed, 17 Jun 2015 13:02:09 -0700
-Message-ID: <xmqqzj3y5cji.fsf@gitster.dls.corp.google.com>
-References: <557E91D2.3000908@googlemail.com>
-	<xmqqzj3y2snq.fsf@gitster.dls.corp.google.com>
-	<5581A964.4000500@googlemail.com> <20150617184607.GA28455@peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
+Date: Wed, 17 Jun 2015 13:03:03 -0700
+Message-ID: <CAGZ79kZCGck24KZBhVa9TGtR4U6Moz-vHNrBMk0HLTz6YeHhsg@mail.gmail.com>
+References: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
+	<CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
+	<CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
+	<20150617191235.GB25304@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jan-Philip Gehrcke <jgehrcke@googlemail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 17 22:02:18 2015
+X-From: git-owner@vger.kernel.org Wed Jun 17 22:03:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5JXN-0004iH-5M
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 22:02:17 +0200
+	id 1Z5JYE-0005a9-NI
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 22:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963AbbFQUCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 16:02:13 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:34742 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751821AbbFQUCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 16:02:11 -0400
-Received: by iebmu5 with SMTP id mu5so41348571ieb.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 13:02:11 -0700 (PDT)
+	id S1753069AbbFQUDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 16:03:06 -0400
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:33862 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751616AbbFQUDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 16:03:04 -0400
+Received: by yhnv31 with SMTP id v31so15835759yhn.1
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 13:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=tMBFMiIwHDRghcjT3XDT4Hg0b7WVllwR9qdXxLoxri4=;
-        b=NmSWwWsslzS6lkOYEFRjEsKX8Hho1fL2TdKJbjMWTZT0ZVXUFe9kSJj7PTz0PXzwnH
-         nJDS9ePAuoGyNhCU/9BaPRImJLPUVjZGfGfN1KKf/bF17IEqx5ufZz/2Lgpu5B05C0QL
-         Tgx5jHyLRrbeAPo0gbtC2vOqIge+JQA6EiB2a18qnpIMr8e3dlJtLn4RDOPGPtNqGJk0
-         d9dCdWDGCZtQFd2IlpCgh8E+/fM1KqxV7I/9z9GPvs6pcu/bNQcsCNtp909WhlrT4hsd
-         az/+yziqDHmy6WbOHBx+rG1G01YEljXHrJvC1mS47BXxMdMYAhTDeQv3ONXS5EYamJGY
-         jAGA==
-X-Received: by 10.107.162.147 with SMTP id l141mr10521879ioe.77.1434571331123;
-        Wed, 17 Jun 2015 13:02:11 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id j20sm3825081igt.16.2015.06.17.13.02.10
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 13:02:10 -0700 (PDT)
-In-Reply-To: <20150617184607.GA28455@peff.net> (Jeff King's message of "Wed,
-	17 Jun 2015 14:46:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vvBsyFR2ZHEABw9Kw5G+wIv24MNqcNfyBulA99gr52s=;
+        b=EcYIKJjqqFCfQheRDOWsDDQUjF0jEDRbqUDRQ9K+MVZLO9xbpPZKMqnKiAN4CO1xUw
+         bELiSLZ0VmQ5s1YuCXjnUdhdop1HKQ8lSqHshmHO9i0e5myZojC9h9gGgZP9ZS1I2CSb
+         rtsBtEb9KroFPwzFs04kMX6nIf9d6fiTjz/ntJexpeTpjjXhTHmM7CccSWFLqrTnc9Xt
+         vg2f4iShocnLpYB9jFechn7NAq7oVUNcFkskSDF0HpvZE0DhkFzg2biNwfTrgzJpX1Nx
+         v3rZcFTHp5HqV6CM9nuz/Pl5ogCLm1IKPxBgq3b9qMy/Ck3jF/2/eEfMwkZInDBLWe3/
+         5new==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vvBsyFR2ZHEABw9Kw5G+wIv24MNqcNfyBulA99gr52s=;
+        b=fLAqm6clkXofiUgcLybxMzIS92NGxYrdpfMl4waRs8/b6FBneUJJ/P3Rv29/q8UBbn
+         wiMILMIP+g0Sil1hw7ejz5V98iADfkQLLCD2qBY71jr2k8Lg2tuoD6v7w2YtDjzNi76I
+         uI/Y8XUnzqgwLUaFMY9/1utf7UOPX3OW0RJ2hsJwuQlOhl3RIWtxkq+tqYcc7UhzQy85
+         DAXVG4x9JxraE4s7eFFPPxo/u31HZrxs1La2dMH5CHW+WiyF5uCxJwrZvAfltQQR5efR
+         FdVr3dZWfQYZ6ziNZY6bhCj0EMcQjVG8FUS9xW/5KI7RCAYt4ejkiioeqgEQ/S+vB+ID
+         ocrw==
+X-Gm-Message-State: ALoCoQkCqNUG0YbrtkdNZ8b21LBS07HpaDnoPQ1QnQoewZYdRw/ALlHjPGk0t+5ayU1uJTQitzHJ
+X-Received: by 10.129.46.1 with SMTP id u1mr9128790ywu.1.1434571383246; Wed,
+ 17 Jun 2015 13:03:03 -0700 (PDT)
+Received: by 10.37.26.213 with HTTP; Wed, 17 Jun 2015 13:03:03 -0700 (PDT)
+In-Reply-To: <20150617191235.GB25304@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271904>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jun 17, 2015 at 12:12 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jun 17, 2015 at 10:58:10AM -0700, Stefan Beller wrote:
+>
+>> > Just make strbuf_slopbuf[] large enough to keep Coverity happy. If it's
+>> > happy, we'll have cleaner defect list
+>>
+>> It's down 31 defects, roughly 10% of all things coverity detected as
+>> problematic.
+>> YAY!
+>
+> That's a good thing.  I do find the solution a little gross, though. I
+> wonder if there is a way we can tell coverity more about how strbuf
+> works.
 
-> I would vote for a documentation change, perhaps like:
->
-> Subject: docs: clarify that --encoding can produce invalid sequences
->
-> In the common case that the commit encoding matches the
-> output encoding, we do not touch the buffer at all, which
-> makes things much more efficient. But it might be unclear to
-> a consumer that we will pass through bogus sequences.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+I always thought the problem was a combination of both having a custom
+strcmp (like skip_prefix, starts_with) and a custom data structure (strbuf,
+string_list). So I am not sure if it is sufficient to tell coverity
 
-Sounds like a sensible thing to do.
-
->  Documentation/pretty-options.txt | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+> I've noticed similar problems with string_list, where it
+> complains that we are touching list->items, which was assigned to NULL
+> (of course it was, but then after that we did string_list_append!).
 >
-> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-> index 74aa01a..642af6e 100644
-> --- a/Documentation/pretty-options.txt
-> +++ b/Documentation/pretty-options.txt
-> @@ -37,7 +37,10 @@ people using 80-column terminals.
->  	in their encoding header; this option can be used to tell the
->  	command to re-code the commit log message in the encoding
->  	preferred by the user.  For non plumbing commands this
-> -	defaults to UTF-8.
-> +	defaults to UTF-8. Note that if an object claims to be encoded
-> +	in `X` and we are outputting in `X`, we will output the object
-> +	verbatim; this means that invalid sequences in the original
-> +	commit may be copied to the output.
->  
->  --notes[=<ref>]::
->  	Show the notes (see linkgit:git-notes[1]) that annotate the
+> I know literally nothing about coverity's annotations and what's
+> possible with them. So I may be barking up a wrong tree completely.
+
+I have searched for the exact annotations for a while, but all I found
+were examples in other open source projects, no official documentation
+with all its features. I may be missing something though (there must be
+some official documentation, I'd assume).
+
+>
+> -Peff
