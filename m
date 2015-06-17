@@ -1,76 +1,68 @@
-From: Tad Hardesty <tad@platymuus.com>
-Subject: 'git status -z' missing separators on OSX
-Date: Tue, 16 Jun 2015 18:21:56 -0500
-Message-ID: <5580AF94.6090801@platymuus.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] notes: Use get_sha1_committish instead of read_ref in init_notes()
+Date: Wed, 17 Jun 2015 10:15:31 +0900
+Message-ID: <1434503731-26414-1-git-send-email-mh@glandium.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 17 01:42:06 2015
+X-From: git-owner@vger.kernel.org Wed Jun 17 03:15:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z50UU-00013S-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 01:42:02 +0200
+	id 1Z51xI-0007Zu-Ql
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 03:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507AbbFPXlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2015 19:41:36 -0400
-Received: from txofep01.suddenlink.net ([208.180.40.71]:45018 "EHLO
-	txofep01.suddenlink.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751786AbbFPXle (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2015 19:41:34 -0400
-X-Greylist: delayed 1198 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jun 2015 19:41:34 EDT
-Received: from [192.168.1.41] (really [74.194.137.165])
-          by txofep02.suddenlink.net
-          (InterMail vM.8.04.03.20 201-2389-100-164-20150330) with ESMTP
-          id <20150616232135.JWMD12816.txofep02.suddenlink.net@[192.168.1.41]>
-          for <git@vger.kernel.org>; Tue, 16 Jun 2015 18:21:35 -0500
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-X-Cloudmark-Analysis: v=2.1 cv=JvB/raIC c=1 sm=0 tr=0 a=wPuOwISMbD0A:10 a=IkcTkHD0fZMA:10 a=oTt4DmRMAAAA:8 a=8LaAqv5HAAAA:8 a=XAFQembCKUMA:10 a=5Tg4r25XAAAA:8 a=PF_oduQi6pg6K4IMhFEA:9 a=QEXdDO2ut3YA:10 a=KgsXq9Tu5zEA:10
+	id S1754272AbbFQBPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2015 21:15:43 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:60006 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752772AbbFQBPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2015 21:15:41 -0400
+Received: from glandium by zenigata with local (Exim 4.85)
+	(envelope-from <glandium@glandium.org>)
+	id 1Z51wx-0006sh-Vi; Wed, 17 Jun 2015 10:15:31 +0900
+X-Mailer: git-send-email 2.4.3.2.gf0a024e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271806>
 
-I have been experiencing a problem where git on OSX prints incorrect
-output to the `git status -z` command, where instead of NUL separators
-records are simply not separated. This is causing problems with IDE
-integration. While I have a workaround involving manually replacing \n
-with \0, it would be nice to identify and fix the root issue.
+init_notes() is essentially the only point of entry to the notes API.
+It is an arbitrary restriction that all it allows as input is a strict
+ref name, when callers may want to give an arbitrary committish.
 
-Here's a terminal session showing the problem:
-~$ mkdir test && cd test
-~/test$ git init
-Initialized empty Git repository in /Users/thardesty/test/.git/
-~/test (master #)$ touch a b
-~/test (master #)$ ls
-a b
-~/test (master #)$ git status -z | hexdump -C
-00000000  3f 3f 20 61 3f 3f 20 62                           |?? a?? b|
-00000008
-~/test (master #)$ git add a b
-~/test (master #)$ git status -z | hexdump -C
-00000000  41 20 20 61 41 20 20 62                           |A  aA  b|
-00000008
-~/test (master #)$ git status --porcelain | hexdump -C
-00000000  41 20 20 61 0a 41 20 20  62 0a                    |A  a.A  b.|
-0000000a
-~/test (master #)$ git --version
-git version 2.4.3
-~/test (master #)$ uname -a
-Darwin HA002070 14.3.0 Darwin Kernel Version 14.3.0: Mon Mar 23 11:59:05
-PDT 2015; root:xnu-2782.20.48~5/RELEASE_X86_64 x86_64
+This has the side effect of enabling the use of committish as notes refs
+in commands allowing them, e.g. git log --notes=foo@{1}, although
+I haven't checked whether that's the case for all of them.
 
-As shown, --porcelain prints a newline but -z yields no separator at all.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
 
-The Mac is running OS X Yosemite 10.10.3. I have tried git 2.3.2 from
-Apple, git 2.4.2 from brew, and git 2.4.3 from brew, git-scm.org, and
-self-compiled, and these all exhibit the problem. Some helpful folks on
-the #git IRC tried the commands for me and didn't see any problems, but
-I temporarily blanked all my configuration files and that didn't help. I
-double-checked and git on Linux has the correct behavior.
+My motivation for this change is to allow to use init_notes from a
+third-party helper that links to libgit.a with a commit that is not
+pointed at directly by a ref. The side effect of making git log
+--notes=foo@{1} work is nice IMHO. As noted, though, I haven't checked if
+all code paths using init_notes don't prefilter the ref, but I assume
+they don't. 
 
-Thanks for any help.
+ notes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/notes.c b/notes.c
+index df08209..402e4ce 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1012,7 +1012,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	t->dirty = 0;
+ 
+ 	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
+-	    read_ref(notes_ref, object_sha1))
++	    get_sha1_committish(notes_ref, object_sha1))
+ 		return;
+ 	if (get_tree_entry(object_sha1, "", sha1, &mode))
+ 		die("Failed to read notes tree referenced by %s (%s)",
+-- 
+2.4.3.2.gf0a024e.dirty
