@@ -1,90 +1,96 @@
-From: KK <horizn@wp.pl>
-Subject: Re: slash in branch name
-Date: Wed, 17 Jun 2015 20:38:57 +0100
-Message-ID: <5581CCD1.4010606@wp.pl>
-References: <5581C77A.3040703@wp.pl> <20150617192444.GD25304@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mergetools: add config option to disable auto-merge
+Date: Wed, 17 Jun 2015 12:41:32 -0700
+Message-ID: <xmqqd20u6s2b.fsf@gitster.dls.corp.google.com>
+References: <1434490514-36204-1-git-send-email-rappazzo@gmail.com>
+	<1434490514-36204-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 17 21:39:29 2015
+Content-Type: text/plain
+Cc: davvid@gmail.com, ssaasen@atlassian.com, john@keeping.me.uk,
+	git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 21:41:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5JBE-0000Tn-Aj
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:39:24 +0200
+	id 1Z5JDP-0002gB-A0
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755697AbbFQTjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 15:39:20 -0400
-Received: from mx3.wp.pl ([212.77.101.10]:13285 "EHLO mx3.wp.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751821AbbFQTjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 15:39:19 -0400
-Received: (wp-smtpd smtp.wp.pl 10576 invoked from network); 17 Jun 2015 21:39:16 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=1024a;
-          t=1434569956; bh=P7xQ1Z/Q49Y8zDuILwfPSSkx/wwC08T1Zu8FCQTRQt4=;
-          h=From:To:CC:Subject;
-          b=JpurTOg04kR8c5K2HzPA9pj68cv3IzUIIE774CecK2+6fu8FCD8U3mZ/NZs9iJ/Ay
-           Tq3v1keKDZHpnpbEnSEUyc7ZA1phRXXj0erh8XjjgVD8iIIgKah7lvEK+JeNz9G9bG
-           W4TO3vYv1CoVSjm71OJO17dIjkt1YCf4li+179vI=
-Received: from host109-148-13-186.range109-148.btcentralplus.com (HELO [192.168.1.79]) (horizn@[109.148.13.186])
-          (envelope-sender <horizn@wp.pl>)
-          by smtp.wp.pl (WP-SMTPD) with ECDHE-RSA-AES256-SHA encrypted SMTP
-          for <git@vger.kernel.org>; 17 Jun 2015 21:39:16 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150617192444.GD25304@peff.net>
-X-WP-MailID: 349454cbb341733863dfa9f064d6c840
-X-WP-AV: skaner antywirusowy poczty Wirtualnej Polski S. A.
-X-WP-SPAM: NO 0000000 [oYPk]                               
+	id S1757739AbbFQTle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 15:41:34 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:34253 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755537AbbFQTle (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 15:41:34 -0400
+Received: by iebmu5 with SMTP id mu5so40985684ieb.1
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 12:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=qX5EdxhTbeyC8PEm67Z51t+HptY6J5TlhbInH4naYsw=;
+        b=RhLh2Dw1FNukTuz9vFWpoHd/yyTbytMiRH/kFhN3xyOx6k6AV1PhL6/V1+DILNOifX
+         cswOAwEtfhwQ00sxmOMdd1cRgoz1dW1RwPMfqVqLn+TUp6gTVoVFsbMuGwQqOt3ioJx/
+         4IDupMia7YOL79/auySsZO3p1fllKh10jxz3u3/5O4QZyHpvxu2CyK/6vjxIbbk/sY8f
+         HEsJM62gdYHYad8CiUBoUO+AHPpNUxPNnPLaUqhuAEn9XhrOM0Lg9CjXH/4VSaPNSaWO
+         WRTpnseZLSeJU8Wq5J2Fj5ql9J7HuO6FDHjl94i71ehBlDiozOXlsKd/78hKFEAL7qJE
+         9+dw==
+X-Received: by 10.50.90.179 with SMTP id bx19mr37677603igb.43.1434570093440;
+        Wed, 17 Jun 2015 12:41:33 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
+        by mx.google.com with ESMTPSA id i4sm86294igm.2.2015.06.17.12.41.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 17 Jun 2015 12:41:32 -0700 (PDT)
+In-Reply-To: <1434490514-36204-2-git-send-email-rappazzo@gmail.com> (Michael
+	Rappazzo's message of "Tue, 16 Jun 2015 17:35:14 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271895>
 
-On 17/06/2015 20:24, Jeff King wrote:
-> On Wed, Jun 17, 2015 at 08:16:10PM +0100, KK wrote:
->
->> remote: error: invalid key: hooks.denypush.branch.versions/4.3.2
->> remote: error: invalid key: hooks.allowmerge.versions/4.3.2
->> [...]
->
-> Those are syntactically bogus config keys. Keys should be of the form
->
->    section.subsection.key
->
-> and only "subsection" can contain arbitrary bytes (and of course the
-> value can, too). The hooks running on the server are using git's config
-> system in ways that were not intended.  It should rearrange its
-> organization of the data (I cannot comment much further without seeing
-> the hooks themselves).
->
->> My colleague did some research about that and it seems that this commit has
->> stopped update hook working:
->>
->> commit b09c53a3e331211fc0154de8ebb271e48f8c7ee5
->> Author: Libor Pechacek <lpechacek@suse.cz>
->> Date:   Sun Jan 30 20:40:41 2011 +0100
->>
->>      Sanity-check config variable names
->> [...]
->>
->> Could you please advise how to fix/revert this?
->
-> I guess we could add a "--no-really-i-am-abusing-git-config" option to
-> git-config to let these pass, at least for lookups. I am not sure that
-> is a good idea, though. I think your hooks are fundamentally broken for
-> branches with odd characters (right now you are seeing complaints on the
-> lookup side, but I suspect that you could not write a
-> "hooks.denypush.branch.versions/4.3.2" entry if you wanted to, as git
-> would choke on reading the config file).
->
-> -Peff
->
->
+Michael Rappazzo <rappazzo@gmail.com> writes:
 
-hooks were downloaded from:
-git://git.et.redhat.com/ovirt-server.git
+> For some mergetools, the current invocation of git mergetool will
+> include an auto-merge flag.  By default the flag is included, however if
+> the git config option 'merge.automerge' is set to 'false', then that
+> flag will now be omitted.
+
+... and why is the "automerge" a bad thing that user would want to
+avoid triggering under which condition?  That description may not
+have to be in the proposed log message, but it would help users when
+they decide if they want to use the configuration to describe it in
+the mergetool.automerge configuration.
+
+And depending on the answer to the above question, a configuration
+variable may turn out be a bad mechanism to customize this (namely,
+set-and-forget configuration variable is a bad match for a knob that
+is more "per invocation" than "user taste").
+
+Is this not about "automerge" but more about "always-show-UI because
+I like GUI?"  Then that may be a "user taste" thing that is a good
+match for a configuration variable.  I simply cannot tell from what
+was in the message I am responding to.
+
+> -TEMPORARY FILES
+> ----------------
+> -`git mergetool` creates `*.orig` backup files while resolving merges.
+> -These are safe to remove once a file has been merged and its
+> -`git mergetool` session has completed.
+> -
+> +CONFIGURATION OPTIONS
+> +---------------------
+> +mergetool.keepBackup::
+> +	`git mergetool` creates `*.orig` backup files while resolving merges.
+> +	These are safe to remove once a file has been merged and its
+> +	`git mergetool` session has completed.
+> ++
+
+This is an unrelated change; I think it is a good change, though.
+
+I however suspect that we would not want to repeat the configuration
+description in this file and instead mention these in "see also"
+section referring the readers to git-config(1).
