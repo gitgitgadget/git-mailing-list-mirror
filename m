@@ -1,67 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] notes: Use get_sha1_committish instead of read_ref in init_notes()
-Date: Wed, 17 Jun 2015 08:18:17 -0700
-Message-ID: <xmqqsi9q4b46.fsf@gitster.dls.corp.google.com>
-References: <1434503731-26414-1-git-send-email-mh@glandium.org>
-	<xmqq1thb58i8.fsf@gitster.dls.corp.google.com>
-	<20150617094036.GA536@glandium.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] rebase -i: do not leave a =?UTF-8?Q?CHERRY=5FPICK?=
+ =?UTF-8?Q?=5FHEAD=20file=20behind?=
+Date: Wed, 17 Jun 2015 17:24:44 +0200
+Organization: gmx
+Message-ID: <d8b9c3f3376817962207b9c3f16c7d01@www.dscho.org>
+References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
+ <cover.1434528725.git.johannes.schindelin@gmx.de>
+ <2751d249ba6315f0139ba8fd6aa6ff23c32c9e69.1434528725.git.johannes.schindelin@gmx.de>
+ <20150617145814.Horde.VFmyWwlQfspzMMXX3ZuSlQ4@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Jun 17 17:18:55 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed Jun 17 17:25:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5F6j-0001xG-3K
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 17:18:29 +0200
+	id 1Z5FCy-00082M-Ce
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 17:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757286AbbFQPSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 11:18:23 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:36233 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756922AbbFQPSU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 11:18:20 -0400
-Received: by igbiq7 with SMTP id iq7so69643747igb.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 08:18:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ScDWZIPd12e8J9Kh3OyCIXjoSKEgChAZ9NcvjMNn4GQ=;
-        b=soCcyrgz4mUQ9MPepNWiGWcGarsl07WU+clp4rnom4dlNZHg//qn0pVOz9xIxLUTGn
-         yRXbm7ev+eUb1A1OnKqPUNbVd00NX7h9jliP9C4P4nb6fzUyktcaKsZNzUbiOzqbWZci
-         mt4KtH76kVFwYrMqXgEdFWHv+VeBp7Kwf2eqk5VOup35q4HcZbKlOcy6oJGC6dt91wp8
-         tpr0HfP0ChgNCD8778W6ekjMPL47sFXwS21LUWVPHFY17HPyzjpEQX9mLo7oAFlzM3OL
-         HxYFS8BZqsAIAfAN8/iOutajqM5OhMOmyNppbBEPHJ+oA2W+KQlpWxN7pohtRxPdO1Zw
-         Lrsw==
-X-Received: by 10.107.154.70 with SMTP id c67mr8802066ioe.22.1434554299409;
-        Wed, 17 Jun 2015 08:18:19 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id d4sm2775718iod.17.2015.06.17.08.18.18
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 08:18:18 -0700 (PDT)
-In-Reply-To: <20150617094036.GA536@glandium.org> (Mike Hommey's message of
-	"Wed, 17 Jun 2015 18:40:36 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754691AbbFQPYv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 11:24:51 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50757 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753116AbbFQPYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 11:24:50 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lm34j-1YVdL228xd-00Zifk; Wed, 17 Jun 2015 17:24:45
+ +0200
+In-Reply-To: <20150617145814.Horde.VFmyWwlQfspzMMXX3ZuSlQ4@webmail.informatik.kit.edu>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:jpC0SMdHWmFk9R7kB4nXsOX8HWq1X22vO/4YWgrF0L0qWu48tRJ
+ vFuOfSWW8O32hOcPzlWPeZyWSsVPZz1gNO17zuAFKs+T0WXIsK1XecuQaZjR2Ix1GRIf8o4
+ +OGQ38SfYwonbdcJTk15/SMgFOhPy4p8ToOsM8iKJ+wQ1hiFgPuVlYsMcH3Mj9+R0FNAaS+
+ LOLTOu20gE2eDBfAs/kzQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/LHke8aqm8s=:e4a3gbiXJJ6S2BywRBX5W8
+ KsbzS0LEqs/J3orM4Ph9VvUSv7QD5K/mXORxpAZdL7UWVHVcMncCDRcqETivu9+Sxj3MfQ6DY
+ ypiuZDYMJ8AuIll0G+u/IaiSWSIlDAwLCzGCd1sfOuhjr48037EpySOBWsEVyW4t+LuFWEkQw
+ P7FYu+J7o2U+bOTCyHFiL0hmQdwX+DW/kZRoeF8ApfaYzuPhsM8+zkjlk2XElaKzRvOortiFZ
+ yfbwA7z9iHZD3A/+VoXGaPYiQGRiE8A4R9lAAlxPeX+lInYFNR56gipxldkyQ+YAw/y/KkvHe
+ SEM4EpO5pJkZR5mD/XDbN9YmBCNo4vxFRORdkDJ5G2qHVRdr4xzYyebx7goOjrSpheXvzZulB
+ 5gdMm+5KD32hFrmPn00882AlbZfk/aJDhpOpGkcKyuXCkPTO8DNjeVpN1IvFfJzRWQYol817I
+ CCAPm/+n0/iXKfj7zApBh6M1yO012t/AsrExw+GoNLqlYwjFPgXIbJEBWNif5NJECE7HZft3y
+ e/lhr6SrSUsu+ptBqMImADSRB9j4QyHCxQRKaHJLiSWXu4syVPB612f3WNH5Kuz6G9iZkgq/c
+ Tqz02Q3DCDX8nRfX/hsHG76Er2Ed1gw3qM+CFbJ1fype0iRub/txyrf8ecFVYbiluZ6qFuMuB
+ bREM9KskwFtCgQszj6gIr+8jH5oi1jN1TEYytVFA1WFzjDG8iKMYP3cP0OyAVdwyLtdY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271856>
 
-Mike Hommey <mh@glandium.org> writes:
+Hi,
 
-> I'm tempted to make init_notes itself do the check, based on the value
-> it is given for a "read_only" argument.
+On 2015-06-17 14:58, SZEDER G=C3=A1bor wrote:
 
-Yeah, that would be one sensible way to go after making sure that
-everything goes thru this interface.
+> Quoting Johannes Schindelin <johannes.schindelin@gmx.de>:
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index dc3133f..16e0a82 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -849,7 +849,11 @@ continue)
+>>  	# do we have anything to commit?
+>>  	if git diff-index --cached --quiet HEAD --
+>>  	then
+>> -		: Nothing to commit -- skip this
+>> +		: Nothing to commit -- skip this commit
+>=20
+> "While at it", perhaps you could turn this into a proper comment with=
+ '#".
+> Now that this if-branch starts to actually do something, there's no=20
+> reason to continue (ab)using the null command.
 
-> On the other hand, some commands
-> do their ref resolving themselves already.
+Sure thing. I'll wait if there are more comments and then send out v2.
 
-Again, as long as they do not bypass the "read-only" safety you are
-suggesting to add to init_notes(), that is OK.
+Ciao,
+Johannes
