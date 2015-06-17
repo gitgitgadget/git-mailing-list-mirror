@@ -1,78 +1,71 @@
-From: josh@joshtriplett.org
-Subject: Re: co-authoring commits
-Date: Wed, 17 Jun 2015 16:06:54 -0700
-Message-ID: <20150617230654.GA27206@cloud>
-References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>
- <xmqq4mm66r99.fsf@gitster.dls.corp.google.com>
- <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
- <20150617225224.GF4076@thunk.org>
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC v4 07/10] send-email: reduce dependancies impact on
+ parse_address_line
+Date: Thu, 18 Jun 2015 01:39:40 +0200 (CEST)
+Message-ID: <52249185.592562.1434584380271.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <vpqoakejq38.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 18 01:07:29 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 18 01:39:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5MQZ-0007vJ-EI
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 01:07:27 +0200
+	id 1Z5Mv9-0004XP-Lc
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 01:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741AbbFQXHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 19:07:01 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:54314 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754484AbbFQXG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 19:06:58 -0400
-Received: from cloud (joshtriplett.org [IPv6:2604:3400:dc1:41:216:3eff:fe9f:2070])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id BD3CD172070;
-	Thu, 18 Jun 2015 01:06:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20150617225224.GF4076@thunk.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757419AbbFQXiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 19:38:18 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:45368 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755091AbbFQXiP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 19:38:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 7922F488D4;
+	Thu, 18 Jun 2015 01:38:13 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5haxlNneKhlk; Thu, 18 Jun 2015 01:38:13 +0200 (CEST)
+Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5BA7B488C8;
+	Thu, 18 Jun 2015 01:38:13 +0200 (CEST)
+In-Reply-To: <vpqoakejq38.fsf@anie.imag.fr>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: send-email: reduce dependancies impact on parse_address_line
+Thread-Index: 4/QvjeIrAXpQjVG6Q4e1vuvTcU5xZg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271929>
 
-On Wed, Jun 17, 2015 at 06:52:24PM -0400, Theodore Ts'o wrote:
-> On Wed, Jun 17, 2015 at 10:26:32PM +0200, Tuncer Ayaz wrote:
-> > 
-> > By allowing multiple authors, you don't have to decide who's the
-> > primary author, as in such situations usually there is no primary at
-> > all. I sometimes deliberately override the author when committing and
-> > add myself just as another co-author in the commit message, but as
-> > others have noted it would be really great if we can just specify
-> > multiple authors.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes
+
+> > +	my $commentrgx=qr/\((?:[^)]*)\)/;
+> > +	my $quotergx=qr/"(?:[^\"\\]|\\.)*"/;
+> > +	my $wordrgx=qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
 > 
-> Just recently, there a major thread on the IETF mailing list where
-> IETF working group had drafts where people were listed as co-authors
-> without their permission, and were upset that the fact that their name
-> was added made it seem as if they agreed with the end product.  (i.e.,
-> that they were endorsing the I-D).  So while adding formal coauthor
-> might solves (a few) problems, it can also introduce others.
+> Spaces around = please.
+> ...
+> > +	foreach my $token (@tokens) {
+> > +	    if ($token =~ /^[,;]$/) {
 > 
-> Ultimately there is one person who can decide which parts of the
-> changes to put in the commit that gets sent to the maintainer.  So
-> there *is* someone who is the primary author; the person who takes the
-> final pass on the patch and then hits the send key.
+> Here and below: you're indenting with a 4-column offset, it should be 8.
 
-I've worked on many patches with another person in a shared screen
-session, co-authoring a series of patches and commit messages in vim,
-and writing an email in mutt.  There were, ultimately, two people
-deciding what to put in a commit and send to the maintainer.  This is,
-admittedly, unusual, but pair programming is not ridiculously uncommon.
+Should have spent more time on the form... Thanks
 
-> In that case, perhaps you could set the from field to a mailing list
-> address.
+> The code below is a bit hard to read (I'm neither fluent in Perl nor in
+> the RFC ...). A few more comments would help. A few examples below (it's
+> up to you to integrate them or not).
 
-The "From" field in email headers supports a list of comma-separated
-addresses, just like To and Cc.  Speaking from experience, this
-more-or-less works with all the mail software we tried it with, with the
-occasional program only displaying the first or last entry.
-
-- Josh Triplett
+Ok, I'll add comments for the hardest parts.
