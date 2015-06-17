@@ -1,96 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetools: add config option to disable auto-merge
-Date: Wed, 17 Jun 2015 12:41:32 -0700
-Message-ID: <xmqqd20u6s2b.fsf@gitster.dls.corp.google.com>
-References: <1434490514-36204-1-git-send-email-rappazzo@gmail.com>
-	<1434490514-36204-2-git-send-email-rappazzo@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] test-lib.sh: fix color support when tput needs
+ ~/.terminfo
+Date: Wed, 17 Jun 2015 15:43:15 -0400
+Message-ID: <20150617194315.GE25304@peff.net>
+References: <1434567986-23552-1-git-send-email-rhansen@bbn.com>
+ <1434567986-23552-3-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: davvid@gmail.com, ssaasen@atlassian.com, john@keeping.me.uk,
-	git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 21:41:46 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 21:43:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5JDP-0002gB-A0
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:41:39 +0200
+	id 1Z5JF5-0004FP-S4
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757739AbbFQTle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 15:41:34 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:34253 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755537AbbFQTle (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 15:41:34 -0400
-Received: by iebmu5 with SMTP id mu5so40985684ieb.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 12:41:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=qX5EdxhTbeyC8PEm67Z51t+HptY6J5TlhbInH4naYsw=;
-        b=RhLh2Dw1FNukTuz9vFWpoHd/yyTbytMiRH/kFhN3xyOx6k6AV1PhL6/V1+DILNOifX
-         cswOAwEtfhwQ00sxmOMdd1cRgoz1dW1RwPMfqVqLn+TUp6gTVoVFsbMuGwQqOt3ioJx/
-         4IDupMia7YOL79/auySsZO3p1fllKh10jxz3u3/5O4QZyHpvxu2CyK/6vjxIbbk/sY8f
-         HEsJM62gdYHYad8CiUBoUO+AHPpNUxPNnPLaUqhuAEn9XhrOM0Lg9CjXH/4VSaPNSaWO
-         WRTpnseZLSeJU8Wq5J2Fj5ql9J7HuO6FDHjl94i71ehBlDiozOXlsKd/78hKFEAL7qJE
-         9+dw==
-X-Received: by 10.50.90.179 with SMTP id bx19mr37677603igb.43.1434570093440;
-        Wed, 17 Jun 2015 12:41:33 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id i4sm86294igm.2.2015.06.17.12.41.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 12:41:32 -0700 (PDT)
-In-Reply-To: <1434490514-36204-2-git-send-email-rappazzo@gmail.com> (Michael
-	Rappazzo's message of "Tue, 16 Jun 2015 17:35:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757168AbbFQTnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 15:43:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47622 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756819AbbFQTnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 15:43:18 -0400
+Received: (qmail 32744 invoked by uid 102); 17 Jun 2015 19:43:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 14:43:18 -0500
+Received: (qmail 28590 invoked by uid 107); 17 Jun 2015 19:43:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 15:43:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 15:43:15 -0400
+Content-Disposition: inline
+In-Reply-To: <1434567986-23552-3-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271896>
 
-Michael Rappazzo <rappazzo@gmail.com> writes:
+On Wed, Jun 17, 2015 at 03:06:26PM -0400, Richard Hansen wrote:
 
-> For some mergetools, the current invocation of git mergetool will
-> include an auto-merge flag.  By default the flag is included, however if
-> the git config option 'merge.automerge' is set to 'false', then that
-> flag will now be omitted.
+> If tput needs ~/.terminfo for the current $TERM, then tput will
+> succeed before HOME is changed to $TRASH_DIRECTORY (causing color to
+> be set to 't') but fail afterward.
+> 
+> One possible way to fix this is to treat HOME like TERM: back up the
+> original value and temporarily restore it before say_color() runs
+> tput.
+> 
+> Instead, pre-compute and save the color control sequences before
+> changing either TERM or HOME.  Use the saved control sequences in
+> say_color() rather than call tput each time.  This avoids the need to
+> back up and restore the TERM and HOME variables, and it avoids the
+> overhead of a subshell and two invocations of tput per call to
+> say_color().
+> 
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
 
-... and why is the "automerge" a bad thing that user would want to
-avoid triggering under which condition?  That description may not
-have to be in the proposed log message, but it would help users when
-they decide if they want to use the configuration to describe it in
-the mergetool.automerge configuration.
+Nice, I like it.
 
-And depending on the answer to the above question, a configuration
-variable may turn out be a bad mechanism to customize this (namely,
-set-and-forget configuration variable is a bad match for a knob that
-is more "per invocation" than "user taste").
+> +	# Save the color control sequences now rather than run tput
+> +	# each time say_color() is called.  This is done for two
+> +	# reasons:
+> +	#   * TERM will be changed to dumb
+> +	#   * HOME will be changed to a temporary directory and tput
+> +	#     might need to read ~/.terminfo from the original HOME
+> +	#     directory to get the control sequences
+> +	# Note:  This approach assumes the control sequences don't end
+> +	# in a newline for any terminal of interest (command
+> +	# substitutions strip trailing newlines).  Given that most
+> +	# (all?) terminals in common use are related to ECMA-48, this
+> +	# shouldn't be a problem.
 
-Is this not about "automerge" but more about "always-show-UI because
-I like GUI?"  Then that may be a "user taste" thing that is a good
-match for a configuration variable.  I simply cannot tell from what
-was in the message I am responding to.
+Yeah, that was my first thought, but I agree it probably isn't going to
+be a big deal in practice.
 
-> -TEMPORARY FILES
-> ----------------
-> -`git mergetool` creates `*.orig` backup files while resolving merges.
-> -These are safe to remove once a file has been merged and its
-> -`git mergetool` session has completed.
-> -
-> +CONFIGURATION OPTIONS
-> +---------------------
-> +mergetool.keepBackup::
-> +	`git mergetool` creates `*.orig` backup files while resolving merges.
-> +	These are safe to remove once a file has been merged and its
-> +	`git mergetool` session has completed.
-> ++
+> +	say_color_error=$(tput bold; tput setaf 1) # bold red
+> +	say_color_skip=$(tput setaf 4) # blue
+> +	say_color_warn=$(tput setaf 3) # brown/yellow
+> +	say_color_pass=$(tput setaf 2) # green
+> +	say_color_info=$(tput setaf 6) # cyan
+> +	say_color_sgr0=$(tput sgr0)
+> [...]
+> +		error|skip|warn|pass|info)
+> +			eval "say_color_color=\$say_color_$1";;
+>  		*)
+>  			test -n "$quiet" && return;;
 
-This is an unrelated change; I think it is a good change, though.
+I think you could dispense with this case statement entirely and do:
 
-I however suspect that we would not want to repeat the configuration
-description in this file and instead mention these in "see also"
-section referring the readers to git-config(1).
+  eval "say_color_color=\$say_color_$1"
+  if test -z "$say_color_color"; then
+          test -n "$quiet" && return
+  fi
+
+I guess that is making the assumption that all colors have non-zero
+sizes, but that seems reasonable. I do not mind it so much as you have
+it, but it does mean adding a new field needs to update two spots.
+
+-Peff
