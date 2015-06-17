@@ -1,81 +1,94 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] notes: Use get_sha1_committish instead of read_ref in init_notes()
-Date: Wed, 17 Jun 2015 18:35:11 +0200
-Message-ID: <CALKQrgfR7AwJ1XY2iPHBAssk_2uKGUJC=J-r7bJVSKaiosc5gw@mail.gmail.com>
-References: <1434503731-26414-1-git-send-email-mh@glandium.org>
-	<xmqq1thb58i8.fsf@gitster.dls.corp.google.com>
-	<20150617094036.GA536@glandium.org>
-	<xmqqsi9q4b46.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>" better
+Date: Wed, 17 Jun 2015 19:24:30 +0200
+Message-ID: <vpqh9q6gsdt.fsf@anie.imag.fr>
+References: <558127CB.70603@web.de>
+	<CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>
+	<vpq8ubiwqo9.fsf@anie.imag.fr> <mlrmnt$te5$1@ger.gmane.org>
+	<vpqoaketusa.fsf@anie.imag.fr> <mlrn9r$9ho$1@ger.gmane.org>
+	<vpqtwu6sf4r.fsf@anie.imag.fr>
+	<xmqqoake4akt.fsf@gitster.dls.corp.google.com>
+	<xmqqd20u48at.fsf@gitster.dls.corp.google.com>
+	<5581A3A3.1070908@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Jun 17 19:20:30 2015
+	"Andres G. Aragoneses" <knocte@gmail.com>, git@vger.kernel.org
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 17 19:24:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5H0h-0006St-9X
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:20:23 +0200
+	id 1Z5H54-00029W-9M
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:24:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757796AbbFQRUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 13:20:14 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:50837 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757758AbbFQRUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 13:20:08 -0400
-X-Greylist: delayed 2689 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Jun 2015 13:20:08 EDT
-Received: from mail-yh0-f53.google.com ([209.85.213.53])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Z5GJ3-000Ls5-OX
-	for git@vger.kernel.org; Wed, 17 Jun 2015 18:35:17 +0200
-Received: by yhak3 with SMTP id k3so37667683yha.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 09:35:11 -0700 (PDT)
-X-Received: by 10.129.72.194 with SMTP id v185mr7694756ywa.20.1434558911732;
- Wed, 17 Jun 2015 09:35:11 -0700 (PDT)
-Received: by 10.37.96.4 with HTTP; Wed, 17 Jun 2015 09:35:11 -0700 (PDT)
-In-Reply-To: <xmqqsi9q4b46.fsf@gitster.dls.corp.google.com>
+	id S1757957AbbFQRYq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 13:24:46 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40183 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757940AbbFQRYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 13:24:39 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5HHORT2027965
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 17 Jun 2015 19:24:27 +0200
+Received: from anie.imag.fr (ensi-vpn-247.imag.fr [129.88.57.247])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5HHOUsG014613;
+	Wed, 17 Jun 2015 19:24:30 +0200
+In-Reply-To: <5581A3A3.1070908@web.de> ("Torsten \=\?iso-8859-1\?Q\?B\=F6gersha\?\=
+ \=\?iso-8859-1\?Q\?usen\=22's\?\= message of
+	"Wed, 17 Jun 2015 18:43:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 17 Jun 2015 19:24:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5HHORT2027965
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435166672.34551@kHXzJcozjfrwqlamTFUBng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271874>
 
-On Wed, Jun 17, 2015 at 5:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> > I'm tempted to make init_notes itself do the check, based on the value
-> > it is given for a "read_only" argument.
->
-> Yeah, that would be one sensible way to go after making sure that
-> everything goes thru this interface.
+Torsten B=F6gershausen <tboegi@web.de> writes:
 
-Agreed. Furthermore, consider adding the read_only flag (or however
-you choose to encode it internally) to struct notes_tree, so that the
-API functions that _manipulate_ notes trees can immediately bail out
-when used on a read-only tree (i.e. we want them to fail as early as
-possible).
+> My v3 will probably use the original line:
+> git-checkout - Checkout a branch or paths to the working tree
 
-> > On the other hand, some commands
-> > do their ref resolving themselves already.
->
-> Again, as long as they do not bypass the "read-only" safety you are
-> suggesting to add to init_notes(), that is OK.
+I think mentionning "Switch branch" was a real improvement. For someone
+not familiar with the version control vocabulary, "checkout" does not
+mean much (just looked in a dictionary, it talks about payment and
+leaving a room in a hotel ...). And someone not understanding what
+"checkout" means in this context won't be helped much reading the
+description and getting "checkout" there.
 
-Agreed. An alternative to adding a simple read_only flag argument is
-to modify the const char *notes_ref argument into two separate
-arguments: const char *notes_treeish, and const char *update_ref,
-where the latter should be NULL for read-only trees. That said,
-currently the logic for actually updating notes ref lives outside the
-notes.h API (see commit_notes() in notes-utils.h/c), so there might be
-room for more consolidation/refactoring here...
+(Ironically, Junio did almost the same remark when I proposed to
+document "git describe" as "Describe ...", but the word "describe" does
+not have the ambiguity problem that "checkout" has)
 
+> 'git checkout <commit> -- <path>'
+> will "copy" the version from another commit into the workspace.
 
-...Johan
+If <commit> exists, it means that the state of this path existed
+somewhere in <path> in the past (well, modulo "git add -p" and other
+ways to cheat with history).
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+So, to me, "restore a previous version" does apply in this case. Perhap=
+s
+"restore a recorded state into the worktree" (my favorite up to now I
+think).
+
+But as you say, it copies into the workspace, so "copy a previous
+version into the workspace" sounds good to me.
+
+Basically, I'm fine with anything starting with "Switch branches or",
+but please do change the headline ;-).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
