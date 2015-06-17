@@ -1,9 +1,9 @@
 From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
 Subject: [PATCH/RFC v4 07/10] send-email: reduce dependancies impact on
  parse_address_line
-Date: Thu, 18 Jun 2015 01:39:40 +0200 (CEST)
-Message-ID: <52249185.592562.1434584380271.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <vpqoakejq38.fsf@anie.imag.fr>
+Date: Thu, 18 Jun 2015 01:48:34 +0200 (CEST)
+Message-ID: <989982277.592587.1434584914349.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <xmqqioam58kz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
@@ -12,60 +12,90 @@ Cc: git@vger.kernel.org,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
 	Louis-Alexandre Stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 18 01:39:06 2015
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 01:47:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Mv9-0004XP-Lc
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 01:39:04 +0200
+	id 1Z5N35-00041B-EC
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 01:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757419AbbFQXiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 19:38:18 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:45368 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755091AbbFQXiP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 19:38:15 -0400
+	id S1753396AbbFQXrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 19:47:11 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:52047 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752080AbbFQXrJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 19:47:09 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 7922F488D4;
-	Thu, 18 Jun 2015 01:38:13 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5haxlNneKhlk; Thu, 18 Jun 2015 01:38:13 +0200 (CEST)
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 79E6A292A;
+	Thu, 18 Jun 2015 01:47:07 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Jacgl+y-WxRL; Thu, 18 Jun 2015 01:47:07 +0200 (CEST)
 Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5BA7B488C8;
-	Thu, 18 Jun 2015 01:38:13 +0200 (CEST)
-In-Reply-To: <vpqoakejq38.fsf@anie.imag.fr>
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 65B4F2928;
+	Thu, 18 Jun 2015 01:47:07 +0200 (CEST)
+In-Reply-To: <xmqqioam58kz.fsf@gitster.dls.corp.google.com>
 X-Originating-IP: [130.190.242.136]
 X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
 Thread-Topic: send-email: reduce dependancies impact on parse_address_line
-Thread-Index: 4/QvjeIrAXpQjVG6Q4e1vuvTcU5xZg==
+Thread-Index: sluhZO36/kqxmsS0NMejmEJH3TakNw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271930>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes
+> Junio C Hamano <gitster@pobox.com> writes
+> Suffix "rgx" that means "regular expression" is a bit unusual, and
+> also hard to read when squashed to another word.  Elsewhere in the
+> same script, we seem to use $re_whatever to store precompiled
+> regular expressions, so perhaps $re_comment, $re_quote, etc.?
 
-> > +	my $commentrgx=qr/\((?:[^)]*)\)/;
-> > +	my $quotergx=qr/"(?:[^\"\\]|\\.)*"/;
-> > +	my $wordrgx=qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
+Yes it's indeed a better name. I had not seen it, thanks!
+
+
+> > +                if ($str_address ne "" && $str_phrase ne "") {
+> > +                    $str_address = qq[<$str_address>];
+> > +                }
 > 
-> Spaces around = please.
-> ...
-> > +	foreach my $token (@tokens) {
-> > +	    if ($token =~ /^[,;]$/) {
-> 
-> Here and below: you're indenting with a 4-column offset, it should be 8.
+> We see both "git@vger.kernel.org" and "<git@vger.kernel.org>" around
+> here for an address without comment or phrase; this chooses to turn
+> them both into "<git@vger.kernel.org>" form?  Not a complaint but am
+> thinking aloud to see if I am reading it correctly.
 
-Should have spent more time on the form... Thanks
+If there's no phrase, this will choose the "git@vger.kernel.org" form,
+in both cases, because it'll be recognize as an address, $str_address
+will be "git@vger.kernel.org" and $str_phrase will be empty before the
+if ($str_address ne "" ...)
+Here are some tests:
 
-> The code below is a bit hard to read (I'm neither fluent in Perl nor in
-> the RFC ...). A few more comments would help. A few examples below (it's
-> up to you to integrate them or not).
+Input: <jdoe@example.com>
+Split: jdoe@example.com
+M::A : jdoe@example.com
+----------
+Input: jdoe@example.com
+Split: jdoe@example.com
+M::A : jdoe@example.com
+----------
+Input: Jane <jdoe@example.com>
+Split: Jane <jdoe@example.com>
+M::A : Jane <jdoe@example.com>
+----------
+Input: Jane Doe <jdoe@example.com>
+Split: Jane Doe <jdoe@example.com>
+M::A : Jane Doe <jdoe@example.com>
+----------
+Input: "Jane" <jdoe@example.com>
+Split: "Jane" <jdoe@example.com>
+M::A : "Jane" <jdoe@example.com>
+----------
+Input: "Doe, Jane" <jdoe@example.com>
+Split: "Doe, Jane" <jdoe@example.com>
+M::A : "Doe, Jane" <jdoe@example.com>
 
-Ok, I'll add comments for the hardest parts.
+I've some more tests, maybe I should put them all in this post ?
