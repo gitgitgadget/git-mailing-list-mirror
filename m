@@ -1,93 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 7/7] bisect: allows any terms set by user
-Date: Wed, 17 Jun 2015 09:05:21 +0200
-Message-ID: <vpq1tha4xxq.fsf@anie.imag.fr>
-References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<vpqy4jq2rjr.fsf@anie.imag.fr>
-	<1155395826.552092.1434285546884.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<835646176.485512.1434310200681.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<vpqoakh74fw.fsf@anie.imag.fr>
-	<183774662.562924.1434489533064.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>"
+ better
+Date: Wed, 17 Jun 2015 09:54:51 +0200
+Message-ID: <558127CB.70603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com
-To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 17 09:05:49 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de, eda@waniasset.com, i.grok@comcast.net,
+	pclouds@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 17 09:55:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z57Pq-0008EH-Ur
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 09:05:43 +0200
+	id 1Z58Bj-0001Us-6Y
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 09:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463AbbFQHFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 03:05:38 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42289 "EHLO shiva.imag.fr"
+	id S1757827AbbFQHzH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 03:55:07 -0400
+Received: from mout.web.de ([212.227.15.4]:52297 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754458AbbFQHFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 03:05:37 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5H75K7W018267
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Jun 2015 09:05:20 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5H75Lso028275;
-	Wed, 17 Jun 2015 09:05:21 +0200
-In-Reply-To: <183774662.562924.1434489533064.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Antoine Delaite's message of "Tue, 16 Jun 2015 23:18:53 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 17 Jun 2015 09:05:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5H75K7W018267
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435129521.15669@Jv8omtdCNQ7gy7unYdReRQ
+	id S1757724AbbFQHzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 03:55:02 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MgOUY-1ZSrIc3E50-00Nf1N; Wed, 17 Jun 2015 09:54:56
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.0.1
+X-Provags-ID: V03:K0:s7qmfD15w3dIUSlqz4cWiOe1IczmCJxc0ajFRzwFUub7OlegAbx
+ XHTYjVH49+c+90mrBcd8FTy/d2XoocW/R8DM3CUIUrHWNu7+STUVdGQDcdFm6Saz/4u1Q9R
+ 6mM1MfJnYX4jQGYbkqzckN6vWbGPedg9lKIzTFpxTfDdGc38Xoa3+0GtQ0d95OaVq5TANMx
+ YzevGav8CMkALnhQRaGmA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+PzeYmcATNI=:UKDXOSvCwpi3FQTi5bw3Xx
+ 7usQKpouVo/DUEBgkNmShHCjsDvPSaL9afUov4G4RgCkr5IVER8s7kq5yuydlRob+6v6n4Ct8
+ 5jB8xeGM77Vm/FNSqFTEbI6HxM/cFMA7kCvm23+3xCLUiVkNOeNlILI6PoQc3ARF+ofPFyFO/
+ iqSt19FpS9NiXO+BkYejxo88fOGcTIbhq8DfcXYvRIyWQMZyWDPq7hi4eptWo8Rnav0Z9o7jj
+ xkNnEP5fKUehb4f5RpIUp1Q7eUAdemxEsurvp5O83DreOiDkbcF+YuYlXxfHnnsx47tMAQwlW
+ n+svXfSbyYvskKevDDjprXni+3bNOz8KCD3Pd25Lc7d+m6dlViK5sLrK4fb10a14p5+zpYOxB
+ Bnlm6VPl9muBLe1zZ1/G7cBOwLQ9h12kaFQ82rTz9PrR/jgR4HIYHJm8ETQBXC/rm8HQapfY9
+ /ehTJihyhOLZY1L0Bj6EuQRql7SC7k+F9yxecRiP/f/Jw0b94bcAyBgx8lqFIdXxadru/iR4k
+ sJVZckKMCW/hZI85xjmgqBCFwxCVZX6oNc6Iro7huXwuP3CANz4IMSh66d9LXK6SDs73khwqE
+ tdcjtuLwZMpZk3CTN9b27j4PFIWTgfjMNb1QeCHejhHlOKqPtyOX7Cp71CSwPOJpCkxv3waoa
+ Lh1x4gVj/4ibIBJkyMOhGeogHh0Jdj9c78YLiNuehk8u7YpRG6vgvYXsIPh4PQnGa5Kg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271812>
 
-Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
+git checkout <pathspec> can be used to reset changes in the working tre=
+e.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->># terms_defined is 0 when the user did not define the terms explicitely
->># yet. This is the case when running 'git bisect start bad_rev good_rev'
->># before we see an explicit reference to a term.
->>terms_defined=0
->
-> The thing is:
-> 'git bisect reset
-> git bisect new HEAD
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+Version 2: Try to summarize the suggestions from the mailing list
+ Documentation/git-checkout.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-"git bisect new" does not exist. Did you mean "git bisect start HEAD"?
-
-> (autostart ?) y'
->
-> is strictly equivalent to
->
-> 'git bisect reset
-> git bisect start
-> git bisect new HEAD'
->
-> In both case terms_defined value would be 0 while we kinda know that a
-> term has been used.
-
-I don't understand. The user didn't say either "bad" or "good", so in
-both cases we haven't seen a term yet. Or I misunderstood what you meant
-by "define a term".
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
+t.txt
+index d263a56..39ad36f 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -3,7 +3,7 @@ git-checkout(1)
+  NAME
+ ----
+-git-checkout - Checkout a branch or paths to the working tree
++git-checkout - Switch branches or restore changes
+  SYNOPSIS
+ --------
+@@ -89,6 +89,10 @@ Omitting <branch> detaches HEAD at the tip of the cu=
+rrent branch.
+ 	(i.e.  commit, tag or tree) to update the index for the given
+ 	paths before updating the working tree.
+ +
++'git checkout' with <paths> or `--patch` is used to restore modified o=
+r
++deleted paths to their original contents from the index or replace pat=
+hs
++with the contents from a named <tree-ish> (most often a commit-ish).
+++
+ The index may contain unmerged entries because of a previous failed me=
+rge.
+ By default, if you try to check out such an entry from the index, the
+ checkout operation will fail and nothing will be checked out.
+--=20
+2.2.0.rc1.790.ge19fcd2
