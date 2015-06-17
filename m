@@ -1,100 +1,90 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 1/2] t3404: demonstrate =?UTF-8?Q?CHERRY=5FPICK=5FHEAD=20b?=
- =?UTF-8?Q?ug?=
-Date: Wed, 17 Jun 2015 10:16:08 +0200
+Subject: [PATCH 2/2] rebase -i: do not leave a =?UTF-8?Q?CHERRY=5FPICK=5FH?=
+ =?UTF-8?Q?EAD=20file=20behind?=
+Date: Wed, 17 Jun 2015 10:16:18 +0200
 Organization: gmx
-Message-ID: <f76ca5d0b6687a4d2ee4f587d8ba75a643a33c04.1434528725.git.johannes.schindelin@gmx.de>
+Message-ID: <2751d249ba6315f0139ba8fd6aa6ff23c32c9e69.1434528725.git.johannes.schindelin@gmx.de>
 References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
  <cover.1434528725.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, szeder@ira.uka.de
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 17 10:16:33 2015
+X-From: git-owner@vger.kernel.org Wed Jun 17 10:16:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z58WD-0004VO-N5
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 10:16:22 +0200
+	id 1Z58WQ-0004fM-7t
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 10:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757933AbbFQIQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 04:16:17 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50164 "EHLO mout.gmx.net"
+	id S1757941AbbFQIQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 04:16:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:62282 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757931AbbFQIQO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 04:16:14 -0400
+	id S1756904AbbFQIQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 04:16:28 -0400
 Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LqQnR-1YaDcG0hOL-00e8b5; Wed, 17 Jun 2015 10:16:09
+ ESMTPSA (Nemesis) id 0MTBLi-1ZXDUq3xAc-00S34e; Wed, 17 Jun 2015 10:16:18
  +0200
 In-Reply-To: <cover.1434528725.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:k/BbOtVSc1V8vMMQ5c66tWusRipbi+1dJg+k3oEgAbW5wJmFYtW
- DuYCuEVV4EqQmyuncCG7VePvzwHJoHw/fRAqmptMVI1TAyCwH4h5R0N+o3XFUD1SudUpG5r
- 2Cwgmh71KZDSzE7P6UFT/5tlA8JxG+doOjPfhj8YnBUUKWFp7Do/K1JFho+eUH6lEQIiRLj
- cfaYRER0MWNERVzRKD8Lw==
+X-Provags-ID: V03:K0:J0Ce1VHCVJEAJG1ygTVgXqiztaqiAyokf2hDKyb3xMqzNK7gtMy
+ 7PTUS75NoPaiAa549feYXCBpdNqNiarWYzQNS2feGb/IYcXoXT3lfGgIatVWjwZ8OzskHJQ
+ l7tAXMqIeiSb2aTjzsB404sPC7O6mnH44VurPDlUjEaZ3wWHMDalUiknO24u7bcch5OnLGt
+ ufu62SuOdVriKLkZIs/bQ==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271816>
 
-When rev-list's --cherry option does not detect that a patch has alread=
-y
-been applied upstream, an interactive rebase would offer to reapply it =
-and
-consequently stop at that patch with a failure, mentioning that the dif=
-f
-is empty.
+When skipping commits whose changes were already applied via `git rebase
+--continue`, we need to clean up said file explicitly.
 
-Traditionally, a `git rebase --continue` simply skips the commit in suc=
-h a
-situation.
-
-However, as pointed out by G=C3=A1bor Szeder, this leaves a CHERRY_PICK=
-_HEAD
-behind, making the Git prompt believe that a cherry pick is still going
-on. This commit adds a test case demonstrating this bug.
+The same is not true for `git rebase --skip` because that will execute
+`git reset --hard` as part of the "skip" handling in git-rebase.sh, even
+before git-rebase--interactive.sh is called.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3404-rebase-interactive.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ git-rebase--interactive.sh    | 6 +++++-
+ t/t3404-rebase-interactive.sh | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index ac429a0..5d52775 100755
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index dc3133f..16e0a82 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -849,7 +849,11 @@ continue)
+ 	# do we have anything to commit?
+ 	if git diff-index --cached --quiet HEAD --
+ 	then
+-		: Nothing to commit -- skip this
++		: Nothing to commit -- skip this commit
++
++		test ! -f "$GIT_DIR"/CHERRY_PICK_HEAD ||
++		rm "$GIT_DIR"/CHERRY_PICK_HEAD ||
++		die "Could not remove CHERRY_PICK_HEAD"
+ 	else
+ 		if ! test -f "$author_script"
+ 		then
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 5d52775..241d4d1 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1102,4 +1102,24 @@ test_expect_success 'rebase -i commits that over=
-write untracked files (no ff)' '
- 	test $(git cat-file commit HEAD | sed -ne \$p) =3D I
+@@ -1102,7 +1102,7 @@ test_expect_success 'rebase -i commits that overwrite untracked files (no ff)' '
+ 	test $(git cat-file commit HEAD | sed -ne \$p) = I
  '
-=20
-+test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
-+	git checkout -b commit-to-skip &&
-+	for double in X 3 1
-+	do
-+		seq 5 | sed "s/$double/&&/" >seq &&
-+		git add seq &&
-+		test_tick &&
-+		git commit -m seq-$double
-+	done &&
-+	git tag seq-onto &&
-+	git reset --hard HEAD~2 &&
-+	git cherry-pick seq-onto &&
-+	test_must_fail git rebase -i seq-onto &&
-+	test -d .git/rebase-merge &&
-+	git rebase --continue &&
-+	git diff seq-onto &&
-+	test ! -d .git/rebase-merge &&
-+	test ! -f .git/CHERRY_PICK_HEAD
-+'
-+
- test_done
---=20
+ 
+-test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
++test_expect_success 'rebase --continue removes CHERRY_PICK_HEAD' '
+ 	git checkout -b commit-to-skip &&
+ 	for double in X 3 1
+ 	do
+-- 
 2.3.1.windows.1.9.g8c01ab4
