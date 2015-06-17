@@ -1,73 +1,164 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Fwd: New Defects reported by Coverity Scan for git
-Date: Wed, 17 Jun 2015 20:54:56 +0700
-Message-ID: <CACsJy8D5_n3+yQ=7fRFMv6XU=s3vf0hoi4-7yDyYZSByK0zKsA@mail.gmail.com>
-References: <558151df465a5_4fafe3b3182568a@scan.mail>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 15:55:46 2015
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC v4 02/10] send-email: allow aliases in patch header and command script outputs
+Date: Wed, 17 Jun 2015 16:18:32 +0200
+Message-ID: <1434550720-24130-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 17 16:19:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5DoT-0002Aj-S9
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 15:55:34 +0200
+	id 1Z5EBH-00067X-7I
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 16:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231AbbFQNz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 09:55:29 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:35002 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754990AbbFQNz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 09:55:27 -0400
-Received: by iesa3 with SMTP id a3so34211972ies.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 06:55:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=LubwvjOyBb74zTE6cKuUvlnAJWy0ph6RO3wvyYahwlE=;
-        b=aPuQEXB4HxCa5wUvOcSIddnTGCKwbyM1AnZ5bLOgf7i9w4Fg9P031w2OCHaEiop92M
-         msSN9eokqaj/h/k8GsxKX8D/CexJ8wRnbn1zx7BFODXgWNRs7AWj+Lq9+drSS5mi177x
-         of48S/50iBhGZig6y8itJ7RZ1iJqwwaD9I5VeFX1lbhuy0GQ1w2lxiGgDCumwclmfsR4
-         HZvBekpti4VGUx6ZEM9Htc0zhl795zFd0skbhvXbwpGJOGxRftXcarYfNIE1m6NzE4yg
-         sORoprRp1NSq8c5e7dOQSRXYb0wKCnJkFfvpKYjakYiYUhLfYpvpmWY9nK9Ar0XrDmnh
-         jdXQ==
-X-Received: by 10.107.47.224 with SMTP id v93mr8241254iov.86.1434549326978;
- Wed, 17 Jun 2015 06:55:26 -0700 (PDT)
-Received: by 10.107.6.226 with HTTP; Wed, 17 Jun 2015 06:54:56 -0700 (PDT)
-In-Reply-To: <558151df465a5_4fafe3b3182568a@scan.mail>
+	id S1756734AbbFQOTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 10:19:01 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:46973 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756399AbbFQOS5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 10:18:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 2FCF02896;
+	Wed, 17 Jun 2015 16:18:54 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AJdwSrsX4wXJ; Wed, 17 Jun 2015 16:18:54 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 14F9426E8;
+	Wed, 17 Jun 2015 16:18:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 0DE0320DD;
+	Wed, 17 Jun 2015 16:18:54 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tu0hITrdA6hN; Wed, 17 Jun 2015 16:18:53 +0200 (CEST)
+Received: from Groseille.home (AGrenoble-652-1-475-169.w90-52.abo.wanadoo.fr [90.52.146.169])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 21A8B20D1;
+	Wed, 17 Jun 2015 16:18:53 +0200 (CEST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271839>
 
-I think Coverity caught this correctly.
+Interpret aliases in:
 
-** CID 1306846:  Memory - illegal accesses  (USE_AFTER_FREE)
-/builtin/pull.c: 287 in config_get_rebase()
+  -  Header fields of patches generated by git format-patch
+     (using --to, --cc, --add-header for example) or
+     manually modified. Example of fields in header:
 
+      To: alias1
+      Cc: alias2
+      Cc: alias3
 
-________________________________________________________________________________________________________
-*** CID 1306846:  Memory - illegal accesses  (USE_AFTER_FREE)
-/builtin/pull.c: 287 in config_get_rebase()
-281
-282             if (curr_branch) {
-283                     char *key = xstrfmt("branch.%s.rebase",
-curr_branch->name);
-284
-285                     if (!git_config_get_value(key, &value)) {
-286                             free(key);
->>>     CID 1306846:  Memory - illegal accesses  (USE_AFTER_FREE)
->>>     Passing freed pointer "key" as an argument to "parse_config_rebase".
-287                             return parse_config_rebase(key, value, 1);
-288                     }
-289
-290                     free(key);
-291             }
-292
+  -  Outputs of command scripts specified by --cc-cmd and
+     --to-cmd. Example of script:
+
+      #!/bin/sh
+      echo alias1
+      echo alias2
+
+Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+---
+ git-send-email.perl   |  2 ++
+ t/t9001-send-email.sh | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 6bedf74..8bf38ee 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1560,7 +1560,9 @@ foreach my $t (@files) {
+ 		($confirm =~ /^(?:auto|compose)$/ && $compose && $message_num == 1));
+ 	$needs_confirm = "inform" if ($needs_confirm && $confirm_unconfigured && @cc);
+ 
++	@to = expand_aliases(@to);
+ 	@to = validate_address_list(sanitize_address_list(@to));
++	@cc = expand_aliases(@cc);
+ 	@cc = validate_address_list(sanitize_address_list(@cc));
+ 
+ 	@to = (@initial_to, @to);
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index eef12e6..f7d4132 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1579,6 +1579,66 @@ test_expect_success $PREREQ 'sendemail.aliasfiletype=sendmail' '
+ 	grep "^!o@example\.com!$" commandline1
+ '
+ 
++test_expect_success $PREREQ 'alias support in To header' '
++	clean_fake_sendmail &&
++	echo "alias sbd  someone@example.org" >.mailrc &&
++	test_config sendemail.aliasesfile ".mailrc" &&
++	test_config sendemail.aliasfiletype mailrc &&
++	git format-patch --stdout -1 --to=sbd >aliased.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		aliased.patch \
++		2>errors >out &&
++	grep "^!someone@example\.org!$" commandline1
++'
++
++test_expect_success $PREREQ 'alias support in Cc header' '
++	clean_fake_sendmail &&
++	echo "alias sbd  someone@example.org" >.mailrc &&
++	test_config sendemail.aliasesfile ".mailrc" &&
++	test_config sendemail.aliasfiletype mailrc &&
++	git format-patch --stdout -1 --cc=sbd >aliased.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		aliased.patch \
++		2>errors >out &&
++	grep "^!someone@example\.org!$" commandline1
++'
++
++test_expect_success $PREREQ 'tocmd works with aliases' '
++	clean_fake_sendmail &&
++	echo "alias sbd  someone@example.org" >.mailrc &&
++	test_config sendemail.aliasesfile ".mailrc" &&
++	test_config sendemail.aliasfiletype mailrc &&
++	git format-patch --stdout -1 >tocmd.patch &&
++	echo tocmd--sbd >>tocmd.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to-cmd=./tocmd-sed \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		tocmd.patch \
++		2>errors >out &&
++	grep "^!someone@example\.org!$" commandline1
++'
++
++test_expect_success $PREREQ 'cccmd works with aliases' '
++	clean_fake_sendmail &&
++	echo "alias sbd  someone@example.org" >.mailrc &&
++	test_config sendemail.aliasesfile ".mailrc" &&
++	test_config sendemail.aliasfiletype mailrc &&
++	git format-patch --stdout -1 >cccmd.patch &&
++	echo cccmd--sbd >>cccmd.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--cc-cmd=./cccmd-sed \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		cccmd.patch \
++		2>errors >out &&
++	grep "^!someone@example\.org!$" commandline1
++'
++
+ do_xmailer_test () {
+ 	expected=$1 params=$2 &&
+ 	git format-patch -1 &&
 -- 
-Duy
+1.9.1
