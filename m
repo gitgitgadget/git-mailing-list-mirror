@@ -1,80 +1,78 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
-Date: Wed, 17 Jun 2015 13:05:05 -0700
-Message-ID: <CAGZ79kbwXGkBJrX793Ry1gn_5uBymrXWz=yy00WDADNjG1m-=A@mail.gmail.com>
-References: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
-	<CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
-	<CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
-	<xmqqh9q66ss9.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] test-lib.sh: fix color support when tput needs ~/.terminfo
+Date: Wed, 17 Jun 2015 13:15:30 -0700
+Message-ID: <xmqqvbem5bx9.fsf@gitster.dls.corp.google.com>
+References: <1434567986-23552-1-git-send-email-rhansen@bbn.com>
+	<1434567986-23552-3-git-send-email-rhansen@bbn.com>
+	<20150617194315.GE25304@peff.net> <5581D099.7090200@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 22:05:13 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 22:15:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5JaB-0007Vp-WB
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 22:05:12 +0200
+	id 1Z5JkH-0008PD-4x
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 22:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562AbbFQUFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 16:05:07 -0400
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:34428 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752361AbbFQUFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 16:05:05 -0400
-Received: by yhnv31 with SMTP id v31so15876693yhn.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 13:05:05 -0700 (PDT)
+	id S1753297AbbFQUPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 16:15:33 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:35994 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753205AbbFQUPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 16:15:32 -0400
+Received: by igbiq7 with SMTP id iq7so76115307igb.1
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 13:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=cXuFaAZ7CKZwM3zCxBxk1Xc30tq6DdDceG8PNsyHrWw=;
-        b=fD/x/vBySF5JPZFtJ3nkdNSt4ZTHcX7TOrHxqj5rTfOV5jvOZbV6MAsBwirks2d8p7
-         CGMCYFzZ527RyxNJU+JcqekgaJ+WrmbTI6ol2c5D5x2FViVjnkV6xGLXnEFMJp9U1TA7
-         zQ/k6u0uqS8s6CXPLvUP9XT8UH1eMUrbbLXu4gePNlhAP5Kwb5zQfyxTohaEVSWwEtz7
-         Y47B4MtorM/UwkmxmHK81OmcsdsrGP4G0hvAH6Ai9tgTUCKvbdc8VNU886PguUQLZJMW
-         guRsNmqgs6uVTOiUnUBrTvMLdhFP66tDlcc1qoFGVA+nvnJuBhc6V05y8tQDMylAPRmE
-         BEhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=cXuFaAZ7CKZwM3zCxBxk1Xc30tq6DdDceG8PNsyHrWw=;
-        b=InlEhvBHgkQjmUnxlPha5r0Ytb2e42cqSkVicnyZCQygLjBwiPX2J5WTRV4h0xIEFC
-         WcROiTEGqBIkyk3gZqsI+LkkUP0WhwlLtTFz4HRLtgNC3C0JBdhzSfw0y4z9hgZXDbTP
-         BMVY6pUFNemjX6wzNA0cg42zMJgaYcLRJPeMB5nNs3nwVD2tbn2ne8hD6Z4LnSYoY/HD
-         is8B5hnaQw1wZEKymLiRf2d2vzFmwKs0apLjDVoE7o4dnPVQC2nS6e+0binyvaZF7W6l
-         yw7yO62U+vyep3SidfDnkBxMGzD6KSltKaClqjIf+qep2+rBuyGFf1Zp/gvFl7vROKNN
-         LPcQ==
-X-Gm-Message-State: ALoCoQnrYuaSzBAAUHxNQ3Rf3yZTSvL5dZU4r1g0fD2dmsMH4kj3HcCiMcbltbIC3V2GwwOPVluz
-X-Received: by 10.129.148.4 with SMTP id l4mr9409651ywg.142.1434571505399;
- Wed, 17 Jun 2015 13:05:05 -0700 (PDT)
-Received: by 10.37.26.213 with HTTP; Wed, 17 Jun 2015 13:05:05 -0700 (PDT)
-In-Reply-To: <xmqqh9q66ss9.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=g2fjL76Bt+S2tFDFYfV/oAjhSxpJgVdRwocGXtilsCM=;
+        b=g7834NM8/dRO2pNL9Xdfsel3Qbi/MYXRkGIBqI/nGmYQbHa0stXkw4aVgkmod5Ria9
+         j957rpNLE23bn7c2ZmYHkLgY740yTXt8VPA+tTVVvvhjIqySqU3RZKDWBFH4Ko2AA84a
+         xwwIdeV9ppDObgnsWEpm4uayfckYks/6TKFHV2X9ByPLArcgHbgtxKCv9bH8LoiJ2zms
+         7bWcuCYbQb/F3bkVQHEvX2hBHBBlwNd6MM4x7u1wOzlK1P/Hg41hiX7C5z+BTVq4Zw4Y
+         h/oz/CLLY6GwYn+CLX3v4LZ2EGwcIEQVQ3bq9gFtepDhMyWuQLGO5KkLwBQchGHp57ke
+         rRUQ==
+X-Received: by 10.50.143.104 with SMTP id sd8mr37592405igb.14.1434572131809;
+        Wed, 17 Jun 2015 13:15:31 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
+        by mx.google.com with ESMTPSA id h10sm3274993iod.44.2015.06.17.13.15.30
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 17 Jun 2015 13:15:31 -0700 (PDT)
+In-Reply-To: <5581D099.7090200@bbn.com> (Richard Hansen's message of "Wed, 17
+	Jun 2015 15:55:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271906>
 
-On Wed, Jun 17, 2015 at 12:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> Just make strbuf_slopbuf[] large enough to keep Coverity happy. If it's
->>> happy, we'll have cleaner defect list
->>
->> It's down 31 defects, roughly 10% of all things coverity detected as
->> problematic.
->> YAY!
->
-> I actually think this is too ugly to live.  If coverity is buggy and
-> unusable, why aren't we raising that issue to them?
+Richard Hansen <rhansen@bbn.com> writes:
 
-We can try to do that.
-The last time I wanted them to take a look at Git, they were
-unresponsive. I presume that's what you get when not being
-a paying customer. :(
+> We could test if the variable is set first (test -n "${foo+set}"), at
+> the cost of a bit more complexity.
+>
+>> I do not mind it so much as you have
+>> it, but it does mean adding a new field needs to update two spots.
+>
+> I also don't like the duplicate list of color types, and I considered
+> doing something similar to what you suggested, but I decided against it.
+> I'm a bit worried about bizarre syntax errors or code execution if
+> say_color() is used improperly.  ('eval' with uncontrolled variables
+> makes me nervous.)
+
+I originally had the same reaction to your use of `eval` (with or
+without being guarded by the case to limit to known 5 ones).  But
+the uncontrolled-ness of this use of eval is to the same degree of
+uncontrolled-ness of any test_expect_{success,failure} scriptlet,
+so...
+
+I like this "save to variables instead of using tput" approach very
+much either way.  Well done.
+
+Thanks.
