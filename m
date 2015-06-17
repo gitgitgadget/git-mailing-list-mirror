@@ -1,94 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>" better
-Date: Wed, 17 Jun 2015 09:19:06 -0700
-Message-ID: <xmqqd20u48at.fsf@gitster.dls.corp.google.com>
-References: <558127CB.70603@web.de>
-	<CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>
-	<vpq8ubiwqo9.fsf@anie.imag.fr> <mlrmnt$te5$1@ger.gmane.org>
-	<vpqoaketusa.fsf@anie.imag.fr> <mlrn9r$9ho$1@ger.gmane.org>
-	<vpqtwu6sf4r.fsf@anie.imag.fr>
-	<xmqqoake4akt.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] clone: check if server supports shallow clones
+Date: Wed, 17 Jun 2015 09:35:23 -0700
+Message-ID: <xmqq8ubi47jo.fsf@gitster.dls.corp.google.com>
+References: <1433961320-1366-1-git-send-email-adgar@google.com>
+	<20150610190512.GB22800@peff.net>
+	<CACsJy8CiwiWgf2CarNNN5NgN7QbRB8oxGMmxF+VX8T=ZV2M1ow@mail.gmail.com>
+	<20150611143204.GA3343@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "Andres G. Aragoneses" <knocte@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 17 18:19:18 2015
+Cc: Duy Nguyen <pclouds@gmail.com>, Mike Edgar <adgar@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 17 18:35:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5G3X-0007yj-Bw
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 18:19:15 +0200
+	id 1Z5GJO-0006ma-Cy
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 18:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755557AbbFQQTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 12:19:10 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:34915 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755691AbbFQQTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 12:19:09 -0400
-Received: by iesa3 with SMTP id a3so37286524ies.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 09:19:08 -0700 (PDT)
+	id S1753172AbbFQQfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 12:35:32 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:33167 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753812AbbFQQf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 12:35:26 -0400
+Received: by iebgx4 with SMTP id gx4so37526947ieb.0
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 09:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=5Chq9OTy2R+9OGnxTQEXvvLgKwTKgSAUYmJNy6ZDXVU=;
-        b=mNChQRo94fcmk+KbnwZyI0ugAFJnbtHEjnEF6i8WX89v9bMKT6J5C8MQjh5eDGOdQk
-         eJzq7V8Fz7shvL8hpfHsdSl4RixR0xgyi++722HZZmXvl1u55ktZUKKcfwBqM/LweOMT
-         NVBSycTTLqr/g8GAZ1r4CJJAkxOxxNoL+3cda+ZoauYK3/UZqIN71JPL+OngxgegyVU0
-         Dxrz6h47mcs3ZF1+bQI5vuIFuM2I4snvw1Hljtf5jhLWxWIm+v+Lgpiz3Q+b2ApZimeL
-         Q5QM/ySx3C4q9deF7H0iyW9nF7maFM6zAzKyDDYKjf4DBK0OV0JhT/HNmLdI7FbAgTeC
-         9rOw==
-X-Received: by 10.43.17.135 with SMTP id qc7mr1029164icb.14.1434557948841;
-        Wed, 17 Jun 2015 09:19:08 -0700 (PDT)
+        bh=br+3hsrNmWiYBXKp/UAjrGo5I5Sv9TP8s+LLe0vDe8A=;
+        b=BZh/DuZkwTyr/8SLzPcXvmNUaTXW2cnsy/VvJDP+TKqnz4KLFyTcH0IFcKKnWCG119
+         HisUttAvc/j4Vw44PTlc6hOAxlqqh77K92o7KcIiHvUBUa3LInCuXA5K4Tyxy4oUx4UY
+         7edr0QQ9wjyxy0LhQ2F7tWb5ViFQSqYTckzge61u2ba0tC4YfVq8oYrZSuvIQkMzZn1I
+         b/XngjGnsy+Pra5JnyYyKU9OWPOlKlES7pUrkslxT65YHg9BDPlWNASnYD4v76jN2l7W
+         qHt1fu9bE7DeXBbgJmfDjq3pHLexepLnjJuAK2sdtvKGNxHskJzWGqNASFHJK2OVvziG
+         qEbg==
+X-Received: by 10.50.112.73 with SMTP id io9mr37001638igb.18.1434558925403;
+        Wed, 17 Jun 2015 09:35:25 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id b73sm2873623iob.25.2015.06.17.09.19.08
+        by mx.google.com with ESMTPSA id v3sm3480256igk.1.2015.06.17.09.35.24
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 09:19:08 -0700 (PDT)
-In-Reply-To: <xmqqoake4akt.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 17 Jun 2015 08:29:54 -0700")
+        Wed, 17 Jun 2015 09:35:24 -0700 (PDT)
+In-Reply-To: <20150611143204.GA3343@peff.net> (Jeff King's message of "Thu, 11
+	Jun 2015 10:32:07 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271864>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> On Thu, Jun 11, 2015 at 08:02:33PM +0700, Duy Nguyen wrote:
 >
->> Yes, but "Switch branchs or discard local changes" still does not
->> describe "git checkout HEAD^^^ -- file.txt" (restore to an old state,
->> but does not switch branch) or "git checkout -- file.txt" (get from the
->> index).
+>> > I see that do_fetch_pack checks server_supports("shallow"). Is that
+>> > enough to cover all fetch cases? And if it is, why does it not cover the
+>> > matching clone cases?
+>> 
+>> I think this replacement check would do
+>> 
+>> if ((args->depth > 0 || is_repository_shallow()) && !server_supports("shallow"))
+>>         die("Server does not support shallow clients");
 >
-> You are right, especially when file.txt does not have any change
-> relative to HEAD, there is no "discarding" going on.  You are
-> actively introducing a change to an unchanged file by checking
-> contents out of a different revision.
+> Oh, indeed, there is the depth flag I was looking for. :)
 >
->> To me, "discard local changes" imply that there will be no uncommited
->> changes on the files implied in the command after the operation.
+> And from some rudimentary testing, I believe that:
 >
-> Yup.
+>   git init
+>   git fetch --depth=1 ...
+>
+> is currently broken in the same way as clone (we are not shallow yet, so
+> it does not complain when the server does not support it). I think the
+> patch above fixes both that and the clone case.
+>
+> Of course it's hard to add to the test suite, since we do not have a way
+> of hitting a server that does not understand shallow (I simply fudged
+> server_supports() to return false on the client).
 
-What was discussed in this thread sounded suspiciously familiar ;-).
+We've had the "shallow" capability advertised since ed09aef0
+(support fetching into a shallow repository, 2006-10-30), and this
+patch itself may not be that super-important in practice.  Let's not
+worry too much about a test for situations that may not likely
+matter to us [*1*].
 
-Unfortunately "overwrite changes in the working tree" and "discard
-local changes" are equally bad.  As it does not say overwrite with
-what, we invite the original confusion that triggered these threads
-if the reader thought an equally useful but different "overwrites
-with result of merging your local changes to the pristine" (similar
-to what "checkout -m" does) would happen.
+Thanks, all.
 
-At least, "restore working tree files" without saying "restoring
-them to what state?" is much less likely to cause such a confusion.
 
-So perhaps
+[Footnote]
 
-    git-checkout - Switch branches or restore working tree files
-
-in the headline, and then explain "restore to what state" in the
-description?
+*1* How behind are re-implementations of upload-pack by other
+people, I have to wonder, though?
