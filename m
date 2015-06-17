@@ -1,108 +1,61 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
-Date: Wed, 17 Jun 2015 17:16:49 +0700
-Message-ID: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH] pull.c: fix some sparse warnings
+Date: Wed, 17 Jun 2015 18:32:56 +0800
+Message-ID: <CACRoPnRWkjvLLNSdMOia6-ncWxhoGU9qUf01pRa8fquSxM=2Bg@mail.gmail.com>
+References: <5580AEE1.6090300@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 17 12:16:39 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 17 12:33:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5AOb-0006cm-1B
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 12:16:37 +0200
+	id 1Z5AeV-0003JY-Aj
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 12:33:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbbFQKQd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 06:16:33 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:36697 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752281AbbFQKQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 06:16:30 -0400
-Received: by pdjm12 with SMTP id m12so36222549pdj.3
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 03:16:29 -0700 (PDT)
+	id S1753144AbbFQKc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 06:32:59 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:36144 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751258AbbFQKc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 06:32:57 -0400
+Received: by lacny3 with SMTP id ny3so29724137lac.3
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 03:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=E3F1XBgxPiPvSrm2MyD/YBgzym3F1/gdFuxYMnRZFrI=;
-        b=rOUtQTdWhFaaQIbLjH9pmBSkLKxamIIA4T3yaF6BIa8O1bRdvOmyi/2fDV+5RzO0Z8
-         liRTUxEAf/AsQBfmue7fTL4qladnnF5OqXHm4sskZnj0MRbxoDlmvpLGWfTSTpzsTsuk
-         /Fn1UVnxt0IeEV/3M+Bhuue6uiA3fYiYm8qCPWQLNsQed0ZFxG2c9AcfyubpF6Qth5rL
-         rSAZTSynSHazPcZVQp9d+zacoODSfNlp4xVkQQpedM9MpZ+g8IQXx96yQ6NmczO4nxM2
-         ktThl5Bu1XsSEtbcqojOrFcFWWeztFGyn7dhGkx3herd/WrAf3aYSsuhMVIDqI6QjAEq
-         XNpw==
-X-Received: by 10.68.101.65 with SMTP id fe1mr9506816pbb.40.1434536189756;
-        Wed, 17 Jun 2015 03:16:29 -0700 (PDT)
-Received: from lanh ([115.73.44.207])
-        by mx.google.com with ESMTPSA id ki3sm4173135pdb.74.2015.06.17.03.16.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Jun 2015 03:16:28 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 17 Jun 2015 17:16:51 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Hbz92sqI8F6FV3g831dTU7JQyuyLOWj2/XPpnBfjz+w=;
+        b=ZeWtjrYdQSg1AknfrJWPfG8ny+Cjc44dZKr9ek4RZT1dODC0kWuyjL7P0921tOYh05
+         GcwxP6RZNlUty+oHaBNLLvwTnkMbwUUsgJJg2/iRNf0DyS9hSUDNUQBYAjP2l1N0WDKM
+         LKBr6oFN+GE7NSsUcFgbwF56SWZmZLP9l3MIj6Gz+nstr+hmA+XDUQCRC0onL98Cah9C
+         gKyguGRC2j4EKcNXx53MbFHibvmHCbhZB8vUwm3uAONROAkEEgcCBAn3xynkn3nxU8ky
+         AfoHApqhVtwDhbdkcPzfAtQIstlyDMb3JT2nqLvjVs/drUXOiE300RgN9hy3IPtpb+ho
+         6wQA==
+X-Received: by 10.112.93.230 with SMTP id cx6mr7050873lbb.65.1434537176154;
+ Wed, 17 Jun 2015 03:32:56 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Wed, 17 Jun 2015 03:32:56 -0700 (PDT)
+In-Reply-To: <5580AEE1.6090300@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271827>
 
-It usually goes like this
+On Wed, Jun 17, 2015 at 7:18 AM, Ramsay Jones
+<ramsay@ramsay1.demon.co.uk> wrote:
+> Hi Paul,
+>
+> If you need to re-roll your patches on the 'pt/pull-builtin' branch,
+> could you please squash this into the patch which corresponds to
+> commit 191241e5.
 
-    strbuf sb =3D STRBUF_INIT;
-    if (!strncmp(sb.buf, "foo", 3))
-       printf("%s", sb.buf + 3);
+Thanks. I must have been half-asleep because the block of code just
+above uses NULL instead of 0. ><
 
-Coverity thinks that printf() can be executed, and because initial
-sb.buf only has one character (from strbuf_slopbuf), sb.buf + 3 is out
-of bound. What it does not recognize is strbuf_slopbuf[0] is always (*)
-zero. We always do some string comparison before jumping ahead to
-"sb.buf + 3" and those operations will stop out of bound accesses.
-
-Just make strbuf_slopbuf[] large enough to keep Coverity happy. If it's
-happy, we'll have cleaner defect list and better chances of spotting
-true defects.
-
-(*) It's not entirely wrong though. Somebody may do sb.buf[0] =3D 'f'
-    right after variable declaration and ruin all unused strbuf.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- There are lots of false warnings like this from Coverity. I just
- wanted to kill them off so we can spot more serious problems easier.
- I can't really verify that this patch shuts off those warnings
- because scan.coverity.com policy does not allow forks.
-
- I had another patch that avoids corrupting strbuf_slopbuf, by putting
- it to .rodata section. The patch is more invasive though, because
- this statement buf.buf[buf.len] =3D '\0' now has to make sure buf.buf
- is not strbuf_slopbuf. It feels safer, but probably not enough to
- justify the change.
-
- strbuf.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/strbuf.c b/strbuf.c
-index 0d4f4e5..0d7c3cf 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -16,7 +16,12 @@ int starts_with(const char *str, const char *prefix)
-  * buf is non NULL and ->buf is NUL terminated even for a freshly
-  * initialized strbuf.
-  */
-+#ifndef __COVERITY__
- char strbuf_slopbuf[1];
-+#else
-+/* Stop so many incorrect out-of-boundary warnings from Coverity */
-+char strbuf_slopbuf[64];
-+#endif
-=20
- void strbuf_init(struct strbuf *sb, size_t hint)
- {
---=20
-2.3.0.rc1.137.g477eb31
+Regards,
+Paul
