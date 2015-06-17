@@ -1,78 +1,78 @@
-From: Ismail Badawi <ismail@badawi.io>
-Subject: git difftool --dir-diff error in the presence of symlinks to directories
-Date: Wed, 17 Jun 2015 18:39:27 -0400
-Message-ID: <CAFB4ZjUnhEMfjg9+sHrPp271e=V=yU_5QFHBbmPpWMkb72+ENw@mail.gmail.com>
+From: josh@joshtriplett.org
+Subject: Re: co-authoring commits
+Date: Wed, 17 Jun 2015 16:06:54 -0700
+Message-ID: <20150617230654.GA27206@cloud>
+References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>
+ <xmqq4mm66r99.fsf@gitster.dls.corp.google.com>
+ <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
+ <20150617225224.GF4076@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 00:58:25 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 18 01:07:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5MHk-0007qS-Ue
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 00:58:21 +0200
+	id 1Z5MQZ-0007vJ-EI
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 01:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755561AbbFQW6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 18:58:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64504 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753647AbbFQW5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 18:57:35 -0400
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Jun 2015 18:57:34 EDT
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 678C75A685
-	for <git@vger.kernel.org>; Wed, 17 Jun 2015 18:39:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=mime-version
-	:date:message-id:subject:from:to:content-type; s=sasl; bh=jlIYvO
-	SIEhkVoB3WZxvxgATyGKc=; b=hMMkIUlPxcSUh0S5j4NXbDF/opORg3iW8uUOZP
-	ofEB2EWqvSp/AenG7YCTCLqCHW0HQqsGdOqhuK1kyI8KHyAIihbRjctzJ4zLBt/D
-	RAFNlS9xs1cVi+Xd6nnzK0AcpEzeDlaLphAEXeuJm6WfuXLsTE54P3tbqVemMAa+
-	2pezQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F1C65A684
-	for <git@vger.kernel.org>; Wed, 17 Jun 2015 18:39:28 -0400 (EDT)
-Received: from mail-yh0-f43.google.com (unknown [209.85.213.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F181B5A681
-	for <git@vger.kernel.org>; Wed, 17 Jun 2015 18:39:27 -0400 (EDT)
-Received: by yhan67 with SMTP id n67so44417251yha.3
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 15:39:27 -0700 (PDT)
-X-Received: by 10.52.179.73 with SMTP id de9mr913785vdc.28.1434580767142; Wed,
- 17 Jun 2015 15:39:27 -0700 (PDT)
-Received: by 10.52.166.132 with HTTP; Wed, 17 Jun 2015 15:39:27 -0700 (PDT)
-X-Pobox-Relay-ID: B64981AA-1541-11E5-8010-561A9F42C9D4-72591293!pb-smtp1.pobox.com
+	id S1754741AbbFQXHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 19:07:01 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:54314 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484AbbFQXG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 19:06:58 -0400
+Received: from cloud (joshtriplett.org [IPv6:2604:3400:dc1:41:216:3eff:fe9f:2070])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id BD3CD172070;
+	Thu, 18 Jun 2015 01:06:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20150617225224.GF4076@thunk.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271928>
 
-Reproduce like this (using git 2.4.3):
+On Wed, Jun 17, 2015 at 06:52:24PM -0400, Theodore Ts'o wrote:
+> On Wed, Jun 17, 2015 at 10:26:32PM +0200, Tuncer Ayaz wrote:
+> > 
+> > By allowing multiple authors, you don't have to decide who's the
+> > primary author, as in such situations usually there is no primary at
+> > all. I sometimes deliberately override the author when committing and
+> > add myself just as another co-author in the commit message, but as
+> > others have noted it would be really great if we can just specify
+> > multiple authors.
+> 
+> Just recently, there a major thread on the IETF mailing list where
+> IETF working group had drafts where people were listed as co-authors
+> without their permission, and were upset that the fact that their name
+> was added made it seem as if they agreed with the end product.  (i.e.,
+> that they were endorsing the I-D).  So while adding formal coauthor
+> might solves (a few) problems, it can also introduce others.
+> 
+> Ultimately there is one person who can decide which parts of the
+> changes to put in the commit that gets sent to the maintainer.  So
+> there *is* someone who is the primary author; the person who takes the
+> final pass on the patch and then hits the send key.
 
-git init
-mkdir foo
-touch foo/bar
-git add .
-git commit -m "Initial commit."
-ln -s foo link
-git add .
-git commit -m "Add link to foo."
-git difftool -d HEAD^ HEAD
+I've worked on many patches with another person in a shared screen
+session, co-authoring a series of patches and commit messages in vim,
+and writing an email in mutt.  There were, ultimately, two people
+deciding what to put in a commit and send to the maintainer.  This is,
+admittedly, unusual, but pair programming is not ridiculously uncommon.
 
-That last command outputs:
+> In that case, perhaps you could set the from field to a mailing list
+> address.
 
-fatal: Unable to hash /Users/isbadawi/test/link
-hash-object /Users/isbadawi/test/link: command returned error: 128
+The "From" field in email headers supports a list of comma-separated
+addresses, just like To and Cc.  Speaking from experience, this
+more-or-less works with all the mail software we tried it with, with the
+occasional program only displaying the first or last entry.
 
-Briefly looking at the 'git difftool' source it looks like it uses the
-output of 'git diff --raw' and calls 'hash-object' on any object whose
-mode is nonzero, including symlinks.
-
-I'm not sure what the right thing to do here is -- just thought I'd
-report this failure.
-
-Thanks,
-Ismail
+- Josh Triplett
