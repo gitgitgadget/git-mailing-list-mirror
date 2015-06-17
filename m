@@ -1,71 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Should the --encoding argument to log/show commands make any guarantees about their output?
-Date: Wed, 17 Jun 2015 09:42:17 -0700
-Message-ID: <xmqqzj3y2snq.fsf@gitster.dls.corp.google.com>
-References: <557E91D2.3000908@googlemail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>"
+ better
+Date: Wed, 17 Jun 2015 18:43:15 +0200
+Message-ID: <5581A3A3.1070908@web.de>
+References: <558127CB.70603@web.de>
+ <CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>
+ <vpq8ubiwqo9.fsf@anie.imag.fr> <mlrmnt$te5$1@ger.gmane.org>
+ <vpqoaketusa.fsf@anie.imag.fr> <mlrn9r$9ho$1@ger.gmane.org>
+ <vpqtwu6sf4r.fsf@anie.imag.fr> <xmqqoake4akt.fsf@gitster.dls.corp.google.com>
+ <xmqqd20u48at.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jan-Philip Gehrcke <jgehrcke@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 18:42:37 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: "Andres G. Aragoneses" <knocte@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 17 18:43:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5GPx-0004bj-Bg
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 18:42:25 +0200
+	id 1Z5GR6-0005bn-P9
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 18:43:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756757AbbFQQmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 12:42:21 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33834 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754163AbbFQQmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 12:42:19 -0400
-Received: by iebmu5 with SMTP id mu5so37697847ieb.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 09:42:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ZBFhSKnkWy57znMgC9U922p1IEG6KGsATphCWHhGVF4=;
-        b=g2PfAgdvZrcRj29im8oGnuoLx1N5u9Kea/tYZo0nNVY1n6uMKshyua7nW277NLh0s4
-         /cRr+jTMMLaMHzfSevqDg4otMqKXF8M5xDRwoR4vhP5AuQQ7Ij6lTn/1MKbM83IDKnD0
-         wzEdocCLj0dTBgMOb5kXiCySDs/70XtL2qH1a7inq43IVdq4aEItNUZmODDDOa41ATmO
-         7360Kzh+1Lvz7h1BM/BzNZLOIrLW/N73yIi4a+6AuNHH3zaHXGWQDdCJHR3rSeKYFn8u
-         k5qbPdxWHQYC4Glafx2Syr4/N3EGsd6ox1MrL3//0O8hS9obTsOEOKs9vrpzxbG4Si+t
-         5Cyg==
-X-Received: by 10.43.139.6 with SMTP id iu6mr1202897icc.32.1434559339411;
-        Wed, 17 Jun 2015 09:42:19 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id rr5sm3486854igb.7.2015.06.17.09.42.18
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 09:42:18 -0700 (PDT)
-In-Reply-To: <557E91D2.3000908@googlemail.com> (Jan-Philip Gehrcke's message
-	of "Mon, 15 Jun 2015 10:50:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756856AbbFQQnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 12:43:33 -0400
+Received: from mout.web.de ([212.227.15.4]:57999 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755875AbbFQQnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 12:43:31 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0Lz3CK-1Z0mIg03OK-014Bz2; Wed, 17 Jun 2015 18:43:18
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.0.1
+In-Reply-To: <xmqqd20u48at.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:Ft4n6rjGaVJZMLwCP1PNJRV/RGRw9B7cl5H0ho2x5a7jyWsUahs
+ +a7lVcJMtaYJPoXzWIQ7ewgs69A3Hau+fw8uvYm+TwXNQxOiUsYnp6aK+fMycskenYcgJzn
+ 1GdPpeXYIPChHi5WoME+b8Z82tJVroKMHG1WHHkb+cfVbJFY42BgAwS8/U3+6tyDbrcaBnQ
+ sLHre+WuP3p9M6sFcD6Cw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Zi6FMPVzbto=:xZgKAED9m6+ew9Cu8vRl6l
+ MmssfYYjn29Yzn72ia63tSAsqEjVeTI7EsdRxspuNqnAdXpEWD4xw7F4ahK4fhBaM53kWG8Ze
+ TwuyesXhnnlU1hIj+gh8TJ++Qir73ONOUqPzQsl3PP40R0dJ0lZixtiLkh67YZoOW8+VIU7Ti
+ U7q3XIn3oTRxxpvBSGqbU0BjFX7xqmOfAysZ1I4RMszZnT7bBcCAOgszIpTG1hBg33yVrXbqs
+ E+MzSWIqLQdKV3DD1vRydmhMtTo/tMUqXrHbhqMvM7yxfaYw6SYudT6/KOjmFeJN6Q4SGdh6D
+ OiK9M8U1NupvMx1LgwWtDKyggdahLdO00SWyiwqCpFtHZKmT6sTK1Qn5Nyt76rwGgrv7eVwBb
+ BFGvD7Tcbba42UgiGps6CPMv7Du8JZB87Nb9wgYpS5D4amon9AGj8G91jIzdTNB9wnqxqLUXr
+ Xq2fW7Ext9/INWUbgYp3ZOeyXX39RxFSZbhY43TekAovqzDWQZt+Dr0YMeTiQWD1uCFkEr+C0
+ zhqyY4EfwiyyxBUOEP4bXdkwDUfhd3H006kdJnhmaOS2NsBx0dpVdhv58isqFt2g5pX6W9D4E
+ zEbt7ELPJYTa1hEc91e5QuqFwwdDKbc3i88dhWQvJlP+PA0thlvRN44Du7Tw/uJKSDgU5l+eX
+ UmbtJy9goYl+msfsGHQkK9GThLTjmnVe/wvIXZGPSkruyhMxkX+kJ0sO3zt3o+K7zyRs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271868>
 
-Jan-Philip Gehrcke <jgehrcke@googlemail.com> writes:
+On 2015-06-17 18.19, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>>
+>>> Yes, but "Switch branchs or discard local changes" still does not
+>>> describe "git checkout HEAD^^^ -- file.txt" (restore to an old state,
+>>> but does not switch branch) or "git checkout -- file.txt" (get from the
+>>> index).
+>>
+>> You are right, especially when file.txt does not have any change
+>> relative to HEAD, there is no "discarding" going on.  You are
+>> actively introducing a change to an unchanged file by checking
+>> contents out of a different revision.
+>>
+>>> To me, "discard local changes" imply that there will be no uncommited
+>>> changes on the files implied in the command after the operation.
+>>
+>> Yup.
+> 
+> What was discussed in this thread sounded suspiciously familiar ;-).
+> 
+> Unfortunately "overwrite changes in the working tree" and "discard
+> local changes" are equally bad.  As it does not say overwrite with
+> what, we invite the original confusion that triggered these threads
+> if the reader thought an equally useful but different "overwrites
+> with result of merging your local changes to the pristine" (similar
+> to what "checkout -m" does) would happen.
+> 
+> At least, "restore working tree files" without saying "restoring
+> them to what state?" is much less likely to cause such a confusion.
+> 
+> So perhaps
+> 
+>     git-checkout - Switch branches or restore working tree files
+> 
+> in the headline, and then explain "restore to what state" in the
+> description?
+I'm not sure if the "restore" is always the right thing to describe:
+'git checkout <commit> -- <path>'
+will "copy" the version from another commit into the workspace.
 
-> I was surprised to see that the output of
->
->     git log --encoding=utf-8 "--format=format:%b"
->
-> can contain byte sequences that are invalid in UTF-8. Note: I am using
-> git 2.1.4 and the %b format specifier represents the commit message
-> body.
+My v3 will probably use the original line:
+git-checkout - Checkout a branch or paths to the working tree
 
-Yeah, if the original was bad and cannot be sanely expressed in
-UTF-8, you have two options.  You can show the contents as raw bytes
-recorded in the object with a warning so that the user can use it as
-such (e.g. perhaps the original was indeed an iso8859-2 but was
-incorrectly marked as UTF-8, or something like that, and a human
-that is more intelligent than a tool _could_ guess and attempt to
-recover).  Or you can error out and refuse to produce output.
+(and improve the description)
 
-We deliberately made a design choice to take the former option.
+git-checkout - Checkout a branch or paths to the working tree
