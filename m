@@ -1,126 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] pull: allow dirty tree when rebase.autostash enabled
-Date: Wed, 17 Jun 2015 08:36:34 -0700
-Message-ID: <xmqqh9q64a9p.fsf@gitster.dls.corp.google.com>
-References: <1433625145-29668-2-git-send-email-me@ikke.info>
-	<1434538880-15608-1-git-send-email-me@ikke.info>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC v4 07/10] send-email: reduce dependancies impact on parse_address_line
+Date: Wed, 17 Jun 2015 17:45:47 +0200
+Message-ID: <vpqoakejq38.fsf@anie.imag.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Wed Jun 17 17:36:50 2015
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 17 17:46:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5FOL-0002BC-RK
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 17:36:42 +0200
+	id 1Z5FXI-0002Mx-UB
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 17:45:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756905AbbFQPgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 11:36:37 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33305 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755691AbbFQPgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 11:36:36 -0400
-Received: by igbos3 with SMTP id os3so71366171igb.0
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 08:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=be454q2Qv/zF9Z1EHsY+yymt3kqpiOh9FTqpTZUi6Jg=;
-        b=D2aOi+7j+94G/4mF5ISZrKHxUpaSqZjtYr0QsTCS9SOL00VqMdsVgN/1IryAc+E1/X
-         zziWwBU4tGyouoKwXTR9KY213MCy9WMS4RG3izZ8d2E4FryLBMEPmBRZdjAHJ2L7dvEz
-         B1BLRrPTw6CqZooewLJCtAhhfyDaJm+X7GUyODN5H7QkNxpoOt04EpdEaPtiT0H//Zzp
-         IoaGzdF+jLjRRI53QKVVrfIEzZygU4sOgNPdmOMa0jBwkAIgnAWhv8ew1hLcvpHeoDct
-         L6mSI2iwPiriy3j+g9LrKNdf+drCAbqUFjloPhkVIjxsksDKoThQFjsE6f3N4NWFOB86
-         QddA==
-X-Received: by 10.50.141.164 with SMTP id rp4mr36519945igb.2.1434555396116;
-        Wed, 17 Jun 2015 08:36:36 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id 77sm2805369ioi.20.2015.06.17.08.36.35
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 08:36:35 -0700 (PDT)
-In-Reply-To: <1434538880-15608-1-git-send-email-me@ikke.info> (Kevin Daudt's
-	message of "Wed, 17 Jun 2015 13:01:20 +0200")
+	id S1756596AbbFQPpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 11:45:52 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59406 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755488AbbFQPpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 11:45:51 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5HFjj8p023315
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 17 Jun 2015 17:45:45 +0200
+Received: from anie.imag.fr (ensi-vpn-247.imag.fr [129.88.57.247])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5HFjlIE013039;
+	Wed, 17 Jun 2015 17:45:47 +0200
+In-Reply-To: <1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	(Remi Lespinet's message of "Wed, 17 Jun 2015 16:18:37 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 17 Jun 2015 17:45:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5HFjj8p023315
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435160746.39956@iPj/C6ZNvV+GlHslaDGWrg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271859>
 
-Kevin Daudt <me@ikke.info> writes:
+Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
 
-> rebase learned to stash changes when it encounters a dirty work tree, but
-> git pull --rebase does not.
->
-> Only verify if the working tree is dirty when rebase.autostash is not
-> enabled.
->
-> Signed-off-by: Kevin Daudt <me@ikke.info>
-> Helped-by: Paul Tan <pyokagan@gmail.com>
 > ---
-> Changes to v2:
->  - Dropped the change of the existing --rebase test
->  - Improvements to the test.
+>  git-send-email.perl | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 52 insertions(+), 2 deletions(-)
 >
-> Verified that the test fails before the change, and succeeds after the change.
->
->  git-pull.sh     |  5 ++++-
->  t/t5520-pull.sh | 11 +++++++++++
->  2 files changed, 15 insertions(+), 1 deletion(-)
->
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 0917d0d..f0a3b6e 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -239,7 +239,10 @@ test true = "$rebase" && {
->  			die "$(gettext "updating an unborn branch with changes added to the index")"
->  		fi
->  	else
-> -		require_clean_work_tree "pull with rebase" "Please commit or stash them."
-> +		if [ $(git config --bool --get rebase.autostash || echo false) = false ]
-
-Style (use of []).
-
-Shouldn't you be doing
-
-	if ...
-	then        	
-		on an unborn
-	elif we are not doing autostash
-		require clean work tree
-	fi
-
-which does not need unnecessarily deep nesting?
-
-> +		then
-> +			require_clean_work_tree "pull with rebase" "Please commit or stash them."
-> +		fi
->  	fi
->  	oldremoteref= &&
->  	test -n "$curr_branch" &&
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index af31f04..aa247ec 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -233,6 +233,17 @@ test_expect_success '--rebase fails with multiple branches' '
->  	test modified = "$(git show HEAD:file)"
->  '
->  
-> +test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
-> +	test_config rebase.autostash true &&
-> +	git reset --hard before-rebase &&
-> +	echo dirty >new_file &&
-> +	git add new_file &&
-> +	git pull --rebase . copy &&
-> +	test_cmp_rev HEAD^ copy &&
-> +	test "$(cat new_file)" = dirty &&
-> +	test "$(cat file)" = "modified again"
-> +'
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index a0cd7ff..a1f6c18 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -477,9 +477,59 @@ foreach my $entry (@bcclist) {
+>  sub parse_address_line {
+>  	if ($have_mail_address) {
+>  		return map { $_->format } Mail::Address->parse($_[0]);
+> -	} else {
+> -		return split_addrs($_[0]);
+>  	}
 > +
->  test_expect_success 'pull.rebase' '
->  	git reset --hard before-rebase &&
->  	test_config pull.rebase true &&
+> +	my $commentrgx=qr/\((?:[^)]*)\)/;
+> +	my $quotergx=qr/"(?:[^\"\\]|\\.)*"/;
+> +	my $wordrgx=qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
+
+Spaces around = please.
+
+The code below is a bit hard to read (I'm neither fluent in Perl nor in
+the RFC ...). A few more comments would help. A few examples below (it's
+up to you to integrate them or not).
+
+> +	my $tokenrgx = qr/(?:$quotergx|$wordrgx|$commentrgx|\S)/;
+> +
+> +	my @tokens = map { $_ =~ /\s*($tokenrgx)\s*/g } @_;
+> +	push @tokens, ",";
+
+
+        # parse a full address like
+        # "Phrase" (comment) <address@example.com>
+
+(to clarify the wording)
+
+> +	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
+> +	foreach my $token (@tokens) {
+> +	    if ($token =~ /^[,;]$/) {
+
+Here and below: you're indenting with a 4-column offset, it should be 8.
+
+> +		if (@address) {
+> +		    push @address, @buffer;
+> +		} else {
+> +		    push @phrase, @buffer;
+> +		}
+> +
+> +		my $str_phrase = join ' ', @phrase;
+> +		my $str_address = join '', @address;
+> +		my $str_comment = join ' ', @comment;
+
+                # Escape special-characters with backslash
+> +		if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
+> +		    $str_phrase =~ s/(^|[^\\])"/$1/g;
+> +		    $str_phrase = qq["$str_phrase"];
+> +		}
+> +
+> +		if ($str_address ne "" && $str_phrase ne "") {
+> +		    $str_address = qq[<$str_address>];
+> +		}
+> +
+> +		my $str_mailbox = "$str_phrase $str_address $str_comment";
+> +		$str_mailbox =~ s/^\s*|\s*$//g;
+> +		push @addr_list, $str_mailbox if ($str_mailbox);
+> +
+> +		@phrase = @address = @comment = @buffer = ();
+> +	    } elsif ($token =~ /^\(/) {
+> +		push @comment, $token;
+> +	    } elsif ($token eq "<") {
+> +		push @phrase, (splice @address), (splice @buffer);
+> +	    } elsif ($token eq ">") {
+> +		push @address, (splice @buffer);
+> +	    } elsif ($token eq "@") {
+> +		push @address, (splice @buffer), "@";
+> +	    } elsif ($token eq ".") {
+> +		push @address, (splice @buffer), ".";
+> +	    } else {
+
+                # We don't know what the token belongs to yet. We'll
+                # decide where to append @buffer later.
+> +		push @buffer, $token;
+> +	    }
+> +	}
+> +
+> +	return @addr_list;
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
