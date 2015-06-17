@@ -1,66 +1,172 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
-Date: Wed, 17 Jun 2015 12:25:58 -0700
-Message-ID: <xmqqh9q66ss9.fsf@gitster.dls.corp.google.com>
-References: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
-	<CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
-	<CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 21:26:10 2015
+From: Richard Hansen <rhansen@bbn.com>
+Subject: [PATCH 1/2] Revert "test-lib.sh: do tests for color support after changing HOME"
+Date: Wed, 17 Jun 2015 15:06:25 -0400
+Message-ID: <1434567986-23552-2-git-send-email-rhansen@bbn.com>
+References: <1434567986-23552-1-git-send-email-rhansen@bbn.com>
+Cc: Richard Hansen <rhansen@bbn.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 17 21:28:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5IyL-000548-Fu
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:26:06 +0200
+	id 1Z5J0G-0006vr-Ub
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755711AbbFQT0C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 15:26:02 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:36385 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753175AbbFQT0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 15:26:00 -0400
-Received: by iecrd14 with SMTP id rd14so40742685iec.3
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 12:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=l6gUv+ER1pd+QJBPekg7bs/Zkq0Z/QhDIhseNeFgByA=;
-        b=cmEZBVcNFGl2ad18jbiNyQm1whx1JxV2KOLWD7EmCollPU9hMvyqrsL1SGGKKgrTIX
-         JWiarwHGIBtQANHoBOtzZMx55n8q/uNkPDmWtDfvIzjyn3GvMIvrrbFZsX2GR1SmLCQZ
-         02voGCybOngDug9FQn7O3ZXoN/n0/PdiaBO2pjKPOXmYmHl97s3TKE2aG5AEfpNdBTjK
-         L5zdp16+nKXHf1M2+dmKmIlMdgQflJBt1ITt791dLLPQwg7fxcukr4y7UztBHDy5ryh+
-         t3JE3SruOMmNIUFg3ctj3MfUouQhzvE0GVGPy+TRy5bcaukrYz1i+fEIXwnVfeh1y3mc
-         AHuQ==
-X-Received: by 10.42.161.74 with SMTP id s10mr8787881icx.5.1434569160006;
-        Wed, 17 Jun 2015 12:26:00 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id j4sm12517729igo.0.2015.06.17.12.25.59
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 12:25:59 -0700 (PDT)
-In-Reply-To: <CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 17 Jun 2015 10:58:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753175AbbFQT2C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 15:28:02 -0400
+Received: from smtp.bbn.com ([128.33.0.80]:36992 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755614AbbFQT17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 15:27:59 -0400
+Received: from socket.bbn.com ([192.1.120.102]:34520)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1Z5IfQ-000241-8D; Wed, 17 Jun 2015 15:06:32 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id E5A0140329
+X-Mailer: git-send-email 2.4.3
+In-Reply-To: <1434567986-23552-1-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271891>
 
-Stefan Beller <sbeller@google.com> writes:
+This reverts commit 102fc80d32094ad6598b17ab9d607516ee8edc4a.
 
->> Just make strbuf_slopbuf[] large enough to keep Coverity happy. If it's
->> happy, we'll have cleaner defect list
->
-> It's down 31 defects, roughly 10% of all things coverity detected as
-> problematic.
-> YAY!
+There are two issues with that commit:
 
-I actually think this is too ugly to live.  If coverity is buggy and
-unusable, why aren't we raising that issue to them?
+  * It is buggy.  In pseudocode, it is doing:
+
+       color is set || TERM != dumb && color works && color=t
+
+    when it should be doing:
+
+       color is set || { TERM != dumb && color works && color=t }
+
+  * It unnecessarily disables color when tput needs to read
+    ~/.terminfo to get the control sequences.
+---
+ t/test-lib.sh | 90 ++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 43 insertions(+), 47 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 39da9c2..57212ec 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -181,8 +181,16 @@ export _x05 _x40 _z40 LF u200c
+ # This test checks if command xyzzy does the right thing...
+ # '
+ # . ./test-lib.sh
++test "x$ORIGINAL_TERM" != "xdumb" && (
++		TERM=$ORIGINAL_TERM &&
++		export TERM &&
++		test -t 1 &&
++		tput bold >/dev/null 2>&1 &&
++		tput setaf 1 >/dev/null 2>&1 &&
++		tput sgr0 >/dev/null 2>&1
++	) &&
++	color=t
+ 
+-unset color
+ while test "$#" -ne 0
+ do
+ 	case "$1" in
+@@ -253,6 +261,40 @@ then
+ 	verbose=t
+ fi
+ 
++if test -n "$color"
++then
++	say_color () {
++		(
++		TERM=$ORIGINAL_TERM
++		export TERM
++		case "$1" in
++		error)
++			tput bold; tput setaf 1;; # bold red
++		skip)
++			tput setaf 4;; # blue
++		warn)
++			tput setaf 3;; # brown/yellow
++		pass)
++			tput setaf 2;; # green
++		info)
++			tput setaf 6;; # cyan
++		*)
++			test -n "$quiet" && return;;
++		esac
++		shift
++		printf "%s" "$*"
++		tput sgr0
++		echo
++		)
++	}
++else
++	say_color() {
++		test -z "$1" && test -n "$quiet" && return
++		shift
++		printf "%s\n" "$*"
++	}
++fi
++
+ error () {
+ 	say_color error "error: $*"
+ 	GIT_EXIT_OK=t
+@@ -829,52 +871,6 @@ HOME="$TRASH_DIRECTORY"
+ GNUPGHOME="$HOME/gnupg-home-not-used"
+ export HOME GNUPGHOME
+ 
+-# run the tput tests *after* changing HOME (in case ncurses needs
+-# ~/.terminfo for $TERM)
+-test -n "${color+set}" || test "x$ORIGINAL_TERM" != "xdumb" && (
+-		TERM=$ORIGINAL_TERM &&
+-		export TERM &&
+-		test -t 1 &&
+-		tput bold >/dev/null 2>&1 &&
+-		tput setaf 1 >/dev/null 2>&1 &&
+-		tput sgr0 >/dev/null 2>&1
+-	) &&
+-	color=t
+-
+-if test -n "$color"
+-then
+-	say_color () {
+-		(
+-		TERM=$ORIGINAL_TERM
+-		export TERM
+-		case "$1" in
+-		error)
+-			tput bold; tput setaf 1;; # bold red
+-		skip)
+-			tput setaf 4;; # blue
+-		warn)
+-			tput setaf 3;; # brown/yellow
+-		pass)
+-			tput setaf 2;; # green
+-		info)
+-			tput setaf 6;; # cyan
+-		*)
+-			test -n "$quiet" && return;;
+-		esac
+-		shift
+-		printf "%s" "$*"
+-		tput sgr0
+-		echo
+-		)
+-	}
+-else
+-	say_color() {
+-		test -z "$1" && test -n "$quiet" && return
+-		shift
+-		printf "%s\n" "$*"
+-	}
+-fi
+-
+ if test -z "$TEST_NO_CREATE_REPO"
+ then
+ 	test_create_repo "$TRASH_DIRECTORY"
+-- 
+2.4.3
