@@ -1,98 +1,81 @@
-From: Jan-Philip Gehrcke <jgehrcke@googlemail.com>
-Subject: Re: Should the --encoding argument to log/show commands make any
- guarantees about their output?
-Date: Wed, 17 Jun 2015 19:07:48 +0200
-Message-ID: <5581A964.4000500@googlemail.com>
-References: <557E91D2.3000908@googlemail.com> <xmqqzj3y2snq.fsf@gitster.dls.corp.google.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] notes: Use get_sha1_committish instead of read_ref in init_notes()
+Date: Wed, 17 Jun 2015 18:35:11 +0200
+Message-ID: <CALKQrgfR7AwJ1XY2iPHBAssk_2uKGUJC=J-r7bJVSKaiosc5gw@mail.gmail.com>
+References: <1434503731-26414-1-git-send-email-mh@glandium.org>
+	<xmqq1thb58i8.fsf@gitster.dls.corp.google.com>
+	<20150617094036.GA536@glandium.org>
+	<xmqqsi9q4b46.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 17 19:08:01 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jun 17 19:20:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Goj-0003Aa-D8
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:08:01 +0200
+	id 1Z5H0h-0006St-9X
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755986AbbFQRH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 13:07:57 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:37769 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753509AbbFQRHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 13:07:55 -0400
-Received: by wifx6 with SMTP id x6so60594056wif.0
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 10:07:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=9xbfCzHmX6X6ZO7FnuxNY5eEnylyNibyD4XrmFFxXy8=;
-        b=IAXr8DQZ/HRWE2YNXY18vy5RVmyH4u3ztOC49oaJACOQ3Zo4D1A00eao/QmtmagJKj
-         UGNeHYAqmSXMcr1KYgyQsX703MF0Z0KnfTp+SRAr+ao0qFXvVCuYK6ObG1PxWyaKc1fF
-         oVtISeJvK6dapgwlVRWK/W4otoMaJHmwEy8GOEsFL6oaitPOoEBo+Q33yiWWc9S7ljZD
-         SZh11m6OUeL0X1pEQIQnJj5uksxIvkSMxQoElEi+vLQiEBxXWCa7XMbrFgRC8ib5Yfcv
-         vDURZCj5rNgPsWqa1l6KMZmG0f41JO0gzNySx5nmSPaRdYogtpG84psfMn/SYlthF0u3
-         bWjA==
-X-Received: by 10.195.11.168 with SMTP id ej8mr7666213wjd.150.1434560874317;
-        Wed, 17 Jun 2015 10:07:54 -0700 (PDT)
-Received: from [192.168.178.11] (ip92342367.dynamic.kabel-deutschland.de. [146.52.35.103])
-        by mx.google.com with ESMTPSA id df1sm26929615wib.12.2015.06.17.10.07.52
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Jun 2015 10:07:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqqzj3y2snq.fsf@gitster.dls.corp.google.com>
+	id S1757796AbbFQRUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 13:20:14 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:50837 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757758AbbFQRUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 13:20:08 -0400
+X-Greylist: delayed 2689 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Jun 2015 13:20:08 EDT
+Received: from mail-yh0-f53.google.com ([209.85.213.53])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Z5GJ3-000Ls5-OX
+	for git@vger.kernel.org; Wed, 17 Jun 2015 18:35:17 +0200
+Received: by yhak3 with SMTP id k3so37667683yha.2
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 09:35:11 -0700 (PDT)
+X-Received: by 10.129.72.194 with SMTP id v185mr7694756ywa.20.1434558911732;
+ Wed, 17 Jun 2015 09:35:11 -0700 (PDT)
+Received: by 10.37.96.4 with HTTP; Wed, 17 Jun 2015 09:35:11 -0700 (PDT)
+In-Reply-To: <xmqqsi9q4b46.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271873>
 
-On 17.06.2015 18:42, Junio C Hamano wrote:
-> Jan-Philip Gehrcke <jgehrcke@googlemail.com> writes:
+On Wed, Jun 17, 2015 at 5:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> > I'm tempted to make init_notes itself do the check, based on the value
+> > it is given for a "read_only" argument.
 >
->> I was surprised to see that the output of
->>
->>      git log --encoding=utf-8 "--format=format:%b"
->>
->> can contain byte sequences that are invalid in UTF-8. Note: I am using
->> git 2.1.4 and the %b format specifier represents the commit message
->> body.
+> Yeah, that would be one sensible way to go after making sure that
+> everything goes thru this interface.
+
+Agreed. Furthermore, consider adding the read_only flag (or however
+you choose to encode it internally) to struct notes_tree, so that the
+API functions that _manipulate_ notes trees can immediately bail out
+when used on a read-only tree (i.e. we want them to fail as early as
+possible).
+
+> > On the other hand, some commands
+> > do their ref resolving themselves already.
 >
-> Yeah, if the original was bad and cannot be sanely expressed in
-> UTF-8, you have two options.  You can show the contents as raw bytes
-> recorded in the object with a warning so that the user can use it as
-> such (e.g. perhaps the original was indeed an iso8859-2 but was
-> incorrectly marked as UTF-8, or something like that, and a human
-> that is more intelligent than a tool _could_ guess and attempt to
-> recover).  Or you can error out and refuse to produce output.
+> Again, as long as they do not bypass the "read-only" safety you are
+> suggesting to add to init_notes(), that is OK.
 
-The two-option scenario is totally clear. Although one must stress that 
-the "error-out" option can, as discussed, be kept minimally invasive: it 
-is sufficient (and common) to just skip those byte sequences (and 
-replace them with a replacement symbol) that would be invalid in the 
-requested output encoding. This would retain as much information as 
-possible while guaranteeing a subsequent decoder to retrieve valid input.
-
-> We deliberately made a design choice to take the former option.
-
-I totally support this design choice in general, especially when 
-invoking `git whatever` without options. This here is, I think, mainly 
-about documentation and the semantics of "--encoding". From my point of 
-view, `--encoding=utf-8` semantically suggests that the output *is* 
-valid UTF-8. But it is not, not always. May initial question was: what 
-do you think about this? Should we
-
-* just make this more clear in the docs and/or
-* should we adjust the behavior of --encoding or
-* should we do something entirely different, like adding a new command 
-line option or
-* should we just leave things as they are?
-
-Thanks and cheers,
+Agreed. An alternative to adding a simple read_only flag argument is
+to modify the const char *notes_ref argument into two separate
+arguments: const char *notes_treeish, and const char *update_ref,
+where the latter should be NULL for read-only trees. That said,
+currently the logic for actually updating notes ref lives outside the
+notes.h API (see commit_notes() in notes-utils.h/c), so there might be
+room for more consolidation/refactoring here...
 
 
-Jan-Philip
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
