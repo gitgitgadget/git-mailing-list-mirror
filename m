@@ -1,75 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>" better
-Date: Wed, 17 Jun 2015 12:54:46 +0200
-Message-ID: <vpq8ubiwqo9.fsf@anie.imag.fr>
-References: <558127CB.70603@web.de>
-	<CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ed Avis <eda@waniasset.com>, Scott Schmit <i.grok@comcast.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 12:55:10 2015
+From: Kevin Daudt <me@ikke.info>
+Subject: [PATCH v3] pull: allow dirty tree when rebase.autostash enabled
+Date: Wed, 17 Jun 2015 13:01:20 +0200
+Message-ID: <1434538880-15608-1-git-send-email-me@ikke.info>
+References: <1433625145-29668-2-git-send-email-me@ikke.info>
+Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
+	Kevin daudt <me@ikke.info>
+To: "Junio C. Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 13:01:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Azo-0006GR-DA
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 12:55:04 +0200
+	id 1Z5B68-0003qa-7u
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 13:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715AbbFQKyz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 06:54:55 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50116 "EHLO shiva.imag.fr"
+	id S1752482AbbFQLBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 07:01:31 -0400
+Received: from ikke.info ([178.21.113.177]:57809 "EHLO vps892.directvps.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751095AbbFQKyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 06:54:54 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5HAsjlS028344
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Jun 2015 12:54:45 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5HAsk9l003023;
-	Wed, 17 Jun 2015 12:54:46 +0200
-In-Reply-To: <CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 17 Jun 2015 16:58:27 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 17 Jun 2015 12:54:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5HAsjlS028344
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435143288.39552@vZALccyRG9Kd6vUdN84gJQ
+	id S1750859AbbFQLBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 07:01:31 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+	id 127A84400B1; Wed, 17 Jun 2015 13:01:30 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on vps892.directvps.nl
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.1
+Received: from ikke-laptop.ikke (unknown [10.8.0.6])
+	by vps892.directvps.nl (Postfix) with ESMTP id 0002B44007E;
+	Wed, 17 Jun 2015 13:01:28 +0200 (CEST)
+X-Mailer: git-send-email 2.4.3
+In-Reply-To: <1433625145-29668-2-git-send-email-me@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271830>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+rebase learned to stash changes when it encounters a dirty work tree, but
+git pull --rebase does not.
 
-> On Wed, Jun 17, 2015 at 2:54 PM, Torsten B=F6gershausen <tboegi@web.d=
-e> wrote:
->> -git-checkout - Checkout a branch or paths to the working tree
->> +git-checkout - Switch branches or restore changes
->
-> I didn't follow closely the previous discussion.
+Only verify if the working tree is dirty when rebase.autostash is not
+enabled.
 
-(Neither did I)
+Signed-off-by: Kevin Daudt <me@ikke.info>
+Helped-by: Paul Tan <pyokagan@gmail.com>
+---
+Changes to v2:
+ - Dropped the change of the existing --rebase test
+ - Improvements to the test.
 
-> Forgive me if this is already discussed, but I would keep the "in the
-> working tree". "Restore changes" alone seems vague.
+Verified that the test fails before the change, and succeeds after the change.
 
-"Restore previous version" would be better than "Restore changes" to me=
-=2E
+ git-pull.sh     |  5 ++++-
+ t/t5520-pull.sh | 11 +++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-"changes" sounds like "the diff between a commit and its parent", so it
-makes sense to "revert a change" (git revert), but not "restore a
-change".
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/git-pull.sh b/git-pull.sh
+index 0917d0d..f0a3b6e 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -239,7 +239,10 @@ test true = "$rebase" && {
+ 			die "$(gettext "updating an unborn branch with changes added to the index")"
+ 		fi
+ 	else
+-		require_clean_work_tree "pull with rebase" "Please commit or stash them."
++		if [ $(git config --bool --get rebase.autostash || echo false) = false ]
++		then
++			require_clean_work_tree "pull with rebase" "Please commit or stash them."
++		fi
+ 	fi
+ 	oldremoteref= &&
+ 	test -n "$curr_branch" &&
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index af31f04..aa247ec 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -233,6 +233,17 @@ test_expect_success '--rebase fails with multiple branches' '
+ 	test modified = "$(git show HEAD:file)"
+ '
+ 
++test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
++	test_config rebase.autostash true &&
++	git reset --hard before-rebase &&
++	echo dirty >new_file &&
++	git add new_file &&
++	git pull --rebase . copy &&
++	test_cmp_rev HEAD^ copy &&
++	test "$(cat new_file)" = dirty &&
++	test "$(cat file)" = "modified again"
++'
++
+ test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
+ 	test_config pull.rebase true &&
+-- 
+2.4.3
