@@ -1,102 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] test-lib.sh: fix color support when tput needs
- ~/.terminfo
-Date: Wed, 17 Jun 2015 15:43:15 -0400
-Message-ID: <20150617194315.GE25304@peff.net>
-References: <1434567986-23552-1-git-send-email-rhansen@bbn.com>
- <1434567986-23552-3-git-send-email-rhansen@bbn.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 06/11] ref-filter: implement '--merged' and
+ '--no-merged' options
+Date: Thu, 18 Jun 2015 01:19:22 +0530
+Message-ID: <CAOLa=ZR1GgWDK71bjmNmgQwEr-nMCFpRmD6yXSijq6z=VXxwow@mail.gmail.com>
+References: <CAOLa=ZQeZ=6mZcntR_BS_Wp0LXDzSUx9WTLXCTLxemb0e3SS0w@mail.gmail.com>
+ <1434464457-10749-1-git-send-email-karthik.188@gmail.com> <1434464457-10749-6-git-send-email-karthik.188@gmail.com>
+ <vpqoakezq51.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 21:43:30 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 17 21:50:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5JF5-0004FP-S4
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:43:24 +0200
+	id 1Z5JLU-0001pH-4T
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757168AbbFQTnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 15:43:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47622 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756819AbbFQTnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 15:43:18 -0400
-Received: (qmail 32744 invoked by uid 102); 17 Jun 2015 19:43:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 14:43:18 -0500
-Received: (qmail 28590 invoked by uid 107); 17 Jun 2015 19:43:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 15:43:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 15:43:15 -0400
-Content-Disposition: inline
-In-Reply-To: <1434567986-23552-3-git-send-email-rhansen@bbn.com>
+	id S1755170AbbFQTty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 15:49:54 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:33093 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751605AbbFQTtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 15:49:53 -0400
+Received: by oiyy130 with SMTP id y130so25161952oiy.0
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 12:49:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2iiTBf48Qw0S6kXAkIVtisvxxNsSXGWK3kCoRY/JM1Y=;
+        b=ONOXWzl+osLJyQx+PZFH5udQTxu2eCPh+o9JSvvTpZEuHn2ZXoy+Ozr3AtEvidcIpr
+         V5FOhptb1zyHswTL0DnJipIeSyPLUNl4tBmOOk2zcDbM1l+emKt5xuCn1k+bNZ0ONrkL
+         0gMOz9FDE7zHSK/ooc5b7HRkRBp973vkdqlj4QJEdJgDjpg8nU3B6pWQBOA3CCD+iZ0U
+         PvVZR4HnYHRryHi55UzpQccNfZLhkv2JMjdCJ9cNuZ8XfxYpYh/U9aabksv1uLPVSOh/
+         qA6H4F93ZoJ3yutxwBopd4pjOoyHd4jJiyNt8DwvX7J0CZznFYouaJHZTEo9ZrUQnCJm
+         Qqdw==
+X-Received: by 10.60.62.105 with SMTP id x9mr5982773oer.1.1434570592890; Wed,
+ 17 Jun 2015 12:49:52 -0700 (PDT)
+Received: by 10.182.95.165 with HTTP; Wed, 17 Jun 2015 12:49:22 -0700 (PDT)
+In-Reply-To: <vpqoakezq51.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271897>
 
-On Wed, Jun 17, 2015 at 03:06:26PM -0400, Richard Hansen wrote:
+On Wed, Jun 17, 2015 at 2:08 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -901,12 +903,19 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+>>       if (!match_points_at(&filter->points_at, oid->hash, refname))
+>>               return 0;
+>>
+>> +     if (filter->merge_commit) {
+>> +             commit = lookup_commit_reference_gently(oid->hash, 1);
+>> +             if (!commit)
+>> +                     return 0;
+>> +     }
+>
+> I'd appreciate a comment here. If I understand correctly, the comment
+> could be along the lines of
+>
+> /*
+>  * A merge filter implies that we're looking at refs pointing to
+>  * commits => discard non-commits early. The actual filtering is done
+>  * later.
+>  */
+>
+> (perhaps something more concise)
+>
 
-> If tput needs ~/.terminfo for the current $TERM, then tput will
-> succeed before HOME is changed to $TRASH_DIRECTORY (causing color to
-> be set to 't') but fail afterward.
-> 
-> One possible way to fix this is to treat HOME like TERM: back up the
-> original value and temporarily restore it before say_color() runs
-> tput.
-> 
-> Instead, pre-compute and save the color control sequences before
-> changing either TERM or HOME.  Use the saved control sequences in
-> say_color() rather than call tput each time.  This avoids the need to
-> back up and restore the TERM and HOME variables, and it avoids the
-> overhead of a subshell and two invocations of tput per call to
-> say_color().
-> 
-> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+Will do add a comment, Thanks!
 
-Nice, I like it.
-
-> +	# Save the color control sequences now rather than run tput
-> +	# each time say_color() is called.  This is done for two
-> +	# reasons:
-> +	#   * TERM will be changed to dumb
-> +	#   * HOME will be changed to a temporary directory and tput
-> +	#     might need to read ~/.terminfo from the original HOME
-> +	#     directory to get the control sequences
-> +	# Note:  This approach assumes the control sequences don't end
-> +	# in a newline for any terminal of interest (command
-> +	# substitutions strip trailing newlines).  Given that most
-> +	# (all?) terminals in common use are related to ECMA-48, this
-> +	# shouldn't be a problem.
-
-Yeah, that was my first thought, but I agree it probably isn't going to
-be a big deal in practice.
-
-> +	say_color_error=$(tput bold; tput setaf 1) # bold red
-> +	say_color_skip=$(tput setaf 4) # blue
-> +	say_color_warn=$(tput setaf 3) # brown/yellow
-> +	say_color_pass=$(tput setaf 2) # green
-> +	say_color_info=$(tput setaf 6) # cyan
-> +	say_color_sgr0=$(tput sgr0)
-> [...]
-> +		error|skip|warn|pass|info)
-> +			eval "say_color_color=\$say_color_$1";;
->  		*)
->  			test -n "$quiet" && return;;
-
-I think you could dispense with this case statement entirely and do:
-
-  eval "say_color_color=\$say_color_$1"
-  if test -z "$say_color_color"; then
-          test -n "$quiet" && return
-  fi
-
-I guess that is making the assumption that all colors have non-zero
-sizes, but that seems reasonable. I do not mind it so much as you have
-it, but it does mean adding a new field needs to update two spots.
-
--Peff
+-- 
+Regards,
+Karthik Nayak
