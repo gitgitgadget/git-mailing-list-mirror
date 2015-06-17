@@ -1,76 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: slash in branch name
-Date: Wed, 17 Jun 2015 15:24:45 -0400
-Message-ID: <20150617192444.GD25304@peff.net>
-References: <5581C77A.3040703@wp.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-checkout.txt: Document "git checkout <pathspec>" better
+Date: Wed, 17 Jun 2015 12:24:53 -0700
+Message-ID: <xmqqlhfi6su2.fsf@gitster.dls.corp.google.com>
+References: <558127CB.70603@web.de>
+	<CACsJy8CuRcV2Rxaz8Ut4ayW-Hyd8Aao5W4JMc20jcfggOG3d4g@mail.gmail.com>
+	<vpq8ubiwqo9.fsf@anie.imag.fr> <mlrmnt$te5$1@ger.gmane.org>
+	<vpqoaketusa.fsf@anie.imag.fr> <mlrn9r$9ho$1@ger.gmane.org>
+	<vpqtwu6sf4r.fsf@anie.imag.fr>
+	<xmqqoake4akt.fsf@gitster.dls.corp.google.com>
+	<xmqqd20u48at.fsf@gitster.dls.corp.google.com>
+	<5581A3A3.1070908@web.de> <vpqh9q6gsdt.fsf@anie.imag.fr>
+	<mlsc62$8u5$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: KK <horizn@wp.pl>
-X-From: git-owner@vger.kernel.org Wed Jun 17 21:24:52 2015
+To: "Andres G. Aragoneses" <knocte@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 21:25:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Ix9-0003zk-Ms
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:24:52 +0200
+	id 1Z5IxK-0004Ac-P6
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757512AbbFQTYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 15:24:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47599 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757309AbbFQTYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 15:24:47 -0400
-Received: (qmail 31090 invoked by uid 102); 17 Jun 2015 19:24:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 14:24:47 -0500
-Received: (qmail 28400 invoked by uid 107); 17 Jun 2015 19:24:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 15:24:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 15:24:45 -0400
-Content-Disposition: inline
-In-Reply-To: <5581C77A.3040703@wp.pl>
+	id S1757553AbbFQTY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 15:24:57 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:38543 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753175AbbFQTY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 15:24:56 -0400
+Received: by igblz2 with SMTP id lz2so44317079igb.1
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 12:24:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=LUQBlaBLmHuF2l5iSVRTfxQFeXqDOeRsdZ/jBbJenzU=;
+        b=GN65qZqHbIGcSmEU+JUNziMAyNTtwEixHy7RNXcUsMAvhKO8S/ZvJnHCakaWKrQiLm
+         4NNge0OiJzKssxLY7ttXOTVV9F1ec2A23WQAkmVS9VNgkIizv/55R60/sqT7Pjz+AEfG
+         n86+pUmQzYjXKKbYbogtxMTzWpOQUFGSQerESzPDTd9EGtZDg/ecjuAxDlOryNfcXpRj
+         Z0vVqJdy6aIoqh6vvm/A3Dx+ZBHwV7+KeXiThxBXZzdtFloqJ7bSYGG93neqWXUCKbYD
+         kTQ36NPr0MI/SUGgDkxpvEUBr8AyBEWYkEdWOitcrs9B7o1hPcP1QNZI/gE1ZDnj7eNF
+         iPVg==
+X-Received: by 10.50.64.243 with SMTP id r19mr13253286igs.5.1434569095361;
+        Wed, 17 Jun 2015 12:24:55 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
+        by mx.google.com with ESMTPSA id o9sm3185265ioe.35.2015.06.17.12.24.54
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 17 Jun 2015 12:24:54 -0700 (PDT)
+In-Reply-To: <mlsc62$8u5$1@ger.gmane.org> (Andres G. Aragoneses's message of
+	"Wed, 17 Jun 2015 19:53:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271888>
 
-On Wed, Jun 17, 2015 at 08:16:10PM +0100, KK wrote:
+"Andres G. Aragoneses" <knocte@gmail.com> writes:
 
-> remote: error: invalid key: hooks.denypush.branch.versions/4.3.2
-> remote: error: invalid key: hooks.allowmerge.versions/4.3.2
-> [...]
+> Comments?
 
-Those are syntactically bogus config keys. Keys should be of the form
-
-  section.subsection.key
-
-and only "subsection" can contain arbitrary bytes (and of course the
-value can, too). The hooks running on the server are using git's config
-system in ways that were not intended.  It should rearrange its
-organization of the data (I cannot comment much further without seeing
-the hooks themselves).
-
-> My colleague did some research about that and it seems that this commit has
-> stopped update hook working:
-> 
-> commit b09c53a3e331211fc0154de8ebb271e48f8c7ee5
-> Author: Libor Pechacek <lpechacek@suse.cz>
-> Date:   Sun Jan 30 20:40:41 2011 +0100
-> 
->     Sanity-check config variable names
-> [...]
-> 
-> Could you please advise how to fix/revert this?
-
-I guess we could add a "--no-really-i-am-abusing-git-config" option to
-git-config to let these pass, at least for lookups. I am not sure that
-is a good idea, though. I think your hooks are fundamentally broken for
-branches with odd characters (right now you are seeing complaints on the
-lookup side, but I suspect that you could not write a
-"hooks.denypush.branch.versions/4.3.2" entry if you wanted to, as git
-would choke on reading the config file).
-
--Peff
+No.
