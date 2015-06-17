@@ -1,144 +1,113 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] progress: store throughput display in a strbuf
-Date: Wed, 17 Jun 2015 14:54:06 -0400
-Message-ID: <20150617185406.GA727@peff.net>
+Subject: Re: [PATCH 3/3] trace: add GIT_TRACE_STDIN
+Date: Wed, 17 Jun 2015 15:10:23 -0400
+Message-ID: <20150617191023.GA25304@peff.net>
+References: <20150616193102.GA15856@peff.net>
+ <20150616193716.GC15931@peff.net>
+ <20150616194907.GA15988@peff.net>
+ <20150616212039.GA11353@peff.net>
+ <CACsJy8DaJOOu7PA8jL+Mu3HQua-TRmzN378Mek1HuWVmRzT+ww@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 17 20:54:15 2015
+Cc: Augie Fackler <augie@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 21:10:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5ITW-0000ps-Ju
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 20:54:15 +0200
+	id 1Z5IjJ-0007SN-Ak
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 21:10:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754693AbbFQSyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 14:54:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47561 "HELO cloud.peff.net"
+	id S1756899AbbFQTK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 15:10:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47571 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755636AbbFQSyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 14:54:08 -0400
-Received: (qmail 28354 invoked by uid 102); 17 Jun 2015 18:54:08 -0000
+	id S1756613AbbFQTK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 15:10:26 -0400
+Received: (qmail 29818 invoked by uid 102); 17 Jun 2015 19:10:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 13:54:08 -0500
-Received: (qmail 28052 invoked by uid 107); 17 Jun 2015 18:54:07 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 14:10:26 -0500
+Received: (qmail 28198 invoked by uid 107); 17 Jun 2015 19:10:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 14:54:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 14:54:06 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 15:10:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 15:10:23 -0400
 Content-Disposition: inline
+In-Reply-To: <CACsJy8DaJOOu7PA8jL+Mu3HQua-TRmzN378Mek1HuWVmRzT+ww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271881>
 
-Coverity noticed that we strncpy() into a fixed-size buffer
-without making sure that it actually ended up
-NUL-terminated. This is unlikely to be a bug in practice,
-since throughput strings rarely hit 32 characters, but it
-would be nice to clean it up.
+On Wed, Jun 17, 2015 at 05:04:04PM +0700, Duy Nguyen wrote:
 
-The most obvious way to do so is to add a NUL-terminator.
-But instead, this patch switches the fixed-size buffer out
-for a strbuf. At first glance this seems much less
-efficient, until we realize that filling in the fixed-size
-buffer is done by writing into a strbuf and copying the
-result!
+> I wonder if we could do it a bit differently. Instead of
+> GIT_TRACE_STDIN, I would add GIT_TRACE_HOOK that points to a script.
+> Whenever a command is run via run-command interface, the actual
+> command line to be executed would be "<hook script> <command>
+> <arguments>".
 
-By writing straight to the buffer, we actually end up more
-efficient:
+Hmm, yeah, I like that. It's even more flexible, and it is much more
+obvious why it works only for run-command. If we feed the resulting
+"hooked" command to the shell, I think you could do:
 
-  1. We avoid an extra copy of the bytes.
+  GIT_TRACE_HOOK='
+    f() {
+      case "$1 $2" in
+      git pack-objects)
+        tee /tmp/foo.out | "$@"
+	;;
+      esac
+    }; f
+  '
 
-  2. Rather than malloc/free each time progress is shown, we
-     can strbuf_reset and use the same buffer each time.
+That is not 100% correct (you would miss "git --some-arg pack-objects"),
+but it is probably fine in practice for debugging sessions. It is a bit
+more complicated to use, but I really like the flexibility (I can
+imagine that "GIT_TRACE_HOOK=gdbserver localhost:1234" would come in
+handy).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- progress.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+> Because this script is given full command line, it can decide to trace
+> something if the command name is matched (or arguments are matched) or
+> just execute the original command. It's more flexible that trace.*
+> config keys. We also have an opportunity to replace builtin commands,
+> like pack-objects, in command pipeline in fetch or push with something
+> else, to inject errors or whatever. It can be done manually, but it's
+> not easy or convenient.
 
-diff --git a/progress.c b/progress.c
-index 2e31bec..a3efcfd 100644
---- a/progress.c
-+++ b/progress.c
-@@ -25,7 +25,7 @@ struct throughput {
- 	unsigned int last_bytes[TP_IDX_MAX];
- 	unsigned int last_misecs[TP_IDX_MAX];
- 	unsigned int idx;
--	char display[32];
-+	struct strbuf display;
- };
- 
- struct progress {
-@@ -98,7 +98,7 @@ static int display(struct progress *progress, unsigned n, const char *done)
- 	}
- 
- 	progress->last_value = n;
--	tp = (progress->throughput) ? progress->throughput->display : "";
-+	tp = (progress->throughput) ? progress->throughput->display.buf : "";
- 	eol = done ? done : "   \r";
- 	if (progress->total) {
- 		unsigned percent = n * 100 / progress->total;
-@@ -129,6 +129,7 @@ static int display(struct progress *progress, unsigned n, const char *done)
- static void throughput_string(struct strbuf *buf, off_t total,
- 			      unsigned int rate)
- {
-+	strbuf_reset(buf);
- 	strbuf_addstr(buf, ", ");
- 	strbuf_humanise_bytes(buf, total);
- 	strbuf_addstr(buf, " | ");
-@@ -141,7 +142,6 @@ void display_throughput(struct progress *progress, off_t total)
- 	struct throughput *tp;
- 	uint64_t now_ns;
- 	unsigned int misecs, count, rate;
--	struct strbuf buf = STRBUF_INIT;
- 
- 	if (!progress)
- 		return;
-@@ -154,6 +154,7 @@ void display_throughput(struct progress *progress, off_t total)
- 		if (tp) {
- 			tp->prev_total = tp->curr_total = total;
- 			tp->prev_ns = now_ns;
-+			strbuf_init(&tp->display, 0);
- 		}
- 		return;
- 	}
-@@ -193,9 +194,7 @@ void display_throughput(struct progress *progress, off_t total)
- 	tp->last_misecs[tp->idx] = misecs;
- 	tp->idx = (tp->idx + 1) % TP_IDX_MAX;
- 
--	throughput_string(&buf, total, rate);
--	strncpy(tp->display, buf.buf, sizeof(tp->display));
--	strbuf_release(&buf);
-+	throughput_string(&tp->display, total, rate);
- 	if (progress->last_value != -1 && progress_update)
- 		display(progress, progress->last_value, NULL);
- }
-@@ -250,12 +249,9 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 
- 		bufp = (len < sizeof(buf)) ? buf : xmalloc(len + 1);
- 		if (tp) {
--			struct strbuf strbuf = STRBUF_INIT;
- 			unsigned int rate = !tp->avg_misecs ? 0 :
- 					tp->avg_bytes / tp->avg_misecs;
--			throughput_string(&strbuf, tp->curr_total, rate);
--			strncpy(tp->display, strbuf.buf, sizeof(tp->display));
--			strbuf_release(&strbuf);
-+			throughput_string(&tp->display, tp->curr_total, rate);
- 		}
- 		progress_update = 1;
- 		sprintf(bufp, ", %s.\n", msg);
-@@ -264,6 +260,8 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 			free(bufp);
- 	}
- 	clear_progress_signal();
-+	if (progress->throughput)
-+		strbuf_release(&progress->throughput->display);
- 	free(progress->throughput);
- 	free(progress);
- }
--- 
-2.4.4.719.g3984bc6
+My other motive for trace.* was that we could have something like
+"trace.prune", and have git-prune provide verbose debugging information.
+We have custom patches like that on GitHub servers, which we've used to
+debug occasional weirdness (e.g., you find that an object is missing
+from a repo, but you have no clue why it went away; was it never there,
+did somebody prune it, did it get dropped from a pack?).
+
+I can send those upstream, but it would be nice not to introduce a
+totally separate tracing facility when trace_* is so close. But it
+needs:
+
+  1. To be enabled by config, not environment.
+
+  2. To support some basic output filename flexibility so the output can
+     be organized (we write the equivalent of GIT_TRACE_FOO to
+     $GIT_DIR/ghlog_foo/YYYY-MM-DD/YYYY-MM-DDTHH:MM:SS.PID).
+
+For (1), we could just load trace.* in git_default_config; you couldn't
+use it with any "early" tracing that happens before then, but I think in
+practice it would be fine for most traces.
+
+For (2), I think we could accomplish that with %-placeholders (like my
+earlier patch), and the ability to write relative paths into $GIT_DIR
+(again, you couldn't do this for "early" traces, but you could for other
+stuff).
+
+Or we could just do nothing. I'm not sure if anybody else is actually
+interested in verbose-logging patches like these.
+
+-Peff
