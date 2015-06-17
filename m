@@ -1,63 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] rebase -i: Fix left-behind CHERRY_PICK_HEAD
-Date: Wed, 17 Jun 2015 09:43:39 -0700
-Message-ID: <xmqqvbem2slg.fsf@gitster.dls.corp.google.com>
-References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
-	<cover.1434528725.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] clone: check if server supports shallow clones
+Date: Wed, 17 Jun 2015 12:59:10 -0400
+Message-ID: <20150617165909.GB22689@peff.net>
+References: <1433961320-1366-1-git-send-email-adgar@google.com>
+ <20150610190512.GB22800@peff.net>
+ <CACsJy8CiwiWgf2CarNNN5NgN7QbRB8oxGMmxF+VX8T=ZV2M1ow@mail.gmail.com>
+ <20150611143204.GA3343@peff.net>
+ <xmqq8ubi47jo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 17 18:43:58 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Mike Edgar <adgar@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 18:59:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5GRH-0005lW-D5
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 18:43:47 +0200
+	id 1Z5GgI-0003HI-P5
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 18:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757041AbbFQQnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 12:43:43 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:35628 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756864AbbFQQnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 12:43:42 -0400
-Received: by iesa3 with SMTP id a3so37771410ies.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 09:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=dHZJxb3xHi6bM2UT7rD4eBKdqI6/EQl/akntLNXLkas=;
-        b=BdFMxOrjBOL/DnSKxr+VELohUKPHBE3d77BlD7hHMNz3iA3xWKzlEEepMlUKcTr4Dy
-         O8aUSGgwJKpGcdJqzlRpfJzCJ5s/6LYyHieRGEAHqA2fjEx2BJPjelLvm1tK5xBH/t9e
-         OiQtFXgjlyNNOcGDGj9QuKZtGEXyU2UEIEOLQNJskywLak8rGM3cqOehpSPbwphnwj4n
-         Uko2a4iqqUbIa4gGARKJTARGRqslduxi2/Nm3EKYVNgM38y4/ZONNZmI3mKxPpCtIBF/
-         JpscRCv4gGd4xLIR7XI4xztK2tqQe0NQMyBYwSv30kElXQ8BHLdvPBrhtdD9bl42S1I/
-         jOFQ==
-X-Received: by 10.43.14.65 with SMTP id pp1mr1171768icb.40.1434559421791;
-        Wed, 17 Jun 2015 09:43:41 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a4d4:8fab:953e:ec65])
-        by mx.google.com with ESMTPSA id o9sm2911090ioe.35.2015.06.17.09.43.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jun 2015 09:43:40 -0700 (PDT)
-In-Reply-To: <cover.1434528725.git.johannes.schindelin@gmx.de> (Johannes
-	Schindelin's message of "Wed, 17 Jun 2015 10:15:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756603AbbFQQ7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 12:59:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47497 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754335AbbFQQ7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 12:59:12 -0400
+Received: (qmail 18788 invoked by uid 102); 17 Jun 2015 16:59:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 11:59:12 -0500
+Received: (qmail 27204 invoked by uid 107); 17 Jun 2015 16:59:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 12:59:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 12:59:10 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq8ubi47jo.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271870>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Wed, Jun 17, 2015 at 09:35:23AM -0700, Junio C Hamano wrote:
 
-> The symptom is that .git/CHERRY_PICK_HEAD is left behind after
-> skipping an already-merged patch with `git rebase --continue`
-> instead of `git rebase --skip`. I always prefer the former
-> invocation because the latter would also skip legitimate patches
-> if there were merge conflicts, while the former would not allow
-> that.
+> > Of course it's hard to add to the test suite, since we do not have a way
+> > of hitting a server that does not understand shallow (I simply fudged
+> > server_supports() to return false on the client).
+> 
+> We've had the "shallow" capability advertised since ed09aef0
+> (support fetching into a shallow repository, 2006-10-30), and this
+> patch itself may not be that super-important in practice.  Let's not
+> worry too much about a test for situations that may not likely
+> matter to us [*1*].
 
-Makes sense; will queue.  Thanks.
+I had actually started looking at doing a generic interop testing
+suite. It would be nice to be able to do something like:
+
+  cd t/interop
+  ./run v1.0.0 v2.0.0 ./t0001-clone.sh
+
+and then the test script looks something like:
+
+  test_expect_success 'clone with A from B' '
+	git.a clone -u "git.b upload-pack"
+  '
+
+The "run" script is similar to the version in t/perf that builds
+arbitrary revisions for testing, but with the twist that it points
+the PATH to "git.a" and "git.b", which symlink into the bin-wrappers/ of
+the built directories (and probably disallows bare "git" to prevent
+mistakes).
+
+But I agree that this particular bug is not all that exciting to test.
+
+> *1* How behind are re-implementations of upload-pack by other
+> people, I have to wonder, though?
+
+JGit advertises "shallow". Libgit2 does not, but it also does not
+implement upload-pack. :)
+
+I do wonder which server Mike was hitting to come across this in the
+first place. Maybe the Google Code dulwich-based one?
+
+-Peff
