@@ -1,120 +1,131 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFC v4 10/10] send-email: suppress meaningless whitespaces in from field
-Date: Wed, 17 Jun 2015 16:32:05 +0200
-Message-ID: <1434551525-24709-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 17 16:32:35 2015
+From: Simon Eugster <simon.eu@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation on git-checkout --ours/--theirs improved
+Date: Wed, 17 Jun 2015 16:31:45 +0200
+Message-ID: <CAO8d5BYkgNgB+fV2HjrUasYi0jz9YvZGuFxKNMBbWoaONpAeUA@mail.gmail.com>
+References: <xmqqwpzafe88.fsf@gitster.dls.corp.google.com>
+	<1434372447-51230-1-git-send-email-simon.eu@gmail.com>
+	<1434372447-51230-3-git-send-email-simon.eu@gmail.com>
+	<xmqq381s91gz.fsf@gitster.dls.corp.google.com>
+	<CAO8d5Bbi8LHHP0nnYwv=_Qr6KZCJmFPTq5ut2KzeSKJ-i0RZNg@mail.gmail.com>
+	<xmqqzj3z64q9.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 16:32:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5EOH-00019r-Ai
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 16:32:33 +0200
+	id 1Z5EOb-0001Pp-O8
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 16:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932447AbbFQOcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 10:32:23 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:36528 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932339AbbFQOcP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 10:32:15 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id B1CE8488EB;
-	Wed, 17 Jun 2015 16:32:13 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bt2yS9wEmbb1; Wed, 17 Jun 2015 16:32:13 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9A67348898;
-	Wed, 17 Jun 2015 16:32:13 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 94E8D20DD;
-	Wed, 17 Jun 2015 16:32:13 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 64efT6z1cNvS; Wed, 17 Jun 2015 16:32:13 +0200 (CEST)
-Received: from Groseille.home (AGrenoble-652-1-475-169.w90-52.abo.wanadoo.fr [90.52.146.169])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id A3E7220D1;
-	Wed, 17 Jun 2015 16:32:12 +0200 (CEST)
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	id S1757145AbbFQObx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2015 10:31:53 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:36455 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754096AbbFQObq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2015 10:31:46 -0400
+Received: by wgzl5 with SMTP id l5so38722982wgz.3
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 07:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=12uS7pA7foBl+Jn79X3DWg4EHBovPg4nzjGK34dgBKQ=;
+        b=umoFfoUDHR71oBAou0jiSI5lXKCPb51PmMAOtTleJAamhch1EkkUYJjElmtcdNdfpw
+         grkysfd4tnr9QH73noF9qxPfCMpOlxFKYjIE+cAAMXVhKEgeld1iatncei6eLwG/Jqwe
+         MP9iH+T/B+t+tPicMLhGDkLyiwq5hzZlCAdEOXQ7FkyWu7MJAdFKfQrDHFIMvPBtdAEa
+         3093Wq/oiuuVVqr28ox+t7yL/Yna0UDkHMDyon+Psy97WMLj2lAhnsQ98TokjC7Rb158
+         NjFC/BWGgLOnL+NQ/x8zCmbVrVajGc4vzVAqIA55kp0eod3va/UiBHyo0US5KC8z8Edx
+         Ot0w==
+X-Received: by 10.194.84.179 with SMTP id a19mr6277989wjz.29.1434551505371;
+ Wed, 17 Jun 2015 07:31:45 -0700 (PDT)
+Received: by 10.27.134.86 with HTTP; Wed, 17 Jun 2015 07:31:45 -0700 (PDT)
+In-Reply-To: <xmqqzj3z64q9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271850>
 
-Remove leading and trailing whitespaces in from field before
-interepreting it to improve consistency with other options.  The
-split_addrs function already take care of trailing and leading
-whitespaces for to, cc and bcc fields.
-The from option now:
+2015-06-16 17:41 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
+> Simon Eugster <simon.eu@gmail.com> writes:
+>
+>> 2015-06-15 22:10 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
+>>>
+>>> "Simon A. Eugster" <simon.eu@gmail.com> writes:
+>>>
+>>> > ---
+>>>
+>>> - Lack of explanation as to why this is a good thing.
+>>> - Lack of sign-off.
+>>>
+>>> Why is there still 1/2, if its effect is wholly annulled by a
+>>> subsequent step 2/2?
+>>
+>>
+>> Sorry for that, still trying to find out how git send-email works.
+>
+> I do not think "git send-email" is involved in that process in any
+> way.  The problem is you made the updates on top of the previous
+> one, without squashing.  You fed two commits, instead of a squashed
+> one commit, to "git send-email", and the command obliged and sent
+> them out.
 
- - has the same behavior when passing arguments like
-   "  jdoe@example.com ", "\t jdoe@example.com " or
-   "jdoe@example.com".
+Yes, I somehow expected the two commits would be added to the same
+email because I provided the Message-Id, and yes, I could just have
+squashed them.
 
- - interprets aliases in string containing leading and trailing
-   whitespaces such as " alias" or "alias\t" like other options.
+>>> > +During merging, we assume the role of the canonical history=E2=80=
+=99s keeper,
+>>> > +which, in case of a rebase, is the remote history, and our priva=
+te commits
+>>> > +look to the keeper as =E2=80=9Ctheir=E2=80=9D commits which need=
+ to be integrated on top
+>>> > +of =E2=80=9Cour=E2=80=9D work.
+>>> > ++
+>>> > +Normal merging:
+>>> > +------------
+>>> > +local ---------abC                  <-- canonical history
+>>> > +                 | git checkout --ours
+>>> > +                 v
+>>> > +MERGE ---------abC
+>>> > +                 ^
+>>> > +                 | git checkout --theirs
+>>> > +origin/master ---Xyz
+>>> > +------------
+>>> > +Rebasing:
+>>> > +------------
+>>> > +local -----------Abc
+>>> > +                 | git checkout --theirs
+>>> > +                 v
+>>> > +REBASE --------xyZ
+>>> > +                 ^
+>>> > +                 | git checkout --ours
+>>> > +origin/master -xyZ                    <-- canonical history
+>>> > +------------
+>>>
+>>> I can see that an arrow with "canonical history" points at differen=
+t
+>>> things between the two pictures, but other than that, I am not sure
+>>> what these are trying to illustrate.  Especially between abc and
+>>> xyz, why does the former choose abc while the latter choooses xyz?
+>>> Are these pictures meant to show what happens when the user says
+>>> "checkout --ours" during a conflicted integration (whether it is a
+>>> merge or a rebase)?
+>>
+>> I tried to create a picture which shows the difference of ours and
+>> theirs when merging vs. rebasing, but apparently it did not turn out
+>> well, and I will just leave it away.
+>
+> I'll wait for several days to see what other people would say, if
+> they care to comment on this.  Maybe they can come up with a more
+> intuitive picture, or maybe they say textual description is
+> sufficiently clear that we do not need an illustration.  I dunno.
 
-Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
----
- git-send-email.perl   |  1 +
- t/t9001-send-email.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 265299e..9b28dfa 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -836,6 +836,7 @@ if (!$force) {
- }
- 
- if (defined $sender) {
-+	$sender =~ s/^\s+|\s$//g;
- 	($sender) = expand_aliases($sender);
- } else {
- 	$sender = $repoauthor || $repocommitter || '';
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 3c5b853..8e21fb0 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1719,4 +1719,28 @@ test_expect_success $PREREQ 'aliases work with email list' '
- 	test_cmp expected-list actual-list
- '
- 
-+test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
-+	echo "alias to2 to2@example.com" >.mutt &&
-+	echo "alias cc1 Cc 1 <cc1@example.com>" >>.mutt &&
-+	test_config sendemail.aliasesfile ".mutt" &&
-+	test_config sendemail.aliasfiletype mutt &&
-+	TO1=$(echo "QTo 1 <to1@example.com>" | q_to_tab) &&
-+	TO2=$(echo "QZto2" | qz_to_tab_space) &&
-+	CC1=$(echo "cc1" | append_cr) &&
-+	BCC1=$(echo "Q bcc1@example.com Q" | q_to_nul) &&
-+	git send-email \
-+	--dry-run \
-+	--from="	Example <from@example.com>" \
-+	--to="$TO1" \
-+	--to="$TO2" \
-+	--to="  to3@example.com   " \
-+	--cc="$CC1" \
-+	--cc="Cc2 <cc2@example.com>" \
-+	--bcc="$BCC1" \
-+	--bcc="bcc2@example.com" \
-+	0001-add-master.patch | replace_variable_fields \
-+	>actual-list &&
-+	test_cmp expected-list actual-list
-+'
-+
- test_done
--- 
-1.9.1
+A better picture would be nice.
+And regarding the textual description, are you going to commit your ver=
+sion?
