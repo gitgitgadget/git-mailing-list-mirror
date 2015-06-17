@@ -1,90 +1,109 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/2] rebase -i: do not leave a =?UTF-8?Q?CHERRY=5FPICK=5FH?=
- =?UTF-8?Q?EAD=20file=20behind?=
-Date: Wed, 17 Jun 2015 10:16:18 +0200
-Organization: gmx
-Message-ID: <2751d249ba6315f0139ba8fd6aa6ff23c32c9e69.1434528725.git.johannes.schindelin@gmx.de>
-References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
- <cover.1434528725.git.johannes.schindelin@gmx.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 7/7] bisect: allows any terms set by user
+Date: Wed, 17 Jun 2015 10:18:20 +0200
+Message-ID: <vpqioam21f7.fsf@anie.imag.fr>
+References: <1433962918-6536-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+	<1433962918-6536-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+	<vpqy4jq2rjr.fsf@anie.imag.fr>
+	<1155395826.552092.1434285546884.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<835646176.485512.1434310200681.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpqoakh74fw.fsf@anie.imag.fr>
+	<183774662.562924.1434489533064.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpq1tha4xxq.fsf@anie.imag.fr>
+	<575469420.568311.1434528064283.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 17 10:16:37 2015
+Content-Type: text/plain
+Cc: Louis-Alexandre Stuber <stuberl@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org,
+	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
+	valentinduperray@gmail.com
+To: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 17 10:19:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z58WQ-0004fM-7t
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 10:16:34 +0200
+	id 1Z58Yk-0006vT-5P
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 10:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757941AbbFQIQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 04:16:30 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62282 "EHLO mout.gmx.net"
+	id S1754645AbbFQISs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 04:18:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51735 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756904AbbFQIQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 04:16:28 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MTBLi-1ZXDUq3xAc-00S34e; Wed, 17 Jun 2015 10:16:18
- +0200
-In-Reply-To: <cover.1434528725.git.johannes.schindelin@gmx.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:J0Ce1VHCVJEAJG1ygTVgXqiztaqiAyokf2hDKyb3xMqzNK7gtMy
- 7PTUS75NoPaiAa549feYXCBpdNqNiarWYzQNS2feGb/IYcXoXT3lfGgIatVWjwZ8OzskHJQ
- l7tAXMqIeiSb2aTjzsB404sPC7O6mnH44VurPDlUjEaZ3wWHMDalUiknO24u7bcch5OnLGt
- ufu62SuOdVriKLkZIs/bQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752493AbbFQIS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 04:18:28 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5H8IJ1J029226
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 17 Jun 2015 10:18:19 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5H8IKHx030365;
+	Wed, 17 Jun 2015 10:18:20 +0200
+In-Reply-To: <575469420.568311.1434528064283.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Antoine Delaite's message of "Wed, 17 Jun 2015 10:01:04 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 17 Jun 2015 10:18:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5H8IJ1J029226
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435133904.24218@Yk+PIpHzMMU2Z3dEmDj6eA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271817>
 
-When skipping commits whose changes were already applied via `git rebase
---continue`, we need to clean up said file explicitly.
+Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr> writes:
 
-The same is not true for `git rebase --skip` because that will execute
-`git reset --hard` as part of the "skip" handling in git-rebase.sh, even
-before git-rebase--interactive.sh is called.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes: 
+>
+>>> 
+>>>># terms_defined is 0 when the user did not define the terms explicitely 
+>>>># yet. This is the case when running 'git bisect start bad_rev good_rev' 
+>>>># before we see an explicit reference to a term. 
+>>>>terms_defined=0 
+>>> 
+>>> The thing is: 
+>>> 'git bisect reset 
+>>> git bisect new HEAD 
+>
+>>"git bisect new" does not exist. Did you mean "git bisect start HEAD"? 
+>
+> No I meant new but it can be 'git bisect bad' aswell
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-rebase--interactive.sh    | 6 +++++-
- t/t3404-rebase-interactive.sh | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+OK, answering emails before coffee doesn't suit me well, I did not
+remember that the series was about "new" ;-).
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index dc3133f..16e0a82 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -849,7 +849,11 @@ continue)
- 	# do we have anything to commit?
- 	if git diff-index --cached --quiet HEAD --
- 	then
--		: Nothing to commit -- skip this
-+		: Nothing to commit -- skip this commit
-+
-+		test ! -f "$GIT_DIR"/CHERRY_PICK_HEAD ||
-+		rm "$GIT_DIR"/CHERRY_PICK_HEAD ||
-+		die "Could not remove CHERRY_PICK_HEAD"
- 	else
- 		if ! test -f "$author_script"
- 		then
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 5d52775..241d4d1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1102,7 +1102,7 @@ test_expect_success 'rebase -i commits that overwrite untracked files (no ff)' '
- 	test $(git cat-file commit HEAD | sed -ne \$p) = I
- '
- 
--test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
-+test_expect_success 'rebase --continue removes CHERRY_PICK_HEAD' '
- 	git checkout -b commit-to-skip &&
- 	for double in X 3 1
- 	do
+(Actually your use-case is not possible yet as of PATCH 3 which
+introduces start_bad_good. It is possible after PATCH 4)
+
+> So 
+> '
+> git bisect reset
+> git bisect bad
+> answer yes to "autostart ?"
+> '
+
+> In the case I rewrited, we saw a 'bad' but terms_defined value in bisect_start
+> (called by the autostart) is 0. 
+
+As you said, it is really equivalent to
+
+git bisect start
+git bisect bad
+
+the autostart is just a convenience piece of code to run "git bisect
+start" for the user, but does not change the logic of the code. Write
+good code for the normal case (start, and then bad), and it will just
+work without having to worry about in in the autostart case.
+
 -- 
-2.3.1.windows.1.9.g8c01ab4
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
