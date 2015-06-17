@@ -1,99 +1,78 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: co-authoring commits
-Date: Wed, 17 Jun 2015 18:52:24 -0400
-Message-ID: <20150617225224.GF4076@thunk.org>
-References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>
- <xmqq4mm66r99.fsf@gitster.dls.corp.google.com>
- <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
+From: Ismail Badawi <ismail@badawi.io>
+Subject: git difftool --dir-diff error in the presence of symlinks to directories
+Date: Wed, 17 Jun 2015 18:39:27 -0400
+Message-ID: <CAFB4ZjUnhEMfjg9+sHrPp271e=V=yU_5QFHBbmPpWMkb72+ENw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Josh Triplett <josh@joshtriplett.org>
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 00:52:47 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 18 00:58:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5MCE-0002XA-Kl
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 00:52:38 +0200
+	id 1Z5MHk-0007qS-Ue
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 00:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015AbbFQWwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 18:52:32 -0400
-Received: from imap.thunk.org ([74.207.234.97]:41293 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754999AbbFQWwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 18:52:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=ZNgnqev85wr2bJ9lQBCm4FiR+Mntz+MwwEu00ny9tUA=;
-	b=prO7wq6JXOU/Fd2b0rVvxS9GNaQSQsiBLMe+vYcR4JKeMeMT9c4TAI7NFw0Fm827kUWS9P1y+SmhIJeA/igG3xm/9LYkh05EpKtAKeQzVsrVt86T3kjOMwY8ZmSfg+E1ZBPU4PmoFXLsDgG0a1qJqxIiT/oWv/G154IlGfHqLjA=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.84)
-	(envelope-from <tytso@thunk.org>)
-	id 1Z5MC2-0004Mf-Ls; Wed, 17 Jun 2015 22:52:26 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id DD7B458404B; Wed, 17 Jun 2015 18:52:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1755561AbbFQW6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 18:58:15 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64504 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753647AbbFQW5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 18:57:35 -0400
+X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Jun 2015 18:57:34 EDT
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 678C75A685
+	for <git@vger.kernel.org>; Wed, 17 Jun 2015 18:39:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=mime-version
+	:date:message-id:subject:from:to:content-type; s=sasl; bh=jlIYvO
+	SIEhkVoB3WZxvxgATyGKc=; b=hMMkIUlPxcSUh0S5j4NXbDF/opORg3iW8uUOZP
+	ofEB2EWqvSp/AenG7YCTCLqCHW0HQqsGdOqhuK1kyI8KHyAIihbRjctzJ4zLBt/D
+	RAFNlS9xs1cVi+Xd6nnzK0AcpEzeDlaLphAEXeuJm6WfuXLsTE54P3tbqVemMAa+
+	2pezQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F1C65A684
+	for <git@vger.kernel.org>; Wed, 17 Jun 2015 18:39:28 -0400 (EDT)
+Received: from mail-yh0-f43.google.com (unknown [209.85.213.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F181B5A681
+	for <git@vger.kernel.org>; Wed, 17 Jun 2015 18:39:27 -0400 (EDT)
+Received: by yhan67 with SMTP id n67so44417251yha.3
+        for <git@vger.kernel.org>; Wed, 17 Jun 2015 15:39:27 -0700 (PDT)
+X-Received: by 10.52.179.73 with SMTP id de9mr913785vdc.28.1434580767142; Wed,
+ 17 Jun 2015 15:39:27 -0700 (PDT)
+Received: by 10.52.166.132 with HTTP; Wed, 17 Jun 2015 15:39:27 -0700 (PDT)
+X-Pobox-Relay-ID: B64981AA-1541-11E5-8010-561A9F42C9D4-72591293!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271927>
 
-On Wed, Jun 17, 2015 at 10:26:32PM +0200, Tuncer Ayaz wrote:
-> 
-> By allowing multiple authors, you don't have to decide who's the
-> primary author, as in such situations usually there is no primary at
-> all. I sometimes deliberately override the author when committing and
-> add myself just as another co-author in the commit message, but as
-> others have noted it would be really great if we can just specify
-> multiple authors.
+Reproduce like this (using git 2.4.3):
 
-Just recently, there a major thread on the IETF mailing list where
-IETF working group had drafts where people were listed as co-authors
-without their permission, and were upset that the fact that their name
-was added made it seem as if they agreed with the end product.  (i.e.,
-that they were endorsing the I-D).  So while adding formal coauthor
-might solves (a few) problems, it can also introduce others.
+git init
+mkdir foo
+touch foo/bar
+git add .
+git commit -m "Initial commit."
+ln -s foo link
+git add .
+git commit -m "Add link to foo."
+git difftool -d HEAD^ HEAD
 
-Ultimately there is one person who can decide which parts of the
-changes to put in the commit that gets sent to the maintainer.  So
-there *is* someone who is the primary author; the person who takes the
-final pass on the patch and then hits the send key.
+That last command outputs:
 
-One could imagine some frankly, quite rare example where there is a
-team of people who votes on each commit before it gets sent out and
-where everyone is equal and there is no hierarchy.  In that case,
-perhaps you could set the from field to a mailing list address.  But
-honestly, how often is that *all* of the authors are completely
-equal[1]?
+fatal: Unable to hash /Users/isbadawi/test/link
+hash-object /Users/isbadawi/test/link: command returned error: 128
 
-In my personal practice, if I make significant changes to a patch, I
-will indeed simply change the submitter, and then give credit the
-original author.  This is the case where I'm essentially saying, "Bob
-did a lot of work, but I made a bunch of changes, so if things break
-horribly, blame *me*, not Bob".
+Briefly looking at the 'git difftool' source it looks like it uses the
+output of 'git diff --raw' and calls 'hash-object' on any object whose
+mode is nonzero, including symlinks.
 
-Alternatively, if I just need to make a few cosmetic changes to
-Alice's patch (i.e., fix white spaces, correct spelling, change the
-commit description so it's validly parsable and understandable
-English, etc.), I'll just add a comment in square brackets indicating
-what changes I made before I committed the change.  This seems to work
-just fine, and I don't think we should try to fix something that isn't
-broken.
+I'm not sure what the right thing to do here is -- just thought I'd
+report this failure.
 
-						- Ted
-
-
-[1]  Gilbert and Sullivan attacked this notion is a commedic way in
-"The Gondoliers"; especially in the songs "Replying we sing as one
-individual" and "There Lived a King":
-
-	     https://www.youtube.com/watch?v=YD0dgXTQ3K0
-	     https://www.youtube.com/watch?v=oSaVdqcDgZc
+Thanks,
+Ismail
