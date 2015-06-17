@@ -1,67 +1,102 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
-Date: Wed, 17 Jun 2015 10:58:10 -0700
-Message-ID: <CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
-References: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
-	<CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Should the --encoding argument to log/show commands make any
+ guarantees about their output?
+Date: Wed, 17 Jun 2015 14:46:08 -0400
+Message-ID: <20150617184607.GA28455@peff.net>
+References: <557E91D2.3000908@googlemail.com>
+ <xmqqzj3y2snq.fsf@gitster.dls.corp.google.com>
+ <5581A964.4000500@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 19:58:27 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jan-Philip Gehrcke <jgehrcke@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 20:46:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5HbU-0008S0-Qs
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 19:58:25 +0200
+	id 1Z5ILo-0001xc-Q1
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jun 2015 20:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756901AbbFQR6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2015 13:58:20 -0400
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:33086 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756764AbbFQR6L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2015 13:58:11 -0400
-Received: by yhpn97 with SMTP id n97so39362652yhp.0
-        for <git@vger.kernel.org>; Wed, 17 Jun 2015 10:58:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Z4qScqz1mDVEvp2ATMVVxRJq9VeVYrCBptviEcQDZWc=;
-        b=eY4rrkxu6c2vwhw6PDESELB4xtJBZqlqONKS6WoLMpcWZdSPNDGdM5J/2NkWnoYqzu
-         ZXkmWDMcvmCdYAjppTfbN/VusYEyZWMhXa6ZUs76krc7g3CuW0h26l3t12eWd5bPDAk4
-         Ur9AjycTv2CPfRlsgWI7OCQ2CBSBGHyc9K85XbSjr78wQ+QO7SDel9YgfGNErb9hahOQ
-         rTSEzBZ8AhSWfb2+IEIWVoZuAktC4xXBJnq4PQq/tAp9cwlunwbBhEKwmS6d+z1mm1+7
-         z7nXCdbhT65h+p1ncgJnFiBVxnqMSkd4mz6RTgmFy9ILX1AZMaxl6TnG4buFvsjuNwcT
-         vQVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Z4qScqz1mDVEvp2ATMVVxRJq9VeVYrCBptviEcQDZWc=;
-        b=YITydWnHOB6FGebHlmBqpMU/uBg2zYJF8d12Vz5hdOLrNOr0563MnLKw6cZORzT8s0
-         rdkFYcRd8Jn+eGUtoykBoa4+LOjRYaA7wfsdgcNpAMFIfNvc27ncFi7jzCSsCwEAMPPy
-         RmzSee21hJuEHkjYGzPmfjnuP1jdd4PpQBZAzfzRGGqW8YKlsciwve+EScLT30MA8+vW
-         9CjrQ3INHO4oL4JtfOUCRZoKJO9hDF0OuZ311Lqw3g9NipBN9Rb46HzbWuyVASn5uGHv
-         tJyb7CE+iCNWioLGTjGkrjRbQkQdxPt43HXNrCExH3NstopXCUXUlb2EBhz2wALcZRl4
-         GuOw==
-X-Gm-Message-State: ALoCoQm/+J9R+sAdGqI/AfqUbhDs4T2EwTShAQI1C4c10Kn0bFHjFJ1j83AR1RBTXY3J3RdQEX88
-X-Received: by 10.129.111.65 with SMTP id k62mr8793335ywc.88.1434563890664;
- Wed, 17 Jun 2015 10:58:10 -0700 (PDT)
-Received: by 10.37.26.213 with HTTP; Wed, 17 Jun 2015 10:58:10 -0700 (PDT)
-In-Reply-To: <CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
+	id S1755726AbbFQSqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2015 14:46:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47553 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755170AbbFQSqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2015 14:46:10 -0400
+Received: (qmail 27655 invoked by uid 102); 17 Jun 2015 18:46:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 13:46:10 -0500
+Received: (qmail 27959 invoked by uid 107); 17 Jun 2015 18:46:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Jun 2015 14:46:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2015 14:46:08 -0400
+Content-Disposition: inline
+In-Reply-To: <5581A964.4000500@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271879>
 
-> Just make strbuf_slopbuf[] large enough to keep Coverity happy. If it's
-> happy, we'll have cleaner defect list
+On Wed, Jun 17, 2015 at 07:07:48PM +0200, Jan-Philip Gehrcke wrote:
 
-It's down 31 defects, roughly 10% of all things coverity detected as
-problematic.
-YAY!
+> The two-option scenario is totally clear. Although one must stress that the
+> "error-out" option can, as discussed, be kept minimally invasive: it is
+> sufficient (and common) to just skip those byte sequences (and replace them
+> with a replacement symbol) that would be invalid in the requested output
+> encoding. This would retain as much information as possible while
+> guaranteeing a subsequent decoder to retrieve valid input.
+
+I think "munge into valid UTF-8, even if it means losing data" is a
+totally valid and useful option. I'm not completely sure that git should
+do that, though.  E.g., you could just as easily do:
+
+  git log --encoding=utf8 | drop_invalid_utf8 | your_script
+
+Or quite possibly, your_script could do the munging itself while reading
+the data. I do not know much about Python's input handling, but in Perl,
+it is easy to say "the input is utf8, and replace anything bogus with a
+substitution character"[1].
+
+> Should we
+> 
+> * just make this more clear in the docs and/or
+> * should we adjust the behavior of --encoding or
+> * should we do something entirely different, like adding a new command line
+> option or
+> * should we just leave things as they are?
+
+I would vote for a documentation change, perhaps like:
+
+Subject: docs: clarify that --encoding can produce invalid sequences
+
+In the common case that the commit encoding matches the
+output encoding, we do not touch the buffer at all, which
+makes things much more efficient. But it might be unclear to
+a consumer that we will pass through bogus sequences.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/pretty-options.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 74aa01a..642af6e 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -37,7 +37,10 @@ people using 80-column terminals.
+ 	in their encoding header; this option can be used to tell the
+ 	command to re-code the commit log message in the encoding
+ 	preferred by the user.  For non plumbing commands this
+-	defaults to UTF-8.
++	defaults to UTF-8. Note that if an object claims to be encoded
++	in `X` and we are outputting in `X`, we will output the object
++	verbatim; this means that invalid sequences in the original
++	commit may be copied to the output.
+ 
+ --notes[=<ref>]::
+ 	Show the notes (see linkgit:git-notes[1]) that annotate the
+-- 
+2.4.4.719.g3984bc6
