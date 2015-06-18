@@ -1,111 +1,110 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 1/2] t3404: demonstrate =?UTF-8?Q?CHERRY=5FPICK=5FHEAD?=
- =?UTF-8?Q?=20bug?=
-Date: Thu, 18 Jun 2015 13:44:38 +0200
-Organization: gmx
-Message-ID: <930906ab4bb4d629d8963850460c1d15f958af5a.1434627492.git.johannes.schindelin@gmx.de>
-References: <cover.1434528725.git.johannes.schindelin@gmx.de>
- <cover.1434627492.git.johannes.schindelin@gmx.de>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: co-authoring commits
+Date: Thu, 18 Jun 2015 06:54:51 -0400
+Organization: PD Inc
+Message-ID: <FBF98192E9F44B6E97F211B961DC7905@black7>
+References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com> <xmqq4mm66r99.fsf@gitster.dls.corp.google.com> <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com> <20150617225224.GF4076@thunk.org>
+Reply-To: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
+	  "Josh Triplett" <josh@joshtriplett.org>,
+	  "Tuncer Ayaz" <tuncer.ayaz@gmail.com>,
+	  "Theodore Ts'o" <tytso@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 18 13:45:01 2015
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Josh Triplett'" <josh@joshtriplett.org>,
+	"'Tuncer Ayaz'" <tuncer.ayaz@gmail.com>,
+	"'Theodore Ts'o'" <tytso@mit.edu>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 18 13:56:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5YFe-0004Fa-6e
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:44:58 +0200
+	id 1Z5YQq-0005wQ-Sy
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754585AbbFRLow convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2015 07:44:52 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57604 "EHLO mout.gmx.net"
+	id S1754859AbbFRL41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 07:56:27 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:40670 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754016AbbFRLov (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 07:44:51 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Mg0IT-1ZT0Py1eqb-00NUuX; Thu, 18 Jun 2015 13:44:39
- +0200
-In-Reply-To: <cover.1434627492.git.johannes.schindelin@gmx.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:8Kluxu64qTU2OU97KYnOLXBaEdVmMoum7YaFaOO2SgzDfB4UsLK
- pODCkicw31t220Dhu36mFS4nML500l6m8G736PWecHfhSw23wrlCxkH1vvHOkAvqR/5a2e5
- W7DNdcHmzbTWsZlQgrMpgZ88T6bu5eDQ14dyD1T9q0uXiBqJrTvJ1S6SsARiWpdcBa/RN/+
- 7TJc1IDmEMZxU3DTr01EA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:D7bT3Wjkwz8=:AbILY4z/3pacMXKiFWa3yV
- bwezdNwM0SO/VNENfqSvdmJipojQNaecHiqfV54L1fnIvlwb1i22z8+G1z5tT4nrbChKwCptf
- YG2Ufxg2mrD/C0rXJJnbDvr3wupilQfNQkaORmvnUlcJBUPJ9lrA3s5yPurS+XvbCCqKJULWq
- azKDYg2NijmAQkSPQch8mBdZ80xOTIgahY/zdxuyXAUsc1y52YBUXnoPB4wmQT+cJQK0OOuM/
- AH9YGsPXFONHv2ou4VRecSNrOVA2iR+FwXcEhIRgsTQn1ap2yxI34W5ZtWLZK9fBqAG0Weyhm
- jBi6nWzS3Wg+aUImZFfY0S62QnZE/rDNoR83rh3YvA0hWTDp2GrBW18X0BfwgH8/yd3pYZEOe
- uT4+6i1yZWUw3o/0lsbh6y6eWnHpC0PjB+VfFwimXyUWNCH4RxQ7ICuXgphJ6UJDCPvHdLMdn
- lalagQGe6l4FY2Rvhhh2DBDIMUP6tT12qeJB1vOCzGDpjThFTgPbBnVqEH4sAwXGi0UJy23Yp
- hdwqzdXqb7+YiMnh7jmCSIa5VWjM5pUDfu7zpcI0eHYeofOewf98wizeOJN2A7kkj3VYXiMal
- ZIAEq45Wl0dNnfl7aB4TnQ82BI+mASQiVDhBw6kLG4Zh5BP3Zm5i3DlTI0RoEkPbM9vrQH+g7
- giHpYGWzUayt/cvTOi5usvNRIBxkDW3yRPBuy36Di583rFf4QuVVywo28Kg5jtPQRxiA=
+	id S1753768AbbFRL4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 07:56:22 -0400
+X-Greylist: delayed 3702 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jun 2015 07:56:22 EDT
+Received: from black7 ([70.42.157.91])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.14.4/8.12.11) with ESMTP id t5IAsX2s011493;
+	Thu, 18 Jun 2015 06:54:34 -0400
+In-Reply-To: <20150617225224.GF4076@thunk.org>
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdCpUFTdg9fPTqgTRK+aOEL6rnCLAwAY3K4g
+X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.17609
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272002>
 
-When rev-list's --cherry option does not detect that a patch has alread=
-y
-been applied upstream, an interactive rebase would offer to reapply it =
-and
-consequently stop at that patch with a failure, mentioning that the dif=
-f
-is empty.
+> -----Original Message-----
+> From: Theodore Ts'o
+> Sent: Wednesday, June 17, 2015 6:52 PM
+> 
+> On Wed, Jun 17, 2015 at 10:26:32PM +0200, Tuncer Ayaz wrote:
+> > 
+> > By allowing multiple authors, you don't have to decide who's the 
+> > primary author, as in such situations usually there is no 
+> primary at 
+> > all. I sometimes deliberately override the author when 
+> committing and 
+> > add myself just as another co-author in the commit message, but as 
+> > others have noted it would be really great if we can just specify 
+> > multiple authors.
+<snip/>
+> One could imagine some frankly, quite rare example where 
+> there is a team of people who votes on each commit before it 
+> gets sent out and where everyone is equal and there is no 
+> hierarchy.  In that case, perhaps you could set the from 
+> field to a mailing list address.
 
-Traditionally, a `git rebase --continue` simply skips the commit in suc=
-h a
-situation.
+This is a perfect use the signed commit by multiple persons. Git already
+supports it (under the hood and in reporting).
 
-However, as pointed out by G=C3=A1bor Szeder, this leaves a CHERRY_PICK=
-_HEAD
-behind, making the Git prompt believe that a cherry pick is still going
-on. This commit adds a test case demonstrating this bug.
+A quick google pulled up my notes on this:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t3404-rebase-interactive.sh | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+http://marc.info/?l=git&m=140845378317052&w=2
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index ac429a0..e5e7744 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1102,4 +1102,25 @@ test_expect_success 'rebase -i commits that over=
-write untracked files (no ff)' '
- 	test $(git cat-file commit HEAD | sed -ne \$p) =3D I
- '
-=20
-+test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
-+	git checkout -b commit-to-skip &&
-+	for double in X 3 1
-+	do
-+		seq 5 | sed "s/$double/&&/" >seq &&
-+		git add seq &&
-+		test_tick &&
-+		git commit -m seq-$double
-+	done &&
-+	git tag seq-onto &&
-+	git reset --hard HEAD~2 &&
-+	git cherry-pick seq-onto &&
-+	set_fake_editor &&
-+	FAKE_LINES=3D test_must_fail git rebase -i seq-onto &&
-+	test -d .git/rebase-merge &&
-+	git rebase --continue &&
-+	git diff seq-onto &&
-+	test ! -d .git/rebase-merge &&
-+	test ! -f .git/CHERRY_PICK_HEAD
-+'
-+
- test_done
---=20
-2.3.1.windows.1.9.g8c01ab4
+$ cat merge-multisigs.sh
+#!/bin/bash
+(
+ for i in "$@"
+ do
+  gpg --dearmor < "$i"
+ done
+) | gpg --enarmor
+
+$ cat write-commit.ruby
+#!/usr/bin/irb
+require 'fileutils'
+file = File.open(ARGV[0], "rb")
+content = file.read
+header = "commit #{content.length}\0"
+store = header + content
+require 'digest/sha1'
+sha1 = Digest::SHA1.hexdigest(store)
+require 'zlib'
+zlib_content = Zlib::Deflate.deflate(store)
+path = '.git/objects/' + sha1[0,2] + '/' + sha1[2,38]
+FileUtils.mkdir_p(File.dirname(path))
+File.open(path, 'w') { |f| f.write zlib_content }
+
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
