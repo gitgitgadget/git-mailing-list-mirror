@@ -1,101 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] format-patch: introduce format.outputDirectory
- configuration
-Date: Thu, 18 Jun 2015 15:57:51 -0400
-Message-ID: <20150618195751.GA14550@peff.net>
-References: <1434626280-4610-1-git-send-email-kuleshovmail@gmail.com>
- <xmqq616ley7y.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Using clean/smudge filters with difftool
+Date: Thu, 18 Jun 2015 13:00:36 -0700
+Message-ID: <xmqqsi9oeqhn.fsf@gitster.dls.corp.google.com>
+References: <CAGA3++LiX9NyK94RPiuiG83X8FSRN4EkaxMchir51hGSQY90Tw@mail.gmail.com>
+	<5582BA1F.1030409@drmicha.warpmail.net>
+	<CAGA3++LrVSs3rMkg=S2Og48pz1yEBxwpcRsPt7sNLENRh1ooAg@mail.gmail.com>
+	<20150618132622.GJ18226@serenity.lan>
+	<CAGA3+++_mx=O=Un0pip8Q41X5PZBLmES=Hd=U=aSowryx5r=8w@mail.gmail.com>
+	<20150618141116.GK18226@serenity.lan>
+	<CAGA3+++ibw=8Q1LtM6yJrZ7Q4eVs_MEHmPAzctSVSREXMmBiMQ@mail.gmail.com>
+	<20150618142852.GL18226@serenity.lan>
+	<CAGA3+++LqZ8Qv6tpuoqQwi37kO5LLODwcbFQtvneorjiV4KARw@mail.gmail.com>
+	<20150618160133.GO18226@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 21:58:12 2015
+Content-Type: text/plain
+Cc: Florian Aspart <florian.aspart@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jun 18 22:00:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5fwu-0001Um-Tq
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 21:58:09 +0200
+	id 1Z5fzS-00040R-4v
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756660AbbFRT6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 15:58:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48315 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755940AbbFRT5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 15:57:55 -0400
-Received: (qmail 23798 invoked by uid 102); 18 Jun 2015 19:57:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 14:57:54 -0500
-Received: (qmail 6876 invoked by uid 107); 18 Jun 2015 19:57:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 15:57:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Jun 2015 15:57:51 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq616ley7y.fsf@gitster.dls.corp.google.com>
+	id S1756765AbbFRUAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 16:00:42 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:37598 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755521AbbFRUAl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 16:00:41 -0400
+Received: by igbsb11 with SMTP id sb11so3263141igb.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:00:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=5SKzhHqbseWzYvffKA8JHinKgPRjdvN6xVyzXvORo0E=;
+        b=OjEWWo4gzf8IuyPir32A+0OM8WuxSipbijWYstRPIG68cBtl8pHAlsM7N/nK+MNXd8
+         SYUo1rw6U3EyvdhKYufmuCeqdPi6ScCYSiqPdj/sx3zJf9oz4aV26mDclQ/iQ2e0g890
+         Vba1VGKlP6JBiyE//02vGPkW9nu5JhTNxbi96nnGUoPsLW0sd2gcOmHSD13WkytgQgUs
+         pg9DkArDj8C/Gb9vKKwAusTh7sjQwGojGiGnWQQej8/yQ0Q9m4O8WbRbMu+x8JjiZGmE
+         5riNw5zmmZ5RergMIqlDUHpdoeGx6mMpkfzlLaWk0bUzBFrCH72vFOyCw19ZpN4vBp+K
+         d6Nw==
+X-Received: by 10.50.78.232 with SMTP id e8mr34348939igx.32.1434657638145;
+        Thu, 18 Jun 2015 13:00:38 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id i185sm5584669ioi.24.2015.06.18.13.00.37
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 13:00:37 -0700 (PDT)
+In-Reply-To: <20150618160133.GO18226@serenity.lan> (John Keeping's message of
+	"Thu, 18 Jun 2015 17:01:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272039>
 
-On Thu, Jun 18, 2015 at 10:13:37AM -0700, Junio C Hamano wrote:
+John Keeping <john@keeping.me.uk> writes:
 
-> > -static const char *set_outdir(const char *prefix, const char *output_directory)
-> > +static const char *set_outdir(const char *prefix, const char *output_directory,
-> > +			      const char *config_output_directory)
-> 
-> This change looks ugly and unnecessary.  All the machinery after and
-> including the point set_outdir() is called, including reopen_stdout(),
-> work on output_directory variable and only that variable.
-> 
-> Wouldn't it work equally well to have
-> 
-> 	if (!output_directory)
->         	output_directory = config_output_directory;
-> 
-> before a call to set_outdir() is made but after the configuration is
-> read (namely, soon after parse_options() returns), without making
-> any change to this function?
+> I think this is a difference between git-diff's internal and external
+> diff modes which is working correctly, although possibly not desirably
+> in this case.  The internal diff always uses clean files (so it runs the
+> working tree file through the "clean" filter before applying the diff
+> algorithm) but the external diff uses the working tree file so it
+> applies the "smudge" filter to any blobs that it needs to checkout.
+>
+> Commit 4e218f5 (Smudge the files fed to external diff and textconv,
+> 2009-03-21) was the source of this behaviour.
 
-Don't we load the config before parsing options here? In that case, we
-can use our usual strategy to just set output_directory (which is
-already a static global) from the config callback, and everything Just
-Works.
+The fundamental design to use smudged version when interacting with
+external programs actually predates that particular commit, I think.
 
-We do have to bump the definition of output_directory up above the
-config callback, like so (while we are here, we might also want to
-drop the unnecessary static initializers, which violate our style guide):
-
-diff --git a/builtin/log.c b/builtin/log.c
-index e67671e..77c06f7 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -37,6 +37,10 @@ static int use_mailmap_config;
- static const char *fmt_patch_subject_prefix = "PATCH";
- static const char *fmt_pretty;
- 
-+static FILE *realstdout = NULL;
-+static const char *output_directory = NULL;
-+static int outdir_offset;
-+
- static const char * const builtin_log_usage[] = {
- 	N_("git log [<options>] [<revision-range>] [[--] <path>...]"),
- 	N_("git show [<options>] <object>..."),
-@@ -752,14 +756,12 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 		config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.outputdirectory"))
-+		return git_config_string(&output_directory, var, value);
- 
- 	return git_log_config(var, value, cb);
- }
- 
--static FILE *realstdout = NULL;
--static const char *output_directory = NULL;
--static int outdir_offset;
--
- static int reopen_stdout(struct commit *commit, const char *subject,
- 			 struct rev_info *rev, int quiet)
- {
+The caller of the function that was updated by that commit, i.e.
+prepare_temp_file(), reuses what is checked out to the working tree
+when we can (i.e. it hasn't been modified from what we think is
+checked out) and when it is beneficial to do so (i.e. on a system
+with FAST_WORKING_DIRECTORY defined), which means the temporary file
+given by the prepare_temp_file() that is used by the external tools
+(both --ext-diff program and textconv filter) are designed to be fed
+and work on the smudged version of the file.  4e218f5 did not change
+that fundamental design; it just made things more consistent between
+the case where we do create a new temporary file out of blob and we
+allow an unmodified checked out file to be reused.
