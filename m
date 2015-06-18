@@ -1,65 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG: checkout won't checkout?
-Date: Thu, 18 Jun 2015 15:32:03 -0700
-Message-ID: <xmqqzj3wbqcc.fsf@gitster.dls.corp.google.com>
-References: <CAE5ih7-=WPme_BxgAjtm9hrShxTk1z+uDM-LXzc3BcN3n2vqAg@mail.gmail.com>
-	<xmqq4mm4d53f.fsf@gitster.dls.corp.google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Using clean/smudge filters with difftool
+Date: Thu, 18 Jun 2015 23:39:27 +0100
+Message-ID: <20150618223927.GP18226@serenity.lan>
+References: <5582BA1F.1030409@drmicha.warpmail.net>
+ <CAGA3++LrVSs3rMkg=S2Og48pz1yEBxwpcRsPt7sNLENRh1ooAg@mail.gmail.com>
+ <20150618132622.GJ18226@serenity.lan>
+ <CAGA3+++_mx=O=Un0pip8Q41X5PZBLmES=Hd=U=aSowryx5r=8w@mail.gmail.com>
+ <20150618141116.GK18226@serenity.lan>
+ <CAGA3+++ibw=8Q1LtM6yJrZ7Q4eVs_MEHmPAzctSVSREXMmBiMQ@mail.gmail.com>
+ <20150618142852.GL18226@serenity.lan>
+ <CAGA3+++LqZ8Qv6tpuoqQwi37kO5LLODwcbFQtvneorjiV4KARw@mail.gmail.com>
+ <20150618160133.GO18226@serenity.lan>
+ <xmqqsi9oeqhn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Fri Jun 19 00:32:13 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Florian Aspart <florian.aspart@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 00:39:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5iM0-0008Ut-1Y
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 00:32:12 +0200
+	id 1Z5iTL-0007PZ-F7
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 00:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbbFRWcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 18:32:07 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:37326 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbbFRWcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 18:32:05 -0400
-Received: by igblr2 with SMTP id lr2so1973846igb.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 15:32:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=xdojtKLHl/jJynBWVeOFaYamuD87uCgOrz48sF7d60E=;
-        b=eRqRatx56Et06+85XBR9qypLwnCKYFvpZNqQT8SNkXi/kpMsgE3XyuuOlbDHpNL2L1
-         KvlvO6oFF5/cUlk1FbTLAzmX8JcQ2Wsrsm8T36c1Jo7Rbv5E0K4ltJo6KTSSqIKNZU39
-         kAlIhYjstSOBm4SksWB0gTaiIKJF1oCi6tn+2JV1aIVLfNKhHg7vB2EO5dbzqyhEm92z
-         80n0agPzTM9hlj5bwnNf8BLVlUhZV2Tt0TUIpsw/WhPt/MBNA+WVDm6NAgak/PpBqZiO
-         N68BK9yK5s8iXO5DR3k7a8X+tz/1CutsvFa3eOATbTt4lbh7GaiAP275mIuNC4oXPl1Y
-         kfLQ==
-X-Received: by 10.50.90.179 with SMTP id bx19mr407268igb.43.1434666724966;
-        Thu, 18 Jun 2015 15:32:04 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
-        by mx.google.com with ESMTPSA id f82sm5821822ioj.37.2015.06.18.15.32.03
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jun 2015 15:32:04 -0700 (PDT)
-In-Reply-To: <xmqq4mm4d53f.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 18 Jun 2015 15:28:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751708AbbFRWjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 18:39:43 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:34368 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001AbbFRWjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 18:39:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 5A027CDA5AE;
+	Thu, 18 Jun 2015 23:39:41 +0100 (BST)
+X-Quarantine-ID: <ghWvRzcGoSWi>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id ghWvRzcGoSWi; Thu, 18 Jun 2015 23:39:40 +0100 (BST)
+Received: from serenity.lan (griffin.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id EFEB6CDA5A6;
+	Thu, 18 Jun 2015 23:39:29 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqsi9oeqhn.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272090>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jun 18, 2015 at 01:00:36PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > I think this is a difference between git-diff's internal and external
+> > diff modes which is working correctly, although possibly not desirably
+> > in this case.  The internal diff always uses clean files (so it runs the
+> > working tree file through the "clean" filter before applying the diff
+> > algorithm) but the external diff uses the working tree file so it
+> > applies the "smudge" filter to any blobs that it needs to checkout.
+> >
+> > Commit 4e218f5 (Smudge the files fed to external diff and textconv,
+> > 2009-03-21) was the source of this behaviour.
+> 
+> The fundamental design to use smudged version when interacting with
+> external programs actually predates that particular commit, I think.
+> 
+> The caller of the function that was updated by that commit, i.e.
+> prepare_temp_file(), reuses what is checked out to the working tree
+> when we can (i.e. it hasn't been modified from what we think is
+> checked out) and when it is beneficial to do so (i.e. on a system
+> with FAST_WORKING_DIRECTORY defined), which means the temporary file
+> given by the prepare_temp_file() that is used by the external tools
+> (both --ext-diff program and textconv filter) are designed to be fed
+> and work on the smudged version of the file.  4e218f5 did not change
+> that fundamental design; it just made things more consistent between
+> the case where we do create a new temporary file out of blob and we
+> allow an unmodified checked out file to be reused.
 
->> $ git checkout upstream/master -- subtree
->> $ git diff upstream/master -- subtree
->> -- still lots of deltas
->
-> Does this show _ONLY_ additions?  Or does it include modifications
-> and removals?
+When I started looking at this, I assumed the problem would be that
+git-difftool wasn't smudging the non-working-tree files.  But actually
+everything is working "correctly", I'm just not sure it's always what
+the user wants (at least it isn't what was wanted in this case).
 
-The reason I ask this question is because of 
+Currently, the behaviour is:
 
-http://thread.gmane.org/gmane.comp.version-control.git/234903/focus=234924
+	internal diff: compare clean files
+	external diff: compare smudged files
+
+This makes sense for LF/CRLF conversion, where platform-specific tools
+clearly want the platform's line ending but the internal diff machinery
+doesn't care.
+
+However, from the filter description in an earlier email, I think
+Florian is using a clean filter to remove output from IPython notebook
+files (it seems that IPython saves both the input and the output in the
+same file [1] and the output is the equivalent of, for example, C object
+files).  In this case, the filter is one-way and discards information
+from the working tree file, producing a smaller and more readable diff
+in the process.
+
+I think the summary is that there are some scenarios where the external
+diff tool should see the smudged version and others where the clean
+version is more appropriate and Git should support both options.  It
+seems this is a property of the filter, so I wonder if the best solution
+is a new "filter.<name>.extdiff = [clean|smudge]" configuration
+variable (there's probably a better name for the variable than
+"extdiff").
+
+
+[1] http://pascalbugnion.net/blog/ipython-notebooks-and-git.html
