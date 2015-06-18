@@ -1,109 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/WIP v3 05/31] am: split out mbox/maildir patches with git-mailsplit
-Date: Thu, 18 Jun 2015 13:52:30 -0700
-Message-ID: <xmqq381oeo35.fsf@gitster.dls.corp.google.com>
-References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-	<1434626743-8552-6-git-send-email-pyokagan@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 22:52:54 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Selectively clone Git submodules -- a useful feature?
+Date: Thu, 18 Jun 2015 22:55:42 +0200
+Message-ID: <162A5ADF-1FDD-432B-B5F8-672DF5B50EEC@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 18 22:55:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5gne-0008KX-ML
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:52:39 +0200
+	id 1Z5gql-0002xW-Ll
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752236AbbFRUwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 16:52:34 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34127 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbbFRUwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 16:52:33 -0400
-Received: by igboe5 with SMTP id oe5so1115270igb.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:52:33 -0700 (PDT)
+	id S1752334AbbFRUzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 16:55:48 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:38400 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728AbbFRUzq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2015 16:55:46 -0400
+Received: by wibdq8 with SMTP id dq8so604868wib.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:55:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=J79b5546k3e8RBKFSV7uIi9+VRK6evB8apVc2t8V7i0=;
-        b=1HrgonpL8avgEnIeMqjEKyCZB7aHdAgAbZ40AicvZqUjwFFWOL3/9NnUL8L5yJ5zUp
-         pOKMGnOCMGbOTl1S5LqgGTVpPpt0I1SdVEVFaEMVAwuCnHLx7GrDxdE+XHhzl9R7CbH+
-         k7+ILlMrTRazEky3o3sNrFrWjrLgEMAfR7CdvH2Mt4PFc46nBO1RS8kTSWypyoa6f5lA
-         o4LGZ/XrvEhXZcpuXdLbr9DSJjxoC3FQ6XcV25WSVwM7tt6DiwcN4arT2rCWB2DFO49n
-         VI0jQVesYVwqg/kU3p9GSulGany3Z9OQDUtSCP4aUzhDoPDOZPsXaxwEZKd20MY9KKZJ
-         TG3g==
-X-Received: by 10.107.33.9 with SMTP id h9mr17887863ioh.1.1434660752998;
-        Thu, 18 Jun 2015 13:52:32 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
-        by mx.google.com with ESMTPSA id t7sm276857ign.8.2015.06.18.13.52.31
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jun 2015 13:52:31 -0700 (PDT)
-In-Reply-To: <1434626743-8552-6-git-send-email-pyokagan@gmail.com> (Paul Tan's
-	message of "Thu, 18 Jun 2015 19:25:17 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version;
+        bh=0d8neCvTVOhm8/MN/bvFiAqaf96n0FldrKlRX8Z0uXA=;
+        b=ZpCbjUvZQ7wF9pFYDwLU8hPuuYTzORBAvZ5MGkyRjrx6OQXe+uKcioMC4KFVXHdCbT
+         tNUjDvk5nM5ub8Z2nsJ3uJVE0xWo/FB4B6cyhIkjWApXMtNe3jUC/xjdPqdYYISwLKTo
+         diYeNYCt8Adw+0NhKC44LEZ3M9M0AqbyhNOmUvFsEMz++KxkXY7IHNlTyCnWzkpHfPdz
+         HSeE2oMaSMS+xxE31I8+EAMtc9KEq7PVfJPJ65r/v7PXl4ZcWJ/kCGKbtVYS4UMoW1oI
+         TbAUV/3vuz7rA9bf/BSTdGzpAPMtvYDGYm1sknHu1TsRc3Q1wpFW9OCdsI6GYt3kA7CA
+         GFKg==
+X-Received: by 10.194.205.5 with SMTP id lc5mr19563040wjc.74.1434660945563;
+        Thu, 18 Jun 2015 13:55:45 -0700 (PDT)
+Received: from slxbook3.fritz.box (dslb-188-103-022-019.188.103.pools.vodafone-ip.de. [188.103.22.19])
+        by mx.google.com with ESMTPSA id tl3sm13865230wjc.20.2015.06.18.13.55.43
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 13:55:44 -0700 (PDT)
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272073>
 
-Paul Tan <pyokagan@gmail.com> writes:
+Hi,
 
-> @@ -111,13 +122,69 @@ static void am_destroy(const struct am_state *state)
->  }
->  
->  /**
-> + * Splits out individual patches from `paths`, where each path is either a mbox
-> + * file or a Maildir. Return 0 on success, -1 on failure.
-> + */
+AFAIK Git has two ways to clone a repository with respect to submodules:
 
-"Splits" and then "Return"?  Be consistent.
+(1) Plain clone of just the repository itself:
+git clone git://github.com/foo/bar.git
 
-> +static int split_patches_mbox(struct am_state *state, struct string_list *paths)
-> +{
-> ...
-> +}
+(2) Recursive clone of the repository including all its submodules:
+git clone --recursive git://github.com/foo/bar.git
 
-Looks straightforward ;-)
+I am working on a big cross platform project and on certain platforms I don't need certain submodules. AFAIK there is no way to selectively clone only a subset of the submodules with the standard command line interface. I wonder if something like an exclude pattern for submodules would be of general interest. I imagine a call like this after a plain "clone" operation:
 
-> +/**
-> + * parse_options() callback that validates and sets opt->value to the
-> + * PATCH_FORMAT_* enum value corresponding to `arg`.
-> + */
-> +static int parse_opt_patchformat(const struct option *opt, const char *arg, int unset)
-> +{
-> +	int *opt_value = opt->value;
-> +
-> +	if (!strcmp(arg, "mbox"))
-> +		*opt_value = PATCH_FORMAT_MBOX;
-> +	else
-> +		return -1;
-> +	return 0;
-> +}
-> +
->  static struct am_state state;
-> +static int opt_patch_format;
->  
->  static const char * const am_usage[] = {
->  	N_("git am [options] [(<mbox>|<Maildir>)...]"),
-> @@ -156,6 +239,8 @@ static const char * const am_usage[] = {
->  };
->  
->  static struct option am_options[] = {
-> +	OPT_CALLBACK(0, "patch-format", &opt_patch_format, N_("format"),
-> +		N_("format the patch(es) are in"), parse_opt_patchformat),
->  	OPT_END()
->  };
+git submodule update --init --recursive --exclude 3rdParty/Windows/*
 
-Looking good ;-).
+or even:
 
-Just FYI, you do not have to make am_options[], and the variables
-that are referenced from there, e.g. opt_patch_format, etc., global
-variables (instead you can have them all in the function scope of
-cmd_am()).
+git clone --recursive --exclude 3rdParty/Windows/* git://github.com/foo/bar.git
+
+Please let me know what you think.
+
+
+Thanks,
+Lars
+
+
+PS: I posted this question already on the Google Git group here:
+https://groups.google.com/forum/?fromgroups=#!topic/git-users/jyKsd45d2MA
+
+I am sorry, but I discovered this mailing list afterwards and I am not sure which one is the appropriate one. Please advise.
+
+
+---
+https://larsxschneider.github.io/
