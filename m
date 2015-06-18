@@ -1,8 +1,9 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v5 06/19] fsck: Report the ID of the error/warning
-Date: Thu, 18 Jun 2015 22:08:25 +0200
+Subject: [PATCH v5 04/19] fsck: Offer a function to demote fsck errors to
+ warnings
+Date: Thu, 18 Jun 2015 22:08:07 +0200
 Organization: gmx
-Message-ID: <d0cab23cd7755a080b4a2b9b51d65684632bf4f9.1434657920.git.johannes.schindelin@gmx.de>
+Message-ID: <ae715e3a4879e1c619fd3b32fbf081d504d9e9aa.1434657920.git.johannes.schindelin@gmx.de>
 References: <cover.1422737997.git.johannes.schindelin@gmx.de>
  <cover.1434657920.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
@@ -10,107 +11,198 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 18 22:08:38 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 22:08:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5g72-0002go-W0
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:08:37 +0200
+	id 1Z5g6t-0002ZW-TC
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756255AbbFRUId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 16:08:33 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53694 "EHLO mout.gmx.net"
+	id S1756923AbbFRUIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 16:08:24 -0400
+Received: from mout.gmx.net ([212.227.17.20]:64048 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756926AbbFRUIa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 16:08:30 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lj1Xa-1YZNIN2G9m-00dC1n; Thu, 18 Jun 2015 22:08:25
+	id S1756621AbbFRUIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 16:08:22 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MFz0E-1ZJPLi3S7i-00EtWy; Thu, 18 Jun 2015 22:08:08
  +0200
 In-Reply-To: <cover.1434657920.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:yuEl4m/hvP0bPF6Sim6MRWeMjKzWKJ/uMZcSDWE5JwvePIiZOL5
- drx6m6Y/7Pl4Mt0EIFFV9KWFtlWskAptdcJNoejGZWPz4CX5nRAqRBmaCDIHTBIWaBk/QPj
- whdHbQPmZtxOw+DG6Tlfv+RvYFhkgZDilHu7GlBUCvRRQSvPiqtdiJUl2u36hWEk02eE3tB
- tOXLVhr4psYrnGsRoIWqA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wIu2MjjV3cA=:VbOhHB0Q9+1OdWdytBsNKW
- k5u67D2FqqCtV0mkH7SzROO8br7Yt2sOzIbSg3O1INoF53X6pfpPL9Dn6txw5VsKiLrE6nuWJ
- pyoLBhGPaelxBaIEPsj7qkyRglofJE3hFCi+On7KmUtBzPwLYj/4gos6ofG9i9PizwOsk7T4y
- mVz+vxzTzGzlk2ZOHWTNWYnBc9wcH8lzJTBwDupjuqo9ELYZtirLvp1RSffLuyYGi1ysNnhqQ
- Yxk0aHu6bmjAbwwCL0h+V+aL+UEqYx0nnkIlPKf3IokFLdAsRwLVmtae20JoupUftWn7lSQ34
- rJq89HHk9Rx1e5PDJpGMDT7ht4xeeGuc1GgaBGKJHb0FFEm9AzR7KpYOXLK8EVrZlJckM/N/u
- BN0f9ry2PS38nc6EHWclC/2xFPAqmzD1R+2gVZKsm+1twIfckFg55hGBKdIu9BPJU9Ru7v8xi
- dIp2XkmIx8N6yfoU0lzrbvJUEtPe3xODCvQ18tcSZS6c23njWyvncTrXJN7rsZjKm3MgzfLxv
- JXlqcSRV5IqO7Ad2V49ZCV5iwrzIUb+4sgolAJZKcn15vJkHRoeaBnlOxwFySnRs3xHfP6sWy
- TRMASJepGs97afxLOsTDSyIkTjwISzR66Xgz4u3PtlqDJ52ghNsbwoet7Y9FlzDxibvD940m7
- 1TCn7U8h80pCP7H85XKPD3nZKT4yNMS/iiieklxAe0Te9w/mC5+EoC80pmHTns87DK/o=
+X-Provags-ID: V03:K0:igN9vIQQjUFhJfCurWAfhop+cvcPseNYHURNKGaxEoOf3+rLUkn
+ ZXfUCIAchufiiYE037HZn78sypwcHLqLBop16BvB5BExeLbfT3Edcofx6mySdpGG7RM/PkP
+ u69Ncl7mPV+60LT0MVkyGpD+b1McqCM6ZRpYfcIC8t1qdXjk+hXbJu30dVOy2dujUVO81iw
+ bRM3UiWpFY+v3vqD6sNAA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272047>
 
-Some legacy code has objects with non-fatal fsck issues; To enable the
-user to ignore those issues, let's print out the ID (e.g. when
-encountering "missingemail", the user might want to call `git config
---add receive.fsck.missingemail=warn`).
+There are legacy repositories out there whose older commits and tags
+have issues that prevent pushing them when 'receive.fsckObjects' is set.
+One real-life example is a commit object that has been hand-crafted to
+list two authors.
+
+Often, it is not possible to fix those issues without disrupting the
+work with said repositories, yet it is still desirable to perform checks
+by setting `receive.fsckObjects = true`. This commit is the first step
+to allow demoting specific fsck issues to mere warnings.
+
+The `fsck_set_msg_types()` function added by this commit parses a list
+of settings in the form:
+
+	missingemail=warn,badname=warn,...
+
+Unfortunately, the FSCK_WARN/FSCK_ERROR flag is only really heeded by
+git fsck so far, but other call paths (e.g. git index-pack --strict)
+error out *always* no matter what type was specified. Therefore, we need
+to take extra care to set all message types to FSCK_ERROR by default in
+those cases.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c          | 16 ++++++++++++++++
- t/t1450-fsck.sh |  4 ++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ fsck.c | 82 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ fsck.h | 10 ++++++--
+ 2 files changed, 87 insertions(+), 5 deletions(-)
 
 diff --git a/fsck.c b/fsck.c
-index 0c7cc26..47cb686 100644
+index 4595c7f..7db81d2 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -190,6 +190,20 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
- 	}
+@@ -103,13 +103,85 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+ {
+ 	int msg_type;
+ 
+-	msg_type = msg_id_info[msg_id].msg_type;
+-	if (options->strict && msg_type == FSCK_WARN)
+-		msg_type = FSCK_ERROR;
++	assert(msg_id >= 0 && msg_id < FSCK_MSG_MAX);
++
++	if (options->msg_type)
++		msg_type = options->msg_type[msg_id];
++	else {
++		msg_type = msg_id_info[msg_id].msg_type;
++		if (options->strict && msg_type == FSCK_WARN)
++			msg_type = FSCK_ERROR;
++	}
+ 
+ 	return msg_type;
  }
  
-+static void append_msg_id(struct strbuf *sb, const char *msg_id)
++static inline int substrcmp(const char *string, int len, const char *match)
 +{
-+	for (;;) {
-+		char c = *(msg_id)++;
++	int match_len = strlen(match);
++	if (match_len != len)
++		return -1;
++	return memcmp(string, match, len);
++}
 +
-+		if (!c)
-+			break;
-+		if (c != '_')
-+			strbuf_addch(sb, tolower(c));
++static int parse_msg_type(const char *str, int len)
++{
++	if (len < 0)
++		len = strlen(str);
++
++	if (!substrcmp(str, len, "error"))
++		return FSCK_ERROR;
++	else if (!substrcmp(str, len, "warn"))
++		return FSCK_WARN;
++	else
++		die("Unknown fsck message type: '%.*s'",
++				len, str);
++}
++
++void fsck_set_msg_type(struct fsck_options *options,
++		const char *msg_id, int msg_id_len,
++		const char *msg_type, int msg_type_len)
++{
++	int id = parse_msg_id(msg_id, msg_id_len), type;
++
++	if (id < 0)
++		die("Unhandled message id: %.*s", msg_id_len, msg_id);
++	type = parse_msg_type(msg_type, msg_type_len);
++
++	if (!options->msg_type) {
++		int i;
++		int *msg_type = xmalloc(sizeof(int) * FSCK_MSG_MAX);
++		for (i = 0; i < FSCK_MSG_MAX; i++)
++			msg_type[i] = fsck_msg_type(i, options);
++		options->msg_type = msg_type;
 +	}
 +
-+	strbuf_addstr(sb, ": ");
++	options->msg_type[id] = type;
++}
++
++void fsck_set_msg_types(struct fsck_options *options, const char *values)
++{
++	while (*values) {
++		int len = strcspn(values, " ,|"), equal;
++
++		if (!len) {
++			values++;
++			continue;
++		}
++
++		for (equal = 0; equal < len; equal++)
++			if (values[equal] == '=' || values[equal] == ':')
++				break;
++
++		if (equal == len)
++			die("Missing '=': '%.*s'", len, values);
++
++		fsck_set_msg_type(options, values, equal,
++				values + equal + 1, len - equal - 1);
++		values += len;
++	}
 +}
 +
  __attribute__((format (printf, 4, 5)))
  static int report(struct fsck_options *options, struct object *object,
  	enum fsck_msg_id id, const char *fmt, ...)
-@@ -198,6 +212,8 @@ static int report(struct fsck_options *options, struct object *object,
- 	struct strbuf sb = STRBUF_INIT;
- 	int msg_type = fsck_msg_type(id, options), result;
+@@ -599,6 +671,10 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
  
-+	append_msg_id(&sb, msg_id_info[id].id_string);
+ int fsck_error_function(struct object *obj, int msg_type, const char *message)
+ {
++	if (msg_type == FSCK_WARN) {
++		warning("object %s: %s", sha1_to_hex(obj->sha1), message);
++		return 0;
++	}
+ 	error("object %s: %s", sha1_to_hex(obj->sha1), message);
+ 	return 1;
+ }
+diff --git a/fsck.h b/fsck.h
+index f6f268a..edb4540 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -6,6 +6,11 @@
+ 
+ struct fsck_options;
+ 
++void fsck_set_msg_type(struct fsck_options *options,
++		const char *msg_id, int msg_id_len,
++		const char *msg_type, int msg_type_len);
++void fsck_set_msg_types(struct fsck_options *options, const char *values);
 +
- 	va_start(ap, fmt);
- 	strbuf_vaddf(&sb, fmt, ap);
- 	result = options->error_func(object, msg_type, sb.buf);
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index cfb32b6..286a643 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -231,8 +231,8 @@ test_expect_success 'tag with incorrect tag name & missing tagger' '
- 	git fsck --tags 2>out &&
+ /*
+  * callback function for fsck_walk
+  * type is the expected type of the object or OBJ_ANY
+@@ -25,10 +30,11 @@ struct fsck_options {
+ 	fsck_walk_func walk;
+ 	fsck_error error_func;
+ 	unsigned strict:1;
++	int *msg_type;
+ };
  
- 	cat >expect <<-EOF &&
--	warning in tag $tag: invalid '\''tag'\'' name: wrong name format
--	warning in tag $tag: invalid format - expected '\''tagger'\'' line
-+	warning in tag $tag: invalidtagname: invalid '\''tag'\'' name: wrong name format
-+	warning in tag $tag: missingtaggerentry: invalid format - expected '\''tagger'\'' line
- 	EOF
- 	test_cmp expect out
- '
+-#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0 }
+-#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1 }
++#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
++#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL }
+ 
+ /* descend in all linked child objects
+  * the return value is:
 -- 
 2.3.1.windows.1.9.g8c01ab4
