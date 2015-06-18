@@ -1,145 +1,160 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v5 14/19] fsck: Allow upgrading fsck warnings to errors
-Date: Thu, 18 Jun 2015 22:09:34 +0200
+Subject: [PATCH v5 16/19] fsck: Support demoting errors to warnings
+Date: Thu, 18 Jun 2015 22:09:50 +0200
 Organization: gmx
-Message-ID: <6c5ac208f58d995fa07d64aa4b0ef4ae634e85d4.1434657920.git.johannes.schindelin@gmx.de>
+Message-ID: <d6eb0210ac56de264c528887f5ba0f5c67f59d08.1434657920.git.johannes.schindelin@gmx.de>
 References: <cover.1422737997.git.johannes.schindelin@gmx.de>
  <cover.1434657920.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 18 22:09:58 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 22:10:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5g8K-0003xm-Ln
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:09:57 +0200
+	id 1Z5g8e-0004JY-PU
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932642AbbFRUJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 16:09:45 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63313 "EHLO mout.gmx.net"
+	id S932654AbbFRUKK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2015 16:10:10 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51184 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932482AbbFRUJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 16:09:38 -0400
+	id S932652AbbFRUKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 16:10:03 -0400
 Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MBExR-1ZFGMl4C0L-00AFFI; Thu, 18 Jun 2015 22:09:35
+ ESMTPSA (Nemesis) id 0MdKDb-1ZMWSa16g7-00IT66; Thu, 18 Jun 2015 22:09:51
  +0200
 In-Reply-To: <cover.1434657920.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:yswCJPwI/9etTbpDi7nYIIDYxOhgBjaS887QlCaG20GNF9/oT7Y
- kBVkOmcoMA/2HN5ju3VSbtVVVzVL7J7QywZCHea5WPQWd2dcuKL64yoyiARcI8cJ3/KIO/+
- RfvLZdvy4DM+x1RvjnHatoYjOt4Dc+6Z/igYJTN5cQLNYt1hQqoFDjUOCCqFcPlJofD5xBK
- 6U57luGXVsK6Pq81c4YfQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:C9wpbMTdqa0=:Ckd8nDHW/wqXUr/4qBOYWb
- nIpr7GWXIs4ZfiGsxLGmiCv7gvcfbQ2KYT2WEoa0nj5/tPBaghKVF0N+iky0a2fTWoUaEcVIr
- BtsyDE37kOd3d9zY2nT+0Cy7UHYLEeZhEbWjKQ5XBANT7R5vD7tWAAKByIf2jQY6Vr7HILjvO
- LEj5rRDbU7s04YSmja4OttuK0z3JxHI7AM0VL4zPpYqbMfc1xc1pJSwg+eJ/y2G0f9QUVL7xx
- CnkLDOb7QIaP4jUjLcJZRshPboaLMvc2rHF8UIJjPjOTncoFcBnm6VmjD2bgVLb23wyWGXH85
- r2Hb80spEDL1/Sw+gQk3Y5KknmTHRJJbXt+57pVE9S30DtLk15O7fMyaTEjoOb0CXHQgIZZGZ
- gpxhS4W7lAYO1nmaFkN00mhEQfK0TBdOFwCJjNRvDhzgbRb4wmiFt48oml3nOW4hvIHhe0L9v
- DtoGU6XFz6WP0sJgo+z6okhHT1ROKN6Vip2i4f6tGPA1QfOxLaRopq+R+8lM3Hode3q4gdalB
- Odo70ZQA/xmyRJJSfRo9z0BFM5xvyAAQbzxXB3SMuNPa6Ua7GbinwX7XclcBT6DC5p9q/Q98o
- 7aTztHwMViy2Y2zPdloq8Yd4yBmLc9sYLwGsUgQiH9Cx0FakMiEBwxo84EZ0shmdOjFNoAYK0
- dDiefBu7ClVVO26kNwJi/cJQ5PUtGzzrRDiUht56Tmk7Ryx/e+tzm4bvsb8DFz+kH2b8=
+X-Provags-ID: V03:K0:f0YuwU32kf5OS/KQ4PjdJjxL22Q9bbd8+/gy4HUQdGSwhfJYxsf
+ aSIXnYdPcBsWzDXmYdfeNugtus7gDo6lfKzVduQwmRVrXiKJ8JVI2TRXx2L356XLD6lY0Xs
+ BKbrKooW5OdD3a1Mwzp0XM8c771HJgIFZNJEwrAOJvF4mezt0VLcUyDfqp7FoLCcR6tIWt8
+ rWuzTpqhE696FAYVrMtAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aFNxsKznrcc=:eVIGcC6XMb93atSQ9U084U
+ gI9W4uK+262g3xPe3lXiy+8CQdvSdo5eqShvZdr0URwIwsmF+0lgK6krVLvVWczCc5cwGShem
+ SJcKLrj0gF4PYEDMG+scdlSVt2GsRBeHR04pQ1j7B32keFAgfhStiRsDqvFZdNgr/qhzkLVCU
+ 6T5P74U7qCBd4arConLSkOJOSM8yCWY7yno8kqKIChL2SYTAwX+QvZyaABG7IejhiBiLAJRI6
+ XfXtjOnHjAsfDfbBa5cJmiWRlV4LHz+3BbRalSp/3KlRH4qgt05B1djupGdzIsQ1W3S1JcegO
+ ZkxIQ1Odb5HPJ0kpFh6Jom1vpyFvtgMbeVAfZ2h3Xjd5uMYYkdxE/fesaSz0hS7TbYS/2Dfzr
+ 9hB9U3byLMZbS1k11BbdS9QVt648Tj+C2Djaaxgtvr+ysqQTBNNOQ/H0udNHv9jgQ7OBkvatF
+ O6H+xdlRsM4Wk+kaU5hzW5d08CzJc6x1gu4XAT0Y1pw9TT+sQ0on3THz3mighcrcJpwbxmm80
+ eWPA/19aMFtqQmsbYEceuSuNcY1A1J0SWNVvUYkz3mxVM2kbRuIrLX9E4l3YaSqcB1XW1sEcr
+ m7M0n7zSrytGBA94l9a4SDj+v0n/YyogXdksB6ns8Ucn0TOt5NV5mDLw2vtDR1abZSosdWDe9
+ QdKpXNu4L+Bl+EfnM6rEdXjWGIg89/7or+QvacyRBSMxQHtLKQYkKn4NXSASJyQxvJnQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272057>
 
-The 'invalid tag name' and 'missing tagger entry' warnings can now be
-upgraded to errors by specifying `invalidtagname` and
-`missingtaggerentry` in the receive.fsck.<msg-id> config setting.
+We already have support in `git receive-pack` to deal with some legacy
+repositories which have non-fatal issues.
 
-Incidentally, the missing tagger warning is now really shown as a warning
-(as opposed to being reported with the "error:" prefix, as it used to be
-the case before this commit).
+Let's make `git fsck` itself useful with such repositories, too, by
+allowing users to ignore known issues, or at least demote those issues
+to mere warnings.
+
+Example: `git -c fsck.missingemail=3Dignore fsck` would hide
+problems with missing emails in author, committer and tagger lines.
+
+In the same spirit that `git receive-pack`'s usage of the fsck machiner=
+y
+differs from `git fsck`'s =E2=80=93 some of the non-fatal warnings in `=
+git fsck`
+are fatal with `git receive-pack` when receive.fsckObjects =3D true, fo=
+r
+example =E2=80=93 we strictly separate the fsck.<msg-id> from the
+receive.fsck.<msg-id> settings.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c                | 24 +++++++++++++++++-------
- t/t5302-pack-index.sh |  2 +-
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ Documentation/config.txt | 11 +++++++++++
+ builtin/fsck.c           | 12 ++++++++++++
+ t/t1450-fsck.sh          | 11 +++++++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/fsck.c b/fsck.c
-index 0f7eb22..a5e7dfb 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -10,6 +10,7 @@
- #include "utf8.h"
- 
- #define FSCK_FATAL -1
-+#define FSCK_INFO -2
- 
- #define FOREACH_MSG_ID(FUNC) \
- 	/* fatal errors */ \
-@@ -55,10 +56,11 @@
- 	FUNC(HAS_DOT, WARN) \
- 	FUNC(HAS_DOTDOT, WARN) \
- 	FUNC(HAS_DOTGIT, WARN) \
--	FUNC(INVALID_TAG_NAME, WARN) \
--	FUNC(MISSING_TAGGER_ENTRY, WARN) \
- 	FUNC(NULL_SHA1, WARN) \
--	FUNC(ZERO_PADDED_FILEMODE, WARN)
-+	FUNC(ZERO_PADDED_FILEMODE, WARN) \
-+	/* infos (reported as warnings, but ignored by default) */ \
-+	FUNC(INVALID_TAG_NAME, INFO) \
-+	FUNC(MISSING_TAGGER_ENTRY, INFO)
- 
- #define MSG_ID(id, msg_type) FSCK_MSG_##id,
- enum fsck_msg_id {
-@@ -227,6 +229,8 @@ static int report(struct fsck_options *options, struct object *object,
- 
- 	if (msg_type == FSCK_FATAL)
- 		msg_type = FSCK_ERROR;
-+	else if (msg_type == FSCK_INFO)
-+		msg_type = FSCK_WARN;
- 
- 	append_msg_id(&sb, msg_id_info[id].id_string);
- 
-@@ -685,15 +689,21 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
- 		goto done;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 306ab7a..41fd460 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1250,6 +1250,17 @@ filter.<driver>.smudge::
+ 	object to a worktree file upon checkout.  See
+ 	linkgit:gitattributes[5] for details.
+=20
++fsck.<msg-id>::
++	Allows overriding the message type (error, warn or ignore) of a
++	specific message ID such as `missingemail`.
+++
++For convenience, fsck prefixes the error/warning with the message ID,
++e.g.  "missingemail: invalid author/committer line - missing email" me=
+ans
++that setting `fsck.missingemail =3D ignore` will hide that issue.
+++
++This feature is intended to support working with legacy repositories
++which cannot be repaired without disruptive changes.
++
+ gc.aggressiveDepth::
+ 	The depth parameter used in the delta compression
+ 	algorithm used by 'git gc --aggressive'.  This defaults
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index fff38fe..6de9f3e 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -46,6 +46,16 @@ static int show_dangling =3D 1;
+ #define DIRENT_SORT_HINT(de) ((de)->d_ino)
+ #endif
+=20
++static int fsck_config(const char *var, const char *value, void *cb)
++{
++	if (skip_prefix(var, "fsck.", &var)) {
++		fsck_set_msg_type(&fsck_obj_options, var, -1, value, -1);
++		return 0;
++	}
++
++	return git_default_config(var, value, cb);
++}
++
+ static void objreport(struct object *obj, const char *msg_type,
+ 			const char *err)
+ {
+@@ -646,6 +656,8 @@ int cmd_fsck(int argc, const char **argv, const cha=
+r *prefix)
+ 		include_reflogs =3D 0;
  	}
- 	strbuf_addf(&sb, "refs/tags/%.*s", (int)(eol - buffer), buffer);
--	if (check_refname_format(sb.buf, 0))
--		report(options, &tag->object, FSCK_MSG_INVALID_TAG_NAME,
-+	if (check_refname_format(sb.buf, 0)) {
-+		ret = report(options, &tag->object, FSCK_MSG_INVALID_TAG_NAME,
- 			   "invalid 'tag' name: %.*s",
- 			   (int)(eol - buffer), buffer);
-+		if (ret)
-+			goto done;
-+	}
- 	buffer = eol + 1;
- 
--	if (!skip_prefix(buffer, "tagger ", &buffer))
-+	if (!skip_prefix(buffer, "tagger ", &buffer)) {
- 		/* early tags do not contain 'tagger' lines; warn only */
--		report(options, &tag->object, FSCK_MSG_MISSING_TAGGER_ENTRY, "invalid format - expected 'tagger' line");
-+		ret = report(options, &tag->object, FSCK_MSG_MISSING_TAGGER_ENTRY, "invalid format - expected 'tagger' line");
-+		if (ret)
-+			goto done;
-+	}
- 	else
- 		ret = fsck_ident(&buffer, &tag->object, options);
- 
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index 61bc8da..3dc5ec4 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -259,7 +259,7 @@ EOF
-     thirtyeight=${tag#??} &&
-     rm -f .git/objects/${tag%$thirtyeight}/$thirtyeight &&
-     git index-pack --strict tag-test-${pack1}.pack 2>err &&
--    grep "^error:.* expected .tagger. line" err
-+    grep "^warning:.* expected .tagger. line" err
+=20
++	git_config(fsck_config, NULL);
++
+ 	fsck_head_link();
+ 	fsck_object_dir(get_object_directory());
+=20
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 286a643..fe4bb03 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -287,6 +287,17 @@ test_expect_success 'rev-list --verify-objects wit=
+h bad sha1' '
+ 	grep -q "error: sha1 mismatch 63fffffffffffffffffffffffffffffffffffff=
+f" out
  '
- 
- test_done
--- 
+=20
++test_expect_success 'force fsck to ignore double author' '
++	git cat-file commit HEAD >basis &&
++	sed "s/^author .*/&,&/" <basis | tr , \\n >multiple-authors &&
++	new=3D$(git hash-object -t commit -w --stdin <multiple-authors) &&
++	test_when_finished "remove_object $new" &&
++	git update-ref refs/heads/bogus "$new" &&
++	test_when_finished "git update-ref -d refs/heads/bogus" &&
++	test_must_fail git fsck &&
++	git -c fsck.multipleauthors=3Dignore fsck
++'
++
+ _bz=3D'\0'
+ _bz5=3D"$_bz$_bz$_bz$_bz$_bz"
+ _bz20=3D"$_bz5$_bz5$_bz5$_bz5"
+--=20
 2.3.1.windows.1.9.g8c01ab4
