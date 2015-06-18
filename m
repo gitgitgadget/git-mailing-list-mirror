@@ -1,258 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight
- unevenly-sized hunks
-Date: Thu, 18 Jun 2015 17:23:56 -0400
-Message-ID: <20150618212356.GA20271@peff.net>
-References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx>
- <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
- <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
- <xmqq1th8ga9b.fsf@gitster.dls.corp.google.com>
- <20150618190417.GA12769@peff.net>
- <alpine.DEB.2.20.8.1506181536070.4322@idea>
- <20150618204505.GD14550@peff.net>
+From: =?ISO-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>
+Subject: Re: co-authoring commits
+Date: Thu, 18 Jun 2015 23:25:44 +0200
+Message-ID: <55833758.6010000@gmail.com>
+References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>	<xmqq4mm66r99.fsf@gitster.dls.corp.google.com>	<CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>	<20150617205931.GB24079@cloud>	<xmqqegla57hl.fsf@gitster.dls.corp.google.com>	<20150617222828.GB24438@cloud> <xmqq381q551o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Patrick Palka <patrick@parcs.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Jun 18 23:24:26 2015
+Content-Type: text/plain; charset=iso-8859-2;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>, josh@joshtriplett.org
+X-From: git-owner@vger.kernel.org Thu Jun 18 23:26:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5hID-0003ut-A8
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:24:13 +0200
+	id 1Z5hK5-0005ZJ-6j
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbbFRVYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 17:24:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48492 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752012AbbFRVYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 17:24:00 -0400
-Received: (qmail 27966 invoked by uid 102); 18 Jun 2015 21:23:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 16:23:59 -0500
-Received: (qmail 8952 invoked by uid 107); 18 Jun 2015 21:23:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 17:23:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Jun 2015 17:23:56 -0400
-Content-Disposition: inline
-In-Reply-To: <20150618204505.GD14550@peff.net>
+	id S1751526AbbFRV0F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2015 17:26:05 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:38816 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997AbbFRV0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 17:26:02 -0400
+Received: by wibdq8 with SMTP id dq8so1202809wib.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 14:26:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=/bKV7H2UuBHOMEhi9NaO4CsQLoYDfBGjKqB1O6yUBMQ=;
+        b=UqDEmaxuLYbFqrzs3zRAyrV9nTZi37nka0ynbgRgQ/fytbCcuhYfc/hNREPH5Twz3A
+         38WyYOgdq5zFwrb8fNsYqLDYNUjKaxN+5KHZRf2Mpxx0LXlPZhFySoNsrMWll23t61la
+         aiu7c+IfN2SbMUFINSyFU+yAoHvM+DcKyxoktryNnbGyJNJYhGdbeSihFKuslw8RRwXV
+         fGbWX6ZNFNTLmPgN/LwZJmDgMNxbYAX6Zt8EZJKgUwSyrsibR0iY9hrn5B15Zj/RyywP
+         +NUww8OUww4FIOfl7T2pARmt1mvw63Y/72kAMWqL5OLIpza2oF0i2lNryf87cD249xtT
+         Dyjg==
+X-Received: by 10.180.109.6 with SMTP id ho6mr176611wib.58.1434662760917;
+        Thu, 18 Jun 2015 14:26:00 -0700 (PDT)
+Received: from [192.168.1.53] (ewv187.neoplus.adsl.tpnet.pl. [83.20.245.187])
+        by mx.google.com with ESMTPSA id gz3sm5827681wib.0.2015.06.18.14.25.59
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jun 2015 14:25:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <xmqq381q551o.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272078>
 
-On Thu, Jun 18, 2015 at 04:45:05PM -0400, Jeff King wrote:
+Junio C Hamano wrote:
+> josh@joshtriplett.org writes:
+>
+>> Author and committer are used by many git tools; if they weren't par=
+t of
+>> the object header, they'd need to be part of some pseudo-header with=
+ a
+>> standardized format that git can parse.
+>
+> Yes, the same goes to the address on Signed-off-by: footers.  There
+> recently was a series to enhance the footer list handling (Christian
+> Cc'ed) for the generation and maintenance side, and I do think it is
+> reasonable to further add enhanced support for footers.
+>
+> That does not argue for having a new "coauthor" as a new commit
+> object header at all, though.
 
-> Still, I think this is probably a minority case, and it may be
-> outweighed by the improvements. The "real" solution is to consider the
-> hunk as a whole and do an LCS diff on it, which would show that yes,
-> it's worth highlighting both of those spots, as they are a small
-> percentage of the total hunk.
+The threshold for modifying commit object is high. This is an
+ABI-level change, something to do if there is no other solution.
 
-I've been meaning to play with this for years, so I took the opportunity
-to spend a little time on it. :)
+Author and committer include datetime in the contents of the
+field, which is used by Git for heuristics limiting walk. Coauthor
+would have the same date as author, isn't it? If, after long
+and involved discussion, we didn't add 'generation' field (for
+easier cutting history walking), what chance adding 'coauthor'
+has.
 
-Below is a (slightly hacky) patch I came up with. It seems to work, and
-produces really great output in some cases. For instance, in 99a2cfb, it
-produces (I put highlighted bits in angle brackets):
+OTOH it would be nice to have support for .mailmap, and for
+grepping... but the former could conceivably be added to the trailer
+tool, the latter can be done with appropriate regexp in
+"git log --grep=3D...".
 
-  -               <hash>cpy(peeled, <sha1>);
-  +               <oid>cpy(<&>peeled, <oid>);
+I wonder what would break if one used 'Name <e@mai.l>, Name <em@i.l>'
+as the author...
 
-It also produces nonsense like:
-
-  -       <un>s<ign>ed <char >peeled<[20]>;
-  +       s<truct obj>e<ct_i>d peeled;
-
-but I think that is simply because my splitting function is terrible (it
-splits each byte, whereas we'd probably want to use whitespace and
-punctuation, or something content-specific).
-
----
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
-index ffefc31..7165518 100755
---- a/contrib/diff-highlight/diff-highlight
-+++ b/contrib/diff-highlight/diff-highlight
-@@ -3,6 +3,7 @@
- use 5.008;
- use warnings FATAL => 'all';
- use strict;
-+use Algorithm::Diff;
- 
- # Highlight by reversing foreground and background. You could do
- # other things like bold or underline if you prefer.
-@@ -88,131 +89,54 @@ sub show_hunk {
- 		return;
- 	}
- 
--	# If we have mismatched numbers of lines on each side, we could try to
--	# be clever and match up similar lines. But for now we are simple and
--	# stupid, and only handle multi-line hunks that remove and add the same
--	# number of lines.
--	if (@$a != @$b) {
--		print @$a, @$b;
--		return;
--	}
--
--	my @queue;
--	for (my $i = 0; $i < @$a; $i++) {
--		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
--		print $rm;
--		push @queue, $add;
--	}
--	print @queue;
--}
--
--sub highlight_pair {
--	my @a = split_line(shift);
--	my @b = split_line(shift);
-+	my ($prefix_a, $suffix_a, @hunk_a) = split_hunk(@$a);
-+	my ($prefix_b, $suffix_b, @hunk_b) = split_hunk(@$b);
- 
--	# Find common prefix, taking care to skip any ansi
--	# color codes.
--	my $seen_plusminus;
--	my ($pa, $pb) = (0, 0);
--	while ($pa < @a && $pb < @b) {
--		if ($a[$pa] =~ /$COLOR/) {
--			$pa++;
--		}
--		elsif ($b[$pb] =~ /$COLOR/) {
--			$pb++;
--		}
--		elsif ($a[$pa] eq $b[$pb]) {
--			$pa++;
--			$pb++;
--		}
--		elsif (!$seen_plusminus && $a[$pa] eq '-' && $b[$pb] eq '+') {
--			$seen_plusminus = 1;
--			$pa++;
--			$pb++;
--		}
--		else {
--			last;
--		}
--	}
-+	my $diff = Algorithm::Diff->new(\@hunk_a, \@hunk_b);
-+	my (@out_a, @out_b);
-+	while ($diff->Next()) {
-+		my $bits = $diff->Diff();
- 
--	# Find common suffix, ignoring colors.
--	my ($sa, $sb) = ($#a, $#b);
--	while ($sa >= $pa && $sb >= $pb) {
--		if ($a[$sa] =~ /$COLOR/) {
--			$sa--;
--		}
--		elsif ($b[$sb] =~ /$COLOR/) {
--			$sb--;
--		}
--		elsif ($a[$sa] eq $b[$sb]) {
--			$sa--;
--			$sb--;
--		}
--		else {
--			last;
--		}
--	}
-+		push @out_a, $OLD_HIGHLIGHT[1] if $bits & 1;
-+		push @out_a, $diff->Items(1);
-+		push @out_a, $OLD_HIGHLIGHT[2] if $bits & 1;
- 
--	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
--		return highlight_line(\@a, $pa, $sa, \@OLD_HIGHLIGHT),
--		       highlight_line(\@b, $pb, $sb, \@NEW_HIGHLIGHT);
--	}
--	else {
--		return join('', @a),
--		       join('', @b);
-+		push @out_b, $NEW_HIGHLIGHT[1] if $bits & 2;
-+		push @out_b, $diff->Items(2);
-+		push @out_b, $NEW_HIGHLIGHT[2] if $bits & 2;
- 	}
--}
- 
--sub split_line {
--	local $_ = shift;
--	return utf8::decode($_) ?
--		map { utf8::encode($_); $_ }
--			map { /$COLOR/ ? $_ : (split //) }
--			split /($COLOR+)/ :
--		map { /$COLOR/ ? $_ : (split //) }
--		split /($COLOR+)/;
-+	output_split_hunk($prefix_a, $suffix_a, @out_a);
-+	output_split_hunk($prefix_b, $suffix_b, @out_b);
- }
- 
--sub highlight_line {
--	my ($line, $prefix, $suffix, $theme) = @_;
--
--	my $start = join('', @{$line}[0..($prefix-1)]);
--	my $mid = join('', @{$line}[$prefix..$suffix]);
--	my $end = join('', @{$line}[($suffix+1)..$#$line]);
--
--	# If we have a "normal" color specified, then take over the whole line.
--	# Otherwise, we try to just manipulate the highlighted bits.
--	if (defined $theme->[0]) {
--		s/$COLOR//g for ($start, $mid, $end);
--		chomp $end;
--		return join('',
--			$theme->[0], $start, $RESET,
--			$theme->[1], $mid, $RESET,
--			$theme->[0], $end, $RESET,
--			"\n"
--		);
--	} else {
--		return join('',
--			$start,
--			$theme->[1], $mid, $theme->[2],
--			$end
--		);
-+# Return the individual diff-able items of the hunk, but with any
-+# diff or color prefix/suffix for each line split out (we assume that the
-+# prefix/suffix for each line will be the same).
-+sub split_hunk {
-+	my ($prefix, $suffix, @r);
-+	foreach my $line (@_) {
-+		$line =~ /^($COLOR*[+-]$COLOR*)(.*)($COLOR*)/
-+			or die "eh, this is supposed to match everything!";
-+
-+		# overwrite the old values; we assume they're all the same
-+		# anyway
-+		$prefix = $1;
-+		$suffix = $3;
-+
-+		# do a straight character split. This almost certainly isn't
-+		# ideal, but it's a good starting point. We should at the very
-+		# least be utf8-aware, and probably use color-words regexes.
-+		push @r, split(//, $2), "\n";
- 	}
-+	return ($prefix, $suffix, @r);
- }
- 
--# Pairs are interesting to highlight only if we are going to end up
--# highlighting a subset (i.e., not the whole line). Otherwise, the highlighting
--# is just useless noise. We can detect this by finding either a matching prefix
--# or suffix (disregarding boring bits like whitespace and colorization).
--sub is_pair_interesting {
--	my ($a, $pa, $sa, $b, $pb, $sb) = @_;
--	my $prefix_a = join('', @$a[0..($pa-1)]);
--	my $prefix_b = join('', @$b[0..($pb-1)]);
--	my $suffix_a = join('', @$a[($sa+1)..$#$a]);
--	my $suffix_b = join('', @$b[($sb+1)..$#$b]);
--
--	return $prefix_a !~ /^$COLOR*-$BORING*$/ ||
--	       $prefix_b !~ /^$COLOR*\+$BORING*$/ ||
--	       $suffix_a !~ /^$BORING*$/ ||
--	       $suffix_b !~ /^$BORING*$/;
-+sub output_split_hunk {
-+	my $prefix = shift;
-+	my $suffix = shift;
-+	my $str = join('', @_);
-+	$str =~ s/^/$prefix/mg;
-+	$str =~ s/$/$suffix/mg;
-+	print $str;
- }
+--=20
+Jakub Nar=EAbski
