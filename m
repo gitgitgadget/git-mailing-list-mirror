@@ -1,153 +1,147 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v4 05/19] pull: implement fetch + merge
-Date: Thu, 18 Jun 2015 18:53:58 +0800
-Message-ID: <1434624852-6869-6-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v4 04/19] pull: implement skeletal builtin pull
+Date: Thu, 18 Jun 2015 18:53:57 +0800
+Message-ID: <1434624852-6869-5-git-send-email-pyokagan@gmail.com>
 References: <1434624852-6869-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stephen Robin <stephen.robin@gmail.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 12:55:24 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 12:55:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5XTU-0001Zx-LW
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 12:55:13 +0200
+	id 1Z5XTy-000210-11
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 12:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329AbbFRKzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 06:55:07 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:34427 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754139AbbFRKy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 06:54:56 -0400
-Received: by pdbki1 with SMTP id ki1so64214770pdb.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 03:54:55 -0700 (PDT)
+	id S1754508AbbFRKzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 06:55:18 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:36265 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753996AbbFRKyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 06:54:52 -0400
+Received: by pdjm12 with SMTP id m12so64123428pdj.3
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 03:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cuwi4vzzv1WYucndzN7ZRmYbPE4fg1XFr/W8q/xRCiY=;
-        b=wJT0pdEZSWBQJTlunLa5MLgd4CrQ9sJCJU/r1lV/4J1jckkK6Jonk9PjmiL96KBoGO
-         FM0VXjqYSi+//Y3N4buYPkP3GS9ASlKcLcQ+antYy6E2kQxtBBRvyp2KJN8AWlv50ZB5
-         XtO0fSdxr2Q7WpDE1E5h836Bb7THzLw79YHKIkVjaXgczBvSJocGSXeeODTwFk/eAm1a
-         ATaWZ9VpuorT/BDYwXQpzP9Wj9wt8R0OeiN1sV6Ekxj9JVdfWFlHiAkXyEk2gP+65O41
-         TrMEdxptsFGSzI3lclPqZVu1XhebJDhccYMxN1887rDh80RmA5uoz+KdSdzIYL/XNlNH
-         abOA==
-X-Received: by 10.70.43.10 with SMTP id s10mr20165711pdl.57.1434624895458;
-        Thu, 18 Jun 2015 03:54:55 -0700 (PDT)
+        bh=spdnPKZEBaCbC/HEgven1use7GYvmmOu9BAOORWOJP0=;
+        b=IaFomro5fsPfxh9HL0fS+KdAFxlLe+8KiUNbsM4tmHexxN793afx1AdAFuIVhVh6Q6
+         GAFHG3DgTk20maZDJFbamAJw0btOP9pxkRGJ8byuI/GX3NVwlZc1PmumBhWJSraZCsjY
+         OaYuWi0SEYhfO4jguxeOCH52yvgGdxIcNxw6v2HXei3eAmp6E8ouY7kjWmdK+zlnE7qx
+         fReks/wR9lbreVc5TRjCZWBPCJaM/jQIx1FCtJu8axMaFjk30plQmfRKdOOtSYH7C5b3
+         DhfLmHG48+WEuBpfks920Fie9tAy3W8UN+u46tEzKePSOWedVxBZ+3HAlrkg9imEdqBu
+         vjRw==
+X-Received: by 10.69.17.130 with SMTP id ge2mr19838622pbd.75.1434624892283;
+        Thu, 18 Jun 2015 03:54:52 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id eu5sm7735063pac.37.2015.06.18.03.54.52
+        by mx.google.com with ESMTPSA id eu5sm7735063pac.37.2015.06.18.03.54.49
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Jun 2015 03:54:54 -0700 (PDT)
+        Thu, 18 Jun 2015 03:54:51 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1434624852-6869-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271948>
 
-Implement the fetch + merge functionality of git-pull, by first running
-git-fetch with the repo and refspecs provided on the command line, then
-running git-merge on FETCH_HEAD to merge the fetched refs into the
-current branch.
+For the purpose of rewriting git-pull.sh into a C builtin, implement a
+skeletal builtin/pull.c that redirects to $GIT_EXEC_PATH/git-pull.sh if
+the environment variable _GIT_USE_BUILTIN_PULL is not defined. This
+allows us to fall back on the functional git-pull.sh when running the
+test suite for tests that depend on a working git-pull implementation.
+
+This redirection should be removed when all the features of git-pull.sh
+have been re-implemented in builtin/pull.c.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/pull.c | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 61 insertions(+), 1 deletion(-)
+ Makefile       |  1 +
+ builtin.h      |  1 +
+ builtin/pull.c | 33 +++++++++++++++++++++++++++++++++
+ git.c          |  1 +
+ 4 files changed, 36 insertions(+)
+ create mode 100644 builtin/pull.c
 
+diff --git a/Makefile b/Makefile
+index 149f1c7..17e1136 100644
+--- a/Makefile
++++ b/Makefile
+@@ -877,6 +877,7 @@ BUILTIN_OBJS += builtin/pack-refs.o
+ BUILTIN_OBJS += builtin/patch-id.o
+ BUILTIN_OBJS += builtin/prune-packed.o
+ BUILTIN_OBJS += builtin/prune.o
++BUILTIN_OBJS += builtin/pull.o
+ BUILTIN_OBJS += builtin/push.o
+ BUILTIN_OBJS += builtin/read-tree.o
+ BUILTIN_OBJS += builtin/receive-pack.o
+diff --git a/builtin.h b/builtin.h
+index b87df70..ea3c834 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -98,6 +98,7 @@ extern int cmd_pack_redundant(int argc, const char **argv, const char *prefix);
+ extern int cmd_patch_id(int argc, const char **argv, const char *prefix);
+ extern int cmd_prune(int argc, const char **argv, const char *prefix);
+ extern int cmd_prune_packed(int argc, const char **argv, const char *prefix);
++extern int cmd_pull(int argc, const char **argv, const char *prefix);
+ extern int cmd_push(int argc, const char **argv, const char *prefix);
+ extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_receive_pack(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/pull.c b/builtin/pull.c
-index cabeed4..9157536 100644
---- a/builtin/pull.c
+new file mode 100644
+index 0000000..cabeed4
+--- /dev/null
 +++ b/builtin/pull.c
-@@ -9,8 +9,10 @@
- #include "builtin.h"
- #include "parse-options.h"
- #include "exec_cmd.h"
-+#include "run-command.h"
- 
- static const char * const pull_usage[] = {
-+	N_("git pull [options] [<repository> [<refspec>...]]"),
- 	NULL
- };
- 
-@@ -18,8 +20,61 @@ static struct option pull_options[] = {
- 	OPT_END()
- };
- 
-+/**
-+ * Parses argv into [<repo> [<refspecs>...]], returning their values in `repo`
-+ * as a string and `refspecs` as a null-terminated array of strings. If `repo`
-+ * is not provided in argv, it is set to NULL.
+@@ -0,0 +1,33 @@
++/*
++ * Builtin "git pull"
++ *
++ * Based on git-pull.sh by Junio C Hamano
++ *
++ * Fetch one or more remote refs and merge it/them into the current HEAD.
 + */
-+static void parse_repo_refspecs(int argc, const char **argv, const char **repo,
-+		const char ***refspecs)
++#include "cache.h"
++#include "builtin.h"
++#include "parse-options.h"
++#include "exec_cmd.h"
++
++static const char * const pull_usage[] = {
++	NULL
++};
++
++static struct option pull_options[] = {
++	OPT_END()
++};
++
++int cmd_pull(int argc, const char **argv, const char *prefix)
 +{
-+	if (argc > 0) {
-+		*repo = *argv++;
-+		argc--;
-+	} else
-+		*repo = NULL;
-+	*refspecs = argv;
++	if (!getenv("_GIT_USE_BUILTIN_PULL")) {
++		const char *path = mkpath("%s/git-pull", git_exec_path());
++
++		if (sane_execvp(path, (char **)argv) < 0)
++			die_errno("could not exec %s", path);
++	}
++
++	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
++
++	return 0;
 +}
-+
-+/**
-+ * Runs git-fetch, returning its exit status. `repo` and `refspecs` are the
-+ * repository and refspecs to fetch, or NULL if they are not provided.
-+ */
-+static int run_fetch(const char *repo, const char **refspecs)
-+{
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	int ret;
-+
-+	argv_array_pushl(&args, "fetch", "--update-head-ok", NULL);
-+	if (repo) {
-+		argv_array_push(&args, repo);
-+		argv_array_pushv(&args, refspecs);
-+	} else if (*refspecs)
-+		die("BUG: refspecs without repo?");
-+	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+	argv_array_clear(&args);
-+	return ret;
-+}
-+
-+/**
-+ * Runs git-merge, returning its exit status.
-+ */
-+static int run_merge(void)
-+{
-+	int ret;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+
-+	argv_array_pushl(&args, "merge", NULL);
-+	argv_array_push(&args, "FETCH_HEAD");
-+	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+	argv_array_clear(&args);
-+	return ret;
-+}
-+
- int cmd_pull(int argc, const char **argv, const char *prefix)
- {
-+	const char *repo, **refspecs;
-+
- 	if (!getenv("_GIT_USE_BUILTIN_PULL")) {
- 		const char *path = mkpath("%s/git-pull", git_exec_path());
- 
-@@ -29,5 +84,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
- 
--	return 0;
-+	parse_repo_refspecs(argc, argv, &repo, &refspecs);
-+
-+	if (run_fetch(repo, refspecs))
-+		return 1;
-+
-+	return run_merge();
- }
+diff --git a/git.c b/git.c
+index 44374b1..e7a7713 100644
+--- a/git.c
++++ b/git.c
+@@ -445,6 +445,7 @@ static struct cmd_struct commands[] = {
+ 	{ "pickaxe", cmd_blame, RUN_SETUP },
+ 	{ "prune", cmd_prune, RUN_SETUP },
+ 	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
++	{ "pull", cmd_pull, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "push", cmd_push, RUN_SETUP },
+ 	{ "read-tree", cmd_read_tree, RUN_SETUP },
+ 	{ "receive-pack", cmd_receive_pack },
 -- 
 2.1.4
