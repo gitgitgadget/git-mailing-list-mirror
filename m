@@ -1,90 +1,126 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH/RFC v4 07/10] send-email: reduce dependancies impact on
- parse_address_line
-Date: Thu, 18 Jun 2015 23:29:13 +0200 (CEST)
-Message-ID: <114284546.628903.1434662953414.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <2114933489.627454.1434658853079.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/WIP v3 10/31] am: refresh the index at start
+Date: Thu, 18 Jun 2015 14:28:04 -0700
+Message-ID: <xmqqlhfgd7vf.fsf@gitster.dls.corp.google.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-11-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 18 23:27:52 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 23:28:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5hLg-0006yJ-Hm
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:27:48 +0200
+	id 1Z5hM3-0007MD-MG
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:28:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbbFRV1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 17:27:45 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:44081 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751645AbbFRV1o (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2015 17:27:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9F3D03740;
-	Thu, 18 Jun 2015 23:27:41 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WL2rqtXEg5DC; Thu, 18 Jun 2015 23:27:41 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 81EB4373F;
-	Thu, 18 Jun 2015 23:27:41 +0200 (CEST)
-In-Reply-To: <vpqvbelylfk.fsf@anie.imag.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: send-email: reduce dependancies impact on parse_address_line
-Thread-Index: DTqF3tjVQS9Gv8qvdL7Vh0MDxUomnA==
+	id S1752776AbbFRV2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 17:28:08 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:35328 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751749AbbFRV2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 17:28:06 -0400
+Received: by iefd2 with SMTP id d2so6953963ief.2
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 14:28:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=mzSeZLlCW8BvO6OjzNmUCdg/0tWyAq1XpOHVq4mRQnY=;
+        b=n2jasGS5rtk11kikFUb51B0aFWGQ7/43W5Jt2x+nnZdodgXUzFKMaTGBgK6SJ4etrM
+         d+o90MkEVGsgtOC74MCtKdb5BHqO4UU7cBRbglMvY4xEO59mR3ZjcdY9UuHg+pb+SBYc
+         mt4bdTWyq8jjW700V0FZp0hIvzcmQYWHu6FHLb3zPTNOJzDuSJOC9jUjlfh9d8ELe+pb
+         PGqSRNX4kamEurYNYhsRrKfIMLrCM0Mtd2+2AuabKTauqpUvljKJPHU/wMsKfpTQC6R+
+         jC38DhSQiSzN+dmHywJHE9IqBnkfHuok8SqULV0Jpb6aLM0Dy15xbZc+POt/cKFx69vX
+         HqLg==
+X-Received: by 10.43.96.5 with SMTP id ce5mr8076194icc.96.1434662886034;
+        Thu, 18 Jun 2015 14:28:06 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id fm3sm2561751igb.1.2015.06.18.14.28.05
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 14:28:05 -0700 (PDT)
+In-Reply-To: <1434626743-8552-11-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Thu, 18 Jun 2015 19:25:22 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272081>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Paul Tan <pyokagan@gmail.com> writes:
 
-> Cool. Then almost all the work is done to get an automated test. Next
-> step would be to add the tests itself in the code. I would do that by
-> adding a hidden --selfcheck option to git send-email that would compare
-> Mail::Address->parse($string); and split_addrs($string); for all your
-> testcases, and die if they do not match. Then calling it from the
-> testsuite would be trivial.
+> If a file is unchanged but stat-dirty, git-apply may erroneously fail to
+> apply patches, thinking that they conflict with a dirty working tree.
+>
+> As such, since 2a6f08a (am: refresh the index at start and --resolved,
+> 2011-08-15), git-am will refresh the index before applying patches.
+> Re-implement this behavior.
 
-Ok, are there such "--selfcheck" options elsewhere? If I understand it
-right, you want to put the tests inside the git-send-email script. I
-don't feel really good about that but I guess it's hard to test it
-otherwise...  Also what will we do with the failing tests?  Just
-discard them?  I think there's two sort of failing test:
+Good.
 
- - When output provided by parse_address_ without Mail::Address
-   is better or has no impact at all on the code. Such as:
+I would actually have expected to see this as part of 08/31, though.
 
-    Input: "Doe, Ja"ne <jdoe@example.com>
-    Split: "Doe, Ja ne" <jdoe@example.com>
-    M::A : "Doe, Ja" ne <jdoe@example.com>
-
-   This output is done on purpose. If it was the same output with
-   Mail::Address, we could have avoided commit 8/9 of this serie btw.
-
-   I think we should also test these cases.
-
- - When we don't really care about the output, because the user entry
-   is wrong, and we just expect the script to be aborted somehow... We
-   don't need to test that.
-
-We could also add an option to specify whether we want to use
-Mail::Address or not and do the tests in t9001* (but this would
-take much more time).
-
-> I can do that on top of your series if you don't have time.
-
-Time will become a problem soon, but I think I can handle it unless
-you really want to do it !
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>  builtin/am.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/builtin/am.c b/builtin/am.c
+> index dfb6f7e..a7efe85 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -13,6 +13,7 @@
+>  #include "cache-tree.h"
+>  #include "refs.h"
+>  #include "commit.h"
+> +#include "lockfile.h"
+>  
+>  /**
+>   * Returns 1 if the file is empty or does not exist, 0 otherwise.
+> @@ -471,6 +472,20 @@ static const char *msgnum(const struct am_state *state)
+>  }
+>  
+>  /**
+> + * Refresh and write index.
+> + */
+> +static void refresh_and_write_cache(void)
+> +{
+> +	static struct lock_file lock_file;
+> +
+> +	hold_locked_index(&lock_file, 1);
+> +	refresh_cache(REFRESH_QUIET);
+> +	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+> +		die(_("unable to write index file"));
+> +	rollback_lock_file(&lock_file);
+> +}
+> +
+> +/**
+>   * Parses `patch` using git-mailinfo. state->msg will be set to the patch
+>   * message. state->author_name, state->author_email, state->author_date will be
+>   * set to the patch author's name, email and date respectively. The patch's
+> @@ -607,6 +622,8 @@ static void do_commit(const struct am_state *state)
+>   */
+>  static void am_run(struct am_state *state)
+>  {
+> +	refresh_and_write_cache();
+> +
+>  	while (state->cur <= state->last) {
+>  		const char *patch = am_path(state, msgnum(state));
+>  
+> @@ -696,6 +713,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>  
+>  	argc = parse_options(argc, argv, prefix, am_options, am_usage, 0);
+>  
+> +	if (read_index_preload(&the_index, NULL) < 0)
+> +		die(_("failed to read the index"));
+> +
+>  	if (am_in_progress(&state))
+>  		am_load(&state);
+>  	else {
