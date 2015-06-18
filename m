@@ -1,151 +1,138 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP v3 19/31] cache-tree: introduce write_index_as_tree()
-Date: Thu, 18 Jun 2015 19:25:31 +0800
-Message-ID: <1434626743-8552-20-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/WIP v3 11/31] am: refuse to apply patches if index is dirty
+Date: Thu, 18 Jun 2015 19:25:23 +0800
+Message-ID: <1434626743-8552-12-git-send-email-pyokagan@gmail.com>
 References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 13:27:31 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 13:27:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Xyc-0005J4-5L
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:27:22 +0200
+	id 1Z5XyP-00055J-H0
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932261AbbFRL1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 07:27:16 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:36653 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932196AbbFRL1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 07:27:02 -0400
-Received: by paceq1 with SMTP id eq1so35058790pac.3
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 04:27:01 -0700 (PDT)
+	id S932171AbbFRL06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 07:26:58 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:35266 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754639AbbFRL0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 07:26:43 -0400
+Received: by pdbci14 with SMTP id ci14so6231050pdb.2
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 04:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=N8N8V3TnjUSoL04HrMqAaVXTtuHZg2c3Y+u8c3NM/xc=;
-        b=wW1Qyx1GI8YjAJdRlyCB6+Ymo90fYSyK6i5e8jDt9XfVnIYJa26NojWcvbRzcekV78
-         fff0IEWy4MjtAcyoHgNVcwCjOMKXQe+qo+iZ5h6fYwCAssKX0+JG6X9dWR3y70WGgucp
-         lTtgGE+PkAKEsAjsv3oXT1+4u4k1JFMdkUnFSyf88GUbaqrPt0Rv9j+JlR7iglA2EwQm
-         mXhk6Ug4p1noGuJuuFiwUndwY/5Qm1XXtJdNu/UaaNSVsXqWoTeT/2ysFNIW823YrpqT
-         S14XlEImjeGY9ZO1XOEDPNGW2hLqVr6tsD1kIbXU5LiWEEPJrTinZfo2xqJL/TFoaMwr
-         JY/A==
-X-Received: by 10.68.178.68 with SMTP id cw4mr20438151pbc.112.1434626821733;
-        Thu, 18 Jun 2015 04:27:01 -0700 (PDT)
+        bh=2F7J0apdIMwnudbkn1q2biy7IfI3YmvxQvLMEo0Rqfg=;
+        b=HOZtwUFGyu+AmZ8CXyGgAYU7m6C/IqqNJ7PUfcHofg5Gjx43uQ0MnWUKNQh20B0hQN
+         SCg67mH5Q8xj9p8g438Ef0ib3k4HKc4Hi1ezZhXEAzxibHNjtQadUm/R2TnAz0agpbBb
+         Heat5765+7fJH/UHVZbjYiuW3ghUPb3WGHmQA5YrHKhKuGdzFB+wUkLQk25CGvD53We3
+         MX03Q0kCz8HIxVn0jVYphCnFbEzpNrjqmBlcRMYx5D9454LlKVImvRNHBC6rBpchMLVq
+         h462453KAFzMbXnw4Uyt4LG45KJFKeIJECtM7uupJQwNgt4XBzQtF6Ik4Udj6JIp6qxO
+         /rjQ==
+X-Received: by 10.70.136.67 with SMTP id py3mr20448762pdb.112.1434626802644;
+        Thu, 18 Jun 2015 04:26:42 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id j9sm5443016pdl.65.2015.06.18.04.26.59
+        by mx.google.com with ESMTPSA id j9sm5443016pdl.65.2015.06.18.04.26.39
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Jun 2015 04:27:00 -0700 (PDT)
+        Thu, 18 Jun 2015 04:26:41 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271983>
 
-A caller may wish to write a temporary index as a tree. However,
-write_cache_as_tree() assumes that the index was read from, and will
-write to, the default index file path. Introduce write_index_as_tree()
-which removes this limitation by allowing the caller to specify its own
-index_state and index file path.
+Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
+will refuse to apply patches if the index is dirty. Re-implement this
+behavior.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- cache-tree.c | 29 +++++++++++++++++------------
- cache-tree.h |  1 +
- 2 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 32772b9..feace8b 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -592,7 +592,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 	return it;
+Notes:
+    Note: no tests for this
+
+ builtin/am.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
+
+diff --git a/builtin/am.c b/builtin/am.c
+index a7efe85..9d6ab2a 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -14,6 +14,8 @@
+ #include "refs.h"
+ #include "commit.h"
+ #include "lockfile.h"
++#include "diff.h"
++#include "diffcore.h"
+ 
+ /**
+  * Returns 1 if the file is empty or does not exist, 0 otherwise.
+@@ -486,6 +488,43 @@ static void refresh_and_write_cache(void)
  }
  
--int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
-+int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
- {
- 	int entries, was_valid, newfd;
- 	struct lock_file *lock_file;
-@@ -603,23 +603,23 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
- 	 */
- 	lock_file = xcalloc(1, sizeof(struct lock_file));
- 
--	newfd = hold_locked_index(lock_file, 1);
-+	newfd = hold_lock_file_for_update(lock_file, index_path, LOCK_DIE_ON_ERROR);
- 
--	entries = read_cache();
-+	entries = read_index_from(index_state, index_path);
- 	if (entries < 0)
- 		return WRITE_TREE_UNREADABLE_INDEX;
- 	if (flags & WRITE_TREE_IGNORE_CACHE_TREE)
--		cache_tree_free(&(active_cache_tree));
-+		cache_tree_free(&index_state->cache_tree);
- 
--	if (!active_cache_tree)
--		active_cache_tree = cache_tree();
-+	if (!index_state->cache_tree)
-+		index_state->cache_tree = cache_tree();
- 
--	was_valid = cache_tree_fully_valid(active_cache_tree);
-+	was_valid = cache_tree_fully_valid(index_state->cache_tree);
- 	if (!was_valid) {
--		if (cache_tree_update(&the_index, flags) < 0)
-+		if (cache_tree_update(index_state, flags) < 0)
- 			return WRITE_TREE_UNMERGED_INDEX;
- 		if (0 <= newfd) {
--			if (!write_locked_index(&the_index, lock_file, COMMIT_LOCK))
-+			if (!write_locked_index(index_state, lock_file, COMMIT_LOCK))
- 				newfd = -1;
- 		}
- 		/* Not being able to write is fine -- we are only interested
-@@ -631,14 +631,14 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
- 	}
- 
- 	if (prefix) {
--		struct cache_tree *subtree =
--			cache_tree_find(active_cache_tree, prefix);
-+		struct cache_tree *subtree;
-+		subtree = cache_tree_find(index_state->cache_tree, prefix);
- 		if (!subtree)
- 			return WRITE_TREE_PREFIX_ERROR;
- 		hashcpy(sha1, subtree->sha1);
- 	}
- 	else
--		hashcpy(sha1, active_cache_tree->sha1);
-+		hashcpy(sha1, index_state->cache_tree->sha1);
- 
- 	if (0 <= newfd)
- 		rollback_lock_file(lock_file);
-@@ -646,6 +646,11 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
- 	return 0;
- }
- 
-+int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ /**
++ * Returns 1 if the index differs from HEAD, 0 otherwise. When on an unborn
++ * branch, returns 1 if there are entries in the index, 0 otherwise. If an
++ * strbuf is provided, the space-separated list of files that differ will be
++ * appended to it.
++ */
++static int index_has_changes(struct strbuf *sb)
 +{
-+	return write_index_as_tree(sha1, &the_index, get_index_file(), flags, prefix);
++	unsigned char head[GIT_SHA1_RAWSZ];
++	int i;
++
++	if (!get_sha1_tree("HEAD", head)) {
++		struct diff_options opt;
++
++		diff_setup(&opt);
++		DIFF_OPT_SET(&opt, EXIT_WITH_STATUS);
++		if (!sb)
++			DIFF_OPT_SET(&opt, QUICK);
++		do_diff_cache(head, &opt);
++		diffcore_std(&opt);
++		for (i = 0; sb && i < diff_queued_diff.nr; i++) {
++			if (i)
++				strbuf_addch(sb, ' ');
++			strbuf_addstr(sb, diff_queued_diff.queue[i]->two->path);
++		}
++		diff_flush(&opt);
++		return DIFF_OPT_TST(&opt, HAS_CHANGES) != 0;
++	} else {
++		for (i = 0; sb && i < active_nr; i++) {
++			if (i)
++				strbuf_addch(sb, ' ');
++			strbuf_addstr(sb, active_cache[i]->name);
++		}
++		return !!active_nr;
++	}
 +}
 +
- static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
++/**
+  * Parses `patch` using git-mailinfo. state->msg will be set to the patch
+  * message. state->author_name, state->author_email, state->author_date will be
+  * set to the patch author's name, email and date respectively. The patch's
+@@ -622,8 +661,15 @@ static void do_commit(const struct am_state *state)
+  */
+ static void am_run(struct am_state *state)
  {
- 	struct tree_desc desc;
-diff --git a/cache-tree.h b/cache-tree.h
-index aa7b3e4..41c5746 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -46,6 +46,7 @@ int update_main_cache_tree(int);
- #define WRITE_TREE_UNMERGED_INDEX (-2)
- #define WRITE_TREE_PREFIX_ERROR (-3)
++	struct strbuf sb = STRBUF_INIT;
++
+ 	refresh_and_write_cache();
  
-+int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
- int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix);
- void prime_cache_tree(struct index_state *, struct tree *);
++	if (index_has_changes(&sb))
++		die(_("Dirty index: cannot apply patches (dirty: %s)"), sb.buf);
++
++	strbuf_release(&sb);
++
+ 	while (state->cur <= state->last) {
+ 		const char *patch = am_path(state, msgnum(state));
  
 -- 
 2.1.4
