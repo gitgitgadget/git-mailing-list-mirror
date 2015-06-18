@@ -1,91 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch: introduce format.outputDirectory configuration
-Date: Thu, 18 Jun 2015 10:13:37 -0700
-Message-ID: <xmqq616ley7y.fsf@gitster.dls.corp.google.com>
-References: <1434626280-4610-1-git-send-email-kuleshovmail@gmail.com>
+From: Petr Stodulka <pstodulk@redhat.com>
+Subject: Re: [PATCH] request-pull: short sha handling, manual update
+Date: Thu, 18 Jun 2015 19:20:05 +0200
+Message-ID: <5582FDC5.5040105@redhat.com>
+References: <556DBA37.2010402@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 19:13:49 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 18 19:20:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5dNo-0000a7-O1
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 19:13:45 +0200
+	id 1Z5dU6-0006Y9-9T
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 19:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756287AbbFRRNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 13:13:41 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:35595 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753134AbbFRRNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 13:13:39 -0400
-Received: by igbzc4 with SMTP id zc4so61477igb.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 10:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=wBh0Up81/sMCDWrjCkphIpuCUtoTq+qqPzxzopxoOX0=;
-        b=g0Wy5e1Yh53VQRANKwHFQ8/WSg+jhubH5TbxzPOYdB3XI0jlmFWj84ZbKjJGkWQyQc
-         KakBSm84LeMIMh+eM0/zO2vvgicVlU9lZQNf3NAa5OOoP4nt5+PR9QOS7U6L/KXvUtWY
-         bu9E0E1zrxpLN4mNJWn6JRCi03fQKE+nlvLv/8L4Inja3OoVSnvPfW5WjJYrt6p9ODQg
-         DztzClCIPblFl4jUn5qMz8ow8QeeidHwO7TvLkW0go4aPrrIDPqTHDMXxgyPhVtRG+4H
-         M1mMLNTYpHrtraDY8qS2nSMJT26QjW4IqjsCXHUX4Y1IPNgRRAJxBxgBsRK/G51i32gO
-         v6yQ==
-X-Received: by 10.50.43.131 with SMTP id w3mr14873529igl.8.1434647619044;
-        Thu, 18 Jun 2015 10:13:39 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
-        by mx.google.com with ESMTPSA id b15sm14657318igm.12.2015.06.18.10.13.38
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jun 2015 10:13:38 -0700 (PDT)
-In-Reply-To: <1434626280-4610-1-git-send-email-kuleshovmail@gmail.com>
-	(Alexander Kuleshov's message of "Thu, 18 Jun 2015 17:18:00 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756046AbbFRRUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 13:20:09 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39250 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754080AbbFRRUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 13:20:07 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (Postfix) with ESMTPS id BAC383674BB
+	for <git@vger.kernel.org>; Thu, 18 Jun 2015 17:20:07 +0000 (UTC)
+Received: from [10.34.4.110] (unused-4-110.brq.redhat.com [10.34.4.110])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t5IHK6iC008113
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:20:07 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <556DBA37.2010402@redhat.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272029>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+Hi folks,
+can you someone look at it? Or were these troubles mentioned somewhere 
+earlier and I miss that?
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index fd2036c..8f6f7ed 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1247,6 +1247,10 @@ format.coverLetter::
->  	format-patch is invoked, but in addition can be set to "auto", to
->  	generate a cover-letter only when there's more than one patch.
->  
-> +format.outputDirectory::
-> +	Set a custom directory to store the resulting files instead of the
-> +	current working directory.
+On 2.6.2015 16:14, Petr Stodulka wrote:
+> request-pull prints incorrectly warn messages about not found commits 
+> and man pages don't say
+> anything about todays changed behaviour. People are confused and try 
+> look for errors at wrong places.
+> At least these should be fixed/modified.
+>
+> Warn massage says that commit can't be found ar remote, however there 
+> it is in and is missing on local repository
+> in 'many' cases. So I don't know if better solution is check, where 
+> commit is truly missing or transform warning message.
+> Something like:
+>
+>    warn: No match for commit <commit> found at <url> or local repository.
+>    warn: Are you sure you have synchronized branch with remote 
+> repository?
+>
+> ......
+> man page could be changed like this:
+>
+> -------------------------------------------------------
+> diff --git a/Documentation/git-request-pull.txt 
+> b/Documentation/git-request-pull.txt
+> index 283577b..6d34fc7 100644
+> --- a/Documentation/git-request-pull.txt
+> +++ b/Documentation/git-request-pull.txt
+> @@ -73,6 +73,17 @@ then you can ask that to be pulled with
+>         git request-pull v1.0 https://git.ko.xz/project master:for-linus
+>
+>
+> +NOTES
+> +-----
 > +
-
-After you set this configuration variable, how would you override it
-and get the default behaviour back from the command line for one
-time invocation?  "-o ./"?  That needs to be documented somewhere.
-
-Documentation/format-patch.txt must have description on -o; that
-paragraph needs to mention this new configuration variable, and it
-would be a good place to document the "-o ./" workaround.
-
-> -static const char *set_outdir(const char *prefix, const char *output_directory)
-> +static const char *set_outdir(const char *prefix, const char *output_directory,
-> +			      const char *config_output_directory)
-
-This change looks ugly and unnecessary.  All the machinery after and
-including the point set_outdir() is called, including reopen_stdout(),
-work on output_directory variable and only that variable.
-
-Wouldn't it work equally well to have
-
-	if (!output_directory)
-        	output_directory = config_output_directory;
-
-before a call to set_outdir() is made but after the configuration is
-read (namely, soon after parse_options() returns), without making
-any change to this function?
+> +Since git version 2.0.0 is behaviour of git request-pull little 
+> different.
+> +It is recommended use of third argument for each request-pull, otherwise
+> +you can get error message like:
+> +
+> +   warn: No match for commit <commit> found at <url>
+> +   warn: Are you sure you pushed 'HEAD' there?
+> +
+> +
+>  GIT
+>  ---
+>  Part of the linkgit:git[1] suite
+>
+> -------------------------------------------------------
+>
+> Second patch provides right processing of third parameter when short 
+> version of sha hash is used (e.g. 897a111). Now is
+> supported only full hash, what is different behaviour against first 
+> parameter or what can be found in other functions. Extra
+> solves one of cases of wrong warn message.
+>
+> -------------------------------------------------------
+> diff --git a/git-request-pull.sh b/git-request-pull.sh
+> index d5500fd..2dc735e 100755
+> --- a/git-request-pull.sh
+> +++ b/git-request-pull.sh
+> @@ -92,9 +92,11 @@ find_matching_ref='
+>                 chomp;
+>                 my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
+>                 my ($pattern);
+> +               my ($pattern2);
+>                 next unless ($sha1 eq $headrev);
+>
+>                 $pattern="/$head\$";
+> +               $pattern2="^$head";
+>                 if ($ref eq $head) {
+>                         $found = $ref;
+>                 }
+> @@ -104,6 +106,9 @@ find_matching_ref='
+>                 if ($sha1 eq $head) {
+>                         $found = $sha1;
+>                 }
+> +               elsif ($sha1 =~ /$pattern2/ and (length $head) gt 7) {
+> +                       $found = $sha1
+> +               }
+>         }
+>         if ($found) {
+>                 print "$found\n";
+> -------------------------------------------------------
