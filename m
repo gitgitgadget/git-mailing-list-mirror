@@ -1,148 +1,236 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP v3 00/31] Make git-am a builtin
-Date: Thu, 18 Jun 2015 19:25:12 +0800
-Message-ID: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH/WIP v3 05/31] am: split out mbox/maildir patches with git-mailsplit
+Date: Thu, 18 Jun 2015 19:25:17 +0800
+Message-ID: <1434626743-8552-6-git-send-email-pyokagan@gmail.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 13:26:37 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 13:26:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Xxh-0004Py-5T
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:26:25 +0200
+	id 1Z5Xxw-0004e3-0x
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755453AbbFRL0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 07:26:15 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:33485 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751547AbbFRL0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 07:26:11 -0400
-Received: by pdjn11 with SMTP id n11so64823006pdj.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 04:26:10 -0700 (PDT)
+	id S1755475AbbFRL03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 07:26:29 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35812 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755454AbbFRL0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 07:26:25 -0400
+Received: by pacyx8 with SMTP id yx8so59546782pac.2
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 04:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=rJ1DQrMWpSTPZgBMC84gyKryOXt6FIwFohtI4oR0jO4=;
-        b=XoWNarJjHHTX5KuxdrmAkv4zuPYobnB4+WRUxsxhaCQy7kazf0nIGT1f4DtitQfP18
-         XLYmBXv1JxWENHQWu+6oRa2fnz8rv7k0EC8Wh9OqGK8knsAe/WcGs5qdnm3cQVOC6IaM
-         48FCCT/V0ZtRLQt0Z7wAs8WrRBnvRlkygHrx7NBNnibta5mRZL3ymqmfcrjTJ95JFlt/
-         3EDoAzeZZQ/4s3/9UrrgyndDF7oZ0jx46btGRfyFCOxNjMz2h7e0cveZjxH7D/galeVH
-         gQF/vlvKI4dxmzyD55Js5VHvt1eZvMhpUPiWkMD6NVcVCtBB4IYIwxvPFzlVb7ba6K1g
-         Re5g==
-X-Received: by 10.68.130.98 with SMTP id od2mr20203568pbb.73.1434626770659;
-        Thu, 18 Jun 2015 04:26:10 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=g/0BxOcahn39xgaxzMK+yCGNB2SJYlxcbpDCUBTvIHw=;
+        b=ykK+GEes7IyxT2hlftZvKhN0R8f2b7cjqMde7S2QVkl1l5y+kGO4HzH+b5OfWh7Gd4
+         lr+2owBanzq+kzXIznTVshwX1+oYRc3zty827xk39+NrPvJTvWv64Bgzy8NDKJOXOEIp
+         m5Bt9RXY2HCfzRfGVB/vSsnV1c4Ef3kjKq6WB6CUuAt6WvRObapkYoVKRXadoLHSubJ/
+         keDftGs39FfdygTtKzCkuZYMsnHLhxfqOOnLimJpMDqzvm/joMG/q5woTiYtJm/CkISs
+         wtYpLhTrgJIf0iGYXxDYrbMnPRqpYTPzJ/pHBmROg4+zt9o8f2/yBQG0GwFDz2kjG1TK
+         SU5A==
+X-Received: by 10.68.180.131 with SMTP id do3mr20304260pbc.42.1434626784998;
+        Thu, 18 Jun 2015 04:26:24 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id j9sm5443016pdl.65.2015.06.18.04.26.05
+        by mx.google.com with ESMTPSA id j9sm5443016pdl.65.2015.06.18.04.26.22
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Jun 2015 04:26:06 -0700 (PDT)
+        Thu, 18 Jun 2015 04:26:23 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
+In-Reply-To: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271968>
 
-This patch series depends on pt/pull-builtin for OPT_PASSTHRU_ARGV() and
-argv_array_pushv().
+git-am.sh supports mbox, stgit and mercurial patches. Re-implement
+support for splitting out mbox/maildirs using git-mailsplit, while also
+implementing the framework required to support other patch formats in
+the future.
 
-This is a re-roll of [WIP v3]. Thanks Junio and Stefan for the reviews last
-round.
+Re-implement support for the --patch-format option (since a5a6755
+(git-am foreign patch support: introduce patch_format, 2009-05-27)) to
+allow the user to choose between the different patch formats.
 
-The biggest addition this round would be the support for git-rebase. Here's
-a small unscientific benchmark that rebases 50 patches:
+Signed-off-by: Paul Tan <pyokagan@gmail.com>
+---
 
-	git init &&
-	echo initial >file &&
-	git add file &&
-	git commit -m initial &&
-	git tag initial &&
-	for x in $(seq 50)
-	do
-	    echo $x >>file &&
-	    git commit -a -m $x
-	done &&
-	git checkout -b onto-rebase initial &&
-	git commit --allow-empty -mempty &&
-	time git rebase -q --onto onto-rebase initial master
+Notes:
+    v3
+    
+    * Moved the TODO comment to the previous patch
 
-With master:
+ builtin/am.c | 104 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 101 insertions(+), 3 deletions(-)
 
-1.53s, 1.55s, 1.17s, 1.52s, 1.22s. Avg: ~1.40s
-
-With master + this patch series:
-
-0.22s, 0.22s, 0.18s, 0.21s, 0.18s. Avg: ~0.20s
-
-So this is around a 6-7x speedup.
-
-Previous versions:
-
-[WIP v1] http://thread.gmane.org/gmane.comp.version-control.git/270048
-[WIP v2] http://thread.gmane.org/gmane.comp.version-control.git/271381
-
-git-am is a commonly used command for applying a series of patches from a
-mailbox to the current branch. Currently, it is implemented by the shell script
-git-am.sh. However, compared to C, shell scripts have certain deficiencies:
-they need to spawn a lot of processes, introduce a lot of dependencies and
-cannot take advantage of git's internal caches.
-
-This WIP patch series rewrites git-am.sh into optimized C builtin/am.c, and is
-part of my GSoC project to rewrite git-pull and git-am into C builtins[1].
-
-[1] https://gist.github.com/pyokagan/1b7b0d1f4dab6ba3cef1
-
-
-Paul Tan (31):
-  wrapper: implement xopen()
-  wrapper: implement xfopen()
-  am: implement skeletal builtin am
-  am: implement patch queue mechanism
-  am: split out mbox/maildir patches with git-mailsplit
-  am: detect mbox patches
-  am: extract patch, message and authorship with git-mailinfo
-  am: apply patch with git-apply
-  am: commit applied patch
-  am: refresh the index at start
-  am: refuse to apply patches if index is dirty
-  am: implement --resolved/--continue
-  am: implement --skip
-  am: implement --abort
-  am: don't accept patches when there's a session in progress
-  am: implement quiet option
-  am: exit with user friendly message on patch failure
-  am: implement am --signoff
-  cache-tree: introduce write_index_as_tree()
-  am: implement 3-way merge
-  am: --rebasing
-  am: don't use git-mailinfo if --rebasing
-  am: handle stray state directory
-  am: implement -k/--keep, --keep-non-patch
-  am: implement --[no-]message-id, am.messageid
-  am: support --keep-cr, am.keepcr
-  am: implement --[no-]scissors
-  am: pass git-apply's options to git-apply
-  am: implement --ignore-date
-  am: implement --committer-date-is-author-date
-  am: implement -S/--gpg-sign, commit.gpgsign
-
- Makefile          |    1 +
- builtin.h         |    1 +
- builtin/am.c      | 1650 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- cache-tree.c      |   29 +-
- cache-tree.h      |    1 +
- git-compat-util.h |    2 +
- git.c             |    1 +
- wrapper.c         |   43 ++
- 8 files changed, 1716 insertions(+), 12 deletions(-)
- create mode 100644 builtin/am.c
-
+diff --git a/builtin/am.c b/builtin/am.c
+index af68c51..e9a3687 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -8,6 +8,12 @@
+ #include "exec_cmd.h"
+ #include "parse-options.h"
+ #include "dir.h"
++#include "run-command.h"
++
++enum patch_format {
++	PATCH_FORMAT_UNKNOWN = 0,
++	PATCH_FORMAT_MBOX
++};
+ 
+ struct am_state {
+ 	/* state directory path */
+@@ -16,6 +22,9 @@ struct am_state {
+ 	/* current and last patch numbers, 1-indexed */
+ 	int cur;
+ 	int last;
++
++	/* number of digits in patch filename */
++	int prec;
+ };
+ 
+ /**
+@@ -26,6 +35,8 @@ static void am_state_init(struct am_state *state)
+ 	memset(state, 0, sizeof(*state));
+ 
+ 	strbuf_init(&state->dir, 0);
++
++	state->prec = 4;
+ }
+ 
+ /**
+@@ -111,13 +122,69 @@ static void am_destroy(const struct am_state *state)
+ }
+ 
+ /**
++ * Splits out individual patches from `paths`, where each path is either a mbox
++ * file or a Maildir. Return 0 on success, -1 on failure.
++ */
++static int split_patches_mbox(struct am_state *state, struct string_list *paths)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	struct string_list_item *item;
++	struct strbuf last = STRBUF_INIT;
++
++	cp.git_cmd = 1;
++	argv_array_push(&cp.args, "mailsplit");
++	argv_array_pushf(&cp.args, "-d%d", state->prec);
++	argv_array_pushf(&cp.args, "-o%s", state->dir.buf);
++	argv_array_push(&cp.args, "-b");
++	argv_array_push(&cp.args, "--");
++
++	for_each_string_list_item(item, paths)
++		argv_array_push(&cp.args, item->string);
++
++	if (capture_command(&cp, &last, 8))
++		return -1;
++
++	state->cur = 1;
++	state->last = strtol(last.buf, NULL, 10);
++
++	return 0;
++}
++
++/**
++ * Splits out individual patches, of patch_format, contained within paths.
++ * These patches will be stored in the state directory, with each patch's
++ * filename being its index, padded to state->prec digits. state->cur will be
++ * set to the index of the first patch, and state->last will be set to the
++ * index of the last patch.
++ *
++ * Returns 0 on success, -1 on failure.
++ */
++static int split_patches(struct am_state *state, enum patch_format patch_format,
++		struct string_list *paths)
++{
++	switch (patch_format) {
++	case PATCH_FORMAT_MBOX:
++		return split_patches_mbox(state, paths);
++	default:
++		die("BUG: invalid patch_format");
++	}
++	return -1;
++}
++
++/**
+  * Setup a new am session for applying patches
+  */
+-static void am_setup(struct am_state *state)
++static void am_setup(struct am_state *state, enum patch_format patch_format,
++		struct string_list *paths)
+ {
+ 	if (mkdir(state->dir.buf, 0777) < 0 && errno != EEXIST)
+ 		die_errno(_("failed to create directory '%s'"), state->dir.buf);
+ 
++	if (split_patches(state, patch_format, paths) < 0) {
++		am_destroy(state);
++		die(_("Failed to split patches."));
++	}
++
+ 	write_file(am_path(state, "next"), 1, "%d", state->cur);
+ 
+ 	write_file(am_path(state, "last"), 1, "%d", state->last);
+@@ -148,7 +215,23 @@ static void am_run(struct am_state *state)
+ 	am_destroy(state);
+ }
+ 
++/**
++ * parse_options() callback that validates and sets opt->value to the
++ * PATCH_FORMAT_* enum value corresponding to `arg`.
++ */
++static int parse_opt_patchformat(const struct option *opt, const char *arg, int unset)
++{
++	int *opt_value = opt->value;
++
++	if (!strcmp(arg, "mbox"))
++		*opt_value = PATCH_FORMAT_MBOX;
++	else
++		return -1;
++	return 0;
++}
++
+ static struct am_state state;
++static int opt_patch_format;
+ 
+ static const char * const am_usage[] = {
+ 	N_("git am [options] [(<mbox>|<Maildir>)...]"),
+@@ -156,6 +239,8 @@ static const char * const am_usage[] = {
+ };
+ 
+ static struct option am_options[] = {
++	OPT_CALLBACK(0, "patch-format", &opt_patch_format, N_("format"),
++		N_("format the patch(es) are in"), parse_opt_patchformat),
+ 	OPT_END()
+ };
+ 
+@@ -185,8 +270,21 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 
+ 	if (am_in_progress(&state))
+ 		am_load(&state);
+-	else
+-		am_setup(&state);
++	else {
++		struct string_list paths = STRING_LIST_INIT_DUP;
++		int i;
++
++		for (i = 0; i < argc; i++) {
++			if (is_absolute_path(argv[i]) || !prefix)
++				string_list_append(&paths, argv[i]);
++			else
++				string_list_append(&paths, mkpath("%s/%s", prefix, argv[i]));
++		}
++
++		am_setup(&state, opt_patch_format, &paths);
++
++		string_list_clear(&paths, 0);
++	}
+ 
+ 	am_run(&state);
+ 
 -- 
 2.1.4
