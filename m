@@ -1,66 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/19] Make git-pull a builtin
-Date: Thu, 18 Jun 2015 13:13:54 -0700
-Message-ID: <xmqqfv5oepvh.fsf@gitster.dls.corp.google.com>
-References: <1434624852-6869-1-git-send-email-pyokagan@gmail.com>
+From: Patrick Palka <patrick@parcs.ath.cx>
+Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight unevenly-sized
+ hunks
+Date: Thu, 18 Jun 2015 16:14:19 -0400 (EDT)
+Message-ID: <alpine.DEB.2.20.8.1506181536070.4322@idea>
+References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx> <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com> <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com> <xmqq1th8ga9b.fsf@gitster.dls.corp.google.com>
+ <20150618190417.GA12769@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stephen Robin <stephen.robin@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 22:14:02 2015
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Palka <patrick@parcs.ath.cx>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 18 22:14:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5gCG-0007kp-Od
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:14:01 +0200
+	id 1Z5gCl-0008EJ-4l
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756137AbbFRUN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 16:13:57 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:35588 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753417AbbFRUN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 16:13:56 -0400
-Received: by igbzc4 with SMTP id zc4so3648404igb.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=tA+OgY7pAoFRT87nugj7ZVjtIRtQp5m/s7gOfZHbp3Q=;
-        b=LoNwV+sdLBe8o8yZt1Q8Trl5nVYWowzmIbTOVvAQt/xTg3CCpT7SW88Q0jKxjq4MgF
-         pcfnEeDwiVoS/xowQQNzQ1LM+LG8c3zdCRNCP9gE1P9FQBgEZzFyJZt9HEcpT9IGrFSC
-         7dXNppxxkEXkZQQWWQ8U4VbDuH9vVnUclA3sz8gLslucfN8jXYwxtruxn4bUq9MC6M/j
-         RfP+lSqYNDNQqdnIevTzf9aawlS3veWJjwLEm0y2p3cTks3MTK1t++ekOcYfXVBdR77J
-         QxZjCqzeUK32zGNsNZ5pT9DZ5VqNcyDi7jrCw9YG1dR0c3/szQD+5+/YFENxuGZsWYOv
-         7QLQ==
-X-Received: by 10.50.30.105 with SMTP id r9mr44920194igh.11.1434658435591;
-        Thu, 18 Jun 2015 13:13:55 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
-        by mx.google.com with ESMTPSA id eg3sm2447562igb.0.2015.06.18.13.13.54
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jun 2015 13:13:55 -0700 (PDT)
-In-Reply-To: <1434624852-6869-1-git-send-email-pyokagan@gmail.com> (Paul Tan's
-	message of "Thu, 18 Jun 2015 18:53:53 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756485AbbFRUO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 16:14:27 -0400
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:34790 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753417AbbFRUO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 16:14:26 -0400
+Received: by qgf75 with SMTP id 75so30063932qgf.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:14:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:date:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=vTi+6Ldl5LhiRkGIjiZgAMGbNETP7+IELsWUyTcgghc=;
+        b=Y6eP9rFRpMIvdChteY5hiIPaI3ncFvCcqyqEaMa0/L9EcZ0jkx1EKmIR8Aeh/c25ha
+         FUG0snRt39Q1uozeONUNhT349bzNH942364+HEKibh7wqTuWlC6/yLOVEFApwj438riU
+         DKi99kDTKLbcFvkcPOSfPqr3MwZjtBx0Drg88dkxavYwAtrCj1+E3ytViVtl3m2ymuRV
+         WMVi6JYEanZSgSAWm2m6LWyvBw6abvY52YkWVN08YnuEUjzRLbaZKWhhsgl08h0C95ww
+         h1Gop5H6K9uRvLpqT38B89TWEGjmui/g2SVcCKwZr2MAgoRc9xXoctIMqfMyy4N/5huW
+         DuSw==
+X-Gm-Message-State: ALoCoQlmy9BkSHxLv27kXjz+ZiZB3epjQcHMQ2y1h0Y0k7BP2qmRxozYGtm4avmWImatD0+qOt5m
+X-Received: by 10.55.19.225 with SMTP id 94mr28045859qkt.37.1434658465363;
+        Thu, 18 Jun 2015 13:14:25 -0700 (PDT)
+Received: from [192.168.1.130] (ool-4353acd8.dyn.optonline.net. [67.83.172.216])
+        by mx.google.com with ESMTPSA id i90sm4445057qkh.5.2015.06.18.13.14.23
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jun 2015 13:14:24 -0700 (PDT)
+X-Google-Original-From: Patrick Palka <patrick@idea>
+In-Reply-To: <20150618190417.GA12769@peff.net>
+User-Agent: Alpine 2.20.8 (DEB 77 2015-05-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272065>
 
-Paul Tan <pyokagan@gmail.com> writes:
+On Thu, 18 Jun 2015, Jeff King wrote:
 
-> This is a re-roll of [v3]. It squashes in Ramsay's patch "fix some sparse
-> warnings", and fixes the use-before-free reported by Duy. Thanks a lot for
-> dealing with my mess :-).
+> On Thu, Jun 18, 2015 at 11:08:16AM -0700, Junio C Hamano wrote:
 >
-> Other than that, there are no other changes as I'm working on the git-am side
-> of things.
+>> So as I said, I do not think it would hurt to have this as an
+>> incremental improvement (albeit going in a possibly wrong
+>> direction).
+>>
+>> Of course, it is a separate question if this change makes the output
+>> worse, by comparing unmatched early parts of two hunks and making
+>> nonsense highlight by calling highlight_pair() more often.  As long
+>> as that is not an issue, I am not opposed to this change, which was
+>> what I meant to say by "this might not hurt".
+>
+> Yes, that is my big concern, and why I punted on mismatched-size hunks
+> in the first place. Now that we have a patch, it is easy enough to "git
+> log -p | diff-highlight" with the old and new versions to compare the
+> results.
+>
+> It certainly does improve some cases. E.g.:
+>
+>  -foo
+>  +foo &&
+>  +bar
+>
+> in a test script becomes more clear. But some of the output is not so
+> great. For instance, the very commit under discussion has a
+> confusing and useless highlight. Or take a documentation patch like
+> 5c31acfb, where I find the highlights actively distracting. We are saved
+> a little by the "if the whole line is different, do not highlight at
+> all" behavior of 097128d1bc.
 
-I didn't look carefully, but does that mean 04/19 has the "what if
-you start from a subdirectory and are still using the scripted one?"
-issue we discussed recently for "am"?
+To fix the useless highlights for both evenly and unevenly sized hunks
+(like when all but a semicolon on a line changes), one can loosen the
+criterion for not highlighting from "do not highlight if 0% of the
+before and after lines are common between them" to, say, "do not
+highlight if less than 10% of the before and after lines are common
+between them".  Then most of these useless highlights are gone for both
+evenly and unevenly sized hunks.
+
+Here is a patch that changes the criterion as mentioned.  Testing this
+change on the documentation patch 5c31acfb, only two pairs of lines are
+highlighted instead of six.  On my original patch, the useless highlight
+is gone.  The useless semicolon-related highlights on e.g. commit
+99a2cfb are gone.
+
+Ten percent is a modest threshold, and perhaps it should be increased
+when highlighting unevenly sized hunks and decreased when highlighting
+evenly sized hunks.
+
+Of course, these patches are both hacks but they seem to be surprisingly
+effective hacks especially when paired together.
+
+>
+> So I dunno. IMHO this does more harm than good, and I would not want to
+> use it myself. But it is somewhat a matter of taste; I am not opposed to
+> making it a configurable option.
+
+That is something I can do :)
+
+>
+> -Peff
+>
+
+-- >8 --
+
+Subject: [PATCH] diff-highlight: don't highlight lines that have little in
+  common
+
+---
+  contrib/diff-highlight/diff-highlight | 13 +++++++++----
+  1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+index 85d2eb0..e4829ec 100755
+--- a/contrib/diff-highlight/diff-highlight
++++ b/contrib/diff-highlight/diff-highlight
+@@ -218,8 +218,13 @@ sub is_pair_interesting {
+  	my $suffix_a = join('', @$a[($sa+1)..$#$a]);
+  	my $suffix_b = join('', @$b[($sb+1)..$#$b]);
+
+-	return $prefix_a !~ /^$COLOR*-$BORING*$/ ||
+-	       $prefix_b !~ /^$COLOR*\+$BORING*$/ ||
+-	       $suffix_a !~ /^$BORING*$/ ||
+-	       $suffix_b !~ /^$BORING*$/;
++	$prefix_a =~ s/^$COLOR*-$BORING*//;
++	$prefix_b =~ s/^$COLOR*\+$BORING*//;
++	$suffix_a =~ s/$BORING*$//;
++	$suffix_b =~ s/$BORING*$//;
++
++	# Only bother highlighting if at least 10% of each line is common among
++	# the lines.
++	return ((length($prefix_a)+length($suffix_a))*100 >= @$a*10) &&
++	       ((length($prefix_b)+length($suffix_b))*100 >= @$b*10);
+  }
+-- 
+2.4.4.410.g43ed522.dirty
