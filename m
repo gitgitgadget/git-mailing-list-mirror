@@ -1,127 +1,421 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Using clean/smudge filters with difftool
-Date: Thu, 18 Jun 2015 15:28:52 +0100
-Message-ID: <20150618142852.GL18226@serenity.lan>
-References: <CAGA3++LiX9NyK94RPiuiG83X8FSRN4EkaxMchir51hGSQY90Tw@mail.gmail.com>
- <5582BA1F.1030409@drmicha.warpmail.net>
- <CAGA3++LrVSs3rMkg=S2Og48pz1yEBxwpcRsPt7sNLENRh1ooAg@mail.gmail.com>
- <20150618132622.GJ18226@serenity.lan>
- <CAGA3+++_mx=O=Un0pip8Q41X5PZBLmES=Hd=U=aSowryx5r=8w@mail.gmail.com>
- <20150618141116.GK18226@serenity.lan>
- <CAGA3+++ibw=8Q1LtM6yJrZ7Q4eVs_MEHmPAzctSVSREXMmBiMQ@mail.gmail.com>
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC v4 07/10] send-email: reduce dependancies impact on
+ parse_address_line
+Date: Thu, 18 Jun 2015 17:08:51 +0200 (CEST)
+Message-ID: <1444764681.621777.1434640131682.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <xmqqioam58kz.fsf@gitster.dls.corp.google.com> <989982277.592587.1434584914349.JavaMail.zimbra@ensimag.grenoble-inp.fr> <vpqh9q56yaf.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Florian Aspart <florian.aspart@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 16:39:19 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 18 17:07:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5ayJ-0004Fr-TE
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 16:39:16 +0200
+	id 1Z5bPd-00044z-HP
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 17:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943AbbFROjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 10:39:06 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:50902 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753413AbbFROjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 10:39:04 -0400
-X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jun 2015 10:39:04 EDT
+	id S1754016AbbFRPHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 11:07:25 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:39856 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752173AbbFRPHY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2015 11:07:24 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 34F1D2A4B5;
-	Thu, 18 Jun 2015 15:29:04 +0100 (BST)
-X-Quarantine-ID: <SJf5XfnASHYj>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.499 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_05=-0.5, URIBL_BLOCKED=0.001]
-	autolearn=no
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id SJf5XfnASHYj; Thu, 18 Jun 2015 15:29:02 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 25BE32DFDB;
-	Thu, 18 Jun 2015 15:28:54 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAGA3+++ibw=8Q1LtM6yJrZ7Q4eVs_MEHmPAzctSVSREXMmBiMQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5964D3755;
+	Thu, 18 Jun 2015 17:07:21 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XEubWfhadnBk; Thu, 18 Jun 2015 17:07:21 +0200 (CEST)
+Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 398523753;
+	Thu, 18 Jun 2015 17:07:21 +0200 (CEST)
+In-Reply-To: <vpqh9q56yaf.fsf@anie.imag.fr>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: send-email: reduce dependancies impact on parse_address_line
+Thread-Index: Ggq9NPznEeUfjTO1l7Ms3128XiEkUA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272012>
 
-On Thu, Jun 18, 2015 at 04:17:52PM +0200, Florian Aspart wrote:
-> 2015-06-18 16:11 GMT+02:00 John Keeping <john@keeping.me.uk>:
-> > On Thu, Jun 18, 2015 at 03:51:25PM +0200, Florian Aspart wrote:
-> >> 2015-06-18 15:26 GMT+02:00 John Keeping <john@keeping.me.uk>:
-> >> > [Please don't top-post on this list.]
-> >> >
-> >> > On Thu, Jun 18, 2015 at 03:15:38PM +0200, Florian Aspart wrote:
-> >> >> 2015-06-18 14:31 GMT+02:00 Michael J Gruber <git@drmicha.warpmail.net>:
-> >> >> > Florian Aspart venit, vidit, dixit 16.06.2015 16:11:
-> >> >> >> I created a clean filter to apply on some files before commiting them.
-> >> >> >> The filter works correctly when I commit the file and is also applied
-> >> >> >> when I usethe iff command line tool.
-> >> >> >> However, when using difftool with meld, the filter is not applied and
-> >> >> >> the different versions of the files are compared without any
-> >> >> >> filtering.
-> >> >> >>
-> >> >> >> Is there a way to apply the clean/smudge filters when comparing the
-> >> >> >> working copy of a file to the HEAD version in a gui diff tool?
-> >> >> >>
-> >> >> >> I'm using git version 2.4.3 under Ubuntu.
-> > 
-> > I also realised that the code for file diff is very different from
-> > directory diff do you see any difference between git-difftool acting on
-> > files and with the `--dir-diff` option?
+> Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
 > 
-> No, even with the --dir-diff option, the filter is still not applied.
+> > I've some more tests, maybe I should put them all in this post ?
+> 
+> Yes, please post as much as you have. Ideally, this should be
+> automatically tested, but if you don't have time to write the automated
+> tests, at least having a track of what you did on the list archives can
+> help someone else to do it.
 
-I have tried to reproduce this and it works as expected for me (i.e. the
-filter is applied) both for file diff and directory diff mode:
+It may not be easily readable without colors, so there are the scripts
+at the end. You can change the tested input by changing lines after
+the "cat >.tmplist" line in testall.sh. (There are two scripts 
+testall.sh and testone.perl).
 
-$ git config filter.quote.clean "sed -e 's/^> //'"
-$ git config filter.quote.smudge "sed -e '/^> /n; s/^/> /'"
-$ git config filter.quote.required true
+Here are the tests results:
 
-$ echo '*.quote filter=quote' >>.gitattributes
-$ cat >1.quote <<EOF
-one
-two
-three
+Input: 
+Split: 
+M::A : 
+Same : Yes
+----------
+Input: Jane
+Split: Jane
+M::A : Jane
+Same : Yes
+----------
+Input: jdoe@example.com
+Split: jdoe@example.com
+M::A : jdoe@example.com
+Same : Yes
+----------
+Input: <jdoe@example.com>
+Split: jdoe@example.com
+M::A : jdoe@example.com
+Same : Yes
+----------
+Input: Jane <jdoe@example.com>
+Split: Jane <jdoe@example.com>
+M::A : Jane <jdoe@example.com>
+Same : Yes
+----------
+Input: Jane Doe <jdoe@example.com>
+Split: Jane Doe <jdoe@example.com>
+M::A : Jane Doe <jdoe@example.com>
+Same : Yes
+----------
+Input: Jane\ Doe <jdoe@example.com>
+Split: "Jane\ Doe" <jdoe@example.com>
+M::A : "Jane \ Doe" <jdoe@example.com>
+Same : No
+----------
+Input: "Jane" <jdoe@example.com>
+Split: "Jane" <jdoe@example.com>
+M::A : "Jane" <jdoe@example.com>
+Same : Yes
+----------
+Input: "Doe, Jane" <jdoe@example.com>
+Split: "Doe, Jane" <jdoe@example.com>
+M::A : "Doe, Jane" <jdoe@example.com>
+Same : Yes
+----------
+Input: "Doe, Ja"ne <jdoe@example.com>
+Split: "Doe, Ja ne" <jdoe@example.com>
+M::A : "Doe, Ja" ne <jdoe@example.com>
+Same : No
+----------
+Input: "Doe, Katarina" Jane <jdoe@example.com>
+Split: "Doe, Katarina Jane" <jdoe@example.com>
+M::A : "Doe, Katarina" Jane <jdoe@example.com>
+Same : No
+----------
+Input: "Jane@:;\>.,()<Doe" <jdoe@example.com>
+Split: "Jane@:;\>.,()<Doe" <jdoe@example.com>
+M::A : "Jane@:;\>.,()<Doe" <jdoe@example.com>
+Same : Yes
+----------
+Input: Jane@:;\.,()<>Doe <jdoe@example.com>
+Split: Jane@:
+     : "\."
+     : Doe <jdoe@example.com> ()
+M::A : Jane@:
+     : \.
+     : Doe <jdoe@example.com> ()
+Same : No
+----------
+Input: Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>
+Split: Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>
+M::A : Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>
+Same : Yes
+----------
+Input: "<jdoe@example.com>"
+Split: "<jdoe@example.com>"
+M::A : "<jdoe@example.com>"
+Same : Yes
+----------
+Input: "Jane jdoe@example.com"
+Split: "Jane jdoe@example.com"
+M::A : "Jane jdoe@example.com"
+Same : Yes
+----------
+Input: Jane Doe <jdoe    @   example.com  >
+Split: Jane Doe <jdoe@example.com>
+M::A : Jane Doe <jdoe@example.com>
+Same : Yes
+----------
+Input: Jane       Doe <  jdoe@example.com  >
+Split: Jane Doe <jdoe@example.com>
+M::A : Jane Doe <jdoe@example.com>
+Same : Yes
+----------
+Input: Jane @ Doe @ Jane @ Doe
+Split: Jane@Doe@Jane@Doe
+M::A : Jane@Doe@Jane@Doe
+Same : Yes
+----------
+Input: Jane jdoe@example.com
+Split: Janejdoe@example.com
+M::A : Jane
+     : jdoe@example.com
+Same : No
+----------
+Input: <jdoe@example.com> Jane Doe
+Split: jdoe@example.comJaneDoe
+M::A : Jane Doe <jdoe@example.com>
+Same : No
+----------
+Input: Jane <jdoe@example.com> Doe
+Split: Jane <jdoe@example.comDoe>
+M::A : Jane Doe <jdoe@example.com>
+Same : No
+----------
+Input: "Jane, 'Doe'" <jdoe@example.com>
+Split: "Jane, 'Doe'" <jdoe@example.com>
+M::A : "Jane, 'Doe'" <jdoe@example.com>
+Same : Yes
+----------
+Input: 'Doe, "Jane' <jdoe@example.com>
+Split: 'Doe
+     : " Jane' <jdoe@example.com>
+M::A : 'Doe
+     : " Jane' <jdoe@example.com>
+Same : Yes
+----------
+Input: "Jane" "Do"e <jdoe@example.com>
+Split: "Jane" "Do" e <jdoe@example.com>
+M::A : "Jane" "Do" e <jdoe@example.com>
+Same : Yes
+----------
+Input: "Jane' Doe" <jdoe@example.com>
+Split: "Jane' Doe" <jdoe@example.com>
+M::A : "Jane' Doe" <jdoe@example.com>
+Same : Yes
+----------
+Input: "Jane Doe <jdoe@example.com>" <jdoe@example.com>
+Split: "Jane Doe <jdoe@example.com>" <jdoe@example.com>
+M::A : "Jane Doe <jdoe@example.com>" <jdoe@example.com>
+Same : Yes
+----------
+Input: "Jane\" Doe" <jdoe@example.com>
+Split: "Jane\" Doe" <jdoe@example.com>
+M::A : "Jane\" Doe" <jdoe@example.com>
+Same : Yes
+----------
+Input: Doe, jane <jdoe@example.com>
+Split: Doe
+     : jane <jdoe@example.com>
+M::A : Doe
+     : jane <jdoe@example.com>
+Same : Yes
+----------
+Input: "Jane Doe <jdoe@example.com>
+Split: " Jane Doe <jdoe@example.com>
+M::A : " Jane Doe <jdoe@example.com>
+Same : Yes
+----------
+Input: "Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>
+Split: "Jane  Kat a ri na ,Doe" <jdoe@example.com>
+M::A : "Jane " Kat "a" ri "na" ",Doe" <jdoe@example.com>
+Same : No
+----------
+Input: Jane Doe
+Split: Jane Doe
+M::A : Jane
+     : Doe
+Same : No
+----------
+Input: Jane "Doe <jdoe@example.com>"
+Split: "Jane Doe <jdoe@example.com>"
+M::A : Jane
+     : "Doe <jdoe@example.com>"
+Same : No
+----------
+Input: \"Jane Doe <jdoe@example.com>
+Split: "\"Jane Doe" <jdoe@example.com>
+M::A : \ " Jane Doe <jdoe@example.com>
+Same : No
+----------
+Input: Jane\"\" Doe <jdoe@example.com>
+Split: "Jane\"\" Doe" <jdoe@example.com>
+M::A : Jane \ " \ " Doe <jdoe@example.com>
+Same : No
+----------
+Input: 'Jane 'Doe' <jdoe@example.com>
+Split: 'Jane 'Doe' <jdoe@example.com>
+M::A : 'Jane 'Doe' <jdoe@example.com>
+Same : Yes
+----------
+Input: 'Jane "Katarina\" \' Doe' <jdoe@example.com>
+Split: "'Jane  Katarina\" \' Doe'" <jdoe@example.com>
+M::A : 'Jane " Katarina \ " \ ' Doe' <jdoe@example.com>
+Same : No
+
+
+**********************************************************************
+*                          SCRIPTS PART                              *
+**********************************************************************
+
+
+---------------------------- testall.sh ----------------------------
+
+#!/bin/sh
+
+cat >.tmplist <<EOF
+
+Jane
+jdoe@example.com
+<jdoe@example.com>
+Jane <jdoe@example.com>
+Jane Doe <jdoe@example.com>
+Jane\ Doe <jdoe@example.com>
+"Jane" <jdoe@example.com>
+"Doe, Jane" <jdoe@example.com>
+"Doe, Ja"ne <jdoe@example.com>
+"Doe, Katarina" Jane <jdoe@example.com>
+"Jane@:;\>.,()<Doe" <jdoe@example.com>
+Jane@:;\.,()<>Doe <jdoe@example.com>
+Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>
+"<jdoe@example.com>"
+"Jane jdoe@example.com"
+Jane Doe <jdoe    @   example.com  >
+Jane       Doe <  jdoe@example.com  >
+Jane @ Doe @ Jane @ Doe
+Jane jdoe@example.com
+<jdoe@example.com> Jane Doe
+Jane <jdoe@example.com> Doe
+"Jane, 'Doe'" <jdoe@example.com>
+'Doe, "Jane' <jdoe@example.com>
+"Jane" "Do"e <jdoe@example.com>
+"Jane' Doe" <jdoe@example.com>
+"Jane Doe <jdoe@example.com>" <jdoe@example.com>
+"Jane\" Doe" <jdoe@example.com>
+Doe, jane <jdoe@example.com>
+"Jane Doe <jdoe@example.com>
+"Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>
+Jane Doe
+Jane "Doe <jdoe@example.com>"
+\"Jane Doe <jdoe@example.com>
+Jane\"\" Doe <jdoe@example.com>
+'Jane 'Doe' <jdoe@example.com>
+'Jane "Katarina\" \' Doe' <jdoe@example.com>
 EOF
-$ git add .gitattributes 1.quote
-$ git commit -m 'Initial commit'
-$ echo four >>1.quote
 
-Now `git-difftool` shows the differences with the filter applied.  This can be
-seen running with GIT_TRACE:
 
-$ GIT_TRACE=2 git difftool
-15:26:59.211541 git.c:557               trace: exec: 'git-difftool'
-15:26:59.211674 run-command.c:347       trace: run_command: 'git-difftool'
-15:26:59.338617 git.c:348               trace: built-in: git 'config' '--bool' '--get' 'difftool.trustExitCode'
-15:26:59.342664 git.c:348               trace: built-in: git 'diff'
-15:26:59.344857 run-command.c:347       trace: run_command: 'sed -e '\''s/^> //'\'''
-15:26:59.345383 run-command.c:195       trace: exec: '/bin/sh' '-c' 'sed -e '\''s/^> //'\''' 'sed -e '\''s/^> //'\'''
-15:26:59.351077 run-command.c:347       trace: run_command: 'sed -e '\''/^> /n; s/^/> /'\'''
-15:26:59.351605 run-command.c:195       trace: exec: '/bin/sh' '-c' 'sed -e '\''/^> /n; s/^/> /'\''' 'sed -e '\''/^> /n; s/^/> /'\'''
-15:26:59.355716 run-command.c:347       trace: run_command: 'git-difftool--helper' '1.quote' '/tmp/SUEySx_1.quote' '4cb29ea38f70d7c61b2a3a25b02e3bdf44905402' '100644' '1.quote' '0000000000000000000000000000000000000000' '100644'
-15:26:59.356191 run-command.c:195       trace: exec: 'git-difftool--helper' '1.quote' '/tmp/SUEySx_1.quote' '4cb29ea38f70d7c61b2a3a25b02e3bdf44905402' '100644' '1.quote' '0000000000000000000000000000000000000000' '100644'
-15:26:59.370468 git.c:348               trace: built-in: git 'config' 'diff.tool'
-15:26:59.373485 git.c:348               trace: built-in: git 'config' 'merge.tool'
-15:26:59.378402 git.c:348               trace: built-in: git 'config' 'difftool.vimdiff.cmd'
-15:26:59.381424 git.c:348               trace: built-in: git 'config' 'mergetool.vimdiff.cmd'
-15:26:59.386623 git.c:348               trace: built-in: git 'config' '--bool' 'mergetool.prompt'
-15:26:59.390198 git.c:348               trace: built-in: git 'config' '--bool' 'difftool.prompt'
+cat .tmplist | while read -r line
+do
+    echo "Input: $line"
+    ./testone.perl "$line"
+    echo ----------
+done
 
-I think the first run_command of `sed` is cleaning the working tree file
-to figure out *if* it differs, then the second `sed` is smudging the
-version in the index so that difftool can use it.
+---------------------------- testone.perl ----------------------------
+
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Term::ANSIColor;
+use Mail::Address;
+use Text::ParseWords;
+
+my $string = $ARGV[0];
+
+sub split_addrs {
+	my $re_comment = qr/\((?:[^)]*)\)/;
+	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
+	my $re_word = qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
+	my $re_token = qr/(?:$re_quote|$re_word|$re_comment|\S)/;
+
+	my @tokens = map { $_ =~ /\s*($re_token)\s*/g } @_;
+	push @tokens, ",";
+
+	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
+	foreach my $token (@tokens) {
+		if ($token =~ /^[,;]$/) {
+			if (@address) {
+				push @address, @buffer;
+			} else {
+				push @phrase, @buffer;
+			}
+		
+			my $str_phrase = join ' ', @phrase;
+			my $str_address = join '', @address;
+			my $str_comment = join ' ', @comment;
+		
+			if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
+				$str_phrase =~ s/(^|[^\\])"/$1/g;
+				$str_phrase = qq["$str_phrase"];
+			}
+		
+			if ($str_address ne "" && $str_phrase ne "") {
+				$str_address = qq[<$str_address>];
+			}
+		
+			my $str_mailbox = "$str_phrase $str_address $str_comment";
+			$str_mailbox =~ s/^\s*|\s*$//g;
+			push @addr_list, $str_mailbox if ($str_mailbox);
+		
+			@phrase = @address = @comment = @buffer = ();
+		} elsif ($token =~ /^\(/) {
+			push @comment, $token;
+		} elsif ($token eq "<") {
+			push @phrase, (splice @address), (splice @buffer);
+		} elsif ($token eq ">") {
+			push @address, (splice @buffer);
+		} elsif ($token eq "@") {
+			push @address, (splice @buffer), "@";
+		} elsif ($token eq ".") {
+			push @address, (splice @buffer), ".";
+		} else {
+			push @buffer, $token;
+		}
+	}
+
+	return @addr_list;
+}
+
+sub old_split {
+	quotewords('\s*,\s*', 1, $_[0]);
+}
+
+my @tab = split_addrs($string);
+my @ref = map { $_->format } Mail::Address->parse($string);
+# my @old = old_split($string);  #can be printed to see the difference
+
+my $tabstring = join "\n", @tab;
+my $refstring = join "\n", @ref;
+my $same = ($tabstring eq $refstring);
+
+$tabstring =~ s/\n/\n     : /g;
+$refstring =~ s/\n/\n     : /g;
+
+print color 'bold yellow';
+print "Split: ", "$tabstring", "\n";
+
+print color 'bold blue';
+print "M::A : ", "$refstring", "\n";
+
+if ($same) {
+	print color 'bold green';
+	print "Same : ", "Yes", "\n";
+} else {
+	print color 'bold red';
+	print "Same : ", "No", "\n";
+}
+
+print color 'reset';
+
+
+ 
