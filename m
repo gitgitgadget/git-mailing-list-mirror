@@ -1,83 +1,95 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Selectively clone Git submodules -- a useful feature?
-Date: Thu, 18 Jun 2015 22:55:42 +0200
-Message-ID: <162A5ADF-1FDD-432B-B5F8-672DF5B50EEC@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 22:55:53 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/WIP v3 06/31] am: detect mbox patches
+Date: Thu, 18 Jun 2015 14:02:10 -0700
+Message-ID: <xmqqy4jgd92l.fsf@gitster.dls.corp.google.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-7-git-send-email-pyokagan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 23:02:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5gql-0002xW-Ll
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:55:52 +0200
+	id 1Z5gx0-0000W9-2X
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752334AbbFRUzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 16:55:48 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:38400 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728AbbFRUzq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2015 16:55:46 -0400
-Received: by wibdq8 with SMTP id dq8so604868wib.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:55:45 -0700 (PDT)
+	id S1751769AbbFRVCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 17:02:14 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:35562 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751032AbbFRVCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 17:02:13 -0400
+Received: by igbzc4 with SMTP id zc4so690968igb.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 14:02:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=0d8neCvTVOhm8/MN/bvFiAqaf96n0FldrKlRX8Z0uXA=;
-        b=ZpCbjUvZQ7wF9pFYDwLU8hPuuYTzORBAvZ5MGkyRjrx6OQXe+uKcioMC4KFVXHdCbT
-         tNUjDvk5nM5ub8Z2nsJ3uJVE0xWo/FB4B6cyhIkjWApXMtNe3jUC/xjdPqdYYISwLKTo
-         diYeNYCt8Adw+0NhKC44LEZ3M9M0AqbyhNOmUvFsEMz++KxkXY7IHNlTyCnWzkpHfPdz
-         HSeE2oMaSMS+xxE31I8+EAMtc9KEq7PVfJPJ65r/v7PXl4ZcWJ/kCGKbtVYS4UMoW1oI
-         TbAUV/3vuz7rA9bf/BSTdGzpAPMtvYDGYm1sknHu1TsRc3Q1wpFW9OCdsI6GYt3kA7CA
-         GFKg==
-X-Received: by 10.194.205.5 with SMTP id lc5mr19563040wjc.74.1434660945563;
-        Thu, 18 Jun 2015 13:55:45 -0700 (PDT)
-Received: from slxbook3.fritz.box (dslb-188-103-022-019.188.103.pools.vodafone-ip.de. [188.103.22.19])
-        by mx.google.com with ESMTPSA id tl3sm13865230wjc.20.2015.06.18.13.55.43
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Jun 2015 13:55:44 -0700 (PDT)
-X-Mailer: Apple Mail (2.1878.6)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=J5+xtQW5tnApqOSmPSvwkle1SJOObqNfb54lMirvOmI=;
+        b=FZvMrop6lwkKu+eALUb7F4EKDLm7d7pdX6h0g0wA6fwyzCnZJ7wtpvOg+ZexEBWtWD
+         COpb48tSrDyb1Vpar+jlVThmyvnla4ka87WCEpMz3/pXDXizH6/QkADE8lC9SW04LsfZ
+         R9JrN+4DRtojvTS72JUPd7zwW6raQ44rshmYuZgUgngAHy+OWKQmfrh1RsjDJahwmHUi
+         1rMwyy/1WO2x3Odi5UWvFjRs+1gn5vG+gPGXcTxbs6O+CaTBx8HEqiJVWqUlfJtvCeCa
+         G9tukOV/4joHglpNc+pkc/ZiAXp2KgViCrXyvQmBDXv+/ndyk050T+JWIK7DioCJU/HF
+         OpBw==
+X-Received: by 10.43.162.136 with SMTP id mk8mr7944752icc.28.1434661332268;
+        Thu, 18 Jun 2015 14:02:12 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id p39sm5671911ioi.5.2015.06.18.14.02.11
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 14:02:11 -0700 (PDT)
+In-Reply-To: <1434626743-8552-7-git-send-email-pyokagan@gmail.com> (Paul Tan's
+	message of "Thu, 18 Jun 2015 19:25:18 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272074>
 
-Hi,
+Paul Tan <pyokagan@gmail.com> writes:
 
-AFAIK Git has two ways to clone a repository with respect to submodules:
+> +static int is_email(const char *filename)
+> +{
+> +	struct strbuf sb = STRBUF_INIT;
+> +	FILE *fp = xfopen(filename, "r");
+> +	int ret = 1;
+> +
+> +	while (!strbuf_getline(&sb, fp, '\n')) {
+> +		const char *x;
+> +
+> +		strbuf_rtrim(&sb);
 
-(1) Plain clone of just the repository itself:
-git clone git://github.com/foo/bar.git
+Is this a good thing?  strbuf_getline() already has stripped the LF
+at the end, so you'd be treating a line with only whitespaces as if
+it is a truly empty line.
 
-(2) Recursive clone of the repository including all its submodules:
-git clone --recursive git://github.com/foo/bar.git
+I know the series is about literal translation and the script may
+lose the distinction between the two, but I do not think you need
+(or want) to be literally same for things like this.
 
-I am working on a big cross platform project and on certain platforms I don't need certain submodules. AFAIK there is no way to selectively clone only a subset of the submodules with the standard command line interface. I wonder if something like an exclude pattern for submodules would be of general interest. I imagine a call like this after a plain "clone" operation:
+Same comment applies to other uses of "trim" in this patch.
 
-git submodule update --init --recursive --exclude 3rdParty/Windows/*
+> @@ -177,6 +267,14 @@ static int split_patches(struct am_state *state, enum patch_format patch_format,
+>  static void am_setup(struct am_state *state, enum patch_format patch_format,
+>  		struct string_list *paths)
+>  {
+> +	if (!patch_format)
+> +		patch_format = detect_patch_format(paths);
+> +
+> +	if (!patch_format) {
+> +		fprintf_ln(stderr, _("Patch format detection failed."));
+> +		exit(128);
+> +	}
+> +
+>  	if (mkdir(state->dir.buf, 0777) < 0 && errno != EEXIST)
+>  		die_errno(_("failed to create directory '%s'"), state->dir.buf);
 
-or even:
-
-git clone --recursive --exclude 3rdParty/Windows/* git://github.com/foo/bar.git
-
-Please let me know what you think.
-
-
-Thanks,
-Lars
-
-
-PS: I posted this question already on the Google Git group here:
-https://groups.google.com/forum/?fromgroups=#!topic/git-users/jyKsd45d2MA
-
-I am sorry, but I discovered this mailing list afterwards and I am not sure which one is the appropriate one. Please advise.
-
-
----
-https://larsxschneider.github.io/
+I really like the way this keeps building incrementally ;-)
+The series is an enjoyable read.
