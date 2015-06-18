@@ -1,91 +1,115 @@
-From: =?ISO-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
 Subject: Re: co-authoring commits
-Date: Thu, 18 Jun 2015 23:25:44 +0200
-Message-ID: <55833758.6010000@gmail.com>
-References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>	<xmqq4mm66r99.fsf@gitster.dls.corp.google.com>	<CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>	<20150617205931.GB24079@cloud>	<xmqqegla57hl.fsf@gitster.dls.corp.google.com>	<20150617222828.GB24438@cloud> <xmqq381q551o.fsf@gitster.dls.corp.google.com>
+Date: Thu, 18 Jun 2015 23:25:54 +0200
+Message-ID: <CAOvwQ4jb-w4+Ah3ZhVE0j1aXLx1=8tRN3Wo98tz+G-wEqLGAcA@mail.gmail.com>
+References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>
+ <xmqq4mm66r99.fsf@gitster.dls.corp.google.com> <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
+ <20150617225224.GF4076@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>, josh@joshtriplett.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 23:26:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Josh Triplett <josh@joshtriplett.org>
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 18 23:26:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5hK5-0005ZJ-6j
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:26:09 +0200
+	id 1Z5hKa-0005yV-B7
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 23:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751526AbbFRV0F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2015 17:26:05 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:38816 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750997AbbFRV0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 17:26:02 -0400
-Received: by wibdq8 with SMTP id dq8so1202809wib.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 14:26:01 -0700 (PDT)
+	id S1751501AbbFRV0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 17:26:37 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:35517 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810AbbFRV0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 17:26:35 -0400
+Received: by obbgp2 with SMTP id gp2so62693399obb.2
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 14:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=/bKV7H2UuBHOMEhi9NaO4CsQLoYDfBGjKqB1O6yUBMQ=;
-        b=UqDEmaxuLYbFqrzs3zRAyrV9nTZi37nka0ynbgRgQ/fytbCcuhYfc/hNREPH5Twz3A
-         38WyYOgdq5zFwrb8fNsYqLDYNUjKaxN+5KHZRf2Mpxx0LXlPZhFySoNsrMWll23t61la
-         aiu7c+IfN2SbMUFINSyFU+yAoHvM+DcKyxoktryNnbGyJNJYhGdbeSihFKuslw8RRwXV
-         fGbWX6ZNFNTLmPgN/LwZJmDgMNxbYAX6Zt8EZJKgUwSyrsibR0iY9hrn5B15Zj/RyywP
-         +NUww8OUww4FIOfl7T2pARmt1mvw63Y/72kAMWqL5OLIpza2oF0i2lNryf87cD249xtT
-         Dyjg==
-X-Received: by 10.180.109.6 with SMTP id ho6mr176611wib.58.1434662760917;
-        Thu, 18 Jun 2015 14:26:00 -0700 (PDT)
-Received: from [192.168.1.53] (ewv187.neoplus.adsl.tpnet.pl. [83.20.245.187])
-        by mx.google.com with ESMTPSA id gz3sm5827681wib.0.2015.06.18.14.25.59
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jun 2015 14:25:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqq381q551o.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YsHutYplSgd6LSqtIQVTUlKf1dyf4iFotVUWK9qcvOk=;
+        b=r+sVavJ/yIkgOaoXMVIHfvHa1OnfNxHTUj+kM5f+Nly2lunSH3EGlw92amzE/vbbuz
+         otbGI/zvtS95vYtlx3GRsMlLsUz40BnOgjpYDeQsrL1WP+Fk/pJG3qjA7SOZncX6nQuH
+         zI8CkvZnA2fBOm1zId4wqg7E0K3YXFE+mpxJW/y8qNZBXE15Prtmgu84LI93ddRijS1Y
+         sgjBWL6zmmtcK0yV2B/zUXxxeIOqicCXljnWnUZ3Wrcw5jI+wyTBtspAcUZ9uZFusPPA
+         3W+KNyLBvoST8J+ZJ5j+6gH5K9zn+t3EnuzxOhthQFnVTsnFGZKMkZwG5JUi0XGOzhxH
+         SYMg==
+X-Received: by 10.202.78.214 with SMTP id c205mr10141017oib.131.1434662794764;
+ Thu, 18 Jun 2015 14:26:34 -0700 (PDT)
+Received: by 10.76.158.202 with HTTP; Thu, 18 Jun 2015 14:25:54 -0700 (PDT)
+In-Reply-To: <20150617225224.GF4076@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272079>
 
-Junio C Hamano wrote:
-> josh@joshtriplett.org writes:
+On Thu, Jun 18, 2015 at 12:52 AM, Theodore Ts'o wrote:
+> On Wed, Jun 17, 2015 at 10:26:32PM +0200, Tuncer Ayaz wrote:
+> >
+> > By allowing multiple authors, you don't have to decide who's the
+> > primary author, as in such situations usually there is no primary
+> > at all. I sometimes deliberately override the author when
+> > committing and add myself just as another co-author in the commit
+> > message, but as others have noted it would be really great if we
+> > can just specify multiple authors.
 >
->> Author and committer are used by many git tools; if they weren't par=
-t of
->> the object header, they'd need to be part of some pseudo-header with=
- a
->> standardized format that git can parse.
+> Just recently, there a major thread on the IETF mailing list where
+> IETF working group had drafts where people were listed as co-authors
+> without their permission, and were upset that the fact that their
+> name was added made it seem as if they agreed with the end product.
+> (i.e., that they were endorsing the I-D). So while adding formal
+> coauthor might solves (a few) problems, it can also introduce
+> others.
+
+You can misuse signed-off/reviewed-by/etc the same way.
+
+> Ultimately there is one person who can decide which parts of the
+> changes to put in the commit that gets sent to the maintainer. So
+> there *is* someone who is the primary author; the person who takes
+> the final pass on the patch and then hits the send key.
+
+If you (do it in isolation and) want to take full responsibility, yes,
+but I consider reviewed-by/signed-off as taking partial responsibility
+because it's a vetting process.
+
+> One could imagine some frankly, quite rare example where there is a
+> team of people who votes on each commit before it gets sent out and
+> where everyone is equal and there is no hierarchy. In that case,
+> perhaps you could set the from field to a mailing list address. But
+> honestly, how often is that *all* of the authors are completely
+> equal[1]?
+
+For that case something like patchwork, phabricator, or gerrit seems
+to be the logical tool to use, and should ideally leave a trace of
+approvals and such in the resulting commit message(s). If the patch
+management tool takes care of merging the commit(s), it can be harder
+to misattribute signed-off/reviewed-by/etc, which is a good thing.
+
+> In my personal practice, if I make significant changes to a patch, I
+> will indeed simply change the submitter, and then give credit the
+> original author. This is the case where I'm essentially saying, "Bob
+> did a lot of work, but I made a bunch of changes, so if things break
+> horribly, blame *me*, not Bob".
 >
-> Yes, the same goes to the address on Signed-off-by: footers.  There
-> recently was a series to enhance the footer list handling (Christian
-> Cc'ed) for the generation and maintenance side, and I do think it is
-> reasonable to further add enhanced support for footers.
->
-> That does not argue for having a new "coauthor" as a new commit
-> object header at all, though.
+> Alternatively, if I just need to make a few cosmetic changes to
+> Alice's patch (i.e., fix white spaces, correct spelling, change the
+> commit description so it's validly parsable and understandable
+> English, etc.), I'll just add a comment in square brackets
+> indicating what changes I made before I committed the change. This
+> seems to work just fine, and I don't think we should try to fix
+> something that isn't broken.
 
-The threshold for modifying commit object is high. This is an
-ABI-level change, something to do if there is no other solution.
+Perfectly valid use cases, but different from the scenarios Josh
+mentioned.
 
-Author and committer include datetime in the contents of the
-field, which is used by Git for heuristics limiting walk. Coauthor
-would have the same date as author, isn't it? If, after long
-and involved discussion, we didn't add 'generation' field (for
-easier cutting history walking), what chance adding 'coauthor'
-has.
-
-OTOH it would be nice to have support for .mailmap, and for
-grepping... but the former could conceivably be added to the trailer
-tool, the latter can be done with appropriate regexp in
-"git log --grep=3D...".
-
-I wonder what would break if one used 'Name <e@mai.l>, Name <em@i.l>'
-as the author...
-
---=20
-Jakub Nar=EAbski
+You could of course use multiple (everybody makes their own) commits,
+where you risk breaking bisectability and avoid the need for equal
+co-authorship support. In pair programming such intermediate commits
+will quite often be fixups, and when you attempt to squash the fixups
+for bisectability's sake, you may get a desire for co-authorship of
+the resulting commit.
