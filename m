@@ -1,8 +1,8 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v5 03/19] fsck: Provide a function to parse fsck message IDs
-Date: Thu, 18 Jun 2015 22:07:58 +0200
+Subject: [PATCH v5 06/19] fsck: Report the ID of the error/warning
+Date: Thu, 18 Jun 2015 22:08:25 +0200
 Organization: gmx
-Message-ID: <44712302530b17207465cfaa7c4ca180acbb2769.1434657920.git.johannes.schindelin@gmx.de>
+Message-ID: <d0cab23cd7755a080b4a2b9b51d65684632bf4f9.1434657920.git.johannes.schindelin@gmx.de>
 References: <cover.1422737997.git.johannes.schindelin@gmx.de>
  <cover.1434657920.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
@@ -10,111 +10,107 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 18 22:08:17 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 22:08:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5g6b-0002KR-Iq
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:08:09 +0200
+	id 1Z5g72-0002go-W0
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 22:08:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756909AbbFRUIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 16:08:06 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59254 "EHLO mout.gmx.net"
+	id S1756255AbbFRUId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 16:08:33 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53694 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756625AbbFRUID (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 16:08:03 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MgKUo-1ZSJJo3lRe-00NiG9; Thu, 18 Jun 2015 22:07:58
+	id S1756926AbbFRUIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 16:08:30 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Lj1Xa-1YZNIN2G9m-00dC1n; Thu, 18 Jun 2015 22:08:25
  +0200
 In-Reply-To: <cover.1434657920.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:7Az35+OD8OHXdf6CDIQH8BlLJiCvW7eqbrsFCniadbaXXRZU385
- jBdlvkv0KjSIp5/j8OAyKME/zS12u/vHtoa5H/rum7TayR1u9CfljCyIXQQjUtdw+RL885c
- 8bU+CKDzXj9NRm0IbhHuGOjltxk1a9LMi9bSUXuqDsuR9V73wz+pk63dMLEh/aNUp1ydbJn
- ritfX6bSBbtKDhuiFUIBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:o8aymJAb9v4=:z/uzWt9W8WR0k6RiBfbDbc
- 913Y0DQm5gnxbY4Yv0IxB66fUOlseRWCIjRPd8C1P2V8Be/OumVZmsMhPx3Wz64/oJq+g5hYu
- JVTpp9A7/gNnQIe5gknVcSPRphmDx+fAMtYnYNEygUqszmWiAepmFvAWrVJM92usV3hISvR3s
- GOVGHhp/DGunmvXAV7jknQco2TMV8QAAH++GgxhXZ2/kYEMXgNwVgT6Ccgk6RiIpw02fIyEUs
- cWvYRkhmEqdxZTS+ArAqr8MYNXGHNnoY/qBqg9BZuGcpAcRT0erKMCtBGWWUyi4S1jfdticqY
- yCp5dI2TxbjCdbdeTEQ4Xkr/OQnla7W29Y7ykQPqGHBULuCHlkqbyHqKwk7tv9i8xepgAyzPY
- Ghroc0pwtE1V09pcRY3CER128SPQdpbCDzrD/8AFXGPKwQt/usHoeEfzaNC/3czK4EdOLguSE
- Zmw5mb8dopwFT34snWg1INbCH6xFHmABNsg3PUbCYc0h3l9fZ7ak9wKs9UuvA4pjrFGN5a0+I
- 6bm+OvS7NGf0UBeqz4fq5KhhvkJE4LtdBrFIK6qVI7/oJ42eTUO+5Vg2MQgdzOo8T3kJ+f5V4
- S4lafE9uPe5aubfYoPsXcAxc8zRc7vk9eD/OUNLCcZ1gMEGhWvTsdAH0em3GoIFaf1U9BZyhv
- G2TJQz0J6NhhOE+G4uqFMFJXGzEdMR0+owdLEXB5npI8O0aSOK2wWL/oUq57VEVzDVOo=
+X-Provags-ID: V03:K0:yuEl4m/hvP0bPF6Sim6MRWeMjKzWKJ/uMZcSDWE5JwvePIiZOL5
+ drx6m6Y/7Pl4Mt0EIFFV9KWFtlWskAptdcJNoejGZWPz4CX5nRAqRBmaCDIHTBIWaBk/QPj
+ whdHbQPmZtxOw+DG6Tlfv+RvYFhkgZDilHu7GlBUCvRRQSvPiqtdiJUl2u36hWEk02eE3tB
+ tOXLVhr4psYrnGsRoIWqA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wIu2MjjV3cA=:VbOhHB0Q9+1OdWdytBsNKW
+ k5u67D2FqqCtV0mkH7SzROO8br7Yt2sOzIbSg3O1INoF53X6pfpPL9Dn6txw5VsKiLrE6nuWJ
+ pyoLBhGPaelxBaIEPsj7qkyRglofJE3hFCi+On7KmUtBzPwLYj/4gos6ofG9i9PizwOsk7T4y
+ mVz+vxzTzGzlk2ZOHWTNWYnBc9wcH8lzJTBwDupjuqo9ELYZtirLvp1RSffLuyYGi1ysNnhqQ
+ Yxk0aHu6bmjAbwwCL0h+V+aL+UEqYx0nnkIlPKf3IokFLdAsRwLVmtae20JoupUftWn7lSQ34
+ rJq89HHk9Rx1e5PDJpGMDT7ht4xeeGuc1GgaBGKJHb0FFEm9AzR7KpYOXLK8EVrZlJckM/N/u
+ BN0f9ry2PS38nc6EHWclC/2xFPAqmzD1R+2gVZKsm+1twIfckFg55hGBKdIu9BPJU9Ru7v8xi
+ dIp2XkmIx8N6yfoU0lzrbvJUEtPe3xODCvQ18tcSZS6c23njWyvncTrXJN7rsZjKm3MgzfLxv
+ JXlqcSRV5IqO7Ad2V49ZCV5iwrzIUb+4sgolAJZKcn15vJkHRoeaBnlOxwFySnRs3xHfP6sWy
+ TRMASJepGs97afxLOsTDSyIkTjwISzR66Xgz4u3PtlqDJ52ghNsbwoet7Y9FlzDxibvD940m7
+ 1TCn7U8h80pCP7H85XKPD3nZKT4yNMS/iiieklxAe0Te9w/mC5+EoC80pmHTns87DK/o=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272046>
 
-These functions will be used in the next commits to allow the user to
-ask fsck to handle specific problems differently, e.g. demoting certain
-errors to warnings. The upcoming `fsck_set_msg_types()` function has to
-handle partial strings because we would like to be able to parse, say,
-'missingemail=warn,missingtaggerentry=warn' command line parameters
-(which will be passed by receive-pack to index-pack and unpack-objects).
-
-To make the parsing robust, we generate strings from the enum keys, and
-using these keys, we match up strings without dashes case-insensitively
-to the corresponding enum values.
+Some legacy code has objects with non-fatal fsck issues; To enable the
+user to ignore those issues, let's print out the ID (e.g. when
+encountering "missingemail", the user might want to call `git config
+--add receive.fsck.missingemail=warn`).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ fsck.c          | 16 ++++++++++++++++
+ t/t1450-fsck.sh |  4 ++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/fsck.c b/fsck.c
-index ed0bfc3..4595c7f 100644
+index 0c7cc26..47cb686 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -63,15 +63,41 @@ enum fsck_msg_id {
- };
- #undef MSG_ID
+@@ -190,6 +190,20 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+ 	}
+ }
  
--#define MSG_ID(id, msg_type) { FSCK_##msg_type },
-+#define STR(x) #x
-+#define MSG_ID(id, msg_type) { STR(id), FSCK_##msg_type },
- static struct {
-+	const char *id_string;
- 	int msg_type;
- } msg_id_info[FSCK_MSG_MAX + 1] = {
- 	FOREACH_MSG_ID(MSG_ID)
--	{ -1 }
-+	{ NULL, -1 }
- };
- #undef MSG_ID
- 
-+static int parse_msg_id(const char *text, int len)
++static void append_msg_id(struct strbuf *sb, const char *msg_id)
 +{
-+	int i, j;
++	for (;;) {
++		char c = *(msg_id)++;
 +
-+	if (len < 0)
-+		len = strlen(text);
-+
-+	for (i = 0; i < FSCK_MSG_MAX; i++) {
-+		const char *key = msg_id_info[i].id_string;
-+		/* match id_string case-insensitively, without underscores. */
-+		for (j = 0; j < len; j++) {
-+			char c = *(key++);
-+			if (c == '_')
-+				c = *(key++);
-+			if (toupper(text[j]) != c)
-+				break;
-+		}
-+		if (j == len && !*key)
-+			return i;
++		if (!c)
++			break;
++		if (c != '_')
++			strbuf_addch(sb, tolower(c));
 +	}
 +
-+	return -1;
++	strbuf_addstr(sb, ": ");
 +}
 +
- static int fsck_msg_type(enum fsck_msg_id msg_id,
- 	struct fsck_options *options)
- {
+ __attribute__((format (printf, 4, 5)))
+ static int report(struct fsck_options *options, struct object *object,
+ 	enum fsck_msg_id id, const char *fmt, ...)
+@@ -198,6 +212,8 @@ static int report(struct fsck_options *options, struct object *object,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int msg_type = fsck_msg_type(id, options), result;
+ 
++	append_msg_id(&sb, msg_id_info[id].id_string);
++
+ 	va_start(ap, fmt);
+ 	strbuf_vaddf(&sb, fmt, ap);
+ 	result = options->error_func(object, msg_type, sb.buf);
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index cfb32b6..286a643 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -231,8 +231,8 @@ test_expect_success 'tag with incorrect tag name & missing tagger' '
+ 	git fsck --tags 2>out &&
+ 
+ 	cat >expect <<-EOF &&
+-	warning in tag $tag: invalid '\''tag'\'' name: wrong name format
+-	warning in tag $tag: invalid format - expected '\''tagger'\'' line
++	warning in tag $tag: invalidtagname: invalid '\''tag'\'' name: wrong name format
++	warning in tag $tag: missingtaggerentry: invalid format - expected '\''tagger'\'' line
+ 	EOF
+ 	test_cmp expect out
+ '
 -- 
 2.3.1.windows.1.9.g8c01ab4
