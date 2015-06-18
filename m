@@ -1,100 +1,91 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 2/2] rebase -i: do not leave a =?UTF-8?Q?CHERRY=5FPICK?=
- =?UTF-8?Q?=5FHEAD=20file=20behind?=
-Date: Thu, 18 Jun 2015 18:38:53 +0200
-Organization: gmx
-Message-ID: <bf1954a4447bcf99c27a566a10cb0b311221135f.1434645436.git.johannes.schindelin@gmx.de>
-References: <cover.1434627492.git.johannes.schindelin@gmx.de>
- <cover.1434645436.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
+Date: Thu, 18 Jun 2015 09:46:09 -0700
+Message-ID: <xmqqioalezhq.fsf@gitster.dls.corp.google.com>
+References: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
+	<CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
+	<CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
+	<20150617191235.GB25304@peff.net> <20150618101353.GA6525@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 18 18:39:35 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 18:46:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5cqd-0002h0-DR
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 18:39:27 +0200
+	id 1Z5cxF-0000WX-PW
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 18:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213AbbFRQjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 12:39:15 -0400
-Received: from mout.gmx.net ([212.227.15.19]:60016 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756151AbbFRQi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 12:38:59 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M7YF5-1Yt1lS2Khj-00xJW6; Thu, 18 Jun 2015 18:38:53
- +0200
-In-Reply-To: <cover.1434645436.git.johannes.schindelin@gmx.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:i3V3yBMM2C97Uy9RUFKOeSqFXQLwaNVaviLoxjHAKvbQcJ69xrI
- VTfEy7Ki0CLA9ZYd7xWoy8FNGqp0VX1DbNIwu9KuBETF/i16G0iYwzh+A7lDTcWe2Y1tAMo
- M0HI8kbGNV6xGiQv4xk8wXDkAVQZHARxxZ8YPf70uOMzCp0Ovr3ICBsNL5O1nc7qAJD7NWO
- g3ZzKOrDWczH5FIIB56xg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cLlrsaBaZbM=:F4FM48ALleWtB3UWVFWVkQ
- bh/YhtPWC1phOheBjrEJGQBTbR0/1TSvQeQmAkDHUtFFW93HXi5EoaveKPEAaP21y65Dflzwx
- raHxOXNVZssi10XoOOuh+kgDKdJmpo4RavEWpKs220OZZu4QCGWxvQydYIHchHd5JqNY+Z5AH
- 04tUaZ5MhkDRJtmHjEQrmmhZB6BMMkpmr4UtOUjaEU4VWOFAjrALbk3Nq4bG7SnuZr+DhUZqk
- oIt26xaFVTd6TtS/YqipRqQOJdL9OxXSrPWc0XddR/9CVpHuWUXoEikmm5k66n6kjMPw5M50m
- x047CQZn9/cGGVg6rzZhiPyxDfZF/aYQHq+7K4BwbFSUX6TdGCU9BZxTsnt7D+YGvBssh/8MD
- bMwvfXJMA9Dx1Lr/6OlObMLKEByeLRLNCS4oKh2SBFuAsqO3FeNqWeWtxmMUVq6qVyaebEsAu
- 1JNb12sz30aCwIvNa2LKUeimNVVj+Adbrx+9ERiOy6BIwUIow+qC7eFI/Txq+Cjyfy4VQKfWS
- 8ph9EefyepD70v8Y4Rp6muSlXEtgHPPTei/h0WnORFN4HoJtxuF5sbGcdzH/XOxxcQO551Pr9
- 5XLkN/ev3hbeb0/VW/joKaUC86opI1nA1tTTTOe+MbhW1J9oELaARvElSSuvUesGGFOGfoleB
- p3ISo7zK4p5xyiv8Q22+vxvnGt3V3rNjgwToedvGQpnL0FIl1iZDg4MkpvXHFQW3e/Qw=
+	id S1751961AbbFRQqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 12:46:13 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:35316 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514AbbFRQqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 12:46:11 -0400
+Received: by igbzc4 with SMTP id zc4so131593911igb.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 09:46:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=3zsCyI6NvyeOWFfng9QQpKYgEwKxw9bh9KrdoyTYJ9w=;
+        b=XG/XOQ9YX0Md/+EGijs0fRSmWsDVJQOXTa98eos54fGvt6V0aYeMuBHLWbjAtQJV0g
+         z2BJNc3wP2bQOEKEXK5t0JwfdVgYG6OVPTsr4d1ekY1qm99ohLNjR1YBl0v/pBV1S/i5
+         KGl1hsBgmVhAIyU+MAw9KLSeyLXujXynSWCr2iLHpXCA6bjLykcIWQ1npzfycfDFJrzl
+         2/a4vlhH6ksEMoqpkb7bt1UGCAr8RuM8KlyQUHZSWiIM4PnBnGZz54MorHZPf3lUIUq0
+         5OlN95ClQAUTn28sQ8lGju3Zwg4QelGjsk63ox5FNapkGJEMtbRpWejLCT+1eSXSxjaQ
+         HjpQ==
+X-Received: by 10.107.15.40 with SMTP id x40mr16546833ioi.0.1434645971057;
+        Thu, 18 Jun 2015 09:46:11 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id k16sm14612978igf.19.2015.06.18.09.46.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 09:46:10 -0700 (PDT)
+In-Reply-To: <20150618101353.GA6525@lanh> (Duy Nguyen's message of "Thu, 18
+	Jun 2015 17:13:53 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272027>
 
-When skipping commits whose changes were already applied via `git rebase
---continue`, we need to clean up said file explicitly.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-The same is not true for `git rebase --skip` because that will execute
-`git reset --hard` as part of the "skip" handling in git-rebase.sh, even
-before git-rebase--interactive.sh is called.
+> The last resort is simply filter out a whole class of warnings.
+> Probably good enough if both patches look equally ugly.
+>
+> -- 8< --
+> Subject: [PATCH] strbuf: kill strbuf_slopbuf, in favor of ""
+>
+> A lot of "out-of-bound access" warnings on scan.coverity.com is because
+> it does not realize this strbuf_slopbuf[] is in fact initialized with a
+> single and promised to never change. But that promise could be broken if
+> some caller attempts to write to strbuf->buf[0] write after STRBUF_INIT.
+>
+> We really can't do much about it. But we can try to put strbuf_slopbuf
+> in .rodata section, where writes will be caught by the OS with memory
+> protection support. The only drawback is people can't do
+> "buf->buf == strbuf_slopbuf" any more. Luckily nobody does that in the
+> current code base.
+> ---
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-rebase--interactive.sh    | 6 +++++-
- t/t3404-rebase-interactive.sh | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+Hmph, would declaring slopbuf as "const char [1]" (and sprinkling
+the "(char *)" cast) have the same effect, I wonder?
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index dc3133f..5ff0f1c 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -849,7 +849,11 @@ continue)
- 	# do we have anything to commit?
- 	if git diff-index --cached --quiet HEAD --
- 	then
--		: Nothing to commit -- skip this
-+		# Nothing to commit -- skip this commit
-+
-+		test ! -f "$GIT_DIR"/CHERRY_PICK_HEAD ||
-+		rm "$GIT_DIR"/CHERRY_PICK_HEAD ||
-+		die "Could not remove CHERRY_PICK_HEAD"
- 	else
- 		if ! test -f "$author_script"
- 		then
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 6fe6c47..6bcf18b 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1102,7 +1102,7 @@ test_expect_success 'rebase -i commits that overwrite untracked files (no ff)' '
- 	test $(git cat-file commit HEAD | sed -ne \$p) = I
- '
- 
--test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
-+test_expect_success 'rebase --continue removes CHERRY_PICK_HEAD' '
- 	git checkout -b commit-to-skip &&
- 	for double in X 3 1
- 	do
--- 
-2.3.1.windows.1.9.g8c01ab4
+> +static inline void strbuf_terminate(struct strbuf *sb)
+> +{
+> +	if (sb->buf[sb->len])
+> +		sb->buf[sb->len] = '\0';
+> +}
+
+This is so that you can call things like strbuf_rtrim() immediately
+after running strbuf_init() safely, but I think it needs a comment
+to save people from wondering what is going on, e.g. "this is not an
+optimization to avoid assigning NUL to a place that is already NUL;
+a freshly initialized strbuf points at an unwritable piece of NUL
+and we do not want to cause a SEGV".
