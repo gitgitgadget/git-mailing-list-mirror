@@ -1,386 +1,139 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v4 15/19] pull: teach git pull about --rebase
-Date: Thu, 18 Jun 2015 18:54:08 +0800
-Message-ID: <1434624852-6869-16-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v4 16/19] pull: configure --rebase via branch.<name>.rebase or pull.rebase
+Date: Thu, 18 Jun 2015 18:54:09 +0800
+Message-ID: <1434624852-6869-17-git-send-email-pyokagan@gmail.com>
 References: <1434624852-6869-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stephen Robin <stephen.robin@gmail.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 13:08:12 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 13:08:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5Xfu-0004kt-GK
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:08:03 +0200
+	id 1Z5XgC-000571-EN
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754323AbbFRLHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 07:07:32 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:34899 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932070AbbFRKza (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 06:55:30 -0400
-Received: by pdbci14 with SMTP id ci14so5703485pdb.2
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 03:55:29 -0700 (PDT)
+	id S1754496AbbFRLHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 07:07:30 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:33876 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932131AbbFRKzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 06:55:33 -0400
+Received: by pdbki1 with SMTP id ki1so64224682pdb.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 03:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lqSLCuVdJhxKq2fzKAoz8uTGzwgsDAwCw1kZCZktiRs=;
-        b=b9U+WEPV+BvnsmhAPYdboD17uxOTElUH4wnIL7pfeiMvs6nD+n7anVeN78qunHye0W
-         ExPfGCv95rzDFSoC/c6GtcD478Y+nmOshwJbNFIns/XUep5MneQCk3LIs4JtuKs9XtrT
-         GxYFh7GiZf0qu0oxIq+cI08nQw66myaApDaUye+D1n4PKMh7SHbbd3Tvh1yxeEl0k3yQ
-         RtYnk7skUakTW97bb9BNTO5+Row+pR8nQFPGrH2IbkAMylBWmIrBWd2BjVerhSWC+d4F
-         PyTSLTvpzfPMiYNIEMPufbEjg34CTJX8VWXs7OcG2IKBvKEw1Z3eyFlyW8+yO8uvbfKE
-         764Q==
-X-Received: by 10.66.122.144 with SMTP id ls16mr11501763pab.47.1434624929088;
-        Thu, 18 Jun 2015 03:55:29 -0700 (PDT)
+        bh=zq/ZdtpMi8ZxyFrBMCxPGT8z3v1XMao4Q9x1U+yNcx0=;
+        b=wtHgq5+Tox3qaNNroV1ANxd3MboRyE92k7YZ5XAFe3Fo9BZ6MW1oIqtqcDDxvKpg32
+         VvvVSkum8XinDP4cM6SpRiuy87THZsi3f3iyLUXTbPKJlk6A8dzCY52FjyqqsmHaLEQv
+         LyIzxU3ieX85aqrK6TIbpyOTpHNQp8pjClInc9En4fWV1rlOv59n/i+q7/nQmjRs/Q3S
+         yDx6Ul42PYhM9tDFZt5p1+F2hRvcI+X5idtB1ujZUf3SNjOhWsOqha30oHDrGXbt4fhX
+         Zf59fl2kRgWLymQ2Vw5K3FSk1EsYvxibz+LW9md1I4CVIhBQoz2201vg+0jx74jE+s4A
+         +lsQ==
+X-Received: by 10.70.88.43 with SMTP id bd11mr19935479pdb.7.1434624932698;
+        Thu, 18 Jun 2015 03:55:32 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id eu5sm7735063pac.37.2015.06.18.03.55.23
+        by mx.google.com with ESMTPSA id eu5sm7735063pac.37.2015.06.18.03.55.29
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Jun 2015 03:55:25 -0700 (PDT)
+        Thu, 18 Jun 2015 03:55:31 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1434624852-6869-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271961>
 
-Since cd67e4d (Teach 'git pull' about --rebase, 2007-11-28), if the
---rebase option is set, git-rebase is run instead of git-merge.
+Since cd67e4d (Teach 'git pull' about --rebase, 2007-11-28),
+fetch+rebase could be set by default by defining the config variable
+branch.<name>.rebase. This setting can be overriden on the command line
+by --rebase and --no-rebase.
 
-Re-implement this by introducing run_rebase(), which is called instead
-of run_merge() if opt_rebase is a true value.
+Since 6b37dff (pull: introduce a pull.rebase option to enable --rebase,
+2011-11-06), git-pull --rebase can also be configured via the
+pull.rebase configuration option.
 
-Since c85c792 (pull --rebase: be cleverer with rebased upstream
-branches, 2008-01-26), git-pull handles the case where the upstream
-branch was rebased since it was last fetched. The fork point (old remote
-ref) of the branch from the upstream branch is calculated before fetch,
-and then rebased from onto the new remote head (merge_head) after fetch.
-
-Re-implement this by introducing get_merge_branch_2() and
-get_merge_branch_1() to find the upstream branch for the
-specified/current branch, and get_rebase_fork_point() which will find
-the fork point between the upstream branch and current branch.
-
-However, the above change created a problem where git-rebase cannot
-detect commits that are already upstream, and thus may result in
-unnecessary conflicts. cf65426 (pull --rebase: Avoid spurious conflicts
-and reapplying unnecessary patches, 2010-08-12) fixes this by ignoring
-the above old remote ref if it is contained within the merge base of the
-merge head and the current branch.
-
-This is re-implemented in run_rebase() where fork_point is not used if
-it is the merge base returned by get_octopus_merge_base().
+Re-implement support for these two configuration settings by introducing
+config_get_rebase() which is called before parse_options() to set the
+default value of opt_rebase.
 
 Helped-by: Stefan Beller <sbeller@google.com>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Helped-by: Duy Nguyen <pclouds@gmail.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/pull.c | 247 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 245 insertions(+), 2 deletions(-)
+
+Notes:
+    v4
+    
+    * Fixed the use-after-free. Thanks Duy for catching it.
+
+ builtin/pull.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index 98caffe..33a7b98 100644
+index 33a7b98..1c4fb44 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -15,6 +15,53 @@
- #include "dir.h"
- #include "refs.h"
- 
-+enum rebase_type {
-+	REBASE_INVALID = -1,
-+	REBASE_FALSE = 0,
-+	REBASE_TRUE,
-+	REBASE_PRESERVE
-+};
-+
-+/**
-+ * Parses the value of --rebase. If value is a false value, returns
-+ * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
-+ * "preserve", returns REBASE_PRESERVE. If value is a invalid value, dies with
-+ * a fatal error if fatal is true, otherwise returns REBASE_INVALID.
-+ */
-+static enum rebase_type parse_config_rebase(const char *key, const char *value,
-+		int fatal)
-+{
-+	int v = git_config_maybe_bool("pull.rebase", value);
-+
-+	if (!v)
-+		return REBASE_FALSE;
-+	else if (v > 0)
-+		return REBASE_TRUE;
-+	else if (!strcmp(value, "preserve"))
-+		return REBASE_PRESERVE;
-+
-+	if (fatal)
-+		die(_("Invalid value for %s: %s"), key, value);
-+	else
-+		error(_("Invalid value for %s: %s"), key, value);
-+
-+	return REBASE_INVALID;
-+}
-+
-+/**
-+ * Callback for --rebase, which parses arg with parse_config_rebase().
-+ */
-+static int parse_opt_rebase(const struct option *opt, const char *arg, int unset)
-+{
-+	enum rebase_type *value = opt->value;
-+
-+	if (arg)
-+		*value = parse_config_rebase("--rebase", arg, 0);
-+	else
-+		*value = unset ? REBASE_FALSE : REBASE_TRUE;
-+	return *value == REBASE_INVALID ? -1 : 0;
-+}
-+
- static const char * const pull_usage[] = {
- 	N_("git pull [options] [<repository> [<refspec>...]]"),
- 	NULL
-@@ -24,7 +71,8 @@ static const char * const pull_usage[] = {
- static int opt_verbosity;
+@@ -72,7 +72,7 @@ static int opt_verbosity;
  static char *opt_progress;
  
--/* Options passed to git-merge */
-+/* Options passed to git-merge or git-rebase */
-+static enum rebase_type opt_rebase;
+ /* Options passed to git-merge or git-rebase */
+-static enum rebase_type opt_rebase;
++static enum rebase_type opt_rebase = -1;
  static char *opt_diffstat;
  static char *opt_log;
  static char *opt_squash;
-@@ -58,8 +106,12 @@ static struct option pull_options[] = {
- 		N_("force progress reporting"),
- 		PARSE_OPT_NOARG),
- 
--	/* Options passed to git-merge */
-+	/* Options passed to git-merge or git-rebase */
- 	OPT_GROUP(N_("Options related to merging")),
-+	{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase,
-+	  N_("false|true|preserve"),
-+	  N_("incorporate changes by rebasing rather than merging"),
-+	  PARSE_OPT_OPTARG, parse_opt_rebase },
- 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
- 		N_("do not show a diffstat at the end of the merge"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-@@ -449,11 +501,194 @@ static int run_merge(void)
- 	return ret;
+@@ -266,6 +266,36 @@ static const char *config_get_ff(void)
  }
  
-+/**
-+ * Returns remote's upstream branch for the current branch. If remote is NULL,
-+ * the current branch's configured default remote is used. Returns NULL if
-+ * `remote` does not name a valid remote, HEAD does not point to a branch,
-+ * remote is not the branch's configured remote or the branch does not have any
-+ * configured upstream branch.
+ /**
++ * Returns the default configured value for --rebase. It first looks for the
++ * value of "branch.$curr_branch.rebase", where $curr_branch is the current
++ * branch, and if HEAD is detached or the configuration key does not exist,
++ * looks for the value of "pull.rebase". If both configuration keys do not
++ * exist, returns REBASE_FALSE.
 + */
-+static const char *get_upstream_branch(const char *remote)
++static enum rebase_type config_get_rebase(void)
 +{
-+	struct remote *rm;
-+	struct branch *curr_branch;
-+	const char *curr_branch_remote;
++	struct branch *curr_branch = branch_get("HEAD");
++	const char *value;
 +
-+	rm = remote_get(remote);
-+	if (!rm)
-+		return NULL;
++	if (curr_branch) {
++		char *key = xstrfmt("branch.%s.rebase", curr_branch->name);
 +
-+	curr_branch = branch_get("HEAD");
-+	if (!curr_branch)
-+		return NULL;
++		if (!git_config_get_value(key, &value)) {
++			enum rebase_type ret = parse_config_rebase(key, value, 1);
++			free(key);
++			return ret;
++		}
 +
-+	curr_branch_remote = remote_for_branch(curr_branch, NULL);
-+	assert(curr_branch_remote);
++		free(key);
++	}
 +
-+	if (strcmp(curr_branch_remote, rm->name))
-+		return NULL;
++	if (!git_config_get_value("pull.rebase", &value))
++		return parse_config_rebase("pull.rebase", value, 1);
 +
-+	return branch_get_upstream(curr_branch, NULL);
++	return REBASE_FALSE;
 +}
 +
 +/**
-+ * Derives the remote tracking branch from the remote and refspec.
-+ *
-+ * FIXME: The current implementation assumes the default mapping of
-+ * refs/heads/<branch_name> to refs/remotes/<remote_name>/<branch_name>.
-+ */
-+static const char *get_tracking_branch(const char *remote, const char *refspec)
-+{
-+	struct refspec *spec;
-+	const char *spec_src;
-+	const char *merge_branch;
-+
-+	spec = parse_fetch_refspec(1, &refspec);
-+	spec_src = spec->src;
-+	if (!*spec_src || !strcmp(spec_src, "HEAD"))
-+		spec_src = "HEAD";
-+	else if (skip_prefix(spec_src, "heads/", &spec_src))
-+		;
-+	else if (skip_prefix(spec_src, "refs/heads/", &spec_src))
-+		;
-+	else if (starts_with(spec_src, "refs/") ||
-+		starts_with(spec_src, "tags/") ||
-+		starts_with(spec_src, "remotes/"))
-+		spec_src = "";
-+
-+	if (*spec_src) {
-+		if (!strcmp(remote, "."))
-+			merge_branch = mkpath("refs/heads/%s", spec_src);
-+		else
-+			merge_branch = mkpath("refs/remotes/%s/%s", remote, spec_src);
-+	} else
-+		merge_branch = NULL;
-+
-+	free_refspec(1, spec);
-+	return merge_branch;
-+}
-+
-+/**
-+ * Given the repo and refspecs, sets fork_point to the point at which the
-+ * current branch forked from its remote tracking branch. Returns 0 on success,
-+ * -1 on failure.
-+ */
-+static int get_rebase_fork_point(unsigned char *fork_point, const char *repo,
-+		const char *refspec)
-+{
-+	int ret;
-+	struct branch *curr_branch;
-+	const char *remote_branch;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	curr_branch = branch_get("HEAD");
-+	if (!curr_branch)
-+		return -1;
-+
-+	if (refspec)
-+		remote_branch = get_tracking_branch(repo, refspec);
-+	else
-+		remote_branch = get_upstream_branch(repo);
-+
-+	if (!remote_branch)
-+		return -1;
-+
-+	argv_array_pushl(&cp.args, "merge-base", "--fork-point",
-+			remote_branch, curr_branch->name, NULL);
-+	cp.no_stdin = 1;
-+	cp.no_stderr = 1;
-+	cp.git_cmd = 1;
-+
-+	ret = capture_command(&cp, &sb, GIT_SHA1_HEXSZ);
-+	if (ret)
-+		goto cleanup;
-+
-+	ret = get_sha1_hex(sb.buf, fork_point);
-+	if (ret)
-+		goto cleanup;
-+
-+cleanup:
-+	strbuf_release(&sb);
-+	return ret ? -1 : 0;
-+}
-+
-+/**
-+ * Sets merge_base to the octopus merge base of curr_head, merge_head and
-+ * fork_point. Returns 0 if a merge base is found, 1 otherwise.
-+ */
-+static int get_octopus_merge_base(unsigned char *merge_base,
-+		const unsigned char *curr_head,
-+		const unsigned char *merge_head,
-+		const unsigned char *fork_point)
-+{
-+	struct commit_list *revs = NULL, *result;
-+
-+	commit_list_insert(lookup_commit_reference(curr_head), &revs);
-+	commit_list_insert(lookup_commit_reference(merge_head), &revs);
-+	if (!is_null_sha1(fork_point))
-+		commit_list_insert(lookup_commit_reference(fork_point), &revs);
-+
-+	result = reduce_heads(get_octopus_merge_bases(revs));
-+	free_commit_list(revs);
-+	if (!result)
-+		return 1;
-+
-+	hashcpy(merge_base, result->item->object.sha1);
-+	return 0;
-+}
-+
-+/**
-+ * Given the current HEAD SHA1, the merge head returned from git-fetch and the
-+ * fork point calculated by get_rebase_fork_point(), runs git-rebase with the
-+ * appropriate arguments and returns its exit status.
-+ */
-+static int run_rebase(const unsigned char *curr_head,
-+		const unsigned char *merge_head,
-+		const unsigned char *fork_point)
-+{
-+	int ret;
-+	unsigned char oct_merge_base[GIT_SHA1_RAWSZ];
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+
-+	if (!get_octopus_merge_base(oct_merge_base, curr_head, merge_head, fork_point))
-+		if (!is_null_sha1(fork_point) && !hashcmp(oct_merge_base, fork_point))
-+			fork_point = NULL;
-+
-+	argv_array_push(&args, "rebase");
-+
-+	/* Shared options */
-+	argv_push_verbosity(&args);
-+
-+	/* Options passed to git-rebase */
-+	if (opt_rebase == REBASE_PRESERVE)
-+		argv_array_push(&args, "--preserve-merges");
-+	if (opt_diffstat)
-+		argv_array_push(&args, opt_diffstat);
-+	argv_array_pushv(&args, opt_strategies.argv);
-+	argv_array_pushv(&args, opt_strategy_opts.argv);
-+	if (opt_gpg_sign)
-+		argv_array_push(&args, opt_gpg_sign);
-+
-+	argv_array_push(&args, "--onto");
-+	argv_array_push(&args, sha1_to_hex(merge_head));
-+
-+	if (fork_point && !is_null_sha1(fork_point))
-+		argv_array_push(&args, sha1_to_hex(fork_point));
-+	else
-+		argv_array_push(&args, sha1_to_hex(merge_head));
-+
-+	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+	argv_array_clear(&args);
-+	return ret;
-+}
-+
- int cmd_pull(int argc, const char **argv, const char *prefix)
- {
- 	const char *repo, **refspecs;
- 	struct sha1_array merge_heads = SHA1_ARRAY_INIT;
- 	unsigned char orig_head[GIT_SHA1_RAWSZ], curr_head[GIT_SHA1_RAWSZ];
-+	unsigned char rebase_fork_point[GIT_SHA1_RAWSZ];
+  * Appends merge candidates from FETCH_HEAD that are not marked not-for-merge
+  * into merge_heads.
+  */
+@@ -707,6 +737,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (!opt_ff)
+ 		opt_ff = xstrdup_or_null(config_get_ff());
  
- 	if (!getenv("_GIT_USE_BUILTIN_PULL")) {
- 		const char *path = mkpath("%s/git-pull", git_exec_path());
-@@ -483,6 +718,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (get_sha1("HEAD", orig_head))
- 		hashclr(orig_head);
- 
-+	if (opt_rebase)
-+		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
-+			hashclr(rebase_fork_point);
++	if (opt_rebase < 0)
++		opt_rebase = config_get_rebase();
 +
- 	if (run_fetch(repo, refspecs))
- 		return 1;
+ 	git_config(git_default_config, NULL);
  
-@@ -524,6 +763,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		if (merge_heads.nr > 1)
- 			die(_("Cannot merge multiple branches into empty head."));
- 		return pull_into_void(*merge_heads.sha1, curr_head);
-+	} else if (opt_rebase) {
-+		if (merge_heads.nr > 1)
-+			die(_("Cannot rebase onto multiple branches."));
-+		return run_rebase(curr_head, *merge_heads.sha1, rebase_fork_point);
- 	} else
- 		return run_merge();
- }
+ 	if (read_cache_unmerged())
 -- 
 2.1.4
