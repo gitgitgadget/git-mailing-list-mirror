@@ -1,98 +1,62 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/WIP v3 30/31] am: implement --committer-date-is-author-date
-Date: Thu, 18 Jun 2015 19:25:42 +0800
-Message-ID: <1434626743-8552-31-git-send-email-pyokagan@gmail.com>
-References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Paul Tan <pyokagan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 13:28:19 2015
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: Git completion not using ls-remote to auto-complete during push
+Date: Thu, 18 Jun 2015 13:29:33 +0200
+Message-ID: <1434626973-4801-1-git-send-email-szeder@ira.uka.de>
+References: <CAHd499Dk44Fq5c_wadxT_kuCs5BdkRwKZWOHyAgE4oi7pezxPw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Stefan=20N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>,
+	Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 13:30:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5XzI-0005sK-Fn
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:28:04 +0200
+	id 1Z5Y1L-0007vQ-1B
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 13:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932324AbbFRL1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 07:27:54 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:35998 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755065AbbFRL1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 07:27:31 -0400
-Received: by paceq1 with SMTP id eq1so35066470pac.3
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 04:27:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4JdNdNEapCJvfeoiuOIj6XtvtcoJJ72fvMT8sNduQr0=;
-        b=jakDcf5dWSVxYNk0nMuLz/ImIElHQfjQyRjb7dZ8riBFKeJyMGQm9COvDkurc5bYVu
-         yB5q9xrJgzVYIVGUNFF5fd7izCtlXWX1fs6RQ/gB1duXVbv8+fAVXk2kBxG0UhbSCCQk
-         eDqu9SCZFSgTB+B7xi3b+HDYi1pEsFIXK7SRfqDTc64YpJ8HC5aQoL5egGmrbvZLtg0Q
-         j08uZEYs+9QBmmugCuWhU3yBkRc2PhtJ0oEA1ruxhTQ38fF8BDBMN2QPnjwifHWVdwlj
-         hyaiObv3ayDC3KA1we5DEQNBetXPXqso1R/3osu2Jgmu9DTrl6ozIHXtwiEmJNXjZ3Pl
-         KLYw==
-X-Received: by 10.68.235.38 with SMTP id uj6mr20388196pbc.57.1434626850611;
-        Thu, 18 Jun 2015 04:27:30 -0700 (PDT)
-Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id j9sm5443016pdl.65.2015.06.18.04.27.28
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Jun 2015 04:27:29 -0700 (PDT)
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	id S1754152AbbFRLaH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2015 07:30:07 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:41074 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751850AbbFRLaG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2015 07:30:06 -0400
+Received: from x590cb72b.dyn.telefonica.de ([89.12.183.43] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
+	iface 141.3.10.81 id 1Z5Y1C-0003n5-6n; Thu, 18 Jun 2015 13:30:03 +0200
+X-Mailer: git-send-email 2.4.3.429.gcd1050e
+In-Reply-To: <CAHd499Dk44Fq5c_wadxT_kuCs5BdkRwKZWOHyAgE4oi7pezxPw@mail.gmail.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1434627003.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/271997>
 
-Since 3f01ad6 (am: Add --committer-date-is-author-date option,
-2009-01-22), git-am.sh implemented the --committer-date-is-author-date
-option, which tells git-am to use the timestamp recorded in the email
-message as both author and committer date.
+Quoting Robert Dailey <rcdailey.lists@gmail.com>
+> I do the following:
+>=20
+> $ git push origin :topic
+>=20
+> If I stop halfway through typing 'topic' and hit TAB, auto-completion
+> does not work if I do not have a local branch by that name (sometimes
+> I delete my local branch first, then I push to delete it remotely). I
+> thought that git completion code was supposed to use ls-remote to aut=
+o
+> complete refs used in push operations. Is this supposed to work?
 
-Re-implement this option in builtin/am.c.
+It's intentional.  Running 'git ls-remote' with a far away remote can
+take ages, so instead we grab the refs on the remote from the locally
+stored refs under 'refs/remotes/<remote>/'.
 
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
- builtin/am.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+See e832f5c096 (completion: avoid ls-remote in certain scenarios,
+2013-05-28).  The commit message mentions that you can "force"
+completion of remote refs via 'git ls-remote' by starting with the full
+refname, i.e.  'refs/<TAB>', however, that seems to work only on the
+left hand side of the colon in the push refspec.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 6623b49..608a2da 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -130,6 +130,8 @@ struct am_state {
- 	/* override error message when patch failure occurs */
- 	const char *resolvemsg;
- 
-+	int committer_date_is_author_date;
-+
- 	int ignore_date;
- 
- 	int rebasing;
-@@ -1136,6 +1138,10 @@ static void do_commit(const struct am_state *state)
- 			state->ignore_date ? NULL : state->author_date.buf,
- 			IDENT_STRICT);
- 
-+	if (state->committer_date_is_author_date)
-+		setenv("GIT_COMMITTER_DATE",
-+			state->ignore_date ? "" : state->author_date.buf, 1);
-+
- 	if (commit_tree(state->msg.buf, state->msg.len, tree, parents, commit,
- 				author, NULL))
- 		die(_("failed to write commit object"));
-@@ -1524,6 +1530,9 @@ static struct option am_options[] = {
- 	OPT_CMDMODE(0, "abort", &opt_resume,
- 		N_("restore the original branch and abort the patching operation."),
- 		RESUME_ABORT),
-+	OPT_BOOL(0, "committer-date-is-author-date",
-+		&state.committer_date_is_author_date,
-+		N_("lie about committer date")),
- 	OPT_BOOL(0, "ignore-date", &state.ignore_date,
- 		N_("use current timestamp for author date")),
- 	OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
--- 
-2.1.4
+G=C3=A1bor
