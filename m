@@ -1,85 +1,73 @@
-From: Luke Diamand <luke@diamand.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: BUG: checkout won't checkout?
-Date: Thu, 18 Jun 2015 23:47:03 +0100
-Message-ID: <CAE5ih79KhNXqvSNW-w8pMmiys2Dv24Rt4KFdRdoA9EuPDS3ELw@mail.gmail.com>
+Date: Thu, 18 Jun 2015 15:53:51 -0700
+Message-ID: <xmqqvbekbpc0.fsf@gitster.dls.corp.google.com>
 References: <CAE5ih7-=WPme_BxgAjtm9hrShxTk1z+uDM-LXzc3BcN3n2vqAg@mail.gmail.com>
 	<xmqq4mm4d53f.fsf@gitster.dls.corp.google.com>
+	<CAE5ih79KhNXqvSNW-w8pMmiys2Dv24Rt4KFdRdoA9EuPDS3ELw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 00:47:23 2015
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Fri Jun 19 00:54:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5iag-00064n-EH
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 00:47:22 +0200
+	id 1Z5ih4-00045y-Ps
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 00:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbbFRWrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 18:47:11 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:33564 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbbFRWrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 18:47:05 -0400
-Received: by obbkn5 with SMTP id kn5so35264332obb.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 15:47:04 -0700 (PDT)
+	id S1751932AbbFRWxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 18:53:55 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:36222 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751576AbbFRWxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 18:53:53 -0400
+Received: by igbiq7 with SMTP id iq7so2397459igb.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 15:53:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2d+xVbeBkD2NsVF0SXZTmQWGe1xBuzgpYy2VYQf+PWY=;
-        b=PGuD7imADq/wSWxfVXIgARoYTv/gbDwRbBNxFnMPgunGH8F9lokwtJSexNV9extoI7
-         iIX+I/0Vk/faG5RyoyUFaA27qKKCt+thpT3Oe2Hnb1NSC/0haC3e/f8J048jAaaHQ6Xp
-         MYnTNnxQRMW5bziqcvTY94NUO3vldubTL6dEw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=2d+xVbeBkD2NsVF0SXZTmQWGe1xBuzgpYy2VYQf+PWY=;
-        b=GaDwC8Yyq83pI8wyzcNpExMHOLxfm9yUQmM9NLkeJpWu4jGW0xOQ/3VC+smC5vK4f5
-         a+2OWhoFNA3m9tcUn7hXzj+zmbrm10XcyEjVEI/4r1FvBAv1G/llGebdMGT43hT1GMZk
-         rthUKIkuFIoPXdTXJSbO20jUzJguyhNKTa0NWqjf5Jg/D9JpTQypzQ5VEIQ/S2NP01s8
-         Lq38E2exP7Hwq0ciQ2RQuwjNASXrd09EzrjzPmz9fq0zBIxNmhT5iz8Q1lbiknqvn5A0
-         ttUVbt60utQnliyFPl3AM5LOo8kmEqebjlRpyM7vBj2pN/c4Nf8qkjYa1PPrQThrr98k
-         PXnQ==
-X-Gm-Message-State: ALoCoQlZGhAk61VMvMxJyIcbp/qF3eYygrZykeMt5QhIwqC20QxnwK4RWo/otDlcJ3kue00MBX4x
-X-Received: by 10.202.198.151 with SMTP id w145mr470899oif.72.1434667624080;
- Thu, 18 Jun 2015 15:47:04 -0700 (PDT)
-Received: by 10.60.162.5 with HTTP; Thu, 18 Jun 2015 15:47:03 -0700 (PDT)
-In-Reply-To: <xmqq4mm4d53f.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=nmTqOcG6NnPIHvR/VIQk+9dePfHyF75an/9oBJODSAU=;
+        b=ZMzFi1LWH+K6Ms7+D66ZAuHy6uPIcU7ViyN+w0A9sluNBxixSuBAV/qldoBrV9VXyj
+         pHthCkDSeXgQ0PY1tFXwTlNc5fkS0iVGSKcfvP6ru4mc3VLLFGSQQph+k0Ibuq6BcQyn
+         +davXpA5QWVF1YhbIc4vHYBmjfImsfRG0FudUl66AIZ5mvcMQAg1FZ/hfSwGSf7H2BPK
+         VE+PSXOqC+z3j+UhAB8BQuieVqtqivw023bsRIo1vcK6QAIeCFSd8e8G+3uZVKAnYuEK
+         7ycKEp3mGac7bbyC0SnkZ3XxdQoEOe/u2aGAEMfW8Z40m026SDpIIorqD7UOkUW5n4fg
+         H0qg==
+X-Received: by 10.107.168.72 with SMTP id r69mr6505089ioe.4.1434668033205;
+        Thu, 18 Jun 2015 15:53:53 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id a139sm5852957ioa.14.2015.06.18.15.53.52
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 15:53:52 -0700 (PDT)
+In-Reply-To: <CAE5ih79KhNXqvSNW-w8pMmiys2Dv24Rt4KFdRdoA9EuPDS3ELw@mail.gmail.com>
+	(Luke Diamand's message of "Thu, 18 Jun 2015 23:47:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272092>
 
-On 18 June 2015 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
-> Luke Diamand <luke@diamand.org> writes:
->
->> This is probably user error, but I'm not sure what I'm doing wrong.
->> I'm posting here in case anyone else gets the same thing
+Luke Diamand <luke@diamand.org> writes:
+
+>>> $ git checkout upstream/master -- subtree
+>>> $ git diff upstream/master -- subtree
+>>> -- still lots of deltas
 >>
->> I'm using 2.4.4.598.gd7bed1d, i.e. 'next' as of today.
->>
->> I've somehow ended up with history skipping back in time, but git not
->> prepared to let let me fix it, or something.
->>
->> $ git diff upstream/master -- subtree
->>  - lots of deltas, which look like I've reverted this back several
->> revisions (which I haven't AFAIK)
+>> Does this show _ONLY_ additions?  Or does it include modifications
+>> and removals?
 >
-> Are you on the right branch that you think you are working on?
+> There are indeed _ONLY_ additions.
 
-Yes.
+http://thread.gmane.org/gmane.comp.version-control.git/234903/focus=234912
+http://thread.gmane.org/gmane.comp.version-control.git/234903/focus=234924
 
->
->> $ git checkout upstream/master -- subtree
->> $ git diff upstream/master -- subtree
->> -- still lots of deltas
->
-> Does this show _ONLY_ additions?  Or does it include modifications
-> and removals?
+In short, it is an intended behaviour, both Peff and I consider that
+the intention is bad and the behaviour should be changed.
 
-There are indeed _ONLY_ additions.
+But nothing has happened yet (it is listed as one of the "leftover
+bits" http://git-blame.blogspot.com/p/leftover-bits.html).
