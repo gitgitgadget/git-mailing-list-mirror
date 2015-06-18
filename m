@@ -1,85 +1,153 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] t3404: demonstrate =?UTF-8?Q?CHERRY=5FPICK=5FHEAD?=
- =?UTF-8?Q?=20bug?=
-Date: Thu, 18 Jun 2015 18:16:19 +0200
-Organization: gmx
-Message-ID: <0f55232f453ab3a75bafe17db2744552@www.dscho.org>
-References: <20150616140612.Horde.a1irZQmh2o42SqDfxAytHg1@webmail.informatik.kit.edu>
- <cover.1434528725.git.johannes.schindelin@gmx.de>
- <f76ca5d0b6687a4d2ee4f587d8ba75a643a33c04.1434528725.git.johannes.schindelin@gmx.de>
- <xmqqtwu66xzg.fsf@gitster.dls.corp.google.com>
- <c2b427850cc6f298bee017123639c4df@www.dscho.org>
- <xmqqoakdf1lu.fsf@gitster.dls.corp.google.com>
+From: Patrick Palka <patrick@parcs.ath.cx>
+Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight
+ unevenly-sized hunks
+Date: Thu, 18 Jun 2015 12:28:58 -0400
+Message-ID: <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
+References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx> <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, szeder@ira.uka.de
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 18:16:36 2015
+X-From: git-owner@vger.kernel.org Thu Jun 18 18:29:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5cUQ-0006cT-0m
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 18:16:30 +0200
+	id 1Z5cgv-0001dS-CA
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 18:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932522AbbFRQQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 12:16:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60658 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932482AbbFRQQY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 12:16:24 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LwW8p-1Z40Tr08WV-018GIy; Thu, 18 Jun 2015 18:16:20
- +0200
-In-Reply-To: <xmqqoakdf1lu.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:AW8g4YLhDDQhHlzwlor7khtweUml1Zp04AtSQ3k7qdd8Q3Fy1yO
- jdRsrDbzCjjK2n33fhJ3j5n3/B4hxSvdR+fp3P7jvByXBdC/5I9yIAjSewZ3i5MIMLZG/IX
- ewGzjFUg/+yqRThZkcM2+udmtQ/OZuhmqPEAQClAcM7eLS/2YIVs+CpXCNp+gYKEXrmBy0e
- VUNFbO2VgE0DHZFriKSIg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2V1/cj6EIIA=:Hm4M01O2OA1G4Grwyr6b9D
- IT5yH0l87CPdKX7KSFQQO6g4vK++ayQKMknkmIGaAcyD7a/7PuNRyw6KHFCtOF7q0wByGRrxt
- iEQMzF2Iqt84mVVDn/ml6QlK8ceA8n6Qbn/ZBnL2c1B8c0rnYJbV3Krd4QH/kSyRW72dnoafY
- g0j9hbbzO4VTS93wSPzt4sJnrASKX7h6ltvo/qTEa1dRqVckK+uuxaDnttimU6ZIZmxDXLk3i
- PnTRdO08Ssrl5CaEM9VvCkKZc1b9pBOXssK/nHThJkoVqRTATbQRbTc0KzCUGslVTzytVBKv1
- OI0PgGlPjBLEXSUECHFspdc9IxEfTQ9X0FQmCtJ4fPcKE1P+78q/rwlmwzp5QPaUNIGq/TSz1
- SNIdY0wyfmfNnHpqmk1B7otGo90oObv/8NIYe0zVRDiUC28FtN5mUhYFy2xYYxFsm7+UYKyRE
- abjmj4Ok/VJx/o10O6S6JFjolMHBgT8THh4FK36if67rfGHrDOtbwmp+H6BYiAjVbXqJ3GZoo
- hkac4twZDVnJiEVW1/yvkusMgDCDLIvUpMM7oTcPO0N0w5yxMTFG906Ay6TtCqE4SIhfXTkxH
- gCE9/Z0NtEMuE9qzX1oFLyV/NdbwEh2Wob0h2gIdT84y1xZ/4AdBaGLpk+yOXJ5c//tcspa9x
- YG/euB8U/tMyAKPs80Yvbn0iMliiN9sesFKkfRcJK2cpL5FTLozLapg2hJDC4L8vsUbU=
+	id S1756035AbbFRQ3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 12:29:21 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:33348 "EHLO
+	mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755932AbbFRQ3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 12:29:19 -0400
+Received: by oiyy130 with SMTP id y130so44301402oiy.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 09:29:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=10ao/CMAYeDL+jjWZRBx8VRy80GJCsZRL2k0pZmCMFw=;
+        b=QMGNrzRDkS17O6Cry3xAoDKJporwgkFem6Gta6CzsAZZsETYPA6RUbm7eWWkmhYClw
+         S/yzJIFFKzKTM1dAhkQlIRjHk8/oTFlRZHeYBoNBN8pPBPn+UOPYPdcJid036BRaqANE
+         3ym5nEYfCfmDG5noGCCT5SYXKKTxO67EI8wNL7l6KMONm4t21Es3vDeURYGCn1gtJpSp
+         jCmuo7GKc3cNQXka08yqz89jKq1U+XEKh4Ymyj0fUnBuEkSnlpLrhxlXNuL2RxwEY2MU
+         5Kw8LT2HH+/YGsnt1MdGotwz6D1bRmb2r2RG7zAvzCiEWRb/dwJM+UnvSR1EnhtDTn4j
+         y9EQ==
+X-Gm-Message-State: ALoCoQm9FNpF6gQ44GgsyRpmKGN/q4ih7CSNEQwxkO4yXjpHcK8pM+VdHZpy2R6QHrkIKBXVKhMt
+X-Received: by 10.182.42.131 with SMTP id o3mr9778712obl.59.1434644958699;
+ Thu, 18 Jun 2015 09:29:18 -0700 (PDT)
+Received: by 10.182.96.167 with HTTP; Thu, 18 Jun 2015 09:28:58 -0700 (PDT)
+X-Originating-IP: [67.83.172.216]
+In-Reply-To: <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272023>
 
-Hi Junio,
-
-On 2015-06-18 18:00, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->>>> +	git diff seq-onto &&
->>>
->>> I am puzzled with this "diff"; what is this about?  Is it a remnant
->>> from an earlier debugging session, or is it making sure seq-onto is
->>> a valid tree-ish?
+On Thu, Jun 18, 2015 at 11:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Patrick Palka <patrick@parcs.ath.cx> writes:
+>
+>> Currently the diff-highlight script does not try to highlight hunks that
+>> have different numbers of removed/added lines.  But we can be a little
+>> smarter than that, without introducing much magic and complexity.
 >>
->> The idea is to verify that we end up with the same tree even if we
->> exchanged the latest two patches. I can remove it if you want as it is
->> not strictly necessary, but I would like to keep it just to make sure
->> that we did not end up with an incomplete rebase.
-> 
-> I agree that such a verification is a very good thing to have here.
-> But you would need to ask "git diff" to signal that it found no
-> differences with --exit-code or --quiet, I would think.
-> 
-> Thanks.
+>> In the case of unevenly-sized hunks, we could still highlight the first
+>> few (lexicographical) add/remove pairs.  It is not uncommon for hunks to
+>> have common "prefixes", and in such a case this change is very useful
+>> for spotting differences.
+>>
+>> Signed-off-by: Patrick Palka <patrick@parcs.ath.cx>
+>> ---
+>
+> Patrick, "git shortlog --no-merges contrib/diff-highlight/" is your
+> friend to see who may be able to give you a good feedback.
 
-Whoops! Of course... You want me to re-roll?
+Sorry about that.  I admit the sending of this patch was rushed for no
+good reason.
 
-Ciao,
-Dscho
+>
+> Jeff, what do you think?
+>
+> I have this nagging feeling that it is just as likely that two
+> uneven hunks align at the top as they align at the bottom, so while
+> this might not hurt it may not be the right approach for a better
+> solution, in the sense that when somebody really wants to do a
+> better solution, this change and the original code may need to be
+> ripped out and redone from scratch.
+
+Hmm, maybe. I stuck with assuming hunks are top-aligned because it
+required less code to implement :)
+
+The benefits of a simple dumb solution like assuming hunks align at
+the top or bottom is that it remains very easy to visually match up
+each highlighted deleted slice with its corresponding highlighted
+added slice. If we start matching up similar lines or something like
+that then it seems we would have to mostly forsake this benefit.  A
+stupid algorithm in this case is nice because its output is
+predictable.
+
+A direct improvement upon this patch that would not require redoing
+the whole script from scratch would be to first to calculate the
+highlighting assuming the hunk aligns at the top, then to calculate
+the highlighting assuming the hunk aligns at the bottom, and to pick
+out of the two the highlighting with the least "noise".  Though we
+would still be out of luck if the hunk is more complicated than being
+top-aligned or bottom-aligned.
+
+By the way, what would it take to get something like this script into
+git proper?  It is IMHO immensely useful even in its current form, yet
+because it's not baked into the application hardly anybody knows about
+it.
+
+>
+>>  contrib/diff-highlight/diff-highlight | 26 +++++++++++++++++---------
+>>  1 file changed, 17 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+>> index ffefc31..0dfbebd 100755
+>> --- a/contrib/diff-highlight/diff-highlight
+>> +++ b/contrib/diff-highlight/diff-highlight
+>> @@ -88,22 +88,30 @@ sub show_hunk {
+>>               return;
+>>       }
+>>
+>> -     # If we have mismatched numbers of lines on each side, we could try to
+>> -     # be clever and match up similar lines. But for now we are simple and
+>> -     # stupid, and only handle multi-line hunks that remove and add the same
+>> -     # number of lines.
+>> -     if (@$a != @$b) {
+>> -             print @$a, @$b;
+>> -             return;
+>> -     }
+>> +     # We match up the first MIN(a, b) lines on each side.
+>> +     my $c = @$a < @$b ? @$a : @$b;
+>>
+>> +     # Highlight each pair, and print each removed line of that pair.
+>>       my @queue;
+>> -     for (my $i = 0; $i < @$a; $i++) {
+>> +     for (my $i = 0; $i < $c; $i++) {
+>>               my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
+>>               print $rm;
+>>               push @queue, $add;
+>>       }
+>> +
+>> +     # Print the remaining unmatched removed lines of the hunk.
+>> +     for (my $i = $c; $i < @$a; $i++) {
+>> +             print $a->[$i];
+>> +     }
+>> +
+>> +     # Print the added lines of each highlighted pair.
+>>       print @queue;
+>> +
+>> +     # Print the remaining unmatched added lines of the hunk.
+>> +     for (my $i = $c; $i < @$b; $i++) {
+>> +             print $b->[$i];
+>> +     }
+>> +
+>>  }
+>>
+>>  sub highlight_pair {
