@@ -1,126 +1,83 @@
-From: Petr Stodulka <pstodulk@redhat.com>
-Subject: Re: [PATCH] request-pull: short sha handling, manual update
-Date: Thu, 18 Jun 2015 19:20:05 +0200
-Message-ID: <5582FDC5.5040105@redhat.com>
-References: <556DBA37.2010402@redhat.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC v4 07/10] send-email: reduce dependancies impact on parse_address_line
+Date: Thu, 18 Jun 2015 19:29:35 +0200
+Message-ID: <vpqvbelylfk.fsf@anie.imag.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1434550720-24130-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<xmqqioam58kz.fsf@gitster.dls.corp.google.com>
+	<989982277.592587.1434584914349.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<vpqh9q56yaf.fsf@anie.imag.fr>
+	<1444764681.621777.1434640131682.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 19:20:23 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 18 19:29:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5dU6-0006Y9-9T
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 19:20:14 +0200
+	id 1Z5ddR-0007Hs-3d
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 19:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756046AbbFRRUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 13:20:09 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39250 "EHLO mx1.redhat.com"
+	id S1753653AbbFRR3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 13:29:49 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33025 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754080AbbFRRUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 13:20:07 -0400
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
-	by mx1.redhat.com (Postfix) with ESMTPS id BAC383674BB
-	for <git@vger.kernel.org>; Thu, 18 Jun 2015 17:20:07 +0000 (UTC)
-Received: from [10.34.4.110] (unused-4-110.brq.redhat.com [10.34.4.110])
-	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t5IHK6iC008113
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 18 Jun 2015 13:20:07 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <556DBA37.2010402@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+	id S1752289AbbFRR3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 13:29:47 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5IHTXIH028916
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Jun 2015 19:29:33 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5IHTZXJ005990;
+	Thu, 18 Jun 2015 19:29:35 +0200
+In-Reply-To: <1444764681.621777.1434640131682.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Remi Lespinet's message of "Thu, 18 Jun 2015 17:08:51 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 18 Jun 2015 19:29:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5IHTXIH028916
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435253373.98257@YHTBe2WwURljgQqdMVUyEg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272030>
 
-Hi folks,
-can you someone look at it? Or were these troubles mentioned somewhere 
-earlier and I miss that?
+Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
 
-On 2.6.2015 16:14, Petr Stodulka wrote:
-> request-pull prints incorrectly warn messages about not found commits 
-> and man pages don't say
-> anything about todays changed behaviour. People are confused and try 
-> look for errors at wrong places.
-> At least these should be fixed/modified.
+>> Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
+>> 
+>> > I've some more tests, maybe I should put them all in this post ?
+>> 
+>> Yes, please post as much as you have. Ideally, this should be
+>> automatically tested, but if you don't have time to write the automated
+>> tests, at least having a track of what you did on the list archives can
+>> help someone else to do it.
 >
-> Warn massage says that commit can't be found ar remote, however there 
-> it is in and is missing on local repository
-> in 'many' cases. So I don't know if better solution is check, where 
-> commit is truly missing or transform warning message.
-> Something like:
->
->    warn: No match for commit <commit> found at <url> or local repository.
->    warn: Are you sure you have synchronized branch with remote 
-> repository?
->
-> ......
-> man page could be changed like this:
->
-> -------------------------------------------------------
-> diff --git a/Documentation/git-request-pull.txt 
-> b/Documentation/git-request-pull.txt
-> index 283577b..6d34fc7 100644
-> --- a/Documentation/git-request-pull.txt
-> +++ b/Documentation/git-request-pull.txt
-> @@ -73,6 +73,17 @@ then you can ask that to be pulled with
->         git request-pull v1.0 https://git.ko.xz/project master:for-linus
->
->
-> +NOTES
-> +-----
-> +
-> +Since git version 2.0.0 is behaviour of git request-pull little 
-> different.
-> +It is recommended use of third argument for each request-pull, otherwise
-> +you can get error message like:
-> +
-> +   warn: No match for commit <commit> found at <url>
-> +   warn: Are you sure you pushed 'HEAD' there?
-> +
-> +
->  GIT
->  ---
->  Part of the linkgit:git[1] suite
->
-> -------------------------------------------------------
->
-> Second patch provides right processing of third parameter when short 
-> version of sha hash is used (e.g. 897a111). Now is
-> supported only full hash, what is different behaviour against first 
-> parameter or what can be found in other functions. Extra
-> solves one of cases of wrong warn message.
->
-> -------------------------------------------------------
-> diff --git a/git-request-pull.sh b/git-request-pull.sh
-> index d5500fd..2dc735e 100755
-> --- a/git-request-pull.sh
-> +++ b/git-request-pull.sh
-> @@ -92,9 +92,11 @@ find_matching_ref='
->                 chomp;
->                 my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
->                 my ($pattern);
-> +               my ($pattern2);
->                 next unless ($sha1 eq $headrev);
->
->                 $pattern="/$head\$";
-> +               $pattern2="^$head";
->                 if ($ref eq $head) {
->                         $found = $ref;
->                 }
-> @@ -104,6 +106,9 @@ find_matching_ref='
->                 if ($sha1 eq $head) {
->                         $found = $sha1;
->                 }
-> +               elsif ($sha1 =~ /$pattern2/ and (length $head) gt 7) {
-> +                       $found = $sha1
-> +               }
->         }
->         if ($found) {
->                 print "$found\n";
-> -------------------------------------------------------
+> It may not be easily readable without colors, so there are the scripts
+> at the end.
+
+Cool. Then almost all the work is done to get an automated test. Next
+step would be to add the tests itself in the code. I would do that by
+adding a hidden --selfcheck option to git send-email that would compare
+Mail::Address->parse($string); and split_addrs($string); for all your
+testcases, and die if they do not match. Then calling it from the
+testsuite would be trivial.
+
+I can do that on top of your series if you don't have time.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
