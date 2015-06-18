@@ -1,81 +1,73 @@
-From: =?iso-8859-1?Q?=22rendszer_Administrator=AE=22?= 
-	<fizik@vssvalzbety.sk>
-Subject: Kedves Email =?iso-8859-1?Q?felhaszn=E1l=F3i;?=
-Date: Thu, 18 Jun 2015 16:26:41 +0200
-Message-ID: <9a3862d737619b5bcb933cc5196d5715.squirrel@webmail.vssvalzbety.sk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/2] rebase -i: Fix left-behind CHERRY_PICK_HEAD
+Date: Thu, 18 Jun 2015 12:45:58 -0700
+Message-ID: <xmqqwpz0er61.fsf@gitster.dls.corp.google.com>
+References: <cover.1434627492.git.johannes.schindelin@gmx.de>
+	<cover.1434645436.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Jun 18 21:41:16 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, szeder@ira.uka.de
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 18 21:46:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5fgZ-0002qa-Cg
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 21:41:15 +0200
+	id 1Z5flG-0007Bb-66
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 21:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754614AbbFRTlL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2015 15:41:11 -0400
-Received: from vssvalzbety.sk ([109.74.156.59]:49925 "EHLO vssvalzbety.sk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751674AbbFRTlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 15:41:09 -0400
-X-Greylist: delayed 18725 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jun 2015 15:41:09 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=vssvalzbety.sk; s=default;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:From:Subject:Date:Message-ID; bh=k6wDa32L/+nzTzTeRa4LG64T4qmjErcMwvrgaECpxNE=;
-	b=FHm1Japh3FdkGUVMRsAmMHpk7sHd7DgvOfKjEc+UrtKPe4qIFSZOgZl96nhdVnDfPn6sz5THryoqwdzTifZhmFFjcVoV96scKvcWc7ozUtDqU/gj5/bcnjzw0WAqtkVpHnzU1gSrZr/gvJYIZ0V4FaOOb/FWuNEwv0VzISO+/KA=;
-Received: from localhost ([127.0.0.1]:56957 helo=webmail.vssvalzbety.sk)
-	by delta.activenet.sk with esmtpa (Exim 4.85)
-	(envelope-from <fizik@vssvalzbety.sk>)
-	id 1Z5am9-0003zf-Ho; Thu, 18 Jun 2015 16:26:43 +0200
-Received: from 41.206.11.15 ([41.206.11.15]) (proxying for 41.206.11.15)
-        (SquirrelMail authenticated user fizik@vssvalzbety.sk)
-        by webmail.vssvalzbety.sk with HTTP;
-        Thu, 18 Jun 2015 16:26:41 +0200
-User-Agent: SquirrelMail/1.5.2 [SVN]
-X-OutGoing-Spam-Status: No, score=4.7
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - delta.activenet.sk
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - vssvalzbety.sk
-X-Get-Message-Sender-Via: delta.activenet.sk: authenticated_id: fizik@vssvalzbety.sk
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751979AbbFRTqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 15:46:02 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:33141 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbbFRTqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 15:46:00 -0400
+Received: by igbqq3 with SMTP id qq3so23818268igb.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 12:45:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=JYf+Hemd3KAKcaU/SQdtSDC5kDOtXWDbw4vw71jgQtQ=;
+        b=Sy/1CzpyFhrxGJOK6x5xAIrYg6UMR2lzJfwRQgWNTAAumieQZGBYXO2Kc5CkdP2wNP
+         J2mVWwGLMwUhc0W2UC+MQDPP+SOslQFboEhtjltLLbQyCLHT1Jc8PdGtOxZDxoaAgoLi
+         NazRWvFSXULjthoeluQLuIW9pTLSIcvB1GoARRm756XDLVnV1+4UcePxFv6wzfn3e93L
+         Byx63G5v4T1pNgYI0qR23mXz0hRbbey0mid+tKdZ4j7myyGO4MuadP2p3+y/1YYu0/a1
+         wx1D2gJnKIXVy2seVSnQO16w9Wb+tsw1NExczkGzf0Bb4AK6m7d2JR2CXi6qw6/a0itY
+         Qukw==
+X-Received: by 10.42.113.133 with SMTP id c5mr7782317icq.67.1434656759706;
+        Thu, 18 Jun 2015 12:45:59 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id b74sm5553692ioe.6.2015.06.18.12.45.58
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 12:45:59 -0700 (PDT)
+In-Reply-To: <cover.1434645436.git.johannes.schindelin@gmx.de> (Johannes
+	Schindelin's message of "Thu, 18 Jun 2015 18:38:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272037>
 
+Thanks.
 
+This round looks good, except one trivial nit (below), which I'll
+locally squash-in a fix for.
 
-	Kedves Email felhaszn=E1l=F3i;
-
-T=FAll=E9pte a hat=E1rt 23432 t=E1rol=E1sa a megadott e-mail fi=F3kkal =
-=E1ltal be=E1ll=EDtott
-Web Service / Administrator, =E9s akkor siker=FCl a k=FCldo
-=E9s a bej=F6vo =FCzenetek, am=EDg meg =FAjb=F3l =E9rv=E9nyes=EDti az e=
--mail c=EDmre. A
-sz=FCks=E9ges elj=E1r=E1sok
-ny=FAjtottak be az al=E1bbiakban a n=E9zetet, ellenorizze kattintva
-Az al=E1bbi linkre =E9s t=F6ltse ki az inform=E1ci=F3t, hogy =E9rv=E9ny=
-es=EDtse az e-mail
-c=EDmre.
-
-K=E9rj=FCk, kattintson ide
-
-http://mailupopsteyq.jigsy.com/
-
-
-Hogy n=F6velje az e-mail kv=F3ta az e-mail.
-=46igyelem !!!
-Ennek elmulaszt=E1sa azt hozz=E1f=E9r=E9s a postal=E1d=E1ba.
-Ha nem friss=EDti v=E9ve h=E1rom napon bel=FCl a friss=EDt=E9s
-=E9rtes=EDt=E9st, akkor figyelembe kell v=E9gleg.
-
-=DCdv=F6zlettel,
-rendszer Administrator=AE
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index fb1b571..6938e5e 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1052,7 +1052,7 @@ test_expect_failure 'rebase --continue removes CHERRY_PICK_HEAD' '
+ 	git reset --hard HEAD~2 &&
+ 	git cherry-pick seq-onto &&
+ 	set_fake_editor &&
+-	FAKE_LINES= test_must_fail git rebase -i seq-onto &&
++	test_must_fail env FAKE_LINES= git rebase -i seq-onto &&
+ 	test -d .git/rebase-merge &&
+ 	git rebase --continue &&
+ 	git diff --exit-code seq-onto &&
+-- 
+2.4.4-569-gdcc90bb
