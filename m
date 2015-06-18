@@ -1,153 +1,93 @@
-From: Patrick Palka <patrick@parcs.ath.cx>
-Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight
- unevenly-sized hunks
-Date: Thu, 18 Jun 2015 12:28:58 -0400
-Message-ID: <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
-References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx> <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v3 0/2] rebase -i: Fix left-behind =?UTF-8?Q?CHERRY=5FPICK?=
+ =?UTF-8?Q?=5FHEAD?=
+Date: Thu, 18 Jun 2015 18:38:27 +0200
+Organization: gmx
+Message-ID: <cover.1434645436.git.johannes.schindelin@gmx.de>
+References: <cover.1434627492.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 18:29:42 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, szeder@ira.uka.de
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jun 18 18:38:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5cgv-0001dS-CA
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 18:29:25 +0200
+	id 1Z5cq3-00028t-6H
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jun 2015 18:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035AbbFRQ3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 12:29:21 -0400
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:33348 "EHLO
-	mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755932AbbFRQ3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 12:29:19 -0400
-Received: by oiyy130 with SMTP id y130so44301402oiy.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 09:29:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=10ao/CMAYeDL+jjWZRBx8VRy80GJCsZRL2k0pZmCMFw=;
-        b=QMGNrzRDkS17O6Cry3xAoDKJporwgkFem6Gta6CzsAZZsETYPA6RUbm7eWWkmhYClw
-         S/yzJIFFKzKTM1dAhkQlIRjHk8/oTFlRZHeYBoNBN8pPBPn+UOPYPdcJid036BRaqANE
-         3ym5nEYfCfmDG5noGCCT5SYXKKTxO67EI8wNL7l6KMONm4t21Es3vDeURYGCn1gtJpSp
-         jCmuo7GKc3cNQXka08yqz89jKq1U+XEKh4Ymyj0fUnBuEkSnlpLrhxlXNuL2RxwEY2MU
-         5Kw8LT2HH+/YGsnt1MdGotwz6D1bRmb2r2RG7zAvzCiEWRb/dwJM+UnvSR1EnhtDTn4j
-         y9EQ==
-X-Gm-Message-State: ALoCoQm9FNpF6gQ44GgsyRpmKGN/q4ih7CSNEQwxkO4yXjpHcK8pM+VdHZpy2R6QHrkIKBXVKhMt
-X-Received: by 10.182.42.131 with SMTP id o3mr9778712obl.59.1434644958699;
- Thu, 18 Jun 2015 09:29:18 -0700 (PDT)
-Received: by 10.182.96.167 with HTTP; Thu, 18 Jun 2015 09:28:58 -0700 (PDT)
-X-Originating-IP: [67.83.172.216]
-In-Reply-To: <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
+	id S1756090AbbFRQih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 12:38:37 -0400
+Received: from mout.gmx.net ([212.227.15.19]:60447 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751274AbbFRQia (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 12:38:30 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LfTVx-1YlvHm3jo1-00p69V; Thu, 18 Jun 2015 18:38:27
+ +0200
+In-Reply-To: <cover.1434627492.git.johannes.schindelin@gmx.de>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:d4cEUPnhcEePiudvccNXbaKixghDsYS0rpxwLeBbllwSmXqplDg
+ ebPUfvf3MeEkDJix1xcGd/HgwAGM3dQe42KDkA5BV8aFniotJsv96bu5CH6s0li8EGqR1fk
+ EL6giz3ryqGmUXtGZYYWI/ZYPPr+0ljGXPv0jYFfDmfidPNPzDvgHPS1bO72lmeDR///A/Z
+ g4g/zHRlzH2i2KAz62bXw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jkWXN257irU=:zKRIe0lu2AwpPH++NFNZkc
+ pqwpBrfFDAaC9ag0uyFPB4EuJziS2AyFuO0/BhwB6FP//TWAPtghZCb06yKfNE6CyWMDcu+am
+ X6VeHDxP+lIRB91djZyN3DnI77rKuuSKyMWIQnfQLSHSQeUtfzNTXivHvekKyB6s1pfrknG0F
+ N6evwaIzV0Ls+hd26DlBWRxad//yX1tQcPxS5OJneIofZ6og5115EKhEGhEYAgxAjXakdj9mK
+ 6o56YCBOLtXakAMyhc+a/rubikG1o//DWjmm0vlDmuEsmNhI3JOtrVXczH6WV4lhxyrU6F/tQ
+ 62J3Qlp/2evKB2U2sjlPEw5xJhjsqLQ50pbulI1lo7VqtEES38FOkLB3t/KrcNvOGNf/CAvLx
+ TUaEjymM5igg6HtpPslzDcPUrw6B7ZXsucqLoAbYm4dXFi8/Max/eY/L83P9Z2BZrn5uiaP4v
+ R9c8RUUAvDZpp8Azu29H4+dLEaHouRHq/5676cEwJTDKUMBfZt7xrc+G1rzJX8c1nI/a9y37Y
+ En6GsBibRxFhk6+2/wuhBdrOG16HfeioEcjz6lTTUPnJbkoYRlNEJRRrbME96gCO9vfUQzVX5
+ ZUnHlXmt3GYRBorcNy/gp18E+SzyT1RSlggtfbur2AFmM0PU9mP7qxB06MydngwVJQdc6tAWd
+ h1BM66dcVLwieaR/0VqKqP6Kz8CDJ+sAda1mlvB3P/2M9a1FsXH5xV/55gg5Eje6Tlrk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272024>
 
-On Thu, Jun 18, 2015 at 11:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Patrick Palka <patrick@parcs.ath.cx> writes:
->
->> Currently the diff-highlight script does not try to highlight hunks that
->> have different numbers of removed/added lines.  But we can be a little
->> smarter than that, without introducing much magic and complexity.
->>
->> In the case of unevenly-sized hunks, we could still highlight the first
->> few (lexicographical) add/remove pairs.  It is not uncommon for hunks to
->> have common "prefixes", and in such a case this change is very useful
->> for spotting differences.
->>
->> Signed-off-by: Patrick Palka <patrick@parcs.ath.cx>
->> ---
->
-> Patrick, "git shortlog --no-merges contrib/diff-highlight/" is your
-> friend to see who may be able to give you a good feedback.
+These patches fix a bug that bites me often enough when rebasing Git for
+Windows.
 
-Sorry about that.  I admit the sending of this patch was rushed for no
-good reason.
+The symptom is that .git/CHERRY_PICK_HEAD is left behind after skipping
+an already-merged patch with `git rebase --continue` instead of `git
+rebase --skip`. I always prefer the former invocation because the latter
+would also skip legitimate patches if there were merge conflicts, while
+the former would not allow that.
 
->
-> Jeff, what do you think?
->
-> I have this nagging feeling that it is just as likely that two
-> uneven hunks align at the top as they align at the bottom, so while
-> this might not hurt it may not be the right approach for a better
-> solution, in the sense that when somebody really wants to do a
-> better solution, this change and the original code may need to be
-> ripped out and redone from scratch.
+Changes since v2:
 
-Hmm, maybe. I stuck with assuming hunks are top-aligned because it
-required less code to implement :)
+- the test uses `--exit-code` to verify that the result of the rebase is
+  correct
 
-The benefits of a simple dumb solution like assuming hunks align at
-the top or bottom is that it remains very easy to visually match up
-each highlighted deleted slice with its corresponding highlighted
-added slice. If we start matching up similar lines or something like
-that then it seems we would have to mostly forsake this benefit.  A
-stupid algorithm in this case is nice because its output is
-predictable.
+Interdiff below the diffstat.
 
-A direct improvement upon this patch that would not require redoing
-the whole script from scratch would be to first to calculate the
-highlighting assuming the hunk aligns at the top, then to calculate
-the highlighting assuming the hunk aligns at the bottom, and to pick
-out of the two the highlighting with the least "noise".  Though we
-would still be out of luck if the hunk is more complicated than being
-top-aligned or bottom-aligned.
+Johannes Schindelin (2):
+  t3404: demonstrate CHERRY_PICK_HEAD bug
+  rebase -i: do not leave a CHERRY_PICK_HEAD file behind
 
-By the way, what would it take to get something like this script into
-git proper?  It is IMHO immensely useful even in its current form, yet
-because it's not baked into the application hardly anybody knows about
-it.
+ git-rebase--interactive.sh    |  6 +++++-
+ t/t3404-rebase-interactive.sh | 21 +++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
->
->>  contrib/diff-highlight/diff-highlight | 26 +++++++++++++++++---------
->>  1 file changed, 17 insertions(+), 9 deletions(-)
->>
->> diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
->> index ffefc31..0dfbebd 100755
->> --- a/contrib/diff-highlight/diff-highlight
->> +++ b/contrib/diff-highlight/diff-highlight
->> @@ -88,22 +88,30 @@ sub show_hunk {
->>               return;
->>       }
->>
->> -     # If we have mismatched numbers of lines on each side, we could try to
->> -     # be clever and match up similar lines. But for now we are simple and
->> -     # stupid, and only handle multi-line hunks that remove and add the same
->> -     # number of lines.
->> -     if (@$a != @$b) {
->> -             print @$a, @$b;
->> -             return;
->> -     }
->> +     # We match up the first MIN(a, b) lines on each side.
->> +     my $c = @$a < @$b ? @$a : @$b;
->>
->> +     # Highlight each pair, and print each removed line of that pair.
->>       my @queue;
->> -     for (my $i = 0; $i < @$a; $i++) {
->> +     for (my $i = 0; $i < $c; $i++) {
->>               my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
->>               print $rm;
->>               push @queue, $add;
->>       }
->> +
->> +     # Print the remaining unmatched removed lines of the hunk.
->> +     for (my $i = $c; $i < @$a; $i++) {
->> +             print $a->[$i];
->> +     }
->> +
->> +     # Print the added lines of each highlighted pair.
->>       print @queue;
->> +
->> +     # Print the remaining unmatched added lines of the hunk.
->> +     for (my $i = $c; $i < @$b; $i++) {
->> +             print $b->[$i];
->> +     }
->> +
->>  }
->>
->>  sub highlight_pair {
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f3337ad..6bcf18b 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1118,7 +1118,7 @@ test_expect_success 'rebase --continue removes CHERRY_PICK_HEAD' '
+ 	FAKE_LINES= test_must_fail git rebase -i seq-onto &&
+ 	test -d .git/rebase-merge &&
+ 	git rebase --continue &&
+-	git diff seq-onto &&
++	git diff --exit-code seq-onto &&
+ 	test ! -d .git/rebase-merge &&
+ 	test ! -f .git/CHERRY_PICK_HEAD
+ '
+-- 
+2.3.1.windows.1.9.g8c01ab4
