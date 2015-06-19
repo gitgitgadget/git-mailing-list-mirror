@@ -1,71 +1,82 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH/WIP v3 10/31] am: refresh the index at start
-Date: Fri, 19 Jun 2015 16:07:05 +0800
-Message-ID: <CACRoPnRRPLRTsLkKem3QsGiLV3BpEBXNdrtoDHWfXfoR2yCDYg@mail.gmail.com>
-References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-	<1434626743-8552-11-git-send-email-pyokagan@gmail.com>
-	<xmqqlhfgd7vf.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Visualizing merge conflicts after the fact (using kdiff3)
+Date: Fri, 19 Jun 2015 10:34:23 +0200
+Message-ID: <5583D40F.7030300@drmicha.warpmail.net>
+References: <557F791D.3080003@nextest.com>	<87b840d8c73fd7e4e7597e2fd835c703@www.dscho.org>	<5582B8EC.1060205@drmicha.warpmail.net> <xmqqsi9pf1q2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 10:07:22 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Eric Raible <raible@nextest.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 19 10:34:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5rKb-0000oh-RN
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 10:07:22 +0200
+	id 1Z5rl5-0000ZN-Lz
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 10:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932164AbbFSIHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 04:07:11 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:33453 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752787AbbFSIHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 04:07:07 -0400
-Received: by laka10 with SMTP id a10so69379536lak.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 01:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xiWP0lUnEzjAe8aXPCpOZmexkAX57gZHKZccGBCfzp8=;
-        b=C8fd1NdoGb2lnNIgMp4EgE1dzvgJjB2mA8Pfs22otzk4nx9gABq52sD+Q2UhVAlW4o
-         QpOEg9VSjBx0SpShF/QCdkyr/CWH8NAuXphKf4hR4luHNTxusAsf7Bq6PUfbuxaR8vOB
-         zbDcvd6Z5obEImCTfg0u6ot5sjgCUzAksHOsbx4XuA3ElDL/Yek1ET+Z58Ywh+yK63/2
-         F6wsIX+tk9YuCtrk0/p0QGQpn1pITv7hhDoWCoi4UXXGRP84LXwt6ZCdk4GuA8CRnqFW
-         +xEutZyI9mk5mmPWU9kh3vWCUJLfKoBJATkhFzr9C1UHwTxc4oYy0X0eAFnD1ecGYI5K
-         IUGw==
-X-Received: by 10.112.199.133 with SMTP id jk5mr17054078lbc.32.1434701225416;
- Fri, 19 Jun 2015 01:07:05 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Fri, 19 Jun 2015 01:07:05 -0700 (PDT)
-In-Reply-To: <xmqqlhfgd7vf.fsf@gitster.dls.corp.google.com>
+	id S1754416AbbFSIed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 04:34:33 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33560 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932348AbbFSIe0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 04:34:26 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8481120ACD
+	for <git@vger.kernel.org>; Fri, 19 Jun 2015 04:34:25 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Fri, 19 Jun 2015 04:34:25 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=voqu9SKVmtkdktY9wRfHJGFExA4=; b=ntSs7W
+	YCcEf346y+reEYnNaOaDlW1baDN11fsWZijUg1nYxg8HeR5UeLvDJvnurrknQ/qu
+	lYq7SdXOMdl8sWZfMrYak9VxBNUbWHFNaxGM3PnaiKnHobIreVyhuRPcqqspQagY
+	i8x5Qux1pN6ysJSan2/F6x+njHQ4rCpfwmxjY=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=voqu9SKVmtkdktY
+	9wRfHJGFExA4=; b=Wj0uBSspmGGw7UDv0Ts1HeBPAim/8cDTTp7YdNRB+yx4OTC
+	icHOeF1+QyG5nTZ6vHNPYfgycTdk1Hs7Ou9ZCtS9qqfN5moXDnZ8x72Sh4ojBx70
+	LkkkkLPlw+2Mi/zbf2dRRmvnC6bLkNmLSkdtWCTAt8qyX4Bcw6W0sQfGxp88=
+X-Sasl-enc: uZi+lQZm0cOPKHnbVqu3pJtMRHSHnsSINZoDthED49yD 1434702865
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id BB1556800EB;
+	Fri, 19 Jun 2015 04:34:24 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <xmqqsi9pf1q2.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272108>
 
-On Fri, Jun 19, 2015 at 5:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Tan <pyokagan@gmail.com> writes:
->
->> If a file is unchanged but stat-dirty, git-apply may erroneously fail to
->> apply patches, thinking that they conflict with a dirty working tree.
->>
->> As such, since 2a6f08a (am: refresh the index at start and --resolved,
->> 2011-08-15), git-am will refresh the index before applying patches.
->> Re-implement this behavior.
->
-> Good.
->
-> I would actually have expected to see this as part of 08/31, though.
+Junio C Hamano venit, vidit, dixit 18.06.2015 17:57:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> This type of request comes up often (for a reason). I'm wondering
+>> whether we could support it more systematically, either by exposing the
+>> steps above as a command, or by storing the unresolved merge somewhere
+>> (leveraging stash or rerere).
+> 
+> Perhaps 'tr/remerge-diff' (on 'pu') is of interest?
+> 
 
-Ah right, makes sense since this patch is primarily about git-apply.
+Ingenious!
 
-I've squashed this patch into 08/31.
+To me, this seems to be the most useful view if you want to understand a
+merge just from the parents and the merge commit. Since you would use
+that for individual commits only, the cpu cycles are well spent.
 
-Regards,
-Paul
+As and added benefit, tr/remerge-diff merges to current next with
+conflicts (oid...) so that you get to test it on its own merge!
+
+I haven't reviewed remerge-diff but merged it on top of my own local
+additions and ran the full test suite successfully. Any big blocker to
+watch out for?
+
+Michael
