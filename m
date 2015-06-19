@@ -1,110 +1,64 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 00/19] Introduce an internal API to interact with the
- fsck machinery
-Date: Fri, 19 Jun 2015 21:43:05 +0200
-Organization: gmx
-Message-ID: <8eb30cab0d359420bc037ab89b21c4b3@www.dscho.org>
-References: <cover.1422737997.git.johannes.schindelin@gmx.de>
- <cover.1434657920.git.johannes.schindelin@gmx.de>
- <xmqq8ubgd5vt.fsf@gitster.dls.corp.google.com>
- <e3f2c023e59c3608ebbb7e88a6f18d27@www.dscho.org>
- <xmqqfv5na9hd.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 07/19] fsck: Make fsck_ident() warn-friendly
+Date: Fri, 19 Jun 2015 12:48:48 -0700
+Message-ID: <xmqqr3p77a3j.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<3e2deca4addda073f9b80e47865d2a5c95cea6e2.1434720655.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 21:43:32 2015
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 19 21:48:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z62CI-0002Km-2Y
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:43:30 +0200
+	id 1Z62HY-0006kh-50
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:48:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752460AbbFSTn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 15:43:26 -0400
-Received: from mout.gmx.net ([212.227.17.20]:62050 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752034AbbFSTnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 15:43:25 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MK4fR-1Z5DNR0c1l-001Uw4; Fri, 19 Jun 2015 21:43:08
- +0200
-In-Reply-To: <xmqqfv5na9hd.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:060UKzZ0Gw0rL7UyWguXDfj4Gdva3XVNhAS73rnijwMQ7MGj6nb
- AeVKK9cXeGskqwkaBXqBZfEqAipTcrsGPBBs9OpYD2OyIXXp00D3lAAn8+/z2tjlApiJ+3d
- DXwi0wSX8kA5JhTO+eGXZBX8cbo9+XFK+mLe+lysEx0XsVs6qGDBuvjvUIIHE5BuXLjIbp4
- EPJsnch4J9dnJTuJEiN4Q==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1755228AbbFSTsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 15:48:52 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:35566 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752259AbbFSTsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 15:48:50 -0400
+Received: by igbzc4 with SMTP id zc4so21581422igb.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 12:48:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Rujn0NAH9FRc2Ix8kaxgsqhdLI029OzcaSvNWcD+qXw=;
+        b=SdU8I3nZzNmgqPeChWrMlUcW0cET9XE1JYjasXvKS6IWRPL/NvOJHul1cwunayRUbv
+         hT7A0N5HwRuS3me5fHjydcmVapWELjwpWCKCLz7lgMCmpaBzd/zV5zsGrmIIUvLv3CA3
+         NsgfTW/jYm9xHwiT4+As5xpQJNptkW7hk6oSxlmE7dOxR6PfQEkRIBno8cnTQO5bVh6l
+         10zlDF/ISGbdxWNzoNv9vmVcCE3UdT/jQLjvcl1Lis+ZFtlWiFhynGKmF8LhvctQOj8h
+         Df0/mIH6K6rRZ/qGbbAauanbQ61L31XUZKs3Z+Azz3EAnBEmPINTDpq07kInwb4CkJp1
+         7zTA==
+X-Received: by 10.50.138.70 with SMTP id qo6mr6673314igb.15.1434743330168;
+        Fri, 19 Jun 2015 12:48:50 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
+        by mx.google.com with ESMTPSA id y124sm7663067iod.13.2015.06.19.12.48.49
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Jun 2015 12:48:49 -0700 (PDT)
+In-Reply-To: <3e2deca4addda073f9b80e47865d2a5c95cea6e2.1434720655.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Fri, 19 Jun 2015 15:33:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272191>
 
-Hi Junio,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-first of all: the improvements discussed here are already part of v6.
+> When fsck_ident() identifies a problem with the ident, it should still
+> advance the pointer to the next line so that fsck can continue in the
+> case of a mere warning.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-On 2015-06-19 19:33, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> I basically made up names on the go, based on the messages.
->>
->>> Some of the questionable groups are:
->>>
->>>     BAD_DATE DATE_OVERFLOW
->>
->> I guess it should be BAD_DATE_OVERFLOW to be more consistent?
-> 
-> I am not sure about "consistency", but surely a common prefix would
-> help readers to group things.  But for this particular group, I was
-> wondering if singling out "integer overflow", "zero stuffed
-> timestamp", etc. into such a finer sub-errors of "you have a bad
-> timestamp" was beneficial.
-
-Well, someone thought it a good idea to print different error messages, and I took that as an indicator that there is merit in being able to distinguish these issues from one another.
- 
->>>     BAD_TREE_SHA1 INVALID_OBJECT_SHA1 INVALID_TREE
->>>
->>>     BAD_PARENT_SHA1 INVALID_OBJECT_SHA1
->>
->> So how about s/INVALID_/BAD_/g?
-> 
-> It is not just about distinction between INVAID and BAD.
-> 
-> I was basically wondering what rule decides which one among
-> BAD_TREE_SHA1, INVALID_OBJECT_SHA1 and INVALID_TREE I would get when
-> I have a random non-hexdigit string in various places, e.g. after
-> 'tree ' in the object header of a commit object, after 'tag ' in a
-> tag object that says 'type tree', etc.
-
-To be honest, I think the IDs do not really matter as much as your comment makes it sound: the IDs purpose is solely to be able to configure the message type (read: whether to error out, warn or ignore the issue). The real information is in the actual message (and I did not change any message, therefore I could not make things worse than they are right now).
-
-Example: you would never read BAD_TREE_SHA1, but instead: "badtreesha1: invalid 'tree' line format - bad sha1".
-
-For BAD_OBJECT_SHA1 (as it is now called), there are actually two code paths generating the error: "invalid 'object' line format - bad sha1" and "no valid object to fsck".
-
-And for BAD_TREE it is: "could not load commit's tree <SHA1>".
-
-Thus, from the error message it should be really clear what is going on.
-
->>> Also it is unclear if NOT_SORTED is to be used ever for any error
->>> other than a tree object sorted incorrectly, or if we start noticing
->>> a new error that something is not sorted, we will reuse this one.
->>
->> s/NOT_SORTED/TREE_&/ maybe?
-> 
-> If that error is specific to tree sorting order, then that would be
-> a definite improvement.
-
-Yes, that is the case. Tree objects are assumed to list their contents in order, and this ID applies to the problem where a tree object's list is out of order.
-
-As I said, I already made both discussed changes part of v6.
-
-Ciao,
-Dscho
+Makes sense.
