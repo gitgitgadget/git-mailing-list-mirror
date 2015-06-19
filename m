@@ -1,81 +1,95 @@
-From: Jeff King <peff@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] revision.c: Correctly dereference interesting_cache
-Date: Fri, 19 Jun 2015 16:49:24 -0400
-Message-ID: <20150619204923.GA2964@peff.net>
+Date: Fri, 19 Jun 2015 14:00:24 -0700
+Message-ID: <20150619210023.GA4865@google.com>
 References: <1434740483-31730-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: peff@peff.net, git@vger.kernel.org
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 22:59:53 2015
+X-From: git-owner@vger.kernel.org Fri Jun 19 23:00:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z63OA-0003wW-RK
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 22:59:51 +0200
+	id 1Z63P3-0004m4-Qz
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 23:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932776AbbFSU7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 16:59:46 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49165 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932891AbbFSUt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 16:49:27 -0400
-Received: (qmail 7742 invoked by uid 102); 19 Jun 2015 20:49:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 15:49:26 -0500
-Received: (qmail 20980 invoked by uid 107); 19 Jun 2015 20:49:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 16:49:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jun 2015 16:49:24 -0400
+	id S933284AbbFSVAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 17:00:39 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:33428 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932518AbbFSVAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 17:00:33 -0400
+Received: by igbqq3 with SMTP id qq3so25172789igb.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 14:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Ixrws/F7Zjkjf1gwPO6kN+g8+uN02qEDPbIrvioHELo=;
+        b=nar6mEB1JnVrxlgwC1igs/wf7VhFiA+k2JJG9PKgGBxgHfdV7xrwRGPxWq55LIUUbI
+         Ar6FdsCL98vDgBHXbDpyjlw07CQNenO8xup9AByJ1eQ/mzHHXKsRKukcYsn6S+DqpQr7
+         lhMJfD6tzA42qQ6/A2IjIP+vXiPWow2SdFfyOOqH/pOxJbUY9mKK1j9brvOmxTdkum/P
+         NEMXk58YVS+rS/upSFLUIh5KnTkzpbS91wRUhmDnJBOC0AbWhjEXKOi0QtWMd/s6c5jw
+         jX3TErZKj9zD9v+vxiXKt7RA5c6Po/XRVZlYEQk0hbxOlR/9epgiJjPC1I1lxBkzBnDI
+         MaAQ==
+X-Received: by 10.43.10.194 with SMTP id pb2mr14356769icb.31.1434747632271;
+        Fri, 19 Jun 2015 14:00:32 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:7111:f201:e4f4:2844])
+        by mx.google.com with ESMTPSA id pg7sm2437612igb.6.2015.06.19.14.00.31
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Jun 2015 14:00:31 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <1434740483-31730-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272206>
 
-On Fri, Jun 19, 2015 at 12:01:23PM -0700, Stefan Beller wrote:
+Hi,
+
+Stefan Beller wrote:
 
 > This was introduced at b6e8a3b5 (2015-04-17, limit_list: avoid
 > quadratic behavior from still_interesting), which
 > also introduced the check a few lines before, which already dereferences
 > `interesting_cache`. So at this point `interesting_cache` is guaranteed to
-> be not NULL. The code is called referencing the address of a local
+> be not NULL.
+
+The above is the rationale for the coverity warning, but it does not
+explain why this change is safe.
+
+>                The code is called referencing the address of a local
 > variable, so `interesting_cache` can actually never be NULL and trigger a
 > segmentation fault by dereferencing it a few lines before this.
 
-Yeah, I agree it can never be NULL here or we would have already
-segfaulted. Thanks for digging into it.
+I'm having trouble parsing this sentence.  Do you mean that limit_list()
+only calls still_interesting() (and thus, indirectly,
+everybody_uninteresting()), with the second parameter equal to the
+address of the local interesting_cache variable, so it can never be
+NULL?
 
-> I think the right thing is to check for `*interesting_cache` as that
-> can become NULL actually.
+That makes sense, but I had to look at the code and reread the above
+sentence a few times before I understood.
 
-I don't think this is right. We have found the interesting commit, so we
-want to write it into the cache unconditionally, not only if there is
-nothing else in the cache (we know if we got here that either there was
-no current cache item, or it already became UNINTERESTING).
+Do you know what this code is trying to check for?  What does it mean
+for *interesting_cache to be NULL?
 
-I think it is simply a misguided defensive measure to make sure that the
-caller passed in a cache slot to us. But there is only one caller, and
-they always pass a cache, so the first part of the function was lazy and
-not defensive.
+Should there be
 
->  	while (list) {
->  		struct commit *commit = list->item;
->  		list = list->next;
->  		if (commit->object.flags & UNINTERESTING)
->  			continue;
-> -		if (interesting_cache)
-> +		if (*interesting_cache)
->  			*interesting_cache = commit;
+	if (!interesting_cache)
+		die("BUG: &interesting_cache == NULL");
 
-So I think the right solution is just to drop the conditional entirely.
-The current code is not wrong (it is always a noop). What you have here
-actually misbehaves; it does not update the cache slot when it has
-become UNINTERESTING. That does not produce wrong results, but it loses
-the benefit of the cache in some cases.
+checks at the top of still_interesting and everybody_uninteresting to
+futureproof this?
 
--Peff
+What does the *interesting_cache variable represent, anyway?
+
+This code seems to be underdocumented.
+
+Thanks and hope that helps,
+Jonathan
