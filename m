@@ -1,104 +1,134 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 00/19] Introduce an internal API to interact with the
- fsck machinery
-Date: Fri, 19 Jun 2015 02:04:52 +0200
-Organization: gmx
-Message-ID: <e3f2c023e59c3608ebbb7e88a6f18d27@www.dscho.org>
-References: <cover.1422737997.git.johannes.schindelin@gmx.de>
- <cover.1434657920.git.johannes.schindelin@gmx.de>
- <xmqq8ubgd5vt.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight
+ unevenly-sized hunks
+Date: Thu, 18 Jun 2015 23:54:09 -0400
+Message-ID: <20150619035408.GA23679@peff.net>
+References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx>
+ <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
+ <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
+ <xmqq1th8ga9b.fsf@gitster.dls.corp.google.com>
+ <20150618190417.GA12769@peff.net>
+ <alpine.DEB.2.20.8.1506181536070.4322@idea>
+ <20150618204505.GD14550@peff.net>
+ <20150618212356.GA20271@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 02:05:33 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Patrick Palka <patrick@parcs.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Jun 19 05:54:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5joF-00043V-CT
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 02:05:28 +0200
+	id 1Z5nNi-0007b3-7c
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 05:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914AbbFSAFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2015 20:05:12 -0400
-Received: from mout.gmx.net ([212.227.15.15]:64296 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751734AbbFSAFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2015 20:05:10 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LsChr-1YzVRi2o0t-013roR; Fri, 19 Jun 2015 02:04:53
- +0200
-In-Reply-To: <xmqq8ubgd5vt.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:/N01BLLQRhZJpzZ+M7ll84dkmtfg6wXZW/9ptf16wggOVyt9/gP
- meEbT9L321Ls2sheRMmhGU6kumwG3hetmQQNx48aq/U4ag+wHd2v/Bf7Cp7a2AUrFi2ilLW
- OiXif9ilE04cdyMfWLOlg72PWdhmCsItUjDQjBHZ8bX5e7Urlak4Vdrr53wYKHZpq+HHyJQ
- sOe/hxBbxQVOdG+qfrTbA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8c/aCBJ96xs=:iXan7uUQNJ8OzYSD4UXv88
- gY3cqpG7OwGPnwylkqJp6Ttd3SDZ3moB+9XRQP7qg/wFmkJ1HDbivy2+3FHUEyr2Pn3zjQHda
- wERDMXZmV+H/lXKgey0Q2BtAWRf2Dvj33vNAai45onODaepsvGA7FOBGxQjYGRjeGDyK9qWtq
- xVVMjQEkzmCw+KQCmq/7ult/nhokNsGZXea4F+tbJQF6xTx+J0v82ZBpr1h3MxSKPBSW2KWqz
- e+RUN5+SvkLe+ah5je9pBDQjrrw9qMO9aPXpSLlKSPeIO1ok5j3ApKRVK7IvF25DyAIx2selX
- Srf883p+CxZxaOeNdR4sXGnzMvmG4bWwPO4/HIfHVrbVjOO+RkG0ix++D1tD1AqKUoNJaf9wg
- 3K38mifbaFRX0CzkTLT7Hh9QRbDd8MFbGwPTbizuR85Itr+sSD09QDgFQQtnTTwVib3LI45Op
- cHz+Qv+HljHgIuSMDZsBULhIv2FYg5rkDoZyQifokHWbjaViX8VmBKMWbN+kgpre3HeJHjVMT
- 8hgijdOhEoPZJ9dYbu2j2SN72h2LW5AWp/aEb/1OHYR7cSUqu+5/Gn8jf1oht8/azMl4egY/V
- Tw1HGC1Lgjp0AUtv89DYJplX/xue5eton1uGDQybNSjkHVVp2HqImmQ6u8HYNI7E35Fa81qL7
- ZT7PUP9d1F/4D68GOdAjdlxZofPFrx0pS7q4h+HeIF6Z8ecKjK1FasLX5fAzKsYWuaPU=
+	id S1752977AbbFSDyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2015 23:54:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48584 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751484AbbFSDyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2015 23:54:12 -0400
+Received: (qmail 19206 invoked by uid 102); 19 Jun 2015 03:54:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 22:54:12 -0500
+Received: (qmail 11612 invoked by uid 107); 19 Jun 2015 03:54:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 23:54:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Jun 2015 23:54:09 -0400
+Content-Disposition: inline
+In-Reply-To: <20150618212356.GA20271@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272097>
 
-Hi Junio,
+On Thu, Jun 18, 2015 at 05:23:56PM -0400, Jeff King wrote:
 
-On 2015-06-19 00:11, Junio C Hamano wrote:
+> +# Return the individual diff-able items of the hunk, but with any
+> +# diff or color prefix/suffix for each line split out (we assume that the
+> +# prefix/suffix for each line will be the same).
+> +sub split_hunk {
+> +	my ($prefix, $suffix, @r);
+> +	foreach my $line (@_) {
+> +		$line =~ /^($COLOR*[+-]$COLOR*)(.*)($COLOR*)/
+> +			or die "eh, this is supposed to match everything!";
 
-> I haven't had a chance to go through the all the patches, but one
-> thing I noticed that did not appear in the interdiff is that some of
-> the message IDs are unclear.  For example, there are BAD_something,
-> INVALID_something and MISSING_something.  The last one is in a
-> different category and is good, but how are the former two
-> differenciated?  Do they follow some systematic rules, or they are
-> named after the way how they happened to be reported in the original
-> textual error message?
+This isn't quite right. We'll never match the suffix, because it gets
+sucked up by the greedy (.*). But making that non-greedy matches
+nothing, unless we also add "$" at the end.
 
-I basically made up names on the go, based on the messages.
+_But_, there is still something else weird going on. I replaced this
+split:
 
-> Some of the questionable groups are:
-> 
->     BAD_DATE DATE_OVERFLOW
+> +		push @r, split(//, $2), "\n";
 
-I guess it should be BAD_DATE_OVERFLOW to be more consistent?
+with:
 
->     BAD_TREE_SHA1 INVALID_OBJECT_SHA1 INVALID_TREE
-> 
->     BAD_PARENT_SHA1 INVALID_OBJECT_SHA1
+  push @r, split(/([[:space:][:punct:]])/, $2), "\n";
 
-So how about s/INVALID_/BAD_/g?
+which behaves much better. With that, 99a2cfb shows:
 
-> Also it is unclear if NOT_SORTED is to be used ever for any error
-> other than a tree object sorted incorrectly, or if we start noticing
-> a new error that something is not sorted, we will reuse this one.
+  -       <if> (!peel_ref(path, peeled)) {
+  -               <is>_annotated = !!<hashcmp>(<sha1>, peeled);
+  +       <if> (!peel_ref(path, peeled<.hash>)) {
+  +               <is>_annotated = !!<oidcmp>(<oid>, <&>peeled);
 
-s/NOT_SORTED/TREE_&/ maybe?
+The latter half of both lines looks perfect. But what's that weird
+highlighting of the initial "if" and "is" on those lines?
 
-> I also briefly wondered if fsck.skipList should be finer grained
-> than "these are know to be broken, do not bother reporting problems
-> with them" (e.g. I know v0.99 lacks "tagger" so I want to squelch
-> MISSING_TAGGER_ENTRY for it, but I want to be notified on any other
-> errors).  But that only matters if we update Git to a version with a
-> new fsck that knows yet more kinds of breakages, so it is not a huge
-> issue, and the simplicity of "be silent on these objects" is
-> probably better overall.
+It turns out that the colored output we produce is quite odd:
 
-Well, the idea of skiplist is to say: "I have inspected this object and determined that errors in it should be ignored." As such, it does not really matter what problems future Git versions report because the person populating the skiplist is supposed to test thoroughly, not just asking `git fsck` what is going on.
+  $ git show --color 99a2cfb | grep peel_ref | cat -A
+  ^[[31m-^Iif (!peel_ref(path, peeled)) {^[[m$
+  ^[[32m+^[[m^I^[[32mif (!peel_ref(path, peeled.hash)) {^[[m$
 
-And yes, the motivation for this feature is to keep it super-simple. ;-)
+For the pre-image, we print the color, the "-", and then the line data.
+Makes sense.
 
-Ciao,
-Dscho
+For the post-image, we print the color, "+", a reset, then the initial
+whitespace, then the color again!
+
+So of course the diff algorithm says "hey, there's this weird color in
+here". The original implementation of diff-highlight didn't care,
+because it skipped leading whitespace and colors as "boring". But this
+one cannot do that. It pulls the strict prefix out of each line (and it
+must, because it must get the same prefix for each line of a hunk).
+
+I think git is actually wrong here; it's mingling the ANSI colors and
+the actual content. Nobody ever noticed because it looks OK to a human,
+and who would be foolish enough to try machine-parsing colorized diff
+output?
+
+The fix is:
+
+diff --git a/diff.c b/diff.c
+index 87b16d5..a80b5b4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -501,9 +501,9 @@ static void emit_line_checked(const char *reset,
+ 		emit_line_0(ecbdata->opt, ws, reset, sign, line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line_0(ecbdata->opt, set, reset, sign, "", 0);
++		emit_line_0(ecbdata->opt, set, "", sign, "", 0);
+ 		ws_check_emit(line, len, ecbdata->ws_rule,
+-			      ecbdata->opt->file, set, reset, ws);
++			      ecbdata->opt->file, "", reset, ws);
+ 	}
+ }
+ 
+
+But I'm a little worried it may interfere with the way the
+whitespace-checker emits colors (e.g., it may emit its own colors for
+the leading spaces, and we would need to re-assert our color before
+showing the rest of the line). So I think you could also argue that
+because of whitespace-highlighting, colorized diffs are fundamentally
+going to have colors intermingled with the content and should not be
+parsed this way.
+
+All the more reason to try to move this inside diff.c, I guess.
+
+-Peff
