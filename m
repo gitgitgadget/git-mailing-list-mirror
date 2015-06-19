@@ -1,70 +1,64 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] strbuf: stop out-of-boundary warnings from Coverity
-Date: Fri, 19 Jun 2015 17:51:32 +0700
-Message-ID: <CACsJy8AJdjh_XjdEhhykBDMRPogMcV3LLCQpR2o1T3P1GkVKfw@mail.gmail.com>
-References: <1434536209-31350-1-git-send-email-pclouds@gmail.com>
- <CAGZ79kYRfjeXGkYAv-Kn2Bk-pp2ZSzpKGHDhqMpw03scdRZAmQ@mail.gmail.com>
- <CAGZ79kbZpiz2rMbhJReFG=uRiQdj7a5qxLbRiPQQCFqcfBhikw@mail.gmail.com>
- <20150617191235.GB25304@peff.net> <20150618101353.GA6525@lanh>
- <xmqqioalezhq.fsf@gitster.dls.corp.google.com> <20150619103946.GA20493@lanh> <319721281.628788.1434711025325.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 3/3] Add filter-objects command
+Date: Fri, 19 Jun 2015 11:52:28 +0100
+Message-ID: <20150619105228.GR18226@serenity.lan>
+References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
+ <1434705059-2793-4-git-send-email-charles@hashpling.org>
+ <20150619101010.GA15802@peff.net>
+ <20150619103324.GA4093@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 19 12:52:19 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri Jun 19 12:53:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5tu4-0005U6-Sm
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 12:52:09 +0200
+	id 1Z5tus-0006I3-4i
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 12:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754341AbbFSKwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 06:52:05 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:33237 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751397AbbFSKwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 06:52:03 -0400
-Received: by igbqq3 with SMTP id qq3so12854059igb.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 03:52:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=eOG//b76ICBSiu04d9DCZZ2ZXj8C0gRrgkdCF18QUgk=;
-        b=LVTbxYdJfq0wFM5eDrXGBsfNUAtwMErhvV21p4F8VnNo9iKFtUDeI6fZN2XiW2YtY0
-         Xl09DXyPTYwlN2+AEkH128aq8amR/E4SakgMTM5s7me1myoIGEjDdsjLRprqIddg1GJD
-         deHTxMeCu7R41CGiBl0ylKbwCT5fUbO6f379xCr3bR7EPkH1sU3srtFbSkuI/FlYHU/8
-         s552akDXFQLN4M3fTlY4Oacx0fzBqiEhlZlTIKyZKiimy5b7OehP406b+kBp94PVu7/L
-         lmvLEzuslZHLmQlvJm2+0Oe+KWtlIPbxPGtCzvbHn5Yyfw0OQXxF7gJEz6btspu3Lt85
-         38AQ==
-X-Received: by 10.107.47.224 with SMTP id v93mr20964102iov.86.1434711122286;
- Fri, 19 Jun 2015 03:52:02 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Fri, 19 Jun 2015 03:51:32 -0700 (PDT)
-In-Reply-To: <319721281.628788.1434711025325.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	id S1754976AbbFSKwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 06:52:50 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:45771 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885AbbFSKwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 06:52:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 7896DCDA5F6;
+	Fri, 19 Jun 2015 11:52:42 +0100 (BST)
+X-Quarantine-ID: <q6fMjvKSaqUb>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.001
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id q6fMjvKSaqUb; Fri, 19 Jun 2015 11:52:41 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 2C349CDA5EA;
+	Fri, 19 Jun 2015 11:52:30 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20150619103324.GA4093@hashpling.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272126>
 
-On Fri, Jun 19, 2015 at 5:50 PM, Remi Galan Alfonso
-<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> + sb.buf[0] = 'Z';
->> + printf("%c\n", strbuf_slopbuf[0]);
->> + return 0;
->> startup_info = &git_startup_info;
->
-> I might be wrong, but I definitely think that this
-> printf and return 0 are some debug lines that you
-> forgot to remove.
+On Fri, Jun 19, 2015 at 11:33:24AM +0100, Charles Bailey wrote:
+> So, yes, performance is definitely an issue and I could have called this
+> command "git magically-generate-all-object-for-scripts" but then, as it
+> was so easy to provide exactly the filtering that I was looking for in
+> the C code, I thought I would do that as well and then "filter-objects"
+> ("filter-all-objects"?) seemed like a better name.
 
-Yes it's debug code. I hoped that if I made a mistake forcing the
-segfault, people would notice.
--- 
-Duy
+By analogy with "git filter-branch", I don't think "filter-objects" is a
+good name here.  My preference would be "ls-objects".
