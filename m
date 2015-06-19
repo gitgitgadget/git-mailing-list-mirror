@@ -1,104 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug report: `git revert` on empty commit fails silently
-Date: Thu, 18 Jun 2015 22:05:20 -0700
-Message-ID: <xmqqioakb84v.fsf@gitster.dls.corp.google.com>
-References: <A18BC2A3-C9A6-4D03-B929-D821E90B812D@othernation.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight
+ unevenly-sized hunks
+Date: Fri, 19 Jun 2015 01:32:23 -0400
+Message-ID: <20150619053223.GA27241@peff.net>
+References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx>
+ <xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
+ <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
+ <xmqq1th8ga9b.fsf@gitster.dls.corp.google.com>
+ <20150618190417.GA12769@peff.net>
+ <alpine.DEB.2.20.8.1506181536070.4322@idea>
+ <20150618204505.GD14550@peff.net>
+ <20150618212356.GA20271@peff.net>
+ <20150619035408.GA23679@peff.net>
+ <xmqqmvzwb8vk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alistair Lynn <alistair@othernation.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 07:05:33 2015
+Cc: Patrick Palka <patrick@parcs.ath.cx>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 07:32:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5oUa-0008S4-En
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 07:05:28 +0200
+	id 1Z5oul-0000lB-Ld
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 07:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306AbbFSFFY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 01:05:24 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:36381 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751418AbbFSFFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 01:05:22 -0400
-Received: by iecrd14 with SMTP id rd14so68292626iec.3
-        for <git@vger.kernel.org>; Thu, 18 Jun 2015 22:05:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=8xRCfIUslLXkjbUsGVdrLOoImlT3NDQTEIqCbrKbwFE=;
-        b=LQqfa8oY4v6ls8Q7Pi5xJNLVJWXsxQi9venvEMtU4dHfMvQYjjms1MF85TqVFQHK0M
-         qHkS8r3keRktdGwY9UyaULMYKnYFKTbNbD6wm48Aun4OZqLusUBfm7lBRjc+7F6/IbDt
-         J1WTCjKJbw+VxzgQIiQxKfkEBAWZiiMxq35WFuNT/cZ55S2r8rFFZ8CaUie1iRCnVQbt
-         tvGrkyl7+WNvL3lgKJlaZXbqHDpzXbjtDblVRbmzD672ZXYNMIVo16/zkv9Gy9l+Xzru
-         oQ++6HTA40oVnTXlA94S0N8SsKWmmJhS3NaI4h/Z/uFw7aWsEgF7Bdt7/0qllIAV5t6e
-         hxvA==
-X-Received: by 10.50.178.133 with SMTP id cy5mr1927596igc.5.1434690322043;
-        Thu, 18 Jun 2015 22:05:22 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
-        by mx.google.com with ESMTPSA id u35sm6360442iou.7.2015.06.18.22.05.21
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jun 2015 22:05:21 -0700 (PDT)
-In-Reply-To: <A18BC2A3-C9A6-4D03-B929-D821E90B812D@othernation.com> (Alistair
-	Lynn's message of "Thu, 18 Jun 2015 16:27:41 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753066AbbFSFc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 01:32:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48616 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752089AbbFSFc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 01:32:26 -0400
+Received: (qmail 24769 invoked by uid 102); 19 Jun 2015 05:32:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 00:32:26 -0500
+Received: (qmail 12316 invoked by uid 107); 19 Jun 2015 05:32:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 01:32:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jun 2015 01:32:23 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqmvzwb8vk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272103>
 
-Alistair Lynn <alistair@othernation.com> writes:
+On Thu, Jun 18, 2015 at 09:49:19PM -0700, Junio C Hamano wrote:
 
-> $ git commit --allow-empty -m =E2=80=98test=E2=80=99
-> $ git revert HEAD
->
-> The latter fails silently, leaving HEAD pointing at the commit create=
-d
-> by the first command.
+> Jeff King <peff@peff.net> writes:
+> 
+> > ... I think you could also argue that
+> > because of whitespace-highlighting, colorized diffs are fundamentally
+> > going to have colors intermingled with the content and should not be
+> > parsed this way.
+> 
+> Painting of whitespace breakages is asymmetric [*1*].  If you change
+> something on a badly indented line without fixing the indentation,
+> e.g.
+> 
+> 	-<SP><TAB>hello-world
+>         +<SP><TAB>hello-people
+> 
+> only the space-before-tab on the latter line is painted.
+> 
+> For the purpose of your diff highlighting, however, you would want
+> to treat the leading "<SP><TAB>hello-" on preimage and postimage
+> lines as unchanged.
 
-I do not necessarily think it is a bug to ignore reverting a no-op.
-"revert a no-op" should probably fail by default, and the command
-should require --force or --allow-empty.
+I do strip it off, so it is OK for it to be different in both the
+pre-image and post-image. But what I can't tolerate is the
+intermingling with actual data:
 
-But I agree that silently ignoring is not good.  It should warn the
-user, saying that reverting no-op is nonsense, when refusing the
-request.
+  +\t\t\x1b[32m;foo
+  +\t\x1b[32m;bar
 
-> A subsequent `git commit --allow-empty` has the revert message as the
-> default commit message when starting the editor.
+Those are both post-image lines. I can strip off the "+" from each side
+to compare their inner parts to the pre-image. But the intermingled
+color gets in my way. I can simply strip all colors from the whole line,
+but then information is lost; how do I know where to put them back
+again? It is not just "add back the color at the beginning" (which is
+what I do with the prefix).
 
-And leaving a populated MERGE_MSG file to be picked up by the next
-commit, which is an unrelated operation, is clearly wrong, I would
-think.  If we deem the "revert a no-op" as a nonsense and ignore it,
-we should ignore it completely and should not leave MERGE_MSG.
+I think the answer is that I must strip them out, retaining the colors
+found in each line along with their offset into the line, and then as I
+write out the lines, re-add them at the appropriate spots (taking care
+to use the original offsets, not the ones with the highlighting added
+in).
 
-But leaving MERGE_MSG is internally consistent, I think.  When
-"revert" stops due to conflicts and returns the control to the user,
-it would explain the situation to the user loudly, and then after
-user helps Git by resolving the conflict, the user uses "commit",
-and the message is picked up from MERGE_MSG.  I'd view what you saw
-very similar to that situation.  Instead of seeing a conflict (with
-which the command cannot automatically continue), the command saw a
-"no-op" (which it is dubious that the user really meant to revert).
-Asking the user to help and then allowing the user to signal that
-s/he is now done with "git commit" is the right way to continue,
-and for that to work seamlessly, the message has to be in MERGE_MSG.
+> > All the more reason to try to move this inside diff.c, I guess.
+> 
+> That too, probably.
 
-So perhaps the only buggy part of this whole experience is that the
-command "silently" failed, instead of explaining the situation
-(i.e. "No changes to revert"); in case the user still does want to
-commit the revert of no-op by "commit --allow-empty", it did the
-right thing by leaving the message in MERGE_MSG to be picked up
-later.
+Hmm, I thought that would solve all my problems by operating on the
+pre-color version without much more work. But...
 
-I dunno.
+> If we were to do this, I think it may make sense to separate the
+> logic to compute which span of the string need to be painted in what
+> color and the routine to actually emit the colored output.  That is,
+> instead of letting ws-check-emit to decide which part should be in
+> what color _and_ emitting the result, we should have a helper that
+> reads <line, len>, and give us an array of spans to flag as
+> whitespace violation.  Then an optional diff-highlight code would
+> scan the same <line, len> (or a collection of <line, len>) without
+> getting confused by the whitespace errors and annotate the spans to
+> be highlighted.  After all that happens, the output routine would
+> coalesce the spans and produce colored output.
+> 
+> Or something like that ;-)
 
-> Hope this is the right place for bugs.
+I think this "array of spans" is the only way to go. Otherwise whichever
+markup scheme processes the hunk first ruins the data for the next
+processor.
 
-Yes, this is the right place for bugs.
+So it is a lot more work to make the two work together. The --word-diff
+code would have the same issue, except that I imagine it just skips
+whitespace-highlighting altogether.
 
-Thanks.
+The least-work thing may actually be teaching the separate
+diff-highlight script to strip out the colorizing and re-add it by
+offset.
+
+-Peff
