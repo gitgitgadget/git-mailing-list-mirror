@@ -1,78 +1,108 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH] format-patch: introduce format.outputDirectory configuration
-Date: Fri, 19 Jun 2015 17:34:09 +0600
-Message-ID: <CANCZXo7j=5zcjhxXAeEKagRmUVTNVyaDTzyt1LL_-uufGARCKA@mail.gmail.com>
-References: <1434626280-4610-1-git-send-email-kuleshovmail@gmail.com>
-	<1537731273.629800.1434713654223.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight
+ unevenly-sized hunks
+Date: Fri, 19 Jun 2015 07:38:48 -0400
+Message-ID: <20150619113847.GA31824@peff.net>
+References: <CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
+ <xmqq1th8ga9b.fsf@gitster.dls.corp.google.com>
+ <20150618190417.GA12769@peff.net>
+ <alpine.DEB.2.20.8.1506181536070.4322@idea>
+ <20150618204505.GD14550@peff.net>
+ <20150618212356.GA20271@peff.net>
+ <20150619035408.GA23679@peff.net>
+ <xmqqmvzwb8vk.fsf@gitster.dls.corp.google.com>
+ <20150619053223.GA27241@peff.net>
+ <20150619073455.GA29109@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 19 13:34:19 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Patrick Palka <patrick@parcs.ath.cx>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 13:38:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5uYp-0001nL-Ug
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 13:34:16 +0200
+	id 1Z5udL-00066L-FO
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 13:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbbFSLeL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 07:34:11 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:36157 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487AbbFSLeK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 07:34:10 -0400
-Received: by lacny3 with SMTP id ny3so72300614lac.3
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 04:34:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mdhqlUieXRI1TWVshdKjciX/JzKzbLwEql4zgz4FTqI=;
-        b=Ns9fh0mk0HxEkh3FcLJxF+hpAxrs+4szBEPc4EO0Y37mh/dx0Pdx8vMUxmVXYHwf1l
-         6SQj7FnzcA5UxgD+yLzD7XwvG7yHTLqprSz6iSneWNEG99X8PkPfYopls1YTmW7V8cWn
-         F5PzHKns4iI63SFnC4NpvcRSOOPGldDO1A08rNkRkgqPAaiKcnYnm+ObLBE3qSujNEtp
-         hL/jyljOJ5FdTZdHfYQz0j2V6GBCvsKs0UM6skGUErqGae0ALje1jctW4HuPQPbKc+cf
-         vtIoecHoRlMfeqUHvMzXVxCExZBmhd5krprxeHCX9XYL32waX0dvgZzsZeZeU8uOwuRo
-         HXpQ==
-X-Received: by 10.112.156.97 with SMTP id wd1mr17103976lbb.30.1434713649226;
- Fri, 19 Jun 2015 04:34:09 -0700 (PDT)
-Received: by 10.25.62.150 with HTTP; Fri, 19 Jun 2015 04:34:09 -0700 (PDT)
-In-Reply-To: <1537731273.629800.1434713654223.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	id S1751457AbbFSLiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 07:38:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48743 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750954AbbFSLiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 07:38:50 -0400
+Received: (qmail 14989 invoked by uid 102); 19 Jun 2015 11:38:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 06:38:50 -0500
+Received: (qmail 14969 invoked by uid 107); 19 Jun 2015 11:38:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 07:38:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jun 2015 07:38:48 -0400
+Content-Disposition: inline
+In-Reply-To: <20150619073455.GA29109@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272132>
 
-Hello,
+On Fri, Jun 19, 2015 at 03:34:55AM -0400, Jeff King wrote:
 
-Yes, thank you for advice.
+> And here's some more bad news. If you look at the diff for this
+> patch itself, it's terribly unreadable (the regular diff already is
+> pretty bad, but the highlights make it much worse). There are big chunks
+> where we take away 5 or 10 lines from the old code, and replace them
+> with totally unrelated lines. We end up highlighting almost the entire
+> thing, except for spaces and punctuation.
+> 
+> We might be able to solve this with a percentage heuristic similar to
+> the one Patrick proposed. It's not really interesting to highlight
+> unless we're doing it on probably 20% or less of the diff (where 20% is
+> a number I just made up).
 
-2015-06-19 17:34 GMT+06:00 Remi Galan Alfonso
-<remi.galan-alfonso@ensimag.grenoble-inp.fr>:
-> Alexander Kuleshov <kuleshovmail@gmail.com> writes:
->> +test_expect_success "format-patch format.outputDirectory option" '
->> + git config format.outputDirectory "patches/" &&
->> + git format-patch master..side &&
->> + cnt=3D$(ls | wc -l) &&
->> + echo $cnt &&
->> + test $cnt =3D 3 &&
->> + git config --unset format.outputDirectory
->> +'
->
-> You should probably do:
->> + test_config format.outputDirectory "patches/" &&
->
-> instead of:
->> + git config format.outputDirectory "patches/" &&
->> [...]
->> + git config --unset format.outputDirectory
->
-> This way there shouldn't be any problem with the
-> tests following yours if your test fails in the middle.
->
-> R=C3=A9mi
+That turned out to be pretty easy; patch is below (on top of what I sent
+earlier). I set the percentage at 50% based on eyeballing "git log -p"
+in git.git, and it seems to give good results.
+
+So I think the big remaining issue is improved tokenizing. Maybe Patrick
+will want to take a stab at it.
+
+---
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+index 1525ccc..9454446 100755
+--- a/contrib/diff-highlight/diff-highlight
++++ b/contrib/diff-highlight/diff-highlight
+@@ -114,12 +114,32 @@ sub show_hunk {
+ 			if $bits & 2;
+ 	}
+ 
++	my $highlighted = count_highlight(@highlight_a) +
++			  count_highlight(@highlight_b);
++	my $total = length($a) + length($b);
++	my $pct = $highlighted / $total;
++
++	if ($pct > 0.5) {
++		@highlight_a = ();
++		@highlight_b = ();
++	}
++
+ 	# And now show the output both with the original stripped annotations,
+ 	# as well as our new highlights.
+ 	show_image($a, [merge_annotations(\@stripped_a, \@highlight_a)]);
+ 	show_image($b, [merge_annotations(\@stripped_b, \@highlight_b)]);
+ }
+ 
++sub count_highlight {
++	my $total = 0;
++	while (@_) {
++		my $from = shift;
++		my $to = shift;
++		$total += $to->[0] - $from->[0];
++	}
++	return $total;
++}
++
+ # Strip out any diff syntax (i.e., leading +/-), along with any ANSI color
+ # codes from the pre- or post-image of a hunk. The result is a string of text
+ # suitable for diffing against the other side of the hunk.
