@@ -1,102 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: co-authoring commits
-Date: Fri, 19 Jun 2015 00:25:20 -0400
-Message-ID: <20150619042519.GB26001@peff.net>
-References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>
- <xmqq4mm66r99.fsf@gitster.dls.corp.google.com>
- <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
- <20150617205931.GB24079@cloud>
- <xmqqegla57hl.fsf@gitster.dls.corp.google.com>
- <20150617222828.GB24438@cloud>
- <xmqq381q551o.fsf@gitster.dls.corp.google.com>
- <55833758.6010000@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improve contrib/diff-highlight to highlight unevenly-sized hunks
+Date: Thu, 18 Jun 2015 21:49:19 -0700
+Message-ID: <xmqqmvzwb8vk.fsf@gitster.dls.corp.google.com>
+References: <1434388853-23915-1-git-send-email-patrick@parcs.ath.cx>
+	<xmqqwpz1f22b.fsf@gitster.dls.corp.google.com>
+	<CA+C-WL-CC9o13Rxrr+mKw+vbx=aEJmguLnwMwO=fE-JPJ2DqEg@mail.gmail.com>
+	<xmqq1th8ga9b.fsf@gitster.dls.corp.google.com>
+	<20150618190417.GA12769@peff.net>
+	<alpine.DEB.2.20.8.1506181536070.4322@idea>
+	<20150618204505.GD14550@peff.net> <20150618212356.GA20271@peff.net>
+	<20150619035408.GA23679@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, josh@joshtriplett.org,
-	Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 06:25:38 2015
+Content-Type: text/plain
+Cc: Patrick Palka <patrick@parcs.ath.cx>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 19 06:49:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5nrr-0003Qy-QW
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 06:25:28 +0200
+	id 1Z5oFB-0001YR-VQ
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 06:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbbFSEZY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 00:25:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48601 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751357AbbFSEZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 00:25:22 -0400
-Received: (qmail 21463 invoked by uid 102); 19 Jun 2015 04:25:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Jun 2015 23:25:22 -0500
-Received: (qmail 11852 invoked by uid 107); 19 Jun 2015 04:25:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 00:25:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jun 2015 00:25:20 -0400
-Content-Disposition: inline
-In-Reply-To: <55833758.6010000@gmail.com>
+	id S1752148AbbFSEt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 00:49:28 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:37717 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233AbbFSEtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 00:49:22 -0400
+Received: by igblr2 with SMTP id lr2so6092686igb.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2015 21:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=EbjerOLt+RZL87YCkW8jQOAnPeqMpd5Ppp0mQKOPGiE=;
+        b=HqLGTCEo1UiGNpxzC1Ro1Mmnojj8Jr44PFXts+g0BHWbSFprh5JEyVyYE0u5vznGiU
+         sxWfpECQUlqUgvDuYaviXgIV8ogbc0td56sNKEB/ERL/1wh/or1avJLPDQUEib6O3OLs
+         02LUPSeD9NF2uuzX2FvcG3OoJ84Tdr1cVoN9Xk6Gh77qiLvQzFb4mHiDmkBAsp/WpJWK
+         FResg2pYbfBSzh+CR1XAVlHz9vW1uO0+/fNSbmj+tpBGUeXpJZnsYU4UeDkSz6ZiEHv6
+         nw533rC7pxgKG2h8ermfGPvfcFSif1x66J5HY2PFvwRcZqz+f0Kq8GNNvmE2riW2yzic
+         JNEA==
+X-Received: by 10.50.79.129 with SMTP id j1mr1907738igx.32.1434689362204;
+        Thu, 18 Jun 2015 21:49:22 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e04a:861:67b3:9e25])
+        by mx.google.com with ESMTPSA id c63sm6350145ioe.42.2015.06.18.21.49.20
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jun 2015 21:49:20 -0700 (PDT)
+In-Reply-To: <20150619035408.GA23679@peff.net> (Jeff King's message of "Thu,
+	18 Jun 2015 23:54:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272101>
 
-On Thu, Jun 18, 2015 at 11:25:44PM +0200, Jakub Nar=C4=99bski wrote:
+Jeff King <peff@peff.net> writes:
 
-> Author and committer include datetime in the contents of the
-> field, which is used by Git for heuristics limiting walk. Coauthor
-> would have the same date as author, isn't it? If, after long
-> and involved discussion, we didn't add 'generation' field (for
-> easier cutting history walking), what chance adding 'coauthor'
-> has.
+> ... I think you could also argue that
+> because of whitespace-highlighting, colorized diffs are fundamentally
+> going to have colors intermingled with the content and should not be
+> parsed this way.
 
-I don't think the two situations are comparable. I would (and did) argu=
-e
-that a "generation" field is a bad header to bake in because of what it
-means (it is redundant with the graph structure).
+Painting of whitespace breakages is asymmetric [*1*].  If you change
+something on a badly indented line without fixing the indentation,
+e.g.
 
-Whereas "co-author" is not a fundamentally bad; it's just not something
-we chose to support early on, and it would have to be added now.
+	-<SP><TAB>hello-world
+        +<SP><TAB>hello-people
 
-> OTOH it would be nice to have support for .mailmap, and for
-> grepping... but the former could conceivably be added to the trailer
-> tool, the latter can be done with appropriate regexp in
-> "git log --grep=3D...".
+only the space-before-tab on the latter line is painted.
 
-I don't think we munge trailers during "git log" pretty-printing at all
-now, but it is certainly something we could add (including mailmap-ing
-them).  That doesn't seem like much more work than showing the co-autho=
-r
-field, and it's a lot more generally applicable (you could mailmap
-S-O-B, Reviewed-by, and so forth).
+For the purpose of your diff highlighting, however, you would want
+to treat the leading "<SP><TAB>hello-" on preimage and postimage
+lines as unchanged.
 
-Similarly, something like "git shortlog" would have to learn about
-multiple authors under the "co-author" scheme. But likewise, it would
-not be much more work to teach it something like:
+Which means that you shouldn't be reading a colored output without
+ignoring the color-control sequences.
 
-  git shortlog --field=3DReviewed-by
+So I think you arrived at the correct conclusion.
 
-to handle an arbitrary trailer. And that is much more flexible.
+> All the more reason to try to move this inside diff.c, I guess.
 
-> I wonder what would break if one used 'Name <e@mai.l>, Name <em@i.l>'
-> as the author...
+That too, probably.
 
-The "normal" parser we use for pretty-printing goes left-to-right and
-will stop at the first ">", and show only the first author.
+If we were to do this, I think it may make sense to separate the
+logic to compute which span of the string need to be painted in what
+color and the routine to actually emit the colored output.  That is,
+instead of letting ws-check-emit to decide which part should be in
+what color _and_ emitting the result, we should have a helper that
+reads <line, len>, and give us an array of spans to flag as
+whitespace violation.  Then an optional diff-highlight code would
+scan the same <line, len> (or a collection of <line, len>) without
+getting confused by the whitespace errors and annotate the spans to
+be highlighted.  After all that happens, the output routine would
+coalesce the spans and produce colored output.
 
-Older versions of git would then get the date wrong, complaining about
-the ",". Newer versions parse the date from right-to-left to work aroun=
-d
-such bogosities (especially things like "<foo <bar>>") and so will pars=
-e
-back to the second ">".
+Or something like that ;-)
 
-=46sck will definitely complain about it.
 
--Peff
+[Footnote]
+
+*1* We recently added a knob to allow us paint them on preimage and
+common lines, too, but that is not the default.
