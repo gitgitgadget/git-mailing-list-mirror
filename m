@@ -1,70 +1,114 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: co-authoring commits
-Date: Fri, 19 Jun 2015 23:25:19 +0200
-Message-ID: <CANQwDwd8V-RO2XbkdraLhwmvCbUb=1KBTxmf-ZtyQ7gCVXAeWQ@mail.gmail.com>
-References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com>
- <xmqq4mm66r99.fsf@gitster.dls.corp.google.com> <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com>
- <20150617225224.GF4076@thunk.org> <CAOvwQ4jb-w4+Ah3ZhVE0j1aXLx1=8tRN3Wo98tz+G-wEqLGAcA@mail.gmail.com>
- <55845CFE.4070407@gmail.com> <CAOvwQ4gYsQtZPWOA+1gBtdw9XkjQ4WGipk9grb+_ad9iiBj5Og@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 06/19] fsck: Report the ID of the error/warning
+Date: Fri, 19 Jun 2015 23:34:19 +0200
+Organization: gmx
+Message-ID: <118145527541c82e33599259c8e3e050@www.dscho.org>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+ <cover.1434720655.git.johannes.schindelin@gmx.de>
+ <d0c24a7643acd3a1a17ab3abf0ba54ab352b3e41.1434720655.git.johannes.schindelin@gmx.de>
+ <xmqqvbej7b13.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Theodore Ts'o" <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, Josh Triplett <josh@joshtriplett.org>
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 23:26:09 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 23:34:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z63nc-0002lJ-6x
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 23:26:08 +0200
+	id 1Z63vp-0002Df-QC
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 23:34:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755946AbbFSV0E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 17:26:04 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:35387 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755524AbbFSV0C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 17:26:02 -0400
-Received: by labko7 with SMTP id ko7so81569193lab.2
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 14:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jGLWYs7VerfB8gPAZ+UxeBDroE194WrhWa9RPnhyjys=;
-        b=iDXnBkbCUIAIHBImQAPGkQVKfE7CuHc/ACG6g220nnP5nuKGu1TgVJw8Gpazv2ure1
-         mZyIEfKJaXPjT2F9ZXlp9SMO/LLepu8mX7crNxMSkM2An1qWVgMNN/wVivt0qsDxnXMG
-         7EcwsM8Ph+f9eCajozjc6N6mDz2gvEdPFi7Wb65f5QPaeLaSNKDuGW+edhGmGPLaFWXu
-         jfFXII58wlF1NcAZJLhWtoJqb/iT9669f5eu3vA2alHa8mr08vVrTl7AWJQiIDf3k1El
-         W2TMQrf0yZuCyZvCHCZ92+eZP+puhhid8z2tUX5o1cclthi7FU0R3NkptcLX5P2AXtJI
-         7mRQ==
-X-Received: by 10.112.163.101 with SMTP id yh5mr19652125lbb.25.1434749160664;
- Fri, 19 Jun 2015 14:26:00 -0700 (PDT)
-Received: by 10.25.128.213 with HTTP; Fri, 19 Jun 2015 14:25:19 -0700 (PDT)
-In-Reply-To: <CAOvwQ4gYsQtZPWOA+1gBtdw9XkjQ4WGipk9grb+_ad9iiBj5Og@mail.gmail.com>
+	id S1756001AbbFSVed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 17:34:33 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59038 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753045AbbFSVec (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 17:34:32 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MdFwl-1ZOYNr2Q3n-00IU7L; Fri, 19 Jun 2015 23:34:20
+ +0200
+In-Reply-To: <xmqqvbej7b13.fsf@gitster.dls.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:P5Pn6qtO2+yS9HtPMrGTE8Qpfbbuzv1grKB11ofl2HdYsaQAPd9
+ yDMSrAPNuhQ7xZXxGJ6MMDYSjEQ6dgOU256ZzM0QSTIAK5h7v6QFUzKqD8M9TarQJQU8biy
+ /qY4uju0k0rFA/OlHfv4tQK7mqsZJP/5XdmIVrNGvj8b7QAfEW/FFMV3GBiVHNBTyWrxwDF
+ HLRq2CUbgkxYyn7DXXpkA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nD70DsETCNE=:F8F7RQ2XvtQD2PF1YfU7v0
+ FTNOzoQ4+eH2p3ndrxHTomJ3A6ymO8CWeQ9TFiJ9JaijePcoJLLTboKNMDLXlfeFxzZro7IvE
+ Ib+4TDlW7AATe+j+ttzFPJwSNRNj3knRWv/vMsvUKlU1rOfM4uxp0o0BNeOv5L/2yvC58yqhX
+ EI1dztwvuzcXVjxrVrVrjwmzmQfMLQUHt0+MIwO2ReilLmGSdFaNF4MZBLHw74D5PFwfLi+HK
+ FxTsW5kL8+379jVAxBM1ptttSRlOUIAZZMbZdSau6/W2ITfL61ZrMggwCFf1Rwl7lzaNEWygg
+ 44GcJMIs4Sr7SFNMrqu40S7+RNnmcq3o+H+VoUrfSdHoHQVLNjcHW9r+95GX7mYIqDZpfGCnt
+ E6tfpzmGyp1Eg5eO112W9K3h2FWTWwaMgWsoXCUxskdsUv17rqhHzZZozKl4g3VJxX5GOi4Yx
+ jlw/aD7XjZqupbrP7TDHSlpiwnSlK1iroFX8J3I9KcGU9PxfpxBOqmZSGHYV7Fdv/WN3RzDdA
+ VxHLy9v0N3emQFrKLQb9tCyYBA5ENWifZVP5P3yq2n4QX3junTTsTApREG9wddyAMk/BBy449
+ jgmgDEnOWqY24QcQ2C4qQ+WEg3TmCZwVrBKniA7yFWtFjCWh9PpHEbzyBwTByo9St8TsCLjt4
+ 2GBqU/h8lTjWHo6GULqhaS1W6WiPqjSpeM9IImhB1MDSnsNacnx7MEq/6FU32/h5/r/8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272214>
 
-On Fri, Jun 19, 2015 at 11:11 PM, Tuncer Ayaz <tuncer.ayaz@gmail.com> w=
-rote:
-> On Fri, Jun 19, 2015 at 8:18 PM, Jakub Nar=C4=99bski <jnareb@gmail.co=
-m> wrote:
+Hi Junio,
 
->> [This is sent from Thunderbird news, so it should be all right]
->
-> This is fine, the other one was broken. Out of curiosity what's the
-> difference between Thunderbird email and news?
+On 2015-06-19 21:28, Junio C Hamano wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+>> Some legacy code has objects with non-fatal fsck issues; To enable the
+>> user to ignore those issues, let's print out the ID (e.g. when
+>> encountering "missingemail", the user might want to call `git config
+>> --add receive.fsck.missingemail=warn`).
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>  fsck.c          | 16 ++++++++++++++++
+>>  t/t1450-fsck.sh |  4 ++--
+>>  2 files changed, 18 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/fsck.c b/fsck.c
+>> index 8e6faa8..0b3e18f 100644
+>> --- a/fsck.c
+>> +++ b/fsck.c
+>> @@ -190,6 +190,20 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+>>  	}
+>>  }
+>>
+>> +static void append_msg_id(struct strbuf *sb, const char *msg_id)
+>> +{
+>> +	for (;;) {
+>> +		char c = *(msg_id)++;
+>> +
+>> +		if (!c)
+>> +			break;
+>> +		if (c != '_')
+>> +			strbuf_addch(sb, tolower(c));
+>> +	}
+>> +
+>> +	strbuf_addstr(sb, ": ");
+>> +}
+>> +
+>>  __attribute__((format (printf, 4, 5)))
+>>  static int report(struct fsck_options *options, struct object *object,
+>>  	enum fsck_msg_id id, const char *fmt, ...)
+>> @@ -198,6 +212,8 @@ static int report(struct fsck_options *options, struct object *object,
+>>  	struct strbuf sb = STRBUF_INIT;
+>>  	int msg_type = fsck_msg_type(id, options), result;
+>>
+>> +	append_msg_id(&sb, msg_id_info[id].id_string);
+> 
+> 
+> Nice.  The append function can be made a bit more context sensitive
+> to upcase a char immediately after _ to make it easier to cut and
+> paste into "git config" and keep the result readable, I think.
+> 
+> 	git config --add receive.fsck.missingEmail=warn
 
-One was sent as Reply All from the news interface (nntp://news.gmane.or=
-g),
-one was sent as Reply All from the email interface (Gmail account).
+Okay. I camelCased the IDs; it is a bit sore on my eyes in the command-line output, and the config variables are case-insensitive, anyway, but your wish is my command... I changed it locally, it will be part of v7.
 
-Damned if I know why the difference...
---=20
-Jakub Narebski
+Ciao,
+Dscho
