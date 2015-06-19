@@ -1,8 +1,9 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v6 11/19] fsck: Add a simple test for receive.fsck.<msg-id>
-Date: Fri, 19 Jun 2015 15:34:28 +0200
+Subject: [PATCH v6 12/19] fsck: Disallow demoting grave fsck errors to
+ warnings
+Date: Fri, 19 Jun 2015 15:34:36 +0200
 Organization: gmx
-Message-ID: <18f00f86adf7f9e8a252e857e60d369270fdbe33.1434720655.git.johannes.schindelin@gmx.de>
+Message-ID: <c87d71326fc75773f137eee0ef6a8964645f0b74.1434720655.git.johannes.schindelin@gmx.de>
 References: <cover.1434657920.git.johannes.schindelin@gmx.de>
  <cover.1434720655.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
@@ -10,80 +11,125 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jun 19 15:34:55 2015
+X-From: git-owner@vger.kernel.org Fri Jun 19 15:34:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5wRJ-0000Nq-Sc
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 15:34:38 +0200
+	id 1Z5wRU-0000ZN-As
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 15:34:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbbFSNee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 09:34:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56923 "EHLO mout.gmx.net"
+	id S1753436AbbFSNeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 09:34:44 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56177 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753309AbbFSNec (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 09:34:32 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MDi9C-1ZKnk30aZq-00H6ZL; Fri, 19 Jun 2015 15:34:29
+	id S1753395AbbFSNen (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 09:34:43 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lg6op-1Yn75D3Mxn-00pbDn; Fri, 19 Jun 2015 15:34:36
  +0200
 In-Reply-To: <cover.1434720655.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:KpIoCG9WNvAi86raCoi1AnjXO+0LFdc4gZBYZzMSxK+QRlflwmE
- rHsBZn8QyihyNQQae9vHbQgGgqGDvPWlGXXidoZNRs/KAGJZC3wLJFB25nvaLoYfc+0mi4/
- UfZ1gCDbouJKv5ArLHtl+OJC12z5vvVv9vcUbglhynWnjCZx8J+zWNiqK/MUdNAkyb0t/4k
- RXyT4sUkECs732iTcHsiQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RvqecGO8BsA=:4QZOqr4bs7skGrj/tYuHDm
- 5xbc/c9nwPD6gt2UHRcTYrlw60Tv4XpM5qO/CTwHwqyhs0v08pUOHUwQHhDWXxMcEBn5qLJsR
- SkVr76xngqoucw/7F5s2onTXxzNbfS3Gt69Isp8Hxt104ZJogAGTciOZSzMsZ2wAC5kZepb93
- tHmSk3TdGyYsdH4a53vMxsNCWYXjklMU5wP8s21MvA8HQbk2dATcOUGkAXTW5byu3okFQ++2F
- G2tlw8HLxtUKzuH8TXiFmppaEAzG7BKLpmotoHuVonM1YG6QTL35jkkP2w28ycl6UFqu0WUth
- 0VPkjPL0BQr8uKGBI3qTF9SsIgp9hWfsW8yA44pWCMmy10okr7JCYLOtN/6GDVbgeo1d65hAp
- aybGj2Xp6ipJACCFlwRHj2EnFUphNTT0yPdtnwg06ei2ATPrx30eoZ07muUlit12GJ63wwyAX
- My+QmUIcZiCrufPThnZKHknCDXvsiDZy0iMhxrpPleHl6PXXNGstldXx6h4yfsBdgVidosGui
- aGZuBCSR6xGIuRUSqlTjSj/TudnUq/fHPOjDRcLdkozhaT+tFnwvJjOPSDM6ulIT21AmfqroV
- g5JMHtNyZbUQkbHRZgT/7ehEl4vkAMPPkU7+zgS7Ctr50jcz0kAPIt5s2KiIrKMicPjvxMM1N
- m4vC2A0vjVPfDh6bh7ySdVQikfYkhzSY6a+BfG1BdSMfJ8wVOOrEXVsMZGoduE1MmoqA=
+X-Provags-ID: V03:K0:dEnF3Hs7qrefradFsfjWp+kmhzOSyBUltZvQbKT+0tDGPRE6/nh
+ l+OZE99teyVB4BvKFt6HpGeEpw7oLAeqXyPJ7x0ZDw4f44PTBkVeu6O8Ssj9h7qikbCssms
+ rAO0amNPj1X2M4GaRgqA89k0hjUUwjZpXmlAmotwWoPuLYT5jpXK44wmS+Z9QhGuGOk7Mjb
+ 3uK9SM2NDf0MNGB5Qym1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3Es8+txwZ/M=:QttQHeeQ05VuZkdNjnZ+6H
+ G5l3wDPn3G79BbUNbZoD13813aBP32SA3YdvGj8SNiCrHv3lWxtl26/ve7Vv3Ccwdqloubj9U
+ jTRSM602CX98ALJWknMFVyR/RMqGgecSBXqkY0hKjG25UyweztDg+CD+XRXG/QSs+M4f1ITiZ
+ 0O33/EQdK+93YquhJ71n8kh/ohtKP6UiJV0y9STBDTsyFQuN8ffpWPpJd/ceo2hcUYkRlnMSp
+ uKoaB2W7lDQYzAMBLYyLVKrHMZQnI88E2pGovoGpAPA0R8VDHYwC/2gL/7SUk948kHRO0gb3A
+ cDdq7GEacsktaHFrjQmsi3pOGiihFYQkL7xHqi7smQ/EmSq7+zmHLdr/c+I0KqVHqpdv1lWd6
+ Pf/WVHSSk9oJ+R13F0idwQo4wP3MARXrpLVaHVht1s3ahNQ5wwpWFHPh3Tk3r66KZ6qGE5tQU
+ 3qrIGxjHTsdndfvhsdZh2qXh4w8ykeezX/w7x8hfc6jhbsLrZSa7GGO4OYqYvza3I1mtbygx1
+ u9SkYMQQmALiYF5ci30QhtEzA2Fs7daXa6sRoC9RuVCl3J9Z775NwB3CZ0DNO36ZqcBDv2WNQ
+ E54YVdqtQWmZQcpdCRIY7O1pOT3RGQcajg5XLaBKCSwRY6zuMFnhQCiCEbXpqJrL2aa3KjqJ4
+ 88bFH4vtdgigVKSjKoUD8izrXzT6O/rLcNBRyQ9u5kzKDUTTEEDelSJPzUKVDis0/38I=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272148>
+
+Some kinds of errors are intrinsically unrecoverable (e.g. errors while
+uncompressing objects). It does not make sense to allow demoting them to
+mere warnings.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5504-fetch-receive-strict.sh | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ fsck.c                          | 14 ++++++++++++--
+ t/t5504-fetch-receive-strict.sh | 11 +++++++++++
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
+diff --git a/fsck.c b/fsck.c
+index 21e3052..a4fbce3 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -9,7 +9,12 @@
+ #include "refs.h"
+ #include "utf8.h"
+ 
++#define FSCK_FATAL -1
++
+ #define FOREACH_MSG_ID(FUNC) \
++	/* fatal errors */ \
++	FUNC(NUL_IN_HEADER, FATAL) \
++	FUNC(UNTERMINATED_HEADER, FATAL) \
+ 	/* errors */ \
+ 	FUNC(BAD_DATE, ERROR) \
+ 	FUNC(BAD_DATE_OVERFLOW, ERROR) \
+@@ -39,11 +44,9 @@
+ 	FUNC(MISSING_TYPE, ERROR) \
+ 	FUNC(MISSING_TYPE_ENTRY, ERROR) \
+ 	FUNC(MULTIPLE_AUTHORS, ERROR) \
+-	FUNC(NUL_IN_HEADER, ERROR) \
+ 	FUNC(TAG_OBJECT_NOT_TAG, ERROR) \
+ 	FUNC(TREE_NOT_SORTED, ERROR) \
+ 	FUNC(UNKNOWN_TYPE, ERROR) \
+-	FUNC(UNTERMINATED_HEADER, ERROR) \
+ 	FUNC(ZERO_PADDED_DATE, ERROR) \
+ 	/* warnings */ \
+ 	FUNC(BAD_FILEMODE, WARN) \
+@@ -157,6 +160,10 @@ void fsck_set_msg_type(struct fsck_options *options,
+ 		die("Unhandled message id: %.*s", msg_id_len, msg_id);
+ 	type = parse_msg_type(msg_type, msg_type_len);
+ 
++	if (type != FSCK_ERROR && msg_id_info[id].msg_type == FSCK_FATAL)
++		die("Cannot demote %.*s to %.*s", msg_id_len, msg_id,
++				msg_type_len, msg_type);
++
+ 	if (!options->msg_type) {
+ 		int i;
+ 		int *msg_type = xmalloc(sizeof(int) * FSCK_MSG_MAX);
+@@ -213,6 +220,9 @@ static int report(struct fsck_options *options, struct object *object,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int msg_type = fsck_msg_type(id, options), result;
+ 
++	if (msg_type == FSCK_FATAL)
++		msg_type = FSCK_ERROR;
++
+ 	append_msg_id(&sb, msg_id_info[id].id_string);
+ 
+ 	va_start(ap, fmt);
 diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 69ee13c..3f7e96a 100755
+index 3f7e96a..0d64229 100755
 --- a/t/t5504-fetch-receive-strict.sh
 +++ b/t/t5504-fetch-receive-strict.sh
-@@ -115,4 +115,25 @@ test_expect_success 'push with transfer.fsckobjects' '
- 	test_cmp exp act
+@@ -136,4 +136,15 @@ test_expect_success 'push with receive.fsck.missingemail=warn' '
+ 	grep "missingemail" act
  '
  
-+cat >bogus-commit <<\EOF
-+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+author Bugs Bunny 1234567890 +0000
-+committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
-+
-+This commit object intentionally broken
-+EOF
-+
-+test_expect_success 'push with receive.fsck.missingemail=warn' '
-+	commit="$(git hash-object -t commit -w --stdin <bogus-commit)" &&
-+	git push . $commit:refs/heads/bogus &&
++test_expect_success \
++	'receive.fsck.unterminatedheader=warn triggers error' '
 +	rm -rf dst &&
 +	git init dst &&
 +	git --git-dir=dst/.git config receive.fsckobjects true &&
-+	test_must_fail git push --porcelain dst bogus &&
 +	git --git-dir=dst/.git config \
-+		receive.fsck.missingemail warn &&
-+	git push --porcelain dst bogus >act 2>&1 &&
-+	grep "missingemail" act
++		receive.fsck.unterminatedheader warn &&
++	test_must_fail git push --porcelain dst HEAD >act 2>&1 &&
++	grep "Cannot demote unterminatedheader" act
 +'
 +
  test_done
