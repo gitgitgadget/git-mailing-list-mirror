@@ -1,127 +1,96 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] revision.c: Correctly dereference interesting_cache
-Date: Fri, 19 Jun 2015 12:01:23 -0700
-Message-ID: <1434740483-31730-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: peff@peff.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 19 21:01:34 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 01/19] fsck: Introduce fsck options
+Date: Fri, 19 Jun 2015 12:03:25 -0700
+Message-ID: <xmqqd20r8qrm.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<1befa0a0f1feead1ef9b332bdb175182db1c4b4c.1434720655.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 19 21:03:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z61Xg-0007Oc-W3
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:01:33 +0200
+	id 1Z61Zc-0000lF-0y
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168AbbFSTB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 15:01:29 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:34179 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669AbbFSTB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 15:01:27 -0400
-Received: by igboe5 with SMTP id oe5so22992264igb.1
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 12:01:26 -0700 (PDT)
+	id S1755061AbbFSTD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 15:03:28 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:33875 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbbFSTD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 15:03:27 -0400
+Received: by iebmu5 with SMTP id mu5so80660019ieb.1
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 12:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=5xlAdSsjxVaeNqqmjY/XJTGl2m7119zVSrgncvKjWS4=;
-        b=P2107JhtOr+q1g1sLo8sF9DX+DSjnOIYWrhdkjEa6fRx+IiChsZUYOYb19M4JYyilE
-         RmkSRjlDCnxgnZK0DclitR0YYVOVwvPkzh6iEAJXDcRXEEJIPRdknhkzAZr/YdXPVjAZ
-         ceM7R8IkMOZEmE/PWvZY+BZN6piFhueujOc6AmZjZlhQ89WOsdrLEkpQvJ5xVDFrhVPG
-         fBBi9fbjFW3kppljuOKs1oPd/2qqRKbTHpv6klUISqa/IMnN+gC3LgCi28Of99khcSyI
-         MLfKC/+oye26p/EPsgEcOx3sGN8mHMz8W/YVAjZ2R20tpQwBLL2hqoYXC4G41Ydf8Omm
-         /5FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=5xlAdSsjxVaeNqqmjY/XJTGl2m7119zVSrgncvKjWS4=;
-        b=N0+kw1nCZHhQWVCS471Rt2xQP2PCeUBg6HcEtx+1QwKFUycyr8X7wOFS9hAyBRMjuL
-         PGvyxejEdFVjQgTtV3Y7POacqlnvuniKSyR2RP+2dIO5ohfFMKcM5I6CsM5kWo1gmY+L
-         LLkk3r9vMveOTqWO36Pf5kozlWkK1VDzIaoKHPXxHZMCymwJxrm5Y8ThpHyCbPtNo5Wa
-         SBAU8HSnNBziJHz+F6ZVEWsT0BQfxN3Woif9t1kHrRGJwOaAPG0Tek0BsE8r2fohWzsy
-         empz4fdGBXVhgfW5SsVlMJT2+h+MsMvvIRaCSfEiUGiA6I1vVkllaJflQvOePwn1e+06
-         hZSA==
-X-Gm-Message-State: ALoCoQlcAFW+CPex10O0+SM3zGpqqk/FbMx3pyvloEAga61mT+P1To/1K/Jp8lZ9mBgxdDFcSIa6
-X-Received: by 10.107.148.144 with SMTP id w138mr24553905iod.12.1434740486566;
-        Fri, 19 Jun 2015 12:01:26 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:ec94:864a:dce4:d3cd])
-        by mx.google.com with ESMTPSA id o2sm2241609igr.9.2015.06.19.12.01.25
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=6tLGayrzCD3Fw5BaJ9DO5fZWF2v8zqu2sOwLMCi2RK4=;
+        b=hruukKJmlVujRWIwh6VBDeIODPotlUtQCt2zczEwRBqNly21FbVI67/vUP9XWKdvHQ
+         axlte75fFaniS/+tVBf7N4XzExSB9dZ4yB8CDO+K+xkDB+PIOslwerQo1BnAWRna91YU
+         Eg8G2kfOPnOewtr4UjM3XmA2mbsB+s6os3oCcFBQZNf41VoO9SJaAB9oLze9l93nPTiB
+         IzNMjlNFIv3E7ErnS61PohEqWfB4J4XrDj9HxeiC5Qirp171gubKx7Q8nUiEWXJPX32k
+         urzhkFiPXhA2NYu+zp1IMXAMHZke950vgqbmiDhj1LDCeNvlhWqiRSXphJglpkSfe1ku
+         QCDQ==
+X-Received: by 10.50.62.148 with SMTP id y20mr6470046igr.17.1434740606899;
+        Fri, 19 Jun 2015 12:03:26 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
+        by mx.google.com with ESMTPSA id m193sm7595275iom.19.2015.06.19.12.03.25
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jun 2015 12:01:26 -0700 (PDT)
-X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
+        Fri, 19 Jun 2015 12:03:26 -0700 (PDT)
+In-Reply-To: <1befa0a0f1feead1ef9b332bdb175182db1c4b4c.1434720655.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Fri, 19 Jun 2015 15:32:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272184>
 
-This was introduced at b6e8a3b5 (2015-04-17, limit_list: avoid
-quadratic behavior from still_interesting), which
-also introduced the check a few lines before, which already dereferences
-`interesting_cache`. So at this point `interesting_cache` is guaranteed to
-be not NULL. The code is called referencing the address of a local
-variable, so `interesting_cache` can actually never be NULL and trigger a
-segmentation fault by dereferencing it a few lines before this.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-I think the right thing is to check for `*interesting_cache` as that
-can become NULL actually.
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 48fa472..87ae9ba 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -75,6 +75,7 @@ static int nr_threads;
+>  static int from_stdin;
+>  static int strict;
+>  static int do_fsck_object;
+> +static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+So there is a global fsck_options used throughout the entire
+session here.
 
-Hi Jeff,
+> @@ -838,10 +839,10 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+>  			if (!obj)
+>  				die(_("invalid %s"), typename(type));
+>  			if (do_fsck_object &&
+> -			    fsck_object(obj, buf, size, 1,
+> -				    fsck_error_function))
+> +			    fsck_object(obj, buf, size, &fsck_options))
+>  				die(_("Error in object"));
 
-I found this possible defect via coverity id 1295352.
-As I have had limited exposure to revision.c code until now,
-the commit message may or may not be bogus.
+And that is used here to inspect each and every object we encounter.
 
-Thanks,
-Stefan
+> -			if (fsck_walk(obj, mark_link, NULL))
+> +			fsck_options.walk = mark_link;
 
+Then we do a call to fsck_walk() starting from this object, letting
+mark_link() to inspect it and set the LINK bit.
 
- revision.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +			if (fsck_walk(obj, NULL, &fsck_options))
+>  				die(_("Not all child objects of %s are reachable"), sha1_to_hex(obj->sha1));
 
-diff --git a/revision.c b/revision.c
-index 3ff8723..d1f0f07 100644
---- a/revision.c
-+++ b/revision.c
-@@ -347,35 +347,35 @@ static struct commit *handle_commit(struct rev_info *revs,
- 
- static int everybody_uninteresting(struct commit_list *orig,
- 				   struct commit **interesting_cache)
- {
- 	struct commit_list *list = orig;
- 
- 	if (*interesting_cache) {
- 		struct commit *commit = *interesting_cache;
- 		if (!(commit->object.flags & UNINTERESTING))
- 			return 0;
- 	}
- 
- 	while (list) {
- 		struct commit *commit = list->item;
- 		list = list->next;
- 		if (commit->object.flags & UNINTERESTING)
- 			continue;
--		if (interesting_cache)
-+		if (*interesting_cache)
- 			*interesting_cache = commit;
- 		return 0;
- 	}
- 	return 1;
- }
- 
- /*
-  * A definition of "relevant" commit that we can use to simplify limited graphs
-  * by eliminating side branches.
-  *
-  * A "relevant" commit is one that is !UNINTERESTING (ie we are including it
-  * in our list), or that is a specified BOTTOM commit. Then after computing
-  * a limited list, during processing we can generally ignore boundary merges
-  * coming from outside the graph, (ie from irrelevant parents), and treat
-  * those merges as if they were single-parent. TREESAME is defined to consider
-  * only relevant parents, if any. If we are TREESAME to our on-graph parents,
-  * we don't care if we were !TREESAME to non-graph parents.
--- 
-2.4.1.345.gab207b6.dirty
+Since nobody else sets fsck_options.walk to any other value, and
+nobody else calls fsck_walk(), shouldn't that assignment be done
+only once somewhere a lot higher in the callchain?  The apparent
+"overriding while inspecting this object" that does not have any
+corresponding "now we are done, so revert it to the original value"
+puzzled me, and I am sure it would puzzle future readers of this
+code.
