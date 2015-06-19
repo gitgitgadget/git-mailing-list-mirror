@@ -1,82 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Visualizing merge conflicts after the fact (using kdiff3)
-Date: Fri, 19 Jun 2015 10:34:23 +0200
-Message-ID: <5583D40F.7030300@drmicha.warpmail.net>
-References: <557F791D.3080003@nextest.com>	<87b840d8c73fd7e4e7597e2fd835c703@www.dscho.org>	<5582B8EC.1060205@drmicha.warpmail.net> <xmqqsi9pf1q2.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?0J7Qu9C10LMg0JrQvtGF0YLQtdC90LrQvg==?= 
+	<kohtenko@gmail.com>
+Subject: Re: git svn die signal 6
+Date: Fri, 19 Jun 2015 11:42:08 +0300
+Message-ID: <CACbO7BMdEY66RxzEnq8+TduG3nC1HiyX7y6_PLzb12K=oJx+zw@mail.gmail.com>
+References: <CACbO7BMtsgu2eJHa4NBmeZ2-mTDk23NZhhf5f7MM7+_1X5+zsw@mail.gmail.com>
+	<CACbO7BMfDSqTAzNWKhLqgP+eTmsnFTmyDjt7WoZ7nMdJfp-sCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Eric Raible <raible@nextest.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Fri Jun 19 10:34:52 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 19 10:42:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5rl5-0000ZN-Lz
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 10:34:44 +0200
+	id 1Z5rsM-0007Bb-Ss
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 10:42:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754416AbbFSIed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 04:34:33 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33560 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932348AbbFSIe0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 04:34:26 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 8481120ACD
-	for <git@vger.kernel.org>; Fri, 19 Jun 2015 04:34:25 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Fri, 19 Jun 2015 04:34:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=voqu9SKVmtkdktY9wRfHJGFExA4=; b=ntSs7W
-	YCcEf346y+reEYnNaOaDlW1baDN11fsWZijUg1nYxg8HeR5UeLvDJvnurrknQ/qu
-	lYq7SdXOMdl8sWZfMrYak9VxBNUbWHFNaxGM3PnaiKnHobIreVyhuRPcqqspQagY
-	i8x5Qux1pN6ysJSan2/F6x+njHQ4rCpfwmxjY=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=voqu9SKVmtkdktY
-	9wRfHJGFExA4=; b=Wj0uBSspmGGw7UDv0Ts1HeBPAim/8cDTTp7YdNRB+yx4OTC
-	icHOeF1+QyG5nTZ6vHNPYfgycTdk1Hs7Ou9ZCtS9qqfN5moXDnZ8x72Sh4ojBx70
-	LkkkkLPlw+2Mi/zbf2dRRmvnC6bLkNmLSkdtWCTAt8qyX4Bcw6W0sQfGxp88=
-X-Sasl-enc: uZi+lQZm0cOPKHnbVqu3pJtMRHSHnsSINZoDthED49yD 1434702865
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id BB1556800EB;
-	Fri, 19 Jun 2015 04:34:24 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqqsi9pf1q2.fsf@gitster.dls.corp.google.com>
+	id S1753863AbbFSImK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 04:42:10 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:36578 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754025AbbFSImI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 04:42:08 -0400
+Received: by oigb199 with SMTP id b199so33753839oig.3
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 01:42:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=ZEQtajXWPK2Ot1MXyIAHnnKnvLn4CesrHh1LdXGQpmE=;
+        b=GNTSZyqLotrh8qocZwOKxaToZJhaO1G8MOv2dkTYZ2cC0FMouCIfwHHGWseR463jtS
+         HBrfN12gkkSGKDavTxrGYyV+ab4RL7EjeNWGBWWd5rW1J/rZfsofIe5QFQ8mHpqAYRAA
+         Uj2CT8aF6t2UmXir6qh7822omb/+E7d5bGRbzd02qW5eml+9NxdBhBP48ywnMRyJdLJV
+         +FctrYCND6k7I9n+I9mD9eljQJ6dDVdlc/3w5ccykUo5gLSDoO/8QaHPlbtsyGC95kb4
+         G6sIpUnaQUnd9tn+jWWBmLActg940s81Lq/1PQUkM6yQBopiwGLWuQbpM+jvAHlfxKSC
+         A3ZA==
+X-Received: by 10.60.52.174 with SMTP id u14mr12951048oeo.9.1434703328190;
+ Fri, 19 Jun 2015 01:42:08 -0700 (PDT)
+Received: by 10.76.41.202 with HTTP; Fri, 19 Jun 2015 01:42:08 -0700 (PDT)
+In-Reply-To: <CACbO7BMfDSqTAzNWKhLqgP+eTmsnFTmyDjt7WoZ7nMdJfp-sCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272109>
 
-Junio C Hamano venit, vidit, dixit 18.06.2015 17:57:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> This type of request comes up often (for a reason). I'm wondering
->> whether we could support it more systematically, either by exposing the
->> steps above as a command, or by storing the unresolved merge somewhere
->> (leveraging stash or rerere).
-> 
-> Perhaps 'tr/remerge-diff' (on 'pu') is of interest?
-> 
+I even found Pull Request on GitHub with useful changes, but looks
+like there is too hard way to commit changes and author gave up.
+https://github.com/git/git/pull/62 Probably you can take a short look
+into it and include this changes in next release.
 
-Ingenious!
-
-To me, this seems to be the most useful view if you want to understand a
-merge just from the parents and the merge commit. Since you would use
-that for individual commits only, the cpu cycles are well spent.
-
-As and added benefit, tr/remerge-diff merges to current next with
-conflicts (oid...) so that you get to test it on its own merge!
-
-I haven't reviewed remerge-diff but merged it on top of my own local
-additions and ran the full test suite successfully. Any big blocker to
-watch out for?
-
-Michael
+2015-06-15 16:54 GMT+03:00 =D0=9E=D0=BB=D0=B5=D0=B3 =D0=9A=D0=BE=D1=85=D1=
+=82=D0=B5=D0=BD=D0=BA=D0=BE <kohtenko@gmail.com>:
+> Hi great "git crew" member :)
+> I found small, but annoying bug in 'git svn'. If you would try to mak=
+e
+> any commit with new files (or delete/modify files) which contain in
+> name "@" sign - you'll see crash with minimum information about what'=
+s
+> just happened. Such file names are very useful for iOS projects when
+> you can add same pictures with different dimensions with suffix @2x o=
+r
+> @3x. In guts, svn uses "@" sign for pin version of file and it's
+> probably confused if this sign presented in file name. For committing
+> such changes thru svn you would use "svn add 'image@3x.png'@". This
+> will prevent such problem.
+>
+> I hope you can easily find out how to reproduce and fix this issue.
+> Please, feel free to contact me for any details about this.
+>
+> Best regards
