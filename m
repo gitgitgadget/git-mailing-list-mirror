@@ -1,95 +1,99 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] revision.c: Correctly dereference interesting_cache
-Date: Fri, 19 Jun 2015 14:00:24 -0700
-Message-ID: <20150619210023.GA4865@google.com>
-References: <1434740483-31730-1-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 08/19] fsck: Make fsck_commit() warn-friendly
+Date: Fri, 19 Jun 2015 14:01:16 -0700
+Message-ID: <xmqqk2uz5s6b.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<1ce6b2b32cb94d9697056d1181bb1fe396c64a5b.1434720655.git.johannes.schindelin@gmx.de>
+	<xmqqmvzv78z9.fsf@gitster.dls.corp.google.com>
+	<ba0cb32edf26639a8a00ad9d17b49e32@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: peff@peff.net, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 23:00:46 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 19 23:03:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z63P3-0004m4-Qz
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 23:00:46 +0200
+	id 1Z63S0-0007aG-HN
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 23:03:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933284AbbFSVAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 17:00:39 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33428 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932518AbbFSVAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 17:00:33 -0400
-Received: by igbqq3 with SMTP id qq3so25172789igb.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 14:00:32 -0700 (PDT)
+	id S933165AbbFSVDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 17:03:35 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:34170 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932233AbbFSVBS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 17:01:18 -0400
+Received: by iebmu5 with SMTP id mu5so82429019ieb.1
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 14:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ixrws/F7Zjkjf1gwPO6kN+g8+uN02qEDPbIrvioHELo=;
-        b=nar6mEB1JnVrxlgwC1igs/wf7VhFiA+k2JJG9PKgGBxgHfdV7xrwRGPxWq55LIUUbI
-         Ar6FdsCL98vDgBHXbDpyjlw07CQNenO8xup9AByJ1eQ/mzHHXKsRKukcYsn6S+DqpQr7
-         lhMJfD6tzA42qQ6/A2IjIP+vXiPWow2SdFfyOOqH/pOxJbUY9mKK1j9brvOmxTdkum/P
-         NEMXk58YVS+rS/upSFLUIh5KnTkzpbS91wRUhmDnJBOC0AbWhjEXKOi0QtWMd/s6c5jw
-         jX3TErZKj9zD9v+vxiXKt7RA5c6Po/XRVZlYEQk0hbxOlR/9epgiJjPC1I1lxBkzBnDI
-         MaAQ==
-X-Received: by 10.43.10.194 with SMTP id pb2mr14356769icb.31.1434747632271;
-        Fri, 19 Jun 2015 14:00:32 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:7111:f201:e4f4:2844])
-        by mx.google.com with ESMTPSA id pg7sm2437612igb.6.2015.06.19.14.00.31
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=L6vvpl78kCeA+hn0p8IBSKsSCVHJcoT92eiP9FbD1yU=;
+        b=uzFJoJJXtE26SfLz5Mfa8NINMLKFa0U5oLYSqn+QwvdAUYxdDNzfHl4JGKyyjTZaO7
+         5QxoFyS/8T5co/eHX4GLPouy8LneMoGMei8cTdBOBvWsB4odrhAVr6glRfwnTf32aSUX
+         8A+K6212vjaD6q6AmZtNcyi3bq1NPm0lRwxXoiEm/6HCWyaVU+Qzu2Axcmd8rbziPv6G
+         dLo7D6Jm4OI0GUGJMP8BdvKQy2ARKr2dhHPs/H2Tnhg6c8Zcs5B6P7SB8ocw3l5ce10X
+         oXIOY/gUdEZ/+95o31sOgzSMzBesM+XLuc/Z8xX9sLoBfqvGpyRoiU5KAkWM+4AObKTq
+         uVhg==
+X-Received: by 10.107.8.210 with SMTP id h79mr3973295ioi.27.1434747677759;
+        Fri, 19 Jun 2015 14:01:17 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
+        by mx.google.com with ESMTPSA id qh9sm2429081igb.20.2015.06.19.14.01.17
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jun 2015 14:00:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1434740483-31730-1-git-send-email-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Fri, 19 Jun 2015 14:01:17 -0700 (PDT)
+In-Reply-To: <ba0cb32edf26639a8a00ad9d17b49e32@www.dscho.org> (Johannes
+	Schindelin's message of "Fri, 19 Jun 2015 22:52:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272207>
 
-Hi,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Stefan Beller wrote:
+>> I do not think this "if (err) return err;" that uses the return
+>> value of report(), makes sense.
+>> 
+>> As all the errors that use this pattern are isolated ones that does
+>> not break parsing of the remainder (e.g. author ident had an extra >
+>> in it may break "author " but that does not prevent us from checking
+>> "committer ").
+>> 
+>> Your report() switches its return value based on the user setting;
+>> specifically, it returns 0 if the user tells us to ignore/skip or
+>> warn.  Which means that the user will see all warnings, but we stop
+>> at the first error.
+>> 
+>> Shouldn't we continue regardless of the end-user setting in order to
+>> show errors on other fields, too?
+>
+> I can make that happen, but please note that this is a change of
+> behavior: we always stopped upon the first error.
 
-> This was introduced at b6e8a3b5 (2015-04-17, limit_list: avoid
-> quadratic behavior from still_interesting), which
-> also introduced the check a few lines before, which already dereferences
-> `interesting_cache`. So at this point `interesting_cache` is guaranteed to
-> be not NULL.
+Yeah, and we always died when we saw error, without giving users an
+option to turn it down.  So?
 
-The above is the rationale for the coverity warning, but it does not
-explain why this change is safe.
+> It was my intention not to change behavior in that way without a
+> proper reason, and I saw none.
 
->                The code is called referencing the address of a local
-> variable, so `interesting_cache` can actually never be NULL and trigger a
-> segmentation fault by dereferencing it a few lines before this.
+What would be the end-user experience if you stopped at the first
+error?  You see an error, add an "fsck.<msg-id> = ignore" and rerun,
+only to find another error and rinse and repeat?  Wouldn't you
+rather see all of them and add the "ignore" to cover them in one go?
 
-I'm having trouble parsing this sentence.  Do you mean that limit_list()
-only calls still_interesting() (and thus, indirectly,
-everybody_uninteresting()), with the second parameter equal to the
-address of the local interesting_cache variable, so it can never be
-NULL?
+> I actually see a really good reason to *keep* the current behavior:
+> one of the most prominent users of this code path is `git receive-pack
+> --strict`. It is used heavily by GitHub to ensure at least a certain
+> level of validity of pushed objects. Now, for this use case it is easy
+> to see that you want to stop *as soon as an error was
+> encountered*. And as GitHub sponsors my work on this patch series, my
+> main aim is to support their use case.
 
-That makes sense, but I had to look at the code and reread the above
-sentence a few times before I understood.
-
-Do you know what this code is trying to check for?  What does it mean
-for *interesting_cache to be NULL?
-
-Should there be
-
-	if (!interesting_cache)
-		die("BUG: &interesting_cache == NULL");
-
-checks at the top of still_interesting and everybody_uninteresting to
-futureproof this?
-
-What does the *interesting_cache variable represent, anyway?
-
-This code seems to be underdocumented.
-
-Thanks and hope that helps,
-Jonathan
+While I understand that use case, I do not think stopping after
+showing three more errors in a single commit would make much
+difference in the bigger picture.
