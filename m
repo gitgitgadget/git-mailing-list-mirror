@@ -1,71 +1,62 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] Move unsigned long option parsing out of
- pack-objects.c
-Date: Fri, 19 Jun 2015 13:03:25 +0200 (CEST)
-Message-ID: <69265919.629073.1434711805415.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1434705059-2793-1-git-send-email-charles@hashpling.org> <1434705059-2793-3-git-send-email-charles@hashpling.org>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH 3/3] Add filter-objects command
+Date: Fri, 19 Jun 2015 12:04:08 +0100
+Message-ID: <20150619110408.GA4513@hashpling.org>
+References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
+ <1434705059-2793-4-git-send-email-charles@hashpling.org>
+ <20150619101010.GA15802@peff.net>
+ <20150619103324.GA4093@hashpling.org>
+ <20150619105228.GR18226@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Jun 19 13:02:00 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jun 19 13:04:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5u3b-0005s5-Mj
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 13:02:00 +0200
+	id 1Z5u5o-0007yF-Ux
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 13:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982AbbFSLBz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 07:01:55 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:39408 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750980AbbFSLBz convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 07:01:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CAA0C293C;
-	Fri, 19 Jun 2015 13:01:52 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CL80Yd2aRhxv; Fri, 19 Jun 2015 13:01:52 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id AFF562924;
-	Fri, 19 Jun 2015 13:01:52 +0200 (CEST)
-In-Reply-To: <1434705059-2793-3-git-send-email-charles@hashpling.org>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Win)/8.0.9_GA_6191)
-Thread-Topic: Move unsigned long option parsing out of pack-objects.c
-Thread-Index: QmyQi2Q23OuBpDh1cRMIKx2cU3l2fQ==
+	id S1751268AbbFSLEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 07:04:12 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:39868 "EHLO
+	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbbFSLEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 07:04:11 -0400
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout06 with smtp
+	id iB481q0092iA9hg01B49fQ; Fri, 19 Jun 2015 12:04:09 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=foEhHwMf c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
+ a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
+ a=Ew9TdX-QAAAA:8 a=XAFQembCKUMA:10 a=Pn-5SQfMXdCwiE5jNRsA:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.84)
+	(envelope-from <charles@hashpling.plus.com>)
+	id 1Z5u5g-0001BP-Mj; Fri, 19 Jun 2015 12:04:08 +0100
+Content-Disposition: inline
+In-Reply-To: <20150619105228.GR18226@serenity.lan>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272128>
 
-Charles Bailey <cbailey32@bloomberg.net> writes:
-> test_expect_success 'long options' '
-> - test-parse-options --boolean --integer 1729 --boolean --string2=3D3=
-21 \
-> - --verbose --verbose --no-dry-run --abbrev=3D10 --file fi.le\
-> - --obsolete > output 2> output.err &&
-> + test-parse-options --boolean --integer 1729 --unsigned-long 16k \
-> + --boolean --string2=3D321 --verbose --verbose --no-dry-run \
-> + --abbrev=3D10 --file fi.le --obsolete \
-> + > output 2> output.err &&
-> test_must_be_empty output.err &&
-> test_cmp expect output
-> '
+On Fri, Jun 19, 2015 at 11:52:28AM +0100, John Keeping wrote:
+> On Fri, Jun 19, 2015 at 11:33:24AM +0100, Charles Bailey wrote:
+> > So, yes, performance is definitely an issue and I could have called this
+> > command "git magically-generate-all-object-for-scripts" but then, as it
+> > was so easy to provide exactly the filtering that I was looking for in
+> > the C code, I thought I would do that as well and then "filter-objects"
+> > ("filter-all-objects"?) seemed like a better name.
+> 
+> By analogy with "git filter-branch", I don't think "filter-objects" is a
+> good name here.  My preference would be "ls-objects".
 
-It's trivial matter but the line:
-> + > output 2> output.err &&
-should be written:
-> + >output 2>output.err &&
-
-It was incorrectly written before but since=20
-you are modifying the line, it might be a=20
-good thing to change it now.
-
-R=C3=A9mi
+I like that because it emphasises why I wrote it, the very basic
+filtering is a nice additional feature.
