@@ -1,94 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Add filter-objects command
-Date: Fri, 19 Jun 2015 06:10:10 -0400
-Message-ID: <20150619101010.GA15802@peff.net>
-References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
- <1434705059-2793-4-git-send-email-charles@hashpling.org>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 00/19] Make git-pull a builtin
+Date: Fri, 19 Jun 2015 18:11:36 +0800
+Message-ID: <CACRoPnSP4sxE7z4pTYe2TZVCHAie0Sad_tS3zW=znksjusXN1g@mail.gmail.com>
+References: <1434624852-6869-1-git-send-email-pyokagan@gmail.com>
+	<xmqqfv5oepvh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Jun 19 12:10:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 12:12:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5tFc-00017R-Su
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 12:10:21 +0200
+	id 1Z5tH1-0002Kd-As
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 12:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbbFSKKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 06:10:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48693 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751633AbbFSKKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 06:10:15 -0400
-Received: (qmail 9366 invoked by uid 102); 19 Jun 2015 10:10:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 05:10:15 -0500
-Received: (qmail 13938 invoked by uid 107); 19 Jun 2015 10:10:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Jun 2015 06:10:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jun 2015 06:10:10 -0400
-Content-Disposition: inline
-In-Reply-To: <1434705059-2793-4-git-send-email-charles@hashpling.org>
+	id S1754070AbbFSKLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 06:11:39 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:38859 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684AbbFSKLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 06:11:37 -0400
+Received: by wibdq8 with SMTP id dq8so13953783wib.1
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 03:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ZzuUO0F5gpNrk++/2zhO2108cOOH/I56GLwyUAPVscw=;
+        b=Nqf+FIQitwdTYMlttkVUtF7tw4R4bCp1TZkvU1HRDUmKOg14r1uMGeGxo4XTtr6wHx
+         dmq5TJDczOCGzxZdWpyC13U5HjJgrrohj8bCPuIKgf0VLXs0+havwdwbxJDom5wXzxL8
+         cEf1VG/B+OCwVujVJo4FXOiX23kNOYTRS2CrPegw0UzGfu9NNNlATtc/0RWsdOr7eG3W
+         bNhQrDhXPf5zu/1tfRsfKfRWUNz+JmdXjBmmBANYvsMMXpz6qrZ5p4eoY69h5J7KFoMA
+         ftInSNx1homnqKf5tVSlxx+dVwapgbde4tiEVk/fsBf+7Yay/K3JbqT2MLWa5Mi0NXDx
+         2y/g==
+X-Received: by 10.194.62.205 with SMTP id a13mr23364297wjs.98.1434708696289;
+ Fri, 19 Jun 2015 03:11:36 -0700 (PDT)
+Received: by 10.194.85.113 with HTTP; Fri, 19 Jun 2015 03:11:36 -0700 (PDT)
+In-Reply-To: <xmqqfv5oepvh.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272120>
 
-On Fri, Jun 19, 2015 at 10:10:59AM +0100, Charles Bailey wrote:
+On Fri, Jun 19, 2015 at 4:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I didn't look carefully, but does that mean 04/19 has the "what if
+> you start from a subdirectory and are still using the scripted one?"
+> issue we discussed recently for "am"?
 
-> filter-objects is a command to scan all objects in the object database
-> for the repository and print the ids of those which match the given
-> criteria.
-> 
-> The current supported criteria are object type and the minimum size of
-> the object.
-> 
-> The guiding use case is to scan repositories quickly for large objects
-> which may cause performance issues for users. The list of objects can
-> then be used to guide some future remediating action.
+It does, but git-pull.sh does not care about the original working directory, no?
 
-I've had to perform this exact same task. You can already do the
-"filtering" part pretty easily and efficiently with cat-file and a perl
-script, like:
-
-  magically_generate_all_objects |
-  git cat-file --batch-check='%(objectsize) %(objectname)' |
-  perl -alne 'print $F[1] if $F[0] > 1234'
-
-That's not as friendly as your filter-objects, but it's a lot more
-flexible (since you can ask cat-file for all sorts of information).
-
-Obviously I've glossed over the "how to get a list of objects" part.
-If you truly want all objects (not just reachable ones), or if "rev-list
---objects" is too slow, the best way is:
-
-  objects() {
-    # loose objects
-    for i in objects/??/*; do
-       echo $i
-    done |
-    sed 's,objects/\(..\)/,\1,'
-
-    # packed objects
-    for i in objects/pack/*.idx; do
-      git show-index <$i
-    done |
-    cut -d' ' -f2
-  }
-
-Certainly I'm not opposed to doing something less horrible there (and I
-am happy to see my for_each_*_object interface getting more callers!).
-I kind of wonder if we should make "all objects, reachable or not" an
-option for rev-list. I'm not sure if it would choke on adding them all
-to the "pending" list, though; it's not really made for that. But it
-would enable neat things like:
-
-  git rev-list --all-the-objects --not --all
-
-to show you what's unreachable.
-
--Peff
+Regards,
+Paul
