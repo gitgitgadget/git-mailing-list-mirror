@@ -1,121 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 06/19] fsck: Report the ID of the error/warning
-Date: Fri, 19 Jun 2015 16:26:16 -0700
-Message-ID: <CAPc5daUm=h0+itLR-QcL2tMbeQ+oUe5p9Ki8qAsj47OFRX4LTw@mail.gmail.com>
+Subject: Re: [PATCH v6 12/19] fsck: Disallow demoting grave fsck errors to warnings
+Date: Fri, 19 Jun 2015 16:30:21 -0700
+Message-ID: <CAPc5daWuxBYyA03_WxeEEuDN4BPW58tTTK2yLxVnjR7sRwMhoQ@mail.gmail.com>
 References: <cover.1434657920.git.johannes.schindelin@gmx.de>
- <cover.1434720655.git.johannes.schindelin@gmx.de> <d0c24a7643acd3a1a17ab3abf0ba54ab352b3e41.1434720655.git.johannes.schindelin@gmx.de>
- <xmqqvbej7b13.fsf@gitster.dls.corp.google.com> <118145527541c82e33599259c8e3e050@www.dscho.org>
+ <cover.1434720655.git.johannes.schindelin@gmx.de> <c87d71326fc75773f137eee0ef6a8964645f0b74.1434720655.git.johannes.schindelin@gmx.de>
+ <xmqqa8vv78ld.fsf@gitster.dls.corp.google.com> <4e523e191f979706eca5d6ddcd221553@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jeff King <peff@peff.net>
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 20 01:26:58 2015
+X-From: git-owner@vger.kernel.org Sat Jun 20 01:30:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z65gW-0004M4-GT
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 01:26:56 +0200
+	id 1Z65kG-00084k-0P
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 01:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755133AbbFSX0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 19:26:43 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:34086 "EHLO
-	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855AbbFSX0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 19:26:37 -0400
-Received: by oigx81 with SMTP id x81so90262503oig.1
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 16:26:36 -0700 (PDT)
+	id S1752351AbbFSXao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 19:30:44 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:35554 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060AbbFSXam (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 19:30:42 -0400
+Received: by oiax193 with SMTP id x193so90220201oia.2
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 16:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=3s8OKj06bUp4DuH3IU9B4kOR1gCJRB3zZIJ87CJzrMY=;
-        b=IRIkXWrx4kE354tDahwpjpjhwJUB0zZffYQH2WkvgZcZRUzyYvIkd514TOCB9Szna4
-         btYrOSSs9v1dJhAOkGuvyuTq0fn6zfLAQizGQNYsfd+omRfWMSbAhU9BTNjMt2qYer4Y
-         7W6SMcAyLxZLiFFDPsEKkJnOkrkjUzDIxWvAJ0214biOgRCpJtg5x1KbUQOpXWZU0kbb
-         pemUf/gHvovlafA8R512O4Oqu1kPesOLkil/LlCroYLvgJfruWQhp8m69AU9kiz8xCcG
-         EKo76+YMnT2GcI8v5N8nGs4uteffrLsetTa1rGtHPP0GYchtsCLPxbM/XumOabkcmfjy
-         m2Mg==
-X-Received: by 10.182.230.67 with SMTP id sw3mr15756191obc.0.1434756396356;
- Fri, 19 Jun 2015 16:26:36 -0700 (PDT)
-Received: by 10.202.202.129 with HTTP; Fri, 19 Jun 2015 16:26:16 -0700 (PDT)
-In-Reply-To: <118145527541c82e33599259c8e3e050@www.dscho.org>
-X-Google-Sender-Auth: 47FdbkYJG_Z-ngBppUUAh_l2K6E
+        bh=Sv4nVp2NfJd2ajWAjDvFZQy0IfoFBcAITHGOwHok0OE=;
+        b=G+BiMstfIHpkx5wSM0tM2N1aHUbw2q2J4fz9lpjJ6B7lIMohMyUiCIn3EBr6PuvYSj
+         rZkDn75K7J8exUntKMb1taG6Q7ZpFwCORbOQyP8hPPJhMu50DWh7oNABIyg4Oj7ilp8f
+         0euj372e2lrQWTJ9dRaG9nraEWDIyuLupgXXe1bvmngJLKYDV/OajkOr7OG9SrO3PPB5
+         SF0ZncpbYrafkDELRvkK6B/SW8uFloVm9ClcD0Twj6S6GgshI+ye2BmH8fireA0MYir4
+         QEs6YVcodN0+alrVJKYDefVfGH9kHro2XHLsO1RCtzfJZuUK8ZvH/taazJm1UGbN+/7D
+         lukA==
+X-Received: by 10.202.186.132 with SMTP id k126mr14922601oif.60.1434756642179;
+ Fri, 19 Jun 2015 16:30:42 -0700 (PDT)
+Received: by 10.202.202.129 with HTTP; Fri, 19 Jun 2015 16:30:21 -0700 (PDT)
+In-Reply-To: <4e523e191f979706eca5d6ddcd221553@www.dscho.org>
+X-Google-Sender-Auth: 6CzVJRQL8rXengK86KAq7lOpzmg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272216>
 
-That "... can be made ..." was not my wish but more like "the way the
-code is structured it is possible for somebody to do such a thing
-easily, well done" compliment ;-)
+Ahh, I didn't see that they were not grouped by object types, features
+or any meaningful axis.
+That explains it (i.e. I can now understand why the original list was
+ordered differently from the final order).
 
-The message names will have to be shown somewhere in the
-documentation, and in Documentation/ we try to use camelCase to show
-the word boundary; it would be better to match that, as this output is
-meant to be used there.
 
-On Fri, Jun 19, 2015 at 2:34 PM, Johannes Schindelin
+On Fri, Jun 19, 2015 at 2:09 PM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
 > Hi Junio,
 >
-> On 2015-06-19 21:28, Junio C Hamano wrote:
+> On 2015-06-19 22:21, Junio C Hamano wrote:
 >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 >>
->>> Some legacy code has objects with non-fatal fsck issues; To enable the
->>> user to ignore those issues, let's print out the ID (e.g. when
->>> encountering "missingemail", the user might want to call `git config
->>> --add receive.fsck.missingemail=warn`).
+>>> Some kinds of errors are intrinsically unrecoverable (e.g. errors while
+>>> uncompressing objects). It does not make sense to allow demoting them to
+>>> mere warnings.
 >>>
 >>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 >>> ---
->>>  fsck.c          | 16 ++++++++++++++++
->>>  t/t1450-fsck.sh |  4 ++--
->>>  2 files changed, 18 insertions(+), 2 deletions(-)
+>>>  fsck.c                          | 14 ++++++++++++--
+>>>  t/t5504-fetch-receive-strict.sh | 11 +++++++++++
+>>>  2 files changed, 23 insertions(+), 2 deletions(-)
 >>>
 >>> diff --git a/fsck.c b/fsck.c
->>> index 8e6faa8..0b3e18f 100644
+>>> index 21e3052..a4fbce3 100644
 >>> --- a/fsck.c
 >>> +++ b/fsck.c
->>> @@ -190,6 +190,20 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
->>>      }
->>>  }
+>>> @@ -9,7 +9,12 @@
+>>>  #include "refs.h"
+>>>  #include "utf8.h"
 >>>
->>> +static void append_msg_id(struct strbuf *sb, const char *msg_id)
->>> +{
->>> +    for (;;) {
->>> +            char c = *(msg_id)++;
+>>> +#define FSCK_FATAL -1
 >>> +
->>> +            if (!c)
->>> +                    break;
->>> +            if (c != '_')
->>> +                    strbuf_addch(sb, tolower(c));
->>> +    }
->>> +
->>> +    strbuf_addstr(sb, ": ");
->>> +}
->>> +
->>>  __attribute__((format (printf, 4, 5)))
->>>  static int report(struct fsck_options *options, struct object *object,
->>>      enum fsck_msg_id id, const char *fmt, ...)
->>> @@ -198,6 +212,8 @@ static int report(struct fsck_options *options, struct object *object,
->>>      struct strbuf sb = STRBUF_INIT;
->>>      int msg_type = fsck_msg_type(id, options), result;
->>>
->>> +    append_msg_id(&sb, msg_id_info[id].id_string);
+>>>  #define FOREACH_MSG_ID(FUNC) \
+>>> +    /* fatal errors */ \
+>>> +    FUNC(NUL_IN_HEADER, FATAL) \
+>>> +    FUNC(UNTERMINATED_HEADER, FATAL) \
+>>>      /* errors */ \
+>>>      FUNC(BAD_DATE, ERROR) \
+>>>      FUNC(BAD_DATE_OVERFLOW, ERROR) \
+>>> @@ -39,11 +44,9 @@
+>>>      FUNC(MISSING_TYPE, ERROR) \
+>>>      FUNC(MISSING_TYPE_ENTRY, ERROR) \
+>>>      FUNC(MULTIPLE_AUTHORS, ERROR) \
+>>> -    FUNC(NUL_IN_HEADER, ERROR) \
+>>>      FUNC(TAG_OBJECT_NOT_TAG, ERROR) \
+>>>      FUNC(TREE_NOT_SORTED, ERROR) \
+>>>      FUNC(UNKNOWN_TYPE, ERROR) \
+>>> -    FUNC(UNTERMINATED_HEADER, ERROR) \
 >>
->>
->> Nice.  The append function can be made a bit more context sensitive
->> to upcase a char immediately after _ to make it easier to cut and
->> paste into "git config" and keep the result readable, I think.
->>
->>       git config --add receive.fsck.missingEmail=warn
+>> I think the end result very much makes a good sense, but why didn't
+>> this list enumerate the errors in the above "final" order from the
+>> beginning in 02/19?
 >
-> Okay. I camelCased the IDs; it is a bit sore on my eyes in the command-line output, and the config variables are case-insensitive, anyway, but your wish is my command... I changed it locally, it will be part of v7.
+> Because they are alphabetically ordered, within message type categories, that is; this helped me develop with more ease (you do not want to know how many hundreds of times I ran an interactive rebase on all of these patches...).
+>
+> And from the point of a development story (which a patch series is), it would puzzle me, as a reader, if those two out of all the others were in front in 02/19, when they are no different from the others at that stage.
 >
 > Ciao,
 > Dscho
