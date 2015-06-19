@@ -1,77 +1,110 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Selectively clone Git submodules -- a useful feature?
-Date: Fri, 19 Jun 2015 21:08:34 +0200
-Message-ID: <558468B2.2010307@web.de>
-References: <162A5ADF-1FDD-432B-B5F8-672DF5B50EEC@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 03/19] fsck: Provide a function to parse fsck message IDs
+Date: Fri, 19 Jun 2015 12:13:03 -0700
+Message-ID: <xmqq4mm38qbk.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<8129a20ee6befc74eb45b6225edaaa1b61647d08.1434720655.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 19 21:08:49 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 19 21:13:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z61ei-0005V0-2g
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:08:48 +0200
+	id 1Z61iw-00019C-OQ
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbbFSTIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 15:08:44 -0400
-Received: from mout.web.de ([212.227.15.3]:62939 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752435AbbFSTIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 15:08:42 -0400
-Received: from [192.168.178.41] ([79.211.113.60]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MZlNu-1ZPChR1WSE-00LSSw; Fri, 19 Jun 2015 21:08:35
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-In-Reply-To: <162A5ADF-1FDD-432B-B5F8-672DF5B50EEC@gmail.com>
-X-Provags-ID: V03:K0:ZjFS39FCl1bK527G2YP4NwMHkuDTvqT40Cm+VwhB5COIqNgKR0W
- PS1Usmd7CvNkXVZiOwcWxFvqENi8xYH6nHOxz/UZiLXZxFgtX+H+MKg/8b2o4HlN36BMGtW
- VZdS32FbMSMQ1Fs/eVhQhQeU68GTEBEJ0PUrcQnDk4Cv+xYrOzB2ezutWtbA3A1OvlafI98
- 6eO9Df9AuJZsWSIMz1wUA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753681AbbFSTNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 15:13:07 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:32798 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753065AbbFSTNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 15:13:05 -0400
+Received: by igbqq3 with SMTP id qq3so23229887igb.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 12:13:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=DvVFH9BkYRABwVfcdtTj/gqgGL7l7DgIQNREumblHro=;
+        b=NKf3cNnPhX5M0rypTJz0T/knKje4aBs5HDceBPy0rcduplOG+rHd+AqJE+d/j95pKh
+         EHBzZGOESWsJUGCuKdU30TyA4vcSAIpT7gGazliWphjrn1XsjKR26doMJ8QEWJJialKX
+         h96uM9fIu2fmqCdiqF8LsvDsgFsQlCmLyJPvKSbZkaZVB/jpLJ+YXOSOYrqonG7mYTli
+         9ronNKL5KDBlQqAfG3562Hiz2M7TsVIjLCf/U3l03MWMiE/gzpIuEV5SwTcUoNo0s2TD
+         FVAum7zVZi5WA6g67w96QkHwdnTG9T442D7GnlVKS1L2ujZu61pD97ERcixgNeNG0rPR
+         wpPQ==
+X-Received: by 10.50.43.131 with SMTP id w3mr6639022igl.8.1434741184691;
+        Fri, 19 Jun 2015 12:13:04 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
+        by mx.google.com with ESMTPSA id fm3sm4421964igb.1.2015.06.19.12.13.03
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Jun 2015 12:13:04 -0700 (PDT)
+In-Reply-To: <8129a20ee6befc74eb45b6225edaaa1b61647d08.1434720655.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Fri, 19 Jun 2015 15:32:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272187>
 
-Am 18.06.2015 um 22:55 schrieb Lars Schneider:
-> AFAIK Git has two ways to clone a repository with respect to submodules:
->
-> (1) Plain clone of just the repository itself:
-> git clone git://github.com/foo/bar.git
->
-> (2) Recursive clone of the repository including all its submodules:
-> git clone --recursive git://github.com/foo/bar.git
->
-> I am working on a big cross platform project and on certain platforms I don't
- > need certain submodules. AFAIK there is no way to selectively clone only a
- > subset of the submodules with the standard command line interface. I wonder
-> if something like an exclude pattern for submodules would be of general interest.
- > I imagine a call like this after a plain "clone" operation:
->
-> git submodule update --init --recursive --exclude 3rdParty/Windows/*
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Git already supports that use case: Just set the "submodule.<name>.update"
-configuration to "none" for all submodules you aren't interested in and
-"git submodule update" will always skip them.
+> +#define MSG_ID(id, msg_type) { STR(id), FSCK_##msg_type },
+>  static struct {
+> +	const char *id_string;
+>  	int msg_type;
+>  } msg_id_info[FSCK_MSG_MAX + 1] = {
+>  	FOREACH_MSG_ID(MSG_ID)
+> -	{ -1 }
+> +	{ NULL, -1 }
+>  };
+>  #undef MSG_ID
+>  
+> +static int parse_msg_id(const char *text, int len)
+> +{
+> +	int i, j;
+> +
+> +	if (len < 0)
+> +		len = strlen(text);
+> +
+> +	for (i = 0; i < FSCK_MSG_MAX; i++) {
 
-You can also set this config option globally:
+I wonder an array without sentinel at the end with ARRAY_SIZE() may
+be a leaner way to do these, especially as this is all limited to
+this single file.
 
-git config --global submodule.<name>.update=none
+> +		const char *key = msg_id_info[i].id_string;
+> +		/* match id_string case-insensitively, without underscores. */
+> +		for (j = 0; j < len; j++) {
+> +			char c = *(key++);
+> +			if (c == '_')
+> +				c = *(key++);
 
-That'll set the default for all repositories of the logged in user on this
-computer to not update submodule <name>.
+s/if/while/ perhaps?
 
-> or even:
->
-> git clone --recursive --exclude 3rdParty/Windows/* git://github.com/foo/bar.git
+> +			if (toupper(text[j]) != c)
 
-git clone will be influenced by the global setting. If you just want to
-skip submodule <name> for a single clone you can do it like this:
+I know the performance would not matter very much but calling
+toupper() for each letter in the user input FSCK_MSG_MAX times
+sounds rather inefficient.
 
-   git -c submodule.<name>.update=none clone --recursive git://github.com/foo/bar.git
+Would it make sense to make the caller upcase instead (or upcase
+upfront in the function)?
+
+> +				break;
+> +		}
+> +		if (j == len && !*key)
+> +			return i;
+> +	}
+> +
+> +	return -1;
+> +}
+> +
+>  static int fsck_msg_type(enum fsck_msg_id msg_id,
+>  	struct fsck_options *options)
+>  {
