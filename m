@@ -1,71 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch: introduce format.outputDirectory configuration
-Date: Fri, 19 Jun 2015 11:14:34 -0700
-Message-ID: <xmqqwpyz8t11.fsf@gitster.dls.corp.google.com>
-References: <1434626280-4610-1-git-send-email-kuleshovmail@gmail.com>
-	<xmqq616ley7y.fsf@gitster.dls.corp.google.com>
-	<20150618195751.GA14550@peff.net>
-	<xmqqoakceq8s.fsf@gitster.dls.corp.google.com>
-	<xmqqk2v0eq75.fsf@gitster.dls.corp.google.com>
-	<20150618201323.GB14550@peff.net> <20150618202205.GA16517@peff.net>
-	<xmqqd20sd70j.fsf@gitster.dls.corp.google.com>
-	<CANCZXo72BscpXKGAtVPt_1QuffcOpTz6nGB+__q0JLisuTaKsQ@mail.gmail.com>
-	<xmqq616jbse8.fsf@gitster.dls.corp.google.com>
-	<CANCZXo5Nyt+JePQP=kvFsjTaV=xKXduoBqAwp5E0CrEf13QK7g@mail.gmail.com>
-	<CANCZXo7Lyo_Sb=bxF9EgZHV35JfrQZ-CFsM9T4yUjkDBndcp8A@mail.gmail.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: co-authoring commits
+Date: Fri, 19 Jun 2015 20:18:38 +0200
+Message-ID: <55845CFE.4070407@gmail.com>
+References: <CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com> <xmqq4mm66r99.fsf@gitster.dls.corp.google.com> <CAOvwQ4j2bjR1jnLVyZbw1OCE=xQxbCEFGKcK1bpuv1K3s_Y2EQ@mail.gmail.com> <20150617225224.GF4076@thunk.org> <CAOvwQ4jb-w4+Ah3ZhVE0j1aXLx1=8tRN3Wo98tz+G-wEqLGAcA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 20:14:45 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Josh Triplett <josh@joshtriplett.org>
+To: Tuncer Ayaz <tuncer.ayaz@gmail.com>, Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jun 19 20:19:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z60oO-0006Kq-SS
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 20:14:45 +0200
+	id 1Z60si-00023V-GE
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 20:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753602AbbFSSOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 14:14:38 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:37524 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753241AbbFSSOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 14:14:36 -0400
-Received: by igblr2 with SMTP id lr2so18624640igb.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 11:14:36 -0700 (PDT)
+	id S1755236AbbFSSTI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 14:19:08 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:36341 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755200AbbFSSTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 14:19:00 -0400
+Received: by wicnd19 with SMTP id nd19so26347213wic.1
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 11:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=R9aPGqkZQyhxPbwrZrTIxhKeHXNjkdesNshvRfPTPIo=;
-        b=vcog8XD1YkkQ6usSsnm79iKD/gQZgH8B8ja6F/H5jaCknESokQmY+AJtso//KoBUCl
-         yOgaxdW2yj2IeBxMf3XnLb7GdvGc/KXM0meWqt3RzUO3X/U+vyBk/c/b7uW3Zbgxv9l0
-         iKJjrLZTpokebs2vJgSXiJNdS+KMEA8Srab26t47jrpi2ynCTceiVBPn+5wcs6t9TagY
-         zVlnoesnCMD+X3ECKYOhDBRmRDyWNs3ke6iDbItMDaJUZWYXyraF6LzJv4borN4/RtbC
-         ZU6Xew3ESsVzA/CIbT5Xb4zNGBKNLDOLMN1NAWoQFAZ0XLDoSKHCJW8KklaoZcpt8Fzh
-         +m1A==
-X-Received: by 10.50.117.105 with SMTP id kd9mr6352403igb.31.1434737675939;
-        Fri, 19 Jun 2015 11:14:35 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
-        by mx.google.com with ESMTPSA id f15sm7511463iof.36.2015.06.19.11.14.35
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jun 2015 11:14:35 -0700 (PDT)
-In-Reply-To: <CANCZXo7Lyo_Sb=bxF9EgZHV35JfrQZ-CFsM9T4yUjkDBndcp8A@mail.gmail.com>
-	(Alexander Kuleshov's message of "Fri, 19 Jun 2015 23:27:20 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=IScNzMaleduWRIDvuyNKFqKucBlWVUPRjQnLrCkpN1s=;
+        b=ASyModFugpwyCmix6kPElmLUjK9YxwOuHvIDNZCc/uvo58klaZSb1D00PIof/7M3cy
+         w9XskCuj3+4jlCwE4VXXmfSUAOQJw2H3bGyaB9KZusf8v4W93Ju3FvnJBvbny8O+jdC8
+         wEDeDSmOX9G1RJUQL2A4SQFlZucKAi6gfYwjTgzc6CFEmnLLNxK88ffyANPlhmXV8i7j
+         l71FgdybhiFOn5Nqdm1sd0sc4a9PC3fwqZYsQTU030ClVaeWiORfFT3M4a89oYOsYZ9z
+         RScDbwtaNAU+EJKWXa1Zb0FkPhxiLvKoh9+hKaZABzkI0ENL/km7HqF1n/A/t0iavbVa
+         hOrA==
+X-Received: by 10.180.75.48 with SMTP id z16mr8745978wiv.49.1434737939590;
+        Fri, 19 Jun 2015 11:18:59 -0700 (PDT)
+Received: from [192.168.1.53] (abre142.neoplus.adsl.tpnet.pl. [83.8.98.142])
+        by mx.google.com with ESMTPSA id gj7sm4807871wib.4.2015.06.19.11.18.55
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Jun 2015 11:18:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <CAOvwQ4jb-w4+Ah3ZhVE0j1aXLx1=8tRN3Wo98tz+G-wEqLGAcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272177>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+On 2015-06-18 at 23:25, Tuncer Ayaz wrote:
+> On Thu, Jun 18, 2015 at 12:52 AM, Theodore Ts'o wrote:
+>> On Wed, Jun 17, 2015 at 10:26:32PM +0200, Tuncer Ayaz wrote:
+[...]
+>> One could imagine some frankly, quite rare example where there is a
+>> team of people who votes on each commit before it gets sent out and
+>> where everyone is equal and there is no hierarchy. In that case,
+>> perhaps you could set the from field to a mailing list address. But
+>> honestly, how often is that *all* of the authors are completely
+>> equal[1]?
+>=20
+> For that case something like patchwork, phabricator, or gerrit seems
+> to be the logical tool to use, and should ideally leave a trace of
+> approvals and such in the resulting commit message(s). If the patch
+> management tool takes care of merging the commit(s), it can be harder
+> to misattribute signed-off/reviewed-by/etc, which is a good thing.
 
-> Ah, you mean to put this check before.
+Doesn't Gerrit (at least) use trailer-like structured *notes* in the
+'reviews' category (i.e. refs/notes/reviews ref) to store information
+about review process?
 
-I am fuzzy what you mean "before" (or "after"); the "how about doing
-it this way instead?" patch we are discussing is to replace the
-change you did in your original, so if you apply it you would know
-what addition goes to where ;-)
+> You could of course use multiple (everybody makes their own) commits,
+> where you risk breaking bisectability and avoid the need for equal
+> co-authorship support. In pair programming such intermediate commits
+> will quite often be fixups, and when you attempt to squash the fixups
+> for bisectability's sake, you may get a desire for co-authorship of
+> the resulting commit.
+
+Hmmm... I didn't think about the problem of attributing authorship
+for squashed commits.  Though here multiple 'author' headers, or
+multiline 'author' header would be a better match than 'coauthor'
+header (which itself doesn't need, I think, the date filed, or does it?=
+)
+
+[This is sent from Thunderbird news, so it should be all right]
+--=20
+Jakub Nar=C4=99bski
