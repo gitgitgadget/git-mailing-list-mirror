@@ -1,79 +1,80 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH/WIP v3 07/31] am: extract patch, message and authorship
- with git-mailinfo
-Date: Fri, 19 Jun 2015 17:22:11 +0800
-Message-ID: <CACRoPnS9eyBF5NEM7sKvep+A8aKUNLJDaV-1c_oWDBwMcv26Bg@mail.gmail.com>
-References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-	<1434626743-8552-8-git-send-email-pyokagan@gmail.com>
-	<xmqqtwu4d8pg.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 11:22:36 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] mergetool-lib: fix default tool selection
+Date: Fri, 19 Jun 2015 11:30:55 +0200
+Message-ID: <a9844fc48424d5caf27cc2189af3d9d867d01833.1434706187.git.git@drmicha.warpmail.net>
+Cc: David Aguilar <davvid@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 19 11:31:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5sVA-0000P1-01
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 11:22:20 +0200
+	id 1Z5sdt-0007cN-D3
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 11:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754308AbbFSJWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 05:22:16 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:33196 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753863AbbFSJWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 05:22:13 -0400
-Received: by laka10 with SMTP id a10so70500056lak.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 02:22:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SrRfOeJq9JgW0eQ1udPT4Xgbws6FgIy0FM+5zY0MBtc=;
-        b=o/aTQo0zh5sMVSEO7IUG6CVmFiXWfz8dM94yl4tLFZFdDAT07MWGuY7OrhRrQsJ9iq
-         yWtrJ6PrbjwqqofsTekcLwCj6lVmZxXc4R+Jnh2ARBLCJt+agjey2aHV8/64T2XgWTy+
-         Vp3bM78vzANok3THAVBu6gZEgNSLKJZNUG7fjKDVBPoU1hoJ9O337BSFl/MBMB/COaJv
-         Tr5cwNV5QMKtVp08h2oEOi1Jzry6ypBuzyCk5THb0Am50qdUp8RnuKfxWSABUz5XKrG3
-         tk8nBzzsyC2Qroh9JMwxyWeDftvuGUBElKlnKKj4eZhId/Dm7oxFJCa/KPatRXSd21wz
-         GI1Q==
-X-Received: by 10.152.22.99 with SMTP id c3mr17333239laf.32.1434705731922;
- Fri, 19 Jun 2015 02:22:11 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Fri, 19 Jun 2015 02:22:11 -0700 (PDT)
-In-Reply-To: <xmqqtwu4d8pg.fsf@gitster.dls.corp.google.com>
+	id S1753320AbbFSJbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 05:31:11 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:41105 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752606AbbFSJbI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 05:31:08 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1D7752099F
+	for <git@vger.kernel.org>; Fri, 19 Jun 2015 05:30:57 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Fri, 19 Jun 2015 05:30:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=
+	mesmtp; bh=YgLwSwwr5Dct5Abs/ng8MYDqnQc=; b=rRVbJl4fKAAILSIoPLhE0
+	T+LJVlcXDN0qY1vGkYPVcg5vr4Ts5OQcSv/Q+8p/POHWIRSVwSSZUf6Tab3dpDoN
+	sEUQLMpvLAW9qH0pmMnwaKHJtlZ/LwMF8/XS7IdqYajK05vl+fw2C7rLuGP/8o78
+	59CBLoTZi9yjLWlQSw21TM=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=YgLwSwwr5Dct5Abs/ng8MYDqnQ
+	c=; b=Pb37SqK6s5Ed9E7Vrh15wl/646GObiBYMjN0MtI3f1N9N/pw42IAQS2d2d
+	a83vMEpZ8YMVjX8PdOV58tA5RX6rDOqrCsLYhozNyEWYf2Z6OqEp1A6d7xOJF0zQ
+	zsk1NmWVJHE9Aesq6IE4Sa/4vcCq1Qew/kF3Nv9Mgr1UWgwfE=
+X-Sasl-enc: ZZSTA4ih3NkWcXHRqaZPuhksNOpt5mUb7RDfa9D9QUgo 1434706256
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id AC8D4680120;
+	Fri, 19 Jun 2015 05:30:56 -0400 (EDT)
+X-Mailer: git-send-email 2.4.4.610.gea30ab1.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272112>
 
-On Fri, Jun 19, 2015 at 5:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Tan <pyokagan@gmail.com> writes:
->
->> +     /* commit message and metadata */
->> +     struct strbuf author_name;
->> +     struct strbuf author_email;
->> +     struct strbuf author_date;
->> +     struct strbuf msg;
->
-> Same comment as "dir" in the earlier patch applies to these.  If the
-> fields are read or computed and then kept constant, use a temporary
-> variable that is a strbuf to read/compute the final value, and then
-> detach to a "const char *" field.  If they are constantly changing
-> and in-place updates are vital, then they can and should be strbufs,
-> but I do not think that is the case for these.
+When no diff nor merge tool is specified (config, option), mergetool-lib
+is supposed to choose a default tool from a set of tools. That set is
+constructed dynamically depending on the environment (graphical, editor
+setting) as a space separated string of tool names.
 
-I do think it is the case here. The commit message and metadata fields
-change for every patch we process, and we could be processing a large
-volume of patches, so we must be careful to not leak any memory.
+719518f (mergetool--lib: set IFS for difftool and mergetool, 2015-05-20)
+introduced a newline as IFS which breaks the parsing of the space
+separated list into items, resulting in a failed search for an available
+tool.
 
-We could use a char* field, but then to prevent memory leaks we would
-then have to free() it and malloc() a new string for every patch we
-process, which will lead to lots of malloc()s and free()s over a large
-volume of patches that can lead to memory fragmentation.
+Set IFS to a space locally for the tool search.
 
-Regards,
-Paul
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ git-mergetool--lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 14b039d..54ac8e4 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -305,6 +305,7 @@ guess_merge_tool () {
+ 	EOF
+ 
+ 	# Loop over each candidate and stop when a valid merge tool is found.
++	IFS=' '
+ 	for tool in $tools
+ 	do
+ 		is_available "$tool" && echo "$tool" && return 0
+-- 
+2.4.4.610.gea30ab1.dirty
