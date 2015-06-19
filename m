@@ -1,64 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 07/19] fsck: Make fsck_ident() warn-friendly
-Date: Fri, 19 Jun 2015 12:48:48 -0700
-Message-ID: <xmqqr3p77a3j.fsf@gitster.dls.corp.google.com>
-References: <cover.1434657920.git.johannes.schindelin@gmx.de>
-	<cover.1434720655.git.johannes.schindelin@gmx.de>
-	<3e2deca4addda073f9b80e47865d2a5c95cea6e2.1434720655.git.johannes.schindelin@gmx.de>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH/WIP v3 07/31] am: extract patch, message and authorship
+ with git-mailinfo
+Date: Fri, 19 Jun 2015 22:12:42 +0200
+Organization: gmx
+Message-ID: <87fa23332f7435292bcac1b0235d77bd@www.dscho.org>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+ <1434626743-8552-8-git-send-email-pyokagan@gmail.com>
+ <xmqqtwu4d8pg.fsf@gitster.dls.corp.google.com>
+ <CACRoPnS9eyBF5NEM7sKvep+A8aKUNLJDaV-1c_oWDBwMcv26Bg@mail.gmail.com>
+ <CAPc5daVbpB_T4cY1xvLrBKPUZw0JNMXqNAOsKE-R7NPO2nrnZA@mail.gmail.com>
+ <CACRoPnQdR7qC6gH7j9_8gQUYKShLRQCr6GNtmn+XCpe9P4P-nA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 19 21:48:59 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 22:13:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z62HY-0006kh-50
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 21:48:56 +0200
+	id 1Z62ek-0003WO-V6
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 22:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228AbbFSTsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 15:48:52 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:35566 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259AbbFSTsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2015 15:48:50 -0400
-Received: by igbzc4 with SMTP id zc4so21581422igb.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2015 12:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Rujn0NAH9FRc2Ix8kaxgsqhdLI029OzcaSvNWcD+qXw=;
-        b=SdU8I3nZzNmgqPeChWrMlUcW0cET9XE1JYjasXvKS6IWRPL/NvOJHul1cwunayRUbv
-         hT7A0N5HwRuS3me5fHjydcmVapWELjwpWCKCLz7lgMCmpaBzd/zV5zsGrmIIUvLv3CA3
-         NsgfTW/jYm9xHwiT4+As5xpQJNptkW7hk6oSxlmE7dOxR6PfQEkRIBno8cnTQO5bVh6l
-         10zlDF/ISGbdxWNzoNv9vmVcCE3UdT/jQLjvcl1Lis+ZFtlWiFhynGKmF8LhvctQOj8h
-         Df0/mIH6K6rRZ/qGbbAauanbQ61L31XUZKs3Z+Azz3EAnBEmPINTDpq07kInwb4CkJp1
-         7zTA==
-X-Received: by 10.50.138.70 with SMTP id qo6mr6673314igb.15.1434743330168;
-        Fri, 19 Jun 2015 12:48:50 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
-        by mx.google.com with ESMTPSA id y124sm7663067iod.13.2015.06.19.12.48.49
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jun 2015 12:48:49 -0700 (PDT)
-In-Reply-To: <3e2deca4addda073f9b80e47865d2a5c95cea6e2.1434720655.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Fri, 19 Jun 2015 15:33:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754303AbbFSUMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 16:12:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51857 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750951AbbFSUMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 16:12:49 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MWCKz-1ZdCa505pB-00XOmu; Fri, 19 Jun 2015 22:12:44
+ +0200
+In-Reply-To: <CACRoPnQdR7qC6gH7j9_8gQUYKShLRQCr6GNtmn+XCpe9P4P-nA@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:7/K5csIKyrdQbB9EwWl7ZBPEESCQlZVzK/2ANgmwN4690ExrFc2
+ 72n7KPEVj16cA4MPjsEVP07A/EkXHy/Jn/1hazNt4q/BBApPHMLPyd7xzvKRxYC4L3pe40M
+ HrYRac7amnyWaO6v9O8f+wxF4xWrGl8gueJQoPmEDtQwQ4xCCC+m3CUpvhTudbqSUsutyPt
+ 6Gcy7dcIARtn93r5dTWRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+YSBr94Mnfc=:qlDsDK/9a8dum7QKyLzVDI
+ 3K01FFDSBtA9NJ4cUOsLwk/2to4nYtrC4kv0L1O8jBDSUhHv1mEtqMfyh/IBBGHSCoK1xuhbp
+ 6olPazy/LbVe1MH1TgenGCSfcJs/PY6RGNCJ2hpERpuA8om0RSp04u1Bgrn857ZA3hhSl0ZeV
+ hMIlKs4heu6H4h6YqUiNCsTQsiAH3nqcpG7/F+Rpex73luwDA7DiButmWiCsKUZbS1SZJkayn
+ nsasm82BezZ7LytE45QQx4v7uPgOgdNk8MtYL0LN1keukHNYV9Z2sYotyHAn1ItQ55T2IgW/i
+ 0fjDrCbgYmLyl6E2AgzZ2r9i3MRb1BZmOJvGxsYQEJ9ATjadb2DIiSkr5MGeXCaoHMPdFZiF/
+ KYRyBVJtp/pq7secLSYf3Q/9Y2MM+n47xm563KfV+nkbAe+bDwOmXI4mXZAwkkcj8bAr8fgJR
+ OR6E7RE0wjqyBBrQbDj1BgBnAsB0YRwxLAH2y2R7kVs5USljpZpsOaGJm9hhtyEh6c1KXclw5
+ oss/1ilJsaYP9eg/FnTjbP8pUVpqP4rHLwvyt+u4UZwj+PCelVPrXrhh6BvDJaMP94+YmpOHm
+ M0eGk950oXUhDOXdpnbBV/f2cL+Yf+xJ7E0iFFpB4rmg9aTBDPU2i253jjq5aYGzFxagwHB41
+ rZ77oTXvqkvqGr0tfvB1vJYHqoF5FOAKMT4S8wB3nxApuc/qV3zOkZ5eRi4gMQTNrijA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272192>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hi Paul,
 
-> When fsck_ident() identifies a problem with the ident, it should still
-> advance the pointer to the next line so that fsck can continue in the
-> case of a mere warning.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+On 2015-06-19 18:15, Paul Tan wrote:
+> On Fri, Jun 19, 2015 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+>> The primary thing I care about is to discourage callers of the API element
+>> am_state from touching these fields with strbuf functions. If it is char * then
+>> the would think twice before modifying (which would involve allocating the
+>> new buffer, forming the new value and assigning into it). With the fields left
+>> as strbuf after they are read or formed by the API (by reading by the API
+>> implementation from $GIT_DIR/rebase-apply/), it is too tempting to do
+>> strbuf_add(), strbuf_trim(), etc., without restoring the value to the original
+>> saying "I'm the last user of it anyway"--that is the sloppiness we can prevent
+>> by not leaving it as strbuf.
+> 
+> I don't think this is a good deterrent. If the code wanted to, it
+> could just use strbuf_attach()/strbuf_detach() as well, no?
 
-Makes sense.
+Sadly, I am a bit too busy with some loose Git for Windows ends, so I haven't had the chance to look at your code.
+
+But I still wanted to throw this idea out there: would it maybe possible to avoid having those values as global variables, and instead pass them as const char * parameters to the respective functions? That should help resolve the concerns of both sides because it would allow us to keep the strbuf instances, just as local variables.
+
+Ciao,
+Dscho
