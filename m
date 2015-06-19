@@ -1,118 +1,136 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 05/12] delete_refs(): improve error message
-Date: Fri, 19 Jun 2015 16:20:46 +0200
-Message-ID: <5584253E.9030001@alum.mit.edu>
-References: <cover.1434206062.git.mhagger@alum.mit.edu>	<64949bba1031b19abf86629267b8bc40666a4631.1434206062.git.mhagger@alum.mit.edu> <xmqq7fr4akr7.fsf@gitster.dls.corp.google.com>
+From: Florian Aspart <florian.aspart@gmail.com>
+Subject: Re: Using clean/smudge filters with difftool
+Date: Fri, 19 Jun 2015 17:04:03 +0200
+Message-ID: <CAGA3+++uZcVQdYme5H5HqayK2R6N41j1DVOndok3LVRDjcMZkQ@mail.gmail.com>
+References: <CAGA3+++_mx=O=Un0pip8Q41X5PZBLmES=Hd=U=aSowryx5r=8w@mail.gmail.com>
+ <20150618141116.GK18226@serenity.lan> <CAGA3+++ibw=8Q1LtM6yJrZ7Q4eVs_MEHmPAzctSVSREXMmBiMQ@mail.gmail.com>
+ <20150618142852.GL18226@serenity.lan> <CAGA3+++LqZ8Qv6tpuoqQwi37kO5LLODwcbFQtvneorjiV4KARw@mail.gmail.com>
+ <20150618160133.GO18226@serenity.lan> <xmqqsi9oeqhn.fsf@gitster.dls.corp.google.com>
+ <20150618223927.GP18226@serenity.lan> <xmqqr3p8bp8l.fsf@gitster.dls.corp.google.com>
+ <5583D993.4090305@drmicha.warpmail.net> <20150619093251.GQ18226@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 16:21:14 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jun 19 17:04:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z5xA9-0007u5-2I
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 16:20:57 +0200
+	id 1Z5xqP-0005De-OC
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jun 2015 17:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754557AbbFSOUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 10:20:53 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:57361 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752882AbbFSOUv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 10:20:51 -0400
-X-AuditID: 12074412-f79a76d000007c8b-c1-558425413c31
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id F5.74.31883.14524855; Fri, 19 Jun 2015 10:20:49 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB3F26.dip0.t-ipconnect.de [93.219.63.38])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5JEKlXr016703
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 19 Jun 2015 10:20:48 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <xmqq7fr4akr7.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBKsWRmVeSWpSXmKPExsUixO6iqOuo2hJqcPq1gkXXlW4mi4beK8wW
-	P1p6mC02b25ncWDxWLCp1ONZ7x5Gj4uXlD0+b5ILYInitklKLCkLzkzP07dL4M64uUuj4KhA
-	xcqPT5kbGBfwdjFyckgImEgc2zOBHcIWk7hwbz1bFyMXh5DAZUaJn91/mSGcc0wSj2fsYgWp
-	4hXQljg8bR5YB4uAqsTRN31sIDabgK7Eop5mpi5GDg5RgSCJ1y9zIcoFJU7OfMICYosIqElM
-	bDsEZjMLxEtsbb/KDFIuLOAk0ThfDWLVVkaJ+x8fgY3kFLCWOLejF6peT2LH9V+sELa8RPPW
-	2cwTGAVmIVkxC0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKE
-	hLLQDsb1J+UOMQpwMCrx8Bp8aw4VYk0sK67MPcQoycGkJMq7R6klVIgvKT+lMiOxOCO+qDQn
-	tfgQowQHs5IIb4ECUI43JbGyKrUoHyYlzcGiJM77c7G6n5BAemJJanZqakFqEUxWhoNDSYKX
-	VwWoUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQkIx4Up/HFwEgFSfEA7d0O0s5bXJCY
-	CxSFaD3FqCglzvtFGSghAJLIKM2DGwtLUK8YxYG+FOZ9DlLFA0xucN2vgAYzAQ2eUN4EMrgk
-	ESEl1cDot///D+V5thfOHAnOW6UTsf7HxFlXblX8jUgQi9zuEz+byXx3ydqQFRd8Mpc3HZv+
-	bG6xcEDww4jOT4cse3eXsx+xuX0g6cDcgJgbzuVujhYfjgXobuTddZ0nauWjjuJN 
+	id S1750732AbbFSPEb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2015 11:04:31 -0400
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:32892 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750983AbbFSPEY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 11:04:24 -0400
+Received: by yhpn97 with SMTP id n97so79994823yhp.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 08:04:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=vo3FARMFcnV6YmsmQNmhcwuyLBJ/5EoOL6at4wFQZQI=;
+        b=juGOm1FqibCvZ/2kZ3/OQr1iBqYGaWcQ08Z8vuoim7dBwO2QJgkU0IbTgoJHGDshI0
+         AWt50n/Zmb5Ylh6OAxTguXF+fDAm2fwihAVLN+vDdk6a4S+OBRIe9jGCcA/ltQm+lkYZ
+         x+ud4cak1GVHia86G7cF/g5l/iexr/L4P6xo9fDrEwYDtBaRvQjAHKBhyGgphGhZL8XN
+         LREwDH+K/sc2kG/gpz/jpNtT+woDJJrQ/hOdk8Uojokzqh7Z3ITCRhciumDkGHWnTJX5
+         tzPVAIYFvPoKcZ7KGOBqwkGS7huO6hLBTBGNrKGqct9MjKzZFyEBhPcIZgayaeW2mLvr
+         +2BA==
+X-Received: by 10.170.67.66 with SMTP id j63mr20289442ykj.83.1434726264089;
+ Fri, 19 Jun 2015 08:04:24 -0700 (PDT)
+Received: by 10.37.114.85 with HTTP; Fri, 19 Jun 2015 08:04:03 -0700 (PDT)
+In-Reply-To: <20150619093251.GQ18226@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272160>
 
-On 06/15/2015 08:29 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> Subject: Re: [PATCH v2 05/12] delete_refs(): improve error message
-> 
-> I'd call this "make error message more generic".
-> 
->> Change the error message from
+2015-06-19 11:32 GMT+02:00 John Keeping <john@keeping.me.uk>:
+> On Fri, Jun 19, 2015 at 10:57:55AM +0200, Michael J Gruber wrote:
+>> Junio C Hamano venit, vidit, dixit 19.06.2015 00:55:
+>> > John Keeping <john@keeping.me.uk> writes:
+>> >
+>> >> I think the summary is that there are some scenarios where the ex=
+ternal
+>> >> diff tool should see the smudged version and others where the cle=
+an
+>> >> version is more appropriate and Git should support both options. =
+ It
+>> >> seems this is a property of the filter, so I wonder if the best s=
+olution
+>> >> is a new "filter.<name>.extdiff =3D [clean|smudge]" configuration
+>> >> variable (there's probably a better name for the variable than
+>> >> "extdiff").
+>> >
+>> > Not just the external diff, but the textconv filter obeys the same
+>> > rule.  The setting should be done the same way for both, if we are
+>> > going to go in that direction.
+>> >
 >>
->>     Could not remove branch %s
+>> textconv is a "one-way" filter from "blob" to "readable blob". Exter=
+nal
+>> diffs may prefer to work on "blob" rather than "readable blob", but =
+the
+>> currect setup does not seem to produce surprises.
 >>
->> to
+>> clean and smudge are two-way filters: clean from "worktree blob" (ak=
+a
+>> file) to "repo blob", smudge the other way round.
 >>
->>     could not remove reference %s
+>> Typically, the user perceives these as inverse to each other. But we
+>> only require clean to be a left-inverse of smudge, i.e. "(cat-file t=
+hen)
+>> smudge then clean" should give the same "repo blob" (as "cat-file").
 >>
->> * s/branch/reference/. This change makes sense even for the existing
->>   caller, which uses the function to delete remote-tracking
->>   branches.
-> 
-> and replace this bullet with something like:
-> 
-> * Originally 'branch -d' was the only caller of this, but as part
->   of the refs API, we will allow it to be called on refs that is not
->   a branch or a remote-tracking branch.
-> 
-> as calling a remote-tracking branch a 'branch' is not incorrect
-> per-se.
+>> We don't require that the other way round, i.e. we don't require smu=
+dge
+>> to be a left-inverse of clean, and in most setups (like the current =
+one)
+>> it is not: smudge does not recreate what clean has cleaned out. It i=
+s a
+>> no-op (the "identity", while clean is a "projection").
+>>
+>> Now, since external diff runs on smudged blobs, it appears as if we
+>> mixed cleaned and smudged blobs when feeding external diffs; whereas
+>> really, we mix "worktree blobs" and "smudged repo blobs", which is o=
+kay
+>> as per our definition of clean/smudge: the difference is irrelevant =
+by
+>> definition.
+>
+> I agree with this.
+>
+> But I was wrong that "should diff clean"/"should diff smudged" is a
+> property of the filter.  I can also imagine a situation where a more
+> intelligent external diff tool wants to see the smudged version where=
+ a
+> na=C3=AFve tool would want the clean version.
+>
+> For example, some of the big file stores (e.g. git-lfs [1]) use
+> clean/smudge filters and I can imagine a diff utility that avoids
+> needing to fetch the data for large files and instead shows the diff =
+on
+> the server when both blobs are available there.  In that case we
+> generally want to use the smudged copy for external diff, so the filt=
+er
+> would use that setting, but the diff utility knows better and would w=
+ant
+> to override that.
+>
+> [1] https://github.com/github/git-lfs
 
-True, but "branch refs/remotes/origin/foo" is not how we would usually
-refer to that reference. Usually we would say "reference
-refs/remotes/origin/foo" or "remote-tracking branch origin/foo". But I
-will make approximately the change that you suggest.
+I can understand why they are not fed with the clean copy by default.
+Since some external diff tool enable modifying the working copy file,
+this would correspond to apply the cleaning filter to the working copy
+version.
 
-> What would count as true improvement is ...
-> 
->> * Convert it to lower case, as per our usual convention.
-> 
-> ... this one.  If somebody eventually chooses to make the message
-> finer grained by switching on the prefix refs/{what}, so that the
-> user can differentiate between branches, remote-tracking branches,
-> tags, etc., that would also count as improvement as well.
-
-I thought about proposing a function that changes a reference name into
-its prose equivalent, but I'm pretty sure that the result would not be
-internationalizable. Probably such a function would have to look like
-
-enum refname_kind { REFNAME_KIND_BRANCH, REFNAME_KIND_TAG,
-REFNAME_KIND_REMOTE, ...(?), REFNAME_KIND_OTHER};
-
-enum refname_kind shorten_refname(const char *refname, const char
-**short_refname);
-
-and callers would still need logic to pick the correct
-(internationalized) formatting string based on the return value of the
-function.
-
-Someday...
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Nevertheless, in my case it would be really helpful if there were an
+option to feed the external diff tool with the cleaned version.
+Otherwise, I'll probably write a custom script which does this.
