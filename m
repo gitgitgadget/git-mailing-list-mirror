@@ -1,128 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] Move unsigned long option parsing out of pack-objects.c
-Date: Sat, 20 Jun 2015 10:47:13 -0700
-Message-ID: <xmqqzj3ujmqm.fsf@gitster.dls.corp.google.com>
-References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
-	<1434705059-2793-3-git-send-email-charles@hashpling.org>
-	<xmqq7fqza8bo.fsf@gitster.dls.corp.google.com>
-	<20150620165138.GA27488@hashpling.org>
+Subject: Re: [PATCH v2] upload-pack: Fail if cloning empty namespace
+Date: Sat, 20 Jun 2015 11:06:50 -0700
+Message-ID: <xmqqr3p6jltx.fsf@gitster.dls.corp.google.com>
+References: <1434140115-3139-1-git-send-email-johannes@kyriasis.com>
+	<1434147436-21272-1-git-send-email-johannes@kyriasis.com>
+	<20150612223223.GA22677@leeloo.kyriasis.com>
+	<xmqqh9q87l3x.fsf@gitster.dls.corp.google.com>
+	<20150620142705.GA23163@leeloo.kyriasis.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Sat Jun 20 19:47:32 2015
+To: Johannes =?utf-8?Q?L=C3=B6thberg?= <johannes@kyriasis.com>
+X-From: git-owner@vger.kernel.org Sat Jun 20 20:06:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6Mrb-0003F9-8x
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 19:47:31 +0200
+	id 1Z6NAQ-0000CS-Jr
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 20:06:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754979AbbFTRrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2015 13:47:17 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:36874 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604AbbFTRrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2015 13:47:15 -0400
-Received: by igblr2 with SMTP id lr2so31536913igb.0
-        for <git@vger.kernel.org>; Sat, 20 Jun 2015 10:47:14 -0700 (PDT)
+	id S1755325AbbFTSGy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Jun 2015 14:06:54 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:38508 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754121AbbFTSGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2015 14:06:53 -0400
+Received: by igblz2 with SMTP id lz2so31624847igb.1
+        for <git@vger.kernel.org>; Sat, 20 Jun 2015 11:06:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Jwvh7PBgs23NlB9/TNe2cXcg2pxubV23rp7KoTk6yOw=;
-        b=WFMan3R1MoMeiHuJgUq+LNNc30hlQ8ys1qQImu4diZtEk2xe4b3vcXL2nVAtKsXt3I
-         ck1FTsQKQV69apeIjqms1HGHsFFH1PBoCRHOqKNRsXznm3595HZ0v7OxLou57aH0ZhMk
-         MEZxyOJUYrhl6fPmUhth5NvFlmaps5r+13dxa2hOf1BjBDuDsa022zoItwXdj/DPFm7g
-         XN2bbW66a4W/c3DovOOk8v+uSI7gVptP0dNi7178WX3Fy67eP5Lx4QmLrJr4mYXDprs1
-         KTdL1sEWmY8bsCairtICNhW8IY4UTi0AEO64B6iZis+Ncg6N4qTlFcC53lLhVQsh1foR
-         8z7Q==
-X-Received: by 10.50.87.38 with SMTP id u6mr4674050igz.39.1434822434797;
-        Sat, 20 Jun 2015 10:47:14 -0700 (PDT)
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=fMoK6JjafYkSeLcjbfZKcdKX+lfE3MQkryezDRKDSVw=;
+        b=JhHUGRw/ohi6uNbHV3CIkONE7/z3GVBWWb4ooNJkNq82tlAqtM5Z9+OHalE9Ba/0jA
+         giEJKxlnx41sCQ1iw7bv70JucZpfCozo7YQvTiXSoAd49Vv5cLYH0utcIULXTC6npUXP
+         Ig9pKGK/kG8yXXdmBPcGqpwVBUPu/GpmJLhwrK4JphQjjU1FcyqWE6i0qz+vvbqhwsE+
+         Wd9VYwf7Q4//Xj0rBvuPpqVUJ8yvx7MX3mBjcj6/9BRFWuUvixZU4+oT2HrSqo8TFmy7
+         Gx1nnsFfa9+LXv7JmHXgg9o+6S+ubYEU/eZL/wkFe/IIzarhI049naR5sHUjRqIKSRdC
+         lsTA==
+X-Received: by 10.107.14.65 with SMTP id 62mr18056547ioo.67.1434823612491;
+        Sat, 20 Jun 2015 11:06:52 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:f44b:8ca4:e732:8441])
-        by mx.google.com with ESMTPSA id je2sm3633410igb.8.2015.06.20.10.47.13
+        by mx.google.com with ESMTPSA id pg7sm4142584igb.6.2015.06.20.11.06.51
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 20 Jun 2015 10:47:14 -0700 (PDT)
-In-Reply-To: <20150620165138.GA27488@hashpling.org> (Charles Bailey's message
-	of "Sat, 20 Jun 2015 17:51:39 +0100")
+        Sat, 20 Jun 2015 11:06:51 -0700 (PDT)
+In-Reply-To: <20150620142705.GA23163@leeloo.kyriasis.com> ("Johannes
+	=?utf-8?Q?L=C3=B6thberg=22's?= message of "Sat, 20 Jun 2015 16:27:45
+ +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272237>
 
-Charles Bailey <charles@hashpling.org> writes:
+Johannes L=C3=B6thberg <johannes@kyriasis.com> writes:
 
-> On Fri, Jun 19, 2015 at 10:58:51AM -0700, Junio C Hamano wrote:
+> On 15/06, Junio C Hamano wrote:
+>>You would probably want new tests, but more importantly did you make
+>>sure this passes existing tests?  It seems to break 5509 (there
+>>could be others) at least for me.
+>>
 >
->> Eh, make that two:
->> 
->>  * We no longer say what value we did not like.  The user presumably
->>    knows what he typed, so this is only a minor loss.
->> 
->>  * We used to stop without giving "usage", as the error message was
->>    specific enough.  We now spew descriptions on other options
->>    unrelated to the specific error the user may want to concentrate
->>    on.  Perhaps this is a minor regression.
->> 
->> I wonder if "expects a numerical value" is the best way to say this.
+> It breaks 5509 currently yeah, though I've already fixed it locally.
 >
-> I was aware that I was changing the error reporting for max-pack-size
-> and window-memory but thought that by going with the existing behaviour
-> of OPT_INTEGER I'd be going with a more established pattern.
-
-That is OK.  I just wanted to see that design decision explicitly
-recorded in the proposed log message.
-
-> Currently git package-objects --depth=5.5 prints:
+> Anyway,
 >
->     error: option `depth' expects a numerical value
->     usage: git pack-objects --stdout [options...
->     [... many more lines omitted ...]
+> You create a namespace by pushing to it,...
 
-Interesting.  I get this instead:
-
-    git: 'package-objects' is not a git command. See 'git --help'.
-
-;-)  Jokes aside...
-
-> Obviously, changing this to skip the full usage report would affect many
-> existing commands.
-
-Yes and I wouldn't suggest changing that in the same commit that
-exposes the human-readable quantity parsing to parse-options API.
-That is why I said "Perhaps this is a minor regression".  It is a
-change in behaviour, and it may make it slightly worse, but on the
-other hand it makes it in line with other types of options, so it
-may be OK.
-
-If we wanted to teach commands to omit "usage" when parsing of a
-single option failed, we should be doing that consistently for
-everybody, not just to pack-objects, and that is outside the scope
-of this patch, I would think.
-
-	Side note: Just to make it clear, regarding anything I say
-	is "outside the scope of this patch", I am not asking you to
-	do them as follow-up patches (as a precondition to accept
-	this patch).  For that matter, I am not convinced myself
-	that some of them are even worth doing.  And I am not asking
-	you _not_ to do these changes, ever, either.  I am just
-	asking you _not_ to do any of them in _this_ patch.
-
-> Also, I preserved the PARSE_OPT_NONEG flag for OPT_ULONG but would this
-> ever not make sense for an OPT_INTEGER option?
-
-It depends on what "git cmd --depth=4 --no-depth" should do.  In any
-case, changing OPT_INT would be a separate topic outside the scope
-of this patch, I think.
-
-My gut feeling is that
-
-    git pack-objects --max-pack-size=20m --no-max-pack-size
-
-should be usable as a way to countermand a pack size limit given
-earlier on the command line to make it unlimited, but that is
-definitely a separate topic outside the scope of this patch (whose
-purpose is to make an existing callback available to other callers).
+You keep repeating that, but I do not think we agreed that it is the
+supported or correct procedure to set up a new namespace in the
+first place.  Doesn't the server side need a lot more than just
+setting up HEAD symref (like running upload/receive-pack with the
+path to the hierarchy exported as GIT_NAMESPACE environment)?
