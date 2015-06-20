@@ -1,119 +1,212 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: [PATCH v2] upload-pack: Fail if cloning empty namespace
-Date: Sat, 20 Jun 2015 16:27:45 +0200
-Message-ID: <20150620142705.GA23163@leeloo.kyriasis.com>
-References: <1434140115-3139-1-git-send-email-johannes@kyriasis.com>
- <1434147436-21272-1-git-send-email-johannes@kyriasis.com>
- <20150612223223.GA22677@leeloo.kyriasis.com>
- <xmqqh9q87l3x.fsf@gitster.dls.corp.google.com>
+From: Jon <jon.forums@gmail.com>
+Subject: Re: 3rd release candidate of Git for Windows 2.x, was Re:
+ Release candidate of Git for Windows 2.x is out
+Date: Sat, 20 Jun 2015 07:59:33 -0700 (PDT)
+Message-ID: <1081c3a3-65d7-4065-9cf5-a88d966347b2@googlegroups.com>
+References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+ <b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8P1HSweYDcXXzwPJ"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 16:27:54 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_56_602792659.1434812373568"
+Cc: git@vger.kernel.org, git-for-windows@googlegroups.com
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBC3ZHK4B2AFBBVX7SWWAKGQEIJ3ZKQQ@googlegroups.com Sat Jun 20 16:59:36 2015
+Return-path: <msysgit+bncBC3ZHK4B2AFBBVX7SWWAKGQEIJ3ZKQQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f187.google.com ([209.85.216.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6JkQ-0003pR-7w
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 16:27:54 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932084AbbFTO1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2015 10:27:51 -0400
-Received: from theos.kyriasis.com ([212.71.254.33]:41047 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753943AbbFTO1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2015 10:27:48 -0400
-Received: from theos.kyriasis.com (localhost.localdomain [127.0.0.1]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 8e3e3d07;
-	Sat, 20 Jun 2015 14:27:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=Pkh2toLGq/8LvZNwmt7JRAw7xVw=; b=hN7yZq
-	UWVCpIiIVydFJ93OLV13D7qLwOF/1Glnlf1YsRvyIXEVIvlznpTHUPq7dr+o25jo
-	hWccLK1lWQfHzMCKAKHMwCEfLh0nGhYTCVGl9s9WxTzOxWCYTYKdbgYq/rdSnBFr
-	pYnxAy6IPaoMD7U4g9edhm/zGNVeC+SeOel1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=i5DYfeXEwLHxSG6CTZJs6cy28OieaEyP
-	QIzBUJt/OjFcy3V9eGlHy4vTPZt71nTN7/0ljzQ8nmB4c8PL+coGV+1L2/kcDvO8
-	TcdN3p0jxopkOCPvRCCBtVN6h18PSy/1tTC3hSU3EPIXmnZKstaIQRyia/uwqKut
-	2EvcKfpwY0k=
-Received: from leeloo.kyriasis.com (h45n5-tb-a13.ias.bredband.telia.com [81.234.145.45]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 77ccd850;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Sat, 20 Jun 2015 14:27:47 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqqh9q87l3x.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272229>
+	(envelope-from <msysgit+bncBC3ZHK4B2AFBBVX7SWWAKGQEIJ3ZKQQ@googlegroups.com>)
+	id 1Z6KF6-0006ht-0K
+	for gcvm-msysgit@m.gmane.org; Sat, 20 Jun 2015 16:59:36 +0200
+Received: by qcvp6 with SMTP id p6sf38169816qcv.0
+        for <gcvm-msysgit@m.gmane.org>; Sat, 20 Jun 2015 07:59:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:x-spam-checked-in-group:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe;
+        bh=axgE3CmDnEJumCmVG3w4jYIenPSyCQCuw9sVred6IeE=;
+        b=yjY1OgCeLvgHw5HTSr0RRI5HdaEgiVzwOf4FW2MFYzgboZs6Tw1t7kLHiopdbP6YfH
+         k6NDHoXuGn1YPwuZdu5e0vzAiBB/SEpUC2JlHr21d/kaGXcqrY5FQRQWZ83Vo2nm2qol
+         OfEJ473P8Wa5Lf9oS7bHtsJBdFdKyV0+E16PdgDOUykAAdbR1GKuYQNlsGrh6qNRQJIk
+         dfga6FtvU24A4vLCAdZPkO1oUU8C1PCQpruHNu7pHycNU5iip8VAicEvvsiw/dHCHLzw
+         r2owT1DcTOCGtuJ4sL4x66MzHEgoL4SU19zITR2yEwgd3ocMbLOirCc8Wcn0lbYHaHbL
+         ifqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:x-spam-checked-in-group:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe;
+        bh=axgE3CmDnEJumCmVG3w4jYIenPSyCQCuw9sVred6IeE=;
+        b=zS9Xq6wMOUqa8YRdRJsVcJ9FfxSkuWlL93XGts/m1iq0/DyEM6vDHL3w5FhhzZH5/B
+         Tt6HUbUov1jPcuQOnoT+QIDaWp56YNhl/wciQVeYicH8vshyzzvV5c6A3YZGYdfar49E
+         v0Y2CveqYQl0GKqjsUwxx1eHU0iikojdotL0L8Wj38O9NKrR9YVPa/nZvShZMLAV5Y6v
+         pRY20RXTp2HHp5RHnppY+QbVGCsoJHnT+SiaV1El7SbNoJNGSenrb67nyWQp/cCjVD1x
+         OzVhlmS0zATmxI7UzhbwVcY6DbgkDiCzVWYM1IEvg9Z925ivVKEluSRdFkS97f43HTz9
+         H2gg==
+X-Received: by 10.182.91.80 with SMTP id cc16mr190933obb.21.1434812374699;
+        Sat, 20 Jun 2015 07:59:34 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.213.98 with SMTP id nr2ls993155obc.73.gmail; Sat, 20 Jun
+ 2015 07:59:33 -0700 (PDT)
+X-Received: by 10.182.221.129 with SMTP id qe1mr187105obc.2.1434812373953;
+        Sat, 20 Jun 2015 07:59:33 -0700 (PDT)
+In-Reply-To: <b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
+X-Original-Sender: jon.forums@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272230>
+
+------=_Part_56_602792659.1434812373568
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_57_1455856914.1434812373568"
+
+------=_Part_57_1455856914.1434812373568
+Content-Type: text/plain; charset=UTF-8
 
 
---8P1HSweYDcXXzwPJ
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 15/06, Junio C Hamano wrote:
->You would probably want new tests, but more importantly did you make
->sure this passes existing tests?  It seems to break 5509 (there
->could be others) at least for me.
+On Saturday, June 20, 2015 at 10:16:09 AM UTC-4, Johannes Schindelin wrote:
+>
+> Hi all, 
+>
+> I just uploaded the 3rd release candidate for the upcoming Git for Windows 
+> 2.x release. Please find the download link here: 
+>
+> https://git-for-windows.github.io/#download 
+>
+> Lots of changes since the first release candidate (v2.4.2, I was too 
+> swamped to announce the second release candidate -- v2.4.3 -- I published 
+> Friday last week, my apologies). Please find them in the release notes: 
+>
+>
+> https://github.com/git-for-windows/build-extra/blob/master/installer/ReleaseNotes.md 
+>
+> We're getting closer! 
+> Johannes 
 >
 
-It breaks 5509 currently yeah, though I've already fixed it locally.
+Fantastic!
 
-Anyway,
+1) Why are there two ssl/certs trees? (e.g. - one is used by git-bash.exe 
+and the other git-cmd.exe and cmd/git.exe?)
+2) Why are INSTALL_DIR/usr/ssl/certs/ca-bundle.crt and 
+INSTALL_DIR/mingw64/ssl/certs/ca-bundle.crt different?
 
-You create a namespace by pushing to it, and without a HEAD the=20
-namespace is not a proper repo, and the code won't deal with them=20
-properly.  (Which is why without that patch this patch is useless.)
 
-So, if you don't want HEAD to be created when pushing to a ref=20
-namespace, (which seems to be what you're leaning toward, considering=20
-your last reply to the other thread,) then ref namespaces won't really=20
-work in most cases, and it seems pointless to support them at all.
+C:\Apps\git2>mingw64\bin\git.exe version
+git version 2.4.4.windows.2
 
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
+C:\Apps\git2>usr\bin\diff.exe --brief usr\ssl\certs\ca-bundle.crt 
+mingw64\ssl\certs\ca-bundle.crt
+Files usr\ssl\certs\ca-bundle.crt and mingw64\ssl\certs\ca-bundle.crt 
+differ 
 
---8P1HSweYDcXXzwPJ
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
------BEGIN PGP SIGNATURE-----
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-iQQcBAEBCgAGBQJVhXhhAAoJEJAcHDIOsNRduCQgALs2YlbCLHtKEAtdofFDBSr4
-WlYYZDhu3c7YZsRoWRMClJA35GMbduRF8M4qAa1h8Y1+K8aX/JxLd+z8lIudRh/L
-ICq1b3+9hXdxmvpRxV/pd4CUuspyHnwlF5jHMzm1fSZdvP9EPJ+R7nWnPUw2gcv9
-fd9Y6g1Bw4JrgfvZ2pXQT007kg0LCialyGU++PYc1Ttcosx+SXZRYX4jQ9ws85sf
-xyfWUxVUzw1jpLipJ0sLkEGaFT7GW5hTHkjYzl5YIkU6v1p315by4bDyX/5MlLX1
-eRKaqVN8aIFVkpYBpm+/BcYO9WztjfsL5wTbHVS/PfoY4PgXtdEQh0bKMwkUqkTy
-ayQHVRXrnmw/tU/0jAHS00Jlk+Go+yOwOJ25ZJlsgbCYngR34HWQxxRe/9ksXCbH
-UHW6DKd3Xw3srvBkAiNRkdbsxk375fjex9tm2OjnjP3/NCu6VJroICg4AYjtmxgH
-PbpXogynWnx5Ow0J9QKZHepZm66GiAOM7BvjI3snlVUPsQSOVJD0hy53XNyKSizI
-aShKP1yuqqgtdrCWtNq+GEooDumg3DCD91lhav0Ugq6M3wm3Y/59aSZII4awXCRc
-Ye0werdf4DFn4cVeh0zQUBBQgQRq3qHaMdQbuNok2DBsOzT/LCJpJ37vbZ6yrb6e
-V0gk48MGPrX7KLeYC6KZpNhOmvkOJbwcFiTwCgfrniYcpvKgoBwaD8R21G5/O8yV
-PgklmRoJK/kpX+R0/8k1hn4wv2KITl7QsCBJOoNz+N62U3KNNpNSvOlf4skYzUAa
-FWKhOpaT2N5V84aQxve1tGnEqZ5XkO0zv74UN/PW5VzPLrLLOaeaSGz//5rbv0Cu
-CgSQ53vQWFonEcgKUviidQeWjl4eI1Kqe50GI2Oqzun+lRnvHZoUvkYv+oVzlMba
-gxtl7D24A9Bxboe9Dy6fTcpNQfqSlqQluDStwgBrVCIqnCchT4KGeIpLd6GrRBy2
-DQ//l9qjBOpu9TdzJCTXi5ejcCNmuukEv8H1SODPE5CXK5GdAWfRZTzi+yOhlxwC
-yjr5vASj/iALJKqrYxPZ8Cpu13rFuIjttupxD0acpE4lN/KRhhsNWbivwOhekX17
-4z3b2Ygxkki666tp2fPQ9VBCZ0sVa85ASIO8VYuYiCKTHmNwfUhOKT2VDUy5yacC
-K2uYs2ogLG7cKCwdsyyDs7R8GMXpjWuBJGoKiSXzDJcW7baEtzEYxAle86k8VaD9
-VHN0BwWz9eTlMbojjKkwwV/KKU3R0k8gn3UIYCAtTS+un0uJEFQhwZIEUVjaAgvv
-jS+twt+Y2NxA5S6Cu6fliGAHBZOnvIvpisgLfYzUJUoas5PEDAlTAu27uSgGbw4=
-=5Lq0
------END PGP SIGNATURE-----
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
 
---8P1HSweYDcXXzwPJ--
+------=_Part_57_1455856914.1434812373568
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<br>On Saturday, June 20, 2015 at 10:16:09 AM UTC-4, Johannes Schindelin wr=
+ote:<blockquote class=3D"gmail_quote" style=3D"margin: 0;margin-left: 0.8ex=
+;border-left: 1px #ccc solid;padding-left: 1ex;">Hi all,
+<br>
+<br>I just uploaded the 3rd release candidate for the upcoming Git for Wind=
+ows 2.x release. Please find the download link here:
+<br>
+<br><a href=3D"https://git-for-windows.github.io/#download" target=3D"_blan=
+k" rel=3D"nofollow" onmousedown=3D"this.href=3D'https://www.google.com/url?=
+q\75https%3A%2F%2Fgit-for-windows.github.io%2F%23download\46sa\75D\46sntz\0=
+751\46usg\75AFQjCNH7Xr6ehKYvOq0YKmWM2A1d350WTQ';return true;" onclick=3D"th=
+is.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fgit-for-windows.git=
+hub.io%2F%23download\46sa\75D\46sntz\0751\46usg\75AFQjCNH7Xr6ehKYvOq0YKmWM2=
+A1d350WTQ';return true;">https://git-for-windows.<wbr>github.io/#download</=
+a>
+<br>
+<br>Lots of changes since the first release candidate (v2.4.2, I was too sw=
+amped to announce the second release candidate -- v2.4.3 -- I published Fri=
+day last week, my apologies). Please find them in the release notes:
+<br>
+<br><a href=3D"https://github.com/git-for-windows/build-extra/blob/master/i=
+nstaller/ReleaseNotes.md" target=3D"_blank" rel=3D"nofollow" onmousedown=3D=
+"this.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fgithub.com%2Fgit=
+-for-windows%2Fbuild-extra%2Fblob%2Fmaster%2Finstaller%2FReleaseNotes.md\46=
+sa\75D\46sntz\0751\46usg\75AFQjCNGCVC5wwulUYt60rbp9xdQnodsBDA';return true;=
+" onclick=3D"this.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fgith=
+ub.com%2Fgit-for-windows%2Fbuild-extra%2Fblob%2Fmaster%2Finstaller%2FReleas=
+eNotes.md\46sa\75D\46sntz\0751\46usg\75AFQjCNGCVC5wwulUYt60rbp9xdQnodsBDA';=
+return true;">https://github.com/git-for-<wbr>windows/build-extra/blob/<wbr=
+>master/installer/ReleaseNotes.<wbr>md</a>
+<br>
+<br>We're getting closer!
+<br>Johannes
+<br></blockquote><div><br>Fantastic!<br><br>1) Why are there two ssl/certs =
+trees? (e.g. - one is used by git-bash.exe and the other git-cmd.exe and cm=
+d/git.exe?)<br>2) Why are INSTALL_DIR/usr/ssl/certs/ca-bundle.crt and INSTA=
+LL_DIR/mingw64/ssl/certs/ca-bundle.crt different?<br><br><br>C:\Apps\git2&g=
+t;mingw64\bin\git.exe version<br>git version 2.4.4.windows.2<br><br>C:\Apps=
+\git2&gt;usr\bin\diff.exe --brief usr\ssl\certs\ca-bundle.crt mingw64\ssl\c=
+erts\ca-bundle.crt<br>Files usr\ssl\certs\ca-bundle.crt and mingw64\ssl\cer=
+ts\ca-bundle.crt differ <br></div>
+
+<p></p>
+
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for Windows&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+------=_Part_57_1455856914.1434812373568--
+------=_Part_56_602792659.1434812373568--
