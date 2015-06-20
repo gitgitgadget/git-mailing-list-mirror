@@ -1,102 +1,68 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 2/3] Move unsigned long option parsing out of
- pack-objects.c
-Date: Sat, 20 Jun 2015 17:51:39 +0100
-Message-ID: <20150620165138.GA27488@hashpling.org>
-References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
- <1434705059-2793-3-git-send-email-charles@hashpling.org>
- <xmqq7fqza8bo.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 18/19] fsck: git receive-pack: support excluding objects from fsck'ing
+Date: Sat, 20 Jun 2015 10:28:53 -0700
+Message-ID: <xmqq4mm2l25m.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<e843f9f1defca543d3f2eb3143cf9fee8c72f695.1434720655.git.johannes.schindelin@gmx.de>
+	<xmqqwpyz5t66.fsf@gitster.dls.corp.google.com>
+	<9b7c42e6ec81fd70015b8fe9ff2bd137@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 18:51:47 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 20 19:29:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6Lzf-0001b8-Be
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 18:51:47 +0200
+	id 1Z6MZi-0005ad-73
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 19:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754117AbbFTQvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2015 12:51:44 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:59125 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752480AbbFTQvm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2015 12:51:42 -0400
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout06 with smtp
-	id igrf1q0022iA9hg01grggV; Sat, 20 Jun 2015 17:51:40 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=foEhHwMf c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
- a=Ew9TdX-QAAAA:8 a=XAFQembCKUMA:10 a=VgUCJR4wDJE6rHXwwUkA:9 a=CjuIK1q_8ugA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.84)
-	(envelope-from <charles@hashpling.plus.com>)
-	id 1Z6LzX-0007dD-1K; Sat, 20 Jun 2015 17:51:39 +0100
-Content-Disposition: inline
-In-Reply-To: <xmqq7fqza8bo.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S932462AbbFTR26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2015 13:28:58 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:34943 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754866AbbFTR24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2015 13:28:56 -0400
+Received: by igblr2 with SMTP id lr2so10726525igb.0
+        for <git@vger.kernel.org>; Sat, 20 Jun 2015 10:28:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=QsYqf+bmMJwSGQbAnvlN2RWg+XB3uFXVOyP8tTkBixw=;
+        b=oAWcoWMAPMV29D2O3DyvUGH8cEksF+LL2UAK/mf/gMTGiOBSKK/quLaTnP3ss70DS8
+         hAlhT9qQ1ucEpCXCmo/qab/2Eck9GOkHsLlhTFsqePkctzKaG4z0wbDLc4Ro8RKIiT5x
+         VyJZXKm2rQ5jaTNLvx94wbC34cpZ3Y2uU+EkmnXZtioyj/z+u32dSpu+Q5x+vHRsAARr
+         +K0ZmtWiOLpl3KO+jc4Xm+j9nMWiy1LObmbDqp5t2gfcNtrjmgTCTCmm4019r10hxaws
+         YESKohHT6TV2Tp1WWSSOMoKL547f5RWNPd9HylTkxtWoLitqnegDn8AjHhLDvJKQfLxA
+         WEZA==
+X-Received: by 10.43.139.6 with SMTP id iu6mr18450641icc.32.1434821336222;
+        Sat, 20 Jun 2015 10:28:56 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:f44b:8ca4:e732:8441])
+        by mx.google.com with ESMTPSA id qh9sm4077711igb.20.2015.06.20.10.28.54
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 20 Jun 2015 10:28:54 -0700 (PDT)
+In-Reply-To: <9b7c42e6ec81fd70015b8fe9ff2bd137@www.dscho.org> (Johannes
+	Schindelin's message of "Sat, 20 Jun 2015 14:45:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272235>
 
-On Fri, Jun 19, 2015 at 10:58:51AM -0700, Junio C Hamano wrote:
-> Charles Bailey <charles@hashpling.org> writes:
-> 
-> Please place it immediately after INTEGER, as they are conceptually
-> siblings---group similar things together.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Sorry, this is a bad habit from working on projects where changing the
-value of existing enum identifiers cause bad things.
+> There is a problem, though: `git_config_pathname()` accepts a
+> `const char **` parameter to set the path, yet I need to `free()`
+> that pointer afterwards because it has been obtained through
+> `expand_user_path()` which detaches that buffer from a `strbuf`.
 
-> This used to be:
-> 
-> > -		die(_("unable to parse value '%s' for option %s"),
-> > -		    arg, opt->long_name);
-> 
-> but opterror() talks about which option, so there is no information
-> loss by losing "for option %s" from here.  That means there is only
-> one difference for pack-objects:
-> 
->     $ git pack-objects --max-pack-size=1T
->     fatal: unable to parse value '1T' for option max-pack-size
->     $ ./git pack-objects --max-pack-size=1T
->     error: option `max-pack-size' expects a numerical value
->     usage: git pack-objects --stdout [options...
->     ... 30 more lines omitted ...
-> 
-> Eh, make that two:
-> 
->  * We no longer say what value we did not like.  The user presumably
->    knows what he typed, so this is only a minor loss.
-> 
->  * We used to stop without giving "usage", as the error message was
->    specific enough.  We now spew descriptions on other options
->    unrelated to the specific error the user may want to concentrate
->    on.  Perhaps this is a minor regression.
-> 
-> I wonder if "expects a numerical value" is the best way to say this.
-
-I was aware that I was changing the error reporting for max-pack-size
-and window-memory but thought that by going with the existing behaviour
-of OPT_INTEGER I'd be going with a more established pattern.
-
-These observations also seem to apply to OPT_INTEGER handling. Would
-this be something that we'd want to fix too?
-
-Currently git package-objects --depth=5.5 prints:
-
-    error: option `depth' expects a numerical value
-    usage: git pack-objects --stdout [options...
-    [... many more lines omitted ...]
-
-Obviously, changing this to skip the full usage report would affect many
-existing commands.
-
-Also, I preserved the PARSE_OPT_NONEG flag for OPT_ULONG but would this
-ever not make sense for an OPT_INTEGER option?
+"I have 'const char *' because I do not ever change the string
+myself after getting it from an API function, but free() does not
+want to free a const pointer" occurs sometimes in our codebase and
+it is OK to cast the constness away (many callsites to free()
+already do so).
