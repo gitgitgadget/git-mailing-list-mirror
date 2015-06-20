@@ -1,212 +1,118 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6 18/19] fsck: git receive-pack: support excluding
- objects from fsck'ing
-Date: Sat, 20 Jun 2015 14:45:51 +0200
+Subject: 3rd release candidate of Git for Windows 2.x, was Re:
+ Release candidate of Git for Windows 2.x is out
+Date: Sat, 20 Jun 2015 16:16:03 +0200
 Organization: gmx
-Message-ID: <9b7c42e6ec81fd70015b8fe9ff2bd137@www.dscho.org>
-References: <cover.1434657920.git.johannes.schindelin@gmx.de>
- <cover.1434720655.git.johannes.schindelin@gmx.de>
- <e843f9f1defca543d3f2eb3143cf9fee8c72f695.1434720655.git.johannes.schindelin@gmx.de>
- <xmqqwpyz5t66.fsf@gitster.dls.corp.google.com>
+Message-ID: <b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
+References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 14:46:17 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
+ git-for-windows@googlegroups.com
+X-From: msysgit+bncBCZPH74Q5YNRBJ7LSWWAKGQE5CS3Z4Q@googlegroups.com Sat Jun 20 16:16:09 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBJ7LSWWAKGQE5CS3Z4Q@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f188.google.com ([209.85.217.188])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6IA2-0007Wz-7E
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 14:46:14 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741AbbFTMqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2015 08:46:10 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50148 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754455AbbFTMqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2015 08:46:07 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MKYLf-1Z5TTZ00fP-0021oF; Sat, 20 Jun 2015 14:45:54
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBJ7LSWWAKGQE5CS3Z4Q@googlegroups.com>)
+	id 1Z6JZ2-0001D9-Nd
+	for gcvm-msysgit@m.gmane.org; Sat, 20 Jun 2015 16:16:08 +0200
+Received: by lbiv13 with SMTP id v13sf38391850lbi.1
+        for <gcvm-msysgit@m.gmane.org>; Sat, 20 Jun 2015 07:16:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:date:from:to:subject:organization
+         :in-reply-to:references:message-id:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=BpvvVMdliLODe6ejsr8EA7iqAw+njpAw1VzdFvAyrkk=;
+        b=Bckd+rVsRz2P56UDfSNdvdkM+ww6cxke7WuELcR2avaS4vcn1Y9HgNxi7b9wr3tbxH
+         QE4GQF3QDMs3sJ4WIamYTeAgeHRZLFKi/12rVYisYjtZncZoyWsUPkxisLEJZ+GyiPhT
+         tGLT2M4wxkhZgjkb2QafsNgGFeJ1DvpcYdCcax1bkd1vHdWe4+Wz6jv3qttCZUvhpThz
+         pa0H3ckrn+0a1J6/rMai6gNIVN0EyubJ0PZj4pGesQZg68GYtIUWrgubcjR2ibSAN5N8
+         +fWQJ1Xo37nvRd4S+uESX16LRIEOdEejykCpLYn8tDpkTNdA7qdZzO3a7QDTNK3Q+Uiz
+         y0Rw==
+X-Received: by 10.180.8.73 with SMTP id p9mr52786wia.18.1434809768391;
+        Sat, 20 Jun 2015 07:16:08 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.37.177 with SMTP id z17ls390460wij.6.canary; Sat, 20 Jun
+ 2015 07:16:07 -0700 (PDT)
+X-Received: by 10.180.97.9 with SMTP id dw9mr8025671wib.2.1434809767565;
+        Sat, 20 Jun 2015 07:16:07 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id wf6si596678lbb.2.2015.06.20.07.16.07
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 20 Jun 2015 07:16:07 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MYwyp-1ZbGi036EF-00VkNj; Sat, 20 Jun 2015 16:16:03
  +0200
-In-Reply-To: <xmqqwpyz5t66.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:8sdnbLcz+Q2j7PxqHXbj17K8uZa+b2xNQUluqq1EFPqRZ4XiLAw
- hPAKnbUtTNN3CTMVg50+qohO5taOC7jsMQnKvFS2Z5wtLaI88Mk9YVY5DixYpYW/Jhz96nc
- ChhSxd9zTZFb5d81JrvCkhaY9WEpHBZYm+LYVQurF7gUmY76mKO+dZLEfx2NNzECFGxORTp
- DYGdNg9ZVGVolxPOqjm8w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:B+OJqxVPh2Y=:2UzU3SZUO7wu1iDfPx8OaD
- vZqNNobI/F6ad9qScsoApz5/O4++WJMn1lOKrh7p3f5TPdEZe/yH5WG7Z+F845a4syo7U/bDy
- d2IDWVYFomuEuC2KUuNYM6jBOh92B2yrdODia59xl3R1AAiO10AZ5QjTjWnbJkcxfx4jeJFda
- liQiOUdpa65Us5t+M1dRJ4JFw9HtQsAJPsfLrp8A5y4vXQ7hywd4+N2U+h/K6ejBOzeVJtJgG
- XOukaR5hjbzoojb4K+M/LFsVWIZZeTMXIq/wbJwPAMARX4E7rjoNWxsdYUwBnahMLEc8TMMUi
- 1RFK3SiZ8XRovmPsv8yoJqIV6TaV0DE1oRKCfQXKaoKNVSUkEVDYsBm2SxaSMzbU7o6NCavCi
- xpl/mVCIL9f/lGCG8ElaNp9QeGqwagbYR6abaB1+6avdzzQ9zeLqiDPibIOkHNaI1ft9BXxEY
- V4YAMACQ4+3zh+oj5MFuNg8bW6+u1DywY2NCfu7LGSWV/alHp42+Dw+gSYhzz95rG0U1J0ElP
- ncMJUAGUae192lEUEpvWqjv90m5chFLbLL7kMZsL6uvKaAmGFEIolh7LKNzRmMxGiMzvnElVZ
- 0CTJn+f/KgckRWu4LLG2Wke/uXU1SRcMWxy239Jsdz7HT8gE+23kpN7k5RmmqGDzlLrkjVE9V
- k4c+fFTGA3tEphb5fFTVnITlZ+5Tl9RvBCw0YZdx/EIIvsQ114044UmuE2bqRWckD3ww=
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272227>
+X-Provags-ID: V03:K0:MFlDhWEIw18LtNAlOP0rjpSpCD/IUiFcRFaBpYqoNHpIBbW2EDA
+ YQ1I1Y+/nM1lb20TI8VDuyClVYzfJI7U1u5vuoxtYUayTW/In3Y8U/6ygv/zQneMH31bcD8
+ Gc3+smO46U5IOTciwaDHnSRttlMHIJK6BaoK2Ncv7oksMXctWCWwNtDgnlg/m24zq2T4tpK
+ vw6c7S74pL882ZWSawPOQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nl16Qo6CL1w=:JSHWphxZUqWf2JGUyM7eP9
+ xiGbTQxkQIle70CVkginePNY7adjF12yMyjskhBJ6YgmPmPhxc3dnDT9/QwEaV5G18qbEOpFn
+ MqD8k+1J9WFOgPuL8wm+Bt0xHG+VR2YUDwvxToBWqV1G5c6LjuYdRDVdhWIDHBbG4JTbmUbV8
+ Ng2vb7f03iN5zSudxnYf6mRo0XSr757gfyzQ5SkR4PoNlxff35OtulParXPlbiN481ud7PR6Y
+ 86k5BGQ7YURVkkbTCImqj7VbvvthverXb2qotPPYOeLegq86YVX8aZfeOxlmizncPcT1OgiI4
+ umi4HTfc/KatqhDuYn9Pqau5krwbBluwwOwVLGxjrdP1Yw7vnCyY6i3U76IYdZNG299jqfRBj
+ 8o/1e8arIlUD3+/kp8o4plRo3M3pbkxU9VITXIfwQeMmjTsJieCM+6YogGWDHzQxDnZaxVCvH
+ Wn8rPO3Yct6cZ5U9ALvEOjUPURqbl0wWcYLD6CivPPDNGqaL0RuiFk/06AUHNEff9sbqsLAx+
+ KxU6DTWbdwqNIjtkzMGgbM3zjhqPscnmE7IHolzlNjSwpoNkB9ogEG9sVUT5upRJ4u/ih+r5e
+ ZnjMxeuwNflKgSHbN0kTnFh2ywvz+kYC8I+Pkq53Z291yxqGm0eRngdaGMzg7ATNrpm6nW9q2
+ PGfrL7LDAxTdxf21UwU+GFjTvf9+LQGEbbQnpkz6kJGe41Jwjb/Gh5G9t9/gpfnf0/jw=
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272228>
 
-Hi Junio,
+Hi all,
 
-On 2015-06-19 22:39, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> +	if (strcmp(var, "receive.fsck.skiplist") == 0) {
->> +		const char *path = is_absolute_path(value) ?
->> +			value : git_path("%s", value);
-> 
-> This "either absolute or inside $GIT_DIR" looks somewhat strange to
-> me.  Shouldn't we mimick what "git config --path" does instead?
+I just uploaded the 3rd release candidate for the upcoming Git for Windows 2.x release. Please find the download link here:
 
-Okay. That would also support user paths.
+https://git-for-windows.github.io/#download
 
-There is a problem, though: `git_config_pathname()` accepts a `const char **` parameter to set the path, yet I need to `free()` that pointer afterwards because it has been obtained through `expand_user_path()` which detaches that buffer from a `strbuf`.
+Lots of changes since the first release candidate (v2.4.2, I was too swamped to announce the second release candidate -- v2.4.3 -- I published Friday last week, my apologies). Please find them in the release notes:
 
-In regular use cases, that does not matter much because the path obtained via `git_config_pathname()` is typically stored in a global variable, but in my case, I append it to a global variable.
+https://github.com/git-for-windows/build-extra/blob/master/installer/ReleaseNotes.md
 
-Of course I could cast the value to a `char *` and `free()` it, but that would assume too much about the implementation detail of `git_config_pathname()` for my taste.
+We're getting closer!
+Johannes
 
-The easiest cop out would be to recapitulate the code in `git_config_pathname()`, but I think the correct solution would be to change the signature of `git_config_pathname()` to accept a `char **` instead. Do you agree? However, the diff looks really ugly:
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
--- snipsnap --
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 254477f..946b31b 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1494,7 +1494,7 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 	int status;
- 
- 	if (!strcmp(k, "commit.template"))
--		return git_config_pathname(&template_file, k, v);
-+		return git_config_pathname((char **)&template_file, k, v);
- 	if (!strcmp(k, "commit.status")) {
- 		include_status = git_config_bool(k, v);
- 		return 0;
-diff --git a/builtin/config.c b/builtin/config.c
-index 7188405..a249faa 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -130,7 +130,7 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
- 		else
- 			sprintf(value, "%d", v);
- 	} else if (types == TYPE_PATH) {
--		if (git_config_pathname(&vptr, key_, value_) < 0)
-+		if (git_config_pathname((char **)&vptr, key_, value_) < 0)
- 			return -1;
- 		must_free_vptr = 1;
- 	} else if (value_) {
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 4335738..0572cae 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -177,7 +177,8 @@ free_return:
- static int git_init_db_config(const char *k, const char *v, void *cb)
- {
- 	if (!strcmp(k, "init.templatedir"))
--		return git_config_pathname(&init_db_template_dir, k, v);
-+		return git_config_pathname((char **)&init_db_template_dir,
-+				k, v);
- 
- 	return 0;
- }
-diff --git a/builtin/log.c b/builtin/log.c
-index 8781049..8751173 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -743,7 +743,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "format.signature"))
- 		return git_config_string(&signature, var, value);
- 	if (!strcmp(var, "format.signaturefile"))
--		return git_config_pathname(&signature_file, var, value);
-+		return git_config_pathname((char **)&signature_file,
-+				var, value);
- 	if (!strcmp(var, "format.coverletter")) {
- 		if (value && !strcasecmp(value, "auto")) {
- 			config_cover_letter = COVER_AUTO;
-diff --git a/cache.h b/cache.h
-index 4f55466..19af52e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1442,7 +1442,7 @@ extern int git_config_bool_or_int(const char *, const char *, int *);
- extern int git_config_bool(const char *, const char *);
- extern int git_config_maybe_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
--extern int git_config_pathname(const char **, const char *, const char *);
-+extern int git_config_pathname(char **, const char *, const char *);
- extern int git_config_set_in_file(const char *, const char *, const char *);
- extern int git_config_set(const char *, const char *);
- extern int git_config_parse_key(const char *, char **, int *);
-diff --git a/config.c b/config.c
-index 29fa012..51781b8 100644
---- a/config.c
-+++ b/config.c
-@@ -670,7 +670,7 @@ int git_config_string(const char **dest, const char *var, const char *value)
- 	return 0;
- }
- 
--int git_config_pathname(const char **dest, const char *var, const char *value)
-+int git_config_pathname(char **dest, const char *var, const char *value)
- {
- 	if (!value)
- 		return config_error_nonbool(var);
-@@ -714,7 +714,8 @@ static int git_default_core_config(const char *var, const char *value)
- 	}
- 
- 	if (!strcmp(var, "core.attributesfile"))
--		return git_config_pathname(&git_attributes_file, var, value);
-+		return git_config_pathname((char **)&git_attributes_file,
-+				var, value);
- 
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg = git_config_bool(var, value);
-@@ -862,7 +863,7 @@ static int git_default_core_config(const char *var, const char *value)
- 		return git_config_string(&askpass_program, var, value);
- 
- 	if (!strcmp(var, "core.excludesfile"))
--		return git_config_pathname(&excludes_file, var, value);
-+		return git_config_pathname((char **)&excludes_file, var, value);
- 
- 	if (!strcmp(var, "core.whitespace")) {
- 		if (!value)
-@@ -989,7 +990,8 @@ static int git_default_push_config(const char *var, const char *value)
- static int git_default_mailmap_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "mailmap.file"))
--		return git_config_pathname(&git_mailmap_file, var, value);
-+		return git_config_pathname((char **)&git_mailmap_file,
-+				var, value);
- 	if (!strcmp(var, "mailmap.blob"))
- 		return git_config_string(&git_mailmap_blob, var, value);
- 
-@@ -1506,7 +1508,7 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
- {
- 	const char *value;
- 	if (!git_configset_get_value(cs, key, &value))
--		return git_config_pathname(dest, key, value);
-+		return git_config_pathname((char **)dest, key, value);
- 	else
- 		return 1;
- }
-diff --git a/diff.c b/diff.c
-index 87b16d5..e029b75 100644
---- a/diff.c
-+++ b/diff.c
-@@ -204,7 +204,8 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "diff.wordregex"))
- 		return git_config_string(&diff_word_regex_cfg, var, value);
- 	if (!strcmp(var, "diff.orderfile"))
--		return git_config_pathname(&diff_order_file_cfg, var, value);
-+		return git_config_pathname((char **)&diff_order_file_cfg,
-+				var, value);
- 
- 	if (!strcmp(var, "diff.ignoresubmodules"))
- 		handle_ignore_submodules_arg(&default_diff_options, value);
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
