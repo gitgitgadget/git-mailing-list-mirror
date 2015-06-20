@@ -1,88 +1,78 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 08/12] initial_ref_transaction_commit(): function for
- initial ref creation
-Date: Sat, 20 Jun 2015 04:15:53 +0200
-Message-ID: <5584CCD9.9030107@alum.mit.edu>
-References: <cover.1434206062.git.mhagger@alum.mit.edu>	<19f421f504ae22538fd2a902840209c0799e67cb.1434206062.git.mhagger@alum.mit.edu> <xmqqioao952n.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
+Date: Fri, 19 Jun 2015 20:24:15 -0700
+Message-ID: <xmqqbngb5ag0.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
+	<xmqq1th77829.fsf@gitster.dls.corp.google.com>
+	<95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
+	<xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
+	<20150619235748.GA23394@odin.ulthar.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 04:16:47 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Scott Schmit <i.grok@comcast.net>
+X-From: git-owner@vger.kernel.org Sat Jun 20 05:24:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z68Kq-0003id-5o
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 04:16:44 +0200
+	id 1Z69Oa-0007Qv-8y
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jun 2015 05:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752777AbbFTCQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2015 22:16:12 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:58445 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752638AbbFTCQK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2015 22:16:10 -0400
-X-AuditID: 12074414-f794f6d000007852-0a-5584ccdb404d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id C4.05.30802.BDCC4855; Fri, 19 Jun 2015 22:15:55 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB04CB.dip0.t-ipconnect.de [93.219.4.203])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5K2FrSP018561
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 19 Jun 2015 22:15:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <xmqqioao952n.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqHv7TEuowdnVQhZdV7qZLBp6rzBb
-	/GjpYbbYvLmdxYHFY8GmUo9nvXsYPS5eUvb4vEkugCWK2yYpsaQsODM9T98ugTtj77alLAUH
-	2Cpm7o1uYOxl7WLk5JAQMJF4cfg7I4QtJnHh3nq2LkYuDiGBy4wS31ubwYqEBM4xSfTMUwSx
-	eQW0JZ7tf8UOYrMIqErcW9oN1swmoCuxqKeZqYuRg0NUIEji9ctciHJBiZMzn7CA2CICahIT
-	2w6B2cwC8RJb268yg9jCAskSm551Q+3dyijx90UX2F5OAWuJnR3bmCAa9CR2XP/FCmHLS2x/
-	O4d5AqPALCQ7ZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXQu93MwSvdSU0k2M
-	kFAW2cF45KTcIUYBDkYlHt4fS1tChVgTy4orcw8xSnIwKYnynj4EFOJLyk+pzEgszogvKs1J
-	LT7EKMHBrCTCO3c2UI43JbGyKrUoHyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoNDSYL3
-	0SmgRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQnMYXAyMVJMUDtNfoNMje4oLE
-	XKAoROspRl2OBT9ur2USYsnLz0uVEue9AFIkAFKUUZoHtwKWuF4xigN9LMzrDFLFA0x6cJNe
-	AS1hAloyobwJZElJIkJKqoFRcuOqo4YXbCs3WN/7/7bl07zj6xaxRL+fJBS8/tTbysyP1vsF
-	DqzJXdL/u+7Tl90z5j98fXDenCXNK8ovT/qfMGHqhp9+bJniKR6d/br9T12eC7df 
+	id S1753429AbbFTDYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2015 23:24:19 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:33644 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752804AbbFTDYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2015 23:24:18 -0400
+Received: by iebgx4 with SMTP id gx4so85760344ieb.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2015 20:24:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=GGo7DpYwl1q1a/UlVnKMQRj1nV5o5CHBP4S63+KZSO0=;
+        b=B4MpgEnCcNEj9TbAsKlqUzk04zu0oLVDtT5Z6dDfEWu0disADPxrtXo613BXNODfmr
+         9fGNZoORe/S9Ck4aRsYcvE1zE3PgzggEWmTCEa3h4XsOeWplswvxXnp7Mhnf5itBZ9Vh
+         N8bA/upxvJPOW5Xxvx3lTaJ5gfMvY7ki2zfkZf22eNf8R8GgwlOv+U1wA08N52u0HFPn
+         IRXhyiSxyQ9rSK6F8BCElwr/A0nXXke6EvLtcqCmFJkZWTpa2BWl3djFM0WW1/ieHcm4
+         77QA0HjKafDqA3qeHAzaOokrHi+gil7Yrt2NPUZPauDjwmRu/9PLb5v7c+iXNWMBaEVI
+         hdGg==
+X-Received: by 10.50.134.196 with SMTP id pm4mr7785144igb.6.1434770657642;
+        Fri, 19 Jun 2015 20:24:17 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:80a8:63af:ca7c:ab61])
+        by mx.google.com with ESMTPSA id ot6sm3038697igb.11.2015.06.19.20.24.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Jun 2015 20:24:16 -0700 (PDT)
+In-Reply-To: <20150619235748.GA23394@odin.ulthar.us> (Scott Schmit's message
+	of "Fri, 19 Jun 2015 19:57:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272221>
 
-On 06/15/2015 08:53 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> +	struct ref_transaction *t;
->> +	struct strbuf err = STRBUF_INIT;
->> +
->> +	t = ref_transaction_begin(&err);
->> +	if (!t)
->> +		die(err.buf);
-> 
-> Yikes, and sorry for sending three messages without consolidating
-> against the same patch, but
-> 
-> 	die("%s", err.buf);
-> 
-> because
-> 
-> extern NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
-> 
-> in its declaration causes -Werror=format-security to barf.
-> 
-> Likewise for a few other instances of the same construct all in 
-> the same file.
+Scott Schmit <i.grok@comcast.net> writes:
 
-Thanks for catching this. I'll fix it in the re-roll (and also add that
-gcc option to my config.mak for the future).
+> On Fri, Jun 19, 2015 at 01:53:01PM -0700, Junio C Hamano wrote:
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > Can you think of a name for the option that is as short as `--quick`
+>> > but means the same as `--connectivity-only`?
+>> 
+>> No I can't.  I think `--connectivity-only` is a very good name that
+>> is unfortunately a mouthful, I agree that we need a name that is as
+>> short as `--xxxxx` that means the same as `--connectivity-only`.  I
+>> do not think `--quick` is that word; it does not mean such a thing.
+>
+> How about `--linkage` or `--links`?
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Even though "link" may be shorter than "connectivity", the real
+difficulty is to come up with a phrase that conveys the "-only" part
+of the fully spelled name, which is more important, without spending
+5 letters that take to say "-only".
