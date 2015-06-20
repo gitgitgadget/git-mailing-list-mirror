@@ -1,59 +1,97 @@
-From: "Technical Support" <ziakhan.n@metropolisindia.com>
-Subject: Maintenance Notification
-Date: Fri, 19 Jun 2015 22:18:10 +0100
-Message-ID: <20150619211814.B653DA1068@smtp2.jfc.com.ph>
-Reply-To: quamlisa1@Safe-mail.net
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH v5 03/10] t9001-send-email: refactor header variable fields replacement
+Date: Sun, 21 Jun 2015 01:17:46 +0200
+Message-ID: <1434842273-30945-3-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+ <1434842273-30945-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 21 00:20:09 2015
+X-From: git-owner@vger.kernel.org Sun Jun 21 01:18:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6R7Q-00047J-78
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 00:20:08 +0200
+	id 1Z6S1o-0007nJ-5U
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 01:18:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754901AbbFTWTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2015 18:19:51 -0400
-Received: from smtp3.jfc.com.ph ([54.183.61.166]:45240 "EHLO smtp3.jfc.com.ph"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751937AbbFTWTt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Jun 2015 18:19:49 -0400
-X-Greylist: delayed 50419 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Jun 2015 18:19:49 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp3.jfc.com.ph (Postfix) with ESMTP id 3350C213804
-	for <git@vger.kernel.org>; Sat, 20 Jun 2015 05:18:16 +0800 (PHT)
-X-Virus-Scanned: amavisd-new at smtp3.jfc.com.ph
-Received: from smtp3.jfc.com.ph ([127.0.0.1])
-	by localhost (smtp3.jfc.com.ph [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id H3KOht01ywti for <git@vger.kernel.org>;
-	Sat, 20 Jun 2015 05:18:16 +0800 (PHT)
-Received: from smtp2.jfc.com.ph (smtp2.jfc.com.ph [172.20.24.13])
-	by smtp3.jfc.com.ph (Postfix) with ESMTP id 19DA6212ACA
-	for <git@vger.kernel.org>; Sat, 20 Jun 2015 05:18:16 +0800 (PHT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp2.jfc.com.ph (Postfix) with ESMTP id E9C4AA117A
-	for <git@vger.kernel.org>; Sat, 20 Jun 2015 05:18:15 +0800 (PHT)
-X-Virus-Scanned: amavisd-new at smtp2.jfc.com.ph
-Received: from smtp2.jfc.com.ph ([127.0.0.1])
-	by localhost (smtp2.jfc.com.ph [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xwwb-BOYhuEF for <git@vger.kernel.org>;
-	Sat, 20 Jun 2015 05:18:15 +0800 (PHT)
-Received: from [10.0.0.2] (unknown [41.138.162.236])
-	by smtp2.jfc.com.ph (Postfix) with ESMTPSA id B653DA1068
-	for <git@vger.kernel.org>; Sat, 20 Jun 2015 05:18:14 +0800 (PHT)
-Content-Description: Mail message body
+	id S1755017AbbFTXR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2015 19:17:59 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:53494 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750918AbbFTXR5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Jun 2015 19:17:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4314436D8;
+	Sun, 21 Jun 2015 01:17:56 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fLXSexgoSTs1; Sun, 21 Jun 2015 01:17:56 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2B17936B6;
+	Sun, 21 Jun 2015 01:17:56 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id 274CB20D6;
+	Sun, 21 Jun 2015 01:17:56 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RaTBVxlUZHR5; Sun, 21 Jun 2015 01:17:56 +0200 (CEST)
+Received: from localhost.localdomain (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id B1C3F20D9;
+	Sun, 21 Jun 2015 01:17:55 +0200 (CEST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1434842273-30945-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272243>
 
-You are required to click on the link to verify your email account
-because we are upgrading our webmail.http://monicakotnala.in/css/e/
+Create a function which replaces Date, Message-Id and
+X-Mailer lines generated by git-send-email by a specific string:
 
-Webmail Technical Support
-Copyright 2012. All Rights Reserved
+Date:.*$       -> Date: DATE-STRING
+Message-Id:.*$ -> Message-Id: MESSAGE-ID-STRING
+X-Mailer:.*$   -> X-Mailer: X-MAILER-STRING
+Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+---
+ t/t9001-send-email.sh | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index f7d4132..714fcae 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -522,6 +522,12 @@ Result: OK
+ EOF
+ "
+ 
++replace_variable_fields () {
++	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
++		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
++		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/"
++}
++
+ test_suppression () {
+ 	git send-email \
+ 		--dry-run \
+@@ -529,10 +535,7 @@ test_suppression () {
+ 		--from="Example <from@example.com>" \
+ 		--to=to@example.com \
+ 		--smtp-server relay.example.com \
+-		$patches |
+-	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
+-		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
+-		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
++		$patches | replace_variable_fields \
+ 		>actual-suppress-$1${2+"-$2"} &&
+ 	test_cmp expected-suppress-$1${2+"-$2"} actual-suppress-$1${2+"-$2"}
+ }
+-- 
+1.9.1
