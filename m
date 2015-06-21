@@ -1,80 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
-Date: Sun, 21 Jun 2015 13:46:44 -0700
-Message-ID: <xmqqwpywiybv.fsf@gitster.dls.corp.google.com>
-References: <cover.1434657920.git.johannes.schindelin@gmx.de>
-	<cover.1434720655.git.johannes.schindelin@gmx.de>
-	<5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
-	<xmqq1th77829.fsf@gitster.dls.corp.google.com>
-	<95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
-	<xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
-	<558643CA.6000303@alum.mit.edu>
-	<xmqqioahj849.fsf@gitster.dls.corp.google.com>
-	<3faa92b10274ce8cfebe340761f73505@www.dscho.org>
-	<xmqq1th4kdeq.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	peff@peff.net
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 21 22:46:53 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v4 02/19] tag: libify parse_opt_points_at()
+Date: Mon, 22 Jun 2015 02:18:16 +0530
+Message-ID: <1434919705-4884-2-git-send-email-karthik.188@gmail.com>
+References: <CAOLa=ZS_vn8ZNrb7mtqZKU4Y3RCZojcbeMYfbx=3X-aVjhdpSA@mail.gmail.com>
+ <1434919705-4884-1-git-send-email-karthik.188@gmail.com>
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 21 22:48:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6m8h-0004EO-9h
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 22:46:51 +0200
+	id 1Z6mAW-0005JR-9Q
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 22:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbbFUUqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 16:46:47 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:37322 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752492AbbFUUqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 16:46:46 -0400
-Received: by igblr2 with SMTP id lr2so41816332igb.0
-        for <git@vger.kernel.org>; Sun, 21 Jun 2015 13:46:45 -0700 (PDT)
+	id S1753547AbbFUUsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 16:48:40 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:32850 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752446AbbFUUsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 16:48:38 -0400
+Received: by pdjn11 with SMTP id n11so124851693pdj.0
+        for <git@vger.kernel.org>; Sun, 21 Jun 2015 13:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=0C9+rGm6MJ7uHpLLvN2ozXKOzaiuwG/7gMA8T08sJdA=;
-        b=jZMg94Jm6+deLlgKGCpGyaC3rnHX2NRCqGpnzJlxrrGU5rJ6m++xoNnWU7PgH2GuNa
-         gqdYH0yLfE9uAY+zza3i1Si5dw7xqay5L6Dn6YzPupZIP0zhDZBM/dgXNLHbzHboRcoz
-         L77dOYZ5zw9F/G/D+OqqyJVh3WkNt+81RDpMpS1fQ/ubMbNEgZPnnoVHjQzo/Igu6aNG
-         +kyDpuF4StLdKaPtdgpnsB1ugYgdRxJnkOLNhE9wPBSU6aKMY0v6CxKTHYKj9tKHtWrh
-         1dRzSPMWTR0ZBKkjVvZx3aeHg1ayrAN6MO714Fvs9T9JNWzRFaqkdPL8WLhzKtwolxWy
-         A6GA==
-X-Received: by 10.107.170.216 with SMTP id g85mr27068815ioj.31.1434919605713;
-        Sun, 21 Jun 2015 13:46:45 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:990b:778:aa29:b388])
-        by mx.google.com with ESMTPSA id o200sm11585455ioo.43.2015.06.21.13.46.44
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 21 Jun 2015 13:46:45 -0700 (PDT)
-In-Reply-To: <xmqq1th4kdeq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 21 Jun 2015 13:35:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0BB2CJU0lcqsiWQK4Z2uzyDGr/QEuuy7sbMu5CZ73Tc=;
+        b=aWCS7NWZH14dWzoQ3lsLR33aYhyQGIJyyFK6oQNWSczo5nafrG9jXcvFMR72aZo7hC
+         ATgVq6IeSlKtk5yn7DlFcIT+s552oWbtzMyV5ndxLLP+ZakY8o/WpofvrX3BGWQ0MfvZ
+         kLK3F42WH6MRDLY7/EWzEUwBS7yhh9YFx/s1kRlE0uG20QqmUUPXZaL2kC2+DlIVqe9Y
+         31ELxeDYqum/3Gw+j8F6wj4zaWuL9Gw6AL5KtvA/UYI4Rn4ufGDHolALQCBUrR//CiXN
+         n+UVIhvk2G3Y003h0+0lMQxP+e8oj63bLfWUOWEZH5iHFma1cycyBiePIXcJc00+vwj1
+         /5Wg==
+X-Received: by 10.68.205.2 with SMTP id lc2mr52949899pbc.147.1434919718087;
+        Sun, 21 Jun 2015 13:48:38 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23])
+        by mx.google.com with ESMTPSA id s1sm17519488pda.54.2015.06.21.13.48.35
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 21 Jun 2015 13:48:37 -0700 (PDT)
+X-Mailer: git-send-email 2.4.4
+In-Reply-To: <1434919705-4884-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272287>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Rename 'parse_opt_points_at()' to 'parse_opt_object_name()' and
+move it from 'tag.c' to 'parse-options'. This now acts as a common
+parse_opt function which accepts an objectname and stores it into
+a sha1_array.
 
-> Of course, that assumes that you can tell an object is a blob
-> without unpacking.  If a tree entry mentions an object to be a blob
-> by having 100644 as its mode, unless you unpack the object pointed
-> at by that tree entry to make sure it is a blob, you wouldn't be
-> able to detect a case where a non-blob object is stored with 100644
-> mode, which would be an error in the containing tree object that we
-> may want to detect.
+Based-on-patch-by: Jeff King <peff@peff.net>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ builtin/tag.c      | 21 ++-------------------
+ parse-options-cb.c | 17 +++++++++++++++++
+ parse-options.h    |  1 +
+ 3 files changed, 20 insertions(+), 19 deletions(-)
 
-Heh, I was being stupid here.  Of course, you can tell an object is
-a blob without fully inflating it (we should already be doing that
-in sha1_object_info(), inflating only the object header in loose
-objects or inflating only the early parts of delta in packs to
-follow the delta chain to learn the type of the object), and that
-would certainly save us substantial zlib cost.
-
-Sorry about the noise.
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 5f6cdc5..e36c43e 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -546,23 +546,6 @@ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
+ 	return check_refname_format(sb->buf, 0);
+ }
+ 
+-static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
+-			const char *arg, int unset)
+-{
+-	unsigned char sha1[20];
+-
+-	if (unset) {
+-		sha1_array_clear(&points_at);
+-		return 0;
+-	}
+-	if (!arg)
+-		return error(_("switch 'points-at' requires an object"));
+-	if (get_sha1(arg, sha1))
+-		return error(_("malformed object name '%s'"), arg);
+-	sha1_array_append(&points_at, sha1);
+-	return 0;
+-}
+-
+ static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
+ {
+ 	int *sort = opt->value;
+@@ -625,8 +608,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			parse_opt_with_commit, (intptr_t)"HEAD",
+ 		},
+ 		{
+-			OPTION_CALLBACK, 0, "points-at", NULL, N_("object"),
+-			N_("print only tags of the object"), 0, parse_opt_points_at
++			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
++			N_("print only tags of the object"), 0, parse_opt_object_name
+ 		},
+ 		OPT_END()
+ 	};
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index be8c413..de75411 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -4,6 +4,7 @@
+ #include "commit.h"
+ #include "color.h"
+ #include "string-list.h"
++#include "sha1-array.h"
+ 
+ /*----- some often used options -----*/
+ 
+@@ -92,6 +93,22 @@ int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
++int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
++{
++	unsigned char sha1[20];
++
++	if (unset) {
++		sha1_array_clear(opt->value);
++		return 0;
++	}
++	if (!arg)
++		return -1;
++	if (get_sha1(arg, sha1))
++		return error(_("malformed object name '%s'"), arg);
++	sha1_array_append(opt->value, sha1);
++	return 0;
++}
++
+ int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
+ {
+ 	int *target = opt->value;
+diff --git a/parse-options.h b/parse-options.h
+index c71e9da..36c71fe 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -220,6 +220,7 @@ extern int parse_opt_approxidate_cb(const struct option *, const char *, int);
+ extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
+ extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
+ extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
++extern int parse_opt_object_name(const struct option *, const char *, int);
+ extern int parse_opt_with_commit(const struct option *, const char *, int);
+ extern int parse_opt_tertiary(const struct option *, const char *, int);
+ extern int parse_opt_string_list(const struct option *, const char *, int);
+-- 
+2.4.3.439.gfea0c2a.dirty
