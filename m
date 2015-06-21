@@ -1,153 +1,90 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 02/19] tag: libify parse_opt_points_at()
-Date: Mon, 22 Jun 2015 02:18:16 +0530
-Message-ID: <1434919705-4884-2-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v4 01/19] t6301: for-each-ref tests for ref-filter APIs
+Date: Mon, 22 Jun 2015 02:18:15 +0530
+Message-ID: <1434919705-4884-1-git-send-email-karthik.188@gmail.com>
 References: <CAOLa=ZS_vn8ZNrb7mtqZKU4Y3RCZojcbeMYfbx=3X-aVjhdpSA@mail.gmail.com>
- <1434919705-4884-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 21 22:48:45 2015
+X-From: git-owner@vger.kernel.org Sun Jun 21 22:48:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6mAW-0005JR-9Q
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 22:48:44 +0200
+	id 1Z6mAS-0005GT-2E
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 22:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547AbbFUUsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 16:48:40 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:32850 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446AbbFUUsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 16:48:38 -0400
-Received: by pdjn11 with SMTP id n11so124851693pdj.0
-        for <git@vger.kernel.org>; Sun, 21 Jun 2015 13:48:38 -0700 (PDT)
+	id S1753483AbbFUUsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 16:48:35 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:35770 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751526AbbFUUsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 16:48:35 -0400
+Received: by pdbci14 with SMTP id ci14so66143249pdb.2
+        for <git@vger.kernel.org>; Sun, 21 Jun 2015 13:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0BB2CJU0lcqsiWQK4Z2uzyDGr/QEuuy7sbMu5CZ73Tc=;
-        b=aWCS7NWZH14dWzoQ3lsLR33aYhyQGIJyyFK6oQNWSczo5nafrG9jXcvFMR72aZo7hC
-         ATgVq6IeSlKtk5yn7DlFcIT+s552oWbtzMyV5ndxLLP+ZakY8o/WpofvrX3BGWQ0MfvZ
-         kLK3F42WH6MRDLY7/EWzEUwBS7yhh9YFx/s1kRlE0uG20QqmUUPXZaL2kC2+DlIVqe9Y
-         31ELxeDYqum/3Gw+j8F6wj4zaWuL9Gw6AL5KtvA/UYI4Rn4ufGDHolALQCBUrR//CiXN
-         n+UVIhvk2G3Y003h0+0lMQxP+e8oj63bLfWUOWEZH5iHFma1cycyBiePIXcJc00+vwj1
-         /5Wg==
-X-Received: by 10.68.205.2 with SMTP id lc2mr52949899pbc.147.1434919718087;
-        Sun, 21 Jun 2015 13:48:38 -0700 (PDT)
+        bh=8EPWKmHxTijwvClKcLFgUXrDz89whk/u+/eCgzNJCs0=;
+        b=09Jz2fjZWIP0W6K4vpty6yxuqp/32vANf5x1lOs1c6/FsUua7aThg1mkP5peSeCKUW
+         B2BIIn4qZIcfASBiLwU3f7tHRkCCp6KDIQeDFPLV4DQ5KF+YI5dIrO9n6JviNkom+Iai
+         Je5SRO04c0Np63e01q7IBsy2ubdV8mceYnWX/VqzETNHzqqZiObMzdle1gODGg4gxnrk
+         bv4F93BIAzBRjgJ0LOIUPwk8+2Qu9xS8XX46v6Z8t4nN51BnuGq/PE3CEJbB2ZlzGyaN
+         A3csTl3P2+RDP/F4dz90nYM3rdYANEIyWHjnPf5XpJo7g5i8J6Ik/Kiby/7tXwaFsJom
+         CHBw==
+X-Received: by 10.70.128.13 with SMTP id nk13mr51877460pdb.21.1434919714610;
+        Sun, 21 Jun 2015 13:48:34 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id s1sm17519488pda.54.2015.06.21.13.48.35
+        by mx.google.com with ESMTPSA id s1sm17519488pda.54.2015.06.21.13.48.32
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 21 Jun 2015 13:48:37 -0700 (PDT)
+        Sun, 21 Jun 2015 13:48:34 -0700 (PDT)
 X-Mailer: git-send-email 2.4.4
-In-Reply-To: <1434919705-4884-1-git-send-email-karthik.188@gmail.com>
+In-Reply-To: <CAOLa=ZS_vn8ZNrb7mtqZKU4Y3RCZojcbeMYfbx=3X-aVjhdpSA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272288>
 
-Rename 'parse_opt_points_at()' to 'parse_opt_object_name()' and
-move it from 'tag.c' to 'parse-options'. This now acts as a common
-parse_opt function which accepts an objectname and stores it into
-a sha1_array.
+Add a test suite for testing the ref-filter APIs used
+by for-each-ref. We just intialize the test suite for now.
+More tests will be added in the following patches as more
+options are added to for-each-ref.
 
 Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/tag.c      | 21 ++-------------------
- parse-options-cb.c | 17 +++++++++++++++++
- parse-options.h    |  1 +
- 3 files changed, 20 insertions(+), 19 deletions(-)
+ t/t6301-for-each-ref-filter.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+ create mode 100755 t/t6301-for-each-ref-filter.sh
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 5f6cdc5..e36c43e 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -546,23 +546,6 @@ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
- 	return check_refname_format(sb->buf, 0);
- }
- 
--static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
--			const char *arg, int unset)
--{
--	unsigned char sha1[20];
--
--	if (unset) {
--		sha1_array_clear(&points_at);
--		return 0;
--	}
--	if (!arg)
--		return error(_("switch 'points-at' requires an object"));
--	if (get_sha1(arg, sha1))
--		return error(_("malformed object name '%s'"), arg);
--	sha1_array_append(&points_at, sha1);
--	return 0;
--}
--
- static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
- {
- 	int *sort = opt->value;
-@@ -625,8 +608,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			parse_opt_with_commit, (intptr_t)"HEAD",
- 		},
- 		{
--			OPTION_CALLBACK, 0, "points-at", NULL, N_("object"),
--			N_("print only tags of the object"), 0, parse_opt_points_at
-+			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
-+			N_("print only tags of the object"), 0, parse_opt_object_name
- 		},
- 		OPT_END()
- 	};
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index be8c413..de75411 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -4,6 +4,7 @@
- #include "commit.h"
- #include "color.h"
- #include "string-list.h"
-+#include "sha1-array.h"
- 
- /*----- some often used options -----*/
- 
-@@ -92,6 +93,22 @@ int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
-+{
-+	unsigned char sha1[20];
+diff --git a/t/t6301-for-each-ref-filter.sh b/t/t6301-for-each-ref-filter.sh
+new file mode 100755
+index 0000000..b1fa8d4
+--- /dev/null
++++ b/t/t6301-for-each-ref-filter.sh
+@@ -0,0 +1,19 @@
++#!/bin/sh
 +
-+	if (unset) {
-+		sha1_array_clear(opt->value);
-+		return 0;
-+	}
-+	if (!arg)
-+		return -1;
-+	if (get_sha1(arg, sha1))
-+		return error(_("malformed object name '%s'"), arg);
-+	sha1_array_append(opt->value, sha1);
-+	return 0;
-+}
++test_description='test for-each-refs usage of ref-filter APIs'
 +
- int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
- {
- 	int *target = opt->value;
-diff --git a/parse-options.h b/parse-options.h
-index c71e9da..36c71fe 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -220,6 +220,7 @@ extern int parse_opt_approxidate_cb(const struct option *, const char *, int);
- extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
- extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
- extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
-+extern int parse_opt_object_name(const struct option *, const char *, int);
- extern int parse_opt_with_commit(const struct option *, const char *, int);
- extern int parse_opt_tertiary(const struct option *, const char *, int);
- extern int parse_opt_string_list(const struct option *, const char *, int);
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-gpg.sh
++
++test_expect_success 'setup some history and refs' '
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	git checkout -b side &&
++	test_commit four &&
++	git tag -s -m "A signed tag message" signed-tag &&
++	git checkout master &&
++	git update-ref refs/odd/spot master
++'
++
++test_done
 -- 
 2.4.3.439.gfea0c2a.dirty
