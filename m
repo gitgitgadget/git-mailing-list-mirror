@@ -1,85 +1,98 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: broken repo after power cut
-Date: Sun, 21 Jun 2015 14:28:20 +0200
-Organization: gmx
-Message-ID: <330ab8f498e1b435d5b210384200b649@www.dscho.org>
-References: <5585C1B6.50407@nod.at>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Gstir <david@sigma-star.at>
-To: Richard Weinberger <richard@nod.at>
-X-From: git-owner@vger.kernel.org Sun Jun 21 14:30:07 2015
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH v5 08/10] send-email: consider quote as delimiter instead of character
+Date: Sun, 21 Jun 2015 14:45:54 +0200
+Message-ID: <1434890756-5059-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 21 14:46:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6eNy-0003Gx-Ez
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 14:30:06 +0200
+	id 1Z6ede-0003Lq-U8
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 14:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699AbbFUM21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 08:28:27 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52216 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750741AbbFUM2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 08:28:24 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Mh9yT-1ZT0ZL1gB7-00MKgb; Sun, 21 Jun 2015 14:28:22
- +0200
-In-Reply-To: <5585C1B6.50407@nod.at>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:CiC84Gn0EPCp7DKGxG/dDiHBKPkWRRNoJDUqChYLyPJ57cZHlQs
- kHBMa5/SQY94lF53xonXTRn3zT57fVMmtTP+R72L9bii1AZFXHXP1Oeg4c5ZsjGM2WoJthb
- 3RLY9epq7G8CVPgwbwb4Tpsk+A/GdDpEwvGz62O5g5XntAxZXuBunzj8U8nzpnWnXUWidiE
- iswed/AYdzU9w9JSsOiLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fN6liaykgBE=:Cehryms+QnZt6WxfOra4Yq
- Ps3TDnnLUvz4aYUUF+Zmgt2jSl5Rzn5w02S2WqN4oQy3aoxiuBdMcCjyhrSY4zPsOnQ5c/Iwf
- EI+lzRPNWMd/gliV529jRy01yX0YNluIXZywJa0SrpYYdjvbLt+Cr5FEPTcMUdS6r7v9Qtxei
- KjXAjKvP4HXBwfoHljRrXQZInGvN1pmRcxnUye1qgaJyGrBEFPwodWUkZmuLydbUfUgdCO/fk
- 9EHsWTyBTqNb3UJjSjrYN21+5jXz7ebrABzqDnuzB51qq3sl+tAvWpkVKgwf62du+hQGMfPDL
- hueupzhirx56uKHxWmkVpUJXtjppNwB5OFLcwF5ZLiGBHSXJIqGorYw5fraBjUhYhGlW2aGqs
- 05vo/ex4YmGbboJdS4SdsZuBDE5PdJzvNQ3xcvrRYTHxDXZYD35AE/aWtPMk2JI763AhkdyJJ
- fPwMnDzn/6av4uHuYNX69qOjbkA5ToVbznkqs2ZJwHaC2Jlh6WW72hFBCdS8RNd5/G1HSUP3H
- o/G+FRVgyDeiVFiDiR+f+MMUd98SUHWiLkuwnh9RPbfGAnqkMKzk2EVpiqfRlq/Lwg+wf00bz
- I29NPGYhL+hbQxuv9wbam8VGoYeOclr/rDhAzoWiTbFcRL/efNlewquQ87gaX3pJhD54ejAD7
- IwTm/MHb7vhWYdJFn17rBlDHjWWZxfttEExAnnKiEfVvByWPuZXj257gw1x0iJLDMxdI=
+	id S1751989AbbFUMqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 08:46:03 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:36994 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751222AbbFUMqA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Jun 2015 08:46:00 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 8B04B296C;
+	Sun, 21 Jun 2015 14:45:58 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eIQZD3+kv+7x; Sun, 21 Jun 2015 14:45:58 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr (zm-smtpauth-1.grenet.fr [130.190.244.122])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 6B2B6290D;
+	Sun, 21 Jun 2015 14:45:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTP id 6103920D9;
+	Sun, 21 Jun 2015 14:45:58 +0200 (CEST)
+Received: from zm-smtpauth-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8Fkt1CETuCgo; Sun, 21 Jun 2015 14:45:58 +0200 (CEST)
+Received: from localhost.localdomain (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
+	by zm-smtpauth-1.grenet.fr (Postfix) with ESMTPSA id CB34820D3;
+	Sun, 21 Jun 2015 14:45:57 +0200 (CEST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272256>
 
-Hi Richard,
+Do not consider quote inside a recipient name as character when
+they are not escaped. This interprets:
 
-On 2015-06-20 21:40, Richard Weinberger wrote:
+  "Jane" "Doe" <jdoe@example.com>
 
-> Yesterday our git server faced a power cut and a git repository broke.
-> The server is running a ext4 filesystem on top of Linux 3.16 (stable
-> from openSUSE) and git 2.1.4.
-> We had a backup, so no data was lost but I really would like to figure out
-> what happened.
-> 
-> This is the output of git fsck:
-> Checking object directories: 100% (256/256), done.
-> error: object file objects/ce/f7627fc160ad7294b1f728db0c1ddb65a38b1d is empty
-> error: object file objects/ce/f7627fc160ad7294b1f728db0c1ddb65a38b1d is empty
-> fatal: loose object cef7627fc160ad7294b1f728db0c1ddb65a38b1d (stored
-> in objects/ce/f7627fc160ad7294b1f728db0c1ddb65a38b1d) is corrupt
-> 
-> To me it seems like git was creating a new object and got interrupted
-> before fsync/fdatasync'ing it.
-> As the object was referenced before syncing the data to disk the repo broke.
-> Could this have happened?
-> Also, is git designed to survive power cuts? Then referencing an
-> object before synching it do disk would make no sense.
+as:
 
-I had similar issues with ext4 in the past, even with local repositories when using Git without pushing. My then-current laptop would not report battery power correctly, so I ran into out-of-power situations that would result in a loose object file that was simply empty, i.e. its length was zero. As far as my analysis back then went, this was not Git's fault, because its `write_loose_object()` function would write to a temporary file first and only move that file into place once it was written fully.
+  "Jane Doe" <jdoe@example.com>
 
-I was then shocked to learn that ext4 apparently has a default setting that allows it to truncate files upon power failure (something about a full journal vs a fast journal or some such) when I had expected the default to be a true journaled file system with proper atomicity regarding writes and moves. I remember that back then, I angrily fixed that setting to make my file system fully journaled.
+instead of:
 
-Maybe this leads you into the direction of a work-around in your setup?
+  "Jane\" \"Doe" <jdoe@example.com>
 
-Ciao,
-Johannes
+Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+---
+ git-send-email.perl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index bced78e..a03392c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1028,15 +1028,17 @@ sub sanitize_address {
+ 		return $recipient;
+ 	}
+ 
++	# remove non-escaped quotes
++	$recipient_name =~ s/(^|[^\\])"/$1/g;
++
+ 	# rfc2047 is needed if a non-ascii char is included
+ 	if ($recipient_name =~ /[^[:ascii:]]/) {
+-		$recipient_name =~ s/^"(.*)"$/$1/;
+ 		$recipient_name = quote_rfc2047($recipient_name);
+ 	}
+ 
+ 	# double quotes are needed if specials or CTLs are included
+ 	elsif ($recipient_name =~ /[][()<>@,;:\\".\000-\037\177]/) {
+-		$recipient_name =~ s/(["\\\r])/\\$1/g;
++		$recipient_name =~ s/([\\\r])/\\$1/g;
+ 		$recipient_name = qq["$recipient_name"];
+ 	}
+ 
+-- 
+1.9.1
