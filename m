@@ -1,99 +1,85 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: 'eol' documentation confusion
-Date: Sun, 21 Jun 2015 09:16:03 -0500
-Message-ID: <CAHd499Do_bpdOkL2TqdO+8L=pR53117pKR0GSwdgvFDwq_S4=w@mail.gmail.com>
-References: <CAHd499CapqvC3pHszgmX2VexdmqiW4+N23YfkAP5jjXWDrbe0A@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: RE: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
+Date: Sun, 21 Jun 2015 16:40:35 +0200
+Organization: gmx
+Message-ID: <a9e5e7c2580ed138d3fc9576799fe1df@www.dscho.org>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+ <cover.1434720655.git.johannes.schindelin@gmx.de>
+ <5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
+ <xmqq1th77829.fsf@gitster.dls.corp.google.com>
+ <95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
+ <xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
+ <558643CA.6000303@alum.mit.edu>
+ <000201d0abe0$7f3ccf20$7db66d60$@nexbridge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 21 16:16:13 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: 'Michael Haggerty' <mhagger@alum.mit.edu>,
+	'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+	peff@peff.net
+To: "Randall S. Becker" <rsbecker@nexbridge.com>
+X-From: git-owner@vger.kernel.org Sun Jun 21 16:41:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6g2d-0003Rs-0A
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 16:16:11 +0200
+	id 1Z6gQo-0000T3-9U
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 16:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbbFUOQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 10:16:07 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:33851 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755729AbbFUOQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 10:16:04 -0400
-Received: by igboe5 with SMTP id oe5so46410379igb.1
-        for <git@vger.kernel.org>; Sun, 21 Jun 2015 07:16:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=fAkY1TVRxv7HGHbyJFmL16oE6Ohv5eggE/KSXyBicBU=;
-        b=Wpf1VMFR8nUc2FNc6T/jbP8Qu/SbtgfNFD9loAE/aLZqFXefgFj5OkES4onw6jIKus
-         iEnItB0jaqjdF4+fbJ9acX9m4pmpJQ0gEQykmhQAZBOg25/PC2IzzTLybsqSD+1isJ13
-         B6fBBlHpU0WFPKye+wqwdW4gGh/VdnPr3XSDX22XB1gi2UltnPPyN9sS+gWFAvtNWToT
-         SJKsweHZO7zWxLyUmesTgm3f/0emcSEWAnZNtXfIhZZ0d4RjBAfOWuWNtrFJOOLEqW5X
-         +jeb+3kJ+lYE6AzItAJ16PENf9JWnZcjX5FALz6R+y+0QOEMIgAkemJXa3t4ro5F/4Yi
-         0iJg==
-X-Received: by 10.107.8.32 with SMTP id 32mr8114174ioi.15.1434896163626; Sun,
- 21 Jun 2015 07:16:03 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.86.148 with HTTP; Sun, 21 Jun 2015 07:16:03 -0700 (PDT)
-In-Reply-To: <CAHd499CapqvC3pHszgmX2VexdmqiW4+N23YfkAP5jjXWDrbe0A@mail.gmail.com>
-X-Google-Sender-Auth: JBAsSuOZTkYAVoBohU2L6DYAqbM
+	id S1754486AbbFUOlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 10:41:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59793 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752821AbbFUOlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 10:41:03 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MfVYB-1ZUY8c0c39-00P5NI; Sun, 21 Jun 2015 16:40:37
+ +0200
+In-Reply-To: <000201d0abe0$7f3ccf20$7db66d60$@nexbridge.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:bzSI/kYc3F3SjgNnz4q6pNlpjbhuxY/5GXAKWVLSNLPV4a2xGYv
+ ipFhRESlVkTU/6nENi0rpCO3jRPAnvTIIrS49hT3NgGdJvPx/J7HbjczIgEYH9PoWqe6/Rm
+ faHKmimbXaT+VuE6ZrFlJpbTJCcSHSYAwQtsp0pLghpCPKPWKZbQapzg5x6FmaViICbbjXg
+ 3/4lNV7acBPkUBIclEHtw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272269>
 
-On Sun, Jun 21, 2015 at 9:04 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> Upon inspection of the gitattributes documentation page here:
-> https://git-scm.com/docs/gitattributes
+Hi Randall,
+
+On 2015-06-21 07:09, Randall S. Becker wrote:
+> On June 21, 2015 12:56 AM, Michael Haggerty wrote:
 >
-> When comparing the documentation for 'text' with 'eol', I see the
-> following missing explanations for 'eol':
->
-> * eol
-> * -eol
->
-> Maybe the fact that these are missing means they are not valid to use.
-> There is also the issue that `text` usually controls EOL anyway. Is
-> there ever any reason to set eol in a way differently than explained
-> in the documentation (that is, `eol=lf` or `eol=crlf`)?
->
-> For example, what if you want a file to be treated as text BUT you do
-> not want it to perform EOL normalization at all. Could you do this?
->
->     foo.txt text -eol
->
-> Just at first glance, this to me would mean line endings on checkin
-> and checkout are not touched (CRLF could be checked in). Is this
-> possible?
->
-> What about setting `eol` but not `text`?
->
-> Honestly it seems like `eol` is just a supplementary setting for
-> `text` and was never intended to be used in ways that are
-> undocumented. Some explanation to help uncloud this would help, or
-> maybe I missed something in the documentation that explains this.
+>> As for thinking of a shorter name for the option: assuming the blob integrity
+>> checks can be turned on and off independently as described above, then I think
+>> it is reasonable to *also* add a `--quick` option defined as
+>>
+>> --quick: Skip some expensive checks, dramatically reducing the
+>>     runtime of `git fsck`. Currently this is equivalent to
+>>     `--no-check-blob-integrity`.
+>>
+>> In the future if we invent other expensive checks we might also add them to the
+>> list of things that are skipped by `--quick`.
+> 
+> Synonym suggestions: --links or --relations
+> I was going to include --refs but that may be ambiguous. Links also has
+> meaning so it's probably out and --hitch may just be silly and needlessly
+> introducing a new term.
 
-I did a few tests out of curiosity:
+I appreciate your input, but I think in this case, "links" and "relations" would just add new terminology, and I would like to keep using existing terminology as much as possible (because we already have a confusingly large glossary). I also see "link" as a problematic term because it resembles "gitlink" -- which means something entirely different.
 
-    * eol
+My favorite is still `--quick` because in contrast to Junio, to me it *has* a connotation of "less thoroughly". "Get rich quick" just does not mean "Earn a lot of money by doing a thorough job, just faster than you usually would".
 
-This allowed CRLF to be committed in a file named `foo.txt` (I saw ^M
-in the diff, which I think means CR character, and treats this
-character as an error)
+If Junio insists, I will of course rename it to `--skip-blobs` because that is really what we do. However, it has been my experience over and over again that letting implementation details bleed through to the user interface always comes back to haunt you[*1*]. In this case, the purpose of the option really just was to cut a few corners to run `git fsck` more quickly. The fact that the corner I cut here is to skip unpacking of the blobs just happens to be the implementation detail.
 
-    * text=auto eol
+So, Junio, what is it: keep `--quick` and clarify in the documentation that we cut corners (and which corners), or rename it to `--skip-blobs`? Your call.
 
-This did not differ in behavior from `* text=auto` from what I could
-see. It removed CR characters in the repository on check in.
+Ciao,
+Dscho
 
-    * text=auto -eol
-
-Same as before, the addition of `-eol` did not change the behavior at all.
-
-So yeah, I'm still horribly confused. None of these scenarios make any
-sense. The only time I ever set `eol` explicitly is to either do
-`eol=lf` or `eol=crlf`.
+Footnote *1*: You would not believe how often I had to apologize for renaming the `edit-patch-series` script to `interactive rebase`. You see, technically it is correct to call it an interactive rebase: it really is that, from a purely technical, soul-less point of view. From the users' point of view, however, the name `edit-patch-series` would relate exactly what the command is *about*, as opposed to *how* it works. To most users, calling it "rebase -i" is as understandable as "sympodial fasciculation and regrafting of disconnate vernates" (and don't ask me what that even means).
