@@ -1,85 +1,115 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: RE: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
-Date: Sun, 21 Jun 2015 16:40:35 +0200
+Subject: Git for Windows RFC: Code of Conduct
+Date: Sun, 21 Jun 2015 17:53:36 +0200
 Organization: gmx
-Message-ID: <a9e5e7c2580ed138d3fc9576799fe1df@www.dscho.org>
-References: <cover.1434657920.git.johannes.schindelin@gmx.de>
- <cover.1434720655.git.johannes.schindelin@gmx.de>
- <5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
- <xmqq1th77829.fsf@gitster.dls.corp.google.com>
- <95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
- <xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
- <558643CA.6000303@alum.mit.edu>
- <000201d0abe0$7f3ccf20$7db66d60$@nexbridge.com>
+Message-ID: <dbf4ae09e97a8075574fe599a2262f69@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: 'Michael Haggerty' <mhagger@alum.mit.edu>,
-	'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-	peff@peff.net
-To: "Randall S. Becker" <rsbecker@nexbridge.com>
-X-From: git-owner@vger.kernel.org Sun Jun 21 16:41:14 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
+ git-for-windows@googlegroups.com
+X-From: msysgit+bncBCZPH74Q5YNRBBF4TOWAKGQEQ3LW6LY@googlegroups.com Sun Jun 21 17:53:42 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBBF4TOWAKGQEQ3LW6LY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f59.google.com ([74.125.82.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6gQo-0000T3-9U
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 16:41:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754486AbbFUOlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 10:41:06 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59793 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752821AbbFUOlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 10:41:03 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MfVYB-1ZUY8c0c39-00P5NI; Sun, 21 Jun 2015 16:40:37
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBBF4TOWAKGQEQ3LW6LY@googlegroups.com>)
+	id 1Z6hYz-00084E-Vw
+	for gcvm-msysgit@m.gmane.org; Sun, 21 Jun 2015 17:53:42 +0200
+Received: by wggz12 with SMTP id z12sf41959260wgg.0
+        for <gcvm-msysgit@m.gmane.org>; Sun, 21 Jun 2015 08:53:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:date:from:to:subject:organization
+         :message-id:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=irrXQqcIBlIj5s8nZXEznhUZWThTCgjwcTcQp2WgSBE=;
+        b=RQpLqd8N5z/1i6z9+V2EYuXgLtSbdUDr1aLGlmsBjw8YZL55m9U++4dD3ht3yvq20F
+         W6pZl9ba4iVwL4ph2UvWSPsOrohYzUUAXyBJMti19AOA9ImFiYiOjWqRuHRpNtsI1epk
+         Da1Gxii3M4la3rFvU0crOlg4C+acov2Rpc3U/MInBpNePSt1PKRTcNtd//nt+Vzlj15v
+         Hij3gvzL9h8xzneRRb8g6p7iLQb5RyXQ0U6hrM6pNP9LFKn9OaXpYuVY1OkkNqO/Mwsa
+         PzdpYhUjjylV/F2HBdL2JTjjSxLaqh7hvJkXVoxwNTe0+yndjbgEmiMh0BNGDETAxAdQ
+         Yu+Q==
+X-Received: by 10.152.203.165 with SMTP id kr5mr92386lac.14.1434902021249;
+        Sun, 21 Jun 2015 08:53:41 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.42.232 with SMTP id r8ls56910lal.55.gmail; Sun, 21 Jun
+ 2015 08:53:39 -0700 (PDT)
+X-Received: by 10.112.84.104 with SMTP id x8mr24203038lby.23.1434902019972;
+        Sun, 21 Jun 2015 08:53:39 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id gt9si649328wib.2.2015.06.21.08.53.39
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 21 Jun 2015 08:53:39 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MFMIO-1ZIoWi3VWG-00EMBp; Sun, 21 Jun 2015 17:53:36
  +0200
-In-Reply-To: <000201d0abe0$7f3ccf20$7db66d60$@nexbridge.com>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:bzSI/kYc3F3SjgNnz4q6pNlpjbhuxY/5GXAKWVLSNLPV4a2xGYv
- ipFhRESlVkTU/6nENi0rpCO3jRPAnvTIIrS49hT3NgGdJvPx/J7HbjczIgEYH9PoWqe6/Rm
- faHKmimbXaT+VuE6ZrFlJpbTJCcSHSYAwQtsp0pLghpCPKPWKZbQapzg5x6FmaViICbbjXg
- 3/4lNV7acBPkUBIclEHtw==
-X-UI-Out-Filterresults: notjunk:1;
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272269>
+X-Provags-ID: V03:K0:pSu7YB4WfGnX1xr49CCmooRl0nBTsYO8HfDo/AhPXiDB6bOjzPb
+ zTZOK+TVTuB1XWUN9yVGpERwA8LGQOQjXxly+ZEuprmjn5vpUHYo2y3dMIDKFgLRFEMRXOC
+ J0qmFMkbGpBcXb/3yCt1DGkkgYgaFoqLjiiPoVsPDx857haVQ9QrIguwZkV7YGdWFOmeyuE
+ 5Xw9qy2czS5vpzEi357LA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Vg6RdPkDPIQ=:wr5hLbZK3cIrlGn6K4M/Sd
+ DbJAA1To75L/SIEUocnmwGeYUJ5w+xsK1u+CX0YboLiBiCgNQUUq34kSmJp99C8bu/4oqHaX1
+ vP7prRgJe/Cy+ddpsMAyl4t9yymClahr3Rb6haVZHLg/0pcBqhrm1Qn7KL8lQfIaPaJ5CJA21
+ /iuqlbUCwbkjanUMAXGoDNlCqOyBiduLH+v/WW/Uk/RvWPmLWxRnuG2M9mVNownlp/tj+uajk
+ TIvJyi0pR4MgWqYBE9IcZh7L3PMEDf5vOi72ubsbRbEZoehAIdBHrdRXec+5WR74J8ZxyvZNa
+ dkjH9FMK2j3oiGcDJJC5LiXaH2asfqHq8KkGFE/u2b6DequBJLc7Lh2mULkDs87ZoXnRJGH0p
+ FailPjVm61ykjWNs9904knDEu8kAi6IzkjWTo5lNsbl5p6+tBblksaYLkRnMsgHN1qcercGMQ
+ e4JBNUVDajdhYDTrNA6Dx//kn2Z3aqVPlv0in/K9ofDkG09TAws8eq+h2auRVJCWsrj1ClTPP
+ YVR2XNGZSj9LfBPDCJSAcYZbysyEGxi7NnbEnqOY3RMMQ5ueMxc+qc0x6DXUMgOPykOHF3bQh
+ 7Wn6qGTnP7zlhPt/DXvNjKSLQvcuw7rTjNLCoDRxdEi8FGT+w2hzrtTztsmtShYqvghPgkGeh
+ POQDEULVyAgaMrWALPy7oA9EZ0fePYkbaeZQi5IlCseYsOs4WLfUgW5/6MTpMR8d4WgM=
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272270>
 
-Hi Randall,
+Dear Git contributors & users,
 
-On 2015-06-21 07:09, Randall S. Becker wrote:
-> On June 21, 2015 12:56 AM, Michael Haggerty wrote:
->
->> As for thinking of a shorter name for the option: assuming the blob integrity
->> checks can be turned on and off independently as described above, then I think
->> it is reasonable to *also* add a `--quick` option defined as
->>
->> --quick: Skip some expensive checks, dramatically reducing the
->>     runtime of `git fsck`. Currently this is equivalent to
->>     `--no-check-blob-integrity`.
->>
->> In the future if we invent other expensive checks we might also add them to the
->> list of things that are skipped by `--quick`.
-> 
-> Synonym suggestions: --links or --relations
-> I was going to include --refs but that may be ambiguous. Links also has
-> meaning so it's probably out and --hitch may just be silly and needlessly
-> introducing a new term.
+in this time and age, it appears to be a good idea for Open Source Software projects to have a document describing their code of conduct. Git for Windows is no exception, so I opened a ticket:
 
-I appreciate your input, but I think in this case, "links" and "relations" would just add new terminology, and I would like to keep using existing terminology as much as possible (because we already have a confusingly large glossary). I also see "link" as a problematic term because it resembles "gitlink" -- which means something entirely different.
+    https://github.com/git-for-windows/git/issues/200
 
-My favorite is still `--quick` because in contrast to Junio, to me it *has* a connotation of "less thoroughly". "Get rich quick" just does not mean "Earn a lot of money by doing a thorough job, just faster than you usually would".
+In my opinion it is very important to have such a document, and equally important that it is not imposed by a BDFL or anybody else. Instead, it should document what the contributors and active users of the project can agree on.
 
-If Junio insists, I will of course rename it to `--skip-blobs` because that is really what we do. However, it has been my experience over and over again that letting implementation details bleed through to the user interface always comes back to haunt you[*1*]. In this case, the purpose of the option really just was to cut a few corners to run `git fsck` more quickly. The fact that the corner I cut here is to skip unpacking of the blobs just happens to be the implementation detail.
+Therefore I would like to encourage everybody involved in Git for Windows in one way or another to head over to that ticket and offer their constructive input there.
 
-So, Junio, what is it: keep `--quick` and clarify in the documentation that we cut corners (and which corners), or rename it to `--skip-blobs`? Your call.
+Thank you,
+Johannes
 
-Ciao,
-Dscho
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Footnote *1*: You would not believe how often I had to apologize for renaming the `edit-patch-series` script to `interactive rebase`. You see, technically it is correct to call it an interactive rebase: it really is that, from a purely technical, soul-less point of view. From the users' point of view, however, the name `edit-patch-series` would relate exactly what the command is *about*, as opposed to *how* it works. To most users, calling it "rebase -i" is as understandable as "sympodial fasciculation and regrafting of disconnate vernates" (and don't ask me what that even means).
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
