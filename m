@@ -1,63 +1,99 @@
-From: Richard Weinberger <richard@nod.at>
-Subject: Re: broken repo after power cut
-Date: Sun, 21 Jun 2015 16:08:15 +0200
-Message-ID: <5586C54F.1090705@nod.at>
-References: <5585C1B6.50407@nod.at> <330ab8f498e1b435d5b210384200b649@www.dscho.org> <5586B71D.2070407@nod.at> <20150621135903.GA18719@infradead.org>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: 'eol' documentation confusion
+Date: Sun, 21 Jun 2015 09:16:03 -0500
+Message-ID: <CAHd499Do_bpdOkL2TqdO+8L=pR53117pKR0GSwdgvFDwq_S4=w@mail.gmail.com>
+References: <CAHd499CapqvC3pHszgmX2VexdmqiW4+N23YfkAP5jjXWDrbe0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, David Gstir <david@sigma-star.at>,
-	linux-fsdevel <linux-fsdevel@vger.kernel.org>,
-	Theodore Ts'o <tytso@mit.edu>
-To: Christoph Hellwig <hch@infradead.org>
-X-From: linux-fsdevel-owner@vger.kernel.org Sun Jun 21 16:08:25 2015
-Return-path: <linux-fsdevel-owner@vger.kernel.org>
-Envelope-to: lnx-linux-fsdevel@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 21 16:16:13 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-fsdevel-owner@vger.kernel.org>)
-	id 1Z6fv5-0007VK-CP
-	for lnx-linux-fsdevel@plane.gmane.org; Sun, 21 Jun 2015 16:08:23 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z6g2d-0003Rs-0A
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 16:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754284AbbFUOIT (ORCPT <rfc822;lnx-linux-fsdevel@m.gmane.org>);
-	Sun, 21 Jun 2015 10:08:19 -0400
-Received: from a.ns.miles-group.at ([95.130.255.143]:65276 "EHLO radon.swed.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751655AbbFUOIT (ORCPT <rfc822;linux-fsdevel@vger.kernel.org>);
-	Sun, 21 Jun 2015 10:08:19 -0400
-Received: (qmail 4404 invoked by uid 89); 21 Jun 2015 14:08:17 -0000
-Received: by simscan 1.3.1 ppid: 4399, pid: 4402, t: 0.0487s
-         scanners: attach: 1.3.1
-Received: from unknown (HELO ?192.168.0.11?) (richard@nod.at@213.47.235.169)
-  by radon.swed.at with ESMTPA; 21 Jun 2015 14:08:17 -0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150621135903.GA18719@infradead.org>
-Sender: linux-fsdevel-owner@vger.kernel.org
+	id S1753400AbbFUOQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 10:16:07 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:33851 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755729AbbFUOQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 10:16:04 -0400
+Received: by igboe5 with SMTP id oe5so46410379igb.1
+        for <git@vger.kernel.org>; Sun, 21 Jun 2015 07:16:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-type;
+        bh=fAkY1TVRxv7HGHbyJFmL16oE6Ohv5eggE/KSXyBicBU=;
+        b=Wpf1VMFR8nUc2FNc6T/jbP8Qu/SbtgfNFD9loAE/aLZqFXefgFj5OkES4onw6jIKus
+         iEnItB0jaqjdF4+fbJ9acX9m4pmpJQ0gEQykmhQAZBOg25/PC2IzzTLybsqSD+1isJ13
+         B6fBBlHpU0WFPKye+wqwdW4gGh/VdnPr3XSDX22XB1gi2UltnPPyN9sS+gWFAvtNWToT
+         SJKsweHZO7zWxLyUmesTgm3f/0emcSEWAnZNtXfIhZZ0d4RjBAfOWuWNtrFJOOLEqW5X
+         +jeb+3kJ+lYE6AzItAJ16PENf9JWnZcjX5FALz6R+y+0QOEMIgAkemJXa3t4ro5F/4Yi
+         0iJg==
+X-Received: by 10.107.8.32 with SMTP id 32mr8114174ioi.15.1434896163626; Sun,
+ 21 Jun 2015 07:16:03 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.36.86.148 with HTTP; Sun, 21 Jun 2015 07:16:03 -0700 (PDT)
+In-Reply-To: <CAHd499CapqvC3pHszgmX2VexdmqiW4+N23YfkAP5jjXWDrbe0A@mail.gmail.com>
+X-Google-Sender-Auth: JBAsSuOZTkYAVoBohU2L6DYAqbM
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-fsdevel.vger.kernel.org>
-X-Mailing-List: linux-fsdevel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272267>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272268>
 
-Am 21.06.2015 um 15:59 schrieb Christoph Hellwig:
-> On Sun, Jun 21, 2015 at 03:07:41PM +0200, Richard Weinberger wrote:
->>>> To me it seems like git was creating a new object and got interrupted
->>>> before fsync/fdatasync'ing it.
->>>> As the object was referenced before syncing the data to disk the repo broke.
-> 
-> Git doesn't fsync by default, and because of that I've seen similar
-> data losses on ext4/xfs/btrfs.
-> 
-> You can set the core.fsyncobjectfiles to mitigate it, but even with
-> that I've seen corrupted index files.
+On Sun, Jun 21, 2015 at 9:04 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> Upon inspection of the gitattributes documentation page here:
+> https://git-scm.com/docs/gitattributes
+>
+> When comparing the documentation for 'text' with 'eol', I see the
+> following missing explanations for 'eol':
+>
+> * eol
+> * -eol
+>
+> Maybe the fact that these are missing means they are not valid to use.
+> There is also the issue that `text` usually controls EOL anyway. Is
+> there ever any reason to set eol in a way differently than explained
+> in the documentation (that is, `eol=lf` or `eol=crlf`)?
+>
+> For example, what if you want a file to be treated as text BUT you do
+> not want it to perform EOL normalization at all. Could you do this?
+>
+>     foo.txt text -eol
+>
+> Just at first glance, this to me would mean line endings on checkin
+> and checkout are not touched (CRLF could be checked in). Is this
+> possible?
+>
+> What about setting `eol` but not `text`?
+>
+> Honestly it seems like `eol` is just a supplementary setting for
+> `text` and was never intended to be used in ways that are
+> undocumented. Some explanation to help uncloud this would help, or
+> maybe I missed something in the documentation that explains this.
 
-Yeah, after inspecting git's source I've found that config option too.
-Now it's also crystal clear that git is not power cut safe at all by default. ;-\
+I did a few tests out of curiosity:
 
-So, anyone that cares about his repos has to enable core.fsyncobjectfiles,
-which is IMHO kind of sad.
+    * eol
 
-Thanks,
-//richard
---
-To unsubscribe from this list: send the line "unsubscribe linux-fsdevel" in
+This allowed CRLF to be committed in a file named `foo.txt` (I saw ^M
+in the diff, which I think means CR character, and treats this
+character as an error)
+
+    * text=auto eol
+
+This did not differ in behavior from `* text=auto` from what I could
+see. It removed CR characters in the repository on check in.
+
+    * text=auto -eol
+
+Same as before, the addition of `-eol` did not change the behavior at all.
+
+So yeah, I'm still horribly confused. None of these scenarios make any
+sense. The only time I ever set `eol` explicitly is to either do
+`eol=lf` or `eol=crlf`.
