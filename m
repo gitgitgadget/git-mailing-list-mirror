@@ -1,255 +1,150 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH] Add list-all-objects command
-Date: Sun, 21 Jun 2015 20:20:31 +0100
-Message-ID: <1434914431-7745-2-git-send-email-charles@hashpling.org>
-References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
- <1434914431-7745-1-git-send-email-charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 21 21:21:09 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Using clean/smudge filters with difftool
+Date: Sun, 21 Jun 2015 21:29:51 +0200
+Message-ID: <558710AF.9040009@drmicha.warpmail.net>
+References: <5582BA1F.1030409@drmicha.warpmail.net>	<CAGA3++LrVSs3rMkg=S2Og48pz1yEBxwpcRsPt7sNLENRh1ooAg@mail.gmail.com>	<20150618132622.GJ18226@serenity.lan>	<CAGA3+++_mx=O=Un0pip8Q41X5PZBLmES=Hd=U=aSowryx5r=8w@mail.gmail.com>	<20150618141116.GK18226@serenity.lan>	<CAGA3+++ibw=8Q1LtM6yJrZ7Q4eVs_MEHmPAzctSVSREXMmBiMQ@mail.gmail.com>	<20150618142852.GL18226@serenity.lan>	<CAGA3+++LqZ8Qv6tpuoqQwi37kO5LLODwcbFQtvneorjiV4KARw@mail.gmail.com>	<20150618160133.GO18226@serenity.lan>	<xmqqsi9oeqhn.fsf@gitster.dls.corp.google.com>	<20150618223927.GP18226@serenity.lan>	<xmqqr3p8bp8l.fsf@gitster.dls.corp.google.com>	<5583D993.4090305@drmicha.warpmail.net> <xmqqsi9naavw.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: John Keeping <john@keeping.me.uk>,
+	Florian Aspart <florian.aspart@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 21 21:30:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6kni-0007ii-OZ
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 21:21:07 +0200
+	id 1Z6kwL-000420-9c
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 21:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbbFUTUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 15:20:54 -0400
-Received: from host02.zombieandprude.com ([80.82.119.138]:43180 "EHLO
-	host02.zombieandprude.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751365AbbFUTUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 15:20:41 -0400
-Received: from hashpling.plus.com ([212.159.69.125]:53913)
-	by host02.zombieandprude.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
-	(Exim 4.80)
-	(envelope-from <charles@hashpling.org>)
-	id 1Z6knI-0003Vs-28; Sun, 21 Jun 2015 20:20:40 +0100
-X-Mailer: git-send-email 2.4.0.53.g8440f74
-In-Reply-To: <1434914431-7745-1-git-send-email-charles@hashpling.org>
+	id S1752474AbbFUT3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 15:29:55 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:57022 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751776AbbFUT3y (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Jun 2015 15:29:54 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1308A20963
+	for <git@vger.kernel.org>; Sun, 21 Jun 2015 15:29:54 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Sun, 21 Jun 2015 15:29:54 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=1zzVc3AuDhp5ELy66xa69yt9Bwg=; b=h4TXzV
+	1wBxn+WVn+GewCHrNvYwT6u7RFrVMGCu0uivowsHW1BhBfNQ7huEkKNlSMF0iB8C
+	qfC47u9jtDrc+N211R4zYnP9GVP8Chmj1iK97xB1ETcFj4UchgkC5L3hP5L7NyNZ
+	WDaoCCEFpEaWjoyJ1cEeo8/+rukMPDtO8tGkw=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=1zzVc3AuDhp5ELy
+	66xa69yt9Bwg=; b=JYcItKt/sjEqh/mwyqFKrsitGr/7BN1IQnxDnAKSj0EAXQP
+	wHPwVBu3HZ9baeGrIJhBasZYd8yTd4ZSKya+BpDHmXRtiEgCAt4SeA+u7B966QZT
+	hGH/1MgD0/50JtCPJxzJfMcFBceNPIl959+KUnEWU2s3tKKF/0YaoswFhKzI=
+X-Sasl-enc: UpcUxZ+k3Rwna4KS3n/cYSqfktUxe7LwrezyYARBlSG9 1434914993
+Received: from localhost.localdomain (unknown [92.76.170.248])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 80B646801A3;
+	Sun, 21 Jun 2015 15:29:52 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <xmqqsi9naavw.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272283>
 
-From: Charles Bailey <cbailey32@bloomberg.net>
+Junio C Hamano venit, vidit, dixit 19.06.2015 19:03:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Now, since external diff runs on smudged blobs, it appears as if we
+>> mixed cleaned and smudged blobs when feeding external diffs; whereas
+>> really, we mix "worktree blobs" and "smudged repo blobs", which is okay
+>> as per our definition of clean/smudge: the difference is irrelevant by
+>> definition.
+> 
+> It does not appear to "mix cleaned and smudged" to me (even though
+> before Dscho's commit that John pointed out, we did mix by mistake)
+> to me,
 
-list-all-objects is a command to print the ids of all objects in the
-object database of a repository. It is designed as a low overhead
-interface for scripts that want to analyse all objects but don't require
-the ordering implied by a revision walk.
+... neither to me. I appears as if you missed the past subjunctive ;)
 
-It will list all objects, loose and packed, and will include unreachable
-objects.
+> but you arrived at the correct conclusion in the rest of your
+> sentence.
 
-list-all-objects is faster that "rev-list --all --objects" but there is
-no guarantee as to the order in which objects will be listed.
+> We treat "worktree files" and "smudged repo blobs" as "comparable"
+> because by definition the latter is what you get if you did a
+> "checkout" of the blob.  Indeed, when we know a worktree file is an
+> unmodified checkout from a blob and we want to have a read-only
+> temporary file for a "smudged repo blob", we allow that worktree
+> file to be used as such.
+> 
+> So in that sense, the commit by Dscho that John pointed out earlier
+> was not something that changed the semantics; it merely made things
+> consistent (before that commit, we used to use clean version if we
+> do not have a usable worktree file).
+> 
+> It is a separate question which of clean or smudged an external diff
+> tool should be given to work on.
+> 
+>> I still think that feeding cleaned blobs to external diff would be less
+>> surprising (and should be the default, but maybe can't be changed any
+>> more) and feeding smudged blobs should be the special case requiring a
+>> special config.
+> 
+> Go back six years and make a review comment before 4e218f54 (Smudge
+> the files fed to external diff and textconv, 2009-03-21) was taken
+> ;-).  The argument against that commit may have gone like this:
+> 
+>  * The current (that is, current as of 4e218f54^) code is
+>    inconsistent, and your patch has a side effect of making it
+>    consistent by always feeding smudged version.
+> 
+>  * We however could make it consistent by always feeding clean
+>    version (i.e. disable borrow-from-working-tree codepath when
+>    driving external diff).  And that gives us cleaner semantics; the
+>    internal diff and external diff will both work on clean, not
+>    smudged data.
+> 
+>  * Of course, going the "clean" way would not help your cause of
+>    allowing external diff to work on smudged version, so you would
+>    need a separate patch on top of that "consistently feed 'clean'
+>    version" fix to optionally allow "consistently feed 'smudge'
+>    version" mode to help msysGit issue 177.
+> 
+> And I would have bought such an argument with 97% chance [*1*].
+> 
+> I do not think 6 years have changed things very much with respect to
+> the above three-bullet point argument, except that it would be too
+> late to set the default to 'clean' all of a sudden.  So a plausible
+> way forward would be to
+> 
+>  * introduce an option to feed 'clean' versions to external diff
+>    drivers, perhaps with --ext-diff-clean=<driver> command line
+>    option and GIT_EXTERNAL_DIFF_CLEAN environment variable, both of
+>    which take precedence over existing --ext-diff/GIT_EXTERNAL_DIFF
+> 
+>  * optionally add a configuration variable diff.feedCleanToExternal
+>    that makes --ext-diff/GIT_EXTERNAL_DIFF behave as if their
+>    'clean' siblings were given.  Default it to false.
+> 
+> My gut feeling is that textconv should need a similar treatment for
+> consistency (after all, it goes through the same prepare_temp_file()
+> infrastructure).
+> 
+> 
+> [Footnote]
+> 
+> *1* The 3% reservation is that I am not entirely convinced that
+> "both internal and external get to work on the same 'clean'
+> representation gives us cleaner semantics" is always true.
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
----
- Documentation/git-list-all-objects.txt | 29 +++++++++++++++
- Makefile                               |  1 +
- builtin.h                              |  1 +
- builtin/list-all-objects.c             | 64 ++++++++++++++++++++++++++++++++++
- git.c                                  |  1 +
- t/t8100-list-all-objects.sh            | 45 ++++++++++++++++++++++++
- 6 files changed, 141 insertions(+)
- create mode 100644 Documentation/git-list-all-objects.txt
- create mode 100644 builtin/list-all-objects.c
- create mode 100755 t/t8100-list-all-objects.sh
+With consistency stepping back behind compatibility, I don't expect any
+defaults to change.
 
-diff --git a/Documentation/git-list-all-objects.txt b/Documentation/git-list-all-objects.txt
-new file mode 100644
-index 0000000..5f28d41
---- /dev/null
-+++ b/Documentation/git-list-all-objects.txt
-@@ -0,0 +1,29 @@
-+git-list-all-objects(1)
-+=======================
-+
-+NAME
-+----
-+git-list-all-objects - List all objects in the repository.
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git list-all-objects' [-v|--verbose]
-+
-+DESCRIPTION
-+-----------
-+List the ids of all objects in a repository, including any unreachable objects.
-+If `--verbose` is specified then the object's type and size is printed out as
-+well as its id.
-+
-+OPTIONS
-+-------
-+
-+-v::
-+--verbose::
-+	Output in the followin format instead of just printing object ids:
-+	<sha1> SP <type> SP <size>
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 149f1c7..cf4f0c3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -853,6 +853,7 @@ BUILTIN_OBJS += builtin/help.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
- BUILTIN_OBJS += builtin/interpret-trailers.o
-+BUILTIN_OBJS += builtin/list-all-objects.o
- BUILTIN_OBJS += builtin/log.o
- BUILTIN_OBJS += builtin/ls-files.o
- BUILTIN_OBJS += builtin/ls-remote.o
-diff --git a/builtin.h b/builtin.h
-index b87df70..112bafb 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -74,6 +74,7 @@ extern int cmd_help(int argc, const char **argv, const char *prefix);
- extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_init_db(int argc, const char **argv, const char *prefix);
- extern int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
-+extern int cmd_list_all_objects(int argc, const char **argv, const char *prefix);
- extern int cmd_log(int argc, const char **argv, const char *prefix);
- extern int cmd_log_reflog(int argc, const char **argv, const char *prefix);
- extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/list-all-objects.c b/builtin/list-all-objects.c
-new file mode 100644
-index 0000000..3b43b02
---- /dev/null
-+++ b/builtin/list-all-objects.c
-@@ -0,0 +1,64 @@
-+#include "cache.h"
-+#include "builtin.h"
-+#include "revision.h"
-+#include "parse-options.h"
-+
-+#include <stdio.h>
-+
-+static int verbose;
-+
-+static int print_object(const unsigned char *sha1)
-+{
-+	if (verbose) {
-+		unsigned long size;
-+		int type = sha1_object_info(sha1, &size);
-+
-+		if (type < 0)
-+			return -1;
-+
-+		printf("%s %s %lu\n", sha1_to_hex(sha1), typename(type), size);
-+	}
-+	else
-+		printf("%s\n", sha1_to_hex(sha1));
-+
-+	return 0;
-+}
-+
-+static int check_loose_object(const unsigned char *sha1,
-+			      const char *path,
-+			      void *data)
-+{
-+	return print_object(sha1);
-+}
-+
-+static int check_packed_object(const unsigned char *sha1,
-+			       struct packed_git *pack,
-+			       uint32_t pos,
-+			       void *data)
-+{
-+	return print_object(sha1);
-+}
-+
-+static struct option builtin_filter_objects_options[] = {
-+	OPT__VERBOSE(&verbose, "show object type and size"),
-+	OPT_END()
-+};
-+
-+int cmd_list_all_objects(int argc, const char **argv, const char *prefix)
-+{
-+	struct packed_git *p;
-+
-+	argc = parse_options(argc, argv, prefix, builtin_filter_objects_options,
-+			     NULL, 0);
-+
-+	for_each_loose_object(check_loose_object, NULL, 0);
-+
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next) {
-+		open_pack_index(p);
-+	}
-+
-+	for_each_packed_object(check_packed_object, NULL, 0);
-+
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index 44374b1..81e8ae4 100644
---- a/git.c
-+++ b/git.c
-@@ -417,6 +417,7 @@ static struct cmd_struct commands[] = {
- 	{ "init", cmd_init_db, NO_SETUP },
- 	{ "init-db", cmd_init_db, NO_SETUP },
- 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
-+	{ "list-all-objects", cmd_list_all_objects, RUN_SETUP },
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
- 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
-diff --git a/t/t8100-list-all-objects.sh b/t/t8100-list-all-objects.sh
-new file mode 100755
-index 0000000..a7b51ce
---- /dev/null
-+++ b/t/t8100-list-all-objects.sh
-@@ -0,0 +1,45 @@
-+#!/bin/sh
-+
-+test_description='git list-all-objects'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo hello, world >file &&
-+	git add file &&
-+	git commit -m "initial"
-+'
-+
-+test_basic_repo_objects () {
-+	git cat-file --batch-check="%(objectname)" <<-EOF >expected.unsorted &&
-+		HEAD
-+		HEAD:file
-+		HEAD^{tree}
-+	EOF
-+	git list-all-objects >all-objects.unsorted &&
-+	sort expected.unsorted >expected &&
-+	sort all-objects.unsorted >all-objects &&
-+	test_cmp all-objects expected
-+}
-+
-+test_expect_success 'list all objects' '
-+	test_basic_repo_objects
-+'
-+test_expect_success 'list all objects after pack' '
-+	git repack -Ad &&
-+	test_basic_repo_objects
-+'
-+
-+test_expect_success 'verbose output' '
-+	git cat-file --batch-check="%(objectname) %(objecttype) %(objectsize)" \
-+			<<-EOF >expected.unsorted &&
-+		HEAD
-+		HEAD:file
-+		HEAD^{tree}
-+	EOF
-+	git list-all-objects -v >all-objects.unsorted &&
-+	sort expected.unsorted >expected &&
-+	sort all-objects.unsorted >all-objects &&
-+	test_cmp all-objects expected
-+'
-+
-+test_done
--- 
-2.4.0.53.g8440f74
+But a knob to change defaults would be nice, yes, and in that case for
+external diff as well as textconv. A config variable should suffice
+given that we have "git -c" these days.
+
+Michael
