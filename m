@@ -1,70 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 04/19] fsck: Offer a function to demote fsck errors to warnings
-Date: Sun, 21 Jun 2015 11:47:32 -0700
-Message-ID: <xmqq616gkiez.fsf@gitster.dls.corp.google.com>
-References: <cover.1434657920.git.johannes.schindelin@gmx.de>
-	<cover.1434720655.git.johannes.schindelin@gmx.de>
-	<44acafb2cf0a98e5ad75e3da24ba0e7453e6118f.1434720655.git.johannes.schindelin@gmx.de>
-	<xmqqzj3v7b58.fsf@gitster.dls.corp.google.com>
-	<bc06c48f005ad1c32dea2edbfa466208@www.dscho.org>
-	<xmqqegl5j75m.fsf@gitster.dls.corp.google.com>
-	<8545f1b636f157b280f15c615c1e1756@www.dscho.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 21 20:47:42 2015
+From: Charles Bailey <charles@hashpling.org>
+Subject: Fast enumeration of objects
+Date: Sun, 21 Jun 2015 20:20:30 +0100
+Message-ID: <1434914431-7745-1-git-send-email-charles@hashpling.org>
+References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 21 21:21:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6kHO-0005O1-0r
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 20:47:42 +0200
+	id 1Z6kni-0007ii-5j
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 21:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753595AbbFUSri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 14:47:38 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:37235 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752386AbbFUSrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 14:47:36 -0400
-Received: by igblr2 with SMTP id lr2so40982565igb.0
-        for <git@vger.kernel.org>; Sun, 21 Jun 2015 11:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=bzW2t1GCdObFnW0/uwGR3Uo5TF+jtTa7icICNF5Zrlg=;
-        b=sBSSBpcOb1YLzxiwIBpC3eiYCCpdBTsjtfP2Pr1ulHddMd3Z7KLgdAL/BrVTjItaiq
-         oBe1etv/yblEn8e5muaXFsGAjnlniAYzMIV0N7P+e/oVTOop515/lV+Z/0/hfCiIyZVE
-         hImeiVVIrqa6XqBbeChNsa13dVhbL3xxTgwJv9KKrkWiA1EzRhCx7tlOn73ydRBgipQK
-         2riE6ifERHiiBVkudfPNiGPRb0+yCph1SF3o06wqMt8LUlaBHCysPD5HaAMH74wgG6L4
-         reobmPOUuxNcwS0O2bj0ASQdTo/fG4UsCjeeAxZ2E1BBRPZpESaw9TE1RMPBmSMWrm7U
-         SGqw==
-X-Received: by 10.107.137.228 with SMTP id t97mr22423717ioi.16.1434912455689;
-        Sun, 21 Jun 2015 11:47:35 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:990b:778:aa29:b388])
-        by mx.google.com with ESMTPSA id p8sm6116575iga.13.2015.06.21.11.47.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 21 Jun 2015 11:47:33 -0700 (PDT)
-In-Reply-To: <8545f1b636f157b280f15c615c1e1756@www.dscho.org> (Johannes
-	Schindelin's message of "Sun, 21 Jun 2015 20:23:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751232AbbFUTUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 15:20:53 -0400
+Received: from host02.zombieandprude.com ([80.82.119.138]:43178 "EHLO
+	host02.zombieandprude.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751186AbbFUTUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 15:20:41 -0400
+Received: from hashpling.plus.com ([212.159.69.125]:53913)
+	by host02.zombieandprude.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
+	(Exim 4.80)
+	(envelope-from <charles@hashpling.org>)
+	id 1Z6knH-0003Vs-RS; Sun, 21 Jun 2015 20:20:39 +0100
+X-Mailer: git-send-email 2.4.0.53.g8440f74
+In-Reply-To: <1434705059-2793-1-git-send-email-charles@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272281>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+This is a re-casting of my previous filter-objects command but without
+any of the filtering so it is now just "list-all-objects".
 
-> How about I implement your suggestion tomorrow, then show the diff
-> between the two versions and we can assess what looks to be simpler
-> (i.e. more maintainable)?
+I have retained the "--verbose" option which outputs the same format as
+the default "cat-file --batch-check" as it provides a useful performance
+gain to filtering though "cat-file" if this basic information is all
+that is needed.
 
-I'm indifferent at this point, partly because as we agree that what
-you have as long as it works is ok, and more importantly, Michael's
-suggestion to turn "check unconditionally and only control if we
-ignore or warn or error out the result" into "do not even check if
-we are told to ignore" is a much more prouctive thing to spend your
-time on.
+The motivating use case is to enable a script to quickly scan a large
+number of repositories for any large objects.
+
+I performed some test timings of some different commands on a clone of
+the Linux kernel which was completely packed.
+
+	$ time git rev-list --all --objects |
+		cut -d" " -f1 |
+		git cat-file --batch-check |
+		awk '{if ($3 >= 512000) { print $1 }}' |
+		wc -l
+	958
+
+	real    0m30.823s
+	user    0m41.904s
+	sys     0m7.728s
+
+list-all-objects gives a significant improvement:
+
+	$ time git list-all-objects |
+		git cat-file --batch-check |
+		awk '{if ($3 >= 512000) { print $1 }}' |
+		wc -l
+	958
+
+	real    0m9.585s
+	user    0m10.820s
+	sys     0m4.960s
+
+skipping the cat-filter filter is a lesser but still significant
+improvement:
+
+	$ time git list-all-objects -v |
+		awk '{if ($3 >= 512000) { print $1 }}' |
+		wc -l
+	958
+
+	real    0m5.637s
+	user    0m6.652s
+	sys     0m0.156s
+
+The old filter-objects could do the size filter a little be faster, but
+not by much:
+
+	$ time git filter-objects --min-size=500k |
+		wc -l
+	958
+
+	real    0m4.564s
+	user    0m4.496s
+	sys     0m0.064s
