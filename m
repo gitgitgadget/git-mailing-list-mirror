@@ -1,113 +1,87 @@
-From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 07/10] send-email: reduce dependancies impact on
- parse_address_line
-Date: Sun, 21 Jun 2015 12:07:36 +0200 (CEST)
-Message-ID: <1692637261.3463890.1434881256090.JavaMail.zimbra@imag.fr>
-References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434842273-30945-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434842273-30945-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
+Date: Sun, 21 Jun 2015 14:01:16 +0200
+Organization: gmx
+Message-ID: <0fe9bc944a232d40fa94b659bbdf5c97@www.dscho.org>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+ <cover.1434720655.git.johannes.schindelin@gmx.de>
+ <5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
+ <xmqq1th77829.fsf@gitster.dls.corp.google.com>
+ <95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
+ <xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
+ <558643CA.6000303@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jun 21 12:07:49 2015
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	peff@peff.net
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jun 21 14:01:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6cAH-0001Sf-FO
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 12:07:49 +0200
+	id 1Z6dwV-0004wf-9l
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 14:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753431AbbFUKHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 06:07:45 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48695 "EHLO rominette.imag.fr"
+	id S1751405AbbFUMBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 08:01:37 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52777 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752285AbbFUKHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 06:07:43 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5LA7ZES024020
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 21 Jun 2015 12:07:35 +0200
-Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5LA7bdk022048;
-	Sun, 21 Jun 2015 12:07:37 +0200
-In-Reply-To: <1434842273-30945-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-X-Originating-IP: [129.88.6.115]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF31 (Linux)/8.0.6_GA_5922)
-Thread-Topic: send-email: reduce dependancies impact on parse_address_line
-Thread-Index: +M3vEpJoD3pi1fRp2/fC1zqK+r+ZxQ==
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 21 Jun 2015 12:07:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5LA7ZES024020
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1435486060.24685@dmIW3U6QfX/hyg305tpl8Q
+	id S1751246AbbFUMBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 08:01:36 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MDm4o-1ZKNSS1TJu-00H7ut; Sun, 21 Jun 2015 14:01:18
+ +0200
+In-Reply-To: <558643CA.6000303@alum.mit.edu>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:YtXTk23BEEL05QUmN7WjTE95E65pa4R447cDxyGnCn02+jovqwo
+ YWN7rgbe8Jihrs13xNWiFsrgj+gOaL1UeawGNY5Vyy7wjycYF9EALEBg64oH0gbFwjOIJVJ
+ W3xy0SczP93VSvjtXeP0zKA2K2nEko/NFCbBYbOOs+acgt1Lr/tYaIcWT6NUiCOEd0oDrIM
+ MBk/ao1Bey0zAO3QvBDgg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272254>
 
-This is the last message I received in the series, and it's labeled 07/10. Is that normal?
+Hi Michael,
 
-> parse_address_line had not the same behavior whether the user had
+On 2015-06-21 06:55, Michael Haggerty wrote:
+> On 06/19/2015 10:53 PM, Junio C Hamano wrote:
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>>
+>>> Can you think of a name for the option that is as short as `--quick`
+>>> but means the same as `--connectivity-only`?
+>>
+>> No I can't.  I think `--connectivity-only` is a very good name that
+>> is unfortunately a mouthful, I agree that we need a name that is as
+>> short as `--xxxxx` that means the same as `--connectivity-only`.  I
+>> do not think `--quick` is that word; it does not mean such a thing.
+> 
+> `--connectivity-only` says that "of all the things that fsck can do,
+> skip everything except for the connectivity check". But the switch
+> really affects not the connectivity part of the checks (that part is
+> done in either case), but the blob part.
 
-had not -> did not have
+Right, so `--skip-blobs` would be a better name, I guess, if you follow Junio's reasoning.
 
-> I've added the function in Git.pm as suggested. I've also added a test
-> named t9000-addresses.sh (I've read the README to name tests but I'm
-> not sure about the name of this test). I made a separated test
-> (t9000-addresses.sh) because I think it's better not to pollute
-> t9001-send-email with this.
+But...
 
-Sounds good to me.
+> [...]
+> As for thinking of a shorter name for the option: assuming the blob
+> integrity checks can be turned on and off independently as described
+> above, then I think it is reasonable to *also* add a `--quick` option
+> defined as
+> 
+> --quick: Skip some expensive checks, dramatically reducing the
+>     runtime of `git fsck`. Currently this is equivalent to
+>     `--no-check-blob-integrity`.
 
-> About the test itself, file t/t9000-addresses.sh is just a copy/paste
-> of t/t0202-gettext-perl.sh. For the perl part, the TODO tests are
-> verbose: they print out commands whereas test_expect_success doesn't.
+This was my idea, without bothering to introduce the `--no-check-blob-integrity`. I was really thinking along the lines: If you just want to check quickly whether your repository is in good shape, without wanting to check too deeply, then `--quick` is your friend. I just *happened* to think of skipping blobs as a way to trade off accuracy for speed, but really, the reason why I introduced `--quick` was to have a way to check much faster if somewhat less thoroughly.
 
-It seems it's how Test::More works. I'd keep it like this, but I have no real experience with Test::More.
-
-> We can redirect todo_output to a variable but I've not found better...
-> (Maybe someone has the solution here ?). Also there's no summary at
-> the end of the test (as with other perl tests).
-
-You can get the 1..44 at the end with
-
-printf "1..%d\n", Test::More->builder->current_test;
-
-This is what t9700/test.pl does.
-
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 9026a7b..97633e9 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -1584,6 +1584,73 @@ sub DESTROY {
->  	$self->_close_cat_blob();
->  }
->  
-> +=item parse_mailboxes
-> +
-> +Returns an array of mailboxes extracted from a string.
-
-Imperative tone => Return, not Returns.
-
-I would have put parse_mailbox near ident_person because both functions are somehow about email.
-
-> +BEGIN { use_ok('Git') }
-> +BEGIN { use_ok('Mail::Address') }
-
-This will fail if Mail::Address is not available. It would be better to declare Mail::Address as a prerequisite in t9000-address.sh (like what you're already doing for Test::More).
-
-Good job, modulo these minor details, the series looks good to me.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ciao,
+Dscho
