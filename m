@@ -1,115 +1,138 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Git for Windows RFC: Code of Conduct
-Date: Sun, 21 Jun 2015 17:53:36 +0200
-Organization: gmx
-Message-ID: <dbf4ae09e97a8075574fe599a2262f69@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
+Date: Sun, 21 Jun 2015 10:15:18 -0700
+Message-ID: <xmqqioahj849.fsf@gitster.dls.corp.google.com>
+References: <cover.1434657920.git.johannes.schindelin@gmx.de>
+	<cover.1434720655.git.johannes.schindelin@gmx.de>
+	<5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
+	<xmqq1th77829.fsf@gitster.dls.corp.google.com>
+	<95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
+	<xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
+	<558643CA.6000303@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
- git-for-windows@googlegroups.com
-X-From: msysgit+bncBCZPH74Q5YNRBBF4TOWAKGQEQ3LW6LY@googlegroups.com Sun Jun 21 17:53:42 2015
-Return-path: <msysgit+bncBCZPH74Q5YNRBBF4TOWAKGQEQ3LW6LY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f59.google.com ([74.125.82.59])
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, peff@peff.net
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jun 21 19:15:28 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBBF4TOWAKGQEQ3LW6LY@googlegroups.com>)
-	id 1Z6hYz-00084E-Vw
-	for gcvm-msysgit@m.gmane.org; Sun, 21 Jun 2015 17:53:42 +0200
-Received: by wggz12 with SMTP id z12sf41959260wgg.0
-        for <gcvm-msysgit@m.gmane.org>; Sun, 21 Jun 2015 08:53:41 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z6iq7-00045b-En
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 19:15:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751925AbbFURPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 13:15:22 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:37243 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810AbbFURPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 13:15:22 -0400
+Received: by igblr2 with SMTP id lr2so40328029igb.0
+        for <git@vger.kernel.org>; Sun, 21 Jun 2015 10:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:content-type:date:from:to:subject:organization
-         :message-id:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=irrXQqcIBlIj5s8nZXEznhUZWThTCgjwcTcQp2WgSBE=;
-        b=RQpLqd8N5z/1i6z9+V2EYuXgLtSbdUDr1aLGlmsBjw8YZL55m9U++4dD3ht3yvq20F
-         W6pZl9ba4iVwL4ph2UvWSPsOrohYzUUAXyBJMti19AOA9ImFiYiOjWqRuHRpNtsI1epk
-         Da1Gxii3M4la3rFvU0crOlg4C+acov2Rpc3U/MInBpNePSt1PKRTcNtd//nt+Vzlj15v
-         Hij3gvzL9h8xzneRRb8g6p7iLQb5RyXQ0U6hrM6pNP9LFKn9OaXpYuVY1OkkNqO/Mwsa
-         PzdpYhUjjylV/F2HBdL2JTjjSxLaqh7hvJkXVoxwNTe0+yndjbgEmiMh0BNGDETAxAdQ
-         Yu+Q==
-X-Received: by 10.152.203.165 with SMTP id kr5mr92386lac.14.1434902021249;
-        Sun, 21 Jun 2015 08:53:41 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.42.232 with SMTP id r8ls56910lal.55.gmail; Sun, 21 Jun
- 2015 08:53:39 -0700 (PDT)
-X-Received: by 10.112.84.104 with SMTP id x8mr24203038lby.23.1434902019972;
-        Sun, 21 Jun 2015 08:53:39 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
-        by gmr-mx.google.com with ESMTPS id gt9si649328wib.2.2015.06.21.08.53.39
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Jun 2015 08:53:39 -0700 (PDT)
-Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MFMIO-1ZIoWi3VWG-00EMBp; Sun, 21 Jun 2015 17:53:36
- +0200
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:pSu7YB4WfGnX1xr49CCmooRl0nBTsYO8HfDo/AhPXiDB6bOjzPb
- zTZOK+TVTuB1XWUN9yVGpERwA8LGQOQjXxly+ZEuprmjn5vpUHYo2y3dMIDKFgLRFEMRXOC
- J0qmFMkbGpBcXb/3yCt1DGkkgYgaFoqLjiiPoVsPDx857haVQ9QrIguwZkV7YGdWFOmeyuE
- 5Xw9qy2czS5vpzEi357LA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Vg6RdPkDPIQ=:wr5hLbZK3cIrlGn6K4M/Sd
- DbJAA1To75L/SIEUocnmwGeYUJ5w+xsK1u+CX0YboLiBiCgNQUUq34kSmJp99C8bu/4oqHaX1
- vP7prRgJe/Cy+ddpsMAyl4t9yymClahr3Rb6haVZHLg/0pcBqhrm1Qn7KL8lQfIaPaJ5CJA21
- /iuqlbUCwbkjanUMAXGoDNlCqOyBiduLH+v/WW/Uk/RvWPmLWxRnuG2M9mVNownlp/tj+uajk
- TIvJyi0pR4MgWqYBE9IcZh7L3PMEDf5vOi72ubsbRbEZoehAIdBHrdRXec+5WR74J8ZxyvZNa
- dkjH9FMK2j3oiGcDJJC5LiXaH2asfqHq8KkGFE/u2b6DequBJLc7Lh2mULkDs87ZoXnRJGH0p
- FailPjVm61ykjWNs9904knDEu8kAi6IzkjWTo5lNsbl5p6+tBblksaYLkRnMsgHN1qcercGMQ
- e4JBNUVDajdhYDTrNA6Dx//kn2Z3aqVPlv0in/K9ofDkG09TAws8eq+h2auRVJCWsrj1ClTPP
- YVR2XNGZSj9LfBPDCJSAcYZbysyEGxi7NnbEnqOY3RMMQ5ueMxc+qc0x6DXUMgOPykOHF3bQh
- 7Wn6qGTnP7zlhPt/DXvNjKSLQvcuw7rTjNLCoDRxdEi8FGT+w2hzrtTztsmtShYqvghPgkGeh
- POQDEULVyAgaMrWALPy7oA9EZ0fePYkbaeZQi5IlCseYsOs4WLfUgW5/6MTpMR8d4WgM=
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as
- permitted sender) smtp.mail=johannes.schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272270>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=7gPn8QYFkJB22H7dTG8hrsn554Bgn3OC4Tz6zgWsapU=;
+        b=q03bw+pcFAtxDluMD7NygGZM3tsx3aM9SPsjwx93fhOdvCRkcwy1ZiTSQQFvMd30d4
+         HfRNaO/8vVkGHkPv3tHYjVraTPOh2tMCarJ++DJ67wQQm0Ck8yIi0Q/5i0yEOqzmgOWt
+         vT0KL3VOfaQSg3b+udg/815LiX6vVPDWO8GeIqLvIWFJP5/0A10IyRK7X27AXFkMpwVQ
+         55wON3eSA9E9QDjKqnAMbD8l+YTWg3FdimE78OFmwqU2rV73BgNyjzR/1z/xoN3qXd9Z
+         jhDigJ3YAP6H10CDA1VQM8pkw0ivJ3/G9AliNvrwRN2lidoAfBVzQX9LC8ARbznxlXmr
+         1m9w==
+X-Received: by 10.107.168.72 with SMTP id r69mr22359878ioe.4.1434906921463;
+        Sun, 21 Jun 2015 10:15:21 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:990b:778:aa29:b388])
+        by mx.google.com with ESMTPSA id s28sm9908656ioi.31.2015.06.21.10.15.19
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 21 Jun 2015 10:15:19 -0700 (PDT)
+In-Reply-To: <558643CA.6000303@alum.mit.edu> (Michael Haggerty's message of
+	"Sun, 21 Jun 2015 06:55:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272271>
 
-Dear Git contributors & users,
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-in this time and age, it appears to be a good idea for Open Source Software projects to have a document describing their code of conduct. Git for Windows is no exception, so I opened a ticket:
+> But now that I'm writing this, a silly question occurs to me: Do we need
+> an overall option like this at all? If I demote all blob-integrity
+> checks to "ignore" via the mechanism that you have added, then shouldn't
+> fsck automatically detect that it doesn't have to open the blobs at all
+> and enable this speedup automatically?
 
-    https://github.com/git-for-windows/git/issues/200
+That's brilliant.
 
-In my opinion it is very important to have such a document, and equally important that it is not imposed by a BDFL or anybody else. Instead, it should document what the contributors and active users of the project can agree on.
+Just to make sure I am reading you correctly, you mean the current
+overall structure:
 
-Therefore I would like to encourage everybody involved in Git for Windows in one way or another to head over to that ticket and offer their constructive input there.
+	if (! "is the blob loadable and well-formed?") {
+		report("BAD BLOB");
+                ... which is equivalent to ...
+                if ("is bad_blob ignored?")
+			; /* no-op */
+		else {
+			output "BAD BLOB";
+                        if ("is bad_blob an error?")
+				return 1; /* error */
+		}
+	}
+        ... other checks ...
 
-Thank you,
-Johannes
+can be turned into this structure:
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+        if ("is bad_blob ignored?")
+		;
+	else if (! "is the blob loadable and well-formed?") {
+		report("BAD BLOB");
+                ... which would be equivalent to ...
+		output "BAD BLOB";
+                if ("is bad_blob an error?")
+			return 1; /* error */
+	}
+        ... other checks ...
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+I think that makes tons of sense.  With one minor caveat.  In the
+above "rewrite" I deliberately described report() in the updated
+flow to always output, but that would force all checkers to adopt
+"do not unconditionally check; if we do not report, do not even
+bother checking", which (1) would be a large change to what Dscho
+currently have, and (2) might not apply to certain kinds of error
+conditions.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+But that minor caveat is easily addressed by keeping the "if we are
+set to ignore this error, just return 0" in report().  Some codepaths
+(like the "BAD BLOB" above) may not exercise it by bypassing the
+call to report() upfront and that is perfectly fine.
+
+I like that idea.
+
+> So maybe
+> `--(no-)?check-blob-integrity` is actually a shorthand for turning a few
+> more specific checks on/off at once.
+>
+> As for thinking of a shorter name for the option: assuming the blob
+> integrity checks can be turned on and off independently as described
+> above, then I think it is reasonable to *also* add a `--quick` option
+> defined as
+>
+> --quick: Skip some expensive checks, dramatically reducing the
+>     runtime of `git fsck`. Currently this is equivalent to
+>     `--no-check-blob-integrity`.
+>
+> In the future if we invent other expensive checks we might also add them
+> to the list of things that are skipped by `--quick`.
+
+Yes, that is doubly brilliant. Taken together with the auto-skipping
+of the checks based on the report settings, it makes it unnecessary
+to even introduce --[no-]check-blob-integrity or any other new
+knobs.
+
+Very well analysed.  I am happy with the "--quick" with that
+definition.
+
+Thanks.
