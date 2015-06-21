@@ -1,86 +1,70 @@
-From: Richard Weinberger <richard@nod.at>
-Subject: Re: broken repo after power cut
-Date: Sun, 21 Jun 2015 15:07:41 +0200
-Message-ID: <5586B71D.2070407@nod.at>
-References: <5585C1B6.50407@nod.at> <330ab8f498e1b435d5b210384200b649@www.dscho.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 09/10] send-email: allow multiple emails using --cc, --to and --bcc
+Date: Sun, 21 Jun 2015 15:17:57 +0200
+Message-ID: <vpqzj3tmc8q.fsf@anie.imag.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1434890756-5059-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	<1434890756-5059-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, David Gstir <david@sigma-star.at>,
-	linux-fsdevel <linux-fsdevel@vger.kernel.org>,
-	Theodore Ts'o <tytso@mit.edu>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: linux-fsdevel-owner@vger.kernel.org Sun Jun 21 15:07:48 2015
-Return-path: <linux-fsdevel-owner@vger.kernel.org>
-Envelope-to: lnx-linux-fsdevel@plane.gmane.org
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+To: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 21 15:18:13 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-fsdevel-owner@vger.kernel.org>)
-	id 1Z6eyS-0006tF-BR
-	for lnx-linux-fsdevel@plane.gmane.org; Sun, 21 Jun 2015 15:07:48 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z6f8W-0004Gg-H0
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 15:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752244AbbFUNHq (ORCPT <rfc822;lnx-linux-fsdevel@m.gmane.org>);
-	Sun, 21 Jun 2015 09:07:46 -0400
-Received: from a.ns.miles-group.at ([95.130.255.143]:65275 "EHLO radon.swed.at"
+	id S1752357AbbFUNSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 09:18:07 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42511 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752498AbbFUNHp (ORCPT <rfc822;linux-fsdevel@vger.kernel.org>);
-	Sun, 21 Jun 2015 09:07:45 -0400
-Received: (qmail 3950 invoked by uid 89); 21 Jun 2015 13:07:44 -0000
-Received: by simscan 1.3.1 ppid: 3945, pid: 3948, t: 0.0958s
-         scanners: attach: 1.3.1
-Received: from unknown (HELO ?192.168.0.11?) (richard@nod.at@213.47.235.169)
-  by radon.swed.at with ESMTPA; 21 Jun 2015 13:07:44 -0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <330ab8f498e1b435d5b210384200b649@www.dscho.org>
-Sender: linux-fsdevel-owner@vger.kernel.org
+	id S1751825AbbFUNSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 09:18:05 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5LDHuwS017907
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 21 Jun 2015 15:17:56 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5LDHvif024075;
+	Sun, 21 Jun 2015 15:17:57 +0200
+In-Reply-To: <1434890756-5059-2-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	(Remi Lespinet's message of "Sun, 21 Jun 2015 14:45:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 21 Jun 2015 15:17:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5LDHuwS017907
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435497480.89064@GEBCqDeUixFjCQxV6AdbNA
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-fsdevel.vger.kernel.org>
-X-Mailing-List: linux-fsdevel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272260>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272261>
 
-Hi Johannes,
+Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr> writes:
 
-[CC'ing linux-fsdevel and tytso]
+> Helped-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
 
-Am 21.06.2015 um 14:28 schrieb Johannes Schindelin:
-> Hi Richard,
-> 
-> On 2015-06-20 21:40, Richard Weinberger wrote:
-> 
->> Yesterday our git server faced a power cut and a git repository broke.
->> The server is running a ext4 filesystem on top of Linux 3.16 (stable
->> from openSUSE) and git 2.1.4.
->> We had a backup, so no data was lost but I really would like to figure out
->> what happened.
->>
->> This is the output of git fsck:
->> Checking object directories: 100% (256/256), done.
->> error: object file objects/ce/f7627fc160ad7294b1f728db0c1ddb65a38b1d is empty
->> error: object file objects/ce/f7627fc160ad7294b1f728db0c1ddb65a38b1d is empty
->> fatal: loose object cef7627fc160ad7294b1f728db0c1ddb65a38b1d (stored
->> in objects/ce/f7627fc160ad7294b1f728db0c1ddb65a38b1d) is corrupt
->>
->> To me it seems like git was creating a new object and got interrupted
->> before fsync/fdatasync'ing it.
->> As the object was referenced before syncing the data to disk the repo broke.
->> Could this have happened?
->> Also, is git designed to survive power cuts? Then referencing an
->> object before synching it do disk would make no sense.
-> 
-> I had similar issues with ext4 in the past, even with local repositories when using Git without pushing. My then-current laptop would not report battery power correctly, so I ran into out-of-power situations that would result in a loose object file that was simply empty, i.e. its length was zero. As far as my analysis back then went, this was not Git's fault, because its `write_loose_object()` function would write to a temporary file first and only move that file into place once it was written fully.
-> 
-> I was then shocked to learn that ext4 apparently has a default setting that allows it to truncate files upon power failure (something about a full journal vs a fast journal or some such) when I had expected the default to be a true journaled file system with proper atomicity regarding writes and moves. I remember that back then, I angrily fixed that setting to make my file system fully journaled.
+???
 
-You mean the ext4 delayed block allocation feature/issue?
-IIRC Ted added some hacks to ext4 to detect misbehaving applications (Gnome and KDE).
-But to my knowledge such an file corruption must not happen if the application behaves well. And it can happen on all file systems.
-Ted, maybe you can help us? BTW: I'm using ext4's default mount options from openSUSE, data=ordered.
+At this point, it's realonable to consider that you're the main author
+of the patch, but you could add a
 
-> Maybe this leads you into the direction of a work-around in your setup?
+Original-patch-by:
 
-I'm still not sure who to blame. ;-)
+to credit the initial author.
 
-Thanks,
-//richard
---
-To unsubscribe from this list: send the line "unsubscribe linux-fsdevel" in
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
