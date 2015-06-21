@@ -1,138 +1,109 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
-Date: Sun, 21 Jun 2015 10:15:18 -0700
-Message-ID: <xmqqioahj849.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v6 04/19] fsck: Offer a function to demote fsck errors to warnings
+Date: Sun, 21 Jun 2015 10:36:05 -0700
+Message-ID: <xmqqegl5j75m.fsf@gitster.dls.corp.google.com>
 References: <cover.1434657920.git.johannes.schindelin@gmx.de>
 	<cover.1434720655.git.johannes.schindelin@gmx.de>
-	<5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
-	<xmqq1th77829.fsf@gitster.dls.corp.google.com>
-	<95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
-	<xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
-	<558643CA.6000303@alum.mit.edu>
+	<44acafb2cf0a98e5ad75e3da24ba0e7453e6118f.1434720655.git.johannes.schindelin@gmx.de>
+	<xmqqzj3v7b58.fsf@gitster.dls.corp.google.com>
+	<bc06c48f005ad1c32dea2edbfa466208@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, peff@peff.net
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 21 19:15:28 2015
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 21 19:36:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6iq7-00045b-En
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 19:15:27 +0200
+	id 1Z6jAG-0007Tn-Ja
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 19:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925AbbFURPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2015 13:15:22 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:37243 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810AbbFURPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2015 13:15:22 -0400
-Received: by igblr2 with SMTP id lr2so40328029igb.0
-        for <git@vger.kernel.org>; Sun, 21 Jun 2015 10:15:21 -0700 (PDT)
+	id S1752659AbbFURgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 13:36:11 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:36916 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750939AbbFURgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 13:36:09 -0400
+Received: by igblr2 with SMTP id lr2so40475157igb.0
+        for <git@vger.kernel.org>; Sun, 21 Jun 2015 10:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=7gPn8QYFkJB22H7dTG8hrsn554Bgn3OC4Tz6zgWsapU=;
-        b=q03bw+pcFAtxDluMD7NygGZM3tsx3aM9SPsjwx93fhOdvCRkcwy1ZiTSQQFvMd30d4
-         HfRNaO/8vVkGHkPv3tHYjVraTPOh2tMCarJ++DJ67wQQm0Ck8yIi0Q/5i0yEOqzmgOWt
-         vT0KL3VOfaQSg3b+udg/815LiX6vVPDWO8GeIqLvIWFJP5/0A10IyRK7X27AXFkMpwVQ
-         55wON3eSA9E9QDjKqnAMbD8l+YTWg3FdimE78OFmwqU2rV73BgNyjzR/1z/xoN3qXd9Z
-         jhDigJ3YAP6H10CDA1VQM8pkw0ivJ3/G9AliNvrwRN2lidoAfBVzQX9LC8ARbznxlXmr
-         1m9w==
-X-Received: by 10.107.168.72 with SMTP id r69mr22359878ioe.4.1434906921463;
-        Sun, 21 Jun 2015 10:15:21 -0700 (PDT)
+        bh=X/CJhrXjU2Z9MBS15+1C/oZt5uAV+Mx+rPBUMi6qUBE=;
+        b=yEjTY0/Q5NPnoCyv/QernZghrwRQFPPcQfMsjcGF3um4xo/gPCieooN5qapfnQYArT
+         Cau26HjYp1T6za+NC6OXG9+Yrkw18ju0jmecYX4W5PC0nyZu2Ier0Nom2z9f0plG3KZ+
+         ACTEMBRsuPvGmgq3FIIwAW77cO/TCcwxJAal82g7FueBxaAwhNyvRK3TuL4zHwW5GHMr
+         CA6ouw8dKE2zl007CTn+fN169+XRAh/Lrgg12nbmhLmhKESkQuuRSYAP7mIiTEbOadxH
+         nR7+zRCqcbylWMmcAgycbKsUhgfctqHtFiU8RBpLAV058IIo9CiGXG4vkWTy080kz7Vh
+         SY3Q==
+X-Received: by 10.107.153.76 with SMTP id b73mr33719182ioe.36.1434908169144;
+        Sun, 21 Jun 2015 10:36:09 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:990b:778:aa29:b388])
-        by mx.google.com with ESMTPSA id s28sm9908656ioi.31.2015.06.21.10.15.19
+        by mx.google.com with ESMTPSA id u35sm11306454iou.7.2015.06.21.10.36.06
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 21 Jun 2015 10:15:19 -0700 (PDT)
-In-Reply-To: <558643CA.6000303@alum.mit.edu> (Michael Haggerty's message of
-	"Sun, 21 Jun 2015 06:55:38 +0200")
+        Sun, 21 Jun 2015 10:36:06 -0700 (PDT)
+In-Reply-To: <bc06c48f005ad1c32dea2edbfa466208@www.dscho.org> (Johannes
+	Schindelin's message of "Sun, 21 Jun 2015 15:59:29 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272272>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> But now that I'm writing this, a silly question occurs to me: Do we need
-> an overall option like this at all? If I demote all blob-integrity
-> checks to "ignore" via the mechanism that you have added, then shouldn't
-> fsck automatically detect that it doesn't have to open the blobs at all
-> and enable this speedup automatically?
+> Hmm. I really do not like that kind of thinking, i.e. having to
+> duplicate, then modify data to be able to call the API, only to have
+> to modify the data back afterwards, and eventually having to
+> unallocate the data in all code paths. That feels just very inelegant
+> to me.
 
-That's brilliant.
+You can see in our codebase that I have avoided touching end-user
+strings by using a substring in place by introducing a new API
+function or using an existing API function that takes <ptr, len> for
+exactly that reason.  There also are cases where we are better off
+if we make a copy upfront at a very high level in the callchain if
+that makes the processing of that string deeper in the callchain
+much simpler without customized helpers that take counted strings.
 
-Just to make sure I am reading you correctly, you mean the current
-overall structure:
+And 03/19 and this one taken together, I think it is an example of
+the latter [*1*].
 
-	if (! "is the blob loadable and well-formed?") {
-		report("BAD BLOB");
-                ... which is equivalent to ...
-                if ("is bad_blob ignored?")
-			; /* no-op */
-		else {
-			output "BAD BLOB";
-                        if ("is bad_blob an error?")
-				return 1; /* error */
-		}
-	}
-        ... other checks ...
+You not only need to invent counted string comparison in 04/19 but
+also need upcasing byte-by-byte comparison in a loop in 03/19; both
+of which can be made much simpler if you massaged the end-user input
+"foo=error,bar=ignore" into "FOO=error,BAR=ignore" and allowed the
+code to loop over it to turn ',' into NUL while parsing each
+individual piece (i.e. "FOO=error").
 
-can be turned into this structure:
+So contrary to what you said in response to my review on 03/19, I
+view this as not "adding complexity" but its total opposite.  It is
+to make the code and logic much less complex by paying the price for
+one copied (and massaged) string.
 
-        if ("is bad_blob ignored?")
-		;
-	else if (! "is the blob loadable and well-formed?") {
-		report("BAD BLOB");
-                ... which would be equivalent to ...
-		output "BAD BLOB";
-                if ("is bad_blob an error?")
-			return 1; /* error */
-	}
-        ... other checks ...
-
-I think that makes tons of sense.  With one minor caveat.  In the
-above "rewrite" I deliberately described report() in the updated
-flow to always output, but that would force all checkers to adopt
-"do not unconditionally check; if we do not report, do not even
-bother checking", which (1) would be a large change to what Dscho
-currently have, and (2) might not apply to certain kinds of error
-conditions.
-
-But that minor caveat is easily addressed by keeping the "if we are
-set to ignore this error, just return 0" in report().  Some codepaths
-(like the "BAD BLOB" above) may not exercise it by bypassing the
-call to report() upfront and that is perfectly fine.
-
-I like that idea.
-
-> So maybe
-> `--(no-)?check-blob-integrity` is actually a shorthand for turning a few
-> more specific checks on/off at once.
->
-> As for thinking of a shorter name for the option: assuming the blob
-> integrity checks can be turned on and off independently as described
-> above, then I think it is reasonable to *also* add a `--quick` option
-> defined as
->
-> --quick: Skip some expensive checks, dramatically reducing the
->     runtime of `git fsck`. Currently this is equivalent to
->     `--no-check-blob-integrity`.
->
-> In the future if we invent other expensive checks we might also add them
-> to the list of things that are skipped by `--quick`.
-
-Yes, that is doubly brilliant. Taken together with the auto-skipping
-of the checks based on the report settings, it makes it unnecessary
-to even introduce --[no-]check-blob-integrity or any other new
-knobs.
-
-Very well analysed.  I am happy with the "--quick" with that
-definition.
+Having said all that, as long as the result functions correctly, I
+suspect that it may not matter much either way.  As I already said,
+"we can demote this error to a warning (or ignored)" is much less
+useful in practice than the "we know this and that object in this
+project does not pass fsck, so please do not bother checking" in my
+mind, and that makes me think that this part of the series is much
+less important than the skip-list thing.  Unnecessary complexity in
+the code and otherwise useless helper functions may be something
+that can be simplified following my advice, but that can be done as
+a code clean-up, simplification and optimization by somebody else
+later if they really cared.
 
 Thanks.
+
+
+[Footnote]
+
+*1* Everything I say in my messages is what "I think", so saying "I
+think" before saying what I think is redundant, but this one needs
+that, because I think ;-) it is in the "taste" territory to view
+each individual case and decide which one of these two opposite
+approaches is more appropriate.
