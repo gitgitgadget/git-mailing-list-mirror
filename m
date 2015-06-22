@@ -1,90 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Move unsigned long option parsing out of pack-objects.c
-Date: Mon, 22 Jun 2015 15:03:27 -0700
-Message-ID: <xmqqfv5jfljk.fsf@gitster.dls.corp.google.com>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH 8/7] cat-file: sort and de-dup output of
+ --batch-all-objects
+Date: Mon, 22 Jun 2015 23:03:50 +0100
+Message-ID: <20150622220350.GB18677@hashpling.org>
 References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
-	<1434911144-6781-1-git-send-email-charles@hashpling.org>
-	<1434911144-6781-3-git-send-email-charles@hashpling.org>
-	<20150621183026.GA7199@hashpling.org>
+ <1434914431-7745-1-git-send-email-charles@hashpling.org>
+ <1434914431-7745-2-git-send-email-charles@hashpling.org>
+ <20150622083822.GB12259@peff.net>
+ <20150622103321.GB12584@peff.net>
+ <20150622110632.GA26436@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Jun 23 00:03:38 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 23 00:03:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z79oV-0002TR-IH
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 00:03:36 +0200
+	id 1Z79os-0002dD-6l
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 00:03:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbbFVWDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 18:03:32 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:37581 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752502AbbFVWDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 18:03:30 -0400
-Received: by igblr2 with SMTP id lr2so63273510igb.0
-        for <git@vger.kernel.org>; Mon, 22 Jun 2015 15:03:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=41c7/Q+QTuWpyvwV84vCPJPmgRXLAw/dDXkSZ3+s23k=;
-        b=IfuBK/9aDREhi3i87oQK3HmdjsSnOpOjEVuW9xQI2oxNI+YWjohIsN8bXZOgTlyVvk
-         JteHZoZ0/RZi5cGjkG2hHX/96BeB8js5kCtVfx2PyShMxoBZ78sj822hw+6ADpXA0nJi
-         whYFSDO39AIhl8zNQuiosBj1TyMBpBqKFx3oRE0qfE8BgBpSzTeMCdeqB2e8clwJQZQC
-         h7wE76tAeT2U4yJ8GDEtlS9NPrIH6LqkUrOcC9PYCa3e29txcU9mjOkMjZp9t0TvvXwg
-         LHXM3UMGA6Dpp4Tp98kkGF5DZOYHZGaR9w7yFB2BJFDQXb8ATWcJnzLNqK5Zil7D9xX7
-         FazQ==
-X-Received: by 10.107.168.150 with SMTP id e22mr37542905ioj.9.1435010609674;
-        Mon, 22 Jun 2015 15:03:29 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:b0be:ae3d:b206:8e25])
-        by mx.google.com with ESMTPSA id e3sm8386232igq.21.2015.06.22.15.03.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Jun 2015 15:03:29 -0700 (PDT)
-In-Reply-To: <20150621183026.GA7199@hashpling.org> (Charles Bailey's message
-	of "Sun, 21 Jun 2015 19:30:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753740AbbFVWDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 18:03:55 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:36581 "EHLO
+	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107AbbFVWDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 18:03:53 -0400
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout06 with smtp
+	id ja3q1q0022iA9hg01a3rT3; Mon, 22 Jun 2015 23:03:52 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=foEhHwMf c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
+ a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
+ a=Ew9TdX-QAAAA:8 a=XAFQembCKUMA:10 a=xFIPubV5JKScwtMo3_wA:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.84)
+	(envelope-from <charles@hashpling.plus.com>)
+	id 1Z79ok-0004vJ-PD; Mon, 22 Jun 2015 23:03:50 +0100
+Content-Disposition: inline
+In-Reply-To: <20150622110632.GA26436@peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272426>
 
-Charles Bailey <charles@hashpling.org> writes:
+On Mon, Jun 22, 2015 at 07:06:32AM -0400, Jeff King wrote:
+> On Mon, Jun 22, 2015 at 06:33:21AM -0400, Jeff King wrote:
+> 
+> > By the way, in addition to not showing objects in order,
+> > list-all-objects (and my cat-file option) may show duplicates. Do we
+> > want to "sort -u" for the user? It might be nice for them to always get
+> > a de-duped and sorted list. Aside from the CPU cost of sorting, it does
+> > mean we'll allocate ~80MB for the kernel to store the sha1s. I guess
+> > that's not too much when you are talking about the kernel repo. I took
+> > the coward's way out and just mentioned the limitation in the
+> > documentation, but I'm happy to be persuaded.
+> 
+> The patch below does the sort/de-dup. I'd probably just squash it into
+> patch 7, though.
 
-> On Sun, Jun 21, 2015 at 07:25:44PM +0100, Charles Bailey wrote:
->> From: Charles Bailey <cbailey32@bloomberg.net>
->> 
->> diff --git a/parse-options.c b/parse-options.c
->> index 80106c0..101b649 100644
->> --- a/parse-options.c
->> +++ b/parse-options.c
->> @@ -180,6 +180,23 @@ static int get_value(struct parse_opt_ctx_t *p,
->>  			return opterror(opt, "expects a numerical value", flags);
->>  		return 0;
->>  
->> +	case OPTION_MAGNITUDE:
->> +		if (unset) {
->> +			*(unsigned long *)opt->value = 0;
->> +			return 0;
->> +		}
->> +		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
->> +			*(unsigned long *)opt->value = opt->defval;
->> +			return 0;
->> +		}
->> +		if (get_arg(p, opt, flags, &arg))
->> +			return -1;
->> +		if (!git_parse_ulong(arg, opt->value))
->> +			return opterror(opt,
->> +				"expects a integer value with an optional k/m/g suffix",
->> +				flags);
->> +		return 0;
->> +
->
-> Spotted after sending:
-> s/expects a integer/expects an integer/
-
-Thanks.
+Woah, 8 out of 7! Did you get a chance to measure the performance hit of
+the sort? If not, I may test it out when I next get the chance.
