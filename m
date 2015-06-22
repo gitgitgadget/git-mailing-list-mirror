@@ -1,167 +1,326 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v7 04/19] fsck: Offer a function to demote fsck errors
- to warnings
-Date: Mon, 22 Jun 2015 23:00:18 +0200
-Organization: gmx
-Message-ID: <4037772e17652ba93638434294c9512c@www.dscho.org>
-References: <cover.1434720655.git.johannes.schindelin@gmx.de>
- <cover.1434986506.git.johannes.schindelin@gmx.de>
- <08ab723892b4412431b88df8764f506f0abbb0a6.1434986506.git.johannes.schindelin@gmx.de>
- <xmqq616fiqz7.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 22 23:01:00 2015
+From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+Subject: [PATCH v3 4/6] bisect: add the terms old/new
+Date: Mon, 22 Jun 2015 23:00:34 +0200
+Message-ID: <1435006836-18182-4-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+References: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+Cc: antoine.delaite@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	Matthieu.Moy@grenoble-inp.fr, chriscool@tuxfamily.org,
+	thomasxnguy@gmail.com, valentinduperray@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 22 23:00:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z78pv-0005xf-DO
+	id 1Z78pu-0005xf-Lz
 	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 23:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858AbbFVVAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 17:00:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58784 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751522AbbFVVAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 17:00:41 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LbgyV-1YfTdg3SQ7-00lAZh; Mon, 22 Jun 2015 23:00:19
- +0200
-In-Reply-To: <xmqq616fiqz7.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:C+v3SdJZZ5z/BUc9jo70m4dFX8M+cS2b8vEzbKTZy0I6cKVJvsV
- BTxnbx+vmZ6PCFlUtKzSGMbeJX+v+9o50CGReaeobUljRkZDohnitLRQUkVwbbzakDSoRlo
- voZG7Cfq2fR/SRhVibAh9j4cKEBfpOfZ5kDZdCTULu9gQ+0Tn/O2Yuu4FHhPSMiIKeHbZ02
- QW7MmC+RZqTg+5fpK0Sgw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YSVUXIcAegU=:d+vTgOHs2vsjr7q9NUiUn2
- co11c/Il/DQNmeerLtmgWO50oseYzhO87G1EPWNcmxu/doh6bwZjUi/Neb4OZNSpFALFU8onO
- kGInIPnD/f3D3crSfZLt5eF8xmUVg+mi5xfTpGysYOTcK35DsblbDQu8UG3JsOYu2pBRJvSPi
- HzFiQGmThP8UoRzco61Ifra6fD0VxQFDJG85ROCy8fCpqsihF9FRaRjppvZsxgCIVzGqHCD77
- zjZ+3RJpGy7s3/ISuq6cRkjtfAcgmOHSbscM6GQUqJuDhrl9oLTFx17dsjzHnaWthgnAAsDt+
- MF7CdYqPL0DyXNcY01/tZXxDkmW4QzbHgmCg/+1SikUuj5bVMwduRXdiPt5yjGp+f7g/ycwfj
- JU723qwz3fgH6cBGr9Yr400UcD4eCczMpIF6LUxtkh+npJzQSwTWKNhkklvrlMSld3avL464Z
- 9wNaDS4UJErnJokwh1zdgPuPku8FMEkYQDaOzNSdN9jwBGx3yaKeJTcz2n06ueUPdgLfKo314
- 82wfuBHNzopFpvsramDH4m+tcwBjCczRA6pG/GFMiLGTHZhwA1DYaCzJOCuSMG1gyMJJRtyv2
- UYENa5MLNufn8G1X/LodganYtXK9pjv/ZlhBfqqKEW2pjeXl9HEFGe0VUuJ4zH8Xu8NYHcG1/
- /5pPzYWxiki1EbCLZw7AGUcgBwzSaDSySErYkppy6RcHKkuewk5NQq+3WzWaD1RgBvbk=
+	id S1752529AbbFVVAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 17:00:51 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:55161 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751766AbbFVVAk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 17:00:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 09D7188AD;
+	Mon, 22 Jun 2015 23:00:38 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 616f1UnL0MqF; Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id E95912858;
+	Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id BD30120D2;
+	Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SrMtI1Z6uTFS; Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
+Received: from pcserveur.ensimag.fr (ensipcserveur.imag.fr [129.88.240.65])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 588E020E4;
+	Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
+X-Mailer: git-send-email 1.7.1
+In-Reply-To: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272413>
 
-Hi Junio,
+When not looking for a regression during a bisect but for a fix or a
+change in another given property, it can be confusing to use 'good'
+and 'bad'.
 
-On 2015-06-22 19:37, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> diff --git a/fsck.c b/fsck.c
->> index 1a3f7ce..e81a342 100644
->> --- a/fsck.c
->> +++ b/fsck.c
->> @@ -64,30 +64,29 @@ enum fsck_msg_id {
->>  #undef MSG_ID
->>
->>  #define STR(x) #x
->> -#define MSG_ID(id, msg_type) { STR(id), FSCK_##msg_type },
->> +#define MSG_ID(id, msg_type) { STR(id), NULL, FSCK_##msg_type },
->>  static struct {
->>  	const char *id_string;
->> +	const char *lowercased;
->>  	int msg_type;
->>  } msg_id_info[FSCK_MSG_MAX + 1] = {
->>  	FOREACH_MSG_ID(MSG_ID)
->> -	{ NULL, -1 }
->> +	{ NULL, NULL, -1 }
->>  };
->>  #undef MSG_ID
->>
->>  static int parse_msg_id(const char *text)
->>  {
->> -	static char **lowercased;
->>  	int i;
->>
->> -	if (!lowercased) {
->> +	if (!msg_id_info[0].lowercased) {
->>  		/* convert id_string to lower case, without underscores. */
->> -		lowercased = xmalloc(FSCK_MSG_MAX * sizeof(*lowercased));
->>  		for (i = 0; i < FSCK_MSG_MAX; i++) {
->>  			const char *p = msg_id_info[i].id_string;
->>  			int len = strlen(p);
->>  			char *q = xmalloc(len);
->>
->> -			lowercased[i] = q;
->> +			msg_id_info[i].lowercased = q;
->>  			while (*p)
->>  				if (*p == '_')
->>  					p++;
->> @@ -98,7 +97,7 @@ static int parse_msg_id(const char *text)
->>  	}
->>
->>  	for (i = 0; i < FSCK_MSG_MAX; i++)
->> -		if (!strcmp(text, lowercased[i]))
->> +		if (!strcmp(text, msg_id_info[i].lowercased))
->>  			return i;
->>
->>  	return -1;
-> 
-> Heh, this was the first thing that came to my mind when I saw 03/19
-> that lazily prepares downcased version (which is good) but do so in
-> a separately allocated buffer (which is improved by this change) ;-)
-> 
-> IOW, I think all of the above should have been part of 03/19, not
-> "oops I belatedly realized that this way is better" fixup here.
+This patch introduce `git bisect new` and `git bisect old` as an
+alternative to 'bad' and good': the commits which have a certain
+property must be marked as `new` and the ones which do not as `old`.
 
-Gaaaah. Wrong commit fixed up. Sorry. Will be fixed in v8.
+The output will be the first commit after the change in the property.
+During a new/old bisect session you cannot use bad/good commands and
+vice-versa.
 
->> +void fsck_set_msg_types(struct fsck_options *options, const char *values)
->> +{
->> +	char *buf = xstrdup(values), *to_free = buf;
->> +	int done = 0;
->> +
->> +	while (!done) {
->> +		int len = strcspn(buf, " ,|"), equal;
->> +
->> +		done = !buf[len];
->> +		if (!len) {
->> +			buf++;
->> +			continue;
->> +		}
->> +		buf[len] = '\0';
->> +
->> +		for (equal = 0; equal < len &&
->> +				buf[equal] != '=' && buf[equal] != ':'; equal++)
-> 
-> Style.  I'd format this more like so:
-> 
-> 		for (equal = 0;
->                      equal < len && buf[equal] != '=' && buf[equal] != ':';
-> 		     equal++)
+Some commands are still not available for old/new:
+     * git rev-list --bisect does not treat the revs/bisect/new and
+       revs/bisect/old-SHA1 files.
 
-Will be fixed.
+Old discussions:
+	- http://thread.gmane.org/gmane.comp.version-control.git/86063
+		introduced bisect fix unfixed to find fix.
+	- http://thread.gmane.org/gmane.comp.version-control.git/182398
+		discussion around bisect yes/no or old/new.
+	- http://thread.gmane.org/gmane.comp.version-control.git/199758
+		last discussion and reviews
+New discussions:
+	- http://thread.gmane.org/gmane.comp.version-control.git/271320
+		( v2 1/7-4/7 )
+	- http://comments.gmane.org/gmane.comp.version-control.git/271343
+		( v2 5/7-7/7 )
 
->> +			buf[equal] = tolower(buf[equal]);
->> +		buf[equal] = '\0';
->> +
->> +		if (equal == len)
->> +			die("Missing '=': '%s'", buf);
->> +
->> +		fsck_set_msg_type(options, buf, buf + equal + 1);
->> +		buf += len + 1;
->> +	}
->> +	free(to_free);
->> +}
-> 
-> Overall, the change is good (and it was good in v6, too), and I
-> think it has become simpler to follow the logic with the upfront
-> downcasing.
+Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
+Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
+Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
+ Documentation/git-bisect.txt |   48 ++++++++++++++++++++++++++++++++++++++++-
+ bisect.c                     |   11 +++++++--
+ git-bisect.sh                |   30 +++++++++++++++++--------
+ t/t6030-bisect-porcelain.sh  |   38 +++++++++++++++++++++++++++++++++
+ 4 files changed, 112 insertions(+), 15 deletions(-)
 
-Yep, I agree. I did not expect that, but it was worth the effort to compare the two versions.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 4cb52a7..3c3021a 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -18,8 +18,8 @@ on the subcommand:
+ 
+  git bisect help
+  git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
+- git bisect bad [<rev>]
+- git bisect good [<rev>...]
++ git bisect (bad|new) [<rev>]
++ git bisect (good|old) [<rev>...]
+  git bisect skip [(<rev>|<range>)...]
+  git bisect reset [<commit>]
+  git bisect visualize
+@@ -104,6 +104,35 @@ For example, `git bisect reset HEAD` will leave you on the current
+ bisection commit and avoid switching commits at all, while `git bisect
+ reset bisect/bad` will check out the first bad revision.
+ 
++
++Alternative terms: bisect new and bisect old
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++If you are not at ease with the terms "bad" and "good", perhaps
++because you are looking for the commit that introduced a fix, you can
++alternatively use "new" and "old" instead.
++But note that you cannot mix "bad" and good" with "new" and "old".
++
++------------------------------------------------
++git bisect new [<rev>]
++------------------------------------------------
++
++Marks the commit as new, e.g. "the bug is no longer there", if you are looking
++for a commit that fixed a bug, or "the feature that used to work is now broken
++at this point", if you are looking for a commit that introduced a bug.
++It is the equivalent of "git bisect bad [<rev>]".
++
++------------------------------------------------
++git bisect old [<rev>...]
++------------------------------------------------
++
++Marks the commit as old, as the opposite of 'git bisect new'.
++It is the equivalent of "git bisect good [<rev>...]".
++
++You must run `git bisect start` without commits as argument and run
++`git bisect new <rev>`/`git bisect old <rev>...` after to add the
++commits.
++
+ Bisect visualize
+ ~~~~~~~~~~~~~~~~
+ 
+@@ -379,6 +408,21 @@ In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit
+ has at least one parent whose reachable graph is fully traversable in the sense
+ required by 'git pack objects'.
+ 
++* Look for a fix instead of a regression in the code
+++
++------------
++$ git bisect start
++$ git bisect new HEAD    # current commit is marked as new
++$ git bisect old HEAD~10 # the tenth commit from now is marked as old
++------------
+++
++Let's consider the last commit has a given property, and that we are looking
++for the commit which introduced this property. For each commit the bisection
++guide us to, we will test if the property is present. If it is we will mark
++the commit as new with 'git bisect new', otherwise we will mark it as old.
++At the end of the bisect session, the result will be the first new commit (e.g
++the first one with the property).
++
+ 
+ SEE ALSO
+ --------
+diff --git a/bisect.c b/bisect.c
+index 2fc8a78..7492fdc 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -746,6 +746,11 @@ static void handle_bad_merge_base(void)
+ 				"This means the bug has been fixed "
+ 				"between %s and [%s].\n",
+ 				bad_hex, bad_hex, good_hex);
++		} else if (!strcmp(name_bad, "new")) {
++			fprintf(stderr, "The merge base %s is new.\n"
++				"The property has changed "
++				"between %s and [%s].\n",
++				bad_hex, bad_hex, good_hex);
+ 		} else {
+ 			fprintf(stderr, "The merge base %s is %s.\n"
+ 				"This means the first commit marked %s is "
+@@ -778,11 +783,11 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+ }
+ 
+ /*
+- * "check_merge_bases" checks that merge bases are not "bad".
++ * "check_merge_bases" checks that merge bases are not "bad" (or "new").
+  *
+- * - If one is "bad", it means the user assumed something wrong
++ * - If one is "bad" (or "new"), it means the user assumed something wrong
+  * and we must exit with a non 0 error code.
+- * - If one is "good", that's good, we have nothing to do.
++ * - If one is "good" (or "old"), that's good, we have nothing to do.
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
+  */
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 55b9ebd..a11ca06 100644
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,14 +1,16 @@
+ #!/bin/sh
+ 
+-USAGE='[help|start|bad|good|skip|next|reset|visualize|replay|log|run]'
++USAGE='[help|start|bad|good|new|old|skip|next|reset|visualize|replay|log|run]'
+ LONG_USAGE='git bisect help
+ 	print this long help message.
+ git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
+ 	reset bisect state and start bisection.
+-git bisect bad [<rev>]
+-	mark <rev> a known-bad revision.
+-git bisect good [<rev>...]
+-	mark <rev>... known-good revisions.
++git bisect (bad|new) [<rev>]
++	mark <rev> a known-bad revision/
++		a revision after change in a given property.
++git bisect (good|old) [<rev>...]
++	mark <rev>... known-good revisions/
++		revisions before change in a given property.
+ git bisect skip [(<rev>|<range>)...]
+ 	mark <rev>... untestable revisions.
+ git bisect next
+@@ -288,7 +290,7 @@ bisect_next_check() {
+ 		false
+ 		;;
+ 	t,,"$NAME_GOOD")
+-		# have bad but not good.  we could bisect although
++		# have bad (or new) but not good (or old).  we could bisect although
+ 		# this is less optimum.
+ 		eval_gettextln "Warning: bisecting only with a \$NAME_BAD commit." >&2
+ 		if test -t 0
+@@ -529,7 +531,7 @@ get_terms () {
+ check_and_set_terms () {
+ 	cmd="$1"
+ 	case "$cmd" in
+-	bad|good)
++	bad|good|new|old)
+ 		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$NAME_BAD" && test "$cmd" != "$NAME_GOOD"
+ 		then
+ 			die "$(eval_gettext "Invalid command: you're currently in a \$NAME_BAD/\$NAME_GOOD bisect.")"
+@@ -543,14 +545,22 @@ check_and_set_terms () {
+ 			fi
+ 			NAME_BAD="bad"
+ 			NAME_GOOD="good" ;;
++		new|old)
++			if ! test -s "$GIT_DIR/BISECT_TERMS"
++			then
++				echo "new" >"$GIT_DIR/BISECT_TERMS" &&
++				echo "old" >>"$GIT_DIR/BISECT_TERMS"
++			fi
++			NAME_BAD="new"
++			NAME_GOOD="old" ;;
+ 		esac ;;
+ 	esac
+ }
+ 
+ bisect_voc () {
+ 	case "$1" in
+-	bad) echo "bad" ;;
+-	good) echo "good" ;;
++	bad) echo "bad|old" ;;
++	good) echo "good|new" ;;
+ 	esac
+ }
+ 
+@@ -566,7 +576,7 @@ case "$#" in
+ 		git bisect -h ;;
+ 	start)
+ 		bisect_start "$@" ;;
+-	bad|good)
++	bad|good|new|old)
+ 		bisect_state "$cmd" "$@" ;;
+ 	skip)
+ 		bisect_skip "$@" ;;
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 9e2c203..2f2143b 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -759,4 +759,42 @@ test_expect_success '"git bisect bad HEAD" behaves as "git bisect bad"' '
+ 	git bisect reset
+ '
+ 
++test_expect_success 'bisect starts with only one new' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect new $HASH4 &&
++	git bisect next
++'
++
++test_expect_success 'bisect does not start with only one old' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect old $HASH1 &&
++	test_must_fail git bisect next
++'
++
++test_expect_success 'bisect start with one new and old' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect old $HASH1 &&
++	git bisect new $HASH4 &&
++	git bisect new &&
++	git bisect new >bisect_result &&
++	grep "$HASH2 is the first new commit" bisect_result &&
++	git bisect log > log_to_replay.txt &&
++	git bisect reset
++'
++
++test_expect_success 'bisect replay with old and new' '
++	git bisect replay log_to_replay.txt > bisect_result &&
++	grep "$HASH2 is the first new commit" bisect_result &&
++	git bisect reset
++'
++
++test_expect_success 'bisect cannot mix old/new and good/bad' '
++	git bisect start &&
++	git bisect bad $HASH4 &&
++	test_must_fail git bisect old $HASH1
++'
++
+ test_done
+-- 
+1.7.1
