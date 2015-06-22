@@ -1,115 +1,64 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: broken repo after power cut
-Date: Sun, 21 Jun 2015 20:35:51 -0400
-Message-ID: <20150622003551.GP29480@thunk.org>
-References: <5585C1B6.50407@nod.at>
- <330ab8f498e1b435d5b210384200b649@www.dscho.org>
- <5586B71D.2070407@nod.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/7] Raw gpg output support for verify-commit and verify-tag
+Date: Sun, 21 Jun 2015 17:38:36 -0700
+Message-ID: <CAPc5daVX0CE0VeAp-gv6nj_tGp5JKS4kZGLojv-AYXSSkD38EA@mail.gmail.com>
+References: <1434928483-105916-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, David Gstir <david@sigma-star.at>,
-	linux-fsdevel <linux-fsdevel@vger.kernel.org>
-To: Richard Weinberger <richard@nod.at>
-X-From: linux-fsdevel-owner@vger.kernel.org Mon Jun 22 02:36:03 2015
-Return-path: <linux-fsdevel-owner@vger.kernel.org>
-Envelope-to: lnx-linux-fsdevel@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Alex Zepeda <alex@inferiorhumanorgans.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jun 22 02:39:01 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-fsdevel-owner@vger.kernel.org>)
-	id 1Z6piU-0003Kn-7l
-	for lnx-linux-fsdevel@plane.gmane.org; Mon, 22 Jun 2015 02:36:02 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z6plN-0004PN-6n
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 02:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752979AbbFVAf7 (ORCPT <rfc822;lnx-linux-fsdevel@m.gmane.org>);
-	Sun, 21 Jun 2015 20:35:59 -0400
-Received: from imap.thunk.org ([74.207.234.97]:47612 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752723AbbFVAf5 (ORCPT <rfc822;linux-fsdevel@vger.kernel.org>);
-	Sun, 21 Jun 2015 20:35:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=nDPlivvcZC3bjFn/kl2c3xX+uOKIkcyH/Brq2OTclcI=;
-	b=QQmFatT9A9D8YdtilaLWhMDUVydO7c9Tclha1SCEoSzR9LRidaawAq1mAp5zkFVhYps86OWDUdjcs3AwikCKJIMtCgmYvlEbpieujmhvAMMI+vAG43E5yEDJpsh9kFTsz9UUYSpuJjc2Huo3UA/Ks09iuUYkD2q0ExYdA1PnWKs=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.84)
-	(envelope-from <tytso@thunk.org>)
-	id 1Z6piK-0003hi-5Q; Mon, 22 Jun 2015 00:35:52 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 6C14E5803FF; Sun, 21 Jun 2015 20:35:51 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <5586B71D.2070407@nod.at>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
-Sender: linux-fsdevel-owner@vger.kernel.org
+	id S1753121AbbFVAi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2015 20:38:57 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:33458 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485AbbFVAi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2015 20:38:56 -0400
+Received: by obpn3 with SMTP id n3so20846886obp.0
+        for <git@vger.kernel.org>; Sun, 21 Jun 2015 17:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=vocuKwqAU7UEhQwP2WeVleAgHAW3VAMwRMRII4MkZsE=;
+        b=seNiFovcGooX7Xoo4FtTgMRfF9/ocEsFFVA0h6+XBGSaZBLePW780YNsZxrkI71QTW
+         TbZph0uYw0xExQoYEc4te+kbQAOf/04eNyGwLNfbwP3jIfzHPUPZDsEev2mj7KU27kw5
+         TYmXbRSznfc4/KrbH4hKfhGfWoFIPP0+MdSTCKFDolEkQZkOqCPcSqfvbkpNofGr+6hZ
+         OZKNwveD4sOP5xlF4rtXxDfXMHTCb2vldv/BLQPxgzBmprEFgf7bMPKDKZU4azTXlUMv
+         A7+ilsnsoMVVRwD9Tm4rmMDjwLt5KgB3vTcljtD8W/AWYh/QE3y6vAYz1/hKOuGDuHsW
+         7nhA==
+X-Received: by 10.202.186.132 with SMTP id k126mr21715735oif.60.1434933535488;
+ Sun, 21 Jun 2015 17:38:55 -0700 (PDT)
+Received: by 10.202.202.129 with HTTP; Sun, 21 Jun 2015 17:38:36 -0700 (PDT)
+In-Reply-To: <1434928483-105916-1-git-send-email-sandals@crustytoothpaste.net>
+X-Google-Sender-Auth: cGI8juWt9bfeSj3SLZZhMihBpm4
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-fsdevel.vger.kernel.org>
-X-Mailing-List: linux-fsdevel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272307>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272308>
 
-On Sun, Jun 21, 2015 at 03:07:41PM +0200, Richard Weinberger wrote:
+On Sun, Jun 21, 2015 at 4:14 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> This series introduces a --raw option for verify-commit and verify-tag.
+> If it's used, they provide the gpg --status-fd output on standard error
+> instead of the human-readable output.  The series also adds tests for
+> verify-tag, since there were none; these are based off the ones for
+> verify-commit.
 
-> > I was then shocked to learn that ext4 apparently has a default
-> > setting that allows it to truncate files upon power failure
-> > (something about a full journal vs a fast journal or some such)
+The series was a logical and gradual progression that was pleasant to read.
 
-s/ext4/all modern file systems/
-
-POSIX makes **no guarantees** about what happens after a power failure
-unless you use fsync() --- which git does not do by default (see below).
-
-> You mean the ext4 delayed block allocation feature/issue?
-> IIRC Ted added some hacks to ext4 to detect misbehaving applications (Gnome and KDE).
-> But to my knowledge such an file corruption must not happen if the application behaves well. And it can happen on all file systems.
-> Ted, maybe you can help us? BTW: I'm using ext4's default mount options from openSUSE, data=ordered.
-
-The hacks (which were agreed upon by all of the major file system
-developers --- ext4, btfs, xfs --- at the Linux File Systems and
-Storage summit a couple of years ago --- protects against the default
-text editors of GNOME and KDE which were saving file without using
-fsync(), and in one particularly egregious example (although I don't
-remember which program was doing this), updated files by opening the
-file with O_TRUNC and then rewritng the new contents of the file.  So
-if you crashed just after the open(2), and before the file data was
-written, you were guaranteed to lose data.
-
-The hack protects against data loss when programs updated a file
-incompetently.  What we agreed to do was that upon renaming a fileA on
-top of another fileB, there is an implicit writeback initiated of
-fileA.  If the program properly called fsync(2) before closing the
-file descriptor for fileA and doing the rename, this implicit
-writeback would be no-op.  Simiarly, if a file descriptor was opened
-with O_TRUNC, when the file descriptor is closed, we start an implicit
-writeback at that point.  Note that this is not the same as a full
-fsync; it merely closes the race window from 30 seconds down to a
-second or so (depending on how busy the disk is).
-
-But this hack does not protect against freshly written files, which is
-the case of git object files or git pack files.  The basic idea here
-is that you could have just as easily crashed before the commit as
-after the commit, and doing an implicit writeback after all file
-closes would have destroyed performance and penalized progams that
-didn't really care so much about the file hitting disk.  (For example,
-if you do a compile, and you crash, it's not such a big deal.)
-
-The bottome lins is that if you care about files being written, you
-need to use fsync().  Should git use fsync() by default?  Well, if you
-are willing to accept that if your system crashes within a second or
-so of your last git operation, you might need to run "git fsck" and
-potentially recover from a busted repo, maybe speed is more important
-for you (and git is known for its speed/performance, after all. :-)
-
-The actual state of the source tree would have been written using a
-text editor which tends to be paranoid about using fsync (at least, if
-you use a real editor like Emacs or Vi, as opposed to the toy notepad
-editors shipped with GNOME or KDE :-).  So as long as you know what
-you're doing, it's unlikely that you will actually lose any work.
-
-Personally, I have core.fsyncobjectfiles set to yes in my .gitconfig.
-Part of this is because I have an SSD, so the speed hit really doesn't
-bother me, and needing to recover a corrupted git repository is a pain
-(although I have certainly done it in the past).
-
-						- Ted
---
-To unsubscribe from this list: send the line "unsubscribe linux-fsdevel" in
+Thanks.
