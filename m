@@ -1,278 +1,87 @@
-From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Subject: [PATCH v3 3/6] bisect: simplify the addition of new bisect terms
-Date: Mon, 22 Jun 2015 23:00:33 +0200
-Message-ID: <1435006836-18182-3-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-References: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-Cc: antoine.delaite@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	Matthieu.Moy@grenoble-inp.fr, chriscool@tuxfamily.org,
-	thomasxnguy@gmail.com, valentinduperray@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 22 23:01:06 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 12/19] initial_ref_transaction_commit(): check for duplicate refs
+Date: Mon, 22 Jun 2015 14:06:02 -0700
+Message-ID: <xmqqtwtzfo79.fsf@gitster.dls.corp.google.com>
+References: <cover.1434980615.git.mhagger@alum.mit.edu>
+	<63ae59139a3a7b5c85f6d44864eade79a93965fb.1434980615.git.mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 22 23:06:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z78q2-00060n-3A
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 23:01:06 +0200
+	id 1Z78ux-0008V5-CK
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 23:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771AbbFVVA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 17:00:58 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:40646 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751824AbbFVVAk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 17:00:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 0510E86FC;
-	Mon, 22 Jun 2015 23:00:38 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3D3_wmvOV99f; Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id AC4B321E0;
-	Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id A3A2620DC;
-	Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VPmY8-fubSFX; Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
-Received: from pcserveur.ensimag.fr (ensipcserveur.imag.fr [129.88.240.65])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 51E9E20DD;
-	Mon, 22 Jun 2015 23:00:37 +0200 (CEST)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+	id S1751858AbbFVVGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 17:06:07 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:37280 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724AbbFVVGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 17:06:05 -0400
+Received: by igblr2 with SMTP id lr2so62366139igb.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2015 14:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=WjsqhhpW7cArtr7P9D+BcZnZJdUm4VvSwqbh2TUqFHw=;
+        b=UuEaBZMUEW9hXBeSC9Zcwhp/2WDpoSkXNrautBwh51OSEz/d0cN8OJ+3wg4JjIS5J6
+         GQp9ZLXdmYmpyDlyRtEW9EcI9hR7Ujc+ca3ruop5XZJ7G/G1VVTfBhwvw6rKBASxrtnE
+         Cb24AK0Pv5M7A3ZtnWaJvBqz8NVieKtl8YPdwi2xd5qnhQfDbbUIYpl3rpWKaGPvGrkc
+         bhYkjEPPmxQFJuTOOjzrHdFAoIq+p9OTdpznkE6luBnBqt5+QuFmMVneanuNR5QgZ0h4
+         OgytGUEvEIR6LM7d5rZ8JzH6+pJi8/PAqCU7o21Fu1TdRrat//uivDCfHlE4Q+3D4cQH
+         F9xA==
+X-Received: by 10.50.64.147 with SMTP id o19mr23480645igs.33.1435007164720;
+        Mon, 22 Jun 2015 14:06:04 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:b0be:ae3d:b206:8e25])
+        by mx.google.com with ESMTPSA id x4sm13554080iod.26.2015.06.22.14.06.03
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 22 Jun 2015 14:06:04 -0700 (PDT)
+In-Reply-To: <63ae59139a3a7b5c85f6d44864eade79a93965fb.1434980615.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Mon, 22 Jun 2015 16:03:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272416>
 
-We create a file BISECT_TERMS in the repository .git to be read during a
-bisection. The fonctions to be changed if we add new terms are quite
-few.
-In git-bisect.sh :
-	check_and_set_terms
-	bisect_voc
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
-Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
-Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
----
- bisect.c      |   38 ++++++++++++++++++++++++++++--
- git-bisect.sh |   70 +++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 98 insertions(+), 10 deletions(-)
+> Error out if the ref_transaction includes more than one update for any
+> refname.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 
-diff --git a/bisect.c b/bisect.c
-index cda30fa..2fc8a78 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -747,7 +747,10 @@ static void handle_bad_merge_base(void)
- 				"between %s and [%s].\n",
- 				bad_hex, bad_hex, good_hex);
- 		} else {
--			die("BUG: terms %s/%s not managed", name_bad, name_good);
-+			fprintf(stderr, "The merge base %s is %s.\n"
-+				"This means the first commit marked %s is "
-+				"between %s and [%s].\n",
-+				bad_hex, name_bad, name_bad, bad_hex, good_hex);
- 		}
- 		exit(3);
- 	}
-@@ -902,6 +905,36 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
- }
- 
- /*
-+ * The terms used for this bisect session are stored in BISECT_TERMS.
-+ * We read them and store them to adapt the messages accordingly.
-+ * Default is bad/good.
-+ */
-+void read_bisect_terms(const char **read_bad, const char **read_good)
-+{
-+	struct strbuf str = STRBUF_INIT;
-+	const char *filename = git_path("BISECT_TERMS");
-+	FILE *fp = fopen(filename, "r");
-+
-+	if (!fp) {
-+		if (errno==2) {
-+			*read_bad = "bad";
-+			*read_good = "good";
-+			return;
-+		} else {
-+			die("could not read file '%s': %s", filename,
-+				strerror(errno));
-+		}
-+	} else {
-+		strbuf_getline(&str, fp, '\n');
-+		*read_bad = strbuf_detach(&str, NULL);
-+		strbuf_getline(&str, fp, '\n');
-+		*read_good = strbuf_detach(&str, NULL);
-+	}
-+	strbuf_release(&str);
-+	fclose(fp);
-+}
-+
-+/*
-  * We use the convention that exiting with an exit code 10 means that
-  * the bisection process finished successfully.
-  * In this case the calling shell script should exit 0.
-@@ -917,8 +950,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	const unsigned char *bisect_rev;
- 	char bisect_rev_hex[GIT_SHA1_HEXSZ + 1];
- 
--	name_bad="bad";
--	name_good="good";
-+	read_bisect_terms(&name_bad, &name_good);
- 	if (read_bisect_refs())
- 		die("reading bisect refs failed");
- 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index ce6412f..55b9ebd 100644
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -77,6 +77,9 @@ bisect_start() {
- 	orig_args=$(git rev-parse --sq-quote "$@")
- 	bad_seen=0
- 	eval=''
-+	# revision_seen is true if a git bisect start
-+	# has revision as arguments
-+	revision_seen=0
- 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
- 	then
- 		mode=--no-checkout
-@@ -101,6 +104,9 @@ bisect_start() {
- 				die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
- 				break
- 			}
-+
-+			revision_seen=1
-+
- 			case $bad_seen in
- 			0) state=$NAME_BAD ; bad_seen=1 ;;
- 			*) state=$NAME_GOOD ;;
-@@ -172,6 +178,11 @@ bisect_start() {
- 	} &&
- 	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
- 	eval "$eval true" &&
-+	if test $revision_seen -eq 1 && test ! -s "$GIT_DIR/BISECT_TERMS"
-+	then
-+		echo "$NAME_BAD" >"$GIT_DIR/BISECT_TERMS" &&
-+		echo "$NAME_GOOD" >>"$GIT_DIR/BISECT_TERMS"
-+	fi &&
- 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
- 	#
- 	# Check if we can proceed to the next bisect state.
-@@ -232,6 +243,7 @@ bisect_skip() {
- bisect_state() {
- 	bisect_autostart
- 	state=$1
-+	check_and_set_terms $state
- 	case "$#,$state" in
- 	0,*)
- 		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
-@@ -291,15 +303,17 @@ bisect_next_check() {
- 		: bisect without $NAME_GOOD...
- 		;;
- 	*)
--
-+		bad_syn=$(bisect_voc bad)
-+		good_syn=$(bisect_voc good)
- 		if test -s "$GIT_DIR/BISECT_START"
- 		then
--			gettextln "You need to give me at least one good and one bad revision.
--(You can use \"git bisect bad\" and \"git bisect good\" for that.)" >&2
-+
-+			eval_gettextln "You need to give me at least one \$bad_syn and one \$good_syn revision.
-+(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
- 		else
--			gettextln "You need to start by \"git bisect start\".
--You then need to give me at least one good and one bad revision.
--(You can use \"git bisect bad\" and \"git bisect good\" for that.)" >&2
-+			eval_gettextln "You need to start by \"git bisect start\".
-+You then need to give me at least one \$good_syn and one \$bad_syn revision.
-+(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
- 		fi
- 		exit 1 ;;
- 	esac
-@@ -402,6 +416,7 @@ bisect_clean_state() {
- 	rm -f "$GIT_DIR/BISECT_LOG" &&
- 	rm -f "$GIT_DIR/BISECT_NAMES" &&
- 	rm -f "$GIT_DIR/BISECT_RUN" &&
-+	rm -f "$GIT_DIR/BISECT_TERMS" &&
- 	# Cleanup head-name if it got left by an old version of git-bisect
- 	rm -f "$GIT_DIR/head-name" &&
- 	git update-ref -d --no-deref BISECT_HEAD &&
-@@ -422,11 +437,13 @@ bisect_replay () {
- 			rev="$command"
- 			command="$bisect"
- 		fi
-+		get_terms
-+		check_and_set_terms "$command"
- 		case "$command" in
- 		start)
- 			cmd="bisect_start $rev"
- 			eval "$cmd" ;;
--		$NAME_GOOD|$NAME_BAD|skip)
-+		"$NAME_GOOD"|"$NAME_BAD"|skip)
- 			bisect_write "$command" "$rev" ;;
- 		*)
- 			die "$(gettext "?? what are you talking about?")" ;;
-@@ -499,11 +516,50 @@ bisect_log () {
- 	cat "$GIT_DIR/BISECT_LOG"
- }
- 
-+get_terms () {
-+	if test -s "$GIT_DIR/BISECT_TERMS"
-+	then
-+		{
-+		read NAME_BAD
-+		read NAME_GOOD
-+		}<"$GIT_DIR/BISECT_TERMS"	
-+	fi
-+}
-+
-+check_and_set_terms () {
-+	cmd="$1"
-+	case "$cmd" in
-+	bad|good)
-+		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$NAME_BAD" && test "$cmd" != "$NAME_GOOD"
-+		then
-+			die "$(eval_gettext "Invalid command: you're currently in a \$NAME_BAD/\$NAME_GOOD bisect.")"
-+		fi
-+		case "$cmd" in
-+		bad|good)
-+			if ! test -s "$GIT_DIR/BISECT_TERMS"
-+			then
-+				echo "bad" >"$GIT_DIR/BISECT_TERMS" &&
-+				echo "good" >>"$GIT_DIR/BISECT_TERMS"
-+			fi
-+			NAME_BAD="bad"
-+			NAME_GOOD="good" ;;
-+		esac ;;
-+	esac
-+}
-+
-+bisect_voc () {
-+	case "$1" in
-+	bad) echo "bad" ;;
-+	good) echo "good" ;;
-+	esac
-+}
-+
- case "$#" in
- 0)
- 	usage ;;
- *)
- 	cmd="$1"
-+	get_terms
- 	shift
- 	case "$cmd" in
- 	help)
--- 
-1.7.1
+This somehow feels like "ehh, I now know better and this function
+should have been like this from the beginning" to me.
+
+But that is OK.
+
+Is the initial creation logic too fragile to deserve its own
+function to force callers to think about it, by the way?
+
+What I am wondering is if we could turn the safety logic that appear
+here (i.e. no existing refs must be assumed by the set of updates,
+etc.)  into an optimization cue and implement this as a special case
+helper to ref_transaction_commit(), i.e.
+
+	ref_transaction_commit(...)
+        {
+		if (updates are all initial creation &&
+                    no existing refs in repository)
+			return initial_ref_transaction_commit(...);
+		/* otherwise we do the usual thing */
+		...
+	}
+
+and have "clone" call ref_transaction_commit() as usual.
