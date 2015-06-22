@@ -1,59 +1,60 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 04/19] for-each-ref: add '--points-at' option
-Date: Mon, 22 Jun 2015 18:38:18 -0400
-Message-ID: <CAPig+cRzZDa4LyEpzVcODYCdwxoHPRJ3hqjEvSWdBsKi3Ti7nA@mail.gmail.com>
+Subject: Re: [PATCH v4 07/19] for-each-ref: add '--merged' and '--no-merged' options
+Date: Mon, 22 Jun 2015 18:41:39 -0400
+Message-ID: <CAPig+cQLHX2spg00Zn1J=PMg_cuy2ARuWPOQQXLT1yLoQZ_SFg@mail.gmail.com>
 References: <CAOLa=ZS_vn8ZNrb7mtqZKU4Y3RCZojcbeMYfbx=3X-aVjhdpSA@mail.gmail.com>
 	<1434919705-4884-1-git-send-email-karthik.188@gmail.com>
-	<1434919705-4884-4-git-send-email-karthik.188@gmail.com>
+	<1434919705-4884-7-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 00:38:37 2015
+X-From: git-owner@vger.kernel.org Tue Jun 23 00:41:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7AMO-0002j3-JW
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 00:38:36 +0200
+	id 1Z7APV-0004So-2R
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 00:41:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932516AbbFVWi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 18:38:26 -0400
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:34170 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbbFVWiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 18:38:19 -0400
-Received: by yhnv31 with SMTP id v31so82297323yhn.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2015 15:38:18 -0700 (PDT)
+	id S1754316AbbFVWlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 18:41:45 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:35333 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752965AbbFVWlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 18:41:40 -0400
+Received: by ykdy1 with SMTP id y1so31254810ykd.2
+        for <git@vger.kernel.org>; Mon, 22 Jun 2015 15:41:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=R+/FKytdMgaAsG9P8Fqm3TUCDryjwbeG9nYHOyqKbCs=;
-        b=hGFaI8i1Vjprl2zIhjJ3LEcQW+2ojRzk+b1j9ay4M0bJjYZNFWVUFWNYbF5IJ/pGAG
-         JiprCGC/JNL/VQgjZ1oGoQbvQSrloUU041okUrwkfeZ9djwa17igrIH0FPce+svdX0xo
-         pXazphO/zlHk0ondacsNW33jHIJBYtNJCB0Zo4cuzjQPa+FQVYpyUe9X0DXrRocL/lW6
-         GtClksvNu2hTbtehzqgRsGv7hfhsFcAz5ukp92N17VUQ3BFZbn1GWlATjQvN+dihsbmG
-         UDHrt6vw5cD4EAuFRV1R+os8nvHUjRMhNfmarfaL88rLnNJzjqnvBhy0vZ8feI95uHob
-         O3Yg==
-X-Received: by 10.129.70.137 with SMTP id t131mr39159496ywa.4.1435012698319;
- Mon, 22 Jun 2015 15:38:18 -0700 (PDT)
-Received: by 10.37.36.214 with HTTP; Mon, 22 Jun 2015 15:38:18 -0700 (PDT)
-In-Reply-To: <1434919705-4884-4-git-send-email-karthik.188@gmail.com>
-X-Google-Sender-Auth: fE0WJ9I7uZ_XDlLGkHVoTPf75mU
+        bh=tcNbMTo6dkZiuvn1Ybu1GyGNIY0kjghqYel7A7zKGRM=;
+        b=fUZWA/sKzrStjhrVrAQOhEdNGAIa8R4uU/ABuw+zqEdlr64X3T3E2/Vj0xlDoZ1NiA
+         XdX4P8A1AHhs76Lx7aZiRUGOMNj2RabDVRT4J6Xum9Py6aQff4fDwyw1xgkDt3PJ48pA
+         jAcfKXRsCm/Jye/AMt5HRMsx3amWGdvff2fgG4OqM1TwY3m7ZvVzcYBymeVJdUhGjNjJ
+         YWWJqHp4tnj9TPjmw2fwa+1TybgCv2QnqK7GwMk4D+8HoOM/n2wpKL0RAcLvwPwY/tup
+         xT2ZGXn6MvKXFtBehy9EGe1UOOp0mdDtWv+FH/CRBs1xWfFl0a8MpgUgb8Ct0/PcCax/
+         Xtqw==
+X-Received: by 10.170.97.9 with SMTP id o9mr39168118yka.84.1435012899733; Mon,
+ 22 Jun 2015 15:41:39 -0700 (PDT)
+Received: by 10.37.36.214 with HTTP; Mon, 22 Jun 2015 15:41:39 -0700 (PDT)
+In-Reply-To: <1434919705-4884-7-git-send-email-karthik.188@gmail.com>
+X-Google-Sender-Auth: SzgmaGCS5Dpfm1pNuEeZlDo8cV0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272431>
 
 On Sun, Jun 21, 2015 at 4:48 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add the '--points-at' option provided by 'ref-filter'. The
-> option lets the user to pick only refs which point to a particular
-> commit.
+> Add the '--merged' and '--no-merged' options provided by 'ref-filter'.
+> The '--merged' option lets the user to only list refs merged into the
+> named commit. The '--no-merged' option lets the user to only list refs
+> not merged into the named commit.
 >
 > Add documentation and tests for the same.
 >
@@ -62,37 +63,51 @@ On Sun, Jun 21, 2015 at 4:48 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
 > Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
-> diff --git a/t/t6301-for-each-ref-filter.sh b/t/t6301-for-each-ref-filter.sh
-> index b1fa8d4..67de3a7 100755
-> --- a/t/t6301-for-each-ref-filter.sh
-> +++ b/t/t6301-for-each-ref-filter.sh
-> @@ -16,4 +16,24 @@ test_expect_success 'setup some history and refs' '
->         git update-ref refs/odd/spot master
->  '
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index 0ede41d..c6dcd99 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -10,7 +10,7 @@ SYNOPSIS
+>  [verse]
+>  'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
+>                    [(--sort=<key>)...] [--format=<format>] [<pattern>...]
+> -                  [--points-at <object>]
+> +                  [--points-at <object>] [(--merged | --no-merged) <object>]
+
+According to the documentation you added to the OPTIONS section, the
+object following --merged and --no-merged is optional. Therefore,
+shouldn't this be s/<object>/[<object>]/ ?
+
+Also, in the OPTIONS section, you spelled it "commit" rather than "object".
+
+>  DESCRIPTION
+>  -----------
+> @@ -66,6 +66,14 @@ OPTIONS
+>  --points-at <object>::
+>         Only list refs pointing to the given object.
 >
-> +test_expect_success 'filtering with --points-at' '
-> +       cat >expect <<-\EOF &&
-> +       refs/heads/master
-> +       refs/odd/spot
-> +       refs/tags/three
-> +       EOF
-> +       git for-each-ref --format="%(refname)" --points-at=master >actual &&
-> +       test_cmp expect actual
-> +'
+> +--merged [<commit>]::
+> +       Only list refs whose tips are reachable from the
+> +       specified commit (HEAD if not specified).
 > +
-> +test_expect_success 'check signed tags with --points-at' '
-> +       cat >expect <<-\EOF &&
-> +       refs/heads/side
-> +       refs/tags/four
-> +       refs/tags/signed-tag four
-> +       EOF
-> +       git for-each-ref  --format="%(refname) %(*subject)" --points-at=side >actual &&
-
-s/for-each-ref\s+/for-each-ref /
-
-> +       test_cmp expect actual
-> +'
+> +--no-merged [<commit>]::
+> +       Only list refs whose tips are not reachable from the
+> +       specified commit (HEAD if not specified).
 > +
->  test_done
-> --
-> 2.4.3.439.gfea0c2a.dirty
+>  FIELD NAMES
+>  -----------
+>
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 46f9b05..09d48da 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -8,6 +8,7 @@
+>  static char const * const for_each_ref_usage[] = {
+>         N_("git for-each-ref [<options>] [<pattern>]"),
+>         N_("git for-each-ref [--points-at <object>]"),
+> +       N_("git for-each-ref [(--merged | --no-merged) <object>]"),
+
+Ditto: s/<object>/[<object>]/
+
+>         NULL
+>  };
