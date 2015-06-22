@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Galan=20R=C3=A9mi?= 
 	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: [PATCHv6 2/3] git rebase -i: warn about removed commits
-Date: Mon, 22 Jun 2015 23:42:48 +0200
-Message-ID: <1435009369-11496-2-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: [PATCHv6 3/3] git rebase -i: add static check for commands and SHA-1
+Date: Mon, 22 Jun 2015 23:42:49 +0200
+Message-ID: <1435009369-11496-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -18,326 +18,236 @@ Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	=?UTF-8?q?Galan=20R=C3=A9mi?= 
 	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 22 23:43:20 2015
+X-From: git-owner@vger.kernel.org Mon Jun 22 23:43:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z79Us-0000w7-BY
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 23:43:18 +0200
+	id 1Z79Uu-0000w7-EZ
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 23:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbbFVVnM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2015 17:43:12 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:51261 "EHLO
+	id S1752215AbbFVVnQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2015 17:43:16 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:39301 "EHLO
 	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751618AbbFVVnJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 17:43:09 -0400
+	by vger.kernel.org with ESMTP id S1751746AbbFVVnK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 17:43:10 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 63E9B88AD;
-	Mon, 22 Jun 2015 23:43:07 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id A64D28AA5;
+	Mon, 22 Jun 2015 23:43:08 +0200 (CEST)
 Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cO6QiQLd4AIX; Mon, 22 Jun 2015 23:43:07 +0200 (CEST)
+	with ESMTP id TVUyH04IWSy7; Mon, 22 Jun 2015 23:43:08 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4D2AE86FC;
-	Mon, 22 Jun 2015 23:43:07 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9525C86FC;
+	Mon, 22 Jun 2015 23:43:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 3FD4420DC;
-	Mon, 22 Jun 2015 23:43:07 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 8EE0F20DC;
+	Mon, 22 Jun 2015 23:43:08 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6o6ozjvM+SbH; Mon, 22 Jun 2015 23:43:07 +0200 (CEST)
+	with ESMTP id ZZGujkFrRmp6; Mon, 22 Jun 2015 23:43:08 +0200 (CEST)
 Received: from galanalr-Dell-System-Inspiron-N7110.univnautes.lan (eduspot-condillac.crous-grenoble.fr [193.52.241.183])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 1EEFF20D2;
-	Mon, 22 Jun 2015 23:43:07 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 663DB20D2;
+	Mon, 22 Jun 2015 23:43:08 +0200 (CEST)
 X-Mailer: git-send-email 2.4.3.371.g8992f2a
 In-Reply-To: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272422>
 
-Check if commits were removed (i.e. a line was deleted) and print
-warnings or stop git rebase depending on the value of the
-configuration variable rebase.missingCommitsCheck.
+Check before the start of the rebasing if the commands exists, and for
+the commands expecting a SHA-1, check if the SHA-1 is present and
+corresponds to a commit. In case of error, print the error, stop git
+rebase and prompt the user to fix with 'git rebase --edit-todo' or to
+abort.
 
-This patch gives the user the possibility to avoid silent loss of
-information (losing a commit through deleting the line in this case)
-if he wants.
-
-Add the configuration variable rebase.missingCommitsCheck.
-    - When unset or set to "ignore", no checking is done.
-    - When set to "warn", the commits are checked, warnings are
-      displayed but git rebase still proceeds.
-    - When set to "error", the commits are checked, warnings are
-      displayed and the rebase is stopped.
-      (The user can then use 'git rebase --edit-todo' and
-      'git rebase --continue', or 'git rebase --abort')
-
-rebase.missingCommitsCheck defaults to "ignore".
+This allows to avoid doing half of a rebase before finding an error
+and giving back what's left of the todo list to the user and prompt
+him to fix when it might be too late for him to do so (he might have
+to abort and restart the rebase).
 
 Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp=
 =2Efr>
 ---
- On the contrary of v5, the SHA-1 that are read are the short one.
- (the todo-list is read directly after the user closes his editor
- and not after expansion of ids)
+ I used:
+   read -r command sha1 rest <<EOF
+   $line
+   EOF
+ because
+   printf '%s' "$line" | read -r command sha1 rest
+ doesn't work (the 3 variables have no value as a result).
+ There might be a better way to do this, but I don't have it right now.
 
- Documentation/config.txt      |  11 +++++
- Documentation/git-rebase.txt  |   6 +++
- git-rebase--interactive.sh    | 104 ++++++++++++++++++++++++++++++++++=
-++++++--
- t/t3404-rebase-interactive.sh |  66 +++++++++++++++++++++++++++
- 4 files changed, 184 insertions(+), 3 deletions(-)
+ git-rebase--interactive.sh    | 70 +++++++++++++++++++++++++++++++++++=
+++++++++
+ t/lib-rebase.sh               |  5 ++++
+ t/t3404-rebase-interactive.sh | 40 +++++++++++++++++++++++++
+ 3 files changed, 115 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 4d21ce1..25b2a04 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2160,6 +2160,17 @@ rebase.autoStash::
- 	successful rebase might result in non-trivial conflicts.
- 	Defaults to false.
-=20
-+rebase.missingCommitsCheck::
-+	If set to "warn", git rebase -i will print a warning if some
-+	commits are removed (e.g. a line was deleted), however the
-+	rebase will still proceed. If set to "error", it will print
-+	the previous warning and stop the rebase, 'git rebase
-+	--edit-todo' can then be used to correct the error. If set to
-+	"ignore", no checking is done.
-+	To drop a commit without warning or error, use the `drop`
-+	command in the todo-list.
-+	Defaults to "ignore".
-+
- receive.advertiseAtomic::
- 	By default, git-receive-pack will advertise the atomic push
- 	capability to its clients. If you don't want to this capability
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index 34bd070..2ca3b8d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -213,6 +213,12 @@ rebase.autoSquash::
- rebase.autoStash::
- 	If set to true enable '--autostash' option by default.
-=20
-+rebase.missingCommitsCheck::
-+	If set to "warn", print warnings about removed commits in
-+	interactive mode. If set to "error", print the warnings and
-+	stop the rebase. If set to "ignore", no checking is
-+	done. "ignore" by default.
-+
- OPTIONS
- -------
- --onto <newbase>::
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 72abf90..66daacf 100644
+index 66daacf..6381686 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -834,6 +834,104 @@ add_exec_commands () {
+@@ -834,6 +834,52 @@ add_exec_commands () {
  	mv "$1.new" "$1"
  }
 =20
-+# Print the list of the SHA-1 of the commits
-+# from stdin to stdout
-+todo_list_to_sha_list () {
++# Check if the SHA-1 passed as an argument is a
++# correct one, if not then print $2 in "$todo".badsha
++# $1: the SHA-1 to test
++# $2: the line to display if incorrect SHA-1
++check_commit_sha () {
++	badsha=3Df
++	if test -z $1
++	then
++		badsha=3Dt
++	else
++		sha1_verif=3D"$(git rev-parse --verify --quiet $1^{commit})"
++		if test -z $sha1_verif
++		then
++			badsha=3Dt
++		fi
++	fi
++
++	if test $badsha =3D t
++	then
++		printf '%s\n' "$2" >>"$todo".badsha
++	fi
++}
++
++# prints the bad commits and bad commands
++# from the todolist in stdin
++check_bad_cmd_and_sha () {
 +	git stripspace --strip-comments |
-+	while read -r command sha1 rest
++	while read -r line
 +	do
++		read -r command sha1 rest <<EOF
++$line
++EOF
 +		case $command in
-+		"$comment_char"*|''|noop|x|"exec")
++		''|noop|x|"exec")
++			# Doesn't expect a SHA-1
++			;;
++		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
++			check_commit_sha $sha1 "$line"
 +			;;
 +		*)
-+			long_sha=3D$(git rev-list --no-walk "$sha1" 2>/dev/null)
-+			printf "%s\n" "$long_sha"
++			printf '%s\n' "$line" >>"$todo".badcmd
 +			;;
 +		esac
 +	done
 +}
 +
-+# Use warn for each line in stdin
-+warn_lines () {
-+	while read -r line
-+	do
-+		warn " - $line"
-+	done
-+}
+ # Print the list of the SHA-1 of the commits
+ # from stdin to stdout
+ todo_list_to_sha_list () {
+@@ -868,6 +914,8 @@ checkout_onto () {
+=20
+ # Check if the user dropped some commits by mistake
+ # Behaviour determined by rebase.missingCommitsCheck.
++# Check if there is an unrecognized command or a
++# bad SHA-1 in a command.
+ check_todo_list () {
+ 	raise_error=3Df
+=20
+@@ -919,6 +967,28 @@ check_todo_list () {
+ 		;;
+ 	esac
+=20
++	check_bad_cmd_and_sha <"$todo"
 +
-+# Switch to the branch in $into and notify it in the reflog
-+checkout_onto () {
-+	GIT_REFLOG_ACTION=3D"$GIT_REFLOG_ACTION: checkout $onto_name"
-+	output git checkout $onto || die_abort "could not detach HEAD"
-+	git update-ref ORIG_HEAD $orig_head
-+}
-+
-+# Check if the user dropped some commits by mistake
-+# Behaviour determined by rebase.missingCommitsCheck.
-+check_todo_list () {
-+	raise_error=3Df
-+
-+	check_level=3D$(git config --get rebase.missingCommitsCheck)
-+	check_level=3D${check_level:-ignore}
-+	# Don't be case sensitive
-+	check_level=3D$(printf '%s' "$check_level" | tr 'A-Z' 'a-z')
-+
-+	case "$check_level" in
-+	warn|error)
-+		# Get the SHA-1 of the commits
-+		todo_list_to_sha_list <"$todo".backup >"$todo".oldsha1
-+		todo_list_to_sha_list <"$todo" >"$todo".newsha1
-+
-+		# Sort the SHA-1 and compare them
-+		sort -u "$todo".oldsha1 >"$todo".oldsha1+
-+		mv "$todo".oldsha1+ "$todo".oldsha1
-+		sort -u "$todo".newsha1 >"$todo".newsha1+
-+		mv "$todo".newsha1+ "$todo".newsha1
-+		comm -2 -3 "$todo".oldsha1 "$todo".newsha1 >"$todo".miss
-+
-+		# Warn about missing commits
-+		if test -s "$todo".miss
-+		then
-+			test "$check_level" =3D error && raise_error=3Dt
-+
-+			warn "Warning: some commits may have been dropped" \
-+				"accidentally."
-+			warn "Dropped commits (newer to older):"
-+
-+			# Make the list user-friendly and display
-+			opt=3D"--no-walk=3Dsorted --format=3Doneline --abbrev-commit --stdi=
-n"
-+			git rev-list $opt <"$todo".miss | warn_lines
-+
-+			warn "To avoid this message, use \"drop\" to" \
-+				"explicitly remove a commit."
-+			warn
-+			warn "Use 'git --config rebase.missingCommitsCheck' to change" \
-+				"the level of warnings."
-+			warn "The possible behaviours are: ignore, warn, error."
-+			warn
-+		fi
-+		;;
-+	ignore)
-+		;;
-+	*)
-+		warn "Unrecognized setting $check_level for option" \
-+			"rebase.missingCommitsCheck. Ignoring."
-+		;;
-+	esac
-+
-+	if test $raise_error =3D t
++	if test -s "$todo".badsha
 +	then
-+		# Checkout before the first commit of the
-+		# rebase: this way git rebase --continue
-+		# will work correctly as it expects HEAD to be
-+		# placed before the commit of the next action
-+		checkout_onto
++		raise_error=3Dt
 +
-+		warn "You can fix this with 'git rebase --edit-todo'."
-+		die "Or you can abort the rebase with 'git rebase --abort'."
++		warn "Warning: the SHA-1 is missing or isn't" \
++			"a commit in the following line(s):"
++		warn_lines <"$todo".badsha
++		warn
 +	fi
-+}
 +
- # The whole contents of this file is run by dot-sourcing it from
- # inside a shell function.  It used to be that "return"s we see
- # below were not inside any function, and expected to return
-@@ -1077,13 +1175,13 @@ git_sequence_editor "$todo" ||
- has_action "$todo" ||
- 	return 2
-=20
-+check_todo_list
++	if test -s "$todo".badcmd
++	then
++		raise_error=3Dt
 +
- expand_todo_ids
-=20
- test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_pi=
-cks
-=20
--GIT_REFLOG_ACTION=3D"$GIT_REFLOG_ACTION: checkout $onto_name"
--output git checkout $onto || die_abort "could not detach HEAD"
--git update-ref ORIG_HEAD $orig_head
-+checkout_onto
- do_rest
-=20
- }
++		warn "Warning: the command isn't recognized" \
++			"in the following line(s):"
++		warn_lines <"$todo".badcmd
++		warn
++	fi
++
+ 	if test $raise_error =3D t
+ 	then
+ 		# Checkout before the first commit of the
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index fdbc900..9a96e15 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -54,6 +54,11 @@ set_fake_editor () {
+ 			echo '# comment' >> "$1";;
+ 		">")
+ 			echo >> "$1";;
++		bad)
++			action=3D"badcmd";;
++		fakesha)
++			echo "$action XXXXXXX False commit" >> "$1"
++			action=3Dpick;;
+ 		*)
+ 			sed -n "${line}s/^pick/$action/p" < "$1".tmp >> "$1"
+ 			action=3Dpick;;
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
 =2Esh
-index ecd277c..a92ae19 100755
+index a92ae19..d691b1c 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1118,4 +1118,70 @@ test_expect_success 'drop' '
- 	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
+@@ -1184,4 +1184,44 @@ test_expect_success 'rebase -i respects rebase.m=
+issingCommitsCheck =3D error' '
+ 	test B =3D $(git cat-file commit HEAD^ | sed -ne \$p)
  '
 =20
 +cat >expect <<EOF
-+Successfully rebased and updated refs/heads/tmp2.
-+EOF
-+
-+test_expect_success 'rebase -i respects rebase.missingCommitsCheck =3D=
- ignore' '
-+	test_config rebase.missingCommitsCheck ignore &&
-+	test_rebase_end tmp2 &&
-+	set_fake_editor &&
-+	FAKE_LINES=3D"1 2 3 4" \
-+		git rebase -i --root 2>actual &&
-+	test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<EOF
-+Warning: some commits may have been dropped accidentally.
-+Dropped commits (newer to older):
-+ - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-+To avoid this message, use "drop" to explicitly remove a commit.
-+
-+Use 'git --config rebase.missingCommitsCheck' to change the level of w=
-arnings.
-+The possible behaviours are: ignore, warn, error.
-+
-+Successfully rebased and updated refs/heads/tmp2.
-+EOF
-+
-+test_expect_success 'rebase -i respects rebase.missingCommitsCheck =3D=
- warn' '
-+	test_config rebase.missingCommitsCheck warn &&
-+	test_rebase_end tmp2 &&
-+	set_fake_editor &&
-+	FAKE_LINES=3D"1 2 3 4" \
-+		git rebase -i --root 2>actual &&
-+	test_cmp expect actual &&
-+	test D =3D $(git cat-file commit HEAD | sed -ne \$p)
-+'
-+
-+cat >expect <<EOF
-+Warning: some commits may have been dropped accidentally.
-+Dropped commits (newer to older):
-+ - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-+ - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master~2)
-+To avoid this message, use "drop" to explicitly remove a commit.
-+
-+Use 'git --config rebase.missingCommitsCheck' to change the level of w=
-arnings.
-+The possible behaviours are: ignore, warn, error.
++Warning: the command isn't recognized in the following line(s):
++ - badcmd $(git rev-list --oneline -1 master~1)
 +
 +You can fix this with 'git rebase --edit-todo'.
 +Or you can abort the rebase with 'git rebase --abort'.
 +EOF
 +
-+test_expect_success 'rebase -i respects rebase.missingCommitsCheck =3D=
- error' '
++test_expect_success 'static check of bad command' '
++	test_rebase_end tmp2 &&
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES=3D"1 2 3 bad 4 5" \
++		git rebase -i --root 2>actual &&
++	test_cmp expect actual &&
++	FAKE_LINES=3D"1 2 3 drop 4 5" git rebase --edit-todo &&
++	git rebase --continue &&
++	test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
++	test C =3D $(git cat-file commit HEAD^ | sed -ne \$p)
++'
++
++cat >expect <<EOF
++Warning: the SHA-1 is missing or isn't a commit in the following line(=
+s):
++ - edit XXXXXXX False commit
++
++You can fix this with 'git rebase --edit-todo'.
++Or you can abort the rebase with 'git rebase --abort'.
++EOF
++
++test_expect_success 'static check of bad SHA-1' '
 +	test_config rebase.missingCommitsCheck error &&
 +	test_rebase_end tmp2 &&
 +	set_fake_editor &&
-+	test_must_fail env FAKE_LINES=3D"1 2 4" \
++	test_must_fail env FAKE_LINES=3D"1 2 edit fakesha 3 4 5 #" \
 +		git rebase -i --root 2>actual &&
 +	test_cmp expect actual &&
-+	cp .git/rebase-merge/git-rebase-todo.backup \
-+		.git/rebase-merge/git-rebase-todo &&
-+	FAKE_LINES=3D"1 2 drop 3 4 drop 5" \
-+		git rebase --edit-todo &&
++	FAKE_LINES=3D"1 2 4 5 6" git rebase --edit-todo &&
 +	git rebase --continue &&
-+	test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-+	test B =3D $(git cat-file commit HEAD^ | sed -ne \$p)
++	test E =3D $(git cat-file commit HEAD | sed -ne \$p)
 +'
 +
  test_done
