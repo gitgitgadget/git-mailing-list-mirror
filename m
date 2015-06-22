@@ -1,170 +1,179 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 19/19] delete_ref(): use the usual convention for old_sha1
-Date: Mon, 22 Jun 2015 16:03:10 +0200
-Message-ID: <29ca4c18c045147c5260eb699dad31d0e4036e8b.1434980615.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 11/19] refs: remove some functions from the module's public interface
+Date: Mon, 22 Jun 2015 16:03:02 +0200
+Message-ID: <5413233024b7efc9081f25ccc983988d48c76c45.1434980615.git.mhagger@alum.mit.edu>
 References: <cover.1434980615.git.mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 22 16:04:11 2015
+X-From: git-owner@vger.kernel.org Mon Jun 22 16:04:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z72KY-0005pZ-TW
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 16:04:11 +0200
+	id 1Z72KN-0005gX-Ah
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 16:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933695AbbFVOEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 10:04:00 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:42118 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933550AbbFVODu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 10:03:50 -0400
-X-AuditID: 1207440f-f79df6d000007c0f-b7-558815bb73b6
+	id S933690AbbFVODz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 10:03:55 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:52843 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933443AbbFVODn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 10:03:43 -0400
+X-AuditID: 12074412-f79a76d000007c8b-85-558815b14c2f
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 09.99.31759.BB518855; Mon, 22 Jun 2015 10:03:39 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 9E.21.31883.1B518855; Mon, 22 Jun 2015 10:03:29 -0400 (EDT)
 Received: from michael.fritz.box (p4FC977DB.dip0.t-ipconnect.de [79.201.119.219])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5ME3CcH030627
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5ME3Cc9030627
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 22 Jun 2015 10:03:38 -0400
+	Mon, 22 Jun 2015 10:03:28 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <cover.1434980615.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqLtbtCPU4OFuHouuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqLtRtCPU4N9WMYuuK91MFg29V5gt
 	bq+Yz2zxo6WH2WLz5nYWB1aPv+8/MHks2FTq8ax3D6PHxUvKHp83yQWwRnHbJCWWlAVnpufp
-	2yVwZ8xeco21YKpKxa+H65gaGG/JdDFycEgImEic2M3WxcgJZIpJXLi3Hsjm4hASuMwoserx
-	cVYI5ySTxOztv5hBqtgEdCUW9TQzgdgiAmoSE9sOsYAUMQt0MEpcWL6NHSQhLOArsefSVLAi
-	FgFVidd3VoI18wpESWyfe5kVYp2cxPnjP8HinAIWEvP3/QfrFRIwl5g48xHLBEbeBYwMqxjl
-	EnNKc3VzEzNzilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCQop/B2PXeplDjAIcjEo8vA627aFC
-	rIllxZW5hxglOZiURHkPvAYK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFtOQuU401JrKxKLcqH
-	SUlzsCiJ86ovUfcTEkhPLEnNTk0tSC2CycpwcChJ8PqJdIQKCRalpqdWpGXmlCCkmTg4QYZz
-	SYkUp+alpBYllpZkxINiI74YGB0gKR6gvTkg7bzFBYm5QFGI1lOMilLivJNBEgIgiYzSPLix
-	sETxilEc6Eth3j3CQFU8wCQD1/0KaDAT0OAvuW0gg0sSEVJSDYxZoU2Td7c0u6ZM5gy4sL3U
-	UpPpmG3iNRP9i+UlFz437Pvp4pb9vW+n1ocD+f1r439d8LdLffdnzcT4Gt8Ahsh7If9jjSc2
-	Rr8KPPoww8fO+NiFFL9VyR7/3bZOuD5XQVT6vnxvq03a1lP3ppwQC/d6vdD3p/HE 
+	2yVwZ6zeNZel4I9SxYE7/9gaGPfIdDFycEgImEh8/qfWxcgJZIpJXLi3nq2LkYtDSOAyo8Sc
+	FReYIZyTTBJdu1azglSxCehKLOppZgKxRQTUJCa2HWIBKWIW6GCUuLB8GztIQlggQuLF5Vds
+	IDaLgKrEzd9HwGxegSiJT5OvMEGsk5M4f/wnM4jNKWAhMX/ff7BeIQFziYkzH7FMYORdwMiw
+	ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXTC83s0QvNaV0EyMkpIR2MK4/KXeIUYCDUYmH18G2
+	PVSINbGsuDL3EKMkB5OSKO+B10AhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwtZ4FyvCmJlVWp
+	RfkwKWkOFiVx3p+L1f2EBNITS1KzU1MLUotgsjIcHEoSvH4iHaFCgkWp6akVaZk5JQhpJg5O
+	kOFcUiLFqXkpqUWJpSUZ8aDYiC8GRgdIigdo71KQdt7igsRcoChE6ylGRSlx3skgCQGQREZp
+	HtxYWKJ4xSgO9KUw70uQKh5gkoHrfgU0mAlo8JfcNpDBJYkIKakGxk3GM5ZyJt7/aKIexG6w
+	2aGme+okcxGL5rlzZ5QWhu09H6PlPdlS9pT2B/34aPllBUWta0pfdaq4hW38Wmn7fL6Wgs9m
+	oXT3yzlp7ZPPPPu8NtGy+TVrt3rtpFo9De7kZds9mLaUhlnFx5icK/PwnbVjWbl0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272353>
 
-The ref_transaction_update() family of functions use the following
-convention for their old_sha1 parameters:
+The following functions are no longer used from outside the refs
+module:
 
-* old_sha1 == NULL: Don't check the old value at all.
-* is_null_sha1(old_sha1): Ensure that the reference didn't exist
-  before the transaction.
-* otherwise: Ensure that the reference had the specified value before
-  the transaction.
+* lock_packed_refs()
+* add_packed_ref()
+* commit_packed_refs()
+* rollback_packed_refs()
 
-delete_ref() had a different convention, namely treating
-is_null_sha1(old_sha1) as "don't care". Change it to adhere to the
-standard convention to reduce the scope for confusion.
+So make these functions private.
 
-Please note that it is now a bug to pass old_sha1=NULL_SHA1 to
-delete_ref() (because it doesn't make sense to delete a reference that
-you already know doesn't exist). This is consistent with the behavior
-of ref_transaction_delete().
-
-Most of the callers of delete_ref() never pass old_sha1=NULL_SHA1 to
-delete_ref(), and are therefore unaffected by this change. The
-two exceptions are:
-
-* The call in cmd_update_ref(), which passed NULL_SHA1 if the old
-  value passed in on the command line was 0{40} or the empty string.
-  Change that caller to pass NULL in those cases.
-
-  Arguably, it should be an error to call "update-ref -d" with the old
-  value set to "does not exist", just as it is for the `--stdin`
-  command "delete". But since this usage was accepted until now,
-  continue to accept it.
-
-* The call in delete_branches(), which could pass NULL_SHA1 if
-  deleting a broken or symbolic ref. Change it to pass NULL in these
-  cases.
+This is an important step, because it means that nobody outside of the
+refs module needs to know the difference between loose and packed
+references.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/branch.c     |  3 ++-
- builtin/update-ref.c |  8 +++++++-
- refs.c               |  8 --------
- refs.h               | 10 +++++-----
- 4 files changed, 14 insertions(+), 15 deletions(-)
+ refs.c | 31 ++++++++++++++++++++++++-------
+ refs.h | 30 ------------------------------
+ 2 files changed, 24 insertions(+), 37 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 47e3eb9..58aa84f 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -253,7 +253,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			continue;
- 		}
- 
--		if (delete_ref(name, sha1, REF_NODEREF)) {
-+		if (delete_ref(name, is_null_sha1(sha1) ? NULL : sha1,
-+			       REF_NODEREF)) {
- 			error(remote_branch
- 			      ? _("Error deleting remote-tracking branch '%s'")
- 			      : _("Error deleting branch '%s'"),
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 160c7ac..6763cf1 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -422,7 +422,13 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 	if (no_deref)
- 		flags = REF_NODEREF;
- 	if (delete)
--		return delete_ref(refname, oldval ? oldsha1 : NULL, flags);
-+		/*
-+		 * For purposes of backwards compatibility, we treat
-+		 * NULL_SHA1 as "don't care" here:
-+		 */
-+		return delete_ref(refname,
-+				  (oldval && !is_null_sha1(oldsha1)) ? oldsha1 : NULL,
-+				  flags);
- 	else
- 		return update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
- 				  flags, UPDATE_REFS_DIE_ON_ERR);
 diff --git a/refs.c b/refs.c
-index 2ba618e..adf3dc2 100644
+index 2367572..31661c7 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2821,14 +2821,6 @@ int delete_ref(const char *refname, const unsigned char *old_sha1,
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
+@@ -1314,7 +1314,13 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
+ 	return get_packed_ref_dir(get_packed_ref_cache(refs));
+ }
  
--	/*
--	 * Treat NULL_SHA1 and NULL alike, to mean "we don't care what
--	 * the old value of the reference was (or even if it didn't
--	 * exist)":
--	 */
--	if (old_sha1 && is_null_sha1(old_sha1))
--		old_sha1 = NULL;
--
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_sha1,
-diff --git a/refs.h b/refs.h
-index c9596ea..e82fca5 100644
---- a/refs.h
-+++ b/refs.h
-@@ -240,11 +240,11 @@ extern int read_ref_at(const char *refname, unsigned int flags,
- extern int reflog_exists(const char *refname);
+-void add_packed_ref(const char *refname, const unsigned char *sha1)
++/*
++ * Add a reference to the in-memory packed reference cache.  This may
++ * only be called while the packed-refs file is locked (see
++ * lock_packed_refs()).  To actually write the packed-refs file, call
++ * commit_packed_refs().
++ */
++static void add_packed_ref(const char *refname, const unsigned char *sha1)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+@@ -2503,8 +2509,12 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+ 	return 0;
+ }
+ 
+-/* This should return a meaningful errno on failure */
+-int lock_packed_refs(int flags)
++/*
++ * Lock the packed-refs file for writing. Flags is passed to
++ * hold_lock_file_for_update(). Return 0 on success. On errors, set
++ * errno appropriately and return a nonzero value.
++ */
++static int lock_packed_refs(int flags)
+ {
+ 	static int timeout_configured = 0;
+ 	static int timeout_value = 1000;
+@@ -2534,10 +2544,12 @@ int lock_packed_refs(int flags)
+ }
  
  /*
-- * Delete the specified reference. If old_sha1 is non-NULL and not
-- * NULL_SHA1, then verify that the current value of the reference is
-- * old_sha1 before deleting it. If old_sha1 is NULL or NULL_SHA1,
-- * delete the reference if it exists, regardless of its old value.
-- * flags is passed through to ref_transaction_delete().
-+ * Delete the specified reference. If old_sha1 is non-NULL, then
-+ * verify that the current value of the reference is old_sha1 before
-+ * deleting it. If old_sha1 is NULL, delete the reference if it
-+ * exists, regardless of its old value. It is an error for old_sha1 to
-+ * be NULL_SHA1. flags is passed through to ref_transaction_delete().
+- * Commit the packed refs changes.
+- * On error we must make sure that errno contains a meaningful value.
++ * Write the current version of the packed refs cache from memory to
++ * disk. The packed-refs file must already be locked for writing (see
++ * lock_packed_refs()). Return zero on success. On errors, set errno
++ * and return a nonzero value
   */
- extern int delete_ref(const char *refname, const unsigned char *old_sha1,
- 		      unsigned int flags);
+-int commit_packed_refs(void)
++static int commit_packed_refs(void)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+@@ -2566,7 +2578,12 @@ int commit_packed_refs(void)
+ 	return error;
+ }
+ 
+-void rollback_packed_refs(void)
++/*
++ * Rollback the lockfile for the packed-refs file, and discard the
++ * in-memory packed reference cache.  (The packed-refs file will be
++ * read anew if it is needed again after this function is called.)
++ */
++static void rollback_packed_refs(void)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+diff --git a/refs.h b/refs.h
+index 9602889..cd87f2f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -111,36 +111,6 @@ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refn
+ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames);
+ 
+ /*
+- * Lock the packed-refs file for writing.  Flags is passed to
+- * hold_lock_file_for_update().  Return 0 on success.
+- * Errno is set to something meaningful on error.
+- */
+-extern int lock_packed_refs(int flags);
+-
+-/*
+- * Add a reference to the in-memory packed reference cache.  This may
+- * only be called while the packed-refs file is locked (see
+- * lock_packed_refs()).  To actually write the packed-refs file, call
+- * commit_packed_refs().
+- */
+-extern void add_packed_ref(const char *refname, const unsigned char *sha1);
+-
+-/*
+- * Write the current version of the packed refs cache from memory to
+- * disk.  The packed-refs file must already be locked for writing (see
+- * lock_packed_refs()).  Return zero on success.
+- * Sets errno to something meaningful on error.
+- */
+-extern int commit_packed_refs(void);
+-
+-/*
+- * Rollback the lockfile for the packed-refs file, and discard the
+- * in-memory packed reference cache.  (The packed-refs file will be
+- * read anew if it is needed again after this function is called.)
+- */
+-extern void rollback_packed_refs(void);
+-
+-/*
+  * Flags for controlling behaviour of pack_refs()
+  * PACK_REFS_PRUNE: Prune loose refs after packing
+  * PACK_REFS_ALL:   Pack _all_ refs, not just tags and already packed refs
 -- 
 2.1.4
