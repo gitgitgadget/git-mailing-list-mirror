@@ -1,101 +1,169 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6 17/19] fsck: Introduce `git fsck --quick`
-Date: Mon, 22 Jun 2015 15:01:50 +0200
-Organization: gmx
-Message-ID: <80dac4a49123c6e4ddc905c74d63d44e@www.dscho.org>
-References: <cover.1434657920.git.johannes.schindelin@gmx.de>
- <cover.1434720655.git.johannes.schindelin@gmx.de>
- <5f1c4c16027b00ef80490d67bec5e948481153ec.1434720655.git.johannes.schindelin@gmx.de>
- <xmqq1th77829.fsf@gitster.dls.corp.google.com>
- <95e42f21de69ab5299c03ce6ad107037@www.dscho.org>
- <xmqqoakb5sk2.fsf@gitster.dls.corp.google.com>
- <558643CA.6000303@alum.mit.edu>
- <xmqqioahj849.fsf@gitster.dls.corp.google.com>
- <3faa92b10274ce8cfebe340761f73505@www.dscho.org>
- <xmqq1th4kdeq.fsf@gitster.dls.corp.google.com>
+From: Bastien Traverse <bastien@traverse.email>
+Subject: [Question] Is it normal for accented characters to be shown as
+ decomposed Unicode on GNU/Linux?
+Date: Mon, 22 Jun 2015 15:17:40 +0200
+Message-ID: <55880AF4.4000206@traverse.email>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 22 15:02:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 22 15:17:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z71Mg-0001gf-7J
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 15:02:18 +0200
+	id 1Z71bg-0000dH-8k
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 15:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754826AbbFVNCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 09:02:08 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53515 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754567AbbFVNCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 09:02:06 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M04uG-1YoX6a3rCe-00uIK2; Mon, 22 Jun 2015 15:01:52
- +0200
-In-Reply-To: <xmqq1th4kdeq.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:zjgIqtUU7cqXzNO1A2FXcmu3eH53gJOgevU/rj2N0eBpuhP6yg5
- LAxOKTFAc1prRfmSXo4EEf+sgpNsz2yeXt94JnMJXq319te0sHhB1+yTWdFZARneTsUQnmy
- ccRkBkgvPi+6Uf+kwKIBpGs7mC6UOIJBgF2b9TxwFbw/w6ZsFnrUmADFLoStvkJDgK8aFjJ
- 5U/qQ+mWEEic7Y1QpiilQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1756321AbbFVNRo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2015 09:17:44 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:43327 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756172AbbFVNRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 09:17:42 -0400
+Received: from [IPv6:2001:41d0:fc06:e100:6236:ddff:fe94:4666] (unknown [IPv6:2001:41d0:fc06:e100:6236:ddff:fe94:4666])
+	(Authenticated sender: bastien@traverse.email)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 3F2171720AC
+	for <git@vger.kernel.org>; Mon, 22 Jun 2015 15:17:41 +0200 (CEST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272338>
 
-Hi Junio,
+Hi everybody,
 
-On 2015-06-21 22:35, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> On 2015-06-21 19:15, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>> That's brilliant.
->>>
->>> Just to make sure I am reading you correctly, you mean the current
->>> overall structure:
->>>
->>> [...]
->>
->> The way I read Michael's mail, he actually meant something different:
->> if all of the blob-related errors/warnings are switched to "ignore",
->> simply skip unpacking the blobs.
-> 
-> That is how I read his mail, too.
-> 
-> But because IIRC we do not check anything special with blob other
-> than we can read it correctly, my description of "overall structure"
-> stayed at a very high conceptual level.  The unpacking may happen at
-> a much higher level in the code, i.e. it comes way before this part
-> of the logic flow:
-> 
->         if ("is bad_blob ignored?")
-> 		;
-> 	else if (! "is the blob loadable and well-formed?") {
-> 
-> in which case "is bad blobs ignored?" check may have to happen
-> before we unpack the object.
-> 
-> And I do not suggest introducing yet another BAD_BLOB error class; I
-> would have guessed that you already have an error class for objects
-> that are not stored correctly (be it truncated loose object, checksum
-> mismatch in the packed base object, or corrupt delta in pack).
+I have a repository where some files and folders contain accented
+characters due to being in French. Such names include "r=C3=AAve" (drea=
+m),
+"r=C3=A9union" (meeting) etc.
 
-Sadly, there is no BAD_BLOB class. The reason is that we actually perform no test on blobs, as you pointed out, except for the implicit one: read it as a blob object.
+Whether already in version control or not, git tools only show their
+*decomposed* representation (I use a UTF-8 locale, see below), but don'=
+t
+accept those representations as input (and auto-completion is broken fo=
+r
+those), which is a bit misleading (test case follows).
 
-And reading them even only partially would still imply a lot of I/O, taking away much of the performance improvement I wanted to achieve here.
+I've seen the threads about accented characters on OSX and the use of
+'core.precomposeunicode', but as I'm running on GNU/Linux I thought thi=
+s
+shouldn't apply.
 
-Further, please note that the `--quick` option *solely* impacts `git fsck`, not `git receive-pack`, because we actually really skipped everything except the connectivity test.
+Since I've already had a problem in git with a weirdly encoded characte=
+r
+(see http://thread.gmane.org/gmane.comp.version-control.git/269710), I
+wanted to get some feedback to determine whether my setup was the cause
+of it or if it was normal to see decomposed file names in git. I found
+in man git-status:
 
-To allow this discussion to be resolved without further ado, I therefore renamed the `--quick` option to `--connectivity-only`, as even I realize that there is not much of a check left if not even author or committer lines are tested.
+> If a filename contains whitespace or other nonprintable
+> characters, that field will be quoted in the manner of a C string
+> literal: surrounded by ASCII double quote (34) characters, and with
+> interior special characters backslash-escaped.
 
-Ciao,
-Dscho
+So do everybody using accented characters see those in decomposed form
+in git? And if so why some softwares built on top of it (like gitit [1]=
+)
+don't inherit those decomposed representations?
+
+[1] http://gitit.net/
+
+Thanks!
+
+---
+test case:
+$ mkdir accent-test && cd !$
+$ git init
+$ touch r=C3=AAve r=C3=A9union
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	"r\303\251union"
+	"r\303\252ve"
+$ git add .
+$ git commit -m "accent test"
+[master (root commit) 0d776b7] accent test
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 "r\303\251union"
+ create mode 100644 "r\303\252ve"
+$ git log --summary
+commit 0d776b7a09d5384a76066999431507018e292efe
+Author: Bastien Traverse <bastien@traverse.email>
+Date:   2015-06-22 14:13:46 +0200
+
+    accent test
+
+ create mode 100644 "r\303\251union"
+ create mode 100644 "r\303\252ve"
+$ mv r=C3=AAve reve
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working direct=
+ory)
+
+	deleted:    "r\303\252ve"
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	reve
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git add [[TAB-TAB]]
+"r\303\252ve"  reve
+$ git add "[[TAB]] --> git add "\"r\\303\\252ve\""
+fatal: pathspec '"r\303\252ve"' did not match any files
+$ git add "r\303\252ve"
+fatal: pathspec 'r\303\252ve' did not match any files
+$ git add r=C3=AAve reve OR git add .
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	renamed:    "r\303\252ve" -> reve
+
+I'm running an up-to-date Arch linux with following software versions
+and locale config:
+
+$ uname -a
+Linux xxx 4.0.5-1-ARCH #1 SMP PREEMPT Sat Jun 6 18:37:49 CEST 2015
+x86_64 GNU/Linux
+$ bash --version
+GNU bash, version 4.3.39(1)-release (x86_64-unknown-linux-gnu)
+$ git --version
+git version 2.4.3
+$ locale
+LANG=3Dfr_FR.utf8
+LC_CTYPE=3D"fr_FR.utf8"
+LC_NUMERIC=3Dfr_FR.utf8
+LC_TIME=3Dfr_FR.utf8
+LC_COLLATE=3D"fr_FR.utf8"
+LC_MONETARY=3Dfr_FR.utf8
+LC_MESSAGES=3D"fr_FR.utf8"
+LC_PAPER=3Dfr_FR.utf8
+LC_NAME=3D"fr_FR.utf8"
+LC_ADDRESS=3D"fr_FR.utf8"
+LC_TELEPHONE=3D"fr_FR.utf8"
+LC_MEASUREMENT=3Dfr_FR.utf8
+LC_IDENTIFICATION=3D"fr_FR.utf8"
+LC_ALL=3D
+$ localectl
+   System Locale: LANG=3Dfr_FR.UTF8
+       VC Keymap: fr
+      X11 Layout: fr
+     X11 Variant: oss
+
+Cheers
