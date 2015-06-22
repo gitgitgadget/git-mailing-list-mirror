@@ -1,115 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add list-all-objects command
-Date: Mon, 22 Jun 2015 14:50:10 -0700
-Message-ID: <xmqqk2uvfm5p.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 2/2] Move unsigned long option parsing out of pack-objects.c
+Date: Mon, 22 Jun 2015 15:03:27 -0700
+Message-ID: <xmqqfv5jfljk.fsf@gitster.dls.corp.google.com>
 References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
-	<1434914431-7745-1-git-send-email-charles@hashpling.org>
-	<1434914431-7745-2-git-send-email-charles@hashpling.org>
-	<20150622083822.GB12259@peff.net> <20150622103321.GB12584@peff.net>
+	<1434911144-6781-1-git-send-email-charles@hashpling.org>
+	<1434911144-6781-3-git-send-email-charles@hashpling.org>
+	<20150621183026.GA7199@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Charles Bailey <charles@hashpling.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 22 23:50:21 2015
+Cc: git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Jun 23 00:03:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z79be-0004eF-W3
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 23:50:19 +0200
+	id 1Z79oV-0002TR-IH
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 00:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752880AbbFVVuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 17:50:15 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:33454 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752189AbbFVVuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 17:50:13 -0400
-Received: by ieqy10 with SMTP id y10so36205131ieq.0
-        for <git@vger.kernel.org>; Mon, 22 Jun 2015 14:50:13 -0700 (PDT)
+	id S1753736AbbFVWDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 18:03:32 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:37581 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752502AbbFVWDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 18:03:30 -0400
+Received: by igblr2 with SMTP id lr2so63273510igb.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2015 15:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=UEmBu2fMIe1r1QHioG4chDgwSPd4SEJbBSkbNoLwvIg=;
-        b=n/eIg7S5HG9/zLdSv3h9V4whgjTYGlbmg7TEi5gYPfhXGqSPcihHIcnpl5/VF4pR96
-         y6ZP7SMID+Lm5xCigjVnYL+l8WBJBn+s3ZU49U/dzmeFaxDIFAeY0U1eu+ftroXLUBig
-         zyRTFxYIDe1xTGfklcQWRPErbbNUnkrU/GfIuea3cRbe/ESrgKHuyKW/H+1dYfn3asPJ
-         GGmV5naHTmVOrBWoI/Vkyu+wVdhkaS3yq1GMpYzZ6R3y/3nAEgLmDe4UURAXIzOiGHtF
-         waPe/zyHfukAfuw9aMl0wWygLKS5njpYCjhCZ2rWnVYjVl0LYvusUBZ9122vTVIW3K1Y
-         5xRQ==
-X-Received: by 10.107.148.144 with SMTP id w138mr42390369iod.12.1435009813022;
-        Mon, 22 Jun 2015 14:50:13 -0700 (PDT)
+        bh=41c7/Q+QTuWpyvwV84vCPJPmgRXLAw/dDXkSZ3+s23k=;
+        b=IfuBK/9aDREhi3i87oQK3HmdjsSnOpOjEVuW9xQI2oxNI+YWjohIsN8bXZOgTlyVvk
+         JteHZoZ0/RZi5cGjkG2hHX/96BeB8js5kCtVfx2PyShMxoBZ78sj822hw+6ADpXA0nJi
+         whYFSDO39AIhl8zNQuiosBj1TyMBpBqKFx3oRE0qfE8BgBpSzTeMCdeqB2e8clwJQZQC
+         h7wE76tAeT2U4yJ8GDEtlS9NPrIH6LqkUrOcC9PYCa3e29txcU9mjOkMjZp9t0TvvXwg
+         LHXM3UMGA6Dpp4Tp98kkGF5DZOYHZGaR9w7yFB2BJFDQXb8ATWcJnzLNqK5Zil7D9xX7
+         FazQ==
+X-Received: by 10.107.168.150 with SMTP id e22mr37542905ioj.9.1435010609674;
+        Mon, 22 Jun 2015 15:03:29 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:b0be:ae3d:b206:8e25])
-        by mx.google.com with ESMTPSA id a2sm8372216igx.3.2015.06.22.14.50.12
+        by mx.google.com with ESMTPSA id e3sm8386232igq.21.2015.06.22.15.03.28
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Jun 2015 14:50:12 -0700 (PDT)
-In-Reply-To: <20150622103321.GB12584@peff.net> (Jeff King's message of "Mon,
-	22 Jun 2015 06:33:21 -0400")
+        Mon, 22 Jun 2015 15:03:29 -0700 (PDT)
+In-Reply-To: <20150621183026.GA7199@hashpling.org> (Charles Bailey's message
+	of "Sun, 21 Jun 2015 19:30:26 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272425>
 
-Jeff King <peff@peff.net> writes:
+Charles Bailey <charles@hashpling.org> writes:
 
-> On Mon, Jun 22, 2015 at 04:38:22AM -0400, Jeff King wrote:
->
->> > +	prepare_packed_git();
->> > +	for (p = packed_git; p; p = p->next) {
->> > +		open_pack_index(p);
->> > +	}
+> On Sun, Jun 21, 2015 at 07:25:44PM +0100, Charles Bailey wrote:
+>> From: Charles Bailey <cbailey32@bloomberg.net>
 >> 
->> Yikes. The fact that you need to do this means that
->> for_each_packed_object is buggy, IMHO. I'll send a patch.
+>> diff --git a/parse-options.c b/parse-options.c
+>> index 80106c0..101b649 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -180,6 +180,23 @@ static int get_value(struct parse_opt_ctx_t *p,
+>>  			return opterror(opt, "expects a numerical value", flags);
+>>  		return 0;
+>>  
+>> +	case OPTION_MAGNITUDE:
+>> +		if (unset) {
+>> +			*(unsigned long *)opt->value = 0;
+>> +			return 0;
+>> +		}
+>> +		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+>> +			*(unsigned long *)opt->value = opt->defval;
+>> +			return 0;
+>> +		}
+>> +		if (get_arg(p, opt, flags, &arg))
+>> +			return -1;
+>> +		if (!git_parse_ulong(arg, opt->value))
+>> +			return opterror(opt,
+>> +				"expects a integer value with an optional k/m/g suffix",
+>> +				flags);
+>> +		return 0;
+>> +
 >
-> Here's that patch. And since I did not want to pile work on Charles, I
-> went ahead and just implemented the patches I suggested in the other
-> email.
->
-> We may want to take patch 1 separately for the maint-track, as it is
-> really a bug-fix (albeit one that I do not think actually affects anyone
-> in practice right now).
+> Spotted after sending:
+> s/expects a integer/expects an integer/
 
-Hmph, add_unseen_recent_objects_to_traversal() is the only existing
-user, and before d3038d22 (prune: keep objects reachable from recent
-objects, 2014-10-15) added that function, for-each-packed-object
-existed but had no callers.
-
-And the objects not beeing seen by that function (due to lack of
-"open") would matter only for pruning purposes, which would mean
-you have to be calling into the codepath when running a full repack,
-so you would have opened all the packs that matter anyway (if you
-have a "old cruft archive" pack that contains only objects that
-are unreachable, you may not have opened that pack, though, and you
-may prune the thing away prematurely).
-
-So, I think I can agree that this would unlikely affect anybody in
-practice.
-
-> Patches 2-5 are useful even if we go with Charles' command, as they make
-> cat-file better (cleanups and he new buffer option).
->
-> Patches 6-7 implement the cat-file option that would be redundant with
-> list-all-objects.
->
-> By the way, in addition to not showing objects in order,
-> list-all-objects (and my cat-file option) may show duplicates. Do we
-> want to "sort -u" for the user? It might be nice for them to always get
-> a de-duped and sorted list. Aside from the CPU cost of sorting, it does
-> mean we'll allocate ~80MB for the kernel to store the sha1s. I guess
-> that's not too much when you are talking about the kernel repo. I took
-> the coward's way out and just mentioned the limitation in the
-> documentation, but I'm happy to be persuaded.
->
->   [1/7]: for_each_packed_object: automatically open pack index
->   [2/7]: cat-file: minor style fix in options list
->   [3/7]: cat-file: move batch_options definition to top of file
->   [4/7]: cat-file: add --buffer option
->   [5/7]: cat-file: stop returning value from batch_one_object
->   [6/7]: cat-file: split batch_one_object into two stages
->   [7/7]: cat-file: add --batch-all-objects option
->
-> -Peff
+Thanks.
