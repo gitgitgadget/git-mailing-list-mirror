@@ -1,229 +1,188 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 7/7] cat-file: add --batch-all-objects option
-Date: Mon, 22 Jun 2015 06:45:59 -0400
-Message-ID: <20150622104559.GG14475@peff.net>
-References: <20150622103321.GB12584@peff.net>
+Subject: [PATCH 8/7] cat-file: sort and de-dup output of --batch-all-objects
+Date: Mon, 22 Jun 2015 07:06:32 -0400
+Message-ID: <20150622110632.GA26436@peff.net>
+References: <1434705059-2793-1-git-send-email-charles@hashpling.org>
+ <1434914431-7745-1-git-send-email-charles@hashpling.org>
+ <1434914431-7745-2-git-send-email-charles@hashpling.org>
+ <20150622083822.GB12259@peff.net>
+ <20150622103321.GB12584@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Mon Jun 22 12:46:09 2015
+X-From: git-owner@vger.kernel.org Mon Jun 22 13:06:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z6zEu-0006Lk-70
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 12:46:08 +0200
+	id 1Z6zYm-0006bt-9Z
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 13:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933281AbbFVKqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 06:46:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49791 "HELO cloud.peff.net"
+	id S1753446AbbFVLGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 07:06:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49797 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933252AbbFVKqC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 06:46:02 -0400
-Received: (qmail 17472 invoked by uid 102); 22 Jun 2015 10:46:02 -0000
+	id S1752356AbbFVLGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 07:06:34 -0400
+Received: (qmail 18336 invoked by uid 102); 22 Jun 2015 11:06:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Jun 2015 05:46:02 -0500
-Received: (qmail 7597 invoked by uid 107); 22 Jun 2015 10:46:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Jun 2015 06:06:35 -0500
+Received: (qmail 7679 invoked by uid 107); 22 Jun 2015 11:06:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Jun 2015 06:46:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jun 2015 06:45:59 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Jun 2015 07:06:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jun 2015 07:06:32 -0400
 Content-Disposition: inline
 In-Reply-To: <20150622103321.GB12584@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272331>
 
-It can sometimes be useful to examine all objects in the
-repository. Normally this is done with "git rev-list --all
---objects", but:
+On Mon, Jun 22, 2015 at 06:33:21AM -0400, Jeff King wrote:
 
-  1. That shows only reachable objects. You may want to look
-     at all available objects.
+> By the way, in addition to not showing objects in order,
+> list-all-objects (and my cat-file option) may show duplicates. Do we
+> want to "sort -u" for the user? It might be nice for them to always get
+> a de-duped and sorted list. Aside from the CPU cost of sorting, it does
+> mean we'll allocate ~80MB for the kernel to store the sha1s. I guess
+> that's not too much when you are talking about the kernel repo. I took
+> the coward's way out and just mentioned the limitation in the
+> documentation, but I'm happy to be persuaded.
 
-  2. It's slow. We actually open each object to walk the
-     graph. If your operation is OK with seeing unreachable
-     objects, it's an order of magnitude faster to just
-     enumerate the loose directories and pack indices.
+The patch below does the sort/de-dup. I'd probably just squash it into
+patch 7, though.
 
-You can do this yourself using "ls" and "git show-index",
-but it's non-obvious.  This patch adds an option to
-"cat-file --batch-check" to operate on all available
-objects (rather than reading names from stdin).
+I did have one additional thought, though. We are treating this as two
+separate operations: "what are the sha1s in the repo" and "show me
+information about this sha1". But by integrating with cat-file, we could
+actually show information not just about a particular sha1, but about a
+particular on-disk object.
 
-This is based on a proposal by Charles Bailey to provide a
-separate "git list-all-objects" command. That is more
-orthogonal, as it splits enumerating the objects from
-getting information about them. However, in practice you
-will either:
+E.g., if there are duplicates of a particular object, some formatters
+like "%(objectsize:disk)" and "%(deltabase)" pick one arbitrarily to
+show. I don't know if anybody actually cares about that in practice, but
+if we show duplicates, we could give the accurate information for each
+instance (and in fact we could give other information like loose vs
+packed, which file contains the object, etc).
 
-  a. Feed the list of objects directly into cat-file anyway,
-     so you can find out information about them. Keeping it
-     in a single process is more efficient.
+I tend to think that the lack of de-duping is sufficiently confusing
+that it should be the default, and we can always add a "no really, show
+me the duplicates" option later. It is not as simple as skipping the
+de-dup step. We'd have to actually avoid calling sha1_object_info, and
+use the information found in the loose/pack traversal (which would in
+turn require exposing the low-level bits of sha1_object_info).
 
-  b. Ask the listing process to start telling you more
-     information about the objects, in which case you will
-     reinvent cat-file's batch-check formatter.
+-- >8 --
+Subject: cat-file: sort and de-dup output of --batch-all-objects
 
-Adding a cat-file option is simple and efficient. And if you
-really do want just the object names, you can always do:
-
-  git cat-file --batch-check='%(objectname)' --batch-all-objects
+The sorting we could probably live without, but printing
+duplicates is just a hassle for the user, who must then
+de-dup themselves (or risk a wrong answer if they are doing
+something like counting objects with a particular property).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-cat-file.txt |  8 ++++++++
- builtin/cat-file.c             | 44 ++++++++++++++++++++++++++++++++++++++++--
- t/t1006-cat-file.sh            | 27 ++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 2 deletions(-)
+ Documentation/git-cat-file.txt |  3 +--
+ builtin/cat-file.c             | 22 +++++++++++++++-------
+ t/t1006-cat-file.sh            |  3 +--
+ 3 files changed, 17 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 0058bd4..6831b08 100644
+index 6831b08..3105fc0 100644
 --- a/Documentation/git-cat-file.txt
 +++ b/Documentation/git-cat-file.txt
-@@ -69,6 +69,14 @@ OPTIONS
- 	not be combined with any other options or arguments.  See the
- 	section `BATCH OUTPUT` below for details.
+@@ -74,8 +74,7 @@ OPTIONS
+ 	requested batch operation on all objects in the repository and
+ 	any alternate object stores (not just reachable objects).
+ 	Requires `--batch` or `--batch-check` be specified. Note that
+-	the order of the objects is unspecified, and there may be
+-	duplicate entries.
++	the objects are visited in order sorted by their hashes.
  
-+--batch-all-objects::
-+	Instead of reading a list of objects on stdin, perform the
-+	requested batch operation on all objects in the repository and
-+	any alternate object stores (not just reachable objects).
-+	Requires `--batch` or `--batch-check` be specified. Note that
-+	the order of the objects is unspecified, and there may be
-+	duplicate entries.
-+
  --buffer::
  	Normally batch output is flushed after each object is output, so
- 	that a process can interactively read and write from
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 499ccda..95604c4 100644
+index 95604c4..07baad1 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -15,6 +15,7 @@ struct batch_options {
- 	int follow_symlinks;
- 	int print_contents;
- 	int buffer_output;
-+	int all_objects;
- 	const char *format;
+@@ -9,6 +9,7 @@
+ #include "userdiff.h"
+ #include "streaming.h"
+ #include "tree-walk.h"
++#include "sha1-array.h"
+ 
+ struct batch_options {
+ 	int enabled;
+@@ -324,19 +325,19 @@ struct object_cb_data {
+ 	struct expand_data *expand;
  };
  
-@@ -257,7 +258,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (sha1_object_info_extended(data->sha1, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
--		printf("%s missing\n", obj_name);
-+		printf("%s missing\n", obj_name ? obj_name : sha1_to_hex(data->sha1));
- 		fflush(stdout);
- 		return;
- 	}
-@@ -318,6 +319,34 @@ static void batch_one_object(const char *obj_name, struct batch_options *opt,
- 	batch_object_write(obj_name, opt, data);
+-static int batch_object_cb(const unsigned char *sha1,
+-			   struct object_cb_data *data)
++static void batch_object_cb(const unsigned char sha1[20], void *vdata)
+ {
++	struct object_cb_data *data = vdata;
+ 	hashcpy(data->expand->sha1, sha1);
+ 	batch_object_write(NULL, data->opt, data->expand);
+-	return 0;
  }
  
-+struct object_cb_data {
-+	struct batch_options *opt;
-+	struct expand_data *expand;
-+};
-+
-+static int batch_object_cb(const unsigned char *sha1,
-+			   struct object_cb_data *data)
-+{
-+	hashcpy(data->expand->sha1, sha1);
-+	batch_object_write(NULL, data->opt, data->expand);
-+	return 0;
-+}
-+
-+static int batch_loose_object(const unsigned char *sha1,
-+			      const char *path,
-+			      void *data)
-+{
-+	return batch_object_cb(sha1, data);
-+}
-+
-+static int batch_packed_object(const unsigned char *sha1,
-+			       struct packed_git *pack,
-+			       uint32_t pos,
-+			       void *data)
-+{
-+	return batch_object_cb(sha1, data);
-+}
-+
- static int batch_objects(struct batch_options *opt)
+ static int batch_loose_object(const unsigned char *sha1,
+ 			      const char *path,
+ 			      void *data)
  {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -345,6 +374,15 @@ static int batch_objects(struct batch_options *opt)
- 	if (opt->print_contents)
+-	return batch_object_cb(sha1, data);
++	sha1_array_append(data, sha1);
++	return 0;
+ }
+ 
+ static int batch_packed_object(const unsigned char *sha1,
+@@ -344,7 +345,8 @@ static int batch_packed_object(const unsigned char *sha1,
+ 			       uint32_t pos,
+ 			       void *data)
+ {
+-	return batch_object_cb(sha1, data);
++	sha1_array_append(data, sha1);
++	return 0;
+ }
+ 
+ static int batch_objects(struct batch_options *opt)
+@@ -375,11 +377,17 @@ static int batch_objects(struct batch_options *opt)
  		data.info.typep = &data.type;
  
-+	if (opt->all_objects) {
-+		struct object_cb_data cb;
-+		cb.opt = opt;
-+		cb.expand = &data;
-+		for_each_loose_object(batch_loose_object, &cb, 0);
-+		for_each_packed_object(batch_packed_object, &cb, 0);
-+		return 0;
-+	}
+ 	if (opt->all_objects) {
++		struct sha1_array sa = SHA1_ARRAY_INIT;
+ 		struct object_cb_data cb;
 +
- 	/*
- 	 * We are going to call get_sha1 on a potentially very large number of
- 	 * objects. In most large cases, these will be actual object sha1s. The
-@@ -436,6 +474,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 			PARSE_OPT_OPTARG, batch_option_callback },
- 		OPT_BOOL(0, "follow-symlinks", &batch.follow_symlinks,
- 			 N_("follow in-tree symlinks (used with --batch or --batch-check)")),
-+		OPT_BOOL(0, "batch-all-objects", &batch.all_objects,
-+			 N_("show all objects with --batch or --batch-check")),
- 		OPT_END()
- 	};
- 
-@@ -460,7 +500,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		usage_with_options(cat_file_usage, options);
- 	}
- 
--	if (batch.follow_symlinks && !batch.enabled) {
-+	if ((batch.follow_symlinks || batch.all_objects) && !batch.enabled) {
- 		usage_with_options(cat_file_usage, options);
++		for_each_loose_object(batch_loose_object, &sa, 0);
++		for_each_packed_object(batch_packed_object, &sa, 0);
++
+ 		cb.opt = opt;
+ 		cb.expand = &data;
+-		for_each_loose_object(batch_loose_object, &cb, 0);
+-		for_each_packed_object(batch_packed_object, &cb, 0);
++		sha1_array_for_each_unique(&sa, batch_object_cb, &cb);
++
++		sha1_array_clear(&sa);
+ 		return 0;
  	}
  
 diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 93a4794..2b4220a 100755
+index 2b4220a..18dbdc8 100755
 --- a/t/t1006-cat-file.sh
 +++ b/t/t1006-cat-file.sh
-@@ -547,4 +547,31 @@ test_expect_success 'git cat-file --batch --follow-symlink returns correct sha a
+@@ -569,8 +569,7 @@ test_expect_success 'cat-file --batch-all-objects shows all objects' '
+ 	) >>expect.unsorted &&
+ 	sort <expect.unsorted >expect &&
+ 	git -C all-two cat-file --batch-all-objects \
+-				--batch-check="%(objectname)" >actual.unsorted &&
+-	sort <actual.unsorted >actual &&
++				--batch-check="%(objectname)" >actual &&
  	test_cmp expect actual
  '
  
-+test_expect_success 'cat-file --batch-all-objects shows all objects' '
-+	# make new repos so we now the full set of objects; we will
-+	# also make sure that there are some packed and some loose
-+	# objects, some referenced and some not, and that there are
-+	# some available only via alternates.
-+	git init all-one &&
-+	(
-+		cd all-one &&
-+		echo content >file &&
-+		git add file &&
-+		git commit -qm base &&
-+		git rev-parse HEAD HEAD^{tree} HEAD:file &&
-+		git repack -ad &&
-+		echo not-cloned | git hash-object -w --stdin
-+	) >expect.unsorted &&
-+	git clone -s all-one all-two &&
-+	(
-+		cd all-two &&
-+		echo local-unref | git hash-object -w --stdin
-+	) >>expect.unsorted &&
-+	sort <expect.unsorted >expect &&
-+	git -C all-two cat-file --batch-all-objects \
-+				--batch-check="%(objectname)" >actual.unsorted &&
-+	sort <actual.unsorted >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
 -- 
 2.4.4.719.g3984bc6
