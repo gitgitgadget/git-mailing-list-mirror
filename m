@@ -1,9 +1,8 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v7 08/19] fsck: Make =?UTF-8?Q?fsck=5Fcommit=28=29=20warn-?=
- =?UTF-8?Q?friendly?=
-Date: Mon, 22 Jun 2015 17:26:11 +0200
+Subject: [PATCH v7 06/19] fsck: Report the ID of the error/warning
+Date: Mon, 22 Jun 2015 17:25:52 +0200
 Organization: gmx
-Message-ID: <4fb19d2bf037c528de9c98068d083d49575876e5.1434986506.git.johannes.schindelin@gmx.de>
+Message-ID: <ba9759ec82c03e2d60e1e71f1d6f8033d3c17c03.1434986506.git.johannes.schindelin@gmx.de>
 References: <cover.1434720655.git.johannes.schindelin@gmx.de>
  <cover.1434986506.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
@@ -11,111 +10,111 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jun 22 17:26:32 2015
+X-From: git-owner@vger.kernel.org Mon Jun 22 17:26:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z73cE-0006yo-MR
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 17:26:31 +0200
+	id 1Z73c4-0006sw-Qy
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 17:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbbFVP00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 11:26:26 -0400
-Received: from mout.gmx.net ([212.227.17.21]:59475 "EHLO mout.gmx.net"
+	id S1753725AbbFVP0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 11:26:14 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59811 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753517AbbFVP0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 11:26:24 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LeALI-1Yk4ja0jT2-00puad; Mon, 22 Jun 2015 17:26:14
+	id S1753661AbbFVP0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 11:26:10 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LpL4H-1YdnCX3oOL-00f7wU; Mon, 22 Jun 2015 17:25:52
  +0200
 In-Reply-To: <cover.1434986506.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:sEf6hMqzrD0nPUM8ZkSnYl830APKnRyUPVCQjDr16uT4LzdzT83
- p48w3aOcpVpggGc+9r1sEL6eo4MGlos/Aq+O9rgzKJw+0dANNw0mMSdp/YGF6eVaj9b03CA
- 3pbRLEN5+bhDHqazJ8sSynyNcUy2vswpJ27nIYuUgjCCdtFihOg5hDT403m7v9gIaw6PRwK
- UxhcMH7yp1b8meKki0riw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mqiW7rOvwhE=:O4Ws5BMVNVOBbc1CAhFr74
- ZJQy3Wxgf6+d9EemkKhB/vuEEy4aZtoqLh7MAOlT6akVi1IBJZMWtryMV4yInfIpb7zrBvGkr
- V/1uC+mOTqkWGqcnUGXLEbnxUB9dp04X+FLcgvG+658y4P6+8NGTdL/gXNBAq+vV5VK9+Z5Kn
- n96EDPIPzH+DxooHdWf+0/y/Tafm6u/n42gRZc5u+/KbRIi5AwR+70vxBjivVpPK2Umb7hH/i
- jpM8o5vCVTvhrRSgGA86baJAvGBaa80Y1v3JXS+UVW1cx+lOkzuZtTbjVnT1CXBh47JVgBJ0/
- 9foJxXpr+BIBPUfVDLYon4H3cTV/uX2ME/NQ7cISE8FEXTMI3n4+6o1xDGoWIYdpyZssk6c33
- eTH6FwPQJh7jJ5qejFQmuQUOiH0wlX0S34LphgE45apMFA+XzAg0LF9a3+NgZ5QQauR4P4FDG
- gkWzVbCtpwlTRUXADcq5jueWQAyp4pwZVUfz4xwMdDP9v8wcORvuDnUA92bDRLi8H8xoicW5s
- UGMwWmPJt6sOCVmkYbU+7wRB1ckvs0ArfIhbr8qwfzGuZXtsbn6sfaOVGd3ZkgF1hnLPp76HS
- 9IBcPRLORhKZZoBzNyIeeMJVBnEI3soSoGXZd61cQZvQfyZlUQEuKhrjii4xLiBHDdiHG+ysm
- KcDP0dA3YckRK4XNqU81g+f3R2Eew2tT3diYYWhjfqtFWRETmxJU9u/fDcv2+RxXdeqg=
+X-Provags-ID: V03:K0:I63KkI9ywTmfaHnPiXu/5MfycuPMEfyOEupeq4i0VoslNsUCJPa
+ CvtCDgDU1DhTaeIzzaoXNAqKspT1TJhuVKRvsKV2420zPBbDHsQ5DH1toUKbjHgybizZUk+
+ +/NBwyu/pLALI84R9iVStmTopveOidEQMU8I9jFdzMjo2Wk/KutZ5VbuequIaAKn3JDoFmD
+ Nsa4RK3NQMo2ZVJoScABw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zpWC7A/fB10=:oevtWJ1eLayT4hwi95WRh4
+ HpFdc4RbHOGXCN55WdamxsV4zP45uLX5C8bpG9twBfFKXuTFrpSX3ltnSzq3CJkAgyRm+TpGe
+ 7Rv9vfMehaJtDwIro1aSFwNlZ7gGPVgfm2aCFhfEZaStdVgxvsXvhWxuywzbw2zwuB9ZW2USz
+ xLGdzqm1KeN0ewQ10b3FeSt3st0x/wnkQS7pMAp+HIHaCtL0muw1Gkxlad1URnBeDUjuPWXeg
+ WAWGSOl5juuS1R1d0Pp0NibCry33L5Cdx9bkPCgj6ZaQA7r/J4/3c1c9SUogMNSmvAkNIEeKS
+ dfFVBWE3nQIobBAim/+4BwdcAKMbRfzMrWgCrlK8Mh1VN26n+Ix2bITyvSH2IDAD+F+J2S+ZE
+ dqCk6MyDWkww2sNcWxoaE+zLvS6RZA/JIsXJ/qF2GzIgVr1M3Rcqa9S/GrEINS7/pzF288Mzp
+ qA373eJ8AtepfZSS+RcKrax8R7rR5NEBrsQxL/TvAm2evSquqpdAQFlTv/iEhaU2A4cucCRVm
+ 6e9EtZl7+227MwyYW5LEF6cULIFKDgxoWqrZWAAuv4KA06yXPodNoft5APfsTmpV3WxIhYZwD
+ SXrnLfTSFTP7TBaFegFr8JSBesDo6v8v+HnwcPyIOk9cejbwXIQuaYL7Sbix892mN9MW7C6S1
+ VEUmI6ADXm+PLmb3D4+5uaSFpgwXCsA5qhGQOpqNB8oNGZHFQwUtkdpXVFiIYN72wOQM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272379>
 
-When fsck_commit() identifies a problem with the commit, it should try
-to make it possible to continue checking the commit object, in case the
-user wants to demote the detected errors to mere warnings.
-
-Note that some problems are too problematic to simply ignore. For
-example, when the header lines are mixed up, we punt after encountering
-an incorrect line. Therefore, demoting certain warnings to errors can
-hide other problems. Example: demoting the missingauthor error to
-a warning would hide a problematic committer line.
+Some legacy code has objects with non-fatal fsck issues; To enable the
+user to ignore those issues, let's print out the ID (e.g. when
+encountering "missingEmail", the user might want to call `git config
+--add receive.fsck.missingEmail=warn`).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ fsck.c          | 20 ++++++++++++++++++++
+ t/t1450-fsck.sh |  4 ++--
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/fsck.c b/fsck.c
-index d0a7282..ef3bf68 100644
+index 02af3ed..0ec02b2 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -536,12 +536,18 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+@@ -188,6 +188,24 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+ 	free(to_free);
+ }
  
- 	if (!skip_prefix(buffer, "tree ", &buffer))
- 		return report(options, &commit->object, FSCK_MSG_MISSING_TREE, "invalid format - expected 'tree' line");
--	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n')
--		return report(options, &commit->object, FSCK_MSG_BAD_TREE_SHA1, "invalid 'tree' line format - bad sha1");
-+	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n') {
-+		err = report(options, &commit->object, FSCK_MSG_BAD_TREE_SHA1, "invalid 'tree' line format - bad sha1");
-+		if (err)
-+			return err;
++static void append_msg_id(struct strbuf *sb, const char *msg_id)
++{
++	for (;;) {
++		char c = *(msg_id)++;
++
++		if (!c)
++			break;
++		if (c != '_')
++			strbuf_addch(sb, tolower(c));
++		else {
++			assert(*msg_id);
++			strbuf_addch(sb, *(msg_id)++);
++		}
 +	}
- 	buffer += 41;
- 	while (skip_prefix(buffer, "parent ", &buffer)) {
--		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n')
--			return report(options, &commit->object, FSCK_MSG_BAD_PARENT_SHA1, "invalid 'parent' line format - bad sha1");
-+		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
-+			err = report(options, &commit->object, FSCK_MSG_BAD_PARENT_SHA1, "invalid 'parent' line format - bad sha1");
-+			if (err)
-+				return err;
-+		}
- 		buffer += 41;
- 		parent_line_count++;
- 	}
-@@ -550,11 +556,17 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	if (graft) {
- 		if (graft->nr_parent == -1 && !parent_count)
- 			; /* shallow commit */
--		else if (graft->nr_parent != parent_count)
--			return report(options, &commit->object, FSCK_MSG_MISSING_GRAFT, "graft objects missing");
-+		else if (graft->nr_parent != parent_count) {
-+			err = report(options, &commit->object, FSCK_MSG_MISSING_GRAFT, "graft objects missing");
-+			if (err)
-+				return err;
-+		}
- 	} else {
--		if (parent_count != parent_line_count)
--			return report(options, &commit->object, FSCK_MSG_MISSING_PARENT, "parent objects missing");
-+		if (parent_count != parent_line_count) {
-+			err = report(options, &commit->object, FSCK_MSG_MISSING_PARENT, "parent objects missing");
-+			if (err)
-+				return err;
-+		}
- 	}
- 	if (!skip_prefix(buffer, "author ", &buffer))
- 		return report(options, &commit->object, FSCK_MSG_MISSING_AUTHOR, "invalid format - expected 'author' line");
++
++	strbuf_addstr(sb, ": ");
++}
++
+ __attribute__((format (printf, 4, 5)))
+ static int report(struct fsck_options *options, struct object *object,
+ 	enum fsck_msg_id id, const char *fmt, ...)
+@@ -196,6 +214,8 @@ static int report(struct fsck_options *options, struct object *object,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int msg_type = fsck_msg_type(id, options), result;
+ 
++	append_msg_id(&sb, msg_id_info[id].id_string);
++
+ 	va_start(ap, fmt);
+ 	strbuf_vaddf(&sb, fmt, ap);
+ 	result = options->error_func(object, msg_type, sb.buf);
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index cfb32b6..7c5b3d5 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -231,8 +231,8 @@ test_expect_success 'tag with incorrect tag name & missing tagger' '
+ 	git fsck --tags 2>out &&
+ 
+ 	cat >expect <<-EOF &&
+-	warning in tag $tag: invalid '\''tag'\'' name: wrong name format
+-	warning in tag $tag: invalid format - expected '\''tagger'\'' line
++	warning in tag $tag: badTagName: invalid '\''tag'\'' name: wrong name format
++	warning in tag $tag: missingTaggerEntry: invalid format - expected '\''tagger'\'' line
+ 	EOF
+ 	test_cmp expect out
+ '
 -- 
 2.3.1.windows.1.9.g8c01ab4
