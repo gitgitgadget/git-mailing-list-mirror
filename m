@@ -1,106 +1,89 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: Submodule and proxy server.
-Date: Mon, 22 Jun 2015 17:43:21 +0200
-Message-ID: <20150622154321.GA13063@leeloo.kyriasis.com>
-References: <CACnwYoPvcyERhtmqGeF4MJBuwCYX=sabUA5D=XVtT33vXe4HFQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 'eol' documentation confusion
+Date: Mon, 22 Jun 2015 09:11:55 -0700
+Message-ID: <xmqqr3p3iuyc.fsf@gitster.dls.corp.google.com>
+References: <CAHd499CapqvC3pHszgmX2VexdmqiW4+N23YfkAP5jjXWDrbe0A@mail.gmail.com>
+	<CAHd499Do_bpdOkL2TqdO+8L=pR53117pKR0GSwdgvFDwq_S4=w@mail.gmail.com>
+	<5587AAB2.80305@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 22 17:43:40 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Jun 22 18:12:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z73sp-0007qU-9o
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 17:43:39 +0200
+	id 1Z74KJ-0005yC-J5
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jun 2015 18:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028AbbFVPna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2015 11:43:30 -0400
-Received: from theos.kyriasis.com ([212.71.254.33]:48123 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753930AbbFVPn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2015 11:43:26 -0400
-Received: from theos.kyriasis.com (localhost.localdomain [127.0.0.1]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id af5ebc87;
-	for <git@vger.kernel.org>;
-	Mon, 22 Jun 2015 15:43:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=SrKfzQ/kXcZbH3MBa5813uJKX7A=; b=fOk8yD
-	qQAxmUuZt7ug2pD4ntypSMHflbzmThJa4cekjdo/+F2Ll6PB9u3T6IFbADZ88ELS
-	KTsPz35LUraQoGwPBpXxPouaZTBHHGDkYKYLwCLIroaEIRIt8VWhZoFSmI6pwoHN
-	Z1litZjxk1Y8euoyBbiGrUy5/2rjZfObESNjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=ZrWCfy2l2RovAUlcmu7hqAMM5EimZwZF
-	Aj5vuT/0XJKJpL+gsfroMIAliDvE92ylczZIJCnCymmBuy307J6M87BgTWmHUh7V
-	y8lYZ1OfSYonwz+K+FGbZo4j4oRcfP84Rl7gNe9rQn2fu/7uQzQ97Gmm03BA7Dko
-	Em5CLIypVRw=
-Received: from leeloo.kyriasis.com (47.67.24.31.in-addr.zone [31.24.67.47]);
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 2dcc0777;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	for <git@vger.kernel.org>;
-	Mon, 22 Jun 2015 15:43:24 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CACnwYoPvcyERhtmqGeF4MJBuwCYX=sabUA5D=XVtT33vXe4HFQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+	id S1751807AbbFVQL7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2015 12:11:59 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:34658 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538AbbFVQL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 12:11:57 -0400
+Received: by igboe5 with SMTP id oe5so67026933igb.1
+        for <git@vger.kernel.org>; Mon, 22 Jun 2015 09:11:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type:content-transfer-encoding;
+        bh=KuFLEqznM+CeKePND3ehazRdpyYYJALo9hdM85I0HJ8=;
+        b=BE2Zx1eYq3/c0rSlk7kdbEDYF4HgMpVufUq/Gp28O7fMe9w9QqgwJow7wywgQPI1qV
+         jjr+RxMaqHkVg+6OGvc7nd0ImgrW9RaKGd4K0fxN5RAcgBKsB+R01EuyXYheia9/W2hs
+         actsvsKAoFahULxjqBruAAcOklKostJ7NXH1RE8jcVvYS9vaT2+A0dLzXtkIhpzixObz
+         Amu+T8ocJWe+fILxs2EnOVPjAGTNkHT5OyAI7jO5qli8QEeMmk25e5euo3rT5y9xWgY+
+         WOStinLPlNJ8+6f4wLeN9dpGT1VnsTnEA2aeG77RcUj7HZrJcJ/LMQMhUbBgnnJUSaH3
+         xPEw==
+X-Received: by 10.50.178.230 with SMTP id db6mr22064345igc.26.1434989517191;
+        Mon, 22 Jun 2015 09:11:57 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:b0be:ae3d:b206:8e25])
+        by mx.google.com with ESMTPSA id h138sm13030196ioe.2.2015.06.22.09.11.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 22 Jun 2015 09:11:56 -0700 (PDT)
+In-Reply-To: <5587AAB2.80305@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
+ =?utf-8?Q?=22's?= message of
+	"Mon, 22 Jun 2015 08:26:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272393>
 
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 22/06, Jamie Archibald wrote:
->fatal: unable to access
->'http://http://path/to/submodule/MySubmodule.git/': The requested URL
->returned error: 502
+> eol=3Dlf or eol=3Dcrlf are the only useful settings.
+> Everything else is ignored because it does not make sense.
 >
+> See convert.c:
+> static enum eol git_path_check_eol()
 
-Did you copy this error verbatim?
+That makes me wonder...
 
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
+The original reasoning behind the current behaviour that we ignore
+unknown values given to configuration variables and attributes is so
+that people can use the same file that has values that are
+understood by newer versions of Git with older versions of Git.
 
---sdtB3X0nJg68CQEu
-Content-Type: application/pgp-signature; name="signature.asc"
+You may be trying the eol=3DcleverLF setting introduced in Git version
+47-prerelease by adding it to .git/info/attributes, and may have
+found it useful.  But you may also have to use the same repository
+on another machine that you didn't install that future version of
+Git over the network filesystem.  Barfing and not proceeding when we
+see unknown eol=3DcleverLF does not sound like a nice thing to do,
+which is why we just ignore and behave as if the setting was not
+there.
 
------BEGIN PGP SIGNATURE-----
+Ideally, however, I think we should ignore an unknown setting as
+long as it does not matter (i.e. we do not come to the codepath that
+wants to know eol settings for the path, e.g. running "git log" to
+show only the commit log messages and the topology of the history),
+but we should error out when the unknown setting possibly matters
+(i.e. we do need the eol setting for the path in order to correctly
+convert the contents to end-user's liking).
 
-iQQcBAEBCgAGBQJViC0WAAoJEJAcHDIOsNRdAWQf/jVGUPvW/V98qrZa4H4eciGp
-AYMUNLQSf3APHkeDuOHLU9nZmv630O6f5Tp8iijs/G30FP4ve4/UJq2qA51Rvjf+
-VdwFCEibXc/ljkhFOjFQAb1Awy/on/SN5q4gGJsKxW4ut/AzHDpAm/ei9C8Dl5fd
-eFx+p3uUJwUwlCO5OfRUV1odGjI1ObjPaHu6YStK5exv3X+g9J8V6dQB5tTh4Rbq
-ocdRTzfitJFtCg9BDPIKmowrtLUu3FHHClhTs2n7fZBJgJCBHEi0Dq814rL8tDif
-cJ3MTwjLzIx7Bu6c3wqocgkVhptQy+semjFX9QnEk60M2LqjC7wHCBurKRE4p8MV
-dwpDp6DfUYluN/oDA7uNiPWxxyWBh7G/vv6dr78TMBLN+/vetZG9hcRFgTDeTYHM
-2PwF4wTDEH/pm9af2RHDDnrqO2MEZt4+CMR8O5Yvnwn48DRaANJi4M3m7i/fh6gW
-RoWggxzr11aERyYvGPdg2BPJ/wkMv7FSvk45F6S/eEre06G3Wib6X/BSvkgHApXo
-3lbuN/NtlgPCeinSaKWLoGRcE/wvzecHXTnkDtDu2XjFkiE49+CbemZlmVH+oan2
-hon4nP+Z2TvNRYDKp55j41ioq+BXaCHwE9A8ZrtBS0WI/sfb5sxquXP/z1e8lG9T
-bXztem0VY2F3Th0YMgrUV92nTK6vPxFuL/uuggEQja49BGZROJkGprm7XFndQ3rl
-iqTQ8ZMogrlD+O9OOehDP3BHelc7b3n5DNquLKf31xvz/tV8k35R5dt+CTAq9jEp
-PP3xx5dvhvBM55eBdZtSCrnyd/nBOCxhwuFYjj911GfDn6T6NQiAnjApS8muMs0I
-1PqMU/acdVb1FIIRByCE4kfeMP5queMUZrV5+D1QNh0OuPN1vj5mWvVGvJJ1ADFn
-PP3svV5VplLx1Uh2ODk87RZ8vGrnhuqYwXNYIIUT8L7SxtRtcN7iktepWNw/vkSy
-0G8WPGhwi6y8/H1Ypc86snzrj1ALAX4OvV2+GKbXoru8+5YOS5RHXmAtpksc+FjC
-B1OHZCOdK+XSvXW3Jnb2Yc/dknQK3G+kJ3HihCcIk3dqk2SQvu4jHH2uw3CKbTUS
-FaxEl3pUnOrE2ENT3tlr4TOqMYB2rxdOS7tP+BivRiTNjEDFNsQBMU9R6q9JDm8Q
-LRALqkpAD/6nYTMhZUDdRED92V5GPDcrL/wKTHeDIGLeoyK+GvA1I4hyjZMcfqLh
-qu9TXQYSBRPBlmw/vVwmf+VTVqVwlI/JGsm4I7lRbHOl23inSQvuw32INdsZvCbV
-f91SrWbdEnp3xXeq1K8jxd1n3B0COvB/j9mqvz2Uqz8NJVrS19aNe8VmJqzjfog=
-=sv1m
------END PGP SIGNATURE-----
-
---sdtB3X0nJg68CQEu--
+Thoughts (and patches ;-)?
