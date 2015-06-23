@@ -1,12 +1,12 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a commit
-Date: Tue, 23 Jun 2015 21:07:33 +0200
-Message-ID: <vpq1th2p7ka.fsf@anie.imag.fr>
-References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com>
-	<1637608183.731706.1435086079947.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a
+ commit
+Date: Tue, 23 Jun 2015 21:18:17 +0200 (CEST)
+Message-ID: <392249968.731834.1435087097209.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com> <1637608183.731706.1435086079947.JavaMail.zimbra@ensimag.grenoble-inp.fr> <vpq1th2p7ka.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Git List <git@vger.kernel.org>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
@@ -15,79 +15,88 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 23 21:07:47 2015
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 23 21:16:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7TXu-0001fI-FH
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:07:46 +0200
+	id 1Z7TgL-000726-56
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933124AbbFWTHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 15:07:43 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48309 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932805AbbFWTHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 15:07:41 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5NJ7V0n032160
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 23 Jun 2015 21:07:32 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5NJ7XPr010852;
-	Tue, 23 Jun 2015 21:07:33 +0200
-In-Reply-To: <1637608183.731706.1435086079947.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Remi Galan Alfonso's message of "Tue, 23 Jun 2015 21:01:19 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 23 Jun 2015 21:07:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5NJ7V0n032160
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435691252.709@vRyn2mcnKBO54rtAfWHtiA
+	id S1754877AbbFWTQZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 15:16:25 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:51507 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754461AbbFWTQX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 15:16:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5549C370B;
+	Tue, 23 Jun 2015 21:16:21 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pandNS7_fvbv; Tue, 23 Jun 2015 21:16:21 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 3F486205B;
+	Tue, 23 Jun 2015 21:16:21 +0200 (CEST)
+In-Reply-To: <vpq1th2p7ka.fsf@anie.imag.fr>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git-rebase -i: add command "drop" to remove a commit
+Thread-Index: o6EFnOFOMRYxCHzZ+9sQTJsJjjTZ3A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272483>
 
-Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> write=
+s:
+>=20
+> > Eric Sunshine <sunshine@sunshineco.com> writes:
+> >> > +test_rebase_end () {
+> >> > +       test_when_finished "git checkout master &&
+> >> > +       git branch -D $1 &&
+> >> > +       test_might_fail git rebase --abort" &&
+> >> > +       git checkout -b $1 master
+> >> > +}
+> >>
+> >> The way this is indented makes it difficult to see that lines 2 an=
+d 3
+> >> are continuations of 1. Perhaps format it like this instead?
+> >>
+> >>     test_rebase_end () {
+> >>         test_when_finished "git checkout master &&
+> >>             git branch -D $1 &&
+> >>             test_might_fail git rebase --abort" &&
+> >>         git checkout -b $1 master
+> >>     }
+> >
+> > I completely agree with you, moreover it was indented like this bef=
+ore.
+> > I'll change it in my local version for now.
+>=20
+> Perhaps to avoid confusion, stg like:
+>=20
+>         test_when_finished "
+>                 ... &&
+>                 ...
+>         " &&
+>         git checkout
+>=20
+> (the closing " alone on its line)
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> > +test_rebase_end () {
->> > +       test_when_finished "git checkout master &&
->> > +       git branch -D $1 &&
->> > +       test_might_fail git rebase --abort" &&
->> > +       git checkout -b $1 master
->> > +}
->> 
->> The way this is indented makes it difficult to see that lines 2 and 3
->> are continuations of 1. Perhaps format it like this instead?
->> 
->>     test_rebase_end () {
->>         test_when_finished "git checkout master &&
->>             git branch -D $1 &&
->>             test_might_fail git rebase --abort" &&
->>         git checkout -b $1 master
->>     }
->
-> I completely agree with you, moreover it was indented like this before.
-> I'll change it in my local version for now.
+I think that the indentation on its own is enough to avoid confusion
+> test_rebase_end () {
+> 	test_when_finished "git checkout master &&
+> 		git branch -D $1 &&
+> 		test_might_fail git rebase --abort" &&
+> 	git checkout -b $1 master
+> }
+but your idea is fine as well, so I'm ok with either way.
 
-Perhaps to avoid confusion, stg like:
-
-	test_when_finished "
-		... &&
-		...
-	" &&
-	git checkout
-
-(the closing " alone on its line)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks,
+R=C3=A9mi
