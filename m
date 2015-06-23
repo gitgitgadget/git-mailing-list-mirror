@@ -1,147 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: RFC/Pull Request: Refs db backend
-Date: Tue, 23 Jun 2015 10:16:26 -0700
-Message-ID: <CAGZ79kap++fZx3X0D95d35XioRURU468xATDZpWHDOAPapAh+Q@mail.gmail.com>
-References: <1435020656.28466.8.camel@twopensource.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jun 2015, #05; Mon, 22)
+Date: Tue, 23 Jun 2015 19:24:39 +0200
+Organization: gmx
+Message-ID: <3fe144b0808827da3efbfcc44ad43524@www.dscho.org>
+References: <xmqqzj3re4u5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git mailing list <git@vger.kernel.org>,
-	ronnie sahlberg <ronniesahlberg@gmail.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 19:16:34 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 19:24:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7RoH-0007qc-4W
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 19:16:33 +0200
+	id 1Z7RwI-0004uT-FR
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 19:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbbFWRQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 13:16:29 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:35345 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754470AbbFWRQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 13:16:27 -0400
-Received: by yhak3 with SMTP id k3so6448084yha.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 10:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TzZBitCBgA3WqULnL3BoNBLBW/H/FICTsTTX5DYKq7o=;
-        b=Os9ChlZcLPsH47NrOKGWDUWyaeeMoWC3IS2Z84MIzcYb/TvLwUzLHGxYK3pSJ8/M7V
-         nGV2EgnLY7/J3J/5GsaCouUYlisatzSYEqBF4VJ2pagaiT8YEWQKXW7zGrLkBdGzVCM/
-         JWbdBsyB5oMGCvyRy9Cymjg5rk3XNOdiC+OMG7pO8oCp286IcwEw4ovGhiTVd/1+fT7w
-         PN3c0CepqBfJwmO9qDic3YawJkThqf9wrDo6+Mat2idvbGPSZ4J3vKhVAa6rI6E2/vHn
-         6PH/B6ZW+v9Qnf3jZCHvchtLEGmrRZWYZc+t8Elqu9uL4btX9HMa9cSO2kpyWSC/Y9np
-         9yvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=TzZBitCBgA3WqULnL3BoNBLBW/H/FICTsTTX5DYKq7o=;
-        b=iB6jeqoLt95YxLR29edd19AmDPcHRnZc0X/5LSO1IY5sOXIzmtPGok9sRNJI4hA5zb
-         8Q0fxSrDk3dTGArwtKwGo+XPpBfwrsOjzrLh4JZ9lzzyaKwoSq0fAMlsFF7gWN7elES0
-         ryHVruaf1B7ac5Eshn4PMwHtG7RuAU9N48ODB65E+gapv7hWF0SCVbzFuLzKx2wFXiHV
-         5Gt598DJAkBDGUmbgWnkii7NajqTsgM6iMwI6KanFP8CiFh7fra7/931NbCiyVHBpAUz
-         UGFgboUWuo7TIxAVIvmBKiIJRzWa+G+Ovt/Gvm96ssIiXR8ZWCuIgDj3/UibHZ8qLGSq
-         M3AA==
-X-Gm-Message-State: ALoCoQkFsC6DpDVkH6dR4P58Lu/HoYg4HqFfsrtijadoiJj1aVdfYLTDjt3PSKRRWAC9S7bDfnFM
-X-Received: by 10.13.238.71 with SMTP id x68mr45074631ywe.129.1435079786765;
- Tue, 23 Jun 2015 10:16:26 -0700 (PDT)
-Received: by 10.37.26.213 with HTTP; Tue, 23 Jun 2015 10:16:26 -0700 (PDT)
-In-Reply-To: <1435020656.28466.8.camel@twopensource.com>
+	id S1754937AbbFWRYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 13:24:47 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59566 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754661AbbFWRYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 13:24:45 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MJjOu-1Z8Xrp1DzI-001C48; Tue, 23 Jun 2015 19:24:41
+ +0200
+In-Reply-To: <xmqqzj3re4u5.fsf@gitster.dls.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:H0JJus2aGVNeYO5w+BLXUsMPEtL8hDud95vGvBAdvsmKTzhO7BB
+ Yz834KXiFaKae4eBhNWPMXsuETDV2uqnqhjcrBydMPy64l1ejLxC66SCsIa4ggca6vtz9Y1
+ LdByeN8n7vhspGzGZJgN+lW6As5FA7AhFXvLUyfzpuFgrRgQYqGsLYvVNdaNBqZzC8FDCTD
+ QYH1uZVHwjdD56sIo9urg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RgMAFBr0y+I=:fs3wXfq+9eXA2QNrL4mTz+
+ 8fxtTGttuuJz/+9ryB9ozCeKW+JrktG41PIQZV1wMZ7H3wIWyS0cvIaGfhoj9fWNFkE6jidDC
+ wwMFALBdrURoF/M/fB6KNen5nCow8xQAEELJyH6GcudQbQoN8VYYL3lXkMOR/qTs7VzfAfHjQ
+ jxfyHhZ78MCY8cQ99thQKopWxSkhL9fYqu/YFB7LjAYjhfjSlgEMuG0MjLwO2WjYBafTWqTmZ
+ j2oTlSgwyL5Fxl4SUpet/IOPPloCbsXOx+E3nTuddWSESuC3w+C04ccG3E/4cyMep1AEqoETG
+ bKUulZOTXJKcj0POeaKx/UzbOnceAJB+DEPfmyt+145vLmDpKt9HDG/5qp43V2UAp5jR4E5Ou
+ 04DWY87nW6FFi3a4lislxjCh/4OVLkcKnv8BE4VDGk7DrCa8qeLi5SnnIDIge8Imju3QHnbib
+ fTbG0/NSOw8Z6U7YeyISW+SwRPbjTapHy81lvzJ7YguL8269R+Zty/X1S9xOzJfuKtQ0JNPzA
+ 2GybIK6nogOSqdQDAAJ9Dilh1IZ+/576wA1SzqBL0hcpOs8I/llDyVBvRrtZSheohEvV0o5Om
+ GZiE/yXZBf8J/Wubu1GJG73YJwBKg7SA5KUXwPs7ZIm9flw6/t1793rCoXjbCTyji12r1AIFB
+ js9weCdJBvv4js+BiVl/0Id2SFRIghTF56IZiZ43d0RYyWOmSlFj6IXrGfL8Urr5ITJ0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272462>
 
-[+<ronniesahlberg@gmail.com>, FYI]
+Hi Junio,
 
-On Mon, Jun 22, 2015 at 5:50 PM, David Turner <dturner@twopensource.com> wrote:
-> I've revived and modified Ronnie Sahlberg's work on the refs db
-> backend.
+On 2015-06-23 00:49, Junio C Hamano wrote:
 
-Awesome!
+> * js/rebase-i-clean-up-upon-continue-to-skip (2015-06-18) 3 commits
+>  - rebase -i: do not leave a CHERRY_PICK_HEAD file behind
+>  - SQUASH: test_must_fail is a shell function
+>  - t3404: demonstrate CHERRY_PICK_HEAD bug
+> 
+>  Abandoning an already applied change in "git rebase -i" with
+>  "--continue" left CHERRY_PICK_HEAD and confused later steps.
+> 
+>  Expecting a reroll.
+>  ($gmane/271856)
 
->
-> The work is on top of be3c13e5564, Junio's "First batch for 2.5 cycle".
-> I recognize that there have been changes to the refs code since then,
-> and that there are some further changes in-flight from e.g. Michael
-> Haggerty.  If there is interest in this, I can rebase once Michael's
-> changes land.
+Actually, there had been two re-rolls, and v3 seemed to be okay: $gmane/272037. It also looks as if 726a35ebd^..726a35ebd^2 is identical with v3... Anything you want me to change in addition?
 
-Originally I wanted to continue on Ronnies work, but because of the churn
-in refs I stopped it for a while and took care of other projects (and wanted
-to come back eventually). Thanks for reviving this topic!
+Also:
 
-> The changes can be found here:
-> https://github.com/dturner-tw/git.git on the dturner/pluggable-backends
-> branch
->
-> The db backend code was added in the penultimate commit; the rest is
-> just code rearrangement and minor changes to make alternate backends
-> possible.  There ended up being a fair amount of this rearrangement, but
-> the end result is that almost the entire git test suite runs under the
-> db backend without error (see below for details).
+> * js/fsck-opt (2015-06-22) 19 commits
+>  - fsck: support ignoring objects in `git fsck` via fsck.skiplist
+>  - fsck: git receive-pack: support excluding objects from fsck'ing
+>  - fsck: introduce `git fsck --connectivity-only`
+>  - fsck: support demoting errors to warnings
+>  - fsck: document the new receive.fsck.<msg-id> options
+>  - fsck: allow upgrading fsck warnings to errors
+>  - fsck: optionally ignore specific fsck issues completely
+>  - fsck: disallow demoting grave fsck errors to warnings
+>  - fsck: add a simple test for receive.fsck.<msg-id>
+>  - fsck: make fsck_tag() warn-friendly
+>  - fsck: handle multiple authors in commits specially
+>  - fsck: make fsck_commit() warn-friendly
+>  - fsck: make fsck_ident() warn-friendly
+>  - fsck: report the ID of the error/warning
+>  - fsck (receive-pack): allow demoting errors to warnings
+>  - fsck: offer a function to demote fsck errors to warnings
+>  - fsck: provide a function to parse fsck message IDs
+>  - fsck: introduce identifiers for fsck messages
+>  - fsck: introduce fsck options
+> 
+>  Rerolled (at v7) and seems more or less ready for 'next'.
 
-Looking at the end result in refs-be-db.c it feels like there are more
-functions in the refs_be_db struct, did this originate from other design
-choices? IIRC Ronnie wanted to have as least functions in there as
-possible, and share as much of the code between the databases, such
-that the glue between the db and the refs code is minimal.
+I see that you used `downcased` instead of my `lowercased`, which makes more sense, but the style of the multi-line `for` loop as per `pu` is still as *I* wrote it... I also saw that you downcased the first letter after `fsck:` in the commit messages, and touched up the message of the "report the ID of the error/warning" commit. Do you want to touch up the `for` loop style in "offer a function to demote fsck errors to warnings" or shall I send a v8 (it is ready to go: https://github.com/dscho/git/compare/next...fsck-api)?
 
-Some random comments from looking over the branch briefly:
-
-In the latest commit, (refs: tests for db backend), I am unsure about the
-copyright annotations. At least a sole "Copyright (c) 2007 Junio C Hamano"
-doesn't make sense to me. ;)
-
-Typo in commit message "bisect: use refs insfrastructure for BISECT_START"
-
-Some commits contain a ChangeId, which is a Gerrit leftover. :(
-
-Thanks,
-Stefan
-
->
-> The db backend runs git for-each-ref about 30% faster than the files
-> backend with fully-packed refs on a repo with ~120k refs.  It's also
-> about 4x faster than using fully-unpacked refs.  In addition, and
-> perhaps more importantly, it avoids case-conflict issues on OS X.
->
-> I chose to use LMDB for the database.  LMDB has a few features that make
-> it suitable for usage in git:
->
-> 1. It is relatively lightweight; it requires only one header file, and
-> the library itself is under 300k (as opposed to 700k for
-> e.g. sqlite).
->
-> 2. It is well-tested: it's been used in OpenLDAP for years.
->
-> 3. It's very fast.  LMDB's benchmarks show that it is among
-> the fastest key-value stores.
->
-> 4. It has a relatively simple concurrency story; readers don't
-> block writers and writers don't block readers.
->
-> Ronnie Sahlberg's original version of this patchset used tdb.  The
-> advantage of tdb is that it's smaller (~125k).  The disadvantages are
-> that tdb is hard to build on OS X.  It's also not in homebrew.  So lmdb
-> seemed simpler.
->
-> To test this backend's correctness, I hacked test-lib.sh and
-> test-lib-functions.sh to run all tests under the refs backend. Dozens
-> of tests use manual ref/reflog reading/writing, or create submodules
-> without passing --refs-backend-type to git init.  If those tests are
-> changed to use the update-ref machinery or test-refs-be-db (or, in the
-> case of packed-refs, corrupt refs, and dumb fetch tests, are skipped),
-> the only remaining failing tests are the git-new-workdir tests and the
-> gitweb tests.
->
-> Please let me know how it would be best to proceed.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
+Ciao,
+Dscho
