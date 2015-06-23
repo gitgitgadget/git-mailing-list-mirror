@@ -1,84 +1,106 @@
-From: Greg Ledger <gledger@glcdelivers.com>
-Subject: config commands not working _Noobe question
-Date: Mon, 22 Jun 2015 23:31:00 +0000
-Message-ID: <D1AE04E1.1172A%gledger@glcdelivers.com>
+From: David Turner <dturner@twopensource.com>
+Subject: RFC/Pull Request: Refs db backend
+Date: Mon, 22 Jun 2015 20:50:56 -0400
+Organization: Twitter
+Message-ID: <1435020656.28466.8.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=Windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 23 02:04:05 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 23 02:51:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Bh6-0002rX-TF
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 02:04:05 +0200
+	id 1Z7CQb-00061J-Tg
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 02:51:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbbFWAD7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2015 20:03:59 -0400
-Received: from mail-bn1bon0113.outbound.protection.outlook.com ([157.56.111.113]:23428
-	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751900AbbFWAD6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2015 20:03:58 -0400
-Received: from BN1PR05MB202.namprd05.prod.outlook.com (10.255.206.18) by
- BN1PR05MB311.namprd05.prod.outlook.com (10.141.63.147) with Microsoft SMTP
- Server (TLS) id 15.1.195.15; Mon, 22 Jun 2015 23:31:03 +0000
-Received: from BN1PR05MB204.namprd05.prod.outlook.com (10.255.206.17) by
- BN1PR05MB202.namprd05.prod.outlook.com (10.255.206.18) with Microsoft SMTP
- Server (TLS) id 15.1.195.15; Mon, 22 Jun 2015 23:31:00 +0000
-Received: from BN1PR05MB204.namprd05.prod.outlook.com ([169.254.1.235]) by
- BN1PR05MB204.namprd05.prod.outlook.com ([169.254.1.235]) with mapi id
- 15.01.0195.005; Mon, 22 Jun 2015 23:31:00 +0000
-Thread-Topic: config commands not working _Noobe question
-Thread-Index: AQHQrUN/jKnkZSttr02w0ocmMhSE6w==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.5.2.150604
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [50.254.2.17]
-x-microsoft-exchange-diagnostics: 1;BN1PR05MB202;5:LVYfL9Qyq3AlIQDKRUcn+oyGRt0RlRkyQ12eZAkkmHcjUdcUkAYLD5suE1c2ynsRVORqAx6qm6+5Y/LZQhW4RbCo+sqIA0uyGL4+PbbHjsoDvombCXKdfXn/9TG2K1nBJBCNFXWTi26XsXkJtQ43Nw==;24:Yt8sVrVMLqgFKwYNA258K++fYW7qenNOYlUCHt6v5mgjUMZuc1yzamxcHmc69bcU8VNCMRRzIDxj2acjzIxe5V3iUgPb3orL/RraggXgRRw=;20:SmBR6bSKXEjgilchcS4zp/s29CKiRgJaNqr5L+rn0hT5zxY7ng8IPtzmXBCNowofyOaCwCJOjNN/6MJngCveJw==
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BN1PR05MB202;UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BN1PR05MB311;
-x-microsoft-antispam-prvs: <BN1PR05MB2027C005EC4E7626218F4BDB1A10@BN1PR05MB202.namprd05.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(5005006)(3002001);SRVR:BN1PR05MB202;BCL:0;PCL:0;RULEID:;SRVR:BN1PR05MB202;
-x-forefront-prvs: 06157D541C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(46102003)(92566002)(83506001)(450100001)(2351001)(2501003)(229853001)(189998001)(54356999)(50986999)(106116001)(99286002)(36756003)(5002640100001)(77156002)(5001960100002)(4001350100001)(15974865002)(62966003)(107886002)(40100003)(110136002)(2656002)(15975445007)(122556002)(102836002)(87936001)(19580405001)(19580395003)(66066001)(85806002)(86362001)(2900100001);DIR:OUT;SFP:1102;SCL:1;SRVR:BN1PR05MB202;H:BN1PR05MB204.namprd05.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-Content-ID: <8CC8EC281154B44896E9432FBFAEAE0A@namprd05.prod.outlook.com>
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jun 2015 23:31:00.2960
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4f7b1050-6293-417a-ae69-dc7603146b46
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN1PR05MB202
-X-Microsoft-Exchange-Diagnostics: 1;BN1PR05MB311;2:p2Biz/KqVFiaQ5H3yJEuQRrt52+9j0VDuaBIlRl6+i6dhRTFcIEsjGVLnIohDntY;3:1vMvrE7zZ4MCwe7Hsq4aLqBRomRWvYJhBB/3YtAyBmfk0VdLyHvU114PUZddB1L1N1KMQk8hNJjKjrjWFGk4Qkp+xlzNXdIe+nxcq69Y4iZYdHnCRMONFnx30ajlPRzmfMhrAuk0Ba2yCwZbv+I/rQ==;23:zTcjTKF6Mv/1zCBL6xx7Hg6xlFUcBvjMJTu7j8tHOpQwt6franKlBlkW8buVR3KnzOMzXRk1d14J6dHVjlH59ixiAk6dfKCLJgDB8xpT323lvOSbHb3joKQZ0yWEyA2AaNglwhNm3koWMaGpDl/E2t8zFW1bIrh7OarSEnn4c50j7ljUEweMZHMmZqNIVDcIioFGxJpd/OMYns+s8SIC9Jv6To0r7oBZ9AAXpEaRNkCE1gRVvVZNcAQIiY6kLmEE
-X-OriginatorOrg: glcdelivers.com
+	id S1753413AbbFWAvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2015 20:51:00 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:34299 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793AbbFWAu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2015 20:50:59 -0400
+Received: by qkeo142 with SMTP id o142so92452348qke.1
+        for <git@vger.kernel.org>; Mon, 22 Jun 2015 17:50:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:organization
+         :content-type:mime-version:content-transfer-encoding;
+        bh=Z3bA+8ozjqmrEdn1DV030NpniETYBLziamQMnIzoBv8=;
+        b=m8ME8v6fUj18TN07yl84kKlI83LfDNCIkFQQI7mccrBcpbnf/BSgH07zumfDriap1m
+         wFuRbu4qN+uVHfew54fTI3zOnpXAlm5B5SLV83xq/5bsX0REemEwfQaq2C05PZj7Jrv8
+         BDQRlsr07SUYlaIkEVvfd0shMuxxjqnVrdaX/i6/tG5PZg5zcweMiqUyyJ2a8lCZPJv0
+         0Oow/ehd8SzNEkWLW+/pq8wT9/uvxwEch1BbLIUr7aP/h+eavd7tcYlIrHutob8jqk3k
+         bQoabTCaxYtew/yqytikUSGTT2lxcrCQt4WXeqETJjvv9mKcn7/HnTABf8JYEW6AlbC3
+         WxHw==
+X-Gm-Message-State: ALoCoQlnBAHk22lbFGwiOMIG261CxTy7rPGXtiiq8vmJsAbexRDomecT3ga+uJpvdq6vkCT1eqM5
+X-Received: by 10.140.48.103 with SMTP id n94mr41042640qga.8.1435020658617;
+        Mon, 22 Jun 2015 17:50:58 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by mx.google.com with ESMTPSA id b85sm698133qkb.8.2015.06.22.17.50.57
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Jun 2015 17:50:57 -0700 (PDT)
+X-Mailer: Evolution 3.12.10-0ubuntu1~14.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272438>
 
-after adding git config =8Bglobal user.name Greg Ledger and git config
-=8Bglobal user.email gledger@glcdelivers.com, when I run:
-source ~/.gitconfig I get
+I've revived and modified Ronnie Sahlberg's work on the refs db
+backend.  
 
--bash: [user]: command not found
--bash: name: command not found
--bash: email: command not found
--bash: [color]: command not found
--bash: ui: command not found
+The work is on top of be3c13e5564, Junio's "First batch for 2.5 cycle".
+I recognize that there have been changes to the refs code since then,
+and that there are some further changes in-flight from e.g. Michael
+Haggerty.  If there is interest in this, I can rebase once Michael's
+changes land.
 
-What gives? (I had to download xcode tools before I could do my first g=
-it
-init
+The changes can be found here:
+https://github.com/dturner-tw/git.git on the dturner/pluggable-backends
+branch
 
-Greg Ledger=20
-Web Developer & E-Marketing Specialist | GLC
-847.205.3125=20
-gledger@glcdelivers.com
-www.glcdelivers.com <http://www.glcdelivers.com>
+The db backend code was added in the penultimate commit; the rest is
+just code rearrangement and minor changes to make alternate backends
+possible.  There ended up being a fair amount of this rearrangement, but
+the end result is that almost the entire git test suite runs under the
+db backend without error (see below for details).
+
+The db backend runs git for-each-ref about 30% faster than the files
+backend with fully-packed refs on a repo with ~120k refs.  It's also
+about 4x faster than using fully-unpacked refs.  In addition, and
+perhaps more importantly, it avoids case-conflict issues on OS X.
+
+I chose to use LMDB for the database.  LMDB has a few features that make
+it suitable for usage in git:
+
+1. It is relatively lightweight; it requires only one header file, and
+the library itself is under 300k (as opposed to 700k for
+e.g. sqlite).
+
+2. It is well-tested: it's been used in OpenLDAP for years.
+
+3. It's very fast.  LMDB's benchmarks show that it is among
+the fastest key-value stores.
+
+4. It has a relatively simple concurrency story; readers don't
+block writers and writers don't block readers.
+
+Ronnie Sahlberg's original version of this patchset used tdb.  The
+advantage of tdb is that it's smaller (~125k).  The disadvantages are
+that tdb is hard to build on OS X.  It's also not in homebrew.  So lmdb
+seemed simpler.
+
+To test this backend's correctness, I hacked test-lib.sh and
+test-lib-functions.sh to run all tests under the refs backend. Dozens
+of tests use manual ref/reflog reading/writing, or create submodules
+without passing --refs-backend-type to git init.  If those tests are
+changed to use the update-ref machinery or test-refs-be-db (or, in the
+case of packed-refs, corrupt refs, and dumb fetch tests, are skipped),
+the only remaining failing tests are the git-new-workdir tests and the
+gitweb tests.  
+
+Please let me know how it would be best to proceed. 
