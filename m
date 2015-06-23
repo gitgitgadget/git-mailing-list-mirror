@@ -1,288 +1,124 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH v6 07/10] send-email: reduce dependencies impact on parse_address_line
-Date: Tue, 23 Jun 2015 22:30:13 +0200
-Message-ID: <1435091416-9394-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
- <1435091416-9394-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
-Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCHv6 3/3] git rebase -i: add static check for commands and
+ SHA-1
+Date: Tue, 23 Jun 2015 22:35:32 +0200 (CEST)
+Message-ID: <1208569888.733725.1435091732761.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <1435009369-11496-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <xmqqpp4mciu7.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
 	Louis-Alexandre Stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 23 22:30:49 2015
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 22:33:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7UqG-0000mo-Cg
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:30:48 +0200
+	id 1Z7Ut5-0002XG-1a
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933331AbbFWUap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 16:30:45 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:55966 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933316AbbFWUah (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:30:37 -0400
+	id S932538AbbFWUdj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 16:33:39 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:42930 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754901AbbFWUdi convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 16:33:38 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 366E82948;
-	Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0htZsr2J18ZO; Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 197692941;
-	Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 14B7C20DC;
-	Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6EqcXmYkAlWZ; Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
-Received: from localhost.localdomain (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 8DBEF20DA;
-	Tue, 23 Jun 2015 22:30:35 +0200 (CEST)
-X-Mailer: git-send-email 2.4.4.418.ga60dbe1
-In-Reply-To: <1435091416-9394-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id A726837E3;
+	Tue, 23 Jun 2015 22:33:36 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XRYZz5qV96VI; Tue, 23 Jun 2015 22:33:36 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 8017A37DE;
+	Tue, 23 Jun 2015 22:33:36 +0200 (CEST)
+In-Reply-To: <xmqqpp4mciu7.fsf@gitster.dls.corp.google.com>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git rebase -i: add static check for commands and SHA-1
+Thread-Index: UlwCa9w96kyF8NxMDs6WzvAYqQ4/VQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272506>
 
-parse_address_line had not the same behavior whether the user had
-Mail::Address or not. Teach parse_address_line to behave like
-Mail::Address.
+Junio C Hamano <gitster@pobox.com> writes:
+> Galan R=C3=A9mi  <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+>=20
+> >  I used:
+> >    read -r command sha1 rest <<EOF
+> >    $line
+> >    EOF
+> >  because
+> >    printf '%s' "$line" | read -r command sha1 rest
+> >  doesn't work (the 3 variables have no value as a result).
+> >  There might be a better way to do this, but I don't have it right =
+now.
+>=20
+>         while read line
+>         do
+>                 (
+>                         IFS=3D' '
+>                         set x $line
+>                         shift
+>                         # now $1 is your command, $2 is sha1, $3 is r=
+emainder
+>                         ...
+>                 )
+>         done
+>=20
+> perhaps?
 
-When the user input is correct, this implementation behaves
-exactly like Mail::Address except when there are quotes
-inside the name:
+Will try, thanks!
 
-  "Jane Do"e <jdoe@example.com>
+> But more importantly, why do you even need to keep the bad ones in a
+> separate .badcmd and .badsha files?  Isn't that bloating your changes
+> unnecessarily, iow, if you issued your warning as you encounter them,
+> wouldn't the change become cleaner and easier to understand (and as
+> a side effect it may even become smaller)?  The _only_ thing that
+> you would get by keeping them in temporary files is that you can do
+> "one header and bunch of errors", but is it so common to make a bad
+> edit to the insn sheet that "a sequence of errors, one per line"
+> becomes more burdensome to the end user?
+>=20
+> I would think
+>=20
+>         stripspace |
+>         while read -r command sha1 rest
+>         do
+>                 ...
+>=20
+> and showing the warning as you detect inside that loop would be
+> sufficient.  Perhaps I am missing subtle details of what you are
+> doing.
 
-In this case the result of parse_address_line is:
+You're not missing subtle details, it is as you said, I tough it would
+be clearer for the user to have "one header and a bunch of errors".
+Moreover while it would make the patch smaller and easier to
+understand, I am not sure about making it cleaner; I guess I will have
+to try and see how it ends up.
 
-  With M::A : "Jane Do" e <jdoe@example.com>
-  Without   : "Jane Do e" <jdoe@example.com>
+What I'm not completely happy with your proposition is the fact that=20
+if there are multiple errors of the same kind, the output would look=20
+something like:
+> Warning: the command isn't recognized in the following line:
+> badcmd1 some_sha some_commit_message
+> Warning: the command isn't recognized in the following line:
+> badcmd2 some_sha some_commit_message
+(I don't think it would be good to squash some understandable warning
+message and the faulty line in one line, it would probably end up
+being too long)
+However as you say, such mistakes are uncommon so I guess it's fine.
 
-When the user input is not correct, the behavior is also mostly
-the same.
-
-Unlike Mail::Address, this doesn't parse groups and recursive
-commentaries.
-
-Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
----
- git-send-email.perl  |  2 +-
- perl/Git.pm          | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- t/t9000-addresses.sh | 30 +++++++++++++++++++++++
- t/t9000/test.pl      | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 165 insertions(+), 1 deletion(-)
- create mode 100755 t/t9000-addresses.sh
- create mode 100755 t/t9000/test.pl
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a0cd7ff..bced78e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -478,7 +478,7 @@ sub parse_address_line {
- 	if ($have_mail_address) {
- 		return map { $_->format } Mail::Address->parse($_[0]);
- 	} else {
--		return split_addrs($_[0]);
-+		return Git::parse_mailboxes($_[0]);
- 	}
- }
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 9026a7b..19ef081 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -864,6 +864,73 @@ sub ident_person {
- 	return "$ident[0] <$ident[1]>";
- }
- 
-+=item parse_mailboxes
-+
-+Return an array of mailboxes extracted from a string.
-+
-+=cut
-+
-+sub parse_mailboxes {
-+	my $re_comment = qr/\((?:[^)]*)\)/;
-+	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
-+	my $re_word = qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
-+
-+	# divide the string in tokens of the above form
-+	my $re_token = qr/(?:$re_quote|$re_word|$re_comment|\S)/;
-+	my @tokens = map { $_ =~ /\s*($re_token)\s*/g } @_;
-+
-+	# add a delimiter to simplify treatment for the last mailbox
-+	push @tokens, ",";
-+
-+	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
-+	foreach my $token (@tokens) {
-+		if ($token =~ /^[,;]$/) {
-+			# if buffer still contains undeterminated strings
-+			# append it at the end of @address or @phrase
-+			if (@address) {
-+				push @address, @buffer;
-+			} else {
-+				push @phrase, @buffer;
-+			}
-+
-+			my $str_phrase = join ' ', @phrase;
-+			my $str_address = join '', @address;
-+			my $str_comment = join ' ', @comment;
-+
-+			# quote are necessary if phrase contains
-+			# special characters
-+			if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
-+				$str_phrase =~ s/(^|[^\\])"/$1/g;
-+				$str_phrase = qq["$str_phrase"];
-+			}
-+
-+			# add "<>" around the address if necessary
-+			if ($str_address ne "" && $str_phrase ne "") {
-+				$str_address = qq[<$str_address>];
-+			}
-+
-+			my $str_mailbox = "$str_phrase $str_address $str_comment";
-+			$str_mailbox =~ s/^\s*|\s*$//g;
-+			push @addr_list, $str_mailbox if ($str_mailbox);
-+
-+			@phrase = @address = @comment = @buffer = ();
-+		} elsif ($token =~ /^\(/) {
-+			push @comment, $token;
-+		} elsif ($token eq "<") {
-+			push @phrase, (splice @address), (splice @buffer);
-+		} elsif ($token eq ">") {
-+			push @address, (splice @buffer);
-+		} elsif ($token eq "@") {
-+			push @address, (splice @buffer), "@";
-+		} elsif ($token eq ".") {
-+			push @address, (splice @buffer), ".";
-+		} else {
-+			push @buffer, $token;
-+		}
-+	}
-+
-+	return @addr_list;
-+}
- 
- =item hash_object ( TYPE, FILENAME )
- 
-diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
-new file mode 100755
-index 0000000..7223d03
---- /dev/null
-+++ b/t/t9000-addresses.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2015
-+#
-+
-+test_description='compare address parsing with and without Mail::Address'
-+. ./test-lib.sh
-+
-+if ! test_have_prereq PERL; then
-+	skip_all='skipping perl interface tests, perl not available'
-+	test_done
-+fi
-+
-+perl -MTest::More -e 0 2>/dev/null || {
-+	skip_all="Perl Test::More unavailable, skipping test"
-+	test_done
-+}
-+
-+perl -MMail::Address -e 0 2>/dev/null || {
-+	skip_all="Perl Mail::Address unavailable, skipping test"
-+	test_done
-+}
-+
-+test_external_has_tap=1
-+
-+test_external_without_stderr \
-+	'Perl address parsing function' \
-+	perl "$TEST_DIRECTORY"/t9000/test.pl
-+
-+test_done
-diff --git a/t/t9000/test.pl b/t/t9000/test.pl
-new file mode 100755
-index 0000000..8e2b760
---- /dev/null
-+++ b/t/t9000/test.pl
-@@ -0,0 +1,67 @@
-+#!/usr/bin/perl
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+
-+use 5.008;
-+use warnings;
-+use strict;
-+
-+use Test::More qw(no_plan);
-+use Mail::Address;
-+
-+BEGIN { use_ok('Git') }
-+
-+my @success_list = (q[Jane],
-+	q[jdoe@example.com],
-+	q[<jdoe@example.com>],
-+	q[Jane <jdoe@example.com>],
-+	q[Jane Doe <jdoe@example.com>],
-+	q["Jane" <jdoe@example.com>],
-+	q["Doe, Jane" <jdoe@example.com>],
-+	q["Jane@:;\>.,()<Doe" <jdoe@example.com>],
-+	q[Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>],
-+	q["<jdoe@example.com>"],
-+	q["Jane jdoe@example.com"],
-+	q[Jane Doe <jdoe    @   example.com  >],
-+	q[Jane       Doe <  jdoe@example.com  >],
-+	q[Jane @ Doe @ Jane @ Doe],
-+	q["Jane, 'Doe'" <jdoe@example.com>],
-+	q['Doe, "Jane' <jdoe@example.com>],
-+	q["Jane" "Do"e <jdoe@example.com>],
-+	q["Jane' Doe" <jdoe@example.com>],
-+	q["Jane Doe <jdoe@example.com>" <jdoe@example.com>],
-+	q["Jane\" Doe" <jdoe@example.com>],
-+	q[Doe, jane <jdoe@example.com>],
-+	q["Jane Doe <jdoe@example.com>],
-+	q['Jane 'Doe' <jdoe@example.com>]);
-+
-+my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
-+	q["Doe, Ja"ne <jdoe@example.com>],
-+	q["Doe, Katarina" Jane <jdoe@example.com>],
-+	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
-+	q[Jane jdoe@example.com],
-+	q[<jdoe@example.com> Jane Doe],
-+	q[Jane <jdoe@example.com> Doe],
-+	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
-+	q[Jane Doe],
-+	q[Jane "Doe <jdoe@example.com>"],
-+	q[\"Jane Doe <jdoe@example.com>],
-+	q[Jane\"\" Doe <jdoe@example.com>],
-+	q['Jane "Katarina\" \' Doe' <jdoe@example.com>]);
-+
-+foreach my $str (@success_list) {
-+	my @expected = map { $_->format } Mail::Address->parse("$str");
-+	my @actual = Git::parse_mailboxes("$str");
-+	is_deeply(\@expected, \@actual, qq[same output : $str]);
-+}
-+
-+TODO: {
-+	local $TODO = "known breakage";
-+	foreach my $str (@known_failure_list) {
-+		my @expected = map { $_->format } Mail::Address->parse("$str");
-+		my @actual = Git::parse_mailboxes("$str");
-+		is_deeply(\@expected, \@actual, qq[same output : $str]);
-+	}
-+}
-+
-+my $is_passing = Test::More->builder->is_passing;
-+exit($is_passing ? 0 : 1);
--- 
-1.9.1
+Thanks,
+R=C3=A9mi
