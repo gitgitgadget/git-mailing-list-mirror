@@ -1,83 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC/Pull Request: Refs db backend
-Date: Tue, 23 Jun 2015 14:41:08 -0700
-Message-ID: <xmqqwpyuayrv.fsf@gitster.dls.corp.google.com>
-References: <1435020656.28466.8.camel@twopensource.com>
-	<55898073.4010105@alum.mit.edu>
-	<1435089205.28466.56.camel@twopensource.com>
-	<1435095301.28466.76.camel@twopensource.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Enable core.fsyncObjectFiles by default
+Date: Tue, 23 Jun 2015 14:57:23 -0700
+Message-ID: <1435096643-18159-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 23:41:37 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, peff@peff.net, torvalds@linux-foundation.org,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 23:57:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Vwg-0001eX-KA
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 23:41:30 +0200
+	id 1Z7WCJ-00046t-6W
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 23:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933907AbbFWVlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 17:41:18 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:36419 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933657AbbFWVlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 17:41:11 -0400
-Received: by igbiq7 with SMTP id iq7so84985363igb.1
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 14:41:10 -0700 (PDT)
+	id S933347AbbFWV5e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 17:57:34 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:38851 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932323AbbFWV5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 17:57:33 -0400
+Received: by igin14 with SMTP id n14so21771065igi.1
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 14:57:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=YpvptECfZ0pe9wjziG7HDCCOk6AtMN1lWNyVYrtSuJU=;
-        b=tBPUklEf18h6tKZYUfcUy0r8w6JB39NElTE8E30xGn2UZkn0hmi87FH+FQE81FNghA
-         V187AmPEooBDOkkLZiqhFMsIZ9AG71yxtk60zFlqifyyfRUaNN1uFcHfJ53bpfNm9bMR
-         WgXoVp22INC4Fq6nlbFfosYoZWaB2MuCkXZ9v6tcYa5IBozJGodNlFIhYg6JpEm87oCK
-         VGu/IUGwqLuftXzbumoOqL6gfnLkG1/ze+LOrwa2saUXUSAsCXXcEqZNcHRTjzsmFtoa
-         gVdSJv5YpQbZe1iYQn0txOrMqBzBdRb/4mYSMTy4dbQSYEN5lN4Ve0x2vudtMFyS+vJ5
-         mYzw==
-X-Received: by 10.43.24.134 with SMTP id re6mr15709720icb.74.1435095670546;
-        Tue, 23 Jun 2015 14:41:10 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
-        by mx.google.com with ESMTPSA id l128sm15904496iol.1.2015.06.23.14.41.09
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=cB+L2jrgsAwqyRw9DAIjkT2/b+9QwiftFdribFCBRGo=;
+        b=KTq4K4dKvMk3JQk4TqBvgQoq1WZo5KVDgY8Fd8FfldSmxUVfn6HzKt4Pie/aC8FN9e
+         LN35zneB2UDy9xgT0AZq5FXcY+NSd6s9hJXt86T3GuwPg49V5+jrzPjJWY0xh0n69wqr
+         cc6ssZWQvlpax9iuPVfStFbc1jTKIRn+2qti/KpSofYIncZG7QhdH2kJUBmob1Zy+9Nt
+         kt0GtttdnJSxEcnfxcSw0s+xiZQxltkusPumCA8BJeClais0+6GyZMqnkpm0y27oasvt
+         6om0tM64D+3fGzx00Bnuqj/y1F/D3d5V+PMLCAc98kSfaZ/FtZci9g9N2uBZuNMZCyld
+         9z5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=cB+L2jrgsAwqyRw9DAIjkT2/b+9QwiftFdribFCBRGo=;
+        b=NyNdWpxhPUv3kftyg2+7AK0B94hceOjC4PgYkOFCFLundQ86qqK1YN5hKMjJ4OKj21
+         30e+xSoEfzvGyn4Dt7VZ21WFiNUoIbsBil96gFOnaMdqgROMD7F9aidEQZ59xsDQ0iQA
+         xMMZIYVARKn8fJDZHYRdfZOLPMk9IG4GOr+u5vBTSv6uViC7xY2QzuG/Cja9c60Khy8G
+         1RZzyBCrevq17ClfUpmDv+jhzYmw32NzxqyDEgTBo78jzl0dxaj37G4HmWZDzi5WuBMs
+         knbGRP2+MG0CVE3/bcdAPeFMzOkxpbsaXh3FZTbWt0S6bc2fHOTa2S7TebwKapLPpHfl
+         JK2A==
+X-Gm-Message-State: ALoCoQndN+2A6/CGSUrVOxlh0XqDz8uQrCHe7LdMUFjWHdOPgz2hHU/jn9/NAHqMr58yuC1HGSc9
+X-Received: by 10.107.164.89 with SMTP id n86mr18630065ioe.73.1435096652634;
+        Tue, 23 Jun 2015 14:57:32 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:5993:4446:e67a:566a])
+        by mx.google.com with ESMTPSA id r4sm636443igh.9.2015.06.23.14.57.31
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Jun 2015 14:41:09 -0700 (PDT)
-In-Reply-To: <1435095301.28466.76.camel@twopensource.com> (David Turner's
-	message of "Tue, 23 Jun 2015 17:35:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        Tue, 23 Jun 2015 14:57:31 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272523>
 
-David Turner <dturner@twopensource.com> writes:
+Linus Torvalds started a discussion[1] if we want to play rather safe
+than use defaults which make sense only for the most power users of Git=
+:
 
-> On Tue, 2015-06-23 at 15:53 -0400, David Turner wrote:
->> > * Regarding MERGE_HEAD: you take the point of view that it must continue
->> > to be stored as a file. And yet it must also behave somewhat like a
->> > reference; for example, `git rev-parse MERGE_HEAD` works today.
->> > MERGE_HEAD is also used for reachability, right?
->> > 
->> > Another point of view is that MERGE_HEAD is a plain old boring
->> > reference, but there is some other metadata related to it that the refs
->> > backend has to store. The file-based backend would have special-case
->> > code to read the additional data from the tail of the loose refs file
->> > (and be sure to write the metadata when writing the reference), but
->> > other backends could store the reference with the rest but do their own
->> > thing with the metadata. So I guess I'm wondering whether the refs API
->> > needs a MERGE_HEAD-specific way to read and write MERGE_HEAD along with
->> > its metadata.
->> 
->> You are probably right that this is a good idea.
->
-> On reflection, I think it might make sense to keep MERGE_HEAD as a file.
-> The problem is that not only would refs backends have to add new
-> MERGE_HEAD-handling functions, but we would also need new plumbing
-> commands to allow scripts to access the complete contents of MERGE_HEAD.
-> That seems more complicated to me.  
+> So git is "safe" in the sense that you won't really lose any data,
+> but you may well be inconvenienced.  The "fsync each object" config
+> option is there in case you don't want that inconvenience, but it
+> should be noted that it can make for a hell of a performance impact.
 
-I think you are talking about FETCH_HEAD, but I tend to agree.
+> Of course, it might well be the case that the actual default
+> might be worth turning around. Most git users probably don't
+> care about that kind of "apply two hundred patches from Andrew
+> Morton" kind of workload, although "rebase a big patch-series"
+> does end up doing basically the same thing, and might be more
+> common.=EF=BB=BF
+
+This patch enables fsync_object_files by default.
+
+[1] https://plus.google.com/u/1/+JonathanCorbet/posts/JBxiKPe3VXa
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/config.txt | 8 ++++----
+ environment.c            | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 43bb53c..dce2640 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -693,10 +693,10 @@ core.whitespace::
+ core.fsyncObjectFiles::
+ 	This boolean will enable 'fsync()' when writing object files.
+ +
+-This is a total waste of time and effort on a filesystem that orders
+-data writes properly, but can be useful for filesystems that do not us=
+e
+-journalling (traditional UNIX filesystems) or that only journal metada=
+ta
+-and not file contents (OS X's HFS+, or Linux ext3 with "data=3Dwriteba=
+ck").
++This ensures objects are written to disk instead of relying on the
++operating systems cache and eventual write. Disabling this option will
++yield performance with a trade off in safety for repository corruption
++during power loss.
+=20
+ core.preloadIndex::
+ 	Enable parallel index preload for operations like 'git diff'
+diff --git a/environment.c b/environment.c
+index 61c685b..b406f5e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -35,7 +35,7 @@ const char *git_attributes_file;
+ int zlib_compression_level =3D Z_BEST_SPEED;
+ int core_compression_level;
+ int core_compression_seen;
+-int fsync_object_files;
++int fsync_object_files =3D 1;
+ size_t packed_git_window_size =3D DEFAULT_PACKED_GIT_WINDOW_SIZE;
+ size_t packed_git_limit =3D DEFAULT_PACKED_GIT_LIMIT;
+ size_t delta_base_cache_limit =3D 96 * 1024 * 1024;
+--=20
+2.4.1.345.gab207b6.dirty
