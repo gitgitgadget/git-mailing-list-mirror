@@ -1,102 +1,130 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a
- commit
-Date: Tue, 23 Jun 2015 21:01:19 +0200 (CEST)
-Message-ID: <1637608183.731706.1435086079947.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 0/5] git bisect old/new
+Date: Tue, 23 Jun 2015 12:04:50 -0700
+Message-ID: <xmqq381idz59.fsf@gitster.dls.corp.google.com>
+References: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
+	<1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 20:59:40 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
+	valentinduperray@gmail.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 23 21:05:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7TQ2-00059z-1p
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:59:38 +0200
+	id 1Z7TVC-0008J3-Am
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:04:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933516AbbFWS7e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 14:59:34 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:51335 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932130AbbFWS70 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 14:59:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 55C8B292F;
-	Tue, 23 Jun 2015 20:59:24 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bm-o+Dw-T27L; Tue, 23 Jun 2015 20:59:24 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 17C85292E;
-	Tue, 23 Jun 2015 20:59:24 +0200 (CEST)
-In-Reply-To: <CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git-rebase -i: add command "drop" to remove a commit
-Thread-Index: U5KmGaUOiFq7i279P2QxOFTSwIBW9w==
+	id S933182AbbFWTEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 15:04:54 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:34841 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932323AbbFWTEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 15:04:53 -0400
+Received: by iebrt9 with SMTP id rt9so18377176ieb.2
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 12:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=fLsSYk5FRXSt/FW5Y/Y0Kj9m/x9kFPAGPbINtuV2rZU=;
+        b=Y9Fhr/QX+w0XFSmMfvteGexG/c9GqQIxYF/ls2zJixFSZK/a0Nt1gVelKh29qh13fm
+         UOX46pfS4xscrtq1jfWYGL+xc6ZLQ6WLv98VFp5b2C+L7FH4KMZGwMyAX03Wryyr0KBv
+         JjDCSLWQutI3u1iY6g3MgompdEQy2HJR+C0HYLra1Gh34gquFgibGFwxW3h28c2QZrwv
+         Ro8hA91rhpY/M51kG6MvvLoPg+dFr85HA9Iad2/DxOxWQgP1shGOjNlquNomIQ6MH+JV
+         YBCTtFpWH4BoFdrps6fiRZElzSmoCahnVHIziGtoLqenrs6fQTVYmSD/PRHsTRywlGG9
+         XpgA==
+X-Received: by 10.50.79.169 with SMTP id k9mr4177848igx.44.1435086292750;
+        Tue, 23 Jun 2015 12:04:52 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
+        by mx.google.com with ESMTPSA id p193sm15659188ioe.34.2015.06.23.12.04.51
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Jun 2015 12:04:51 -0700 (PDT)
+In-Reply-To: <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
+	Moy's message of "Tue, 23 Jun 2015 14:54:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272481>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-> > +test_rebase_end () {
-> > +       test_when_finished "git checkout master &&
-> > +       git branch -D $1 &&
-> > +       test_might_fail git rebase --abort" &&
-> > +       git checkout -b $1 master
-> > +}
->=20
-> The way this is indented makes it difficult to see that lines 2 and 3
-> are continuations of 1. Perhaps format it like this instead?
->=20
->     test_rebase_end () {
->         test_when_finished "git checkout master &&
->             git branch -D $1 &&
->             test_might_fail git rebase --abort" &&
->         git checkout -b $1 master
->     }
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-I completely agree with you, moreover it was indented like this before.
-I'll change it in my local version for now.
+> I fixed a few minor issues in v6. Patch between my version and v6 is
+> below. I also pushed my branch here:
+>
+>   https://github.com/moy/git/tree/bisect-terms
 
-Ironically, it was modified after the following:
+It is somewhat confusing to see v3 yesterday and then this v7 next
+day.  How did I miss v4 thru v6?
 
-Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > > +test_expect_success 'rebase -i respects rebase.missingCommitsChe=
-ck=3Dignore' '
-> > > +       test_config rebase.missingCommitsCheck ignore &&
-> > > +       test_when_finished "git checkout master &&
-> > > +               git branch -D tmp2" &&
-> >
-> > Strange indentation.
->=20
-> Considering that 'git branch -D tmp2' is a part of test_when_finished=
-,
-> I wasn't sure of how it was supposed to be indented, so I did it this
-> way to show that it was still within test_when_finished and not a
-> separate command.
-> >         test_when_finished "git checkout master &&
-> >         git branch -D tmp2" &&
-> Doesn't seem as clear, especially if you quickly read the lines.
->=20
-> For now, I have removed the tab.
+> Not visible in the patch below: I squashed PATCH 5 into PATCH 3 to
+> avoid the pattern "break stuff and then repair it".
 
-:p
+Good.
 
-Thanks,
-R=C3=A9mi
+> The first two patches seem ready.
+
+Yeah, the first one is obviously fine ;-), and I agree the second
+one looks more or less OK.
+
+Regarding the second and third one, the messages they give when the
+user marked one tip of a side branch as old and the other new gave
+me a hiccup while reading them, though.
+
+	if (!strcmp(name_bad, "bad")) {
+		fprintf(stderr, "The merge base %s is bad.\n"
+			"This means the bug has been fixed "
+			"between %s and [%s].\n",
+			bad_hex, bad_hex, good_hex);
+	} else {
+		fprintf(stderr, "The merge base %s is %s.\n"
+			"This means the first commit marked %s is "
+			"between %s and [%s].\n",
+			bad_hex, name_bad, name_bad, bad_hex, good_hex);
+
+The "bad" side is inherited from the original and not your fault,
+but it was already very hard to understand. The other side is not
+just unreadable, but I think is incorrect and confusing to say
+"first commit marked %(name_bad)s"; you know there are history
+segments whose oldest ends (i.e. merge base that is bad) are marked
+as 'bad', and the other ends are marked as 'good', and you haven't
+marked any of the commits in between yet.  So there is no "first
+commit marked" either as bad or good there between these endpoints
+(yet).
+
+Also I was somewhat puzzled and disappointed to still see
+name_{bad,good} not name_{new,old} used as variable names even in
+the endgame patch, though.  Is that intended?
+
+> PATCH 4 (add old/new) is still buggy. When starting a bisection with
+>
+>   git bisect start $old $new
+>
+> the command "git bisect visualize" does not work (it shows no commit).
+>
+> I consider PATCH 5 as WIP, I think it would need a lot of polishing
+> and testing to be mergeable. I think a reasonable objective for now it
+> to get old/new working in the user-interface, and drop PATCH 5 from
+> the series when it gets merged. The existance of PATCH 5 is a very
+> good thing even if it doesn't get merged:
+>
+> * The fact that it's possible to do it on top of the series shows that
+>   we make the code more generic. I think it's important that
+>   regardless of features, the code moves in the right direction.
+>
+> * The patch can be taken over later by someone else.
+
+Yeah, if I may rephrase to make sure we are on the same page, in
+order for 5/5 to be done sanely, 1-4/5 must be giving a good
+foundation to build on.  I agree with that, I agree that including a
+polished 5/5 would be a good thing, and then I further agree that
+1-4/5 could be delivered before 5/5 is ready.
+
+Thanks.
