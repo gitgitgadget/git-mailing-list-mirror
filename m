@@ -1,84 +1,84 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: RFC/Pull Request: Refs db backend
-Date: Tue, 23 Jun 2015 16:10:01 -0400
-Message-ID: <005101d0adf0$964bca10$c2e35e30$@nexbridge.com>
-References: <1435020656.28466.8.camel@twopensource.com>	 <CAGZ79kap++fZx3X0D95d35XioRURU468xATDZpWHDOAPapAh+Q@mail.gmail.com> <1435089895.28466.65.camel@twopensource.com>
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH v5 07/10] send-email: reduce dependancies impact on
+ parse_address_line
+Date: Tue, 23 Jun 2015 22:15:07 +0200 (CEST)
+Message-ID: <69022894.748633.1435090507744.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434842273-30945-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1434842273-30945-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr> <1692637261.3463890.1434881256090.JavaMail.zimbra@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'git mailing list'" <git@vger.kernel.org>,
-	"'ronnie sahlberg'" <ronniesahlberg@gmail.com>
-To: "'David Turner'" <dturner@twopensource.com>,
-	"'Stefan Beller'" <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 22:10:13 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 23 22:13:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7UWK-0005JS-9S
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:10:12 +0200
+	id 1Z7UZH-0007Bq-1o
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754877AbbFWUKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 16:10:08 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:43426 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754852AbbFWUKG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:10:06 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t5NKA2gu086940
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Tue, 23 Jun 2015 16:10:03 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <1435089895.28466.65.camel@twopensource.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQJ1O/YN/henzw5pG8BC73xzk1Dn5wJTjVJeARUmkxWcViLwgA==
-Content-Language: en-ca
+	id S932552AbbFWUNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 16:13:11 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:50819 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932747AbbFWUNK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:13:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D2B8D2945;
+	Tue, 23 Jun 2015 22:13:08 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H67OYDw4XcEe; Tue, 23 Jun 2015 22:13:08 +0200 (CEST)
+Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id BEF1E2941;
+	Tue, 23 Jun 2015 22:13:08 +0200 (CEST)
+In-Reply-To: <1692637261.3463890.1434881256090.JavaMail.zimbra@imag.fr>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: send-email: reduce dependancies impact on parse_address_line
+Thread-Index: +M3vEpJoD3pi1fRp2/fC1zqK+r+ZxYwFCXZ1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272493>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of David Turner
-> Sent: June 23, 2015 4:05 PM
-> To: Stefan Beller
-> Cc: git mailing list; ronnie sahlberg
-> Subject: Re: RFC/Pull Request: Refs db backend
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> > We can redirect todo_output to a variable but I've not found better...
+> > (Maybe someone has the solution here ?). Also there's no summary at
+> > the end of the test (as with other perl tests).
 > 
-> On Tue, 2015-06-23 at 10:16 -0700, Stefan Beller wrote:
-> > > The db backend code was added in the penultimate commit; the rest is
-> > > just code rearrangement and minor changes to make alternate backends
-> > > possible.  There ended up being a fair amount of this rearrangement,
-> > > but the end result is that almost the entire git test suite runs
-> > > under the db backend without error (see below for
-> > details).
-> >
-> > Looking at the end result in refs-be-db.c it feels like there are more
-> > functions in the refs_be_db struct, did this originate from other
-> > design choices? IIRC Ronnie wanted to have as least functions in there
-> > as possible, and share as much of the code between the databases, such
-> > that the glue between the db and the refs code is minimal.
+> You can get the 1..44 at the end with
 > 
-> I didn't actually spend that much time reading Ronnie's backend code.
-> My code aims to be extremely thoroughly compatible.  I spent a ton of time
-> making sure that the git test suite passed.  I don't know if an alternate
-> approach would have been as compatible.
+> printf "1..%d\n", Test::More->builder->current_test;
 > 
-> The requirement for reflog storage did complicate things a bit.
-> 
-> I also didn't see a strong need to abstract the database, since LMDB is common,
-> widely compatible, and tiny.
+> This is what t9700/test.pl does.
 
-Just to beg a request: LMDB is not available on some MPP architectures to which git has been ported. If it comes up, I beg you not to add this as a dependency to base git components.
+I can also get it by removing the line 
 
-Thanks,
-Randall
+ Test::More->builder->no_ending(1);
 
--- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+and replacing
+
+ use Test::More;
+
+by
+
+ use Test::More "no_plan";
+
+I think I'm going to do that, because the no_ending thing makes the
+test suite success even if every test fails: at the end we have
+
+# test_external test Perl address parsing function was ok
+# test_external_without_stderr test no stderr: Perl address parsing function was ok
+
+in case everything is ok. With the "no_ending" line, only the second
+line reports failures, the first is always the same.
+I think both must be marked red.
