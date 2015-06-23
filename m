@@ -1,110 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a commit
-Date: Tue, 23 Jun 2015 12:27:30 -0700
-Message-ID: <xmqqwpyucjj1.fsf@gitster.dls.corp.google.com>
-References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+From: Jacek Wielemborek <d33tah@gmail.com>
+Subject: git status --diffstat?
+Date: Tue, 23 Jun 2015 21:30:13 +0200
+Message-ID: <5589B3C5.7050504@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Galan =?utf-8?Q?R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 23 21:27:49 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 21:30:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Tr9-0005WX-2J
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:27:39 +0200
+	id 1Z7Ttw-0007NE-Bx
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:30:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754979AbbFWT1f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 15:27:35 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:36551 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754568AbbFWT1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 15:27:33 -0400
-Received: by iecvh10 with SMTP id vh10so18811841iec.3
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 12:27:32 -0700 (PDT)
+	id S933231AbbFWTa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 15:30:28 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:36684 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933015AbbFWTa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 15:30:26 -0400
+Received: by lbbpo10 with SMTP id po10so13135578lbb.3
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 12:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=IG2Y46OvHuet+YFj6+jISMgxBMLsIHGtTX+rR/NVEkU=;
-        b=GKW0JILw+dSDuPWm166Et0r0lu+rJb7cX3lhsfHcMdNAAdm7mbCScqcaCBrEY98aho
-         Ppi4f3fuxn0ZF+om7q0fZ9KT5e3WIOvi9EcaHkP0oli3EZEHpgQqNkk3r0OWcX2C2l1T
-         OtbIfAwTAcWjUHDsvfKu1f8IfPAWcOPNr52EwMKQc1JD7SxHVEjh4XUT9qrg2TZiO7y4
-         3ywf4MVeYf0DGgtkl8iOgitUlsbVlOby4dc20FIB2LUg1U9eEr4SNz+sVaVJWXZF0YyG
-         LNv+KjxB280UQEhLEg4+VGL6HdSgLa5C8kksrDHu5zeOtQ9oR5PLNA69xuQw+HRwzZRR
-         aldA==
-X-Received: by 10.43.66.5 with SMTP id xo5mr32956921icb.57.1435087652678;
-        Tue, 23 Jun 2015 12:27:32 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
-        by mx.google.com with ESMTPSA id l67sm7618278ioe.3.2015.06.23.12.27.31
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Jun 2015 12:27:31 -0700 (PDT)
-In-Reply-To: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	("Galan =?utf-8?Q?R=C3=A9mi=22's?= message of "Mon, 22 Jun 2015 23:42:47
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=message-id:date:from:mime-version:to:subject:content-type;
+        bh=kuCS8cJwZayyYnZdknDk7R4ovc4hgvSHtHuSo2yU6GU=;
+        b=BCgGCobEAn3sQBg+GpNGdZQnX1xC9cnCAk56gRIRqFdjerFG9dHnGZh90ULMhVuOLR
+         0cY/nolxPCTWSEx5iFnk6cbKUndBCVUYkLgFhFzAOQsmbRhwtq/flU1JrRrCh336eRA8
+         HtsVWhZueAvbJDsuNakx+Ntj3bRdrraQ1Cg+EGaiNcXHzK8y5m5oUKGdE6wS5xgakes7
+         yKDV8EKe0O42uHgs6ad5CzqprI1s7RtmbSOuq0KsQqsC3JwADi6z+aERGFF4ji2ooaxO
+         f7VKTqrI301alH6OCK1pKgT1jzLAm4vYA8BeYVclRKGdSYmgR8lDP0EiXRHCKEUGmMZe
+         /upA==
+X-Received: by 10.112.213.108 with SMTP id nr12mr36926215lbc.42.1435087824706;
+        Tue, 23 Jun 2015 12:30:24 -0700 (PDT)
+Received: from [172.16.1.2] (staticline-31-183-3-28.toya.net.pl. [31.183.3.28])
+        by mx.google.com with ESMTPSA id tp10sm5755652lbb.4.2015.06.23.12.30.23
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Jun 2015 12:30:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272487>
 
-Galan R=C3=A9mi  <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> +test_rebase_end () {
-> +	test_when_finished "git checkout master &&
-> +	git branch -D $1 &&
+Hi,
 
-Is this one guaranteed to succeed?  Do we want to consider it a
-failure to remove "$1" (e.g. dropTest)?
+I recently realized that I could use a "git status" syntax like this:
 
-    $ git branch -D no-such-branch ; echo $?
-    error: branch 'no-such-branch' not found.
-    1
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working director=
+y)
 
-If dropTest branch did not exist before the test that begins with
-a call to this function, what happens?
+        modified:   macd.py     2 +-
+        modified:   macd.wsgi     2 +-
+        modified:   macd/admin.py     4 ++++
+        modified:   macd/index.html     2 +-
+        modified:   macd/models.py     7 +++++--
+        modified:   macd/settings.py    27 +++++++++++++++++----------
+        modified:   macd/urls.py     6 ++++++
+        modified:   macd/views.py    27 +++++++++++++++++++--------
 
-Besides, a function that must be called at the beginning of a test
-piece has a name that ends with _end?  That sounds funny, no?
+(...)
 
-> +	test_might_fail git rebase --abort" &&
-> +	git checkout -b $1 master
-> +}
+The idea is to add diffstats to git-status. I cooked up a Python script
+to do that [1], but I'd like that to be default behavior on my box.
+Someone suggested me to just implement it in C, but I'm not familiar
+with the codebase, so it'd take me a while.
 
-I'm wondering if this is not sufficient.
+What do you think about this? Would anybody else find it useful and
+perhaps consider implementing it?
 
-	test_rebase_i_drop_prepare () {
-		git reset --hard &&
-	        git checkout -B "$1" master
-	}
+Cheers,
+d33tah
 
-I am guessing that you named _end because it has when_finished, but
-as far as I can tell, even after these three patches, the tests do
-not really rely on the fact that it is on 'master' branch.  More
-importantly, just being on 'master' branch is not a sufficient
-cleanliness for the next test (and that is why you added these
-"branch -D" and "might-fail rebase --abort" to this function in the
-first place), it seems.  So...
 
-> +test_expect_success 'drop' '
-> +	test_rebase_end dropTest &&
-> +	set_fake_editor &&
-> +	FAKE_LINES=3D"1 drop 2 3 drop 4 5" git rebase -i --root &&
-> +	test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-> +	test C =3D $(git cat-file commit HEAD^ | sed -ne \$p) &&
-> +	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
-> +'
-> +
->  test_done
+--t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJVibPOAAoJEGlViymZXJRvPC4P/2gdSqH4tEZJIiAFfnXvCVHZ
+iQfm9sC4hsP16xWAxU00XIs5Ugbbf9aVafK7kcW9BOkpgIPYuPwidsFSTB/sArIV
+hczag1fssrQckKEA5WxK4R119msJ670NkXiwrrr4R3uEvAhmSwYXXlDHaMaGrQHU
+2has4H7ymr4iQWp2wxRM5rxBgNMZ3AATEUrJzTYJb0ViefWW/CEPM6yMfeRXqszr
+JaUMdh2EL5yW6Bz6GQ0xvzi0dgIEvbLhYanhqPq3AGfG5T5o+xLcELlWt1HbrFH1
+Lq4u6B/y8EnhC2lX3NhMJbuNbndanqdl3uw+g34DpPXsZg/ptgKavXWAZ7WAOj2I
+8Oq6ICAVcB1PhDSjEIW4M2s3ZkIttQZtFqU3h3rxVc8+pY27zY9EO0u56YntSwCF
+VSC4EhVoj5GbC7hjASJ0GOxK3DWN9hi7bTkZ+4F80s8SWHGRrzbuXS4qysPpfQXg
+4cdVm6hXBk0+ZP9GrPfjEBua3mUQObgiAijL6LYLlGZsinIMo9Ep8oq9ie6QMDPh
+Y0MSGTzJSD2g6AuJnJR9NL98VThDrFt4BSr0ArWwxcWcsjOzhyq29tr6SDqSCvaM
+91jpaWQcmA0+VkEkHdwlCnAxS/MkwiWfy6PyRHepmo/ZAsbSHwpmDiQjCsMUkxvO
+UP8COctpdvAfV69pajPR
+=j+ei
+-----END PGP SIGNATURE-----
+
+--t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF--
