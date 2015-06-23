@@ -1,78 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 4/5] bisect: add the terms old/new
-Date: Tue, 23 Jun 2015 22:26:18 +0200
-Message-ID: <vpqy4jakw7p.fsf@anie.imag.fr>
-References: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435064084-5554-5-git-send-email-Matthieu.Moy@imag.fr>
-	<303519671.732577.1435087672353.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: RFC/Pull Request: Refs db backend
+Date: Tue, 23 Jun 2015 16:27:46 -0400
+Message-ID: <005e01d0adf3$117eb880$347c2980$@nexbridge.com>
+References: <1435020656.28466.8.camel@twopensource.com>		 <CAGZ79kap++fZx3X0D95d35XioRURU468xATDZpWHDOAPapAh+Q@mail.gmail.com>	 <1435089895.28466.65.camel@twopensource.com>	 <005101d0adf0$964bca10$c2e35e30$@nexbridge.com> <1435090937.28466.68.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	antoine delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 23 22:26:33 2015
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Stefan Beller'" <sbeller@google.com>,
+	"'git mailing list'" <git@vger.kernel.org>,
+	"'ronnie sahlberg'" <ronniesahlberg@gmail.com>
+To: "'David Turner'" <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 22:27:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Um7-0006cr-II
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:26:31 +0200
+	id 1Z7UnW-0007Yp-2n
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932810AbbFWU02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 16:26:28 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49373 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932538AbbFWU00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 16:26:26 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5NKQGcB006014
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 23 Jun 2015 22:26:16 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5NKQIAE011581;
-	Tue, 23 Jun 2015 22:26:18 +0200
-In-Reply-To: <303519671.732577.1435087672353.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Remi Galan Alfonso's message of "Tue, 23 Jun 2015 21:27:52 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 23 Jun 2015 22:26:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5NKQGcB006014
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435695979.6785@nvm+jv558DW/Jf+gK3bFYg
+	id S932715AbbFWU1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 16:27:52 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:21118 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932133AbbFWU1w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:27:52 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t5NKRm10087373
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 23 Jun 2015 16:27:48 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <1435090937.28466.68.camel@twopensource.com>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQJ1O/YN/henzw5pG8BC73xzk1Dn5wJTjVJeARUmkxUCGmZtRwJ/iwWFnDFYsTA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272498>
 
-Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of David Turner
+> Sent: June 23, 2015 4:22 PM
+> To: Randall S. Becker
+> Cc: 'Stefan Beller'; 'git mailing list'; 'ronnie sahlberg'
+> Subject: Re: RFC/Pull Request: Refs db backend
+> 
+> > Just to beg a request: LMDB is not available on some MPP architectures to
+> which git has been ported. If it comes up, I beg you not to add this as a
+> dependency to base git components.
+> 
+> My changes make `configure` check for the presence of liblmdb. The LMDB
+> code is only built if liblmdb is present.  So, I think we're good.
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->
-> Sounds like you went all out with this patch.
+Thanks :) You have no idea how much, in a "burnt by that in other projects" POV.
 
-Ah, the first line was in the original patch, and the second is added by
-send-email -s ... Both me and myself agree that one of them can be
-removed indeed ;-).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Cheers,
+Randall
