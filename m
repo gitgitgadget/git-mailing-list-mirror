@@ -1,112 +1,109 @@
-From: Jacek Wielemborek <d33tah@gmail.com>
-Subject: git status --diffstat?
-Date: Tue, 23 Jun 2015 21:30:13 +0200
-Message-ID: <5589B3C5.7050504@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv6 3/3] git rebase -i: add static check for commands and SHA-1
+Date: Tue, 23 Jun 2015 12:42:24 -0700
+Message-ID: <xmqqpp4mciu7.fsf@gitster.dls.corp.google.com>
+References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	<1435009369-11496-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 23 21:30:33 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Galan =?utf-8?Q?R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 23 21:42:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Ttw-0007NE-Bx
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:30:32 +0200
+	id 1Z7U5a-0006FA-NW
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933231AbbFWTa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 15:30:28 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:36684 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933015AbbFWTa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 15:30:26 -0400
-Received: by lbbpo10 with SMTP id po10so13135578lbb.3
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 12:30:24 -0700 (PDT)
+	id S932994AbbFWTma convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 15:42:30 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:35607 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932133AbbFWTm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 15:42:28 -0400
+Received: by igblr2 with SMTP id lr2so61123673igb.0
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 12:42:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:subject:content-type;
-        bh=kuCS8cJwZayyYnZdknDk7R4ovc4hgvSHtHuSo2yU6GU=;
-        b=BCgGCobEAn3sQBg+GpNGdZQnX1xC9cnCAk56gRIRqFdjerFG9dHnGZh90ULMhVuOLR
-         0cY/nolxPCTWSEx5iFnk6cbKUndBCVUYkLgFhFzAOQsmbRhwtq/flU1JrRrCh336eRA8
-         HtsVWhZueAvbJDsuNakx+Ntj3bRdrraQ1Cg+EGaiNcXHzK8y5m5oUKGdE6wS5xgakes7
-         yKDV8EKe0O42uHgs6ad5CzqprI1s7RtmbSOuq0KsQqsC3JwADi6z+aERGFF4ji2ooaxO
-         f7VKTqrI301alH6OCK1pKgT1jzLAm4vYA8BeYVclRKGdSYmgR8lDP0EiXRHCKEUGmMZe
-         /upA==
-X-Received: by 10.112.213.108 with SMTP id nr12mr36926215lbc.42.1435087824706;
-        Tue, 23 Jun 2015 12:30:24 -0700 (PDT)
-Received: from [172.16.1.2] (staticline-31-183-3-28.toya.net.pl. [31.183.3.28])
-        by mx.google.com with ESMTPSA id tp10sm5755652lbb.4.2015.06.23.12.30.23
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Jun 2015 12:30:23 -0700 (PDT)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=HG+q722Cu+UvqZvMGiS6uMagx54rG9RTrE2sxvS6aQk=;
+        b=KjksS/9Qnu49cK/J1Uc6maIrrRKxnP5yjMIxk8cuCmjuNhcphDz/PcpYMmprFCMMWN
+         CvxkUO4+8DeByPREYFyZcwT/9GlVwX7Mi+e7Hwsjj60jlZRC2XokmdsLuLDrABPVr9Bx
+         Sf/RTVn2bBv6DU/vLzK+Dsweh0B+XUMUXc3naxMdyx28O4pQgVo1xvtSv3PiiNKtkbEC
+         UzmynuKw7emmWk+hFIQtTZLFupFA8FzXw+3AzBBu4RcSyk7P8deeJrozj4WP3+38IgKD
+         VJ0YZJakMBVP/skDllzaz/T6DIRQM9m6CVNGJvcciagV0z55CxyJI1AWkA4f1Dpk5F3D
+         sEQg==
+X-Received: by 10.107.130.101 with SMTP id e98mr47041889iod.38.1435088547779;
+        Tue, 23 Jun 2015 12:42:27 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
+        by mx.google.com with ESMTPSA id p193sm15726876ioe.34.2015.06.23.12.42.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Jun 2015 12:42:26 -0700 (PDT)
+In-Reply-To: <1435009369-11496-3-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	("Galan =?utf-8?Q?R=C3=A9mi=22's?= message of "Mon, 22 Jun 2015 23:42:49
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272488>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Galan R=C3=A9mi  <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
 
-Hi,
+>  I used:
+>    read -r command sha1 rest <<EOF
+>    $line
+>    EOF
+>  because
+>    printf '%s' "$line" | read -r command sha1 rest
+>  doesn't work (the 3 variables have no value as a result).
+>  There might be a better way to do this, but I don't have it right no=
+w.
 
-I recently realized that I could use a "git status" syntax like this:
+	while read line
+        do
+		(
+			IFS=3D' '
+                        set x $line
+			shift
+                        # now $1 is your command, $2 is sha1, $3 is rem=
+ainder
+			...
+		)
+	done
 
-On branch master
-Your branch is up-to-date with 'origin/master'.
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working director=
-y)
+perhaps?
 
-        modified:   macd.py     2 +-
-        modified:   macd.wsgi     2 +-
-        modified:   macd/admin.py     4 ++++
-        modified:   macd/index.html     2 +-
-        modified:   macd/models.py     7 +++++--
-        modified:   macd/settings.py    27 +++++++++++++++++----------
-        modified:   macd/urls.py     6 ++++++
-        modified:   macd/views.py    27 +++++++++++++++++++--------
+But more importantly, why do you even need to keep the bad ones in a
+separate .badcmd and .badsha files?  Isn't that bloating your changes
+unnecessarily, iow, if you issued your warning as you encounter them,
+wouldn't the change become cleaner and easier to understand (and as
+a side effect it may even become smaller)?  The _only_ thing that
+you would get by keeping them in temporary files is that you can do
+"one header and bunch of errors", but is it so common to make a bad
+edit to the insn sheet that "a sequence of errors, one per line"
+becomes more burdensome to the end user?
 
-(...)
+I would think
 
-The idea is to add diffstats to git-status. I cooked up a Python script
-to do that [1], but I'd like that to be default behavior on my box.
-Someone suggested me to just implement it in C, but I'm not familiar
-with the codebase, so it'd take me a while.
+	stripspace |
+	while read -r command sha1 rest
+        do
+        	...
 
-What do you think about this? Would anybody else find it useful and
-perhaps consider implementing it?
-
-Cheers,
-d33tah
-
-
---t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJVibPOAAoJEGlViymZXJRvPC4P/2gdSqH4tEZJIiAFfnXvCVHZ
-iQfm9sC4hsP16xWAxU00XIs5Ugbbf9aVafK7kcW9BOkpgIPYuPwidsFSTB/sArIV
-hczag1fssrQckKEA5WxK4R119msJ670NkXiwrrr4R3uEvAhmSwYXXlDHaMaGrQHU
-2has4H7ymr4iQWp2wxRM5rxBgNMZ3AATEUrJzTYJb0ViefWW/CEPM6yMfeRXqszr
-JaUMdh2EL5yW6Bz6GQ0xvzi0dgIEvbLhYanhqPq3AGfG5T5o+xLcELlWt1HbrFH1
-Lq4u6B/y8EnhC2lX3NhMJbuNbndanqdl3uw+g34DpPXsZg/ptgKavXWAZ7WAOj2I
-8Oq6ICAVcB1PhDSjEIW4M2s3ZkIttQZtFqU3h3rxVc8+pY27zY9EO0u56YntSwCF
-VSC4EhVoj5GbC7hjASJ0GOxK3DWN9hi7bTkZ+4F80s8SWHGRrzbuXS4qysPpfQXg
-4cdVm6hXBk0+ZP9GrPfjEBua3mUQObgiAijL6LYLlGZsinIMo9Ep8oq9ie6QMDPh
-Y0MSGTzJSD2g6AuJnJR9NL98VThDrFt4BSr0ArWwxcWcsjOzhyq29tr6SDqSCvaM
-91jpaWQcmA0+VkEkHdwlCnAxS/MkwiWfy6PyRHepmo/ZAsbSHwpmDiQjCsMUkxvO
-UP8COctpdvAfV69pajPR
-=j+ei
------END PGP SIGNATURE-----
-
---t9LJJX5owtcrlH1pNhHwmQVKqFB6kplCF--
+and showing the warning as you detect inside that loop would be
+sufficient.  Perhaps I am missing subtle details of what you are
+doing.
