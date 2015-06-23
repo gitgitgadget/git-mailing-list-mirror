@@ -1,68 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 5/5] bisect: allows any terms set by user
-Date: Tue, 23 Jun 2015 11:48:22 -0700
-Message-ID: <xmqq8ubadzwp.fsf@gitster.dls.corp.google.com>
-References: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr>
-	<1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435064084-5554-6-git-send-email-Matthieu.Moy@imag.fr>
+From: Josh Hagins <hagins.josh@gmail.com>
+Subject: Re: Dependency Management
+Date: Tue, 23 Jun 2015 14:49:46 -0400
+Message-ID: <CANuW5x0_B0F-CZ5-iq4c_JiZ99FyUvqywrdA8hPr4Pg2dfZ1sA@mail.gmail.com>
+References: <45DF444C03B59343B5893402DC4F867E3A800EC7@PB2OAEXM01.oad.exch.int>
+ <45DF444C03B59343B5893402DC4F867E3A800EF8@PB2OAEXM01.oad.exch.int> <CAGZ79kZkUvqDzf-j0Z3yM5q+spV-MFYL5da4LOrYoGOHFsftjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 23 20:48:32 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>,
+	Jean Audibert <jaudibert@euronext.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 20:50:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7TFG-00073S-8o
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:48:30 +0200
+	id 1Z7TH9-0008Bz-78
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933031AbbFWSs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 14:48:26 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34891 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932980AbbFWSsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 14:48:25 -0400
-Received: by iebrt9 with SMTP id rt9so18070913ieb.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 11:48:24 -0700 (PDT)
+	id S933459AbbFWSuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 14:50:22 -0400
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:35622 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932543AbbFWSuQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 14:50:16 -0400
+Received: by ykdy1 with SMTP id y1so10813475ykd.2
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 11:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Dn8SEgPgDoUWvI8HrhUL7+YApNT7ch45q6nqGanUueM=;
-        b=XyFdGhdD26C9ADXQNhw6GQF2IP6qmSRUwPkKa8XT1v1yj9XEBWUL+LsRgo4xV057Ce
-         XtyrFaLscOEQXc2hXLrwOPpwPkOFwXDMmGBhwCNwWByJb5KRPqWKFCURNvbDD8ULb1g7
-         Sdo5/b7rB8blPjZYOi8ZTIiNhleBl08H/4GxdPWUjpUcba2lMNtTrGVA3otDEoEItBdm
-         6yv8llIG2mp741bWnORagPOPjB2Vna1DIhYIHODzN0zhtalnVQkP7zOXB4GH2+7qbjba
-         qOxbCOGqw4tDJFSTTgLBGk05KWzhCbi3IIMYiyiXwuUcY0szNMcfGbh1ppLCPYZg5GIy
-         1TvA==
-X-Received: by 10.43.148.72 with SMTP id kf8mr34048561icc.76.1435085304510;
-        Tue, 23 Jun 2015 11:48:24 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
-        by mx.google.com with ESMTPSA id c63sm15626101ioe.42.2015.06.23.11.48.23
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Jun 2015 11:48:23 -0700 (PDT)
-In-Reply-To: <1435064084-5554-6-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Tue, 23 Jun 2015 14:54:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rbxlZMF06MueB5mnsu4SxiPKccSH3xL2KXiPhpBXLWo=;
+        b=vpoaJabbK5O2GjMwmTg2K3eqCHtBi3zZBPyeVCVd3QCcwzUB+4Xe8QCiZzUE75hvcL
+         +9d2V4rxfq0Apsvx1mw7CXxKgNqNbxy7wGTG/Y3RTIryYPN+wchCSEhymyi02il+twR7
+         Wm76Oeq5eW5lvLU3cpHqYM6x3ft+26J3tBsdVIFKTjlI3/SwNKyhYOPEcdPQ42DXDdDX
+         wBkBvFXJDbXP+ii4i05mPv9TfuXExRmX8Nx1PDBEGZ2OOWtIfeTXixNdF+Jlor5d91Rv
+         fWSzHHRQaoJ5mplof1GdsZ3RIFgXu2AFF/OZ0y+y6YrAZO8BXVJcN+5tRL/fbTl7s9YX
+         C6ig==
+X-Received: by 10.170.224.65 with SMTP id q62mr13535007ykf.75.1435085415855;
+ Tue, 23 Jun 2015 11:50:15 -0700 (PDT)
+Received: by 10.13.245.129 with HTTP; Tue, 23 Jun 2015 11:49:46 -0700 (PDT)
+In-Reply-To: <CAGZ79kZkUvqDzf-j0Z3yM5q+spV-MFYL5da4LOrYoGOHFsftjw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272479>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+If neither git-submodule nor git-subtree is palatable to you, here are
+a couple of alternatives you might try:
 
->Subject: Re: [PATCH v7 5/5] bisect: allows any terms set by user
+  * https://github.com/ingydotnet/git-subrepo
+  * https://github.com/tdd/git-stree
 
-s/allows/allow/;
-
-> +Alternative terms: use your own terms
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Lengths of underline and the text must match.
+On Tue, Jun 23, 2015 at 1:36 PM Stefan Beller <sbeller@google.com> wrote:
+>
+> On Tue, Jun 23, 2015 at 1:52 AM, Jean Audibert <jaudibert@euronext.com> wrote:
+> > Hi,
+> >
+> > Sorry to bother you with this question but I can't find any "official" answer or "strong opinion" from Git community.
+> >
+> > In my company we recently started to use Git and we wonder how to share code and manage dependencies with Git?
+> > Use case: in project P we need to include lib-a and lib-b (libraries shared by several projects)
+> >
+> > In your opinion, what is the "future proof" solution?
+> > * Use submodule
+> > * Use subtree
+> >
+> > We know there is lot of PRO/CONS but I feel that subtree is "behind" in the race and the latest version of submodule work fine
+>
+> Use whatever works fine for your use case.
+>
+> My personal opinion/expectation is to see submodules
+> improving/advancing more than subtrees advancing in the near future.
+> Though this is neither the official nor a strong opinion.
+>
+> Stefan
+>
+> >
+> > Suggestions are very welcome.
+> > Thanks in advance,
+> >
+> > Jean Audibert
+> >
+> >
+> > _________________________________________________________________
+> >
+> > This message may contain confidential information and is intended for specific recipients unless explicitly noted otherwise. If you have reason to believe you are not an intended recipient of this message, please delete it and notify the sender. This message may not represent the opinion of Euronext N.V. or any of its subsidiaries or affiliates, and does not constitute a contract or guarantee. Unencrypted electronic mail is not secure and the recipient of this message is expected to provide safeguards from viruses and pursue alternate means of communication where privacy or a binding message is desired.
+> >
+> > --
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
