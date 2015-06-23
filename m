@@ -1,66 +1,110 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH v7 4/5] bisect: add the terms old/new
-Date: Tue, 23 Jun 2015 21:27:52 +0200 (CEST)
-Message-ID: <303519671.732577.1435087672353.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1435006836-18182-1-git-send-email-antoine.delaite@ensimag.grenoble-inp.fr> <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr> <1435064084-5554-5-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a commit
+Date: Tue, 23 Jun 2015 12:27:30 -0700
+Message-ID: <xmqqwpyucjj1.fsf@gitster.dls.corp.google.com>
+References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	antoine delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
 	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 23 21:26:04 2015
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Galan =?utf-8?Q?R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 23 21:27:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Tpc-0004Zx-2K
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:26:04 +0200
+	id 1Z7Tr9-0005WX-2J
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 21:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754901AbbFWTZ6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 15:25:58 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:60275 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754461AbbFWTZ5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 15:25:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 6C817370B;
-	Tue, 23 Jun 2015 21:25:56 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3n9BC8T3eTxx; Tue, 23 Jun 2015 21:25:56 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 599F920A0;
-	Tue, 23 Jun 2015 21:25:56 +0200 (CEST)
-In-Reply-To: <1435064084-5554-5-git-send-email-Matthieu.Moy@imag.fr>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: bisect: add the terms old/new
-Thread-Index: +Ccy0MRlrbFAGAi3MdA6fCZRH/K6YA==
+	id S1754979AbbFWT1f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 15:27:35 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:36551 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754568AbbFWT1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 15:27:33 -0400
+Received: by iecvh10 with SMTP id vh10so18811841iec.3
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 12:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=IG2Y46OvHuet+YFj6+jISMgxBMLsIHGtTX+rR/NVEkU=;
+        b=GKW0JILw+dSDuPWm166Et0r0lu+rJb7cX3lhsfHcMdNAAdm7mbCScqcaCBrEY98aho
+         Ppi4f3fuxn0ZF+om7q0fZ9KT5e3WIOvi9EcaHkP0oli3EZEHpgQqNkk3r0OWcX2C2l1T
+         OtbIfAwTAcWjUHDsvfKu1f8IfPAWcOPNr52EwMKQc1JD7SxHVEjh4XUT9qrg2TZiO7y4
+         3ywf4MVeYf0DGgtkl8iOgitUlsbVlOby4dc20FIB2LUg1U9eEr4SNz+sVaVJWXZF0YyG
+         LNv+KjxB280UQEhLEg4+VGL6HdSgLa5C8kksrDHu5zeOtQ9oR5PLNA69xuQw+HRwzZRR
+         aldA==
+X-Received: by 10.43.66.5 with SMTP id xo5mr32956921icb.57.1435087652678;
+        Tue, 23 Jun 2015 12:27:32 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
+        by mx.google.com with ESMTPSA id l67sm7618278ioe.3.2015.06.23.12.27.31
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Jun 2015 12:27:31 -0700 (PDT)
+In-Reply-To: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+	("Galan =?utf-8?Q?R=C3=A9mi=22's?= message of "Mon, 22 Jun 2015 23:42:47
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272486>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Galan R=C3=A9mi  <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
 
-Sounds like you went all out with this patch.
+> +test_rebase_end () {
+> +	test_when_finished "git checkout master &&
+> +	git branch -D $1 &&
 
-R=C3=A9mi
+Is this one guaranteed to succeed?  Do we want to consider it a
+failure to remove "$1" (e.g. dropTest)?
+
+    $ git branch -D no-such-branch ; echo $?
+    error: branch 'no-such-branch' not found.
+    1
+
+If dropTest branch did not exist before the test that begins with
+a call to this function, what happens?
+
+Besides, a function that must be called at the beginning of a test
+piece has a name that ends with _end?  That sounds funny, no?
+
+> +	test_might_fail git rebase --abort" &&
+> +	git checkout -b $1 master
+> +}
+
+I'm wondering if this is not sufficient.
+
+	test_rebase_i_drop_prepare () {
+		git reset --hard &&
+	        git checkout -B "$1" master
+	}
+
+I am guessing that you named _end because it has when_finished, but
+as far as I can tell, even after these three patches, the tests do
+not really rely on the fact that it is on 'master' branch.  More
+importantly, just being on 'master' branch is not a sufficient
+cleanliness for the next test (and that is why you added these
+"branch -D" and "might-fail rebase --abort" to this function in the
+first place), it seems.  So...
+
+> +test_expect_success 'drop' '
+> +	test_rebase_end dropTest &&
+> +	set_fake_editor &&
+> +	FAKE_LINES=3D"1 drop 2 3 drop 4 5" git rebase -i --root &&
+> +	test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
+> +	test C =3D $(git cat-file commit HEAD^ | sed -ne \$p) &&
+> +	test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
+> +'
+> +
+>  test_done
