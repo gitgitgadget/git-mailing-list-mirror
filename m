@@ -1,125 +1,84 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a
- commit
-Date: Tue, 23 Jun 2015 22:08:30 +0200 (CEST)
-Message-ID: <122907552.733385.1435090110363.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <xmqqwpyucjj1.fsf@gitster.dls.corp.google.com>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: RFC/Pull Request: Refs db backend
+Date: Tue, 23 Jun 2015 16:10:01 -0400
+Message-ID: <005101d0adf0$964bca10$c2e35e30$@nexbridge.com>
+References: <1435020656.28466.8.camel@twopensource.com>	 <CAGZ79kap++fZx3X0D95d35XioRURU468xATDZpWHDOAPapAh+Q@mail.gmail.com> <1435089895.28466.65.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 22:06:42 2015
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: "'git mailing list'" <git@vger.kernel.org>,
+	"'ronnie sahlberg'" <ronniesahlberg@gmail.com>
+To: "'David Turner'" <dturner@twopensource.com>,
+	"'Stefan Beller'" <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 22:10:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7USv-0003Gv-8H
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:06:41 +0200
+	id 1Z7UWK-0005JS-9S
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933207AbbFWUGh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 16:06:37 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:33386 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932648AbbFWUGg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 16:06:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 4A3612838;
-	Tue, 23 Jun 2015 22:06:34 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id poJc4vXVkxDi; Tue, 23 Jun 2015 22:06:34 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 340B22826;
-	Tue, 23 Jun 2015 22:06:34 +0200 (CEST)
-In-Reply-To: <xmqqwpyucjj1.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git-rebase -i: add command "drop" to remove a commit
-Thread-Index: UtP/zwUB/bihNsAXeOlfZGOuOJ6VrA==
+	id S1754877AbbFWUKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 16:10:08 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:43426 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754852AbbFWUKG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:10:06 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t5NKA2gu086940
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 23 Jun 2015 16:10:03 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <1435089895.28466.65.camel@twopensource.com>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQJ1O/YN/henzw5pG8BC73xzk1Dn5wJTjVJeARUmkxWcViLwgA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272492>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> > Galan R=C3=A9mi  <remi.galan-alfonso@ensimag.grenoble-inp.fr> write=
-s:
-> >=20
-> > > +test_rebase_end () {
-> > > +        test_when_finished "git checkout master &&
-> > > +        git branch -D $1 &&
-> >=20
-> > Is this one guaranteed to succeed?  Do we want to consider it a
-> > failure to remove "$1" (e.g. dropTest)?
-> >=20
-> >     $ git branch -D no-such-branch ; echo $?
-> >     error: branch 'no-such-branch' not found.
-> >     1
-> >=20
-> > If dropTest branch did not exist before the test that begins with
-> > a call to this function, what happens?
->=20
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of David Turner
+> Sent: June 23, 2015 4:05 PM
+> To: Stefan Beller
+> Cc: git mailing list; ronnie sahlberg
+> Subject: Re: RFC/Pull Request: Refs db backend
+> 
+> On Tue, 2015-06-23 at 10:16 -0700, Stefan Beller wrote:
+> > > The db backend code was added in the penultimate commit; the rest is
+> > > just code rearrangement and minor changes to make alternate backends
+> > > possible.  There ended up being a fair amount of this rearrangement,
+> > > but the end result is that almost the entire git test suite runs
+> > > under the db backend without error (see below for
+> > details).
+> >
+> > Looking at the end result in refs-be-db.c it feels like there are more
+> > functions in the refs_be_db struct, did this originate from other
+> > design choices? IIRC Ronnie wanted to have as least functions in there
+> > as possible, and share as much of the code between the databases, such
+> > that the glue between the db and the refs code is minimal.
+> 
+> I didn't actually spend that much time reading Ronnie's backend code.
+> My code aims to be extremely thoroughly compatible.  I spent a ton of time
+> making sure that the git test suite passed.  I don't know if an alternate
+> approach would have been as compatible.
+> 
+> The requirement for reflog storage did complicate things a bit.
+> 
+> I also didn't see a strong need to abstract the database, since LMDB is common,
+> widely compatible, and tiny.
 
-Since the function is
-> 	test_when_finished "git checkout master &&
-> 		git branch -D $1 &&
-> 		test_might_fail git rebase --abort" &&
-> 	git checkout -b $1 master
-If $1 doesn't exist, then it means that 'git checkout -b $1 master'
-failed, thus the test would fail before reaching the part in
-'test_when_finished'.
-However I guess there are more reasons that could cause 'git branch -D
-$1' to fail so I'll add a 'test_might_fail' in front of it.
-
-> Besides, a function that must be called at the beginning of a test
-> piece has a name that ends with _end?  That sounds funny, no?
-
-I see your point but I'm not really sure how to call it, considering
-that what it does is creating a branch to test on it, and taking care
-of the cleaning at the end of the test.
-Maybe something more generic like "setup_and_clean" ?
-=20
-> > +        test_might_fail git rebase --abort" &&
-> > +        git checkout -b $1 master
-> > +}
->=20
-> I'm wondering if this is not sufficient.
->=20
->         test_rebase_i_drop_prepare () {
->                 git reset --hard &&
->                 git checkout -B "$1" master
->         }
->=20
-> I am guessing that you named _end because it has when_finished, but
-> as far as I can tell, even after these three patches, the tests do
-> not really rely on the fact that it is on 'master' branch.  More
-> importantly, just being on 'master' branch is not a sufficient
-> cleanliness for the next test (and that is why you added these
-> "branch -D" and "might-fail rebase --abort" to this function in the
-> first place), it seems.  So...
-
-I removed the branch in case someone used the same name when creating
-a branch in a future test. However he would notice it when writing the
-test and it's not something that would suddenly break when modifying
-the code, so it might not be necessary.
-The "might-fail rebase --abort" is there in case this test fails in
-the middle (because of a future modification of rebase for example) to
-avoid failling all the following tests that use rebase.
-
-The name "test_rebase_i_drop_prepare" wouldn't be accurate since 2/3
-and 3/3 uses the function as well and don't really have much to do
-with 'drop'.
+Just to beg a request: LMDB is not available on some MPP architectures to which git has been ported. If it comes up, I beg you not to add this as a dependency to base git components.
 
 Thanks,
-R=C3=A9mi
+Randall
+
+-- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
+-- In my real life, I talk too much.
