@@ -1,7 +1,7 @@
 From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH v6 05/10] send-email: Allow use of aliases in the From field of --compose mode
-Date: Tue, 23 Jun 2015 22:30:11 +0200
-Message-ID: <1435091416-9394-5-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH v6 07/10] send-email: reduce dependencies impact on parse_address_line
+Date: Tue, 23 Jun 2015 22:30:13 +0200
+Message-ID: <1435091416-9394-7-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
  <1435091416-9394-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
@@ -12,77 +12,277 @@ Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
 	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 23 22:30:48 2015
+X-From: git-owner@vger.kernel.org Tue Jun 23 22:30:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7UqF-0000mo-5u
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:30:47 +0200
+	id 1Z7UqG-0000mo-Cg
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933299AbbFWUak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 16:30:40 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:52674 "EHLO
+	id S933331AbbFWUap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 16:30:45 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:55966 "EHLO
 	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933236AbbFWUad (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:30:33 -0400
+	by vger.kernel.org with ESMTP id S933316AbbFWUah (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:30:37 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 65C012948;
-	Tue, 23 Jun 2015 22:30:32 +0200 (CEST)
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 366E82948;
+	Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
 Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Atf-NKb6fq2A; Tue, 23 Jun 2015 22:30:32 +0200 (CEST)
+	with ESMTP id 0htZsr2J18ZO; Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 494142941;
-	Tue, 23 Jun 2015 22:30:32 +0200 (CEST)
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 197692941;
+	Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 44B2920DC;
-	Tue, 23 Jun 2015 22:30:32 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 14B7C20DC;
+	Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6fEv6Sa4srzT; Tue, 23 Jun 2015 22:30:32 +0200 (CEST)
+	with ESMTP id 6EqcXmYkAlWZ; Tue, 23 Jun 2015 22:30:36 +0200 (CEST)
 Received: from localhost.localdomain (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id CFB2F20DA;
-	Tue, 23 Jun 2015 22:30:31 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 8DBEF20DA;
+	Tue, 23 Jun 2015 22:30:35 +0200 (CEST)
 X-Mailer: git-send-email 2.4.4.418.ga60dbe1
 In-Reply-To: <1435091416-9394-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272505>
 
-Aliases were expanded before considering the From field of the
---compose option. This is inconsistent with other fields
-(To, Cc, ...) which already support aliases.
+parse_address_line had not the same behavior whether the user had
+Mail::Address or not. Teach parse_address_line to behave like
+Mail::Address.
+
+When the user input is correct, this implementation behaves
+exactly like Mail::Address except when there are quotes
+inside the name:
+
+  "Jane Do"e <jdoe@example.com>
+
+In this case the result of parse_address_line is:
+
+  With M::A : "Jane Do" e <jdoe@example.com>
+  Without   : "Jane Do e" <jdoe@example.com>
+
+When the user input is not correct, the behavior is also mostly
+the same.
+
+Unlike Mail::Address, this doesn't parse groups and recursive
+commentaries.
 
 Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
 ---
- git-send-email.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-send-email.perl  |  2 +-
+ perl/Git.pm          | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t9000-addresses.sh | 30 +++++++++++++++++++++++
+ t/t9000/test.pl      | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 165 insertions(+), 1 deletion(-)
+ create mode 100755 t/t9000-addresses.sh
+ create mode 100755 t/t9000/test.pl
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 2d5c530..f61449d 100755
+index a0cd7ff..bced78e 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -555,8 +555,6 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
+@@ -478,7 +478,7 @@ sub parse_address_line {
+ 	if ($have_mail_address) {
+ 		return map { $_->format } Mail::Address->parse($_[0]);
+ 	} else {
+-		return split_addrs($_[0]);
++		return Git::parse_mailboxes($_[0]);
  	}
  }
  
--($sender) = expand_aliases($sender) if defined $sender;
--
- # is_format_patch_arg($f) returns 0 if $f names a patch, or 1 if
- # $f is a revision list specification to be passed to format-patch.
- sub is_format_patch_arg {
-@@ -801,6 +799,8 @@ if (!$force) {
- 	}
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 9026a7b..19ef081 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -864,6 +864,73 @@ sub ident_person {
+ 	return "$ident[0] <$ident[1]>";
  }
  
-+($sender) = expand_aliases($sender) if defined $sender;
++=item parse_mailboxes
 +
- if (!defined $sender) {
- 	$sender = $repoauthor || $repocommitter || '';
- }
++Return an array of mailboxes extracted from a string.
++
++=cut
++
++sub parse_mailboxes {
++	my $re_comment = qr/\((?:[^)]*)\)/;
++	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
++	my $re_word = qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
++
++	# divide the string in tokens of the above form
++	my $re_token = qr/(?:$re_quote|$re_word|$re_comment|\S)/;
++	my @tokens = map { $_ =~ /\s*($re_token)\s*/g } @_;
++
++	# add a delimiter to simplify treatment for the last mailbox
++	push @tokens, ",";
++
++	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
++	foreach my $token (@tokens) {
++		if ($token =~ /^[,;]$/) {
++			# if buffer still contains undeterminated strings
++			# append it at the end of @address or @phrase
++			if (@address) {
++				push @address, @buffer;
++			} else {
++				push @phrase, @buffer;
++			}
++
++			my $str_phrase = join ' ', @phrase;
++			my $str_address = join '', @address;
++			my $str_comment = join ' ', @comment;
++
++			# quote are necessary if phrase contains
++			# special characters
++			if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
++				$str_phrase =~ s/(^|[^\\])"/$1/g;
++				$str_phrase = qq["$str_phrase"];
++			}
++
++			# add "<>" around the address if necessary
++			if ($str_address ne "" && $str_phrase ne "") {
++				$str_address = qq[<$str_address>];
++			}
++
++			my $str_mailbox = "$str_phrase $str_address $str_comment";
++			$str_mailbox =~ s/^\s*|\s*$//g;
++			push @addr_list, $str_mailbox if ($str_mailbox);
++
++			@phrase = @address = @comment = @buffer = ();
++		} elsif ($token =~ /^\(/) {
++			push @comment, $token;
++		} elsif ($token eq "<") {
++			push @phrase, (splice @address), (splice @buffer);
++		} elsif ($token eq ">") {
++			push @address, (splice @buffer);
++		} elsif ($token eq "@") {
++			push @address, (splice @buffer), "@";
++		} elsif ($token eq ".") {
++			push @address, (splice @buffer), ".";
++		} else {
++			push @buffer, $token;
++		}
++	}
++
++	return @addr_list;
++}
+ 
+ =item hash_object ( TYPE, FILENAME )
+ 
+diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
+new file mode 100755
+index 0000000..7223d03
+--- /dev/null
++++ b/t/t9000-addresses.sh
+@@ -0,0 +1,30 @@
++#!/bin/sh
++#
++# Copyright (c) 2015
++#
++
++test_description='compare address parsing with and without Mail::Address'
++. ./test-lib.sh
++
++if ! test_have_prereq PERL; then
++	skip_all='skipping perl interface tests, perl not available'
++	test_done
++fi
++
++perl -MTest::More -e 0 2>/dev/null || {
++	skip_all="Perl Test::More unavailable, skipping test"
++	test_done
++}
++
++perl -MMail::Address -e 0 2>/dev/null || {
++	skip_all="Perl Mail::Address unavailable, skipping test"
++	test_done
++}
++
++test_external_has_tap=1
++
++test_external_without_stderr \
++	'Perl address parsing function' \
++	perl "$TEST_DIRECTORY"/t9000/test.pl
++
++test_done
+diff --git a/t/t9000/test.pl b/t/t9000/test.pl
+new file mode 100755
+index 0000000..8e2b760
+--- /dev/null
++++ b/t/t9000/test.pl
+@@ -0,0 +1,67 @@
++#!/usr/bin/perl
++use lib (split(/:/, $ENV{GITPERLLIB}));
++
++use 5.008;
++use warnings;
++use strict;
++
++use Test::More qw(no_plan);
++use Mail::Address;
++
++BEGIN { use_ok('Git') }
++
++my @success_list = (q[Jane],
++	q[jdoe@example.com],
++	q[<jdoe@example.com>],
++	q[Jane <jdoe@example.com>],
++	q[Jane Doe <jdoe@example.com>],
++	q["Jane" <jdoe@example.com>],
++	q["Doe, Jane" <jdoe@example.com>],
++	q["Jane@:;\>.,()<Doe" <jdoe@example.com>],
++	q[Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>],
++	q["<jdoe@example.com>"],
++	q["Jane jdoe@example.com"],
++	q[Jane Doe <jdoe    @   example.com  >],
++	q[Jane       Doe <  jdoe@example.com  >],
++	q[Jane @ Doe @ Jane @ Doe],
++	q["Jane, 'Doe'" <jdoe@example.com>],
++	q['Doe, "Jane' <jdoe@example.com>],
++	q["Jane" "Do"e <jdoe@example.com>],
++	q["Jane' Doe" <jdoe@example.com>],
++	q["Jane Doe <jdoe@example.com>" <jdoe@example.com>],
++	q["Jane\" Doe" <jdoe@example.com>],
++	q[Doe, jane <jdoe@example.com>],
++	q["Jane Doe <jdoe@example.com>],
++	q['Jane 'Doe' <jdoe@example.com>]);
++
++my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
++	q["Doe, Ja"ne <jdoe@example.com>],
++	q["Doe, Katarina" Jane <jdoe@example.com>],
++	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
++	q[Jane jdoe@example.com],
++	q[<jdoe@example.com> Jane Doe],
++	q[Jane <jdoe@example.com> Doe],
++	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
++	q[Jane Doe],
++	q[Jane "Doe <jdoe@example.com>"],
++	q[\"Jane Doe <jdoe@example.com>],
++	q[Jane\"\" Doe <jdoe@example.com>],
++	q['Jane "Katarina\" \' Doe' <jdoe@example.com>]);
++
++foreach my $str (@success_list) {
++	my @expected = map { $_->format } Mail::Address->parse("$str");
++	my @actual = Git::parse_mailboxes("$str");
++	is_deeply(\@expected, \@actual, qq[same output : $str]);
++}
++
++TODO: {
++	local $TODO = "known breakage";
++	foreach my $str (@known_failure_list) {
++		my @expected = map { $_->format } Mail::Address->parse("$str");
++		my @actual = Git::parse_mailboxes("$str");
++		is_deeply(\@expected, \@actual, qq[same output : $str]);
++	}
++}
++
++my $is_passing = Test::More->builder->is_passing;
++exit($is_passing ? 0 : 1);
 -- 
 1.9.1
