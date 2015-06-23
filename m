@@ -1,109 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a commit
-Date: Tue, 23 Jun 2015 14:24:46 -0400
-Message-ID: <CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com>
-References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: RFC/Pull Request: Refs db backend
+Date: Tue, 23 Jun 2015 14:47:06 -0400
+Organization: Twitter
+Message-ID: <1435085226.28466.37.camel@twopensource.com>
+References: <1435020656.28466.8.camel@twopensource.com>
+	 <xmqqvbefdm0d.fsf@gitster.dls.corp.google.com>
+	 <CACsJy8DA3oOt8QRsztdJXwmfUwDvY_nGALQrOpSA3M_eNSuT8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Louis-Alexandre Stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Galan_R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 23 20:24:53 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git mailing list <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 20:47:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7SsO-0001Rq-Lb
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:24:53 +0200
+	id 1Z7TE3-0006KG-Fm
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933149AbbFWSYs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 14:24:48 -0400
-Received: from mail-yh0-f52.google.com ([209.85.213.52]:35684 "EHLO
-	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932974AbbFWSYr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 14:24:47 -0400
-Received: by yhak3 with SMTP id k3so7226433yha.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 11:24:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=aiaT034I7quFv+fMGs7CqVAoaiqfjcD1vjfaoKHeDao=;
-        b=X6BdlQ8JO0+q2uRtVMJL9TaNoQsQbPCY5tbvE8MXMT2Zi9AyaP3AK+jqCDUSVtK7hw
-         AQVmTh9X0MDdVtfZSAaEd7VBqGa8DxHn4St3z4iLrpRvEvUA6tEgtQx0bjJljwwqx1v5
-         VDMOz6Ej5wLMIbmFqwpu82pEeRAK1CSd0GYpxiyjnZ4jnDCNM1bfCgx6eNaeXqcZlBIT
-         Badh/4F/koe3qzEaAtOtlHelv22RGk5geRJbmiQcAAqOkYHa0dDXmGL2O2dz0RTzHmkc
-         ELB2Qwet13XFU5fr3+efTSsXVUA71EzvcnZmDC/sc8i2CcSxhP9MCDqJUxlLd9nbI3l5
-         Uziw==
-X-Received: by 10.129.50.207 with SMTP id y198mr44231201ywy.39.1435083887147;
- Tue, 23 Jun 2015 11:24:47 -0700 (PDT)
-Received: by 10.37.36.214 with HTTP; Tue, 23 Jun 2015 11:24:46 -0700 (PDT)
-In-Reply-To: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-Google-Sender-Auth: Q_4vLFoRYI2yBzBMDx2ee1ZCYcI
+	id S933328AbbFWSrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 14:47:11 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:33667 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932981AbbFWSrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 14:47:09 -0400
+Received: by qkhu186 with SMTP id u186so9735202qkh.0
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 11:47:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=F5ViSiWOiARf0Kw1jhW7ZnQwum9fVnEYVQ90P3mBi4g=;
+        b=T75jET5VhrD4914SDybajloiS1WBOxpAlUa8tUERvo0ZLyf63FDq+vk0TNCGC1qpW1
+         sIq5pjVL9KmOJBC24njHuGyJ9ePaO2vx6Aj7rwCP0VGmpx/DnSRKOQsQTrY1tPPiua+v
+         LfA6UX7VCNiZVppOzAybY4VkFhzWOsYbhkM7eN8MEEgekTQKc/D1JagbnEYK8l0ettWa
+         scrHV9XmNw4rZ+MC7Dr8aEZJ3YeR6faqEpWDEmbRprSNfcbqVwXeNefyvIJwZ0hgkzOX
+         bbaGU5x1XULLvT6pddmpu3qQlmqPQQYEOdqE5qqfw8qpIJJXhkF1UDVn5iuGe77S1yI+
+         167Q==
+X-Gm-Message-State: ALoCoQkEmVIc9yeoue870rLKHgeAyCLIE6DQ13PD8gvKnOA9JuzApDgkIU0TdEGYRRVAmL3XNrlF
+X-Received: by 10.140.147.129 with SMTP id 123mr48594751qht.79.1435085228715;
+        Tue, 23 Jun 2015 11:47:08 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by mx.google.com with ESMTPSA id b133sm1877329qhc.40.2015.06.23.11.47.07
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Jun 2015 11:47:07 -0700 (PDT)
+In-Reply-To: <CACsJy8DA3oOt8QRsztdJXwmfUwDvY_nGALQrOpSA3M_eNSuT8g@mail.gmail.com>
+X-Mailer: Evolution 3.12.10-0ubuntu1~14.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272477>
 
-On Mon, Jun 22, 2015 at 5:42 PM, Galan R=C3=A9mi
-<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> Instead of removing a line to remove the commit, you can use the
-> command "drop" (just like "pick" or "edit"). It has the same effect a=
-s
-> deleting the line (removing the commit) except that you keep a visual
-> trace of your actions, allowing a better control and reducing the
-> possibility of removing a commit by mistake.
->
-> Signed-off-by: Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-i=
-np.fr>
-> ---
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interacti=
-ve.sh
-> index ac429a0..ecd277c 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1102,4 +1102,20 @@ test_expect_success 'rebase -i commits that ov=
-erwrite untracked files (no ff)' '
->         test $(git cat-file commit HEAD | sed -ne \$p) =3D I
->  '
->
-> +test_rebase_end () {
-> +       test_when_finished "git checkout master &&
-> +       git branch -D $1 &&
-> +       test_might_fail git rebase --abort" &&
-> +       git checkout -b $1 master
-> +}
+On Tue, 2015-06-23 at 17:23 +0700, Duy Nguyen wrote:
+> On Tue, Jun 23, 2015 at 7:50 AM, David Turner
+<dturner@twopensource.com> wrote:
+> > To test this backend's correctness, I hacked test-lib.sh and
+> > test-lib-functions.sh to run all tests under the refs backend.
+> 
+> Now we have two. split-index also benefits from running through full
+> test suite like this. I propose we make "make test" run the test suite
+> twice. The first run is with default configuration, no split index, no
+> fancy ref backend. The second run enables split-index and switches to
+> new backend, running through all test cases. In future we can also
+> enable packv4 in this second run. There won't be a third run.
+> 
+> When the second ref backend comes, we can switch between the two
+> backends using a random number generator where we control both
+> algorithm and seed, so that when a test fails, the user can give us
+> their seed and we can re-run with the same configuration.
 
-The way this is indented makes it difficult to see that lines 2 and 3
-are continuations of 1. Perhaps format it like this instead?
+I'm not in love with this idea, because it makes it hard to do
+exhaustive testing efficiently.  I would rather have make test run
+through all tests under all combinations -- or at least all relevant
+tests.  We could perhaps mark tests with a list of features that they
+exercise, so that we don't have to run e.g. t8xxx with alternate refs
+backends.  
 
-    test_rebase_end () {
-        test_when_finished "git checkout master &&
-            git branch -D $1 &&
-            test_might_fail git rebase --abort" &&
-        git checkout -b $1 master
-    }
+> Dozens of tests use manual ref/reflog reading/writing, or create
+submodules
+> > without passing --refs-backend-type to git init.  If those tests are
+> > changed to use the update-ref machinery or test-refs-be-db (or, in
+the
+> > case of packed-refs, corrupt refs, and dumb fetch tests, are
+skipped),
+> > the only remaining failing tests are the git-new-workdir tests and
+the
+> > gitweb tests.
+> 
+> I haven't read the series, but I guess you should also add a few tests
+> to run on the first run, so new code is exercised a bit even if people
+> skip the second run.
 
-> +
-> +test_expect_success 'drop' '
-> +       test_rebase_end dropTest &&
-> +       set_fake_editor &&
-> +       FAKE_LINES=3D"1 drop 2 3 drop 4 5" git rebase -i --root &&
-> +       test E =3D $(git cat-file commit HEAD | sed -ne \$p) &&
-> +       test C =3D $(git cat-file commit HEAD^ | sed -ne \$p) &&
-> +       test A =3D $(git cat-file commit HEAD^^ | sed -ne \$p)
-> +'
-> +
->  test_done
-> --
-> 2.4.3.371.g8992f2a
+I did this already, yes.
