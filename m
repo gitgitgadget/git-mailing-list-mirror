@@ -1,103 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: RFC/Pull Request: Refs db backend
-Date: Tue, 23 Jun 2015 20:10:03 +0700
-Message-ID: <CACsJy8B=jthxn_E-zWnDfua29FGGgz221N-cLw=NxeVOKadUxA@mail.gmail.com>
-References: <1435020656.28466.8.camel@twopensource.com> <20150623114716.GC12518@peff.net>
+From: =?ISO-8859-1?Q?V=EDctor_Mart=EDn_?= =?ISO-8859-1?Q?Hern=E1ndez?= 
+	<vmartin@aliga.ieec.uab.es>
+Subject: Untracked files when git status executed on a new folder
+Date: Tue, 23 Jun 2015 17:19:21 +0200
+Message-ID: <1435072761.15867.38.camel@aliga.ieec.uab.es>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 23 15:10:40 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 17:28:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7NyI-000652-TP
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 15:10:39 +0200
+	id 1Z7Q84-0006Az-AE
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 17:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802AbbFWNKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 09:10:34 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:34085 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752368AbbFWNKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 09:10:33 -0400
-Received: by iebmu5 with SMTP id mu5so11075089ieb.1
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 06:10:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=P8Nbo0WGAFgw3Ru27Ao7zpHcfKXgskSv11nshRtDQaM=;
-        b=XUAUUlYOU0W9LgdrxDHrHg2QkL6Q0f6I5yR34uNtDcD1dGv4Zh0MhyOb+R0VtrChrg
-         Wt/1iCEHnQ9GUZM+gd79w3oVWHd+9TO6P67lnbxz59zDkvfjIL0WbvMiWhLq/oJ5297j
-         29GTY2AHYMyt8zulgr4V2PYC+LirMSbwAumuKmADG6FvnaY7m7S2fqJJZZ3r8H48uWnw
-         qelICq2kS7VACDvlj6pK8rQ3jK1XE4OtjrWQnRtK9+9kooPW/ztZiyujcIgiseEMyZDy
-         5lKtUJxJ0ah+w0tvAnHlo9s4K+OY/xL0T7fRTxu6gCXdiQ6OpWCOSLuya91WthY8NRoB
-         Y5lQ==
-X-Received: by 10.107.47.224 with SMTP id v93mr45458127iov.86.1435065032586;
- Tue, 23 Jun 2015 06:10:32 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Tue, 23 Jun 2015 06:10:03 -0700 (PDT)
-In-Reply-To: <20150623114716.GC12518@peff.net>
+	id S1754681AbbFWP2s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 11:28:48 -0400
+Received: from aliga.ieec.uab.es ([158.109.166.130]:45758 "EHLO aliga.ice.cat"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754523AbbFWP2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 11:28:46 -0400
+X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Jun 2015 11:28:46 EDT
+Received: by aliga.ice.cat (Postfix, from userid 65534)
+	id 85E0A394; Tue, 23 Jun 2015 17:20:07 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
+	esparver.interna.ice.cat
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED
+	autolearn=unavailable version=3.3.2
+Received: from vmartin01 (unknown [10.50.2.26])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by aliga.ice.cat (Postfix) with ESMTPSA id 088E927D
+	for <git@vger.kernel.org>; Tue, 23 Jun 2015 17:20:02 +0200 (CEST)
+X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272457>
 
-On Tue, Jun 23, 2015 at 6:47 PM, Jeff King <peff@peff.net> wrote:
-> I was thinking of actually moving to a log-structured ref storage.
-> Something like:
->
->   - any ref write puts a line at the end of a single logfile that
->     contains the ref name, along with the normal reflog data
->
->   - the logfile is the source of truth for the ref state. If you want to
->     know the value of any ref, you can read it backwards to find the
->     last entry for the ref. Everything else is an optimization.
->
->     Let's call the number of refs N, and the number of ref updates in
->     the log U.
->
->   - we keep a key/value index mapping the name of any branch that exists
->     to the byte offset of its entry in the logfile. This would probably
+Hi all.
+Today I've had an unexpected behaviour that I'm not sure if is a bug or
+I'm not doing git best practices... (surely the latest...)
+The sequence of actions is :
 
-One key/value mapping per branch, pointing to the latest reflog entry,
-or one key/valye mapping for each reflog entry?
+1. create a new subfolder of my local repository branch
+2. cd to this new folder, and create a new file
+3. execute git status from the new folder
 
->     be in some binary key/value store (like LMDB). Without this,
->     resolving a ref is O(U), which is horrible. With it, it should be
->     O(1) or O(lg N), depending on the index data structure.
+Doing that, the new folder doesn't appear as untracked.
 
-I'm thinking of the user with small or medium repos, in terms of refs,
-who does not want an extra dependency. If we store one mapping per
-branch, then the size of this mapping is small enough that the index
-in a text file is ok. If we also store the offset to the previous
-reflog entry of the same branch in the current reflog entry, like a
-back pointer, then we could jump back faster.
+4. cd ..
+5. git status
+In this case, the new folder appears.
 
-Or do you have something else in mind? Current reflog structure won't
-work because I think you bring back the reflog graveyard with this,
-and I don't want to lose that
+If I create a new folder on the same level that the new one created in
+step 1, cd into it, and execute git status, the folder created in step =
+1
+appears as untracked.
 
->   - the index can also contain other optimizations. E.g., rather than
->     point to the entry in the logfile, it can include the sha1 directly
->     (to avoid an extra level of indirection). It may want to include the
->     "peeled" value, as the current packed-refs file does.
->
->   - Reading all of the reflogs (e.g., for repacking) is O(U), just like
->     it is today. Except the storage for the logfile is a lot more
->     compact than what we store today, with one reflog per file.
->
->   - Reading a single reflog is _also_ O(U), which is not as good as
->     today. But if each log entry contains a byte offset of the previous
->     entry, you can follow the chain (it is still slightly worse, because
->     you are jumping all over the file, rather than reading a compact set
->     of lines).
->
->   - Pruning the reflog entries from the logfile requires rewriting the
->     whole thing. That's similar to today, where we rewrite each of the
->     reflog files.
--- 
-Duy
+After step 3 I have executed git commit and git push to the remote, and
+later another user has realized that the new file was not present.
+
+Please let me know if you understand my explanation, and if it's a bug
+or just that I'm not as experienced as I'd like with git ;)
+
+THANKS!!
+V=C3=ADctor
+
+--=20
+---
+V=C3=ADctor Mart=C3=ADn Hern=C3=A1ndez
+
+R&D Software Engineer
+Instituto de Ciencias del Espacio (ICE/CSIC), and=20
+Institut d'Estudis Espacials de Catalunya (IEEC)
+
+Campus UAB, Carrer de Can Magrans, s/n
+08193  Bellaterra (Cerdanyola del Vall=C3=A8s) - Barcelona
+Tel. : +34 93 586 8782
+Web:   http://gwart.ice.cat/
