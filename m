@@ -1,99 +1,102 @@
-From: Josh Hagins <hagins.josh@gmail.com>
-Subject: Re: Dependency Management
-Date: Tue, 23 Jun 2015 14:49:46 -0400
-Message-ID: <CANuW5x0_B0F-CZ5-iq4c_JiZ99FyUvqywrdA8hPr4Pg2dfZ1sA@mail.gmail.com>
-References: <45DF444C03B59343B5893402DC4F867E3A800EC7@PB2OAEXM01.oad.exch.int>
- <45DF444C03B59343B5893402DC4F867E3A800EF8@PB2OAEXM01.oad.exch.int> <CAGZ79kZkUvqDzf-j0Z3yM5q+spV-MFYL5da4LOrYoGOHFsftjw@mail.gmail.com>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCHv6 1/3] git-rebase -i: add command "drop" to remove a
+ commit
+Date: Tue, 23 Jun 2015 21:01:19 +0200 (CEST)
+Message-ID: <1637608183.731706.1435086079947.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1435009369-11496-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr> <CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>,
-	Jean Audibert <jaudibert@euronext.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 20:50:28 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 20:59:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7TH9-0008Bz-78
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:50:27 +0200
+	id 1Z7TQ2-00059z-1p
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 20:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933459AbbFWSuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 14:50:22 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:35622 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932543AbbFWSuQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 14:50:16 -0400
-Received: by ykdy1 with SMTP id y1so10813475ykd.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2015 11:50:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rbxlZMF06MueB5mnsu4SxiPKccSH3xL2KXiPhpBXLWo=;
-        b=vpoaJabbK5O2GjMwmTg2K3eqCHtBi3zZBPyeVCVd3QCcwzUB+4Xe8QCiZzUE75hvcL
-         +9d2V4rxfq0Apsvx1mw7CXxKgNqNbxy7wGTG/Y3RTIryYPN+wchCSEhymyi02il+twR7
-         Wm76Oeq5eW5lvLU3cpHqYM6x3ft+26J3tBsdVIFKTjlI3/SwNKyhYOPEcdPQ42DXDdDX
-         wBkBvFXJDbXP+ii4i05mPv9TfuXExRmX8Nx1PDBEGZ2OOWtIfeTXixNdF+Jlor5d91Rv
-         fWSzHHRQaoJ5mplof1GdsZ3RIFgXu2AFF/OZ0y+y6YrAZO8BXVJcN+5tRL/fbTl7s9YX
-         C6ig==
-X-Received: by 10.170.224.65 with SMTP id q62mr13535007ykf.75.1435085415855;
- Tue, 23 Jun 2015 11:50:15 -0700 (PDT)
-Received: by 10.13.245.129 with HTTP; Tue, 23 Jun 2015 11:49:46 -0700 (PDT)
-In-Reply-To: <CAGZ79kZkUvqDzf-j0Z3yM5q+spV-MFYL5da4LOrYoGOHFsftjw@mail.gmail.com>
+	id S933516AbbFWS7e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 14:59:34 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:51335 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932130AbbFWS70 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 14:59:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 55C8B292F;
+	Tue, 23 Jun 2015 20:59:24 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bm-o+Dw-T27L; Tue, 23 Jun 2015 20:59:24 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 17C85292E;
+	Tue, 23 Jun 2015 20:59:24 +0200 (CEST)
+In-Reply-To: <CAPig+cT+idnGkR0V-UfwbHwvjd_U=zbjHx+so7Jz+4o1XU5eHw@mail.gmail.com>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: git-rebase -i: add command "drop" to remove a commit
+Thread-Index: U5KmGaUOiFq7i279P2QxOFTSwIBW9w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272480>
 
-If neither git-submodule nor git-subtree is palatable to you, here are
-a couple of alternatives you might try:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+> > +test_rebase_end () {
+> > +       test_when_finished "git checkout master &&
+> > +       git branch -D $1 &&
+> > +       test_might_fail git rebase --abort" &&
+> > +       git checkout -b $1 master
+> > +}
+>=20
+> The way this is indented makes it difficult to see that lines 2 and 3
+> are continuations of 1. Perhaps format it like this instead?
+>=20
+>     test_rebase_end () {
+>         test_when_finished "git checkout master &&
+>             git branch -D $1 &&
+>             test_might_fail git rebase --abort" &&
+>         git checkout -b $1 master
+>     }
 
-  * https://github.com/ingydotnet/git-subrepo
-  * https://github.com/tdd/git-stree
+I completely agree with you, moreover it was indented like this before.
+I'll change it in my local version for now.
 
-On Tue, Jun 23, 2015 at 1:36 PM Stefan Beller <sbeller@google.com> wrote:
->
-> On Tue, Jun 23, 2015 at 1:52 AM, Jean Audibert <jaudibert@euronext.com> wrote:
-> > Hi,
+Ironically, it was modified after the following:
+
+Galan R=C3=A9mi <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > > +test_expect_success 'rebase -i respects rebase.missingCommitsChe=
+ck=3Dignore' '
+> > > +       test_config rebase.missingCommitsCheck ignore &&
+> > > +       test_when_finished "git checkout master &&
+> > > +               git branch -D tmp2" &&
 > >
-> > Sorry to bother you with this question but I can't find any "official" answer or "strong opinion" from Git community.
-> >
-> > In my company we recently started to use Git and we wonder how to share code and manage dependencies with Git?
-> > Use case: in project P we need to include lib-a and lib-b (libraries shared by several projects)
-> >
-> > In your opinion, what is the "future proof" solution?
-> > * Use submodule
-> > * Use subtree
-> >
-> > We know there is lot of PRO/CONS but I feel that subtree is "behind" in the race and the latest version of submodule work fine
->
-> Use whatever works fine for your use case.
->
-> My personal opinion/expectation is to see submodules
-> improving/advancing more than subtrees advancing in the near future.
-> Though this is neither the official nor a strong opinion.
->
-> Stefan
->
-> >
-> > Suggestions are very welcome.
-> > Thanks in advance,
-> >
-> > Jean Audibert
-> >
-> >
-> > _________________________________________________________________
-> >
-> > This message may contain confidential information and is intended for specific recipients unless explicitly noted otherwise. If you have reason to believe you are not an intended recipient of this message, please delete it and notify the sender. This message may not represent the opinion of Euronext N.V. or any of its subsidiaries or affiliates, and does not constitute a contract or guarantee. Unencrypted electronic mail is not secure and the recipient of this message is expected to provide safeguards from viruses and pursue alternate means of communication where privacy or a binding message is desired.
-> >
-> > --
-> > To unsubscribe from this list: send the line "unsubscribe git" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> > Strange indentation.
+>=20
+> Considering that 'git branch -D tmp2' is a part of test_when_finished=
+,
+> I wasn't sure of how it was supposed to be indented, so I did it this
+> way to show that it was still within test_when_finished and not a
+> separate command.
+> >         test_when_finished "git checkout master &&
+> >         git branch -D tmp2" &&
+> Doesn't seem as clear, especially if you quickly read the lines.
+>=20
+> For now, I have removed the tab.
+
+:p
+
+Thanks,
+R=C3=A9mi
