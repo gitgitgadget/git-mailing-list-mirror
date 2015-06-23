@@ -1,64 +1,101 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: RFC/Pull Request: Refs db backend
-Date: Tue, 23 Jun 2015 16:27:46 -0400
-Message-ID: <005e01d0adf3$117eb880$347c2980$@nexbridge.com>
-References: <1435020656.28466.8.camel@twopensource.com>		 <CAGZ79kap++fZx3X0D95d35XioRURU468xATDZpWHDOAPapAh+Q@mail.gmail.com>	 <1435089895.28466.65.camel@twopensource.com>	 <005101d0adf0$964bca10$c2e35e30$@nexbridge.com> <1435090937.28466.68.camel@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Stefan Beller'" <sbeller@google.com>,
-	"'git mailing list'" <git@vger.kernel.org>,
-	"'ronnie sahlberg'" <ronniesahlberg@gmail.com>
-To: "'David Turner'" <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 22:27:59 2015
+From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: [PATCH v6 01/10] t9001-send-email: move script creation in a setup test
+Date: Tue, 23 Jun 2015 22:30:07 +0200
+Message-ID: <1435091416-9394-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+References: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
+Cc: Remi Galan <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Louis-Alexandre Stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 22:30:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7UnW-0007Yp-2n
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:27:58 +0200
+	id 1Z7Upy-0000dL-L6
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 22:30:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932715AbbFWU1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 16:27:52 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:21118 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932133AbbFWU1w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:27:52 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t5NKRm10087373
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Tue, 23 Jun 2015 16:27:48 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <1435090937.28466.68.camel@twopensource.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQJ1O/YN/henzw5pG8BC73xzk1Dn5wJTjVJeARUmkxUCGmZtRwJ/iwWFnDFYsTA=
-Content-Language: en-ca
+	id S1754766AbbFWUa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 16:30:26 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:35890 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754891AbbFWUaZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 16:30:25 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id DD23037E3;
+	Tue, 23 Jun 2015 22:30:21 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0KRKwErp3CKI; Tue, 23 Jun 2015 22:30:21 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id BB1ED37DE;
+	Tue, 23 Jun 2015 22:30:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id B2BA520DC;
+	Tue, 23 Jun 2015 22:30:21 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bKprGXa0Yynu; Tue, 23 Jun 2015 22:30:21 +0200 (CEST)
+Received: from localhost.localdomain (cor91-7-83-156-199-91.fbx.proxad.net [83.156.199.91])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 465FC20DA;
+	Tue, 23 Jun 2015 22:30:21 +0200 (CEST)
+X-Mailer: git-send-email 2.4.4.418.ga60dbe1
+In-Reply-To: <1434550720-24130-1-git-send-email-remi.lespinet@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272499>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of David Turner
-> Sent: June 23, 2015 4:22 PM
-> To: Randall S. Becker
-> Cc: 'Stefan Beller'; 'git mailing list'; 'ronnie sahlberg'
-> Subject: Re: RFC/Pull Request: Refs db backend
-> 
-> > Just to beg a request: LMDB is not available on some MPP architectures to
-> which git has been ported. If it comes up, I beg you not to add this as a
-> dependency to base git components.
-> 
-> My changes make `configure` check for the presence of liblmdb. The LMDB
-> code is only built if liblmdb is present.  So, I think we're good.
+Move the creation of the scripts used in to-cmd and cc-cmd tests
+in a setup test to make them available for later tests.
 
-Thanks :) You have no idea how much, in a "burnt by that in other projects" POV.
+Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+---
+ t/t9001-send-email.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-Cheers,
-Randall
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index a3663da..eef12e6 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -312,13 +312,19 @@ test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email'
+ 	)
+ '
+ 
++test_expect_success $PREREQ 'setup tocmd and cccmd scripts' '
++	write_script tocmd-sed <<-\EOF &&
++	sed -n -e "s/^tocmd--//p" "$1"
++	EOF
++	write_script cccmd-sed <<-\EOF
++	sed -n -e "s/^cccmd--//p" "$1"
++	EOF
++'
++
+ test_expect_success $PREREQ 'tocmd works' '
+ 	clean_fake_sendmail &&
+ 	cp $patches tocmd.patch &&
+ 	echo tocmd--tocmd@example.com >>tocmd.patch &&
+-	write_script tocmd-sed <<-\EOF &&
+-	sed -n -e "s/^tocmd--//p" "$1"
+-	EOF
+ 	git send-email \
+ 		--from="Example <nobody@example.com>" \
+ 		--to-cmd=./tocmd-sed \
+@@ -332,9 +338,6 @@ test_expect_success $PREREQ 'cccmd works' '
+ 	clean_fake_sendmail &&
+ 	cp $patches cccmd.patch &&
+ 	echo "cccmd--  cccmd@example.com" >>cccmd.patch &&
+-	write_script cccmd-sed <<-\EOF &&
+-	sed -n -e "s/^cccmd--//p" "$1"
+-	EOF
+ 	git send-email \
+ 		--from="Example <nobody@example.com>" \
+ 		--to=nobody@example.com \
+-- 
+1.9.1
