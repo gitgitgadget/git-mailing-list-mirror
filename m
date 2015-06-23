@@ -1,96 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC/Pull Request: Refs db backend
-Date: Mon, 22 Jun 2015 22:36:18 -0700
-Message-ID: <xmqqvbefdm0d.fsf@gitster.dls.corp.google.com>
-References: <1435020656.28466.8.camel@twopensource.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 12/19] initial_ref_transaction_commit(): check for
+ duplicate refs
+Date: Tue, 23 Jun 2015 09:11:32 +0200
+Message-ID: <558906A4.8060106@alum.mit.edu>
+References: <cover.1434980615.git.mhagger@alum.mit.edu>	<63ae59139a3a7b5c85f6d44864eade79a93965fb.1434980615.git.mhagger@alum.mit.edu> <xmqqtwtzfo79.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 07:36:27 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 09:11:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Gsk-0002pE-CX
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 07:36:26 +0200
+	id 1Z7IN8-0003JU-4t
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 09:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138AbbFWFgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 01:36:22 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:34339 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751055AbbFWFgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 01:36:21 -0400
-Received: by iebmu5 with SMTP id mu5so4513691ieb.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2015 22:36:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=vNHvUV1PndPcFC1oY8C1zmKXdg3huHNSd0OWEzrY4Yk=;
-        b=Z1CtT8XYDj6UHYort1FTpuqgfgu7PAgVj2YiyNyjBDTynyMIBBBPGynjvUWtrTZxwI
-         tDPL63hGDv2yO86X98Fa6rxdmfZBLqBrQXBDwnyEf95w7uwT8W0UQxj5d8FzbBRHKF5r
-         ZBmYU8saHleK0R3vZxtUmOR/19sIRqDKrj75Qie1ksqV+LLoAgQmA7a4IXpFLhvq5VO9
-         E4lxQk4+4TEYhc8inpS/7S25dMSVO84YgBeqR/ii5cYexb/ISA35JoaNtBnwuTqfL8JX
-         KoKzubjkZUlWFOJiWT3oN7yR1Dl4Nkepxmv9TBELtQs2SpPe+Mw/lyHbFo406nkFyGbA
-         xpTw==
-X-Received: by 10.107.35.203 with SMTP id j194mr44082754ioj.45.1435037780560;
-        Mon, 22 Jun 2015 22:36:20 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3c90:65f7:f86b:dfda])
-        by mx.google.com with ESMTPSA id p196sm14404974iop.15.2015.06.22.22.36.19
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Jun 2015 22:36:19 -0700 (PDT)
-In-Reply-To: <1435020656.28466.8.camel@twopensource.com> (David Turner's
-	message of "Mon, 22 Jun 2015 20:50:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753555AbbFWHLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 03:11:49 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:55835 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751358AbbFWHLs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 03:11:48 -0400
+X-AuditID: 12074414-f794f6d000007852-4f-558906a778b2
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id A9.E4.30802.7A609855; Tue, 23 Jun 2015 03:11:35 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC972ED.dip0.t-ipconnect.de [79.201.114.237])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t5N7BWRx014473
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 23 Jun 2015 03:11:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <xmqqtwtzfo79.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqLucrTPU4HwDh0XXlW4mi4beK8wW
+	P1p6mC02b25ncWDxWLCp1ONZ7x5Gj4uXlD0+b5ILYInitklKLCkLzkzP07dL4M74smUKa0Gf
+	bMXKY23MDYwrxLsYOTgkBEwkjk6R6mLkBDLFJC7cW8/WxcjFISRwmVHi6bQtTBDOBSaJhvkb
+	GUGqeAW0JaZtf8gKYrMIqEq8fTGJGcRmE9CVWNTTzAQyVFQgSOL1y1yIckGJkzOfsIDYIgJq
+	EhPbDoHZzALxElvbr4K1CgtESdxfsYEZYtdWRokFj56DJTgFrCV2dG5lhmjQk9hx/RcrhC0v
+	0bx1NvMERoFZSHbMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSml
+	mxghwSyyg/HISblDjAIcjEo8vCemdoQKsSaWFVfmHmKU5GBSEuUV+QEU4kvKT6nMSCzOiC8q
+	zUktPsQowcGsJMK79iZQjjclsbIqtSgfJiXNwaIkzvttsbqfkEB6YklqdmpqQWoRTFaDg0Ng
+	xrm505mkWPLy81KVJHhlWTtDhQSLUtNTK9Iyc0oQSpk4OEEWcUmJFKfmpaQWJZaWZMSDIji+
+	GBjDICkeoBuiQNp5iwsSc4GiEK2nGBWlxHk/sQAlBEASGaV5cGNhqesVozjQx8K8M0HaeYBp
+	D677FdBgJqDBX3LbQAaXJCKkpBoYFUy27/0qsoCNOcV/6swXoZw551ZmFtc/qbBnqz94brOe
+	89WJEx8ZHF+7yezzqs5eafF8e7en8Zo9U9fcbzyubnvn6+sOD693J2ZGWde83LxX 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272441>
 
-David Turner <dturner@twopensource.com> writes:
+On 06/22/2015 11:06 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Error out if the ref_transaction includes more than one update for any
+>> refname.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  refs.c | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
+> 
+> This somehow feels like "ehh, I now know better and this function
+> should have been like this from the beginning" to me.
+> 
+> But that is OK.
+> 
+> Is the initial creation logic too fragile to deserve its own
+> function to force callers to think about it, by the way?
+> 
+> What I am wondering is if we could turn the safety logic that appear
+> here (i.e. no existing refs must be assumed by the set of updates,
+> etc.)  into an optimization cue and implement this as a special case
+> helper to ref_transaction_commit(), i.e.
+> 
+> 	ref_transaction_commit(...)
+>         {
+> 		if (updates are all initial creation &&
+>                     no existing refs in repository)
+> 			return initial_ref_transaction_commit(...);
+> 		/* otherwise we do the usual thing */
+> 		...
+> 	}
+> 
+> and have "clone" call ref_transaction_commit() as usual.
 
-> I've revived and modified Ronnie Sahlberg's work on the refs db
-> backend.  
->
-> The work is on top of be3c13e5564, Junio's "First batch for 2.5 cycle".
-> I recognize that there have been changes to the refs code since then,
-> and that there are some further changes in-flight from e.g. Michael
-> Haggerty.  If there is interest in this, I can rebase once Michael's
-> changes land.
-> ...
-> The db backend runs git for-each-ref about 30% faster than the files
-> backend with fully-packed refs on a repo with ~120k refs.  It's also
-> about 4x faster than using fully-unpacked refs.  In addition, and
-> perhaps more importantly, it avoids case-conflict issues on OS X.
->
-> I chose to use LMDB for the database...
-> ...
-> Ronnie Sahlberg's original version of this patchset used tdb.  The
-> advantage of tdb is that it's smaller (~125k).  The disadvantages are
-> that tdb is hard to build on OS X.  It's also not in homebrew.  So lmdb
-> seemed simpler.
+The safety logic in this function is (approximately) necessary, but not
+sufficient, to guarantee safety. One of the shortcuts that it takes is
+not locking the references while they are being created. Therefore, it
+would be unsafe for one process to call ref_transaction_commit() while
+another is calling initial_ref_transaction_commit(). So the caller has
+to "know" somehow that no other processes are working in the repository
+for this optimization to be safe. It conveys that knowledge by calling
+initial_ref_transaction_commit() rather than ref_transaction_commit().
 
-"If there is interest"?  Shut up and take my money ;-)
+Of course the next question is, "How does `git clone` know that no other
+process is working in the new repository?" Actually, it doesn't. For
+example, I just verified that I can run
 
-More seriously, that's great that you stepped up to resurrect this
-topic.  In a sense, the choice of sample database backend does not
-matter.  I do not care if it is tdb, lmdb, or even Berkeley DB as
-long as it functions. ;-)
+    git clone $URL mygit &
+    sleep 0.1
+    cd mygit
+    git commit --allow-empty -m "New root commit"
 
-As long as the interface between ref-transaction system on the Git
-side and the database backend is designed right, your lmdb thing can
-serve as a reference implementation for other people to plug other
-database backends to the same interface, right?  As one step to
-validate the interface to the database backends, it would be nice to
-eventually have at least two backends that talk to meaningfully
-different systems, but we have to start somewhere, and "for now we
-have lmdb" is as good a place to start as any other db backend.
+and thereby "overwrite" the upstream `master` without the usual
+non-fast-forward protection. I guess we are just relying on the user's
+common sense not to run Git commands in a new repository before its
+creation is complete.
 
-I wonder if we can do a "filesystem" backend on top of the same
-backend interface---is that too much impedance mismatch to make it
-unpractical?
+I suppose we *could* special-case `git clone` to not finish the
+initialization of the repository (for example, not write the `config`
+file) until *after* the packed-refs file is written. This would prevent
+other git processes from recognizing the directory as a Git repository
+and so prevent them from running before the clone is finished.
 
-Thanks.
+But I think if anything it would make more sense to go the other direction:
+
+* Teach ref_transaction_commit() an option that asks it to write
+  references updates to packed-refs instead of loose refs (but
+  locking the references as usual).
+
+* Change clone to use ref_transaction_commit() like everybody
+  else, passing it the new REFS_WRITE_TO_PACKED_REFS option.
+
+Then clone would participate in the normal locking protocol, and it
+wouldn't *matter* if another process runs before the clone is finished.
+There would also be some consistency benefits. For example, if
+core.logallrefupdates is set globally or on the command line, the
+initial reference creations would be reflogged. And other operations
+that write references in bulk could use the new
+REFS_WRITE_TO_PACKED_REFS option to prevent loose reference proliferation.
+
+But I don't think any of this is a problem in practice, and I think we
+can live with using the optimized-but-not-100%-safe
+initial_ref_transaction_commit() for cloning.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
