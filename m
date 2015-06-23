@@ -1,65 +1,66 @@
-From: Jean Audibert <jaudibert@euronext.com>
-Subject: Dependency Management
-Date: Tue, 23 Jun 2015 08:52:16 +0000
-Message-ID: <45DF444C03B59343B5893402DC4F867E3A800EF8@PB2OAEXM01.oad.exch.int>
-References: <45DF444C03B59343B5893402DC4F867E3A800EC7@PB2OAEXM01.oad.exch.int>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: incomplete footers added by list server?
+Date: Tue, 23 Jun 2015 11:43:42 +0200
+Message-ID: <1435052622.26582.3.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "'git@vger.kernel.org'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 23 10:52:39 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 11:43:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7Jwa-0003FZ-FT
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 10:52:36 +0200
+	id 1Z7KkB-00042o-N8
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jun 2015 11:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385AbbFWIwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2015 04:52:31 -0400
-Received: from ukmailgw03.nyx.com ([156.48.57.54]:26749 "EHLO
-	ukmailgw03.nyx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751997AbbFWIw3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2015 04:52:29 -0400
-X-IronPort-AV: E=Sophos;i="5.13,664,1427756400"; 
-   d="scan'208";a="59335012"
-Received: from PB2OAEXM01.oad.exch.int ([fe80::64e9:c35b:8ae:5561]) by
- PB2OAEXC01.oad.exch.int ([::1]) with mapi id 14.03.0210.002; Tue, 23 Jun 2015
- 09:52:17 +0100
-Thread-Topic: Dependency Management
-Thread-Index: AdCtjx50IJjdx59mTziDuZ67pyp7JgAArixA
-In-Reply-To: <45DF444C03B59343B5893402DC4F867E3A800EC7@PB2OAEXM01.oad.exch.int>
-Accept-Language: fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.79.246.139]
+	id S1753370AbbFWJns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2015 05:43:48 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:33888 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752120AbbFWJnq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2015 05:43:46 -0400
+Received: by wicnd19 with SMTP id nd19so100335914wic.1
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 02:43:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:content-type
+         :mime-version:content-transfer-encoding;
+        bh=r29kFHc0JU63mbeGjD/TYxZPBg69TgT2nxybErvGQ8A=;
+        b=RV5r1au4ABwsR99ge/gAmCTWY4Et/FUD7Ybv5gaX80erlGks5D6NxfCs/gLGIHUxJY
+         cD+CGD6BB1CUDGBed04vps941M3hahIqHmPu9RF+hz2Xth+fGtzeDdZc4o66eItllWTx
+         jpBHUOkia7DlMDzrJVB/1G5gIwmAecwsJ0rNyyiYAGWqAYxbVzKNWn6Z5FojthM4dRca
+         iHZhcheDYF9OI3Y0BzXXPQmAh+E9sjJVUp0jUgWHWB0mB7LWFu9RR4ii5bw/bg/EDyo+
+         ervCaTYY8TmOTK1zzMO+YRhWyXvkjewm7crvPWldY2opcz2VInK1peF0QulX4FCyGLbm
+         NNmg==
+X-Gm-Message-State: ALoCoQlNaP5wmqBCXY//LvaFhUM7dURo/rAk9H8atKhuNf0syk+rhZkhVGOmD6BzImddd13CWGXO
+X-Received: by 10.194.95.132 with SMTP id dk4mr60635845wjb.88.1435052624666;
+        Tue, 23 Jun 2015 02:43:44 -0700 (PDT)
+Received: from seahawk.local (proxy-gw-l.booking.com. [5.57.20.8])
+        by mx.google.com with ESMTPSA id j7sm34720528wjz.11.2015.06.23.02.43.43
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Jun 2015 02:43:43 -0700 (PDT)
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272443>
 
-Hi,
+Since last friday between 10:39 and 10:50 UTC, mails to git@vger
+suddenly get an incomplete footer added.
 
-Sorry to bother you with this question but I can't find any "official" answer or "strong opinion" from Git community.
+Instead of the normal footer:
 
-In my company we recently started to use Git and we wonder how to share code and manage dependencies with Git?
-Use case: in project P we need to include lib-a and lib-b (libraries shared by several projects)
-
-In your opinion, what is the "future proof" solution?
-* Use submodule
-* Use subtree
-
-We know there is lot of PRO/CONS but I feel that subtree is "behind" in the race and the latest version of submodule work fine
-
-Suggestions are very welcome.
-Thanks in advance,
-
-Jean Audibert
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 
-_________________________________________________________________
+Only the first line is now added, actually making it fairly useless :)
 
-This message may contain confidential information and is intended for specific recipients unless explicitly noted otherwise. If you have reason to believe you are not an intended recipient of this message, please delete it and notify the sender. This message may not represent the opinion of Euronext N.V. or any of its subsidiaries or affiliates, and does not constitute a contract or guarantee. Unencrypted electronic mail is not secure and the recipient of this message is expected to provide safeguards from viruses and pursue alternate means of communication where privacy or a binding message is desired.
+-- 
+Dennis Kaarsemaker
+http://www.kaarsemaker.net
