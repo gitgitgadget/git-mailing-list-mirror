@@ -1,87 +1,66 @@
-From: =?UTF-8?Q?Bj=C3=B8rnar_Snoksrud?= <snoksrud@gmail.com>
-Subject: Cannot clone a linked working directory.
-Date: Wed, 24 Jun 2015 12:38:37 +0200
-Message-ID: <CA+cck7FB6QPz1Pec11TPXxxAhwKR78K9swgsQjMrZPhKJzi_iw@mail.gmail.com>
-Reply-To: bjornar@snoksrud.no
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Cannot clone a linked working directory.
+Date: Wed, 24 Jun 2015 18:16:11 +0700
+Message-ID: <CACsJy8BDrkrxO6f8SgqRjmLgSCwALqhO5hXEOo51v25=6NpwrA@mail.gmail.com>
+References: <CA+cck7FB6QPz1Pec11TPXxxAhwKR78K9swgsQjMrZPhKJzi_iw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 24 12:38:55 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: bjornar@snoksrud.no
+X-From: git-owner@vger.kernel.org Wed Jun 24 13:16:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7i4u-0002ZU-Ey
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 12:38:48 +0200
+	id 1Z7iff-0001Gm-2C
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 13:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbbFXKij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 06:38:39 -0400
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:36578 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966AbbFXKii (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 06:38:38 -0400
-Received: by yhan67 with SMTP id n67so14793577yha.3
-        for <git@vger.kernel.org>; Wed, 24 Jun 2015 03:38:38 -0700 (PDT)
+	id S1751977AbbFXLQn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jun 2015 07:16:43 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:33461 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750966AbbFXLQl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jun 2015 07:16:41 -0400
+Received: by igbqq3 with SMTP id qq3so111314404igb.0
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 04:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        bh=fxm2lBu9E1a67St+/EE07jscD+4bo9p7Aru3JMDr2as=;
-        b=tmrBYJRdx1i/bcgffu03kN2EN5UhWQW86pVYrIDlGJ/BVNL56qd4yNbjZ+M77UFUhB
-         SckYsjKSh7kve3hZzEd2s37rXcCsxQbEgwW1Y+60U+qRlW5/GVvMs2HmARWEDLb0xW9E
-         18AcCwhGa5WzyUzgW0EhfEXGBcfxAj26lY9gHPVts1rPVVn4w24nfhvujhqq+usGSWto
-         U91xvjOnK6HxWNVxKLPm3FrXs2dKpETKf+0g8vjvu3vtSEcNBAeXtAwyIeCfXMjBOT5P
-         8583DivGb0tYH65EnKLKdRJ82c+Q1oz6sc0QJjgHeQ/P0ZpyF9NjihwodQEzWpKeuQwN
-         x9ZA==
-X-Received: by 10.13.233.199 with SMTP id s190mr45046442ywe.164.1435142317976;
- Wed, 24 Jun 2015 03:38:37 -0700 (PDT)
-Received: by 10.129.71.3 with HTTP; Wed, 24 Jun 2015 03:38:37 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=d0ahsuN2Jctchnc3/NqOAN4akBfY0MNJByE/eNVVSmI=;
+        b=q52I/2TseJroKIx0v/GfTKEmE1JiS+teFYILTH5zCEzXepOPfKGjLVKPbrlJIItzb3
+         d3EQ1BcMCDOx7jvaqwYmoYjHz3U3tPCdjIblEVgRFs1TGgtQgc0ER4xnexcINHU/PXjT
+         Zyb/qwjYDQ9m+YuIIS/SOauUZqOkvqTNrwnjxzFLQng0pBF6tj+Ijh/tZlyyinABMkzV
+         wuYPbylgDaA3Zxeg6GSNRWkw0SDnUYiREVKLQ/+AWyUkgcCyHa/HOQToI942CdfHGHHI
+         MRaSLXNtdcW6WeK79toWQtl8cxT/iQf0I1quKaRR8N1Zy8ym4BazxUkJSOf66pTv/xga
+         gW1g==
+X-Received: by 10.50.164.233 with SMTP id yt9mr2334255igb.41.1435144600986;
+ Wed, 24 Jun 2015 04:16:40 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Wed, 24 Jun 2015 04:16:11 -0700 (PDT)
+In-Reply-To: <CA+cck7FB6QPz1Pec11TPXxxAhwKR78K9swgsQjMrZPhKJzi_iw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272549>
 
-Summary:
-When creating a linked working directory with `git checkout --to`, you
-cannot clone from the local path. This works when cloning the main
-repository directory.
+On Wed, Jun 24, 2015 at 5:38 PM, Bj=C3=B8rnar Snoksrud <snoksrud@gmail.=
+com> wrote:
+> Summary:
+> When creating a linked working directory with `git checkout --to`, yo=
+u
+> cannot clone from the local path. This works when cloning the main
+> repository directory.
+>
+> I couldn't find anything the the documentation for `git checkout` tha=
+t
+> indicates that this shouldn't work.
 
-I couldn't find anything the the documentation for `git checkout` that
-indicates that this shouldn't work.
-
-Repro:
-Creating a repo `foo`, checkout --to'ing it to ../bar, then try to
-clone both resulting repositories -
-
-$ git --version
-git version 2.4.4.600.g6397abd
-$ mkdir foo
-$ cd foo
-$ git init
-Initialized empty Git repository in /bar/foo/.git/
-$ git commit -m init --allow-empty
-[master (root-commit) c6da399] init
-$ git branch bar
-$ git checkout bar --to ../bar
-Enter ../bar (identifier bar)
-Switched to branch 'bar'
-$ cd ../bar
-$ cd bar
-$ git status -sb
-## bar
-$ cd ..
-$ git clone bar baz
-Cloning into 'baz'...
-fatal: '/path/bar' does not appear to be a git repository
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-$ git clone foo baz
-Cloning into 'baz'...
-done.
-
-
--- 
-bjornar@snoksrud.no
+I didn't think of this use case. If something works on the main
+worktree then it should also work on linked checkouts. I think I see
+the problem and will try to fix it in probably a few days (the "git
+add -N" problem takes higher priority).
+--=20
+Duy
