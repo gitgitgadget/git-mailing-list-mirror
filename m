@@ -1,147 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 5/5] bisect: allow any terms set by user
-Date: Wed, 24 Jun 2015 10:46:01 -0700
-Message-ID: <xmqqa8vp9ezq.fsf@gitster.dls.corp.google.com>
-References: <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435159062-23468-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435159062-23468-6-git-send-email-Matthieu.Moy@imag.fr>
+From: BGaudreault Brian <BGaudreault@edrnet.com>
+Subject: Repository Code Security (Plan Text)
+Date: Wed, 24 Jun 2015 18:18:00 +0000
+Message-ID: <BLUPR0701MB19693B73E05DF433C6B70182D7AF0@BLUPR0701MB1969.namprd07.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 24 19:46:28 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 24 20:18:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7oki-0006hh-Hr
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 19:46:24 +0200
+	id 1Z7pFQ-0002nY-Ou
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 20:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752895AbbFXRqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 13:46:06 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33591 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752443AbbFXRqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 13:46:04 -0400
-Received: by ieqy10 with SMTP id y10so38356914ieq.0
-        for <git@vger.kernel.org>; Wed, 24 Jun 2015 10:46:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=vR5OB7my5rbgkylDRPkEczDTsmTGVBbZ7g7rW8Oroqk=;
-        b=OLkm8tZmad91xvzSFhRfmTEtg8uvYT4exWiepWY5ajlFwXFPuHTsao6rsQXZKJSSnr
-         in+8WBew8DxVOXev+LUOG6hV2h2pWXXQqtUOIZU8gVVKRsiYbOT0PVlHSB7SG+XPwQBA
-         7pq8oC/mTNtMbMk7mzY5qCCntU8Vxz87dGessB1UsWxOB3/knfHrE231CSjmNKepLqUi
-         iC9o2IHQgzb8eWWlgrBXZNpbW2SCeoB8SlLIbbb0Yc3I02LW6o/1107KdA5wYkr+E11W
-         /pl3xoJkaE3n4PHU1sJQHuDbyl7Uarvbtpov2RuQ2ejQRvv/j1ghVIfLc/CZeL5lMVkb
-         zyZw==
-X-Received: by 10.50.79.129 with SMTP id j1mr1337982igx.32.1435167963621;
-        Wed, 24 Jun 2015 10:46:03 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:1c05:dbc5:2f2f:d033])
-        by mx.google.com with ESMTPSA id j3sm1479126ige.0.2015.06.24.10.46.02
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 24 Jun 2015 10:46:02 -0700 (PDT)
-In-Reply-To: <1435159062-23468-6-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Wed, 24 Jun 2015 17:17:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752412AbbFXSSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 14:18:04 -0400
+Received: from mail-bn1bon0069.outbound.protection.outlook.com ([157.56.111.69]:50010
+	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752908AbbFXSSD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jun 2015 14:18:03 -0400
+Received: from BLUPR0701MB1971.namprd07.prod.outlook.com (10.163.121.22) by
+ BLUPR0701MB1044.namprd07.prod.outlook.com (10.160.36.139) with Microsoft SMTP
+ Server (TLS) id 15.1.190.14; Wed, 24 Jun 2015 18:18:01 +0000
+Received: from BLUPR0701MB1969.namprd07.prod.outlook.com (10.163.121.20) by
+ BLUPR0701MB1971.namprd07.prod.outlook.com (10.163.121.22) with Microsoft SMTP
+ Server (TLS) id 15.1.195.15; Wed, 24 Jun 2015 18:18:01 +0000
+Received: from BLUPR0701MB1969.namprd07.prod.outlook.com ([10.163.121.20]) by
+ BLUPR0701MB1969.namprd07.prod.outlook.com ([10.163.121.20]) with mapi id
+ 15.01.0195.005; Wed, 24 Jun 2015 18:18:01 +0000
+Thread-Topic: Repository Code Security (Plan Text)
+Thread-Index: AdCuqem2MqHLznfSRzO/+eUOqJToog==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;
+x-originating-ip: [12.188.185.200]
+x-microsoft-exchange-diagnostics: 1;BLUPR0701MB1971;5:c04KhR1Ax+qdBlZ2VR1GXKzH7SndAAo6o4niteC0BduxvW+aVYoSZ5fwGoLIV0xCOK5ste5P+548dlfratuYlAxr2L0soKEyJ4yfWUs5yfJtGleVWlDwWj9BAGvwt9KTJTPrWzrD6VpTJT0RY2TZZg==;24:t5cLHguHm4Dfx/89Fw06isCDIbt30KmQMReyH+cPXCqNvwHZJYM7m+RlAEBS/ABQWzjvxVLugOU+dV2EThLk2ziZjsE1t5nsHv/ptDrIki0=;20:2+3c6ZBsXNWWxdfS2kK5vqObwFOMr9h0D+jpvboW9ebcL3qbnUjDWtBJGm8py3KDOv0NbtW+ZevF77s5PGo6bw==
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1971;UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1044;
+x-microsoft-antispam-prvs: <BLUPR0701MB197110047EA59226A9622D7FD7AF0@BLUPR0701MB1971.namprd07.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(5005006)(3002001);SRVR:BLUPR0701MB1971;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB1971;
+x-forefront-prvs: 061725F016
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(164054003)(77096005)(46102003)(558084003)(189998001)(450100001)(66066001)(99286002)(2501003)(107886002)(102836002)(5001960100002)(2900100001)(229853001)(40100003)(2351001)(110136002)(33656002)(5003600100002)(87936001)(2656002)(92566002)(5002640100001)(86362001)(122556002)(77156002)(80792005)(62966003)(76576001)(54356999)(74316001)(50986999);DIR:OUT;SFP:1101;SCL:1;SRVR:BLUPR0701MB1971;H:BLUPR0701MB1969.namprd07.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Jun 2015 18:18:01.0091
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: c5294837-2991-446b-82ba-9a6e606fbfae
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLUPR0701MB1971
+X-Microsoft-Exchange-Diagnostics: 1;BLUPR0701MB1044;2:+EHlHI1cy62vTDeyhzFJPWzKJTcBN+yotzUHygEPJos0nXVyL6YdIa2iJvQ3htWd;2:2f817FaxjN6vX6zm5aFkrwVrkSu0zd0w9oGch7uhJO6e5AZDNHjKJWlRukxJqm9AkuoL9bivlu5k21yIhzEsto2YYhldTLvexDMUEX+y+Z4YikJfcp3B3gzoZJbcts+UerGO3+ZMzUiMi/AGxYczSw==;9:o+m2dlZhZZ49T/eKnmDQ24G9xyteOxWHNOn7uXrSNsuouRRJ6EKjqcmsVuHsWrnKvjGnGnwT3F7XmWA2reOZ7Uaohe/jbjjIApyfjXy3HNUwG7ErKriZwsa/Ee//F4GQFOpG0BnHbvtT4zsDgZekJA==
+X-OriginatorOrg: edrnet.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272573>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Hello,
 
-> +Alternative terms: use your own terms
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +If the builtins terms bad/good and new/old do not satisfy you, you can
-> +set your own terms.
-> +
-> +------------------------------------------------
-> +git bisect terms term1 term2
-> +------------------------------------------------
-> +
-> +This command has to be used before a bisection has started.
-> +The term1 must be associated with the latest revisions and term2 with the
-> +ancestors of term1.
+If someone downloads code to their notebook PC and leaves the company, what protection do we have against them not being able to access the local code copy anymore?
 
-While this is not incorrect per-se, it would be more helpful to tell
-the readers that they are hunting for a commit that changes the state
-they would call "term2" into "term1" somewhere.  e.g.
-
-	-ancestors of term1.
-	+ancestors of term1.  For example, if something was buggy in
-        +the old part of the history, you know somewhere the bug was
-	+fixed, and you want to find the exact commit that fixed it,
-        +you may want to say `git bisect terms fixed broken`; this
-        +way, you would mark a commit that still has the bug with
-        +`broken`, and a newer one after the fix with `fixed`.
-
-or something?
-
-> -USAGE='[help|start|bad|good|new|old|skip|next|reset|visualize|replay|log|run]'
-> +USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
->  LONG_USAGE='git bisect help
->  	print this long help message.
->  git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
-> @@ -11,6 +11,8 @@ git bisect (bad|new) [<rev>]
->  git bisect (good|old) [<rev>...]
->  	mark <rev>... known-good revisions/
->  		revisions before change in a given property.
-> +git bisect terms term1 term2
-> +	set up term1 and term2 as bisection terms.
-
-This will not help those who cannot remember which one between these
-two they want:
-
-	git bisect terms new old
-        git bisect terms old new
-
-I am wondering (together with the documentation patch) if it would
-be better to be more explicit, instead of term[12], like this:
-
-	git bisect terms new old
-
-or even
-
-	git bisect terms bad good
-
-assuming that the only reason they use 'terms' is because they are
-sufficiently familiar with 'git bisect' and (intellectually) know
-that 'bad' is more recent and 'good' is what it used to be, but have
-trouble remembering which one is which during a hunt for a fix.
-
-> +bisect_terms () {
-> +	case "$#" in
-> +	0)
-> +		if test -s "$GIT_DIR/BISECT_TERMS"
-> +		then
-> +			{
-> +			read term1
-> +			read term2
-> +			}<"$GIT_DIR/BISECT_TERMS"
-> +			gettextln "Your current terms are $term1 and $term2."
-
-The same comment on this part.  Instead of "git bisect terms" that
-just says "You are using $term1 and $term2", the users would benefit
-if it said "You are using $term1 for newer state and $term2 for
-older state" [*1*].
-
-Thanks.
-
-
-[Footnote]
-
-*1* It is funny that I had to rewrite this "if it said..." a few
-times to make sure I got newer and older right, even though I had
-the relevant pieces (and only releavant pieces) of information for
-the doc and help text in a single patch form while composing this
-response.  I suspect that an end user without such material would be
-a lot more confused than I was.
+Thanks,
+Brian
