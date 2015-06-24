@@ -1,130 +1,88 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v8 0/5] Bisect terms
-Date: Wed, 24 Jun 2015 17:17:37 +0200
-Message-ID: <1435159062-23468-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v8 1/5] bisect: correction of typo
+Date: Wed, 24 Jun 2015 17:17:38 +0200
+Message-ID: <1435159062-23468-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1435159062-23468-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
 	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
 	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
 	valentinduperray@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 24 17:18:09 2015
+X-From: git-owner@vger.kernel.org Wed Jun 24 17:18:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7mRC-000885-9i
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 17:18:06 +0200
+	id 1Z7mRG-0008CC-GH
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 17:18:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbbFXPSC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 11:18:02 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54960 "EHLO rominette.imag.fr"
+	id S1754017AbbFXPSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 11:18:05 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54962 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627AbbFXPSA (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751212AbbFXPSA (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 24 Jun 2015 11:18:00 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5OFHqQL001987
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5OFHqB7001993
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 24 Jun 2015 17:17:52 +0200
+	Wed, 24 Jun 2015 17:17:53 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5OFHrV9030605;
-	Wed, 24 Jun 2015 17:17:54 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5OFHt2w030608;
+	Wed, 24 Jun 2015 17:17:55 +0200
 Received: from moy by anie.imag.fr with local (Exim 4.80)
 	(envelope-from <moy@imag.fr>)
-	id 1Z7mQz-0006Xr-Q4; Wed, 24 Jun 2015 17:17:53 +0200
+	id 1Z7mR0-0006Y5-Tk; Wed, 24 Jun 2015 17:17:54 +0200
 X-Mailer: git-send-email 2.4.4.414.g59d82e6
-In-Reply-To: <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 24 Jun 2015 17:17:52 +0200 (CEST)
+In-Reply-To: <1435159062-23468-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 24 Jun 2015 17:17:53 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5OFHqQL001987
+X-MailScanner-ID: t5OFHqB7001993
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1435763872.81979@FDO4ePsJ1EcFFBSmOall+A
+MailScanner-NULL-Check: 1435763873.91226@ePkN5ujDv0n9brn9aAQtnA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272555>
 
-This is a minor iteration over v7 to take into account Junio and
-Eric's comments, AND fix an important typo that I introduced in the
-strbuf code conversion (I used name_good instead of name_bad). This
-fixes the "git bisect visualize" bug I found earlier. I played a bit
-with the result and didn't find any bug.
+From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
 
-Except for the last patch, it seems at least close to mergeable.
+Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ bisect.c                    | 2 +-
+ t/t6030-bisect-porcelain.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index ef0c03c..a37336e 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -134,7 +134,7 @@ You must run `git bisect start` without commits as argument and run
- commits.
+diff --git a/bisect.c b/bisect.c
+index 03d5cd9..5b8357d 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -743,7 +743,7 @@ static void handle_bad_merge_base(void)
  
- Alternative terms: use your own terms
--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- If the builtins terms bad/good and new/old do not satisfy you, you can
- set your own terms.
-diff --git a/revision.c b/revision.c
-index f22923f..24ce842 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2083,27 +2083,21 @@ extern void read_bisect_terms(const char **bad, const char **good);
- 
- static int for_each_bad_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
--	struct strbuf bisect_refs_buf = STRBUF_INIT;
--	const char *bisect_refs_str;
-+	struct strbuf bisect_refs = STRBUF_INIT;
- 	int status;
--	strbuf_addstr(&bisect_refs_buf, "refs/bisect/");
--	strbuf_addstr(&bisect_refs_buf, name_bad);
--	bisect_refs_str = strbuf_detach(&bisect_refs_buf, NULL);
--	status = for_each_ref_in_submodule(submodule, bisect_refs_str, fn, cb_data);
--	free((char *)bisect_refs_str);
-+	strbuf_addf(&bisect_refs, "refs/bisect/%s", name_bad);
-+	status = for_each_ref_in_submodule(submodule, bisect_refs.buf, fn, cb_data);
-+	strbuf_release(&bisect_refs);
- 	return status;
+ 	fprintf(stderr, "Some good revs are not ancestor of the bad rev.\n"
+ 		"git bisect cannot work properly in this case.\n"
+-		"Maybe you mistake good and bad revs?\n");
++		"Maybe you mistook good and bad revs?\n");
+ 	exit(1);
  }
  
- static int for_each_good_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
--	struct strbuf bisect_refs_buf = STRBUF_INIT;
--	const char *bisect_refs_str;
-+	struct strbuf bisect_refs = STRBUF_INIT;
- 	int status;
--	strbuf_addstr(&bisect_refs_buf, "refs/bisect/");
--	strbuf_addstr(&bisect_refs_buf, name_bad);
--	bisect_refs_str = strbuf_detach(&bisect_refs_buf, NULL);
--	status = for_each_ref_in_submodule(submodule, bisect_refs_str, fn, cb_data);
--	free((char *)bisect_refs_str);
-+	strbuf_addf(&bisect_refs, "refs/bisect/%s", name_good);
-+	status = for_each_ref_in_submodule(submodule, bisect_refs.buf, fn, cb_data);
-+	strbuf_release(&bisect_refs);
- 	return status;
- }
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 06b4868..9e2c203 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -362,7 +362,7 @@ test_expect_success 'bisect starting with a detached HEAD' '
+ test_expect_success 'bisect errors out if bad and good are mistaken' '
+ 	git bisect reset &&
+ 	test_must_fail git bisect start $HASH2 $HASH4 2> rev_list_error &&
+-	grep "mistake good and bad" rev_list_error &&
++	grep "mistook good and bad" rev_list_error &&
+ 	git bisect reset
+ '
  
-
-
-Antoine Delaite (5):
-  bisect: correction of typo
-  bisect: replace hardcoded "bad|good" by variables
-  bisect: simplify the addition of new bisect terms
-  bisect: add the terms old/new
-  bisect: allow any terms set by user
-
- Documentation/git-bisect.txt |  67 +++++++++++++-
- bisect.c                     |  94 +++++++++++++++-----
- git-bisect.sh                | 207 +++++++++++++++++++++++++++++++++++--------
- revision.c                   |  20 ++++-
- t/t6030-bisect-porcelain.sh  |  83 ++++++++++++++++-
- 5 files changed, 407 insertions(+), 64 deletions(-)
- mode change 100755 => 100644 git-bisect.sh
-
 -- 
 2.4.4.414.g59d82e6
