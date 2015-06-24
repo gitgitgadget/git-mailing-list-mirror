@@ -1,80 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Enable core.fsyncObjectFiles by default
-Date: Tue, 23 Jun 2015 23:37:25 -0400
-Message-ID: <20150624033725.GA19321@peff.net>
-References: <1435096643-18159-1-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] apply: fix adding new files on i-t-a entries
+Date: Tue, 23 Jun 2015 21:48:33 -0700
+Message-ID: <CAPc5daXgEt==wpWH7CBXQFFZVSMuTR1PUMZqwQDmRG+QTJyt0g@mail.gmail.com>
+References: <CACfKtTAvH7FH2AkC5hUNFEQ620gF401SNYaULLy62iE8S55-7A@mail.gmail.com>
+ <1435062855-26274-1-git-send-email-pclouds@gmail.com> <xmqqoak6e5dx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org,
-	gitster@pobox.com, torvalds@linux-foundation.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 05:37:35 2015
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Patrick Higgins <phiggins@google.com>,
+	=?UTF-8?Q?Bj=C3=B8rnar_Snoksrud?= <snoksrud@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 06:48:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7bVF-00021i-Ka
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 05:37:33 +0200
+	id 1Z7ccM-0001SQ-N5
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 06:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754353AbbFXDh3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2015 23:37:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50775 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753179AbbFXDh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2015 23:37:28 -0400
-Received: (qmail 12057 invoked by uid 102); 24 Jun 2015 03:37:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Jun 2015 22:37:28 -0500
-Received: (qmail 23529 invoked by uid 107); 24 Jun 2015 03:37:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Jun 2015 23:37:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Jun 2015 23:37:25 -0400
-Content-Disposition: inline
-In-Reply-To: <1435096643-18159-1-git-send-email-sbeller@google.com>
+	id S1751585AbbFXEsz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jun 2015 00:48:55 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:33339 "EHLO
+	mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804AbbFXEsx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jun 2015 00:48:53 -0400
+Received: by oiyy130 with SMTP id y130so22189520oiy.0
+        for <git@vger.kernel.org>; Tue, 23 Jun 2015 21:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=R1rAJUvDGfqrZjBWhYr9HJQTkNXy6tnDFbTUe+TA5Ys=;
+        b=qv4q7lajq5B8ViGg69LrwobcdqMJWT7cRQuE5JoBzzUuNRP5pXUg8PqUp3mtIsJ/s/
+         hCtpgAMKRcXDStz9OuvQaIui70+y9vjpvmvmoWeQXnfI+Pc1nWexR4L6r5EudAcmvE5I
+         0EiZZBdCGlba2xcJPId5qGnbnye1sgGeHoLyGo/fM1m2605UZiCKcpjadCI7eNGur3Pl
+         lSBY7I8i/X4UARC8veFMXG4afWP6Lc9cOE0VpbCnuCAVx5GmTKpjZfHGS5Pc2j6dMc5b
+         a4y0KUgy41/X7bVbJkHLzB+gG6qMLPeVOA5NzXyBrz+/jjzz0MUCeAFEF95Gdz/EDzfO
+         4VYQ==
+X-Received: by 10.60.79.97 with SMTP id i1mr33039241oex.44.1435121332967; Tue,
+ 23 Jun 2015 21:48:52 -0700 (PDT)
+Received: by 10.202.202.129 with HTTP; Tue, 23 Jun 2015 21:48:33 -0700 (PDT)
+In-Reply-To: <xmqqoak6e5dx.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 32r0LdbSfyrqqlYn7WfedLjxcYk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272530>
 
-On Tue, Jun 23, 2015 at 02:57:23PM -0700, Stefan Beller wrote:
+On Tue, Jun 23, 2015 at 9:50 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> -     pos =3D cache_name_pos(name, strlen(name));
+>> +     pos =3D exists_in_cache(name, strlen(name));
+>
+> Something that is named as if it would return yes/no that returns a
+> real value is not a very welcome idea.
+>
+>> +/* This is the same as index_name_pos, except that i-t-a entries ar=
+e invisible */
+>> +int exists_in_index(const struct index_state *istate, const char *n=
+ame, int namelen)
+>> +{
+>> +     int pos =3D index_name_stage_pos(istate, name, namelen, 0);
+>> +
+>> +     if (pos < 0)
+>> +             return pos;
+>> +     if (istate->cache[pos]->ce_flags & CE_INTENT_TO_ADD)
+>> +             return -pos-1;
+>
+> This is a useless complexity.  Your callers cannot use the returned
+> value like this:
+>
+>         pos =3D exists_in_cache(...);
+>         if (pos < 0) {
+>                 if (active_cache[-pos-1]->ce_flags & CE_INTENT_TO_ADD=
+)
+>                         ; /* ah it actually exists but it is i-t-a */
+>                 else
+>                         ; /* no it does not really exist */
+>         } else {
+>                 ; /* yes it is really there at pos */
+>         }
+>
+> because they cannot tell two cases apart: (1) you do have i-t-a with
+> the given name, (2) you do not have the entry but the location you
+> would insert an entry with such a name is occupied by an unrelated
+> entry (i.e. with a name that sorts adjacent) that happens to be
+> i-t-a.
 
-> Linus Torvalds started a discussion[1] if we want to play rather safe
-> than use defaults which make sense only for the most power users of G=
-it:
->=20
-> > So git is "safe" in the sense that you won't really lose any data,
-> > but you may well be inconvenienced.  The "fsync each object" config
-> > option is there in case you don't want that inconvenience, but it
-> > should be noted that it can make for a hell of a performance impact=
-=2E
->=20
-> > Of course, it might well be the case that the actual default
-> > might be worth turning around. Most git users probably don't
-> > care about that kind of "apply two hundred patches from Andrew
-> > Morton" kind of workload, although "rebase a big patch-series"
-> > does end up doing basically the same thing, and might be more
-> > common.=EF=BB=BF
->=20
-> This patch enables fsync_object_files by default.
+Also, the callers cannot even use that return value in the usual way th=
+ey
+would use the return value from index_name_pos(), either.
 
-If you are looking for safety out of the box, I think this falls far
-short, as we do not fsync all of the other files. For instance, we do
-not fsync refs before they are written (nor anything else that uses the
-commit_lock_file() interface to rename, such as the index).  We do
-always fsync packfiles and their indices.
+    pos =3D exists_in_cache(...);
+    if (pos < 0) {
+        /* ah, it does not exist, so... */
+        pos =3D -1 - pos;
+        /*
+         * ... it is OK to shift active_cache[pos..] by one and add our
+         * entry at active_cache[pos]
+         */
+   } else {
+        /* it exists, so update in place */
+        ;
+   }
 
-I had always assumed this was fine on ext4 with data=3Dordered (i.e.,
-either the rename and its pointed-to content will go through, or not; s=
-o
-you either get your update or the old state, but not a garbage or empty
-file). But it sounds from what Ted wrote in:
-
-  http://article.gmane.org/gmane.linux.file-systems/97255
-
-that this may not be the case. If it's not, I think we should consider
-fsyncing ref writes.
-
--Peff
+So, returning pos that smells like a return value from index_name_pos()
+only has an effect of confusing callers into buggy code, I am afraid. T=
+he
+callers that care need to be updated to check for ce_flags after findin=
+g the
+entry with index_name_pos() the usual way if you want to avoid search i=
+n
+the index_state->cache[] twice, and the callers that are only intereste=
+d in
+knowing if an entry "exists" are better off with an exists_in_cache() t=
+hat
+returns Yes/No and not a confusing and useless "pos", I think.
