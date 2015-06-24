@@ -1,163 +1,134 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/WIP v3 07/31] am: extract patch, message and authorship
- with git-mailinfo
-Date: Wed, 24 Jun 2015 18:36:16 +0200
-Organization: gmx
-Message-ID: <72c470f3a6890dfcb66f1439383d2278@www.dscho.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH/WIP v3 01/31] wrapper: implement xopen()
+Date: Wed, 24 Jun 2015 09:59:26 -0700
+Message-ID: <CAGZ79kYtF+rHozVQhNz8uguLZvArPiB2UdkPTFn=Vc+YCsA=UQ@mail.gmail.com>
 References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
- <1434626743-8552-8-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-2-git-send-email-pyokagan@gmail.com>
+	<ed4f6565ed610a337244e06cc15b41bb@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 18:36:29 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Paul Tan <pyokagan@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 24 18:59:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7nez-00054x-Dx
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 18:36:25 +0200
+	id 1Z7o1M-0006fe-LA
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 18:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753059AbbFXQgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 12:36:21 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57575 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752830AbbFXQgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 12:36:19 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LiDrv-1YlPPu0C6F-00nRk3; Wed, 24 Jun 2015 18:36:17
- +0200
-In-Reply-To: <1434626743-8552-8-git-send-email-pyokagan@gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:UH+wdlInMBD+JX/rdZmo9sLURqOxBQriA+xYel6KJh6EJuu9Uki
- wm8+8iJgW+/jmXUINDIiYyy4bJh/Ono3rIFI8RLkJBKXv8Jwc4+E9J/3FkvsFvveCtuBFpA
- g5dA50qwOqPyehHkrshdomp8kgE6MGOLa0Nkj3h7a84TUKJh4pRpuiErv23lY2jbILj5m/D
- sig9FfgdN228SKmeA2QGA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PpjeVkw0jWM=:pzLf8KOq6ls3DOqux6CzYC
- laYatRiL7dxsGznGERVyEPE1evlp51Z9GwCyQ5n0rltiavAjsEmrG+4fMayXf2g8bzHTnKBY2
- nhoXKpPdfyGFHF+MOeK0mmNOJOB4318EswhqUbU5+4c4lKaRtHPHbZw4Fme77ibi0nXZgrqbY
- 3GUZvzU+It2H+raJedD6Sv0yAkVId6pJkGzY2Yvj09Yxj1V7Mvp9WsyzgheGzqIj5YTj4CeGp
- BfBl0/AdRiU7b9/Di5pOkchkBQrl7kJbPJrjkWBX9Fg2sPkzXGCWgmx7ahRjZGqpQFhgI0MDU
- V7QL4rhZy0ETQ6WSMXXyn9Xk7uoT1pAg+800IkPeIQhK3LnWgTNDpm+EFwmcLC7kfkwlCo3Mj
- dnyE58xbkBE2VCG/YMJNGds2gjSqEEvUVv+r4+o2iVWnNkn+alnL4N2vQxTLsNPxBuVl2Gwvg
- FLy99Zl1hbFKycb4zQHk+LkWmWQJYgnckjkv9KyOLvq2mguJXiX2kSvXcyBpbaXJdaW0dYupi
- Cl4wlwr5xOYt3Bnk9cTUjm4MY5c8L07SaZrWK4UWBJUDQvojT/5bGTgUVQp7dBaGmIl2MUMIr
- jWweVL2E/Q9sCT/vmjytM6i1nd0GD/S2cjC5dkvfCNOmJRHVnMX5qE4vxOTH+Ry8HreHS0WXK
- jiOV857yo3fGMvgudhYl04Y71Xpo4UGQjZ16dcmZRZxy1zLPWGk8hHBRCQlcSBU3fQj0=
+	id S1752922AbbFXQ73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 12:59:29 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:36637 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212AbbFXQ71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 12:59:27 -0400
+Received: by ykdr198 with SMTP id r198so27132779ykd.3
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 09:59:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zdx1ufn4ab1Ofae0s8E7PYzVJ47Pwj+MG/dkFjF0oug=;
+        b=ZGoXk2IS0bKXb0fskC7Q4XL369OlUGYmJdIAaYyvpHj9m13p27YJAsI3bCzHgtQ/ET
+         kK9o+8NnJ+nq10tp5P7sJwNyW5F0Vq2qmEBT0ph3zwuCExSMSGnjTDRejEKwG7jVTpL+
+         rmn/65L+gLKUHw0lj/0Rksj+vLLgEQY3e7/auTwVmNXsoVe3IOZlgxjSiQUFCnxPQlkf
+         m9D5iBGQk7zMSoRa8CAldXSkg0CHQfidXIm2w5nJbYU1vsVSSSkayliIhkJYhnDbH5io
+         SiZa0BwvNmm5BfJ4Q38PCChSv8dSTvYeTlQNAlSPDwXrIi5intscJ9m+6JDFLvtvMsrG
+         bNzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=zdx1ufn4ab1Ofae0s8E7PYzVJ47Pwj+MG/dkFjF0oug=;
+        b=VWjaEgYxyNE88WBhTbJH38eE1NI0k3wKN0knQ1HnBsUWZPXzjv8W2PIqtwP+FqBS6n
+         u27yE3NGWJcNBg64qLuokpjuaufYuTGIGez+jv7/d4HYLAcrloKbnbdBPAwdRzC7IXGU
+         FIKyXQuRKu4bGlIC9umEDlGOYS507pxbN6A/Uod+xwHLQY37ku1wXe5lR+kdXg2NsOR7
+         TKBYqBmkavgUKecZCcWtJY7E7ifkhYh9u84zMvaSpMe0ScYDeG88ekrAp27MdSRq9xMK
+         D7rfzY2RXYSQPin4f0GgW3MHvkFGLKZGpEUvpO911vo52HvLy8kUsGcarjJFnLdAGrSY
+         ORSw==
+X-Gm-Message-State: ALoCoQnm9Yy8n7xVgfdWEMle1MGuqwP/dATqSi1Hh3wxS4C5t4cwE8z4lV9sbdJqk/6QhDBr4DtW
+X-Received: by 10.170.56.83 with SMTP id 80mr45570985yky.16.1435165166425;
+ Wed, 24 Jun 2015 09:59:26 -0700 (PDT)
+Received: by 10.37.26.213 with HTTP; Wed, 24 Jun 2015 09:59:26 -0700 (PDT)
+In-Reply-To: <ed4f6565ed610a337244e06cc15b41bb@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272565>
 
-Hi Paul,
+On Wed, Jun 24, 2015 at 9:28 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Paul,
+>
+> On 2015-06-18 13:25, Paul Tan wrote:
+>
+>> diff --git a/git-compat-util.h b/git-compat-util.h
+>> index 0cc7ae8..bc77d77 100644
+>> --- a/git-compat-util.h
+>> +++ b/git-compat-util.h
+>> @@ -719,6 +719,7 @@ extern void *xrealloc(void *ptr, size_t size);
+>>  extern void *xcalloc(size_t nmemb, size_t size);
+>>  extern void *xmmap(void *start, size_t length, int prot, int flags,
+>> int fd, off_t offset);
+>>  extern void *xmmap_gently(void *start, size_t length, int prot, int
+>> flags, int fd, off_t offset);
+>> +extern int xopen(const char *path, int flags, ...);
+>
+> I wonder whether it is worth it to make this a varargs function. It is not too much to ask callers to specify a specific mode everytime they call `xopen()`, no?
+>
+>> diff --git a/wrapper.c b/wrapper.c
+>> index c1a663f..82658b3 100644
+>> --- a/wrapper.c
+>> +++ b/wrapper.c
+>> @@ -189,6 +189,31 @@ void *xcalloc(size_t nmemb, size_t size)
+>>  # endif
+>>  #endif
+>>
+>> +/**
+>> + * xopen() is the same as open(), but it die()s if the open() fails.
+>> + */
+>> +int xopen(const char *path, int oflag, ...)
+>> +{
+>> +     mode_t mode = 0;
+>> +     va_list ap;
+>> +
+>> +     va_start(ap, oflag);
+>> +     if (oflag & O_CREAT)
+>> +             mode = va_arg(ap, mode_t);
+>> +     va_end(ap);
+>> +
+>> +     assert(path);
+>> +
+>> +     for (;;) {
+>> +             int fd = open(path, oflag, mode);
+>> +             if (fd >= 0)
+>> +                     return fd;
+>> +             if (errno == EINTR)
+>> +                     continue;
+>> +             die_errno(_("could not open '%s'"), path);
+>
+> It is often helpful to know whether a path was opened for reading or writing, so maybe we should have something like
+>
+> if (oflag & O_WRITE)
+>     die_errno(_("could not open '%s' for writing"), path);
+> else if (oflag & O_READ)
+>     die_errno(_("could not open '%s' for reading"), path);
+> else
+>     die_errno(_("could not open '%s'"), path);
+>
+> ? I know it is a bit of duplication, but I fear we cannot get around that without breaking i18n support.
 
-On 2015-06-18 13:25, Paul Tan wrote:
+This distinction was part of earlier series, but Torsten Boegershausen
+suggested to leave
+it out. [compare
+http://thread.gmane.org/gmane.comp.version-control.git/270048/focus=270049]
 
-> diff --git a/builtin/am.c b/builtin/am.c
-> index 7b97ea8..d6434e4 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -94,6 +126,105 @@ static int read_state_file(struct strbuf *sb,
-> const char *file, size_t hint, int
->  }
->  
->  /**
-> + * Reads a KEY=VALUE shell variable assignment from fp, and returns the VALUE
-> + * in `value`. VALUE must be a quoted string, and the KEY must match `key`.
-> + * Returns 0 on success, -1 on failure.
-> + *
-> + * This is used by read_author_script() to read the GIT_AUTHOR_* variables from
-> + * the author-script.
-> + */
-> +static int read_shell_var(struct strbuf *value, FILE *fp, const char *key)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	char *str;
-> +
-> +	if (strbuf_getline(&sb, fp, '\n'))
-> +		return -1;
-> +
-> +	if (!skip_prefix(sb.buf, key, (const char **)&str))
-> +		return -1;
-> +
-> +	if (!skip_prefix(str, "=", (const char **)&str))
-> +		return -1;
-> +
-> +	str = sq_dequote(str);
-> +	if (!str)
-> +		return -1;
-> +
-> +	strbuf_reset(value);
-> +	strbuf_addstr(value, str);
-> +
-> +	strbuf_release(&sb);
-> +
-> +	return 0;
-> +}
-
-How about using `strbuf_remove()` and keeping `str` as `const char *`? I also think we can fold it into the `read_author_script()` function and make it more resilient with regards to the order of the variables. Something like this:
-
-static int read_author_script(struct am_state *state)
-{
-	struct strbuf sb = STRBUF_INIT;
-	const char *filename = am_path(state, "author-script");
-	FILE *fp = fopen(filename, "r");
-	if (!fp) {
-		if (errno == ENOENT)
-			return 0;
-		die_errno(_("could not open '%s' for reading"), filename);
-	}
-
-	while (!strbuf_getline(&sb, fp, '\n')) {
-		char *equal = strchr(sb.buf, '='), **var;
-
-		if (!equal) {
-error:
-			fclose(fp);
-			return -1;
-		}
-		*equal = '\0';
-		if (!strcmp(sb.buf, "GIT_AUTHOR_NAME"))
-			var = &state->author_name;
-		else if (!strcmp(sb.buf, "GIT_AUTHOR_EMAIL"))
-			var = &state->author_email;
-		else if (!strcmp(sb.buf, "GIT_AUTHOR_DATE"))
-			var = &state->author_date;
-		else
-			goto error;
-		*var = xstrdup(sq_dequote(equal + 1));
-	}
-
-	fclose(fp);
-	return -1;
-}
-
-If you follow my earlier suggestion to keep a strbuf inside the am_state, you could reuse that here, too.
-
-> +/**
-> + * Saves state->author_name, state->author_email and state->author_date in
-> + * `filename` as an "author script", which is the format used by git-am.sh.
-> + */
-> +static void write_author_script(const struct am_state *state)
-> +{
-> +	static const char fmt[] = "GIT_AUTHOR_NAME=%s\n"
-> +		"GIT_AUTHOR_EMAIL=%s\n"
-> +		"GIT_AUTHOR_DATE=%s\n";
-> +	struct strbuf author_name = STRBUF_INIT;
-> +	struct strbuf author_email = STRBUF_INIT;
-> +	struct strbuf author_date = STRBUF_INIT;
-> +
-> +	sq_quote_buf(&author_name, state->author_name.buf);
-> +	sq_quote_buf(&author_email, state->author_email.buf);
-> +	sq_quote_buf(&author_date, state->author_date.buf);
-
-The `sq_quote_buf()` function does not call `strbuf_reset()`. Therefore you could just use a single strbuf to construct the entire three lines and then write that out. Again, if you follow my suggestion to keep a "scratch pad" strbuf in am_state, you could reuse that.
-
-That scratch pad could come in handy in a couple of other places in the rest of this patch.
-
-Ciao,
-Dscho
+>
+> Ciao,
+> Dscho
+>
+>
