@@ -1,107 +1,92 @@
-From: =?ISO-8859-1?Q?V=EDctor_Mart=EDn_?= =?ISO-8859-1?Q?Hern=E1ndez?= 
-	<vmartin@aliga.ieec.uab.es>
-Subject: Re: Untracked files when git status executed on a new folder
-Date: Wed, 24 Jun 2015 17:28:45 +0200
-Message-ID: <1435159725.19750.7.camel@aliga.ieec.uab.es>
-References: <1435072761.15867.38.camel@aliga.ieec.uab.es>
-	 <20150623165453.GA9265@leeloo.kyriasis.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/WIP v3 07/31] am: extract patch, message and authorship with git-mailinfo
+Date: Wed, 24 Jun 2015 08:59:39 -0700
+Message-ID: <xmqqa8vpayhg.fsf@gitster.dls.corp.google.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-8-git-send-email-pyokagan@gmail.com>
+	<xmqqtwu4d8pg.fsf@gitster.dls.corp.google.com>
+	<CACRoPnS9eyBF5NEM7sKvep+A8aKUNLJDaV-1c_oWDBwMcv26Bg@mail.gmail.com>
+	<xmqq1th7brsj.fsf@gitster.dls.corp.google.com>
+	<20150624075446.GA1964@yoshi.chippynet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes =?ISO-8859-1?Q?L=F6thberg?= <johannes@kyriasis.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 17:29:50 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 17:59:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7mcS-0000ic-TK
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 17:29:45 +0200
+	id 1Z7n5X-0008A7-Mh
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 17:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807AbbFXP3l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jun 2015 11:29:41 -0400
-Received: from aliga.ieec.uab.es ([158.109.166.130]:49602 "EHLO aliga.ice.cat"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752808AbbFXP3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 11:29:39 -0400
-Received: by aliga.ice.cat (Postfix, from userid 65534)
-	id 3438FB03; Wed, 24 Jun 2015 17:29:35 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
-	esparver.interna.ice.cat
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED
-	autolearn=unavailable version=3.3.2
-Received: from vmartin01 (110.201.133.37.dynamic.jazztel.es [37.133.201.110])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by aliga.ice.cat (Postfix) with ESMTPSA id 8F09B8DB;
-	Wed, 24 Jun 2015 17:29:28 +0200 (CEST)
-In-Reply-To: <20150623165453.GA9265@leeloo.kyriasis.com>
-X-Mailer: Evolution 3.12.9-1+b1 
+	id S1752605AbbFXP7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 11:59:44 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37292 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212AbbFXP7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 11:59:42 -0400
+Received: by igblr2 with SMTP id lr2so36857290igb.0
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 08:59:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=2tvhxyC7NWv7qP/VbeumxF/WloBb9DX08PJCPVfK+Rk=;
+        b=EQCxpiDDj3UwmtfGmU3q29/0VTRTzfz9y32OG6zbv71dfUNjnB/mttc2UNJTMDiLup
+         FlMZC0fdDjjhEaJeH3vaKVwdRQFtJc8agzzfN7UyEVOmoXK0gBZMp1YRYM/vKHpBdKlX
+         DZ1zNmBRK1LrWZLD0Ymi9xUL2O8HpI+agAi4x9bHmPTD8oK3fxFY/dvxOEyDOm1UgTzy
+         oepaFhebxdHsSZdKkI+a2S1M0ApdsJPWTSUuMko3pSuvEyUbp3CASrpVLgoBbEqk+y0F
+         SB0WdbKoy4iiSyx5f1i2Ka4CRzbWTWvBbMDx9LL+Hyd3EfCN0yei6knfwubD2MT94S39
+         b0kA==
+X-Received: by 10.43.151.83 with SMTP id kr19mr38090036icc.3.1435161582118;
+        Wed, 24 Jun 2015 08:59:42 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1c05:dbc5:2f2f:d033])
+        by mx.google.com with ESMTPSA id e10sm1280462igy.11.2015.06.24.08.59.41
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 24 Jun 2015 08:59:41 -0700 (PDT)
+In-Reply-To: <20150624075446.GA1964@yoshi.chippynet.com> (Paul Tan's message
+	of "Wed, 24 Jun 2015 15:54:46 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272561>
 
-Hi all,
-sorry for not having sent these informations in my first e-mail.
-I'm working on a Debian Jessie laptop, with git version 2.1.4.=20
-I watched the same behavior in a workmate's laptop which uses last
-version of Ubuntu, but now I cannot contact him to get git version.
+Paul Tan <pyokagan@gmail.com> writes:
 
-Afger "apt-get update" and "apg-get install --only-upgrade git", the
-response is that I have the latest git version, what sounds strange to
-me if you say you use version 2.4.4.
+> 3. I'm over-thinking this and you just want the "struct strbufs" in the
+>    struct am_state to be switched to "char*"s?
 
+Yes, everybody interacts with am_state, and these fields are
+supposed to be constant during the processing of each patch input
+message; they should be simple strings, not strbufs, to make sure if
+anybody _does_ muck with them in-place, that would be very visible.
+The helpers to initialize them are free to use strbuf API to prepare
+these simple string fields, of course.
 
-Thanks!!
+> (On a somewhat related thought, currently we do write_file() all over
+> the place, which is really ugly. I'm leaning heavily on introducing an
+> am_save() function, for "I don't care how it is done but just update the
+> contents of the am state directory so that it matches the contents of
+> the struct am_state".
 
-V=C3=ADctor
+Sure; the scripted Porcelain may have done "echo here, echo there"
+instead of "concatenate into a $var and then 'echo $var' at end" as
+that is more natural way to program in that environment.  You are
+doing this in C and "prepare the thing in-core and write it all at
+the point to snapshot" may well be the more natural way to program.
 
-
-=20
-
-On Tue, 2015-06-23 at 18:54 +0200, Johannes L=C3=B6thberg wrote:
-> On 23/06, V=C3=ADctor Mart=C3=ADn Hern=C3=A1ndez wrote:
-> >Hi all.
-> >Today I've had an unexpected behaviour that I'm not sure if is a bug=
- or
-> >I'm not doing git best practices... (surely the latest...)
-> >The sequence of actions is :
-> >
-> >1. create a new subfolder of my local repository branch
-> >2. cd to this new folder, and create a new file
-> >3. execute git status from the new folder
-> >
-> >Doing that, the new folder doesn't appear as untracked.
-> >
-> >4. cd ..
-> >5. git status
-> >In this case, the new folder appears.
-> >
-> >If I create a new folder on the same level that the new one created =
-in
-> >step 1, cd into it, and execute git status, the folder created in st=
-ep 1
-> >appears as untracked.
-> >
->=20
-> Can't reproduce on Git 2.4.4/Linux, which Git version and platform ar=
-e=20
-> you using?
->=20
-
---=20
----
-V=C3=ADctor Mart=C3=ADn Hern=C3=A1ndez
-
-R&D Software Engineer
-Instituto de Ciencias del Espacio (ICE/CSIC), and=20
-Institut d'Estudis Espacials de Catalunya (IEEC)
-
-Campus UAB, Carrer de Can Magrans, s/n
-08193  Bellaterra (Cerdanyola del Vall=C3=A8s) - Barcelona
-Tel. : +34 93 586 8782
-Web:   http://gwart.ice.cat/
+As long as a process that stops in the middle does not leave on-disk
+state inconsistent, batching would be fine.  For example, you may
+apply and commit two (or more) patches without updating the on-disk
+state as you do not see need to give control back to the user
+(i.e. they applied cleanly) and then write out the on-disk state
+with .next incremented by two (or more) before giving the control
+back could be a valid optimization (take this example with a grain
+of salt, though; I haven't thought too deeply about what should
+happen if you Ctrl-C the process in the middle).
