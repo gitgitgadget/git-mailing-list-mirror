@@ -1,78 +1,121 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH] Fix definition of ARRAY_SIZE for non-gcc builds
-Date: Wed, 24 Jun 2015 08:44:27 +0100
-Message-ID: <1435131867-11361-1-git-send-email-charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 24 09:44:48 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] introduce "preciousObjects" repository extension
+Date: Wed, 24 Jun 2015 03:50:20 -0400
+Message-ID: <20150624075019.GA827@peff.net>
+References: <20150623105042.GA10888@peff.net>
+ <20150623105411.GB12518@peff.net>
+ <xmqq1th2cezr.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 09:50:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7fMV-0000Dj-Pj
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 09:44:48 +0200
+	id 1Z7fRz-0003hN-No
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 09:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbbFXHoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 03:44:44 -0400
-Received: from host02.zombieandprude.com ([80.82.119.138]:42334 "EHLO
-	host02.zombieandprude.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750947AbbFXHom (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 03:44:42 -0400
-Received: from hashpling.plus.com ([212.159.69.125]:41155)
-	by host02.zombieandprude.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
-	(Exim 4.80)
-	(envelope-from <charles@hashpling.org>)
-	id 1Z7fMO-0007iz-8P; Wed, 24 Jun 2015 08:44:40 +0100
-X-Mailer: git-send-email 2.4.0.53.g8440f74
+	id S1751029AbbFXHuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 03:50:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50846 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750981AbbFXHuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 03:50:22 -0400
+Received: (qmail 2135 invoked by uid 102); 24 Jun 2015 07:50:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Jun 2015 02:50:22 -0500
+Received: (qmail 25517 invoked by uid 107); 24 Jun 2015 07:50:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Jun 2015 03:50:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jun 2015 03:50:20 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq1th2cezr.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272536>
 
-From: Charles Bailey <cbailey32@bloomberg.net>
+On Tue, Jun 23, 2015 at 02:05:28PM -0700, Junio C Hamano wrote:
 
-The improved ARRAY_SIZE macro uses BARF_UNLESS_AN_ARRAY which is expands
-to a valid check for recent gcc versions and to 0 for older gcc
-versions but is not defined on non-gcc builds.
+> Jeff King <peff@peff.net> writes:
+> 
+> >  This extension does not change git's behavior at all. It is useful only
+> >  for testing format-1 compatibility.
+> > +
+> > +`preciousObjects`
+> > +~~~~~~~~~~~~~~~~~
+> > +
+> > +When the config key `extensions.preciousObjects` is set to `true`,
+> > +objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
+> > +`git repack -d`).
+> 
+> OK.  In essense, the 'extension' on the disk is like 'capability' on
+> the wire, in that you are not supposed to ask for capability they do
+> not understand, and you are not supposed to touch a repository you
+> do not understand.
 
-Non-gcc builds need this macro to expand to 0 as well. The current
-outer test (defined(__GNUC__) && (__GNUC__)) is a strictly weaker
-condition than the inner test (GIT_GNUC_PREREQ(3, 1)) so we can omit the
-outer test and cause the BARF_UNLESS_AN_ARRAY macro to be defined
-correctly on non-gcc builds as well as gcc builds with older versions.
+Yeah, I think that is a good analogy.
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
+> > +	if (delete_redundant && repository_format_precious_objects)
+> > +		die("cannot repack in a precious-objects repo");
+> 
+> This message initially threw me off during my cursory reading, but
+> the code tells me that this is only about "repack -d".
+> 
+> Unfortunately the users do not get the chance to read the code;
+> perhaps s/cannot repack/& -d/; or something?
+
+I agree that would be better. I originally just blocked all use of
+git-repack, but at the last minute softened it to just "repack -d". I'm
+not sure if that would actually help anyone in practice. Sure, doing
+"git repack" without any options is not destructive, but I wonder if
+anybody actually does it. They either run `git gc`, or they probably do
+something more exotic and disable the safety check during that run[1].
+
+So I think we could squash in the patch below (which also marks the
+strings for translation). But I'd also be OK with the rule covering all
+of `git repack`.
+
+-Peff
+
+[1] One of my proposed uses for this is to revamp the way we handle
+    shared objects on GitHub servers. Right now objects get pushed to
+    individual forks, and then migrate to a shared repository that is
+    accessed via the alternates mechanism. I would like to move to
+    symlinking the `objects/` directory to write directly into the
+    shared space. But the destruction from accidentally running
+    something like `git gc` in a fork is very high. With this patch, we
+    can bump the forks to the v1 format and mark their objects as
+    precious.
+
 ---
-
-This fixes a build regression introduced in v2.4.4 so this patch is
-based off that tag.
-
- git-compat-util.h | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b45c75f..8c2b7aa 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -58,15 +58,13 @@
- #define BUILD_ASSERT_OR_ZERO(cond) \
- 	(sizeof(char [1 - 2*!(cond)]) - 1)
+diff --git a/builtin/prune.c b/builtin/prune.c
+index fc0c8e8..6a58e75 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -219,7 +219,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 	}
  
--#if defined(__GNUC__) && (__GNUC__ >= 3)
--# if GIT_GNUC_PREREQ(3, 1)
-+#if GIT_GNUC_PREREQ(3, 1)
-  /* &arr[0] degrades to a pointer: a different type from an array */
- # define BARF_UNLESS_AN_ARRAY(arr)						\
- 	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(__typeof__(arr), \
- 							   __typeof__(&(arr)[0])))
--# else
--#  define BARF_UNLESS_AN_ARRAY(arr) 0
--# endif
-+#else
-+# define BARF_UNLESS_AN_ARRAY(arr) 0
- #endif
- /*
-  * ARRAY_SIZE - get the number of elements in a visible array
--- 
-2.4.0.53.g8440f74
+ 	if (repository_format_precious_objects)
+-		die("cannot prune in a precious-objects repo");
++		die(_("cannot prune in a precious-objects repo"));
+ 
+ 	while (argc--) {
+ 		unsigned char sha1[20];
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 8ae7fe5..3beda2c 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -194,7 +194,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				git_repack_usage, 0);
+ 
+ 	if (delete_redundant && repository_format_precious_objects)
+-		die("cannot repack in a precious-objects repo");
++		die(_("cannot delete packs in a precious-objects repo"));
+ 
+ 	if (pack_kept_objects < 0)
+ 		pack_kept_objects = write_bitmaps;
