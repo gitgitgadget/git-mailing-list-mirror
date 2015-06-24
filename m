@@ -1,163 +1,146 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/WIP v3 04/31] am: implement patch queue mechanism
-Date: Wed, 24 Jun 2015 16:59:48 +0200
+Subject: Re: [PATCH/WIP v3 06/31] am: detect mbox patches
+Date: Wed, 24 Jun 2015 17:10:27 +0200
 Organization: gmx
-Message-ID: <6560adbc8b1842dd369628980f1264c3@www.dscho.org>
+Message-ID: <334feea4cee88d06a10a7363956d2bfe@www.dscho.org>
 References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
- <1434626743-8552-5-git-send-email-pyokagan@gmail.com>
+ <1434626743-8552-7-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 17:01:07 2015
+X-From: git-owner@vger.kernel.org Wed Jun 24 17:10:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7mAk-0002s4-EQ
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 17:01:06 +0200
+	id 1Z7mJw-000233-Bj
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 17:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071AbbFXPBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 11:01:00 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56651 "EHLO mout.gmx.net"
+	id S1753573AbbFXPKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 11:10:32 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52233 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753848AbbFXO7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 10:59:51 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M3zT0-1YpQDn0p86-00rVc4; Wed, 24 Jun 2015 16:59:49
+	id S1753208AbbFXPKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 11:10:30 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MhRI2-1ZTB3e02kc-00Mdko; Wed, 24 Jun 2015 17:10:28
  +0200
-In-Reply-To: <1434626743-8552-5-git-send-email-pyokagan@gmail.com>
+In-Reply-To: <1434626743-8552-7-git-send-email-pyokagan@gmail.com>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:Op1KeSMxLVNioBq4ZmtfU78jq9KOWQFM1zS9+BzIFUGaOAxmFUB
- Px+MjLYchLdrhfwVNIIidZ9PblkRRyhv8Xmu14N+7d0XAax8U1z4ol229/xgodCVTS6Qn20
- pdL69XM4HEzaCCuMehot6knzlf2hA/jH+3VZYwPxhSUUTPEZK4d4SZ1Hoy2dB0P9F/DsTF/
- UmBFmW+YlGZl97DiUfUHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kX4obYQmABM=:J2zjtH2wfp6JndfTzZl9m7
- vwLLcusi5YEpji2JMnWn7CWIhiA5OUFpgK3sdIWQjFGhU1dh1D+2n8CHfC81qCvDfCMQSuKI8
- TWNpswpSUzpUgBkttDrn3xZ/wx3/dR5TXgez2Wui5vUUsUwP3SrGCgVdSQNyrFhki3L6BuN2D
- 5UdTD3N34qsuSLj+8bOjyPrRhccPjMGFBkXT/ON2L6Z4G+jGbb8Iigekey64QtllVX9NkBeXM
- 6xgNjMyBLVNpkAkzHhnv0Ow02QPRgp9QKq+myCt4tn/1zArcl0zj9wzYjTRANQwnNZuAhGqjJ
- bc6IxBqSqG2d+z8S8BFZ0bQY2OAAgKk743q3A602g/b7zzcDOODFvwFpctV/ZUIpu90VWlOy0
- FpVDWB3muKH6qJsfFk2pbZmKcaj33IUXmJs5Cvlkpb/Gat5Wpbeh/7ALMLOSgkeqeM0dj5x8M
- iCiV/buAC91BcUHebNVBJrQQ9QuKuj2fB5Is4OxiY+PNBr/nHzyf3jX5W1tgfVOCTejqH7uqX
- sR/PnliWco0d9gVcdtk13YJCM5KXeYTNLIEmTStrHIt54Ba5SOf1hpYf0F0GeQ/2xFdg6+FPl
- WCjAeqyUDBbbT00rUKt66jOw2Hr6b4MQLBCR1tXSwaR4ri7PFnlp/mMpU6wzynE5cbIuNQ7LZ
- yYPD1rQdnD6FEoPgIfsdMK4HNaQUGLcO2BZfvFL06BRJP5V/2hT9TumyNhRc200AP1rI=
+X-Provags-ID: V03:K0:q0PJIqB4dqXw6er0ZnKeZ+CGWGgxi1RMyoP66tzBNgKQsK0zMAh
+ kOOAQ3D5jzarUQhbEJoELw5SAboJ/DHOBlJ6v4JXc0wQyTkN/eUiMzdjUpAfU2ZkmRH/GVC
+ 2b8+rFDR1RBLsixUzLGQvu5hv+iHkW3nMk6/8T3+CXUg+6ipNet4RxCQESJRRWF0+BvaVKi
+ EJIJXrr1pVP8mKUbjPuIA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qw3AWCvSHrs=:r7fFHGGg/yLwgps2ssrCJZ
+ idguCSlMxLCej3BF/uU6hqtPe4yCTkXX2JW6V3MzhY86xEQlGRg7USnte14P1QIj+0RmDgIrv
+ gl+0pic4pBNgzClcSI3PPvpGOh/AVEdIwiOb/Rt0H3Xws74BhbTm5Q22TAikd7bknpH6/+fRz
+ Nz3mtiY6/UJy6hPUu7rOZnAkMbEincq+fUbt7d7wgo37TlLQwrkyyFydqHACrLVmlGfICEr01
+ CliOF+2/jwIl2dWqDQypxjNhtU0b+5ChSwP1vl/uJ0B7Vutg4RLy+I2O1IpeRreDRIWY2keRR
+ EisyWDIUKBynYLl3pp38Dy3w9Coq/DRL/sc8c70iR5gfXV+Oh/l9iBWlpcSth5SXGptwQPTiW
+ c88H8S1VkADSRqTtPy0WBYRJCUEHCpmLXkqJqAWLQIXhtDjW7/e7d4JeJVmm9JpOfTkbWQzmn
+ A0cLQV+mPzOAvib+PQ7KjAUUFHUJfr/4PXjVqeDN+nKpxnfRGp3J61VIrlskr65NRS7wrabZI
+ xAqtCmjEI22SDDuesISEZuBqUls+L5DToDbHYapjYDTG+rBQFpwcKjSkXvqSDUVRTzHdMVifV
+ l5/QRdPNteVNRW0XGdeabvWBx1h7gUteGxBPkaCJt0tbnKowK7ThBhE3GQHdeaL2ohcNe0LlZ
+ jvf/ap4UQUiGwan63aKqg2PGbicYSusdUMcjsKjLt6jarEI/hnU5EzgZ4pk5dodlvgr4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272553>
 
 Hi Paul,
 
 On 2015-06-18 13:25, Paul Tan wrote:
 
 > diff --git a/builtin/am.c b/builtin/am.c
-> index dbc8836..af68c51 100644
+> index e9a3687..7b97ea8 100644
 > --- a/builtin/am.c
 > +++ b/builtin/am.c
-> @@ -6,6 +6,158 @@
->  #include "cache.h"
->  #include "builtin.h"
->  #include "exec_cmd.h"
-> +#include "parse-options.h"
-> +#include "dir.h"
-> +
-> +struct am_state {
-> +	/* state directory path */
-> +	struct strbuf dir;
-> +
-> +	/* current and last patch numbers, 1-indexed */
-> +	int cur;
-> +	int last;
-> +};
-> +
-> +/**
-> + * Initializes am_state with the default values.
+> @@ -121,6 +121,96 @@ static void am_destroy(const struct am_state *state)
+>  	strbuf_release(&sb);
+>  }
+>  
+> +/*
+> + * Returns 1 if the file looks like a piece of email a-la RFC2822, 0 otherwise.
+> + * We check this by grabbing all the non-indented lines and seeing if they look
+> + * like they begin with valid header field names.
 > + */
-> +static void am_state_init(struct am_state *state)
-> +{
-> +	memset(state, 0, sizeof(*state));
-> +
-> +	strbuf_init(&state->dir, 0);
-> +}
-
-With strbufs, we use the initializer STRBUF_INIT. How about using
-
-#define AM_STATE_INIT { STRBUF_INIT, 0, 0 }
-
-here?
-
-> +/**
-> + * Reads the contents of `file`. The third argument can be used to give a hint
-> + * about the file size, to avoid reallocs. Returns number of bytes read on
-> + * success, -1 if the file does not exist. If trim is set, trailing whitespace
-> + * will be removed from the file contents.
-> + */
-> +static int read_state_file(struct strbuf *sb, const char *file,
-> size_t hint, int trim)
-> +{
-> +	strbuf_reset(sb);
-> +	if (strbuf_read_file(sb, file, hint) >= 0) {
-> +		if (trim)
-> +			strbuf_trim(sb);
-> +
-> +		return sb->len;
-> +	}
-> +
-> +	if (errno == ENOENT)
-> +		return -1;
-> +
-> +	die_errno(_("could not read '%s'"), file);
-> +}
-
-A couple of thoughts:
-
-- why not reuse the strbuf by making it a part of the am_state()? That way, you can allocate, say, 1024 bytes (should be plenty enough for most of our operations) and just reuse them in all of the functions. We will not make any of this multi-threaded anyway, I don't think.
-
-- Given that we only read short files all the time, why not skip the hint parameter? Especially if we reuse the strbuf, it should be good enough to allocate a reasonable buffer first and then just assume that we do not have to reallocate it all that often anyway.
-
-- Since we only read files from the state directory, why not pass the basename as parameter? That way we can avoid calling `am_path()` explicitly over and over again (and yours truly cannot forget to call `am_path()` in future patches).
-
-- If you agree with these suggestions, the signature would become something like
-
-static void read_state_file(struct am_state *state, const char *basename, int trim);
-
-> +/**
-> + * Remove the am_state directory.
-> + */
-> +static void am_destroy(const struct am_state *state)
+> +static int is_email(const char *filename)
 > +{
 > +	struct strbuf sb = STRBUF_INIT;
+> +	FILE *fp = xfopen(filename, "r");
+> +	int ret = 1;
 > +
-> +	strbuf_addstr(&sb, state->dir.buf);
-> +	remove_dir_recursively(&sb, 0);
-> +	strbuf_release(&sb);
-> +}
+> +	while (!strbuf_getline(&sb, fp, '\n')) {
+> +		const char *x;
+> +
+> +		strbuf_rtrim(&sb);
+> +
+> +		if (!sb.len)
+> +			break; /* End of header */
+> +
+> +		/* Ignore indented folded lines */
+> +		if (*sb.buf == '\t' || *sb.buf == ' ')
+> +			continue;
+> +
+> +		/* It's a header if it matches the regexp "^[!-9;-~]+:" */
 
-Given that `remove_dir_recursively()` has to reset the strbuf with the directory's path to the original value before it returns (because it recurses into itself, therefore the value *has* to be reset when returning), we can just call
-
-    remove_dir_recursively(&state->dir, 0);
-
-and do not need another temporary strbuf.
+Why not just compile a regex and use it here? We use regexes elsewhere anyway...
 
 > +/**
-> + * Increments the patch pointer, and cleans am_state for the application of the
-> + * next patch.
+> + * Attempts to detect the patch_format of the patches contained in `paths`,
+> + * returning the PATCH_FORMAT_* enum value. Returns PATCH_FORMAT_UNKNOWN if
+> + * detection fails.
 > + */
-> +static void am_next(struct am_state *state)
+> +static int detect_patch_format(struct string_list *paths)
 > +{
-> +	state->cur++;
-> +	write_file(am_path(state, "next"), 1, "%d", state->cur);
-> +}
+> +	enum patch_format ret = PATCH_FORMAT_UNKNOWN;
+> +	struct strbuf l1 = STRBUF_INIT;
+> +	struct strbuf l2 = STRBUF_INIT;
+> +	struct strbuf l3 = STRBUF_INIT;
+> +	FILE *fp;
+> +
+> +	/*
+> +	 * We default to mbox format if input is from stdin and for directories
+> +	 */
+> +	if (!paths->nr || !strcmp(paths->items->string, "-") ||
+> +	    is_directory(paths->items->string)) {
+> +		ret = PATCH_FORMAT_MBOX;
+> +		goto done;
+> +	}
+> +
+> +	/*
+> +	 * Otherwise, check the first 3 lines of the first patch, starting
+> +	 * from the first non-blank line, to try to detect its format.
+> +	 */
+> +	fp = xfopen(paths->items->string, "r");
+> +	while (!strbuf_getline(&l1, fp, '\n')) {
+> +		strbuf_trim(&l1);
+> +		if (l1.len)
+> +			break;
+> +	}
+> +	strbuf_getline(&l2, fp, '\n');
 
-Locking and re-checking the contents of "next" before writing the incremented value would probably be a little too paranoid...
+We should test the return value of `strbuf_getline()`; if EOF was reached already, `strbuf_getwholeline()` does not touch the strbuf. I know, the strbuf is still initialized empty here, but it is too easy to forget when changing this code.
 
-(Just saying it out loud, the current code is fine by me.)
+> +	strbuf_trim(&l2);
+> +	strbuf_getline(&l3, fp, '\n');
+> +	strbuf_trim(&l3);
+> +	fclose(fp);
+> +
+> +	if (starts_with(l1.buf, "From ") || starts_with(l1.buf, "From: "))
+> +		ret = PATCH_FORMAT_MBOX;
 
-Ciao,
+Hmm. We can test that earlier and return without reading from the file any further, I think.
+
+> +	else if (l1.len && l2.len && l3.len && is_email(paths->items->string))
+> +		ret = PATCH_FORMAT_MBOX;
+
+Maybe we can do better than this by folding the `is_email() function into this here function, reusing the same strbuf to read the lines and keeping track of the email header lines we saw... I would really like to avoid opening the same file twice just to figure out whether it is in email format.
+
+The rest looks very nice!
 Dscho
