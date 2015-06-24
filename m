@@ -1,153 +1,138 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v5 02/11] tag: libify parse_opt_points_at()
-Date: Thu, 25 Jun 2015 01:23:43 +0530
-Message-ID: <1435175632-27803-2-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v5 05/11] ref-filter: add parse_opt_merge_filter()
+Date: Thu, 25 Jun 2015 01:23:46 +0530
+Message-ID: <1435175632-27803-5-git-send-email-karthik.188@gmail.com>
 References: <CAOLa=ZTbXCRFx6xEv+cB7DQhu92=ePb_MJ5zeEjsr_-=HPAU6g@mail.gmail.com>
  <1435175632-27803-1-git-send-email-karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 24 21:54:26 2015
+X-From: git-owner@vger.kernel.org Wed Jun 24 21:54:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7qkS-0007pI-TD
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 21:54:17 +0200
+	id 1Z7qkY-0007v3-CZ
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 21:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391AbbFXTyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 15:54:08 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:35969 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753349AbbFXTyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 15:54:04 -0400
-Received: by pdcu2 with SMTP id u2so37115236pdc.3
-        for <git@vger.kernel.org>; Wed, 24 Jun 2015 12:54:04 -0700 (PDT)
+	id S1753668AbbFXTyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 15:54:17 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:36059 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753623AbbFXTyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 15:54:14 -0400
+Received: by pdcu2 with SMTP id u2so37117569pdc.3
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 12:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rOwCSnlhSNUtlx098nJpU8u/xkiwdUptC654ujW6NFw=;
-        b=QqJS4scEO85Rzd++PtLTZBTyLtjIYE3+bCqohzAw78lb8RRN+oKv1pgwhzM5WFrL7Y
-         8+iqyD5DsaZEHlnz3rN5fujoZ07wdJYae5pw1oyLmcwGkHOHX3n2CoHOPTx3toPBlSH2
-         hzEj72mdK1tysGbDqeGYMe5KC0cDypbSdIfdF3Rn1weqxsjnglXHnCfN+oK5uSPnjNiO
-         eJRpiUi5WFC0YOrhzdS8wjbbzxyPT7K+hsJq0Y6ApTJpeMaJkqv1OcV930xr3t0bt6LK
-         MH4cnz65/4Ht1YmCuwy7R443CptxIIa5Dq69yRmHXYQoQrchDxoOlUFq/Vgj0LJ6UddS
-         fOUw==
-X-Received: by 10.66.218.6 with SMTP id pc6mr82940467pac.20.1435175643962;
-        Wed, 24 Jun 2015 12:54:03 -0700 (PDT)
+        bh=ow5gtKPsVd50XIRQOljzMZSjM72+B6nsxEudgRygShw=;
+        b=OfSiXYJk5M52L2yrvG/7UJw9yGzejkp02duDWfdK9LTf/arCNmYXR6ffcdKGN8DSOh
+         MkF1nP/IFes2Us4fj8Qy+U0bOjchslMd3evTVx8Pp5T33yKl6BMTO94g0kFWLM1bIgP4
+         25vBea0S/gMp4eoLpe8AY2YZlfiU6YKgCC5TM1roCuQlIz6M2TJ/u+1/LKCzAoJh5x5T
+         nAbVNyK9V4Ub58VCP9v7z+FRX9cHdSOBFmggL0h5ZxzOy1kNOkb4uHE9GKhfQeurUnTR
+         VMgA4IreDFYDEps2lhiOvezPlN8JYfQl4x8yFdbgD8VjmM1XDDV2YpU6Pn9OzVRPah0+
+         FyKg==
+X-Received: by 10.66.121.101 with SMTP id lj5mr82648536pab.113.1435175652665;
+        Wed, 24 Jun 2015 12:54:12 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id zx1sm27583483pbb.73.2015.06.24.12.54.01
+        by mx.google.com with ESMTPSA id zx1sm27583483pbb.73.2015.06.24.12.54.10
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 24 Jun 2015 12:54:03 -0700 (PDT)
+        Wed, 24 Jun 2015 12:54:12 -0700 (PDT)
 X-Mailer: git-send-email 2.4.4
 In-Reply-To: <1435175632-27803-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272597>
 
-Rename 'parse_opt_points_at()' to 'parse_opt_object_name()' and
-move it from 'tag.c' to 'parse-options'. This now acts as a common
-parse_opt function which accepts an objectname and stores it into
-a sha1_array.
+Add 'parse_opt_merge_filter()' to parse '--merged' and '--no-merged'
+options and write macros for the same.
+
+This is copied from 'builtin/branch.c' which will eventually be removed
+when we port 'branch.c' to use ref-filter APIs.
 
 Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/tag.c      | 21 ++-------------------
- parse-options-cb.c | 17 +++++++++++++++++
- parse-options.h    |  1 +
- 3 files changed, 20 insertions(+), 19 deletions(-)
+ builtin/branch.c |  4 ++++
+ ref-filter.c     | 19 +++++++++++++++++++
+ ref-filter.h     | 11 +++++++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 5f6cdc5..e36c43e 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -546,23 +546,6 @@ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
- 	return check_refname_format(sb->buf, 0);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b42e5b6..ddd90e6 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -745,6 +745,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 	strbuf_release(&newsection);
  }
  
--static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
--			const char *arg, int unset)
--{
--	unsigned char sha1[20];
--
--	if (unset) {
--		sha1_array_clear(&points_at);
--		return 0;
--	}
--	if (!arg)
--		return error(_("switch 'points-at' requires an object"));
--	if (get_sha1(arg, sha1))
--		return error(_("malformed object name '%s'"), arg);
--	sha1_array_append(&points_at, sha1);
--	return 0;
--}
--
- static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
++/*
++ * This function is duplicated in ref-filter. It will eventually be removed
++ * when we port branch.c to use ref-filter APIs.
++ */
+ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int unset)
  {
- 	int *sort = opt->value;
-@@ -625,8 +608,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			parse_opt_with_commit, (intptr_t)"HEAD",
- 		},
- 		{
--			OPTION_CALLBACK, 0, "points-at", NULL, N_("object"),
--			N_("print only tags of the object"), 0, parse_opt_points_at
-+			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
-+			N_("print only tags of the object"), 0, parse_opt_object_name
- 		},
- 		OPT_END()
- 	};
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index be8c413..de75411 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -4,6 +4,7 @@
- #include "commit.h"
- #include "color.h"
- #include "string-list.h"
-+#include "sha1-array.h"
- 
- /*----- some often used options -----*/
- 
-@@ -92,6 +93,22 @@ int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
+ 	merge_filter = ((opt->long_name[0] == 'n')
+diff --git a/ref-filter.c b/ref-filter.c
+index f40f06e..0c2d67c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1125,3 +1125,22 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
+ 	s->atom = parse_ref_filter_atom(arg, arg+len);
  	return 0;
  }
- 
-+int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
++
++int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
 +{
++	struct ref_filter *rf = opt->value;
 +	unsigned char sha1[20];
 +
-+	if (unset) {
-+		sha1_array_clear(opt->value);
-+		return 0;
-+	}
-+	if (!arg)
-+		return -1;
++	rf->merge = starts_with(opt->long_name, "no")
++		? REF_FILTER_MERGED_OMIT
++		: REF_FILTER_MERGED_INCLUDE;
++
 +	if (get_sha1(arg, sha1))
-+		return error(_("malformed object name '%s'"), arg);
-+	sha1_array_append(opt->value, sha1);
++		die(_("malformed object name %s"), arg);
++
++	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
++	if (!rf->merge_commit)
++		return opterror(opt, "must point to a commit", 0);
++
 +	return 0;
 +}
+diff --git a/ref-filter.h b/ref-filter.h
+index c2856b8..ad2902b 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -50,6 +50,15 @@ struct ref_filter_cbdata {
+ 	struct ref_filter *filter;
+ };
+ 
++/*  Macros for checking --merged and --no-merged options */
++#define _OPT_MERGED_NO_MERGED(option, filter, h)				\
++	{ OPTION_CALLBACK, 0, option, (filter), N_("commit"), (h), \
++	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
++	  parse_opt_merge_filter, (intptr_t) "HEAD" \
++	}
++#define OPT_MERGED(f, h) _OPT_MERGED_NO_MERGED("merged", f, h)
++#define OPT_NO_MERGED(f, h) _OPT_MERGED_NO_MERGED("no-merged", f, h)
 +
- int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
- {
- 	int *target = opt->value;
-diff --git a/parse-options.h b/parse-options.h
-index c71e9da..36c71fe 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -220,6 +220,7 @@ extern int parse_opt_approxidate_cb(const struct option *, const char *, int);
- extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
- extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
- extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
-+extern int parse_opt_object_name(const struct option *, const char *, int);
- extern int parse_opt_with_commit(const struct option *, const char *, int);
- extern int parse_opt_tertiary(const struct option *, const char *, int);
- extern int parse_opt_string_list(const struct option *, const char *, int);
+ /*
+  * API for filtering a set of refs. Based on the type of refs the user
+  * has requested, we iterate through those refs and apply filters
+@@ -71,5 +80,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
+ /*  Default sort option based on refname */
+ struct ref_sorting *ref_default_sorting(void);
++/*  Function to parse --merged and --no-merged options */
++int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
+ 
+ #endif /*  REF_FILTER_H  */
 -- 
 2.4.4
