@@ -1,78 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] introduce "preciousObjects" repository extension
-Date: Wed, 24 Jun 2015 04:12:24 -0400
-Message-ID: <20150624081224.GA4781@peff.net>
-References: <20150623105042.GA10888@peff.net>
- <20150623105411.GB12518@peff.net>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/WIP v3 06/31] am: detect mbox patches
+Date: Wed, 24 Jun 2015 16:41:09 +0800
+Message-ID: <CACRoPnSoFDnuJC-q3nR7xwpqOcpmzYReDPPPao1NJdY11TV0cQ@mail.gmail.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-7-git-send-email-pyokagan@gmail.com>
+	<xmqqy4jgd92l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 10:12:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 10:41:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7fnO-0008Ts-Pb
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 10:12:35 +0200
+	id 1Z7gFV-0005cR-0V
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 10:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751014AbbFXIMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 04:12:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50871 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750988AbbFXIM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 04:12:27 -0400
-Received: (qmail 4106 invoked by uid 102); 24 Jun 2015 08:12:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Jun 2015 03:12:27 -0500
-Received: (qmail 25805 invoked by uid 107); 24 Jun 2015 08:12:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Jun 2015 04:12:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jun 2015 04:12:24 -0400
-Content-Disposition: inline
-In-Reply-To: <20150623105411.GB12518@peff.net>
+	id S1751943AbbFXIlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 04:41:22 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:34548 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751573AbbFXIlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 04:41:11 -0400
+Received: by lbnk3 with SMTP id k3so21976838lbn.1
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 01:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VSwnwix62SpqySZz5Bg6/0Z6J+pXox5GrGYqnqPP7hw=;
+        b=SezRtVdCLRyEAxAJQwDHtQb3T2IFys8UYR+RjoUPlXSF7hZkG031t7dqSxZUSbZmFa
+         WahFwkvQE0GfI2+Itj6A7mVIL81BEYLoMu7EjpyokVBQFYm1onAe3/hr7f18kt0QcaM8
+         FWeU4Bj/7xW1NRIM7SvgvNkWy50Qo8/qYxCLq6xntnUkwD/DSDM2bV4MU2IkWd1AsP43
+         ztB4VqQKOnSCIF+kEjC80k4OFwir4algcVnGGQg3+XE+J+17pNJKU+Gpj/XaeY8q/YbY
+         u8Oef30NcrWZoeHADycsoEWJ3Q5ongFSqaa67zd/s3J99kqHOA8Ynq+1jMG8oZVctprP
+         4Iug==
+X-Received: by 10.152.164.193 with SMTP id ys1mr39036300lab.65.1435135269378;
+ Wed, 24 Jun 2015 01:41:09 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Wed, 24 Jun 2015 01:41:09 -0700 (PDT)
+In-Reply-To: <xmqqy4jgd92l.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272540>
 
-On Tue, Jun 23, 2015 at 06:54:11AM -0400, Jeff King wrote:
+On Fri, Jun 19, 2015 at 5:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> +static int is_email(const char *filename)
+>> +{
+>> +     struct strbuf sb = STRBUF_INIT;
+>> +     FILE *fp = xfopen(filename, "r");
+>> +     int ret = 1;
+>> +
+>> +     while (!strbuf_getline(&sb, fp, '\n')) {
+>> +             const char *x;
+>> +
+>> +             strbuf_rtrim(&sb);
+>
+> Is this a good thing?  strbuf_getline() already has stripped the LF
+> at the end, so you'd be treating a line with only whitespaces as if
+> it is a truly empty line.
+>
+> I know the series is about literal translation and the script may
+> lose the distinction between the two, but I do not think you need
+> (or want) to be literally same for things like this.
+>
+> Same comment applies to other uses of "trim" in this patch.
 
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 0c73246..fc0c8e8 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -218,6 +218,9 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
->  		return 0;
->  	}
->  
-> +	if (repository_format_precious_objects)
-> +		die("cannot prune in a precious-objects repo");
-> +
+No, the uses of strbuf_trim() are not good at all. Will remove them.
 
-By the way, I originally wrote this patch on an older version of git,
-and was surprised that `git gc` broke when I brought it forward. The
-problem was that gc now runs `git prune --worktree`, and my die() was
-affecting that case.
-
-It really seems misplaced to me to make worktree-pruning part of
-git-prune. I imagine the rationale was "well, we are pruning things, so
-let's add an option to this command rather than make a new one". But I
-do not think that follows our usual pattern with gc, which is:
-
-  1. Individual areas of code handle their own cleanup. E.g., "reflog
-     expire", "rerere gc".
-
-  2. We tie them together with "git gc", not with "git prune".
-
-So it seems weird that "git prune --worktree" is a fundamentally
-different command than "git prune". I think by (1), it should be a
-separate "git prune-worktree" (or better yet, "git worktree prune", as
-the start of a command for manipulating the list of multiple-worktrees).
-
-Not a _huge_ deal, but if we want to change it, it would be nice to do so
-now before it is part of a release. Thoughts?
-
--Peff
+Thanks,
+Paul
