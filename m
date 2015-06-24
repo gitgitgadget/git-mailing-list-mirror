@@ -1,180 +1,199 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC/Pull Request: Refs db backend
-Date: Wed, 24 Jun 2015 05:49:20 -0400
-Message-ID: <20150624094919.GC5436@peff.net>
-References: <1435020656.28466.8.camel@twopensource.com>
- <20150623114716.GC12518@peff.net>
- <CAJo=hJsu2b0kmpjOhGwvgRsG3yGK56+U_2RANDi2qoEg7V_PmQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] apply: fix adding new files on i-t-a entries
+Date: Wed, 24 Jun 2015 17:11:37 +0700
+Message-ID: <CACsJy8Ap4uNi3gXV8Y+S18xtLaZ1R6DscEf7wJKjt59ZLOAJ5Q@mail.gmail.com>
+References: <CACfKtTAvH7FH2AkC5hUNFEQ620gF401SNYaULLy62iE8S55-7A@mail.gmail.com>
+ <1435062855-26274-1-git-send-email-pclouds@gmail.com> <xmqqoak6e5dx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twopensource.com>,
-	git mailing list <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jun 24 11:50:04 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, phiggins@google.com,
+	snoksrud@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 12:12:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7hJj-0000jG-V2
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 11:50:04 +0200
+	id 1Z7hfC-0004S3-RU
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jun 2015 12:12:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752484AbbFXJtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 05:49:40 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50906 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751018AbbFXJtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 05:49:22 -0400
-Received: (qmail 12545 invoked by uid 102); 24 Jun 2015 09:49:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Jun 2015 04:49:22 -0500
-Received: (qmail 26353 invoked by uid 107); 24 Jun 2015 09:49:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Jun 2015 05:49:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jun 2015 05:49:20 -0400
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJsu2b0kmpjOhGwvgRsG3yGK56+U_2RANDi2qoEg7V_PmQ@mail.gmail.com>
+	id S1751203AbbFXKMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 06:12:10 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:35894 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751029AbbFXKMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 06:12:08 -0400
+Received: by iecvh10 with SMTP id vh10so29958417iec.3
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 03:12:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Lo4nwuNG2wPjBp8EUEijWX9xZQQPOD9dB9/Q+E6U2sc=;
+        b=wysimWnGgNdNdF1JPddWy0IK/Mt4FIwfK8ZmUHFk4V/LlCXPU/fyJ5r+ur4F7//O+a
+         Q+h7XVWGTnsTtki8SlrFtXVenKtSSDQ3DWquNTSiSfg2bH1Mwn0oMLVmpQHhI3XwIrQf
+         9+1rgVFSbjepmJ0BgyVXJFvKCYEYYgz18YUvncJcM4JpB0xZSSOob6iLubTIMGdeXKzu
+         BzigGfVPaJMFqlyT9b9V2ZwHsB63FcvMpjCeX2lNLawCVaXUXMRG6apCzzT44uRzS6Qd
+         y/lE15JXbcrxCrNx4RMeX4c+GfRlGzZxFohHiUW5D/ABBLvLkiz8m6Y19uiv77nbRseL
+         0UYg==
+X-Received: by 10.50.7.68 with SMTP id h4mr2142652iga.40.1435140727214; Wed,
+ 24 Jun 2015 03:12:07 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Wed, 24 Jun 2015 03:11:37 -0700 (PDT)
+In-Reply-To: <xmqqoak6e5dx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272544>
 
-On Tue, Jun 23, 2015 at 11:09:40PM -0700, Shawn Pearce wrote:
+On Tue, Jun 23, 2015 at 11:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> This patch tightens the "exists in index" check, ignoring i-t-a
+>> entries. For fixing the above problem, only the change in
+>> check_to_create() is needed.
+>
+> And the first thing I noticed and found a bit disturbing was that
+> this change (which I think is correct, and happens to match what I
+> sent out earlier) was the only thing necessary to make your new test
+> pass.  IOW, the other changes in this patch have no test coverage.
 
-> Yes. $DAY_JOB's DFS implementation never expires reflogs, allowing it
-> to be used as a history to inspect what happened. Its been useful a
-> couple of times to investigate and recover from a few accidental
-> deletions.
-> 
-> Once you never expire reflog records you now have to consider at what
-> point do you stop paying attention to the reflog entries for graph
-> reachability during repack and fsck. Users still expect to be able to
-> force push or delete a branch and have a set of objects disappear from
-> the repository.
+Because to be honest I don't understand these code well enough to know
+how to trigger it :)
 
-Yeah, we face this problem at GitHub. We actually write every single ref
-write to $GIT_DIR/audit_log, which is essentially a reflog with the
-refname prepended. The key, though, is that it isn't ever _read_ by git
-for reachability. So it becomes an immutable log of what happened, and
-we can happily prune the reflog to drop objects.
+>> For other changes,
+>>
+>>  - load_current(), reporting "not exists in index" is better than "does
+>>    not match index"
+>
+> Is that error reporting the only side effect from this change?
 
-In a log-structured ref storage world, I think I'd include a single bit
-per entry for "use this for reachability". Then you could "soft-expire"
-reflog entries by dropping their reachability bit, but still retain them
-in your audit_log. The alternative is to just copy the entries to an
-archival log.
+The only thing that I can see. If an i-t-a entry is returned, it can't
+get past verify_index_match because ce_match_stat(). Hmm.. no the
+on-disk version is gone, we'll get to checkout_target() where it will
+"restore" the entry with an empty file. This is related to checkout
+that I will continue later below.
 
-> There are some issues with append. Before appending we would need to
-> verify the last record actually ends with an LF. If there was a power
-> failure and only part of the last record wrote, you can't append
-> without that record separator in place.
+>>  - get_current_sha1(), or actually build_fake_ancestor(), we should not
+>>    add i-t-a entries to the temporary index, at least not without also
+>>    adding i-t-a flag back
+>
+> This is part of "am" three-way fallback codepath.  I do not think
+> the merge-recursive three-way merge code knows and cares about, is
+> capable of handling, or would even want to deal with i-t-a entries
+> in the first place, so adding an entry as i-t-a bit would not help.
+> What the ultimate caller wants from us in this codepath is a tree
+> object, and that is written out from the temporary index---and that
+> codepath ignores i-t-a entries, so it is correct to omit them from
+> the temporary index in the first place.  Unlike the previous two
+> changes, I think this change deserves a new test.
 
-Yeah, I think that is straightforward. You have to take a lock on the
-whole log anyway, so it's OK to "fixup" the previous entry.
+Will do, after I study some more about this apply.c.
 
-> If that last record was truncated, and an LF was wedged in to do a new
-> append, we can't trust that intermediate record. A CRC at the end of
-> the record might make it safer to know the record is intact or bogus
-> due to an earlier failed write that wasn't completed.
+>
+>>  I think I'm opening a can of worms with d95d728. There's nothing
+>>  wrong with that patch per se, but with this issue popping up, I need
+>>  to go over all {cache,index}_name_pos call sites and see what would be
+>>  the sensible behavior when i-t-a entries are involved.
+>
+> Yeah, I agree that d95d728 should have been a part of a larger
+> series that changes the world order, instead of a single change that
+> brings inconsistency to the system.
+>
+> I cannot offhand convince myself that "apply" is the only casualty;
+> assuming it is, I think a reasonable way forward is to keep d95d728
+> and adjust "apply" to the new world order.  Otherwise, i.e. if there
+> are wider fallouts from d95d728, we may instead want to temporarily
+> revert it off from 'master', deal with fallouts to "apply" and other
+> things, before resurrecting it.
+>
+> Anything that internally uses "diff-index" is suspect, I think.
 
-I suspect you could get by with just realizing that the entry doesn't
-parse (that's what we do now for reflogs). But the idea of per-entry
-consistency checks is appealing. You could also include the CRC for the
-"previous" entry (remember that we would probably have a back-pointer to
-some byte offset to say "this is the current ref state that I am
-building on"). Then you can walk back the whole chain to know that it
-hasn't been damaged.
+Yeah that's one or two more grep runs and more reading.
 
-If you want to get very fancy, replace your CRC with a cryptographically
-strong hash, and you've just reinvented a blockchain. :)
+> What do others think?  You seem to ...
+>
+>>  So far blame, rm and checkout-entry and "checkout <paths>" are on my
+>>  to-think-or-fix list. But this patch can get in early to fix a real
+>>  regression instead of waiting for one big series. A lot more
+>>  discussions will be had before that series gets in good shape.
+>
+> ... think that the damage could be quite extensive, so I am inclined
+> to say that we first revert d95d728 before going forward.
 
-> What about the case of never expiring the reflog? This log would grow
-> forever. You may eventually need to archive old sections of it (e.g. 1
-> year ago?) to maintain an audit log, while keeping the "latest" entry
-> for each ref to rebuild the index.
+I'm not opposed to reverting if you think it's the safest option and I
+will report back soon after grepping diff-index. But those I mentioned
+above have more to do with the fact that an i-t-a entry does exist in
+the index in a normal way, so reverting does not help.
 
-Yeah, that's certainly an option. I'd say that's somewhat outside the
-scope of git. If git provides the ability to prune entries completely
-(i.e., what "reflog expire" does now) and to soft-expire them, then that
-is enough for anyone to build whatever sort of archival system they want
-(e.g., soft-expire for reachability as desired, and then occasionally
-"git reflog show >your-archive && git reflog expire").
+Take checkout for example, when you do "git checkout -- foo" where foo
+is i-t-a, the file foo on disk will be emptied because the SHA-1 in
+the i-t-a entry is an empty blob, mostly to help "git diff". I think
+it should behave as if foo is not i-t-a: checkout should error out
+about not matching pathspec, or at least not destroy "foo" on disk. To
+me, when "ce" is an i-t-a entry, only i-t-a flag and ce_name are
+valid, the rest of "ce" should never be accessed.
 
-> +1 to always storing the peeled value. This was a major improvement
-> for $DAY_JOB's Git servers as peeling tags on the fly can be costly
-> when your storage is something remote, such as NFS. Unfortunately the
-> current wire protocol demands peeled information to serve a ref
-> advertisement.
+blame.c's situation is close to check_preimage() where it may read
+zero from ce_mode. It may be ok for check_preimage() to take zero as
+mode, but I think this is like fixed size buffer vs strbuf again. It
+works now, but if the code is reorganized or refactored, then it may
+or may not work. Better be safe than sorry and avoid reading something
+we should not read in the first place.
 
-Even on good disks, it makes the initial ref advertisement from
-git-upload-pack _way_ cheaper, because we don't have to actually touch
-the object database at all. It's basically just blitting out the
-packed-refs file.
+>>  builtin/apply.c       |  8 ++++----
+>>  cache.h               |  2 ++
+>>  read-cache.c          | 12 ++++++++++++
+>>  t/t2203-add-intent.sh | 10 ++++++++++
+>>  4 files changed, 28 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index 146be97..4f813ac 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -3344,7 +3344,7 @@ static int load_current(struct image *image, struct patch *patch)
+>>       if (!patch->is_new)
+>>               die("BUG: patch to %s is not a creation", patch->old_name);
+>>
+>> -     pos = cache_name_pos(name, strlen(name));
+>> +     pos = exists_in_cache(name, strlen(name));
+>
+> Something that is named as if it would return yes/no that returns a
+> real value is not a very welcome idea.
 
-> One thing we do is always peel all refs. We record a bit to state its
-> been peeled, but there is no peeled value because the ref is pointing
-> to a non-tag object (e.g. refs/heads/master points to a commit).
+Yeah. But I don't want the caller to call cache_name_pos again to get
+"pos". If I can't find a better name, I'll probably go with
+cache_name_pos_without_ita().
 
-Yeah, since c29c46f (pack-refs: add fully-peeled trait, 2013-03-18) we
-implicitly do this in packed-refs; if there's no peel line after the
-entry, it cannot be peeled. We could do the same here, but I think I
-favor being more implicit (I'd probably add a few bits of "flags" to
-each entry, and this could be one such flag).
+>> +/* This is the same as index_name_pos, except that i-t-a entries are invisible */
+>> +int exists_in_index(const struct index_state *istate, const char *name, int namelen)
+>> +{
+>> +     int pos = index_name_stage_pos(istate, name, namelen, 0);
+>> +
+>> +     if (pos < 0)
+>> +             return pos;
+>> +     if (istate->cache[pos]->ce_flags & CE_INTENT_TO_ADD)
+>> +             return -pos-1;
+>
+> This is a useless complexity.  Your callers cannot use the returned
+> value like this:
+>
+>         pos = exists_in_cache(...);
+>         if (pos < 0) {
+>                 if (active_cache[-pos-1]->ce_flags & CE_INTENT_TO_ADD)
+>                         ; /* ah it actually exists but it is i-t-a */
+>                 else
+>                         ; /* no it does not really exist */
+>         } else {
+>                 ; /* yes it is really there at pos */
+>         }
+>
+> because they cannot tell two cases apart: (1) you do have i-t-a with
+> the given name, (2) you do not have the entry but the location you
+> would insert an entry with such a name is occupied by an unrelated
+> entry (i.e. with a name that sorts adjacent) that happens to be
+> i-t-a.
 
-> Updating the index on updates to a ref would be costly, as its O(N).
-
-It depends how you implement the index. A straight text index would be
-O(N). Replacing the index with a real key/value store should be very
-fast. But unless we are going to write our own, that's going to
-introduce a dependency (possibly one we can ship as we do with xdiff,
-but the whole JGit thing is an open question).
-
-> You could skip some index updates. Record in the header of the index
-> the length of the reflog file used to build it. When reading the
-> index, scan the reflog from that position to the end and patch those
-> updates in memory. Rewrites of the index could then be deferred until
-> the scan delta on the log is high, or the next gc.
-
-Yeah, basically use the log as a journal. You save (or at least
-amortize) O(# of refs) work for the writers, at the cost of O(# of
-recent updates) work for the readers. That might be worth doing. It's
-also complicated, and I was hoping to avoid complicated things. :)
-
-> >   - Reading a single reflog is _also_ O(U), which is not as good as
-> >     today. But if each log entry contains a byte offset of the previous
-> >     entry, you can follow the chain (it is still slightly worse, because
-> >     you are jumping all over the file, rather than reading a compact set
-> >     of lines).
-> 
-> But this is like saying reading `git log` is bad because we jump all
-> over the pack file to parse ancestors and insert them into the
-> revqueue at the correct position. Feh.
-
-Yeah, I agree it's probably not worth caring too much about. Reading the
-reflogs at all is not that common an operation, and it's a tradeoff I'd
-be happy to make. I was just trying to be upfront about the tradeoffs
-versus the current storage format.
-
-> IIRC some part of Ronnie's series was about setting up a socket
-> protocol between Git and the ref backend. If non-default backends are
-> like this, JGit could spawn the backend binary and then speak the
-> socket protocol just like git-core. This would be preferable to
-> linking JNI into the JVM.
-
-I am not excited about contacting an already-running program, which is
-what I thought Ronnie's patches did. That's one more thing to go wrong
-or become confusing doing basic operations.  If we have to do an
-external program, I'd much rather it be something we spawn once (more
-like the remote-helper, which I think is what you are proposing).
-
-I don't know how much that helps for the JGit situation. It punts the
-native code out of JGit, but people using JGit still have to have the
-native helper from git on their system.  I have no problems at all with
-pluggable $FANCY_DB that not everybody supports.  But I think we would
-want _some_ baseline that is reasonably performant, and that everybody
-will support. I'm not sure putting the index into a flat file is
-performant enough. Is there any basic key/value store that is has both a
-C and a pure-Java version (e.g., berkeley db)?
-
--Peff
+OK so either return -1 when the entry does not exist or is i-t-a and
+non-negative otherwise.
+-- 
+Duy
