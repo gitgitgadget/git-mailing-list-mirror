@@ -1,105 +1,82 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jun 2015, #06; Wed, 24)
-Date: Thu, 25 Jun 2015 13:04:30 +0200
-Organization: gmx
-Message-ID: <d825b05938778f4ee911cbb8c3c8573b@www.dscho.org>
-References: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
- <CAGZ79kby0RaKiS2e4o7O7OyLGCftMYVJppvATyPxpzJUOe59jw@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] blame: remove obsolete comment
+Date: Thu, 25 Jun 2015 18:08:14 +0700
+Message-ID: <1435230494-7030-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 13:04:42 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 25 13:08:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z84xV-0000D8-07
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 13:04:41 +0200
+	id 1Z850l-0002rF-Lj
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 13:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbbFYLEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 07:04:37 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50594 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751451AbbFYLEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 07:04:35 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MfjJY-1ZV8951sV2-00NB0Y; Thu, 25 Jun 2015 13:04:31
- +0200
-In-Reply-To: <CAGZ79kby0RaKiS2e4o7O7OyLGCftMYVJppvATyPxpzJUOe59jw@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:0fSCfNjM8lMyEDibNCUuFEK4DVAl9x1xRrrOTrVd+dcf6Tg1Z4Z
- S2LzrvOrbzv1lpKiGmZWsUbG+cgZPVIvsjLUSTmzrdfKv1Nw3Hau+Yyydw5yJm4z+Y3P2OQ
- //MPHmq+267YSrJx8w99rlJFf1/T8Lcy6V6D0bbJC9T40Hxmhko1LZ7ec4xDsshK+BDlQ/7
- gRw5mVkE7itr8XAC7j4/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:j6HKpprtbB0=:MSEK4W1a4q1u/7LT5gFzYk
- juL9b96AeDb1kUb+SYRsgp/joHlFs329nXDuzrnyLxBZbqvI4ABV4S8mTtirJmfs/w2OGNPDN
- Lzaj7IexV6Sxozb2Rwo6dNiTihMvnPURMMekY2I73iwIUYM7xKLooOqqIM8LH+naZVVJPXamM
- 1E0aPxJRmHe6yt0V+bVLwQ0zHvl4G1Qpc7bVV8P4jo/N4zhVkJvET9GplQn/4fr0ABcJNvU2y
- Jz6fk+H7WucK7SZu7bgKIpGzxMDOIWLq9eXVTyulKNIOnysMTbVYAe0EhwWncigu9dX8qgDRf
- zVC5N7L0Idk4+dEql516mlYUcBwXvkTG4eWVVcq5iA01Qev67zaK7Lc2LQi8lk942zR2G5J5Z
- 87vgGNL/SyD5aCPRZ9C0g5Mpl5LoTbfoL6qELG5zTlwFOUZd27Gm6k1W1K/49eoJH4KkgqbAr
- +kQwyzk9PxyGcuvNyulUdn0S14LvO5xkNS4No0tPlFwSEPBYtfgi/tLgie4mm3VTpOzr+7IGr
- IPRxIsikHCRDhFMGE7WD9I/3Mo7pZ3NsQ/90w2pzy769r1LDYfJsYN2/C5MB4D6Moqwm0f9NB
- +FEhVTvFcE1m7gYIfL53H+X552x8LVeUlDukLCrz0dE4sjnMWKnY+Vlu8h6NIKPv8k3tLcpfU
- xAjfk6WpfLGFhAydEo92aMWK2ZkbD5DuIfArYLG0W9He8DAvtw5hI1hsIDWbA/ptwQ1g=
+	id S1752311AbbFYLH5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2015 07:07:57 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34219 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751805AbbFYLHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 07:07:45 -0400
+Received: by pabvl15 with SMTP id vl15so48160472pab.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 04:07:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=nL1fAX/5GQIPsQYylKxqZW3ZU4qX8ZpEueMyA9sVJUE=;
+        b=WmMsK7r2nn1fsv2JEWu2AAbZzTmI8HAlIoCoa4m/lwziRAVEURUUDlXOpWRqMTO+5j
+         WfIjh9Zwcs9NqJREywMNbmpyqpilyDii9fQYtKIv376WANNmRsS97iYc1ObmOA4aE40r
+         A/5cF2WuvteupKhT3SZ/6UxhMMbyTePVGAvqYBYrVajfOYf0WcAAnX42gno4HibQG6cF
+         KH9Im6y/QHg+47AcPdSa2IKd8ungVKb0lcaYyXAJy+rh4/lbA60IVObc5aI28zzHFgcE
+         A9kCL/4DldZjVqucgod8C/UuKYTTlMV2TAi9uXrS3MmbTMrpguIf6L4azSVt/2vPb3cK
+         5PHw==
+X-Received: by 10.66.147.4 with SMTP id tg4mr91002462pab.69.1435230464733;
+        Thu, 25 Jun 2015 04:07:44 -0700 (PDT)
+Received: from lanh ([115.73.33.22])
+        by mx.google.com with ESMTPSA id i10sm29746799pdr.78.2015.06.25.04.07.41
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Jun 2015 04:07:43 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 25 Jun 2015 18:08:16 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272657>
 
-Hi,
+That "someday" in the comment happened two years later in
+b65982b (Optimize "diff-index --cached" using cache-tree - 2009-05-20)
 
-On 2015-06-25 03:01, Stefan Beller wrote:
->> * pt/pull-builtin (2015-06-18) 19 commits
->>  - pull: remove redirection to git-pull.sh
->>  - pull --rebase: error on no merge candidate cases
->>  - pull --rebase: exit early when the working directory is dirty
->>  - pull: configure --rebase via branch.<name>.rebase or pull.rebase
->>  - pull: teach git pull about --rebase
->>  - pull: set reflog message
->>  - pull: implement pulling into an unborn branch
->>  - pull: fast-forward working tree if head is updated
->>  - pull: check if in unresolved merge state
->>  - pull: support pull.ff config
->>  - pull: error on no merge candidates
->>  - pull: pass git-fetch's options to git-fetch
->>  - pull: pass git-merge's options to git-merge
->>  - pull: pass verbosity, --progress flags to fetch and merge
->>  - pull: implement fetch + merge
->>  - pull: implement skeletal builtin pull
->>  - argv-array: implement argv_array_pushv()
->>  - parse-options-cb: implement parse_opt_passthru_argv()
->>  - parse-options-cb: implement parse_opt_passthru()
->>
->>  Reimplement 'git pull' in C.
->>
->>  This is v4 ($gmane/271943).
->>  Comments from mentors and others?
-> 
-> I think the series is good as is.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/blame.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-I just had a fresh look. Some comments:
-
-- I *think* that the current `recreate_opt()` is fine, but if it is used more, we will have to quote the arguments to guard against spaces and quotes and whatnot
-
-- There is a loop
-
-        for (; *argv; argv++)
-               argv_array_push(array, *argv);
-
-  which might want to be written as
-
-        while (*argv)
-               argv_array_push(array, *(argv)++);
-
-  to conform better with Git's coding style, but this one is not crucial at all.
-
-Having said that, I really think this is impressive work, and not only the outcome. It is a real pleasure to have you, Paul!
-
-I vote for merging, too,
-Dscho
+diff --git a/builtin/blame.c b/builtin/blame.c
+index b3e948e..b077bb6 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2371,11 +2371,6 @@ static struct commit *fake_working_tree_commit(s=
+truct diff_options *opt,
+ 	ce->ce_mode =3D create_ce_mode(mode);
+ 	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+=20
+-	/*
+-	 * We are not going to write this out, so this does not matter
+-	 * right now, but someday we might optimize diff-index --cached
+-	 * with cache-tree information.
+-	 */
+ 	cache_tree_invalidate_path(&the_index, path);
+=20
+ 	return commit;
+--=20
+2.3.0.rc1.137.g477eb31
