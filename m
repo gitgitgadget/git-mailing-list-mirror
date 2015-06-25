@@ -1,22 +1,23 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 13/17] engine.pl: provide more debug print statements
-Date: Thu, 25 Jun 2015 01:03:49 +0100
-Message-ID: <1435190633-2208-14-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 10/17] engine.pl: name the msvc buildsystem's
+ makedry error file
+Date: Thu, 25 Jun 2015 01:03:46 +0100
+Message-ID: <1435190633-2208-11-git-send-email-philipoakley@iee.org>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
 	Philip Oakley <philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com Thu Jun 25 02:02:20 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:35 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f183.google.com ([209.85.212.183])
+Received: from mail-la0-f55.google.com ([209.85.215.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com>)
-	id 1Z7ucN-0001KW-Lk
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
+	id 1Z7ucN-0001K7-Bz
 	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
-Received: by wibbw19 with SMTP id bw19sf18187239wib.1
+Received: by lams18 with SMTP id s18sf16781071lam.0
         for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -25,32 +26,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=EnYWwAbRPL6sig9OHAzLJA9OTxODPVThVVZiKB+szEw=;
-        b=Tl+nJVS9C9Wh5F3Iwa/txQNRVBj0OXjjuBBhbLdrspr8I6153J5ncHsvYp6Z3Kb0N/
-         iBxTxZuacf6jcHL0akhkNUySgr3IdRwXO54AN5L9YWUeMVhr1BOH6LF+YH3rwUAi2I7q
-         zWSv8N3sgQXOzxRJXXHDrM7/xtXgVUbvpIV9JWScXSvD+6PsBfrxqvREiir88+lM1Yj5
-         5kib0QlTTC3w2gzGRsRK2lSMsfISY/XVzzBHljEPcuXkl1sHcjUbdkv4yKDk1KX3A5r9
-         mq7CNcdhdZpPEJtF35OF1wggymEhurvwUrZpVtNPUP2qCmNioi6eRv87U0McEQj9FCD3
-         m7CQ==
-X-Received: by 10.152.19.5 with SMTP id a5mr550229lae.23.1435190531396;
+        bh=AtUJLMH26Xkj8qqGnK5WjxFCmsE9H9nyMoP9RoE+3GM=;
+        b=eoB1VyVp8J3d/u79d1x6dlEKQFZy2EBbkvnj8pp3Qm8EtRZoEuZBLKik1CVOxd/QJR
+         SO0CG17IlouzC0w27mxrWAkub+hdTr/8fFKyAoIvup+YLQN8bSy3+m7OrUjNvKvAQHZb
+         Xj5LME7/b7uTVTyoyOOqSPpL9MaEDi1IXCwjYpipHvYk2uhBulv92Z7Ca03HfGmMECOo
+         Y7KD2N8/mJ79hklydf9BtOVQjSLDWg6jIa/63S6oTZ/ONzzvkuMGno8yMqsIb+NJmPxT
+         xuyqP91duGOdNEQ8wAmYmkEXH0TQPBEubmeosyCfQzGu5F/oiNj94KxhtTEHU2a0JCR5
+         xijw==
+X-Received: by 10.180.39.205 with SMTP id r13mr2318wik.2.1435190531098;
         Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.43.228 with SMTP id z4ls282683lal.90.gmail; Wed, 24 Jun
+Received: by 10.180.93.201 with SMTP id cw9ls511853wib.33.gmail; Wed, 24 Jun
  2015 17:02:10 -0700 (PDT)
-X-Received: by 10.152.88.70 with SMTP id be6mr18392408lab.9.1435190530439;
+X-Received: by 10.180.81.170 with SMTP id b10mr298787wiy.4.1435190530319;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.10
+        by gmr-mx.google.com with ESMTP id t6si17968wiz.0.2015.06.24.17.02.10
         for <msysgit@googlegroups.com>;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CYBwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKFAYTFYgezWoBK5BQB4QrBZQFhFiEW4NsLpY8gQmDGD0xgkgBAQE
-X-IPAS-Result: A2CYBwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKFAYTFYgezWoBK5BQB4QrBZQFhFiEW4NsLpY8gQmDGD0xgkgBAQE
+X-IronPort-Anti-Spam-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qASuPa2UHhCsFjBOHcoRYiHWWPIEJgxg9MYEDgUUBAQE
+X-IPAS-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qASuPa2UHhCsFjBOHcoRYiHWWPIEJgxg9MYEDgUUBAQE
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366782"
+   d="scan'208";a="784366777"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:59 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:57 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -69,65 +70,36 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272628>
 
-Assist developers transitioning between the two cultures
-by including appropriate, but commented out, debug statements.
-
-The exception is when an unhandled compiler option is detected,
-where printing of the full line will supplement the line number and
-option part. Otherwise the OP has no immediate mechanism for
-inspecting the relevant part of the makedry output.
-
-These debug print statements act as a guide for a poor man's --verbose
-option. The test suite doesn't cover the contrib/buildsystems (or
-Msysgit's msvc-build) contributions so fails to notice breakages there-in.
-
-It is doubly hard to get developers to ride both horses so, contrary to
-normal convention, retain selected debug statements as a safety net for
-those willing to try.
+Save the stderr from the dry MSVC make to a well named file for
+later review. Use 'msvc-build-makedryerrors.txt' which should be
+obvious as to its source, and is not ignored by 'git status'.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/engine.pl | 4 ++++
- 1 file changed, 4 insertions(+)
+ contrib/buildsystems/engine.pl | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+ mode change 100755 => 100644 contrib/buildsystems/engine.pl
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 7a2aeef..ac2970a 100644
+old mode 100755
+new mode 100644
+index e8aa8ea..7eba870
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -41,6 +41,7 @@ EOM
- # Parse command-line options
- while (@ARGV) {
-     my $arg = shift @ARGV;
-+	#print "Arg: $arg \n";
-     if ("$arg" eq "-h" || "$arg" eq "--help" || "$arg" eq "-?") {
- 	showUsage();
- 	exit(0);
-@@ -129,6 +130,7 @@ sub parseMakeOutput
-     print "Parsing GNU Make output to figure out build structure...\n";
-     my $line = 0;
-     while (my $text = shift @makedry) {
-+		#print "Make: $text\n"; # show the makedry line
-         my $ate_next;
-         do {
-             $ate_next = 0;
-@@ -263,6 +265,7 @@ sub handleCompileLine
-         } elsif ($part =~ /\.(c|cc|cpp)$/) {
-             $sourcefile = $part;
-         } else {
-+            print "full line: $line\n";
-             die "Unhandled compiler option @ line $lineno: $part";
-         }
-     }
-@@ -288,6 +291,7 @@ sub handleLibLine
-             $libout = $part;
-             $libout =~ s/\.a$//;
-         } else {
-+            print "full line: $line\n";
-             die "Unhandled lib option @ line $lineno: $part";
-         }
-     }
+@@ -73,7 +73,10 @@ Running GNU Make to figure out build structure...
+ EOM
+ 
+ # Pipe a make --dry-run into a variable, if not already loaded from file
+-@makedry = `cd $git_dir && make -n MSVC=1 NO_PERL=1 V=1 2>/dev/null` if !@makedry;
++# Capture the make dry stderr to file for review (will be empty for a release build).
++
++my $ErrsFile = "msvc-build-makedryerrors.txt";
++@makedry = `cd $git_dir && make -n MSVC=1 NO_PERL=1 V=1 2>$ErrsFile` if !@makedry;
+ 
+ # Parse the make output into usable info
+ parseMakeOutput();
 -- 
 2.3.1
 
