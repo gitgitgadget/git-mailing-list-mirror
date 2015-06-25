@@ -1,64 +1,62 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 01/11] t6301: for-each-ref tests for ref-filter APIs
-Date: Thu, 25 Jun 2015 14:10:06 +0530
-Message-ID: <CAOLa=ZQpLJWPVQK3X+UdShf2bVFxQ2riVVqcAHgevp5KqKPPLQ@mail.gmail.com>
-References: <CAOLa=ZTbXCRFx6xEv+cB7DQhu92=ePb_MJ5zeEjsr_-=HPAU6g@mail.gmail.com>
- <1435175632-27803-1-git-send-email-karthik.188@gmail.com> <xmqqoak48wwc.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] commit: add commit.signoff config option
+Date: Thu, 25 Jun 2015 10:43:02 +0200
+Message-ID: <CAP8UFD1kbu4uB1Xaf_jWdQUBzkSJ-Z3_o3NT0Wb6GNyRG=jSLw@mail.gmail.com>
+References: <1435217558-5866-1-git-send-email-cmarcelo@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 10:40:46 2015
+Cc: git <git@vger.kernel.org>
+To: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 10:43:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z82iD-0003HF-AX
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 10:40:45 +0200
+	id 1Z82kj-0005P8-DC
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 10:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbbFYIkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 04:40:40 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:35918 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788AbbFYIki (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 04:40:38 -0400
-Received: by obctg8 with SMTP id tg8so42714976obc.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 01:40:36 -0700 (PDT)
+	id S1752376AbbFYInK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 04:43:10 -0400
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:33250 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752315AbbFYInD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 04:43:03 -0400
+Received: by wgck11 with SMTP id k11so56270564wgc.0
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 01:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=NWo1VqeGcJWbzs6MlPS+C6JuMRrPqeCuBpXtfoYc7t0=;
-        b=gmASKrGRxPGOnXLG9RqXZY+QcCaWRYzVN11PDKvoaxUzoyvA6k6VKebc2bA5gWDHul
-         hEzlxvonIqgTsyIuNiX3kN9pF7AOYVZzCucBFDntSuSIbvJzt/osqLJvEIgjpmWLmlH3
-         nDp49p4zta6F7tpnK3Yox4zERPmnFuiu4VwJeM2g4+xHNVP3VGjrSUYP9XBPTXoSaftF
-         7sMlAphDs9IvtCvrTk3WvAKwxaYn7OekxP4v1HrRsFKJHAW6QMT1uJcoR2/cwaEjWmvZ
-         J3tFkBOADaTW60LOAgZwUZpCK4tP8BMjvAhmnMcT+BNWDfFbniYcq4bwN+f2YLPw3u3y
-         xtWQ==
-X-Received: by 10.182.153.161 with SMTP id vh1mr12357083obb.34.1435221635951;
- Thu, 25 Jun 2015 01:40:35 -0700 (PDT)
-Received: by 10.182.95.165 with HTTP; Thu, 25 Jun 2015 01:40:06 -0700 (PDT)
-In-Reply-To: <xmqqoak48wwc.fsf@gitster.dls.corp.google.com>
+        bh=xEhkrUs4H5U7J9JbSypQI2MPSwspF1YO+X8BB4x4+6w=;
+        b=GwxOgajVBpR8dCGzou49GulF2tYIjiJwJFYtrutDWuh9TBWPXonPoYXijtbTzVIMEv
+         4NYC6YQGHqxkTi/I6XOj/xPdxXJOwdYPcJ1DdoFFmCJEJj2YUPt5x8bWO9vj2pqyqI5T
+         TQHHYHC6c5zX12nEkHf9dXbhgqeVA2FxcAcrOLKAHoW7c2I0SBcfCg/Wm40fYLngu29s
+         yxmVWV6BchcpDelefRaSQgud4fbgkAP4+DDPew0T9cdPMJ5wjC2MXR0rxsisK+Q+8Czj
+         9frXFMeNJ6iuNDDzlJTfycqwyrx3PTvDWMcyoY2QPY9YAKuuwLNPoLUbXueGmx/fggsx
+         fI1Q==
+X-Received: by 10.180.95.10 with SMTP id dg10mr3632178wib.41.1435221782429;
+ Thu, 25 Jun 2015 01:43:02 -0700 (PDT)
+Received: by 10.194.221.229 with HTTP; Thu, 25 Jun 2015 01:43:02 -0700 (PDT)
+In-Reply-To: <1435217558-5866-1-git-send-email-cmarcelo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272640>
 
-On Thu, Jun 25, 2015 at 5:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>  t/t6301-for-each-ref-filter.sh | 19 +++++++++++++++++++
->
-> t6301 is already used in mh/reporting-broken-refs-from-for-each-ref
-> topic.  Please renumber.
->
+On Thu, Jun 25, 2015 at 9:32 AM, Caio Marcelo de Oliveira Filho
+<cmarcelo@gmail.com> wrote:
+> In projects that use Signed-off-by, it's convenient to include that line
+> in the commit by default. The commit.signoff config option allows to add
+> that line in all commits automatically.
 
-Will do :) Thanks
+You can use a commit template.
 
--- 
-Regards,
-Karthik Nayak
+Or you can use the "commit-msg" hook. For example with commands like:
+
+grep "^Signed-off-by:" "$1" ||
+echo "Signed-off-by: $(git config user.name) <$(git config user.email)>" >>"$1"
+
+If you have more complex needs, there is also "git interpret-trailers"
+(see the examples in the man page).
