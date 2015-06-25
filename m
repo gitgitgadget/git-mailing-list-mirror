@@ -1,109 +1,109 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 2/3] convert "enum date_mode" into a struct
-Date: Thu, 25 Jun 2015 18:03:28 +0100
-Message-ID: <20150625170328.GV18226@serenity.lan>
-References: <20150625165341.GA21949@peff.net>
- <20150625165501.GB23503@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] git-reflog: add create and exists functions
+Date: Thu, 25 Jun 2015 10:18:09 -0700
+Message-ID: <xmqqioabzoz2.fsf@gitster.dls.corp.google.com>
+References: <1435173388-8346-1-git-send-email-dturner@twopensource.com>
+	<1435173388-8346-6-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 25 19:04:03 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 19:18:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8AZD-0001pC-RP
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 19:04:00 +0200
+	id 1Z8AnQ-00061e-Mb
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 19:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbbFYRDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 13:03:50 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:37233 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751006AbbFYRDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 13:03:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id B512986602E;
-	Thu, 25 Jun 2015 18:03:48 +0100 (BST)
-X-Quarantine-ID: <u4ZD2i2eSTtk>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id u4ZD2i2eSTtk; Thu, 25 Jun 2015 18:03:44 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 47393CDA659;
-	Thu, 25 Jun 2015 18:03:30 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20150625165501.GB23503@peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752078AbbFYRSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 13:18:34 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:35545 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752662AbbFYRSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 13:18:12 -0400
+Received: by igblr2 with SMTP id lr2so101769544igb.0
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 10:18:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=1ikLT4fHtWwezcTwCHxyoUodZh0a3yg7PpOz84xiOFE=;
+        b=t9AHHE/+fIoTuTOEQJkGAT4/CT00wfgS1lFiil8co0VLm1wdDKtVHzixTa7f3EBDji
+         KuuTF7lu7h+MWkz+gElacocewUvx95sgT6jb1IMaQ2K5ws5TtAILSKuA1drA79lGEdSa
+         P6/XdzJlPk/v1IqOs1aSUWUatmHYkJ+kXHXYgTdyXE0WTi0jttcHPGBlCgWMQWVhDc+1
+         IDa/LagyQUXi6/N6NUTt6p/QWPyQOjsafdcAWV5Wg2LwahtoYqGm7ElRjm8yoOawYtdu
+         T3Rb755cJIWbKsLqo6qSvBVx8I9z4GND/8uKXt11SWnRWKECqGIDJaX/H06p/TrsLXpj
+         n3RQ==
+X-Received: by 10.107.135.22 with SMTP id j22mr13078593iod.20.1435252691579;
+        Thu, 25 Jun 2015 10:18:11 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
+        by mx.google.com with ESMTPSA id b73sm19972291iob.25.2015.06.25.10.18.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 25 Jun 2015 10:18:10 -0700 (PDT)
+In-Reply-To: <1435173388-8346-6-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Wed, 24 Jun 2015 15:16:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272701>
 
-On Thu, Jun 25, 2015 at 12:55:02PM -0400, Jeff King wrote:
-> In preparation for adding date modes that may carry extra
-> information beyond the mode itself, this patch converts the
-> date_mode enum into a struct.
-> 
-> Most of the conversion is fairly straightforward; we pass
-> the struct as a pointer and dereference the type field where
-> necessary. Locations that declare a date_mode can use a "{}"
-> constructor.  However, the tricky case is where we use the
-> enum labels as constants, like:
-> 
->   show_date(t, tz, DATE_NORMAL);
-> 
-> Ideally we could say:
-> 
->   show_date(t, tz, &{ DATE_NORMAL });
-> 
-> but of course C does not allow that.
+David Turner <dturner@twopensource.com> writes:
 
-Yes it does, e.g. in 6.5.2.5 of C11, example 3 shows:
+> These are necessary because ref backends manage reflogs.
 
-	drawline(&(struct point){.x=1, .y=1},
-		&(struct point){.x=3, .y=4});
+Because?
 
-The cast is required, but if the argument is pointer-to-const you can
-construct a temporary in the function call.
+	Because with core.logAllRefUpdates set to false, creating or
+        updating a ref would not log what is done to it, unless a
+        reflog already exists for the ref.  There are cases where
+        we always want to have a reflog for a ref (e.g. refs/stash)
+        regardless of the value of core.logAllRefUpdates, and we
+        need a way to ensure that a reflog for a ref exists.
+        "reflog create" is the way to do so.
 
-Of course, whether all of the compilers we target support it is a
-different question.  If they do, perhaps something like:
+	Also we need to be able to tell if a reflog for a ref
+	exists, and "reflog exists" is the way to do so.
 
-#define SIMPLE_DATE(f)		&(struct date_mode) { DATE_NORMAL }
+Now, going back to 4/6, I think create_reflog() function as an
+external API has a few problems.
 
-would allow the callers to remain reasonably sane.
+ * Its name does not tell us what should happen when a reflog
+   already exists for the refname the caller asked to "create"
+   reflog for.  I understand that this only makes sure it exists and
+   does not destroy existing one.  Its old name, log_ref_setup(),
+   did not have this problem, but now it does.
 
->                                      Likewise, we cannot
-> cast the constant to a struct, because we need to pass an
-> actual address. Our options are basically:
-> 
->   1. Manually add a "struct date_mode d = { DATE_NORMAL }"
->      definition to each caller, and pass "&d". This makes
->      the callers uglier, because they sometimes do not even
->      have their own scope (e.g., they are inside a switch
->      statement).
-> 
->   2. Provide a pre-made global "date_normal" struct that can
->      be passed by address. We'd also need "date_rfc2822",
->      "date_iso8601", and so forth. But at least the ugliness
->      is defined in one place.
-> 
->   3. Provide a wrapper that generates the correct struct on
->      the fly. The big downside is that we end up pointing to
->      a single global, which makes our wrapper non-reentrant.
->      But show_date is already not reentrant, so it does not
->      matter.
-> 
-> This patch implements 3, along with a minor macro to keep
-> the size of the callers sane.
+ * Its second parameter that is a strbuf is used only internally
+   from within log_ref_write_1(); all the external callers do not
+   look at it and they are forced to strbuf_init() it before calling
+   the function and to strbuf_release() after the function returns.
+
+Oh, also 4/6 incorrectly says that log_ref_write() is renamed to
+create_reflog(), but it was log_ref_setup() that was renamed.
+
+I think what 4/6 should have done in order to make the guts of what
+log_ref_setup() does available as a more useful external API is to
+
+ * keep log_ref_setup() as-is, make it static to refs.c, and have
+   the internal caller that cares about the strbuf (i.e. the path
+   to the log file) call that; and
+
+ * Add a thin-wrapper for callers that do not care about the path to
+   the log file, e.g.
+
+	int vivify_reflog(const char *refname, struct strbuf *err)
+	{
+		int ret;
+		struct strbuf sb = STRBUF_INIT;
+
+                ret = log_ref_setup(refname, &sb, err);
+                strbuf_release(&sb);
+                return ret;
+	}
+
+Hmm?
+    
