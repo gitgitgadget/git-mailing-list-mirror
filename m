@@ -1,85 +1,150 @@
-From: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
-Subject: Re: [PATCH v2] commit: add commit.signoff config option
-Date: Thu, 25 Jun 2015 12:19:22 -0300
-Message-ID: <CADstYCamTxaLnZeYUma6t=KP3Fx2rQH3svqgCYP4WpAR9k_USg@mail.gmail.com>
-References: <1435243807-32112-1-git-send-email-cmarcelo@gmail.com>
-	<xmqqlhf725xy.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 04/17] Makefile: a dry-run can error out if no
+ perl. Document the issue
+Date: Thu, 25 Jun 2015 08:24:31 -0700
+Message-ID: <xmqq8ub724ls.fsf@gitster.dls.corp.google.com>
+References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
+	<1435190633-2208-5-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 17:19:33 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: GitList <git@vger.kernel.org>,  MsysGitList <msysgit@googlegroups.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: msysgit+bncBCG77UMM3EJRBMV2WCWAKGQEEPRYYXY@googlegroups.com Thu Jun 25 17:24:37 2015
+Return-path: <msysgit+bncBCG77UMM3EJRBMV2WCWAKGQEEPRYYXY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pa0-f57.google.com ([209.85.220.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z88w3-0004nK-EH
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 17:19:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbbFYPTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 11:19:23 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:33123 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213AbbFYPTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 11:19:23 -0400
-Received: by ykdt186 with SMTP id t186so42206754ykd.0
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 08:19:22 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBMV2WCWAKGQEEPRYYXY@googlegroups.com>)
+	id 1Z8911-000156-P4
+	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 17:24:35 +0200
+Received: by pabli10 with SMTP id li10sf18118979pab.0
+        for <gcvm-msysgit@m.gmane.org>; Thu, 25 Jun 2015 08:24:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Sj+JYYfeUEMmvH+B7heZYFaTQMCykT/T1EdVpycamGY=;
-        b=grNRf08SIq09GZ7Q5MF2pbL3FmL9VpJ2hwMU6mWVR9KPbl3uIY96ikgLLsYW6g1mHa
-         SsiaVj4H1YCQ5uAO1QZyXw0ds4/3vsTfW0sPwdDePrLxoBZaMuJgnCkmUhKY6u9ELN1m
-         ElVEI5EuqwUMtOQGhzH/LsPzZiPldGCRKj81zPnq1hwSJl9MJ+d2uva87Q3L1I6CVKKY
-         4GJgTEQ+9rFAOBAz1Z33///W49sesiW/i0iJPVhLCssv7QPdhxf0tqOqcSGSIhReIhXP
-         Ozf2H7boXaHEmQ71pg6M1rIBVjCrQgD4UWd11csbD5sgim0zk/0bGKsB0MVk3qKPkkPs
-         Cs3Q==
-X-Received: by 10.170.125.138 with SMTP id r132mr6394810ykb.19.1435245562585;
- Thu, 25 Jun 2015 08:19:22 -0700 (PDT)
-Received: by 10.13.213.142 with HTTP; Thu, 25 Jun 2015 08:19:22 -0700 (PDT)
-In-Reply-To: <xmqqlhf725xy.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272686>
+        d=googlegroups.com; s=20120806;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe;
+        bh=MyxXujggVzVE4kC42f/fFpN4NXnD8lDpD8SH3b4Tic4=;
+        b=upt4KyMDUy/Hm5JsZIo8g+p66HkC8egVgSPkSR4hY4fM/UmZA7RehAM+KKLxiENnsi
+         Irj3HTv/adCO5NyGq6ZVqSlg/xJ64ob7k1IeJX3CzZ2qVc6hh4W2U+C4aw3gqMyGkNxs
+         p8/pZFpr3AQPyL7Mz4zFxBAsgYyjOglyTVo1pySKzKGpfEyFXGGxTO19V8yJpnMsOhh9
+         +ZUNZpT9y1oaOydYSorw0IwkkmLKS/qFsNuW+EyeXrRX7XkU0yuU+d6oKUn7N5STSn/K
+         dmvhoIUZMKSZQ/86Z2rCa9QebsFvP31l2dM43pnDi5VZrB6k1PucDx0wu5U1Xz0X4oBH
+         ZYCA==
+X-Received: by 10.50.64.179 with SMTP id p19mr76034igs.6.1435245874404;
+        Thu, 25 Jun 2015 08:24:34 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.107.132.18 with SMTP id g18ls710672iod.67.gmail; Thu, 25 Jun
+ 2015 08:24:33 -0700 (PDT)
+X-Received: by 10.66.191.195 with SMTP id ha3mr60607717pac.42.1435245873958;
+        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
+Received: from mail-ig0-x22c.google.com (mail-ig0-x22c.google.com. [2607:f8b0:4001:c05::22c])
+        by gmr-mx.google.com with ESMTPS id fk9si549779igb.0.2015.06.25.08.24.33
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::22c as permitted sender) client-ip=2607:f8b0:4001:c05::22c;
+Received: by mail-ig0-x22c.google.com with SMTP id qq3so17209192igb.0
+        for <msysgit@googlegroups.com>; Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
+X-Received: by 10.50.61.241 with SMTP id t17mr4871590igr.34.1435245873787;
+        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
+        by mx.google.com with ESMTPSA id o9sm19779225ioe.35.2015.06.25.08.24.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+In-Reply-To: <1435190633-2208-5-git-send-email-philipoakley@iee.org> (Philip
+	Oakley's message of "Thu, 25 Jun 2015 01:03:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::22c
+ as permitted sender) smtp.mail=jch2355@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272687>
 
-Hi,
+Philip Oakley <philipoakley@iee.org> writes:
 
-> Hmm, I do not recall seeing v1 but that is OK.
-
-http://thread.gmane.org/gmane.comp.version-control.git/272635
-http://thread.gmane.org/gmane.comp.version-control.git/272636
-
-
-> The following immediately comes to mind.
+> A 'make -n' dry-run is used as part of the /compat/vcbuild and
+> /contrib/buildsystems code. The commit ee9be06 (perl: detect new files
+> in MakeMaker builds, 2012-07-27) was not aware of that dry-run usage
+> and thus would not execute the target.
 >
-> http://thread.gmane.org/gmane.comp.version-control.git/51754/focus=51780
+> Add a comment to the make file stating the issue and the available
+> solutions of either NO_PERL or a '+recipe'.
 
-Thanks for the reference, amazed that I ended up using the same title!
-From the thread:
+I am not sure what this patch is trying to achieve.
 
-> Even though these lines are not digitally signed,
-> the intent of adding a Signed-off-by: line with your name is
-> that you are certifying its origin, according to the definition
-> of DCO (see Documentation/SubmittingPatches).  This should be a
-> conscious act from the signer's part, and making it automatic
-> with a config variable that you set once and forget makes it
-> much less meaningful.
+If you are not touching what this Makefile actually does, then I
+would imagine that you are running the "buildsystems code" that
+actually drives 'make -n' with some "available solution" (perhaps
+you are running 'make -n NO_PERL=NoThanks' or something like that)?
+Then instead of a command like this that nobody would read in this
+file, the same command can instead go there to explain what the
+"workaround" (e.g. unusual-looking 'make -n NO_PERL=NoThanks') is
+doing?
 
-This is a fair point. However I've seen that in practice, in some
-cases it's easier
-to consider the DCO as the rules for contributing to the entire
-project. In those
-cases people tend to use commit templates or aliases or hooks, which in practice
-automate the signing off act anyway.
+I suspect you mean by +recipe that you modify this makefile to make
+such a workaround unnecessary?  If that is the case, why isn't such
+a change actually be done with this commit, instead of a comment?
 
-A similar concern probably applies to format.signOff option. Would be sufficient
-to add a note about conscious act (like format.signOff has) to the
-config description?
+I am not sure what this patch is trying to achieve.
 
+Puzzled...
+
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>  Makefile | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index 149f1c7..22108bb 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1746,6 +1746,9 @@ $(SCRIPT_PERL_GEN): perl/perl.mak
+>  
+>  perl/perl.mak: perl/PM.stamp
+>  
+> +# 'make -n' (dry-run) will not execute this target which creates/updates the PM.stamp file.
+> +# To avoid the error of failing to find the target PM.stamp, either use NO_PERL=1 (YesPlease),
+> +# or add a leading '+' to the recipe '+$(QUIET_GEN)$(FIND) perl ...' so that it is executed.
+>  perl/PM.stamp: FORCE
+>  	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
+>  	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
+> -- 
+> 2.3.1
+>
+> -- 
 
 -- 
-Caio Marcelo de Oliveira Filho
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
