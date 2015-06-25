@@ -1,129 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] refs: add safe_create_reflog function
-Date: Thu, 25 Jun 2015 14:02:26 -0700
-Message-ID: <xmqqwpyrwlgd.fsf@gitster.dls.corp.google.com>
-References: <1435265110-6414-1-git-send-email-dturner@twopensource.com>
-	<1435265110-6414-4-git-send-email-dturner@twopensource.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: git error in tag ...: unterminated header
+Date: Thu, 25 Jun 2015 23:07:41 +0200
+Organization: gmx
+Message-ID: <2b124e09d9c89ff3892f246ea91aa3c4@www.dscho.org>
+References: <20150625155128.C3E9738005C@gemini.denx.de>
+ <xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
+ <20150625201309.5026A384E81@gemini.denx.de>
+ <xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 23:02:36 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 23:07:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8EI6-0004Fn-CT
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 23:02:34 +0200
+	id 1Z8END-0000XC-Vr
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 23:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104AbbFYVCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 17:02:30 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:36294 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751780AbbFYVC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 17:02:28 -0400
-Received: by igbiq7 with SMTP id iq7so788700igb.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 14:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=RhHqlfuSkkZEdgpIOKzOzlZ/vO0w7IT3CGV+0gADCgI=;
-        b=S+EWqdJSOafcc7dV3oRjhxT9Wpbp3Vl3dMxwtieg58JOXmgBlz9RD3Pz5aBriLdR2g
-         xBRk3OIgKwaTIUK3ao5KyvJunPzbexV+V1PkBt+IBdTfnIjH8mfsC2jI56Bp6OPq0Rv3
-         bX4gixPzjYKxvFvYV3lRomgmHAsWMzNESMUvZCmVJDSfLXzMs3eAycFblWpbpx75o7dD
-         GbGGZFW5gB9dyOnHrZSk5kyaYf18dhjxIGzzFzpBBCKErlcq3hDUwJhfEhv6Est09sHU
-         2Ln1jtFZr2AvYalKRFTFtcSIF3mKfUXlnytvDxof/nil4B0Y/K7XHxSSaBZ0KSWlGjwM
-         jwNg==
-X-Received: by 10.43.10.194 with SMTP id pb2mr46982701icb.31.1435266148332;
-        Thu, 25 Jun 2015 14:02:28 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id s5sm4081154igh.6.2015.06.25.14.02.27
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 14:02:27 -0700 (PDT)
-In-Reply-To: <1435265110-6414-4-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Thu, 25 Jun 2015 16:45:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751558AbbFYVHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 17:07:47 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57477 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751585AbbFYVHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 17:07:46 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MPUlV-1ZCvCJ0lxB-004hFi; Thu, 25 Jun 2015 23:07:42
+ +0200
+In-Reply-To: <xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:OY0+pI5dVkxwdYoDbxCIZonfdyzsT4M0iFblmBGEHOzcxiH4/+M
+ 17Gpuc/MkeHCVwAWqJX5zDAom2uN2Jm2OzUNZShKUXAGaY5BGyVTYTtkxVNVULNYDjLyy5T
+ 1Jwn0gjqz8K8bQxBI8bK1qWs+5pM5FapwcVfj7mrTJFOhaws4Tj0egUEliLPZf1OVmipn6X
+ 2wJJBtaprylJQyAuKVVfQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xO+7MG9UHi0=:Em+r9hKuM2pe7LWb+eX2gY
+ n81VBLPtoZ2T0w9Ho5pI17abOMyGnLn7aQGP9/fdbmox6Cn0Oqx1JsI7oeNjCsmaEuq6nN25B
+ ljkR15Rask69go3zfL1sHmbmHYk7q71NktQHRdZWlhGuULEH9RkfMS3OH956GTdI3+5ri/58w
+ /KRNsw3rw5uBrWLGcXap5yx/6z5CqRsbas3IGMWDsNyAyT0IYE7xp4Wei+0VvY/ci87AaCIRB
+ UUaayiY72TBrCrOWH66UED8rZROA3PhGJrGOv3s3SDu9OcjwMb9k+qI6COZHjC6qZolxJDZnl
+ Oxy0BHDJjP5EJDObxsVwTyDOs0GfDj5osQMEgGneSrEbXzqFv4e+w36zfKyCK1Efz219PP8zv
+ SpBE+mVt6v31TtB3QxAcGuy8Fo4XO37upe3y//t5zLCcEbG8ttbUpztGzedkCHD/5pEscYuXG
+ L8Xk9lFGcI4qGQtSOWn3b5pGBJHDCdMJKgZMJYaGFNu69MotWFCeWisJ3fiiZwaV/dXO+7Z88
+ xTNlWO6WW5u6ksOeQpjOhEBEVDsRZoUGxNZ9DjqoKW01tBBHUdxtPHqUqMO+nsVyUeOxM2kkp
+ MHqpHi9aRrivVXDW6lzInUA6k9TtSwxQgARnIHM7IOrrmSY9z0MGi9mpzkQ0JtrBKYOcoNsbt
+ aYupkEe86bdwtGRC2SQVD/mGHheBeL4UVmq+A8aypoppjSeTTcnJPvzLIlo/jKHEDjLk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272735>
 
-David Turner <dturner@twopensource.com> writes:
+Hi Junio & Wolfgang,
 
-> Make log_ref_setup private, and add public safe_create_reflog which
-> calls log_ref_setup.
->
-> In a moment, we will use safe_create_reflog to add reflog creation
-> commands to git-reflog.
->
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  builtin/checkout.c |  4 +---
->  refs.c             | 11 +++++++++++
->  refs.h             |  2 +-
->  3 files changed, 13 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 93f63d3..b793670 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -621,7 +621,6 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
->  		if (opts->new_orphan_branch) {
->  			if (opts->new_branch_log && !log_all_ref_updates) {
->  				int temp;
-> -				struct strbuf log_file = STRBUF_INIT;
->  				int ret;
->  				const char *ref_name;
->  				struct strbuf err = STRBUF_INIT;
-> @@ -629,9 +628,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
->  				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
->  				temp = log_all_ref_updates;
->  				log_all_ref_updates = 1;
-> -				ret = log_ref_setup(ref_name, &log_file, &err);
-> +				ret = safe_create_reflog(ref_name, &err);
->  				log_all_ref_updates = temp;
-> -				strbuf_release(&log_file);
->  				if (ret) {
->  					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
->  						opts->new_orphan_branch, err.buf);
+On 2015-06-25 22:24, Junio C Hamano wrote:
+> Wolfgang Denk <wd@denx.de> writes:
+> 
+>> In message <xmqqegkzzoaz.fsf@gitster.dls.corp.google.com> you wrote:
+>>>
+>>> > Question is: how can we fix that?
+>>>
+>>> It could be that 4d0d8975 is buggy and barking at a non breakage.
 
-Yup, much nicer ;-)
+Well, I would like to believe that this commit made our code *safer* by making sure that we would never overrun the buffer. Remember: under certain circumstances, the buffer passed to the fsck machinery is *not* terminated by a NUL. The code I introduced simply verifies that there is an empty line because the fsck code stops there and does not look further.
 
-> diff --git a/refs.c b/refs.c
-> index de7b5ef..7b02c45 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3171,6 +3171,17 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
->  	return 0;
->  }
->  
-> +
-> +int safe_create_reflog(const char *refname, struct strbuf *err)
-> +{
-> +	int ret;
-> +	struct strbuf sb = STRBUF_INIT;
-> +
-> +	ret = log_ref_setup(refname, &sb, err);
-> +	strbuf_release(&sb);
-> +	return ret;
-> +}
-> +
->  static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
->  			    const unsigned char *new_sha1,
->  			    const char *committer, const char *msg)
-> diff --git a/refs.h b/refs.h
-> index debdefc..2986aac 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -228,7 +228,7 @@ int pack_refs(unsigned int flags);
->  /*
->   * Setup reflog before using. Fill in err and return -1 on failure.
->   */
-> -int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
-> +int safe_create_reflog(const char *refname, struct strbuf *err);
->  
->  /** Reads log for the value of ref during at_time. **/
->  extern int read_ref_at(const char *refname, unsigned int flags,
+If the buffer does *not* contain an empty line, the fsck code runs the danger of looking beyond the allocated memory because it uses functions that assume NUL-terminated strings, while the buffer passed to the fsck code is a counted string.
+
+The quick & dirty work-around would be to detect when the buffer does not contain an empty line and to make a NUL-terminated copy in that case.
+
+A better solution was outlined by Peff back when I submitted those patches: change all the code paths that read objects and make sure that all of them are terminated by a NUL. AFAIR some code paths did that already, but not all of them.
+
+Ciao,
+Dscho
