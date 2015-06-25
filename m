@@ -1,150 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/17] Makefile: a dry-run can error out if no
- perl. Document the issue
-Date: Thu, 25 Jun 2015 08:24:31 -0700
-Message-ID: <xmqq8ub724ls.fsf@gitster.dls.corp.google.com>
-References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
-	<1435190633-2208-5-git-send-email-philipoakley@iee.org>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: 'eol' documentation confusion
+Date: Thu, 25 Jun 2015 17:31:27 +0200
+Message-ID: <558C1ECF.1030801@web.de>
+References: <CAHd499CapqvC3pHszgmX2VexdmqiW4+N23YfkAP5jjXWDrbe0A@mail.gmail.com>
+ <CAHd499Do_bpdOkL2TqdO+8L=pR53117pKR0GSwdgvFDwq_S4=w@mail.gmail.com>
+ <5587AAB2.80305@web.de> <xmqqr3p3iuyc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GitList <git@vger.kernel.org>,  MsysGitList <msysgit@googlegroups.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: msysgit+bncBCG77UMM3EJRBMV2WCWAKGQEEPRYYXY@googlegroups.com Thu Jun 25 17:24:37 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBMV2WCWAKGQEEPRYYXY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pa0-f57.google.com ([209.85.220.57])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jun 25 17:32:25 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBMV2WCWAKGQEEPRYYXY@googlegroups.com>)
-	id 1Z8911-000156-P4
-	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 17:24:35 +0200
-Received: by pabli10 with SMTP id li10sf18118979pab.0
-        for <gcvm-msysgit@m.gmane.org>; Thu, 25 Jun 2015 08:24:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive
-         :list-subscribe:list-unsubscribe;
-        bh=MyxXujggVzVE4kC42f/fFpN4NXnD8lDpD8SH3b4Tic4=;
-        b=upt4KyMDUy/Hm5JsZIo8g+p66HkC8egVgSPkSR4hY4fM/UmZA7RehAM+KKLxiENnsi
-         Irj3HTv/adCO5NyGq6ZVqSlg/xJ64ob7k1IeJX3CzZ2qVc6hh4W2U+C4aw3gqMyGkNxs
-         p8/pZFpr3AQPyL7Mz4zFxBAsgYyjOglyTVo1pySKzKGpfEyFXGGxTO19V8yJpnMsOhh9
-         +ZUNZpT9y1oaOydYSorw0IwkkmLKS/qFsNuW+EyeXrRX7XkU0yuU+d6oKUn7N5STSn/K
-         dmvhoIUZMKSZQ/86Z2rCa9QebsFvP31l2dM43pnDi5VZrB6k1PucDx0wu5U1Xz0X4oBH
-         ZYCA==
-X-Received: by 10.50.64.179 with SMTP id p19mr76034igs.6.1435245874404;
-        Thu, 25 Jun 2015 08:24:34 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.107.132.18 with SMTP id g18ls710672iod.67.gmail; Thu, 25 Jun
- 2015 08:24:33 -0700 (PDT)
-X-Received: by 10.66.191.195 with SMTP id ha3mr60607717pac.42.1435245873958;
-        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
-Received: from mail-ig0-x22c.google.com (mail-ig0-x22c.google.com. [2607:f8b0:4001:c05::22c])
-        by gmr-mx.google.com with ESMTPS id fk9si549779igb.0.2015.06.25.08.24.33
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::22c as permitted sender) client-ip=2607:f8b0:4001:c05::22c;
-Received: by mail-ig0-x22c.google.com with SMTP id qq3so17209192igb.0
-        for <msysgit@googlegroups.com>; Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
-X-Received: by 10.50.61.241 with SMTP id t17mr4871590igr.34.1435245873787;
-        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id o9sm19779225ioe.35.2015.06.25.08.24.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 08:24:33 -0700 (PDT)
-Sender: msysgit@googlegroups.com
-In-Reply-To: <1435190633-2208-5-git-send-email-philipoakley@iee.org> (Philip
-	Oakley's message of "Thu, 25 Jun 2015 01:03:40 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::22c
- as permitted sender) smtp.mail=jch2355@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272687>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z898Z-0007NV-RI
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 17:32:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752801AbbFYPcT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2015 11:32:19 -0400
+Received: from mout.web.de ([212.227.17.12]:58474 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751555AbbFYPbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 11:31:37 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MhDYL-1ZUTKP3J0T-00MM7H; Thu, 25 Jun 2015 17:31:32
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.0.1
+In-Reply-To: <xmqqr3p3iuyc.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:vApieHV6sslhGow7OX5nBauV5hy2SeAYIMxdWogsDQMZznm+Rq1
+ xb9v2km6tfvbpUBhOqubu/Gkw8kMveWmmbAJfit9MVzLYR0YzIJRWq4Lsx5+h7LeBYBdRx1
+ uW60SBFC+SA2A1LV9G6+C/XFRM7++gsRMxO95UYwKXtxj8I92n5bIvxczWaff71UriBmABD
+ ezwYOoZvGVC22rqLT8Lvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oaJseNCA2e0=:ynknlrbP3wqpoBE4TAiLaA
+ WkKfL4vMTQRbarpr6/wlRI+BQNSdrlnn+JV8Hj3L4g/ClU8viL+qZ0oTUd+rRvc1XVrPWFhng
+ V4HgwSl85w4NVWqC7GZObO38AuOkyXxnT2eCcCaYSD7Yt/PXrqZgzBM434ReY4tBsjQ/egPGg
+ DDoArpNQnU9FEefidSIV/2F5r0rfkI15/cFcc/6WDrYqmVzhv8aRgvjYLw9t1u6jCvCay18do
+ ++aHvITCkI7K1/4K6LDWgbv9YcyaDcsA/gq0eJy7Vp4u6c/nDaqFPJz2fPHzwMDFcTP9h6UNy
+ u2w4F4LSPQWP7ovZfK/PxC1rbzeiUekKufVQI5KXabDw7IqtQTjHTxyzdA2WtGEph0TUp4dxy
+ 5txyEoxYfL7YDpWzaA2d//ffYUP8NJGcesWelxx2AtfGzynY5lVhpR/F/i15yIPJoyWBnNz4N
+ 2He4vFojg4cawQScnK7Wk+aTNTQ35OxpnrvY/xBi/194liKO8taZVVo0w7XDFxOehmGkOwNWh
+ iIn2O37Qg/6zu8KyufD1u/QXocoSce58xpYcGG3jhAoR60R32p6GE+roc2iG+pIdIw3f0LHA5
+ UWM9oQ1iMqnjzA3za5H3r3teI0pQqKq1vtLSRqXMbaQ8OEybgecEExjpmiuSH8hs95TgxdG7m
+ yrpdqetwpC2pSVvEzSSKD6SnMGeE0VQYk3qML59SCbGuWmFKckUdnX8itQhGYu+M5IDw=
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272688>
 
-Philip Oakley <philipoakley@iee.org> writes:
-
-> A 'make -n' dry-run is used as part of the /compat/vcbuild and
-> /contrib/buildsystems code. The commit ee9be06 (perl: detect new files
-> in MakeMaker builds, 2012-07-27) was not aware of that dry-run usage
-> and thus would not execute the target.
->
-> Add a comment to the make file stating the issue and the available
-> solutions of either NO_PERL or a '+recipe'.
-
-I am not sure what this patch is trying to achieve.
-
-If you are not touching what this Makefile actually does, then I
-would imagine that you are running the "buildsystems code" that
-actually drives 'make -n' with some "available solution" (perhaps
-you are running 'make -n NO_PERL=NoThanks' or something like that)?
-Then instead of a command like this that nobody would read in this
-file, the same command can instead go there to explain what the
-"workaround" (e.g. unusual-looking 'make -n NO_PERL=NoThanks') is
-doing?
-
-I suspect you mean by +recipe that you modify this makefile to make
-such a workaround unnecessary?  If that is the case, why isn't such
-a change actually be done with this commit, instead of a comment?
-
-I am not sure what this patch is trying to achieve.
-
-Puzzled...
-
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> ---
->  Makefile | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index 149f1c7..22108bb 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1746,6 +1746,9 @@ $(SCRIPT_PERL_GEN): perl/perl.mak
->  
->  perl/perl.mak: perl/PM.stamp
->  
-> +# 'make -n' (dry-run) will not execute this target which creates/updates the PM.stamp file.
-> +# To avoid the error of failing to find the target PM.stamp, either use NO_PERL=1 (YesPlease),
-> +# or add a leading '+' to the recipe '+$(QUIET_GEN)$(FIND) perl ...' so that it is executed.
->  perl/PM.stamp: FORCE
->  	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
->  	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
-> -- 
-> 2.3.1
->
-> -- 
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+On 2015-06-22 18.11, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> eol=3Dlf or eol=3Dcrlf are the only useful settings.
+>> Everything else is ignored because it does not make sense.
+>>
+>> See convert.c:
+>> static enum eol git_path_check_eol()
+>=20
+> That makes me wonder...
+>=20
+> The original reasoning behind the current behaviour that we ignore
+> unknown values given to configuration variables and attributes is so
+> that people can use the same file that has values that are
+> understood by newer versions of Git with older versions of Git.
+>=20
+> You may be trying the eol=3DcleverLF setting introduced in Git versio=
+n
+> 47-prerelease by adding it to .git/info/attributes, and may have
+> found it useful.  But you may also have to use the same repository
+> on another machine that you didn't install that future version of
+> Git over the network filesystem.  Barfing and not proceeding when we
+> see unknown eol=3DcleverLF does not sound like a nice thing to do,
+> which is why we just ignore and behave as if the setting was not
+> there.
+>=20
+> Ideally, however, I think we should ignore an unknown setting as
+> long as it does not matter (i.e. we do not come to the codepath that
+> wants to know eol settings for the path, e.g. running "git log" to
+> show only the commit log messages and the topology of the history),
+> but we should error out when the unknown setting possibly matters
+> (i.e. we do need the eol setting for the path in order to correctly
+> convert the contents to end-user's liking).
+>=20
+> Thoughts (and patches ;-)?
+In short:
+Good idea, patches follow within the next weeks/months
