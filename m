@@ -1,108 +1,69 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: Dependency Management
-Date: Thu, 25 Jun 2015 10:00:11 +0100
-Message-ID: <558BC31B.5000401@diamand.org>
-References: <45DF444C03B59343B5893402DC4F867E3A800EC7@PB2OAEXM01.oad.exch.int> <45DF444C03B59343B5893402DC4F867E3A800EF8@PB2OAEXM01.oad.exch.int> <CAGZ79kZkUvqDzf-j0Z3yM5q+spV-MFYL5da4LOrYoGOHFsftjw@mail.gmail.com> <CANuW5x0_B0F-CZ5-iq4c_JiZ99FyUvqywrdA8hPr4Pg2dfZ1sA@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [RFC/PATCH 0/9] port tag.c to use ref-filter library
+Date: Thu, 25 Jun 2015 15:25:41 +0530
+Message-ID: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Josh Hagins <hagins.josh@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jean Audibert <jaudibert@euronext.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 11:01:13 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 25 11:56:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z831x-0003N6-Vu
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 11:01:10 +0200
+	id 1Z83tN-0003aI-Cg
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 11:56:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbbFYJBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 05:01:06 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:36519 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751137AbbFYJBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 05:01:02 -0400
-Received: by wicnd19 with SMTP id nd19so157473491wic.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 02:01:00 -0700 (PDT)
+	id S1751829AbbFYJ4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 05:56:16 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:33617 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752469AbbFYJ4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 05:56:11 -0400
+Received: by obpn3 with SMTP id n3so43841647obp.0
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 02:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=aZIBBqhMz/kIzIcETNGNwOiCeILeorBJhZCTUYAghD0=;
-        b=ITuGdNYHenvKFvenQY568xzlxQh3umewn2MPHD6ZoeqoCLxB5eB0dkY8B+Y7KhpZEZ
-         DVx5h7rDIGgdd4Xv3YUvWb0/YtlKMJ5ab1oSdr54ppHYb2VYRZ0hDbxMCGBW9F6utwFk
-         RlzfGhhNUWdH04OT7sMBiTcUFq21+Ph+J0zqw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=aZIBBqhMz/kIzIcETNGNwOiCeILeorBJhZCTUYAghD0=;
-        b=KN4oiew7EM55eIIKq+iFN5yrS3KbUhltf+H/GRtnY0dIXEVlNRDhDSCtPjiaOEikp3
-         29JZU7DipVhwlWKPHd4x1lpq3LW4GoD3H1gyMfZirXGRQK2peAR1M6clUe/LdbuWZpRL
-         zZc7a/1/rhbrGeK1Yf0LEsg58oFA4gc0FLscvJdN2/pVNsNBzl6b6hvvSo/nD2Tzw6Lt
-         G4W7kRXBCj0Z2AN96kCAYYDOv3kbrKfeP3M4E0+kjdVxu9ZqbRb45xCRQRtjsfM6EGJm
-         NRXP6JMGTGll6hsGYW8e0eA30+cmv0aEvo44L8zulG4gkx4oVX8mbYhtM1ARaveezAR1
-         6CNQ==
-X-Gm-Message-State: ALoCoQk+Zl3AmyoU6n1kJ6CGnTtde5BvXcpBkmrDXIKy/rEnPjLSd5OHBsB35RTZJeROjLoNgdxU
-X-Received: by 10.194.71.105 with SMTP id t9mr76294383wju.128.1435222860416;
-        Thu, 25 Jun 2015 02:01:00 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id d3sm44669975wjs.21.2015.06.25.02.00.59
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jun 2015 02:00:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <CANuW5x0_B0F-CZ5-iq4c_JiZ99FyUvqywrdA8hPr4Pg2dfZ1sA@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=SzbNMbxe0VzWdlusr//v100kK7fndet4CpH4bIdiunw=;
+        b=WND+dT5xtAVTQw/l9MKdrc2hnM0Dhi9rC2/Mu5GaPzOJJ4rAa/nCYgk/HnkWXg/T66
+         lONK9GuiFI5dARlciGXaNy+Luljm9N9iNY6DOrhh4eRq+a937cCrJXx5DRoljLPJQw+A
+         nzU68RHM6fpm64/m87j5Hwh3hTYOsDeSTC8MhgyGOw/C4lhHXCH36XztL613UVPWucsL
+         27FFdVnNuqAX9iEOjKoTXXrg3TzcJTfM/X7Mi+Phxw0TlaexP+OqOfg+92bgtfJowFPL
+         3z45xp+wwlEtv5OJGAGIamJlB069iyrt4INMqJvkynUDpwmqyPstHhrqHAONVUuJFhK3
+         bq2w==
+X-Received: by 10.60.52.174 with SMTP id u14mr39617605oeo.9.1435226170579;
+ Thu, 25 Jun 2015 02:56:10 -0700 (PDT)
+Received: by 10.182.95.165 with HTTP; Thu, 25 Jun 2015 02:55:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272654>
 
-On 23/06/15 19:49, Josh Hagins wrote:
-> If neither git-submodule nor git-subtree is palatable to you, here are
-> a couple of alternatives you might try:
->
->    * https://github.com/ingydotnet/git-subrepo
->    * https://github.com/tdd/git-stree
+This is part of the GSoC project to unify the commands `git tag -l`,
+`git branch -l`
+and `git for-each-ref`.
 
-You could also use Android's "repo" tool:
+This is a follow up to
+http://article.gmane.org/gmane.comp.version-control.git/272641 which
+is still in the 6th iteration.
 
-https://code.google.com/p/git-repo/
+This ports over tag.c to use ref-filter APIs and adds --format,
+--sort, --merged and --no-merged options to the same.
 
-Luke
+ Documentation/git-tag.txt |  39 ++++++++++---
+ builtin/for-each-ref.c    |   3 +-
+ builtin/tag.c             | 362
+++++++++++++++++++++------------------------------------------------------------------------------------------------
+ ref-filter.c              | 100 ++++++++++++++++++++++++++++----
+ ref-filter.h              |   7 ++-
+ t/t7004-tag.sh            |  51 ++++++++++++++---
+ 6 files changed, 233 insertions(+), 329 deletions(-)
 
->
-> On Tue, Jun 23, 2015 at 1:36 PM Stefan Beller <sbeller@google.com> wrote:
->>
->> On Tue, Jun 23, 2015 at 1:52 AM, Jean Audibert <jaudibert@euronext.com> wrote:
->>> Hi,
->>>
->>> Sorry to bother you with this question but I can't find any "official" answer or "strong opinion" from Git community.
->>>
->>> In my company we recently started to use Git and we wonder how to share code and manage dependencies with Git?
->>> Use case: in project P we need to include lib-a and lib-b (libraries shared by several projects)
->>>
->>> In your opinion, what is the "future proof" solution?
->>> * Use submodule
->>> * Use subtree
->>>
->>> We know there is lot of PRO/CONS but I feel that subtree is "behind" in the race and the latest version of submodule work fine
->>
->> Use whatever works fine for your use case.
->>
->> My personal opinion/expectation is to see submodules
->> improving/advancing more than subtrees advancing in the near future.
->> Though this is neither the official nor a strong opinion.
->>
->> Stefan
->>
->>>
->>> Suggestions are very welcome.
->>> Thanks in advance,
->>>
->>> Jean Audibert
->>>
+-- 
+Regards,
+Karthik Nayak
