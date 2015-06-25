@@ -1,122 +1,146 @@
-From: Mikael Knutsson <mikael.knutsson@quinyx.com>
-Subject: [BUG] git describe returns wrong tag as closest tag
-Date: Thu, 25 Jun 2015 09:20:25 +0200
-Message-ID: <CADVPA6CXqr6yuQ5Mb_vyhtrfin1jQskF6YDTRZWVHfQjZrnwng@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: cmarcelo@gmail.com
+Subject: [PATCH] commit: add commit.signoff config option
+Date: Thu, 25 Jun 2015 04:30:54 -0300
+Message-ID: <1435217454-5718-1-git-send-email-cmarcelo@gmail.com>
+Cc: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 25 09:20:51 2015
+X-From: git-owner@vger.kernel.org Thu Jun 25 09:31:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z81Sr-00065w-Px
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 09:20:50 +0200
+	id 1Z81d1-0006AM-Eg
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 09:31:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105AbbFYHUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 03:20:46 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:37191 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750988AbbFYHUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 03:20:45 -0400
-Received: by igblr2 with SMTP id lr2so49779128igb.0
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 00:20:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=J+2YErsvupFS1yi6NOQWpD/2oEYuwY+DXfpV2pmASbg=;
-        b=eSCnnXMgic1xBNoSebag6D9bL/UdzpqAW8sSl9IlybtbS0gVdP1SDdLRT7d01P30Sw
-         9NbZ0v3Rdu8j9+cxQOojJrAU8Q8Xq6f5+3u5IXkcCeUUj7t0zT+mjZDY4adKLiwLbEnp
-         RwQumJBDv3jzzUmZ+unwv7gftktO2N9dVVBDudGszsGGEwiVtdSqN0ZBh/aWh6rSW7oZ
-         FXR4tZZ9W0NnANYtp9KniqQTMmEfHmVvD94nSA7OqxfrEbPQtlm+G8z7wB0UDn20mwDy
-         LXPp428AtTmB3LhtCkhvtixQIdzW+C0G7PFvPmESt2vkRga2jGOiJNKWOTjmoWfwipfN
-         KeZg==
-X-Gm-Message-State: ALoCoQkZA3DsUkDtcZWGEWCg/JCFn+4oCpwoMGAJfhriooFFmV+5bXjgaijFqjoFLf82BBMov+nh
-X-Received: by 10.107.151.75 with SMTP id z72mr57554509iod.46.1435216844387;
- Thu, 25 Jun 2015 00:20:44 -0700 (PDT)
-Received: by 10.36.133.86 with HTTP; Thu, 25 Jun 2015 00:20:25 -0700 (PDT)
+	id S1751922AbbFYHbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 03:31:05 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:35166 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751900AbbFYHbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 03:31:01 -0400
+Received: by pactm7 with SMTP id tm7so44730593pac.2
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 00:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=501NZQr4KPrg4VU1AB1k4E1UeoBeE7xJM6PA2UDzIzw=;
+        b=ai10ZLn86LIrFfJBKqSqdmEBDtwpsWd8utOQP3eumtHvzkmy9/qtZdG0RdXn2qBRYa
+         gLmzsdo/Lq+ZNQ5D67sIMOFbM3U0/QoCYMASEK4jfchiaydma7ozwoIrl3rGzjj3OPvR
+         s/2HvnE3a1fA1qb+iXsE1Q8JjYS4qEoOrBC3ESutl3F4Y5tl3aGzVq8oS+25jCI/1rt5
+         bG2m0mv3j93ItYPOAF8H1OCf+FS/9n8SKwCiKpKpc10dxdc9Twn7HoRkaPWzQEH0Vo/o
+         olinu7aYVPhFT9snWelGVxXAcaUUKpAkr5bfhktQE7vn5zdYvpQ6yqFeCszMjsGvoEEV
+         Y1Hg==
+X-Received: by 10.70.140.38 with SMTP id rd6mr87861091pdb.47.1435217460571;
+        Thu, 25 Jun 2015 00:31:00 -0700 (PDT)
+Received: from gray.localdomain (205.158.165.99.ptr.us.xo.net. [205.158.165.99])
+        by mx.google.com with ESMTPSA id ve7sm20193018pab.26.2015.06.25.00.30.59
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Jun 2015 00:30:59 -0700 (PDT)
+X-Mailer: git-send-email 2.4.4.489.gc2a2b54.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272635>
 
-Hi!
+From: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
 
-I've discovered that if you have two non-rewinding branches that you
-merge between you can get the wrong tag as closest tag if the
-COMMITTER_DATE of any of the commits after the branch split is before
-the date of the branch split. You can end up in this state simply by
-having a committer doing a rebase after a branch split and pushing
-their code. (This is an assumption of what happened when we saw the
-behaviour)
+In projects that use Signed-off-by, it's convenient to include that line
+in the commit by default. The commit.signoff config option allows to add
+that line in all commits automatically.
 
-Reproduction case:
-mkdir testcase
-cd testcase
-git init
-git commit --allow-empty -m init
-git tag -a -m 'Test tag 1' 1
-git branch tagerror
-git checkout tagerror
-git commit --allow-empty -m test01
-git commit --allow-empty -m test02
-git checkout master
-GIT_COMMITTER_DATE=`date --date '-10 min'` git commit --allow-empty -m
-test03 # this is what causes the error
-git tag -a -m 'Test tag 2' 2
-git checkout tagerror
-git commit --allow-empty -m test04
-git checkout master
-git merge --no-ff tagerror
-git describe --long # (expected output is '2-4-COMMITHASH', output is
-'1-5-COMMITHASH')
+Document that this config option can be overriden by using
+--no-signoff.
 
-If you remove the GIT_COMMITTER_DATE from the repro, you'll notice
-that you get the expected output.
-You can verify the ANY part by adding a commit on each branch before
-the COMMITTER_DATE like this:
-mkdir testcase
-cd testcase
-git init
-git commit --allow-empty -m init
-git tag -a -m 'Test tag 1' 1
-git branch tagerror
-git checkout tagerror
-git commit --allow-empty -m test01
-git commit --allow-empty -m test02
-git commit --allow-empty -m test03
-git checkout master
-git commit --allow-empty -m test04
-git tag -a -m 'Test tag 2' 2
-GIT_COMMITTER_DATE=`date --date '-10 min'` git commit --allow-empty -m
-test05 # this is what causes the error
-git checkout tagerror
-git commit --allow-empty -m test06
-git checkout master
-git merge --no-ff tagerror
-git describe --long # (expected output is '2-4-COMMITHASH', output is
-'1-5-COMMITHASH')
+Signed-off-by: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+---
+ Documentation/config.txt     |  6 ++++++
+ Documentation/git-commit.txt |  5 +++++
+ builtin/commit.c             |  4 ++++
+ t/t7500-commit.sh            | 22 ++++++++++++++++++++++
+ 4 files changed, 37 insertions(+)
 
-If you run a "git describe --long --first-parent", you'll notice that
-it does actually pick up the correct tag in both above cases.
-
-It seems to me that in the source code for describe, it relies on
-sorting the commits on a strict date basis, rather than sorting them
-in traversal order:
-https://github.com/git/git/blob/master/builtin/describe.c#L204
-
-Caveats to the reproduction case:
-In our "real" case, the date of the commit causing the issue is before
-the last commit before the branch split, but not before the root
-commit nor before tag "1" in the repro case.
-The distance to the tag that is erroneously picked up is much greater
-than the closest tag (around 1200 commits more).
-
-I'm sadly not very well-versed in C nor in the Git source code, so I'm
-not sure how the appropriate fix would look like - that's why I'm not
-also submitting a patch to fix this. :)
-
-// Mikael K.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3e37b93..e019f62 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1089,6 +1089,12 @@ commit.gpgSign::
+ 	convenient to use an agent to avoid typing your GPG passphrase
+ 	several times.
+ 
++commit.signoff::
++
++	A boolean to enable/disable whether Signed-off-by line by the
++	committer should be added to all commits at the end of the
++	commit log messages.  Defaults to false.
++
+ commit.status::
+ 	A boolean to enable/disable inclusion of status information in the
+ 	commit message template when using an editor to prepare the commit
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 904dafa..7546c7a 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -156,6 +156,11 @@ OPTIONS
+ 	Add Signed-off-by line by the committer at the end of the commit
+ 	log message.
+ 
++--no-signoff::
++	Countermand `commit.signoff` configuration, preventing a
++	Signed-off-by line to be added at the end of the commit log
++	message.
++
+ -n::
+ --no-verify::
+ 	This option bypasses the pre-commit and commit-msg hooks.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 254477f..5cfbe57 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1505,6 +1505,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.signoff")) {
++		signoff = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 116885a..fcb39b4 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -179,6 +179,28 @@ test_expect_success '--signoff' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success 'commit.signoff config option' '
++	git config commit.signoff true &&
++	echo "yet another content *narf*" >> foo &&
++	echo "zort" | git commit -F - foo &&
++	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
++	git config --unset commit.signoff &&
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++no signed off by here
++EOF
++
++test_expect_success '--no-signoff' '
++	git config commit.signoff true &&
++	echo "yet another content *narf*" >> foo &&
++	echo "no signed off by here" | git commit --no-signoff -F - foo &&
++	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
++	git config --unset commit.signoff &&
++	test_cmp expect output
++'
++
+ test_expect_success 'commit message from file (1)' '
+ 	mkdir subdir &&
+ 	echo "Log in top directory" >log &&
+-- 
+2.4.4.489.gc2a2b54.dirty
