@@ -1,126 +1,129 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/6] git-reflog: add create and exists functions
-Date: Thu, 25 Jun 2015 14:01:36 -0700
-Message-ID: <xmqq1tgzy027.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 4/6] refs: add safe_create_reflog function
+Date: Thu, 25 Jun 2015 14:02:26 -0700
+Message-ID: <xmqqwpyrwlgd.fsf@gitster.dls.corp.google.com>
 References: <1435265110-6414-1-git-send-email-dturner@twopensource.com>
-	<1435265110-6414-5-git-send-email-dturner@twopensource.com>
+	<1435265110-6414-4-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 23:01:44 2015
+X-From: git-owner@vger.kernel.org Thu Jun 25 23:02:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8EHH-0003V6-Uo
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 23:01:44 +0200
+	id 1Z8EI6-0004Fn-CT
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 23:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751799AbbFYVBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 17:01:40 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:35727 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751997AbbFYVBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 17:01:39 -0400
-Received: by iebrt9 with SMTP id rt9so63096337ieb.2
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 14:01:38 -0700 (PDT)
+	id S1752104AbbFYVCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 17:02:30 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:36294 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751780AbbFYVC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 17:02:28 -0400
+Received: by igbiq7 with SMTP id iq7so788700igb.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 14:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=Oi+s8FbClXkYU2myauU+8JKW0i1uKdet7DdaQIOC2ps=;
-        b=0ES1zeRhOBC3/9iBY/kcrXODl18YwOK3oma5FNgq/oL945+nHM0ANVlsFetO4O6SD5
-         JcfCN2HMTGE4Svf3OiwW3qo3CYTallvOBRLNa4L2W3t0fCqCXlOWLG5ndz3WjFx8sP9G
-         NTVCURtNH88vr/6E5ZE/hzPE9Un7EQTuCfzQb0NSXwHwo0uLxtvd6nWS+3EAldAKVnLl
-         ZkLurGtZjBzAxI0vIwxboeZaYKfbSarba0/iJQFgUnBcTQus0hlYAS4qpgo8xFw08kWq
-         aexxwE4Lj27TxdzQ2o38wM1z0cWFcvNuzfd+BCWh8lYAXA/z/B6W4K2vfuOj44FUjtTq
-         M/fA==
-X-Received: by 10.107.170.216 with SMTP id g85mr54314701ioj.31.1435266098580;
-        Thu, 25 Jun 2015 14:01:38 -0700 (PDT)
+        bh=RhHqlfuSkkZEdgpIOKzOzlZ/vO0w7IT3CGV+0gADCgI=;
+        b=S+EWqdJSOafcc7dV3oRjhxT9Wpbp3Vl3dMxwtieg58JOXmgBlz9RD3Pz5aBriLdR2g
+         xBRk3OIgKwaTIUK3ao5KyvJunPzbexV+V1PkBt+IBdTfnIjH8mfsC2jI56Bp6OPq0Rv3
+         bX4gixPzjYKxvFvYV3lRomgmHAsWMzNESMUvZCmVJDSfLXzMs3eAycFblWpbpx75o7dD
+         GbGGZFW5gB9dyOnHrZSk5kyaYf18dhjxIGzzFzpBBCKErlcq3hDUwJhfEhv6Est09sHU
+         2Ln1jtFZr2AvYalKRFTFtcSIF3mKfUXlnytvDxof/nil4B0Y/K7XHxSSaBZ0KSWlGjwM
+         jwNg==
+X-Received: by 10.43.10.194 with SMTP id pb2mr46982701icb.31.1435266148332;
+        Thu, 25 Jun 2015 14:02:28 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id u38sm20327353ioi.0.2015.06.25.14.01.37
+        by mx.google.com with ESMTPSA id s5sm4081154igh.6.2015.06.25.14.02.27
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 14:01:38 -0700 (PDT)
-In-Reply-To: <1435265110-6414-5-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Thu, 25 Jun 2015 16:45:09 -0400")
+        Thu, 25 Jun 2015 14:02:27 -0700 (PDT)
+In-Reply-To: <1435265110-6414-4-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Thu, 25 Jun 2015 16:45:08 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272734>
 
 David Turner <dturner@twopensource.com> writes:
 
-Because...???
-
-> These are necessary because ref backends manage reflogs.
-
-"Because ref backends manage reflogs" may be a good explanation to
-implement something as part of ref API, but it does not explain why
-that something needs to be implemented in the first place.
-
-> In a moment,
-> we will use these functions to make git stash work with alternate
-> ref backends.
+> Make log_ref_setup private, and add public safe_create_reflog which
+> calls log_ref_setup.
+>
+> In a moment, we will use safe_create_reflog to add reflog creation
+> commands to git-reflog.
 >
 > Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
->  builtin/reflog.c | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 78 insertions(+), 1 deletion(-)
+>  builtin/checkout.c |  4 +---
+>  refs.c             | 11 +++++++++++
+>  refs.h             |  2 +-
+>  3 files changed, 13 insertions(+), 4 deletions(-)
 >
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index c2eb8ff..a64158d 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -13,6 +13,10 @@ static const char reflog_expire_usage[] =
->  "git reflog expire [--expire=<time>] [--expire-unreachable=<time>] [--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] [--verbose] [--all] <refs>...";
->  static const char reflog_delete_usage[] =
->  "git reflog delete [--rewrite] [--updateref] [--dry-run | -n] [--verbose] <refs>...";
-> +static const char reflog_create_usage[] =
-> +"git reflog create <refs>...";
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 93f63d3..b793670 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -621,7 +621,6 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>  		if (opts->new_orphan_branch) {
+>  			if (opts->new_branch_log && !log_all_ref_updates) {
+>  				int temp;
+> -				struct strbuf log_file = STRBUF_INIT;
+>  				int ret;
+>  				const char *ref_name;
+>  				struct strbuf err = STRBUF_INIT;
+> @@ -629,9 +628,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>  				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
+>  				temp = log_all_ref_updates;
+>  				log_all_ref_updates = 1;
+> -				ret = log_ref_setup(ref_name, &log_file, &err);
+> +				ret = safe_create_reflog(ref_name, &err);
+>  				log_all_ref_updates = temp;
+> -				strbuf_release(&log_file);
+>  				if (ret) {
+>  					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
+>  						opts->new_orphan_branch, err.buf);
 
-It makes sense to take more than one; you may want to prepare more
-than one, and you would signal error by exiting with a non-zero
-status if any of them failed.
+Yup, much nicer ;-)
 
-> +static const char reflog_exists_usage[] =
-> +"git reflog exists <refs>...";
-
-This is iffy, though.  "git reflog exists foo bar" says "all of them
-exist" or "some of them exist"?  Why is it more useful to implement
-"all of them exist"?
-
-Perhaps dropping "..." would be simpler to explain and less
-confusing.
-
-> @@ -699,12 +703,79 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
->  	return status;
+> diff --git a/refs.c b/refs.c
+> index de7b5ef..7b02c45 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3171,6 +3171,17 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+>  	return 0;
 >  }
 >  
-> +static int cmd_reflog_create(int argc, const char **argv, const char *prefix)
+> +
+> +int safe_create_reflog(const char *refname, struct strbuf *err)
 > +{
-> +	int i, status = 0, start = 0;
-> +	struct strbuf err = STRBUF_INIT;
+> +	int ret;
+> +	struct strbuf sb = STRBUF_INIT;
 > +
-> +	for (i = 1; i < argc; i++) {
-> +		const char *arg = argv[i];
-> +		if (!strcmp(arg, "--")) {
-> +			i++;
-> +			break;
-> +		}
-> +		else if (arg[0] == '-')
-> +			usage(reflog_create_usage);
-> +		else
-> +			break;
-> +	}
+> +	ret = log_ref_setup(refname, &sb, err);
+> +	strbuf_release(&sb);
+> +	return ret;
+> +}
 > +
-> +	start = i;
-> +
-> +	if (argc - start < 1)
-> +		return error("Nothing to create?");
-> +
-> +	for (i = start ; i < argc; i++) {
-
-s/start ;/start;/ (everywhere).
+>  static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
+>  			    const unsigned char *new_sha1,
+>  			    const char *committer, const char *msg)
+> diff --git a/refs.h b/refs.h
+> index debdefc..2986aac 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -228,7 +228,7 @@ int pack_refs(unsigned int flags);
+>  /*
+>   * Setup reflog before using. Fill in err and return -1 on failure.
+>   */
+> -int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
+> +int safe_create_reflog(const char *refname, struct strbuf *err);
+>  
+>  /** Reads log for the value of ref during at_time. **/
+>  extern int read_ref_at(const char *refname, unsigned int flags,
