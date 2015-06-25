@@ -1,104 +1,170 @@
-From: =?UTF-8?Q?Bj=C3=B8rnar_Snoksrud?= <snoksrud@gmail.com>
-Subject: Linked workdirs break typo-correction.
-Date: Thu, 25 Jun 2015 16:15:23 +0200
-Message-ID: <CA+cck7GD+JgR4O-XoBeUX1gJAG6suP9iLwASyRygK8hR4KP7pw@mail.gmail.com>
-Reply-To: bjornar@snoksrud.no
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 25 16:15:42 2015
+From: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+Subject: [PATCH v2] commit: add commit.signoff config option
+Date: Thu, 25 Jun 2015 11:50:07 -0300
+Message-ID: <1435243807-32112-1-git-send-email-cmarcelo@gmail.com>
+Cc: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 25 16:50:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z87wE-0001m7-Nm
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 16:15:35 +0200
+	id 1Z88U3-0004yz-AK
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 16:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751297AbbFYOP0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2015 10:15:26 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:36234 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239AbbFYOPY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2015 10:15:24 -0400
-Received: by ykdr198 with SMTP id r198so41125329ykd.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 07:15:23 -0700 (PDT)
+	id S1752627AbbFYOuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 10:50:25 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:34417 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752315AbbFYOuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 10:50:17 -0400
+Received: by pdbep18 with SMTP id ep18so33125766pdb.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 07:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=WhVFAknyNO54jlcBHoMPIHDdZdmR/XPXr7Z1okyPm14=;
-        b=K1g00L1jesfLdSF8Gzs9j+Wjl7bS91tERs6FHlv8zfpoI/zkzi7/ZkZbLN3iz8ZQHW
-         sebB1eKcqvLErDfZJVSg+7Gz+BShPJq+a5wT624ZsXgUCfd5Y63WJPsy/jVgyaqcv8GL
-         CPDLko+xjXOOpO4aoY2+5J7Suxu8yvA5E5/mUBE2120oNzxVTup4AiMjWV0KpRzNUhpG
-         0X+MNZLbfE+vvuvaeqsdDBZbqUa+cw76ReNPV2o8wHTMz3DSRLJU3gT0OtCMrDLt21kI
-         zioseG+ke2BnnALxQeqlQq1ZtNsFlfFlHPrMT1j3/H6Fxj7Bvyb9oZ5Rvd98D2a3fEO9
-         l2Zg==
-X-Received: by 10.13.244.195 with SMTP id d186mr48558399ywf.73.1435241723823;
- Thu, 25 Jun 2015 07:15:23 -0700 (PDT)
-Received: by 10.129.71.3 with HTTP; Thu, 25 Jun 2015 07:15:23 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=JLwZiAwRyrKBxrF69JZiCMt4VvwMIqUq8UptHYoujPY=;
+        b=YyzYtv58cquBajVPcsIrscgaH67jwDBc47YMRNvZfPO4kg3xdAC32MuYHkVHSZT4pe
+         kNRsM5zyMpXshpeujYCFZLPAiLqV3hG24QqO2WzTwAw9d3l8b280CJfPqwEc8LELsK3S
+         zvp5PJadc9OU6f/2KZGOYWFZlh6c8NCwuju7WvQAnaHvFopzHkMJE9I2ald6T/lfwmf7
+         +m42+Wa59XAcivlbZsCgxm7gKpeQy0OM5MBQ/yoUb8lOT6tsFTlCRwyjGYBnyq/4p2hi
+         327Cbi+mntQ+smIgEduKrwPMaFfTuscXPlJwmc5U9ofGR8Tq2jJiq3eM7jUBYy/wP+Tk
+         oinw==
+X-Received: by 10.70.42.101 with SMTP id n5mr92617231pdl.93.1435243816461;
+        Thu, 25 Jun 2015 07:50:16 -0700 (PDT)
+Received: from gray.localdomain (205.158.165.99.ptr.us.xo.net. [205.158.165.99])
+        by mx.google.com with ESMTPSA id u7sm27176664pdo.49.2015.06.25.07.50.15
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Jun 2015 07:50:15 -0700 (PDT)
+X-Mailer: git-send-email 2.4.4.489.g5bc41de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272678>
 
-This is a weird one..
+In projects that use Signed-off-by, it's convenient to include that line
+in the commit message by default. The commit.signoff config option
+allows to add that line in all commits automatically.
 
-When standing in a folder inside a linked working copy, the
-typo-correction breaks all commands.
+Document that this config option can be overriden by using
+--no-signoff.
 
-Repro:
-~/git $ git --version
-git version 2.4.4.600.g6397abd
-~/git $ git init bar
-Initialized empty Git repository in ~/git/bar/.git/
-~/git $ cd bar
-~/git/bar (master #) $ git commit -m init --allow-empty
-[master (root-commit) 554ea84] init
-~/git/bar (master) $ mkdir folder
-~/git/bar (master) $ touch folder/file
-~/git/bar (master) $ git add folder
-~/git/bar (master +) $ git commit -m folder
-[master 8c00ba8] folder
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 folder/file
-~/git/bar (master) $ cd folder/
-~/git/bar/folder (master) $ git shw
-WARNING: You called a Git command named 'shw', which does not exist.
-Continuing under the assumption that you meant 'show'
-in 0.1 seconds automatically...
-commit 8c00ba8d30cff0e0d1b9cf110a65ea8f33edf8b2
-Author: Bj=C3=B8rnar Snoksrud <bsnoksru@cisco.com>
-Date:   Thu Jun 25 16:08:01 2015 +0200
+Signed-off-by: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+---
 
-    folder
+Differences from v1:
+* Use test_config helper in the test
+* Add bash completion for commit and config
 
-diff --git a/folder/file b/folder/file
-new file mode 100644
-index 0000000..e69de29
-bsnoksru@calculon ~/git/bar/folder (master) $ git branch foo
-bsnoksru@calculon ~/git/bar/folder (master) $ git checkout foo --to
-~/git/foo
-Enter /home/bsnoksru/git/foo (identifier foo)
-Switched to branch 'foo'
-bsnoksru@calculon ~/git/bar/folder (master) $ cd ../../foo/folder/
-~/git/foo/folder (foo) $ git shw
-WARNING: You called a Git command named 'shw', which does not exist.
-Continuing under the assumption that you meant 'show'
-in 0.1 seconds automatically...
-fatal: internal error: work tree has already been set
-Current worktree: ~/git/foo
-New worktree: ~/git/foo/folder
-~/git/foo/folder (foo) $ git brnch baz
-WARNING: You called a Git command named 'brnch', which does not exist.
-Continuing under the assumption that you meant 'branch'
-in 0.1 seconds automatically...
-fatal: internal error: work tree has already been set
-Current worktree: /home/bsnoksru/git/foo
-New worktree: /home/bsnoksru/git/foo/folder
+ Documentation/config.txt               |  6 ++++++
+ Documentation/git-commit.txt           |  5 +++++
+ builtin/commit.c                       |  4 ++++
+ contrib/completion/git-completion.bash |  4 +++-
+ t/t7500-commit.sh                      | 20 ++++++++++++++++++++
+ 5 files changed, 38 insertions(+), 1 deletion(-)
 
-
---=20
-bjornar@snoksrud.no
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3e37b93..e019f62 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1089,6 +1089,12 @@ commit.gpgSign::
+ 	convenient to use an agent to avoid typing your GPG passphrase
+ 	several times.
+ 
++commit.signoff::
++
++	A boolean to enable/disable whether Signed-off-by line by the
++	committer should be added to all commits at the end of the
++	commit log messages.  Defaults to false.
++
+ commit.status::
+ 	A boolean to enable/disable inclusion of status information in the
+ 	commit message template when using an editor to prepare the commit
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 904dafa..7546c7a 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -156,6 +156,11 @@ OPTIONS
+ 	Add Signed-off-by line by the committer at the end of the commit
+ 	log message.
+ 
++--no-signoff::
++	Countermand `commit.signoff` configuration, preventing a
++	Signed-off-by line to be added at the end of the commit log
++	message.
++
+ -n::
+ --no-verify::
+ 	This option bypasses the pre-commit and commit-msg hooks.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 254477f..5cfbe57 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1505,6 +1505,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.signoff")) {
++		signoff = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c97c648..7a79a89 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1123,7 +1123,8 @@ _git_commit ()
+ 		;;
+ 	--*)
+ 		__gitcomp "
+-			--all --author= --signoff --verify --no-verify
++			--all --author=
++			--signoff --no-signoff --verify --no-verify
+ 			--edit --no-edit
+ 			--amend --include --only --interactive
+ 			--dry-run --reuse-message= --reedit-message=
+@@ -2009,6 +2010,7 @@ _git_config ()
+ 		color.status.untracked
+ 		color.status.updated
+ 		color.ui
++		commit.signoff
+ 		commit.status
+ 		commit.template
+ 		core.abbrev
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 116885a..949272d 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -179,6 +179,26 @@ test_expect_success '--signoff' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success 'commit.signoff config option' '
++	test_config commit.signoff true &&
++	echo "yet another content *narf*" >> foo &&
++	echo "zort" | git commit -F - foo &&
++	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++no signed off by here
++EOF
++
++test_expect_success '--no-signoff' '
++	test_config commit.signoff true &&
++	echo "yet another content *narf*" >> foo &&
++	echo "no signed off by here" | git commit --no-signoff -F - foo &&
++	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
++	test_cmp expect output
++'
++
+ test_expect_success 'commit message from file (1)' '
+ 	mkdir subdir &&
+ 	echo "Log in top directory" >log &&
+-- 
+2.4.4.489.g5bc41de
