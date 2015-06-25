@@ -1,109 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/6] git-reflog: add create and exists functions
-Date: Thu, 25 Jun 2015 10:18:09 -0700
-Message-ID: <xmqqioabzoz2.fsf@gitster.dls.corp.google.com>
-References: <1435173388-8346-1-git-send-email-dturner@twopensource.com>
-	<1435173388-8346-6-git-send-email-dturner@twopensource.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] convert "enum date_mode" into a struct
+Date: Thu, 25 Jun 2015 13:22:47 -0400
+Message-ID: <20150625172246.GA24744@peff.net>
+References: <20150625165341.GA21949@peff.net>
+ <20150625165501.GB23503@peff.net>
+ <20150625170328.GV18226@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 19:18:44 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jun 25 19:22:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8AnQ-00061e-Mb
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 19:18:41 +0200
+	id 1Z8ArY-0001Ak-Ja
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 19:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbbFYRSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 13:18:34 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:35545 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752662AbbFYRSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 13:18:12 -0400
-Received: by igblr2 with SMTP id lr2so101769544igb.0
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 10:18:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=1ikLT4fHtWwezcTwCHxyoUodZh0a3yg7PpOz84xiOFE=;
-        b=t9AHHE/+fIoTuTOEQJkGAT4/CT00wfgS1lFiil8co0VLm1wdDKtVHzixTa7f3EBDji
-         KuuTF7lu7h+MWkz+gElacocewUvx95sgT6jb1IMaQ2K5ws5TtAILSKuA1drA79lGEdSa
-         P6/XdzJlPk/v1IqOs1aSUWUatmHYkJ+kXHXYgTdyXE0WTi0jttcHPGBlCgWMQWVhDc+1
-         IDa/LagyQUXi6/N6NUTt6p/QWPyQOjsafdcAWV5Wg2LwahtoYqGm7ElRjm8yoOawYtdu
-         T3Rb755cJIWbKsLqo6qSvBVx8I9z4GND/8uKXt11SWnRWKECqGIDJaX/H06p/TrsLXpj
-         n3RQ==
-X-Received: by 10.107.135.22 with SMTP id j22mr13078593iod.20.1435252691579;
-        Thu, 25 Jun 2015 10:18:11 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id b73sm19972291iob.25.2015.06.25.10.18.10
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 10:18:10 -0700 (PDT)
-In-Reply-To: <1435173388-8346-6-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 24 Jun 2015 15:16:27 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752574AbbFYRWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 13:22:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51794 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750777AbbFYRWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 13:22:49 -0400
+Received: (qmail 21202 invoked by uid 102); 25 Jun 2015 17:22:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Jun 2015 12:22:49 -0500
+Received: (qmail 8517 invoked by uid 107); 25 Jun 2015 17:22:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Jun 2015 13:22:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Jun 2015 13:22:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20150625170328.GV18226@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272702>
 
-David Turner <dturner@twopensource.com> writes:
+On Thu, Jun 25, 2015 at 06:03:28PM +0100, John Keeping wrote:
 
-> These are necessary because ref backends manage reflogs.
+> > Ideally we could say:
+> > 
+> >   show_date(t, tz, &{ DATE_NORMAL });
+> > 
+> > but of course C does not allow that.
+> 
+> Yes it does, e.g. in 6.5.2.5 of C11, example 3 shows:
 
-Because?
+Well, yes. But we generally restrict ourselves to C89 here, so we are
+not even close.
 
-	Because with core.logAllRefUpdates set to false, creating or
-        updating a ref would not log what is done to it, unless a
-        reflog already exists for the ref.  There are cases where
-        we always want to have a reflog for a ref (e.g. refs/stash)
-        regardless of the value of core.logAllRefUpdates, and we
-        need a way to ensure that a reflog for a ref exists.
-        "reflog create" is the way to do so.
+> Of course, whether all of the compilers we target support it is a
+> different question.  If they do, perhaps something like:
+> 
+> #define SIMPLE_DATE(f)		&(struct date_mode) { DATE_NORMAL }
+> 
+> would allow the callers to remain reasonably sane.
 
-	Also we need to be able to tell if a reflog for a ref
-	exists, and "reflog exists" is the way to do so.
+My patch already introduces DATE_MODE, so you could conditionally hide
+it there, and fall back to date_mode_from_type when the compiler is too
+old for this. But then, what is the advantage over the existing
+solution? It's reentrant, but I don't think that is a problem here.
 
-Now, going back to 4/6, I think create_reflog() function as an
-external API has a few problems.
+And in patch 3, you'll see that I add an extra assertion to
+date_mode_from_type that this cannot support (to make sure that we do
+not create a DATE_STRFTIME mode with no matching format string). The
+syntax above would at least give us NULL for the string, which is better
+than random garbage, but I think the assert is better still.
 
- * Its name does not tell us what should happen when a reflog
-   already exists for the refname the caller asked to "create"
-   reflog for.  I understand that this only makes sure it exists and
-   does not destroy existing one.  Its old name, log_ref_setup(),
-   did not have this problem, but now it does.
-
- * Its second parameter that is a strbuf is used only internally
-   from within log_ref_write_1(); all the external callers do not
-   look at it and they are forced to strbuf_init() it before calling
-   the function and to strbuf_release() after the function returns.
-
-Oh, also 4/6 incorrectly says that log_ref_write() is renamed to
-create_reflog(), but it was log_ref_setup() that was renamed.
-
-I think what 4/6 should have done in order to make the guts of what
-log_ref_setup() does available as a more useful external API is to
-
- * keep log_ref_setup() as-is, make it static to refs.c, and have
-   the internal caller that cares about the strbuf (i.e. the path
-   to the log file) call that; and
-
- * Add a thin-wrapper for callers that do not care about the path to
-   the log file, e.g.
-
-	int vivify_reflog(const char *refname, struct strbuf *err)
-	{
-		int ret;
-		struct strbuf sb = STRBUF_INIT;
-
-                ret = log_ref_setup(refname, &sb, err);
-                strbuf_release(&sb);
-                return ret;
-	}
-
-Hmm?
-    
+-Peff
