@@ -1,174 +1,104 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [RFC/PATCH 9/9] tag.c: implement '--merged' and '--no-merged' options
-Date: Thu, 25 Jun 2015 17:13:16 +0530
-Message-ID: <1435232596-27466-9-git-send-email-karthik.188@gmail.com>
-References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
- <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 25 13:44:28 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/WIP v3 07/31] am: extract patch, message and authorship
+ with git-mailinfo
+Date: Thu, 25 Jun 2015 19:54:47 +0800
+Message-ID: <CACRoPnSD5kHof6yeRLqP6E7LcBjiHR1it3cadcRUCA3T-g=kUw@mail.gmail.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-8-git-send-email-pyokagan@gmail.com>
+	<xmqqtwu4d8pg.fsf@gitster.dls.corp.google.com>
+	<CACRoPnS9eyBF5NEM7sKvep+A8aKUNLJDaV-1c_oWDBwMcv26Bg@mail.gmail.com>
+	<xmqq1th7brsj.fsf@gitster.dls.corp.google.com>
+	<20150624075446.GA1964@yoshi.chippynet.com>
+	<xmqqa8vpayhg.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 13:54:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z85Zx-0006dH-MC
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 13:44:26 +0200
+	id 1Z85k6-0006aY-RS
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 13:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751817AbbFYLoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 07:44:22 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:34377 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751650AbbFYLoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 07:44:18 -0400
-Received: by pdbep18 with SMTP id ep18so30164444pdb.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 04:44:18 -0700 (PDT)
+	id S1751165AbbFYLyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 07:54:51 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:36227 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750777AbbFYLyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 07:54:49 -0400
+Received: by lacny3 with SMTP id ny3so43302983lac.3
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 04:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=J96yV3jSwUEskDHKmy5A5IFcz19rdXSS3Gpjybh80M4=;
-        b=VQhIAh/vMyNdKR7EQbKm7WeSvYC8g8qPWr6sah5LVsHt5cVyMSm5QMChWSziLCMyxi
-         nrA14UrZD7MTOOmMb3uKNXkLF26LNUB3lMiXHY43MOWcZ6IuNh3wSW3CwZz1QVoIa55m
-         FYcbKNK952yJgTSKhOTxdVQhFBkt/zgv5bNuS/745dJ6HCUAYtY+zXNZ0FyrzK/A+Ufl
-         gHs30qvaGTzIUU2eQBxUnCIKyeGVWSDH9Pv1rQuHiGc60wl7HSKbyk6L0QYe+aOOs/oM
-         DxJoPNwUjjwMS4tmfPVjZsxze+NSnrMISr76SG3F24A2qB7r4MzITwBtcIEdlpjGIbGc
-         J2oQ==
-X-Received: by 10.70.118.73 with SMTP id kk9mr91024579pdb.150.1435232657945;
-        Thu, 25 Jun 2015 04:44:17 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id xn2sm11575446pbc.44.2015.06.25.04.44.15
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jun 2015 04:44:17 -0700 (PDT)
-X-Mailer: git-send-email 2.4.4
-In-Reply-To: <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GpnJo70Kw5dFost0ezX6cs1nH+GnrKwIN+8yq8Jc2I8=;
+        b=0CRFc4tSDa/RAOmbXdK0M11S5MpSZg3r0KRhlOWqxRbmlDOwoMkajnmhfOEaVfepvm
+         g31vdUj6NNJWSAoMGyv6qFUo2omofn3GhmvUf51EpK1gFtOrx/Of+/pUZ36EJhxBHHfm
+         ZL8jqP0EEpguh5ppx1jS4tK1/FyfKrBXUaKY/8yTvbSzbXCuzvMO2dTKD7iO+4w1XqPt
+         jXudn7V4H5nm/y3lntYmEj1nYe+3MlklKp6CXeVwsjuvn234Y4WKBPddOtVugwHBwIKl
+         A+bn+0W+2PWQ+bl6RgX87C/2+1zvKURG4xTkJFw+VnBtNfKX8bM/EBLk9hI0g0lfAD+l
+         YWRw==
+X-Received: by 10.112.12.102 with SMTP id x6mr37955758lbb.80.1435233287809;
+ Thu, 25 Jun 2015 04:54:47 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 25 Jun 2015 04:54:47 -0700 (PDT)
+In-Reply-To: <xmqqa8vpayhg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272668>
 
-Using 'ref-filter' APIs implement the '--merged' and '--no-merged'
-options into 'tag.c'. The '--merged' option lets the user to only
-list tags merged into the named commit. The '--no-merged' option
-lets the user to only list tags not merged into the named commit.
-If no object is provided it assumes HEAD as the object.
+On Wed, Jun 24, 2015 at 11:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> 3. I'm over-thinking this and you just want the "struct strbufs" in the
+>>    struct am_state to be switched to "char*"s?
+>
+> Yes, everybody interacts with am_state, and these fields are
+> supposed to be constant during the processing of each patch input
+> message; they should be simple strings, not strbufs, to make sure if
+> anybody _does_ muck with them in-place, that would be very visible.
+> The helpers to initialize them are free to use strbuf API to prepare
+> these simple string fields, of course.
 
-Add documentation and tests for the same.
+OK. I've implemented it on my end.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-tag.txt | 10 +++++++++-
- builtin/tag.c             |  9 +++++----
- t/t7004-tag.sh            | 27 +++++++++++++++++++++++++++
- 3 files changed, 41 insertions(+), 5 deletions(-)
+>> (On a somewhat related thought, currently we do write_file() all over
+>> the place, which is really ugly. I'm leaning heavily on introducing an
+>> am_save() function, for "I don't care how it is done but just update the
+>> contents of the am state directory so that it matches the contents of
+>> the struct am_state".
+>
+> Sure; the scripted Porcelain may have done "echo here, echo there"
+> instead of "concatenate into a $var and then 'echo $var' at end" as
+> that is more natural way to program in that environment.  You are
+> doing this in C and "prepare the thing in-core and write it all at
+> the point to snapshot" may well be the more natural way to program.
+>
+> As long as a process that stops in the middle does not leave on-disk
+> state inconsistent, batching would be fine.  For example, you may
+> apply and commit two (or more) patches without updating the on-disk
+> state as you do not see need to give control back to the user
+> (i.e. they applied cleanly) and then write out the on-disk state
+> with .next incremented by two (or more) before giving the control
+> back could be a valid optimization (take this example with a grain
+> of salt, though; I haven't thought too deeply about what should
+> happen if you Ctrl-C the process in the middle).
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 16e396c..74ed157 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
- 	[--column[=<options>] | --no-column] [--sort=<key>] [--format=<format>]
--	[<pattern>...]
-+	[(--merged | --no-merged) [<commit>]] [<pattern>...]
- 'git tag' -v <tagname>...
- 
- DESCRIPTION
-@@ -169,6 +169,14 @@ This option is only applicable when listing tags without annotation lines.
- 	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
- 	The fields are same as those in `git for-each-ref`.
- 
-+--merged [<commit>]::
-+	Only list tags whose tips are reachable from the
-+	specified commit (HEAD if not specified).
-+
-+--no-merged [<commit>]::
-+	Only list tags whose tips are not reachable from the
-+	specified commit (HEAD if not specified).
-+
- 
- CONFIGURATION
- -------------
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 91356c9..9a1f7a5 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -23,7 +23,7 @@ static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
- 	N_("git tag -d <tagname>..."),
- 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
--		"\n\t\t[<pattern>...]"),
-+		"\n\t\t[--merged [<commit>]] [--no-merged [<commit>]] [<pattern>...]"),
- 	N_("git tag -v <tagname>..."),
- 	NULL
- };
-@@ -35,9 +35,6 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
- 	struct ref_array array;
- 	int i;
- 
--	if (!format)
--		check_format = 1;
--
- 	memset(&array, 0, sizeof(array));
- 
- 	if (filter->lines == -1)
-@@ -352,6 +349,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
- 		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
- 		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
-+		OPT_MERGED(&filter, N_("print only tags that are merged")),
-+		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
- 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		{
-@@ -412,6 +411,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("--contains option is only allowed with -l."));
- 	if (filter.points_at.nr)
- 		die(_("--points-at option is only allowed with -l."));
-+	if (filter.merge_commit)
-+		die(_("--merged and --no-merged option are only allowed with -l"));
- 	if (cmdmode == 'd')
- 		return for_each_tag_name(argv, delete_tag);
- 	if (cmdmode == 'v')
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index e8cebb6..873aad3 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1523,4 +1523,31 @@ test_expect_success '--format should list tags as per format given' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup --merged test tags' '
-+	git tag mergetest-1 HEAD~2 &&
-+	git tag mergetest-2 HEAD~1 &&
-+	git tag mergetest-3 HEAD
-+'
-+
-+test_expect_success '--merged cannot be used in non-list mode' '
-+	test_must_fail git tag --merged=mergetest-2 foo
-+'
-+
-+test_expect_success '--merged shows merged tags' '
-+	cat >expect <<-\EOF &&
-+	mergetest-1
-+	mergetest-2
-+	EOF
-+	git tag -l --merged=mergetest-2 mergetest-* >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-merged show unmerged tags' '
-+	cat >expect <<-\EOF &&
-+	mergetest-3
-+	EOF
-+	git tag -l --no-merged=mergetest-2 mergetest-* >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.4.4
+Right, I briefly wondered if we could hold off writing the am_state to
+disk as much as possible, and only write to disk when we are about to
+terminate. This would involve installing an atexit() and SIGTERM
+signal handler, but I haven't thought too deeply about that.
+
+Anyway, moving all the "writing am_state to disk" logic to a central
+function am_save() would be a good immediate step, I think, so I've
+implemented it on my end.
+
+Thanks,
+Paul
