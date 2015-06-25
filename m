@@ -1,177 +1,80 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [RFC/PATCH 8/9] tag.c: implement '--format' option
-Date: Thu, 25 Jun 2015 18:33:15 +0530
-Message-ID: <1435237395-6754-1-git-send-email-karthik.188@gmail.com>
-References: <1435232596-27466-8-git-send-email-karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 25 15:03:38 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] apply: fix adding new files on i-t-a entries
+Date: Thu, 25 Jun 2015 06:07:44 -0700
+Message-ID: <xmqqy4j80wdb.fsf@gitster.dls.corp.google.com>
+References: <CACfKtTAvH7FH2AkC5hUNFEQ620gF401SNYaULLy62iE8S55-7A@mail.gmail.com>
+	<1435062855-26274-1-git-send-email-pclouds@gmail.com>
+	<xmqqoak6e5dx.fsf@gitster.dls.corp.google.com>
+	<CACsJy8Ap4uNi3gXV8Y+S18xtLaZ1R6DscEf7wJKjt59ZLOAJ5Q@mail.gmail.com>
+	<xmqqzj3p9gv7.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AVeGxOS4pWfkcbPnxRQ0-gJRC7B1NSs+Ci81x46ieDzQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Patrick Higgins <phiggins@google.com>,
+	=?utf-8?Q?Bj=C3=B8rnar?= Snoksrud <snoksrud@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 15:08:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z86oY-0002li-Fg
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 15:03:34 +0200
+	id 1Z86sr-0006Nz-Pg
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 15:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbbFYND0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 09:03:26 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36460 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbbFYNDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 09:03:25 -0400
-Received: by paceq1 with SMTP id eq1so49538997pac.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 06:03:24 -0700 (PDT)
+	id S1750968AbbFYNH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 09:07:57 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:33437 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555AbbFYNH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 09:07:56 -0400
+Received: by igbqq3 with SMTP id qq3so14001402igb.0
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 06:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4m2CQlUReIl0VrNgUi2owBNOorvj6iSVIy8aILF/Gt0=;
-        b=u0bcdNl4/s2kuv0ETDwu2CX+as24FK0AErLH2BAC9LAeRmtH2R2axviuuSC0i2hDqW
-         sA7YwROFwL4WghOl6fRE3+xXUjz54onB/5pK4qKr5pOkKmEhVUmig2wqjl6nmm5fMf9b
-         J7Xif8gIuLqB/R67wAUKhqywzfSEEcSfbL3m6QROdD4c+mdvYL0TuNgnsZHGOWldQ1Bi
-         rMrcuqS1SI7OXCoVLYtgMCZ8CrxXi1AmInj2Zp6gaQk9XTMEcc7JCQ+0m4w3hzxw+K1E
-         iY2/3qraF39z1WD2NBSV1lorvALPFVfwKwM2ltRrsLVivCihR26i/Q1BxehCRo+nQROP
-         whfw==
-X-Received: by 10.67.23.3 with SMTP id hw3mr92843355pad.67.1435237404820;
-        Thu, 25 Jun 2015 06:03:24 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id de2sm30125275pdb.15.2015.06.25.06.03.22
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jun 2015 06:03:23 -0700 (PDT)
-X-Mailer: git-send-email 2.4.4
-In-Reply-To: <1435232596-27466-8-git-send-email-karthik.188@gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=THnmMaUFGVKg9g1wEmdZ9tKEby+KaYjfaKmn+flsPBA=;
+        b=X8XnzHiV3DtgLR+H/kyfSl071BHLHLuydtn5syNrq5TEG3pNlF4mX7koOAMzrlEtc/
+         W2YCfCumrN4VjN/kizx10Eyo73FYVJKwYvGYjBBQxVkU1CwpIo7Eoo7753YpKhTWEIXo
+         SI7z/ZUOnljBAi2Orov6KYqClH/g3GnoD3fcPFYhQmy2h9ERaocfyklGsiqeJHI0E45E
+         WzwP9pQFWn/6uDxC4AkdnMgLE37cQi3bBnn67reOtVGa+24TvJCWI7OSyD4xGYWT7Oz7
+         l1D04tODnh/X6J8snL3fs5qArYAZqk0WiAglPZ3Un74OYDEh1c2RQ5eiOoc02yVOH1Wu
+         MGkg==
+X-Received: by 10.50.13.10 with SMTP id d10mr3980039igc.20.1435237676233;
+        Thu, 25 Jun 2015 06:07:56 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
+        by mx.google.com with ESMTPSA id b15sm3287686igm.12.2015.06.25.06.07.50
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 25 Jun 2015 06:07:50 -0700 (PDT)
+In-Reply-To: <CACsJy8AVeGxOS4pWfkcbPnxRQ0-gJRC7B1NSs+Ci81x46ieDzQ@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 25 Jun 2015 19:26:17 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272673>
 
-Implement the '--format' option provided by 'ref-filter'.
-This lets the user list tags as per desired format similar
-to the implementation in 'git for-each-ref'.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Add tests and documentation for the same.
+> I think it's clear that you need to revert that commit. I didn't see
+> this at all when I made the commit.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-tag.txt | 15 ++++++++++++++-
- builtin/tag.c             | 11 +++++++----
- t/t7004-tag.sh            | 16 ++++++++++++++++
- 3 files changed, 37 insertions(+), 5 deletions(-)
+I didn't either, and no other reviewers did. But now we know it was
+not sufficient, so let's see...
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 1950d94..16e396c 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
--	[--column[=<options>] | --no-column] [--sort=<key>] [<pattern>...]
-+	[--column[=<options>] | --no-column] [--sort=<key>] [--format=<format>]
- 	[<pattern>...]
- 'git tag' -v <tagname>...
- 
-@@ -156,6 +156,19 @@ This option is only applicable when listing tags without annotation lines.
- 	The object that the new tag will refer to, usually a commit.
- 	Defaults to HEAD.
- 
-+<format>::
-+	A string that interpolates `%(fieldname)` from the
-+	object pointed at by a ref being shown.  If `fieldname`
-+	is prefixed with an asterisk (`*`) and the ref points
-+	at a tag object, the value for the field in the object
-+	tag refers is used.  When unspecified, defaults to
-+	`%(objectname) SPC %(objecttype) TAB %(refname)`.
-+	It also interpolates `%%` to `%`, and `%xx` where `xx`
-+	are hex digits interpolates to character with hex code
-+	`xx`; for example `%00` interpolates to `\0` (NUL),
-+	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
-+	The fields are same as those in `git for-each-ref`.
-+
- 
- CONFIGURATION
- -------------
-diff --git a/builtin/tag.c b/builtin/tag.c
-index d80120e..257526b 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -30,10 +30,9 @@ static const char * const git_tag_usage[] = {
- 
- static unsigned int colopts;
- 
--static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
-+static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
- {
- 	struct ref_array array;
--	char *format;
- 	int i;
- 
- 	memset(&array, 0, sizeof(array));
-@@ -43,7 +42,7 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
- 
- 	if (filter->lines)
- 		format = "%(refname:lalign16)";
--	else
-+	else if (!format)
- 		format = "%(refname:short)";
- 
- 	verify_ref_format(format);
-@@ -324,6 +323,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct strbuf err = STRBUF_INIT;
- 	struct ref_filter filter;
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
-+	const char *format = NULL;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -355,6 +355,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
- 			N_("print only tags of the object"), 0, parse_opt_object_name
- 		},
-+		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
- 		OPT_END()
- 	};
- 
-@@ -394,8 +395,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			copts.padding = 2;
- 			run_column_filter(colopts, &copts);
- 		}
-+		if (format && (filter.lines != -1))
-+			die(_("--format and -n are incompatible"));
- 		filter.name_patterns = argv;
--		ret = list_tags(&filter, sorting);
-+		ret = list_tags(&filter, sorting, format);
- 		if (column_active(colopts))
- 			stop_column_filter();
- 		return ret;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 51a233f..e8cebb6 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1507,4 +1507,20 @@ EOF"
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--format cannot be used with -n' '
-+	test_must_fail git tag -l -n4 --format="%(refname)"
-+'
-+
-+test_expect_success '--format should list tags as per format given' '
-+	cat >expect <<-\EOF &&
-+	foo1.10
-+	foo1.3
-+	foo1.6
-+	foo1.6-rc1
-+	foo1.6-rc2
-+	EOF
-+	git tag -l --format="%(refname)" "foo*" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.4.4
+>> Perhaps a good and safe way forward to resurrect what d95d728a
+>> wanted to do is to first add an option to tell run_diff_index() and
+>> run_diff_files() which behaviour the caller wants to see, add that
+>> only to the caller in wt-status.c?  Then incrementally pass that
+>> option from more callsites that we are absolutely certain that want
+>> this different worldview with respect to i-t-a?
+>
+> Agreed.
+
+OK.  Perhaps then first I should do that revert and we'll
+incrementally rebuild on top.
+
+Thanks.
