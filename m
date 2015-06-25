@@ -1,88 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git error in tag ...: unterminated header
-Date: Thu, 25 Jun 2015 13:48:52 -0700
-Message-ID: <xmqqa8vny0nf.fsf@gitster.dls.corp.google.com>
-References: <20150625155128.C3E9738005C@gemini.denx.de>
-	<xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
-	<20150625201309.5026A384E81@gemini.denx.de>
+Subject: Re: [PATCH v2 3/6] bisect: use refs infrastructure for BISECT_START
+Date: Thu, 25 Jun 2015 13:52:40 -0700
+Message-ID: <xmqq616by0h3.fsf@gitster.dls.corp.google.com>
+References: <1435265110-6414-1-git-send-email-dturner@twopensource.com>
+	<1435265110-6414-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Wolfgang Denk <wd@denx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 25 22:49:05 2015
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 22:52:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8E4x-0000X7-ID
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 22:48:59 +0200
+	id 1Z8E8d-0003uV-IK
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 22:52:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbbFYUs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 16:48:56 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:32997 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670AbbFYUsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 16:48:54 -0400
-Received: by ieqy10 with SMTP id y10so63013337ieq.0
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 13:48:54 -0700 (PDT)
+	id S1751555AbbFYUwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 16:52:44 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:33055 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136AbbFYUwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 16:52:42 -0400
+Received: by igbqq3 with SMTP id qq3so24067072igb.0
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 13:52:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=9hfXsecwgyuKoYtcDAVuX2zKtmQBtSCGDlEjj/g+Yfc=;
-        b=D7bSpnnAR+ynBkHpOVhgKCdU6p+FAOY70tgolis4/vwIeIuHZJENwCC8dytbXAIk7i
-         MudTHQueDqXLj7Vzc5eq1ynPh9wAV8MoyGXA3yeSEVPYG26XMywZ77PCFUO6994BIoy5
-         3z0nGMWvHvTUCrjPyE9b16ApAIAJGj1CV1rYfW9rHlBni7o5T72LjTFUeYdNRB0scfeR
-         CQoVcpF6rCuGUNHKCBJwu4icZWyOqbKMnxhQcYUMDk65ngnNaEm4dAcnkdTdvWp3iwrm
-         k4FSdrAd94qO53RYPBgtihQUpp3eppliVT7aqIU1ltD+SJDsmPDtCmHKUfA8JPwRAFzL
-         mIdA==
-X-Received: by 10.43.163.129 with SMTP id mo1mr44440225icc.61.1435265334229;
-        Thu, 25 Jun 2015 13:48:54 -0700 (PDT)
+        bh=j837etk3bEI3dxWT38Jh5rPGERKNsxP8NULuF9eTWq4=;
+        b=VFPbFsNW1dHGFP7m7PhzRVLXj82++BkDFjOIQk6IHvbj7i+fSiCqggOmk2MeDW0OPB
+         FOa0uCQ/9jZyeX+uGN5LbVwsNQkRTyHZs9i8rb+kz4qqbSRBRcPC9ZbH5i/pNmxQMXRx
+         aB31eNxO4KvxxArPu3eKs51n2nxIAN/Cn6cKJU/gXyEzYpMtYLty+T/yZgS07WTqkAC0
+         /nUeC+Y7rbu7LYFK2JvalB++ltCI2o8perRR1vRB2Of7Mcd5D5MP3up0M6JBYNkwPYlB
+         WSgHpifYYWXrjcPe/4kcxN8tNAqZV3nFk/LLNczTdRpchA07KezovrbnoZfTw27HHIQV
+         opiQ==
+X-Received: by 10.50.13.34 with SMTP id e2mr6611931igc.23.1435265561980;
+        Thu, 25 Jun 2015 13:52:41 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id z6sm4056751ign.13.2015.06.25.13.48.53
+        by mx.google.com with ESMTPSA id ij4sm4067117igb.7.2015.06.25.13.52.41
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 13:48:53 -0700 (PDT)
-In-Reply-To: <20150625201309.5026A384E81@gemini.denx.de> (Wolfgang Denk's
-	message of "Thu, 25 Jun 2015 22:13:09 +0200")
+        Thu, 25 Jun 2015 13:52:41 -0700 (PDT)
+In-Reply-To: <1435265110-6414-3-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Thu, 25 Jun 2015 16:45:07 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272732>
 
-Wolfgang Denk <wd@denx.de> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> Hm... it seems I cannot even easily delte these tags:
+> This ref needs to go through the refs backend, since some code assumes
+> that it can be written and read as a ref.
+
+And the reason why BISECT_HEAD cannot be treated as a ref, but must
+be treated as a file under $GIT_DIR, is...?
+
 >
-> -> git tag -d LABEL_2006_03_12_0025
-> Deleted tag 'LABEL_2006_03_12_0025' (was eb394f5)
-> -> git fsck --full
-> Checking object directories: 100% (256/256), done.
-> Checking object directories: 100% (256/256), done.
-
-This is expected.  "git tag -d" only severed the linkage between
-tagname LABEL_2006_03_12_0025 and the tag object eb394f5; without
-repacking and pruning, the object eb394f5 is not removed from your
-object store.
-
-> dangling tag eb394f56db3e05d00891d6dc36a00df0025cf255
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  contrib/completion/git-completion.bash | 2 +-
+>  git-bisect.sh                          | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 >
-> Now I also have this "dangling tag" thingy...
-
-That also is expected.  It now is "dangling" because it is not
-reachable from any of your refs.
-
-"git repack -a -d -f" after "git tag -d && git tag -a" would make
-your repository fsck-clean, but I highly doubt that you would want
-to recreate your tags right now.
-
-If I were you, I'd learn to ignore these 'unterminated header'
-errors for now and wait to see if Git folks decide that 4d0d8975
-(Make sure fsck_commit_buffer() does not run out of the buffer,
-2014-09-11) is overzealous and giving an error message where there
-is no error, in which case future versions of Git will not complain
-on these objects.  It is not too late to do the re-tagging after
-they decide to keep the current behaviour.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 93716c4..c4d4d80 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -938,7 +938,7 @@ _git_bisect ()
+>  	local subcommands="start bad good skip reset visualize replay log run"
+>  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+>  	if [ -z "$subcommand" ]; then
+> -		if [ -f "$(__gitdir)"/BISECT_START ]; then
+> +		if [ git rev-parse BISECT_START 2>/dev/null ]; then
+>  			__gitcomp "$subcommands"
+>  		else
+>  			__gitcomp "replay start"
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index ae3fec2..8658772 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -166,7 +166,7 @@ bisect_start() {
+>  	#
+>  	echo "$start_head" >"$GIT_DIR/BISECT_START" && {
+>  		test "z$mode" != "z--no-checkout" ||
+> -		git update-ref --no-deref BISECT_HEAD "$start_head"
+> +		git rev-parse "$start_head" > "$GIT_DIR/BISECT_HEAD"
+>  	} &&
+>  	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
+>  	eval "$eval true" &&
+> @@ -399,7 +399,7 @@ bisect_clean_state() {
+>  	rm -f "$GIT_DIR/BISECT_RUN" &&
+>  	# Cleanup head-name if it got left by an old version of git-bisect
+>  	rm -f "$GIT_DIR/head-name" &&
+> -	git update-ref -d --no-deref BISECT_HEAD &&
+> +	rm -f "$GIT_DIR/BISECT_HEAD" &&
+>  	# clean up BISECT_START last
+>  	rm -f "$GIT_DIR/BISECT_START"
+>  }
