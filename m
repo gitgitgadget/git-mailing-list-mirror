@@ -1,23 +1,22 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 15/17] vcbuild/readme: Improve layout and reference
- msvc-build script
-Date: Thu, 25 Jun 2015 01:03:51 +0100
-Message-ID: <1435190633-2208-16-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 06/17] engine.pl: Avoid complications with perl support
+Date: Thu, 25 Jun 2015 01:03:42 +0100
+Message-ID: <1435190633-2208-7-git-send-email-philipoakley@iee.org>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
 	Philip Oakley <philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com Thu Jun 25 02:02:12 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:12 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f61.google.com ([74.125.82.61])
+Received: from mail-wg0-f56.google.com ([74.125.82.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com>)
-	id 1Z7ucN-0001Km-V2
-	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:12 +0200
-Received: by wggz12 with SMTP id z12sf16837262wgg.0
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
+	id 1Z7ucN-0001KU-LC
+	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
+Received: by wggx12 with SMTP id x12sf16726525wgg.1
         for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -26,19 +25,19 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=Uc4MkGWtkR6R1SKOekmJFMY7lP3l1q7jL9H960pRpPc=;
-        b=jh0WP4YRKETlpRHKFF+LVXoLMd3YJ7dt4RaySCyX0OOJNeX1lJcQGb66mYnhrumMr2
-         s2mvb2zB2J3i81Ug7NvlKnzMfN6F9qG6ecwo3fR+89yd7PirNDje75NneFIBSLIIjrBE
-         Hp1mwqErWoFj8LnpFr6FmnUMhgfTj0j/Cxsi80Vhbkq0IcLssOfCCxnHxCt1rPEd1eae
-         VdM7J+8YdctVIpDx0SNvL6bZhrZSGxypoKfBh1EVtLmvJrnDDBSsHFpwP3rqrLBWymTr
-         BsIyCZqfL/xcJViWSt1OEsqlNHCrKsYcq9TbCqoIcGe28gqeb1s1qf3vYjjst8oAk69H
-         z6Kg==
-X-Received: by 10.152.1.39 with SMTP id 7mr551781laj.18.1435190531685;
+        bh=I6loKpIjx/RIOXbSWwNhQ+i5uFdM+nus39YMf9v2TMs=;
+        b=cSwNd5MZi2O8bBD88scQfburSa1Ntg5bf2cFDuScS0XmVPN01toe/y/rwJKl5HNf/r
+         jai2/VqFUVRNjrb7EhzKBQeA+on59L3Oo/pHgxmOMErdOdIXa1BhDKlCBg+vKhfM7Szz
+         3qlTl7l2aevge8E+Bx3qjR622DxT7eiSBCHZNsB0ujcYzdX+bXklNvgpAaalnpWEN2yB
+         zrTq/fI0uukRrdjiSavG6H2unB1zAVIC2PcafqPhimNjrAxuPwQQvcqPONE7vEggB+A6
+         +CttxM2FLk0zVFXWU9rYGKA4pC62Kb28/1+ivtSBa95dUEec+qflis4BMfC4k8yrqHCX
+         SPGA==
+X-Received: by 10.152.244.131 with SMTP id xg3mr557718lac.0.1435190531334;
         Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.23.195 with SMTP id o3ls282084laf.1.gmail; Wed, 24 Jun
+Received: by 10.152.170.227 with SMTP id ap3ls278201lac.21.gmail; Wed, 24 Jun
  2015 17:02:10 -0700 (PDT)
-X-Received: by 10.152.219.166 with SMTP id pp6mr37753022lac.1.1435190530541;
+X-Received: by 10.152.5.2 with SMTP id o2mr37773798lao.0.1435190530133;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
         by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.10
@@ -46,12 +45,12 @@ Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.2
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BLDQCSRItVPCWpEVxbgxFUX4gksECDAIMahXIEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKBg4GExuIGAnNYQErkFAHhCsFlAWEWIgzQpJgg1yBCYMYPTGCSAEBAQ
-X-IPAS-Result: A2BLDQCSRItVPCWpEVxbgxFUX4gksECDAIMahXIEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKBg4GExuIGAnNYQErkFAHhCsFlAWEWIgzQpJgg1yBCYMYPTGCSAEBAQ
+X-IronPort-Anti-Spam-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qASuPa2UHhCsFlAWEWIh1ljyBCYEpHIFTPTGBA4FFAQEB
+X-IPAS-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qASuPa2UHhCsFlAWEWIh1ljyBCYEpHIFTPTGBA4FFAQEB
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366784"
+   d="scan'208";a="784366772"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:02:00 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:55 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -70,81 +69,32 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272612>
 
-Layout the 'either/or' with more white space to clarify
-which alternatives are matched up.
+ee9be06 (perl: detect new files in MakeMaker builds, 2012-07-27)
+did not include dry-run support for the generation of the PM.stamp
+file, though the dry-run output is used by the build engine.
 
-Reference the Msysgit build script which automates one sequence of options.
+Disable the perl processing during the dry-run to avoid the issue.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- compat/vcbuild/README | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ contrib/buildsystems/engine.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-index df8a657..7548dc4 100644
---- a/compat/vcbuild/README
-+++ b/compat/vcbuild/README
-@@ -3,20 +3,24 @@ The Steps of Build Git with VS2008
- 1. You need the build environment, which contains the Git dependencies
-    to be able to compile, link and run Git with MSVC.
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 5398315..4d0a616 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -72,7 +72,7 @@ Running GNU Make to figure out build structure...
+ EOM
  
--   You can either use the binary repository:
-+   You can either:
-+      use the binary repository:
+ # Pipe a make --dry-run into a variable, if not already loaded from file
+-@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>/dev/null` if !@makedry;
++@makedry = `cd $git_dir && make -n MSVC=1 NO_PERL=1 V=1 2>/dev/null` if !@makedry;
  
-        WWW: http://repo.or.cz/w/msvcgit.git
-        Git: git clone git://repo.or.cz/msvcgit.git
-        Zip: http://repo.or.cz/w/msvcgit.git?a=snapshot;h=master;sf=zip
- 
--   and call the setup_32bit_env.cmd batch script before compiling Git,
--   (see repo/package README for details), or the source repository:
-+      and call the setup_32bit_env.cmd batch script before compiling Git,
-+     (see repo/package README for details),
-+
-+   or:
-+      use the source repository:
- 
-        WWW: http://repo.or.cz/w/gitbuild.git
-        Git: git clone git://repo.or.cz/gitbuild.git
-        Zip: (None, as it's a project with submodules)
- 
--   and build the support libs as instructed in that repo/package.
-+     and build the support libs as instructed in that repo/package.
- 
- 2. Ensure you have the msysgit environment in your path, so you have
-    GNU Make, bash and perl available.
-@@ -33,18 +37,25 @@ The Steps of Build Git with VS2008
-        make common-cmds.h
-    to generate the common-cmds.h file needed to compile git.
- 
--4. Then either build Git with the GNU Make Makefile in the Git projects
--   root
-+4. Then either
-+
-+     build Git with the GNU Make Makefile in the Git projects root
-        make MSVC=1
--   or generate Visual Studio solution/projects (.sln/.vcproj) with the
-+   or
-+
-+   generate Visual Studio solution/projects (.sln/.vcproj) with the
-    command
-        perl contrib/buildsystems/generate -g Vcproj
-    and open and build the solution with the IDE
-        devenv git.sln /useenv
--   or build with the IDE build engine directly from the command line
-+     or
-+
-+   build with the IDE build engine directly from the command line
-        devenv git.sln /useenv /build "Release|Win32"
-    The /useenv option is required, so Visual Studio picks up the
-    environment variables for the support libraries required to build
-    Git, which you set up in step 1.
- 
- Done!
-+
-+Or, use the Msysgit msvc-build script; available from that project.
+ # Parse the make output into usable info
+ parseMakeOutput();
 -- 
 2.3.1
 
