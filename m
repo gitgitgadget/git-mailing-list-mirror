@@ -1,26 +1,25 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/17] Makefile: a dry-run can error out if no
- perl. Document the issue
-Date: Thu, 25 Jun 2015 13:21:17 -0700
-Message-ID: <xmqqmvzny1xe.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 01/17] .gitignore: improve MSVC ignore patterns
+Date: Thu, 25 Jun 2015 13:22:55 -0700
+Message-ID: <xmqqioaby1uo.fsf@gitster.dls.corp.google.com>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
-	<1435190633-2208-5-git-send-email-philipoakley@iee.org>
-	<xmqq8ub724ls.fsf@gitster.dls.corp.google.com>
-	<DBFC4D88D6F34023BA43F5F10134331E@PhilipOakley>
+	<1435190633-2208-2-git-send-email-philipoakley@iee.org>
+	<xmqqd20j253w.fsf@gitster.dls.corp.google.com>
+	<DDC36A35EBC548718762478AA7B80F67@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "GitList" <git@vger.kernel.org>,  "MsysGitList" <msysgit@googlegroups.com>
 To: "Philip Oakley" <philipoakley@iee.org>
-X-From: msysgit+bncBCG77UMM3EJRBP6FWGWAKGQEHI5MRVI@googlegroups.com Thu Jun 25 22:21:22 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBP6FWGWAKGQEHI5MRVI@googlegroups.com>
+X-From: msysgit+bncBCG77UMM3EJRBIOGWGWAKGQEHHLMLWQ@googlegroups.com Thu Jun 25 22:22:59 2015
+Return-path: <msysgit+bncBCG77UMM3EJRBIOGWGWAKGQEHHLMLWQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qk0-f192.google.com ([209.85.220.192])
+Received: from mail-qc0-f191.google.com ([209.85.216.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBP6FWGWAKGQEHI5MRVI@googlegroups.com>)
-	id 1Z8DeC-00028Z-FU
-	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 22:21:20 +0200
-Received: by qkby64 with SMTP id y64sf20258992qkb.1
-        for <gcvm-msysgit@m.gmane.org>; Thu, 25 Jun 2015 13:21:19 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBIOGWGWAKGQEHHLMLWQ@googlegroups.com>)
+	id 1Z8Dfm-0003c0-MS
+	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 22:22:58 +0200
+Received: by qcrw7 with SMTP id w7sf20158776qcr.1
+        for <gcvm-msysgit@m.gmane.org>; Thu, 25 Jun 2015 13:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
@@ -28,41 +27,41 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive
          :list-subscribe:list-unsubscribe;
-        bh=0mzwk0hs971CbBjCOxftOqfrhujZJ289WOAvk+B6Tzo=;
-        b=F9FBO5lREq2Ml5FsXAtx5di8KRj5MLukT2Ppxdu74lS+wrWvoL8xyKr2KIa4+8tQBe
-         pxeU1TtuGg4YrZ0pxP28ZXcL4vhWmnMbJtzeFEqYfNKH4Ryb9uwew4N9vznS2E43EqP/
-         ChY9LKmen8D/CK8fzYKp7keye6+a8MxP3/CdW4Hl0xbdC+RbMtAG6ojDQgFHFWxAp5zz
-         PfMIoG5nOuWrxQFqCkqykcKHLvZmJNVnMPOilD3Iz8yp1BPemH2hh9p0wc75vPlRHTG7
-         Mm1mbVODnHeBcnd3mBe44aCizpUfVrcu9EixvXKTo4pY5qJcwCDGrW8jqIr65NNi4Wru
-         IGRg==
-X-Received: by 10.140.34.78 with SMTP id k72mr86583qgk.17.1435263679899;
-        Thu, 25 Jun 2015 13:21:19 -0700 (PDT)
+        bh=kcmkjvA6DzmygaOmom5niZOfJ13tV+Oa8X6mfr8QE9w=;
+        b=rf5px3av22jM1owDqioTzdEv2IiPfOw0vBggErIcPOvTdQLHiwqp2FNOgutyIY3FmX
+         7pkMLBp0WzK/2QF4dVvM0yaYWK+FoUyA42vaaN6jIsM2mfguP6KQBnAoDM191QhQ8YHL
+         iN/B2z/k3YwomcWuLQ7NGL/zufAyTu9URol057l3qAE7Huc4vgrwMFf7sRiEsuRL224q
+         oCbaUcm8NYrwGd8PM4bT2NS+dXC4nfbSqX1cfMipia2GcKaB/Xx7kqJU1ltpGkxzc6uU
+         3YQr5vArm4Tw/cp3y4Gmeab+rQJawY2wO9uZIOsO4vD2KC+CZR42s4nQQRLv9Ibjt8QA
+         ZFJw==
+X-Received: by 10.50.82.8 with SMTP id e8mr125600igy.7.1435263778010;
+        Thu, 25 Jun 2015 13:22:58 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.88.116 with SMTP id s107ls1722628qgd.65.gmail; Thu, 25 Jun
- 2015 13:21:19 -0700 (PDT)
-X-Received: by 10.140.232.88 with SMTP id d85mr61615585qhc.0.1435263679520;
-        Thu, 25 Jun 2015 13:21:19 -0700 (PDT)
-Received: from mail-ig0-x22d.google.com (mail-ig0-x22d.google.com. [2607:f8b0:4001:c05::22d])
-        by gmr-mx.google.com with ESMTPS id x1si630310igb.2.2015.06.25.13.21.19
+Received: by 10.107.16.81 with SMTP id y78ls844685ioi.57.gmail; Thu, 25 Jun
+ 2015 13:22:57 -0700 (PDT)
+X-Received: by 10.50.66.193 with SMTP id h1mr5873502igt.3.1435263777521;
+        Thu, 25 Jun 2015 13:22:57 -0700 (PDT)
+Received: from mail-ig0-x236.google.com (mail-ig0-x236.google.com. [2607:f8b0:4001:c05::236])
+        by gmr-mx.google.com with ESMTPS id x1si630313igb.2.2015.06.25.13.22.57
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jun 2015 13:21:19 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::22d as permitted sender) client-ip=2607:f8b0:4001:c05::22d;
-Received: by mail-ig0-x22d.google.com with SMTP id iq7so58043igb.1
-        for <msysgit@googlegroups.com>; Thu, 25 Jun 2015 13:21:19 -0700 (PDT)
-X-Received: by 10.42.110.75 with SMTP id o11mr2141830icp.14.1435263679431;
-        Thu, 25 Jun 2015 13:21:19 -0700 (PDT)
+        Thu, 25 Jun 2015 13:22:57 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::236 as permitted sender) client-ip=2607:f8b0:4001:c05::236;
+Received: by mail-ig0-x236.google.com with SMTP id n14so75473igi.1
+        for <msysgit@googlegroups.com>; Thu, 25 Jun 2015 13:22:57 -0700 (PDT)
+X-Received: by 10.50.43.196 with SMTP id y4mr6507033igl.14.1435263777452;
+        Thu, 25 Jun 2015 13:22:57 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id y6sm4004297igl.17.2015.06.25.13.21.18
+        by mx.google.com with ESMTPSA id p4sm4005233igg.20.2015.06.25.13.22.56
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 13:21:18 -0700 (PDT)
+        Thu, 25 Jun 2015 13:22:57 -0700 (PDT)
 Sender: msysgit@googlegroups.com
-In-Reply-To: <DBFC4D88D6F34023BA43F5F10134331E@PhilipOakley> (Philip Oakley's
-	message of "Thu, 25 Jun 2015 20:33:04 +0100")
+In-Reply-To: <DDC36A35EBC548718762478AA7B80F67@PhilipOakley> (Philip Oakley's
+	message of "Thu, 25 Jun 2015 20:32:10 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 X-Original-Sender: gitster@pobox.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::22d
+ (google.com: domain of jch2355@gmail.com designates 2607:f8b0:4001:c05::236
  as permitted sender) smtp.mail=jch2355@gmail.com;       dkim=pass header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -75,29 +74,19 @@ List-Archive: <http://groups.google.com/group/msysgit
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272721>
 
 "Philip Oakley" <philipoakley@iee.org> writes:
 
-> From: "Junio C Hamano" <gitster@pobox.com>
+>> Debug/
+>> Release/
 >>
->> I am not sure what this patch is trying to achieve.
->
-> It was probably a bit of 'don't mess with working code', given that
-> I'd used the NO_PERL solution, rather 'document the issue'....
+>> suffice?
+>>
+> Probably. I was thinking of the 'at any level' aspect...
 
-Then this part applies, I think.
-
->> If you are not touching what this Makefile actually does, then I
->> would imagine that you are running the "buildsystems code" that
->> actually drives 'make -n' with some "available solution" (perhaps
->> you are running 'make -n NO_PERL=NoThanks' or something like that)?
->> Then instead of a command like this that nobody would read in this
->> file, the same command can instead go there to explain what the
->> "workaround" (e.g. unusual-looking 'make -n NO_PERL=NoThanks') is
->> doing?
-
-Thanks.
+Yeah, that is exactly the difference between rooted "/Debug/" and
+"Debug/" ;-).
 
 -- 
 -- 
