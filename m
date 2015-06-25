@@ -1,69 +1,89 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [RFC/PATCH 0/9] port tag.c to use ref-filter library
-Date: Thu, 25 Jun 2015 15:25:41 +0530
-Message-ID: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] introduce "preciousObjects" repository extension
+Date: Thu, 25 Jun 2015 06:07:37 -0400
+Message-ID: <20150625100737.GA26795@peff.net>
+References: <20150623105042.GA10888@peff.net>
+ <20150623105411.GB12518@peff.net>
+ <xmqq1th2cezr.fsf@gitster.dls.corp.google.com>
+ <20150624075019.GA827@peff.net>
+ <xmqqvbed9gf7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 25 11:56:22 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 12:12:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z83tN-0003aI-Cg
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 11:56:21 +0200
+	id 1Z8494-0000Il-2e
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 12:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829AbbFYJ4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 05:56:16 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:33617 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752469AbbFYJ4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 05:56:11 -0400
-Received: by obpn3 with SMTP id n3so43841647obp.0
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 02:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=SzbNMbxe0VzWdlusr//v100kK7fndet4CpH4bIdiunw=;
-        b=WND+dT5xtAVTQw/l9MKdrc2hnM0Dhi9rC2/Mu5GaPzOJJ4rAa/nCYgk/HnkWXg/T66
-         lONK9GuiFI5dARlciGXaNy+Luljm9N9iNY6DOrhh4eRq+a937cCrJXx5DRoljLPJQw+A
-         nzU68RHM6fpm64/m87j5Hwh3hTYOsDeSTC8MhgyGOw/C4lhHXCH36XztL613UVPWucsL
-         27FFdVnNuqAX9iEOjKoTXXrg3TzcJTfM/X7Mi+Phxw0TlaexP+OqOfg+92bgtfJowFPL
-         3z45xp+wwlEtv5OJGAGIamJlB069iyrt4INMqJvkynUDpwmqyPstHhrqHAONVUuJFhK3
-         bq2w==
-X-Received: by 10.60.52.174 with SMTP id u14mr39617605oeo.9.1435226170579;
- Thu, 25 Jun 2015 02:56:10 -0700 (PDT)
-Received: by 10.182.95.165 with HTTP; Thu, 25 Jun 2015 02:55:41 -0700 (PDT)
+	id S1753997AbbFYKMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 06:12:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51535 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752836AbbFYKHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 06:07:40 -0400
+Received: (qmail 27726 invoked by uid 102); 25 Jun 2015 10:07:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Jun 2015 05:07:40 -0500
+Received: (qmail 4663 invoked by uid 107); 25 Jun 2015 10:07:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Jun 2015 06:07:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Jun 2015 06:07:37 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqvbed9gf7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272655>
 
-This is part of the GSoC project to unify the commands `git tag -l`,
-`git branch -l`
-and `git for-each-ref`.
+On Wed, Jun 24, 2015 at 10:15:08AM -0700, Junio C Hamano wrote:
 
-This is a follow up to
-http://article.gmane.org/gmane.comp.version-control.git/272641 which
-is still in the 6th iteration.
+> > I agree that would be better. I originally just blocked all use of
+> > git-repack, but at the last minute softened it to just "repack -d". I'm
+> > not sure if that would actually help anyone in practice. Sure, doing
+> > "git repack" without any options is not destructive, but I wonder if
+> > anybody actually does it.
+> 
+> Hmph, if you cannot afford to lose objects that are unreachable from
+> your refs (because you know your repository has borrowers) but are
+> suffering from too many packs, wouldn't "repack -a" be the most
+> natural thing to do?  Maybe I am biased, but "git gc" is not the
+> first thing that comes to my mind in that situation.
 
-This ports over tag.c to use ref-filter APIs and adds --format,
---sort, --merged and --no-merged options to the same.
+My assumption was that people fall into one of two categories:
 
- Documentation/git-tag.txt |  39 ++++++++++---
- builtin/for-each-ref.c    |   3 +-
- builtin/tag.c             | 362
-++++++++++++++++++++------------------------------------------------------------------------------------------------
- ref-filter.c              | 100 ++++++++++++++++++++++++++++----
- ref-filter.h              |   7 ++-
- t/t7004-tag.sh            |  51 ++++++++++++++---
- 6 files changed, 233 insertions(+), 329 deletions(-)
+  - people who just run `git gc`
 
--- 
-Regards,
-Karthik Nayak
+  - people who are doing something clever, and will use `git
+    repack` to do a full repack after making sure it is safe to do so.
+
+    E.g., after "clone -s", it might be OK to do:
+
+      for i in ../*.git; do
+        git fetch $i +refs/*:refs/remotes/$i/*
+      done
+      git -c extensions.preciousObjects=false repack -ad
+
+    But only the user can make that decision; git does not know whether
+    "../*.git" is the complete set of children.
+
+Certainly "git repack -a" is a safe stopgap in the shared-object parent,
+but eventually you will want to do the clever thing. :)
+
+I think it is OK to use this patch as a starting point, and for people
+to loosen the rules later if there is a combination of repack flags that
+are safe to run but not covered by the current logic (there is no
+regression, since preciousObjects is a new extension, and going forward
+it is OK to allow new safe things to open up workflows, but not the
+other way around).
+
+It may even be that the current patch even allows any sane workflow; I
+am only claiming that I did not think too hard on it, and tried to err
+on the side of safety, and allowing the workflow above.
+
+-Peff
