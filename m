@@ -1,221 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] introduce "format" date-mode
-Date: Thu, 25 Jun 2015 12:55:45 -0400
-Message-ID: <20150625165545.GC23503@peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/3] convert "enum date_mode" into a struct
+Date: Thu, 25 Jun 2015 18:03:28 +0100
+Message-ID: <20150625170328.GV18226@serenity.lan>
 References: <20150625165341.GA21949@peff.net>
+ <20150625165501.GB23503@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu Jun 25 18:55:53 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 25 19:04:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8ARN-0003BO-1G
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 18:55:53 +0200
+	id 1Z8AZD-0001pC-RP
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 19:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbbFYQzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 12:55:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51774 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751201AbbFYQzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 12:55:47 -0400
-Received: (qmail 19913 invoked by uid 102); 25 Jun 2015 16:55:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Jun 2015 11:55:47 -0500
-Received: (qmail 8226 invoked by uid 107); 25 Jun 2015 16:55:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Jun 2015 12:55:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Jun 2015 12:55:45 -0400
+	id S1751667AbbFYRDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 13:03:50 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:37233 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006AbbFYRDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 13:03:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id B512986602E;
+	Thu, 25 Jun 2015 18:03:48 +0100 (BST)
+X-Quarantine-ID: <u4ZD2i2eSTtk>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id u4ZD2i2eSTtk; Thu, 25 Jun 2015 18:03:44 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 47393CDA659;
+	Thu, 25 Jun 2015 18:03:30 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <20150625165341.GA21949@peff.net>
+In-Reply-To: <20150625165501.GB23503@peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272700>
 
-This feeds the format directly to strftime. Besides being a
-little more flexible, the main advantage is that your system
-strftime may know more about your locale's preferred format
-(e.g., how to spell the days of the week).
+On Thu, Jun 25, 2015 at 12:55:02PM -0400, Jeff King wrote:
+> In preparation for adding date modes that may carry extra
+> information beyond the mode itself, this patch converts the
+> date_mode enum into a struct.
+> 
+> Most of the conversion is fairly straightforward; we pass
+> the struct as a pointer and dereference the type field where
+> necessary. Locations that declare a date_mode can use a "{}"
+> constructor.  However, the tricky case is where we use the
+> enum labels as constants, like:
+> 
+>   show_date(t, tz, DATE_NORMAL);
+> 
+> Ideally we could say:
+> 
+>   show_date(t, tz, &{ DATE_NORMAL });
+> 
+> but of course C does not allow that.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/rev-list-options.txt |  5 +++++
- builtin/blame.c                    |  3 +++
- cache.h                            |  2 ++
- date.c                             |  9 ++++++++-
- gettext.c                          |  1 +
- strbuf.c                           | 29 +++++++++++++++++++++++++++++
- strbuf.h                           |  5 +++++
- t/t6300-for-each-ref.sh            |  8 ++++++++
- 8 files changed, 61 insertions(+), 1 deletion(-)
+Yes it does, e.g. in 6.5.2.5 of C11, example 3 shows:
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 77ac439..a9b808f 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -727,6 +727,11 @@ format, often found in email messages.
- +
- `--date=raw` shows the date in the internal raw Git format `%s %z` format.
- +
-+`--date=format:...` feeds the format `...` to your system `strftime`.
-+Use `--date=format:%c` to show the date in your system locale's
-+preferred format.  See the `strftime` manual for a complete list of
-+format placeholders.
-++
- `--date=default` shows timestamps in the original time zone
- (either committer's or author's).
- 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 43e8473..e2e3e75 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2596,6 +2596,9 @@ parse_done:
- 	case DATE_NORMAL:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
-+	case DATE_STRFTIME:
-+		blame_date_width = strlen(show_date(0, 0, &blame_date_mode)) + 1; /* add the null */
-+		break;
- 	}
- 	blame_date_width -= 1; /* strip the null */
- 
-diff --git a/cache.h b/cache.h
-index 1759011..bb63a58 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1105,8 +1105,10 @@ struct date_mode {
- 		DATE_ISO8601,
- 		DATE_ISO8601_STRICT,
- 		DATE_RFC2822,
-+		DATE_STRFTIME,
- 		DATE_RAW
- 	} type;
-+	const char *strftime_fmt;
- };
- 
- /*
-diff --git a/date.c b/date.c
-index cdad4db..8f91569 100644
---- a/date.c
-+++ b/date.c
-@@ -163,6 +163,8 @@ void show_date_relative(unsigned long time, int tz,
- struct date_mode *date_mode_from_type(enum date_mode_type type)
- {
- 	static struct date_mode mode;
-+	if (type == DATE_STRFTIME)
-+		die("BUG: cannot create anonymous strftime date_mode struct");
- 	mode.type = type;
- 	return &mode;
- }
-@@ -221,6 +223,8 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 			weekday_names[tm->tm_wday], tm->tm_mday,
- 			month_names[tm->tm_mon], tm->tm_year + 1900,
- 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
-+	else if (mode->type == DATE_STRFTIME)
-+		strbuf_addftime(&timebuf, mode->strftime_fmt, tm);
- 	else
- 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
- 				weekday_names[tm->tm_wday],
-@@ -787,7 +791,10 @@ void parse_date_format(const char *format, struct date_mode *mode)
- 		mode->type = DATE_NORMAL;
- 	else if (!strcmp(format, "raw"))
- 		mode->type = DATE_RAW;
--	else
-+	else if (skip_prefix(format, "format:", &format)) {
-+		mode->type = DATE_STRFTIME;
-+		mode->strftime_fmt = xstrdup(format);
-+	} else
- 		die("unknown date format %s", format);
- }
- 
-diff --git a/gettext.c b/gettext.c
-index 7378ba2..a268a2c 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -162,6 +162,7 @@ void git_setup_gettext(void)
- 		podir = GIT_LOCALE_PATH;
- 	bindtextdomain("git", podir);
- 	setlocale(LC_MESSAGES, "");
-+	setlocale(LC_TIME, "");
- 	init_gettext_charset("git");
- 	textdomain("git");
- }
-diff --git a/strbuf.c b/strbuf.c
-index 0d4f4e5..a7ba028 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -709,3 +709,32 @@ char *xstrfmt(const char *fmt, ...)
- 
- 	return ret;
- }
-+
-+void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm)
-+{
-+	size_t len;
-+
-+	/*
-+	 * strftime reports "0" if it could not fit the result in the buffer.
-+	 * Unfortunately, it also reports "0" if the requested time string
-+	 * takes 0 bytes. So if we were to probe and grow, we have to choose
-+	 * some arbitrary cap beyond which we guess that the format probably
-+	 * just results in a 0-length output. Since we have to choose some
-+	 * reasonable cap anyway, and since it is not that big, we may
-+	 * as well just grow to their in the first place.
-+	 */
-+	strbuf_grow(sb, 128);
-+	len = strftime(sb->buf + sb->len, sb->alloc - sb->len, fmt, tm);
-+
-+	if (!len) {
-+		/*
-+		 * Either we failed, or the format actually produces a 0-length
-+		 * output. There's not much we can do, so we leave it blank.
-+		 * However, the output array is left in an undefined state, so
-+		 * we must re-assert our NUL terminator.
-+		 */
-+		sb->buf[sb->len] = '\0';
-+	} else {
-+		sb->len += len;
-+	}
-+}
-diff --git a/strbuf.h b/strbuf.h
-index 01c5c63..8c8f8d5 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -345,6 +345,11 @@ __attribute__((format (printf,2,0)))
- extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
- 
- /**
-+ * Add the time specified by `tm`, as formatted by `strftime`.
-+ */
-+extern void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm);
-+
-+/**
-  * Read a given size of data from a FILE* pointer to the buffer.
-  *
-  * NOTE: The buffer is rewound if the read fails. If -1 is returned,
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 24fc2ba..c7f368c 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -227,6 +227,14 @@ test_expect_success 'Check format "rfc2822" date fields output' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'Check format of strftime date fields' '
-+	echo "my date is 2006-07-03" >expected &&
-+	git for-each-ref \
-+	  --format="%(authordate:format:my date is %Y-%m-%d)" \
-+	  refs/heads >actual &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<\EOF
- refs/heads/master
- refs/remotes/origin/master
--- 
-2.4.4.742.g862750c
+	drawline(&(struct point){.x=1, .y=1},
+		&(struct point){.x=3, .y=4});
+
+The cast is required, but if the argument is pointer-to-const you can
+construct a temporary in the function call.
+
+Of course, whether all of the compilers we target support it is a
+different question.  If they do, perhaps something like:
+
+#define SIMPLE_DATE(f)		&(struct date_mode) { DATE_NORMAL }
+
+would allow the callers to remain reasonably sane.
+
+>                                      Likewise, we cannot
+> cast the constant to a struct, because we need to pass an
+> actual address. Our options are basically:
+> 
+>   1. Manually add a "struct date_mode d = { DATE_NORMAL }"
+>      definition to each caller, and pass "&d". This makes
+>      the callers uglier, because they sometimes do not even
+>      have their own scope (e.g., they are inside a switch
+>      statement).
+> 
+>   2. Provide a pre-made global "date_normal" struct that can
+>      be passed by address. We'd also need "date_rfc2822",
+>      "date_iso8601", and so forth. But at least the ugliness
+>      is defined in one place.
+> 
+>   3. Provide a wrapper that generates the correct struct on
+>      the fly. The big downside is that we end up pointing to
+>      a single global, which makes our wrapper non-reentrant.
+>      But show_date is already not reentrant, so it does not
+>      matter.
+> 
+> This patch implements 3, along with a minor macro to keep
+> the size of the callers sane.
