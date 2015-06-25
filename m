@@ -1,23 +1,23 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 08/17] engine.pl: Fix i18n -o option in msvc
- buildsystem generator
-Date: Thu, 25 Jun 2015 01:03:44 +0100
-Message-ID: <1435190633-2208-9-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 09/17] engine.pl: ignore invalidcontinue.obj which
+ is known to MSVC
+Date: Thu, 25 Jun 2015 01:03:45 +0100
+Message-ID: <1435190633-2208-10-git-send-email-philipoakley@iee.org>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
 	Philip Oakley <philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:16 2015
+X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:22 2015
 Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f183.google.com ([209.85.212.183])
+Received: from mail-lb0-f189.google.com ([209.85.217.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
-	id 1Z7ucN-0001KV-LS
+	id 1Z7ucN-0001Ji-9F
 	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
-Received: by wibbw19 with SMTP id bw19sf18076774wib.0
+Received: by lbiv13 with SMTP id v13sf16791837lbi.0
         for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -26,32 +26,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=nZhVGQG68kFJNzJDhDbB0XMFqbC/WbqAxhwXJO5YUZQ=;
-        b=uHxbigJSOgtTnu/1+cjMchoKrHp287SqULPfi+BFXz84gVeEOvqioi+TzIpw7wGCy4
-         23Pz9IOBDmlqJud1TU3TBgGy/MEnDcIA9tyztpePrCPMPIaGuHUAKgkzvtv9iA4pSq/q
-         vpiH7t0aHOJs38aeycFreUwagwGSnxcHHQ6TDZo8OSFb/hd8QgL8GyKiDFMU13F335eK
-         P62sOwPAUUZWa+9Uk2GCff9AEipeuRzRn6gYiLEAwQbz76fKW5ab+2DcSEbU8dLsGi3R
-         JFP58tC3v0QjXP2MIj7IISQB229vTm3DkCh2MB/naorPUQY2H/ieuKEqFk320+Rsd9iF
-         OG4g==
-X-Received: by 10.152.44.200 with SMTP id g8mr438957lam.41.1435190531377;
+        bh=JsUoUgdhyqTkFsYh14nYH8GJhEI7FXz4MXY6HicmRzA=;
+        b=R6sJx3KVBOxHbKN2m0wtUnc3bDGlA22IXgD8U/4bcKY+3cMLQjJYlmKtBrnvKoYki6
+         CJ3nqPFbE/7xrn3Jp53/ZkgO/ZwvZHS4PjJ5brHwBFNWeb3LvqCpGAQhH0A9wDTyPosK
+         iBe+K5sP3bhWHdMZCtix2EMZmRPKb97wBc0SgE7lk9kmxxTAT7IXoSRZplcmR5y8QgFy
+         zzBAqBP5gMkdXHBIQwd0MfdSIoP5u9WWfhlQDWwUDjN6KUllHptWkD3Qfojio6bRk2P0
+         872/dwOKiWDV/8CuoGgFncpXi67zybKIMA2t2eHrId3NlfdZD9hKRzO7xlEcIpX8CD2G
+         84QQ==
+X-Received: by 10.180.11.239 with SMTP id t15mr66wib.1.1435190531002;
         Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.42.206 with SMTP id q14ls238134lal.58.gmail; Wed, 24 Jun
+Received: by 10.180.99.3 with SMTP id em3ls515495wib.48.gmail; Wed, 24 Jun
  2015 17:02:10 -0700 (PDT)
-X-Received: by 10.152.115.147 with SMTP id jo19mr2865371lab.7.1435190530238;
+X-Received: by 10.180.89.231 with SMTP id br7mr309222wib.0.1435190530251;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.10
+        by gmr-mx.google.com with ESMTP id t6si17968wiz.0.2015.06.24.17.02.10
         for <msysgit@googlegroups.com>;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BvVwCSRItVPCWpEVxbgxFUX4FBhQuBWLBAhhKFegQCAoFMTQEBAQEBAQcBAQEBQT9BBYNdAQEEViMQCEk5ChQGE4gzzWoBAQEHIpBQB4QrBZQFhFiIdZY8gQmDGD0xgkgBAQE
-X-IPAS-Result: A2BvVwCSRItVPCWpEVxbgxFUX4FBhQuBWLBAhhKFegQCAoFMTQEBAQEBAQcBAQEBQT9BBYNdAQEEViMQCEk5ChQGE4gzzWoBAQEHIpBQB4QrBZQFhFiIdZY8gQmDGD0xgkgBAQE
+X-IronPort-Anti-Spam-Result: A2CYBwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKFAYTiDPNagErkFAHhCsFlAWEWIh1ljyBCYMYPTGCSAEBAQ
+X-IPAS-Result: A2CYBwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKFAYTiDPNagErkFAHhCsFlAWEWIh1ljyBCYMYPTGCSAEBAQ
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366774"
+   d="scan'208";a="784366775"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:56 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:57 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -70,47 +70,57 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272625>
 
-The i18n 5e9637c (i18n: add infrastructure for translating
-Git with gettext, 2011-11-18) introduced an extra '-o' option
-into the make file.
+Commit 4b623d8 (MSVC: link in invalidcontinue.obj for better
+POSIX compatibility, 2014-03-29) is not processed correctly
+by the buildsystem. Ignore it.
 
-If the msvc buildsystem is run without NO_GETTEXT being set
-then this broke the engine.pl code for extracting the git.sln
-for msvc gui-IDE. The setting of NO_GETTEXT was not fixed until
-later, relative to the Msysgit project where this issue was being
-investigated.
-
-The presence of these options in the Makefile output should not
-compromise the derived build structure. They should be ignored.
-
-Add tests to remove these non linker options, in same vein as
-74cf9bd (engine.pl: Fix a recent breakage of the buildsystem
-generator, 2010-01-22).
+Also split the .o and .obj processing; 'make' does not produce .obj
+files. Only substitute filenames ending with .o when generating the
+source .c filename.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/engine.pl | 6 ++++++
- 1 file changed, 6 insertions(+)
+ contrib/buildsystems/engine.pl | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index ccb59fd..73f2472 100755
+index 73f2472..e8aa8ea 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -141,6 +141,12 @@ sub parseMakeOutput
-             next;
+@@ -289,7 +289,7 @@ sub handleLibLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+@@ -333,8 +333,12 @@ sub handleLinkLine
+         } elsif ($part =~ /\.(a|lib)$/) {
+             $part =~ s/\.a$/.lib/;
+             push(@libs, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
++        } elsif ($part eq 'invalidcontinue.obj') {
++            # ignore - known to MSVC
++        } elsif ($part =~ /\.o$/) {
+             push(@objfiles, $part);
++        } elsif ($part =~ /\.obj$/) {
++            # do nothing, 'make' should not be producing .obj, only .o files
+         } else {
+             die "Unhandled link option @ line $lineno: *$part*";
          }
- 
-+        if ($text =~ /^(mkdir|msgfmt) /) {
-+            # options to the Portable Object translations
-+            # the line "mkdir ... && msgfmt ..." contains no linker options
-+            next;
-+        }
-+
-         if($text =~ / -c /) {
-             # compilation
-             handleCompileLine($text, $line);
+@@ -343,7 +347,7 @@ sub handleLinkLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
 -- 
 2.3.1
 
