@@ -1,23 +1,23 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 01/17] .gitignore: improve MSVC ignore patterns
-Date: Thu, 25 Jun 2015 01:03:37 +0100
-Message-ID: <1435190633-2208-2-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 12/17] engine.pl: add debug line to capture the dry-run
+Date: Thu, 25 Jun 2015 01:03:48 +0100
+Message-ID: <1435190633-2208-13-git-send-email-philipoakley@iee.org>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
 	Philip Oakley <philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:28 2015
+X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:21 2015
 Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f189.google.com ([209.85.212.189])
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
-	id 1Z7ucN-0001JD-4j
+	id 1Z7ucN-0001KK-E3
 	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
-Received: by wibbw19 with SMTP id bw19sf18187065wib.1
-        for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
+Received: by wggx12 with SMTP id x12sf16726480wgg.1
+        for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
@@ -25,32 +25,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=8X4VwyLNPWTqnp/sEtqEKy7hu1z7+D123ZdZzEh1IDY=;
-        b=bq8+7kY9H9ccSCQU+dXfjW5P/C3FMokEN+w4e88U/xd3zaT5A3WmlpslFRHblj47Xa
-         dzekmm1/Z3e0TVIvTmVmBHkoqTk4fxZDluaaJrweWM+pgr66LjMstIdyUjWzg0iw8GIV
-         lvCCKQUt7YTypEroeYCRpzsPm2hxD9WjHpd2oImTK7mqQ97DueJYQAtSCKhsbH1GaSNz
-         3D1UPsCuy/nfVpcfyrldiHQpRpfY1k44yzuu7WWpWldlIozUEbcISqBp4Ztvwol2/gTl
-         JtW4+hWCvgRb3ySssrm/bseiR0Go24exgWzxqAJ2DfzkLuPoO1VbswCs8l0sPCTqWhun
-         GdGA==
-X-Received: by 10.152.29.5 with SMTP id f5mr562983lah.19.1435190530762;
-        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
+        bh=3QYlDahlz0Kxg1LqOGGq4aJ8VYiuszW0cUBh2r8s4V8=;
+        b=zRpUyMRXszriyhvqgbCTb3lDN9r4vdB69ZkEFgtnyA5WCtiNRTFAbYjNuFst5S+QkF
+         YVvdkl1iiojpqoZbJhf67ZgdrWGLR5XqiEE27Mhs05imbIMz/mnvGdUHbSsaRxHetsRr
+         SkyC/HKI6k+6VQ8GFWw2T8glc/jqCGfYlFzbbKGNtTG1lP4DXowMABh1gEizBE8xvKzF
+         61srjXzpQBmh5TURFobOgqhAWe12dgnyYC+JC8/yX+UmYHiRTkUrIHmb+dcqCUC1v9V+
+         HaOlCm8iY9LPnf+U+QhAvTXNofheN1O7byoBb+USCeiAxP25aFCmdFwVsvUlPxqD7Iyy
+         DiCg==
+X-Received: by 10.180.149.168 with SMTP id ub8mr2064wib.17.1435190531128;
+        Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.4.199 with SMTP id m7ls278429lam.83.gmail; Wed, 24 Jun
- 2015 17:02:09 -0700 (PDT)
-X-Received: by 10.152.37.101 with SMTP id x5mr37740598laj.5.1435190529523;
-        Wed, 24 Jun 2015 17:02:09 -0700 (PDT)
+Received: by 10.180.24.135 with SMTP id u7ls513979wif.42.gmail; Wed, 24 Jun
+ 2015 17:02:10 -0700 (PDT)
+X-Received: by 10.180.90.106 with SMTP id bv10mr292891wib.6.1435190530390;
+        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.09
+        by gmr-mx.google.com with ESMTP id t6si17968wiz.0.2015.06.24.17.02.10
         for <msysgit@googlegroups.com>;
-        Wed, 24 Jun 2015 17:02:09 -0700 (PDT)
+        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CvDwCSRItVPCWpEVxbgxGBM4ZMgViwQIwMBAICgUxNAQEBAQEBBwEBAQFBP0EFg10BAQRWIxAISTkKFAYTiDPNagErkFAHhCsFhVqOK6QJgQmDGD0xgkgBAQE
-X-IPAS-Result: A2CvDwCSRItVPCWpEVxbgxGBM4ZMgViwQIwMBAICgUxNAQEBAQEBBwEBAQFBP0EFg10BAQRWIxAISTkKFAYTiDPNagErkFAHhCsFhVqOK6QJgQmDGD0xgkgBAQE
+X-IronPort-Anti-Spam-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qLJBQB4QrBZQFhFiIdZY8gQmDGD0xgkgBAQE
+X-IPAS-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qLJBQB4QrBZQFhFiIdZY8gQmDGD0xgkgBAQE
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366753"
+   d="scan'208";a="784366780"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:52 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:59 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -69,31 +69,29 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272620>
 
-Add the Microsoft .manifest pattern, and correct the generic 'Debug'
-and 'Release' directory patterns which were mechanically adjusted way
-back in c591d5f (gitignore: root most patterns at the top-level directory,
-2009-10-26) to allow multi-level projects within the Git suite.
+Add a debug suggestion for capturing to file the stdout from the dry-run
+of the make file used in determining the msvc-build structure for easy
+debugging.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- .gitignore | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ contrib/buildsystems/engine.pl | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/.gitignore b/.gitignore
-index 422c538..55498c1 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -246,5 +246,6 @@
- *.user
- *.idb
- *.pdb
--/Debug/
--/Release/
-+*.manifest
-+**/Debug/
-+**/Release/
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 27884f7..7a2aeef 100644
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -76,6 +76,7 @@ EOM
+ # Capture the make dry stderr to file for review (will be empty for a release build).
+ 
+ my $ErrsFile = "msvc-build-makedryerrors.txt";
++#@makedry = `cd $git_dir && make -n MSVC=1 NO_PERL=1 V=1 1>makedry.txt 2>$ErrsFile`; # capture the dry run as a text file
+ @makedry = `cd $git_dir && make -n MSVC=1 NO_PERL=1 V=1 2>$ErrsFile` if !@makedry;
+ # test for an empty Errors file and remove it
+ for ($ErrsFile) {unlink $_ if (-f $_) && (!-s $_);}
 -- 
 2.3.1
 
