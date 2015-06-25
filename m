@@ -1,22 +1,22 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 03/17] (msvc-build) Vcproj.pm: remove duplicate GUID
-Date: Thu, 25 Jun 2015 01:03:39 +0100
-Message-ID: <1435190633-2208-4-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 13/17] engine.pl: provide more debug print statements
+Date: Thu, 25 Jun 2015 01:03:49 +0100
+Message-ID: <1435190633-2208-14-git-send-email-philipoakley@iee.org>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
 	Philip Oakley <philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:23 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com Thu Jun 25 02:02:20 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f183.google.com ([209.85.217.183])
+Received: from mail-wi0-f183.google.com ([209.85.212.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
-	id 1Z7ucN-0001Jm-AQ
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBA4KVWWAKGQE2AJN6UQ@googlegroups.com>)
+	id 1Z7ucN-0001KW-Lk
 	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
-Received: by lbiv13 with SMTP id v13sf16791853lbi.0
+Received: by wibbw19 with SMTP id bw19sf18187239wib.1
         for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -25,32 +25,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=2jrGJbPIcdky80mBRckFnPGlR88/QIBEg8ST9xC1q4Q=;
-        b=qxHOULxWeXDulbf3SVQpDJC7z5mIsG4k+YkEDwOl7YaUSlAtsTojfvOwTe0wKoMVqf
-         8c1gAA8XZCWX5W2pOtvOTnW2lyHlZxZiqnYvkXTQRgM8uN8FFyc5YkmWkBz5Zgh+lJbK
-         +uOW8EuFX9uVeM/VbIULMm9s/X8HmZEbN+YCFM2q6PNlLXs63BHiErUyUOq+BGJocQdZ
-         ENASHsxyZDMJaHW+GypZ/mo+kpfzVQ8uA7io6SPlJ7PBYspz0v/HkGqt3sFcwDdvPIzO
-         GUaOXnpT/zocsJt3kTTL2dnvR9Ph3TziVehPKUgcWxfQU0TGnXiIlggruJzVZXGr+zRO
-         F8dg==
-X-Received: by 10.152.6.40 with SMTP id x8mr567639lax.40.1435190531056;
+        bh=EnYWwAbRPL6sig9OHAzLJA9OTxODPVThVVZiKB+szEw=;
+        b=Tl+nJVS9C9Wh5F3Iwa/txQNRVBj0OXjjuBBhbLdrspr8I6153J5ncHsvYp6Z3Kb0N/
+         iBxTxZuacf6jcHL0akhkNUySgr3IdRwXO54AN5L9YWUeMVhr1BOH6LF+YH3rwUAi2I7q
+         zWSv8N3sgQXOzxRJXXHDrM7/xtXgVUbvpIV9JWScXSvD+6PsBfrxqvREiir88+lM1Yj5
+         5kib0QlTTC3w2gzGRsRK2lSMsfISY/XVzzBHljEPcuXkl1sHcjUbdkv4yKDk1KX3A5r9
+         mq7CNcdhdZpPEJtF35OF1wggymEhurvwUrZpVtNPUP2qCmNioi6eRv87U0McEQj9FCD3
+         m7CQ==
+X-Received: by 10.152.19.5 with SMTP id a5mr550229lae.23.1435190531396;
         Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.4.227 with SMTP id n3ls288403lan.0.gmail; Wed, 24 Jun 2015
- 17:02:09 -0700 (PDT)
-X-Received: by 10.152.87.146 with SMTP id ay18mr15273089lab.6.1435190529832;
-        Wed, 24 Jun 2015 17:02:09 -0700 (PDT)
+Received: by 10.152.43.228 with SMTP id z4ls282683lal.90.gmail; Wed, 24 Jun
+ 2015 17:02:10 -0700 (PDT)
+X-Received: by 10.152.88.70 with SMTP id be6mr18392408lab.9.1435190530439;
+        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.09
+        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.10
         for <msysgit@googlegroups.com>;
-        Wed, 24 Jun 2015 17:02:09 -0700 (PDT)
+        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoGDgYTiDPNagErj2tlB4QrBZQFhFiIdZY8gQmBKRyBUz0xgQOBRQEBAQ
-X-IPAS-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoGDgYTiDPNagErj2tlB4QrBZQFhFiIdZY8gQmBKRyBUz0xgQOBRQEBAQ
+X-IronPort-Anti-Spam-Result: A2CYBwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKFAYTFYgezWoBK5BQB4QrBZQFhFiEW4NsLpY8gQmDGD0xgkgBAQE
+X-IPAS-Result: A2CYBwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/hCMBAQRWIxAISTkKFAYTFYgezWoBK5BQB4QrBZQFhFiEW4NsLpY8gQmDGD0xgkgBAQE
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366768"
+   d="scan'208";a="784366782"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:54 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:59 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -69,32 +69,65 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272627>
 
-Delete the duplicated GUID from the generation code for the Visual Studio
-.sln project file.
+Assist developers transitioning between the two cultures
+by including appropriate, but commented out, debug statements.
 
-The duplicate GUID tended to be allocated to test-svn-fe, which was then
-ignored by Visual Studio / MSVC, and it's omission from the build never
-noticed.
+The exception is when an unhandled compiler option is detected,
+where printing of the full line will supplement the line number and
+option part. Otherwise the OP has no immediate mechanism for
+inspecting the relevant part of the makedry output.
+
+These debug print statements act as a guide for a poor man's --verbose
+option. The test suite doesn't cover the contrib/buildsystems (or
+Msysgit's msvc-build) contributions so fails to notice breakages there-in.
+
+It is doubly hard to get developers to ride both horses so, contrary to
+normal convention, retain selected debug statements as a safety net for
+those willing to try.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/Generators/Vcproj.pm | 1 -
- 1 file changed, 1 deletion(-)
+ contrib/buildsystems/engine.pl | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
-index cfa74ad..1b01d58 100644
---- a/contrib/buildsystems/Generators/Vcproj.pm
-+++ b/contrib/buildsystems/Generators/Vcproj.pm
-@@ -52,7 +52,6 @@ my @GUIDS = (
-     "{00785268-A9CC-4E40-AC29-BAC0019159CE}",
-     "{4C06F56A-DCDB-46A6-B67C-02339935CF12}",
-     "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
--    "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
-     "{9392EB58-D7BA-410B-B1F0-B2FAA6BC89A7}",
-     "{2ACAB2D5-E0CE-4027-BCA0-D78B2D7A6C66}",
-     "{86E216C3-43CE-481A-BCB2-BE5E62850635}",
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 7a2aeef..ac2970a 100644
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -41,6 +41,7 @@ EOM
+ # Parse command-line options
+ while (@ARGV) {
+     my $arg = shift @ARGV;
++	#print "Arg: $arg \n";
+     if ("$arg" eq "-h" || "$arg" eq "--help" || "$arg" eq "-?") {
+ 	showUsage();
+ 	exit(0);
+@@ -129,6 +130,7 @@ sub parseMakeOutput
+     print "Parsing GNU Make output to figure out build structure...\n";
+     my $line = 0;
+     while (my $text = shift @makedry) {
++		#print "Make: $text\n"; # show the makedry line
+         my $ate_next;
+         do {
+             $ate_next = 0;
+@@ -263,6 +265,7 @@ sub handleCompileLine
+         } elsif ($part =~ /\.(c|cc|cpp)$/) {
+             $sourcefile = $part;
+         } else {
++            print "full line: $line\n";
+             die "Unhandled compiler option @ line $lineno: $part";
+         }
+     }
+@@ -288,6 +291,7 @@ sub handleLibLine
+             $libout = $part;
+             $libout =~ s/\.a$//;
+         } else {
++            print "full line: $line\n";
+             die "Unhandled lib option @ line $lineno: $part";
+         }
+     }
 -- 
 2.3.1
 
