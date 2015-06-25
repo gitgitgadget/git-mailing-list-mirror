@@ -1,7 +1,9 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 00/17] Make the msvc-build scripts work again
-Date: Thu, 25 Jun 2015 01:03:36 +0100
-Message-ID: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 08/17] engine.pl: Fix i18n -o option in msvc
+ buildsystem generator
+Date: Thu, 25 Jun 2015 01:03:44 +0100
+Message-ID: <1435190633-2208-9-git-send-email-philipoakley@iee.org>
+References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
@@ -10,46 +12,48 @@ To: GitList <git@vger.kernel.org>
 X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:16 2015
 Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f63.google.com ([74.125.82.63])
+Received: from mail-wi0-f183.google.com ([209.85.212.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
-	id 1Z7ucN-0001JO-71
+	id 1Z7ucN-0001KV-LS
 	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
-Received: by wggz12 with SMTP id z12sf16836954wgg.0
-        for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
+Received: by wibbw19 with SMTP id bw19sf18076774wib.0
+        for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-spam-checked-in-group:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe;
-        bh=RbgEESZ1bhrgr8NAMxYz8Mc7XxusYmoXlrEk1yax0Kk=;
-        b=SqC0hCsgeynu/EIVjACh0yep3+D7wWVENrYXvA9Ubt+ugp0S8Yn6f7JChYqLkdr7Gb
-         nAAOnnAPWNevHJLklx6YQsa5OE0Udncelbkq5/xlogYngydFP7ZcQhnCd/SzZgac1u6+
-         hrJzZLePaL2W/n8Lp3iaBbswylseUN2RxwJA3lpI3IX+IBTo3FKOM89ToiT36Y510QhE
-         OrtcE0q9Wgrt12nIZjgcmbTzh2lIPxqToErmLAtZB/olDbpLJnuvdgczYaB3AwDzV+T3
-         3Gzvkc3jV2TtMXU0vuoRUritDsCG1/LAM7tzuFzaRrQFsx0VgakiX1xZmm/2UlnrQwVc
-         SPHg==
-X-Received: by 10.152.5.100 with SMTP id r4mr566409lar.13.1435190530850;
-        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :content-type:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=nZhVGQG68kFJNzJDhDbB0XMFqbC/WbqAxhwXJO5YUZQ=;
+        b=uHxbigJSOgtTnu/1+cjMchoKrHp287SqULPfi+BFXz84gVeEOvqioi+TzIpw7wGCy4
+         23Pz9IOBDmlqJud1TU3TBgGy/MEnDcIA9tyztpePrCPMPIaGuHUAKgkzvtv9iA4pSq/q
+         vpiH7t0aHOJs38aeycFreUwagwGSnxcHHQ6TDZo8OSFb/hd8QgL8GyKiDFMU13F335eK
+         P62sOwPAUUZWa+9Uk2GCff9AEipeuRzRn6gYiLEAwQbz76fKW5ab+2DcSEbU8dLsGi3R
+         JFP58tC3v0QjXP2MIj7IISQB229vTm3DkCh2MB/naorPUQY2H/ieuKEqFk320+Rsd9iF
+         OG4g==
+X-Received: by 10.152.44.200 with SMTP id g8mr438957lam.41.1435190531377;
+        Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.8.201 with SMTP id t9ls256874laa.95.gmail; Wed, 24 Jun
- 2015 17:02:09 -0700 (PDT)
-X-Received: by 10.152.179.136 with SMTP id dg8mr1572257lac.4.1435190529629;
-        Wed, 24 Jun 2015 17:02:09 -0700 (PDT)
+Received: by 10.152.42.206 with SMTP id q14ls238134lal.58.gmail; Wed, 24 Jun
+ 2015 17:02:10 -0700 (PDT)
+X-Received: by 10.152.115.147 with SMTP id jo19mr2865371lab.7.1435190530238;
+        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.09
+        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.10
         for <msysgit@googlegroups.com>;
-        Wed, 24 Jun 2015 17:02:09 -0700 (PDT)
+        Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2ByGACSRItVPCWpEVxbgxABAVNfgx6FBrBAhgsRhXAEAoFOTQEBAQEBAQcBAQEBQT+ETAQLASMjGB0CJgI7CgYBE4hGCbctljQBK4Ehjy+Cb4FDBYVahjmHcoRYiHWWPIEJgSkcgVM9MYJIAQEB
-X-IPAS-Result: A2ByGACSRItVPCWpEVxbgxABAVNfgx6FBrBAhgsRhXAEAoFOTQEBAQEBAQcBAQEBQT+ETAQLASMjGB0CJgI7CgYBE4hGCbctljQBK4Ehjy+Cb4FDBYVahjmHcoRYiHWWPIEJgSkcgVM9MYJIAQEB
+X-IronPort-Anti-Spam-Result: A2BvVwCSRItVPCWpEVxbgxFUX4FBhQuBWLBAhhKFegQCAoFMTQEBAQEBAQcBAQEBQT9BBYNdAQEEViMQCEk5ChQGE4gzzWoBAQEHIpBQB4QrBZQFhFiIdZY8gQmDGD0xgkgBAQE
+X-IPAS-Result: A2BvVwCSRItVPCWpEVxbgxFUX4FBhQuBWLBAhhKFegQCAoFMTQEBAQEBAQcBAQEBQT9BBYNdAQEEViMQCEk5ChQGE4gzzWoBAQEHIpBQB4QrBZQFhFiIdZY8gQmDGD0xgkgBAQE
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366752"
+   d="scan'208";a="784366774"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:52 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:56 +0100
 X-Mailer: git-send-email 2.3.1
+In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
  (google.com: domain of transitioning philipoakley@iee.org does not designate
@@ -66,57 +70,47 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272624>
 
-This series fixes the scripts which generated Visual Studio project
-files. The scripts had bit rotted over the years as other commits
-changed the git makefile which it post processed.
+The i18n 5e9637c (i18n: add infrastructure for translating
+Git with gettext, 2011-11-18) introduced an extra '-o' option
+into the make file.
 
-The series doesn't attempt to install the Visual Studio compiled product
-but allows Windows developers familiar with VS to support the Windows SDK
-port of Git.
+If the msvc buildsystem is run without NO_GETTEXT being set
+then this broke the engine.pl code for extracting the git.sln
+for msvc gui-IDE. The setting of NO_GETTEXT was not fixed until
+later, relative to the Msysgit project where this issue was being
+investigated.
 
-The fixes are presented in a fine grained manner.
+The presence of these options in the Makefile output should not
+compromise the derived build structure. They should be ignored.
 
-A previous patch series were at $gmane/21132 (2014-11-20), $gmane/21207
-(2014-12-26), and on Msysgit list (2015-02-23)
- https://groups.google.com/forum/?hl=en_US?hl%3Den#!topic/msysgit/aiEVBKjRshY
- https://github.com/msysgit/git/pull/318/files
+Add tests to remove these non linker options, in same vein as
+74cf9bd (engine.pl: Fix a recent breakage of the buildsystem
+generator, 2010-01-22).
 
-Hopefully it's not too late in the cycle for a review of this contrib/compat
-item.
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ contrib/buildsystems/engine.pl | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Philip Oakley (17):
-  .gitignore: improve MSVC ignore patterns
-  .gitignore: ignore library directories created by MSVC VS2008
-    buildsystem
-  (msvc-build) Vcproj.pm: remove duplicate GUID
-  Makefile: a dry-run can error out if no perl. Document the issue
-  engine.pl: fix error message (lib->link)
-  engine.pl: Avoid complications with perl support
-  engine.pl: Properly accept quoted spaces in filenames
-  engine.pl: Fix i18n -o option in msvc buildsystem generator
-  engine.pl: ignore invalidcontinue.obj which is known to MSVC
-  engine.pl: name the msvc buildsystem's makedry error file
-  engine.pl: delete the captured stderr file if empty
-  engine.pl: add debug line to capture the dry-run
-  engine.pl: provide more debug print statements
-  Vcproj.pm: list git.exe first to be startup project
-  vcbuild/readme: Improve layout and reference msvc-build script
-  msvc-build: add complete Microsoft Visual C compilation script
-  config.mak.uname: add MSVC No_SafeExeceptionHandler option
-
- .gitignore                                |  8 ++-
- Makefile                                  |  3 ++
- compat/vcbuild/README                     | 27 +++++++---
- compat/vcbuild/scripts/msvc-build         | 89 +++++++++++++++++++++++++++++++
- config.mak.uname                          |  9 ++++
- contrib/buildsystems/Generators/Vcproj.pm | 34 ++++++------
- contrib/buildsystems/engine.pl            | 37 ++++++++++---
- 7 files changed, 174 insertions(+), 33 deletions(-)
- create mode 100644 compat/vcbuild/scripts/msvc-build
- mode change 100755 => 100644 contrib/buildsystems/engine.pl
-
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index ccb59fd..73f2472 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -141,6 +141,12 @@ sub parseMakeOutput
+             next;
+         }
+ 
++        if ($text =~ /^(mkdir|msgfmt) /) {
++            # options to the Portable Object translations
++            # the line "mkdir ... && msgfmt ..." contains no linker options
++            next;
++        }
++
+         if($text =~ / -c /) {
+             # compilation
+             handleCompileLine($text, $line);
 -- 
 2.3.1
 
