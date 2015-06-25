@@ -1,63 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] commit: add commit.signoff config option
-Date: Thu, 25 Jun 2015 07:55:37 -0700
-Message-ID: <xmqqlhf725xy.fsf@gitster.dls.corp.google.com>
-References: <1435243807-32112-1-git-send-email-cmarcelo@gmail.com>
+From: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+Subject: Re: [PATCH] commit: add commit.signoff config option
+Date: Thu, 25 Jun 2015 11:57:13 -0300
+Message-ID: <CADstYCZ6cXrA-3a-NX1GANQ+tjL69D-V37Y0FGbs9dpF4Oa7rg@mail.gmail.com>
+References: <1435217454-5718-1-git-send-email-cmarcelo@gmail.com>
+	<20150625082059.GA9937@alex-host>
+	<1228200928.789773.1435221179871.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 16:55:48 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 25 16:57:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z88Z8-0001B4-4U
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 16:55:46 +0200
+	id 1Z88ac-0002Wq-M7
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 16:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167AbbFYOzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 10:55:40 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:38794 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbbFYOzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 10:55:39 -0400
-Received: by igin14 with SMTP id n14so57186964igi.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 07:55:38 -0700 (PDT)
+	id S1751297AbbFYO5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 10:57:14 -0400
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:33955 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751469AbbFYO5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 10:57:13 -0400
+Received: by yhnv31 with SMTP id v31so30859946yhn.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 07:57:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=F7OLSOOD1XvG/MkPx49g73jlNJarBTgPX7D/qMmcxac=;
-        b=A/4vbyBT7o59yDx0IMTmDqmXrZj1ZlSEBdlz2K+SDuF1A3ocavlnwtCeO1zluEp565
-         5Eon/8ROfH4+mQA2TN2Z+Oc76ugDGqyiD5KwfQHlbZik1q4Xvji3NTSNBHvGLw+8YQF3
-         ee3B60DzOG65N+QvxKbWYfb8aunFFjn5VqqXjg3dZLg/q5JuOkahaBQSoD7D+KNY2+xl
-         CQPnV6sXnXNePjmmtbMzjqRDFKbHU4miAFpaijh4x28b4L3d2GMJDataINcYX10P17Rs
-         s5p9wdWVYYjnPnulXXJYTVx9ZDyqBqszD+7UQNoH3UHHgXMaqb70fzzEgX62q3JdHbvD
-         YnIA==
-X-Received: by 10.107.170.216 with SMTP id g85mr52129146ioj.31.1435244138706;
-        Thu, 25 Jun 2015 07:55:38 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:3512:3582:e5d3:22a9])
-        by mx.google.com with ESMTPSA id z195sm19737576iod.33.2015.06.25.07.55.37
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jun 2015 07:55:38 -0700 (PDT)
-In-Reply-To: <1435243807-32112-1-git-send-email-cmarcelo@gmail.com> (Caio
-	Marcelo de Oliveira Filho's message of "Thu, 25 Jun 2015 11:50:07
-	-0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zFZdMMdl2v0ZQ7yPU83SB1UQA97+gGDax8fYHN6N9dY=;
+        b=rrxGzbYl7cntAcOJ3VHRC2gCXg485IXGki3QyRyZyE8smrSHiFYHYz6DCeaEd5Rj2g
+         2J6JCHfmTcZldYepamh+LSqJZRY4MxzeZSRGNzQGEaA1bmJvBr5ZvPamFAYucqp+cAEJ
+         C1MAqQFe/Sd2FVxI4erPyjW0H1l1OY+3Q3falY+8JYUkbUCITzBGc+jQoBIbQJNAMJoU
+         IkE+wDFqYXROPcjD1vxjK5DwdPU4OoPEyqeKKezymi6SwEaElL5y1hb5Y+dwapcscsih
+         HEpDmjl31dR7j9v3w1hoq1NzRUjasjt5h8ChJS/stEsIsaEy1FR6bUwOxFQDwlLAX8VW
+         Wusw==
+X-Received: by 10.170.93.11 with SMTP id k11mr56419191yka.79.1435244233171;
+ Thu, 25 Jun 2015 07:57:13 -0700 (PDT)
+Received: by 10.13.213.142 with HTTP; Thu, 25 Jun 2015 07:57:13 -0700 (PDT)
+In-Reply-To: <1228200928.789773.1435221179871.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272681>
 
-Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com> writes:
+> In both tests, you should probably use 'test_config' instead of 'git
+> config [...] git config --unset', it takes care of it for you (also
+> should prevent the case where the config is not unset when your test
+> fails in the middle).
 
-> In projects that use Signed-off-by, it's convenient to include that line
-> in the commit message by default. The commit.signoff config option
+Posted a v2 with this improvement and the bash completion.
+Thanks for the review.
 
-Hmm, I do not recall seeing v1 but that is OK.
 
-The following immediately comes to mind.
-
-http://thread.gmane.org/gmane.comp.version-control.git/51754/focus=51780
+-- 
+Caio Marcelo de Oliveira Filho
