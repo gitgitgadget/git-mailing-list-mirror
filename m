@@ -1,86 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: What's cooking in git.git (Jun 2015, #06; Wed, 24)
-Date: Wed, 24 Jun 2015 18:01:51 -0700
-Message-ID: <CAGZ79kby0RaKiS2e4o7O7OyLGCftMYVJppvATyPxpzJUOe59jw@mail.gmail.com>
-References: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: RFC/Pull Request: Refs db backend
+Date: Thu, 25 Jun 2015 01:08:15 +0000
+Message-ID: <20150625010814.GA263667@vauxhall.crustytoothpaste.net>
+References: <1435020656.28466.8.camel@twopensource.com>
+ <20150623114716.GC12518@peff.net>
+ <CAJo=hJsu2b0kmpjOhGwvgRsG3yGK56+U_2RANDi2qoEg7V_PmQ@mail.gmail.com>
+ <20150624094919.GC5436@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 03:02:12 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
+Cc: Shawn Pearce <spearce@spearce.org>,
+	David Turner <dturner@twopensource.com>,
+	git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 25 03:08:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7vYR-0000QB-LT
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 03:02:12 +0200
+	id 1Z7veW-0005Q0-9T
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 03:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753588AbbFYBCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 21:02:03 -0400
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:36534 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932103AbbFYBBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 21:01:52 -0400
-Received: by yhjh26 with SMTP id h26so1024965yhj.3
-        for <git@vger.kernel.org>; Wed, 24 Jun 2015 18:01:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+r5aa9oehLkhaf/pttKTy5gEPshrQN0i11i1ZeDUXMI=;
-        b=MYOV5vpzb/La43dPt2Odc4DTGNDrRI7dJcNRylKRcLG5Zn1WVhYu+02cOXX5XDhBz8
-         +2F2hPSHfohnhJnPmjaWpXFpztOC8OHdyuFL9Wcj+GS1Waq+/y0/YgYgJPYOZvMcKUgJ
-         DwekYHy01lN3fmqoV7piobaSc9uYccXlRkrwRU1zkG5I4zz6g7mrdDWtz468G/PFJdQy
-         SlvIDocYUNM81VZPCJjJcT/Ncj15zbxFUu9Dl6hJjNrZPeuT9sGVjMNDhcxhnX9s4b/0
-         +MG6iIhMfYW5orAkFfqXf/6iVhyr4ovjFh6vO4mHkTcXxj2tAcUdGqGzGKKm3YtAgoy8
-         lsJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=+r5aa9oehLkhaf/pttKTy5gEPshrQN0i11i1ZeDUXMI=;
-        b=SFYJgnythfkgP+NMT1C0P+uiNll1gbKDr/jFIN5lC101Teq79s81lU0dM4HtTO3jzc
-         cfiaZ9O+F5rOBIbuUonw95XF/ov96cdiXLt/FZNfD0oKp0UpO9WQRcNZpYYzMrz0Q0r6
-         Re4ukLZHnVU105tCG7CxhSP2IjFWexPEgQarW9nfIbdo/FGBGswG8RH1lD9ZAvzwt6Ar
-         E2xzXrljDfLwt8CjlEDtsI4uP1UtcVxlew9f58Jc8hlaNxsfM6h7nHrp6bdJdkP/XWJ6
-         60TEELKxAt8iXZjuFfzVYZ1R/ifOXEWMdHBIrh+Pr/Jd88+GSQ2RFkoKq/HobHevhzq0
-         fW2w==
-X-Gm-Message-State: ALoCoQncBgfexa0hg6i6H1I8v/hQy2gwNgv72r+bBnoXQEn5Bd1y+J+Zbw5S1qMpTRMuDrzxayWt
-X-Received: by 10.129.117.5 with SMTP id q5mr29324782ywc.82.1435194111462;
- Wed, 24 Jun 2015 18:01:51 -0700 (PDT)
-Received: by 10.37.81.193 with HTTP; Wed, 24 Jun 2015 18:01:51 -0700 (PDT)
-In-Reply-To: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
+	id S1752773AbbFYBIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 21:08:23 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:54318 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752048AbbFYBIW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jun 2015 21:08:22 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:c9d0:403a:aa47:277a])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 59E4D2808F;
+	Thu, 25 Jun 2015 01:08:20 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
+	David Turner <dturner@twopensource.com>,
+	git mailing list <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20150624094919.GC5436@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.19.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272632>
 
-> * pt/pull-builtin (2015-06-18) 19 commits
->  - pull: remove redirection to git-pull.sh
->  - pull --rebase: error on no merge candidate cases
->  - pull --rebase: exit early when the working directory is dirty
->  - pull: configure --rebase via branch.<name>.rebase or pull.rebase
->  - pull: teach git pull about --rebase
->  - pull: set reflog message
->  - pull: implement pulling into an unborn branch
->  - pull: fast-forward working tree if head is updated
->  - pull: check if in unresolved merge state
->  - pull: support pull.ff config
->  - pull: error on no merge candidates
->  - pull: pass git-fetch's options to git-fetch
->  - pull: pass git-merge's options to git-merge
->  - pull: pass verbosity, --progress flags to fetch and merge
->  - pull: implement fetch + merge
->  - pull: implement skeletal builtin pull
->  - argv-array: implement argv_array_pushv()
->  - parse-options-cb: implement parse_opt_passthru_argv()
->  - parse-options-cb: implement parse_opt_passthru()
->
->  Reimplement 'git pull' in C.
->
->  This is v4 ($gmane/271943).
->  Comments from mentors and others?
 
-I think the series is good as is.
+--EVF5PPMfhYS0aIcm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 24, 2015 at 05:49:20AM -0400, Jeff King wrote:
+> I don't know how much that helps for the JGit situation. It punts the
+> native code out of JGit, but people using JGit still have to have the
+> native helper from git on their system.  I have no problems at all with
+> pluggable $FANCY_DB that not everybody supports.  But I think we would
+> want _some_ baseline that is reasonably performant, and that everybody
+> will support. I'm not sure putting the index into a flat file is
+> performant enough. Is there any basic key/value store that is has both a
+> C and a pure-Java version (e.g., berkeley db)?
+
+Berkeley DB has switched to the AGPLv3 for new versions.  Besides being
+unpalatable for many people, it's also incompatible with the GPLv2.  I
+do otherwise like Berkeley DB: it performs reasonably well and is
+available on most systems.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--EVF5PPMfhYS0aIcm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.4 (GNU/Linux)
+
+iQIcBAEBCgAGBQJVi1R+AAoJEL9TXYEfUvaLWZkP/Ar2JewCCbrqWqlxQA22+oub
+p5JvEnD+SCMchvDOhOIVK+xCBZMqtV4rpkIc3LfRFYY0F8An3aDH3jVxU0xxabTN
+GUfdEviHc2dw1CWRsEvS0LiSibdu12f6gxLyeq9JocKPDtg9PTINdkkfC5YtzA2w
+afLoybtmJdgey4nUUraYl+mPLN3EOoqYtst9i/V9E1jdogkRvZtOo7GDj+naMuKU
+GLgJcb914Kkmk8SbaajkKSZHaLkoxeOg0H8ynFjRJ/y5DVgSDMibskBROnoRg5Br
+GMv0xd6Ph7FCAKaWpCzL0IVXslsn7XEV4+TKM4+NXBQzzFRpcm/H02W6QquW3bIh
+ygqPlSsATt45Q/R3NYlNLQthIb9I87pYbAQOPn6WIIb26SuG1abEDMnKWQ7EBxJD
+KxFeLomxXWaCP3qr7QgAnRRx74azRN8lRAPzHnbee0s0zGgI4L9IyE3pud4IZCP3
+zY1/enn6/UnsPSmxxRGIuye9qk8l3ICscEvsEgR75CPjX20UiGIIfZT6YRUOQGfr
+NBKHWjFxL2E8lnt0Dla+V6M7ZrXIK6pMr/U/G22muxgLpQ5uq8Q51rLJE+GKBnD4
+MxJiExAtPNbR3djt7zq44t59DKmihg77Qld52s/w7Gp5B7qd9a3v02HvL525if4o
+KOIdVNsA07gF1giAn1X4
+=by0t
+-----END PGP SIGNATURE-----
+
+--EVF5PPMfhYS0aIcm--
