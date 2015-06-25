@@ -1,60 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 01/11] t6301: for-each-ref tests for ref-filter APIs
-Date: Wed, 24 Jun 2015 17:16:51 -0700
-Message-ID: <xmqqoak48wwc.fsf@gitster.dls.corp.google.com>
-References: <CAOLa=ZTbXCRFx6xEv+cB7DQhu92=ePb_MJ5zeEjsr_-=HPAU6g@mail.gmail.com>
-	<1435175632-27803-1-git-send-email-karthik.188@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: What's cooking in git.git (Jun 2015, #06; Wed, 24)
+Date: Wed, 24 Jun 2015 18:01:51 -0700
+Message-ID: <CAGZ79kby0RaKiS2e4o7O7OyLGCftMYVJppvATyPxpzJUOe59jw@mail.gmail.com>
+References: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 02:17:50 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 03:02:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z7urU-0005PI-9q
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 02:17:48 +0200
+	id 1Z7vYR-0000QB-LT
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 03:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbbFYARo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2015 20:17:44 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:36701 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbbFYAQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2015 20:16:54 -0400
-Received: by igbiq7 with SMTP id iq7so108456470igb.1
-        for <git@vger.kernel.org>; Wed, 24 Jun 2015 17:16:52 -0700 (PDT)
+	id S1753588AbbFYBCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2015 21:02:03 -0400
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:36534 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932103AbbFYBBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2015 21:01:52 -0400
+Received: by yhjh26 with SMTP id h26so1024965yhj.3
+        for <git@vger.kernel.org>; Wed, 24 Jun 2015 18:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ClzcWZDk8YEaNKfTFlMC2wyq0pnsg9twZbk8bM/WQqg=;
-        b=Ls8IZlMzTNGija/xUQfe690wneZ9EEnbIMHDpT1OtTWzKEoYAp313x0B95cCUDvf+n
-         hdCA3iIZUt7kQaW+1AT7cKR4zbbwQ0urWhcBe8NM1G+QsEbAWHCCFIuABh/B8hzvKk87
-         qfZVP9qbsU6XmGoZ8a5nQjJdvwwG0DmIyeFFSzOQ8yLbUpNNnAtBrhjznru1pm0FQHbw
-         cVwJZB60ku1wKN40Gm2f3hcKPRArLvnXkNcdphGhMCSDeU9t46uk7+Gmgf1e1mFvSbEP
-         4YJt5YMUVQHEtzLXQZuqLXLCLWKxgKalF94tqCGcTLIxtCYqmXPn2IYWX3EdIRaTQVhb
-         w5xg==
-X-Received: by 10.50.117.106 with SMTP id kd10mr534195igb.24.1435191412902;
-        Wed, 24 Jun 2015 17:16:52 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:1c05:dbc5:2f2f:d033])
-        by mx.google.com with ESMTPSA id d4sm2181927igl.1.2015.06.24.17.16.52
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 24 Jun 2015 17:16:52 -0700 (PDT)
-In-Reply-To: <1435175632-27803-1-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Thu, 25 Jun 2015 01:23:42 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+r5aa9oehLkhaf/pttKTy5gEPshrQN0i11i1ZeDUXMI=;
+        b=MYOV5vpzb/La43dPt2Odc4DTGNDrRI7dJcNRylKRcLG5Zn1WVhYu+02cOXX5XDhBz8
+         +2F2hPSHfohnhJnPmjaWpXFpztOC8OHdyuFL9Wcj+GS1Waq+/y0/YgYgJPYOZvMcKUgJ
+         DwekYHy01lN3fmqoV7piobaSc9uYccXlRkrwRU1zkG5I4zz6g7mrdDWtz468G/PFJdQy
+         SlvIDocYUNM81VZPCJjJcT/Ncj15zbxFUu9Dl6hJjNrZPeuT9sGVjMNDhcxhnX9s4b/0
+         +MG6iIhMfYW5orAkFfqXf/6iVhyr4ovjFh6vO4mHkTcXxj2tAcUdGqGzGKKm3YtAgoy8
+         lsJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=+r5aa9oehLkhaf/pttKTy5gEPshrQN0i11i1ZeDUXMI=;
+        b=SFYJgnythfkgP+NMT1C0P+uiNll1gbKDr/jFIN5lC101Teq79s81lU0dM4HtTO3jzc
+         cfiaZ9O+F5rOBIbuUonw95XF/ov96cdiXLt/FZNfD0oKp0UpO9WQRcNZpYYzMrz0Q0r6
+         Re4ukLZHnVU105tCG7CxhSP2IjFWexPEgQarW9nfIbdo/FGBGswG8RH1lD9ZAvzwt6Ar
+         E2xzXrljDfLwt8CjlEDtsI4uP1UtcVxlew9f58Jc8hlaNxsfM6h7nHrp6bdJdkP/XWJ6
+         60TEELKxAt8iXZjuFfzVYZ1R/ifOXEWMdHBIrh+Pr/Jd88+GSQ2RFkoKq/HobHevhzq0
+         fW2w==
+X-Gm-Message-State: ALoCoQncBgfexa0hg6i6H1I8v/hQy2gwNgv72r+bBnoXQEn5Bd1y+J+Zbw5S1qMpTRMuDrzxayWt
+X-Received: by 10.129.117.5 with SMTP id q5mr29324782ywc.82.1435194111462;
+ Wed, 24 Jun 2015 18:01:51 -0700 (PDT)
+Received: by 10.37.81.193 with HTTP; Wed, 24 Jun 2015 18:01:51 -0700 (PDT)
+In-Reply-To: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272631>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+> * pt/pull-builtin (2015-06-18) 19 commits
+>  - pull: remove redirection to git-pull.sh
+>  - pull --rebase: error on no merge candidate cases
+>  - pull --rebase: exit early when the working directory is dirty
+>  - pull: configure --rebase via branch.<name>.rebase or pull.rebase
+>  - pull: teach git pull about --rebase
+>  - pull: set reflog message
+>  - pull: implement pulling into an unborn branch
+>  - pull: fast-forward working tree if head is updated
+>  - pull: check if in unresolved merge state
+>  - pull: support pull.ff config
+>  - pull: error on no merge candidates
+>  - pull: pass git-fetch's options to git-fetch
+>  - pull: pass git-merge's options to git-merge
+>  - pull: pass verbosity, --progress flags to fetch and merge
+>  - pull: implement fetch + merge
+>  - pull: implement skeletal builtin pull
+>  - argv-array: implement argv_array_pushv()
+>  - parse-options-cb: implement parse_opt_passthru_argv()
+>  - parse-options-cb: implement parse_opt_passthru()
+>
+>  Reimplement 'git pull' in C.
+>
+>  This is v4 ($gmane/271943).
+>  Comments from mentors and others?
 
->  t/t6301-for-each-ref-filter.sh | 19 +++++++++++++++++++
-
-t6301 is already used in mh/reporting-broken-refs-from-for-each-ref
-topic.  Please renumber.
+I think the series is good as is.
