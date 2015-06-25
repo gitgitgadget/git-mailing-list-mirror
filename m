@@ -1,22 +1,23 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 06/17] engine.pl: Avoid complications with perl support
-Date: Thu, 25 Jun 2015 01:03:42 +0100
-Message-ID: <1435190633-2208-7-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 17/17] config.mak.uname: add MSVC
+ No_SafeExeceptionHandler option
+Date: Thu, 25 Jun 2015 01:03:53 +0100
+Message-ID: <1435190633-2208-18-git-send-email-philipoakley@iee.org>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: MsysGitList <msysgit@googlegroups.com>,
 	Philip Oakley <philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:12 2015
+X-From: msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com Thu Jun 25 02:02:17 2015
 Return-path: <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f56.google.com ([74.125.82.56])
+Received: from mail-wi0-f189.google.com ([209.85.212.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBDSOTWHYX4PBBAUKVWWAKGQEAT7SHKI@googlegroups.com>)
-	id 1Z7ucN-0001KU-LC
+	id 1Z7ucN-0001KS-IO
 	for gcvm-msysgit@m.gmane.org; Thu, 25 Jun 2015 02:02:11 +0200
-Received: by wggx12 with SMTP id x12sf16726525wgg.1
+Received: by wibbw19 with SMTP id bw19sf18076745wib.0
         for <gcvm-msysgit@m.gmane.org>; Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -25,32 +26,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=I6loKpIjx/RIOXbSWwNhQ+i5uFdM+nus39YMf9v2TMs=;
-        b=cSwNd5MZi2O8bBD88scQfburSa1Ntg5bf2cFDuScS0XmVPN01toe/y/rwJKl5HNf/r
-         jai2/VqFUVRNjrb7EhzKBQeA+on59L3Oo/pHgxmOMErdOdIXa1BhDKlCBg+vKhfM7Szz
-         3qlTl7l2aevge8E+Bx3qjR622DxT7eiSBCHZNsB0ujcYzdX+bXklNvgpAaalnpWEN2yB
-         zrTq/fI0uukRrdjiSavG6H2unB1zAVIC2PcafqPhimNjrAxuPwQQvcqPONE7vEggB+A6
-         +CttxM2FLk0zVFXWU9rYGKA4pC62Kb28/1+ivtSBa95dUEec+qflis4BMfC4k8yrqHCX
-         SPGA==
-X-Received: by 10.152.244.131 with SMTP id xg3mr557718lac.0.1435190531334;
+        bh=JHW0+aC7eD0HexjQFzeIhOOLLkIfRE/g4MeSmNN23yw=;
+        b=qQQy2vqfgxTXjvH3h5LdlTlestHH1WWSYkB1znLxzjW7Tf+cLPtZ/LtCNOTZlXyRtb
+         0HA7rW8SQAzjyBOWdJL1I8FuH25PqpvY8R8ql3I/1Uoq2xx2L3cSwViFph6DXxTcv2Ku
+         GxgqLmreCKid5Dg8YVo6mXu8zPd6E797sLIO1GNW9Cziu0aIGuM+wpqjX169hSciqSJc
+         r3onEQD51wN52boBkTMaKEp85X46xps6uNf1P4I//eKaRL3TsDF17YFDQgVHBs8goe7f
+         M8Qs59cbSaEzQ6f8wEZPv9Iy+D9DP8vpGqRa+kuHgwiKsky8YyEyN6LmOakgiyohVtGr
+         wWuA==
+X-Received: by 10.181.13.47 with SMTP id ev15mr2183wid.12.1435190531228;
         Wed, 24 Jun 2015 17:02:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.170.227 with SMTP id ap3ls278201lac.21.gmail; Wed, 24 Jun
+Received: by 10.180.86.165 with SMTP id q5ls108934wiz.24.gmail; Wed, 24 Jun
  2015 17:02:10 -0700 (PDT)
-X-Received: by 10.152.5.2 with SMTP id o2mr37773798lao.0.1435190530133;
+X-Received: by 10.180.97.9 with SMTP id dw9mr304675wib.2.1435190530530;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id da3si4921wib.1.2015.06.24.17.02.10
+        by gmr-mx.google.com with ESMTP id t6si17968wiz.0.2015.06.24.17.02.10
         for <msysgit@googlegroups.com>;
         Wed, 24 Jun 2015 17:02:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qASuPa2UHhCsFlAWEWIh1ljyBCYEpHIFTPTGBA4FFAQEB
-X-IPAS-Result: A2C1DwCSRItVPCWpEVxbgxFUX4ZMgViwQIYShXoEAgKBTE0BAQEBAQEHAQEBAUE/QQWDXQEBBFYjEAhJOQoUBhOIM81qASuPa2UHhCsFlAWEWIh1ljyBCYEpHIFTPTGBA4FFAQEB
+X-IronPort-Anti-Spam-Result: A2CvDwCSRItVPCWpEVxbgxGBM4ZMgViwQIwMBAICgUxNAQEBAQEBBwEBAQFBP0EFg10BAQRWIxAISTkKBg4GE4gzzWoBAQgigk2OAweEKwWFWo4rmUaKQ4EJgxg9MYJIAQEB
+X-IPAS-Result: A2CvDwCSRItVPCWpEVxbgxGBM4ZMgViwQIwMBAICgUxNAQEBAQEBBwEBAQFBP0EFg10BAQRWIxAISTkKBg4GE4gzzWoBAQgigk2OAweEKwWFWo4rmUaKQ4EJgxg9MYJIAQEB
 X-IronPort-AV: E=Sophos;i="5.13,673,1427756400"; 
-   d="scan'208";a="784366772"
+   d="scan'208";a="784366786"
 Received: from host-92-17-169-37.as13285.net (HELO localhost) ([92.17.169.37])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:01:55 +0100
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 25 Jun 2015 01:02:02 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -69,32 +70,39 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272612>
-
-ee9be06 (perl: detect new files in MakeMaker builds, 2012-07-27)
-did not include dry-run support for the generation of the PM.stamp
-file, though the dry-run output is used by the build engine.
-
-Disable the perl processing during the dry-run to avoid the issue.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272613>
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/engine.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ config.mak.uname | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 5398315..4d0a616 100755
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -72,7 +72,7 @@ Running GNU Make to figure out build structure...
- EOM
+diff --git a/config.mak.uname b/config.mak.uname
+index 943c439..1c27828 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -1,5 +1,9 @@
+ # Platform specific Makefile tweaks based on uname detection
  
- # Pipe a make --dry-run into a variable, if not already loaded from file
--@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>/dev/null` if !@makedry;
-+@makedry = `cd $git_dir && make -n MSVC=1 NO_PERL=1 V=1 2>/dev/null` if !@makedry;
- 
- # Parse the make output into usable info
- parseMakeOutput();
++# Define NO_SAFESEH if you need MSVC/Visual Studio to ignore the lack of
++# Microsoft's Safe Exception Handling in libraries (such as zlib).
++# Typically required for VS2013+/32-bit compilation on Vista+ versions.
++
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+ uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
+ uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
+@@ -385,6 +389,11 @@ ifeq ($(uname_S),Windows)
+ 	PTHREAD_LIBS =
+ 	lib =
+ 	BASIC_CFLAGS += -DPROTECT_NTFS_DEFAULT=1
++
++ifdef NO_SAFESEH
++	LDFLAGS += -SAFESEH:NO
++endif
++
+ ifndef DEBUG
+ 	BASIC_CFLAGS += -GL -Os -MD
+ 	BASIC_LDFLAGS += -LTCG
 -- 
 2.3.1
 
