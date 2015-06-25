@@ -1,226 +1,104 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH/WIP v3 06/31] am: detect mbox patches
-Date: Thu, 25 Jun 2015 21:40:30 +0800
-Message-ID: <CACRoPnQAGt_mLbG-EtJ+qTpD2OvNgi-MZfU=NoKCoSmhCOnBEw@mail.gmail.com>
-References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-	<1434626743-8552-7-git-send-email-pyokagan@gmail.com>
-	<334feea4cee88d06a10a7363956d2bfe@www.dscho.org>
+From: =?UTF-8?Q?Bj=C3=B8rnar_Snoksrud?= <snoksrud@gmail.com>
+Subject: Linked workdirs break typo-correction.
+Date: Thu, 25 Jun 2015 16:15:23 +0200
+Message-ID: <CA+cck7GD+JgR4O-XoBeUX1gJAG6suP9iLwASyRygK8hR4KP7pw@mail.gmail.com>
+Reply-To: bjornar@snoksrud.no
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 25 15:40:41 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 25 16:15:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z87OQ-00080W-Ey
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 15:40:38 +0200
+	id 1Z87wE-0001m7-Nm
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jun 2015 16:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447AbbFYNke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 09:40:34 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:36315 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752136AbbFYNkc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2015 09:40:32 -0400
-Received: by lacny3 with SMTP id ny3so45113433lac.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 06:40:30 -0700 (PDT)
+	id S1751297AbbFYOP0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2015 10:15:26 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:36234 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbbFYOPY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2015 10:15:24 -0400
+Received: by ykdr198 with SMTP id r198so41125329ykd.3
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 07:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jqq8C4yqc9XrmsPc8VZj8VP4WTZ36gPo8fL5XF568tU=;
-        b=B0MBiPsgH7s0WBKUbv04TNxZV4Ajy14YgVk10Ux9jf59AwSVcHnhABKehDWbDftA7N
-         V19nyQIlkYWIWHy6w6v0McFPjZtAcIx8JLb2aI19J8BGofqBWukGtsMIeLdvmGuq87kf
-         GixJKcSGcCwBWhktFVuto0QOt0ZSYz2+X5IbX0AyGuCIgReC59BiMLWMOQ5tyg2QXl73
-         uy9uAm2djylXBoJbF4hS1DY1rzmyva8/LiJsWm8SXLwfz+Vj3q4ifoNxUO8DkX2k5l87
-         9Hc1/ZOAJzmO7NZnZCQ3FKTFXb1hU8jQcFgIMrOyHjT+/d94mxf8194sJf4FNB9kUY0f
-         SlBA==
-X-Received: by 10.152.4.163 with SMTP id l3mr12328611lal.35.1435239630674;
- Thu, 25 Jun 2015 06:40:30 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Thu, 25 Jun 2015 06:40:30 -0700 (PDT)
-In-Reply-To: <334feea4cee88d06a10a7363956d2bfe@www.dscho.org>
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=WhVFAknyNO54jlcBHoMPIHDdZdmR/XPXr7Z1okyPm14=;
+        b=K1g00L1jesfLdSF8Gzs9j+Wjl7bS91tERs6FHlv8zfpoI/zkzi7/ZkZbLN3iz8ZQHW
+         sebB1eKcqvLErDfZJVSg+7Gz+BShPJq+a5wT624ZsXgUCfd5Y63WJPsy/jVgyaqcv8GL
+         CPDLko+xjXOOpO4aoY2+5J7Suxu8yvA5E5/mUBE2120oNzxVTup4AiMjWV0KpRzNUhpG
+         0X+MNZLbfE+vvuvaeqsdDBZbqUa+cw76ReNPV2o8wHTMz3DSRLJU3gT0OtCMrDLt21kI
+         zioseG+ke2BnnALxQeqlQq1ZtNsFlfFlHPrMT1j3/H6Fxj7Bvyb9oZ5Rvd98D2a3fEO9
+         l2Zg==
+X-Received: by 10.13.244.195 with SMTP id d186mr48558399ywf.73.1435241723823;
+ Thu, 25 Jun 2015 07:15:23 -0700 (PDT)
+Received: by 10.129.71.3 with HTTP; Thu, 25 Jun 2015 07:15:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272677>
 
-On Wed, Jun 24, 2015 at 11:10 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Paul,
->
-> On 2015-06-18 13:25, Paul Tan wrote:
->
->> diff --git a/builtin/am.c b/builtin/am.c
->> index e9a3687..7b97ea8 100644
->> --- a/builtin/am.c
->> +++ b/builtin/am.c
->> @@ -121,6 +121,96 @@ static void am_destroy(const struct am_state *state)
->>       strbuf_release(&sb);
->>  }
->>
->> +/*
->> + * Returns 1 if the file looks like a piece of email a-la RFC2822, 0 otherwise.
->> + * We check this by grabbing all the non-indented lines and seeing if they look
->> + * like they begin with valid header field names.
->> + */
->> +static int is_email(const char *filename)
->> +{
->> +     struct strbuf sb = STRBUF_INIT;
->> +     FILE *fp = xfopen(filename, "r");
->> +     int ret = 1;
->> +
->> +     while (!strbuf_getline(&sb, fp, '\n')) {
->> +             const char *x;
->> +
->> +             strbuf_rtrim(&sb);
->> +
->> +             if (!sb.len)
->> +                     break; /* End of header */
->> +
->> +             /* Ignore indented folded lines */
->> +             if (*sb.buf == '\t' || *sb.buf == ' ')
->> +                     continue;
->> +
->> +             /* It's a header if it matches the regexp "^[!-9;-~]+:" */
->
-> Why not just compile a regex and use it here? We use regexes elsewhere anyway...
+This is a weird one..
 
-Ah, you're right. A regular expression would definitely be clearer.
-I've fixed it on my end.
+When standing in a folder inside a linked working copy, the
+typo-correction breaks all commands.
 
->> +/**
->> + * Attempts to detect the patch_format of the patches contained in `paths`,
->> + * returning the PATCH_FORMAT_* enum value. Returns PATCH_FORMAT_UNKNOWN if
->> + * detection fails.
->> + */
->> +static int detect_patch_format(struct string_list *paths)
->> +{
->> +     enum patch_format ret = PATCH_FORMAT_UNKNOWN;
->> +     struct strbuf l1 = STRBUF_INIT;
->> +     struct strbuf l2 = STRBUF_INIT;
->> +     struct strbuf l3 = STRBUF_INIT;
->> +     FILE *fp;
->> +
->> +     /*
->> +      * We default to mbox format if input is from stdin and for directories
->> +      */
->> +     if (!paths->nr || !strcmp(paths->items->string, "-") ||
->> +         is_directory(paths->items->string)) {
->> +             ret = PATCH_FORMAT_MBOX;
->> +             goto done;
->> +     }
->> +
->> +     /*
->> +      * Otherwise, check the first 3 lines of the first patch, starting
->> +      * from the first non-blank line, to try to detect its format.
->> +      */
->> +     fp = xfopen(paths->items->string, "r");
->> +     while (!strbuf_getline(&l1, fp, '\n')) {
->> +             strbuf_trim(&l1);
->> +             if (l1.len)
->> +                     break;
->> +     }
->> +     strbuf_getline(&l2, fp, '\n');
->
-> We should test the return value of `strbuf_getline()`; if EOF was reached already, `strbuf_getwholeline()` does not touch the strbuf. I know, the strbuf is still initialized empty here, but it is too easy to forget when changing this code.
+Repro:
+~/git $ git --version
+git version 2.4.4.600.g6397abd
+~/git $ git init bar
+Initialized empty Git repository in ~/git/bar/.git/
+~/git $ cd bar
+~/git/bar (master #) $ git commit -m init --allow-empty
+[master (root-commit) 554ea84] init
+~/git/bar (master) $ mkdir folder
+~/git/bar (master) $ touch folder/file
+~/git/bar (master) $ git add folder
+~/git/bar (master +) $ git commit -m folder
+[master 8c00ba8] folder
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 folder/file
+~/git/bar (master) $ cd folder/
+~/git/bar/folder (master) $ git shw
+WARNING: You called a Git command named 'shw', which does not exist.
+Continuing under the assumption that you meant 'show'
+in 0.1 seconds automatically...
+commit 8c00ba8d30cff0e0d1b9cf110a65ea8f33edf8b2
+Author: Bj=C3=B8rnar Snoksrud <bsnoksru@cisco.com>
+Date:   Thu Jun 25 16:08:01 2015 +0200
 
-Ah OK. I'll vote for doing a strbuf_reset() just before the
-strbuf_getline() though.
+    folder
 
->> +     strbuf_trim(&l2);
->> +     strbuf_getline(&l3, fp, '\n');
->> +     strbuf_trim(&l3);
->> +     fclose(fp);
->> +
->> +     if (starts_with(l1.buf, "From ") || starts_with(l1.buf, "From: "))
->> +             ret = PATCH_FORMAT_MBOX;
->
-> Hmm. We can test that earlier and return without reading from the file any further, I think.
+diff --git a/folder/file b/folder/file
+new file mode 100644
+index 0000000..e69de29
+bsnoksru@calculon ~/git/bar/folder (master) $ git branch foo
+bsnoksru@calculon ~/git/bar/folder (master) $ git checkout foo --to
+~/git/foo
+Enter /home/bsnoksru/git/foo (identifier foo)
+Switched to branch 'foo'
+bsnoksru@calculon ~/git/bar/folder (master) $ cd ../../foo/folder/
+~/git/foo/folder (foo) $ git shw
+WARNING: You called a Git command named 'shw', which does not exist.
+Continuing under the assumption that you meant 'show'
+in 0.1 seconds automatically...
+fatal: internal error: work tree has already been set
+Current worktree: ~/git/foo
+New worktree: ~/git/foo/folder
+~/git/foo/folder (foo) $ git brnch baz
+WARNING: You called a Git command named 'brnch', which does not exist.
+Continuing under the assumption that you meant 'branch'
+in 0.1 seconds automatically...
+fatal: internal error: work tree has already been set
+Current worktree: /home/bsnoksru/git/foo
+New worktree: /home/bsnoksru/git/foo/folder
 
-The "reading 3 lines at the beginning" logic is meant to support a
-later patch where support for StGit and mercurial patches is added.
-That said, it's true that we don't need to read 3 lines in this patch,
-so I think I will remove it in this patch.
 
->> +     else if (l1.len && l2.len && l3.len && is_email(paths->items->string))
->> +             ret = PATCH_FORMAT_MBOX;
->
-> Maybe we can do better than this by folding the `is_email() function into this here function, reusing the same strbuf to read the lines and keeping track of the email header lines we saw... I would really like to avoid opening the same file twice just to figure out whether it is in email format.
-
-Okay, how about every time we call a strbuf_getline(), we save the
-line to a string_list as well? Like string_list_getline_crlf() below:
-
-/**
- * Like strbuf_getline(), but supports both '\n' and "\r\n" as line
- * terminators.
- */
-static int strbuf_getline_crlf(struct strbuf *sb, FILE *fp)
-{
-    if (strbuf_getwholeline(sb, fp, '\n'))
-        return EOF;
-    if (sb->buf[sb->len - 1] == '\n') {
-        strbuf_setlen(sb, sb->len - 1);
-        if (sb->len > 0 && sb->buf[sb->len - 1] == '\r')
-            strbuf_setlen(sb, sb->len - 1);
-    }
-    return 0;
-}
-
-/**
- * Like strbuf_getline_crlf(), but appends the line to a string_list and
- * returns it as a string. Returns NULL on EOF.
- */
-static const char *string_list_getline_crlf(struct string_list *list, FILE *fp)
-{
-    struct strbuf sb = STRBUF_INIT;
-    struct string_list_item *item;
-
-    if (strbuf_getline_crlf(&sb, fp))
-        return NULL;
-    item = string_list_append_nodup(list, strbuf_detach(&sb, NULL));
-    return item->string;
-}
-
-So now, is_email() can have access to previously-read lines, and if it
-needs some more, it can read more as well:
-
-static int is_email(struct string_list *lines, FILE *fp)
-{
-    const char *header_regex = "^[!-9;-~]+:";
-    regex_t regex;
-    int ret = 1;
-    size_t i;
-
-    if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
-        die("Invalid search pattern: %s", header_regex);
-
-    for (i = 0; i < lines->nr || string_list_getline_crlf(lines, fp); i++) {
-        const char *line = lines->items[i].string;
-
-        if (!*line)
-            break; /* End of header */
-
-        /* Ignore indented folded lines */
-        if (*line == '\t' || *line == ' ')
-            continue;
-
-        /* It's a header if it matches header_regex */
-        if (regexec(&regex, line, 0, NULL, 0)) {
-            ret = 0;
-            goto done;
-        }
-    }
-
-done:
-    regfree(&regex);
-    return ret;
-}
-
-Which solves the problem of opening the file 2 times. What do you think?
-
-Regards,
-Paul
+--=20
+bjornar@snoksrud.no
