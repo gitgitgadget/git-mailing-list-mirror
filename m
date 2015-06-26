@@ -1,122 +1,391 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/WIP v3 07/31] am: extract patch, message and authorship with git-mailinfo
-Date: Fri, 26 Jun 2015 13:41:57 -0700
-Message-ID: <xmqqbng2td62.fsf@gitster.dls.corp.google.com>
-References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
-	<1434626743-8552-8-git-send-email-pyokagan@gmail.com>
-	<72c470f3a6890dfcb66f1439383d2278@www.dscho.org>
-	<CACRoPnSyu6or8nkMQ0yS_KcLwumJVNv3pfSFGcSDyk4-P_VZ_A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 22:42:15 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v10.1 7/7] bisect: allow any terms set by user
+Date: Fri, 26 Jun 2015 22:39:43 +0200
+Message-ID: <1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jun 26 22:42:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8aRy-0007Yj-68
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 22:42:14 +0200
+	id 1Z8aSL-0007q3-UB
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 22:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbbFZUmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 16:42:10 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:35204 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753040AbbFZUmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 16:42:03 -0400
-Received: by iebrt9 with SMTP id rt9so83133266ieb.2
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 13:42:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=gNS+BIClWbXciFXpMWrt4ssoaPovRm7xOYW9R69A8hw=;
-        b=koARF1fZsPlrf5vRMjOrjGYVUhtp+vVXHDk96gzbQAXBOwoBAoKjAvQFWqZgVAaC8R
-         2AzOrddlAsSp77OS182owa6Byyf5M+JImtlxKI0+qWH21EULjoje8jCF3T22bG/KzWXS
-         csdGmtma1QZQEG51XeLCQGG8G3vWj8MwJIb3tkigL/053+k7jQzZWbepi63E2pS6nTwh
-         zYCQxmBPkmXcFHYiUJ+lTj5ZjGWD1832LspSd/quGPB7fvMCZhOQK3wugIpyXublhIzd
-         jj7K8FobzTJQ7PFTFg7pNWxrIP34mI1XSd+qBVew9tuMjZChzOsI9wV6hcqjj3uHmmzU
-         ojqQ==
-X-Received: by 10.50.90.179 with SMTP id bx19mr5948904igb.43.1435351322720;
-        Fri, 26 Jun 2015 13:42:02 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
-        by mx.google.com with ESMTPSA id z195sm22317878iod.33.2015.06.26.13.42.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Jun 2015 13:42:00 -0700 (PDT)
-In-Reply-To: <CACRoPnSyu6or8nkMQ0yS_KcLwumJVNv3pfSFGcSDyk4-P_VZ_A@mail.gmail.com>
-	(Paul Tan's message of "Fri, 26 Jun 2015 16:11:09 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752749AbbFZUlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 16:41:46 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45667 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751898AbbFZUjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 16:39:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5QKdhFe005945
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 26 Jun 2015 22:39:43 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5QKdjj9015954;
+	Fri, 26 Jun 2015 22:39:45 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1Z8aPZ-0007Gl-Cx; Fri, 26 Jun 2015 22:39:45 +0200
+X-Mailer: git-send-email 2.5.0.rc0.7.g0f487ca.dirty
+In-Reply-To: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Jun 2015 22:39:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5QKdhFe005945
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1435955987.49359@9lIVMYFgqgR2m6+HatbIdQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272823>
 
-Paul Tan <pyokagan@gmail.com> writes:
+From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
 
-> OK, I'll try that out. Looks like this now:
+Introduction of the git bisect terms command. The user can set his own
+terms. It will work exactly like before. The terms must be set before the
+start.
+
+Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> static char *read_shell_var(FILE *fp, const char *key)
-> {
-> ...
->     str = sq_dequote(sb.buf);
->     if (!str)
->         return NULL;
+>> + git bisect terms <term-old> <term-new>
+>
+> I think this is the other way around.
 
-You are unlikely to get !str, but if it does, you leak sb here,
-don't you?
+Indeed.
 
->     return strbuf_detach(&sb, NULL);
+The test scripts were messed up, I sent too quickly after refactoring.
 
-This call is OK; if you passed the &length to detach, you're likely
-to get a wrong result, though ;-)
+There was also a small bug: "git bisect reset" was not reseting the
+terms when ran before "git bisect start".
 
-sq_dequote() is one of the older parts of the API set and its "we
-know it cannot do anything but shrink, so we'd do it in-place"
-attitude, which may be vastly useful in practice, is now showing
-some impedance mismatch with newer parts of the API like strbuf.
+My branch https://github.com/moy/git/commits/bisect-terms is up to
+date in case the individual resend are too messy. I can also resend
+later, but I was too ashamed of my bugs with tests to leave it as
+is ;-).
 
->>> +/**
->>> + * Saves state->author_name, state->author_email and state->author_date in
->>> + * `filename` as an "author script", which is the format used by git-am.sh.
->>> + */
->>> +static void write_author_script(const struct am_state *state)
->>> +{
->>> +     static const char fmt[] = "GIT_AUTHOR_NAME=%s\n"
->>> +             "GIT_AUTHOR_EMAIL=%s\n"
->>> +             "GIT_AUTHOR_DATE=%s\n";
->>> +     struct strbuf author_name = STRBUF_INIT;
->>> +     struct strbuf author_email = STRBUF_INIT;
->>> +     struct strbuf author_date = STRBUF_INIT;
->>> +
->>> +     sq_quote_buf(&author_name, state->author_name.buf);
->>> +     sq_quote_buf(&author_email, state->author_email.buf);
->>> +     sq_quote_buf(&author_date, state->author_date.buf);
->>
->> The `sq_quote_buf()` function does not call
->> strbuf_reset()`. Therefore you could just use a single strbuf to
->> construct the entire three lines and then write that out.
+ Documentation/git-bisect.txt | 36 +++++++++++++++++++-
+ git-bisect.sh                | 67 +++++++++++++++++++++++++++++++++---
+ t/t6030-bisect-porcelain.sh  | 81 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 179 insertions(+), 5 deletions(-)
 
-Yup.  "quote" appends to the output, so you could do this:
-
-	add(&out, "GIT_AUTHOR_NAME=");
-        quote(&out, state->author_name);
-        add(&out, "\"\nGIT_AUTHOR_EMAIL=");
-        quote(&out, state->author_email);
-        ...
-
-I am not sure if that is easier to read than what you have, though.
-
->> Again, if
->> you follow my suggestion to keep a "scratch pad" strbuf in am_state,
->> you could reuse that.
-
-Don't do "scratch pad" in a structure that is passed around to
-various people.  Somebody may be tempted to use the scratch pad
-while he has the control, but as soon as he becomes complex enough
-to require calling some helper functions, the ownership rules of the
-scratch pad will become cumbersome to manage and understandable only
-by the person who originally wrote the codepath.
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index abaf462..28f6104 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -19,6 +19,7 @@ on the subcommand:
+  git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
+  git bisect (bad|new) [<rev>]
+  git bisect (good|old) [<rev>...]
++ git bisect terms <term-new> <term-old>
+  git bisect skip [(<rev>|<range>)...]
+  git bisect reset [<commit>]
+  git bisect visualize
+@@ -40,7 +41,7 @@ In fact, `git bisect` can be used to find the commit that changed
+ *any* property of your project; e.g., the commit that fixed a bug, or
+ the commit that caused a benchmark's performance to improve. To
+ support this more general usage, the terms "old" and "new" can be used
+-in place of "good" and "bad". See
++in place of "good" and "bad", or you can choose your own terms. See
+ section "Alternate terms" below for more information.
+ 
+ Basic bisect commands: start, bad, good
+@@ -157,6 +158,31 @@ git bisect new [<rev>...]
+ 
+ to indicate that it was after.
+ 
++If you would like to use your own terms instead of "bad"/"good" or
++"new"/"old", you can choose any names you like by typing
++
++------------------------------------------------
++git bisect terms <term-new> <term-old>
++------------------------------------------------
++
++before starting a bisection session. For example, if you are looking
++for a commit that introduced a performance regression, you might use
++
++------------------------------------------------
++git bisect terms slow fast
++------------------------------------------------
++
++Or if you are looking for the commit that fixed a bug, you might use
++
++------------------------------------------------
++git bisect terms fixed broken
++------------------------------------------------
++
++Only the bisection following the `git bisect terms` will use the
++terms. If you mistyped one of the terms you can do again `git bisect
++terms <term-new> <term-old>`, but that is possible only before you
++start the bisection.
++
+ Bisect visualize
+ ~~~~~~~~~~~~~~~~
+ 
+@@ -440,6 +466,14 @@ $ git bisect start
+ $ git bisect new HEAD    # current commit is marked as new
+ $ git bisect old HEAD~10 # the tenth commit from now is marked as old
+ ------------
+++
++or:
++------------
++$ git bisect terms fixed broken
++$ git bisect start
++$ git bisect fixed
++$ git bisect broken HEAD~10
++------------
+ 
+ Getting help
+ ~~~~~~~~~~~~
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 5769eaf..cf07a91 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-USAGE='[help|start|bad|good|new|old|skip|next|reset|visualize|replay|log|run]'
++USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
+ LONG_USAGE='git bisect help
+ 	print this long help message.
+ git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
+@@ -11,6 +11,8 @@ git bisect (bad|new) [<rev>]
+ git bisect (good|old) [<rev>...]
+ 	mark <rev>... known-good revisions/
+ 		revisions before change in a given property.
++git bisect terms <term-new> <term-old>
++	set up <term-new> and <term-old> as terms (default: bad, good)
+ git bisect skip [(<rev>|<range>)...]
+ 	mark <rev>... untestable revisions.
+ git bisect next
+@@ -80,6 +82,16 @@ bisect_start() {
+ 	bad_seen=0
+ 	eval=''
+ 	must_write_terms=0
++	must_log_terms=0
++	if test -s "$GIT_DIR/BISECT_TERMS"
++	then
++		# We're going to restart from a clean state and the
++		# file will be deleted. Record the old state in
++		# variables and restore it below.
++		must_write_terms=1
++		must_log_terms=1
++		get_terms
++	fi
+ 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
+ 	then
+ 		mode=--no-checkout
+@@ -185,7 +197,12 @@ bisect_start() {
+ 	eval "$eval true" &&
+ 	if test $must_write_terms -eq 1
+ 	then
+-		write_terms "$NAME_BAD" "$NAME_GOOD"
++		write_terms "$NAME_BAD" "$NAME_GOOD" &&
++		if test $must_log_terms -eq 1
++		then
++			echo "git bisect terms $NAME_BAD $NAME_GOOD" \
++			    >>"$GIT_DIR/BISECT_LOG"
++		fi
+ 	fi &&
+ 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+ 	#
+@@ -387,6 +404,8 @@ bisect_visualize() {
+ bisect_reset() {
+ 	test -s "$GIT_DIR/BISECT_START" || {
+ 		gettextln "We are not bisecting."
++		# We may still have leftovers like BISECT_TERMS
++		bisect_clean_state
+ 		return
+ 	}
+ 	case "$#" in
+@@ -449,6 +468,8 @@ bisect_replay () {
+ 			eval "$cmd" ;;
+ 		"$NAME_GOOD"|"$NAME_BAD"|skip)
+ 			bisect_write "$command" "$rev" ;;
++		terms)
++			bisect_terms $rev ;;
+ 		*)
+ 			die "$(gettext "?? what are you talking about?")" ;;
+ 		esac
+@@ -533,13 +554,22 @@ get_terms () {
+ write_terms () {
+ 	NAME_BAD=$1
+ 	NAME_GOOD=$2
++	check_term_format "$NAME_BAD"
++	check_term_format "$NAME_GOOD"
+ 	printf '%s\n%s\n' "$NAME_BAD" "$NAME_GOOD" >"$GIT_DIR/BISECT_TERMS"
+ }
+ 
++check_term_format () {
++	term=$1
++	git check-ref-format refs/bisect/"$term" ||
++	die "$(eval_gettext "'\$term' is not a valid term")"
++}
++
+ check_and_set_terms () {
+ 	cmd="$1"
+ 	case "$cmd" in
+-	bad|good|new|old)
++	skip|start|terms) ;;
++	*)
+ 		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$NAME_BAD" && test "$cmd" != "$NAME_GOOD"
+ 		then
+ 			die "$(eval_gettext "Invalid command: you're currently in a \$NAME_BAD/\$NAME_GOOD bisect.")"
+@@ -568,6 +598,33 @@ bisect_voc () {
+ 	esac
+ }
+ 
++bisect_terms () {
++	case "$#" in
++	0)
++		if test -s "$GIT_DIR/BISECT_TERMS"
++		then
++			get_terms
++			gettextln "Your current terms are $NAME_GOOD for the old state
++and $NAME_BAD for the new state."
++		else
++			die "$(gettext "No terms defined.")"
++		fi ;;
++	2)
++		if ! test -s "$GIT_DIR/BISECT_START"
++		then
++			write_terms "$1" "$2"
++			echo "git bisect terms $NAME_BAD $NAME_GOOD" >>"$GIT_DIR/BISECT_LOG" || exit
++		else
++			die "$(gettext "A bisection has already started, and you can't change terms in the middle of it.
++Use 'git bisect terms' to see the current terms.
++Otherwise, to start a new bisection with new terms, please use
++'git bisect reset' and set the terms before the start")"
++		fi ;;
++	*)
++		usage ;;
++	esac
++}
++
+ case "$#" in
+ 0)
+ 	usage ;;
+@@ -580,7 +637,7 @@ case "$#" in
+ 		git bisect -h ;;
+ 	start)
+ 		bisect_start "$@" ;;
+-	bad|good|new|old)
++	bad|good|new|old|"$NAME_BAD"|"$NAME_GOOD")
+ 		bisect_state "$cmd" "$@" ;;
+ 	skip)
+ 		bisect_skip "$@" ;;
+@@ -597,6 +654,8 @@ case "$#" in
+ 		bisect_log ;;
+ 	run)
+ 		bisect_run "$@" ;;
++	terms)
++		bisect_terms "$@" ;;
+ 	*)
+ 		usage ;;
+ 	esac
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 983c503..eb8cc80 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -797,4 +797,85 @@ test_expect_success 'bisect cannot mix old/new and good/bad' '
+ 	test_must_fail git bisect old $HASH1
+ '
+ 
++test_expect_success 'bisect start with one term1 and term2' '
++	git bisect reset &&
++	git bisect terms term1 term2 &&
++	git bisect start &&
++	git bisect term2 $HASH1 &&
++	git bisect term1 $HASH4 &&
++	git bisect term1 &&
++	git bisect term1 >bisect_result &&
++	grep "$HASH2 is the first term1 commit" bisect_result &&
++	git bisect log >log_to_replay.txt &&
++	git bisect reset
++'
++
++test_expect_success 'bisect replay with term1 and term2' '
++	git bisect replay log_to_replay.txt >bisect_result &&
++	grep "$HASH2 is the first term1 commit" bisect_result &&
++	git bisect reset
++'
++
++test_expect_success 'bisect start term1 term2' '
++	git bisect reset &&
++	git bisect terms term1 term2 &&
++	git bisect start $HASH4 $HASH1 &&
++	git bisect term1 &&
++	git bisect term1 >bisect_result &&
++	grep "$HASH2 is the first term1 commit" bisect_result &&
++	git bisect log >log_to_replay.txt &&
++	git bisect reset
++'
++
++test_expect_success 'bisect cannot mix terms' '
++	git bisect reset &&
++	git bisect terms a b &&
++	git bisect terms term1 term2 &&
++	git bisect start $HASH4 $HASH1 &&
++	test_must_fail git bisect a &&
++	test_must_fail git bisect b &&
++	test_must_fail git bisect bad &&
++	test_must_fail git bisect good &&
++	test_must_fail git bisect new &&
++	test_must_fail git bisect old
++'
++
++test_expect_success 'bisect terms rejects invalid terms' '
++	git bisect reset &&
++	test_must_fail git bisect terms invalid..term term2 &&
++	test_must_fail git bisect terms term1 invalid..term &&
++	test_path_is_missing .git/BISECT_TERMS
++'
++
++test_expect_success 'bisect terms needs 0 or 2 arguments' '
++	git bisect reset &&
++	test_must_fail git bisect terms only-one &&
++	test_must_fail git bisect terms 1 2 3 &&
++	test_must_fail git bisect terms 2>actual &&
++	echo "No terms defined." >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'bisect terms does store terms' '
++	git bisect reset &&
++	git bisect terms one two &&
++	git bisect terms >actual &&
++	cat <<-EOF >expected &&
++	Your current terms are two for the old state
++	and one for the new state.
++	EOF
++	test_cmp expected actual'
++
++test_expect_success 'bisect start keeps defined terms' '
++	git bisect reset &&
++	git bisect terms one two &&
++	git bisect start &&
++	git bisect terms >actual &&
++	cat <<-EOF >expected &&
++	Your current terms are two for the old state
++	and one for the new state.
++	EOF
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+2.5.0.rc0.7.g0f487ca.dirty
