@@ -1,110 +1,92 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 3/3] connect: improve check for plink to reduce false
- positives
-Date: Fri, 26 Jun 2015 20:43:56 +0000
-Message-ID: <20150626204356.GB263667@vauxhall.crustytoothpaste.net>
-References: <1429914505-325708-1-git-send-email-sandals@crustytoothpaste.net>
- <1430080212-396370-1-git-send-email-sandals@crustytoothpaste.net>
- <1430080212-396370-4-git-send-email-sandals@crustytoothpaste.net>
- <20150626131524.GA2626@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug in 'git am' when applying a broken patch
+Date: Fri, 26 Jun 2015 13:58:21 -0700
+Message-ID: <xmqq7fqqtceq.fsf@gitster.dls.corp.google.com>
+References: <20150601001759.GA3934@kroah.com>
+	<xmqqwpzn5lht.fsf@gitster.dls.corp.google.com>
+	<xmqqd21f5k7w.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTc72npgXUA9EirGonrjwhXCROxn4cc=6=uPywers_h9w@mail.gmail.com>
+	<xmqq8uc35gap.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYbyTOeEvJBPqWOX8fxbB637N5aV3Q=yENQXu4v9FzBPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="61jdw2sOBCFtR2d/"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 26 22:44:12 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Greg KH <gregkh@linuxfoundation.org>,
+	Git List <git@vger.kernel.org>,
+	Gaston Gonzalez <gascoar@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 23:00:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8aTr-0000fk-58
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 22:44:11 +0200
+	id 1Z8ajv-0001qD-Ih
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 23:00:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238AbbFZUoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 16:44:07 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:56105 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753083AbbFZUoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2015 16:44:04 -0400
-Received: from vauxhall.crustytoothpaste.net (c-73-155-40-49.hsd1.tx.comcast.net [73.155.40.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2B06A2808F;
-	Fri, 26 Jun 2015 20:44:02 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Content-Disposition: inline
-In-Reply-To: <20150626131524.GA2626@peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
+	id S1753918AbbFZU7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 16:59:02 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:33189 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752404AbbFZU6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 16:58:24 -0400
+Received: by igtg8 with SMTP id g8so9929573igt.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 13:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=W1Zhe3thzc4I6+MPp1qq1Ia6E8/BwAemuiCoWOxSO8E=;
+        b=tSvytESKkQt2pzNd492QddcK2l0ENCBAGJYn1mvFGmaSCKmFF8C+fB25XpIivQMlGi
+         AaoECsRyQOO9AliCfrrupx53pncWJpafs0Zyv64+gfZvFRofyr/QF6lWln7II1r+K6Ug
+         SUAyFojG4qsFhAuEmNq3Dg3ePBR/U2Yt94WqNOCkwg59Dy4EMgEE+6Add0IMuK1LU/ip
+         TkB1rgCAnZg73o9XYC3tcPCIzCYlFZvJsuEBzTfOcllbVDIaMSC4pg1S8nTpdwrEdv5Y
+         nudjMZHcv22O77JJ6FVJAdPIPyDiWXvBhh2pkvTA4f1+enAsx4mqTGrk5N7/QGXgydgN
+         v/fg==
+X-Received: by 10.50.87.38 with SMTP id u6mr24435igz.39.1435352303403;
+        Fri, 26 Jun 2015 13:58:23 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
+        by mx.google.com with ESMTPSA id ax8sm21951igc.17.2015.06.26.13.58.22
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 26 Jun 2015 13:58:22 -0700 (PDT)
+In-Reply-To: <CAGZ79kYbyTOeEvJBPqWOX8fxbB637N5aV3Q=yENQXu4v9FzBPQ@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 26 Jun 2015 12:49:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272825>
 
+Stefan Beller <sbeller@google.com> writes:
 
---61jdw2sOBCFtR2d/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In the hunk header we can learn about the
+> expected lines to read for this hunk and after the hunk we only have
+> 3 possible lines:
+>
+>   * it's the next hunk, then the line starts with @@
 
-On Fri, Jun 26, 2015 at 09:15:24AM -0400, Jeff King wrote:
-> On Sun, Apr 26, 2015 at 08:30:12PM +0000, brian m. carlson wrote:
-> > Improve the check by looking for "plink" or "tortoiseplink" (or those
-> > names suffixed with ".exe") only in the final component of the path.
-> > This has the downside that a program such as "plink-0.63" would no
-> > longer be recognized, but the increased robustness is likely worth it.
-> > Add tests to cover these cases to avoid regressions.
->=20
-> FYI, this ended up biting me today. We have some integration tests that
-> make sure we can clone over putty, and we wrap plink in a
-> "plink-wrapper.sh" script that tweaks a few extra options. That used to
-> match under the old scheme, but not the new. It would also match if we
-> looked for "plink" anywhere in the basename (but not in leading
-> directories).
->=20
-> I was able to work around it pretty easily by changing our test setup,
-> but I thought I would include it here as a data point. It's probably not
-> that representative of real-world users.
+This is true.
 
-Thanks for the data point.  While we don't use plink at $DAYJOB, this is
-the kind of test we might well perform.  I expect it's most likely to
-hit people in test setups like this, but if it turns out to be a
-problem, we can certainly loosen it or if necessary, revert it.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+>   * it's a new file, so the line starts with "diff --git"
 
---61jdw2sOBCFtR2d/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+This is true with s/--git//.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.4 (GNU/Linux)
+>   * it's the end of the patch, so the line is "--\n" and the line there after
+>     is version number as git describe puts (not sure we want to test on that)
 
-iQIcBAEBCgAGBQJVjbmMAAoJEL9TXYEfUvaLLZsQAIPMU+ytoLz4Mqup5o0n4rFG
-pYZEmN9JFKWdZu9FCdty4ef8OlsIK1hnqDohP3N0Ho+L9XVduE/YlVejw06+Zt+O
-pMifo3+XQtMinZlu0oe5WiCmcb5CKY2kUr8pZ0B6l0z8gAtwaVanAEX7nCWVWeV2
-VMkEF1sNWAUCqdsk6Vk2Kw5HCw5A9zmsfVydaGQc/h5muSJSaQ/dSKLUb+E2tLhD
-eRuWtwyZSoVtqWANgfPHpTAcDejdKDz0x4VfiOSYE+M9NGHOxDawCVuUSNC70M2/
-HbUnS6lqDbkpNyOYfqC7kPFtUh10McX0Ymy39HuXwi0Q512qx5i10QNT3lbGv/y6
-53byb6sJXIXiXsfwdNsSVjBSWYaOi/q0xpkpJjyuatDaz4gE2X3pS8VqAxSiwsik
-7k4f7jlvar5XVtYZXS0JkJmEsKKgf+y55LeIjgmcyJ4yVIYd1GvV7QUkUd9CRh7Q
-ZITLMr3zenHKSxS21LUfYrY2abhr1xfuetoPX1Y8gJT6tCXQv14VvEkXRkNv7HQi
-oD1a7hWBrGv+4FkkQmW6zzPkD30sWGcXXrBS8fcWmFeVf5a7POWnMDsYuiVBdxRq
-KVA97fHvmnAoQTzICHsEiqXtx1t5sWmfUps0h7EKyOYpdCJnufNSSf8oWh+aZns8
-Aea+IIK74znttiyhCxXK
-=SCMC
------END PGP SIGNATURE-----
+This is not true in general, as we do not want to limit "git apply"
+to only what "git diff" produces.  You can write anything after a
+patch and that is still a valid patch.  And that anything could be a
+line that begins with '-', ' ' and '+'; as long as the line numbers
+in the hunk header are correct, we'd ignore it.
 
---61jdw2sOBCFtR2d/--
+So as you said, the change you are responding to is "better than
+nothing", and would only help when you truncate the patch (or break
+the numbers), but does not protect against arbitrary breakage.
+
+One thing we _could_ do is after seeing the end of a message
+(i.e. we did not see "@@" that signals there are more hunks in the
+current patch, and we did not see "diff " that signals there are
+more patches), we keep scanning and declare breakage if we see lines
+that begin with something that looks like a hunk "@@ ... @@".
