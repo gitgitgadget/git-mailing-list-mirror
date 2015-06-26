@@ -1,137 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http: always use any proxy auth method available
-Date: Fri, 26 Jun 2015 12:24:42 -0700
-Message-ID: <xmqqfv5etgqt.fsf@gitster.dls.corp.google.com>
-References: <FCAB894186380D42A07AFFFA5A1282B8F1EC65FD@EXMBNJE2.ad.twosigma.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "'git\@vger.kernel.org'" <git@vger.kernel.org>,
-	'Nelson Benitez Leon' <nbenitezl@gmail.com>
-To: Enrique Tobis <Enrique.Tobis@twosigma.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 21:25:14 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] revision.c: Remove unneeded check for NULL
+Date: Fri, 26 Jun 2015 12:40:19 -0700
+Message-ID: <1435347619-29410-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jun 26 21:40:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8ZFR-0006RF-Hs
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 21:25:13 +0200
+	id 1Z8ZUF-0001lP-LY
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 21:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbbFZTYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 15:24:55 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:38458 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752762AbbFZTYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 15:24:48 -0400
-Received: by igrv9 with SMTP id v9so7501879igr.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 12:24:47 -0700 (PDT)
+	id S1752620AbbFZTk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 15:40:27 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:33753 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475AbbFZTk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 15:40:26 -0400
+Received: by ieqy10 with SMTP id y10so82379747ieq.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 12:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=hlMrueIOMyKASghbWN8PrKMtrvFgPDrgKUsmWgIvt0E=;
-        b=aGomQEuM43Ak1hqBnM9/3t19FTUvFqj3yaMZZbYiR2uC8DVhwpx2UuedT7u0szXRUG
-         R3mwwzro4WlJUTEIueoYImvwJ0r4NsscbpO+6qbiuBCREcpjW9ZMAXKh+EIO6dbTN9fq
-         rZOHVgLGLAH+XZx3hZcKIYd2/UOso6/7aVMdJfFhUD92PcgpG61iSh7OtIbygQ05KIOp
-         thsI0ilTpFoASuJFtpaCoq3kNOFjtvKWiDJIsmwjGfE4GMez2xDKK/7YkNjKYRB0EKu9
-         UpAITFPQFPKuzP5phAh8AG2+h9pHVViizbzdzFzu2xCoH+oJhHhivnB1NQ+6qvnnnksT
-         l5xw==
-X-Received: by 10.42.99.70 with SMTP id v6mr4791189icn.1.1435346687124;
-        Fri, 26 Jun 2015 12:24:47 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
-        by mx.google.com with ESMTPSA id w4sm1411078igl.22.2015.06.26.12.24.44
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Wj4dku2Z9clpCS5GiYOUe07CiQSwnnSntjYvi/EfsH0=;
+        b=Z62b9lSP4FuP4v51a7c9ZorbSLzPVlkETCf116+J4uqcDgFFKqfUaMshK5aS40021V
+         MY4vAr//gtj7k34F+0pIYEl0fPJjbJnRN5BRmIgyHON0ymDEXvwZFvMoMq4BMHmYd7Jc
+         +KvQo8VBS637MwVbP+ALraqJ35+rH/6+tZ+miWTI6Y9XqFArmo9VT1MOpNWy5XzSMSXT
+         FSfCV9EODgz4sUvNjoy7RsY7/Ma8FTZOJBtWMZ1uAkyufB980zoQfLBi3hX1yBVKbgIX
+         Gziw+CzinLfzT+pCtm+g5ZJ5YzKKa22c5aIWHn+FuM7ZS90P6Vt4zOyDQswejhORA0JF
+         PtEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Wj4dku2Z9clpCS5GiYOUe07CiQSwnnSntjYvi/EfsH0=;
+        b=GYZ+/ZnfhlQfafCoj8dJjq0s31d9Yfll1U31HDZ9fZtVBA8kDkEe7ZBwnkjzgevTkQ
+         cRNy9EURioKeryhGgEyYjpCXYXaF45I45z2l8zediW6ixmWJvxTaV+g8E/3coL9LDcfa
+         /fLxmX/bON9FaghmrRp8LovugGFT7ovbiouF8icGYeRlYhu790PF+6IsryXi+zy7SbUN
+         uxzkOR7kTheuOsWMsSowHL0zHINAM+OWYb+CkTSMBvKDFTmrUvEI9erzgby6vj6oqMt7
+         5ogw7oIpCqBhbrZV3iSrobUI8qqHJSQreAncEjMvnkEgX6hgGtlxz7XxxDcj+FkPMF1F
+         Jr1g==
+X-Gm-Message-State: ALoCoQk8ia0fsgaRv3P1t/s4flju/o4S4MTY8De0Hb3rRqx5ASzDHGDLwQBasldBKSa/l6Qh4PTT
+X-Received: by 10.42.72.132 with SMTP id o4mr5526037icj.20.1435347625327;
+        Fri, 26 Jun 2015 12:40:25 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:5cb3:17a8:2ff6:7709])
+        by mx.google.com with ESMTPSA id j20sm1438035igt.16.2015.06.26.12.40.24
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Jun 2015 12:24:46 -0700 (PDT)
-In-Reply-To: <FCAB894186380D42A07AFFFA5A1282B8F1EC65FD@EXMBNJE2.ad.twosigma.com>
-	(Enrique Tobis's message of "Fri, 26 Jun 2015 18:19:04 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        Fri, 26 Jun 2015 12:40:24 -0700 (PDT)
+X-Mailer: git-send-email 2.4.1.345.gab207b6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272816>
 
-Enrique Tobis <Enrique.Tobis@twosigma.com> writes:
+The function is called only from one place, which makes sure
+to have `interesting_cache` not NULL. Additionally it is a
+dereferenced a few lines before unconditionally, which would
+result in a segmentation fault.
 
-Thanks.  I wonder why this was addressed me directly (i.e. I am not
-an area expert, and I haven't seen this patch discussed here and
-reviewed by other people), but anyway...
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> By default, libcurl honors some environment variables that specify a
-> proxy (e.g. http_proxy, https_proxy). Also by default, libcurl will
-> only try to authenticate with a proxy using the Basic method. 
+Notes:
+    > So I think the right solution is just to drop the conditional entirely.
+    > The current code is not wrong (it is always a noop). What you have here
+    > actually misbehaves; it does not update the cache slot when it has
+    > become UNINTERESTING. That does not produce wrong results, but it loses
+    > the benefit of the cache in some cases.
+    
+    After reading the code a bit more, I agree.
+    
+    > I'm having trouble parsing this sentence.  Do you mean that limit_list()
+    > only calls still_interesting() (and thus, indirectly,
+    > everybody_uninteresting()), with the second parameter equal to the
+    > address of the local interesting_cache variable, so it can never be
+    > NULL?
+    
+    I completely reworded the commit message.
+    
+    > Should there be
+    >
+    >        if (!interesting_cache)
+    >                die("BUG: &interesting_cache == NULL");
+    >
+    > checks at the top of still_interesting and everybody_uninteresting to
+    > futureproof this?
+    
+    I don't think this is necessary as these functions are local functions
+    so when somebody wants to use them they will be aware of the limitations.
+    
+    > This code seems to be underdocumented.
+    
+    I am not a expert in this area of the code, so I hoped Peff
+    would document it if he feels like so.
 
-OK, that is a statement of two facts.
+ revision.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-What's missing here is what they relate to this change.  Are these
-two good things that we want to keep?  Are these bad things we need
-to tweak out by changing our software?  Or some combination?  Some
-third key information that is left untold?
-
-> This
-> change makes libcurl always try the most secure proxy authentication
-> method available. As a consequence, you can use environment variables
-> to instruct git to use a proxy that uses an authentication method
-> different from Basic (e.g. Negotiate).
-
-That is a worthy goal, but the description of the current problem
-seems lacking.  Perhaps you meant something like this:
-
-	We use CURLOPT_PROXYAUTH to ask for the most secure
-        authentication method with proxy only when we have
-        curl_http_proxy set, by http.proxy or remote.*.proxy
-        configuration variables.  However, libcurl also allows users
-        to use http proxies by setting some environment variables,
-        and by default the authentication with the proxy uses Basic
-        auth (unless specified with CURLOPT_PROXYAUTH, that is).
-
-	By always using CURLOPT_PROXYAUTH to ask for the most secure
-	authentication method, even when we are not aware that we
-	are using proxy (because there is no configuration that
-	tells us so), we can allow users to tell libcurl to use
-	a proxy with more secure method without setting http.proxy
-        or remote.*.proxy configuration variables.
-
-But I am just guessing; as I said, I am not an expert in this area
-of the code.
-
-> Signed-off-by: Enrique A. Tobis <etobis@twosigma.com>
-> ---
->  http.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index f0c5bbc..e9c6fdd 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -416,10 +416,10 @@ static CURL *get_curl_handle(void)
->  
->  	if (curl_http_proxy) {
->  		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-> +	}
->  #if LIBCURL_VERSION_NUM >= 0x070a07
-
-The authoritative source of truth:
-
-  https://github.com/bagder/curl/blob/master/docs/libcurl/symbols-in-versions
-
-matches this version number, so there is nothing wrong per-se on
-this line, but it makes me wonder why we didn't do
-
-	#ifdef CURLOPT_PROXYAUTH
-
-instead.  That's not something that should be changed with this
-change, though.
-
-> -		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
-> +	curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
-
->  #endif
-> -	}
->  
->  	set_curl_keepalive(result);
-
-Assuming that I guessed your justification for this change corretly
-in the earlier part of this message, I think the change makes sense.
-
-Thanks.
+diff --git a/revision.c b/revision.c
+index 3ff8723..ab97ffd 100644
+--- a/revision.c
++++ b/revision.c
+@@ -361,8 +361,8 @@ static int everybody_uninteresting(struct commit_list *orig,
+ 		list = list->next;
+ 		if (commit->object.flags & UNINTERESTING)
+ 			continue;
+-		if (interesting_cache)
+-			*interesting_cache = commit;
++
++		*interesting_cache = commit;
+ 		return 0;
+ 	}
+ 	return 1;
+-- 
+2.4.1.345.gab207b6.dirty
