@@ -1,168 +1,128 @@
-From: Enrique Tobis <Enrique.Tobis@twosigma.com>
-Subject: RE: [PATCH] http: always use any proxy auth method available
-Date: Fri, 26 Jun 2015 21:53:24 +0000
-Message-ID: <FCAB894186380D42A07AFFFA5A1282B8F1EC7AB5@EXMBNJE2.ad.twosigma.com>
-References: <FCAB894186380D42A07AFFFA5A1282B8F1EC65FD@EXMBNJE2.ad.twosigma.com>
- <xmqqfv5etgqt.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/7] refs: add safe_create_reflog function
+Date: Fri, 26 Jun 2015 15:12:58 -0700
+Message-ID: <xmqqlhf6rudx.fsf@gitster.dls.corp.google.com>
+References: <1435278548-3790-1-git-send-email-dturner@twopensource.com>
+	<1435278548-3790-5-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "'git@vger.kernel.org'" <git@vger.kernel.org>,
-	'Nelson Benitez Leon' <nbenitezl@gmail.com>
-To: 'Junio C Hamano' <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 00:01:37 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Jun 27 00:13:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8bgg-0002XJ-75
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 00:01:30 +0200
+	id 1Z8brw-0003Fi-Ca
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 00:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbbFZWB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 18:01:26 -0400
-Received: from mxl1.nje.dmz.twosigma.com ([208.77.214.145]:51459 "EHLO
-	mxl1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173AbbFZWBY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2015 18:01:24 -0400
-X-Greylist: delayed 475 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jun 2015 18:01:23 EDT
-Received: by mxl1.nje.dmz.twosigma.com (Postfix, from userid 110)
-	id DE127600A3; Fri, 26 Jun 2015 21:53:27 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
-	mxl1.nje.dmz.twosigma.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00=-1.9 autolearn=no
-	version=3.3.2
-Received: from EXHTNJE2.ad.twosigma.com (exhtnje2.ad.twosigma.com [172.20.32.80])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mxl1.nje.dmz.twosigma.com (Postfix) with ESMTPS id A50876008B;
-	Fri, 26 Jun 2015 21:53:26 +0000 (GMT)
-Received: from EXMBNJE2.ad.twosigma.com ([169.254.2.157]) by
- EXHTNJE2.ad.twosigma.com ([172.20.32.80]) with mapi id 14.03.0224.002; Fri,
- 26 Jun 2015 17:53:26 -0400
-Thread-Topic: [PATCH] http: always use any proxy auth method available
-Thread-Index: AdCwOo62xtSDc71ITZiaogSfyRcNiAACzYfOAAAjX5A=
-In-Reply-To: <xmqqfv5etgqt.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.20.60.10]
+	id S1752434AbbFZWNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 18:13:04 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:33248 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474AbbFZWNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 18:13:02 -0400
+Received: by igtg8 with SMTP id g8so11052674igt.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 15:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=s3tVZY0DIzJSVaqH87+lnPifQYuz4SiVE4CXhk/ZYDE=;
+        b=0NQJNUxhLaFXA5ab/2HXVzs9c2lBWw1tDQPtl5iAc/44Y7SwqDWVlTibTfp1nMUeJL
+         5iqhBE+0qnM8nJ62IKFPZ5M9tXMzRrtUqXvUJkTsSk0nK7Ymk0Ahnn1R8L3I7dzVm05Z
+         AeHIjbiXCsoxZZJEw8StqfbsDlG4xBrIV36CednCham05jEw1D07unbS22OFE7XMQlgk
+         dru8okJzyx8VfPP7AtBH3rKBBAnTfHaQQ5pJa/lsLW7JW1qRdXQDCCAnkWrPWWY3gBDx
+         pxz5PNJbchEcHpYBVMednQlKOCDWK/GWK8N9ve2I25vtLsLxrHgyGBiEMTMbA2rYN5kg
+         c4Eg==
+X-Received: by 10.50.129.101 with SMTP id nv5mr403857igb.31.1435356781016;
+        Fri, 26 Jun 2015 15:13:01 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
+        by mx.google.com with ESMTPSA id e3sm126174igq.21.2015.06.26.15.12.59
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 26 Jun 2015 15:13:00 -0700 (PDT)
+In-Reply-To: <1435278548-3790-5-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Thu, 25 Jun 2015 20:29:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272835>
 
-Thanks for your feedback!
+David Turner <dturner@twopensource.com> writes:
 
-> -----Original Message-----
-> From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C
-> Hamano
-> Sent: Friday, June 26, 2015 15:25
-> To: Enrique Tobis
-> Cc: 'git@vger.kernel.org'; 'Nelson Benitez Leon'
-> Subject: Re: [PATCH] http: always use any proxy auth method available
-> 
-> Enrique Tobis <Enrique.Tobis@twosigma.com> writes:
-> 
-> Thanks.  I wonder why this was addressed me directly (i.e. I am not an area
-> expert, and I haven't seen this patch discussed here and reviewed by other
-> people), but anyway...
+> Make log_ref_setup private, and add public safe_create_reflog which
+> calls log_ref_setup.
+>
+> In a moment, we will use safe_create_reflog to add reflog creation
+> commands to git-reflog.
+>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
 
-I apologize for that. I misunderstood part of the instructions for submitting patches.
+> @@ -629,9 +628,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>  				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
+>  				temp = log_all_ref_updates;
+>  				log_all_ref_updates = 1;
+> -				ret = log_ref_setup(ref_name, &log_file, &err);
+> +				ret = safe_create_reflog(ref_name, &err, 0);
+>  				log_all_ref_updates = temp;
+> -				strbuf_release(&log_file);
 
-> > By default, libcurl honors some environment variables that specify a
-> > proxy (e.g. http_proxy, https_proxy). Also by default, libcurl will
-> > only try to authenticate with a proxy using the Basic method.
-> 
-> OK, that is a statement of two facts.
-> 
-> What's missing here is what they relate to this change.  Are these two good
-> things that we want to keep?  Are these bad things we need to tweak out by
-> changing our software?  Or some combination?  Some third key information
-> that is left untold?
-> 
-> > This
-> > change makes libcurl always try the most secure proxy authentication
-> > method available. As a consequence, you can use environment variables
-> > to instruct git to use a proxy that uses an authentication method
-> > different from Basic (e.g. Negotiate).
-> 
-> That is a worthy goal, but the description of the current problem seems
-> lacking.  Perhaps you meant something like this:
-> 
-> 	We use CURLOPT_PROXYAUTH to ask for the most secure
->         authentication method with proxy only when we have
->         curl_http_proxy set, by http.proxy or remote.*.proxy
->         configuration variables.  However, libcurl also allows users
->         to use http proxies by setting some environment variables,
->         and by default the authentication with the proxy uses Basic
->         auth (unless specified with CURLOPT_PROXYAUTH, that is).
-> 
-> 	By always using CURLOPT_PROXYAUTH to ask for the most secure
-> 	authentication method, even when we are not aware that we
-> 	are using proxy (because there is no configuration that
-> 	tells us so), we can allow users to tell libcurl to use
-> 	a proxy with more secure method without setting http.proxy
->         or remote.*.proxy configuration variables.
-> 
-> But I am just guessing; as I said, I am not an expert in this area of the code.
+What the result of applying this patch does around here is
+incoherent, isn't it?  I do understand and agree that adding the
+"force-create" argument to safe_create_reflog() is a good idea, but
+then I do not think you need to temporarily set log-all-ref-updates
+while calling it (and revert it afterwards).  Not having to do that
+is the whole point of "force-create", isn't it?
 
-How about this?
+> diff --git a/refs.c b/refs.c
+> index dff91cf..7519dac 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3123,11 +3123,12 @@ static int should_autocreate_reflog(const char *refname)
+>  	return starts_with(refname, "refs/heads/") ||
+>  		starts_with(refname, "refs/remotes/") ||
+>  		starts_with(refname, "refs/notes/") ||
+> +		!strcmp(refname, "refs/stash") ||
+>  		!strcmp(refname, "HEAD");
+>  }
 
-"
-We set CURLOPT_PROXYAUTH to use the most secure authentication method available only when the user has set configuration variables to specify a proxy. However, libcurl also supports specifying a proxy through environment variables. In that case libcurl defaults to only using the Basic proxy authentication method.
+This change is *not* part of creating safe-create-reflog.
 
-This change sets CURLOPT_PROXYAUTH to always use the most secure authentication method available, even when there is no git configuration telling us to use a proxy. This allows the user to use environment variables to configure a proxy that requires an authentication method different from Basic.
-"
+It may be part of "allowing us to use safe_create_reflog() to manage
+stash", but I'd imagine that a new "reflog create" command should
+ignore log-all-ref-updates settings (after all, the end user is
+explicitly telling us to create one by issuing a command), so I
+doubt it matters if 'stash' is on the auto-create list.
 
-> > Signed-off-by: Enrique A. Tobis <etobis@twosigma.com>
-> > ---
-> >  http.c |    4 ++--
-> >  1 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/http.c b/http.c
-> > index f0c5bbc..e9c6fdd 100644
-> > --- a/http.c
-> > +++ b/http.c
-> > @@ -416,10 +416,10 @@ static CURL *get_curl_handle(void)
-> >
-> >  	if (curl_http_proxy) {
-> >  		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-> > +	}
-> >  #if LIBCURL_VERSION_NUM >= 0x070a07
-> 
-> The authoritative source of truth:
-> 
->   https://github.com/bagder/curl/blob/master/docs/libcurl/symbols-in-
-> versions
-> 
-> matches this version number, so there is nothing wrong per-se on this line,
-> but it makes me wonder why we didn't do
-> 
-> 	#ifdef CURLOPT_PROXYAUTH
-> 
-> instead.  That's not something that should be changed with this change,
-> though.
-> 
-> > -		curl_easy_setopt(result, CURLOPT_PROXYAUTH,
-> CURLAUTH_ANY);
-> > +	curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
-> 
-> >  #endif
-> > -	}
-> >
-> >  	set_curl_keepalive(result);
-> 
-> Assuming that I guessed your justification for this change corretly in the
-> earlier part of this message, I think the change makes sense.
+>  /* This function will fill in *err and return -1 on failure */
+> -int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
+> +static int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err, int force_create)
+>  {
+>  	int logfd, oflags = O_APPEND | O_WRONLY;
+>  	char *logfile;
+> @@ -3136,7 +3137,8 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+>  	logfile = sb_logfile->buf;
+>  	/* make sure the rest of the function can't change "logfile" */
+>  	sb_logfile = NULL;
+> -	if (log_all_ref_updates && should_autocreate_reflog(refname)) {
+> +	if (log_all_ref_updates &&
+> +	    (force_create || should_autocreate_reflog(refname))) {
 
-You did guess correctly. As you said you are not an expert in this area, should I wait until someone else chimes in or is this enough to resubmit for inclusion? Assuming my revised explanation is acceptable, of course.
- 
-> Thanks.
+With this patch, force_create is used as "we are throwing you an
+unusual name that do not automatically get a reflog when log-all is
+set, and we are overriding that selection-by-name aspect of auto
+creation" but does not defeat log-all settings.  Is that intended?
 
-Thank you!
+If somebody asks safe_create_reflog() to create a reflog and passes
+force_create, shouldn't we create that reflog regardless of
+log_all_ref_updates settings?  That is
 
-Enrique
+	if (force_create || should_autocreate_reflog(refname)) {
+        	... create it ...
+
+would be more natural to read here, and you would get that for free
+if 4/7 checked log_all_ref_updates in should_autocreate_reflog().
