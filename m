@@ -1,75 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v9 4/5] bisect: add the terms old/new
-Date: Fri, 26 Jun 2015 09:00:55 +0200
-Message-ID: <vpqoak3x8bc.fsf@anie.imag.fr>
-References: <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435258257-29047-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435258257-29047-5-git-send-email-Matthieu.Moy@imag.fr>
-	<CAP8UFD1EWYzg7-O4BDgUTQPJOoo6TEAF49amakgfR8K6CX886A@mail.gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/WIP v3 06/31] am: detect mbox patches
+Date: Fri, 26 Jun 2015 15:42:46 +0800
+Message-ID: <CACRoPnQgy2C__912pVx+Xn2YTgMgfV8ukLtbd8f5uvk82EjnAw@mail.gmail.com>
+References: <1434626743-8552-1-git-send-email-pyokagan@gmail.com>
+	<1434626743-8552-7-git-send-email-pyokagan@gmail.com>
+	<334feea4cee88d06a10a7363956d2bfe@www.dscho.org>
+	<CACRoPnQAGt_mLbG-EtJ+qTpD2OvNgi-MZfU=NoKCoSmhCOnBEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Nguy <thomasxnguy@gmail.com>,
-	Valentin Duperray <valentinduperray@gmail.com>,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 09:01:12 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 26 09:42:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8NdO-00089o-2D
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 09:01:10 +0200
+	id 1Z8OHl-0001iA-3N
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 09:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575AbbFZHBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 03:01:05 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55948 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751317AbbFZHBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 03:01:04 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5Q70tST015255
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Jun 2015 09:00:55 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5Q70tAT032334;
-	Fri, 26 Jun 2015 09:00:55 +0200
-In-Reply-To: <CAP8UFD1EWYzg7-O4BDgUTQPJOoo6TEAF49amakgfR8K6CX886A@mail.gmail.com>
-	(Christian Couder's message of "Fri, 26 Jun 2015 06:11:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Jun 2015 09:00:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5Q70tST015255
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435906858.32408@iJfD8B+tZNMqOiCvSDmehg
+	id S1752156AbbFZHmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 03:42:49 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:33973 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752136AbbFZHms convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2015 03:42:48 -0400
+Received: by lbnk3 with SMTP id k3so59434965lbn.1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 00:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XVev6ar+zsmjQtLZqtaqbmZRYJbw+HvAKTXJl7KcH0U=;
+        b=DXkNINqzUEPDOH7Kqqrb+hSQdgsUp9IxkdbiFC4NSvEroInnN/br6VKQR7v5JOEsJ6
+         p9TSLfu0HJgAlixGEeLxlUdW3Eq43PGptO3k4kSC7dYQOvopaNs7zKHAo6cbjXtv8AsD
+         22i7MmoHaTNtXe/G/TSF4ne7WK3edtwuuVs8iFBIP7CurnlnaX0uF0DW8OavHzGqvURW
+         YhQbF2fkWz3DaOljPfAWsWZlnF4TitekVkvktf416kUCxDUVA3wOPrwbVO2zQ++pHkP9
+         JB6XCQUVz3+82yDFbMhPSl7ymLMUPQlqxvTJv7oiGZOWUr39AqeIvBq14xIRjueZxlfL
+         ZQcA==
+X-Received: by 10.152.87.13 with SMTP id t13mr306688laz.66.1435304566575; Fri,
+ 26 Jun 2015 00:42:46 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Fri, 26 Jun 2015 00:42:46 -0700 (PDT)
+In-Reply-To: <CACRoPnQAGt_mLbG-EtJ+qTpD2OvNgi-MZfU=NoKCoSmhCOnBEw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272764>
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> So perhaps you could use a function like:
+On Thu, Jun 25, 2015 at 9:40 PM, Paul Tan <pyokagan@gmail.com> wrote:
+> On Wed, Jun 24, 2015 at 11:10 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>>> +     else if (l1.len && l2.len && l3.len && is_email(paths->items->string))
+>>> +             ret = PATCH_FORMAT_MBOX;
+>>
+>> Maybe we can do better than this by folding the `is_email() function into this here function, reusing the same strbuf to read the lines and keeping track of the email header lines we saw... I would really like to avoid opening the same file twice just to figure out whether it is in email format.
 >
-> write_bisect_terms() {
->       if test ! -s "$GIT_DIR/BISECT_TERMS"
->       then
->             echo "$NAME_BAD" >"$GIT_DIR/BISECT_TERMS" &&
->             echo "$NAME_GOOD" >>"$GIT_DIR/BISECT_TERMS"
->       fi
-> }
+> Okay, how about every time we call a strbuf_getline(), we save the
+> line to a string_list as well? Like string_list_getline_crlf() below:
+> [...]
 
-I already had it in the last patch, but reworked the code to introduce
-it earlier, and never >"$GIT_DIR/BISECT_TERMS" outside this function.
+Hmm, on second thought, I don't think it's worth the code complexity.
+While I agree it's desirable to not open the file twice, I don't think
+detecting the patch format is so IO intensive that it needs to be
+optimized to that extent.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Instead, we should probably just modify is_email() to take a FILE*,
+and then fseek(fp, 0L, SEEK_SET) to the beginning.
+
+I think the logic of is_email() is complex and so it should not be
+folded into the detect_patch_format() function, especially since we
+may add detection of other patch formats in the future, and may need
+more complex heuristics.
+
+Regards,
+Paul
