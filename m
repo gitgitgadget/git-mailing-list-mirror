@@ -1,131 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR
-Date: Fri, 26 Jun 2015 10:15:21 -0700
-Message-ID: <xmqqpp4iv1au.fsf@gitster.dls.corp.google.com>
-References: <CA+cck7GD+JgR4O-XoBeUX1gJAG6suP9iLwASyRygK8hR4KP7pw@mail.gmail.com>
-	<1435315055-27011-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 3/3] connect: improve check for plink to reduce false
+ positives
+Date: Fri, 26 Jun 2015 13:23:39 -0400
+Message-ID: <20150626172339.GA1945@peff.net>
+References: <1429914505-325708-1-git-send-email-sandals@crustytoothpaste.net>
+ <1430080212-396370-1-git-send-email-sandals@crustytoothpaste.net>
+ <1430080212-396370-4-git-send-email-sandals@crustytoothpaste.net>
+ <20150626131524.GA2626@peff.net>
+ <xmqq381ewiln.fsf@gitster.dls.corp.google.com>
+ <20150626162701.GA32123@peff.net>
+ <0838aaf747ce0db5a83de107495270cf@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, snoksrud@gmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 19:15:32 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 26 19:24:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8XDt-0002Pg-AH
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 19:15:29 +0200
+	id 1Z8XM9-0001in-Sb
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 19:24:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbbFZRP0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2015 13:15:26 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34199 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbbFZRPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 13:15:24 -0400
-Received: by iebmu5 with SMTP id mu5so79601016ieb.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 10:15:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=CHAfReg6hRZC8lK6n727Iq7atCq2AD0sxD+Vo5J9bK4=;
-        b=OMVYFXci1D/raG/rUZ8wT2Duy/LtgNhFqW7xCsklnJpWa6L4aGOeo2xrDUF5X+q86j
-         AqXSNtf9JwQJr8i2zAcJ+KEddnBKWOU4+4iDbFg20zDYsael/cDjX5yeu0bnWEV1W+EP
-         PpU7EUr25fo+UWrY9Jq44anrvgRDcEniMH1N1UEFoJWdIme7HRxAsne2UIj2BrSUj6Ca
-         A3bjERbxX5Pyqxo8HkahPpI1vPGaGdC+UO47qAiqQR7gzc/tulwVFCiUa77GkYioOC4b
-         3OuagNKQ2OvZVqentqPQkwq5XgKIMcVxQqkVpcocZOrf3NNYyF88sWq0A2anug3XxbZZ
-         6+/g==
-X-Received: by 10.50.79.129 with SMTP id j1mr4731123igx.12.1435338923841;
-        Fri, 26 Jun 2015 10:15:23 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
-        by mx.google.com with ESMTPSA id o2sm1229449igr.9.2015.06.26.10.15.22
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Jun 2015 10:15:23 -0700 (PDT)
-In-Reply-To: <1435315055-27011-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 26
- Jun 2015 17:37:35 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751906AbbFZRXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 13:23:43 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52369 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751717AbbFZRXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 13:23:42 -0400
+Received: (qmail 16437 invoked by uid 102); 26 Jun 2015 17:23:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Jun 2015 12:23:41 -0500
+Received: (qmail 18916 invoked by uid 107); 26 Jun 2015 17:23:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Jun 2015 13:23:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jun 2015 13:23:39 -0400
+Content-Disposition: inline
+In-Reply-To: <0838aaf747ce0db5a83de107495270cf@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272802>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Fri, Jun 26, 2015 at 07:13:15PM +0200, Johannes Schindelin wrote:
 
-> Bottom line is, when $GIT_DIR is set, $GIT_WORK_TREE should be set to=
-o
-> unless there's no work tree. But setting $GIT_WORK_TREE inside
-> set_git_dir() may backfire. We don't know at that point if work tree =
-is
-> already configured by the caller. So set it when work tree is
-> detected. It does not harm if $GIT_WORK_TREE is set while $GIT_DIR is
-> not.
+> > It's the test suite for the server side of our git infrastructure, so
+> > nothing gets installed. It's more like:
+> > 
+> >   export GIT_SSH=$PROJECT_ROOT/test/plink-wrapper.sh
+> >   export REAL_PLINK=$PROJECT_ROOT/vendor/putty/plink
+> >   git clone localhost:foo.git
+> > 
+> > and the wrapper knows to chain to $REAL_PLINK. So it was actually pretty
+> > easy to swap, without any hacks to avoid recursing to ourselves in the
+> > $PATH.
+> > 
+> > I doubt it is a problem for most people, because I don't imagine they
+> > are writing test suites for git-related software.
+> 
+> Sorry to be so unavailable... day-job and Git for Windows[*1*], what can I say.
 
-Hmmm, setting GIT_WORK_TREE locally without exporting it to our
-subprocesses would not hurt even when we do not see GIT_DIR, so I
-agree "It does not harm" is true for _us_, the process that runs
-this code itself.
+No problem. I don't envy you. :)
 
-But I am not sure if it is true for our children (e.g. hooks,
-filters etc. that is spawned by us).  With this change, they inherit
-GIT_WORK_TREE and no GIT_DIR, in such a case.  If they set GIT_DIR
-themselves for their own use, perhaps arranging to work in somewhere
-else they know by chdir'ing there, they did not have to set
-GIT_WORK_TREE=3D. before runing git in there, but now they do, because
-we start exporting GIT_WORK_TREE to interfere what they have been
-doing.
+> Would it help you if we detected ^plink[^a-zA-Z]?
 
-"It does not harm" is probably false for our children, I would
-think.  The children can do new things to avoid the harm, though.
+In our we would have needed "^plink[^a-zA-Z-.]". I think there's no real
+"right" answer here, as you can come up with hypotheticals that work and
+don't work with just about every pattern. I was less trying to advocate
+for loosening, and more just providing a data point to the list.
 
+If we were to do any loosening, I'd probably suggest "^plink.*" (in the
+basename).
 
-> Reported-by: Bj=C3=B8rnar Snoksrud <snoksrud@gmail.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  environment.c      |  2 ++
->  t/t0002-gitfile.sh | 17 +++++++++++++++++
->  2 files changed, 19 insertions(+)
->
-> diff --git a/environment.c b/environment.c
-> index 61c685b..8f1b249 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -231,6 +231,8 @@ void set_git_work_tree(const char *new_work_tree)
->  	}
->  	git_work_tree_initialized =3D 1;
->  	work_tree =3D xstrdup(real_path(new_work_tree));
-> +	if (setenv(GIT_WORK_TREE_ENVIRONMENT, work_tree, 1))
-> +		error("Could not set GIT_WORK_TREE to '%s'", work_tree);
->  }
-> =20
->  const char *get_git_work_tree(void)
-> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-> index 37e9396..9393322 100755
-> --- a/t/t0002-gitfile.sh
-> +++ b/t/t0002-gitfile.sh
-> @@ -99,4 +99,21 @@ test_expect_success 'check rev-list' '
->  	test "$SHA" =3D "$(git rev-list HEAD)"
->  '
-> =20
-> +test_expect_success 'setup_git_dir twice in subdir' '
-> +	git init sgd &&
-> +	(
-> +		cd sgd &&
-> +		git config alias.lsfi ls-files &&
-> +		mv .git .realgit &&
-> +		echo "gitdir: .realgit" >.git &&
-> +		mkdir subdir &&
-> +		cd subdir &&
-> +		>foo &&
-> +		git add foo &&
-> +		git lsfi >actual &&
-> +		echo foo >expected &&
-> +		test_cmp expected actual
-> +	)
-> +'
-> +
->  test_done
+-Peff
