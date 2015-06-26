@@ -1,123 +1,170 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v10 7/7] bisect: allow any terms set by user
-Date: Fri, 26 Jun 2015 22:59:48 +0200
-Message-ID: <vpq7fqqqj7f.fsf@anie.imag.fr>
-References: <1435337896-20709-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435337896-20709-8-git-send-email-Matthieu.Moy@imag.fr>
-	<CAP8UFD1Donr4v3Z8bpawv0_heDUQ+-EkepZF6UvuXOed7TQBXA@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [RFC/PATCH 5/9] ref-filter: add option to match literal pattern
+Date: Sat, 27 Jun 2015 02:45:23 +0530
+Message-ID: <558DC0EB.3050203@gmail.com>
+References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
+ <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
+ <1435232596-27466-5-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Nguy <thomasxnguy@gmail.com>,
-	Valentin Duperray <valentinduperray@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 23:03:28 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 26 23:15:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8al3-0001qD-1s
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 23:01:57 +0200
+	id 1Z8ayF-00081J-JI
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 23:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754073AbbFZVAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 17:00:15 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45904 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754096AbbFZVAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 17:00:01 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5QKxjkF008078
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Jun 2015 22:59:45 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5QKxmuV016153;
-	Fri, 26 Jun 2015 22:59:48 +0200
-In-Reply-To: <CAP8UFD1Donr4v3Z8bpawv0_heDUQ+-EkepZF6UvuXOed7TQBXA@mail.gmail.com>
-	(Christian Couder's message of "Fri, 26 Jun 2015 22:29:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Jun 2015 22:59:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5QKxjkF008078
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1435957188.9597@dXvzh7Lbg9fBYZKyIvxyJQ
+	id S1752447AbbFZVPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 17:15:31 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:34495 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751898AbbFZVP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 17:15:28 -0400
+Received: by pdbep18 with SMTP id ep18so59579530pdb.1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 14:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=rlSR2eSQx5ETuslxZ48CYe8UdGAqBo1lbW1mJpnx4YA=;
+        b=YOFMdqYBlcHnNTKN6VcFAfYCN9joKg5ITr7a+BGl3aIqGKqe1hC49sLNE+aOBZ5+3M
+         tivrdPmqUU3ZZS+w3hYygalai2fmbJEgSnn3y07PBHKtsDOtUQPYNa7MwQHdpkvuSnP1
+         l379lAog3ElxBQVJ2gGz26z76e6mjVUxCIXtVh+YIMa8cPIPCZVWe6lytAW0q332S9dt
+         oMvt7Spc2Za67hln5A/uGSymNYkGjCqQpleyd6ovNPIjNtt44xqop4enQpkuS1rS+lKn
+         7BYaOqG2YfeWoVvr1xFqaOVzeEBgVApmZ4oeJ5IW5WQSgsMvvi2gc0pFvmtAhsTpNFEv
+         VPIA==
+X-Received: by 10.70.96.139 with SMTP id ds11mr7155454pdb.98.1435353328168;
+        Fri, 26 Jun 2015 14:15:28 -0700 (PDT)
+Received: from [192.168.0.100] ([106.51.130.23])
+        by mx.google.com with ESMTPSA id bi4sm34252049pbc.56.2015.06.26.14.15.25
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jun 2015 14:15:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.0.1
+In-Reply-To: <1435232596-27466-5-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272827>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Just a few things I need to fix, personal note.
 
-> On Fri, Jun 26, 2015 at 6:58 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
->> From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
->>
->> Introduction of the git bisect terms command. The user can set his own
->> terms. It will work exactly like before. The terms must be set before the
->> start.
+On 06/25/2015 05:13 PM, Karthik Nayak wrote:
+> Since 'ref-filter' only has an option to match path names.
+> Add an option for regular pattern matching.
 >
-> After looking a bit at the code, I think that for now existing
-> predefined terms ("bad", "good", "new" and "old") as well as some
-> other terms that look like bisect subcommands like "skip", "start" and
-> "terms" should be disallowed as arguments to "git bisect terms",
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>   builtin/for-each-ref.c |  1 +
+>   ref-filter.c           | 30 ++++++++++++++++++++++++------
+>   ref-filter.h           |  3 ++-
+>   3 files changed, 27 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index c318e33..01d5363 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -68,6 +68,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>   	git_config(git_default_config, NULL);
+>
+>   	filter.name_patterns = argv;
+> +	filter.match_as_path = 1;
+>   	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+>   	ref_array_sort(sorting, &array);
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index e307fab..1f97910 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -954,6 +954,20 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
+>
+>   /*
+>    * Return 1 if the refname matches one of the patterns, otherwise 0.
+> + * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
+> + * matches a pattern "refs/heads/m") or a wildcard (e.g. the same ref
+> + * matches "refs/heads/m*",too).
+> + */
+> +static int match_pattern(const char **patterns, const char *refname)
+> +{
+> +	for (; *patterns; patterns++)
+> +		if (!wildmatch(*patterns, refname, 0, NULL))
+> +			return 1;
+> +	return 0;
+> +}
+> +
+> +/*
+> + * Return 1 if the refname matches one of the patterns, otherwise 0.
+>    * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+>    * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
+>    * matches "refs/heads/m*",too).
+> @@ -977,6 +991,15 @@ static int match_name_as_path(const char **pattern, const char *refname)
+>   	return 0;
+>   }
+>
+> +static int filter_pattern_match(struct ref_filter *filter, const char *refname)
+> +{
+> +	if (!*filter->name_patterns)
+> +		return 0;
 
-More importantly, subcommands should be disallowed, or the user may
-completely break bisect (e.g. running 'git bisect terms reset bar'
-prevents you from running 'git bisect reset' later).
+Should return 1.
 
-And they should be different, or some more funny situation will occur.
+> +	if (filter->match_as_path)
+> +		return match_name_as_path(filter->name_patterns, refname);
+> +	return match_pattern(filter->name_patterns, refname);
+> +}
+> +
+>   /*
+>    * Given a ref (sha1, refname) see if it points to one of the sha1s
+>    * in a sha1_array.
+> @@ -1026,17 +1049,12 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+>   	struct ref_array_item *ref;
+>   	struct commit *commit = NULL;
+>
+> -	if (flag & REF_BAD_NAME) {
+> -		  warning("ignoring ref with broken name %s", refname);
+> -		  return 0;
+> -	}
+> -
 
-I've just squashed this into my last patch:
+Undo this merge conflict.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index cf07a91..f6be218 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -607,9 +607,21 @@ bisect_terms () {
- 			gettextln "Your current terms are $NAME_GOOD for the old state
- and $NAME_BAD for the new state."
- 		else
--			die "$(gettext "No terms defined.")"
-+			die "$(gettext "no terms defined")"
- 		fi ;;
- 	2)
-+		for term in "$@"
-+		do
-+			case "$term" in
-+				help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run)
-+				die "$(eval_gettext "can't use the builtin command '\$term' as a term")"
-+				;;
-+			esac
-+		done
-+		if test "$1" = "$2"
-+		then
-+			die "$(gettext "please use two different terms")"
-+		fi
- 		if ! test -s "$GIT_DIR/BISECT_START"
- 		then
- 			write_terms "$1" "$2"
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index eb8cc80..5a7243b 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -852,7 +852,7 @@ test_expect_success 'bisect terms needs 0 or 2 arguments' '
- 	test_must_fail git bisect terms only-one &&
- 	test_must_fail git bisect terms 1 2 3 &&
- 	test_must_fail git bisect terms 2>actual &&
--	echo "No terms defined." >expected &&
-+	echo "no terms defined" >expected &&
- 	test_cmp expected actual
- '
- 
-Updated my GitHub branch, but I'll stop spamming the list with git
-send-email for a while ;-).
+>   	if (flag & REF_ISBROKEN) {
+>   		warning("ignoring broken ref %s", refname);
+>   		return 0;
+>   	}
+>
+> -	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
+> +	if (!filter_pattern_match(filter, refname))
+>   		return 0;
+>
+>   	if (!match_points_at(&filter->points_at, oid->hash, refname))
+> diff --git a/ref-filter.h b/ref-filter.h
+> index 6b6fb96..a4809c8 100644
+> --- a/ref-filter.h
+> +++ b/ref-filter.h
+> @@ -54,7 +54,8 @@ struct ref_filter {
+>   	} merge;
+>   	struct commit *merge_commit;
+>
+> -	unsigned int with_commit_tag_algo: 1;
+> +	unsigned int with_commit_tag_algo: 1,
+> +		match_as_path: 1;
+>   	unsigned int lines;
+>   };
+>
+>
+
+I'll add these changes to my local branch.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Karthik
