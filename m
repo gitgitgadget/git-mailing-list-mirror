@@ -1,102 +1,91 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 3/7] bisect: treat BISECT_HEAD as a ref
-Date: Thu, 25 Jun 2015 20:29:04 -0400
-Message-ID: <1435278548-3790-3-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 4/7] refs: Break out check for reflog autocreation
+Date: Thu, 25 Jun 2015 20:29:05 -0400
+Message-ID: <1435278548-3790-4-git-send-email-dturner@twopensource.com>
 References: <1435278548-3790-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Jun 26 02:29:40 2015
+X-From: git-owner@vger.kernel.org Fri Jun 26 02:29:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8HWW-00054N-DI
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 02:29:40 +0200
+	id 1Z8HWb-000591-6L
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 02:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500AbbFZA3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 20:29:38 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:34270 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169AbbFZA3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 20:29:34 -0400
-Received: by igcsj18 with SMTP id sj18so21055017igc.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 17:29:32 -0700 (PDT)
+	id S1751568AbbFZA3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 20:29:40 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:34289 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750792AbbFZA3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 20:29:35 -0400
+Received: by igcsj18 with SMTP id sj18so21055470igc.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 17:29:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=W2nd371/ewnngTbZjluMua4IHEEKAJHr6n8k23q2OG4=;
-        b=GEe9ri9LmD/H5N3c/929TjbqViszywF0WzwIaOtTPuaPIRLAjXxIykgbWZFldlmPwT
-         jwqbEC1QpVXBWs48uQLKidNiaVHakAiHB8gkH1JMKMX0MLMgOeYNcMDQE4FUY3vBvwP9
-         SUL3ioZPAz+MtBpIelXzgvPKGVZOv1gKu28i1R2pGpMuU1IM3NtlD8qf/Hm70VQm1e+P
-         VyQhkr16ZyT+901cr8DFkVKovurTI7lLyHLE/UVXdO9B58XiDWMsT0/e3nhpN7frX1nM
-         8vYEcm79yXoMqzLEYFcJmVe7fr8mbIVlfrpPoreJAm54p/H2SvKgMagXkQhSBOs/829d
-         9x7g==
-X-Gm-Message-State: ALoCoQnand93kV1lxXgT13GZdp/3jaB+rYy/O5Dh2jl/XeOloPs1qUvyVoyfpLJsJQMwuD3wD5fU
-X-Received: by 10.42.214.144 with SMTP id ha16mr304463icb.70.1435278572616;
-        Thu, 25 Jun 2015 17:29:32 -0700 (PDT)
+        bh=l+XMF1c7IG2TrRzRXka9FyDodYqChZGJYdZZmtHI0dM=;
+        b=e4qygJyVmaXlDSOkSpQOvHvOsmezAv3Y0xNdKpb+3wjOzkua9dqoI8h1oJqSaAIyk1
+         StvMVOJI3buwpAVJS4x84fV91p9/et78awCFpdNcxnZWYZyQg72wRGp/dOhlYJf6s7+G
+         4uecSUnSurwqxTe95NQb6sjik3ulW0z8/L3C9262ZP7bTzO62YLgvKibwgSsTrrwpTG3
+         vPdsDOXAreSmbnWer/Myua3rRDHmiZLzrlQKO+dpXPhqmdiVm0+QdUM+mefz8L/4PS+v
+         KjT1Xr6DuGamRFfdRJnUy5dMiLg8yRj+OGoJGFXqlXO+PPs9wIdCZCoUr1ql5fIzjHoK
+         D3Og==
+X-Gm-Message-State: ALoCoQnN+KWiGmPjDTUi8oPZ9UKbgNYIgSMJE3vyDCQQHLZ2nXCYq9FbsVVQfmCLgSFXF2Tkq0kx
+X-Received: by 10.43.169.137 with SMTP id nm9mr298597icc.82.1435278574923;
+        Thu, 25 Jun 2015 17:29:34 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by mx.google.com with ESMTPSA id i85sm20714344iod.41.2015.06.25.17.29.30
+        by mx.google.com with ESMTPSA id i85sm20714344iod.41.2015.06.25.17.29.32
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jun 2015 17:29:31 -0700 (PDT)
+        Thu, 25 Jun 2015 17:29:33 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.314.gdbf7a51-twtrsrc
 In-Reply-To: <1435278548-3790-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272750>
 
-Instead of directly writing to and reading from files in
-$GIT_DIR, use ref API to interact with BISECT_HEAD.
+This is just for clarity.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- git-bisect.sh | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ refs.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index ae3fec2..dddcc89 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -35,7 +35,7 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- 
- bisect_head()
- {
--	if test -f "$GIT_DIR/BISECT_HEAD"
-+	if bisect_head_exists
- 	then
- 		echo BISECT_HEAD
- 	else
-@@ -209,6 +209,10 @@ check_expected_revs() {
- 	done
+diff --git a/refs.c b/refs.c
+index b34a54a..dff91cf 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3118,6 +3118,14 @@ static int copy_msg(char *buf, const char *msg)
+ 	return cp - buf;
  }
  
-+bisect_head_exists() {
-+    git rev-parse --quiet --verify "BISECT_HEAD" >/dev/null
++static int should_autocreate_reflog(const char *refname)
++{
++	return starts_with(refname, "refs/heads/") ||
++		starts_with(refname, "refs/remotes/") ||
++		starts_with(refname, "refs/notes/") ||
++		!strcmp(refname, "HEAD");
 +}
 +
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -310,7 +314,7 @@ bisect_next() {
- 	bisect_next_check good
- 
- 	# Perform all bisection computation, display and checkout
--	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
-+	git bisect--helper --next-all $(bisect_head_exists && echo --no-checkout)
- 	res=$?
- 
- 	# Check if we should exit because bisection is finished
-@@ -377,7 +381,7 @@ bisect_reset() {
- 		usage ;;
- 	esac
- 
--	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
-+	if ! bisect_head_exists && ! git checkout "$branch" --
- 	then
- 		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
- Try 'git bisect reset <commit>'.")"
+ /* This function will fill in *err and return -1 on failure */
+ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
+ {
+@@ -3128,11 +3136,7 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+ 	logfile = sb_logfile->buf;
+ 	/* make sure the rest of the function can't change "logfile" */
+ 	sb_logfile = NULL;
+-	if (log_all_ref_updates &&
+-	    (starts_with(refname, "refs/heads/") ||
+-	     starts_with(refname, "refs/remotes/") ||
+-	     starts_with(refname, "refs/notes/") ||
+-	     !strcmp(refname, "HEAD"))) {
++	if (log_all_ref_updates && should_autocreate_reflog(refname)) {
+ 		if (safe_create_leading_directories(logfile) < 0) {
+ 			strbuf_addf(err, "unable to create directory for %s. "
+ 				    "%s", logfile, strerror(errno));
 -- 
 2.0.4.314.gdbf7a51-twtrsrc
