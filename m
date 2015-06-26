@@ -1,137 +1,125 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR
-Date: Fri, 26 Jun 2015 10:30:28 -0700
-Message-ID: <xmqqlhf6v0ln.fsf@gitster.dls.corp.google.com>
-References: <CA+cck7GD+JgR4O-XoBeUX1gJAG6suP9iLwASyRygK8hR4KP7pw@mail.gmail.com>
-	<1435315055-27011-1-git-send-email-pclouds@gmail.com>
+Subject: Re: git error in tag ...: unterminated header
+Date: Fri, 26 Jun 2015 10:37:19 -0700
+Message-ID: <xmqqh9puv0a8.fsf@gitster.dls.corp.google.com>
+References: <20150625155128.C3E9738005C@gemini.denx.de>
+	<xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
+	<20150625201309.5026A384E81@gemini.denx.de>
+	<xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
+	<2b124e09d9c89ff3892f246ea91aa3c4@www.dscho.org>
+	<xmqqoak3wkkq.fsf@gitster.dls.corp.google.com>
+	<xmqqbng3wheu.fsf@gitster.dls.corp.google.com>
+	<d455a77d76b3558fb79d550d6ed4468d@www.dscho.org>
+	<20150626155248.GB30273@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, snoksrud@gmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 19:30:36 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 26 19:37:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8XSV-0007jb-Pr
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 19:30:36 +0200
+	id 1Z8XZC-0005S9-QJ
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 19:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbbFZRac convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2015 13:30:32 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:37386 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001AbbFZRab (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 13:30:31 -0400
-Received: by igblr2 with SMTP id lr2so17913499igb.0
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 10:30:30 -0700 (PDT)
+	id S1751919AbbFZRhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 13:37:24 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:35164 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752090AbbFZRhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 13:37:22 -0400
+Received: by iebrt9 with SMTP id rt9so80184169ieb.2
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 10:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=BBDUlp/zUSgmatKkGZKxAtUF6kNdgnPbjDJVhvYw9fw=;
-        b=0FcxZ2mMeRVlhx8pq8R0cY+nICpgLJJofSZmWv49LjSEQRqZgNsZirPxcxZaeD2PUI
-         5N10r1X4/KFbbpo29Ru3NNsrkTIRVKnup1GHYNxM/65eMWwnHWLOl+MNIu6OnL/ewlxN
-         lkGLinV+dmjGKNZnJIYPO+y7h7x1jsyTn1k85EryAEjfnMayuzmGHeXFCgDSXRkkACCR
-         L1KN8w5JrEesHwBy6S1aYyPK6ZJirCXp9JHYBArBXtWncCRz8AIuYyL15jXPb60qWQyo
-         aVamEuUAulcOidp9TKO4HskhuIEA5557oNXX/PftFmo2UIhA0HUt0/oaDDMdJb1oW7l1
-         EZVw==
-X-Received: by 10.43.34.205 with SMTP id st13mr4682641icb.4.1435339830496;
-        Fri, 26 Jun 2015 10:30:30 -0700 (PDT)
+         :user-agent:mime-version:content-type;
+        bh=ll4B2013A6FxNxBc8yo5UMXfBYwdhGmiGD1c5vq0vHg=;
+        b=GnZxQo3JFdkzmVwpsU5S/T9KRZVII/4gSyiuLRMAxPEWkRpWPUs+x1GG6Og/JJecNO
+         Uxn0CWJck1KfRba5r8RXLgcFSzKtvbyLz6IvuZgA35Gb6Yc397zdcfV6CcpmB8nEIMIA
+         JNJxlx9jVIgmyKDeML0rOn2cHpORW1T4vd5YjFZZJMK+KBgABrE04ku1j1kusGzuzrmj
+         EQTdTmmnOSd+fuAI54g4tSjBKPzfpb4eggDZto8VFFPdvXJJWzj/gNrCmWXO4alEGPaM
+         8AaB9vYV5k8sIABxBGzXQhfDn7yBrnasBCjI3FfF+lKq2DtG7QqN2mosXZ+Jl+DNtTjJ
+         luwQ==
+X-Received: by 10.50.8.68 with SMTP id p4mr5150590iga.4.1435340241854;
+        Fri, 26 Jun 2015 10:37:21 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
-        by mx.google.com with ESMTPSA id o19sm1246439igs.18.2015.06.26.10.30.29
+        by mx.google.com with ESMTPSA id e3sm1254409igq.21.2015.06.26.10.37.20
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Jun 2015 10:30:29 -0700 (PDT)
-In-Reply-To: <1435315055-27011-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 26
- Jun 2015 17:37:35 +0700")
+        Fri, 26 Jun 2015 10:37:21 -0700 (PDT)
+In-Reply-To: <20150626155248.GB30273@peff.net> (Jeff King's message of "Fri,
+	26 Jun 2015 11:52:48 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272804>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> This is where the "fun" is. The legacy behavior is, if $GIT_WORK_TREE=
- is
-> not set but $GIT_DIR is, cwd is chosen as worktree's top. If you happ=
-en
-> to stand at worktree's top when you do this, all is well.
-
-It is not legacy, though.  It is how things were designed to be
-used, and how things are supposed to work in the future.
-
-Until we do the deprecation dance to force people to update existing
-scripts to explicitly export GIT_WORK_TREE=3D$(pwd) or something like
-that, that is.
-
-And I wouldn't be opposed to such a transition plan; something along
-the lines of what Peff outlined in that old thread.
-
-http://thread.gmane.org/gmane.comp.version-control.git/219096/focus=3D2=
-19197
-
-> Bottom line is, when $GIT_DIR is set, $GIT_WORK_TREE should be set to=
-o
-> unless there's no work tree. But setting $GIT_WORK_TREE inside
-> set_git_dir() may backfire. We don't know at that point if work tree =
-is
-> already configured by the caller. So set it when work tree is
-> detected. It does not harm if $GIT_WORK_TREE is set while $GIT_DIR is
-> not.
-
-I am inclined to queue this on 'next' per "experimental" basis so
-that other people with different workflows (especially those who
-use existing scripts around Git plumbing heavily) can see if this
-does not have any unintended fallouts.  I cannot convince myself
-that it is generally a safe thing to do to muck with environment
-partially, hoping nobody would care.
-
-Thanks for looking into it.
-
->  environment.c      |  2 ++
->  t/t0002-gitfile.sh | 17 +++++++++++++++++
->  2 files changed, 19 insertions(+)
+> On Fri, Jun 26, 2015 at 10:06:20AM +0200, Johannes Schindelin wrote:
 >
-> diff --git a/environment.c b/environment.c
-> index 61c685b..8f1b249 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -231,6 +231,8 @@ void set_git_work_tree(const char *new_work_tree)
->  	}
->  	git_work_tree_initialized =3D 1;
->  	work_tree =3D xstrdup(real_path(new_work_tree));
-> +	if (setenv(GIT_WORK_TREE_ENVIRONMENT, work_tree, 1))
-> +		error("Could not set GIT_WORK_TREE to '%s'", work_tree);
->  }
-> =20
->  const char *get_git_work_tree(void)
-> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-> index 37e9396..9393322 100755
-> --- a/t/t0002-gitfile.sh
-> +++ b/t/t0002-gitfile.sh
-> @@ -99,4 +99,21 @@ test_expect_success 'check rev-list' '
->  	test "$SHA" =3D "$(git rev-list HEAD)"
->  '
-> =20
-> +test_expect_success 'setup_git_dir twice in subdir' '
-> +	git init sgd &&
-> +	(
-> +		cd sgd &&
-> +		git config alias.lsfi ls-files &&
-> +		mv .git .realgit &&
-> +		echo "gitdir: .realgit" >.git &&
-> +		mkdir subdir &&
-> +		cd subdir &&
-> +		>foo &&
-> +		git add foo &&
-> +		git lsfi >actual &&
-> +		echo foo >expected &&
-> +		test_cmp expected actual
-> +	)
-> +'
-> +
->  test_done
+>> I understood what you were saying, but it still appears too fragile to
+>> me to mix functions that assume NUL-terminated strings with an ad-hoc
+>> counted string check.
+>
+> Yeah, I agree. It is not that you cannot make it safe, but that it is
+> simply a fragile maintenance burden in the future. I thought we dealt
+> with this already with a1e920a (index-pack: terminate object buffers
+> with NUL, 2014-12-08), though.
+
+Hmph, that is an interesting point.
+
+It would mean that the require_eoh() can be reduced a bit further.
+
+ * It is still a good idea to make sure we do not have NUL in the
+   header part,
+
+ * It can still stop scanning when it finds a blank line (i.e. we do
+   not care what is in the message part of commit and tag),
+
+ * It does not have to insist that a commit or a tag has a blank
+   line to reject a header-only object.
+
+That would mean the name of the helper needs to change, though.
+
+Perhaps like this?
+
+ fsck.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 10bcb65..c23e84e 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -241,8 +241,8 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 	return retval;
+ }
+ 
+-static int require_end_of_header(const void *data, unsigned long size,
+-	struct object *obj, fsck_error error_func)
++static int verify_headers(const void *data, unsigned long size,
++			  struct object *obj, fsck_error error_func)
+ {
+ 	const char *buffer = (const char *)data;
+ 	unsigned long i;
+@@ -257,8 +257,13 @@ static int require_end_of_header(const void *data, unsigned long size,
+ 				return 0;
+ 		}
+ 	}
+-
+-	return error_func(obj, FSCK_ERROR, "unterminated header");
++	/*
++	 * did not find a blank line -- is the last header line
++	 * correctly terminated with LF?
++	 */
++	if (size && buffer[size - 1] != '\n')
++		return error_func(obj, FSCK_ERROR, "unterminated header");
++	return 0;
+ }
+ 
+ static int fsck_ident(const char **ident, struct object *obj, fsck_error error_func)
