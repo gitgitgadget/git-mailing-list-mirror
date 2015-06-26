@@ -1,321 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v10.1 3/7] Documentation/bisect: revise overall content
-Date: Fri, 26 Jun 2015 22:22:46 +0200
-Message-ID: <1435350166-7122-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <558D68A7.6010608@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jun 26 22:23:05 2015
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v10 7/7] bisect: allow any terms set by user
+Date: Fri, 26 Jun 2015 22:29:04 +0200
+Message-ID: <CAP8UFD1Donr4v3Z8bpawv0_heDUQ+-EkepZF6UvuXOed7TQBXA@mail.gmail.com>
+References: <1435337896-20709-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1435337896-20709-8-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	louis--alexandre stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Nguy <thomasxnguy@gmail.com>,
+	Valentin Duperray <valentinduperray@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 26 22:29:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8a9Q-0001HI-Kg
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 22:23:05 +0200
+	id 1Z8aFM-00061w-7l
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 22:29:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbbFZUXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 16:23:00 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58097 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751983AbbFZUW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 16:22:59 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5QKMmwO019846
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Jun 2015 22:22:48 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5QKMpWp015831;
-	Fri, 26 Jun 2015 22:22:51 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Z8a9C-0001zY-WF; Fri, 26 Jun 2015 22:22:51 +0200
-X-Mailer: git-send-email 2.5.0.rc0.7.g0f487ca.dirty
-In-Reply-To: <558D68A7.6010608@alum.mit.edu>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 26 Jun 2015 22:22:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5QKMmwO019846
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1435954970.70388@QEOXDmKZMHUdvgw2VigfHQ
+	id S1752104AbbFZU3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 16:29:07 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:34710 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751897AbbFZU3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 16:29:05 -0400
+Received: by wgqq4 with SMTP id q4so97169029wgq.1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 13:29:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=y6YXzn1u8dtqV0JyxZXS3F2n0QZ6yvNxrPFX06yBWhQ=;
+        b=DDCrOf7f94NPo76N10kmlSmc7MAe98BXc7sZUd1BIBx//f8jTTMhlNJteMHffwD/Qc
+         2T51sWfdtxBw6L+XTawWH1ggAI/FryrxY1PY2AszGr+AqxnfuZ5/PEWjxu9m/Bzb4scg
+         ubF6Dx7+4VDjIVy1neRVUdhj0vPy4WZBjib+vcvbvA3mYBWf1mtV40axghs9ikhX1d6W
+         BDh1GptnYb9B+2JbDAzvs0B8QOvQc5Qcle/EpS86TsXx795wCvI3KR//7hQFmzjeBNPZ
+         x1vxaGe8zDuPRUmjDQwsXIsSbCEWw5qpMwD5K7AZzsqCS1/D55ssfathDDbDUMEpmO5N
+         6plQ==
+X-Received: by 10.181.25.234 with SMTP id it10mr7929909wid.41.1435350544499;
+ Fri, 26 Jun 2015 13:29:04 -0700 (PDT)
+Received: by 10.194.221.229 with HTTP; Fri, 26 Jun 2015 13:29:04 -0700 (PDT)
+In-Reply-To: <1435337896-20709-8-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272820>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+On Fri, Jun 26, 2015 at 6:58 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+>
+> Introduction of the git bisect terms command. The user can set his own
+> terms. It will work exactly like before. The terms must be set before the
+> start.
 
-Thoroughly revise the "git bisect" manpage, including:
+After looking a bit at the code, I think that for now existing
+predefined terms ("bad", "good", "new" and "old") as well as some
+other terms that look like bisect subcommands like "skip", "start" and
+"terms" should be disallowed as arguments to "git bisect terms", and
+this should be stated in the commit message and in the documentation
+as well as checked and tested.
 
-* Beef up the "Description" section.
+For example a user might want to search for a fix by using "git bisect
+terms good bad" (which should swap "good" and "bad"), but we should
+not at least for now allow that.
 
-* Make the first long example less specific to kernel development.
+> @@ -185,7 +197,12 @@ bisect_start() {
+>         eval "$eval true" &&
+>         if test $must_write_terms -eq 1
+>         then
+> -               write_terms "$NAME_BAD" "$NAME_GOOD"
+> +               write_terms "$NAME_BAD" "$NAME_GOOD" &&
+> +               if test $must_log_terms -eq 1
+> +               then
+> +                       echo "git bisect terms $NAME_BAD $NAME_GOOD" \
+> +                           >>"$GIT_DIR/BISECT_LOG"
+> +               fi
 
-* De-emphasize implementation details in a couple of places.
-
-* Add "(roughly N steps)" in the places where example output is shown.
-
-* Properly markup code within the prose.
-
-* Lots of wordsmithing.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Just applied Junio's suggestion: 'no more revision left to inspect'.
-
- Documentation/git-bisect.txt | 122 ++++++++++++++++++++++++-------------------
- 1 file changed, 68 insertions(+), 54 deletions(-)
-
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 2bdc3b8..e97f2de 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -3,7 +3,7 @@ git-bisect(1)
- 
- NAME
- ----
--git-bisect - Find by binary search the change that introduced a bug
-+git-bisect - Use binary search to find the commit that introduced a bug
- 
- 
- SYNOPSIS
-@@ -16,7 +16,6 @@ DESCRIPTION
- The command takes various subcommands, and different options depending
- on the subcommand:
- 
-- git bisect help
-  git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-@@ -26,58 +25,71 @@ on the subcommand:
-  git bisect replay <logfile>
-  git bisect log
-  git bisect run <cmd>...
-+ git bisect help
- 
--This command uses 'git rev-list --bisect' to help drive the
--binary search process to find which change introduced a bug, given an
--old "good" commit object name and a later "bad" commit object name.
-+This command uses a binary search algorithm to find which commit in
-+your project's history introduced a bug. You use it by first telling
-+it a "bad" commit that is known to contain the bug, and a "good"
-+commit that is known to be before the bug was introduced. Then `git
-+bisect` picks a commit between those two endpoints and asks you
-+whether the selected commit is "good" or "bad". It continues narrowing
-+down the range until it finds the exact commit that introduced the
-+change.
- 
- Basic bisect commands: start, bad, good
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--Using the Linux kernel tree as an example, basic use of the bisect
--command is as follows:
-+As an example, suppose you are trying to find the commit that broke a
-+feature that was known to work in version `v2.6.13-rc2` of your
-+project. You start a bisect session as follows:
- 
- ------------------------------------------------
- $ git bisect start
- $ git bisect bad                 # Current version is bad
--$ git bisect good v2.6.13-rc2    # v2.6.13-rc2 was the last version
--                                 # tested that was good
-+$ git bisect good v2.6.13-rc2    # v2.6.13-rc2 is known to be good
-+------------------------------------------------
-+
-+Once you have specified at least one bad and one good commit, `git
-+bisect` selects a commit in the middle of that range of history,
-+checks it out, and outputs something similar to the following:
-+
-+------------------------------------------------
-+Bisecting: 675 revisions left to test after this (roughly 10 steps)
- ------------------------------------------------
- 
--When you have specified at least one bad and one good version, the
--command bisects the revision tree and outputs something similar to
--the following:
-+You should now compile the checked-out version and test it. If that
-+version works correctly, type
- 
- ------------------------------------------------
--Bisecting: 675 revisions left to test after this
-+$ git bisect good
- ------------------------------------------------
- 
--The state in the middle of the set of revisions is then checked out.
--You would now compile that kernel and boot it. If the booted kernel
--works correctly, you would then issue the following command:
-+If that version is broken, type
- 
- ------------------------------------------------
--$ git bisect good			# this one is good
-+$ git bisect bad
- ------------------------------------------------
- 
--The output of this command would be something similar to the following:
-+Then `git bisect` will respond with something like
- 
- ------------------------------------------------
--Bisecting: 337 revisions left to test after this
-+Bisecting: 337 revisions left to test after this (roughly 9 steps)
- ------------------------------------------------
- 
--You keep repeating this process, compiling the tree, testing it, and
--depending on whether it is good or bad issuing the command "git bisect good"
--or "git bisect bad" to ask for the next bisection.
-+Keep repeating the process: compile the tree, test it, and depending
-+on whether it is good or bad run `git bisect good` or `git bisect bad`
-+to ask for the next commit that needs testing.
-+
-+Eventually there will be no more revisions left to inspect, and the
-+command will print out a description of the first bad commit. The
-+reference `refs/bisect/bad` will be left pointing at that commit.
- 
--Eventually there will be no more revisions left to bisect, and you
--will have been left with the first bad kernel revision in "refs/bisect/bad".
- 
- Bisect reset
- ~~~~~~~~~~~~
- 
- After a bisect session, to clean up the bisection state and return to
--the original HEAD (i.e., to quit bisecting), issue the following command:
-+the original HEAD, issue the following command:
- 
- ------------------------------------------------
- $ git bisect reset
-@@ -94,9 +106,10 @@ instead:
- $ git bisect reset <commit>
- ------------------------------------------------
- 
--For example, `git bisect reset HEAD` will leave you on the current
--bisection commit and avoid switching commits at all, while `git bisect
--reset bisect/bad` will check out the first bad revision.
-+For example, `git bisect reset bisect/bad` will check out the first
-+bad revision, while `git bisect reset HEAD` will leave you on the
-+current bisection commit and avoid switching commits at all.
-+
- 
- Bisect visualize
- ~~~~~~~~~~~~~~~~
-@@ -141,17 +154,17 @@ $ git bisect replay that-file
- Avoiding testing a commit
- ~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--If, in the middle of a bisect session, you know that the next suggested
--revision is not a good one to test (e.g. the change the commit
--introduces is known not to work in your environment and you know it
--does not have anything to do with the bug you are chasing), you may
--want to find a nearby commit and try that instead.
-+If, in the middle of a bisect session, you know that the suggested
-+revision is not a good one to test (e.g. it fails to build and you
-+know that the failure does not have anything to do with the bug you
-+are chasing), you can manually select a nearby commit and test that
-+one instead.
- 
- For example:
- 
- ------------
- $ git bisect good/bad			# previous round was good or bad.
--Bisecting: 337 revisions left to test after this
-+Bisecting: 337 revisions left to test after this (roughly 9 steps)
- $ git bisect visualize			# oops, that is uninteresting.
- $ git reset --hard HEAD~3		# try 3 revisions before what
- 					# was suggested
-@@ -163,18 +176,19 @@ the revision as good or bad in the usual manner.
- Bisect skip
- ~~~~~~~~~~~~
- 
--Instead of choosing by yourself a nearby commit, you can ask Git
--to do it for you by issuing the command:
-+Instead of choosing a nearby commit by yourself, you can ask Git to do
-+it for you by issuing the command:
- 
- ------------
- $ git bisect skip                 # Current version cannot be tested
- ------------
- 
--But Git may eventually be unable to tell the first bad commit among
--a bad commit and one or more skipped commits.
-+However, if you skip a commit adjacent to the one you are looking for,
-+Git will be unable to tell exactly which of those commits was the
-+first bad one.
- 
--You can even skip a range of commits, instead of just one commit,
--using the "'<commit1>'..'<commit2>'" notation. For example:
-+You can also skip a range of commits, instead of just one commit,
-+using range notation. For example:
- 
- ------------
- $ git bisect skip v2.5..v2.6
-@@ -190,8 +204,8 @@ would issue the command:
- $ git bisect skip v2.5 v2.5..v2.6
- ------------
- 
--This tells the bisect process that the commits between `v2.5` included
--and `v2.6` included should be skipped.
-+This tells the bisect process that the commits between `v2.5` and
-+`v2.6` (inclusive) should be skipped.
- 
- 
- Cutting down bisection by giving more parameters to bisect start
-@@ -225,14 +239,14 @@ or bad, you can bisect by issuing the command:
- $ git bisect run my_script arguments
- ------------
- 
--Note that the script (`my_script` in the above example) should
--exit with code 0 if the current source code is good, and exit with a
--code between 1 and 127 (inclusive), except 125, if the current
--source code is bad.
-+Note that the script (`my_script` in the above example) should exit
-+with code 0 if the current source code is good/old, and exit with a
-+code between 1 and 127 (inclusive), except 125, if the current source
-+code is bad/new.
- 
- Any other exit code will abort the bisect process. It should be noted
--that a program that terminates via "exit(-1)" leaves $? = 255, (see the
--exit(3) manual page), as the value is chopped with "& 0377".
-+that a program that terminates via `exit(-1)` leaves $? = 255, (see the
-+exit(3) manual page), as the value is chopped with `& 0377`.
- 
- The special exit code 125 should be used when the current source code
- cannot be tested. If the script exits with this code, the current
-@@ -241,7 +255,7 @@ as the highest sensible value to use for this purpose, because 126 and 127
- are used by POSIX shells to signal specific error status (127 is for
- command not found, 126 is for command found but not executable---these
- details do not matter, as they are normal errors in the script, as far as
--"bisect run" is concerned).
-+`bisect run` is concerned).
- 
- You may often find that during a bisect session you want to have
- temporary modifications (e.g. s/#define DEBUG 0/#define DEBUG 1/ in a
-@@ -254,7 +268,7 @@ next revision to test, the script can apply the patch
- before compiling, run the real test, and afterwards decide if the
- revision (possibly with the needed patch) passed the test and then
- rewind the tree to the pristine state.  Finally the script should exit
--with the status of the real test to let the "git bisect run" command loop
-+with the status of the real test to let the `git bisect run` command loop
- determine the eventual outcome of the bisect session.
- 
- OPTIONS
-@@ -301,12 +315,12 @@ $ git bisect run ~/test.sh
- $ git bisect reset                   # quit the bisect session
- ------------
- +
--Here we use a "test.sh" custom script. In this script, if "make"
-+Here we use a `test.sh` custom script. In this script, if `make`
- fails, we skip the current commit.
--"check_test_case.sh" should "exit 0" if the test case passes,
--and "exit 1" otherwise.
-+`check_test_case.sh` should `exit 0` if the test case passes,
-+and `exit 1` otherwise.
- +
--It is safer if both "test.sh" and "check_test_case.sh" are
-+It is safer if both `test.sh` and `check_test_case.sh` are
- outside the repository to prevent interactions between the bisect,
- make and test processes and the scripts.
- 
--- 
-2.5.0.rc0.7.g0f487ca.dirty
+Maybe you could move appending to the log into write_terms() though
+you might need to pass an additional argument to enable or disable
+logging.
