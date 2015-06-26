@@ -1,99 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 7/7] cat-file: add --batch-all-objects option
-Date: Fri, 26 Jun 2015 02:56:58 -0400
-Message-ID: <CAPig+cT-VC7eQgLec+ATux76GHdRBVwG9BqcR9QiqXntf+s4eg@mail.gmail.com>
-References: <20150622103321.GB12584@peff.net>
-	<20150622104559.GG14475@peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v9 5/5] bisect: allow any terms set by user
+Date: Fri, 26 Jun 2015 08:59:03 +0200
+Message-ID: <vpqy4j7x8eg.fsf@anie.imag.fr>
+References: <1435064084-5554-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1435258257-29047-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1435258257-29047-6-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqk2urwjmq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Charles Bailey <charles@hashpling.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 26 08:57:07 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
+	valentinduperray@gmail.com,
+	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 08:59:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8NZS-0004TT-6K
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 08:57:06 +0200
+	id 1Z8Nbb-0006XN-5h
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 08:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbbFZG5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 02:57:01 -0400
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:36303 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752056AbbFZG47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 02:56:59 -0400
-Received: by ykdr198 with SMTP id r198so52352409ykd.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 23:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=gM4pjqJsoh1TlN/ER8ItgHYZYTTNz2xEfUrey5WjWzk=;
-        b=gC7SE6U3oVetDFGncPc+HeRlQy3sgqP4RyOTTg951mbW0kdZ1gKHimDP5b98XgYK24
-         3lD/X7YGtDDfeTohjUOhTEM7mTw5r/1sDjifHscFpv0ucHodde596DtNxMFwbCrSjrw1
-         qITVR8Sym/YWxintN1CHSogiaGWQmkp75IaB4vCxn1b4Uy5MUdzmydRmR5nTm7BzEbbO
-         1dls+PECVQPfVusu3Go+AFHRufkZdjOQ+0PV3i2mquMlRYz3KF0r9jmNcZmOvxNH+EIx
-         0Q4iPiruHN9LXK75m9nvFzCqiBZNgwFxVAy09GbmYb1o6ieB9i+Gz78BpS8AX9GlYQbX
-         kfSQ==
-X-Received: by 10.13.204.207 with SMTP id o198mr105054ywd.163.1435301818901;
- Thu, 25 Jun 2015 23:56:58 -0700 (PDT)
-Received: by 10.37.36.214 with HTTP; Thu, 25 Jun 2015 23:56:58 -0700 (PDT)
-In-Reply-To: <20150622104559.GG14475@peff.net>
-X-Google-Sender-Auth: 3166x9OpeDX92VRYgxaeilyipsc
+	id S1751682AbbFZG7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 02:59:15 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:55877 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751561AbbFZG7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 02:59:14 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5Q6x2JM014798
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 26 Jun 2015 08:59:03 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5Q6x3YV032277;
+	Fri, 26 Jun 2015 08:59:03 +0200
+In-Reply-To: <xmqqk2urwjmq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 25 Jun 2015 14:41:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Jun 2015 08:59:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5Q6x2JM014798
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1435906747.93137@Od1rWygaBJhDfoqO6ipc+Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272762>
 
-On Mon, Jun 22, 2015 at 6:45 AM, Jeff King <peff@peff.net> wrote:
-> [...] This patch adds an option to
-> "cat-file --batch-check" to operate on all available
-> objects (rather than reading names from stdin).
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 93a4794..2b4220a 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -547,4 +547,31 @@ test_expect_success 'git cat-file --batch --follow-symlink returns correct sha a
->         test_cmp expect actual
->  '
+>> +------------------------------------------------
+>> +git bisect terms <term-new> <term-old>
+>> +------------------------------------------------
 >
-> +test_expect_success 'cat-file --batch-all-objects shows all objects' '
-> +       # make new repos so we now the full set of objects; we will
+> The mnemonic for "git bisect start bad good" is Bad comes before
+> Good (B = 0x42, G = 0x47) and this is same for "new/old", New comes
+> before Old (N = 0x4e, O = 0x4f).  "git bisect terms new old" follows
+> the same pattern, which is good.  Easy to remember.
+>
+>> +This command has to be used before a bisection has started. <term-old>
+>> +must be associated with the latest revisions and <term-new> with the
+>> +ancestors of <term-old>.
+>
+> Whoa?  This gets new and old mixed up, doesn't it?
 
-s/now/know/
+Right. I think it was already the case before, but using term1/term2 in
+the text made it hard to spot. The new wording is clearer, and makes it
+easier to find bugs in the explanations ;-).
 
-> +       # also make sure that there are some packed and some loose
-> +       # objects, some referenced and some not, and that there are
-> +       # some available only via alternates.
-> +       git init all-one &&
-> +       (
-> +               cd all-one &&
-> +               echo content >file &&
-> +               git add file &&
-> +               git commit -qm base &&
-> +               git rev-parse HEAD HEAD^{tree} HEAD:file &&
-> +               git repack -ad &&
-> +               echo not-cloned | git hash-object -w --stdin
-> +       ) >expect.unsorted &&
-> +       git clone -s all-one all-two &&
-> +       (
-> +               cd all-two &&
-> +               echo local-unref | git hash-object -w --stdin
-> +       ) >>expect.unsorted &&
-> +       sort <expect.unsorted >expect &&
-> +       git -C all-two cat-file --batch-all-objects \
-> +                               --batch-check="%(objectname)" >actual.unsorted &&
-> +       sort <actual.unsorted >actual &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-> --
-> 2.4.4.719.g3984bc6
+>> +Only the first bisection following the `git bisect terms` will use the
+>> +terms. If you mistyped one of the terms you can do again `git bisect
+>> +terms <term-old> <term-new>`.
+>
+> This is also the other way around, no?
+
+Indeed.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
