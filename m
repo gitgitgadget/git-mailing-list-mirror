@@ -1,389 +1,102 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 1/7] refs.c: add err arguments to reflog functions
-Date: Thu, 25 Jun 2015 20:29:02 -0400
-Message-ID: <1435278548-3790-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>,
-	Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v3 3/7] bisect: treat BISECT_HEAD as a ref
+Date: Thu, 25 Jun 2015 20:29:04 -0400
+Message-ID: <1435278548-3790-3-git-send-email-dturner@twopensource.com>
+References: <1435278548-3790-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Jun 26 02:29:36 2015
+X-From: git-owner@vger.kernel.org Fri Jun 26 02:29:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8HWR-00050j-D5
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 02:29:35 +0200
+	id 1Z8HWW-00054N-DI
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 02:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbbFZA3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2015 20:29:31 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:37997 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878AbbFZA33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2015 20:29:29 -0400
-Received: by igin14 with SMTP id n14so3490073igi.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2015 17:29:29 -0700 (PDT)
+	id S1751500AbbFZA3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2015 20:29:38 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:34270 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbbFZA3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2015 20:29:34 -0400
+Received: by igcsj18 with SMTP id sj18so21055017igc.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2015 17:29:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=UZDoIG5WaUTGBUu2QvqiSan0JeA8UImJoEc6iA6rlpo=;
-        b=DFkIgQE5BvtOL8OwuqzMnWxx07lc6k0EM3Sdt2blHuMvnlN67kbD7RZ17xgFIekEnc
-         X1eVMuNHwyUMIw83lx9liL4Zc+Uw0f8bRKct4QLlZyk2+4aPLE3W7MT8CqG+MHGwqbei
-         1LjYLDX2JX0ocY84DDMlVo6AYVZtexSqhXVqJNOnQsl3T5lGuPnRUGN/9mo5tNbDH3rz
-         L3nfUcQOay5IbmonWoq0a+2S+IerqklnHkjJv5muu6ZIyePsUD9SGfatkGEUKl/9vDCc
-         JXHWiEbh8DuxiOb8QJDLJXMaY9l89TG0TKVGG3vwFp4i1YGUjf17U6WkqkkkFL+rvmBF
-         5YgA==
-X-Gm-Message-State: ALoCoQlUkhSi5NYh0onsl4AIDBSb1mMbqSzsqj0wvR3rVltdJFILXjUYpPrId9pCApjTHwfMISiU
-X-Received: by 10.50.43.131 with SMTP id w3mr424581igl.8.1435278568882;
-        Thu, 25 Jun 2015 17:29:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=W2nd371/ewnngTbZjluMua4IHEEKAJHr6n8k23q2OG4=;
+        b=GEe9ri9LmD/H5N3c/929TjbqViszywF0WzwIaOtTPuaPIRLAjXxIykgbWZFldlmPwT
+         jwqbEC1QpVXBWs48uQLKidNiaVHakAiHB8gkH1JMKMX0MLMgOeYNcMDQE4FUY3vBvwP9
+         SUL3ioZPAz+MtBpIelXzgvPKGVZOv1gKu28i1R2pGpMuU1IM3NtlD8qf/Hm70VQm1e+P
+         VyQhkr16ZyT+901cr8DFkVKovurTI7lLyHLE/UVXdO9B58XiDWMsT0/e3nhpN7frX1nM
+         8vYEcm79yXoMqzLEYFcJmVe7fr8mbIVlfrpPoreJAm54p/H2SvKgMagXkQhSBOs/829d
+         9x7g==
+X-Gm-Message-State: ALoCoQnand93kV1lxXgT13GZdp/3jaB+rYy/O5Dh2jl/XeOloPs1qUvyVoyfpLJsJQMwuD3wD5fU
+X-Received: by 10.42.214.144 with SMTP id ha16mr304463icb.70.1435278572616;
+        Thu, 25 Jun 2015 17:29:32 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by mx.google.com with ESMTPSA id i85sm20714344iod.41.2015.06.25.17.29.26
+        by mx.google.com with ESMTPSA id i85sm20714344iod.41.2015.06.25.17.29.30
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jun 2015 17:29:27 -0700 (PDT)
+        Thu, 25 Jun 2015 17:29:31 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.314.gdbf7a51-twtrsrc
+In-Reply-To: <1435278548-3790-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272749>
 
-Add an err argument to log_ref_setup that can explain the reason
-for a failure. This then eliminates the need to manage errno through
-this function since we can just add strerror(errno) to the err string
-when meaningful. No callers relied on errno from this function for
-anything else than the error message.
+Instead of directly writing to and reading from files in
+$GIT_DIR, use ref API to interact with BISECT_HEAD.
 
-Also add err arguments to private functions write_ref_to_lockfile,
-log_ref_write_1, commit_ref_update. This again eliminates the need to
-manage errno in these functions.
-
-Update of a patch by Ronnie Sahlberg.
-
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- builtin/checkout.c |   8 ++--
- refs.c             | 111 ++++++++++++++++++++++++++++-------------------------
- refs.h             |   4 +-
- 3 files changed, 66 insertions(+), 57 deletions(-)
+ git-bisect.sh | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c018ab3..93f63d3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -624,16 +624,18 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 				struct strbuf log_file = STRBUF_INIT;
- 				int ret;
- 				const char *ref_name;
-+				struct strbuf err = STRBUF_INIT;
+diff --git a/git-bisect.sh b/git-bisect.sh
+index ae3fec2..dddcc89 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -35,7 +35,7 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
  
- 				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
- 				temp = log_all_ref_updates;
- 				log_all_ref_updates = 1;
--				ret = log_ref_setup(ref_name, &log_file);
-+				ret = log_ref_setup(ref_name, &log_file, &err);
- 				log_all_ref_updates = temp;
- 				strbuf_release(&log_file);
- 				if (ret) {
--					fprintf(stderr, _("Can not do reflog for '%s'\n"),
--					    opts->new_orphan_branch);
-+					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
-+						opts->new_orphan_branch, err.buf);
-+					strbuf_release(&err);
- 					return;
- 				}
- 			}
-diff --git a/refs.c b/refs.c
-index fb568d7..b34a54a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2975,9 +2975,11 @@ static int rename_ref_available(const char *oldname, const char *newname)
- 	return ret;
+ bisect_head()
+ {
+-	if test -f "$GIT_DIR/BISECT_HEAD"
++	if bisect_head_exists
+ 	then
+ 		echo BISECT_HEAD
+ 	else
+@@ -209,6 +209,10 @@ check_expected_revs() {
+ 	done
  }
  
--static int write_ref_to_lockfile(struct ref_lock *lock, const unsigned char *sha1);
-+static int write_ref_to_lockfile(struct ref_lock *lock,
-+				 const unsigned char *sha1, struct strbuf* err);
- static int commit_ref_update(struct ref_lock *lock,
--			     const unsigned char *sha1, const char *logmsg);
-+			     const unsigned char *sha1, const char *logmsg,
-+			     struct strbuf *err);
- 
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
- {
-@@ -3038,9 +3040,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	}
- 	hashcpy(lock->old_oid.hash, orig_sha1);
- 
--	if (write_ref_to_lockfile(lock, orig_sha1) ||
--	    commit_ref_update(lock, orig_sha1, logmsg)) {
--		error("unable to write current sha1 into %s", newrefname);
-+	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
-+	    commit_ref_update(lock, orig_sha1, logmsg, &err)) {
-+		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
-+		strbuf_release(&err);
- 		goto rollback;
- 	}
- 
-@@ -3056,9 +3059,11 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 
- 	flag = log_all_ref_updates;
- 	log_all_ref_updates = 0;
--	if (write_ref_to_lockfile(lock, orig_sha1) ||
--	    commit_ref_update(lock, orig_sha1, NULL))
--		error("unable to write current sha1 into %s", oldrefname);
-+	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
-+	    commit_ref_update(lock, orig_sha1, NULL, &err)) {
-+		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
-+		strbuf_release(&err);
-+	}
- 	log_all_ref_updates = flag;
- 
-  rollbacklog:
-@@ -3113,8 +3118,8 @@ static int copy_msg(char *buf, const char *msg)
- 	return cp - buf;
- }
- 
--/* This function must set a meaningful errno on failure */
--int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
-+/* This function will fill in *err and return -1 on failure */
-+int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
- {
- 	int logfd, oflags = O_APPEND | O_WRONLY;
- 	char *logfile;
-@@ -3129,9 +3134,8 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
- 	     starts_with(refname, "refs/notes/") ||
- 	     !strcmp(refname, "HEAD"))) {
- 		if (safe_create_leading_directories(logfile) < 0) {
--			int save_errno = errno;
--			error("unable to create directory for %s", logfile);
--			errno = save_errno;
-+			strbuf_addf(err, "unable to create directory for %s. "
-+				    "%s", logfile, strerror(errno));
- 			return -1;
- 		}
- 		oflags |= O_CREAT;
-@@ -3144,20 +3148,16 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
- 
- 		if (errno == EISDIR) {
- 			if (remove_empty_directories(logfile)) {
--				int save_errno = errno;
--				error("There are still logs under '%s'",
--				      logfile);
--				errno = save_errno;
-+				strbuf_addf(err, "There are still logs under "
-+					    "'%s'", logfile);
- 				return -1;
- 			}
- 			logfd = open(logfile, oflags, 0666);
- 		}
- 
- 		if (logfd < 0) {
--			int save_errno = errno;
--			error("Unable to append to %s: %s", logfile,
--			      strerror(errno));
--			errno = save_errno;
-+			strbuf_addf(err, "Unable to append to %s: %s",
-+				    logfile, strerror(errno));
- 			return -1;
- 		}
- 	}
-@@ -3195,7 +3195,7 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 
- static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 			   const unsigned char *new_sha1, const char *msg,
--			   struct strbuf *sb_log_file)
-+			   struct strbuf *sb_log_file, struct strbuf *err)
- {
- 	int logfd, result, oflags = O_APPEND | O_WRONLY;
- 	char *log_file;
-@@ -3203,7 +3203,8 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
- 
--	result = log_ref_setup(refname, sb_log_file);
-+	result = log_ref_setup(refname, sb_log_file, err);
++bisect_head_exists() {
++    git rev-parse --quiet --verify "BISECT_HEAD" >/dev/null
++}
 +
- 	if (result)
- 		return result;
- 	log_file = sb_log_file->buf;
-@@ -3216,26 +3217,25 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
- 				  git_committer_info(0), msg);
- 	if (result) {
--		int save_errno = errno;
- 		close(logfd);
--		error("Unable to append to %s", log_file);
--		errno = save_errno;
-+		strbuf_addf(err, "Unable to append to %s. %s", log_file,
-+			    strerror(errno));
- 		return -1;
- 	}
- 	if (close(logfd)) {
--		int save_errno = errno;
--		error("Unable to append to %s", log_file);
--		errno = save_errno;
-+		strbuf_addf(err, "Unable to append to %s. %s", log_file,
-+			    strerror(errno));
- 		return -1;
- 	}
- 	return 0;
- }
+ bisect_skip() {
+ 	all=''
+ 	for arg in "$@"
+@@ -310,7 +314,7 @@ bisect_next() {
+ 	bisect_next_check good
  
- static int log_ref_write(const char *refname, const unsigned char *old_sha1,
--			 const unsigned char *new_sha1, const char *msg)
-+			 const unsigned char *new_sha1, const char *msg,
-+			 struct strbuf *err)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb);
-+	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, err);
- 	strbuf_release(&sb);
- 	return ret;
- }
-@@ -3247,25 +3247,28 @@ int is_branch(const char *refname)
+ 	# Perform all bisection computation, display and checkout
+-	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
++	git bisect--helper --next-all $(bisect_head_exists && echo --no-checkout)
+ 	res=$?
  
- /*
-  * Write sha1 into the open lockfile, then close the lockfile. On
-- * errors, rollback the lockfile and set errno to reflect the problem.
-+ * errors, rollback the lockfile, fill in *err and
-+ * return -1.
-  */
- static int write_ref_to_lockfile(struct ref_lock *lock,
--				 const unsigned char *sha1)
-+				 const unsigned char *sha1, struct strbuf *err)
- {
- 	static char term = '\n';
- 	struct object *o;
+ 	# Check if we should exit because bisection is finished
+@@ -377,7 +381,7 @@ bisect_reset() {
+ 		usage ;;
+ 	esac
  
- 	o = parse_object(sha1);
- 	if (!o) {
--		error("Trying to write ref %s with nonexistent object %s",
--			lock->ref_name, sha1_to_hex(sha1));
-+		strbuf_addf(err,
-+			    "Trying to write ref %s with nonexistent object %s",
-+			    lock->ref_name, sha1_to_hex(sha1));
- 		unlock_ref(lock);
- 		errno = EINVAL;
- 		return -1;
- 	}
- 	if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
--		error("Trying to write non-commit object %s to branch %s",
--			sha1_to_hex(sha1), lock->ref_name);
-+		strbuf_addf(err,
-+			    "Trying to write non-commit object %s to branch %s",
-+			    sha1_to_hex(sha1), lock->ref_name);
- 		unlock_ref(lock);
- 		errno = EINVAL;
- 		return -1;
-@@ -3273,10 +3276,9 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
- 	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
- 	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
- 	    close_ref(lock) < 0) {
--		int save_errno = errno;
--		error("Couldn't write %s", lock->lk->filename.buf);
-+		strbuf_addf(err,
-+			    "Couldn't write %s", lock->lk->filename.buf);
- 		unlock_ref(lock);
--		errno = save_errno;
- 		return -1;
- 	}
- 	return 0;
-@@ -3288,12 +3290,15 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
-  * necessary, using the specified lockmsg (which can be NULL).
-  */
- static int commit_ref_update(struct ref_lock *lock,
--			     const unsigned char *sha1, const char *logmsg)
-+			     const unsigned char *sha1, const char *logmsg,
-+			     struct strbuf *err)
- {
- 	clear_loose_ref_cache(&ref_cache);
--	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg) < 0 ||
-+	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0 ||
- 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
--	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg) < 0)) {
-+	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0)) {
-+		strbuf_addf(err, "Cannot update the ref '%s'.",
-+			    lock->ref_name);
- 		unlock_ref(lock);
- 		return -1;
- 	}
-@@ -3317,7 +3322,8 @@ static int commit_ref_update(struct ref_lock *lock,
- 					      head_sha1, &head_flag);
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name))
--			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg);
-+			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg,
-+				      err);
- 	}
- 	if (commit_ref(lock)) {
- 		error("Couldn't set %s", lock->ref_name);
-@@ -3336,6 +3342,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- 	int fd, len, written;
- 	char *git_HEAD = git_pathdup("%s", ref_target);
- 	unsigned char old_sha1[20], new_sha1[20];
-+	struct strbuf err = STRBUF_INIT;
- 
- 	if (logmsg && read_ref(ref_target, old_sha1))
- 		hashclr(old_sha1);
-@@ -3384,8 +3391,11 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- #ifndef NO_SYMLINK_HEAD
- 	done:
- #endif
--	if (logmsg && !read_ref(refs_heads_master, new_sha1))
--		log_ref_write(ref_target, old_sha1, new_sha1, logmsg);
-+	if (logmsg && !read_ref(refs_heads_master, new_sha1) &&
-+		log_ref_write(ref_target, old_sha1, new_sha1, logmsg, &err)) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+	}
- 
- 	free(git_HEAD);
- 	return 0;
-@@ -4021,14 +4031,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 				 * value, so we don't need to write it.
- 				 */
- 			} else if (write_ref_to_lockfile(update->lock,
--							 update->new_sha1)) {
-+							 update->new_sha1,
-+							 err)) {
- 				/*
- 				 * The lock was freed upon failure of
- 				 * write_ref_to_lockfile():
- 				 */
- 				update->lock = NULL;
--				strbuf_addf(err, "cannot update the ref '%s'.",
--					    update->refname);
- 				ret = TRANSACTION_GENERIC_ERROR;
- 				goto cleanup;
- 			} else {
-@@ -4054,11 +4063,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 
- 		if (update->flags & REF_NEEDS_COMMIT) {
- 			if (commit_ref_update(update->lock,
--					      update->new_sha1, update->msg)) {
-+					      update->new_sha1, update->msg, err)) {
- 				/* freed by commit_ref_update(): */
- 				update->lock = NULL;
--				strbuf_addf(err, "Cannot update the ref '%s'.",
--					    update->refname);
- 				ret = TRANSACTION_GENERIC_ERROR;
- 				goto cleanup;
- 			} else {
-diff --git a/refs.h b/refs.h
-index e82fca5..debdefc 100644
---- a/refs.h
-+++ b/refs.h
-@@ -226,9 +226,9 @@ int pack_refs(unsigned int flags);
- #define REF_NODEREF	0x01
- 
- /*
-- * Setup reflog before using. Set errno to something meaningful on failure.
-+ * Setup reflog before using. Fill in err and return -1 on failure.
-  */
--int log_ref_setup(const char *refname, struct strbuf *logfile);
-+int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
- 
- /** Reads log for the value of ref during at_time. **/
- extern int read_ref_at(const char *refname, unsigned int flags,
+-	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
++	if ! bisect_head_exists && ! git checkout "$branch" --
+ 	then
+ 		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
+ Try 'git bisect reset <commit>'.")"
 -- 
 2.0.4.314.gdbf7a51-twtrsrc
