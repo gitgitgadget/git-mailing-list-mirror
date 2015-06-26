@@ -1,100 +1,75 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] bisect: revise manpage
-Date: Fri, 26 Jun 2015 17:28:27 +0200
-Message-ID: <CAP8UFD1_qDhT5kE+Kk_8BCyPH_dL=zR-X8sdhsQoHE5nW8BUGw@mail.gmail.com>
-References: <12a2e2d5e545459837b5eb2356cfc2fe4e3ef631.1435317576.git.mhagger@alum.mit.edu>
-	<CAP8UFD1GwH1ewapraL6cms04OVk8wHdtv+TJ7=HKL0_CLGjK-g@mail.gmail.com>
-	<vpqmvzmwrng.fsf@anie.imag.fr>
-	<CAP8UFD3y3gBp6bdLHus4TNo3LSwWLLOOWgzRR+6Yqh-rg4ASRg@mail.gmail.com>
-	<558D68A7.6010608@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/7] cat-file: add --batch-all-objects option
+Date: Fri, 26 Jun 2015 11:48:22 -0400
+Message-ID: <20150626154822.GA30273@peff.net>
+References: <20150622103321.GB12584@peff.net>
+ <20150622104559.GG14475@peff.net>
+ <CAPig+cT-VC7eQgLec+ATux76GHdRBVwG9BqcR9QiqXntf+s4eg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+Content-Type: text/plain; charset=utf-8
+Cc: Charles Bailey <charles@hashpling.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Nguy <thomasxnguy@gmail.com>,
-	Valentin Duperray <valentinduperray@gmail.com>,
-	git <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 26 17:28:37 2015
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 17:48:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8VYQ-0006OC-SK
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 17:28:35 +0200
+	id 1Z8Vrw-0007vZ-Gh
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 17:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbFZP2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 11:28:30 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:32831 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbbFZP22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 11:28:28 -0400
-Received: by wiwl6 with SMTP id l6so48323928wiw.0
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 08:28:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=F2wrG32YKo0y5Fha2dvqcao/0DKusuCCkbu1qoiJ/B4=;
-        b=U2HrTBfWGlKvaQZQSbKPRGoSbPxo3ohVAdr/2ppadLAanuVcYMWeQXhv9ktQspvYXl
-         Z9X7qrnsBYjkkVvWp11ZG9N2YKgQNmrzjOMEkn7OxeoITnqreMFHJVwdusFVD4xbEsXI
-         2myuYklPdd7UXX5AByz+GHYGlXytTInelBMmBjFKu6B4WXaVXA/Ra1eyF14hGaz9Z9te
-         6bK8cElNpXNHX+CiGovVQ00A1cmXrhj24KLQaSZQs7pmHyaEJCpxN+nHq2YftOJs5OXU
-         /e0E15kuJqZtIZwXbls9srNfjkNfuMF7pGdrqIK8dZbE2K8QcWVQYTr3SrzaO6TnKxG2
-         L3Lg==
-X-Received: by 10.194.95.132 with SMTP id dk4mr4231456wjb.88.1435332507755;
- Fri, 26 Jun 2015 08:28:27 -0700 (PDT)
-Received: by 10.194.221.229 with HTTP; Fri, 26 Jun 2015 08:28:27 -0700 (PDT)
-In-Reply-To: <558D68A7.6010608@alum.mit.edu>
+	id S1753041AbbFZPse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 11:48:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52281 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751379AbbFZPsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 11:48:25 -0400
+Received: (qmail 12412 invoked by uid 102); 26 Jun 2015 15:48:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Jun 2015 10:48:24 -0500
+Received: (qmail 17681 invoked by uid 107); 26 Jun 2015 15:48:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Jun 2015 11:48:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jun 2015 11:48:22 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT-VC7eQgLec+ATux76GHdRBVwG9BqcR9QiqXntf+s4eg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272783>
 
-On Fri, Jun 26, 2015 at 4:58 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 06/26/2015 03:15 PM, Christian Couder wrote:
->> On Fri, Jun 26, 2015 at 3:00 PM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>> Christian Couder <christian.couder@gmail.com> writes:
->>>
->>>> On Fri, Jun 26, 2015 at 1:30 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>>>
->>>> [...]
->>>>
->>>>> +Eventually there will be no more revisions left to bisect, and the
->>>>> +command will print out a description of the first bad commit, and also
->>>>> +create a reference called `refs/bisect/bad` that points at that
->>>>> +commit.
->>>>
->>>> This could be understood as meaning that `refs/bisect/bad` is created
->>>> only at the end of the bisection.
->>>>
->>>>> -Eventually there will be no more revisions left to bisect, and you
->>>>> -will have been left with the first bad kernel revision in "refs/bisect/bad".
->>>>
->>>> The original looks better to me in this regard.
->>>
->>> I'm changing it to:
->>>
->>> Eventually there will be no more revisions left to bisect, and the
->>> command will print out a description of the first bad commit. The
->>> reference `refs/bisect/bad` created by bisect will point at that
->>> commit.
->
-> I agree that is better.
->
->> For the last sentence I'd suggest:
->>
->> The reference called `refs/bisect/bad` will point at that commit.
->
-> Or maybe
->
-> The reference `refs/bisect/bad` will be left pointing at that commit.
+On Fri, Jun 26, 2015 at 02:56:58AM -0400, Eric Sunshine wrote:
 
-Yeah ok.
+> > +test_expect_success 'cat-file --batch-all-objects shows all objects' '
+> > +       # make new repos so we now the full set of objects; we will
+> 
+> s/now/know/
+
+Yeah. I don't think this series otherwise needs re-rolled. Here it is in
+an autosquash-able form:
+
+-- >8 --
+Subject: [PATCH] fixup! cat-file: add --batch-all-objects option
+
+---
+ t/t1006-cat-file.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 18dbdc8..4f38078 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -548,7 +548,7 @@ test_expect_success 'git cat-file --batch --follow-symlink returns correct sha a
+ '
+ 
+ test_expect_success 'cat-file --batch-all-objects shows all objects' '
+-	# make new repos so we now the full set of objects; we will
++	# make new repos so we know the full set of objects; we will
+ 	# also make sure that there are some packed and some loose
+ 	# objects, some referenced and some not, and that there are
+ 	# some available only via alternates.
+-- 
+2.5.0.rc0.336.g8460790
