@@ -1,59 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git error in tag ...: unterminated header
-Date: Fri, 26 Jun 2015 11:52:48 -0400
-Message-ID: <20150626155248.GB30273@peff.net>
-References: <20150625155128.C3E9738005C@gemini.denx.de>
- <xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
- <20150625201309.5026A384E81@gemini.denx.de>
- <xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
- <2b124e09d9c89ff3892f246ea91aa3c4@www.dscho.org>
- <xmqqoak3wkkq.fsf@gitster.dls.corp.google.com>
- <xmqqbng3wheu.fsf@gitster.dls.corp.google.com>
- <d455a77d76b3558fb79d550d6ed4468d@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/3] connect: improve check for plink to reduce false positives
+Date: Fri, 26 Jun 2015 09:16:20 -0700
+Message-ID: <xmqq381ewiln.fsf@gitster.dls.corp.google.com>
+References: <1429914505-325708-1-git-send-email-sandals@crustytoothpaste.net>
+	<1430080212-396370-1-git-send-email-sandals@crustytoothpaste.net>
+	<1430080212-396370-4-git-send-email-sandals@crustytoothpaste.net>
+	<20150626131524.GA2626@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Wolfgang Denk <wd@denx.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 26 17:52:58 2015
+Content-Type: text/plain
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Torsten =?utf-8?Q?B?= =?utf-8?Q?=C3=B6gershausen?= 
+	<tboegi@web.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 26 18:16:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8Vw0-0003Fu-C6
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 17:52:56 +0200
+	id 1Z8WIn-0007vG-3k
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jun 2015 18:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287AbbFZPww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2015 11:52:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52288 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751983AbbFZPwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2015 11:52:51 -0400
-Received: (qmail 12590 invoked by uid 102); 26 Jun 2015 15:52:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Jun 2015 10:52:51 -0500
-Received: (qmail 17722 invoked by uid 107); 26 Jun 2015 15:52:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Jun 2015 11:52:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jun 2015 11:52:48 -0400
-Content-Disposition: inline
-In-Reply-To: <d455a77d76b3558fb79d550d6ed4468d@www.dscho.org>
+	id S1752045AbbFZQQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2015 12:16:25 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:33255 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbbFZQQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2015 12:16:23 -0400
+Received: by ieqy10 with SMTP id y10so79094998ieq.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 09:16:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=5r2LpJy7s9+0GGT6iYC2aIK93kJMqlaVBBPHzmqzcO4=;
+        b=iW4jSuu5WtrCh5sb4nsYAwXMkJPb3fvQCPFhBHNQFUXSvqcPiqXAjh4fpxrA/OrrPl
+         fcMyk4Xsu7vhVaRTn1D1/aspdubhVF+Kn3GHcmjbCnR7q7V4OEbRTJDLWEt5nk2689EI
+         muHdmKJrA4YW+aaVNxZQM9hM/lNbPDmndDwFQduZODkP67ebtWWWIQ34PzAsvyhWfpIe
+         eI6JjjNICNIUwPkCqaQmbeiKZNPH/7MEq4UHNp833Vn3n2F+0oQOWV220xy/qaadYKzN
+         eeLCkoC6pm/OvzZgImDsRru65Ro7ynINQx6KEseLZ/5xRzZqyT992Gj6nxcQQHhW3T1p
+         8Cjg==
+X-Received: by 10.50.108.102 with SMTP id hj6mr4490533igb.39.1435335383072;
+        Fri, 26 Jun 2015 09:16:23 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6587:7c7a:db33:ca35])
+        by mx.google.com with ESMTPSA id j3sm1145329ige.0.2015.06.26.09.16.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 26 Jun 2015 09:16:22 -0700 (PDT)
+In-Reply-To: <20150626131524.GA2626@peff.net> (Jeff King's message of "Fri, 26
+	Jun 2015 09:15:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272785>
 
-On Fri, Jun 26, 2015 at 10:06:20AM +0200, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> writes:
 
-> I understood what you were saying, but it still appears too fragile to
-> me to mix functions that assume NUL-terminated strings with an ad-hoc
-> counted string check.
+> On Sun, Apr 26, 2015 at 08:30:12PM +0000, brian m. carlson wrote:
+>
+>> Improve the check by looking for "plink" or "tortoiseplink" (or those
+>> names suffixed with ".exe") only in the final component of the path.
+>> This has the downside that a program such as "plink-0.63" would no
+>> longer be recognized, but the increased robustness is likely worth it.
+>> Add tests to cover these cases to avoid regressions.
+>
+> FYI, this ended up biting me today. We have some integration tests that
+> make sure we can clone over putty, and we wrap plink in a
+> "plink-wrapper.sh" script that tweaks a few extra options. That used to
+> match under the old scheme, but not the new. It would also match if we
+> looked for "plink" anywhere in the basename (but not in leading
+> directories).
 
-Yeah, I agree. It is not that you cannot make it safe, but that it is
-simply a fragile maintenance burden in the future. I thought we dealt
-with this already with a1e920a (index-pack: terminate object buffers
-with NUL, 2014-12-08), though.
+So this was a minor regression? ;-)
 
--Peff
+> I was able to work around it pretty easily by changing our test setup,
+> but I thought I would include it here as a data point. It's probably not
+> that representative of real-world users.
+
+I'd imagine that "/usr/local/github/wrapped/bin/plink" may be a more
+appropriate name to install that wrapper as than "plink-wrapper.sh",
+but then people would need to think how to help that wrapper find
+the real plink, so...
