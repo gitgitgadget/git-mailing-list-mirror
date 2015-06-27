@@ -1,90 +1,108 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
-Date: Sat, 27 Jun 2015 06:51:20 +0200
-Message-ID: <CAP8UFD0Zzjcc94qcUJOpfSrTej-o6hRKzZOuTufzAbOPkjUr_A@mail.gmail.com>
-References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
-	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
-	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR
+Date: Sat, 27 Jun 2015 12:57:44 +0700
+Message-ID: <CACsJy8AuO5PNy=oFN1W9EQKK5_=jRkSNx8KhQYjL-0mW+jvr0A@mail.gmail.com>
+References: <CA+cck7GD+JgR4O-XoBeUX1gJAG6suP9iLwASyRygK8hR4KP7pw@mail.gmail.com>
+ <1435315055-27011-1-git-send-email-pclouds@gmail.com> <20150626115603.GB4315@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 06:51:28 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?Q?Bj=C3=B8rnar_Snoksrud?= <snoksrud@gmail.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 27 07:58:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8i5P-0002uk-U9
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 06:51:28 +0200
+	id 1Z8j89-00019x-25
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 07:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382AbbF0EvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jun 2015 00:51:23 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:33811 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752131AbbF0EvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2015 00:51:21 -0400
-Received: by wicnd19 with SMTP id nd19so59409060wic.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 21:51:20 -0700 (PDT)
+	id S1751073AbbF0F6Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Jun 2015 01:58:16 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:35173 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583AbbF0F6O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Jun 2015 01:58:14 -0400
+Received: by iebrt9 with SMTP id rt9so87885754ieb.2
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 22:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UtBsd2GDYqS7eyPVG7VjPSokDIRVD38zNLG9YnnOyfA=;
-        b=SUwyDgqfVB2SgwrUhTWoDcoYLqKtsAbl290UddIF5DGpL12kZ8IN67iiOZY7OsfB+v
-         CwdtJ0mcJ8zrFOc/j2/hGWyGaV2CSijjGjX9WlGpKVqMGskg8yyCToTVKtIkD5utmM+d
-         oyhtSuULrQago2syzbPHXdAWlHw71unyuYVMKaCNmbHg1D5g/BQvj4ImoTtQ4IZrUz/y
-         jdgyav8Ywxm1uuRIYtPcJ4q7soghAl28syRgBFGqN844sutbw/OExXU1qrAGrDHeboXo
-         NTv28pBYvYqdf6RBTIqFSlalO8q22RHJid4arYHvZUgImpqzjErQK++p0hImdh739hHd
-         CxFg==
-X-Received: by 10.194.2.68 with SMTP id 4mr9087221wjs.82.1435380680293; Fri,
- 26 Jun 2015 21:51:20 -0700 (PDT)
-Received: by 10.194.221.229 with HTTP; Fri, 26 Jun 2015 21:51:20 -0700 (PDT)
-In-Reply-To: <CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Y2UqwHuaulqxekD8hwP2Q5JHJACfdmDA2xiQR6bJoek=;
+        b=cvDy/FY14RWAIyu5V1szSr/oQhJZBwVmZkNWzpxomoPCifwQ8SfzFy8AZtGwmTBLjc
+         TZ5p/lo0sDNisBENU0uT5Ia3JFGwZZJKruvvyVglCHP8VXZmfHYmPmztnUiOxyRoVG/2
+         H4cVGaXWUf0kQPooTmecchEtx1mtdxNZ7LdVKyza1ceOFcdCpDW+xOZbyua8jQ6Y2Kv+
+         xNWBY/YsaYmVDjZy3RNC6lNKYIyG35h+7dmQpe+qk0dftlTx07tErjob9YlmIE+ZBlzf
+         PViXC2z3iBLoKmuwDOYXkwWZUVxFcvN4+A527Y8u1dHlq0tRuKKC2S1jumJ84vT8e0Gl
+         2ihg==
+X-Received: by 10.50.7.68 with SMTP id h4mr2217957iga.40.1435384693870; Fri,
+ 26 Jun 2015 22:58:13 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Fri, 26 Jun 2015 22:57:44 -0700 (PDT)
+In-Reply-To: <20150626115603.GB4315@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272851>
 
-On Sat, Jun 27, 2015 at 6:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Fri, Jun 26, 2015 at 9:10 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->>
->> If we don't want to support positional arguments, then I would suggest
->> supporting first the following instead:
->>
->>          git bisect terms --name-good=fast --name-bad=slow
->>          git bisect terms --name-bad=slow --name-good=fast
->>
->> This would make the interface consistent with the code.
+On Fri, Jun 26, 2015 at 6:56 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jun 26, 2015 at 05:37:35PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy wrote:
 >
-> Which somewhat defeats the point of introducing "old" and "new", though.
-> The "terms" support is for people who feel that good/bad would be too confusing
-> for the particular bisect session (e.g. because they are hunting for a fix).
-
-Well if --name-old and --name-new are also available as synonyms, it
-would not be too bad I think.
-People could use the option names that fit their mental model or their
-use case better.
-
->>> We may want to start supporting
->>>
->>>         git bisect start --new=master --old=maint
->>
->> Maybe we could also support:
->>
->> git bisect start --name-good=fast --name-bad=slow --fast=maint --slow=master
+>> This is where the "fun" is. The legacy behavior is, if $GIT_WORK_TRE=
+E is
+>> not set but $GIT_DIR is, cwd is chosen as worktree's top. If you hap=
+pen
+>> to stand at worktree's top when you do this, all is well. If you are=
+ in
+>> a subdir "foo/bar" (real worktree's top is "foo"), this behavior bit=
+es
+>> you: your detected worktree is now "foo/bar", but the first run
+>> correctly detected worktree as "foo". You get "internal error: work =
+tree
+>> has already been set" as a result.
 >
-> The same comment for the token after --name-, but allowing the terms to be set
-> at "start" could be a type-saver.  With need for added "--name-"
-> prefix (worse, twice),
-> I am not sure if it would be seen as a useful type-saver, though.
+> I think this makes sense. I feel like we've dealt with this before, b=
+ut
+> the two previous rounds I found were basically:
+>
+>   - we have GIT_IMPLICIT_WORK_TREE, but that is for the _opposite_ ca=
+se.
+>     I.e., when we do not have a work tree and must communicate so to
+>     later code (including sub-processes).
+>
+>   - a discussion about switching the "work tree defaults to '.' when
+>     $GIT_DIR is set" behavior yielded almost the identical patch:
+>
+>       http://article.gmane.org/gmane.comp.version-control.git/219196
+>
+>     but we were so wrapped up in the greater discussion we did not ap=
+ply
+>     that simple fix. :)
 
-At least people don't need to remember if they have to use "git bisect
-term" before or after starting :-)
+There's also the patch "[PATCH v2] setup.c: set workdir when gitdir is
+not default" from Max Kirillov last year (gmane down, no link), so we
+have one patch about this every year since 2013 :)
+
+Junio if you are worried about unnecessary setenv, I think Max's
+approach is safer as he solves a specific use case. If this problem
+pops up again in another use case, we can deal with that again.
+
+>> +     if (setenv(GIT_WORK_TREE_ENVIRONMENT, work_tree, 1))
+>> +             error("Could not set GIT_WORK_TREE to '%s'", work_tree=
+);
+>
+> Should this be die()? setenv() should basically never fail, but if it
+> does, it could be confusing and/or dangerous to run without the varia=
+ble
+> set.
+
+It's a straight copy from set_git_dir() but I guess the situation is a
+bit different. If setenv fails in gitdir, no repo is found but if it
+fails here we may select a wrong worktree and could wipe it out by
+mistake. Will fix if Junio chooses this patch instead of Max's.
+--=20
+Duy
