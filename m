@@ -1,77 +1,86 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff of translation for Git 2.5.0 round 1
-Date: Sat, 27 Jun 2015 19:46:00 +0800
-Message-ID: <CANYiYbFTMxafBKoGkWVo1Ok1LRWK=6crtTJMnkD1CpsVEfgHEA@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [GSOC] Update 3: Unification of tag -l, branch -l and for-each-ref
+Date: Sun, 28 Jun 2015 00:02:43 +0530
+Message-ID: <CAOLa=ZTb7Y_aRmBMucKyY-G9uEBL9uvHoh2f-7ny9jXrNB_yow@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 13:46:13 2015
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 27 20:33:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8oYl-0002lz-3Z
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 13:46:11 +0200
+	id 1Z8uur-0001qL-K0
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 20:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786AbbF0LqF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Jun 2015 07:46:05 -0400
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:33234 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753247AbbF0LqC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Jun 2015 07:46:02 -0400
-Received: by wgck11 with SMTP id k11so107036223wgc.0
-        for <git@vger.kernel.org>; Sat, 27 Jun 2015 04:46:00 -0700 (PDT)
+	id S1753248AbbF0SdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jun 2015 14:33:15 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:34701 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752388AbbF0SdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jun 2015 14:33:13 -0400
+Received: by obbkm3 with SMTP id km3so84156821obb.1
+        for <git@vger.kernel.org>; Sat, 27 Jun 2015 11:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9AWKXMN7sZrr0v1NLpTBGcbMEM1ur37kgg700+FnufY=;
-        b=OpbuasDs86wZEMx0gjDihm5OU7Fabw2B0AJSP8Y4eD/lF99LKl5c7MMqbQL2bPnS0B
-         nKVCXg48ey+fqBdxnTLnJvwg6KyTJnHI6LRHVWb/ZnzFD+bjrQ11/kqyOdX7DOCj2Mui
-         pHaAlG29P+kPozVS0KrcPgQmv1llgzrQ7tC1POs/3Frd1kX35aBhnnjyBOfmn6FXkGSm
-         q+8kaBSStI4nHT/TsBR2MMVLU8SkW5ulr101ACB6ecZEvJKR7oDx5vDnUhL7udctZhZ8
-         w2pkNnV7OguqtvTFujbR4vdjM09ehRN6g+HT9D7KGoTNj6WHIy/z2DVRtRVJYEyXfcs2
-         jaOw==
-X-Received: by 10.194.189.80 with SMTP id gg16mr11605384wjc.9.1435405560389;
- Sat, 27 Jun 2015 04:46:00 -0700 (PDT)
-Received: by 10.194.64.131 with HTTP; Sat, 27 Jun 2015 04:46:00 -0700 (PDT)
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=n8mWSxuMMnnyxiD8JpMfl7XS3bIdg2wniTm0bIPBmUE=;
+        b=jaFt9cnZu8cvzGa7PGVvUf39K2lJ9W/vkDnMCrRQf3FS86mm0Pbulyf//bFBcKgzuB
+         ox8GvnlSpNFwP9i91dWUgqdlnqgCToq0u3CePQm+GsKPZbE4ko2QUcufiAOq1BTgWz2B
+         d5C6hrxzUd1V9l8qxTZ6tq++JSoQm6nIgsY+7jmHwh+ISo8TgYxJ+2LmDi8OQuy0cZ4V
+         AgED9LeUQvKLgYvhk8mbxSBjEvfNrX7ylmcUATKLpnkcvGSP2hscSMO69A6NcPfZhds/
+         7+esi9q2nDTSGkIbbEnpV9Ql6vAhtEP5yrQ0kPSdXpiFfiSAr94Z58QcyD9wsCHD8Gu2
+         CUTg==
+X-Received: by 10.60.58.136 with SMTP id r8mr6759954oeq.30.1435429993196; Sat,
+ 27 Jun 2015 11:33:13 -0700 (PDT)
+Received: by 10.182.95.165 with HTTP; Sat, 27 Jun 2015 11:32:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272858>
 
-Hi,
+Hello All,
 
-Git v2.5.0-rc0 has been released, and it's time to start new round of g=
-it l10n.
-This time there are 65 updated messages need to be translated since las=
-t
-update:
+As part of GSoC I'm working on the Unification of 'for-each-ref', 'tag -l'
+and 'branch -l'. Sorry for the lack of update since Jun 14, was a
+little busy with an exam I had. Now thats over, I will be working more
+on the project.
 
-    l10n: git.pot: v2.5.0 round 1 (65 new, 15 removed)
+Current Progress:
 
-    Generate po/git.pot from v2.5.0-rc0 for git v2.5.0 l10n round 1.
+1. Building ref-filter.{c,h} from for-each-ref.
+This is the process of creating an initial library for the unification
+by moving most of the code from for-each-ref to ref-filter.{c,h}.
+thread.gmane.org/gmane.comp.version-control.git/271563v2 This was the
+last edition (v8) and should be merged into next eventually.
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+2. Add options to ref-filter.
+This includes the porting of --points-at, --contains, --merged,
+--no-merged options from builtin/branch.c and builtin/tag.c, Also the
+implementation of these options into for-each-ref.
+The last version (v6) is posted here:
+http:/thread.gmane.org/gmane.comp.version-control.git/272641
+Currently waiting for comments.
 
-You can get it from the usual place:
+3. Port builtin/tag.c to use ref-filter.
+Here we port tag.c to use ref-filter and also port the --format,
+--sort and --merged and --no-merged options to builtin/tag.c.
+The "RFC" version is posted and I'm waiting for comments from the list:
+thread.gmane.org/gmane.comp.version-control.git/272654
 
-    https://github.com/git-l10n/git-po/
+Next Plans:
+I'm currently working on porting over builtin/branch.c to use
+ref-filter.{c,h} the only problem with branch.c is that it implements
+different colors for different branches while printing. Hence we need
+to think about how we could use the code from ref-filter to print the
+filtered branches.
+As usual all intermediate code will be pushed to my Github repository
+https://github.com/KarthikNayak/git
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
-
---
-Jiang Xin
+-- 
+Regards,
+Karthik Nayak
