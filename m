@@ -1,10 +1,9 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 1/6] refs.c: add err arguments to reflog functions
-Date: Sat, 27 Jun 2015 00:23:51 -0400
-Message-ID: <1435379036-30894-2-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 4/6] refs: Break out check for reflog autocreation
+Date: Sat, 27 Jun 2015 00:23:54 -0400
+Message-ID: <1435379036-30894-5-git-send-email-dturner@twopensource.com>
 References: <1435379036-30894-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>,
-	Ronnie Sahlberg <sahlberg@google.com>
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
 X-From: git-owner@vger.kernel.org Sat Jun 27 06:24:48 2015
 Return-path: <git-owner@vger.kernel.org>
@@ -12,379 +11,151 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8hfZ-0005t5-Nc
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 06:24:46 +0200
+	id 1Z8hfc-0005t5-4s
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 06:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbbF0EY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jun 2015 00:24:26 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:36261 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752523AbbF0EYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2015 00:24:24 -0400
-Received: by iecvh10 with SMTP id vh10so87258528iec.3
-        for <git@vger.kernel.org>; Fri, 26 Jun 2015 21:24:23 -0700 (PDT)
+	id S1753667AbbF0EYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jun 2015 00:24:35 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:36283 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752997AbbF0EY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jun 2015 00:24:28 -0400
+Received: by iecvh10 with SMTP id vh10so87259137iec.3
+        for <git@vger.kernel.org>; Fri, 26 Jun 2015 21:24:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2JOFpcbnAyhGamVmEOGYJHre3SE70cF9I27ogSi79RM=;
-        b=Ay0Rv25tW1omSKlc9W5DXLnvCY40XWIHL72MdTeldgJLg6RB7Fj1Gw1FnfoWHYpB5U
-         OGLbOtBfzlgDuisKuJMPP+599u/1Q2AU/MDeAtmpdHvocKQJfB/vpsweM6r19jn2q1Ft
-         uqG0kXdqWKUAyfi3fZSxJH9uAKMn/LdzgimqRoA6ccDzW8dIU7TEXaHiatU6z9ktkshg
-         ZZgcrfRb03Yi63OSvLQo/jOFHUvaqdpn4h3SqYy6qIxf+YS/N3UgEl1hk6kWq3pmeMXZ
-         HD1u4HX9ULbxmgA38lEdO5R1EqMvjHh0ABpayWVRlVuQrPcm9eHqPfCanPV5spEGMkds
-         6Tcg==
-X-Gm-Message-State: ALoCoQn4ip6Lb24LxOcJ2Z+GUESpb+VayfZMj5n6DOq0zyjls5y4C2Ac4PmnoowjftxWp09LzxC9
-X-Received: by 10.42.237.209 with SMTP id kp17mr7440084icb.53.1435379063045;
-        Fri, 26 Jun 2015 21:24:23 -0700 (PDT)
+        bh=IKMD9bo1q7gP3Dx/OAe1x0asYgt2OZIzuVyy6m5Nfz8=;
+        b=TIKyoR7ZawDTHkRUgd9QLNMfT/89ERFGx47pjzwv4U75iG2O5cLfQIDULDl7Gq0IBp
+         H6vqfekUvV2gC+Rl7+M3mtmdUE7iKXUjpAI88rwf+RhBLEFCOW562iTTcnnU/rtbxRnQ
+         MqMfgT7UsfHCOrBSw5NGt2bdJaSTuTNu34SZCNTrYekPX1035176RayINzIIBt2hYdL7
+         D3Q3w4duqAxmgzMYbYqCKaF9YIiKH4nIPjQg9JnlF9Sj9e8GOTpQHS5PqQTfFpAWnttB
+         hVVnAyMHhdmYsKslGqzi2wz5KAb/32q+SsH/Vz4Y8W06xlsYSCLw9eRnEGyhkP3gdPtI
+         Swag==
+X-Gm-Message-State: ALoCoQkt/UxpuR3Nxy25TF0/c2O6iamvgEZoqw5tIM6IdYFsSRhv7hQd6T8ijG30NOkNZMzu5FfP
+X-Received: by 10.107.17.137 with SMTP id 9mr6242589ior.28.1435379068212;
+        Fri, 26 Jun 2015 21:24:28 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by mx.google.com with ESMTPSA id k74sm22930720iok.30.2015.06.26.21.24.21
+        by mx.google.com with ESMTPSA id k74sm22930720iok.30.2015.06.26.21.24.26
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 26 Jun 2015 21:24:21 -0700 (PDT)
+        Fri, 26 Jun 2015 21:24:27 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1435379036-30894-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272843>
 
-Add an err argument to log_ref_setup that can explain the reason
-for a failure. This then eliminates the need to manage errno through
-this function since we can just add strerror(errno) to the err string
-when meaningful. No callers relied on errno from this function for
-anything else than the error message.
+This is just for clarity.
 
-Also add err arguments to private functions write_ref_to_lockfile,
-log_ref_write_1, commit_ref_update. This again eliminates the need to
-manage errno in these functions.
-
-Update of a patch by Ronnie Sahlberg.
-
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- builtin/checkout.c |   8 ++--
- refs.c             | 111 ++++++++++++++++++++++++++++-------------------------
- refs.h             |   4 +-
- 3 files changed, 66 insertions(+), 57 deletions(-)
+ builtin/checkout.c | 10 +---------
+ refs.c             | 31 ++++++++++++++++++++++++-------
+ refs.h             |  2 +-
+ 3 files changed, 26 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c018ab3..93f63d3 100644
+index 93f63d3..9f68399 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -624,16 +624,18 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 				struct strbuf log_file = STRBUF_INIT;
- 				int ret;
+@@ -620,19 +620,11 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 	if (opts->new_branch) {
+ 		if (opts->new_orphan_branch) {
+ 			if (opts->new_branch_log && !log_all_ref_updates) {
+-				int temp;
+-				struct strbuf log_file = STRBUF_INIT;
+-				int ret;
  				const char *ref_name;
-+				struct strbuf err = STRBUF_INIT;
+ 				struct strbuf err = STRBUF_INIT;
  
  				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
- 				temp = log_all_ref_updates;
- 				log_all_ref_updates = 1;
--				ret = log_ref_setup(ref_name, &log_file);
-+				ret = log_ref_setup(ref_name, &log_file, &err);
- 				log_all_ref_updates = temp;
- 				strbuf_release(&log_file);
- 				if (ret) {
--					fprintf(stderr, _("Can not do reflog for '%s'\n"),
--					    opts->new_orphan_branch);
-+					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
-+						opts->new_orphan_branch, err.buf);
-+					strbuf_release(&err);
- 					return;
- 				}
- 			}
+-				temp = log_all_ref_updates;
+-				log_all_ref_updates = 1;
+-				ret = log_ref_setup(ref_name, &log_file, &err);
+-				log_all_ref_updates = temp;
+-				strbuf_release(&log_file);
+-				if (ret) {
++				if (safe_create_reflog(ref_name, &err, 1)) {
+ 					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
+ 						opts->new_orphan_branch, err.buf);
+ 					strbuf_release(&err);
 diff --git a/refs.c b/refs.c
-index fb568d7..b34a54a 100644
+index b34a54a..2f4c304 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2975,9 +2975,11 @@ static int rename_ref_available(const char *oldname, const char *newname)
- 	return ret;
- }
- 
--static int write_ref_to_lockfile(struct ref_lock *lock, const unsigned char *sha1);
-+static int write_ref_to_lockfile(struct ref_lock *lock,
-+				 const unsigned char *sha1, struct strbuf* err);
- static int commit_ref_update(struct ref_lock *lock,
--			     const unsigned char *sha1, const char *logmsg);
-+			     const unsigned char *sha1, const char *logmsg,
-+			     struct strbuf *err);
- 
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
- {
-@@ -3038,9 +3040,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	}
- 	hashcpy(lock->old_oid.hash, orig_sha1);
- 
--	if (write_ref_to_lockfile(lock, orig_sha1) ||
--	    commit_ref_update(lock, orig_sha1, logmsg)) {
--		error("unable to write current sha1 into %s", newrefname);
-+	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
-+	    commit_ref_update(lock, orig_sha1, logmsg, &err)) {
-+		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
-+		strbuf_release(&err);
- 		goto rollback;
- 	}
- 
-@@ -3056,9 +3059,11 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 
- 	flag = log_all_ref_updates;
- 	log_all_ref_updates = 0;
--	if (write_ref_to_lockfile(lock, orig_sha1) ||
--	    commit_ref_update(lock, orig_sha1, NULL))
--		error("unable to write current sha1 into %s", oldrefname);
-+	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
-+	    commit_ref_update(lock, orig_sha1, NULL, &err)) {
-+		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
-+		strbuf_release(&err);
-+	}
- 	log_all_ref_updates = flag;
- 
-  rollbacklog:
-@@ -3113,8 +3118,8 @@ static int copy_msg(char *buf, const char *msg)
+@@ -3118,8 +3118,18 @@ static int copy_msg(char *buf, const char *msg)
  	return cp - buf;
  }
  
--/* This function must set a meaningful errno on failure */
--int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
-+/* This function will fill in *err and return -1 on failure */
-+int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
++static int should_autocreate_reflog(const char *refname)
++{
++	if (!log_all_ref_updates)
++		return 0;
++	return starts_with(refname, "refs/heads/") ||
++		starts_with(refname, "refs/remotes/") ||
++		starts_with(refname, "refs/notes/") ||
++		!strcmp(refname, "HEAD");
++}
++
+ /* This function will fill in *err and return -1 on failure */
+-int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
++static int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err, int force_create)
  {
  	int logfd, oflags = O_APPEND | O_WRONLY;
  	char *logfile;
-@@ -3129,9 +3134,8 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
- 	     starts_with(refname, "refs/notes/") ||
- 	     !strcmp(refname, "HEAD"))) {
+@@ -3128,11 +3138,7 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+ 	logfile = sb_logfile->buf;
+ 	/* make sure the rest of the function can't change "logfile" */
+ 	sb_logfile = NULL;
+-	if (log_all_ref_updates &&
+-	    (starts_with(refname, "refs/heads/") ||
+-	     starts_with(refname, "refs/remotes/") ||
+-	     starts_with(refname, "refs/notes/") ||
+-	     !strcmp(refname, "HEAD"))) {
++	if (force_create || should_autocreate_reflog(refname)) {
  		if (safe_create_leading_directories(logfile) < 0) {
--			int save_errno = errno;
--			error("unable to create directory for %s", logfile);
--			errno = save_errno;
-+			strbuf_addf(err, "unable to create directory for %s. "
-+				    "%s", logfile, strerror(errno));
- 			return -1;
- 		}
- 		oflags |= O_CREAT;
-@@ -3144,20 +3148,16 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
+ 			strbuf_addf(err, "unable to create directory for %s. "
+ 				    "%s", logfile, strerror(errno));
+@@ -3167,6 +3173,17 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+ 	return 0;
+ }
  
- 		if (errno == EISDIR) {
- 			if (remove_empty_directories(logfile)) {
--				int save_errno = errno;
--				error("There are still logs under '%s'",
--				      logfile);
--				errno = save_errno;
-+				strbuf_addf(err, "There are still logs under "
-+					    "'%s'", logfile);
- 				return -1;
- 			}
- 			logfd = open(logfile, oflags, 0666);
- 		}
- 
- 		if (logfd < 0) {
--			int save_errno = errno;
--			error("Unable to append to %s: %s", logfile,
--			      strerror(errno));
--			errno = save_errno;
-+			strbuf_addf(err, "Unable to append to %s: %s",
-+				    logfile, strerror(errno));
- 			return -1;
- 		}
- 	}
-@@ -3195,7 +3195,7 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 
- static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 			   const unsigned char *new_sha1, const char *msg,
--			   struct strbuf *sb_log_file)
-+			   struct strbuf *sb_log_file, struct strbuf *err)
- {
- 	int logfd, result, oflags = O_APPEND | O_WRONLY;
- 	char *log_file;
-@@ -3203,7 +3203,8 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
++
++int safe_create_reflog(const char *refname, struct strbuf *err, int force_create)
++{
++	int ret;
++	struct strbuf sb = STRBUF_INIT;
++
++	ret = log_ref_setup(refname, &sb, err, force_create);
++	strbuf_release(&sb);
++	return ret;
++}
++
+ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
+ 			    const unsigned char *new_sha1,
+ 			    const char *committer, const char *msg)
+@@ -3203,7 +3220,7 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
  	if (log_all_ref_updates < 0)
  		log_all_ref_updates = !is_bare_repository();
  
--	result = log_ref_setup(refname, sb_log_file);
-+	result = log_ref_setup(refname, sb_log_file, err);
-+
+-	result = log_ref_setup(refname, sb_log_file, err);
++	result = log_ref_setup(refname, sb_log_file, err, 0);
+ 
  	if (result)
  		return result;
- 	log_file = sb_log_file->buf;
-@@ -3216,26 +3217,25 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
- 				  git_committer_info(0), msg);
- 	if (result) {
--		int save_errno = errno;
- 		close(logfd);
--		error("Unable to append to %s", log_file);
--		errno = save_errno;
-+		strbuf_addf(err, "Unable to append to %s. %s", log_file,
-+			    strerror(errno));
- 		return -1;
- 	}
- 	if (close(logfd)) {
--		int save_errno = errno;
--		error("Unable to append to %s", log_file);
--		errno = save_errno;
-+		strbuf_addf(err, "Unable to append to %s. %s", log_file,
-+			    strerror(errno));
- 		return -1;
- 	}
- 	return 0;
- }
- 
- static int log_ref_write(const char *refname, const unsigned char *old_sha1,
--			 const unsigned char *new_sha1, const char *msg)
-+			 const unsigned char *new_sha1, const char *msg,
-+			 struct strbuf *err)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb);
-+	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, err);
- 	strbuf_release(&sb);
- 	return ret;
- }
-@@ -3247,25 +3247,28 @@ int is_branch(const char *refname)
- 
- /*
-  * Write sha1 into the open lockfile, then close the lockfile. On
-- * errors, rollback the lockfile and set errno to reflect the problem.
-+ * errors, rollback the lockfile, fill in *err and
-+ * return -1.
-  */
- static int write_ref_to_lockfile(struct ref_lock *lock,
--				 const unsigned char *sha1)
-+				 const unsigned char *sha1, struct strbuf *err)
- {
- 	static char term = '\n';
- 	struct object *o;
- 
- 	o = parse_object(sha1);
- 	if (!o) {
--		error("Trying to write ref %s with nonexistent object %s",
--			lock->ref_name, sha1_to_hex(sha1));
-+		strbuf_addf(err,
-+			    "Trying to write ref %s with nonexistent object %s",
-+			    lock->ref_name, sha1_to_hex(sha1));
- 		unlock_ref(lock);
- 		errno = EINVAL;
- 		return -1;
- 	}
- 	if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
--		error("Trying to write non-commit object %s to branch %s",
--			sha1_to_hex(sha1), lock->ref_name);
-+		strbuf_addf(err,
-+			    "Trying to write non-commit object %s to branch %s",
-+			    sha1_to_hex(sha1), lock->ref_name);
- 		unlock_ref(lock);
- 		errno = EINVAL;
- 		return -1;
-@@ -3273,10 +3276,9 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
- 	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
- 	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
- 	    close_ref(lock) < 0) {
--		int save_errno = errno;
--		error("Couldn't write %s", lock->lk->filename.buf);
-+		strbuf_addf(err,
-+			    "Couldn't write %s", lock->lk->filename.buf);
- 		unlock_ref(lock);
--		errno = save_errno;
- 		return -1;
- 	}
- 	return 0;
-@@ -3288,12 +3290,15 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
-  * necessary, using the specified lockmsg (which can be NULL).
-  */
- static int commit_ref_update(struct ref_lock *lock,
--			     const unsigned char *sha1, const char *logmsg)
-+			     const unsigned char *sha1, const char *logmsg,
-+			     struct strbuf *err)
- {
- 	clear_loose_ref_cache(&ref_cache);
--	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg) < 0 ||
-+	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0 ||
- 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
--	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg) < 0)) {
-+	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0)) {
-+		strbuf_addf(err, "Cannot update the ref '%s'.",
-+			    lock->ref_name);
- 		unlock_ref(lock);
- 		return -1;
- 	}
-@@ -3317,7 +3322,8 @@ static int commit_ref_update(struct ref_lock *lock,
- 					      head_sha1, &head_flag);
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name))
--			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg);
-+			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg,
-+				      err);
- 	}
- 	if (commit_ref(lock)) {
- 		error("Couldn't set %s", lock->ref_name);
-@@ -3336,6 +3342,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- 	int fd, len, written;
- 	char *git_HEAD = git_pathdup("%s", ref_target);
- 	unsigned char old_sha1[20], new_sha1[20];
-+	struct strbuf err = STRBUF_INIT;
- 
- 	if (logmsg && read_ref(ref_target, old_sha1))
- 		hashclr(old_sha1);
-@@ -3384,8 +3391,11 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- #ifndef NO_SYMLINK_HEAD
- 	done:
- #endif
--	if (logmsg && !read_ref(refs_heads_master, new_sha1))
--		log_ref_write(ref_target, old_sha1, new_sha1, logmsg);
-+	if (logmsg && !read_ref(refs_heads_master, new_sha1) &&
-+		log_ref_write(ref_target, old_sha1, new_sha1, logmsg, &err)) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+	}
- 
- 	free(git_HEAD);
- 	return 0;
-@@ -4021,14 +4031,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 				 * value, so we don't need to write it.
- 				 */
- 			} else if (write_ref_to_lockfile(update->lock,
--							 update->new_sha1)) {
-+							 update->new_sha1,
-+							 err)) {
- 				/*
- 				 * The lock was freed upon failure of
- 				 * write_ref_to_lockfile():
- 				 */
- 				update->lock = NULL;
--				strbuf_addf(err, "cannot update the ref '%s'.",
--					    update->refname);
- 				ret = TRANSACTION_GENERIC_ERROR;
- 				goto cleanup;
- 			} else {
-@@ -4054,11 +4063,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 
- 		if (update->flags & REF_NEEDS_COMMIT) {
- 			if (commit_ref_update(update->lock,
--					      update->new_sha1, update->msg)) {
-+					      update->new_sha1, update->msg, err)) {
- 				/* freed by commit_ref_update(): */
- 				update->lock = NULL;
--				strbuf_addf(err, "Cannot update the ref '%s'.",
--					    update->refname);
- 				ret = TRANSACTION_GENERIC_ERROR;
- 				goto cleanup;
- 			} else {
 diff --git a/refs.h b/refs.h
-index e82fca5..debdefc 100644
+index debdefc..3b90e16 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -226,9 +226,9 @@ int pack_refs(unsigned int flags);
- #define REF_NODEREF	0x01
- 
+@@ -228,7 +228,7 @@ int pack_refs(unsigned int flags);
  /*
-- * Setup reflog before using. Set errno to something meaningful on failure.
-+ * Setup reflog before using. Fill in err and return -1 on failure.
+  * Setup reflog before using. Fill in err and return -1 on failure.
   */
--int log_ref_setup(const char *refname, struct strbuf *logfile);
-+int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
+-int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
++int safe_create_reflog(const char *refname, struct strbuf *err, int force_create);
  
  /** Reads log for the value of ref during at_time. **/
  extern int read_ref_at(const char *refname, unsigned int flags,
