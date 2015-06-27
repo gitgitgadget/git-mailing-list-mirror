@@ -1,65 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/6] refs backend preamble
-Date: Sat, 27 Jun 2015 11:44:12 -0700
-Message-ID: <xmqq1tgxf0ub.fsf@gitster.dls.corp.google.com>
-References: <1435379036-30894-1-git-send-email-dturner@twopensource.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 1/9] ref-filter: add %(refname:lalignX) option
+Date: Sat, 27 Jun 2015 22:02:14 +0200
+Message-ID: <CAP8UFD1gT_2RKYc1vvBO9goGwPzFxhu9uMan5+cLO7eWxwwB_w@mail.gmail.com>
+References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
+	<1435232596-27466-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 20:44:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 27 22:06:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8v5Q-0001LO-Pt
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 20:44:21 +0200
+	id 1Z8wMh-0005p2-Sq
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 22:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215AbbF0SoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jun 2015 14:44:16 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:35212 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbbF0SoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2015 14:44:14 -0400
-Received: by iebrt9 with SMTP id rt9so93749454ieb.2
-        for <git@vger.kernel.org>; Sat, 27 Jun 2015 11:44:14 -0700 (PDT)
+	id S1751611AbbF0UCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jun 2015 16:02:17 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:34434 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751073AbbF0UCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jun 2015 16:02:15 -0400
+Received: by wicnd19 with SMTP id nd19so69475361wic.1
+        for <git@vger.kernel.org>; Sat, 27 Jun 2015 13:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=7FLau37MNdr1yy82su2Zo7zxwunnl4wNqQPm6KTWHso=;
-        b=DC03/143bCtjktaAj8mRApQfVMrS1XZL+Db4nrWEHtKj0clB9Vl9lqnWa+8idXSLSq
-         M7JvGO8I1zjxul1ImXHtIUGKhwevmRBRsIpxXBfD0Xod5EOjb9iiWcq98ciPqZ4bQnCF
-         2+qL5gFp+x0x7bcDwZb4/eqk8zrxbU0xczX6e2oj4HM9r+K0uv4mGLRc4eZlE05lnhNP
-         46UNaYduC7kHTjBoCqsik22OoypBNhwVkbt2bmdonpSgS9MXoWvsyNTySXB+rRZWyDP4
-         pW6p7p409l8+miX8UqUfIcW5xJY4FVQp6QGuNGmkyg37KWmDz499eCMX8Q/Ql9GeqAb9
-         /ELg==
-X-Received: by 10.107.157.205 with SMTP id g196mr10414338ioe.57.1435430654030;
-        Sat, 27 Jun 2015 11:44:14 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:205e:4a52:83c1:a37f])
-        by mx.google.com with ESMTPSA id t93sm857873ioe.13.2015.06.27.11.44.13
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 27 Jun 2015 11:44:13 -0700 (PDT)
-In-Reply-To: <1435379036-30894-1-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Sat, 27 Jun 2015 00:23:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YhagRwR9PTz3Y79nLkWb62MZFuyNNfs2jaDjO0skuWg=;
+        b=qRKeEfe2F2HMQFcYP4TSlFO3+LSRr/+6f5P6r8HRwG8NbHu2Xv2PQjQieE0/OngBKf
+         Y7UbarIb9V+T8Lkt35OdRd8sb5kOJLOObxc7XKxKJ021+vhR98wdIVHu9wUlmAKP+9hz
+         gfydoeWqz8yaRcs9qZll6m34bk13+RpW1AKAKdZnByfz6FRGcbWEt1ttdlxa+SB9QW4j
+         df1L6UH0Z8nt72/cm2wrfne5jccY6VPvJ6cruwFdDfe1LJQ8ezjRdrzPRY7JkxX1ACZ0
+         zDaJlx4dj3Q7TzM4W4U2VdnrzwM8pV+uyXsE6Nr+Zu6zRT1iq76aK7ho0ncFd2RidQhe
+         ynrw==
+X-Received: by 10.194.2.68 with SMTP id 4mr14866270wjs.82.1435435334171; Sat,
+ 27 Jun 2015 13:02:14 -0700 (PDT)
+Received: by 10.194.221.229 with HTTP; Sat, 27 Jun 2015 13:02:14 -0700 (PDT)
+In-Reply-To: <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272862>
 
-David Turner <dturner@twopensource.com> writes:
+On Thu, Jun 25, 2015 at 1:43 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Add support for %(refname:lalignX) where X is a number.
+> This will print a shortened refname aligned to the left
+> followed by spaces for a total length of X characters.
+> If X is less than the shortened refname size, the entire
+> shortened refname is printed.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  ref-filter.c | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 00d06bf..299b048 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -695,7 +695,22 @@ static void populate_value(struct ref_array_item *ref)
+>                         int num_ours, num_theirs;
+>
+>                         formatp++;
+> -                       if (!strcmp(formatp, "short"))
+> +                       if (starts_with(formatp, "lalign")) {
+> +                               const char *valp;
+> +                               int val;
+> +
+> +                               skip_prefix(formatp, "lalign", &valp);
+> +                               val = atoi(valp);
 
-> This version addresses Junio's comments on v3.
+After thinking about such code, I wonder if it would be better to
+support %(refname:lalign=X) instead of %(refname:lalignX).
 
-The end result makes more sense than the previous one, but did you
-screw up when rewriting and/or squashing patches around the new 4/6?
+The reason why it might be interesting to require an = sign between
+"align" and the number X is that if we later want to introduce another
+option with a name that starts with "lalign", for example
+%(refname:lalignall=X) that would truncate the refname if it is bigger
+than X), we might be more backward compatible with old git versions
+that implement %(refname:lalign=X) but not %(refname:lalignall=X).
 
-I think that one has two separate changes mixed into one and does a
-lot more than "this is just for clarity".  I think they should stay
-separate, as the other changes are more impactful and deserve their
-own justification and explanation.
+We will be more backward compatible because the above call to
+starts_with() would probably be something like:
 
-Thanks.
+                       if (starts_with(formatp, "lalign=")) {
+
+which means that old git versions would ignore something like "lalignall=X".
+
+> +                               refname = shorten_unambiguous_ref(refname,
+> +                                                                 warn_ambiguous_refs);
+> +                               if (val > strlen(refname)) {
+> +                                       struct strbuf buf = STRBUF_INIT;
+> +                                       strbuf_addstr(&buf, refname);
+> +                                       strbuf_addchars(&buf, ' ', val - strlen(refname));
+> +                                       free((char *)refname);
+> +                                       refname = strbuf_detach(&buf, NULL);
+> +                               }
+
+Thanks,
+Christian.
