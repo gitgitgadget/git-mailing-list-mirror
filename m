@@ -1,109 +1,60 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 1/9] ref-filter: add %(refname:lalignX) option
-Date: Sat, 27 Jun 2015 22:02:14 +0200
-Message-ID: <CAP8UFD1gT_2RKYc1vvBO9goGwPzFxhu9uMan5+cLO7eWxwwB_w@mail.gmail.com>
-References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
-	<1435232596-27466-1-git-send-email-karthik.188@gmail.com>
+From: John Lee <jjl@pobox.com>
+Subject: Re: Staging commits with visual diff tools?
+Date: Sun, 28 Jun 2015 00:23:53 +0100 (BST)
+Message-ID: <alpine.DEB.2.10.1506272359240.31567@alice>
+References: <alpine.DEB.2.10.1505262147230.3709@alice> <20150531015956.GA64502@gmail.com> <alpine.DEB.2.10.1505311029210.3664@alice> <20150601022515.GA66417@gmail.com> <alpine.DEB.2.10.1506012034120.2730@alice>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 22:06:18 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 28 01:24:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8wMh-0005p2-Sq
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jun 2015 22:06:16 +0200
+	id 1Z8zSM-0006u6-K1
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 01:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751611AbbF0UCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jun 2015 16:02:17 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:34434 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073AbbF0UCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2015 16:02:15 -0400
-Received: by wicnd19 with SMTP id nd19so69475361wic.1
-        for <git@vger.kernel.org>; Sat, 27 Jun 2015 13:02:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YhagRwR9PTz3Y79nLkWb62MZFuyNNfs2jaDjO0skuWg=;
-        b=qRKeEfe2F2HMQFcYP4TSlFO3+LSRr/+6f5P6r8HRwG8NbHu2Xv2PQjQieE0/OngBKf
-         Y7UbarIb9V+T8Lkt35OdRd8sb5kOJLOObxc7XKxKJ021+vhR98wdIVHu9wUlmAKP+9hz
-         gfydoeWqz8yaRcs9qZll6m34bk13+RpW1AKAKdZnByfz6FRGcbWEt1ttdlxa+SB9QW4j
-         df1L6UH0Z8nt72/cm2wrfne5jccY6VPvJ6cruwFdDfe1LJQ8ezjRdrzPRY7JkxX1ACZ0
-         zDaJlx4dj3Q7TzM4W4U2VdnrzwM8pV+uyXsE6Nr+Zu6zRT1iq76aK7ho0ncFd2RidQhe
-         ynrw==
-X-Received: by 10.194.2.68 with SMTP id 4mr14866270wjs.82.1435435334171; Sat,
- 27 Jun 2015 13:02:14 -0700 (PDT)
-Received: by 10.194.221.229 with HTTP; Sat, 27 Jun 2015 13:02:14 -0700 (PDT)
-In-Reply-To: <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
+	id S1751640AbbF0XYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jun 2015 19:24:14 -0400
+Received: from mxout-07.mxes.net ([216.86.168.182]:16097 "EHLO
+	mxout-07.mxes.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753AbbF0XYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jun 2015 19:24:11 -0400
+Received: from alice.home (unknown [81.152.186.122])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.mxes.net (Postfix) with ESMTPSA id 9543422E200
+	for <git@vger.kernel.org>; Sat, 27 Jun 2015 19:24:10 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.10.1506012034120.2730@alice>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272863>
 
-On Thu, Jun 25, 2015 at 1:43 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add support for %(refname:lalignX) where X is a number.
-> This will print a shortened refname aligned to the left
-> followed by spaces for a total length of X characters.
-> If X is less than the shortened refname size, the entire
-> shortened refname is printed.
+On Mon, 1 Jun 2015, John Lee wrote:
+
+> On Sun, 31 May 2015, David Aguilar wrote:
+>> Were you thinking of something like this, or something else?
+>> Can you describe your use case a bit more?
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  ref-filter.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
+> I think now I should just publish my script and then it will be very clear 
+> what I'm talking about.  If somebody then wants to add a similar feature to 
+> git-cola, or even git itself, that would be great.
 >
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 00d06bf..299b048 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -695,7 +695,22 @@ static void populate_value(struct ref_array_item *ref)
->                         int num_ours, num_theirs;
 >
->                         formatp++;
-> -                       if (!strcmp(formatp, "short"))
-> +                       if (starts_with(formatp, "lalign")) {
-> +                               const char *valp;
-> +                               int val;
-> +
-> +                               skip_prefix(formatp, "lalign", &valp);
-> +                               val = atoi(valp);
+> John
+>
 
-After thinking about such code, I wonder if it would be better to
-support %(refname:lalign=X) instead of %(refname:lalignX).
+Here it is:
 
-The reason why it might be interesting to require an = sign between
-"align" and the number X is that if we later want to introduce another
-option with a name that starts with "lalign", for example
-%(refname:lalignall=X) that would truncate the refname if it is bigger
-than X), we might be more backward compatible with old git versions
-that implement %(refname:lalign=X) but not %(refname:lalignall=X).
+https://github.com/jjlee/git-meld-index
 
-We will be more backward compatible because the above call to
-starts_with() would probably be something like:
+Hasn't seen use for real yet, so be a bit cautious with it.
 
-                       if (starts_with(formatp, "lalign=")) {
+Comments / patches / whatever appreciated.
 
-which means that old git versions would ignore something like "lalignall=X".
 
-> +                               refname = shorten_unambiguous_ref(refname,
-> +                                                                 warn_ambiguous_refs);
-> +                               if (val > strlen(refname)) {
-> +                                       struct strbuf buf = STRBUF_INIT;
-> +                                       strbuf_addstr(&buf, refname);
-> +                                       strbuf_addchars(&buf, ' ', val - strlen(refname));
-> +                                       free((char *)refname);
-> +                                       refname = strbuf_detach(&buf, NULL);
-> +                               }
-
-Thanks,
-Christian.
+John
