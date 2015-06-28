@@ -1,121 +1,311 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v4 17/44] builtin-am: implement -s/--signoff
-Date: Sun, 28 Jun 2015 22:05:39 +0800
-Message-ID: <1435500366-31700-18-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v4 19/44] builtin-am: implement --3way, am.threeway
+Date: Sun, 28 Jun 2015 22:05:41 +0800
+Message-ID: <1435500366-31700-20-git-send-email-pyokagan@gmail.com>
 References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 28 16:08:14 2015
+X-From: git-owner@vger.kernel.org Sun Jun 28 16:08:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9DFl-0002LQ-Rm
+	id 1Z9DFm-0002LQ-Do
 	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 16:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbbF1OIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2015 10:08:09 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:35221 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752891AbbF1OHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2015 10:07:41 -0400
-Received: by pdbci14 with SMTP id ci14so101356429pdb.2
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 07:07:41 -0700 (PDT)
+	id S1752773AbbF1OIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2015 10:08:11 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:34228 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752597AbbF1OHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2015 10:07:46 -0400
+Received: by pdbep18 with SMTP id ep18so79682501pdb.1
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 07:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IJOzG/8ET+1jgVkTh4p4WgdxpRkh5Khuw7Qz7nO1qRs=;
-        b=FrNh1q77VL7l4NeZ1rWUGYr8iFRnq+GdFUe8ZikvHmvMpM6HS5bTXD6WD42KeXQ9WM
-         3XkgGEIyv7posIU/opR8vbDzK2Eqv5iaWspN/h6wiUM8L+CewoeTKK/gVKOvAV9izKzH
-         Q6A2LApFJ+VzaTxXNUBOLMvwwiyCQcecy7rRjU8o1qezo70OjtCMqVkRKki0Emdgsf/U
-         VH366Pfd9SK5WO73wgYInEBC8bhZ//PySlINBfBOAiHC6NA6qhdh5MTxGv+LJG5sT9IP
-         GJvvpJ0mnXy/YBxuwBkx4ijDk8hQ3KiXXcsa1WWWrHeGJnJ9ayyccxifBcdygn+Qqalq
-         szsA==
-X-Received: by 10.68.243.9 with SMTP id wu9mr22588855pbc.28.1435500460922;
-        Sun, 28 Jun 2015 07:07:40 -0700 (PDT)
+        bh=8Lvk1JvK8GxtuXCnpQBwngKXQJ0zEOqyKZEODdHA/Rg=;
+        b=ClTw3iEqYr0gY83zXzophoUy0sg1Aj1e9WsM7TwrrrfofxPC8WJ5eYBlI9b9HgDEIu
+         WtjXszn6sl7X6F7N7WfAZlFJaEBVlT8knEzlrCRlfg8OmcNLBwmCnyWuNWwd925dSqi+
+         EOBOy7tCnHIfjlkQ3AM8MdHoqPQ4AUCrUGbf0cPTIDEHneZQQazZ/Zuli8Iav05BvalJ
+         lCs2bLUyVwtfESSgnWCy674SoXvEijMem9Jz6rEnzlmFSIFVqBEjZBeZCbmfWPQ90r+C
+         z1Ie0ZyVOZbiY4kDVCFgOI1uuJHNICvsqQ6UbgmKsr+UugMJZV/pjuArGIF4gmjkXcht
+         DOoA==
+X-Received: by 10.66.66.65 with SMTP id d1mr22537811pat.22.1435500465497;
+        Sun, 28 Jun 2015 07:07:45 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id qa1sm39244820pab.0.2015.06.28.07.07.38
+        by mx.google.com with ESMTPSA id qa1sm39244820pab.0.2015.06.28.07.07.43
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 28 Jun 2015 07:07:40 -0700 (PDT)
+        Sun, 28 Jun 2015 07:07:44 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc0.76.gb2c6e93
 In-Reply-To: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272895>
 
-Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
-supported the --signoff option which will append a signoff at the end of
-the commit messsage. Re-implement this feature in parse_mail() by
-calling append_signoff() if the option is set.
+Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07),
+git-am.sh supported the --3way option, and if set, would attempt to do a
+3-way merge if the initial patch application fails.
+
+Since d96a275 (git-am: add am.threeWay config variable, 2015-06-04), the
+setting am.threeWay configures if the --3way option is set by default.
+
+Since 5d86861 (am -3: list the paths that needed 3-way fallback,
+2012-03-28), in a 3-way merge git-am.sh would list the paths that needed
+3-way fallback, so that the user can review them more carefully to spot
+mismerges.
+
+Re-implement the above in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ builtin/am.c | 157 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 153 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 7832ecf..1ffbba1 100644
+index 1ffbba1..e870a1b 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -18,6 +18,7 @@
- #include "diffcore.h"
+@@ -19,6 +19,8 @@
  #include "unpack-trees.h"
  #include "branch.h"
-+#include "sequencer.h"
+ #include "sequencer.h"
++#include "revision.h"
++#include "merge-recursive.h"
  
  /**
   * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -83,6 +84,8 @@ struct am_state {
+@@ -82,6 +84,8 @@ struct am_state {
+ 	/* number of digits in patch filename */
+ 	int prec;
  
++	int threeway;
++
  	int quiet;
  
-+	int append_signoff;
+ 	int append_signoff;
+@@ -105,6 +109,8 @@ static void am_state_init(struct am_state *state, const char *dir)
+ 
+ 	state->prec = 4;
+ 
++	git_config_get_bool("am.threeway", &state->threeway);
 +
- 	/* override error message when patch failure occurs */
- 	const char *resolvemsg;
- };
-@@ -377,6 +380,9 @@ static void am_load(struct am_state *state)
+ 	quiet = getenv("GIT_QUIET");
+ 	if (quiet && *quiet)
+ 		state->quiet = 1;
+@@ -377,6 +383,9 @@ static void am_load(struct am_state *state)
+ 
+ 	read_commit_msg(state);
+ 
++	read_state_file(&sb, state, "threeway", 1);
++	state->threeway = !strcmp(sb.buf, "t");
++
  	read_state_file(&sb, state, "quiet", 1);
  	state->quiet = !strcmp(sb.buf, "t");
  
-+	read_state_file(&sb, state, "sign", 1);
-+	state->append_signoff = !strcmp(sb.buf, "t");
+@@ -561,6 +570,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 		die(_("Failed to split patches."));
+ 	}
+ 
++	write_file(am_path(state, "threeway"), 1, state->threeway ? "t" : "f");
 +
- 	strbuf_release(&sb);
- }
- 
-@@ -557,6 +563,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 
  	write_file(am_path(state, "quiet"), 1, state->quiet ? "t" : "f");
  
-+	write_file(am_path(state, "sign"), 1, state->append_signoff ? "t" : "f");
-+
- 	if (!get_sha1("HEAD", curr_head)) {
- 		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
- 		update_ref("am", "ORIG_HEAD", curr_head, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-@@ -763,6 +771,9 @@ static int parse_mail(struct am_state *state, const char *mail)
- 		die_errno(_("could not read '%s'"), am_path(state, "msg"));
- 	stripspace(&msg, 0);
+ 	write_file(am_path(state, "sign"), 1, state->append_signoff ? "t" : "f");
+@@ -796,16 +807,34 @@ finish:
+ }
  
-+	if (state->append_signoff)
-+		append_signoff(&msg, 0, 0);
-+
- 	assert(!state->author_name);
- 	state->author_name = strbuf_detach(&author_name, NULL);
+ /**
+- * Applies current patch with git-apply. Returns 0 on success, -1 otherwise.
++ * Applies current patch with git-apply. Returns 0 on success, -1 otherwise. If
++ * `index_file` is not NULL, the patch will be applied to that index.
+  */
+-static int run_apply(const struct am_state *state)
++static int run_apply(const struct am_state *state, const char *index_file)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
  
-@@ -1157,6 +1168,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	cp.git_cmd = 1;
+ 
++	if (index_file)
++		argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s", index_file);
++
++	/*
++	 * If we are allowed to fall back on 3-way merge, don't give false
++	 * errors during the initial attempt.
++	 */
++	if (state->threeway && !index_file) {
++		cp.no_stdout = 1;
++		cp.no_stderr = 1;
++	}
++
+ 	argv_array_push(&cp.args, "apply");
+-	argv_array_push(&cp.args, "--index");
++
++	if (index_file)
++		argv_array_push(&cp.args, "--cached");
++	else
++		argv_array_push(&cp.args, "--index");
++
+ 	argv_array_push(&cp.args, am_path(state, "patch"));
+ 
+ 	if (run_command(&cp))
+@@ -813,8 +842,106 @@ static int run_apply(const struct am_state *state)
+ 
+ 	/* Reload index as git-apply will have modified it. */
+ 	discard_cache();
++	read_cache_from(index_file ? index_file : get_index_file());
++
++	return 0;
++}
++
++/**
++ * Builds a index that contains just the blobs needed for a 3way merge.
++ */
++static int build_fake_ancestor(const struct am_state *state, const char *index_file)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++
++	cp.git_cmd = 1;
++	argv_array_push(&cp.args, "apply");
++	argv_array_pushf(&cp.args, "--build-fake-ancestor=%s", index_file);
++	argv_array_push(&cp.args, am_path(state, "patch"));
++
++	if (run_command(&cp))
++		return -1;
++
++	return 0;
++}
++
++/**
++ * Attempt a threeway merge, using index_path as the temporary index.
++ */
++static int fall_back_threeway(const struct am_state *state, const char *index_path)
++{
++	unsigned char orig_tree[GIT_SHA1_RAWSZ], his_tree[GIT_SHA1_RAWSZ],
++		      our_tree[GIT_SHA1_RAWSZ];
++	const unsigned char *bases[1] = {orig_tree};
++	struct merge_options o;
++	struct commit *result;
++	char *his_tree_name;
++
++	if (get_sha1("HEAD", our_tree) < 0)
++		hashcpy(our_tree, EMPTY_TREE_SHA1_BIN);
++
++	if (build_fake_ancestor(state, index_path))
++		return error("could not build fake ancestor");
++
++	discard_cache();
++	read_cache_from(index_path);
++
++	if (write_index_as_tree(orig_tree, &the_index, index_path, 0, NULL))
++		return error(_("Repository lacks necessary blobs to fall back on 3-way merge."));
++
++	say(state, stdout, _("Using index info to reconstruct a base tree..."));
++
++	if (!state->quiet) {
++		/*
++		 * List paths that needed 3-way fallback, so that the user can
++		 * review them with extra care to spot mismerges.
++		 */
++		struct rev_info rev_info;
++		const char *diff_filter_str = "--diff-filter=AM";
++
++		init_revisions(&rev_info, NULL);
++		rev_info.diffopt.output_format = DIFF_FORMAT_NAME_STATUS;
++		diff_opt_parse(&rev_info.diffopt, &diff_filter_str, 1);
++		add_pending_sha1(&rev_info, "HEAD", our_tree, 0);
++		diff_setup_done(&rev_info.diffopt);
++		run_diff_index(&rev_info, 1);
++	}
++
++	if (run_apply(state, index_path))
++		return error(_("Did you hand edit your patch?\n"
++				"It does not apply to blobs recorded in its index."));
++
++	if (write_index_as_tree(his_tree, &the_index, index_path, 0, NULL))
++		return error("could not write tree");
++
++	say(state, stdout, _("Falling back to patching base and 3-way merge..."));
++
++	discard_cache();
+ 	read_cache();
+ 
++	/*
++	 * This is not so wrong. Depending on which base we picked, orig_tree
++	 * may be wildly different from ours, but his_tree has the same set of
++	 * wildly different changes in parts the patch did not touch, so
++	 * recursive ends up canceling them, saying that we reverted all those
++	 * changes.
++	 */
++
++	init_merge_options(&o);
++
++	o.branch1 = "HEAD";
++	his_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
++	o.branch2 = his_tree_name;
++
++	if (state->quiet)
++		o.verbosity = 0;
++
++	if (merge_recursive_generic(&o, our_tree, his_tree, 1, bases, &result)) {
++		free(his_tree_name);
++		return error(_("Failed to merge in the changes."));
++	}
++
++	free(his_tree_name);
+ 	return 0;
+ }
+ 
+@@ -883,6 +1010,7 @@ static void am_run(struct am_state *state)
+ 
+ 	while (state->cur <= state->last) {
+ 		const char *mail = am_path(state, msgnum(state));
++		int apply_status;
+ 
+ 		if (!file_exists(mail))
+ 			goto next;
+@@ -895,7 +1023,26 @@ static void am_run(struct am_state *state)
+ 
+ 		say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
+ 
+-		if (run_apply(state) < 0) {
++		apply_status = run_apply(state, NULL);
++
++		if (apply_status && state->threeway) {
++			struct strbuf sb = STRBUF_INIT;
++
++			strbuf_addstr(&sb, am_path(state, "patch-merge-index"));
++			apply_status = fall_back_threeway(state, sb.buf);
++			strbuf_release(&sb);
++
++			/*
++			 * Applying the patch to an earlier tree and merging
++			 * the result may have produced the same tree as ours.
++			 */
++			if (!apply_status && !index_has_changes(NULL)) {
++				say(state, stdout, _("No changes -- Patch already applied."));
++				goto next;
++			}
++		}
++
++		if (apply_status) {
+ 			int advice_amworkdir = 1;
+ 
+ 			printf_ln(_("Patch failed at %s %.*s"), msgnum(state),
+@@ -1167,6 +1314,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	};
  
  	struct option options[] = {
++		OPT_BOOL('3', "3way", &state.threeway,
++			N_("allow fall back on 3way merging if needed")),
  		OPT__QUIET(&state.quiet, N_("be quiet")),
-+		OPT_BOOL('s', "signoff", &state.append_signoff,
-+			N_("add a Signed-off-by line to the commit message")),
- 		OPT_CALLBACK(0, "patch-format", &patch_format, N_("format"),
- 			N_("format the patch(es) are in"),
- 			parse_opt_patchformat),
+ 		OPT_BOOL('s', "signoff", &state.append_signoff,
+ 			N_("add a Signed-off-by line to the commit message")),
 -- 
 2.5.0.rc0.76.gb2c6e93
