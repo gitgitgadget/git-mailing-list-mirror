@@ -1,103 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
-Date: Sun, 28 Jun 2015 11:51:55 -0700
-Message-ID: <xmqqh9prekdw.fsf@gitster.dls.corp.google.com>
-References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
-	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
-	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
-	<558F8B55.1070708@alum.mit.edu>
-	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
-	<558F9854.5080605@alum.mit.edu>
-	<xmqqwpyoe1aj.fsf@gitster.dls.corp.google.com>
-	<558FDAF9.3010300@alum.mit.edu>
+From: ash@kambanaria.org
+Subject: [PATCH] gitk: Update Bulgarian translation (307t)
+Date: Sun, 28 Jun 2015 23:28:13 +0300
+Message-ID: <1435523293-4453-1-git-send-email-ash@kambanaria.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 28 20:52:05 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: paulus@samba.org, Alexander Shopov <ash@kambanaria.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 28 22:28:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9HgS-0006Sh-Tv
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 20:52:05 +0200
+	id 1Z9JCC-0007nD-AZ
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 22:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752666AbbF1Sv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2015 14:51:59 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:33795 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752576AbbF1Sv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2015 14:51:58 -0400
-Received: by iebmu5 with SMTP id mu5so102648135ieb.1
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 11:51:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=0rSlvKlAocMxlXLG00Dq5iQ9nzWQL559A+K0CXeboOM=;
-        b=pPnZewi4LdpeIHOCy99CtNDm50EiigDI64hGzx8B5FrUY0UDmAY1ac2H8RMGd7pCT3
-         0fCoR0lAq3k4RzcuhAnwZfzm2ucfjcpYLKTOEX9MgXEixze4Kxbz5sfr1gpY7as+77ql
-         eEIvbP70oJePdmXyi097+IBJ9k0USOggxWa5+tv/DW7ms90ZPA/4fJUhiwpar5aIceJ/
-         AUaZCUOOm3nBhvZ3HRAkKfg5C3VFlhFxo7y4xmpY7Qp3x6XVd7shgHKKDDERSR7pYeMe
-         PaHOvrPPbzCX/Ns4xp8CdHjXW+VXq9U0sbZsw/NHQIGZyqvojYg7g7FfjOUa+ESGl1HH
-         o62g==
-X-Received: by 10.107.47.26 with SMTP id j26mr15650948ioo.17.1435517517971;
-        Sun, 28 Jun 2015 11:51:57 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a109:3c27:ff77:e0c7])
-        by mx.google.com with ESMTPSA id s28sm24632791ioi.31.2015.06.28.11.51.56
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 28 Jun 2015 11:51:56 -0700 (PDT)
-In-Reply-To: <558FDAF9.3010300@alum.mit.edu> (Michael Haggerty's message of
-	"Sun, 28 Jun 2015 13:31:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752777AbbF1U2u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Jun 2015 16:28:50 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:33098 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752600AbbF1U2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2015 16:28:49 -0400
+Received: by wiwl6 with SMTP id l6so83079652wiw.0
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 13:28:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=gDYThy3GmaPyzHg4sBikYdcmkAv2mRLzRmLe/Dgh2rw=;
+        b=irkXqpznYaNi//D5UfbJR8kDSQPQRZOscssMweZ/kqTc+rCvhNGFu7wjGFbZKYc0Nt
+         R4X+vpFd5M6S5+eGVpWx/Y7vLjo2oNqXxNKoiGMktaHKNWkKbJ9FZg9ymEte6a3liu3H
+         iKn/6eOml0WkTY6zzE9xaUrbFs36lkAensLtyq+v8muoV1MiqpXv5e4oqqzl4swZtGcN
+         4ZkwqYR/tEjsssYHR/cd+ztxL3/If5hnahlDopuscqBl0b5u7zyXwNyjnOqkHCH/2K7i
+         1iWGP6Kz+O2SO87tBVs4YMpMRpssS2uxRFn0oRPwNhiC4jEvZF/6lSfcvef2avlHDPS0
+         vIzw==
+X-Gm-Message-State: ALoCoQkaBZY49QVq4HQns4br4FZX7Toa/bDqnipkVu6EfYvF1QX+g5KSZ3ugeKwjxnMSuoFhIKeq
+X-Received: by 10.194.11.73 with SMTP id o9mr22910059wjb.116.1435523327813;
+        Sun, 28 Jun 2015 13:28:47 -0700 (PDT)
+Received: from dalgonosko.lan (78-83-52-173.spectrumnet.bg. [78.83.52.173])
+        by mx.google.com with ESMTPSA id e4sm13862964wjy.46.2015.06.28.13.28.46
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Jun 2015 13:28:47 -0700 (PDT)
+X-Mailer: git-send-email 2.4.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272925>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+=46rom: Alexander Shopov <ash@kambanaria.org>
 
-> On 06/28/2015 09:32 AM, Junio C Hamano wrote:
->> 
->> You just _always_ say "good" or "bad".  If something is slow, you
->> say "bad" and if something is fast, you say "good".
->
-> Yes, I think "good" and "bad" would usually be perfectly intuitive and
-> would almost always be usable.
->
->> [...]
->> No need for "bisect new", "bisect old", or "bisect terms", let alone
->> "bisect terms --new=fast --old=slow".  The tool just does the right
->> thing because it already has the information necessary to infer what
->> the user means by 'good' and 'bad', and the initial topology determines
->> which transition, either from 'good' to 'bad' or from 'bad' to 'good',
->> the user is hunting for.
->
-> Correct. The only caveat is if the initial "good" and "bad" commits are
-> not ancestrally related to each other. But in this case, I think
-> "bisect" asks the user to test a merge base anyway, and once that one
-> has been tested it will be clear which of the labels comes "before" the
-> other.
+Signed-off-by: Alexander Shopov <ash@kambanaria.org>
+---
+ po/bg.po | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-The more I look at the proposal, the more I like it.  The old way of
-thinking is that we need to keep 'bad' for newer one and 'good' for
-older one, that required us to invent 'broken' vs 'fixed', or value
-neutral 'old' vs 'new'.  Then we extend it to a random pair of
-'terms', but we reserve 'good', 'bad', etc. and do not allow the
-user to say "old was bad, new is now good".  With your proposal, the
-user can just say "oh this is good", vs "oh this is bad".  The
-mental model becomes much simpler.
-
-I _think_ bulk of Antoine and Matthieu's work can be salvaged/reused
-to implement the proposal, but now it would be more clear that
-$name_good and $name_bad is a bad way to name internal variables and
-files in $GIT_DIR.  The inferred 'ah you are hunting for regression'
-mode would call old ones 'bad' and new ones 'good', they have to be
-given value neutral names, e.g. $name_old and $name_new.
+diff --git a/po/bg.po b/po/bg.po
+index c4246bf..61073eb 100644
+--- a/po/bg.po
++++ b/po/bg.po
+@@ -8,8 +8,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: gitk master\n"
+ "Report-Msgid-Bugs-To: \n"
+-"POT-Creation-Date: 2015-05-17 14:32+1000\n"
+-"PO-Revision-Date: 2015-04-07 07:54+0300\n"
++"POT-Creation-Date: 2015-06-27 20:44+0300\n"
++"PO-Revision-Date: 2015-06-27 20:46+0300\n"
+ "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
+ "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+ "Language: bg\n"
+@@ -328,7 +328,7 @@ msgstr "=D0=98=D0=B7=D1=82=D1=80=D0=B8=D0=B2=D0=B0=D0=
+=BD=D0=B5 =D0=BD=D0=B0 =D1=82=D0=BE=D0=B7=D0=B8 =D0=BA=D0=BB=D0=BE=D0=BD=
+"
+=20
+ #: gitk:2649
+ msgid "Copy branch name"
+-msgstr ""
++msgstr "=D0=9A=D0=BE=D0=BF=D0=B8=D1=80=D0=B0=D0=BD=D0=B5 =D0=BD=D0=B0 =
+=D0=B8=D0=BC=D0=B5=D1=82=D0=BE =D0=BD=D0=B0 =D0=BA=D0=BB=D0=BE=D0=BD=D0=
+=B0"
+=20
+ #: gitk:2656
+ msgid "Highlight this too"
+@@ -348,7 +348,7 @@ msgstr "=D0=90=D0=BD=D0=BE=D1=82=D0=B8=D1=80=D0=B0=D0=
+=BD=D0=B5 =D0=BD=D0=B0 =D1=80=D0=BE=D0=B4=D0=B8=D1=82=D0=B5=D0=BB=D1=81=
+=D0=BA=D0=BE=D1=82=D0=BE =D0=BF=D0=BE=D0=B4=D0=B0=D0=B2=D0=B0=D0=BD=D0=B5=
+"
+=20
+ #: gitk:2660
+ msgid "Copy path"
+-msgstr ""
++msgstr "=D0=9A=D0=BE=D0=BF=D0=B8=D1=80=D0=B0=D0=BD=D0=B5 =D0=BD=D0=B0 =
+=D0=BF=D1=8A=D1=82=D1=8F"
+=20
+ #: gitk:2667
+ msgid "Show origin of this line"
+@@ -507,9 +507,8 @@ msgid "<Return>\tMove to next find hit"
+ msgstr "<Return>\t=D0=9A=D1=8A=D0=BC =D1=81=D0=BB=D0=B5=D0=B4=D0=B2=D0=
+=B0=D1=89=D0=B0=D1=82=D0=B0 =D0=BF=D0=BE=D1=8F=D0=B2=D0=B0"
+=20
+ #: gitk:3075
+-#, fuzzy
+ msgid "g\t\tGo to commit"
+-msgstr "<End>\t\t=D0=9A=D1=8A=D0=BC =D0=BF=D0=BE=D1=81=D0=BB=D0=B5=D0=B4=
+=D0=BD=D0=BE=D1=82=D0=BE =D0=BF=D0=BE=D0=B4=D0=B0=D0=B2=D0=B0=D0=BD=D0=B5=
+"
++msgstr "g\t\t=D0=9A=D1=8A=D0=BC =D0=BF=D0=BE=D1=81=D0=BB=D0=B5=D0=B4=D0=
+=BD=D0=BE=D1=82=D0=BE =D0=BF=D0=BE=D0=B4=D0=B0=D0=B2=D0=B0=D0=BD=D0=B5"
+=20
+ #: gitk:3076
+ msgid "/\t\tFocus the search box"
+@@ -665,9 +664,8 @@ msgid "Matches all Commit Info criteria"
+ msgstr "=D0=A1=D1=8A=D0=B2=D0=BF=D0=B0=D0=B4=D0=B5=D0=BD=D0=B8=D0=B5 =D0=
+=BF=D0=BE =D0=B2=D1=81=D0=B8=D1=87=D0=BA=D0=B8 =D1=85=D0=B0=D1=80=D0=B0=
+=D0=BA=D1=82=D0=B5=D1=80=D0=B8=D1=81=D1=82=D0=B8=D0=BA=D0=B8 =D0=BD=D0=B0=
+ =D0=BF=D0=BE=D0=B4=D0=B0=D0=B2=D0=B0=D0=BD=D0=B5=D1=82=D0=BE"
+=20
+ #: gitk:4086
+-#, fuzzy
+ msgid "Matches no Commit Info criteria"
+-msgstr "=D0=A1=D1=8A=D0=B2=D0=BF=D0=B0=D0=B4=D0=B5=D0=BD=D0=B8=D0=B5 =D0=
+=BF=D0=BE =D0=BD=D0=B8=D0=BA=D0=BE=D1=8F =D0=BE=D1=82 =D1=85=D0=B0=D1=80=
+=D0=B0=D0=BA=D1=82=D0=B5=D1=80=D0=B8=D1=81=D1=82=D0=B8=D0=BA=D0=B8=D1=82=
+=D0=B5 =D0=BD=D0=B0 =D0=BF=D0=BE=D0=B4=D0=B0=D0=B2=D0=B0=D0=BD=D0=B5=D1=
+=82=D0=BE"
++msgstr "=D0=9D=D0=B5 =D1=81=D1=8A=D0=B2=D0=BF=D0=B0=D0=B4=D0=B0 =D0=BF=
+=D0=BE =D0=BD=D0=B8=D0=BA=D0=BE=D1=8F =D0=BE=D1=82 =D1=85=D0=B0=D1=80=D0=
+=B0=D0=BA=D1=82=D0=B5=D1=80=D0=B8=D1=81=D1=82=D0=B8=D0=BA=D0=B8=D1=82=D0=
+=B5 =D0=BD=D0=B0 =D0=BF=D0=BE=D0=B4=D0=B0=D0=B2=D0=B0=D0=BD=D0=B5=D1=82=
+=D0=BE"
+=20
+ #: gitk:4087
+ msgid "Changes to Files:"
+@@ -1350,6 +1348,8 @@ msgid ""
+ "Sorry, gitk cannot run with this version of Tcl/Tk.\n"
+ " Gitk requires at least Tcl/Tk 8.4."
+ msgstr ""
++"=D0=A2=D0=B0=D0=B7=D0=B8 =D0=B2=D0=B5=D1=80=D1=81=D0=B8=D1=8F =D0=BD=D0=
+=B0 Tcl/Tk =D0=BD=D0=B5 =D1=81=D0=B5 =D0=BF=D0=BE=D0=B4=D0=B4=D1=8A=D1=80=
+=D0=B6=D0=B0 =D0=BE=D1=82 Gitk.\n"
++" =D0=9D=D0=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D0=B0 =D0=B2=D0=
+=B8 =D0=B5 =D0=BF=D0=BE=D0=BD=D0=B5 Tcl/Tk 8.4."
+=20
+ #: gitk:12269
+ msgid "Cannot find a git repository here."
+@@ -1363,6 +1363,3 @@ msgstr "=D0=9D=D0=B5=D0=B5=D0=B4=D0=BD=D0=BE=D0=B7=
+=D0=BD=D0=B0=D1=87=D0=B5=D0=BD =D0=B0=D1=80=D0=B3=D1=83=D0=BC=D0=B5=D0=BD=
+=D1=82 =E2=80=9E%s=E2=80=9C: =D0=B8=D0=BC=D0=B0 =D0=B8 =D1=82=D0=B0=D0=BA=
+=D0=B0=D0=B2
+ #: gitk:12328
+ msgid "Bad arguments to gitk:"
+ msgstr "=D0=9D=D0=B5=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D0=BB=D0=BD=D0=B8 =D0=
+=B0=D1=80=D0=B3=D1=83=D0=BC=D0=B5=D0=BD=D1=82=D0=B8 =D0=BD=D0=B0 gitk:"
+-
+-#~ msgid "mc"
+-#~ msgstr "mc"
+--=20
+2.4.3
