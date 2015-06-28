@@ -1,152 +1,131 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v4 20/44] builtin-am: implement --rebasing mode
-Date: Sun, 28 Jun 2015 22:05:42 +0800
-Message-ID: <1435500366-31700-21-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v4 25/44] builtin-am: implement --[no-]message-id, am.messageid
+Date: Sun, 28 Jun 2015 22:05:47 +0800
+Message-ID: <1435500366-31700-26-git-send-email-pyokagan@gmail.com>
 References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 28 16:08:23 2015
+X-From: git-owner@vger.kernel.org Sun Jun 28 16:08:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9DFt-0002Qu-N4
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 16:08:22 +0200
+	id 1Z9DFx-0002UW-MA
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 16:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbbF1OIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2015 10:08:17 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:33390 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444AbbF1OHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2015 10:07:48 -0400
-Received: by padev16 with SMTP id ev16so91887879pad.0
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 07:07:47 -0700 (PDT)
+	id S1752949AbbF1OIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2015 10:08:21 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:33540 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752508AbbF1OIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2015 10:08:06 -0400
+Received: by pdjn11 with SMTP id n11so101605701pdj.0
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 07:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EeTHApullWAskrR+UZVL0r48dYY3b5SeOQIhtbrnEkc=;
-        b=uYA8FNjNlwHeu1MTq5OB93iJGl+8qp/ySaqEL0ooqt+sD14G4sM8Hpb7AOaM3ZPaQv
-         KnUOO0fMB1vxA0Q2qi8oeIh7WJPpgxHpPku30/Pag8AZ3eJlK51tJQuYHvu2UvuIVLw0
-         kPUbTJxszbMjqbvID+ku4tIhfQbUaNeBulCgx45nCnUZEJAIEICkHSJ5X2fHnKGDFXSH
-         Mmz6SnVTgGCf5oZRAj6tipNTuB154urM1z5P6g2pUMch0lX3yGb+wdXcszZQ/rzxnWDf
-         ELuExJKe0UUziYdXMSBs0r8Uyl2wPUi49UN8zUF5Sj7jeFomT5INrEkXpIBX8cQEJHDM
-         Tv8A==
-X-Received: by 10.69.26.170 with SMTP id iz10mr22105270pbd.81.1435500467673;
-        Sun, 28 Jun 2015 07:07:47 -0700 (PDT)
+        bh=oM5aNbTL7EJgACkiILDmPJXMko+mZXQv3nz1iAERrIE=;
+        b=nqCaqaWMRe/Zn0z2uVeMBWCWODntGuNDEjstP74f0fcFdQifaqMVxancTXQ1aJFaVS
+         8qBD0QVYlEiz3vifR6MXjT81KNyIPUwztyJ7/+RLb3KwOUrd7tUdlFOy6Nve7216w/fK
+         Bpuk/Nja+YrzF/WMLPo0LPlJxKYiO8JIfV3PNxDp+hhh7MWLIHtZbLfLnHnqZBxDl3LK
+         V8T+AyCX0thtX3ERXbfWM+piq+BlFhGGnPMym9r/tKhWnf0xXk92W+VmthncsNAfnzKj
+         bd2cDPDRROO2UZZUlg8Mh73YG5JD9JZ+YQI7NiuCRuaiCfTOYzZ1WqQwTINyQPvq1wlX
+         FWLA==
+X-Received: by 10.70.128.104 with SMTP id nn8mr22623274pdb.28.1435500485735;
+        Sun, 28 Jun 2015 07:08:05 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id qa1sm39244820pab.0.2015.06.28.07.07.45
+        by mx.google.com with ESMTPSA id qa1sm39244820pab.0.2015.06.28.07.08.03
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 28 Jun 2015 07:07:46 -0700 (PDT)
+        Sun, 28 Jun 2015 07:08:05 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc0.76.gb2c6e93
 In-Reply-To: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272897>
 
-Since 3041c32 (am: --rebasing, 2008-03-04), git-am.sh supported the
---rebasing option, which is used internally by git-rebase to tell git-am
-that it is being used for its purpose. It would create the empty file
-$state_dir/rebasing to help "completion" scripts tell if the ongoing
-operation is am or rebase.
+Since a078f73 (git-am: add --message-id/--no-message-id, 2014-11-25),
+git-am.sh supported the --[no-]message-id options, and the
+"am.messageid" setting which specifies the default option.
 
-As of 0fbb95d (am: don't call mailinfo if $rebasing, 2012-06-26),
---rebasing also implies --3way as well.
+--[no-]message-id tells git-am whether or not the -m option should be
+passed to git-mailinfo.
 
-Since a1549e1 (am: return control to caller, for housekeeping,
-2013-05-12), git-am.sh would only clean up the state directory when it
-is not --rebasing, instead deferring cleanup to git-rebase.sh.
-
-Re-implement the above in builtin/am.c.
+Re-implement this option in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+
+Notes:
+    No test for am.messageid
+
+ builtin/am.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index e870a1b..ca8f07b 100644
+index 3410601..52e5b5a 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -92,6 +92,8 @@ struct am_state {
+@@ -103,6 +103,9 @@ struct am_state {
+ 	/* one of the enum keep_type values */
+ 	int keep;
  
++	/* pass -m flag to git-mailinfo */
++	int message_id;
++
  	/* override error message when patch failure occurs */
  	const char *resolvemsg;
+ 
+@@ -131,6 +134,8 @@ static void am_state_init(struct am_state *state, const char *dir)
+ 		state->quiet = 1;
+ 
+ 	state->utf8 = 1;
 +
-+	int rebasing;
- };
++	git_config_get_bool("am.messageid", &state->message_id);
+ }
  
  /**
-@@ -392,6 +394,8 @@ static void am_load(struct am_state *state)
- 	read_state_file(&sb, state, "sign", 1);
- 	state->append_signoff = !strcmp(sb.buf, "t");
+@@ -420,6 +425,9 @@ static void am_load(struct am_state *state)
+ 	else
+ 		state->keep = KEEP_FALSE;
  
-+	state->rebasing = !!file_exists(am_path(state, "rebasing"));
++	read_state_file(&sb, state, "messageid", 1);
++	state->message_id = !strcmp(sb.buf, "t");
 +
+ 	state->rebasing = !!file_exists(am_path(state, "rebasing"));
+ 
  	strbuf_release(&sb);
- }
+@@ -628,6 +636,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
  
-@@ -570,18 +574,29 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 		die(_("Failed to split patches."));
- 	}
+ 	write_file(am_path(state, "keep"), 1, "%s", str);
  
-+	if (state->rebasing)
-+		state->threeway = 1;
++	write_file(am_path(state, "messageid"), 1, state->message_id ? "t" : "f");
 +
- 	write_file(am_path(state, "threeway"), 1, state->threeway ? "t" : "f");
+ 	if (state->rebasing)
+ 		write_file(am_path(state, "rebasing"), 1, "%s", "");
+ 	else
+@@ -814,6 +824,9 @@ static int parse_mail(struct am_state *state, const char *mail)
+ 		die("BUG: invalid value for state->keep");
+ 	}
  
- 	write_file(am_path(state, "quiet"), 1, state->quiet ? "t" : "f");
- 
- 	write_file(am_path(state, "sign"), 1, state->append_signoff ? "t" : "f");
- 
-+	if (state->rebasing)
-+		write_file(am_path(state, "rebasing"), 1, "%s", "");
-+	else
-+		write_file(am_path(state, "applying"), 1, "%s", "");
++	if (state->message_id)
++		argv_array_push(&cp.args, "-m");
 +
- 	if (!get_sha1("HEAD", curr_head)) {
- 		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
--		update_ref("am", "ORIG_HEAD", curr_head, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+		if (!state->rebasing)
-+			update_ref("am", "ORIG_HEAD", curr_head, NULL, 0,
-+					UPDATE_REFS_DIE_ON_ERR);
- 	} else {
- 		write_file(am_path(state, "abort-safety"), 1, "%s", "");
--		delete_ref("ORIG_HEAD", NULL, 0);
-+		if (!state->rebasing)
-+			delete_ref("ORIG_HEAD", NULL, 0);
- 	}
+ 	argv_array_push(&cp.args, am_path(state, "msg"));
+ 	argv_array_push(&cp.args, am_path(state, "patch"));
  
- 	/*
-@@ -1063,8 +1078,14 @@ next:
- 		am_next(state);
- 	}
- 
--	am_destroy(state);
--	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-+	/*
-+	 * In rebasing mode, it's up to the caller to take care of
-+	 * housekeeping.
-+	 */
-+	if (!state->rebasing) {
-+		am_destroy(state);
-+		run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-+	}
- }
- 
- /**
-@@ -1336,6 +1357,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "abort", &resume,
- 			N_("restore the original branch and abort the patching operation."),
- 			RESUME_ABORT),
-+		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
-+			N_("(internal use for git-rebase)")),
- 		OPT_END()
- 	};
- 
+@@ -1534,6 +1547,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 			N_("pass -k flag to git-mailinfo"), KEEP_TRUE),
+ 		OPT_SET_INT(0, "keep-non-patch", &state.keep,
+ 			N_("pass -b flag to git-mailinfo"), KEEP_NON_PATCH),
++		OPT_BOOL('m', "message-id", &state.message_id,
++			N_("pass -m flag to git-mailinfo")),
+ 		OPT_CALLBACK(0, "patch-format", &patch_format, N_("format"),
+ 			N_("format the patch(es) are in"),
+ 			parse_opt_patchformat),
 -- 
 2.5.0.rc0.76.gb2c6e93
