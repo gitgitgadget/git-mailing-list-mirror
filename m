@@ -1,92 +1,103 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] fsck: it is OK for a tag and a commit to lack the body
-Date: Sun, 28 Jun 2015 14:21:56 -0400
-Message-ID: <CAPig+cR8MzEX+-Xi8YD7K=iHmYB3hjZKraFcyJ0mqKzY16HS8g@mail.gmail.com>
-References: <20150625155128.C3E9738005C@gemini.denx.de>
-	<xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
-	<20150625201309.5026A384E81@gemini.denx.de>
-	<xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
-	<2b124e09d9c89ff3892f246ea91aa3c4@www.dscho.org>
-	<xmqqoak3wkkq.fsf@gitster.dls.corp.google.com>
-	<xmqqbng3wheu.fsf@gitster.dls.corp.google.com>
-	<d455a77d76b3558fb79d550d6ed4468d@www.dscho.org>
-	<20150626155248.GB30273@peff.net>
-	<xmqqlhf3elxk.fsf_-_@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
+Date: Sun, 28 Jun 2015 11:51:55 -0700
+Message-ID: <xmqqh9prekdw.fsf@gitster.dls.corp.google.com>
+References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
+	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
+	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
+	<558F8B55.1070708@alum.mit.edu>
+	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
+	<558F9854.5080605@alum.mit.edu>
+	<xmqqwpyoe1aj.fsf@gitster.dls.corp.google.com>
+	<558FDAF9.3010300@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Wolfgang Denk <wd@denx.de>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 20:22:03 2015
+Content-Type: text/plain
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jun 28 20:52:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9HDO-0007Gy-9t
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 20:22:02 +0200
+	id 1Z9HgS-0006Sh-Tv
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 20:52:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310AbbF1SV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2015 14:21:57 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:33290 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751962AbbF1SV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2015 14:21:57 -0400
-Received: by ykdt186 with SMTP id t186so97899861ykd.0
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 11:21:56 -0700 (PDT)
+	id S1752666AbbF1Sv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2015 14:51:59 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:33795 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752576AbbF1Sv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2015 14:51:58 -0400
+Received: by iebmu5 with SMTP id mu5so102648135ieb.1
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 11:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=VSpnyHjwUNrZuZ/+BZhWutFniPeATlhgvDpkoWDehrk=;
-        b=gxmvF4EY0GcCaEwq733NZRIOfps1Mj+DrzE1bb+bhELrCQxkThFYqDy8LBw2g0Z2Ta
-         00zbeNoyYsa52IM1qXx94zs07roqzxSTI+ouHCIaiVdwG9a38bP0K4j7n3viRozBKunr
-         OX7BRH7utkniUCV1bZ4LR2zFaUVYas76dg8cB14cJ5eUb5BbEU61iobOZ9iLw8a6JC5N
-         NU0klZaRVwQb4Prq7pb5qRqWm0GAhPJMvkV5zym1Zd3hBEyJ9mYax6hk38Kt90t3sf5A
-         bt6rkWbYj1oJU+VvaAZgjorChXX3AqhGVgg/qw84LYearIJfeByS2p8gYuxb0S1Sjqgx
-         J3BA==
-X-Received: by 10.129.70.69 with SMTP id t66mr779890ywa.4.1435515716376; Sun,
- 28 Jun 2015 11:21:56 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 28 Jun 2015 11:21:56 -0700 (PDT)
-In-Reply-To: <xmqqlhf3elxk.fsf_-_@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: gJ4k6LUp9s2x2sQoR4uX9WWHa6Y
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=0rSlvKlAocMxlXLG00Dq5iQ9nzWQL559A+K0CXeboOM=;
+        b=pPnZewi4LdpeIHOCy99CtNDm50EiigDI64hGzx8B5FrUY0UDmAY1ac2H8RMGd7pCT3
+         0fCoR0lAq3k4RzcuhAnwZfzm2ucfjcpYLKTOEX9MgXEixze4Kxbz5sfr1gpY7as+77ql
+         eEIvbP70oJePdmXyi097+IBJ9k0USOggxWa5+tv/DW7ms90ZPA/4fJUhiwpar5aIceJ/
+         AUaZCUOOm3nBhvZ3HRAkKfg5C3VFlhFxo7y4xmpY7Qp3x6XVd7shgHKKDDERSR7pYeMe
+         PaHOvrPPbzCX/Ns4xp8CdHjXW+VXq9U0sbZsw/NHQIGZyqvojYg7g7FfjOUa+ESGl1HH
+         o62g==
+X-Received: by 10.107.47.26 with SMTP id j26mr15650948ioo.17.1435517517971;
+        Sun, 28 Jun 2015 11:51:57 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a109:3c27:ff77:e0c7])
+        by mx.google.com with ESMTPSA id s28sm24632791ioi.31.2015.06.28.11.51.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 28 Jun 2015 11:51:56 -0700 (PDT)
+In-Reply-To: <558FDAF9.3010300@alum.mit.edu> (Michael Haggerty's message of
+	"Sun, 28 Jun 2015 13:31:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272924>
 
-On Sun, Jun 28, 2015 at 2:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> When fsck validates a commit or a tag object, it scans each line in
-> the header the object using helper functions such as "start_with()",
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-s/header/& of/
+> On 06/28/2015 09:32 AM, Junio C Hamano wrote:
+>> 
+>> You just _always_ say "good" or "bad".  If something is slow, you
+>> say "bad" and if something is fast, you say "good".
+>
+> Yes, I think "good" and "bad" would usually be perfectly intuitive and
+> would almost always be usable.
+>
+>> [...]
+>> No need for "bisect new", "bisect old", or "bisect terms", let alone
+>> "bisect terms --new=fast --old=slow".  The tool just does the right
+>> thing because it already has the information necessary to infer what
+>> the user means by 'good' and 'bad', and the initial topology determines
+>> which transition, either from 'good' to 'bad' or from 'bad' to 'good',
+>> the user is hunting for.
+>
+> Correct. The only caveat is if the initial "good" and "bad" commits are
+> not ancestrally related to each other. But in this case, I think
+> "bisect" asks the user to test a merge base anyway, and once that one
+> has been tested it will be clear which of the labels comes "before" the
+> other.
 
-> etc. that work on a NUL terminated buffer, but before a1e920a0
-> (index-pack: terminate object buffers with NUL, 2014-12-08), the
-> validation functions were fed the object data as counted strings,
-> not necessarily terminated with a NUL.  We added a helper function
-> require_end_of_header() to be called at the beginning of these
-> validation functions to insist that the object data contains an
-> empty line before its end.  The theory is that the validating
-> functions will notice and stop when it hits an empty line as a
-> normal end of header (or a required header line that is missing)
-> before scanning past the end of potentially not NUL-terminated
-> buffer.
->
-> But the theory forgot that in the older days, Git itself happily
-> created objects with only the header lines without a body. This
-> caused Git 2.2 and later to issue an unnecessary warning on some
-> existing repositories.
->
-> With a1e920a0, we do not need to require an empty line (or the body)
-> in these objects to safely parse and validate them.  Drop the
-> offending "must have an empty line" check from this helper function,
-> while keeping the other check to make sure that there is no NUL in
-> the header part of the object, and adjust the name of the helper to
-> what it does accordingly.
->
-> Noticed-by: Wolfgang Denk <wd@denx.de>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+The more I look at the proposal, the more I like it.  The old way of
+thinking is that we need to keep 'bad' for newer one and 'good' for
+older one, that required us to invent 'broken' vs 'fixed', or value
+neutral 'old' vs 'new'.  Then we extend it to a random pair of
+'terms', but we reserve 'good', 'bad', etc. and do not allow the
+user to say "old was bad, new is now good".  With your proposal, the
+user can just say "oh this is good", vs "oh this is bad".  The
+mental model becomes much simpler.
+
+I _think_ bulk of Antoine and Matthieu's work can be salvaged/reused
+to implement the proposal, but now it would be more clear that
+$name_good and $name_bad is a bad way to name internal variables and
+files in $GIT_DIR.  The inferred 'ah you are hunting for regression'
+mode would call old ones 'bad' and new ones 'good', they have to be
+given value neutral names, e.g. $name_old and $name_new.
