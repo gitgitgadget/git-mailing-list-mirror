@@ -1,136 +1,86 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 03/17] (msvc-build) Vcproj.pm: remove duplicate GUID
-Date: Sun, 28 Jun 2015 09:44:18 +0100
-Organization: OPDS
-Message-ID: <27766BC958B74F8C805221782F93B2DE@PhilipOakley>
-References: <1435190633-2208-1-git-send-email-philipoakley@iee.org><1435190633-2208-4-git-send-email-philipoakley@iee.org> <CAPig+cTpJ2cz49guBFOHpOsP1UEip=JV-c2fPyjfdSegzZACJQ@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [RFC/PATCH 1/9] ref-filter: add %(refname:lalignX) option
+Date: Sun, 28 Jun 2015 14:43:14 +0530
+Message-ID: <CAOLa=ZTkq9NWSu-Bd1iwxYD1yj9+URuQSopc_qjgxSbBv2t2uA@mail.gmail.com>
+References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
+ <1435232596-27466-1-git-send-email-karthik.188@gmail.com> <xmqqsi9ce0xj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
-Cc: "GitList" <git@vger.kernel.org>,
-	"MsysGitList" <msysgit@googlegroups.com>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-X-From: msysgit+bncBDSOTWHYX4PBBC7HX2WAKGQEWCI3YMY@googlegroups.com Sun Jun 28 10:42:52 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBBC7HX2WAKGQEWCI3YMY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f55.google.com ([74.125.82.55])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 28 11:14:12 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBC7HX2WAKGQEWCI3YMY@googlegroups.com>)
-	id 1Z98At-0000rV-SE
-	for gcvm-msysgit@m.gmane.org; Sun, 28 Jun 2015 10:42:51 +0200
-Received: by wggx12 with SMTP id x12sf39734687wgg.1
-        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Jun 2015 01:42:51 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z98fC-0001g0-By
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 11:14:10 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752108AbbF1JOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2015 05:14:00 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:36325 "EHLO
+	mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489AbbF1JN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2015 05:13:57 -0400
+Received: by oigb199 with SMTP id b199so100830033oig.3
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 02:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:reply-to:from:to:cc:references:subject:date:organization
-         :mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=oEjsK3rtTgJRGAQYx5EOd/BA4wvbmwjdSK+Ow6JiZ2U=;
-        b=y2vOUSoyhtigcZvEgP2pyq3pOl3CRvDMO5EsYTKc5FpdwAxPwIlWlK2Pb1FW7xd5B7
-         8KIJVHzvj6GTWfw7poKbTC2NbFtanwQPNS4B3ck6wXz2MzzBSf3cphpUiVbcbgaz4b6a
-         gOIQn5hnhHSMl4QBGkqwtOwXlf+lrBhDDwB2pBS1vHzzVOD3Aj4mLP2ApGSAflYYbi6b
-         XBrnsfXQMiYnHDeis9rzvcI9Bfg9jf71u0Sk+qkPyFcCrrJJSX8E+M/UckHs7icFGKiv
-         XgHkCK4mFEOUVdALqEwYyAetGjzQn0YhSPAOv5QNIvuDlt4d9YUc+sQIQYVKAKCxPLpJ
-         gGCw==
-X-Received: by 10.180.188.105 with SMTP id fz9mr37125wic.5.1435480971512;
-        Sun, 28 Jun 2015 01:42:51 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.98.226 with SMTP id el2ls408295wib.45.gmail; Sun, 28 Jun
- 2015 01:42:50 -0700 (PDT)
-X-Received: by 10.180.106.10 with SMTP id gq10mr4917155wib.0.1435480970699;
-        Sun, 28 Jun 2015 01:42:50 -0700 (PDT)
-Received: from out1.ip04ir2.opaltelecom.net (out1.ip04ir2.opaltelecom.net. [62.24.128.240])
-        by gmr-mx.google.com with ESMTP id bk2si206860wib.1.2015.06.28.01.42.50
-        for <msysgit@googlegroups.com>;
-        Sun, 28 Jun 2015 01:42:50 -0700 (PDT)
-Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.240 as permitted sender) client-ip=62.24.128.240;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BEWwAps49VPPUQFlxbgxFUX4ZMbbFRhgmFdgQEAoEkTQEBAQEBAQcBAQEBQAEkG0EBAgKDVwUBAQEBAwgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBBoGBwMGDgYTCAIBAgMBiCK4UIZUj1OBIYophCFlgm8vgRQFlAQBgQODVYh4lj+BCXI3HIFTPTGBA4FFAQEB
-X-IPAS-Result: A2BEWwAps49VPPUQFlxbgxFUX4ZMbbFRhgmFdgQEAoEkTQEBAQEBAQcBAQEBQAEkG0EBAgKDVwUBAQEBAwgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBBoGBwMGDgYTCAIBAgMBiCK4UIZUj1OBIYophCFlgm8vgRQFlAQBgQODVYh4lj+BCXI3HIFTPTGBA4FFAQEB
-X-IronPort-AV: E=Sophos;i="5.13,692,1427756400"; 
-   d="scan'208";a="536001975"
-Received: from host-92-22-16-245.as13285.net (HELO PhilipOakley) ([92.22.16.245])
-  by out1.ip04ir2.opaltelecom.net with ESMTP; 28 Jun 2015 09:42:26 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Original-Sender: philipoakley@iee.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
- (google.com: domain of transitioning philipoakley@iee.org does not designate
- 62.24.128.240 as permitted sender) smtp.mail=philipoakley@iee.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272873>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BWQc0bGn3mS6ONzdSDWBCmDnXVBA1aCPfJd+l4B15AQ=;
+        b=M9NhlVzfcAw3lvVMrgVrUN4zSDeJ21laJSDI7wIM42MAbW1fUaB8RON2nKGeG+EeLJ
+         530teJKwgcz8Kd6fqBh5MVpKowuy5Y4TdVoO0ggemd4SZFlJDmx9C7Raa5UdaEbMO9l4
+         zEopQG/MWL3n3kLdhRXnCuz4imL1iz9uL0wW+VXYwUI5IDdOPiy0hJruI2A1xPuyIquh
+         v1Ifa8FuQ/kKP+FiSSN1D0d9RqRxrLEXGNkUwOvCYV/8wZ30mOgSFixGqqtwhIFhasx7
+         rdpNvEni1xiLRSmO9Ui3dr7MKpxSaj13Ow9GikT/vOaPosgYsnLr3WcXdEqLcJXTtpsU
+         xEzA==
+X-Received: by 10.202.73.198 with SMTP id w189mr8542112oia.102.1435482824322;
+ Sun, 28 Jun 2015 02:13:44 -0700 (PDT)
+Received: by 10.182.95.165 with HTTP; Sun, 28 Jun 2015 02:13:14 -0700 (PDT)
+In-Reply-To: <xmqqsi9ce0xj.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272874>
 
-From: "Eric Sunshine" <sunshine@sunshineco.com>
-> On Wed, Jun 24, 2015 at 8:03 PM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->> Delete the duplicated GUID from the generation code for the Visual 
->> Studio
->> .sln project file.
->>
->> The duplicate GUID tended to be allocated to test-svn-fe, which was 
->> then
->> ignored by Visual Studio / MSVC, and it's omission from the build 
->> never
+On Sun, Jun 28, 2015 at 1:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> s/it's/its/
+>> Add support for %(refname:lalignX) where X is a number.
+>> This will print a shortened refname aligned to the left
+>> followed by spaces for a total length of X characters.
+>> If X is less than the shortened refname size, the entire
+>> shortened refname is printed.
+>
+> Why would we even want this kind of thing in the first place?  Is
+> this to make it possible to re-implement some option that exists
+> already in 'git branch' or 'git tag' as a thin wrapper on top of
+> this underlying feature?
+> As a low-level plumbing, I'd rather not to see such an elaborate
+> formatting option added to for-each-ref; after all, the design of
+> the command to allow its output properly script-quoted is so that we
+> can offload such non-essential (meaning: does not need anything only
+> Git knows; computing the display width of a string and filling the
+> output space is an example.  As opposed to something like --merged
+> that needs help from Git, which has the ultimate knowledge on the
+> topology) processing to Porcelain that uses the command as plumbing.
+>
 
-Thanks, will fix.
->
->> noticed.
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>  contrib/buildsystems/Generators/Vcproj.pm | 1 -
->>  1 file changed, 1 deletion(-)
->>
->> diff --git a/contrib/buildsystems/Generators/Vcproj.pm 
->> b/contrib/buildsystems/Generators/Vcproj.pm
->> index cfa74ad..1b01d58 100644
->> --- a/contrib/buildsystems/Generators/Vcproj.pm
->> +++ b/contrib/buildsystems/Generators/Vcproj.pm
->> @@ -52,7 +52,6 @@ my @GUIDS = (
->>      "{00785268-A9CC-4E40-AC29-BAC0019159CE}",
->>      "{4C06F56A-DCDB-46A6-B67C-02339935CF12}",
->>      "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
->> -    "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
->>      "{9392EB58-D7BA-410B-B1F0-B2FAA6BC89A7}",
->>      "{2ACAB2D5-E0CE-4027-BCA0-D78B2D7A6C66}",
->>      "{86E216C3-43CE-481A-BCB2-BE5E62850635}",
->> --
->> 2.3.1
-> 
+Well this is to support the printing of tag in `git tag -l`, if you
+see the current
+implementation we print refs using "printf("%-15s ", refname);" whenever the
+"-n[<n>]" option is given, hence this patch to support printing of refs using a
+required spacing.
+
+I couldn't find a way to do with the current options available in
+for-each-ref/ref-filter.
+Is there a better way to go about this?
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Regards,
+Karthik Nayak
