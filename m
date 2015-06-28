@@ -1,109 +1,121 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH 1/9] ref-filter: add %(refname:lalignX) option
-Date: Sun, 28 Jun 2015 06:43:04 +0700
-Message-ID: <CACsJy8DFrNMGBTL2xpQ6aG6huNhL-ipofPySL8_P+-EQtZyAMw@mail.gmail.com>
-References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
- <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 03/17] (msvc-build) Vcproj.pm: remove duplicate GUID
+Date: Sat, 27 Jun 2015 23:05:41 -0400
+Message-ID: <CAPig+cTpJ2cz49guBFOHpOsP1UEip=JV-c2fPyjfdSegzZACJQ@mail.gmail.com>
+References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
+	<1435190633-2208-4-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 01:45:46 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: GitList <git@vger.kernel.org>, MsysGitList <msysgit@googlegroups.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: msysgit+bncBD2JJCMYYEGBBBOJXWWAKGQESTSJGUQ@googlegroups.com Sun Jun 28 05:05:46 2015
+Return-path: <msysgit+bncBD2JJCMYYEGBBBOJXWWAKGQESTSJGUQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vn0-f57.google.com ([209.85.216.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z8zn7-0006XS-BZ
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Jun 2015 01:45:45 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753AbbF0Xnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jun 2015 19:43:35 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:37663 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751268AbbF0Xne (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2015 19:43:34 -0400
-Received: by igblr2 with SMTP id lr2so33676722igb.0
-        for <git@vger.kernel.org>; Sat, 27 Jun 2015 16:43:33 -0700 (PDT)
+	(envelope-from <msysgit+bncBD2JJCMYYEGBBBOJXWWAKGQESTSJGUQ@googlegroups.com>)
+	id 1Z92ud-0007UI-1F
+	for gcvm-msysgit@m.gmane.org; Sun, 28 Jun 2015 05:05:43 +0200
+Received: by vnav203 with SMTP id v203sf34759435vna.0
+        for <gcvm-msysgit@m.gmane.org>; Sat, 27 Jun 2015 20:05:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vahJZimwqvjd9KqPaNEEIzRqnrJVLmWt/zoppi+gVhA=;
-        b=GFJgJj2C64g34rcRUFBKFPxb33uM5CXS6ABUo/08wDYnQ2r5TuyzH4Su91rF9MvQzI
-         QErFoZP16c0ETB7BJQ9vtT/zi8h8zuVVxYOVFKm4ZkAuc9sMp+Ac3Myomxs0OYx7Axgk
-         MbsQJsZU4b0zTP07MdBrhXXbdHv0MBAarBct6/RwRqPiotqt2AUYO+2ixWg/0QBJpx0S
-         XWVZ9dUNEVe8q3GTtaDSMTM8Bzgd/Wo9rw60/soSERirqNpyfW8AmK8OEm58trjV9lsN
-         0VaFvej/jmk8Gt/PftOmG17Ky2rIHARqCNal131VYKO4lKfUk91zGUB4ftytKCdmhHnl
-         0wdA==
-X-Received: by 10.42.93.17 with SMTP id v17mr10719062icm.42.1435448613641;
- Sat, 27 Jun 2015 16:43:33 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Sat, 27 Jun 2015 16:43:04 -0700 (PDT)
-In-Reply-To: <1435232596-27466-1-git-send-email-karthik.188@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272864>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe;
+        bh=DyzXdFKZUlxPGFRNRqMdvP6qwGMW1n4jYccFMlbhYM4=;
+        b=UX0AsT7JSww07TWGPO7Mex8i8zXQT2uH+n2KEAVurTMDbvChkI56yQ58GX+rCMxGYn
+         IKMA4/NIySKYRruIS4Xq5S9y7ITAibnvJb079CcXFJni66KCno38YHpqlHnu6zgMyZr5
+         x9fididnOZ30OeIlkaahrk9ZEE04dxQTMrjQmYmk7Izz852fx9nUQCyIWsH5zNL7Cwv9
+         h4z4sWakWmz4K0S8CXUkG+aLslAOV9qz+CGJORTj9DR5FTN/H5klT9i3NwwX/WLThi/j
+         c0EZqfRR86rpA/76WmM5cJ1EnaeD/GglD4hozRsxDgPQ9MnkJMxoXHAZdcdHgIbf0RP8
+         VIkA==
+X-Received: by 10.50.67.100 with SMTP id m4mr83375igt.12.1435460741969;
+        Sat, 27 Jun 2015 20:05:41 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.107.46.13 with SMTP id i13ls1701432ioo.43.gmail; Sat, 27 Jun
+ 2015 20:05:41 -0700 (PDT)
+X-Received: by 10.43.5.136 with SMTP id og8mr12794767icb.1.1435460741433;
+        Sat, 27 Jun 2015 20:05:41 -0700 (PDT)
+Received: from mail-yk0-x22c.google.com (mail-yk0-x22c.google.com. [2607:f8b0:4002:c07::22c])
+        by gmr-mx.google.com with ESMTPS id x125si910699ywb.0.2015.06.27.20.05.41
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Jun 2015 20:05:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of ericsunshine@gmail.com designates 2607:f8b0:4002:c07::22c as permitted sender) client-ip=2607:f8b0:4002:c07::22c;
+Received: by mail-yk0-x22c.google.com with SMTP id y1so89466515ykd.2
+        for <msysgit@googlegroups.com>; Sat, 27 Jun 2015 20:05:41 -0700 (PDT)
+X-Received: by 10.170.97.9 with SMTP id o9mr11059852yka.84.1435460741285; Sat,
+ 27 Jun 2015 20:05:41 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+Received: by 10.37.36.214 with HTTP; Sat, 27 Jun 2015 20:05:41 -0700 (PDT)
+In-Reply-To: <1435190633-2208-4-git-send-email-philipoakley@iee.org>
+X-Original-Sender: sunshine@sunshineco.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of ericsunshine@gmail.com designates 2607:f8b0:4002:c07::22c
+ as permitted sender) smtp.mail=ericsunshine@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272865>
 
-On Thu, Jun 25, 2015 at 6:43 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add support for %(refname:lalignX) where X is a number.
-> This will print a shortened refname aligned to the left
-> followed by spaces for a total length of X characters.
-> If X is less than the shortened refname size, the entire
-> shortened refname is printed.
+On Wed, Jun 24, 2015 at 8:03 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> Delete the duplicated GUID from the generation code for the Visual Studio
+> .sln project file.
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> The duplicate GUID tended to be allocated to test-svn-fe, which was then
+> ignored by Visual Studio / MSVC, and it's omission from the build never
+
+s/it's/its/
+
+> noticed.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
 > ---
->  ref-filter.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
+>  contrib/buildsystems/Generators/Vcproj.pm | 1 -
+>  1 file changed, 1 deletion(-)
 >
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 00d06bf..299b048 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -695,7 +695,22 @@ static void populate_value(struct ref_array_item *ref)
->                         int num_ours, num_theirs;
->
->                         formatp++;
-> -                       if (!strcmp(formatp, "short"))
-> +                       if (starts_with(formatp, "lalign")) {
-> +                               const char *valp;
-> +                               int val;
-> +
-> +                               skip_prefix(formatp, "lalign", &valp);
-> +                               val = atoi(valp);
-> +                               refname = shorten_unambiguous_ref(refname,
-> +                                                                 warn_ambiguous_refs);
-> +                               if (val > strlen(refname)) {
-> +                                       struct strbuf buf = STRBUF_INIT;
-> +                                       strbuf_addstr(&buf, refname);
-> +                                       strbuf_addchars(&buf, ' ', val - strlen(refname));
-
-We don't forbid non-ascii characters in refname so you probably want
-to use utf8_width() here instead of strlen()
-
-> +                                       free((char *)refname);
-> +                                       refname = strbuf_detach(&buf, NULL);
-> +                               }
-> +                       } else if (!strcmp(formatp, "short"))
->                                 refname = shorten_unambiguous_ref(refname,
->                                                       warn_ambiguous_refs);
->                         else if (!strcmp(formatp, "track") &&
+> diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
+> index cfa74ad..1b01d58 100644
+> --- a/contrib/buildsystems/Generators/Vcproj.pm
+> +++ b/contrib/buildsystems/Generators/Vcproj.pm
+> @@ -52,7 +52,6 @@ my @GUIDS = (
+>      "{00785268-A9CC-4E40-AC29-BAC0019159CE}",
+>      "{4C06F56A-DCDB-46A6-B67C-02339935CF12}",
+>      "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
+> -    "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
+>      "{9392EB58-D7BA-410B-B1F0-B2FAA6BC89A7}",
+>      "{2ACAB2D5-E0CE-4027-BCA0-D78B2D7A6C66}",
+>      "{86E216C3-43CE-481A-BCB2-BE5E62850635}",
 > --
-> 2.4.4
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
+> 2.3.1
 
 -- 
-Duy
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
