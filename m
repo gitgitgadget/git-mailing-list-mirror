@@ -1,97 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 38/44] builtin-am: support and auto-detect StGit patches
-Date: Mon, 29 Jun 2015 14:39:55 -0700
-Message-ID: <xmqqtwtq8a8k.fsf@gitster.dls.corp.google.com>
-References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
-	<1435500366-31700-39-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kbzb4E8D87nQi+dat6szOdnp56ta3bEwsUwieX=3SiJqw@mail.gmail.com>
-	<CAPig+cRWno4RkemOFJj01rhx_0oFSJ-x2TMKTNxwhF1YSBxjzQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] introduce "format" date-mode
+Date: Mon, 29 Jun 2015 18:22:47 -0400
+Message-ID: <20150629222247.GA31607@flurp.local>
+References: <20150625165341.GA21949@peff.net>
+ <20150625165545.GC23503@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Paul Tan <pyokagan@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 23:40:05 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 30 00:23:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9gma-0002qW-NQ
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 23:40:05 +0200
+	id 1Z9hSX-0006Uk-TG
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 00:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750975AbbF2Vj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 17:39:59 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37640 "EHLO
+	id S1751754AbbF2WWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 18:22:55 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:38143 "EHLO
 	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752576AbbF2Vj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 17:39:57 -0400
-Received: by igblr2 with SMTP id lr2so62115370igb.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 14:39:57 -0700 (PDT)
+	with ESMTP id S1752627AbbF2WWy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 18:22:54 -0400
+Received: by igrv9 with SMTP id v9so466704igr.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 15:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=pV4XpmXuRXW61SU5YO/3404rhKDNL+dVmrXGPNDNJS4=;
-        b=tpNhukU7OUZ7UaQsJVZfaZ4s4NadAUo9QYF+TfthNwHN3pkSWbCsbNST1kjwiYTi4n
-         g1V9oXnn7TZkLbsPLqRw7H3C1I9QxkMIIoaRSSS3O8Z31MMGOuu5ykn8Etbaw+M3Lakd
-         vB7lprQ5IFqyi2HUyl7y8zK4464zwNILABTyYBjoRBAw/wEpKxCBsNLVXT7NraUr95/T
-         PezgOzmchWAundG5yDnKSoFzaLvf5yLUCTbJ+0ww/ViZwkl8xhdiesPoFf6LkKPwgamr
-         z7GkEP+uZbfHrFkAoXLy6sqVkOrFqHZT8xz7zjub3Gk2iZfQlqIDYrrnyoRMdcs96rKw
-         WlGQ==
-X-Received: by 10.42.83.212 with SMTP id i20mr22095664icl.91.1435613997393;
-        Mon, 29 Jun 2015 14:39:57 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:946c:210:22fc:378d])
-        by mx.google.com with ESMTPSA id j4sm6345066igo.0.2015.06.29.14.39.56
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Jun 2015 14:39:56 -0700 (PDT)
-In-Reply-To: <CAPig+cRWno4RkemOFJj01rhx_0oFSJ-x2TMKTNxwhF1YSBxjzQ@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 29 Jun 2015 16:51:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=u2vBFqT7gFytFmEoa303MjHT8DLd2w4QPZ16VLCh8Bg=;
+        b=QP1yZVHxUHuZzr4HL9+dYDLNPffC5X6mxiG8nXvrfeF6eSlvveQmtzwvgIsOtVFakn
+         TeEJQejmyoqce+noJIZik6GAJnsXXLF5pKqdje7tTEny+ryyvMR4HdtrLUd7TkH85Bem
+         nk52EX5do5OJLkshUSujw/Km7fw9+R1pqQjEiQJ7a49VlWbiTu988LiOznVdH5RNLI6s
+         2o/X5luR4YR7obB9uLlD/FCQe3SW5LF5mNVleOhxMI+BAgv0/U9FYbfYLzKDate/7mtg
+         yA5dXu/khAkRvDxLW1L9P74mg8VB8b/qfm05OvslLTkysXAHE5ZgrtC7lKEZmyFGUFLE
+         sORw==
+X-Received: by 10.43.10.194 with SMTP id pb2mr22595888icb.31.1435616573392;
+        Mon, 29 Jun 2015 15:22:53 -0700 (PDT)
+Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id g81sm4344260ioi.20.2015.06.29.15.22.52
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 29 Jun 2015 15:22:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20150625165545.GC23503@peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273026>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Thu, Jun 25, 2015 at 12:55:45PM -0400, Jeff King wrote:
+> This feeds the format directly to strftime. Besides being a
+> little more flexible, the main advantage is that your system
+> strftime may know more about your locale's preferred format
+> (e.g., how to spell the days of the week).
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/strbuf.c b/strbuf.c
+> index 0d4f4e5..a7ba028 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -709,3 +709,32 @@ char *xstrfmt(const char *fmt, ...)
+> +void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm)
+> +{
+> +	size_t len;
+> +
+> +	/*
+> +	 * strftime reports "0" if it could not fit the result in the buffer.
+> +	 * Unfortunately, it also reports "0" if the requested time string
+> +	 * takes 0 bytes. So if we were to probe and grow, we have to choose
+> +	 * some arbitrary cap beyond which we guess that the format probably
+> +	 * just results in a 0-length output. Since we have to choose some
+> +	 * reasonable cap anyway, and since it is not that big, we may
+> +	 * as well just grow to their in the first place.
+> +	 */
+> +	strbuf_grow(sb, 128);
+> +	len = strftime(sb->buf + sb->len, sb->alloc - sb->len, fmt, tm);
+> +
+> +	if (!len) {
+> +		/*
+> +		 * Either we failed, or the format actually produces a 0-length
+> +		 * output. There's not much we can do, so we leave it blank.
+> +		 * However, the output array is left in an undefined state, so
+> +		 * we must re-assert our NUL terminator.
+> +		 */
+> +		sb->buf[sb->len] = '\0';
+> +	} else {
+> +		sb->len += len;
+> +	}
+> +}
 
-> On Mon, Jun 29, 2015 at 4:42 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Sun, Jun 28, 2015 at 7:06 AM, Paul Tan <pyokagan@gmail.com> wrote:
->>> +/**
->>> + * Returns true if `str` consists of only whitespace, false otherwise.
->>> + */
->>> +static int str_isspace(const char *str)
->>> +{
->>> +       while (*str)
->>> +               if (!isspace(*(str)++))
->>> +                       return 0;
->> ...
->>     while (*str && !isspace(*(str)++))
->>         return 0;
-> ...
-> Ugh. Please don't break the logic with this strange and bogus transformation.
->
-> If you really want it to read more idiomatically, try:
->
->     for (; *s; s++)
->         if (!isspace(*s))
->             return 0;
+Clients of strbuf rightly expect the buffer to grow as needed in
+order to complete the requested operation. It is, therefore, both
+weird and expectation-breaking for strbuf_addftime() to lack this
+behavior. Worse, it doesn't even signal when the format has failed
+due to insufficient buffer space.
 
-;-).
+How about taking this approach (or something similar), instead, which
+grows the strbuf as needed?
 
-Regardless of the loop structure, I find
+--- 8< ---
+void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm)
+{
+	size_t len;
+	struct strbuf f = STRBUF_INIT;
 
-	*(str)++
+	/*
+	 * This is a bit tricky since strftime returns 0 if the result did not
+	 * fit in the supplied buffer, as well as when the formatted time has
+	 * zero length. In the former case, we need to grow the buffer and try
+	 * again. To distinguish between the two cases, we supply strftime with
+	 * a format string one character longer than what the client supplied,
+	 * which ensures that a successful format will have non-zero length,
+	 * and then drop the extra character from the formatted time before
+	 * returning.
+	 */
+	strbuf_addf(&f, "%s ", fmt);
 
-especially ugly and confusing.  I'd understand if it were
+	do {
+		strbuf_grow(sb, 128);
+		len = strftime(sb->buf + sb->len, sb->alloc - sb->len,
+			       f.buf, tm);
+	} while (!len);
+	strbuf_setlen(sb, sb->len + len - 1);
 
-	*(str++)
+	strbuf_release(&f);
+}
+--- 8< ---
 
-but the parentheses pair is unnecessary.
-
-Not using any increment inside isspace(), like you showed, is the
-most readable.
-
-Thanks.
+If this is performance critical code, then the augmented format
+string can be constructed with less expensive functions than
+strbuf_addf().
