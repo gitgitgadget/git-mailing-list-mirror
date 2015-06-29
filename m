@@ -1,83 +1,108 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] fsck: it is OK for a tag and a commit to lack the body
-Date: Mon, 29 Jun 2015 16:51:03 +0200
-Organization: gmx
-Message-ID: <27498b4f0033a332e961de055ca226f1@www.dscho.org>
-References: <20150625155128.C3E9738005C@gemini.denx.de>
- <xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
- <20150625201309.5026A384E81@gemini.denx.de>
- <xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
- <2b124e09d9c89ff3892f246ea91aa3c4@www.dscho.org>
- <xmqqoak3wkkq.fsf@gitster.dls.corp.google.com>
- <xmqqbng3wheu.fsf@gitster.dls.corp.google.com>
- <d455a77d76b3558fb79d550d6ed4468d@www.dscho.org>
- <20150626155248.GB30273@peff.net>
- <xmqqlhf3elxk.fsf_-_@gitster.dls.corp.google.com>
- <32aa1979e75ba9bc6dc8a58fe32e9e55@www.dscho.org>
- <xmqqsi9bcboq.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
+Date: Mon, 29 Jun 2015 17:19:21 +0200
+Message-ID: <vpqlhf2czk6.fsf@anie.imag.fr>
+References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
+	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
+	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
+	<558F8B55.1070708@alum.mit.edu>
+	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
+	<558F9854.5080605@alum.mit.edu>
+	<CAP8UFD0NjExQJHQWix1+zc4_k15e3+aC5vAv=dHipg-X+2y1sQ@mail.gmail.com>
+	<vpq1tgvnf2g.fsf@anie.imag.fr>
+	<CAP8UFD1gWXOZHfiELZYgvGP1dA-aeaxbyaokKCut9pfWghy9uQ@mail.gmail.com>
+	<vpqsi9alv1l.fsf@anie.imag.fr>
+	<CAP8UFD23RTCzrv8j8Jbcx5ajMUjgVsO3P5_Fiv3Vwx5uaPwXrw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Wolfgang Denk <wd@denx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 16:51:57 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 17:19:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9aPb-00063M-H4
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 16:51:55 +0200
+	id 1Z9aqO-0006b7-EW
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 17:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396AbbF2OvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 10:51:25 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61990 "EHLO mout.gmx.net"
+	id S1752582AbbF2PTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 11:19:32 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46029 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752197AbbF2OvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 10:51:09 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MBrCt-1ZJnPq3tDz-00Alpf; Mon, 29 Jun 2015 16:51:05
- +0200
-In-Reply-To: <xmqqsi9bcboq.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:Z/dYCeX7WSVhKKjldM7pXnG2eMfA9MkQ7Daocd0xRSNOrhHx3Fn
- 8Uf8tNysCv6slLsDzOMJ3b7cOU5l7FLd/KYsBfSw/nUabsTZnW3rdnvdCQLNdSegMredmv4
- ZOjrMou25potQJRrUpMw7T5ZUUfmwSpOXnq3GPM5RL7l2ILtpIAl3pJF4In5KX+YLoERH+k
- cekpTZ7ECB6WHQg2K7hHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AQc3VanPgvA=:jvlA8Q9cgqIv6ztqKvizz9
- fudNCiQBTx5YVjbP5usNNuYBjoIecflyfsrODBFkmVzN1wSUMmb5VzNO6F3f5K4EdrN/wMLZD
- kK2Lni2hv/N0rOSka8w0ftfcbSwEkTZCFz15CC9rtA72qYw3OLSpsm+OGgkCoyD4t7U7wdspS
- 1z888lIeXifZaR1Yp48DM5ZkS4J/ukOzbN8inJF9iaUDRX9BdspBGzD/joh0oyKu3B7lfW8EF
- J+rODVhFd9AyyaW37kSnXlj9CZSWQzh8k9WhGLispGUv8iGwFdQhyNPz3RGM/PJyEHu1KXNZ/
- 3c+ghbknpEdoAOPaTaGM6waeu8Bmga+poWf1MgAwdlplRYO1B+MhIJhdeexbJiN23glvieVN+
- hU2zQJrJhVs1wvwCB+n9lOt5s4knlEDJqrMlfRhrtPRTDQMpRYde7opAKyetD1HjmZ93LjZl/
- h6fDfVFYD0BhNn3i3wbE5umokVDic+p8FWOXfCk19fW90ZNoymOemDBkLCmB4JWc/8KQW8Zpc
- i2SNMWTgmOQyyxFvavZq3UCqLNP+DLujSjm0PcWgqx9dIObJBBcdqratCaehSQHe4U9/L1Owp
- PH3MFN68DSuDYgDK9XE/XPdpZ2iyvnqok6rk4GjLzPR5OaUvV2Kf7kdeZUmkO2wrFt2ANe8VI
- lMpLG8fke8vaZckp8Zl+jwkmF1eAZtp+1CRdBUJC5fmXqbjrc/7x9xdI+nG74XAkCXOI=
+	id S1752718AbbF2PTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 11:19:31 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFJKpo013440
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 29 Jun 2015 17:19:20 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFJLQ2031250;
+	Mon, 29 Jun 2015 17:19:21 +0200
+In-Reply-To: <CAP8UFD23RTCzrv8j8Jbcx5ajMUjgVsO3P5_Fiv3Vwx5uaPwXrw@mail.gmail.com>
+	(Christian Couder's message of "Mon, 29 Jun 2015 12:55:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 29 Jun 2015 17:19:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5TFJKpo013440
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436195963.85679@+NbmdYdoKbfU4elX9QXnkA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272955>
 
-Hi Junio,
+Christian Couder <christian.couder@gmail.com> writes:
 
-On 2015-06-29 07:42, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> Hmm. Maybe we should still warn when there is no empty line finishing
->> the header explicitly, or at least make it FSCK_IGNORE by default so
->> that maintainers who like a stricter check can upgrade the condition
->> to an error?
-> 
-> [...]
-> 
-> And such a check can certainly be added in the future
+> On Mon, Jun 29, 2015 at 11:32 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> bisect is all about finding the commit where a property has changed,
+>
+> That is your interpretation of this command. On the man page there is:
+>
+>     git-bisect - Find by binary search the change that introduced a bug
+>
+> So its stated purpose is to find the first "bad" commit. Not to find a fix.
 
-True. I take my suggestion back.
+This is a limitation of the current bisect, but the discussion is
+precisely about removing this limitation.
 
-Thanks for the reality check,
-Dscho
+I still don't understand what "risk" we are taking by doing the
+bisection anyway. I can't imagine a case where we would harm the user by
+doing so.
+
+I just tested with Mercurial, and looking for a fix instead of a
+regression just works:
+
+$ hg bisect --good 4        
+$ hg bisect --bad 1         
+Testing changeset 2:d75a2d042c99 (3 changesets remaining, ~1 tests)
+1 files updated, 0 files merged, 0 files removed, 0 files unresolved
+$ hg bisect --bad  
+Testing changeset 3:9d27d9c02e28 (2 changesets remaining, ~1 tests)
+1 files updated, 0 files merged, 0 files removed, 0 files unresolved
+$ hg bisect --bad
+The first good revision is:
+changeset:   4:1dd9bb959eb6
+tag:         tip
+user:        Matthieu Moy <Matthieu.Moy@imag.fr>
+date:        Mon Jun 29 17:07:51 2015 +0200
+summary:     foo
+
+I don't see anything wrong with this.
+
+(OTOH, "hg bisect" does not accept revisions which aren't parent of each
+other)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
