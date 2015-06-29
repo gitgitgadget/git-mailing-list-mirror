@@ -1,321 +1,142 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v4 04/44] builtin-am: implement patch queue mechanism
-Date: Sun, 28 Jun 2015 22:08:11 -0700
-Message-ID: <CAGZ79kYxFceV=w3CQ1xFsT0igy2g=DX2JiV2hwqVLxq-OJ1AOg@mail.gmail.com>
-References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
-	<1435500366-31700-5-git-send-email-pyokagan@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
+Date: Mon, 29 Jun 2015 07:08:26 +0200
+Message-ID: <CAP8UFD0NjExQJHQWix1+zc4_k15e3+aC5vAv=dHipg-X+2y1sQ@mail.gmail.com>
+References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
+	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
+	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
+	<558F8B55.1070708@alum.mit.edu>
+	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
+	<558F9854.5080605@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 07:08:20 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 29 07:08:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9RIp-0004hH-48
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 07:08:19 +0200
+	id 1Z9RJ2-0004mY-VC
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 07:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612AbbF2FIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 01:08:15 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:36222 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752755AbbF2FIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 01:08:12 -0400
-Received: by ykdr198 with SMTP id r198so105438763ykd.3
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 22:08:11 -0700 (PDT)
+	id S1753020AbbF2FI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 01:08:29 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:35365 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752956AbbF2FI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 01:08:27 -0400
+Received: by wiga1 with SMTP id a1so60368452wig.0
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 22:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=HLq5TdwuD8vCu8M5dvg8QBU93KnK1uEzr+aKCFs81dQ=;
-        b=mXmrWlJhdf5oyVxmLvv0VB8cBg4WxPM+VMGqeFYS64Tg0rq00tIJco5VFR8DSGMapx
-         ehPYOuo8Q0KZQCCQVR0nw5wiIoNbjithA+mXVksoGvamZCoE74V+/d36A4gZuRj6erLQ
-         hBLk7FaoSk0H5pG8UaCv0PbXyKK/iiocb2bqMATRIIAm6yQNxcKhRXalVeFEN5wSIrJu
-         x6NNE5c+qqi8dR2WSzc9xZ+Nrg7uJNcOTx0A0SluRIiRB+vgUtADne0EH1qTkhCVqLDR
-         46LXpuCCVghysfxh7xjtGxFsm3nrdrg5RPR+MI8JFpyYfTndqSmeZDEGwaMKaoNejUgQ
-         ItAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=HLq5TdwuD8vCu8M5dvg8QBU93KnK1uEzr+aKCFs81dQ=;
-        b=JULEU6qfqXGBwQhZJxsNJ2QQvYXLCdm3JmS/u/uI6dMeaSBtfMooe5tyVfDBqPI2vw
-         foTRv/qnvrgr+3wdEbpeSErVZ9GNTwuqwXaKy508YkuBVJEFprUVSuUlO5ZBTrc7cMHi
-         K8MMGPnnFzlOKMENDT/h/yS9aghUxMDE2N4UDjnfFfwbSUQi8d2MdpnE8AjpRu+oC6RM
-         NxQ6TULfhu2izXSxkovTRxL5u81zJRgwLjK2UcX6+RXIucrzc53QBsrgwIml5oH6zxHB
-         MB4S3MLeUETF7JqqqaRxfYhvPwcGt6FSx0jKY5giENdE6P1Ub3mTKW2OrGDbzdDW3GpM
-         XSMQ==
-X-Gm-Message-State: ALoCoQnoI41CGUHcZOT+A0bOBCXH1DuO5B2wzW6pAyMEk9gyg+hYZnpZqp+oEkQJxudXvRFkJOxy
-X-Received: by 10.170.117.210 with SMTP id j201mr16762382ykb.56.1435554491318;
- Sun, 28 Jun 2015 22:08:11 -0700 (PDT)
-Received: by 10.37.4.80 with HTTP; Sun, 28 Jun 2015 22:08:11 -0700 (PDT)
-In-Reply-To: <1435500366-31700-5-git-send-email-pyokagan@gmail.com>
+        bh=eIVEXeyNWtzNeokMrCSownytdMRbNaV9pJZYMhkIB2g=;
+        b=tReSwylAe2sQTSIoJNc694bBeZ3jGvnvmzu3dNzojUYOMbOH5buL3zYY5atMQyo9/9
+         QDMbScFQN+Ryw/YM9XWy+xWdOZ/jU4HuMArBQlCdpGd3kOg93vzhzV0IeXXRf5BTnmEY
+         4lT0lYgwm6dl4cgDnR4bpkz1vaD4OZsNMWcWnZ7HzgnyeQgk4HHoniFCUQbj1foZv81j
+         LPDO10LVOq+Nh70qxrnAd2F33V28rNpdLxN3FIOEKsvAQyG9WIKUqbPg/XamI4ovSnAF
+         5C0IT+5R5A0c14v0P0idsjJDyEXPrma2Sf/04AQ5tJ6ib7WW2Kyg6E8blcsRvqOWKs+O
+         4hzg==
+X-Received: by 10.194.95.132 with SMTP id dk4mr27328213wjb.88.1435554506397;
+ Sun, 28 Jun 2015 22:08:26 -0700 (PDT)
+Received: by 10.194.221.229 with HTTP; Sun, 28 Jun 2015 22:08:26 -0700 (PDT)
+In-Reply-To: <558F9854.5080605@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272938>
 
-On Sun, Jun 28, 2015 at 7:05 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> git-am applies a series of patches. If the process terminates
-> abnormally, we want to be able to resume applying the series of patches.
-> This requires the session state to be saved in a persistent location.
+On Sun, Jun 28, 2015 at 8:46 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 06/28/2015 08:15 AM, Junio C Hamano wrote:
+>> On Sat, Jun 27, 2015 at 10:51 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>>
+>>> I would like to remind everybody of my old claim that it would be
+>>> possible to teach `git bisect` to infer by itself which term means
+>>> "older" and which term means "newer":
+>>>
+>>>     http://article.gmane.org/gmane.comp.version-control.git/244036
+>>
+>> But then one mistake at the beginning and the user will be on a wrong
+>> track during the whole bisect session, no? Unless you make absolutely
+>> clear when making the "intelligent" decision what Git inferred, that is.
 >
-> Implement the mechanism of a "patch queue", represented by 2 integers --
-> the index of the current patch we are applying and the index of the last
-> patch, as well as its lifecycle through the following functions:
+> Definitely, `git bisect` should tell the user what it inferred.
 >
-> * am_setup(), which will set up the state directory
->   $GIT_DIR/rebase-apply. As such, even if the process exits abnormally,
->   the last-known state will still persist.
+>> For something complex like bisect, I highly suspect that a tool that is
+>> more intelligent than the end users (more precisely, a tool that it thinks
+>> it is more intelligent) would hurt them more than it helps them.
 >
-> * am_load(), which is called if there is an am session in
->   progress, to load the last known state from the state directory so we
->   can resume applying patches.
+> This isn't about making bisect "more intelligent than the end users". It
+> is about not forcing the user cumbersomely to spell out redundant
+> information because the tool is too stupid.
 >
-> * am_run(), which will do the actual patch application. After applying a
->   patch, it calls am_next() to increment the current patch index. The
->   logic for applying and committing a patch is not implemented yet.
+> If I mark one commit "broken" and another commit "fixed", and the
+> "broken" commit is an ancestor of the "fixed" commit, then it is pretty
+> obvious that I am looking for the commit that caused the transition
+> "broken" -> "fixed". The same if I mark one commit "xyzzy" and the other
+> one "plugh".
 >
-> * am_destroy(), which is finally called when we successfully applied all
->   the patches in the queue, to clean up by removing the state directory
->   and its contents.
+> I understand that the user might make a mistake when marking the initial
+> commits, but as soon as bisect says
 >
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Stefan Beller <sbeller@google.com>
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
+>     Commit <sha1-abbrev> is an ancestor of <sha1-abbrev>, so I
+>     will look for the commit that caused the transition from
+>     "xyzzy" to "plugh".
 >
-> Notes:
->     v4
->
->     * Corrected docstring of read_state_file()
->
->     * Corrected docstring of am_state_release()
->
->     * am_state's "dir" field is now a char*. To help API users,
->       am_state_init() takes an additional const char *dir argument.
->
->     * The opt_* option variables, am_options[] and am_usage[] have been
->       moved into cmd_am()'s scope.
->
->     * signature of read_state_file() has been changed to
->       read_state_file(strbuf, state, file, trim)
->
->  builtin/am.c | 180 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 180 insertions(+)
->
-> diff --git a/builtin/am.c b/builtin/am.c
-> index fd32caf..5b4e9af 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -6,9 +6,174 @@
->  #include "cache.h"
->  #include "builtin.h"
->  #include "exec_cmd.h"
-> +#include "parse-options.h"
-> +#include "dir.h"
-> +
-> +struct am_state {
-> +       /* state directory path */
-> +       char *dir;
-> +
-> +       /* current and last patch numbers, 1-indexed */
-> +       int cur;
-> +       int last;
-> +};
-> +
-> +/**
-> + * Initializes am_state with the default values. The state directory is set to
-> + * dir.
-> + */
-> +static void am_state_init(struct am_state *state, const char *dir)
-> +{
-> +       memset(state, 0, sizeof(*state));
-> +
-> +       assert(dir);
-> +       state->dir = xstrdup(dir);
-> +}
-> +
-> +/**
-> + * Releases memory allocated by an am_state.
-> + */
-> +static void am_state_release(struct am_state *state)
-> +{
-> +       if (state->dir)
-> +               free(state->dir);
-> +}
-> +
-> +/**
-> + * Returns path relative to the am_state directory.
-> + */
-> +static inline const char *am_path(const struct am_state *state, const char *path)
-> +{
-> +       assert(state->dir);
-> +       assert(path);
-> +       return mkpath("%s/%s", state->dir, path);
-> +}
-> +
-> +/**
-> + * Returns 1 if there is an am session in progress, 0 otherwise.
-> + */
-> +static int am_in_progress(const struct am_state *state)
-> +{
-> +       struct stat st;
-> +
-> +       if (lstat(state->dir, &st) < 0 || !S_ISDIR(st.st_mode))
-> +               return 0;
-> +       if (lstat(am_path(state, "last"), &st) || !S_ISREG(st.st_mode))
-> +               return 0;
-> +       if (lstat(am_path(state, "next"), &st) || !S_ISREG(st.st_mode))
-> +               return 0;
-> +       return 1;
-> +}
-> +
-> +/**
-> + * Reads the contents of `file` in the `state` directory into `sb`. Returns the
-> + * number of bytes read on success, -1 if the file does not exist. If `trim` is
-> + * set, trailing whitespace will be removed.
-> + */
-> +static int read_state_file(struct strbuf *sb, const struct am_state *state,
-> +                       const char *file, int trim)
-> +{
-> +       strbuf_reset(sb);
-> +
-> +       if (strbuf_read_file(sb, am_path(state, file), 0) >= 0) {
-> +               if (trim)
-> +                       strbuf_trim(sb);
-> +
-> +               return sb->len;
-> +       }
-> +
-> +       if (errno == ENOENT)
-> +               return -1;
-> +
-> +       die_errno(_("could not read '%s'"), am_path(state, file));
-> +}
-> +
-> +/**
-> + * Loads state from disk.
-> + */
-> +static void am_load(struct am_state *state)
-> +{
-> +       struct strbuf sb = STRBUF_INIT;
-> +
-> +       if (read_state_file(&sb, state, "next", 1) < 0)
-> +               die("BUG: state file 'next' does not exist");
-> +       state->cur = strtol(sb.buf, NULL, 10);
-> +
-> +       if (read_state_file(&sb, state, "last", 1) < 0)
-> +               die("BUG: state file 'last' does not exist");
-> +       state->last = strtol(sb.buf, NULL, 10);
-> +
-> +       strbuf_release(&sb);
-> +}
-> +
-> +/**
-> + * Removes the am_state directory, forcefully terminating the current am
-> + * session.
-> + */
-> +static void am_destroy(const struct am_state *state)
-> +{
-> +       struct strbuf sb = STRBUF_INIT;
-> +
-> +       strbuf_addstr(&sb, state->dir);
-> +       remove_dir_recursively(&sb, 0);
-> +       strbuf_release(&sb);
-> +}
-> +
-> +/**
-> + * Setup a new am session for applying patches
-> + */
-> +static void am_setup(struct am_state *state)
-> +{
-> +       if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
-> +               die_errno(_("failed to create directory '%s'"), state->dir);
-> +
-> +       /*
-> +        * NOTE: Since the "next" and "last" files determine if an am_state
-> +        * session is in progress, they should be written last.
-> +        */
-> +
-> +       write_file(am_path(state, "next"), 1, "%d", state->cur);
-> +
-> +       write_file(am_path(state, "last"), 1, "%d", state->last);
-> +}
-> +
-> +/**
-> + * Increments the patch pointer, and cleans am_state for the application of the
-> + * next patch.
-> + */
-> +static void am_next(struct am_state *state)
-> +{
-> +       state->cur++;
-> +       write_file(am_path(state, "next"), 1, "%d", state->cur);
-> +}
-> +
-> +/**
-> + * Applies all queued mail.
-> + */
-> +static void am_run(struct am_state *state)
-> +{
-> +       while (state->cur <= state->last) {
-> +
-> +               /* TODO: Patch application not implemented yet */
+> then I hope the user will notice and correct her/his mistake.
 
-(optional nit, bikeshedding)
-In conjunction with the previous patch I just wonder when we put a
-TODO and when we want to put a NEEDSWORK, or if we're being
-inconsistent here as both issues will be resolved in a later patch
-in the series.
+This looks fragile to me. Unfortunately many users will probably not
+read it and continue, and then spend a lot of time later trying to
+understand what went wrong, not remembering about the message at all.
 
-> +
-> +               am_next(state);
-> +       }
-> +
-> +       am_destroy(state);
-> +}
+The message looks like an informative message. At least we should add
+something like "Please check that it is what you want to do and abort
+with 'git bisect reset' if it is not."
+
+> For example, a session could be started with
 >
->  int cmd_am(int argc, const char **argv, const char *prefix)
->  {
-> +       struct am_state state;
-> +
-> +       const char * const usage[] = {
-> +               N_("git am [options] [(<mbox>|<Maildir>)...]"),
-> +               NULL
-> +       };
-> +
-> +       struct option options[] = {
-> +               OPT_END()
-> +       };
+>     git bisect start --mark=broken <committish> --mark=fixed <committish>
+
+This look nearly the same as:
+
+git bisect start --name-old=broken --broken=<committish>
+--name-new=fixed --fixed=<committish>
+
+except that it looks safer and more backward compatible to me with
+--name-old and --name-new.
+
+By the way we could use "mark" or "term" instead of "name" in the
+option name (like --mark-old or --term-old) and in the code too if it
+looks clearer.
+
+> and from then on
 >
->         /*
->          * NEEDSWORK: Once all the features of git-am.sh have been
-> @@ -25,5 +190,20 @@ int cmd_am(int argc, const char **argv, const char *prefix)
->                 setup_work_tree();
->         }
+>     git bisect broken
+>     git bisect fixed
 >
-> +       git_config(git_default_config, NULL);
-> +
-> +       am_state_init(&state, git_path("rebase-apply"));
-> +
-> +       argc = parse_options(argc, argv, prefix, options, usage, 0);
-> +
-> +       if (am_in_progress(&state))
-> +               am_load(&state);
-> +       else
-> +               am_setup(&state);
-> +
-> +       am_run(&state);
-> +
-> +       am_state_release(&state);
-> +
->         return 0;
->  }
-> --
-> 2.5.0.rc0.76.gb2c6e93
+> Or, if the user doesn't want to specify both endpoints on the `start` line,
 >
+>     git bisect start
+>     git bisect --mark=broken [<committish>]
+>     git bisect --mark=fixed [<committish>]
+
+We could do that too with:
+
+     git bisect start
+     git bisect --name-old=broken broken [<committish>]
+     git bisect --name-new=fixed fixed [<committish>]
+
+and/or:
+
+     git bisect start
+     git bisect --name-old=broken --broken=[<committish>]
+     git bisect --name-new=fixed --fixed=[<committish>]
