@@ -1,7 +1,7 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 5/7] refs: new public ref function: safe_create_reflog
-Date: Mon, 29 Jun 2015 16:17:54 -0400
-Message-ID: <1435609076-8592-6-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v6 6/7] git-reflog: add create and exists functions
+Date: Mon, 29 Jun 2015 16:17:55 -0400
+Message-ID: <1435609076-8592-7-git-send-email-dturner@twopensource.com>
 References: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
@@ -11,157 +11,209 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9fWA-0006i7-7h
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:19:02 +0200
+	id 1Z9fWA-0006i7-QJ
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbbF2US5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 16:18:57 -0400
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:35627 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752913AbbF2USq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 16:18:46 -0400
-Received: by qcmc1 with SMTP id c1so46458846qcm.2
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:18:45 -0700 (PDT)
+	id S1753485AbbF2US7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 16:18:59 -0400
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:34215 "EHLO
+	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192AbbF2USs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 16:18:48 -0400
+Received: by qcji3 with SMTP id i3so46490317qcj.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:18:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Jlzfn8d5ATFXMocZyXokmhds8qj7dTKfWNImLynRijY=;
-        b=CGJBZrjDGuFpi5pAlUnOfiZt8tlAjvVNsJZQ9WUBeBDPQYE5tewE+qIIPV664Ei1Ts
-         mNY3F3+sjOZbASAHRtpoBnm0mCxRfib6vOGQXcU8FwlpIuhjRFDe0k8DedYy4uXXdj8k
-         6WApvK+lZp48AarekOozI0SPGaQdMiNqsYHpSs9NzW4kgrVCA+weg773jE9Hki8azPzf
-         2LtYDLEmR5sZ2qxnUMB/7Z00NtZ6ljJB8qFlgcBs5kz4YQyvY10d1EXan9RyhApWV+Eq
-         +BCeuEnokNgWBalO3HRzpMIxCuDxzCG2KPmnVfRba/tovTrTPrjsFdJPg9H4EKNO1MAL
-         x97Q==
-X-Gm-Message-State: ALoCoQn80r8F/xscyvbYZ3Ej4jCiAN7ZtH23DeRHg4/m+ZFHPixLE9zis5YoLB6rQqHXi6xM8aNv
-X-Received: by 10.140.41.9 with SMTP id y9mr21319729qgy.28.1435609125789;
-        Mon, 29 Jun 2015 13:18:45 -0700 (PDT)
+        bh=y9vO/NkOnG3S93d1xlQOyi5ZjUd9EH7Qi9Sz6WaR8FM=;
+        b=bN83AIVD9sCEAneaDKsmvR7rnBjlwc5NqWXG21xFIbYngvEBTIXxbpF4YHWyEhzfsu
+         R5yassOsuKeitVi5vu0Kgab7S/ETTYwChZ3kncuMnAyxY0XU058LwsO62dd/ytv4gizM
+         FPDOHCpsmNRnb2X0aewOmq18cTHYcayKU8dqZ1BxiDLvu913MIFowVU+uW9bJw+AY+kF
+         ytFpYI12WnHrslqpdalJpa4CYi3TNMQ1UZVIvbrS8QuqTQlSQcEIuf5UYXPBxIRAIgnv
+         DR4FzCJdLp8DhCt/gbsHgx/zL+A4RicwFmVM7UQBs5JJzH/eRSRVaIlOiQAnOA/bznbt
+         liRw==
+X-Gm-Message-State: ALoCoQkKiveFmbbpdmKPKUErZKiWIpEVO01rQqzr3ENvc+ku6xzT+toMrkZFwbHed+1fi0WwEV3P
+X-Received: by 10.55.18.158 with SMTP id 30mr34932962qks.17.1435609127211;
+        Mon, 29 Jun 2015 13:18:47 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by mx.google.com with ESMTPSA id 139sm11906090qhx.22.2015.06.29.13.18.44
+        by mx.google.com with ESMTPSA id 139sm11906090qhx.22.2015.06.29.13.18.45
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 29 Jun 2015 13:18:45 -0700 (PDT)
+        Mon, 29 Jun 2015 13:18:46 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273007>
 
-The safe_create_reflog function creates a reflog, if it does not
-already exist.
+These are necessary because alternate ref backends might store reflogs
+somewhere other than .git/logs.  Code that now directly manipulates
+.git/logs should instead go through git-reflog.
 
-The log_ref_setup function becomes private and gains a force_create
-parameter to force the creation of a reflog even if log_all_ref_updates
-is false or the refname is not one of the special refnames.
-
-The new parameter also reduces the need to store, modify, and restore
-the log_all_ref_updates global before reflog creation.
-
-In a moment, we will use this to add reflog creation commands to
-git-reflog.
+In a moment, we will use these functions to make git stash work with
+alternate ref backends.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- builtin/checkout.c | 10 +---------
- refs.c             | 25 +++++++++++++++++++++----
- refs.h             |  2 +-
- 3 files changed, 23 insertions(+), 14 deletions(-)
+ Documentation/git-reflog.txt | 10 ++++++
+ builtin/reflog.c             | 75 +++++++++++++++++++++++++++++++++++++++++++-
+ t/t1411-reflog-show.sh       | 12 +++++++
+ 3 files changed, 96 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 93f63d3..9f68399 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -620,19 +620,11 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 	if (opts->new_branch) {
- 		if (opts->new_orphan_branch) {
- 			if (opts->new_branch_log && !log_all_ref_updates) {
--				int temp;
--				struct strbuf log_file = STRBUF_INIT;
--				int ret;
- 				const char *ref_name;
- 				struct strbuf err = STRBUF_INIT;
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 5e7908e..2bf8aa6 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -23,6 +23,8 @@ depending on the subcommand:
+ 	[--dry-run] [--verbose] [--all | <refs>...]
+ 'git reflog delete' [--rewrite] [--updateref]
+ 	[--dry-run] [--verbose] ref@\{specifier\}...
++'git reflog create' <refs>...
++'git reflog exists' <ref>
  
- 				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
--				temp = log_all_ref_updates;
--				log_all_ref_updates = 1;
--				ret = log_ref_setup(ref_name, &log_file, &err);
--				log_all_ref_updates = temp;
--				strbuf_release(&log_file);
--				if (ret) {
-+				if (safe_create_reflog(ref_name, &err, 1)) {
- 					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
- 						opts->new_orphan_branch, err.buf);
- 					strbuf_release(&err);
-diff --git a/refs.c b/refs.c
-index 30e81ba..1e53ef0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3128,8 +3128,14 @@ static int should_autocreate_reflog(const char *refname)
- 		!strcmp(refname, "HEAD");
- }
+ Reference logs, or "reflogs", record when the tips of branches and
+ other references were updated in the local repository. Reflogs are
+@@ -52,6 +54,14 @@ argument must be an _exact_ entry (e.g. "`git reflog delete
+ master@{2}`"). This subcommand is also typically not used directly by
+ end users.
  
--/* This function will fill in *err and return -1 on failure */
--int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
-+/*
-+ * This function creates a reflog for a ref.  If force_create = 0, the
-+ * reflog will only be created for certain refs (those for which
-+ * should_autocreate_reflog returns non-zero.  Otherwise, it will be
-+ * created regardless of the ref name.  This function will fill in *err
-+ * and return -1 on failure
-+ */
-+static int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err, int force_create)
- {
- 	int logfd, oflags = O_APPEND | O_WRONLY;
- 	char *logfile;
-@@ -3138,7 +3144,7 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
- 	logfile = sb_logfile->buf;
- 	/* make sure the rest of the function can't change "logfile" */
- 	sb_logfile = NULL;
--	if (should_autocreate_reflog(refname)) {
-+	if (force_create || should_autocreate_reflog(refname)) {
- 		if (safe_create_leading_directories(logfile) < 0) {
- 			strbuf_addf(err, "unable to create directory for %s. "
- 				    "%s", logfile, strerror(errno));
-@@ -3173,6 +3179,17 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
- 	return 0;
- }
- 
++The "create" subcommand creates a reflog for one or more refs. Most
++refs (those under refs/heads, refs/remotes, and refs/tags) will
++automatically have reflogs created. Other refs will not. This command
++allows manual ref creation.
 +
-+int safe_create_reflog(const char *refname, struct strbuf *err, int force_create)
++The "exists" subcommand checks whether a ref has a reflog.  It exists
++with zero status if the reflog exists, and non-zero status if it does
++not.
+ 
+ OPTIONS
+ -------
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index c2eb8ff..3080865 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -13,6 +13,10 @@ static const char reflog_expire_usage[] =
+ "git reflog expire [--expire=<time>] [--expire-unreachable=<time>] [--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] [--verbose] [--all] <refs>...";
+ static const char reflog_delete_usage[] =
+ "git reflog delete [--rewrite] [--updateref] [--dry-run | -n] [--verbose] <refs>...";
++static const char reflog_create_usage[] =
++"git reflog create <refs>...";
++static const char reflog_exists_usage[] =
++"git reflog exists <ref>";
+ 
+ static unsigned long default_reflog_expire;
+ static unsigned long default_reflog_expire_unreachable;
+@@ -699,12 +703,75 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 	return status;
+ }
+ 
++static int cmd_reflog_create(int argc, const char **argv, const char *prefix)
 +{
-+	int ret;
-+	struct strbuf sb = STRBUF_INIT;
++	int i, status = 0, start = 0;
++	struct strbuf err = STRBUF_INIT;
 +
-+	ret = log_ref_setup(refname, &sb, err, force_create);
-+	strbuf_release(&sb);
-+	return ret;
++	for (i = 1; i < argc; i++) {
++		const char *arg = argv[i];
++		if (!strcmp(arg, "--")) {
++			i++;
++			break;
++		}
++		else if (arg[0] == '-')
++			usage(reflog_create_usage);
++		else
++			break;
++	}
++
++	start = i;
++
++	if (argc - start < 1)
++		return error("Nothing to create?");
++
++	for (i = start; i < argc; i++) {
++		if (check_refname_format(argv[i], REFNAME_ALLOW_ONELEVEL))
++			die("invalid ref format: %s", argv[i]);
++	}
++	for (i = start; i < argc; i++) {
++		if (safe_create_reflog(argv[i], &err, 1)) {
++			error("could not create reflog %s: %s", argv[i],
++			      err.buf);
++			status = 1;
++			strbuf_release(&err);
++		}
++	}
++	return status;
 +}
 +
- static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 			    const unsigned char *new_sha1,
- 			    const char *committer, const char *msg)
-@@ -3209,7 +3226,7 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
- 
--	result = log_ref_setup(refname, sb_log_file, err);
-+	result = log_ref_setup(refname, sb_log_file, err, 0);
- 
- 	if (result)
- 		return result;
-diff --git a/refs.h b/refs.h
-index debdefc..3b90e16 100644
---- a/refs.h
-+++ b/refs.h
-@@ -228,7 +228,7 @@ int pack_refs(unsigned int flags);
++static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
++{
++	int i, start = 0;
++
++	for (i = 1; i < argc; i++) {
++		const char *arg = argv[i];
++		if (!strcmp(arg, "--")) {
++			i++;
++			break;
++		}
++		else if (arg[0] == '-')
++			usage(reflog_exists_usage);
++		else
++			break;
++	}
++
++	start = i;
++
++	if (argc - start != 1)
++		usage(reflog_exists_usage);
++
++	if (check_refname_format(argv[start], REFNAME_ALLOW_ONELEVEL))
++		die("invalid ref format: %s", argv[start]);
++	return !reflog_exists(argv[start]);
++}
++
  /*
-  * Setup reflog before using. Fill in err and return -1 on failure.
+  * main "reflog"
   */
--int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
-+int safe_create_reflog(const char *refname, struct strbuf *err, int force_create);
  
- /** Reads log for the value of ref during at_time. **/
- extern int read_ref_at(const char *refname, unsigned int flags,
+ static const char reflog_usage[] =
+-"git reflog [ show | expire | delete ]";
++"git reflog [ show | expire | delete | create | exists ]";
+ 
+ int cmd_reflog(int argc, const char **argv, const char *prefix)
+ {
+@@ -724,5 +791,11 @@ int cmd_reflog(int argc, const char **argv, const char *prefix)
+ 	if (!strcmp(argv[1], "delete"))
+ 		return cmd_reflog_delete(argc - 1, argv + 1, prefix);
+ 
++	if (!strcmp(argv[1], "create"))
++		return cmd_reflog_create(argc - 1, argv + 1, prefix);
++
++	if (!strcmp(argv[1], "exists"))
++		return cmd_reflog_exists(argc - 1, argv + 1, prefix);
++
+ 	return cmd_log_reflog(argc, argv, prefix);
+ }
+diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+index 6f47c0d..6e1abe7 100755
+--- a/t/t1411-reflog-show.sh
++++ b/t/t1411-reflog-show.sh
+@@ -166,4 +166,16 @@ test_expect_success 'git log -g -p shows diffs vs. parents' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'reflog exists works' '
++	git reflog exists refs/heads/master &&
++	! git reflog exists refs/heads/nonexistent
++'
++
++test_expect_success 'reflog create works' '
++	git update-ref non-refs-dir HEAD &&
++	! git reflog exists non-refs-dir &&
++	git reflog create non-refs-dir &&
++	git reflog exists non-refs-dir
++'
++
+ test_done
 -- 
 2.0.4.315.gad8727a-twtrsrc
