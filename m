@@ -1,107 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v11 06/10] bisect: don't mix option parsing and non-trivial code
-Date: Mon, 29 Jun 2015 13:28:36 -0700
-Message-ID: <xmqqbnfy9s3v.fsf@gitster.dls.corp.google.com>
-References: <1435592435-27914-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435592435-27914-7-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH v6 0/7] refs backend preamble
+Date: Mon, 29 Jun 2015 13:31:36 -0700
+Message-ID: <xmqq7fqm9ryv.fsf@gitster.dls.corp.google.com>
+References: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 29 22:28:46 2015
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 22:31:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9ffZ-0004d5-M3
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:28:46 +0200
+	id 1Z9fiS-0006lQ-QW
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752003AbbF2U2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 16:28:41 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:35064 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbbF2U2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 16:28:39 -0400
-Received: by igblr2 with SMTP id lr2so60983288igb.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:28:39 -0700 (PDT)
+	id S1752102AbbF2Ubl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 16:31:41 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36251 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752560AbbF2Ubj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 16:31:39 -0400
+Received: by igrv9 with SMTP id v9so37384171igr.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=NdjiUpQ2CaNah2MUlW5ABsTgsmajCGwbLyVZpSN+HUs=;
-        b=UaBGBUE4GhEeL6y07ipYju9ai5THBSSpxSNWScq+sRi7z9hECqigiMDBGcLPyb6cTd
-         RlJX5NDCdvMEiUl2TZuUw/eq5VmPMLj7anoP20B08EuCsPXc/K2Yqi6BAAIiz+/nfgYC
-         51cglg2xGeq0wI8Hjmjy2unEPCf4dIM/SMJgQ9T2TlicIKOU5EQz/3DN5g61weVyzawr
-         oftVRAplijd8Uaa60Y8VsXUq3p3+DmWF8j2D68OTiZNaTRqscPcBlQ5IM56ORNwkuSur
-         Okou9OENxHCJ2Wn7B2r2Q67I5MUdmYpDrMT2NS78Ru0aTTa1eWFWFCkF6YeLh6uOKHUE
-         W1rQ==
-X-Received: by 10.107.38.139 with SMTP id m133mr23171695iom.51.1435609719191;
-        Mon, 29 Jun 2015 13:28:39 -0700 (PDT)
+        bh=BvZfJjSvW66eKdsCGLhN9dNkKLKsW2HrYNdXwOjixAk=;
+        b=Oiqo52vbxiw2pi4i/ZkwGezPLwlVn+gRoPSxepbEJvcZh1OL36380srpzS8ROncOfj
+         dFarlwp2W4kQ1fIc9USJKTn9q26S47mYVFlV0AnginzLt1hA+WODD6SN+FOtPCGgDMZs
+         85kbJMRan9sDIUzliqufp0TGDpVnjDTDxPAMnkHsEmbG+mp8x8qL3cSqRBrIpbm6syct
+         KTfeARk6XBKEa1PjaEffKdniwew6Hkz0GU5Lv8rRNOeassAIyVoHdzuOKeiIJCLOngqV
+         cnILE7Zbf1QF3xwbT38nxumnwncHIybUdm+ZXASdcDe0bZaWHwewWaAJ8EDWICo10Zz0
+         Cziw==
+X-Received: by 10.50.50.98 with SMTP id b2mr17960130igo.42.1435609899125;
+        Mon, 29 Jun 2015 13:31:39 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:946c:210:22fc:378d])
-        by mx.google.com with ESMTPSA id i7sm6200700igt.18.2015.06.29.13.28.38
+        by mx.google.com with ESMTPSA id j20sm6208796igt.16.2015.06.29.13.31.38
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Jun 2015 13:28:38 -0700 (PDT)
-In-Reply-To: <1435592435-27914-7-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Mon, 29 Jun 2015 17:40:31 +0200")
+        Mon, 29 Jun 2015 13:31:38 -0700 (PDT)
+In-Reply-To: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Mon, 29 Jun 2015 16:17:49 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273014>
 
-Matthieu, are you allowing your editor to corrupt the number of
-lines in the hunk on the @@ ... @@ hunk header?  "diff" mode in
-Emacs does that, and there may be other editors that has the same
-bug, but please be careful---they make the patch unapplicable.
+David Turner <dturner@twopensource.com> writes:
 
-Count the preimage lines in the hunk below.  I count 24 but somebody
-is lying there.
+> Minor formatting fixes from Junio Hamano.
 
-> @@ -102,25 +103,27 @@ bisect_start() {
->  				die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
->  				break
->  			}
-> -
-> -			# The user ran "git bisect start <sha1>
-> -			# <sha1>", hence did not explicitly specify
-> -			# the terms, but we are already starting to
-> -			# set references named with the default terms,
-> -			# and won't be able to change afterwards.
-> -			must_write_terms=1
-> -
-> -			case $bad_seen in
-> -			0) state=$TERM_BAD ; bad_seen=1 ;;
-> -			*) state=$TERM_GOOD ;;
-> -			esac
-> -			eval="$eval bisect_write '$state' '$rev' 'nolog' &&"
-> +			revs="$revs $rev"
->  			shift
->  			;;
->  		esac
->  	done
->  
-> +	for rev in $revs
-> +	do
-> +		# The user ran "git bisect start <sha1>
-> +		# <sha1>", hence did not explicitly specify
-> +		# the terms, but we are already starting to
-> +		# set references named with the default terms,
-> +		# and won't be able to change afterwards.
-> +		must_write_terms=1
-> +
-> +		case $bad_seen in
-> +		0) state=$TERM_BAD ; bad_seen=1 ;;
-> +		*) state=$TERM_GOOD ;;
-> +		esac
-> +		eval="$eval bisect_write '$state' '$rev' 'nolog' &&"
-> +	done
->  	#
->  	# Verify HEAD.
->  	#
-> -- 
-> 2.5.0.rc0.10.gd2bff5d
+There is another.
+
+By the way, "unused variable" is not a formatting fix.
+
+
+ git-bisect.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index dddcc89..2fd8ea6 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -210,7 +210,7 @@ check_expected_revs() {
+ }
+ 
+ bisect_head_exists() {
+-    git rev-parse --quiet --verify "BISECT_HEAD" >/dev/null
++	git rev-parse --quiet --verify "BISECT_HEAD" >/dev/null
+ }
+ 
+ bisect_skip() {
