@@ -1,102 +1,167 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 3/7] bisect: treat BISECT_HEAD as a ref
-Date: Mon, 29 Jun 2015 16:17:52 -0400
-Message-ID: <1435609076-8592-4-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v6 5/7] refs: new public ref function: safe_create_reflog
+Date: Mon, 29 Jun 2015 16:17:54 -0400
+Message-ID: <1435609076-8592-6-git-send-email-dturner@twopensource.com>
 References: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Mon Jun 29 22:18:59 2015
+X-From: git-owner@vger.kernel.org Mon Jun 29 22:19:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9fW5-0006eX-92
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:18:57 +0200
+	id 1Z9fWA-0006i7-7h
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbbF2USu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 16:18:50 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:35350 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752434AbbF2USo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 16:18:44 -0400
-Received: by qkbp125 with SMTP id p125so100394226qkb.2
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:18:43 -0700 (PDT)
+	id S1753455AbbF2US5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 16:18:57 -0400
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:35627 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752913AbbF2USq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 16:18:46 -0400
+Received: by qcmc1 with SMTP id c1so46458846qcm.2
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:18:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=G+d7zRLkFF5CfrhVBjIKEsCwskG3Zs2NWcIBJs28jZQ=;
-        b=akf/mMzNJ3saDRzEVQ/xcN9XRSaZbJGxRaBMt70mnQZe1x6PUrPEgpnnvHdTUAwuOi
-         Wi287DNgVFDL5vnj5y7NPzjdwPV89RZqHFaBW6AnwHyy/gY56z+/LfI67uXqteW0rTa8
-         HqIrIsm70UUp+g97l4I9FuRFe1DtuMxL6to0RgG9wG1aFYhi51KdX+on8MALamqBJ1oX
-         PoCPLtYKMTZJi3wLs2zI7i65x7QiwQtWMzFTT56t7jo5MAZ+RozsTASL1rW6o+Qs6MqD
-         veX4BxMlyqUrSadsbvl4OGCcRmpDG95EfClbaPKTGpJjuzP/Fl9H0YPQp5bu51t8wl//
-         8Q/A==
-X-Gm-Message-State: ALoCoQnGsOCnamLKEjEAFbPlW730nnP/Q/Yo3u0NMiAvPFiuQac72NnHtNh5uSMNk4inJVVyWZVM
-X-Received: by 10.140.42.247 with SMTP id c110mr21244301qga.100.1435609123524;
-        Mon, 29 Jun 2015 13:18:43 -0700 (PDT)
+        bh=Jlzfn8d5ATFXMocZyXokmhds8qj7dTKfWNImLynRijY=;
+        b=CGJBZrjDGuFpi5pAlUnOfiZt8tlAjvVNsJZQ9WUBeBDPQYE5tewE+qIIPV664Ei1Ts
+         mNY3F3+sjOZbASAHRtpoBnm0mCxRfib6vOGQXcU8FwlpIuhjRFDe0k8DedYy4uXXdj8k
+         6WApvK+lZp48AarekOozI0SPGaQdMiNqsYHpSs9NzW4kgrVCA+weg773jE9Hki8azPzf
+         2LtYDLEmR5sZ2qxnUMB/7Z00NtZ6ljJB8qFlgcBs5kz4YQyvY10d1EXan9RyhApWV+Eq
+         +BCeuEnokNgWBalO3HRzpMIxCuDxzCG2KPmnVfRba/tovTrTPrjsFdJPg9H4EKNO1MAL
+         x97Q==
+X-Gm-Message-State: ALoCoQn80r8F/xscyvbYZ3Ej4jCiAN7ZtH23DeRHg4/m+ZFHPixLE9zis5YoLB6rQqHXi6xM8aNv
+X-Received: by 10.140.41.9 with SMTP id y9mr21319729qgy.28.1435609125789;
+        Mon, 29 Jun 2015 13:18:45 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by mx.google.com with ESMTPSA id 139sm11906090qhx.22.2015.06.29.13.18.42
+        by mx.google.com with ESMTPSA id 139sm11906090qhx.22.2015.06.29.13.18.44
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 29 Jun 2015 13:18:42 -0700 (PDT)
+        Mon, 29 Jun 2015 13:18:45 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273006>
 
-Instead of directly writing to and reading from files in
-$GIT_DIR, use ref API to interact with BISECT_HEAD.
+The safe_create_reflog function creates a reflog, if it does not
+already exist.
+
+The log_ref_setup function becomes private and gains a force_create
+parameter to force the creation of a reflog even if log_all_ref_updates
+is false or the refname is not one of the special refnames.
+
+The new parameter also reduces the need to store, modify, and restore
+the log_all_ref_updates global before reflog creation.
+
+In a moment, we will use this to add reflog creation commands to
+git-reflog.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- git-bisect.sh | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ builtin/checkout.c | 10 +---------
+ refs.c             | 25 +++++++++++++++++++++----
+ refs.h             |  2 +-
+ 3 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index ae3fec2..dddcc89 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -35,7 +35,7 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 93f63d3..9f68399 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -620,19 +620,11 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 	if (opts->new_branch) {
+ 		if (opts->new_orphan_branch) {
+ 			if (opts->new_branch_log && !log_all_ref_updates) {
+-				int temp;
+-				struct strbuf log_file = STRBUF_INIT;
+-				int ret;
+ 				const char *ref_name;
+ 				struct strbuf err = STRBUF_INIT;
  
- bisect_head()
- {
--	if test -f "$GIT_DIR/BISECT_HEAD"
-+	if bisect_head_exists
- 	then
- 		echo BISECT_HEAD
- 	else
-@@ -209,6 +209,10 @@ check_expected_revs() {
- 	done
+ 				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
+-				temp = log_all_ref_updates;
+-				log_all_ref_updates = 1;
+-				ret = log_ref_setup(ref_name, &log_file, &err);
+-				log_all_ref_updates = temp;
+-				strbuf_release(&log_file);
+-				if (ret) {
++				if (safe_create_reflog(ref_name, &err, 1)) {
+ 					fprintf(stderr, _("Can not do reflog for '%s'. %s\n"),
+ 						opts->new_orphan_branch, err.buf);
+ 					strbuf_release(&err);
+diff --git a/refs.c b/refs.c
+index 30e81ba..1e53ef0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3128,8 +3128,14 @@ static int should_autocreate_reflog(const char *refname)
+ 		!strcmp(refname, "HEAD");
  }
  
-+bisect_head_exists() {
-+    git rev-parse --quiet --verify "BISECT_HEAD" >/dev/null
+-/* This function will fill in *err and return -1 on failure */
+-int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err)
++/*
++ * This function creates a reflog for a ref.  If force_create = 0, the
++ * reflog will only be created for certain refs (those for which
++ * should_autocreate_reflog returns non-zero.  Otherwise, it will be
++ * created regardless of the ref name.  This function will fill in *err
++ * and return -1 on failure
++ */
++static int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf *err, int force_create)
+ {
+ 	int logfd, oflags = O_APPEND | O_WRONLY;
+ 	char *logfile;
+@@ -3138,7 +3144,7 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+ 	logfile = sb_logfile->buf;
+ 	/* make sure the rest of the function can't change "logfile" */
+ 	sb_logfile = NULL;
+-	if (should_autocreate_reflog(refname)) {
++	if (force_create || should_autocreate_reflog(refname)) {
+ 		if (safe_create_leading_directories(logfile) < 0) {
+ 			strbuf_addf(err, "unable to create directory for %s. "
+ 				    "%s", logfile, strerror(errno));
+@@ -3173,6 +3179,17 @@ int log_ref_setup(const char *refname, struct strbuf *sb_logfile, struct strbuf
+ 	return 0;
+ }
+ 
++
++int safe_create_reflog(const char *refname, struct strbuf *err, int force_create)
++{
++	int ret;
++	struct strbuf sb = STRBUF_INIT;
++
++	ret = log_ref_setup(refname, &sb, err, force_create);
++	strbuf_release(&sb);
++	return ret;
 +}
 +
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -310,7 +314,7 @@ bisect_next() {
- 	bisect_next_check good
+ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
+ 			    const unsigned char *new_sha1,
+ 			    const char *committer, const char *msg)
+@@ -3209,7 +3226,7 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
+ 	if (log_all_ref_updates < 0)
+ 		log_all_ref_updates = !is_bare_repository();
  
- 	# Perform all bisection computation, display and checkout
--	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
-+	git bisect--helper --next-all $(bisect_head_exists && echo --no-checkout)
- 	res=$?
+-	result = log_ref_setup(refname, sb_log_file, err);
++	result = log_ref_setup(refname, sb_log_file, err, 0);
  
- 	# Check if we should exit because bisection is finished
-@@ -377,7 +381,7 @@ bisect_reset() {
- 		usage ;;
- 	esac
+ 	if (result)
+ 		return result;
+diff --git a/refs.h b/refs.h
+index debdefc..3b90e16 100644
+--- a/refs.h
++++ b/refs.h
+@@ -228,7 +228,7 @@ int pack_refs(unsigned int flags);
+ /*
+  * Setup reflog before using. Fill in err and return -1 on failure.
+  */
+-int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
++int safe_create_reflog(const char *refname, struct strbuf *err, int force_create);
  
--	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
-+	if ! bisect_head_exists && ! git checkout "$branch" --
- 	then
- 		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
- Try 'git bisect reset <commit>'.")"
+ /** Reads log for the value of ref during at_time. **/
+ extern int read_ref_at(const char *refname, unsigned int flags,
 -- 
 2.0.4.315.gad8727a-twtrsrc
