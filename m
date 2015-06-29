@@ -1,105 +1,72 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 04/11] for-each-ref: add '--points-at' option
-Date: Tue, 30 Jun 2015 01:25:11 +0530
-Message-ID: <CAOLa=ZQTPTdYYphPcQaGtUmhusNAOc7o9jB_mM5KHc0XNWFhPQ@mail.gmail.com>
-References: <CAOLa=ZRHoFgELMtxbZpfTvu5-S7nMTguiuOiMQDnoOs3tHXb8A@mail.gmail.com>
- <1435222633-32007-1-git-send-email-karthik.188@gmail.com> <1435222633-32007-4-git-send-email-karthik.188@gmail.com>
- <xmqqioa6be6s.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Jun 2015, #06; Wed, 24)
+Date: Mon, 29 Jun 2015 22:02:09 +0200
+Message-ID: <5591A441.2010400@web.de>
+References: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 21:55:49 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 29 22:02:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9f9f-00086Y-MT
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 21:55:48 +0200
+	id 1Z9fFs-0003mg-Mu
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbbF2Tzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 15:55:42 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:35139 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752442AbbF2Tzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 15:55:41 -0400
-Received: by obbop1 with SMTP id op1so112055532obb.2
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 12:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=/VQZuXea+Xiq3W+bNkW1U8K3V76u3uxAKLx/rFblaAA=;
-        b=pqOkaBKeBYRP7sGVpYDS0N58u2KtOII8zyNKCCHRlDPjOff19BpTTuYq7eoKM+NIHi
-         0RsaOELjNCasmZMgmj3zbzTHXXFISDGTKXD/thvt6LxkfqG4DLR0ml4qTVxZ0NdJXmJA
-         zaunFpu2Oiq1U9zrRuoPDGSTjdnOntD6sbO3e2ojAnjZfoW34Z6zYzlGBJ9+S/NdAr0U
-         RM9frqOV8bIsynWB7x8MXxA2nxYzisj02MpvsGsg9B8VaDon7U5RObsS/YAX82QSemLN
-         JFqughdVxJP2bwhJRKiFuU2YdrHO0AUkGJfFG2IY60RfAEWxALWTKfDCwe3obNQ3wwev
-         4kNA==
-X-Received: by 10.60.62.105 with SMTP id x9mr12753999oer.1.1435607740630; Mon,
- 29 Jun 2015 12:55:40 -0700 (PDT)
-Received: by 10.182.95.165 with HTTP; Mon, 29 Jun 2015 12:55:11 -0700 (PDT)
-In-Reply-To: <xmqqioa6be6s.fsf@gitster.dls.corp.google.com>
+	id S1751159AbbF2UCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 16:02:09 -0400
+Received: from mout.web.de ([212.227.17.12]:49253 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752865AbbF2UCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 16:02:07 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0Lrruc-1Z4cQ32tTS-013ie3; Mon, 29 Jun 2015 22:02:01
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.0.1
+In-Reply-To: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:5TrhM/T7L5JsQYfEMeNb7jEWdqpA6QY2tBYo2Mdd9UV0o9Kmdun
+ 77cCTW+TgroRs7J3KEfr55Jdl1x8ldx365Eql0Y+K8hsFez8lWMBlT0irArpxDrONHzVBTw
+ Ak5b++ygT1Cz8xLBI4iUMTyYVQdnmVZ1Ug0aEUkPRxJ839KItJYYFFtEiguUJGDYD3qivzj
+ j79wclbr9v5iIxAOSXqug==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7bERfM4mJYA=:0Y3JenRTPjeRK1P5Qx9HVN
+ qQ2u9tDTsoEH3XSP+8tWwXwI2pcXsF2sB4N7W0EnYtSIqfgINag9PeaCSHICmMM7Z0d1r20uY
+ wggWoWs/Zt280xmy8wDxuVZ4qo46BchCP9WAdXqeqYWIL3AKi1w8hm3ddc5jRmU0LR0QMDxPE
+ 8VKiFeYtelt05jGPRhsLe6zZlsNZaPne9dJ4LRwUf6kg5juyvYBbvVto81jLh+jtvDZ370b71
+ H5y7bBCx5vDjoIpP2aEvFmY1Ju0Ww5VXdI+vQztgFVMIiTSlf289uqvoYadvAqujxwbJ/Sj4m
+ T1F/9RdUSdLAa3nMJ/HoDrvB8KHU43PEfJLNgVK2cLcjsZdbaArfqLNFvVE3/7+li/95VCmN2
+ 3JoWOe1y3Nzs6lExUmLeB/lW5BNgh7WRw3sb3khkTQ3hqiU6RixEKh6QlZi31SPdXTIroz5VA
+ rOUPsFpoCoAcPSJidktLSrcNCbJgNQfYUzygwFw7W/AbRqwuIUmhFHhKj7N5/1uzrFcyBNKQN
+ k1X/IXL953ALOkpfVDbKCppv5LpdejPW+e72dqqj0Yn534vsHQSfaqBFzVKGPgUTv2jUCtsj9
+ qGc7tsQsUUIEgm8XgIFn1G9adtrcXg/eN/OAiiUxRDGDg5gziWTThrCUwAlR/CjEAmI9o5tlL
+ NybbtbcxGAgWJA8cxpTGLX5whtMw5Be1Gz6m4/x2CKCcFLthfO9/41eVZGYdUK56zCIc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272998>
 
-On Mon, Jun 29, 2015 at 11:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Add the '--points-at' option provided by 'ref-filter'. The option
->> lets the user to pick only refs which point to a particular
->> commit.
->
-> It somehow feels strange that the option name is points-at and all
-> the explanation (like the above and also in the doc) talks about
-> pointing to an object.  Not limited to this patch but the previous
-> one had the same, I think.
->
+> * js/rebase-i-clean-up-upon-continue-to-skip (2015-06-23) 2 commits
+>  - rebase -i: do not leave a CHERRY_PICK_HEAD file behind
+>  - t3404: demonstrate CHERRY_PICK_HEAD bug
+> 
+>  Abandoning an already applied change in "git rebase -i" with
+>  "--continue" left CHERRY_PICK_HEAD and confused later steps.
+> 
+>  Will merge to 'next'.
+I need a little tweak here:
 
-Will have a look and change, thanks :)
-
->> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
->> index b1fa8d4..7269a66 100644
->> --- a/t/t6302-for-each-ref-filter.sh
->> +++ b/t/t6302-for-each-ref-filter.sh
->> @@ -16,4 +16,24 @@ test_expect_success 'setup some history and refs' '
->>       git update-ref refs/odd/spot master
->>  '
->>
->> +test_expect_success 'filtering with --points-at' '
->> +     cat >expect <<-\EOF &&
->> +     refs/heads/master
->> +     refs/odd/spot
->> +     refs/tags/three
->> +     EOF
->> +     git for-each-ref --format="%(refname)" --points-at=master >actual &&
->> +     test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'check signed tags with --points-at' '
->> +     cat >expect <<-\EOF &&
->> +     refs/heads/side
->> +     refs/tags/four
->> +     refs/tags/signed-tag four
->> +     EOF
->> +     git for-each-ref --format="%(refname) %(*subject)" --points-at=side >actual &&
->> +     test_cmp expect actual
->> +'
->
-> This shows that we would want to add a "annotated doubly" tag in the
-> preparation step 01/11; the expected outcome is that it will not
-> show in the output, I think.
->
-> Thanks.
-
-Will add!
-
--- 
-Regards,
-Karthik Nayak
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 7fd1330..f236128 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1228,7 +1228,7 @@ test_expect_success 'rebase --continue removes
+CHERRY_PICK_HEAD' '
+        git checkout -b commit-to-skip &&
+        for double in X 3 1
+        do
+-               seq 5 | sed "s/$double/&&/" >seq &&
++               test_seq 5 | sed "s/$double/&&/" >seq &&
