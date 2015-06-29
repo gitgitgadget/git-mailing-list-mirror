@@ -1,126 +1,122 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
-Date: Mon, 29 Jun 2015 10:08:42 +0200
-Message-ID: <CAP8UFD1gWXOZHfiELZYgvGP1dA-aeaxbyaokKCut9pfWghy9uQ@mail.gmail.com>
-References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
-	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
-	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
-	<558F8B55.1070708@alum.mit.edu>
-	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
-	<558F9854.5080605@alum.mit.edu>
-	<CAP8UFD0NjExQJHQWix1+zc4_k15e3+aC5vAv=dHipg-X+2y1sQ@mail.gmail.com>
-	<vpq1tgvnf2g.fsf@anie.imag.fr>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: 4th release candidate of Git for Windows 2.x, was Re: 3rd
+ release candidate of Git for Windows 2.x
+Date: Mon, 29 Jun 2015 10:30:49 +0200
+Organization: gmx
+Message-ID: <8224736a18724f751312d57e67967d69@www.dscho.org>
+References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+ <b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 29 10:08:57 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
+ git-for-windows@googlegroups.com
+X-From: msysgit+bncBCZPH74Q5YNRBPEEYSWAKGQEAC7G6QA@googlegroups.com Mon Jun 29 10:30:54 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBPEEYSWAKGQEAC7G6QA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f57.google.com ([74.125.82.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9U7c-0000dx-LJ
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 10:08:57 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833AbbF2IIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 04:08:49 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:36344 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751712AbbF2IIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 04:08:44 -0400
-Received: by wicnd19 with SMTP id nd19so63651037wic.1
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 01:08:43 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBPEEYSWAKGQEAC7G6QA@googlegroups.com>)
+	id 1Z9USr-0002fP-Jv
+	for gcvm-msysgit@m.gmane.org; Mon, 29 Jun 2015 10:30:53 +0200
+Received: by wggx12 with SMTP id x12sf43832553wgg.1
+        for <gcvm-msysgit@m.gmane.org>; Mon, 29 Jun 2015 01:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LUlKJN1RUu2aKKkzIwJroeTLfIr1Bg7npEqLwfbrjRs=;
-        b=rAeuvHvznnUEaXQvc3YLs32HIpX3y9ekJI9zxIEHX4JVC5Rzhb3Jn/EeeZRGtQiYI9
-         h4knrHpv5uscYhhfNcs96buFpAtj5+Q8zlVDFcV4tJ5EVslbxDIUgZgy4QlwU0pF1Jp/
-         zFV9E7XNd5zC1DPcHmNdioLiN/a8KNge9/S5lODwIlWTBd6Vn4yY+umFEGI9nvKsqYQW
-         TSeWb+jVx5tcW5qgVBFZ7F11xkqwUMYNk4rZIl2xrM6/DPURMs/XzWdlQbovAP5vquYR
-         ImhqTMJAw6DYc4H0j56u0criO/534mReS6je8Ggtyda+WQ//yLbXqyRv1I9/K3n8dKqI
-         jBnw==
-X-Received: by 10.194.95.132 with SMTP id dk4mr28655617wjb.88.1435565322964;
- Mon, 29 Jun 2015 01:08:42 -0700 (PDT)
-Received: by 10.194.221.229 with HTTP; Mon, 29 Jun 2015 01:08:42 -0700 (PDT)
-In-Reply-To: <vpq1tgvnf2g.fsf@anie.imag.fr>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272943>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:date:from:to:subject:organization
+         :in-reply-to:references:message-id:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=rpQvuFx86+FqtkxkpfueWkNjqi7u/bBPqDPfqNb2UgM=;
+        b=yV7HV+tsKgbvb8byZhrspIJ9on4DGIM7MXL71515bWt0LJvqEsOUlS9Dyc4Pmrngqp
+         V//lJDFd6BYYMyLHNpgCWAsGGYa2uz/dBcjN9btyhCvGd1mi5n8PFBHnO+y0NPHuKzAf
+         lkY+38FNr+I4jX9+eyT1CysJ/sDeJ6gDQbWkGH3UesiuwU6R+W+VAeGt/v2BRGeAx6dP
+         v9EO9x4P+U2V6TaD01Q+gWJ0Q5jch/vggF/YI9Bk500f12GZJ10CpBuq+GMrwVa+tZsD
+         WGRe2Jmd6EmsYqOu41jXcMtYi14uh7IFgCYFrHkBUCtkSFO8yijjUidUyGnvpqOgtY64
+         hWlQ==
+X-Received: by 10.152.8.39 with SMTP id o7mr116174laa.3.1435566653294;
+        Mon, 29 Jun 2015 01:30:53 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.21.230 with SMTP id y6ls414570lae.20.gmail; Mon, 29 Jun
+ 2015 01:30:51 -0700 (PDT)
+X-Received: by 10.112.203.168 with SMTP id kr8mr10177648lbc.10.1435566651870;
+        Mon, 29 Jun 2015 01:30:51 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.18])
+        by gmr-mx.google.com with ESMTPS id ec7si354350wib.3.2015.06.29.01.30.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jun 2015 01:30:51 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.18 as permitted sender) client-ip=212.227.15.18;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0ML7NR-1Z9DTv1V2H-000Ngn; Mon, 29 Jun 2015 10:30:50
+ +0200
+In-Reply-To: <b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:PT+WHki+ds5nmEqaB6JFg5bKDuMPrUjsk+Ou093PbmaH7VcD7pa
+ uD7633M3bTnuSOW41Vk3QAEKzbiPOamae3oNg7x0HVUudufoBFBUG89TlHUKCWtysKCZXgX
+ msNL1Wzd9Z1BED5WoL/RCN5SRP1aNKWNN2a3Xd5rmdlDxlWWNSUoyXxjXlVBM87kpURBpAO
+ 0JjpmoYZZOiY0h3gvEpCw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FJAdh5oNBGY=:Ear2/GXFdb5LNdy02anBN+
+ lBSqlv2tah21g4ygivElBoKENqmuZ5+LgLvFKEDeVVzwibPbz+l5LKj5gSQ1JXqMPrQ0ZAWqQ
+ NPKq7+sxd2UqOUikNSI7fi0BCzHEGi953fZfJQHdzI6LllZN6FshgdmYWSnkzEXsKMUSo6vm2
+ hvS6QUA3KjUQ8Ywc29zlNtS3QJPlr77Yc/ZcX24bEq8ikqpVFfW3N2sfKtrUVSIl4lVae4sLC
+ FHsQTOoa1ybvK7Rg+JiE5med+zTUQ87xfjta9Gn1QHBHphJ0QJo64F8OnqTGoi1Rke7FLzO2S
+ 9xAQujnTo2ybbUlOkWX+EOYsHwg1Uhz4uF6qGSnxGq5ODisDULIgLS/SnRJFhoBiKs7yXwQhp
+ OZSbB0fvPz158BnMrInN7UNdDTFn/vFIN7uGf8H+FdT4PTX4mEC7IfYgP2Xa64i2uDsMelSe1
+ 6XI2ojFh7Lfdw7U2V4kOhmGc0FIdKjadLHNRWMwU7Y6lU33f/4G/WwNoE9jjIbCfm2FKvLsp9
+ xwQCBRAPn+DM7hWPXrW/qXGlj4S/tlf0h288SaLDCpHcEhzpNcTi5A/sdEkMnzwk9pGtFakPj
+ lBBJqIosR0r/y2DIbStSKu/twlLw9ZtZuNoBXa35JJsce6n+VyWM594xqllG0b3/b3p+cTYVp
+ 2zEwi0h8PxU1ViEi3PA1zzvqr7vKEzcWdMexoe7bNR9xon7JBABU1vMQqENn+bj5XTAs=
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.18 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272944>
 
-On Mon, Jun 29, 2015 at 9:34 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> On Sun, Jun 28, 2015 at 8:46 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> I understand that the user might make a mistake when marking the initial
->>> commits, but as soon as bisect says
->>>
->>>     Commit <sha1-abbrev> is an ancestor of <sha1-abbrev>, so I
->>>     will look for the commit that caused the transition from
->>>     "xyzzy" to "plugh".
->>>
->>> then I hope the user will notice and correct her/his mistake.
->>
->> This looks fragile to me. Unfortunately many users will probably not
->> read it and continue, and then spend a lot of time later trying to
->> understand what went wrong,
->
-> I don't understand what you mean by "went wrong".
+Hi all,
 
-It happens that users mistake the "good" and the "bad" commits when
-giving them to git bisect.
+I just uploaded the 4th release candidate for the upcoming Git for
+Windows 2.x release. Please find the download link here:
+ 
+https://git-for-windows.github.io/#download
 
-Right now in the most common case, we can error out because we know
-that a "bad" commit cannot be an ancestor of a "good" commit.
+The most important changes are the update to Git 2.4.5 and a fix for the crash when running Git Bash with a legacy `TERM` setting (this should help 3rd party software to upgrade to Git for Windows 2.x).
 
-> As a user, when I
-> discovered "git bisect", I was actually surprised that it expected one
-> particular order between good and bad. I would have expected to be able
-> to say "this is good, this is bad, tell me where it changed" without
-> having an idea of who's good and who's bad.
+Please find the release notes here:
 
-Maybe, but it's not how it has been developed.
+https://github.com/git-for-windows/build-extra/blob/master/installer/ReleaseNotes.md
 
-> In particular when bisecting
-> from two branches, the user knows that branch A is good, and branch B is
-> bad, but does not necessarily know whether it's a regression in B or a
-> fix in A. The fact that bisect can find out should be just "normal" from
-> the user point of view. There's no mistake involved, nothing to fix, and
-> nothing that went wrong.
+Another step,
+Johannes
 
-Well in this case, it's possible that the merge base is bad and what
-the user is interested in is the first bad commit that was commited
-before the merge base. We just don't know, in the case the merge base
-is bad, what is more interesting for the user.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-So I disagree with you and Michael that we should decide that the user
-is interested by the fix in this case. It's better to error out like
-we do now and let the user decide what he/she wants rather than decide
-for him/her that he/she is interested by the fix.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
->> By the way we could use "mark" or "term" instead of "name" in the
->> option name (like --mark-old or --term-old) and in the code too if it
->> looks clearer.
->
-> I prefer "term" to "mark" because "mark" is both a verb and a noun, so
-> --mark-old=foo could mean both "mark foo as old" or "the name of the
-> marks for old commits is foo".
->
-> I think I prefer "term" to "name".
-
-Ok with that. I agree that it would be more consistent to have a "git
-bisect terms" and "--term-{old,new,bad,good}".
-
-Thanks,
-Christian.
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
