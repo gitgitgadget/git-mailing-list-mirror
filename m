@@ -1,333 +1,134 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v11 08/10] bisect: add the terms old/new
-Date: Mon, 29 Jun 2015 17:40:33 +0200
-Message-ID: <1435592435-27914-9-git-send-email-Matthieu.Moy@imag.fr>
-References: <1435592435-27914-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jun 29 17:41:43 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: 4th release candidate of Git for Windows 2.x, was Re:
+ 3rd release candidate of Git for Windows 2.x
+Date: Mon, 29 Jun 2015 18:54:30 +0300
+Message-ID: <20150629185430.5dfbab069b5dbdf32398d290@domain007.com>
+References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
+	<b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
+	<8224736a18724f751312d57e67967d69@www.dscho.org>
+	<55910AE7.3000206@atlas-elektronik.com>
+	<426859781bd04ca4ebb13719350537ed@www.dscho.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan =?UTF-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>,
+        Git
+ Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
+        git-for-windows@googlegroups.com
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: msysgit+bncBCWKX34CSUCBBSGUYWWAKGQE26D7LWQ@googlegroups.com Mon Jun 29 17:54:49 2015
+Return-path: <msysgit+bncBCWKX34CSUCBBSGUYWWAKGQE26D7LWQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9bBe-0003OX-AS
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 17:41:34 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbbF2PlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 11:41:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33121 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753887AbbF2Pk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 11:40:57 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFefTk018378
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 29 Jun 2015 17:40:41 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFeh4P031687;
-	Mon, 29 Jun 2015 17:40:43 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Z9bAp-0008Dz-EE; Mon, 29 Jun 2015 17:40:43 +0200
-X-Mailer: git-send-email 2.5.0.rc0.10.gd2bff5d
-In-Reply-To: <1435592435-27914-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 29 Jun 2015 17:40:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5TFefTk018378
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1436197244.11724@MylPUU8+Ea+Z+N0oSQfuiQ
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272966>
+	(envelope-from <msysgit+bncBCWKX34CSUCBBSGUYWWAKGQE26D7LWQ@googlegroups.com>)
+	id 1Z9bOS-0003fU-UI
+	for gcvm-msysgit@m.gmane.org; Mon, 29 Jun 2015 17:54:49 +0200
+Received: by wggx12 with SMTP id x12sf47564654wgg.1
+        for <gcvm-msysgit@m.gmane.org>; Mon, 29 Jun 2015 08:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=b6kshRcmdX7Dl0/zwgZMMRZjryhCF9kSeGkzhmUUxTY=;
+        b=m8dk2+Yh9jx5wE2D7QuFBqg4aiJE8kaoSyNII17GWtuiXxbEDMR5VBwHuDNXDLOuAX
+         1EjcUWlQcQc7NlvfjnL3U2aZte1zbuiPcm1P8HpnJdgbL8RSD6I7Zrj7C6+oMldu7hhq
+         y6mPzRIrmeKW2vo296kbgH91wDt5i/mmI+qOX32I/qwcIvapneRNpbTEV/foPcSt2X3u
+         dauQy0GC5L4rxMYBBcyB0yLRMJ0gP/FsM6dQKL8MFgCpJse267SQuwSs6xw3vFCl1Id4
+         mlTbgr1NF35XsHfgVx8KGKEgAyBccDZN6U2AXmMf5SmcPJZdWgEnYaN329yuWpTW0FR/
+         9DZQ==
+X-Received: by 10.152.23.167 with SMTP id n7mr131604laf.36.1435593288587;
+        Mon, 29 Jun 2015 08:54:48 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.115.204 with SMTP id jq12ls96071lab.4.gmail; Mon, 29 Jun
+ 2015 08:54:47 -0700 (PDT)
+X-Received: by 10.112.200.163 with SMTP id jt3mr11209152lbc.17.1435593287448;
+        Mon, 29 Jun 2015 08:54:47 -0700 (PDT)
+Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
+        by gmr-mx.google.com with ESMTPS id wf6si1493077lbb.2.2015.06.29.08.54.47
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 29 Jun 2015 08:54:47 -0700 (PDT)
+Received-SPF: neutral (google.com: 84.204.203.130 is neither permitted nor denied by best guess record for domain of flatworm@users.sourceforge.net) client-ip=84.204.203.130;
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+	(authenticated bits=0)
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id t5TFsU5P004544
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 29 Jun 2015 18:54:31 +0300
+In-Reply-To: <426859781bd04ca4ebb13719350537ed@www.dscho.org>
+X-Mailer: Sylpheed 3.2.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+X-Original-Sender: flatworm@users.sourceforge.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 84.204.203.130 is neither permitted nor denied by best guess
+ record for domain of flatworm@users.sourceforge.net) smtp.mail=flatworm@users.sourceforge.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272967>
 
-From: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+On Mon, 29 Jun 2015 16:37:54 +0200
+Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
 
-When not looking for a regression during a bisect but for a fix or a
-change in another given property, it can be confusing to use 'good'
-and 'bad'.
+> >> I just uploaded the 4th release candidate for the upcoming Git for
+> >> Windows 2.x release. Please find the download link here:
+> >>
+> >> https://git-for-windows.github.io/#download
+> >>
+> >> The most important changes are the update to Git 2.4.5 and a fix
+> >> for the crash when running Git Bash with a legacy `TERM` setting
+> >> (this should help 3rd party software to upgrade to Git for Windows
+> >> 2.x).
+> > 
+> > Thanks.
+> > It seems that this link:
+> > 
+> >    https://github.com/git-for-windows/git/releases/latest
+> > 
+> > doesn't point to the latest release.
+> > 
+> > Might be because the tags have the same date ?
+> 
+> Wooops. Sorry for being so slow (been interviewing today). It should
+> be correct now, can you verify, please?
 
-This patch introduce `git bisect new` and `git bisect old` as an
-alternative to 'bad' and good': the commits which have a certain
-property must be marked as `new` and the ones which do not as `old`.
+Thanks for making all this real, Johannes!
 
-The output will be the first commit after the change in the property.
-During a new/old bisect session you cannot use bad/good commands and
-vice-versa.
+I've finally took time to switch from my old "msys1" release to this
+RC4, and immediately got hit by the fact Git is now speaking to me in
+Russian, which is not what I want (previously this behaviour was only
+exhibited by `git gui` and `gitk`).
 
-Some commands are still not available for old/new:
-     * git rev-list --bisect does not treat the revs/bisect/new and
-       revs/bisect/old-SHA1 files.
+Should I make Git see LC_MESSAGES=en (or other thing like LANG) in the
+environment or is there some Git-local method to affect this behaviour?
+I tried to grep the release notes using relevant keywords but was left
+empty-handed.
 
-Old discussions:
-	- http://thread.gmane.org/gmane.comp.version-control.git/86063
-		introduced bisect fix unfixed to find fix.
-	- http://thread.gmane.org/gmane.comp.version-control.git/182398
-		discussion around bisect yes/no or old/new.
-	- http://thread.gmane.org/gmane.comp.version-control.git/199758
-		last discussion and reviews
-New discussions:
-	- http://thread.gmane.org/gmane.comp.version-control.git/271320
-		( v2 1/7-4/7 )
-	- http://comments.gmane.org/gmane.comp.version-control.git/271343
-		( v2 5/7-7/7 )
-
-Signed-off-by: Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Signed-off-by: Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
-Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
-Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-bisect.txt | 58 ++++++++++++++++++++++++++++++++++++++++++--
- bisect.c                     | 11 ++++++---
- git-bisect.sh                | 26 +++++++++++++-------
- t/t6030-bisect-porcelain.sh  | 38 +++++++++++++++++++++++++++++
- 4 files changed, 119 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index e97f2de..abaf462 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -17,8 +17,8 @@ The command takes various subcommands, and different options depending
- on the subcommand:
- 
-  git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
-- git bisect bad [<rev>]
-- git bisect good [<rev>...]
-+ git bisect (bad|new) [<rev>]
-+ git bisect (good|old) [<rev>...]
-  git bisect skip [(<rev>|<range>)...]
-  git bisect reset [<commit>]
-  git bisect visualize
-@@ -36,6 +36,13 @@ whether the selected commit is "good" or "bad". It continues narrowing
- down the range until it finds the exact commit that introduced the
- change.
- 
-+In fact, `git bisect` can be used to find the commit that changed
-+*any* property of your project; e.g., the commit that fixed a bug, or
-+the commit that caused a benchmark's performance to improve. To
-+support this more general usage, the terms "old" and "new" can be used
-+in place of "good" and "bad". See
-+section "Alternate terms" below for more information.
-+
- Basic bisect commands: start, bad, good
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -111,6 +118,45 @@ bad revision, while `git bisect reset HEAD` will leave you on the
- current bisection commit and avoid switching commits at all.
- 
- 
-+Alternate terms
-+~~~~~~~~~~~~~~~
-+
-+Sometimes you are not looking for the commit that introduced a
-+breakage, but rather for a commit that caused a change between some
-+other "old" state and "new" state. For example, you might be looking
-+for the commit that introduced a particular fix. Or you might be
-+looking for the first commit in which the source-code filenames were
-+finally all converted to your company's naming standard. Or whatever.
-+
-+In such cases it can be very confusing to use the terms "good" and
-+"bad" to refer to "the state before the change" and "the state after
-+the change". So instead, you can use the terms "old" and "new",
-+respectively, in place of "good" and "bad". (But note that you cannot
-+mix "good" and "bad" with "old" and "new" in a single session.)
-+
-+In this more general usage, you provide `git bisect` with a "new"
-+commit has some property and an "old" commit that doesn't have that
-+property. Each time `git bisect` checks out a commit, you test if that
-+commit has the property. If it does, mark the commit as "new";
-+otherwise, mark it as "old". When the bisection is done, `git bisect`
-+will report which commit introduced the property.
-+
-+To use "old" and "new" instead of "good" and bad, you must run `git
-+bisect start` without commits as argument and then run the following
-+commands to add the commits:
-+
-+------------------------------------------------
-+git bisect old [<rev>]
-+------------------------------------------------
-+
-+to indicate that a commit was before the sought change, or
-+
-+------------------------------------------------
-+git bisect new [<rev>...]
-+------------------------------------------------
-+
-+to indicate that it was after.
-+
- Bisect visualize
- ~~~~~~~~~~~~~~~~
- 
-@@ -387,6 +433,14 @@ In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit
- has at least one parent whose reachable graph is fully traversable in the sense
- required by 'git pack objects'.
- 
-+* Look for a fix instead of a regression in the code
-++
-+------------
-+$ git bisect start
-+$ git bisect new HEAD    # current commit is marked as new
-+$ git bisect old HEAD~10 # the tenth commit from now is marked as old
-+------------
-+
- Getting help
- ~~~~~~~~~~~~
- 
-diff --git a/bisect.c b/bisect.c
-index 857cf59..f7292cb 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -746,6 +746,11 @@ static void handle_bad_merge_base(void)
- 				"This means the bug has been fixed "
- 				"between %s and [%s].\n",
- 				bad_hex, bad_hex, good_hex);
-+		} else if (!strcmp(term_bad, "new") && !strcmp(term_good, "old")) {
-+			fprintf(stderr, "The merge base %s is new.\n"
-+				"The property has changed "
-+				"between %s and [%s].\n",
-+				bad_hex, bad_hex, good_hex);
- 		} else {
- 			fprintf(stderr, "The merge base %s is %s.\n"
- 				"This means the first '%s' commit is "
-@@ -778,11 +783,11 @@ static void handle_skipped_merge_base(const unsigned char *mb)
- }
- 
- /*
-- * "check_merge_bases" checks that merge bases are not "bad".
-+ * "check_merge_bases" checks that merge bases are not "bad" (or "new").
-  *
-- * - If one is "bad", it means the user assumed something wrong
-+ * - If one is "bad" (or "new"), it means the user assumed something wrong
-  * and we must exit with a non 0 error code.
-- * - If one is "good", that's good, we have nothing to do.
-+ * - If one is "good" (or "old"), that's good, we have nothing to do.
-  * - If one is "skipped", we can't know but we should warn.
-  * - If we don't know, we should check it out and ask the user to test.
-  */
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 0b3c820..42e1cee 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -1,14 +1,16 @@
- #!/bin/sh
- 
--USAGE='[help|start|bad|good|skip|next|reset|visualize|replay|log|run]'
-+USAGE='[help|start|bad|good|new|old|skip|next|reset|visualize|replay|log|run]'
- LONG_USAGE='git bisect help
- 	print this long help message.
- git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
- 	reset bisect state and start bisection.
--git bisect bad [<rev>]
--	mark <rev> a known-bad revision.
--git bisect good [<rev>...]
--	mark <rev>... known-good revisions.
-+git bisect (bad|new) [<rev>]
-+	mark <rev> a known-bad revision/
-+		a revision after change in a given property.
-+git bisect (good|old) [<rev>...]
-+	mark <rev>... known-good revisions/
-+		revisions before change in a given property.
- git bisect skip [(<rev>|<range>)...]
- 	mark <rev>... untestable revisions.
- git bisect next
-@@ -294,7 +296,7 @@ bisect_next_check() {
- 		false
- 		;;
- 	t,,"$TERM_GOOD")
--		# have bad but not good.  we could bisect although
-+		# have bad (or new) but not good (or old).  we could bisect although
- 		# this is less optimum.
- 		eval_gettextln "Warning: bisecting only with a \$TERM_BAD commit." >&2
- 		if test -t 0
-@@ -587,14 +589,20 @@ check_and_set_terms () {
- 				write_terms bad good
- 			fi
- 			;;
-+		new|old)
-+			if ! test -s "$GIT_DIR/BISECT_TERMS"
-+			then
-+				write_terms new old
-+			fi
-+			;;
- 		esac ;;
- 	esac
- }
- 
- bisect_voc () {
- 	case "$1" in
--	bad) echo "bad" ;;
--	good) echo "good" ;;
-+	bad) echo "bad|new" ;;
-+	good) echo "good|old" ;;
- 	esac
- }
- 
-@@ -610,7 +618,7 @@ case "$#" in
- 		git bisect -h ;;
- 	start)
- 		bisect_start "$@" ;;
--	bad|good|"$TERM_BAD"|"$TERM_GOOD")
-+	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
- 		bisect_state "$cmd" "$@" ;;
- 	skip)
- 		bisect_skip "$@" ;;
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 9e2c203..983c503 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -759,4 +759,42 @@ test_expect_success '"git bisect bad HEAD" behaves as "git bisect bad"' '
- 	git bisect reset
- '
- 
-+test_expect_success 'bisect starts with only one new' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect new $HASH4 &&
-+	git bisect next
-+'
-+
-+test_expect_success 'bisect does not start with only one old' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect old $HASH1 &&
-+	test_must_fail git bisect next
-+'
-+
-+test_expect_success 'bisect start with one new and old' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect old $HASH1 &&
-+	git bisect new $HASH4 &&
-+	git bisect new &&
-+	git bisect new >bisect_result &&
-+	grep "$HASH2 is the first new commit" bisect_result &&
-+	git bisect log >log_to_replay.txt &&
-+	git bisect reset
-+'
-+
-+test_expect_success 'bisect replay with old and new' '
-+	git bisect replay log_to_replay.txt >bisect_result &&
-+	grep "$HASH2 is the first new commit" bisect_result &&
-+	git bisect reset
-+'
-+
-+test_expect_success 'bisect cannot mix old/new and good/bad' '
-+	git bisect start &&
-+	git bisect bad $HASH4 &&
-+	test_must_fail git bisect old $HASH1
-+'
-+
- test_done
 -- 
-2.5.0.rc0.10.gd2bff5d
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
