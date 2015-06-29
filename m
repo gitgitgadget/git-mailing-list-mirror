@@ -1,108 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
-Date: Mon, 29 Jun 2015 17:19:21 +0200
-Message-ID: <vpqlhf2czk6.fsf@anie.imag.fr>
-References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
-	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
-	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
-	<558F8B55.1070708@alum.mit.edu>
-	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
-	<558F9854.5080605@alum.mit.edu>
-	<CAP8UFD0NjExQJHQWix1+zc4_k15e3+aC5vAv=dHipg-X+2y1sQ@mail.gmail.com>
-	<vpq1tgvnf2g.fsf@anie.imag.fr>
-	<CAP8UFD1gWXOZHfiELZYgvGP1dA-aeaxbyaokKCut9pfWghy9uQ@mail.gmail.com>
-	<vpqsi9alv1l.fsf@anie.imag.fr>
-	<CAP8UFD23RTCzrv8j8Jbcx5ajMUjgVsO3P5_Fiv3Vwx5uaPwXrw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 17:19:38 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v11 00/10] bisect terms
+Date: Mon, 29 Jun 2015 17:40:25 +0200
+Message-ID: <1435592435-27914-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
+	valentinduperray@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jun 29 17:41:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9aqO-0006b7-EW
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 17:19:36 +0200
+	id 1Z9bB5-00033O-7c
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 17:40:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582AbbF2PTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 11:19:32 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46029 "EHLO shiva.imag.fr"
+	id S1753902AbbF2Pkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 11:40:52 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46694 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752718AbbF2PTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 11:19:31 -0400
+	id S1753782AbbF2Pku (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 11:40:50 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFJKpo013440
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFeedV018083
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 29 Jun 2015 17:19:20 +0200
+	Mon, 29 Jun 2015 17:40:41 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFJLQ2031250;
-	Mon, 29 Jun 2015 17:19:21 +0200
-In-Reply-To: <CAP8UFD23RTCzrv8j8Jbcx5ajMUjgVsO3P5_Fiv3Vwx5uaPwXrw@mail.gmail.com>
-	(Christian Couder's message of "Mon, 29 Jun 2015 12:55:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 29 Jun 2015 17:19:21 +0200 (CEST)
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5TFeg76031660;
+	Mon, 29 Jun 2015 17:40:42 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1Z9bAo-0008DC-Ho; Mon, 29 Jun 2015 17:40:42 +0200
+X-Mailer: git-send-email 2.5.0.rc0.10.gd2bff5d
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 29 Jun 2015 17:40:41 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5TFJKpo013440
+X-MailScanner-ID: t5TFeedV018083
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1436195963.85679@+NbmdYdoKbfU4elX9QXnkA
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1436197242.48028@QfulRh4kVKzW0OvxlXjzcw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272956>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi,
 
-> On Mon, Jun 29, 2015 at 11:32 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> bisect is all about finding the commit where a property has changed,
->
-> That is your interpretation of this command. On the man page there is:
->
->     git-bisect - Find by binary search the change that introduced a bug
->
-> So its stated purpose is to find the first "bad" commit. Not to find a fix.
+So, here's a reroll that tries to address the ongoing discussion.
 
-This is a limitation of the current bisect, but the discussion is
-precisely about removing this limitation.
+The first patches are preparatory steps, which are IMHO good
+regardless of the features. I kept the user-interface to chose terms
+at the end, and tried to keep the UI patches as small as possible.
 
-I still don't understand what "risk" we are taking by doing the
-bisection anyway. I can't imagine a case where we would harm the user by
-doing so.
+I have the feeling that "bisect: add the terms old/new" should be
+dropped, but I have no strong opinion on that. If you like the
+feature, say so. If you think the feature doesn't bring enough, and
+should eventually be obsoleted by "guess which commit is old and which
+is new", say so too.
 
-I just tested with Mercurial, and looking for a fix instead of a
-regression just works:
+The beginning of the series didn't change much since v10. The major
+change is that I gave up using "git bisect terms <foo> <bar>", and
+implemented the same feature in "git bisect start". We're losing the
+ability to run "git bisect terms" several times to change the terms
+before we use them, but I'm not sure this was a useful feature. OTOH,
+we're back to the principle "git bisect start" starts from a fresh
+state, this avoids confusing the situation where the user has leftover
+from yesterday's "git bisect terms". And the code is much, much
+simpler.
 
-$ hg bisect --good 4        
-$ hg bisect --bad 1         
-Testing changeset 2:d75a2d042c99 (3 changesets remaining, ~1 tests)
-1 files updated, 0 files merged, 0 files removed, 0 files unresolved
-$ hg bisect --bad  
-Testing changeset 3:9d27d9c02e28 (2 changesets remaining, ~1 tests)
-1 files updated, 0 files merged, 0 files removed, 0 files unresolved
-$ hg bisect --bad
-The first good revision is:
-changeset:   4:1dd9bb959eb6
-tag:         tip
-user:        Matthieu Moy <Matthieu.Moy@imag.fr>
-date:        Mon Jun 29 17:07:51 2015 +0200
-summary:     foo
+Antoine Delaite (4):
+  bisect: correction of typo
+  bisect: replace hardcoded "bad|good" by variables
+  bisect: simplify the addition of new bisect terms
+  bisect: add the terms old/new
 
-I don't see anything wrong with this.
+Matthieu Moy (5):
+  Documentation/bisect: move getting help section to the end
+  bisect: don't mix option parsing and non-trivial code
+  bisect: sanity check on terms
+  bisect: add 'git bisect terms' to view the current terms
+  bisect: allow setting any user-specified in 'git bisect start'
 
-(OTOH, "hg bisect" does not accept revisions which aren't parent of each
-other)
+Michael Haggerty (1):
+  Documentation/bisect: revise overall content
+
+ Documentation/git-bisect.txt | 236 ++++++++++++++++++++++++++++-----------
+ bisect.c                     |  94 ++++++++++++----
+ git-bisect.sh                | 255 +++++++++++++++++++++++++++++++++++--------
+ revision.c                   |  19 +++-
+ t/t6030-bisect-porcelain.sh  | 137 ++++++++++++++++++++++-
+ 5 files changed, 612 insertions(+), 129 deletions(-)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.5.0.rc0.10.gd2bff5d
