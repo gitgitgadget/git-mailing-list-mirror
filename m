@@ -1,23 +1,23 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [PATCH 13/17] engine.pl: provide more debug print statements
-Date: Mon, 29 Jun 2015 23:33:35 +0200
-Message-ID: <5591B9AF.2000506@gmail.com>
+Date: Mon, 29 Jun 2015 23:31:22 +0200
+Message-ID: <5591B92A.9010907@gmail.com>
 References: <1435190633-2208-1-git-send-email-philipoakley@iee.org>
  <1435190633-2208-14-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Cc: git@vger.kernel.org
 To: msysgit@googlegroups.com
-X-From: msysgit+bncBDZMLEGXWQLBBW7TY2WAKGQE3ZXO4PI@googlegroups.com Mon Jun 29 23:34:20 2015
-Return-path: <msysgit+bncBDZMLEGXWQLBBW7TY2WAKGQE3ZXO4PI@googlegroups.com>
+X-From: msysgit+bncBDZMLEGXWQLBBCPUY2WAKGQEPTH4J4I@googlegroups.com Mon Jun 29 23:35:07 2015
+Return-path: <msysgit+bncBDZMLEGXWQLBBCPUY2WAKGQEPTH4J4I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f61.google.com ([209.85.215.61])
+Received: from mail-wg0-f63.google.com ([74.125.82.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDZMLEGXWQLBBW7TY2WAKGQE3ZXO4PI@googlegroups.com>)
-	id 1Z9gh2-0007GV-Fs
-	for gcvm-msysgit@m.gmane.org; Mon, 29 Jun 2015 23:34:20 +0200
-Received: by lams18 with SMTP id s18sf24102058lam.1
-        for <gcvm-msysgit@m.gmane.org>; Mon, 29 Jun 2015 14:34:20 -0700 (PDT)
+	(envelope-from <msysgit+bncBDZMLEGXWQLBBCPUY2WAKGQEPTH4J4I@googlegroups.com>)
+	id 1Z9ghm-0007nN-JE
+	for gcvm-msysgit@m.gmane.org; Mon, 29 Jun 2015 23:35:06 +0200
+Received: by wggz12 with SMTP id z12sf51934782wgg.0
+        for <gcvm-msysgit@m.gmane.org>; Mon, 29 Jun 2015 14:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=to:from:subject:date:lines:message-id:references:mime-version
@@ -26,36 +26,36 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
         bh=UNpf2UJ7PmgxDUmkNgvvK4J4EJ2TVcCuASG13v5NHa8=;
-        b=xsBdIRKnXppX/D9vmcI4r+6keZiX+cctukj0pURqEJ1KeQZnUzlkdIRA7g3MAFsMQw
-         gp57By5Y5QCF6X/1MYJKjSmuanb2ycVyVIWzomMJ/6uG+LW2wnQa3PiFGUS5gvMY1MlO
-         /XOJ3WRE9uBa2XUlF8CrzlaSACMQ0SrlqOf5bddpDfjvqKieW2GtwTviMAcvbt3bjN5L
-         d68KnvY2eJ7XJC1NcE4NygpS507BrprXzE96/yJXOhgPrRjt78LTZIpbqSeR4yTZ47nG
-         lbINUnxxTJNriSpf3BcM+B1BicK/YHbI5ms3Nfuq7mxCtbI7Fch/fIXgP0ium7QRZYrq
-         Z2Rw==
-X-Received: by 10.152.5.100 with SMTP id r4mr156634lar.13.1435613660235;
-        Mon, 29 Jun 2015 14:34:20 -0700 (PDT)
+        b=B5PNSpCF9kFBmH9jo58uE1Mw1M0gPMipbEdQQJmlqFqKfshHeKdyKsN2k+MYsg5nte
+         EJ7caYtjMxcW7jogV9jNUALYugsHsFpGYjQo4hXLVSm/cKhXrxX8QZfROiKwFi2+EFH8
+         h7twINu7LNxSkhukOye78TcUxkVeLPzXnwAWYP6A/zXHUf9mNPQx/6R/UofEKtDHrfrC
+         uh0eZ+LurPUwH4ZnnLcnBDotUxPLIFPwIYKGWagkEHMw9VRYX8gJ4OkqT3N2MgthbUYO
+         PhiedMVSr+5wk9KJ8at52qvxX5Rudy1glYa5cqY89kWv1BrXtnNa9NvAl3myjRn9GLP3
+         VhSw==
+X-Received: by 10.152.23.167 with SMTP id n7mr152512laf.36.1435613706279;
+        Mon, 29 Jun 2015 14:35:06 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.19.39 with SMTP id b7ls742414lae.85.gmail; Mon, 29 Jun
- 2015 14:34:19 -0700 (PDT)
-X-Received: by 10.112.189.131 with SMTP id gi3mr11973776lbc.6.1435613659130;
-        Mon, 29 Jun 2015 14:34:19 -0700 (PDT)
+Received: by 10.152.179.39 with SMTP id dd7ls823818lac.60.gmail; Mon, 29 Jun
+ 2015 14:35:05 -0700 (PDT)
+X-Received: by 10.112.171.41 with SMTP id ar9mr11953146lbc.24.1435613704915;
+        Mon, 29 Jun 2015 14:35:04 -0700 (PDT)
 Received: from plane.gmane.org (plane.gmane.org. [80.91.229.3])
-        by gmr-mx.google.com with ESMTPS id su3si1504960lbb.1.2015.06.29.14.34.19
+        by gmr-mx.google.com with ESMTPS id wf6si1520347lbb.2.2015.06.29.14.35.04
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Jun 2015 14:34:19 -0700 (PDT)
+        Mon, 29 Jun 2015 14:35:04 -0700 (PDT)
 Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.3 as permitted sender) client-ip=80.91.229.3;
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvm-msysgit@m.gmane.org>)
-	id 1Z9gh0-0007EK-3w
-	for msysgit@googlegroups.com; Mon, 29 Jun 2015 23:34:18 +0200
+	id 1Z9ghi-0007kA-Uu
+	for msysgit@googlegroups.com; Mon, 29 Jun 2015 23:35:03 +0200
 Received: from p57a257c5.dip0.t-ipconnect.de ([87.162.87.197])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <msysgit@googlegroups.com>; Mon, 29 Jun 2015 23:34:18 +0200
+        for <msysgit@googlegroups.com>; Mon, 29 Jun 2015 23:35:02 +0200
 Received: from sschuberth by p57a257c5.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <msysgit@googlegroups.com>; Mon, 29 Jun 2015 23:34:18 +0200
+        for <msysgit@googlegroups.com>; Mon, 29 Jun 2015 23:35:02 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
 X-Gmane-NNTP-Posting-Host: p57a257c5.dip0.t-ipconnect.de
@@ -80,7 +80,7 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273024>
 
 On 25.06.2015 02:03, Philip Oakley wrote:
 
