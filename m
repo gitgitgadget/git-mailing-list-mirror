@@ -1,72 +1,102 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Jun 2015, #06; Wed, 24)
-Date: Mon, 29 Jun 2015 22:02:09 +0200
-Message-ID: <5591A441.2010400@web.de>
-References: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 43/44] builtin-am: check for valid committer ident
+Date: Mon, 29 Jun 2015 13:02:33 -0700
+Message-ID: <CAGZ79kaUYS1kiiFTwTTA=Wh924JcHMLOU61mSuMZxiqZFO7PPw@mail.gmail.com>
+References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
+	<1435500366-31700-44-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 29 22:02:14 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 22:02:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9fFs-0003mg-Mu
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:02:13 +0200
+	id 1Z9fGI-00042f-Jt
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 22:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751159AbbF2UCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 16:02:09 -0400
-Received: from mout.web.de ([212.227.17.12]:49253 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752865AbbF2UCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 16:02:07 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0Lrruc-1Z4cQ32tTS-013ie3; Mon, 29 Jun 2015 22:02:01
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.0.1
-In-Reply-To: <xmqqwpys95bm.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:5TrhM/T7L5JsQYfEMeNb7jEWdqpA6QY2tBYo2Mdd9UV0o9Kmdun
- 77cCTW+TgroRs7J3KEfr55Jdl1x8ldx365Eql0Y+K8hsFez8lWMBlT0irArpxDrONHzVBTw
- Ak5b++ygT1Cz8xLBI4iUMTyYVQdnmVZ1Ug0aEUkPRxJ839KItJYYFFtEiguUJGDYD3qivzj
- j79wclbr9v5iIxAOSXqug==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7bERfM4mJYA=:0Y3JenRTPjeRK1P5Qx9HVN
- qQ2u9tDTsoEH3XSP+8tWwXwI2pcXsF2sB4N7W0EnYtSIqfgINag9PeaCSHICmMM7Z0d1r20uY
- wggWoWs/Zt280xmy8wDxuVZ4qo46BchCP9WAdXqeqYWIL3AKi1w8hm3ddc5jRmU0LR0QMDxPE
- 8VKiFeYtelt05jGPRhsLe6zZlsNZaPne9dJ4LRwUf6kg5juyvYBbvVto81jLh+jtvDZ370b71
- H5y7bBCx5vDjoIpP2aEvFmY1Ju0Ww5VXdI+vQztgFVMIiTSlf289uqvoYadvAqujxwbJ/Sj4m
- T1F/9RdUSdLAa3nMJ/HoDrvB8KHU43PEfJLNgVK2cLcjsZdbaArfqLNFvVE3/7+li/95VCmN2
- 3JoWOe1y3Nzs6lExUmLeB/lW5BNgh7WRw3sb3khkTQ3hqiU6RixEKh6QlZi31SPdXTIroz5VA
- rOUPsFpoCoAcPSJidktLSrcNCbJgNQfYUzygwFw7W/AbRqwuIUmhFHhKj7N5/1uzrFcyBNKQN
- k1X/IXL953ALOkpfVDbKCppv5LpdejPW+e72dqqj0Yn534vsHQSfaqBFzVKGPgUTv2jUCtsj9
- qGc7tsQsUUIEgm8XgIFn1G9adtrcXg/eN/OAiiUxRDGDg5gziWTThrCUwAlR/CjEAmI9o5tlL
- NybbtbcxGAgWJA8cxpTGLX5whtMw5Be1Gz6m4/x2CKCcFLthfO9/41eVZGYdUK56zCIc=
+	id S1752284AbbF2UCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 16:02:35 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:33307 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750738AbbF2UCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 16:02:33 -0400
+Received: by ykdt186 with SMTP id t186so124847997ykd.0
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 13:02:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=h3wqZ7CV+E6RvvScG9eGMqn1MP+tXyWuaE63jzZbSRQ=;
+        b=hNWUoH6va+69sFXL8o2gWXBTsjTiqjhFKci9VviIblqSKoHNbF00a2Fn8+SV5yjhLV
+         XajUMCWXmciY9S2J0sc+WJPNol344VS47aLAOkaIyqgwsWI/OlCt81mYY8quAZiDlmcm
+         uRlB8pRsXhjt9hmQQVJkNVDFFVmtfSPPSDO3bbI7PXfr4qNwnDZcV6s3T4EzBfw+Py48
+         3G5FZHf63em2wglYSLFWhfdh5FAOjJwlUpAbBE9hejZeOy7XDgpxrNUcXWBH4wiyQ1+V
+         1j42jul07i04d8ouEAULLNAGWRiLT5g6wsTVVrja4pTIUhsYR1EGOCoe2voLrm7POpBQ
+         TDFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=h3wqZ7CV+E6RvvScG9eGMqn1MP+tXyWuaE63jzZbSRQ=;
+        b=EdpCsVfFY/2QNRsKH4lhOwgHJjp6kG7tKwiL3N4idCgobfdkogPCBqhfdp9LVpw5xE
+         tOIBN5xzrKDrcbcqvpBwNUvagigml09ub86k+8XbQAfU1KDLCldUhW9btInHSb25u1Ib
+         eIYYiwqTIBNq9pUlYWGhEZRSJv2qOd7OZ6PydlMJoZJS5i0q+6I213cR32M+fl84o5+F
+         VkMnethPah37WUEtSqB7lJMBdCcQaH+ROY5P66P4fpOzCErkTCCdWQplg1d6fJrxDIgt
+         Fk2F1lhOnWu4GKlaeBu7TsZWfLnearhbMXFR/ZMjQ/j9EUtl6ypi2YVYKBr8ocitYoHE
+         QJFQ==
+X-Gm-Message-State: ALoCoQkbmdf9/yYjIaTN0zPm+JykTtxWFM340Nsl/oKYnTe1J/QiJTIRk+uYTLqpCV0u/xqNFcQl
+X-Received: by 10.129.101.135 with SMTP id z129mr19295168ywb.81.1435608153196;
+ Mon, 29 Jun 2015 13:02:33 -0700 (PDT)
+Received: by 10.37.4.80 with HTTP; Mon, 29 Jun 2015 13:02:33 -0700 (PDT)
+In-Reply-To: <1435500366-31700-44-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272999>
 
-> * js/rebase-i-clean-up-upon-continue-to-skip (2015-06-23) 2 commits
->  - rebase -i: do not leave a CHERRY_PICK_HEAD file behind
->  - t3404: demonstrate CHERRY_PICK_HEAD bug
-> 
->  Abandoning an already applied change in "git rebase -i" with
->  "--continue" left CHERRY_PICK_HEAD and confused later steps.
-> 
->  Will merge to 'next'.
-I need a little tweak here:
+On Sun, Jun 28, 2015 at 7:06 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> When commit_tree() is called, if the user does not have an explicit
+> committer ident configured, it will attempt to construct a default
+> committer ident based on the user's and system's info (e.g. gecos field,
+> hostname etc.) However, if a default committer ident is unable to be
+> constructed, commit_tree() will die(). However, at this point of git-am,
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 7fd1330..f236128 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1228,7 +1228,7 @@ test_expect_success 'rebase --continue removes
-CHERRY_PICK_HEAD' '
-        git checkout -b commit-to-skip &&
-        for double in X 3 1
-        do
--               seq 5 | sed "s/$double/&&/" >seq &&
-+               test_seq 5 | sed "s/$double/&&/" >seq &&
+s/. However,/, but/ ?
+
+> there will already be changes made to the index and work tree.
+>
+> This can be confusing to new users, and as such since d64e6b0 (Keep
+> Porcelainish from failing by broken ident after making changes.,
+> 2006-02-18) git-am.sh will check to see if the committer ident has been
+> configured, or a default one can be constructed, before even starting to
+> apply patches.
+>
+> Re-implement this in builtin/am.c.
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>  builtin/am.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/builtin/am.c b/builtin/am.c
+> index a46aa74..1cb02c8 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -2268,6 +2268,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>                 fprintf_ln(stderr, _("The -b/--binary option has been a no-op for long time, and\n"
+>                                 "it will be removed. Please do not use it anymore."));
+>
+> +       /* Ensure a valid committer ident can be constructed */
+> +       git_committer_info(IDENT_STRICT);
+> +
+>         if (read_index_preload(&the_index, NULL) < 0)
+>                 die(_("failed to read the index"));
+>
+> --
+> 2.5.0.rc0.76.gb2c6e93
+>
