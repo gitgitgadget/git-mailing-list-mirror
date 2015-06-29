@@ -1,134 +1,123 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: 4th release candidate of Git for Windows 2.x, was Re:
- 3rd release candidate of Git for Windows 2.x
-Date: Mon, 29 Jun 2015 18:54:30 +0300
-Message-ID: <20150629185430.5dfbab069b5dbdf32398d290@domain007.com>
-References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>
-	<b085dab2e617742b690ccb99ba4a3076@www.dscho.org>
-	<8224736a18724f751312d57e67967d69@www.dscho.org>
-	<55910AE7.3000206@atlas-elektronik.com>
-	<426859781bd04ca4ebb13719350537ed@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] worktree: new place for "git prune --worktrees"
+Date: Mon, 29 Jun 2015 09:13:37 -0700
+Message-ID: <xmqqh9pqcx1q.fsf@gitster.dls.corp.google.com>
+References: <1435582278-31158-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan =?UTF-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>,
-        Git
- Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
-        git-for-windows@googlegroups.com
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: msysgit+bncBCWKX34CSUCBBSGUYWWAKGQE26D7LWQ@googlegroups.com Mon Jun 29 17:54:49 2015
-Return-path: <msysgit+bncBCWKX34CSUCBBSGUYWWAKGQE26D7LWQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f60.google.com ([74.125.82.60])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 18:13:49 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCWKX34CSUCBBSGUYWWAKGQE26D7LWQ@googlegroups.com>)
-	id 1Z9bOS-0003fU-UI
-	for gcvm-msysgit@m.gmane.org; Mon, 29 Jun 2015 17:54:49 +0200
-Received: by wggx12 with SMTP id x12sf47564654wgg.1
-        for <gcvm-msysgit@m.gmane.org>; Mon, 29 Jun 2015 08:54:48 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Z9bgp-0007P8-43
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 18:13:47 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752913AbbF2QNn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jun 2015 12:13:43 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:33393 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849AbbF2QNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 12:13:40 -0400
+Received: by igcur8 with SMTP id ur8so40967679igc.0
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 09:13:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=b6kshRcmdX7Dl0/zwgZMMRZjryhCF9kSeGkzhmUUxTY=;
-        b=m8dk2+Yh9jx5wE2D7QuFBqg4aiJE8kaoSyNII17GWtuiXxbEDMR5VBwHuDNXDLOuAX
-         1EjcUWlQcQc7NlvfjnL3U2aZte1zbuiPcm1P8HpnJdgbL8RSD6I7Zrj7C6+oMldu7hhq
-         y6mPzRIrmeKW2vo296kbgH91wDt5i/mmI+qOX32I/qwcIvapneRNpbTEV/foPcSt2X3u
-         dauQy0GC5L4rxMYBBcyB0yLRMJ0gP/FsM6dQKL8MFgCpJse267SQuwSs6xw3vFCl1Id4
-         mlTbgr1NF35XsHfgVx8KGKEgAyBccDZN6U2AXmMf5SmcPJZdWgEnYaN329yuWpTW0FR/
-         9DZQ==
-X-Received: by 10.152.23.167 with SMTP id n7mr131604laf.36.1435593288587;
-        Mon, 29 Jun 2015 08:54:48 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.115.204 with SMTP id jq12ls96071lab.4.gmail; Mon, 29 Jun
- 2015 08:54:47 -0700 (PDT)
-X-Received: by 10.112.200.163 with SMTP id jt3mr11209152lbc.17.1435593287448;
-        Mon, 29 Jun 2015 08:54:47 -0700 (PDT)
-Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
-        by gmr-mx.google.com with ESMTPS id wf6si1493077lbb.2.2015.06.29.08.54.47
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Jun 2015 08:54:47 -0700 (PDT)
-Received-SPF: neutral (google.com: 84.204.203.130 is neither permitted nor denied by best guess record for domain of flatworm@users.sourceforge.net) client-ip=84.204.203.130;
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-	(authenticated bits=0)
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id t5TFsU5P004544
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 29 Jun 2015 18:54:31 +0300
-In-Reply-To: <426859781bd04ca4ebb13719350537ed@www.dscho.org>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
-X-Original-Sender: flatworm@users.sourceforge.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 84.204.203.130 is neither permitted nor denied by best guess
- record for domain of flatworm@users.sourceforge.net) smtp.mail=flatworm@users.sourceforge.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272967>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=SsXLAif++G8j9mjCa3Zvs2hB4KTKOP+FFM+NcUCUPJ4=;
+        b=tCbl6WL1Y/reIxpj1QwFt91l/O3YIio83SeDC7z+0PuzksGzL6ViOJDCbnlWJYHIoE
+         NRvsa0FYZXpFabt+oILbzyVOfWWdsOuV5IxHMN0Q3CDySAkNUy0vm0VOwoUfRy7erzcE
+         r5jth61/JFgr39JY4cdXPn95pjdemUlg4oAswY5lVjqm+NeWKrWRkyQKL8A8a8A0fxEk
+         qPdCNxaYZsoDcCwSVI1gtqepOTNm1bTnGlNqbqu9TS13ba3mnTM1M1jWPil2hA36uQui
+         fJ5YjnwJ2L0E96/wrvARhVQWs9VaUIZbMo6T8N53Lk1IO1vuPgiX7i/jks8nXTjEo67t
+         L+Sg==
+X-Received: by 10.50.64.243 with SMTP id r19mr16598795igs.5.1435594419794;
+        Mon, 29 Jun 2015 09:13:39 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:946c:210:22fc:378d])
+        by mx.google.com with ESMTPSA id 85sm497881iok.44.2015.06.29.09.13.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 29 Jun 2015 09:13:39 -0700 (PDT)
+In-Reply-To: <1435582278-31158-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 29
+ Jun 2015 19:51:18 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272968>
 
-On Mon, 29 Jun 2015 16:37:54 +0200
-Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> >> I just uploaded the 4th release candidate for the upcoming Git for
-> >> Windows 2.x release. Please find the download link here:
-> >>
-> >> https://git-for-windows.github.io/#download
-> >>
-> >> The most important changes are the update to Git 2.4.5 and a fix
-> >> for the crash when running Git Bash with a legacy `TERM` setting
-> >> (this should help 3rd party software to upgrade to Git for Windows
-> >> 2.x).
-> > 
-> > Thanks.
-> > It seems that this link:
-> > 
-> >    https://github.com/git-for-windows/git/releases/latest
-> > 
-> > doesn't point to the latest release.
-> > 
-> > Might be because the tags have the same date ?
-> 
-> Wooops. Sorry for being so slow (been interviewing today). It should
-> be correct now, can you verify, please?
+> Commit 23af91d (prune: strategies for linked checkouts - 2014-11-30)
+> adds "--worktrees" to "git prune" without realizing that "git prune" =
+is
+> for object database only. This patch moves the same functionality to =
+a
+> new command "git worktree".
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  In future I probably move the big block of text in git-checkout.txt =
+to
+>  git-worktree.txt and add "git worktree list". But let's start with
+>  something small and simple before "git prune --worktrees" is shipped
+>  out.
 
-Thanks for making all this real, Johannes!
+Thanks.  I notice that after applying this, builtin/prune.c does not
+revert to the original before 23af91d.  It stops including "dir.h"
+and it adds an extra blank line.  We've been including a header that
+is not necessary even in v2.4.0, it seems.  We used to walk
+$GIT_DIR/objects ourselves to find loose object files and "dir.h"
+was needed for is_dot_or_dotdot(); for_each_loose_file_in_objdir()
+is what we use these days to hide the implementation details these
+days; 27e1e22 forgot to remove the inclusion when it did this.
 
-I've finally took time to switch from my old "msys1" release to this
-RC4, and immediately got hit by the fact Git is now speaking to me in
-Russian, which is not what I want (previously this behaviour was only
-exhibited by `git gui` and `gitk`).
+The C code part is mostly just \C-x \C-v and I found nothing
+questionable.
 
-Should I make Git see LC_MESSAGES=en (or other thing like LANG) in the
-environment or is there some Git-local method to affect this behaviour?
-I tried to grep the release notes using relevant keywords but was left
-empty-handed.
+> diff --git a/command-list.txt b/command-list.txt
+> index b17c011..2a94137 100644
+> --- a/command-list.txt
+> +++ b/command-list.txt
+> @@ -148,4 +148,5 @@ git-verify-pack                         plumbingi=
+nterrogators
+>  git-verify-tag                          ancillaryinterrogators
+>  gitweb                                  ancillaryinterrogators
+>  git-whatchanged                         ancillaryinterrogators
+> +git-worktree                            mainporcelain
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+I doubt that a helper that is primarily spawned from "gc" as its
+implementation detail is more mainporcelain than "git config" is:
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+   git-config                              ancillarymanipulators
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+I also wonder if "git worktree" command should have a mode that
+works in a way similar to how new-workdir (in contrib/workdir) does,
+instead of an option "checkout --to" that looks just out of place as
+"worktree prune" was out of place in "prune".  The feature is doing
+a lot more than what "checkout" normally does (somewhere in between
+"checkout" and "clone", I would say), and it may be cleaner to use
+an independent command "git worktree" to manage a separate worktree.
+
+And when that happens, the command should definitely be classified
+as a mainporcelain.
+
+> diff --git a/git.c b/git.c
+> index 44374b1..fa77bc9 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -483,6 +483,7 @@ static struct cmd_struct commands[] =3D {
+>  	{ "verify-tag", cmd_verify_tag, RUN_SETUP },
+>  	{ "version", cmd_version },
+>  	{ "whatchanged", cmd_whatchanged, RUN_SETUP },
+> +	{ "worktree", cmd_worktree, RUN_SETUP },
+
+We do not NEED_WORK_TREE because we can create a new worktree
+off of a bare repository?
