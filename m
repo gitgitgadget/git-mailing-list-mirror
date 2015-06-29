@@ -1,70 +1,79 @@
-From: Lawrence Siebert <lawrencesiebert@gmail.com>
-Subject: [PATCH] --count feature for git shortlog
-Date: Sun, 28 Jun 2015 18:22:02 -0700
-Message-ID: <1435540922-12208-3-git-send-email-lawrencesiebert@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] --count feature for git shortlog
+Date: Sun, 28 Jun 2015 21:37:33 -0700
+Message-ID: <xmqq1tgvdt9u.fsf@gitster.dls.corp.google.com>
 References: <1435540922-12208-1-git-send-email-lawrencesiebert@gmail.com>
-Cc: Johannes.Schindelin@gmx.de, apelisse@gmail.com, jrnieder@gmail.com,
-	Lawrence Siebert <lawrencesiebert@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 29 03:22:30 2015
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	apelisse@gmail.com, jrnieder@gmail.com
+To: Lawrence Siebert <lawrencesiebert@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 06:37:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9NmH-0008TO-Gb
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 03:22:29 +0200
+	id 1Z9QpD-0007u6-QQ
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 06:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbbF2BW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2015 21:22:26 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:34818 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753174AbbF2BWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2015 21:22:20 -0400
-Received: by ykdy1 with SMTP id y1so102570316ykd.2
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 18:22:20 -0700 (PDT)
+	id S1751219AbbF2Ehh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 00:37:37 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:33088 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752560AbbF2Ehf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 00:37:35 -0400
+Received: by ieqy10 with SMTP id y10so107841189ieq.0
+        for <git@vger.kernel.org>; Sun, 28 Jun 2015 21:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=N4wrBHw+nQ17/C1aEOnBeDoEkw/snQOS4BkhdMQXmtU=;
-        b=Bq6AD7Zn9yLI+XqZltnRpsctP7ZX79oZfMeeZ5zn4DE1lBab9IK0NYhQcTPkfSAi2b
-         IySsruVHf9haD/hrDD5wEUAW++2En7oWscz8XKzraUfQ3kgf0MoXSSbXC36b2XSWBW7Y
-         A+PI6CR21Vex0sKJR4sCN0hbv7xVjEhtL8llH10hLxXn7OzDZjm5id8XDH+6DLNgnby0
-         0CpPAKdjoGL6b8lw+Y1/jCkDbX9kBmaKMicW9SjY57cqwateTtUCS5cLBiD0Yq9ytmwJ
-         fPONQMtDNTqrJvq6GgjnWOgrsnat6G/jcGMZfkoaDw56AQngtIYMIdE38C6OLurJBsnE
-         L3cA==
-X-Received: by 10.170.53.87 with SMTP id 84mr15875019ykv.68.1435540940120;
-        Sun, 28 Jun 2015 18:22:20 -0700 (PDT)
-Received: from localhost.localdomain (24-176-234-59.dhcp.atsc.ca.charter.com. [24.176.234.59])
-        by mx.google.com with ESMTPSA id c3sm35528470ywd.39.2015.06.28.18.22.18
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 28 Jun 2015 18:22:19 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Dpo6aNUJ8tP6mc9MO3oQzPgNTsyGsowAwYGnHSnURUk=;
+        b=IuhXMaKnlCKm3DukzkJmwhdAhlaWeNw4t9eHW/a87u0h3cDUyLPgUHQpQoquDkkO42
+         kaKejf9L00rpuqsS/yv+QvrUjjBWfHHwPgL+8pZVsU/BG8U5Eja32IV8e6CCLpHmYCok
+         KfcwWmQqQ3OV2UkHbsFe4KOaHGN2Q7OJbydKkXLQX9Cbm0fSMHpUq4ku+u/usLSgA+i4
+         KfYoTASLittlvbJNwydykT1WDYvqKahxh/2lV0DVDzHflaNz1nI1swspgxNg5BRUf/PY
+         RoXxVKP+bpbidusYuLnrIvTvmUkgnYOTqvgf2Riu2EuLn8jRIK4lYDrmHLIUPHv0T2bu
+         hPCA==
+X-Received: by 10.107.135.21 with SMTP id j21mr16228187iod.33.1435552655156;
+        Sun, 28 Jun 2015 21:37:35 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a109:3c27:ff77:e0c7])
+        by mx.google.com with ESMTPSA id w4sm4670512igl.22.2015.06.28.21.37.34
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 28 Jun 2015 21:37:34 -0700 (PDT)
 In-Reply-To: <1435540922-12208-1-git-send-email-lawrencesiebert@gmail.com>
+	(Lawrence Siebert's message of "Sun, 28 Jun 2015 18:22:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272932>
 
-Signed-off-by: Lawrence Siebert <lawrencesiebert@gmail.com>
----
- t/t4201-shortlog.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+Lawrence Siebert <lawrencesiebert@gmail.com> writes:
 
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 7600a3e..33ecb4a 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -194,4 +194,9 @@ test_expect_success 'shortlog with revision pseudo options' '
- 	git shortlog --exclude=refs/heads/m* --all
- '
- 
-+test_expect_success 'shortlog --count' '
-+	git shortlog --count HEAD > actual &&
-+	echo  "4" >expect &&
-+	test_cmp expect actual'
-+
- test_done
--- 
-1.9.1
+> This is a new feature for short log, which lets you count commits on a per
+> file or repository basis easily.
+>
+> Currently if you want a total count of commits with shortlog, you would
+> need to add up each authors commits after using --summary. This adds a 
+> -N / --count option to shortlog for this purpose.
+  
+The standard way to do that is
+
+    git log --oneline ... whatever other args ... | wc -l
+
+or more kosher from a script
+
+    git rev-list ... whatever other args ... | wc -l
+
+Adding an option to ignore per-author breakdown smells backwards.
+The whole point of shortlog is to give you the commit stats broken
+out for each author.  I guess it is not so far-fetched to add an
+option to "git log" to only show the number of commits that would be
+output, if you really wanted to avoid "| wc -l", but this option
+does not belong to shortlog.
+
+And it certainly does not deserve a short-and-sweet single letter
+option "-N", I think.
