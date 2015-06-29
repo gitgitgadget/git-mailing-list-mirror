@@ -1,69 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] --count feature for git shortlog
-Date: Mon, 29 Jun 2015 10:04:48 -0700
-Message-ID: <xmqqvbe6bg3z.fsf@gitster.dls.corp.google.com>
-References: <1435540922-12208-1-git-send-email-lawrencesiebert@gmail.com>
-	<xmqq1tgvdt9u.fsf@gitster.dls.corp.google.com>
-	<CAKDoJU4HcGoOS83MKwsQBXztYrDomMd9N-2SKc6iRyNhQQM5Eg@mail.gmail.com>
-	<CAKDoJU4MHGa-c=F0m17rgWUCS2xFwiSb1pmDnYztoDnzRaRKCw@mail.gmail.com>
+Subject: Re: [PATCH v4 01/44] wrapper: implement xopen()
+Date: Mon, 29 Jun 2015 10:18:00 -0700
+Message-ID: <xmqqr3oubfhz.fsf@gitster.dls.corp.google.com>
+References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
+	<1435500366-31700-2-git-send-email-pyokagan@gmail.com>
+	<5590CE10.3020104@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Lawrence Siebert <lawrencesiebert@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 19:05:18 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Jun 29 19:18:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9cUd-0005Oi-2c
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 19:05:15 +0200
+	id 1Z9chA-0006cN-Jm
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 19:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753345AbbF2RFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 13:05:04 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:32808 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752078AbbF2REv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 13:04:51 -0400
-Received: by igcur8 with SMTP id ur8so42195989igc.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2015 10:04:50 -0700 (PDT)
+	id S1751850AbbF2RSH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jun 2015 13:18:07 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:32808 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752130AbbF2RSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 13:18:05 -0400
+Received: by igcur8 with SMTP id ur8so42506729igc.0
+        for <git@vger.kernel.org>; Mon, 29 Jun 2015 10:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=gxJJlqUzrKZHAo8AF1X6dpWDIFef71c8WNNq7DNTHZw=;
-        b=ZqvZc0o4Aw8R1IA4noIhP2nnRPEfuODzj3naNH4VGCGNrJKhcAsVhkcEaZshaU7pal
-         U2QcQCZMS9SdFRWYj4WS7RAR4p/gXN7pZdlboKUq/vewFfAfP5HmRXdseUzXVfBJXnYh
-         xMZXMTM/8yb5ylkkBteR5eKRQsN7RyxdwgnPKSq9J0/PhoMgp+jY29mU+Of41/64xfbz
-         zHJX/l4lEE1YX8bkGOU6XDdKU1j3aqQNI6xy37i6aaXq4k2VmvrrRD8aoL5/1DiOaaLK
-         Tf9SXIU1lKZl0i0W3z0AVnCe1DFwQkbZ6iS15kXo+s/tD0BLHoYR0oUFx5IBy6Sr8Oib
-         PWbA==
-X-Received: by 10.107.3.227 with SMTP id e96mr22037882ioi.50.1435597490809;
-        Mon, 29 Jun 2015 10:04:50 -0700 (PDT)
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=HyjIoq+42HjnqT4BNijNjZ6ROS20/vr00+0+MZwIcAo=;
+        b=0o+FInCqSOWsVoGsm9G1Bg0nwESuLeOiVPMxqUVoYwU7c+wbu6iA+e1gFfzRYWy+Jd
+         J7MP2ViYNXi/TsvigKSpB2rB3vGLxHWUT9FJ4rsTRjNw6XDxVwzVGCxP4Vi6LR08jkQF
+         LwUH3lzeQksYYtghxSSNxCZmfhFbMJ9IaYa5SXeaoSJmpLmpm6C0Lapd3WQEUN34cmUp
+         ctHT7mTE9t7t2j0qko18Dj/25DfZQ8KuAPkpcjaXETgy7TLitLgixpCl8B9DE+CVSqDr
+         CjNCtA/6unFIgU0jvrLDMn9nUhvsaVlhIPKpu2BRZkdfwKmGavt5PJYpml30dTArhE69
+         ynvw==
+X-Received: by 10.50.79.202 with SMTP id l10mr17387583igx.7.1435598284730;
+        Mon, 29 Jun 2015 10:18:04 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:946c:210:22fc:378d])
-        by mx.google.com with ESMTPSA id rr5sm5837075igb.7.2015.06.29.10.04.49
+        by mx.google.com with ESMTPSA id p8sm5859089iga.13.2015.06.29.10.18.03
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Jun 2015 10:04:50 -0700 (PDT)
-In-Reply-To: <CAKDoJU4MHGa-c=F0m17rgWUCS2xFwiSb1pmDnYztoDnzRaRKCw@mail.gmail.com>
-	(Lawrence Siebert's message of "Mon, 29 Jun 2015 09:46:01 -0700")
+        Mon, 29 Jun 2015 10:18:03 -0700 (PDT)
+In-Reply-To: <5590CE10.3020104@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Mon, 29 Jun 2015 06:48:16 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272977>
 
-Lawrence Siebert <lawrencesiebert@gmail.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> I was using it to sort files
-> by commit count when provided a list of files, which git rev-list
-> doesn't really work for.
+>> +int xopen(const char *path, int oflag, ...)
+>> +{
+>> +	mode_t mode =3D 0;
+>> +	va_list ap;
+>> +
+>> +	va_start(ap, oflag);
+>> +	if (oflag & O_CREAT)
+>> +		mode =3D va_arg(ap, mode_t);
+>> +	va_end(ap);
+>> +
+>> +	assert(path);
+>> +
+> 2 remarks:
+> - I don't know if and why we need the assert() here (but don't know i=
+f
+> we have a strategie in Git for assert())
 
-What makes you say rev-list does not work (perhaps 'really' is the
-key word there?)
-
-    git rev-list --no-merges maint..master -- Makefile
-    git shortlog --no-merges maint..master -- Makefile
-    git log --oneline --no-merges maint..master -- Makefile
-
-all gives me results that are consistent among them.
+There is no bright-line rules, but I think it is sensible to remove
+this.  Nobody sane would throw a NULL at open(2) and xopen() is
+supposed to imitate that interface.  We do protect ourselves from
+careless use of our own API, but no need to clutter the code with
+overly zealous check against insane code, I would say.
