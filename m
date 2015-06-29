@@ -1,112 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fsck: it is OK for a tag and a commit to lack the body
-Date: Sun, 28 Jun 2015 22:42:45 -0700
-Message-ID: <xmqqsi9bcboq.fsf@gitster.dls.corp.google.com>
-References: <20150625155128.C3E9738005C@gemini.denx.de>
-	<xmqqegkzzoaz.fsf@gitster.dls.corp.google.com>
-	<20150625201309.5026A384E81@gemini.denx.de>
-	<xmqqegkzy1ri.fsf@gitster.dls.corp.google.com>
-	<2b124e09d9c89ff3892f246ea91aa3c4@www.dscho.org>
-	<xmqqoak3wkkq.fsf@gitster.dls.corp.google.com>
-	<xmqqbng3wheu.fsf@gitster.dls.corp.google.com>
-	<d455a77d76b3558fb79d550d6ed4468d@www.dscho.org>
-	<20150626155248.GB30273@peff.net>
-	<xmqqlhf3elxk.fsf_-_@gitster.dls.corp.google.com>
-	<32aa1979e75ba9bc6dc8a58fe32e9e55@www.dscho.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v10.1 7/7] bisect: allow any terms set by user
+Date: Mon, 29 Jun 2015 09:27:14 +0200
+Message-ID: <vpqegkvnfe5.fsf@anie.imag.fr>
+References: <xmqqsi9etjwy.fsf@gitster.dls.corp.google.com>
+	<1435351183-27100-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqa8vmrtsh.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1PyS_qM3EHW_Nzmo=3aeTDkZ0M3hnhRQANAO+ShF3H1Q@mail.gmail.com>
+	<CAPc5daXSnovQPxR5kVoeRy4kApH7DiuTDvAz1ooQFp=5DZZg4Q@mail.gmail.com>
+	<558F8B55.1070708@alum.mit.edu>
+	<CAPc5daWmhkqDL0pNYne4-kRoxWK7ObcOKxtE5DsfHA2cnMM1pQ@mail.gmail.com>
+	<558F9854.5080605@alum.mit.edu>
+	<xmqqwpyoe1aj.fsf@gitster.dls.corp.google.com>
+	<558FDAF9.3010300@alum.mit.edu>
+	<xmqqh9prekdw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Wolfgang Denk <wd@denx.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 29 07:46:32 2015
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	Louis Stuber <stuberl@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 09:27:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9Rtk-0004pt-6u
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 07:46:28 +0200
+	id 1Z9TTY-0007pN-U0
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jun 2015 09:27:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750718AbbF2Fmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2015 01:42:50 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:34548 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742AbbF2Fmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2015 01:42:49 -0400
-Received: by iebmu5 with SMTP id mu5so107972024ieb.1
-        for <git@vger.kernel.org>; Sun, 28 Jun 2015 22:42:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=uMhHyD8b2VS1b53Hr4q1MUURZkLnUo1XsBGuYZo1WyU=;
-        b=eOT283TRNJVxcXQ/Pf+C3dbePe4poywKKlPHVco6nrLYAnf995BkMX2u/MI/3vDAZv
-         r5/XPw+D/5Y/Jq4ot27GpurAZFKL6CAMK9/ZOElZIldJ6/4pFY70/bkpA6pzH8guHDbs
-         dchR8gE1n7VW2ZqaCFvJ0NyWLHuEeEMmMW0v1eJJ8BaDECtgwbH/mU14GWQfvPKrdW+N
-         OoCAH5yx/3zkZokTRhjB2ZSecLnBToRcCFgYgIu5Y79wa/8XdwFrBm+Cu23YkYZQC8aW
-         nBN0ad0ibQCEhRPzaZUb9I5ff9FL2QQAXlfZTwjIBbHlROg7VomJilbUD3N9r8GjZL1H
-         UIHA==
-X-Received: by 10.43.10.194 with SMTP id pb2mr17150125icb.31.1435556568247;
-        Sun, 28 Jun 2015 22:42:48 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a109:3c27:ff77:e0c7])
-        by mx.google.com with ESMTPSA id l128sm27009387iol.1.2015.06.28.22.42.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 28 Jun 2015 22:42:46 -0700 (PDT)
-In-Reply-To: <32aa1979e75ba9bc6dc8a58fe32e9e55@www.dscho.org> (Johannes
-	Schindelin's message of "Mon, 29 Jun 2015 07:12:38 +0200")
+	id S1752048AbbF2H13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2015 03:27:29 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46949 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752612AbbF2H10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2015 03:27:26 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5T7REcO029040
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 29 Jun 2015 09:27:14 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5T7REkd019571;
+	Mon, 29 Jun 2015 09:27:15 +0200
+In-Reply-To: <xmqqh9prekdw.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Sun, 28 Jun 2015 11:51:55 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 29 Jun 2015 09:27:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5T7REcO029040
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436167639.30907@yfpNUlLr3tNaAjYlcylrXQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272941>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> +	/*
->> +	 * We did not find double-LF that separates the header
->> +	 * and the body.  Not having a body is not a crime but
->> +	 * we do want to see the terminating LF for the last header
->> +	 * line.
->> +	 */
->> +	if (size && buffer[size - 1] == '\n')
->> +		return 0;
->> +
->>  	return error_func(obj, FSCK_ERROR, "unterminated header");
->>  }
->
-> Hmm. Maybe we should still warn when there is no empty line finishing
-> the header explicitly, or at least make it FSCK_IGNORE by default so
-> that maintainers who like a stricter check can upgrade the condition
-> to an error?
+> I _think_ bulk of Antoine and Matthieu's work can be salvaged/reused
+> to implement the proposal,
 
-Wolfgang, do you know how these old tags without messages were
-created?  I think in the old days we didn't advertise "git tag" as
-the sole way to create a tag object and more people drove "git
-mktag" from their script, and "mktag" until e0aaf781 (mktag.c:
-improve verification of tagger field and tests, 2008-03-27) did not
-complain if the header were not terminated with double-LF even when
-the tag did not have a body (hence there is no need for double-LF).
+I'm obviously biaised since I already spent time on the "bisect terms"
+idea, and I would hate to see my work and Antoine & Louis' thrown away.
+But I have to admit that I do like the idea of "git bisect" figuring out
+which commit is the old and which commit is the new one.
 
-Dscho, I do not think it is reasonable to force all repository
-owners of projects that started using Git before early 2008 to set
-configuration variable to ignore warnings for something that was
-perfectly kosher back when their project started.  More importantly,
-even though Git core itself adds unnecessary double-LF after the
-header in a tag or a commit that does not have any body, I am not
-sure if we punish people who use current versions of third-party
-reimplementations of Git that do not write that unnecessary
-double-LF at the end an object without a body (I am not saying that
-there is any known third-party reimplementation to do so---I am
-saying that I do not think it is their bug if such implementations
-existed today).
+It's much easier to implement after the series. I'm currently forbidding
+redefining "good" as "bad" and vice versa, but that's just to avoid
+confusion and because I didn't test this case, but it should just work.
+So, essentially an implementation of this "guess who's old and who's
+new" could be: if we find a good commit that is an ancestor of an old
+commit, swap the terms in BISECT_TERMS. When this happens before we
+started to set any refs, this should do the trick. In general, we should
+rename the good-$sha1 reference to good and the bad to bad-$sha1 (there
+are corner-cases where the user already specified several good-$sha1
+refs, in which case we would need to discard some of them).
 
-Do we have check marked as FSCK_IGNORE by default?  I think a more
-interesting "stricter check" may be to flag a tag object or a commit
-object that does not have any body, with or without the double-LF at
-the end.
+I'm getting out of Git time budget, so I can't be the one doing this, at
+least not soon.
 
-And such a check can certainly be added in the future, but what I
-sent was a fix to a regression that caused us to start whining on a
-syntactically valid object in the v2.2 timeframe, and is not about
-adding a new feature.
+So, one option is to take the series as-is, and wait for someone to
+implement the "guess who's old and who's new" later on top of it. One
+drawback would be that we'd end up having the not-so-useful feature
+"bisect terms" in the user-interface. At least, I am now convinced that
+hardcoding the pair old/new is not needed. In the short term, we can
+have "git bisect start --name-old foo --name-new bar" which avoids the
+"One needs to remember in which order to give terms" issue we used to
+have, so we don't need to clutter the user-interface with many ways to
+do the same thing. OTOH, the "bisect terms" feature wouldn't be
+completely useless: not everything is good or bad, so leaving the option
+to the user to tag "slow/fast", "present/absent", ... still makes sense.
+
+So, my proposal would be to remove the "old/new" patch from the series,
+and keep the other patches.
+
+What do you think?
+
+> but now it would be more clear that $name_good and $name_bad is a bad
+> way to name internal variables and files in $GIT_DIR. The inferred 'ah
+> you are hunting for regression' mode would call old ones 'bad' and new
+> ones 'good', they have to be given value neutral names, e.g. $name_old
+> and $name_new.
+
+Ideally, the whole code would be ported to use old/new, but the more I
+read the code the more I agree with Christian actually: we still have
+many more instances of good/bad in the code (e.g. functions
+check_good_are_ancestors_of_bad, for_each_good_bisect_ref, ...), so
+having just name_new/name_old would make the code very inconsistant.
+It's easier to read the code thinking "good revs are old, bad revs are
+recent; maybe some magic swapped the terms but I don't need to worry
+about this" for now.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
