@@ -1,74 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Tue, 30 Jun 2015 18:11:46 -0400
-Message-ID: <CAPig+cT0a201MVTsvvLrndr40GsMkyvtao33Gt=AFhvShtr=Kg@mail.gmail.com>
+Date: Tue, 30 Jun 2015 15:27:31 -0700
+Message-ID: <xmqqtwtobzn0.fsf@gitster.dls.corp.google.com>
 References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
+	<CAPig+cT0a201MVTsvvLrndr40GsMkyvtao33Gt=AFhvShtr=Kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 01 00:11:55 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 00:29:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZA3ku-00011o-JI
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 00:11:52 +0200
+	id 1ZA41e-0000aK-R8
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 00:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbbF3WLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 18:11:48 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:34527 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752087AbbF3WLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 18:11:47 -0400
-Received: by ykfy125 with SMTP id y125so22593516ykf.1
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 15:11:46 -0700 (PDT)
+	id S1753814AbbF3W3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 18:29:06 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:35364 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753548AbbF3W1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 18:27:34 -0400
+Received: by igblr2 with SMTP id lr2so85393349igb.0
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 15:27:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uBeOstLQ7EyI5AqXTTDJ6nixcf/F81rFOfQxKoLezC4=;
-        b=hZycxlIqymp9Gu3MgXPN1lwePtUDDiu0Vryi7sRjX+ylk0RZSGQwwXjbklqTOwcZX5
-         CxvjJJv/xUbxTlpGksOuLX3lxRFIkpvS5iUPRLyeCI2AQFNWeAUJ7SYn/GZ9su1hR33n
-         MiECuMellDAaxQI6xu4hwa9Gx1sc5sc1K/PFLGCOh1pszGQoeL73jcu5BJ2VlmAjTZpw
-         YCfmepnQI3aL2zw6RKfSQAEktzqyWyW2UniHKqgsRqX7R27dCida/rDRZ0MYIjRCjluJ
-         ZJ8WEqj12HaCbZq+cb2csILsHXjYb1u20/63ejJrQwMoF7ppdQ/RmSae9lSJl1DwxP3l
-         cjWg==
-X-Received: by 10.129.91.135 with SMTP id p129mr28977629ywb.95.1435702306442;
- Tue, 30 Jun 2015 15:11:46 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Tue, 30 Jun 2015 15:11:46 -0700 (PDT)
-In-Reply-To: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
-X-Google-Sender-Auth: 2R_pmnmb8Xq9hfOcJIDlfHwv3to
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=6LgSuGqBsmdV/pSVxRVh/nkvHD4NBUT0hE6sgLMKwgM=;
+        b=dlGp3gmWdCQMOF4Wrz3Pyv3A0RKqDmep2TDnCVxFwhOco8GicC4meduP6QmbUP75BF
+         +GsT9p+01xfJAh6402BKIzFpIOkkzgCLGMVyWnCeLkPcBshyBpiKpBnAbA/HNeF+m0Pk
+         tSpjyrohBb3LRPjOlN69IGWOmPw9DjZRU9IreHci3A1xL0bGSR8bhC41WWVM4zLeqvoc
+         DPO+b3aKuonAFOQKala3a4aC6WmCX7hhWhloxlFK/pQcUjXWT/CIb6+YI6nrgigGvOhL
+         ehf5WGe0nYrSFeMz7lqJOBRyS1WCtGXcT3xnvuht2rvu3+ThKJs6FQz2OhgsIwfwBE6L
+         YfJw==
+X-Received: by 10.42.48.83 with SMTP id r19mr14970icf.3.1435703252691;
+        Tue, 30 Jun 2015 15:27:32 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
+        by mx.google.com with ESMTPSA id e10sm233184igy.11.2015.06.30.15.27.31
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Jun 2015 15:27:32 -0700 (PDT)
+In-Reply-To: <CAPig+cT0a201MVTsvvLrndr40GsMkyvtao33Gt=AFhvShtr=Kg@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 30 Jun 2015 18:11:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273108>
 
-On Tue, Jun 30, 2015 at 12:56 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> The command "git checkout --to <path>" is something of an anachronism,
-> encompassing functionality somewhere between "checkout" and "clone".
-> The introduction of the git-worktree command, however, provides a proper
-> and intuitive place to house such functionality. Consequently,
-> re-implement "git checkout --to" as "git worktree new".
-> [...]
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
-> This is primarily a code and documentation relocation patch, with minor
-> new code added to builtin/worktree.c. Specifically:
->
-> * builtin/worktree.c:new() is new. It recognizes a --force option ("git
->   worktree new --force <path> <branch>") which allows a branch to be
->   checked out in a new worktree even if already checked out in some
->   other worktree (thus, mirroring the functionality of "git checkout
->   --ignore-other-worktrees").
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Speaking of "git worktree new --force", should we revisit "git
-checkout --ignore-other-worktrees" before it gets set in stone? In
-particular, I'm wondering if it makes sense to overload git-checkout's
-existing --force option to encompass the functionality of
---ignore-other-worktrees as well. I don't think there would be any
-semantic conflict by overloading --force, and I do think that --force
-is more discoverable and more intuitive.
+> On Tue, Jun 30, 2015 at 12:56 AM, Eric Sunshine <sunshine@sunshineco.com> wrote
+> Speaking of "git worktree new --force", should we revisit "git
+> checkout --ignore-other-worktrees" before it gets set in stone? In
+> particular, I'm wondering if it makes sense to overload git-checkout's
+> existing --force option to encompass the functionality of
+> --ignore-other-worktrees as well. I don't think there would be any
+> semantic conflict by overloading --force, and I do think that --force
+> is more discoverable and more intuitive.
+
+"git checkout -f" is to throw-away local changes, which is a very
+sensible thing to do and I can see why that would be useful, but
+does --ignore-other-worktrees have the same kind of common-ness?
+
+It primarily is a safety measure, and if the user wants to jump
+around freely to different commits in multiple worktrees, a more
+sensible thing to do so without getting the "nono, you have that
+branch checked out elsewhere" is to detach HEADs in the non-primary
+worktrees that may want to have the same commit checked out as the
+current branch of the primary worktree.
+
+I would mildly object to make --ignore-other-worktrees more
+discoverable and moderately object to make that feature more
+accessible by overloading it into "--force".  I personally would not
+mind if we removed "--ignore-other-worktrees", but that might be
+going too far ;-)
