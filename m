@@ -1,112 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] revision.c: Remove unneeded check for NULL
-Date: Tue, 30 Jun 2015 15:48:14 -0700
-Message-ID: <20150630224814.GB4865@google.com>
-References: <1435347619-29410-1-git-send-email-sbeller@google.com>
- <20150627060710.GA9353@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/4] More helpful 'git status' during 'rebase -i'
+Date: Tue, 30 Jun 2015 16:03:25 -0700
+Message-ID: <xmqqpp4cbxz6.fsf@gitster.dls.corp.google.com>
+References: <1435669275-32102-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 01 00:48:26 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	antoine.delaite@ensimag.grenoble-inp.fr
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 01 01:03:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZA4KG-0000zR-I4
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 00:48:24 +0200
+	id 1ZA4Yx-00081Z-Ka
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 01:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbbF3WsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 18:48:21 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:36521 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752379AbbF3WsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 18:48:18 -0400
-Received: by iecvh10 with SMTP id vh10so22847449iec.3
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 15:48:17 -0700 (PDT)
+	id S1752125AbbF3XDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 19:03:30 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:35287 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752134AbbF3XD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 19:03:28 -0400
+Received: by iecuq6 with SMTP id uq6so23069775iec.2
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 16:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=mGdfb4bZsFvq+jsJ7m4hKRqDQesdNg2/iXgLB8BIoqw=;
-        b=LuL0uQc85WmymsXntCHQ0Xru3YsAiYw/+l3ClyQfbtVi7xqrgabk70Gf4cBlSyNRgK
-         Vij/DPGnpb5oBCAMnUaiRxnQt1DC3yAhYwens699vzx22mRwi2s197LWEq0Ztc93ZvCI
-         ioL80lhNC2ps9GAfbtQwNz0uA+auNNwlNvetA9ks+r99T3UBN/SSPx8ByGYtQ7ccoSDZ
-         rqKiEB2bpVBFdB+ernz+tE+n0zhP9Kzq7c+xGOaU9ucjJgkYw7CX68eDBxO5QVlJxe4i
-         piBuDED2z8t1NuK8TAXlqWESaoywZfX6YuJR7wtPF/emn5oEHE9XzGg2pzGJ3MNd+sP6
-         wxsg==
-X-Received: by 10.50.59.211 with SMTP id b19mr27070197igr.42.1435704497408;
-        Tue, 30 Jun 2015 15:48:17 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:3519:ee81:ec83:ee3d])
-        by mx.google.com with ESMTPSA id 140sm31043457ion.16.2015.06.30.15.48.16
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=vcBv05pMbiOc4PeVOODrw426Xxv+4CRxURaiMlC7G2g=;
+        b=ttTrSy9KYmvYXQCugI1fhRo6TfC2FSF9XpaK9nCRhZ2Y/F6DNK7q8Tk82iz+/cGJyG
+         xiptEmKXyamF7briAIeD/2fvolTR6dwUDm2PDZJFZEIPMSocrcVo7SGkF7fkCIHxCcpA
+         HXYMTFKkIdRIjwQTgArP83ZoWU6aXLQNOos3+h5T+uKN3R0fDC/6qbWoKhourUQ/TfbQ
+         qxs68FHDqtnDSTo3dMUngEvwws9ewgjemoHlElC6IXk+wyMMk5bWGFctz2V2g/D5eYw8
+         sIm8XbgsNKaYiomKznDw5JZ67jebrZyKitXjxWHY5z/BUXDDUWsV82NepuAoce0uhWwb
+         7LaQ==
+X-Received: by 10.43.66.5 with SMTP id xo5mr121868icb.57.1435705407311;
+        Tue, 30 Jun 2015 16:03:27 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
+        by mx.google.com with ESMTPSA id k74sm31104153iok.30.2015.06.30.16.03.26
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jun 2015 15:48:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20150627060710.GA9353@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Tue, 30 Jun 2015 16:03:26 -0700 (PDT)
+In-Reply-To: <1435669275-32102-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Tue, 30 Jun 2015 15:01:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273111>
 
-Jeff King wrote:
-> On Fri, Jun 26, 2015 at 12:40:19PM -0700, Stefan Beller wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
->>> This code seems to be underdocumented.
->>
->> I am not a expert in this area of the code, so I hoped Peff
->> would document it if he feels like so.
+> This series makes "git status" provide an output like
 >
-> I kind of thought that the explanation in b6e8a3b covered this code.
-> Does it not, or did people not read it?
+>   interactive rebase in progress; onto $ONTO
+>   Last commands done (2 commands done):
+>      pick $COMMIT2 two_commit
+>      exec exit 15
+>   Next commands to do (2 remaining commands):
+>      pick $COMMIT3 three_commit
+>      pick $COMMIT4 four_commit
+>     (use "git rebase --edit-todo" to view and edit)
+>
+> in addition to the existing output, when ran during an interactive
+> rebase.
 
-I know that "tl;dr" is the last thing anyone who has written a clear
-description of something wants to read, but I fear it applies here.  I
-tried to skim that commit message to get a gist of what the
-still_interesting variable is supposed to hold and I failed.
+I'd prefer to see these $COMMITn abbreviated, just like $ONTO.  Look
+what I just got while squashing two adjacent patches ;-)
 
-I think part of the problem was that that commit message doesn't give
-a specific example early on to motivate the problem and fix[*].
-
-More to the point, someone interested in that specific variable
-doesn't need to necessarily understand the optimization that motivated
-it.  Instead, they'd want to know what invariants to expect and
-preserve: what value does it start with, what does its value mean, are
-there some forbidden values, etc.
-
-Is the idea that it represents a commit from the queue which is still
-interesting, and that it saves us from looping through the queue to
-find a still-interesting commit as long as mark_parents_uninteresting
-has not marked this one uninteresting yet?  What does it mean when it
-is NULL?
-
-Thanks,
-Jonathan
-
-[*] I.e., what command do I run to get quadratic behavior?
-
-The message starts with a diagnosis --- "When we are limiting a
-rev-list traversal due to UNINTERESTING refs, we have to walk down the
-tips" --- without introducing what problem is being diganosed.
-
-The problem being solved might have been something like "When we call
-'git rev-list $commits --not --all' in check_everything_connected
-after a fetch, if we fetched something much older than most of our
-refs, and if we have a large number of refs, the operation is slow ---
-quadratic in the number of refs.  This hasn't been a problem in the
-past because people did not use so many refs, but now as the number of
-refs in a typical repository grows, it is becoming more noticeable."
-Even after re-reading the message more carefully, I'm not sure.  I
-assume there was a report motivating the change, which might have been
-useful for putting the explanation in context for the reader.
-Alas, git://repo.or.cz/git/trast.git branch notes/gmane doesn't have any
-annotations for that commit to find the context.
-
-The commit message then goes on to explain how the patch solves that
-problem, but without an example to put that explanation in context, it
-is hard to follow.  What linear search is the explanation talking
-about?  What is the interesting commit we find?  I couldn't tell without
-looking at the code.
+# interactive rebase in progress; onto a04bfc2
+# Last commands done (2 commands done):
+#    pick c186b073f46a3298f2e6f63a8c1becb07bedc4f0 rerere: explain what 'want_sp' does to is_cmarker
+#    squash 17c5b40b46c0e171ed49907e6cb91c2a1d7f7113 rerere: drop want_sp parameter from is_cmarker()
+# Next commands to do (3 remaining commands):
+#    pick 8fc64c4c1024006e71cf0b6c2e3d0ad403f263f8 t4200: rerere a merge with two identical conflicts
+#    pick 094950cdc51599f6fec1b1c0098816888a648bf8 rerere: document internal I/O abstraction
+# You are currently editing a commit while rebasing branch 'jc/rerere' on 'a04bfc2'.
