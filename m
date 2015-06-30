@@ -1,287 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v7 07/10] send-email: reduce dependencies impact on parse_address_line
-Date: Tue, 30 Jun 2015 14:16:48 +0200
-Message-ID: <1435666611-18429-8-git-send-email-Matthieu.Moy@imag.fr>
-References: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	antoine.delaite@ensimag.grenoble-inp.fr,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jun 30 14:17:54 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] --count feature for git shortlog
+Date: Tue, 30 Jun 2015 13:23:24 +0100
+Message-ID: <20150630122323.GY18226@serenity.lan>
+References: <1435540922-12208-1-git-send-email-lawrencesiebert@gmail.com>
+ <xmqq1tgvdt9u.fsf@gitster.dls.corp.google.com>
+ <CAKDoJU4HcGoOS83MKwsQBXztYrDomMd9N-2SKc6iRyNhQQM5Eg@mail.gmail.com>
+ <CAKDoJU4MHGa-c=F0m17rgWUCS2xFwiSb1pmDnYztoDnzRaRKCw@mail.gmail.com>
+ <19801032cd7af95bc8030f54d740bf48@www.dscho.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Lawrence Siebert <lawrencesiebert@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 30 14:23:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9uU5-0005qP-Go
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 14:17:53 +0200
+	id 1Z9uZi-0000la-Aa
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 14:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbbF3MRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 08:17:44 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54659 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753067AbbF3MRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 08:17:20 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UCGxSS020569
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 30 Jun 2015 14:17:00 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UCH1lH022754;
-	Tue, 30 Jun 2015 14:17:01 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Z9uTF-00051L-9m; Tue, 30 Jun 2015 14:17:01 +0200
-X-Mailer: git-send-email 2.5.0.rc0.10.g7792c2a
-In-Reply-To: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 30 Jun 2015 14:17:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5UCGxSS020569
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1436271421.14163@aKaULsN+iu4ytnTG1RGUDw
+	id S1753387AbbF3MXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 08:23:36 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:58239 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753380AbbF3MXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 08:23:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 9B1D186601B;
+	Tue, 30 Jun 2015 13:23:34 +0100 (BST)
+X-Quarantine-ID: <vZ8g5nnAh0kY>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.001
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id vZ8g5nnAh0kY; Tue, 30 Jun 2015 13:23:34 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 60B62CDA608;
+	Tue, 30 Jun 2015 13:23:25 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <19801032cd7af95bc8030f54d740bf48@www.dscho.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273054>
 
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+On Tue, Jun 30, 2015 at 02:10:49PM +0200, Johannes Schindelin wrote:
+> On 2015-06-29 18:46, Lawrence Siebert wrote:
+> 
+> > I appreciate your help. Okay, That all makes sense.
+> > 
+> > I would note that something like:
+> >  git shortlog -s "$FILENAME:  | cut -f 1 | paste -sd+ - | bc
+> > 
+> > seems like it run much faster then:
+> > 
+> >  git log --oneline "$FILENAME" | wc -l
+> 
+> How does it compare to `git rev-list -- "$FILENAME" | wc -l`?
 
-parse_address_line had not the same behavior whether the user had
-Mail::Address or not. Teach parse_address_line to behave like
-Mail::Address.
-
-When the user input is correct, this implementation behaves
-exactly like Mail::Address except when there are quotes
-inside the name:
-
-  "Jane Do"e <jdoe@example.com>
-
-In this case the result of parse_address_line is:
-
-  With M::A : "Jane Do" e <jdoe@example.com>
-  Without   : "Jane Do e" <jdoe@example.com>
-
-When the user input is not correct, the behavior is also mostly
-the same.
-
-Unlike Mail::Address, this doesn't parse groups and recursive
-commentaries.
-
-Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- git-send-email.perl  |  2 +-
- perl/Git.pm          | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- t/t9000-addresses.sh | 30 +++++++++++++++++++++++
- t/t9000/test.pl      | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 165 insertions(+), 1 deletion(-)
- create mode 100755 t/t9000-addresses.sh
- create mode 100755 t/t9000/test.pl
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 49fc275..4268ed9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -478,7 +478,7 @@ sub parse_address_line {
- 	if ($have_mail_address) {
- 		return map { $_->format } Mail::Address->parse($_[0]);
- 	} else {
--		return split_addrs($_[0]);
-+		return Git::parse_mailboxes($_[0]);
- 	}
- }
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 9026a7b..19ef081 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -864,6 +864,73 @@ sub ident_person {
- 	return "$ident[0] <$ident[1]>";
- }
- 
-+=item parse_mailboxes
-+
-+Return an array of mailboxes extracted from a string.
-+
-+=cut
-+
-+sub parse_mailboxes {
-+	my $re_comment = qr/\((?:[^)]*)\)/;
-+	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
-+	my $re_word = qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
-+
-+	# divide the string in tokens of the above form
-+	my $re_token = qr/(?:$re_quote|$re_word|$re_comment|\S)/;
-+	my @tokens = map { $_ =~ /\s*($re_token)\s*/g } @_;
-+
-+	# add a delimiter to simplify treatment for the last mailbox
-+	push @tokens, ",";
-+
-+	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
-+	foreach my $token (@tokens) {
-+		if ($token =~ /^[,;]$/) {
-+			# if buffer still contains undeterminated strings
-+			# append it at the end of @address or @phrase
-+			if (@address) {
-+				push @address, @buffer;
-+			} else {
-+				push @phrase, @buffer;
-+			}
-+
-+			my $str_phrase = join ' ', @phrase;
-+			my $str_address = join '', @address;
-+			my $str_comment = join ' ', @comment;
-+
-+			# quote are necessary if phrase contains
-+			# special characters
-+			if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
-+				$str_phrase =~ s/(^|[^\\])"/$1/g;
-+				$str_phrase = qq["$str_phrase"];
-+			}
-+
-+			# add "<>" around the address if necessary
-+			if ($str_address ne "" && $str_phrase ne "") {
-+				$str_address = qq[<$str_address>];
-+			}
-+
-+			my $str_mailbox = "$str_phrase $str_address $str_comment";
-+			$str_mailbox =~ s/^\s*|\s*$//g;
-+			push @addr_list, $str_mailbox if ($str_mailbox);
-+
-+			@phrase = @address = @comment = @buffer = ();
-+		} elsif ($token =~ /^\(/) {
-+			push @comment, $token;
-+		} elsif ($token eq "<") {
-+			push @phrase, (splice @address), (splice @buffer);
-+		} elsif ($token eq ">") {
-+			push @address, (splice @buffer);
-+		} elsif ($token eq "@") {
-+			push @address, (splice @buffer), "@";
-+		} elsif ($token eq ".") {
-+			push @address, (splice @buffer), ".";
-+		} else {
-+			push @buffer, $token;
-+		}
-+	}
-+
-+	return @addr_list;
-+}
- 
- =item hash_object ( TYPE, FILENAME )
- 
-diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
-new file mode 100755
-index 0000000..7223d03
---- /dev/null
-+++ b/t/t9000-addresses.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2015
-+#
-+
-+test_description='compare address parsing with and without Mail::Address'
-+. ./test-lib.sh
-+
-+if ! test_have_prereq PERL; then
-+	skip_all='skipping perl interface tests, perl not available'
-+	test_done
-+fi
-+
-+perl -MTest::More -e 0 2>/dev/null || {
-+	skip_all="Perl Test::More unavailable, skipping test"
-+	test_done
-+}
-+
-+perl -MMail::Address -e 0 2>/dev/null || {
-+	skip_all="Perl Mail::Address unavailable, skipping test"
-+	test_done
-+}
-+
-+test_external_has_tap=1
-+
-+test_external_without_stderr \
-+	'Perl address parsing function' \
-+	perl "$TEST_DIRECTORY"/t9000/test.pl
-+
-+test_done
-diff --git a/t/t9000/test.pl b/t/t9000/test.pl
-new file mode 100755
-index 0000000..8e2b760
---- /dev/null
-+++ b/t/t9000/test.pl
-@@ -0,0 +1,67 @@
-+#!/usr/bin/perl
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+
-+use 5.008;
-+use warnings;
-+use strict;
-+
-+use Test::More qw(no_plan);
-+use Mail::Address;
-+
-+BEGIN { use_ok('Git') }
-+
-+my @success_list = (q[Jane],
-+	q[jdoe@example.com],
-+	q[<jdoe@example.com>],
-+	q[Jane <jdoe@example.com>],
-+	q[Jane Doe <jdoe@example.com>],
-+	q["Jane" <jdoe@example.com>],
-+	q["Doe, Jane" <jdoe@example.com>],
-+	q["Jane@:;\>.,()<Doe" <jdoe@example.com>],
-+	q[Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>],
-+	q["<jdoe@example.com>"],
-+	q["Jane jdoe@example.com"],
-+	q[Jane Doe <jdoe    @   example.com  >],
-+	q[Jane       Doe <  jdoe@example.com  >],
-+	q[Jane @ Doe @ Jane @ Doe],
-+	q["Jane, 'Doe'" <jdoe@example.com>],
-+	q['Doe, "Jane' <jdoe@example.com>],
-+	q["Jane" "Do"e <jdoe@example.com>],
-+	q["Jane' Doe" <jdoe@example.com>],
-+	q["Jane Doe <jdoe@example.com>" <jdoe@example.com>],
-+	q["Jane\" Doe" <jdoe@example.com>],
-+	q[Doe, jane <jdoe@example.com>],
-+	q["Jane Doe <jdoe@example.com>],
-+	q['Jane 'Doe' <jdoe@example.com>]);
-+
-+my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
-+	q["Doe, Ja"ne <jdoe@example.com>],
-+	q["Doe, Katarina" Jane <jdoe@example.com>],
-+	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
-+	q[Jane jdoe@example.com],
-+	q[<jdoe@example.com> Jane Doe],
-+	q[Jane <jdoe@example.com> Doe],
-+	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
-+	q[Jane Doe],
-+	q[Jane "Doe <jdoe@example.com>"],
-+	q[\"Jane Doe <jdoe@example.com>],
-+	q[Jane\"\" Doe <jdoe@example.com>],
-+	q['Jane "Katarina\" \' Doe' <jdoe@example.com>]);
-+
-+foreach my $str (@success_list) {
-+	my @expected = map { $_->format } Mail::Address->parse("$str");
-+	my @actual = Git::parse_mailboxes("$str");
-+	is_deeply(\@expected, \@actual, qq[same output : $str]);
-+}
-+
-+TODO: {
-+	local $TODO = "known breakage";
-+	foreach my $str (@known_failure_list) {
-+		my @expected = map { $_->format } Mail::Address->parse("$str");
-+		my @actual = Git::parse_mailboxes("$str");
-+		is_deeply(\@expected, \@actual, qq[same output : $str]);
-+	}
-+}
-+
-+my $is_passing = Test::More->builder->is_passing;
-+exit($is_passing ? 0 : 1);
--- 
-2.5.0.rc0.10.g7792c2a
+Or even `git rev-list --count HEAD -- "$FILENAME"`.
