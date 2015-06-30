@@ -1,91 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Tue, 30 Jun 2015 09:33:55 -0700
-Message-ID: <xmqqy4j16tqk.fsf@gitster.dls.corp.google.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
-	<CACsJy8BYeYq-fQX=M1h2r4daQSsemXQT4Y+ww2Z3Y54brUS3QQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] introduce "format" date-mode
+Date: Tue, 30 Jun 2015 12:58:33 -0400
+Message-ID: <CAPig+cTXc_RXbOAOaF2MFjrg+DSet=g0XQMZY0ErMYAmNVSV+g@mail.gmail.com>
+References: <20150625165341.GA21949@peff.net>
+	<20150625165545.GC23503@peff.net>
+	<20150629222247.GA31607@flurp.local>
+	<20150630102055.GA11928@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 18:34:04 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 30 18:58:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9yTy-0008UZ-TP
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 18:34:03 +0200
+	id 1Z9yrt-0004qc-6v
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 18:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752805AbbF3Qd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 12:33:58 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:33135 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751805AbbF3Qd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 12:33:58 -0400
-Received: by ieqy10 with SMTP id y10so16373082ieq.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 09:33:57 -0700 (PDT)
+	id S1752988AbbF3Q6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 12:58:35 -0400
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:35651 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbbF3Q6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 12:58:34 -0400
+Received: by ykdy1 with SMTP id y1so14662567ykd.2
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 09:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=cUDz7rkobYFVCgSZlqMxRhJzitjUKYZKGANPNupJ1E4=;
-        b=0f1W/L/0ypY7H3UXRlo0L/fu0PaFeB64gKTKdldilnb3ueR2EmM0w+26ScxOg7MycO
-         idxBdQ8maZIx+T1rJzFhwfjTOHDhMmhEZo/fg2O/SvJJwLHZLwcw1gCzeCAdjX8s/Iwd
-         7/D2VXi2iDM791jCj+5Xn3FKJRFcTPHWk70shJR0ENwkyvZX8uB4Kvfalob3qfZdjtFw
-         QHWd2NICnudTehzTLEIBYrWP9rIfzGroE8h/hQC3m67hjDGrPLyRiMv21YlqcmTC2V09
-         g+TGxVwNEoFUq6egiaeqkm/Gis7WpcDkgQJt1o7R8F6O9mAMgsaj9KGHIv/5kDukx97v
-         lg7Q==
-X-Received: by 10.107.137.41 with SMTP id l41mr20327112iod.60.1435682037227;
-        Tue, 30 Jun 2015 09:33:57 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
-        by mx.google.com with ESMTPSA id rj5sm8068774igc.2.2015.06.30.09.33.56
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jun 2015 09:33:56 -0700 (PDT)
-In-Reply-To: <CACsJy8BYeYq-fQX=M1h2r4daQSsemXQT4Y+ww2Z3Y54brUS3QQ@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 30 Jun 2015 16:23:09 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=0ismkc8MIzXKCW/wP+v+Sc2gulSHP82BZvBMRBu1pFY=;
+        b=0y7Wef7bXpzDDEu+UZgfkxvK+RuTlnYdqsvPNLRFcm52DbojiskmVUNA3W5tQI5Kc2
+         wYTCJjWgQXWyvui66AhBXzXnrkFHyTgFHf7ic8f0zUu3/5GLGR8oRUaqBpjYiSFqAleT
+         BzzY/F4qYMRTXbPFMj4ljVFVDc6iqCFZwhlkqywOhGBr4ka7faZJobBR3RlwhdmuY+kI
+         0UGprc3kLzldkp98M4PAwOc5LNtJIAa1J91FoeJKl3dzIu52IUjTxxTULLLd0FU/+5g1
+         7CcMwat0kJUyyDR1MWbDYIKOOk1HcfJLqbWAJxDYwpD3Qr7DYoZcNnRi1kaZPdZ3FBRB
+         041g==
+X-Received: by 10.129.70.69 with SMTP id t66mr12825281ywa.4.1435683513409;
+ Tue, 30 Jun 2015 09:58:33 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Tue, 30 Jun 2015 09:58:33 -0700 (PDT)
+In-Reply-To: <20150630102055.GA11928@peff.net>
+X-Google-Sender-Auth: fsRNGaRLFW9xJH3bt7HWpIpGbAk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273081>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, Jun 30, 2015 at 6:20 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 29, 2015 at 06:22:47PM -0400, Eric Sunshine wrote:
+>> void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm)
+>> {
+>>       size_t len;
+>>       struct strbuf f = STRBUF_INIT;
+>>
+>>       /*
+>>        * This is a bit tricky since strftime returns 0 if the result did not
+>>        * fit in the supplied buffer, as well as when the formatted time has
+>>        * zero length. In the former case, we need to grow the buffer and try
+>>        * again. To distinguish between the two cases, we supply strftime with
+>>        * a format string one character longer than what the client supplied,
+>>        * which ensures that a successful format will have non-zero length,
+>>        * and then drop the extra character from the formatted time before
+>>        * returning.
+>>        */
+>>       strbuf_addf(&f, "%s ", fmt);
+>
+> Basically I was trying to avoid making any assumptions about exactly how
+> strftime works. But presumably "stick a space in the format" is a
+> universally reasonable thing to do. It's a hack, but it's contained to
+> the function.
 
-> I think this is like "git checkout -b" vs "git branch". We pack so
-> many things in 'checkout' that it's a source of both convenience and
-> confusion. I never use "git branch" to create a new branch and if I
-> had a way to tell checkout to "move away and delete previous branch",
-> I would probably stop using "git branch -d/-D" too. "--to" is another
-> "-b" in this sense.
+I don't think we're making any assumptions about strftime(). POSIX states:
 
-I didn't know "checkout --to" included "create a worktree elsewhere
-and chdir there"; if that "and chdir there" is not something you are
-doing, then I do not think "checkout -b" vs "branch" analogy applies.
+    The format string consists of zero or more conversion
+    specifications and ordinary characters. [...] All ordinary
+    characters (including the terminating NUL character) are copied
+    unchanged into the array.
 
-> "git worktree new" definitely makes sense (maybe stick with verbs like
-> "create", I'm not sure if we have some convention in existing
-> commands), but should we remove "git checkout --to"?
+So, we seem to be on solid footing with this approach (even though
+it's a localized hack).
 
-I'm in favor of removing "--to" before it escapes the lab.
+>>       do {
+>>               strbuf_grow(sb, 128);
+>>               len = strftime(sb->buf + sb->len, sb->alloc - sb->len,
+>>                              f.buf, tm);
+>>       } while (!len);
+>
+> I think we need to keep growing this 128 ourselves, or else each loop
+> iteration will just say "yup, we have 128 bytes available; no need to
+> grow".
 
-I am ambivalent about "new", but that is only because I know about
-the 'new-workdir' in contrib/.  If I pretend to be a naive end user,
-I'd think a verb subcommand would be more in line with the rest of
-the system than "new".
+Yeah, I toyed with the idea of increasing the requested amount each
+iteration but wanted to keep the example simple, thus left it out.
+However, for some reason, I was thinking that strbuf_grow() was
+unconditionally expanding the buffer by the requested amount rather
+than merely ensuring that that amount was availabile, so the amount
+clearly needs to be increased on each iteration. Thanks for pointing
+that out.
 
-I however do not think "create" is a good verb.
+>> If this is performance critical code, then the augmented format
+>> string can be constructed with less expensive functions than
+>> strbuf_addf().
+>
+> This does get called a lot (e.g., once per commit). One extra allocation
+> would probably not kill us there [...]
 
-Wouldn't "git worktree $the-command-in-question" be a management
-command that adds a new worktree to the existing collection, like
-"remote add", "notes add", etc. do?  Perhaps "git worktree list" and
-"git worktree remove $that_one" would be in its future?
+Beyond the extra allocation, I was also concerned about the
+sledgehammer approach of "%s " to append a single character when there
+are much less expensive ways to do so.
 
-That suggests "add" may be a better choice for "worktree".
+> [...] but I think we could fairly trivially put this on the unlikely path:
+>
+>   size_t hint = 128;
+>   size_t len;
+>
+>   /* optimize out obvious 0-length case */
+>   if (!*fmt)
+>         return;
+>
+>   strbuf_grow(sb, hint);
+>   len = strftime(sb->buf + sb->len, sb->alloc - sb->len, fmt, tm);
+>
+>   /* maybe not enough room, or maybe 0-length output */
+>   if (!len) {
+>         struct strbuf f = STRBUF_INIT;
+>         strbuf_addf(&f, "%s ", fmt);
+>         while (!len) {
+>                 hint *= 2;
+>                 strbuf_grow(sb, hint);
+>                 len = strftime(sb->buf + sb->len, sb->alloc - sb->len, f.buf, tm);
+>         }
+>   }
+>
+> I'd guess most cases will fit in 128 bytes and never even hit this code
+> path. You could also get fancier and start the buffer smaller, but only
+> do the fmt hack when we cross a threshold.
 
-The only subcommand that I can think of offhand that says "create"
-is "bundle"; after generates a new bundle, its presence is not known
-to the repository the bundle was created out of, so not using "add"
-but calling the operation "create" is fine for "bundle".
+Yep, I toyed with other looping constructs as well before settling
+upon do-while in the example for its simplicity. If called often
+enough, this sort of optimization seems reasonable enough.
