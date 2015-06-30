@@ -1,118 +1,94 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: 4th release candidate of Git for Windows 2.x, was Re:
- 3rd release candidate of Git for Windows 2.x
-Date: Tue, 30 Jun 2015 20:57:59 +0200
-Message-ID: <5592E6B7.10201@virtuell-zuhause.de>
-References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>	<b085dab2e617742b690ccb99ba4a3076@www.dscho.org>	<8224736a18724f751312d57e67967d69@www.dscho.org>	<55910AE7.3000206@atlas-elektronik.com>	<426859781bd04ca4ebb13719350537ed@www.dscho.org>	<20150629185430.5dfbab069b5dbdf32398d290@domain007.com>	<2abf219bf0235717eaa84889f94eb03c@www.dscho.org> <20150630201523.3a00a2afe9321fb28a6fc82d@domain007.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] introduce "format" date-mode
+Date: Tue, 30 Jun 2015 15:17:58 -0400
+Message-ID: <20150630191758.GA6845@peff.net>
+References: <20150625165341.GA21949@peff.net>
+ <20150625165545.GC23503@peff.net>
+ <20150629222247.GA31607@flurp.local>
+ <20150630102055.GA11928@peff.net>
+ <xmqqr3ot6s9u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?windows-1252?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>, 
- Git Mailing List <git@vger.kernel.org>,
- msysgit@googlegroups.com, git-for-windows@googlegroups.com
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>, 
- Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: msysgit+bncBCL7JHHTPAILTTOLVQCRUBFF5DEJU@googlegroups.com Tue Jun 30 20:58:02 2015
-Return-path: <msysgit+bncBCL7JHHTPAILTTOLVQCRUBFF5DEJU@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f60.google.com ([74.125.82.60])
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 21:18:09 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAILTTOLVQCRUBFF5DEJU@googlegroups.com>)
-	id 1ZA0jK-00054y-LX
-	for gcvm-msysgit@m.gmane.org; Tue, 30 Jun 2015 20:58:02 +0200
-Received: by wggx12 with SMTP id x12sf8678676wgg.1
-        for <gcvm-msysgit@m.gmane.org>; Tue, 30 Jun 2015 11:58:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=4XSjzFubRv/Z6nkTUS3KJfE4fQu8b9BQKeOUhBbXpQA=;
-        b=V+faXNVjZlG7bkYNPWVt7fV1Zofaw/qs2cK4A5kYgSqHUJESMji7HwzsLuhoKJwA0Q
-         uMXqlz/K7e+yZem93S+X8rZDQ98pN2OLozirHCo5taU+GTf+NLYxnPkiHlgG0oIDCeyQ
-         PtL3UjZG/qFqYbiBshpAwLxLmu09alHQeAQN2H0aUo6BLr5ylV6j6LKbWkyRritDVExX
-         bOcYmcVXKSDg97SsQVjVtGAcs/Xu7uKDKqbcIis7/uWFSuTomZJ8HSzCF1QR9Lvs0mqL
-         bht3RizAdXAe/xTOctqsIiSi339vJ1U37bN7aNDnMV6Xr0P0CyoMDOJ/TXwyBtXHdcfW
-         uG9Q==
-X-Received: by 10.152.5.3 with SMTP id o3mr204372lao.2.1435690682022;
-        Tue, 30 Jun 2015 11:58:02 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.36.34 with SMTP id n2ls83108laj.15.gmail; Tue, 30 Jun 2015
- 11:58:01 -0700 (PDT)
-X-Received: by 10.152.22.71 with SMTP id b7mr14822499laf.3.1435690681169;
-        Tue, 30 Jun 2015 11:58:01 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [80.237.132.163])
-        by gmr-mx.google.com with ESMTPS id eo3si640508wib.0.2015.06.30.11.58.01
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jun 2015 11:58:01 -0700 (PDT)
-Received-SPF: neutral (google.com: 80.237.132.163 is neither permitted nor denied by best guess record for domain of thomas.braun@virtuell-zuhause.de) client-ip=80.237.132.163;
-Received: from p5dd6fcbd.dip0.t-ipconnect.de ([93.214.252.189] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1ZA0jI-00042P-Cd; Tue, 30 Jun 2015 20:58:00 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150630201523.3a00a2afe9321fb28a6fc82d@domain007.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1435690681;3763cf8f;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 80.237.132.163 is neither permitted nor denied by best guess
- record for domain of thomas.braun@virtuell-zuhause.de) smtp.mail=thomas.braun@virtuell-zuhause.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273096>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1ZA12m-0006jm-ND
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 21:18:09 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751804AbbF3TSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 15:18:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53924 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751534AbbF3TSB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 15:18:01 -0400
+Received: (qmail 9195 invoked by uid 102); 30 Jun 2015 19:18:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 Jun 2015 14:18:01 -0500
+Received: (qmail 18049 invoked by uid 107); 30 Jun 2015 19:18:05 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 Jun 2015 15:18:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Jun 2015 15:17:58 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqr3ot6s9u.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273097>
 
-Am 30.06.2015 um 19:15 schrieb Konstantin Khomoutov:
-> On Mon, 29 Jun 2015 18:19:09 +0200
-> Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+On Tue, Jun 30, 2015 at 10:05:33AM -0700, Junio C Hamano wrote:
+
+> > I'd guess most cases will fit in 128 bytes and never even hit this code
+> > path. You could also get fancier and start the buffer smaller, but only
+> > do the fmt hack when we cross a threshold.
 > 
->>> I've finally took time to switch from my old "msys1" release to this
->>> RC4, and immediately got hit by the fact Git is now speaking to me
->>> in Russian, which is not what I want (previously this behaviour was
->>> only exhibited by `git gui` and `gitk`).
->>>
->>> Should I make Git see LC_MESSAGES=en (or other thing like LANG) in
->>> the environment or is there some Git-local method to affect this
->>> behaviour? I tried to grep the release notes using relevant
->>> keywords but was left empty-handed.
->>
->> Personally, I would use LC_ALL=C. Maybe that's good for you, too?
+> I'd assume that the "hint" thing will persist across calls somehow?
+> In an invocation of "git log --date=format:<some format>" for
+> millions of commits, it is likely that the length of the formatted
+> date string will stay the same or close to the same (yeah, I know
+> "Wednesday" would be longer than "Monday").
+
+I hadn't thought about that. It could persist, but I don't think this is
+necessarily the right place to do it. For two reasons:
+
+  1. You have no idea in strbuf_addftime if it's the same fmt being
+     added over and over. This is the wrong place to make that
+     optimization.
+
+  2. If you are interested in efficiency in a loop, then you should be
+     reusing the same strbuf over and over, and avoiding the extra
+     allocation in the first place. And that is indeed what we do for
+     "git log --date", as we will always use the same static-local
+     buffer in show_date().
+
+> Answering myself to my earlier question, the reason is because I was
+> worried what happens when given fmt is a malformed strftime format
+> specifier.  Perhaps it ends with a lone % and "% " may format to
+> something unexpected, or something.
 > 
-> After reading [1], I've ended up installing LANG=C into my user's
-> environment variables -- so far so good, thanks for the tip!
+> Are we checking an error from strftime(3)?
 
-Just for the record.
-I created the file lang.sh with contents
-export LC_ALL=C
-in
-/etc/profile.d
-which also fixes the problem. And also survives new versions of git.
+POSIX doesn't define any errno values for strftime (and in fact says "No
+errors are defined"). The return value description for POSIX (and the
+glibc manpage) talk about only whether or not the output fits. However,
+POSIX does say "If a conversion specifier is not one of the above, the
+behavior is undefined".
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+So certainly I could imagine an implementation that returns "0" when you
+feed it a bogus value. If you (as a user) feed us crap to give to
+strftime, I am not particularly concerned with whether you get crap out.
+My main concern is that it would return "0" and we would loop forever.
+OTOH, I think any sane implementation would simply copy unknown
+placeholders out (certainly glibc does that). So I think we could simply
+consider it a quality of implementation issue, and deal with any
+particular crappy implementations if and when they get reported. We
+could add something tricky (like "--date=format:%") to the test suite to
+make it likelier to catch such a thing.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+-Peff
