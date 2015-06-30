@@ -1,120 +1,140 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 06/11] ref-filter: implement '--merged' and
- '--no-merged' options
-Date: Tue, 30 Jun 2015 19:08:00 +0530
-Message-ID: <CAOLa=ZSqvtXioRzeekjCAL3HoFsQmaLKQF=9YmftjQasiHvpqg@mail.gmail.com>
-References: <CAOLa=ZRHoFgELMtxbZpfTvu5-S7nMTguiuOiMQDnoOs3tHXb8A@mail.gmail.com>
- <1435222633-32007-1-git-send-email-karthik.188@gmail.com> <1435222633-32007-6-git-send-email-karthik.188@gmail.com>
- <xmqqegkubddy.fsf@gitster.dls.corp.google.com>
+From: Thomas Vieten <tvie@ivision.de>
+Subject: end-of-line diff checkout direction dependence problem
+Date: Tue, 30 Jun 2015 16:12:41 +0200
+Message-ID: <5592A3D9.3080706@ivision.de>
+Reply-To: tvie@ivision.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 15:38:36 2015
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 30 16:18:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9vkB-0001vz-CX
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 15:38:35 +0200
+	id 1Z9wNE-0002sC-Ce
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 16:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbbF3Nia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 09:38:30 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:33303 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751620AbbF3Ni3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 09:38:29 -0400
-Received: by obpn3 with SMTP id n3so6547936obp.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 06:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wBen3dmi8TnDlcsGuO+TzlT9apHErMhuceCLSvwHnMg=;
-        b=TZ/oFfoeFvRp6oaDEsAqk5x5QRbx/I1I5gGGG5+k7nMq+btIsRyUJGh6ZrmlfEieeP
-         fATOK0LrdZoW9Kn1SKkMGiZ+x5H5CaZc4ZtTezQaVZidYNAozFiLUh5SNe6hGLM9ikbL
-         npFAbseljsyMCU8ztZHnCwifOFkeNpS1qNk2bpuPQ9nLupE1Xcx+19WnI1JtkuNsPsIt
-         kVuFCmOfKZxQ5vbb3CbTbcmwFG8RoTd/B6i0X5DLmJZqG27DtaSJD6xDhIwarVJsTQ8O
-         FNogNQqIUNUV8/1XVwEFJNzuxmeM6ZFDdv9hoEpKbwysfyE6qrpHECDbdHH+JfvPddEt
-         xGow==
-X-Received: by 10.182.153.161 with SMTP id vh1mr16164042obb.34.1435671509433;
- Tue, 30 Jun 2015 06:38:29 -0700 (PDT)
-Received: by 10.182.95.165 with HTTP; Tue, 30 Jun 2015 06:38:00 -0700 (PDT)
-In-Reply-To: <xmqqegkubddy.fsf@gitster.dls.corp.google.com>
+	id S1753252AbbF3OSw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Jun 2015 10:18:52 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.160]:64686 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752835AbbF3OSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 10:18:50 -0400
+X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jun 2015 10:18:49 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1435673928; l=2299;
+	s=domk; d=ivision.de;
+	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:
+	Reply-To:From:Date;
+	bh=86mHq3f/kfnI8PZpAzX1uc4dwZoLmhzBSvgTMFMmJV0=;
+	b=AkTgHkd6QSmpg4yNBxxKUaQ/3qBUbTeu5LHgtvrAHSh96UjoSTTmcuQKlDDrn51K7Ws
+	TRoMvEgbLCY3cJMrlHs0EuaaA5HBiFynC0k1h8tTWh3Xcs7XUnGvcczFJz6xwhZwTqkFK
+	WG8pbU0LkI/KL0oD9RLt8udR1MwR9em6WCs=
+X-RZG-AUTH: :OHoNcGChbfbkF0MiFdPmE/cAQnRWOxNPsUpfO0vBMLQStzWaZbQFXDrmmA7YKok=
+X-RZG-CLASS-ID: mo00
+Received: from firewall.ivision.de (pd95bcd7c.dip0.t-ipconnect.de [217.91.205.124])
+	by smtp.strato.de (RZmta 37.8 AUTH)
+	with ESMTPA id 6057c7r5UECgHB7
+	for <git@vger.kernel.org>;
+	Tue, 30 Jun 2015 16:12:42 +0200 (CEST)
+Received: from ivision.de (unknown [192.168.0.1])
+	by firewall.ivision.de (Postfix) with ESMTP id 15C7632648
+	for <git@vger.kernel.org>; Tue, 30 Jun 2015 16:12:42 +0200 (CEST)
+Received: from [127.0.0.1] (192.168.0.122:37788)
+	by ivision.de with [XMail 1.20 ESMTP Server]
+	id <S2E584> for <git@vger.kernel.org> from <tvie@ivision.de>;
+	Tue, 30 Jun 2015 16:12:41 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.8.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273064>
 
-On Mon, Jun 29, 2015 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> +static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
->> +{
->> +     struct rev_info revs;
->> +     int i, old_nr;
->> +     struct ref_filter *filter = ref_cbdata->filter;
->> +     struct ref_array *array = ref_cbdata->array;
->> +     struct commit **to_clear = xcalloc(sizeof(struct commit *), array->nr);
->> +
->> +     init_revisions(&revs, NULL);
->> +
->> +     for (i = 0; i < array->nr; i++) {
->> +             struct ref_array_item *item = array->items[i];
->> +             add_pending_object(&revs, &item->commit->object, item->refname);
->> +             to_clear[i] = item->commit;
->> +     }
->> +
->> +     filter->merge_commit->object.flags |= UNINTERESTING;
->> +     add_pending_object(&revs, &filter->merge_commit->object, "");
->> +
->> +     revs.limited = 1;
->> +     if (prepare_revision_walk(&revs))
->> +             die(_("revision walk setup failed"));
->> +
->> +     old_nr = array->nr;
->> +     array->nr = 0;
->> +
->> +     for (i = 0; i < old_nr; i++) {
->> +             struct ref_array_item *item = array->items[i];
->> +             struct commit *commit = item->commit;
->> +
->> +             int is_merged = !!(commit->object.flags & UNINTERESTING);
->> +
->> +             if (is_merged == (filter->merge == REF_FILTER_MERGED_INCLUDE))
->> +                     array->items[array->nr++] = array->items[i];
->> +             else
->> +                     free_array_item(item);
->> +     }
->> +
->> +     for (i = 0; i < old_nr; i++)
->> +             clear_commit_marks(to_clear[i], ALL_REV_FLAGS);
->> +     clear_commit_marks(filter->merge_commit, ALL_REV_FLAGS);
->> +     free(to_clear);
->> +}
->
-> Did this come from somewhere else (e.g. tag -l or branch -l)?  If
-> so, you'd need a note similar to what you added in [02/11] to the
-> original.
->
+We face a very inconvenient problem with end-of-line diffs which are no=
+t=20
+"real".
+We know the end-of-line problem very well as we thought.
+But now we found a new phenomenon and nobody mentioning it.
 
-Will do this, thanks.
+Consider the following repository structure:
 
-> I also have a feeling that compared to an implementation based on
-> paint_down_to_common(), including is_descendant_of(), this may be
-> less precise (e.g. it would be confused with clock skew that lasts
-> more than SLOP commits).  If we are inventing a new helper (as
-> opposed to moving an existing one), we'd probably be better off
-> doing a thin wrapper around paint_down_to_common() than calling
-> revision-walk machinery.
->
+           -----------|----|------------->branch1
+         /
+master
+         \
+----------|-------|---------|--------------->branch2
 
-I'll have a look and get back to you.
+The branches are based on master/head.
+We just consider one branch here, e.g. branch1 .
 
--- 
-Regards,
-Karthik Nayak
+Working with the head of branch1 gives no problems. No end-of-line diff=
+s.
+Also going back in the direction of master - no problems.
+Only in the case if we do a checkout from branch1 to master, then
+all of a sudden end-of-line diffs appear.
+The files might be changed, but the end-of-line attributes in=20
+gitattributes are not changed in the branch.
+
+It seems to be the case that since the last change to the files which=20
+pop up with eol differences, gittattributes where changed and touch=20
+their extensions.
+
+With the operation
+
+git ls-files -z | xargs -0 rm -f  # delete all the files of this versio=
+n=20
+- here master/head
+git reset --hard                  # force checkout of master/head and=20
+reset index
+
+The problem disappears! No eol problems anymore. Something like a brute=
+=20
+force checkout.
+
+Also checking out versions in the direction of branch1 give never=20
+end-of-line diffs.
+
+What has changed somewhen are the gitattributes.
+
+We estimate that this becomes a problem when applying the diffs from=20
+branch1 in the direction of
+the master. Finally then the diffs result in a different state from the=
+=20
+master.
+
+But when the master is checked out freshly, this difference does not ap=
+pear.
+
+Very, very annoying.
+
+We check now every time when these end-of-line diffs appear, if they ar=
+e=20
+really end of line diffs
+
+git diff --ignore-space-at-eol
+
+and then try the procedure above.
+
+But to have a dependence from the direction of the checkout is somewhat=
+=20
+irritating.
+
+If this is not a bug - then how to avoid it ?
+
+bye for now
+
+Thomas
+
+--=20
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+iVISION GmbH		|Industrial Inspection Systems
+J=FClicherstr. 336 B	|
+D-52070 Aachen		|
+Tel: +49-(0)241-961233	|
+=46AX: +49-(0)241-980 2064|
+www.ivision.de
+tvie@ivision.de
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
