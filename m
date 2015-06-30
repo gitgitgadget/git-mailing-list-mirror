@@ -1,132 +1,102 @@
 From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: end-of-line diff checkout direction dependence problem
-Date: Tue, 30 Jun 2015 16:41:23 +0200
-Message-ID: <5592AA93.9090002@web.de>
-References: <5592A3D9.3080706@ivision.de>
+Subject: Re: [PATCH] config.c: fix writing config files on Windows network
+ shares
+Date: Tue, 30 Jun 2015 16:46:20 +0200
+Message-ID: <5592ABBC.60904@web.de>
+References: <20150528075142.GB3688@peff.net> <20150528075443.GB23395@peff.net>
+ <5592A8E5.2090601@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: tvie@ivision.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 30 16:41:24 2015
+Cc: Jorge <griffin@gmx.es>, git@vger.kernel.org
+To: Karsten Blees <karsten.blees@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 16:46:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9wiw-0001N8-UW
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 16:41:23 +0200
+	id 1Z9wnq-0004rf-BI
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 16:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752475AbbF3OlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 10:41:19 -0400
-Received: from mout.web.de ([212.227.15.4]:59936 "EHLO mout.web.de"
+	id S1751960AbbF3OqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 10:46:22 -0400
+Received: from mout.web.de ([212.227.15.4]:58023 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751496AbbF3OlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 10:41:17 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0LjP7H-1Ydd6k1Jkd-00dTfb; Tue, 30 Jun 2015 16:41:13
+	id S1751534AbbF3OqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 10:46:20 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0Lx73h-1Yz7wD0zCT-016elb; Tue, 30 Jun 2015 16:46:12
  +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
  Gecko/20100101 Thunderbird/38.0.1
-In-Reply-To: <5592A3D9.3080706@ivision.de>
-X-Provags-ID: V03:K0:GwPPw0B7CynKN4JTGMPDGn0X+iEr2xUPRpTzbFeFRzPrxma50hN
- AIZfr8xlHAwtMvxM7yVwNSqQSPSXb2cE4po7k67y1yJNkR6G20UIJIqVe5NDCazuTEOm5aY
- r5o/JHt3UzrnaJO+A7YU6bUnyhJ86DiI7DWhpLP/4t4edBgJh25ladpNjoIRKJj3vJDoedr
- pIFGiwktlCuW8TNb5FY8w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZGhIIPsTRhk=:sAfg5/1toKd4LKn/o5VRii
- Y5mfUMU1dDwfO6qARGomXpauhyKPSj89y74aiZDMzuLNziNib8GdZ5nd9vhK5EkGIFDa2ggtu
- vnxFKCFlnjDYh7pJqIy5n0W1dZtnMAt0S5lnFzJDkV3Ep/B03W9oo8dWOtrheXcPy4JTxVYL0
- CXln5A7bMwMAQGMcyOUb1WLJOTl71rAZ4QqCozH6bLDTvI5Y/UJdrIFjgWJQ/ZltNumvHWVaS
- AjLPZwJfHzTW2xUlBdgovhfGUEHqKjnxRW98xvY76o7LUxfCcmKjkTOxQ7QC0nBSeFWYIm0XH
- nxtSpe2L4BJJuSmlspz6FE1aCqJ2ZZJHmYuqvaJ+xNjnnDSrhhF/QZ6lxxztWSwxz8iyRPVTn
- Du6kBGX9kKrITQL95PxGul+xiUioWj96uTwVgfXGoOwJ+NOZCO8h/AYp1Ra+Tat/V7YkRaz7C
- jH+UsY2nFiPgATTdtXBi1jPgV9C5JcYI4GQv/4ipzV1Tkd9eZctqJTJHIpyStoANARh3ByAqy
- i9VyBJdk+ESjrbxyGf5mzSWUjdXtTSPEMaQ+6He0f2KnR1uEJVu+hMfF3+KDBQe0nFEDziLBJ
- NWN3MJuDhkBKVeTnIErxPqcUuiFJ1qpyU4qK03L26PqQ5d3MTubRwcBMJEy8e+hSnvT9UZOfR
- 7xJTqRCSe4hwqmv+IdloJ0CJP88FhoGKcZ0NLaYxtm1LRvB7qTvGsnyvoLhXIZHUHVzg=
+In-Reply-To: <5592A8E5.2090601@gmail.com>
+X-Provags-ID: V03:K0:qVb1yPCLFsYV6Cx6j9RsKNl1p898osq5BGt8JnxZ7B06nqxpldX
+ 3KqO1prtcOQKmuerJ9QKZ3SpQEQhZOZcubZybM3wZXTvKUxdyyZ+1m337/gbBFUiwhM5G6x
+ YIxkiHl3GljlOMQ5V1h0aIoVLsM3CGeaRG0n4pxhi0NUmlKzQhKST86+3HE4z3mOi6bMguT
+ B4f/TgiiQlr5WvVUnybRQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ovjZRAgCv00=:e9cXW1CHmaXLJVAwOA5OxC
+ aj4HWo7hvfvQxJljAorLRblpaeZaX3lxoGDIxq3KNaPIX46e1G1IoNHXjid/KIjNJxhihaCE0
+ BsoIUQSX4lHKnn0urmg4J5ClkhbQDhcRtjFwD3shqC2UOtIAPTw1TXEZAf7biVNrY7VkKG5+6
+ 358Z1idPydu2siSvc+dSY3OCpjPvBsJEJDUH+5LFwcy9XvoU0w8if7/djqIO3Xin2FV9IvFx5
+ SAki0iSsqnh9kdY90dqwQ+EYttH5p6pOdNWHxaIju3/ZBN1MzsrdhN/ACdBCDrX6K+Iqff8D9
+ JafxU40NpbJkYhTPFM+KGHscVL8Ayl3w+jRh0QOz43UmKslv5E5CF+VyN0C8pZnNzo2k1AvTA
+ ykuYWUetcB7jnP6ouV6oRi8oClf8eb4P9Cchy79YO5IaDDQslV9zcrIsB9TVkesY3bIttzHpl
+ NGHN4LKS7vfafFNE92MGQz41h7bkfbMzXlYEUe57kppiWu+4jQT6IwmD5K5/B9jIsGK/bQcTh
+ eI/czxNVk7vz3hrCUBfbeDrUXZ7xfxwflfMC8FRB0TJTqMNQQKhvFIrfVnSM6kKhpzHPpwA2c
+ MFhc2ytbC/AfE4pw8ySoTBSb6U7ySBKKx8Xl6HpbiJSjnmca1MKHOUgbuCIuSLxl65/22Hc9V
+ FbfrnrIKFTUV2E0ETPGb/ELCBIco39eP7CnfnMcY7Bl9fI/pawIatlVgmMbQhVIBoU1s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273067>
 
-On 2015-06-30 16.12, Thomas Vieten wrote:
-> We face a very inconvenient problem with end-of-line diffs which are not "real".
-> We know the end-of-line problem very well as we thought.
-> But now we found a new phenomenon and nobody mentioning it.
+On 2015-06-30 16.34, Karsten Blees wrote:
+> Renaming to an existing file doesn't work on Windows network shares if the
+> target file is open.
 > 
-> Consider the following repository structure:
+> munmap() the old config file before commit_lock_file.
 > 
->           -----------|----|------------->branch1
->         /
-> master
->         \
-> ----------|-------|---------|--------------->branch2
+> Signed-off-by: Karsten Blees <blees@dcon.de>
+> ---
 > 
-> The branches are based on master/head.
-> We just consider one branch here, e.g. branch1 .
+> See https://github.com/git-for-windows/git/issues/226
 > 
-> Working with the head of branch1 gives no problems. No end-of-line diffs.
-> Also going back in the direction of master - no problems.
-> Only in the case if we do a checkout from branch1 to master, then
-> all of a sudden end-of-line diffs appear.
-> The files might be changed, but the end-of-line attributes in gitattributes are
-> not changed in the branch.
+> Strangely, renaming to an open file works fine on local disks...
 > 
-> It seems to be the case that since the last change to the files which pop up
-> with eol differences, gittattributes where changed and touch their extensions.
+>  config.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> With the operation
+> diff --git a/config.c b/config.c
+> index 07133ef..3a23c11 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2153,6 +2153,9 @@ int git_config_set_multivar_in_file(const char *config_filename,
+>  					  contents_sz - copy_begin) <
+>  			    contents_sz - copy_begin)
+>  				goto write_err_out;
+> +
+> +		munmap(contents, contents_sz);
+> +		contents = NULL;
+>  	}
+>  
+>  	if (commit_lock_file(lock) < 0) {
 > 
-> git ls-files -z | xargs -0 rm -f  # delete all the files of this version - here
-> master/head
-> git reset --hard                  # force checkout of master/head and reset index
-> 
-> The problem disappears! No eol problems anymore. Something like a brute force
-> checkout.
-> 
-> Also checking out versions in the direction of branch1 give never end-of-line
-> diffs.
-> 
-> What has changed somewhen are the gitattributes.
-> 
-> We estimate that this becomes a problem when applying the diffs from branch1 in
-> the direction of
-> the master. Finally then the diffs result in a different state from the master.
-> 
-> But when the master is checked out freshly, this difference does not appear.
-> 
-> Very, very annoying.
-> 
-> We check now every time when these end-of-line diffs appear, if they are really
-> end of line diffs
-> 
-> git diff --ignore-space-at-eol
-> 
-> and then try the procedure above.
-> 
-> But to have a dependence from the direction of the checkout is somewhat irritating.
-> 
-> If this is not a bug - then how to avoid it ?
-> 
-> bye for now
-> 
-> Thomas
-> 
-The things which are described don't sound unfamilar.
-First some questions:
-Which Git/OS are you running on ?
 
-CYGWIN ?
-Git-for-Windows ?
-Linux ?
-Other ?
+Nice catch.
+Talking about network file system,
+somebody volunteering to fix this issue ?
 
-Which versions ?
-How does your .gitattribute file look like ?
+The value of fstat() is not checked here:
+(indicated by a compiler warning, that contents_sz may be uninitalized.
 
-It may be, that you need to "nornalize" your repo:
+ config.c:
+ int git_config_set_multivar_in_file(
+ //around line 2063 (the only call to fstat())
+ 		fstat(in_fd, &st);
+ 		contents_sz = xsize_t(st.st_size);
 
-https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-The search for this text
-"When text=auto normalization"
-and follow the instructions:
+
+(sorry for hijacking your email thread)
