@@ -1,112 +1,119 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 5/9] ref-filter: add option to match literal pattern
-Date: Tue, 30 Jun 2015 19:06:37 +0530
-Message-ID: <CAOLa=ZSfpjumz6Cu7O3DF8vmVGofpibiJmpPo4irjn32f9WHxg@mail.gmail.com>
-References: <CAOLa=ZSsVqFy4OrSt295qAZdjKTC7z44EVsx3cPEd2jb8Y-sHw@mail.gmail.com>
- <1435232596-27466-1-git-send-email-karthik.188@gmail.com> <1435232596-27466-5-git-send-email-karthik.188@gmail.com>
- <xmqqy4j29y0o.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v6 06/11] ref-filter: implement '--merged' and
+ '--no-merged' options
+Date: Tue, 30 Jun 2015 19:08:00 +0530
+Message-ID: <CAOLa=ZSqvtXioRzeekjCAL3HoFsQmaLKQF=9YmftjQasiHvpqg@mail.gmail.com>
+References: <CAOLa=ZRHoFgELMtxbZpfTvu5-S7nMTguiuOiMQDnoOs3tHXb8A@mail.gmail.com>
+ <1435222633-32007-1-git-send-email-karthik.188@gmail.com> <1435222633-32007-6-git-send-email-karthik.188@gmail.com>
+ <xmqqegkubddy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 15:37:15 2015
+X-From: git-owner@vger.kernel.org Tue Jun 30 15:38:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9vir-0001Al-8r
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 15:37:13 +0200
+	id 1Z9vkB-0001vz-CX
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 15:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363AbbF3NhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 09:37:09 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:34648 "EHLO
+	id S1752725AbbF3Nia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 09:38:30 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:33303 "EHLO
 	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752808AbbF3NhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 09:37:07 -0400
-Received: by obbkm3 with SMTP id km3so6501448obb.1
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 06:37:07 -0700 (PDT)
+	with ESMTP id S1751620AbbF3Ni3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 09:38:29 -0400
+Received: by obpn3 with SMTP id n3so6547936obp.0
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 06:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Y6hv/90qqVTuskLxySRVkv/HsTbHWqYI9K2LlgpmwiQ=;
-        b=i04QcrE+J6abM29bss5FLAs7tcN41H/EXdS3TyxTJO0F7Ia25VoGRQYpyyJlNgHC5B
-         OhrlX/euikAH4yXfjF9CSSRD4OnSk8PJkTz9Fb4CYKdAEfNhnN4b25AOhS3grGs1dEEi
-         fGrnha8tJZPUqblXAM9b3sa+MtVLwUn4zKXFm5AmtqVArhSMu9kIoSy56gwnWDKBaWDj
-         KIHWgs8hj2ssTI6Kj/X4b1cWG85BkP1CjZSxFzUSPCTLDOdjx7mQwYjHkukqeCLXpzm1
-         E7Vzd+hwEiNTa2TjAySElMWkptNPKwmbM+GcdZOf7AAeJ5TkPjjfhGsicLiGIl2poxvE
-         Y79w==
-X-Received: by 10.60.36.165 with SMTP id r5mr19320966oej.84.1435671426951;
- Tue, 30 Jun 2015 06:37:06 -0700 (PDT)
-Received: by 10.182.95.165 with HTTP; Tue, 30 Jun 2015 06:36:37 -0700 (PDT)
-In-Reply-To: <xmqqy4j29y0o.fsf@gitster.dls.corp.google.com>
+        bh=wBen3dmi8TnDlcsGuO+TzlT9apHErMhuceCLSvwHnMg=;
+        b=TZ/oFfoeFvRp6oaDEsAqk5x5QRbx/I1I5gGGG5+k7nMq+btIsRyUJGh6ZrmlfEieeP
+         fATOK0LrdZoW9Kn1SKkMGiZ+x5H5CaZc4ZtTezQaVZidYNAozFiLUh5SNe6hGLM9ikbL
+         npFAbseljsyMCU8ztZHnCwifOFkeNpS1qNk2bpuPQ9nLupE1Xcx+19WnI1JtkuNsPsIt
+         kVuFCmOfKZxQ5vbb3CbTbcmwFG8RoTd/B6i0X5DLmJZqG27DtaSJD6xDhIwarVJsTQ8O
+         FNogNQqIUNUV8/1XVwEFJNzuxmeM6ZFDdv9hoEpKbwysfyE6qrpHECDbdHH+JfvPddEt
+         xGow==
+X-Received: by 10.182.153.161 with SMTP id vh1mr16164042obb.34.1435671509433;
+ Tue, 30 Jun 2015 06:38:29 -0700 (PDT)
+Received: by 10.182.95.165 with HTTP; Tue, 30 Jun 2015 06:38:00 -0700 (PDT)
+In-Reply-To: <xmqqegkubddy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273063>
 
-On Mon, Jun 29, 2015 at 11:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Jun 29, 2015 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> Since 'ref-filter' only has an option to match path names.
+>> +static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
+>> +{
+>> +     struct rev_info revs;
+>> +     int i, old_nr;
+>> +     struct ref_filter *filter = ref_cbdata->filter;
+>> +     struct ref_array *array = ref_cbdata->array;
+>> +     struct commit **to_clear = xcalloc(sizeof(struct commit *), array->nr);
+>> +
+>> +     init_revisions(&revs, NULL);
+>> +
+>> +     for (i = 0; i < array->nr; i++) {
+>> +             struct ref_array_item *item = array->items[i];
+>> +             add_pending_object(&revs, &item->commit->object, item->refname);
+>> +             to_clear[i] = item->commit;
+>> +     }
+>> +
+>> +     filter->merge_commit->object.flags |= UNINTERESTING;
+>> +     add_pending_object(&revs, &filter->merge_commit->object, "");
+>> +
+>> +     revs.limited = 1;
+>> +     if (prepare_revision_walk(&revs))
+>> +             die(_("revision walk setup failed"));
+>> +
+>> +     old_nr = array->nr;
+>> +     array->nr = 0;
+>> +
+>> +     for (i = 0; i < old_nr; i++) {
+>> +             struct ref_array_item *item = array->items[i];
+>> +             struct commit *commit = item->commit;
+>> +
+>> +             int is_merged = !!(commit->object.flags & UNINTERESTING);
+>> +
+>> +             if (is_merged == (filter->merge == REF_FILTER_MERGED_INCLUDE))
+>> +                     array->items[array->nr++] = array->items[i];
+>> +             else
+>> +                     free_array_item(item);
+>> +     }
+>> +
+>> +     for (i = 0; i < old_nr; i++)
+>> +             clear_commit_marks(to_clear[i], ALL_REV_FLAGS);
+>> +     clear_commit_marks(filter->merge_commit, ALL_REV_FLAGS);
+>> +     free(to_clear);
+>> +}
 >
-> That is not a whole sentence ;-)
+> Did this come from somewhere else (e.g. tag -l or branch -l)?  If
+> so, you'd need a note similar to what you added in [02/11] to the
+> original.
 >
 
-Argh! Noted.
+Will do this, thanks.
 
->> Add an option for regular pattern matching.
->
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->
->> -     if (flag & REF_BAD_NAME) {
->> -               warning("ignoring ref with broken name %s", refname);
->> -               return 0;
->> -     }
->> -
->
-> Hmm, where did this check go in the new code?  Or is it now OK not
-> to warn or ignore, and if so why?
+> I also have a feeling that compared to an implementation based on
+> paint_down_to_common(), including is_descendant_of(), this may be
+> less precise (e.g. it would be confused with clock skew that lasts
+> more than SLOP commits).  If we are inventing a new helper (as
+> opposed to moving an existing one), we'd probably be better off
+> doing a thin wrapper around paint_down_to_common() than calling
+> revision-walk machinery.
 >
 
-Merge conflict, I've replied with a fixing patch, shouldn't be there
-in the next version :)
-
->>       if (flag & REF_ISBROKEN) {
->>               warning("ignoring broken ref %s", refname);
->>               return 0;
->>       }
->>
->> -     if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
->> +     if (!filter_pattern_match(filter, refname))
->>               return 0;
->>
->>       if (!match_points_at(&filter->points_at, oid->hash, refname))
->
->> diff --git a/ref-filter.h b/ref-filter.h
->> index 6b6fb96..a4809c8 100644
->> --- a/ref-filter.h
->> +++ b/ref-filter.h
->> @@ -54,7 +54,8 @@ struct ref_filter {
->>       } merge;
->>       struct commit *merge_commit;
->>
->> -     unsigned int with_commit_tag_algo: 1;
->> +     unsigned int with_commit_tag_algo: 1,
->> +             match_as_path: 1;
->
-> Lose SP on both sides of the colon, or have SP on both sides
-> (same for the last patch in the previous series).
-
-Will Do!
-
-Thanks for the quick review.
+I'll have a look and get back to you.
 
 -- 
 Regards,
