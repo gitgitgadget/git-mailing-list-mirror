@@ -1,73 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] introduce "format" date-mode
-Date: Tue, 30 Jun 2015 15:33:19 -0400
-Message-ID: <20150630193319.GA8365@peff.net>
-References: <20150625165341.GA21949@peff.net>
- <20150625165545.GC23503@peff.net>
- <20150629222247.GA31607@flurp.local>
- <20150630102055.GA11928@peff.net>
- <xmqq381988ud.fsf@gitster.dls.corp.google.com>
- <20150630175011.GA5349@peff.net>
- <xmqqbnfxc86b.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 07/10] send-email: reduce dependencies impact on parse_address_line
+Date: Tue, 30 Jun 2015 21:36:53 +0200
+Message-ID: <vpqoajx2dka.fsf@anie.imag.fr>
+References: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1435666611-18429-8-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqfv59ca4b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	antoine.delaite@ensimag.grenoble-inp.fr
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 21:33:29 2015
+X-From: git-owner@vger.kernel.org Tue Jun 30 21:37:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZA1Hc-0005ug-EA
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 21:33:28 +0200
+	id 1ZA1L7-0007bb-L4
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 21:37:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751548AbbF3TdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 15:33:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53954 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751124AbbF3TdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 15:33:23 -0400
-Received: (qmail 9960 invoked by uid 102); 30 Jun 2015 19:33:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 Jun 2015 14:33:22 -0500
-Received: (qmail 18381 invoked by uid 107); 30 Jun 2015 19:33:26 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 Jun 2015 15:33:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Jun 2015 15:33:19 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqbnfxc86b.fsf@gitster.dls.corp.google.com>
+	id S1751447AbbF3ThB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 15:37:01 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51394 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751544AbbF3Tg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 15:36:59 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5UJapbw000974
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 30 Jun 2015 21:36:51 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UJarjB032026;
+	Tue, 30 Jun 2015 21:36:53 +0200
+In-Reply-To: <xmqqfv59ca4b.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 30 Jun 2015 11:41:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 30 Jun 2015 21:36:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t5UJapbw000974
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436297813.12761@05votTMIHjNbFhFlb3dviA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273101>
 
-On Tue, Jun 30, 2015 at 12:23:08PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> >> Why can't I shake this feeling that (" %s", fmt), i.e. prepend not
-> >> append, is the safer thing to do than to append?
-> >
-> > Because then removing the extra space involves `memmove` of the buffer,
-> > rather than just shortening the length by one.
-> 
-> That does not explain why I feel the other way is safer, though ;-)
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
+>> new file mode 100755
+>> index 0000000..7223d03
+>> --- /dev/null
+>> +++ b/t/t9000-addresses.sh
+>> @@ -0,0 +1,30 @@
+>> +#!/bin/sh
+>> +#
+>> +# Copyright (c) 2015
+>
+> That does not look like a valid copyright notice.
+>
+> In the modern age, I'd personally perfer not to add one
 
-Sorry, I think I read it as "saner". ;)
+I'd vote for keeping it simple and not having the copyright notice. Most
+t/*.sh do not have one. The Git history + mailing-list archives are much
+better than in-code comments to keep track of who wrote what.
 
-> In any case, responding myself to my other question, strftime(3)
-> does not define any useful error information even for a case where
-> you feed nonsense format to it, so it is even not possible to
-> protect ourselves by checking errno or doing something similar X-<.
+Remi: any objection on removing it?
 
-I do think " %" is probably safer than "% " in that it is less likely to
-cause weird output from strftime (e.g., I could see an implementation
-treat "%X", where "X" is unknown, as just "X", but treat a trailing "%"
-as a raw "%"). But I doubt there is an implementation that would return
-"0" for one but not the other (anything's possible of course, but we are
-deep in the realm of guessing how systems might implement the
-standard, so it's really our best guess until somebody can present a
-particular data point; I've looked only at glibc and it is sane).
+Junio: do you want me to resend?
 
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
