@@ -1,175 +1,107 @@
-From: "Holl, Marcus" <marcus.holl@sap.com>
-Subject: [git-p4] import with labels fails when commit is not transferred
-Date: Tue, 30 Jun 2015 08:45:23 +0000
-Message-ID: <A24B2157A13A04409644C1456B5AE27F1CE4B663@DEWDFEMB19A.global.corp.sap>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
+Date: Tue, 30 Jun 2015 16:23:09 +0700
+Message-ID: <CACsJy8BYeYq-fQX=M1h2r4daQSsemXQT4Y+ww2Z3Y54brUS3QQ@mail.gmail.com>
+References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_A24B2157A13A04409644C1456B5AE27F1CE4B663DEWDFEMB19Aglob_"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 30 10:45:38 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 11:23:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9rAe-0003n4-9e
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 10:45:36 +0200
+	id 1Z9rle-0001ek-B6
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 11:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbbF3Ipb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 04:45:31 -0400
-Received: from smtpgw03.sap-ag.de ([155.56.66.98]:34414 "EHLO smtpgw.sap-ag.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751269AbbF3IpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 04:45:25 -0400
-Thread-Topic: [git-p4] import with labels fails when commit is not
- transferred
-Thread-Index: AdCzERBBf8IrhzcNTC+BFpdRXBOafQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.21.40.91]
+	id S1750952AbbF3JXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 05:23:41 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:35786 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846AbbF3JXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 05:23:39 -0400
+Received: by igblr2 with SMTP id lr2so70656189igb.0
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 02:23:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UaruwAdQ18pXMPabmiSD+NDFHynafwm9e/sBF0Kx+vQ=;
+        b=s6y3/dBk3sS8u9m8HNMc1Pgucy88kdBXNfZfMj45mEidBAI1UuHYfjNw7aOOnc2Fkh
+         J/wZsK2mQ3mSxks7YMq5uz+EvT4RcQ+itY77bE6qteRhgl1LqOzTYiUb7BJuLdICnMMh
+         0HLgXOc/A8tT8JNOzfX3XpyYehh0hCGtclBroIDumdTHRfCWphtAVzDk2pDqqc+t+ikj
+         uplDoHRxUsvKq/Kyygmi+H7cSOImbLLdr+PffQYKpBE3BDaX4Xg2gPQhDgkKv71NcySR
+         /j4mYQrKFhb8UB7BPXAChTDgg/TOaSsPRxeUC5oM76dbGtCDLTnoSVNlgGON5NqjVXmD
+         QzEg==
+X-Received: by 10.43.172.68 with SMTP id nx4mr23106335icc.48.1435656218824;
+ Tue, 30 Jun 2015 02:23:38 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Tue, 30 Jun 2015 02:23:09 -0700 (PDT)
+In-Reply-To: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273035>
 
---_002_A24B2157A13A04409644C1456B5AE27F1CE4B663DEWDFEMB19Aglob_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jun 30, 2015 at 11:56 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> The command "git checkout --to <path>" is something of an anachronism,
+> encompassing functionality somewhere between "checkout" and "clone".
+> The introduction of the git-worktree command, however, provides a proper
+> and intuitive place to house such functionality. Consequently,
+> re-implement "git checkout --to" as "git worktree new".
+>
+> As a side-effect, linked worktree creation becomes much more
+> discoverable with its own dedicated command, whereas `--to` was easily
+> overlooked amid the plethora of options recognized by git-checkout.
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>
+> I've long felt that Duy's linked-worktree functionality was a bit oddly
+> named as "git checkout --to", but, since I could never come up with a
+> better name, I never made mention of it. However, with Duy's
+> introduction of the git-worktree command[1], we now have a much more
+> appropriate and discoverable place to house the "git checkout --to"
+> functionality, and upon seeing his patch, I was ready to reply with the
+> suggestion to relocate "git checkout --to" to "git worktree new",
+> however, Junio beat me to it[2].
 
-Hi,
+Didn't know you guys were so eager to move this code around :D Jokes
+aside, it's good that it's raised now before --to is set in stone.
 
-I have an issue with the git p4 tooling regarding import of labels.
+I think this is like "git checkout -b" vs "git branch". We pack so
+many things in 'checkout' that it's a source of both convenience and
+confusion. I never use "git branch" to create a new branch and if I
+had a way to tell checkout to "move away and delete previous branch",
+I would probably stop using "git branch -d/-D" too. "--to" is another
+"-b" in this sense.
 
-My git version is 2.4.5
+"git worktree new" definitely makes sense (maybe stick with verbs like
+"create", I'm not sure if we have some convention in existing
+commands), but should we remove "git checkout --to"? I could do "git
+co -b foo --to bar" for example. Maybe "--to" is not used that often
+that "git worktree new" would feel less convenient as a replacement.
+If we are not sure about "--to" (I'm not), I think we just remove it
+now because we can always add it back later.
 
-I try to transform a perforce repository. My command line is:
-git p4 clone --verbose --detect-branches --import-local --import-labels --d=
-estination <DESTINATION> //depot@all
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index 41103e5..8f13281 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -9,16 +9,85 @@ git-worktree - Manage multiple worktrees
+>  SYNOPSIS
+>  --------
+>  [verse]
+> +'git worktree new' [-f] <path> [<checkout-options>] <branch>
 
-
-The relevant parts in the gitconfig is:
-[git-p4]
-                branchUser =3D <USERNAME>
-               =20
-               =20
-For that user there is a branch mapping defined with a lot of entries like:
-//depot/trunk/... //depot/branches/ipro-status-8-2--branch/...
-//depot/trunk/... //depot/branches/9-0-preview/...
-//depot/trunk/... //depot/branches/release-8-0-0-branch/...
-//depot/trunk/... //depot/branches/release-8-1-0-branch/...
-//depot/trunk/... //depot/branches/release-8-2-0-branch/...
-//depot/trunk/... //depot/branches/release-8-3-0-branch/...
-//depot/trunk/... //depot/branches/release-8-4-branch/...
-//depot/trunk/... //depot/branches/release-8-5-branch/...
-...
-
-
-The import fails with the log output that can be found at the bottom of thi=
-s mail.
-
-git log -all -grep "\[git-p4:.*change\ =3D\ 69035\]" reports nothing. The c=
-ommit is not contained in the git repository.
-
-p4 describe for changelist 69035 returns a reasonable result. This change c=
-ontains one file located at a path in the perforce folder structure that co=
-mes without corresponding entry in the perforce branch mapping.=20
-
-According to the given branch mapping it looks reasonable to me that the ch=
-ange is omitted in the git repository. But in my opinion the import should =
-not fail in such a case.
-
-A reasonable behavior would be to blacklist the label (add it to git-p4.ign=
-oredP4Labels) and to continue with the next label.
-
-Attached is a proposal for a fix that needs to be carefully reviews since I=
-'m not that experienced with python.
-
-Other proposals for resolving this issue are highly appreciated.
-
-Thanks a lot and best regards,
-Marcus Holl
-
-
-Log output:
-
-Reading pipe: ['git', 'rev-list', '--max-count=3D1', '--reverse', ':/\\[git=
--p4:.*change =3D 69035\\]']
-fatal: ambiguous argument ':/\[git-p4:.*change =3D 69035\]': unknown revisi=
-on or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-ied with change: 69078, original Date: 2010-04-22T09:07:24.000000Z\n', 'Upd=
-ate': '2013/11/02 07:40:31', 'Label': 'release-8-1-0-976', 'Access': '2015/=
-06/26 14:50:15', 'Owner': 'svn_p4_converter', 'Options': 'unlocked noautore=
-load'}
-p4 label release-8-1-0-976 mapped to git commit 82a11809928b86a7bde03cf4864=
-28de52ab3380f
-writing tag release-9-0-0-179 for commit fb8370cd04806686c567ad720d065436f2=
-334b4a
-labelDetails=3D {'code': 'stat', 'Description': 'Created or modified with c=
-hange: 96984, original Date: 2011-12-22T16:01:25.681427Z\n', 'Update': '201=
-3/11/02 15:15:50', 'Label': 'release-9-0-0-179', 'Access': '2015/06/26 14:5=
-0:16', 'Owner': 'build', 'Options': 'unlocked noautoreload'}
-p4 label release-9-0-0-179 mapped to git commit fb8370cd04806686c567ad720d0=
-65436f2334b4a
-Traceback (most recent call last):
-  File "/usr/lib/git/git-p4", line 3297, in <module>
-    main()
-  File "/usr/lib/git/git-p4", line 3291, in main
-    if not cmd.run(args):
-  File "/usr/lib/git/git-p4", line 3165, in run
-    if not P4Sync.run(self, depotPaths):
-  File "/usr/lib/git/git-p4", line 3045, in run
-    self.importP4Labels(self.gitStream, missingP4Labels)
-  File "/usr/lib/git/git-p4", line 2421, in importP4Labels
-    "--reverse", ":/\[git-p4:.*change =3D %d\]" % changelist])
-  File "/usr/lib/git/git-p4", line 138, in read_pipe
-    die('Command failed: %s' % str(c))
-  File "/usr/lib/git/git-p4", line 106, in die
-    raise Exception(msg)
-Exception: Command failed: ['git', 'rev-list', '--max-count=3D1', '--revers=
-e', ':/\\[git-p4:.*change =3D 69035\\]']
-
---_002_A24B2157A13A04409644C1456B5AE27F1CE4B663DEWDFEMB19Aglob_
-Content-Type: application/octet-stream;
-	name="0001-git-p4-Do-not-fail-on-not-found-commit-when-importin.patch"
-Content-Description: 0001-git-p4-Do-not-fail-on-not-found-commit-when-importin.patch
-Content-Disposition: attachment;
-	filename="0001-git-p4-Do-not-fail-on-not-found-commit-when-importin.patch";
-	size=1552; creation-date="Tue, 30 Jun 2015 08:13:46 GMT";
-	modification-date="Tue, 30 Jun 2015 08:13:46 GMT"
-Content-Transfer-Encoding: base64
-
-RnJvbSA0NzE0ZmIyMzg4NTI3ODk2M2RiMDlhYTNiN2E0MjZkYjFlYmQ1YmU0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjdXMgSG9sbCA8bWFyY3VzLmhvbGxAc2FwLmNvbT4KRGF0
-ZTogVHVlLCAzMCBKdW4gMjAxNSAxMDoxMDoxMiArMDIwMApTdWJqZWN0OiBbUEFUQ0hdIFtnaXQt
-cDRdIERvIG5vdCBmYWlsIG9uIG5vdCBmb3VuZCBjb21taXQgd2hlbiBpbXBvcnRpbmcKIGxhYmVs
-cwoKV2hlbiBhIGNvbW1pdCBpcyBub3QgdHJhbnNmZXJyZWQgZnJvbSBwZXJmb3JjZSB0byBnaXQg
-c2luY2UgaXQgaXMgbG9jYXRlZAppbiB0aGUgcGVyZm9yY2UgZm9sZGVyIGxheW91dCBpbiBhIHBs
-YWNlIHRoYXQgZG9lcyBub3QgbWF0Y2ggdGhlIGJyYW5jaGVzCmFjY29yZGluZyB0byBhIGdpdmVu
-IGJyYW5jaCBtYXBwaW5nIHRoZSBpbXBvcnQgZmFpbHMuCldpdGggdGhpcyBjaGFuZ2UgdGhlIGNv
-cnJlc3BvbmRpbmcgbGFiZWwgaXMgYWRkZWQgdG8gZ2l0LXA0Lmlnbm9yZWRQNExhYmVscwphbmQg
-aXQgaXMgY29udGludWVkIHdpdGggdGhlIG5leHQgbGFiZWwuCi0tLQogZ2l0LXA0LnB5IHwgOCAr
-KysrKystLQogMSBmaWxlIGNoYW5nZWQsIDYgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkK
-CmRpZmYgLS1naXQgYS9naXQtcDQucHkgYi9naXQtcDQucHkKaW5kZXggNTQ5MDIyZS4uZjNjOGM2
-ZiAxMDA3NTUKLS0tIGEvZ2l0LXA0LnB5CisrKyBiL2dpdC1wNC5weQpAQCAtMjQxNyw4ICsyNDE3
-LDEyIEBAIGNsYXNzIFA0U3luYyhDb21tYW5kLCBQNFVzZXJNYXApOgogICAgICAgICAgICAgaWYg
-Y2hhbmdlLmhhc19rZXkoJ2NoYW5nZScpOgogICAgICAgICAgICAgICAgICMgZmluZCB0aGUgY29y
-cmVzcG9uZGluZyBnaXQgY29tbWl0OyB0YWtlIHRoZSBvbGRlc3QgY29tbWl0CiAgICAgICAgICAg
-ICAgICAgY2hhbmdlbGlzdCA9IGludChjaGFuZ2VbJ2NoYW5nZSddKQotICAgICAgICAgICAgICAg
-IGdpdENvbW1pdCA9IHJlYWRfcGlwZShbImdpdCIsICJyZXYtbGlzdCIsICItLW1heC1jb3VudD0x
-IiwKLSAgICAgICAgICAgICAgICAgICAgICItLXJldmVyc2UiLCAiOi9cW2dpdC1wNDouKmNoYW5n
-ZSA9ICVkXF0iICUgY2hhbmdlbGlzdF0pCisgICAgICAgICAgICAgICAgZ2l0Q29tbWl0ID0gIiIK
-KyAgICAgICAgICAgICAgICB0cnk6CisgICAgICAgICAgICAgICAgICAgIGdpdENvbW1pdCA9IHJl
-YWRfcGlwZShbImdpdCIsICJyZXYtbGlzdCIsICItLW1heC1jb3VudD0xIiwKKyAgICAgICAgICAg
-ICAgICAgICAgICAgICAiLS1yZXZlcnNlIiwgIjovXFtnaXQtcDQ6LipjaGFuZ2UgPSAlZFxdIiAl
-IGNoYW5nZWxpc3RdKQorICAgICAgICAgICAgICAgIGV4Y2VwdDoKKyAgICAgICAgICAgICAgICAg
-ICAgcGFzcwogICAgICAgICAgICAgICAgIGlmIGxlbihnaXRDb21taXQpID09IDA6CiAgICAgICAg
-ICAgICAgICAgICAgIHByaW50ICJjb3VsZCBub3QgZmluZCBnaXQgY29tbWl0IGZvciBjaGFuZ2Vs
-aXN0ICVkIiAlIGNoYW5nZWxpc3QKICAgICAgICAgICAgICAgICBlbHNlOgotLSAKMS45LjMgKEFw
-cGxlIEdpdC01MCkKCg==
-
---_002_A24B2157A13A04409644C1456B5AE27F1CE4B663DEWDFEMB19Aglob_--
+Should we follow clone syntax and put the <path> (as destination)
+after <branch> ("source")? Maybe not, because in the clone case,
+explicit destination is optional, not like this.. Or.. maybe <branch>
+could be optional in this case. 'git worktree new' without a branch
+will create a new branch, named closely after the destination.
+Existing branch can be specified via an option..
+-- 
+Duy
