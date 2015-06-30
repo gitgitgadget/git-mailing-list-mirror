@@ -1,7 +1,7 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v7 04/10] send-email: refactor address list process
-Date: Tue, 30 Jun 2015 14:16:45 +0200
-Message-ID: <1435666611-18429-5-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v7 01/10] t9001-send-email: move script creation in a setup test
+Date: Tue, 30 Jun 2015 14:16:42 +0200
+Message-ID: <1435666611-18429-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
 	guillaume.pages@ensimag.grenoble-inp.fr,
@@ -9,104 +9,93 @@ Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
 	antoine.delaite@ensimag.grenoble-inp.fr,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jun 30 14:17:31 2015
+X-From: git-owner@vger.kernel.org Tue Jun 30 14:17:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9uTi-0005eb-Ie
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 14:17:30 +0200
+	id 1Z9uU6-0005qP-4E
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 14:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752949AbbF3MRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 08:17:23 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39694 "EHLO shiva.imag.fr"
+	id S1753272AbbF3MRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 08:17:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54651 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753032AbbF3MRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 08:17:10 -0400
+	id S1752596AbbF3MRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 08:17:05 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t5UCGvjV015321
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UCGrIw020534
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 30 Jun 2015 14:16:57 +0200
+	Tue, 30 Jun 2015 14:16:53 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UCGwwd022745;
-	Tue, 30 Jun 2015 14:16:58 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UCGtkY022736;
+	Tue, 30 Jun 2015 14:16:55 +0200
 Received: from moy by anie.imag.fr with local (Exim 4.80)
 	(envelope-from <moy@imag.fr>)
-	id 1Z9uTC-00050x-CO; Tue, 30 Jun 2015 14:16:58 +0200
+	id 1Z9uT8-00050Q-Vy; Tue, 30 Jun 2015 14:16:55 +0200
 X-Mailer: git-send-email 2.5.0.rc0.10.g7792c2a
 In-Reply-To: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 30 Jun 2015 14:16:57 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 30 Jun 2015 14:16:53 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5UCGvjV015321
+X-MailScanner-ID: t5UCGrIw020534
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1436271419.08499@/yh8HwAM4OxwLY+L9GMAEg
+MailScanner-NULL-Check: 1436271416.1066@1w2PD//PP1mob2itRoyPvA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273051>
 
 From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
 
-Simplify code by creating a function which transform a list of strings
-containing email addresses (separated by commas, comporting aliases)
-into a clean list of valid email addresses.
+Move the creation of the scripts used in to-cmd and cc-cmd tests
+in a setup test to make them available for later tests.
 
 Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- git-send-email.perl | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ t/t9001-send-email.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 3cbdb1a..994697e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -839,12 +839,9 @@ sub expand_one_alias {
- 	return $aliases{$alias} ? expand_aliases(@{$aliases{$alias}}) : $alias;
- }
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index db2f45e..8caf7b0 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -312,13 +312,19 @@ test_expect_success $PREREQ,!AUTOIDENT 'broken implicit ident aborts send-email'
+ 	)
+ '
  
--@initial_to = expand_aliases(@initial_to);
--@initial_to = validate_address_list(sanitize_address_list(@initial_to));
--@initial_cc = expand_aliases(@initial_cc);
--@initial_cc = validate_address_list(sanitize_address_list(@initial_cc));
--@bcclist = expand_aliases(@bcclist);
--@bcclist = validate_address_list(sanitize_address_list(@bcclist));
-+@initial_to = process_address_list(@initial_to);
-+@initial_cc = process_address_list(@initial_cc);
-+@bcclist = process_address_list(@bcclist);
- 
- if ($thread && !defined $initial_reply_to && $prompting) {
- 	$initial_reply_to = ask(
-@@ -1057,6 +1054,13 @@ sub sanitize_address_list {
- 	return (map { sanitize_address($_) } @_);
- }
- 
-+sub process_address_list {
-+	my @addr_list = expand_aliases(@_);
-+	@addr_list = sanitize_address_list(@addr_list);
-+	@addr_list = validate_address_list(@addr_list);
-+	return @addr_list;
-+}
++test_expect_success $PREREQ 'setup tocmd and cccmd scripts' '
++	write_script tocmd-sed <<-\EOF &&
++	sed -n -e "s/^tocmd--//p" "$1"
++	EOF
++	write_script cccmd-sed <<-\EOF
++	sed -n -e "s/^cccmd--//p" "$1"
++	EOF
++'
 +
- # Returns the local Fully Qualified Domain Name (FQDN) if available.
- #
- # Tightly configured MTAa require that a caller sends a real DNS
-@@ -1566,10 +1570,8 @@ foreach my $t (@files) {
- 		($confirm =~ /^(?:auto|compose)$/ && $compose && $message_num == 1));
- 	$needs_confirm = "inform" if ($needs_confirm && $confirm_unconfigured && @cc);
- 
--	@to = expand_aliases(@to);
--	@to = validate_address_list(sanitize_address_list(@to));
--	@cc = expand_aliases(@cc);
--	@cc = validate_address_list(sanitize_address_list(@cc));
-+	@to = process_address_list(@to);
-+	@cc = process_address_list(@cc);
- 
- 	@to = (@initial_to, @to);
- 	@cc = (@initial_cc, @cc);
+ test_expect_success $PREREQ 'tocmd works' '
+ 	clean_fake_sendmail &&
+ 	cp $patches tocmd.patch &&
+ 	echo tocmd--tocmd@example.com >>tocmd.patch &&
+-	write_script tocmd-sed <<-\EOF &&
+-	sed -n -e "s/^tocmd--//p" "$1"
+-	EOF
+ 	git send-email \
+ 		--from="Example <nobody@example.com>" \
+ 		--to-cmd=./tocmd-sed \
+@@ -332,9 +338,6 @@ test_expect_success $PREREQ 'cccmd works' '
+ 	clean_fake_sendmail &&
+ 	cp $patches cccmd.patch &&
+ 	echo "cccmd--  cccmd@example.com" >>cccmd.patch &&
+-	write_script cccmd-sed <<-\EOF &&
+-	sed -n -e "s/^cccmd--//p" "$1"
+-	EOF
+ 	git send-email \
+ 		--from="Example <nobody@example.com>" \
+ 		--to=nobody@example.com \
 -- 
 2.5.0.rc0.10.g7792c2a
