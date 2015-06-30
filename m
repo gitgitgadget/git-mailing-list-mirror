@@ -1,82 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/4] More helpful 'git status' during 'rebase -i'
-Date: Tue, 30 Jun 2015 16:03:25 -0700
-Message-ID: <xmqqpp4cbxz6.fsf@gitster.dls.corp.google.com>
-References: <1435669275-32102-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Avoid the need of "--" when wildcard pathspec is used
+Date: Wed, 1 Jul 2015 06:07:27 +0700
+Message-ID: <CACsJy8C0Pz8ZjzW+n=3kT3c+x+CBONUuk27SNMiMsYwCapnVjA@mail.gmail.com>
+References: <1435668007-31231-1-git-send-email-pclouds@gmail.com> <xmqqk2ulcbj3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	antoine.delaite@ensimag.grenoble-inp.fr
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 01 01:03:38 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 01:08:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZA4Yx-00081Z-Ka
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 01:03:35 +0200
+	id 1ZA4dI-0001VH-CB
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 01:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125AbbF3XDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 19:03:30 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:35287 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134AbbF3XD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 19:03:28 -0400
-Received: by iecuq6 with SMTP id uq6so23069775iec.2
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 16:03:27 -0700 (PDT)
+	id S1751804AbbF3XH7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Jun 2015 19:07:59 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:33852 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398AbbF3XH6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Jun 2015 19:07:58 -0400
+Received: by igcsj18 with SMTP id sj18so120018391igc.1
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 16:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=vcBv05pMbiOc4PeVOODrw426Xxv+4CRxURaiMlC7G2g=;
-        b=ttTrSy9KYmvYXQCugI1fhRo6TfC2FSF9XpaK9nCRhZ2Y/F6DNK7q8Tk82iz+/cGJyG
-         xiptEmKXyamF7briAIeD/2fvolTR6dwUDm2PDZJFZEIPMSocrcVo7SGkF7fkCIHxCcpA
-         HXYMTFKkIdRIjwQTgArP83ZoWU6aXLQNOos3+h5T+uKN3R0fDC/6qbWoKhourUQ/TfbQ
-         qxs68FHDqtnDSTo3dMUngEvwws9ewgjemoHlElC6IXk+wyMMk5bWGFctz2V2g/D5eYw8
-         sIm8XbgsNKaYiomKznDw5JZ67jebrZyKitXjxWHY5z/BUXDDUWsV82NepuAoce0uhWwb
-         7LaQ==
-X-Received: by 10.43.66.5 with SMTP id xo5mr121868icb.57.1435705407311;
-        Tue, 30 Jun 2015 16:03:27 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
-        by mx.google.com with ESMTPSA id k74sm31104153iok.30.2015.06.30.16.03.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jun 2015 16:03:26 -0700 (PDT)
-In-Reply-To: <1435669275-32102-1-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Tue, 30 Jun 2015 15:01:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9EDWG2uQ1OIDk7pxEJetCb4LL7xi+QEKJcvXaTrle4U=;
+        b=cnVcMf7fgZ34U6gKrkK5CJiIyXdaElSW5C2GNQxtb9S82zdS0Fe8+So+4lURoV4gWV
+         XdvOjo6ikr3SbnCLgPnSDz/C7Pp9raXsK/wdfcNy/f+cqK37htttt74hEgZgratzm029
+         sqPHkwSEYBCvD0rKX7X5pBYQzO3tbJrJfUJQWjvBpjscdgoBt9qc3yYhKMxLwXuNiMAS
+         530Y5TIBYTna7GHUNhlXkZWihNdgWHBdgdSxfnFVs1myhrO6kPiG6WmkGoAQQS1oAszf
+         /+lFgD671J0aApdiB7rmY6e8j6hLj8PdDY/oFXOQ2juixBU8f693yEL1hO2FWDTdiJmn
+         iWnA==
+X-Received: by 10.50.132.70 with SMTP id os6mr209334igb.27.1435705677185; Tue,
+ 30 Jun 2015 16:07:57 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Tue, 30 Jun 2015 16:07:27 -0700 (PDT)
+In-Reply-To: <xmqqk2ulcbj3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273112>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-
-> This series makes "git status" provide an output like
+On Wed, Jul 1, 2015 at 1:10 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
->   interactive rebase in progress; onto $ONTO
->   Last commands done (2 commands done):
->      pick $COMMIT2 two_commit
->      exec exit 15
->   Next commands to do (2 remaining commands):
->      pick $COMMIT3 three_commit
->      pick $COMMIT4 four_commit
->     (use "git rebase --edit-todo" to view and edit)
+>> When "--" is lacking from the command line and a command can take bo=
+th
+>> revs and paths, the idea is if an argument can be seen as both an
+>> extended SHA-1 and a path, then "--" is required or git refuses to
+>> continue. It's currently implemented as:
+>> ...
 >
-> in addition to the existing output, when ran during an interactive
-> rebase.
+> Hmph, how does this relate to 28fcc0b7 (pathspec: avoid the need of
+> "--" when wildcard is used, 2015-05-02)?  A follow-up?  "Oops, I did
+> it wrong"?  something else?
 
-I'd prefer to see these $COMMITn abbreviated, just like $ONTO.  Look
-what I just got while squashing two adjacent patches ;-)
+Arghhh! I vaguely recalled I sent something but I couldn't find it and.=
+=2E
 
-# interactive rebase in progress; onto a04bfc2
-# Last commands done (2 commands done):
-#    pick c186b073f46a3298f2e6f63a8c1becb07bedc4f0 rerere: explain what 'want_sp' does to is_cmarker
-#    squash 17c5b40b46c0e171ed49907e6cb91c2a1d7f7113 rerere: drop want_sp parameter from is_cmarker()
-# Next commands to do (3 remaining commands):
-#    pick 8fc64c4c1024006e71cf0b6c2e3d0ad403f263f8 t4200: rerere a merge with two identical conflicts
-#    pick 094950cdc51599f6fec1b1c0098816888a648bf8 rerere: document internal I/O abstraction
-# You are currently editing a commit while rebasing branch 'jc/rerere' on 'a04bfc2'.
+>
+>> diff --git a/setup.c b/setup.c
+>> index 82c0cc2..f7cb93b 100644
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -143,6 +143,8 @@ int check_filename(const char *prefix, const cha=
+r *arg)
+>>               name =3D arg + 2;
+>>       } else if (!no_wildcard(arg))
+>>               return 1;
+
+=2E. if I looked at the context lines, I should have noticed the change
+was already here!
+
+>> +     else if (!no_wildcard(arg))
+>> +             return 1;
+
+ Seems strange (or expected?) that git cherry-pick just adds this
+chunk on top anyway..
+
+> Puzzling.  You already checked if arg has an wildcard and returned
+> with 1 if there is none.  The added check looks like a no-op to me.
+
+Yeah sorry for the noise. The only value this patch adds is tests (and
+maybe better commit message, the last one still mentions magic
+pathspec even though it's not about it). I think we can just drop
+this.
+--=20
+Duy
