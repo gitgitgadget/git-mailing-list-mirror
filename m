@@ -1,68 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v11 06/10] bisect: don't mix option parsing and non-trivial code
-Date: Tue, 30 Jun 2015 13:46:16 +0200
-Message-ID: <vpq7fqla06v.fsf@anie.imag.fr>
-References: <1435592435-27914-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435592435-27914-7-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqbnfy9s3v.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] --count feature for git shortlog
+Date: Tue, 30 Jun 2015 14:10:49 +0200
+Organization: gmx
+Message-ID: <19801032cd7af95bc8030f54d740bf48@www.dscho.org>
+References: <1435540922-12208-1-git-send-email-lawrencesiebert@gmail.com>
+ <xmqq1tgvdt9u.fsf@gitster.dls.corp.google.com>
+ <CAKDoJU4HcGoOS83MKwsQBXztYrDomMd9N-2SKc6iRyNhQQM5Eg@mail.gmail.com>
+ <CAKDoJU4MHGa-c=F0m17rgWUCS2xFwiSb1pmDnYztoDnzRaRKCw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, antoine.delaite@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	chriscool@tuxfamily.org, thomasxnguy@gmail.com,
-	valentinduperray@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 13:46:43 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lawrence Siebert <lawrencesiebert@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 14:11:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9tzq-0005Yd-EV
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 13:46:38 +0200
+	id 1Z9uNj-0002BA-OM
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 14:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350AbbF3Lqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 07:46:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53821 "EHLO rominette.imag.fr"
+	id S1752644AbbF3MLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 08:11:01 -0400
+Received: from mout.gmx.net ([212.227.17.22]:65195 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750940AbbF3Lqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 07:46:32 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UBkERS011049
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 30 Jun 2015 13:46:14 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UBkG0u021863;
-	Tue, 30 Jun 2015 13:46:16 +0200
-In-Reply-To: <xmqqbnfy9s3v.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 29 Jun 2015 13:28:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 30 Jun 2015 13:46:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5UBkERS011049
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1436269579.21615@p0avOpWDdddYYf0flcEkZw
+	id S1752459AbbF3MKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 08:10:53 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M1zFf-1YuAfh2VxL-00u4cZ; Tue, 30 Jun 2015 14:10:50
+ +0200
+In-Reply-To: <CAKDoJU4MHGa-c=F0m17rgWUCS2xFwiSb1pmDnYztoDnzRaRKCw@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:gNIEKkpJRYDveCqnGoxf0ZY//qYeh3PC8zaaYlA/mZDQhAx0b1P
+ MxkSz9Gc3uCvkdsUc96rdUgjfp4G8qzGIfQJ8GIkIGE0Sy46ZB1n2g5xnKWsCVaP0bpWaVH
+ akOoHgkdffsTzwHuXxpfIAM+bIYMFlzVaQ7X+mUwNW7npZlrJ6MwXlVmkwkVF23Ok/CGYLi
+ /7xy3GgUwa8MPKvjgrRgA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:y9lXZJwOAXY=:QX4dKw30XJd2mwY/nNQo6D
+ b89VuS3mSua4zO+MhESIY0A8894eGZTa9Tk/HiQOdBdXAMRBmR2vrqkF4+UD0R5TN9JoJK/hw
+ fVII85D3Z7yQD1tiAMuYy9VWmwvh+huczK+m5fEgiHmvEefPsFL9pnQWfat0BObZhf26jwe1f
+ 5EWdJweaeCiXnWWfsVZJoxu9/0PIN0z3fx6l01Opb93Un5Y+nmT14iXtDDvjZIRhfhrMiBQM7
+ rrf+6zzgmsSPnU3wlyG/6ZeD2NrrfCjf/6TAuYjjOtVn2yoG6czSXwoiZz3awUJ+2aoHCO12+
+ MxVOrVn6W1RckRsNzuR7hgp8QUZD2VdqMdYh3VAi1lReh/v4s9FBCO+edX+no77NhZ9DQND2A
+ uXmED+E63PqMB1bZe19OSGpBVuhk7FTpIQgNbCwBFcycpRggS9HxMVxDZrMtzpUG/YKYIPceS
+ nYwTlvi7DTGtTvpbNNYFhM/kLridmEUxDS9O+DAGXYIwmN9XT/FzRdDO3Bb8Z/Q2pnBP/dU9y
+ jXOb2rHTWRWOdrG2OJj9fYcUwLPzS/YgKBW3Yw4DdY3xy27jOu3wA7IEzcV6gXTbO+EQLHIkg
+ kZD0sPpl5dl9Z5SMeAuwAAYCnf3Rq92l+foVFDqkvYyyPdwkBBCKa7wuma/He+a3acGsrSQ+z
+ zs6zuyKYVlcZDC0mGXCc+Xr6yvojaE1Phctp4KTgtb33a7iOw8D3VqAnx4uCFAQTPxFU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273042>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Lawrence,
 
-> Matthieu, are you allowing your editor to corrupt the number of
-> lines in the hunk on the @@ ... @@ hunk header?  "diff" mode in
-> Emacs does that,
+On 2015-06-29 18:46, Lawrence Siebert wrote:
 
-Indeed. There's magic in Emac's diff-mode to keep the header up to date,
-but it seems totally buggy. I manually deleted a tab (no line added, no
-line removed) and it changed the number of lines in the header.
+> I appreciate your help. Okay, That all makes sense.
+> 
+> I would note that something like:
+>  git shortlog -s "$FILENAME:  | cut -f 1 | paste -sd+ - | bc
+> 
+> seems like it run much faster then:
+> 
+>  git log --oneline "$FILENAME" | wc -l
 
-I see that you still managed to apply the series in pu, thanks and sorry
-for the inconvenience.
+How does it compare to `git rev-list -- "$FILENAME" | wc -l`?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ciao,
+Johannes
