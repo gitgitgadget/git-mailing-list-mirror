@@ -1,88 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 0/3] rebase -i: drop, missing commits and static checks
-Date: Tue, 30 Jun 2015 19:03:46 +0200
-Message-ID: <vpqy4j12knh.fsf@anie.imag.fr>
-References: <1435609232-14232-1-git-send-email-remi.galan-alfonso@ensimag.grenoble-inp.fr>
-	<1435655961-31263-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1849903896.89424.1435676774069.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<xmqq7fql8949.fsf@gitster.dls.corp.google.com>
-	<70428267.93232.1435683724659.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] introduce "format" date-mode
+Date: Tue, 30 Jun 2015 10:05:33 -0700
+Message-ID: <xmqqr3ot6s9u.fsf@gitster.dls.corp.google.com>
+References: <20150625165341.GA21949@peff.net>
+	<20150625165545.GC23503@peff.net> <20150629222247.GA31607@flurp.local>
+	<20150630102055.GA11928@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	antoine delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	sunshine@sunshineco.com
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 30 19:04:09 2015
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 30 19:05:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Z9yx4-0007dr-VZ
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 19:04:07 +0200
+	id 1Z9yyb-0008NR-U1
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 19:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753194AbbF3REC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 13:04:02 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35699 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752810AbbF3REA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 13:04:00 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UH3i0D013620
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 30 Jun 2015 19:03:44 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t5UH3kUP030171;
-	Tue, 30 Jun 2015 19:03:46 +0200
-In-Reply-To: <70428267.93232.1435683724659.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Remi Galan Alfonso's message of "Tue, 30 Jun 2015 19:02:04 +0200
-	(CEST)")
+	id S1753072AbbF3RFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2015 13:05:38 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:36887 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752597AbbF3RFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2015 13:05:36 -0400
+Received: by igblr2 with SMTP id lr2so17016258igb.0
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 10:05:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=+g/YrupgaysCqqSfGtaTZn3zhF94hu34vW+3tOcIvfw=;
+        b=ajWzd6d6TQgCZ44D0lHJH+tP0rlsA+yn7V/BmdhxpTH78BvKNu0TUii2XS1C7Flm5u
+         p8Tk8zAXouAUNn98DX5VJTrDBmhv5IeEIExdOr4VjzVmauhQ75eCOitX5dnxfUw4hL5U
+         oLinduOacf5JDS60eBs2rmVRyKkYr1KmlH5HWvbk9IXRNJkb/CRjSy9oX9Ib4kDeK1wi
+         S5SWt1BhX2FKWtFt2o5frWtuPOu3Zx7RdsFj4Q4/wghQyo5MscSanGwWcmcCjWPkz5pt
+         rBCBVFrz0pkeitcX0xrIbznNyl5kRCBSROcVuKkKyNudnqw+Tw2+jdJbXrDcr/O8qbaE
+         lT0A==
+X-Received: by 10.42.135.69 with SMTP id o5mr27923268ict.47.1435683935424;
+        Tue, 30 Jun 2015 10:05:35 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
+        by mx.google.com with ESMTPSA id rr5sm8122974igb.7.2015.06.30.10.05.34
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Jun 2015 10:05:34 -0700 (PDT)
+In-Reply-To: <20150630102055.GA11928@peff.net> (Jeff King's message of "Tue,
+	30 Jun 2015 06:20:56 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 30 Jun 2015 19:03:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t5UH3i0D013620
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1436288625.84664@3pou80x+zf4Az9Nh1oB2RA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273084>
 
-Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> The place where an error can be introduced is (assuming that what
->> "rebase -i" writes out itself is perfect ;-) where we allow the user
->> to edit, so instead of checking before "--continue", I would expect
->> a sane design would check immediately after the editor we spawned
->> returns.
+> This does get called a lot (e.g., once per commit). One extra allocation
+> would probably not kill us there, but I think we could fairly trivially
+> put this on the unlikely path:
 >
-> Makes sense but we would have the problem mentioned by Matthieu:
->> Warning: the command isn't recognized ...
->>   
->> # Hmm, let's ignore that warning
->> $ git rebase --continue
+>   size_t hint = 128;
+>   size_t len;
+>
+>   /* optimize out obvious 0-length case */
+>   if (!*fmt)
+> 	return;
+>
+>   strbuf_grow(sb, hint);
+>   len = strftime(sb->buf + sb->len, sb->alloc - sb->len, fmt, tm);
+>
+>   /* maybe not enough room, or maybe 0-length output */
+>   if (!len) {
+> 	struct strbuf f = STRBUF_INIT;
+> 	strbuf_addf(&f, "%s ", fmt);
+> 	while (!len) {
+> 		hint *= 2;
+> 		strbuf_grow(sb, hint);
+> 		len = strftime(sb->buf + sb->len, sb->alloc - sb->len, f.buf, tm);
+> 	}
+>   }
+>
+> I'd guess most cases will fit in 128 bytes and never even hit this code
+> path. You could also get fancier and start the buffer smaller, but only
+> do the fmt hack when we cross a threshold.
 
-There's an alternative:
+I'd assume that the "hint" thing will persist across calls somehow?
+In an invocation of "git log --date=format:<some format>" for
+millions of commits, it is likely that the length of the formatted
+date string will stay the same or close to the same (yeah, I know
+"Wednesday" would be longer than "Monday").
 
-$ git rebase --edit-todo
-# Make mistakes, save and quit
-Your todo-list has the following issues:
-- ...
-Do you want to edit again (no aborts the rebase) [Y/n]?
+Answering myself to my earlier question, the reason is because I was
+worried what happens when given fmt is a malformed strftime format
+specifier.  Perhaps it ends with a lone % and "% " may format to
+something unexpected, or something.
 
-There's a precedent with the 'e' command of "git add -p". I have a
-slight preference for non-interactive commands so I prefer not going
-this way though.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Are we checking an error from strftime(3)?
