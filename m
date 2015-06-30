@@ -1,80 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 07/10] send-email: reduce dependencies impact on parse_address_line
-Date: Tue, 30 Jun 2015 11:41:08 -0700
-Message-ID: <xmqqfv59ca4b.fsf@gitster.dls.corp.google.com>
-References: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435666611-18429-8-git-send-email-Matthieu.Moy@imag.fr>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: 4th release candidate of Git for Windows 2.x, was Re:
+ 3rd release candidate of Git for Windows 2.x
+Date: Tue, 30 Jun 2015 20:57:59 +0200
+Message-ID: <5592E6B7.10201@virtuell-zuhause.de>
+References: <d4680251b19275d9f243f8fe0ca383a4@www.dscho.org>	<b085dab2e617742b690ccb99ba4a3076@www.dscho.org>	<8224736a18724f751312d57e67967d69@www.dscho.org>	<55910AE7.3000206@atlas-elektronik.com>	<426859781bd04ca4ebb13719350537ed@www.dscho.org>	<20150629185430.5dfbab069b5dbdf32398d290@domain007.com>	<2abf219bf0235717eaa84889f94eb03c@www.dscho.org> <20150630201523.3a00a2afe9321fb28a6fc82d@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	antoine.delaite@ensimag.grenoble-inp.fr
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 30 20:41:19 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: =?windows-1252?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>, 
+ Git Mailing List <git@vger.kernel.org>,
+ msysgit@googlegroups.com, git-for-windows@googlegroups.com
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>, 
+ Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: msysgit+bncBCL7JHHTPAILTTOLVQCRUBFF5DEJU@googlegroups.com Tue Jun 30 20:58:02 2015
+Return-path: <msysgit+bncBCL7JHHTPAILTTOLVQCRUBFF5DEJU@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZA0T7-0005CR-0D
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jun 2015 20:41:17 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752529AbbF3SlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2015 14:41:13 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:33603 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751767AbbF3SlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2015 14:41:11 -0400
-Received: by igcur8 with SMTP id ur8so71555217igc.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 11:41:10 -0700 (PDT)
+	(envelope-from <msysgit+bncBCL7JHHTPAILTTOLVQCRUBFF5DEJU@googlegroups.com>)
+	id 1ZA0jK-00054y-LX
+	for gcvm-msysgit@m.gmane.org; Tue, 30 Jun 2015 20:58:02 +0200
+Received: by wggx12 with SMTP id x12sf8678676wgg.1
+        for <gcvm-msysgit@m.gmane.org>; Tue, 30 Jun 2015 11:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=8VuEnbGw4yM+GgQyza/F7DJvm2NmE3BqReMwRrNG7Vo=;
-        b=B+PEveLq2bM/If46ZGrRZUxcNTkMWVtsjlq9/hq/bWItPt6kwPg1MBfJGUqrWNIxLR
-         4spfwU5/97FlkYns2RtFPGs2YCI8hiVZ2v3ziST1++TZ4L7Lzk4ifupnVBuI/s0M3LPd
-         jGyYkXfnPGy8ux0JYXJBOtd1S90XGQ36yhlU/R6ITOzgaM7ErOUDDlNW62JEbE1jwWKT
-         wZUC105IzpLpWshxaC8YF0UpBc9Dw5YkcsvssC14wHBP97LGWNav7uj7Fi0GBi4FXung
-         H5KiwTI1YkD7yz2gdODP0sioADWNaVwARkG1CNwCzTM1VtJ4XJCNmeg+wu2PD/+twU5Z
-         Gi8Q==
-X-Received: by 10.42.105.16 with SMTP id t16mr27632906ico.40.1435689670079;
-        Tue, 30 Jun 2015 11:41:10 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
-        by mx.google.com with ESMTPSA id kk9sm3935689igb.7.2015.06.30.11.41.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jun 2015 11:41:09 -0700 (PDT)
-In-Reply-To: <1435666611-18429-8-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Tue, 30 Jun 2015 14:16:48 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273095>
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=4XSjzFubRv/Z6nkTUS3KJfE4fQu8b9BQKeOUhBbXpQA=;
+        b=V+faXNVjZlG7bkYNPWVt7fV1Zofaw/qs2cK4A5kYgSqHUJESMji7HwzsLuhoKJwA0Q
+         uMXqlz/K7e+yZem93S+X8rZDQ98pN2OLozirHCo5taU+GTf+NLYxnPkiHlgG0oIDCeyQ
+         PtL3UjZG/qFqYbiBshpAwLxLmu09alHQeAQN2H0aUo6BLr5ylV6j6LKbWkyRritDVExX
+         bOcYmcVXKSDg97SsQVjVtGAcs/Xu7uKDKqbcIis7/uWFSuTomZJ8HSzCF1QR9Lvs0mqL
+         bht3RizAdXAe/xTOctqsIiSi339vJ1U37bN7aNDnMV6Xr0P0CyoMDOJ/TXwyBtXHdcfW
+         uG9Q==
+X-Received: by 10.152.5.3 with SMTP id o3mr204372lao.2.1435690682022;
+        Tue, 30 Jun 2015 11:58:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.36.34 with SMTP id n2ls83108laj.15.gmail; Tue, 30 Jun 2015
+ 11:58:01 -0700 (PDT)
+X-Received: by 10.152.22.71 with SMTP id b7mr14822499laf.3.1435690681169;
+        Tue, 30 Jun 2015 11:58:01 -0700 (PDT)
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [80.237.132.163])
+        by gmr-mx.google.com with ESMTPS id eo3si640508wib.0.2015.06.30.11.58.01
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Jun 2015 11:58:01 -0700 (PDT)
+Received-SPF: neutral (google.com: 80.237.132.163 is neither permitted nor denied by best guess record for domain of thomas.braun@virtuell-zuhause.de) client-ip=80.237.132.163;
+Received: from p5dd6fcbd.dip0.t-ipconnect.de ([93.214.252.189] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1ZA0jI-00042P-Cd; Tue, 30 Jun 2015 20:58:00 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <20150630201523.3a00a2afe9321fb28a6fc82d@domain007.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1435690681;3763cf8f;
+X-Original-Sender: thomas.braun@virtuell-zuhause.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 80.237.132.163 is neither permitted nor denied by best guess
+ record for domain of thomas.braun@virtuell-zuhause.de) smtp.mail=thomas.braun@virtuell-zuhause.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273096>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Am 30.06.2015 um 19:15 schrieb Konstantin Khomoutov:
+> On Mon, 29 Jun 2015 18:19:09 +0200
+> Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> 
+>>> I've finally took time to switch from my old "msys1" release to this
+>>> RC4, and immediately got hit by the fact Git is now speaking to me
+>>> in Russian, which is not what I want (previously this behaviour was
+>>> only exhibited by `git gui` and `gitk`).
+>>>
+>>> Should I make Git see LC_MESSAGES=en (or other thing like LANG) in
+>>> the environment or is there some Git-local method to affect this
+>>> behaviour? I tried to grep the release notes using relevant
+>>> keywords but was left empty-handed.
+>>
+>> Personally, I would use LC_ALL=C. Maybe that's good for you, too?
+> 
+> After reading [1], I've ended up installing LANG=C into my user's
+> environment variables -- so far so good, thanks for the tip!
 
-> diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
-> new file mode 100755
-> index 0000000..7223d03
-> --- /dev/null
-> +++ b/t/t9000-addresses.sh
-> @@ -0,0 +1,30 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2015
+Just for the record.
+I created the file lang.sh with contents
+export LC_ALL=C
+in
+/etc/profile.d
+which also fixes the problem. And also survives new versions of git.
 
-That does not look like a valid copyright notice.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-In the modern age, I'd personally perfer not to add one (I would not
-have a strong objection to others asserting their copyright), but if
-you want to add one, you would need the name of the copyright holder
-after the year (I presume that it would be your school name?).
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-IIRC, (c) in place of circle-C does no carry legal weight, but
-having the word "Copyright" spelled out there is sufficient.
-
-Thanks for tying the loose ends (not just this topic, but the other
-ones, too).  Very much appreciated.
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
