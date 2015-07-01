@@ -1,110 +1,130 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 3/4] status: give more information during rebase -i
-Date: Wed, 01 Jul 2015 23:06:51 +0200
-Message-ID: <vpqk2ujoadw.fsf@anie.imag.fr>
-References: <vpq7fqkz48f.fsf@anie.imag.fr>
-	<1435739433-18853-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435739433-18853-3-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqq4mlnc0lr.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v6 1/4] status: factor two rebase-related messages together
+Date: Wed,  1 Jul 2015 23:08:33 +0200
+Message-ID: <1435784916-15456-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqk2ujoadw.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
 	guillaume.pages@ensimag.grenoble-inp.fr,
 	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	antoine.delaite@ensimag.grenoble-inp.fr
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 23:07:08 2015
+	antoine.delaite@ensimag.grenoble-inp.fr,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jul 01 23:08:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAPDn-0003Qa-0I
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 23:07:07 +0200
+	id 1ZAPFV-0004Gj-TZ
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 23:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbbGAVHC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 17:07:02 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54704 "EHLO shiva.imag.fr"
+	id S1753065AbbGAVIt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2015 17:08:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42059 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567AbbGAVHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 17:07:01 -0400
+	id S1752059AbbGAVIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 17:08:48 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t61L6nau010935
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L8eRZ001951
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 1 Jul 2015 23:06:49 +0200
+	Wed, 1 Jul 2015 23:08:40 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L6poS025558;
-	Wed, 1 Jul 2015 23:06:51 +0200
-In-Reply-To: <xmqq4mlnc0lr.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 01 Jul 2015 09:18:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 01 Jul 2015 23:06:50 +0200 (CEST)
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L8hAt025569;
+	Wed, 1 Jul 2015 23:08:43 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZAPFL-0004cS-74; Wed, 01 Jul 2015 23:08:43 +0200
+X-Mailer: git-send-email 2.5.0.rc0.7.ge1edd74.dirty
+In-Reply-To: <vpqk2ujoadw.fsf@anie.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 01 Jul 2015 23:08:40 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t61L6nau010935
+X-MailScanner-ID: t61L8eRZ001951
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1436389613.56058@G+JO5S8TyLhlDygPMWm5ug
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1436389721.04244@UGTRL+KHPmS7V+yhjXXASA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273200>
 
-Junio C Hamano <gitster@pobox.com> writes:
+=46rom: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-inp.fr>
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> +		strbuf_trim(split[1]);
->> +		if (!get_sha1(split[1]->buf, sha1)) {
->> +			abbrev = find_unique_abbrev(sha1, DEFAULT_ABBREV);
->> +			strbuf_reset(split[1]);
->> +			strbuf_addf(split[1], "%s ", abbrev);
->> +		}
->
-> ... else?
->
-> That is, "we thought there would be a full SHA-1, but it turns out
-> that there wasn't, so we keep split[1] as-is" would need to add the
-> space back, no?
+Signed-off-by: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-i=
+np.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+No modification.
 
-Right.
+ wt-status.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-> Perhaps be more strict and do this instead (without leading
-> strbuf_trim):
->
-> 	if (!get_sha1_hex(split[1]->buf, sha1) &&
-> 	    !strcmp(split[1]->buf + 40, " ") {
-> 		replace split[1] with "%s " abbrev
-> 	}
-
-Actually, we can do simpler: we still have the original line available,
-so if we don't find a sha1, we can just keep it. By just letting the few
-lines after the if enter the if, it just works:
-
-		strbuf_trim(split[1]);
-		if (!get_sha1(split[1]->buf, sha1)) {
-			abbrev = find_unique_abbrev(sha1, DEFAULT_ABBREV);
-			strbuf_reset(split[1]);
-			strbuf_addf(split[1], "%s ", abbrev);
-			strbuf_reset(line);
-			for (i = 0; split[i]; i++)
-				strbuf_addf(line, "%s", split[i]->buf);
-		}
-
->         while (!strbuf_getline(&line, f, '\n')) {
->                 if (line.len && line.len[0] == comment_line_char)
->                         continue;
->                 strbuf_rtrim(&line);
->                 if (!line.len)
->                         continue;
->                 abbrev_sha1_in_line(&line);
->                 string_list_append(lines, line.buf);
->         }
-
-I took this (modulo s/line.len[0]/line.buf[0]/, and s/rtrim/trim/ to be
-robust to leading whitespace (not really important, but doesn't harm).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/wt-status.c b/wt-status.c
+index eaed4fe..8c4b806 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1027,6 +1027,20 @@ static int split_commit_in_progress(struct wt_st=
+atus *s)
+ 	return split_in_progress;
+ }
+=20
++static void print_rebase_state(struct wt_status *s,
++				struct wt_status_state *state,
++				const char *color)
++{
++	if (state->branch)
++		status_printf_ln(s, color,
++				 _("You are currently rebasing branch '%s' on '%s'."),
++				 state->branch,
++				 state->onto);
++	else
++		status_printf_ln(s, color,
++				 _("You are currently rebasing."));
++}
++
+ static void show_rebase_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
+@@ -1034,14 +1048,7 @@ static void show_rebase_in_progress(struct wt_st=
+atus *s,
+ 	struct stat st;
+=20
+ 	if (has_unmerged(s)) {
+-		if (state->branch)
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing branch '%s' on '%s'."),
+-					 state->branch,
+-					 state->onto);
+-		else
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing."));
++		print_rebase_state(s, state, color);
+ 		if (s->hints) {
+ 			status_printf_ln(s, color,
+ 				_("  (fix conflicts and then run \"git rebase --continue\")"));
+@@ -1051,14 +1058,7 @@ static void show_rebase_in_progress(struct wt_st=
+atus *s,
+ 				_("  (use \"git rebase --abort\" to check out the original branch)=
+"));
+ 		}
+ 	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), =
+&st)) {
+-		if (state->branch)
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing branch '%s' on '%s'."),
+-					 state->branch,
+-					 state->onto);
+-		else
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing."));
++		print_rebase_state(s, state, color);
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+ 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
+--=20
+2.5.0.rc0.7.ge1edd74.dirty
