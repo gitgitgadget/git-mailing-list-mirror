@@ -1,72 +1,117 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Wed, 1 Jul 2015 17:46:41 +0700
-Message-ID: <CACsJy8DaCK3Z4mfVEjkZsALdeNx9LDe=cw=m-qB39a2fmqR80g@mail.gmail.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
- <CACsJy8BYeYq-fQX=M1h2r4daQSsemXQT4Y+ww2Z3Y54brUS3QQ@mail.gmail.com> <xmqqy4j16tqk.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2] Add tests for wildcard "path vs ref" disambiguation
+Date: Wed,  1 Jul 2015 18:08:14 +0700
+Message-ID: <1435748894-4636-1-git-send-email-pclouds@gmail.com>
+References: <1435668007-31231-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 12:47:37 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 01 13:07:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAFYG-0003Rf-Un
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 12:47:37 +0200
+	id 1ZAFrn-00046B-Pf
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 13:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272AbbGAKrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 06:47:13 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:33849 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304AbbGAKrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 06:47:11 -0400
-Received: by iebmu5 with SMTP id mu5so31578626ieb.1
-        for <git@vger.kernel.org>; Wed, 01 Jul 2015 03:47:10 -0700 (PDT)
+	id S1754024AbbGALHo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2015 07:07:44 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:36104 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753798AbbGALHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 07:07:42 -0400
+Received: by pdcu2 with SMTP id u2so24520678pdc.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2015 04:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lYDvfN6nkVpm7QaOP+d4iUcYmI9hmnERQoRwl9AmK/4=;
-        b=U4DJEbfQDBWEQKgf+49R72DEBQN9EDQUePa9LNqigjU4fp5/c2+Y1PAj0lgIbgJwXk
-         OSqpaVDvzY8FymmfnJzwZ8iXJ4yJGTQ2ZZU2U65DL82wY+OxaeEel0xVhWv6pNkXrcPd
-         NYE6LP69SWSGjLXPnl7ZLVCHp3ciWX3B4g43SLkoNYGBRl5aKuN+PzDQ2gIZekhT2C3i
-         x4cCdZyxLqt7sEti9Q53HWhLKkmuALzOfD8t/ClROZDbKO74RdY8sEopLHMrBnZQmeg4
-         Md4lSgEyUiftnLAToDnWhijWCD7rbzUZRnkj4RYD/nhjrCWRc74nm8FjvAhkXxXz8GqK
-         y+bw==
-X-Received: by 10.107.15.153 with SMTP id 25mr38432346iop.44.1435747630701;
- Wed, 01 Jul 2015 03:47:10 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Wed, 1 Jul 2015 03:46:41 -0700 (PDT)
-In-Reply-To: <xmqqy4j16tqk.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=/Z8tj1SrYpZQnoR4s53bwuG9i64J+8upxg7rnfw+ajw=;
+        b=TndbJSncou7b93UqiZ90fBgfN5VWlv4abWVFJKEkfVNLkv9hj3fS9Kk8RaB/HMVXUA
+         4XU4jGLofCO7MfYeu0Cfg0f2+FfxE8Wy9mo+vqWSE+EutmwjYI/pIbNoTQetDsWF87JG
+         mQsHM3O9MNiTLbrX6BrnT4APFv3GFoGtps1P6ePVv+8JSkKEEFWCUAbLX4Ihg2IrEbD0
+         vhFuDL5vTmvzyz42DynY/+ShFLaydm9shRg3ZQS4NKqDPDkJxhSfDh8tYtRU/PCO4f+u
+         XgkezGEOXjsJ93VbIr+mrs//+ULLteHss4v43zKhiqeY9OFpduwzhP/nIoiO8u4shuDX
+         YCeA==
+X-Received: by 10.70.19.200 with SMTP id h8mr15072842pde.66.1435748862421;
+        Wed, 01 Jul 2015 04:07:42 -0700 (PDT)
+Received: from lanh ([115.73.56.51])
+        by mx.google.com with ESMTPSA id do16sm1927099pac.15.2015.07.01.04.07.39
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Jul 2015 04:07:41 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 01 Jul 2015 18:08:20 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <1435668007-31231-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273151>
 
-On Tue, Jun 30, 2015 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> I think this is like "git checkout -b" vs "git branch". We pack so
->> many things in 'checkout' that it's a source of both convenience and
->> confusion. I never use "git branch" to create a new branch and if I
->> had a way to tell checkout to "move away and delete previous branch",
->> I would probably stop using "git branch -d/-D" too. "--to" is another
->> "-b" in this sense.
->
-> I didn't know "checkout --to" included "create a worktree elsewhere
-> and chdir there"; if that "and chdir there" is not something you are
-> doing, then I do not think "checkout -b" vs "branch" analogy applies.
+Commit 28fcc0b (pathspec: avoid the need of "--" when wildcard is used =
+-
+2015-05-02) changes how the disambiguation rules work. This patch adds
+some tests to demonstrate, basically, if wildcard characters are in an
+argument:
 
-Heh.. I do want that "chdir" (even for git-init and git-clone). We
-can't issue "cd" command back to the parent shell, but we can spawn a
-new shell with new cwd. But because the target dir is usually at the
-end of the command line (except for "--to") and "cd !$" is not much to
-type, it never bothers me enough to do something more. I think this is
-another reason I prefer "git worktree add" to have the target dir at
-the end.
--- 
-Duy
+ - if the argument is valid extended sha-1 syntax, "--" must be used
+ - otherwise the argument is considered a path, even without "--"
+
+And wildcard can appear in extended sha-1 syntax, either as part of
+regex in ":/<regex>" or as the literal path in ":<path>". The latter
+case is less likely to happen in real world. But if you do ":/" a lot,
+you may need to type "--" more.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ v2 just adds tests as the code is already in 'master' for some time.
+
+ t/t2019-checkout-ambiguous-ref.sh | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/t/t2019-checkout-ambiguous-ref.sh b/t/t2019-checkout-ambig=
+uous-ref.sh
+index b99d519..e5ceba3 100755
+--- a/t/t2019-checkout-ambiguous-ref.sh
++++ b/t/t2019-checkout-ambiguous-ref.sh
+@@ -56,4 +56,30 @@ test_expect_success VAGUENESS_SUCCESS 'checkout repo=
+rts switch to branch' '
+ 	test_i18ngrep ! "^HEAD is now at" stderr
+ '
+=20
++test_expect_success 'wildcard ambiguation, paths win' '
++	git init ambi &&
++	(
++		cd ambi &&
++		echo a >a.c &&
++		git add a.c &&
++		echo b >a.c &&
++		git checkout "*.c" &&
++		echo a >expect &&
++		test_cmp expect a.c
++	)
++'
++
++test_expect_success 'wildcard ambiguation, refs lose' '
++	git init ambi2 &&
++	(
++		cd ambi2 &&
++		echo a >"*.c" &&
++		git add . &&
++		test_must_fail git show :"*.c" &&
++		git show :"*.c" -- >actual &&
++		echo a >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
+--=20
+2.3.0.rc1.137.g477eb31
