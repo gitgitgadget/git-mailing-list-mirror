@@ -1,121 +1,263 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] --count feature for git shortlog
-Date: Wed, 1 Jul 2015 07:50:37 -0400
-Message-ID: <20150701115036.GA31158@peff.net>
-References: <1435540922-12208-1-git-send-email-lawrencesiebert@gmail.com>
- <xmqq1tgvdt9u.fsf@gitster.dls.corp.google.com>
- <CAKDoJU4HcGoOS83MKwsQBXztYrDomMd9N-2SKc6iRyNhQQM5Eg@mail.gmail.com>
- <CAKDoJU4MHGa-c=F0m17rgWUCS2xFwiSb1pmDnYztoDnzRaRKCw@mail.gmail.com>
- <19801032cd7af95bc8030f54d740bf48@www.dscho.org>
- <20150630122323.GY18226@serenity.lan>
- <CAKDoJU4cEvWvfnFsvfOJ_P0UOrD3RpLK1NdfxaUPiDTWXYg-oA@mail.gmail.com>
- <CAKDoJU42kDs3QXYjo7rJ-vLMJtUdv9AwttJLHnya+toG6cSatQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Keeping <john@keeping.me.uk>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	tanoku@gmail.com
-To: Lawrence Siebert <lawrencesiebert@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 13:50:47 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] fast-import: add a get-mark command
+Date: Wed,  1 Jul 2015 17:05:58 +0200
+Message-ID: <38cd45cb4930c4af8f8224c44064af99b2900260.1435762878.git.mhagger@alum.mit.edu>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 17:06:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAGXO-0007uZ-Tl
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 13:50:47 +0200
+	id 1ZAJae-00031i-Qw
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 17:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752376AbbGALum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 07:50:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54266 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752595AbbGALuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 07:50:40 -0400
-Received: (qmail 26517 invoked by uid 102); 1 Jul 2015 11:50:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jul 2015 06:50:40 -0500
-Received: (qmail 24576 invoked by uid 107); 1 Jul 2015 11:50:45 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jul 2015 07:50:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Jul 2015 07:50:37 -0400
-Content-Disposition: inline
-In-Reply-To: <CAKDoJU42kDs3QXYjo7rJ-vLMJtUdv9AwttJLHnya+toG6cSatQ@mail.gmail.com>
+	id S1753572AbbGAPGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2015 11:06:15 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:42437 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751548AbbGAPGN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jul 2015 11:06:13 -0400
+X-AuditID: 12074411-f797e6d000007df3-ac-559401de326a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 99.38.32243.ED104955; Wed,  1 Jul 2015 11:06:06 -0400 (EDT)
+Received: from michael.fritz.box (p4FC97DE7.dip0.t-ipconnect.de [79.201.125.231])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t61F639D026210
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 1 Jul 2015 11:06:04 -0400
+X-Mailer: git-send-email 2.1.4
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqHuPcUqowcsNJhannq9hsei60s1k
+	0dB7hdni9or5zBbzD01kdWD1+Pv+A5PHnjtzmTwuXlL2+HN+D6vH501yAaxR3DZJiSVlwZnp
+	efp2CdwZO2fvYi44aFdx/sdixgbGBqMuRk4OCQETiT+NNxkhbDGJC/fWs3UxcnEICVxmlHjd
+	f4wZwjnBJNH97SArSBWbgK7Eop5mJhBbREBNYmLbIRaQImaBhYwSS94eBBslDDR2Q9N8sAYW
+	AVWJna0dYDavQJTEmbXTodbJSZw//pN5AiP3AkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
+	pnq5mSV6qSmlmxghYSK4g3HGSblDjAIcjEo8vBkSk0OFWBPLiitzDzFKcjApifLGfAMK8SXl
+	p1RmJBZnxBeV5qQWH2KU4GBWEuG98AUox5uSWFmVWpQPk5LmYFES5+Vbou4nJJCeWJKanZpa
+	kFoEk5Xh4FCS4A1mmBIqJFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ8K9vhiYLiD
+	pHiA9iaDtPMWFyTmAkUhWk8xKkqJ8yYA41dIACSRUZoHNxYW/a8YxYG+FOadANLOA0wccN2v
+	gAYzAQ1+aT8JZHBJIkJKqoHRM+rcvVcJtdsrFyQ6XT/gffPRr4ei/ivmJYnv7mgO8Tij6/H/
+	tamZ27+lJRohS5fpHZsouL/rbc83sSvMv+wqFoV4zZg2N0PqdFPWySk3ZU/r7Z8bxWm82moL
+	u+F+Bo7/bWvSDrB1pkx/Wiy86NW/CrV4tcC4OyXKPE0m6eva3X9KbbHsPM+hxFKc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273154>
 
-On Tue, Jun 30, 2015 at 08:00:53PM -0700, Lawrence Siebert wrote:
+It is sometimes useful for importers to be able to read the SHA-1
+corresponding to a mark that they have created via fast-import. For
+example, they might want to embed the SHA-1 into the commit message of
+a later commit. Or it might be useful for internal bookkeeping uses,
+or for logging.
 
-> The following doesn't currently run:  `git rev-list --count
-> --use-bitmap-index HEAD`
-> 
-> This is an optional parameter for rev-list from commit
-> aa32939fea9c8934b41efce56015732fa12b8247 which can't currently be used
-> because of changes in parameter parsing, but which modifies `--count`
-> and which may be faster. I've gotten it working again, both by
-> changing the current repo code to make it work, and also by building
-> from that commit, and when I tested it on the whole repo, it seems
-> like it's less variable in speed then `git rev-list --count HEAD`. but
-> not necessarily consistently faster like tests suggested it was when
-> it was committed. Obviously I'm not testing on the same system as the
-> original committer, or with the same compiler, or even using the same
-> version of the linux kernel repo, so those may be a factor.  It may
-> also work better in a circumstance that I haven't accounted for, like
-> an older repo, on a per file basis when getting per file commit counts
-> for all files, or something like that.
+Add a "get-mark" command to "git fast-import" that allows the importer
+to ask for the value of a mark that has been created earlier.
 
-Can you give more details?
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+This is something that we need for an internal GitHub project, but I
+think it will also be of general interest.
 
-In a copy of linux.git with bitmaps:
+ Documentation/git-fast-import.txt | 39 +++++++++++++++++++++++++++++++++------
+ fast-import.c                     | 33 +++++++++++++++++++++++++++++----
+ t/t9300-fast-import.sh            | 13 +++++++++++++
+ 3 files changed, 75 insertions(+), 10 deletions(-)
 
-  $ git log -1 --oneline
-  64fb1d0 Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/sparc
-
-  $ ls -l .git/objects/pack/
-  total 892792
-  -r--r--r-- 1 peff peff  24498374 May 21 13:39 pack-182149ca37c3f2d8fa190e4add772ae08af0e9d2.bitmap
-  -r--r--r-- 1 peff peff 115283036 May 21 13:39 pack-182149ca37c3f2d8fa190e4add772ae08af0e9d2.idx
-  -r--r--r-- 1 peff peff 774420808 May 21 13:39 pack-182149ca37c3f2d8fa190e4add772ae08af0e9d2.pack
-
-The packfiles were created with "git repack -adb". It shows big
-speedups for this exact operation:
-
-  $ git version
-  git version 2.5.0.rc0
-
-  $ time git rev-list --count HEAD
-  515406
-
-  real    0m9.500s
-  user    0m9.424s
-  sys     0m0.092s
-
-  $ time git rev-list --use-bitmap-index --count HEAD
-  515406
-
-  real    0m0.392s
-  user    0m0.328s
-  sys     0m0.064s
-
-Note that this would not work with, say:
-
-  git rev-list --use-bitmap-index --count HEAD -- Makefile
-
-as the bitmap index does not have enough information to do path limiting
-(we should probably disallow this or fall back to the non-bitmap code
-path, but right now we just ignore the path limiter).
-
-> I'm thinking I could submit a patch that makes it work again, and
-> leave it to the user to decide whether to use it or not.   There is
-> also a --test-bitmap option which compares the regular count with the
-> bitmap count. I'm not sure if the implication there was regression
-> testing or that --use-bitmap-index might give the wrong results in
-> certain circumstances.  Vincent, could you clarify?
-
-Yes, `--test-bitmap` is just for internal testing; you should always get
-the same results.
-
--Peff
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index fd32895..66910aa 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -54,7 +54,7 @@ Options for Frontends
+ ~~~~~~~~~~~~~~~~~~~~~
+ 
+ --cat-blob-fd=<fd>::
+-	Write responses to `cat-blob` and `ls` queries to the
++	Write responses to `get-mark`, `cat-blob`, and `ls` queries to the
+ 	file descriptor <fd> instead of `stdout`.  Allows `progress`
+ 	output intended for the end-user to be separated from other
+ 	output.
+@@ -350,6 +350,11 @@ and control the current import process.  More detailed discussion
+ 	unless the `done` feature was requested using the
+ 	`--done` command-line option or `feature done` command.
+ 
++`get-mark`::
++	Causes fast-import to print the SHA-1 corresponding to a mark
++	to the file descriptor set with `--cat-blob-fd`, or `stdout` if
++	unspecified.
++
+ `cat-blob`::
+ 	Causes fast-import to print a blob in 'cat-file --batch'
+ 	format to the file descriptor set with `--cat-blob-fd` or
+@@ -930,6 +935,25 @@ Placing a `progress` command immediately after a `checkpoint` will
+ inform the reader when the `checkpoint` has been completed and it
+ can safely access the refs that fast-import updated.
+ 
++`get-mark`
++~~~~~~~~~~
++Causes fast-import to print the SHA-1 corresponding to a mark to
++stdout or to the file descriptor previously arranged with the
++`--cat-blob-fd` argument. The command otherwise has no impact on the
++current import; its purpose is to retrieve SHA-1s that later commits
++might want to refer to in their commit messages.
++
++....
++	'get-mark' SP ':' <idnum> LF
++....
++
++This command can be used anywhere in the stream that comments are
++accepted.  In particular, the `get-mark` command can be used in the
++middle of a commit but not in the middle of a `data` command.
++
++See ``Responses To Commands'' below for details about how to read
++this output safely.
++
+ `cat-blob`
+ ~~~~~~~~~~
+ Causes fast-import to print a blob to a file descriptor previously
+@@ -1000,7 +1024,8 @@ Output uses the same format as `git ls-tree <tree> -- <path>`:
+ ====
+ 
+ The <dataref> represents the blob, tree, or commit object at <path>
+-and can be used in later 'cat-blob', 'filemodify', or 'ls' commands.
++and can be used in later 'get-mark', 'cat-blob', 'filemodify', or
++'ls' commands.
+ 
+ If there is no file or subtree at that path, 'git fast-import' will
+ instead report
+@@ -1042,9 +1067,11 @@ import-marks-if-exists::
+ 	"feature import-marks-if-exists" like a corresponding
+ 	command-line option silently skips a nonexistent file.
+ 
++get-mark::
+ cat-blob::
+ ls::
+-	Require that the backend support the 'cat-blob' or 'ls' command.
++	Require that the backend support the 'get-mark', 'cat-blob',
++	or 'ls' command respectively.
+ 	Versions of fast-import not supporting the specified command
+ 	will exit with a message indicating so.
+ 	This lets the import error out early with a clear message,
+@@ -1124,11 +1151,11 @@ bidirectional pipes:
+ 	git fast-import >fast-import-output
+ ====
+ 
+-A frontend set up this way can use `progress`, `ls`, and `cat-blob`
+-commands to read information from the import in progress.
++A frontend set up this way can use `progress`, `get-mark`, `ls`, and
++`cat-blob` commands to read information from the import in progress.
+ 
+ To avoid deadlock, such frontends must completely consume any
+-pending output from `progress`, `ls`, and `cat-blob` before
++pending output from `progress`, `ls`, `get-mark`, and `cat-blob` before
+ performing writes to fast-import that might block.
+ 
+ Crash Reports
+diff --git a/fast-import.c b/fast-import.c
+index 6378726..1ba83d6 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -134,16 +134,17 @@ Format of STDIN stream:
+   ts    ::= # time since the epoch in seconds, ascii base10 notation;
+   tz    ::= # GIT style timezone;
+ 
+-     # note: comments, ls and cat requests may appear anywhere
+-     # in the input, except within a data command.  Any form
+-     # of the data command always escapes the related input
+-     # from comment processing.
++     # note: comments, get-mark, ls-tree, and cat-blob requests may
++     # appear anywhere in the input, except within a data command. Any
++     # form of the data command always escapes the related input from
++     # comment processing.
+      #
+      # In case it is not clear, the '#' that starts the comment
+      # must be the first character on that line (an lf
+      # preceded it).
+      #
+ 
++  get_mark ::= 'get-mark' sp idnum lf;
+   cat_blob ::= 'cat-blob' sp (hexsha1 | idnum) lf;
+   ls_tree  ::= 'ls' sp (hexsha1 | idnum) sp path_str lf;
+ 
+@@ -372,6 +373,7 @@ static volatile sig_atomic_t checkpoint_requested;
+ static int cat_blob_fd = STDOUT_FILENO;
+ 
+ static void parse_argv(void);
++static void parse_get_mark(const char *p);
+ static void parse_cat_blob(const char *p);
+ static void parse_ls(const char *p, struct branch *b);
+ 
+@@ -1907,6 +1909,10 @@ static int read_next_command(void)
+ 			rc->prev->next = rc;
+ 			cmd_tail = rc;
+ 		}
++		if (skip_prefix(command_buf.buf, "get-mark ", &p)) {
++			parse_get_mark(p);
++			continue;
++		}
+ 		if (skip_prefix(command_buf.buf, "cat-blob ", &p)) {
+ 			parse_cat_blob(p);
+ 			continue;
+@@ -2919,6 +2925,23 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
+ 		free(buf);
+ }
+ 
++static void parse_get_mark(const char *p)
++{
++	struct object_entry *oe = oe;
++	char output[42];
++
++	/* get-mark SP <object> LF */
++	if (*p != ':')
++		die("Not a mark: %s", p);
++
++	oe = find_mark(parse_mark_ref_eol(p));
++	if (!oe)
++		die("Unknown mark: %s", command_buf.buf);
++
++	snprintf(output, sizeof(output), "%s\n", sha1_to_hex(oe->idx.sha1));
++	cat_blob_write(output, 41);
++}
++
+ static void parse_cat_blob(const char *p)
+ {
+ 	struct object_entry *oe = oe;
+@@ -3240,6 +3263,8 @@ static int parse_one_feature(const char *feature, int from_stream)
+ 		option_import_marks(arg, from_stream, 1);
+ 	} else if (skip_prefix(feature, "export-marks=", &arg)) {
+ 		option_export_marks(arg);
++	} else if (!strcmp(feature, "get-mark")) {
++		; /* Don't die - this feature is supported */
+ 	} else if (!strcmp(feature, "cat-blob")) {
+ 		; /* Don't die - this feature is supported */
+ 	} else if (!strcmp(feature, "relative-marks")) {
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index aac126f..9984c48 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2339,6 +2339,19 @@ test_expect_success !MINGW 'R: in-stream cat-blob-fd not respected' '
+ 	test_cmp expect actual.1
+ '
+ 
++test_expect_success !MINGW 'R: print mark for new blob' '
++	echo "effluentish" | git hash-object --stdin >expect &&
++	git fast-import --cat-blob-fd=6 6>actual <<-\EOF &&
++	blob
++	mark :1
++	data <<BLOB_END
++	effluentish
++	BLOB_END
++	get-mark :1
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success !MINGW 'R: print new blob' '
+ 	blob=$(echo "yep yep yep" | git hash-object --stdin) &&
+ 	cat >expect <<-EOF &&
+-- 
+2.1.4
