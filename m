@@ -1,142 +1,97 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v4 28/44] builtin-am: pass git-apply's options to git-apply
-Date: Wed, 1 Jul 2015 10:01:35 -0700
-Message-ID: <CAGZ79kZt2dpNyw7AE6T_ox24tR7poAV3hm7rvfnn3kJ+LVR3UA@mail.gmail.com>
-References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
-	<1435500366-31700-29-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kbzwv8m47t5W+1djFEWGL_X1nHPf7FWcwcKAZ34oFszxg@mail.gmail.com>
-	<CACRoPnTeg08nJfMw6Lh6RUAOaKsSx30-=hhj2QD7_bPfKTHtTQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
+Date: Wed, 1 Jul 2015 13:13:16 -0400
+Message-ID: <CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
+References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
+	<xmqqr3orakex.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 19:01:46 2015
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 19:13:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZALOH-0002Bm-Ur
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 19:01:42 +0200
+	id 1ZALZa-0008DD-Tu
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 19:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751412AbbGARBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 13:01:37 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:35590 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750846AbbGARBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 13:01:35 -0400
-Received: by ykdy1 with SMTP id y1so44796370ykd.2
-        for <git@vger.kernel.org>; Wed, 01 Jul 2015 10:01:35 -0700 (PDT)
+	id S1751534AbbGARNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2015 13:13:19 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:36758 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750753AbbGARNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 13:13:17 -0400
+Received: by ykdr198 with SMTP id r198so44999673ykd.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2015 10:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ErlDmesx4geF7ZoE2JpGU4l34YEDvhJO2Cewosgd7NY=;
-        b=Fjd6bQWJNIQCLTPQgbfrUsD2EQdVHPQ+XY/eVg+tZaynfKDGwQL9UCJllLDOci71Fo
-         r8qSp1YUup6nSRavCSoVqMOcu49DBuD0ybNcZ2gPqrymrR4UMbzCPAw44mcskQvTyX60
-         0st8orslqOWUAaYL6Ol+zaQZxBWn9LFuIMoL6O0DpfPiZLHWUo57VMxFcF3qf7OCRrmQ
-         pR8WyarPZowFCV9C7CBThcT+smYFU0t8/6uImA/8ou+9UsWgNQtdaYHFFRuVd+LIgoZX
-         KI3ZdTjTdY289kx/arzDJQHrgTtPMcUqbAPN2GSOp5OKK70elE5EmQGqxkFRsAmR+Kvm
-         eBxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ErlDmesx4geF7ZoE2JpGU4l34YEDvhJO2Cewosgd7NY=;
-        b=SeEo+d3+g4UsmqX7N0WPOrL7YSn/B6KRR+KhR8j9RCkXjob67X5wFmeUQANKBrm1pu
-         /Di3hjssvgghZEtc8507ZipY4npTJa6UbvzU3BQ86al6rWA9vw28eyDfcaIu4dm7q4rS
-         QWxCwvrsGyVyp1zuaifp48j9NYBJ6kOQHMP7zxkIYWVq1B3cwlGTM6xN1ufXfCb21wK6
-         I0Y7E3A1DTh6Lw4fni7CBG5WpcS6Od6QqJUy6sYIRhuiisDoStuJ1vcvENjVUOGDtfzd
-         vC6sFnLBrjsox9tSWWGDEX/rGxbGKs9vijHMpFzpqPzUBPU0u0MTNuyIC8TY04b+RXDI
-         Q6Iw==
-X-Gm-Message-State: ALoCoQl5/avgrodFI7Gr4iG+EPWdGdA9X5yPmO3hPqYXxM5Lay5RnmAnvnk5XV6Bpz0omwr235/4
-X-Received: by 10.170.94.84 with SMTP id l81mr32942804yka.101.1435770095240;
- Wed, 01 Jul 2015 10:01:35 -0700 (PDT)
-Received: by 10.37.4.80 with HTTP; Wed, 1 Jul 2015 10:01:35 -0700 (PDT)
-In-Reply-To: <CACRoPnTeg08nJfMw6Lh6RUAOaKsSx30-=hhj2QD7_bPfKTHtTQ@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=N3YF7GL7U/kIlqamAo2AsJ4PAOKriPHg7Et/VTV9bwU=;
+        b=U3/ktk4TuawGAB2Aphr+riJQatBdxgmpTvsZhqgILEMO1VVlv6H7x2gz47mD1SZmxG
+         6O96imwXhb66BiZ/0ar8tT4UEienX49GP9ey7ge7IMNps6dtwZqqVIyLxPYmvneHBnL/
+         IcSr0nWZhnd7Z4aQ9Kp5aYoBS0dUgo1RE8n7u8EkrPk9qe0058V1jGxa8LDJEENkWHKY
+         mn4DvGSr/3tb/8quezJkTNtNMFaanwvtiXELsIyDnrMSh+nsNNqTkSfovE9reNjlr2RM
+         8bpo6/8UtBKewRa5H7eCq2HPQeXYGtODbS+QHpiCT8PTtaWBLS8Mb74WqJKu3p2BelPG
+         +DBQ==
+X-Received: by 10.13.207.1 with SMTP id r1mr33828949ywd.166.1435770796097;
+ Wed, 01 Jul 2015 10:13:16 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Wed, 1 Jul 2015 10:13:16 -0700 (PDT)
+In-Reply-To: <xmqqr3orakex.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: tIdkqmR8mL4vFzM8lGSQGIi-ER0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273165>
 
-On Wed, Jul 1, 2015 at 3:22 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> On Tue, Jun 30, 2015 at 7:56 AM, Stefan Beller <sbeller@google.com> wrote:
->> I realize this was in am.sh as well, but I find the help strings a bit
->> unfortunate.
->> (Yes, you actually need to look them up at another place as most people are
->> not familiar with the apply options).
+On Wed, Jul 1, 2015 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> From: Eric Sunshine <sunshine@sunshineco.com>
 >
-> Yeah I agree, it would be an improvement. I think the same can be said
-> for git-mailinfo's and git-mailsplit's options. e.g. "pass -k flag to
-> git-mailinfo" is not very descriptive either, so we should change
-> their help strings as well.
+> The command "git checkout --to <path>" is something of an anachronism,
+> encompassing functionality somewhere between "checkout" and "clone".
+> The introduction of the git-worktree command, however, provides a proper
+> and intuitive place to house such functionality. Consequently,
+> re-implement "git checkout --to" as "git worktree add".
 >
-> Since git-am combines most of the options from git-mailsplit,
-> git-mailinfo and git-apply together, I wonder if we should split their
-> options into different groups, e.g:
+> As a side-effect, linked worktree creation becomes much more
+> discoverable with its own dedicated command, whereas `--to` was easily
+> overlooked amid the plethora of options recognized by git-checkout.
 >
-> usage: git am [options] [(<mbox>|<Maildir>)...]
->    or: git am [options] (--continue | --skip | --abort)
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 >
->     -i, --interactive     run interactively
->     -3, --3way            allow fall back on 3way merging if needed
->     -q, --quiet           be quiet
->     -s, --signoff         add a Signed-off-by line to the commit message
->     --patch-format <format>
->                           format the patch(es) are in
->     --resolvemsg ...      override error message when patch failure occurs
->     --continue            continue applying patches after resolving a conflict
->     -r, --resolved        synonyms for --continue
->     --skip                skip the current patch
->     --abort               restore the original branch and abort the
-> patching operation.
->     --committer-date-is-author-date
->                           lie about committer date
->     --ignore-date         use current timestamp for author date
->     --rerere-autoupdate   update the index with reused conflict
-> resolution if possible
->     -S, --gpg-sign[=<key-id>]
->                           GPG-sign commits
->
-> options for git-mailsplit
->     --keep-cr             pass --keep-cr flag to git-mailsplit for mbox format
->     --no-keep-cr          do not pass --keep-cr flag to git-mailsplit
-> independent of am.keepcr
->
-> options for git-mailinfo
->     -u, --utf8            recode into utf8 (default)
->     -m, --message-id      pass -m flag to git-mailinfo
->     -c, --scissors        strip everything before a scissors line
->     -k, --keep            pass -k flag to git-mailinfo
->     --keep-non-patch      pass -b flag to git-mailinfo
->
-> options for git-apply
->     --whitespace <action>
->                           detect new or modified lines that have
-> whitespace errors
->     --ignore-space-change
->                           ignore changes in whitespace when finding context
->     --ignore-whitespace   ignore changes in whitespace when finding context
->     --directory <root>    prepend <root> to all filenames
->     --exclude <path>      don't apply changes matching the given path
->     --include <path>      apply changes matching the given path
->     -C <n>                ensure at least <n> lines of context match
->     -p <num>              remove <num> leading slashes from
-> traditional diff paths
->     --reject              leave the rejected hunks in corresponding *.rej files
->
-> We may wish to put these changes in their own preparatory patch series though.
->
-> What do you think?
+>  * Duy seems to think "worktree add" is coming, too, so here is a
+>    trivial tweak of your patch from the last month, with test
+>    adjustments to 7410 I sent earlier squashed in.
 
-I think this is an improvement!
-But as you said, we should do it as an additional patch on top of the series.
+Thanks. I was planning on re-rolling to use the new name ("add" rather
+than "new") and to squash in the t7410 fix. Plus, I think the changes
+I had to make to prepare_linked_checkout() in order to move it to
+worktree.c should become separate preparatory patches so that the
+actual relocation can become pure code movement (as much as possible).
 
-Thanks,
-Stefan
+Also, I was planning on including Duy's patch in the re-roll since it
+missed a s/prune --worktrees/worktree prune/ in
+Documentation/git-checkout.txt.
 
->
-> Regards,
-> Paul
+>    I noticed GIT_CHECKOUT_NEW_WORKTREE environment variabl that does
+>    not seem to be documented.  Is this something we still need?
+>    The log message of 529fef20 (checkout: support checking out into
+>    a new working directory, 2014-11-30) does not tell us much.
+
+Yes, it's still used for the same purpose as before the conversion: as
+a private signal to the sub git-checkout invocation that it's
+operating on a new worktree. When defined, it sets the
+'new_worktree_mode' flag in checkout.c, and there are still a few bits
+of code which apparently need to know about it. It would be nice to
+eliminate this special knowledge from checkout.c, however, I'm not yet
+familiar enough with the checkout code to determine if doing so is
+viable.
+
+For the re-roll, I was planning on renaming it to
+GIT_NEW_WORKTREE_MODE or something (or add a private command-line
+option to checkout, but that may be overkill).
