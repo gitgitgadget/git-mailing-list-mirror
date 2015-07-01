@@ -1,78 +1,72 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v4 01/44] wrapper: implement xopen()
-Date: Wed, 1 Jul 2015 14:04:13 +0800
-Message-ID: <CACRoPnRN0ET17USKVFFJHc_y1jK1xdmgc0r-omaUy_+Qgg=ffg@mail.gmail.com>
-References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
-	<1435500366-31700-2-git-send-email-pyokagan@gmail.com>
-	<5590CE10.3020104@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jul 01 08:04:21 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 00/13] "rerere" minor clean-up
+Date: Tue, 30 Jun 2015 23:04:46 -0700
+Message-ID: <1435730699-9124-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 01 08:05:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAB87-0003fE-CU
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 08:04:21 +0200
+	id 1ZAB8v-00048W-IO
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 08:05:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765AbbGAGEQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2015 02:04:16 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:33893 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750936AbbGAGEO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jul 2015 02:04:14 -0400
-Received: by lbnk3 with SMTP id k3so6335653lbn.1
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 23:04:13 -0700 (PDT)
+	id S1750936AbbGAGFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2015 02:05:03 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:33422 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750869AbbGAGFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 02:05:01 -0400
+Received: by igcur8 with SMTP id ur8so82890657igc.0
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 23:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=cfHxEPHq1XRChh8P4Ccf5RalTI14Z4N5ycuYzeIDt0E=;
-        b=Ff4qOrXkHUP2bNPZW9zxVxn1ZS177t3X1jVtHJsZtuTMmMW1rlUijdKIR2mkmH9rMZ
-         9DgwfkL+RRGy/WJr+A2syl45rbPzy11/pq/hYyk15gu5Aj4q9VYtm/LV+nvYmJocvn+M
-         IKxI1+r0Z1NB3Xo0LBwzJHUY4KzGF0OYk7rShndnxDZHK+GW5OcjM2UFoQ8PGhF0qxC4
-         VnVO/mxtwro24HHOITheK/HToGqdJyDnMLKSs740GvAalv9vnrvq6b6W1hISB8E8jcAk
-         p80/4KmwKpKIcfEVM7+x2dWuvCpicFMx9G0jQ0QJlByWj5hYcN1X8AtJYov6c6Cr7SK+
-         aUiw==
-X-Received: by 10.152.164.193 with SMTP id ys1mr23324554lab.65.1435730653262;
- Tue, 30 Jun 2015 23:04:13 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Tue, 30 Jun 2015 23:04:13 -0700 (PDT)
-In-Reply-To: <5590CE10.3020104@web.de>
+        h=sender:from:to:subject:date:message-id;
+        bh=kqFTmZ7SSWpdvgDR6jd1XQ9EBBfo37V+qFVLnZI32yg=;
+        b=XAfvpwK9IxbxezqF5qB5nQ1X0t1gzbsrb/uwMISEdLby2NiE6b3HnxsnJ1zP2SLjMx
+         RMP7O0GFRtEZXhVv5Eewp67fGx2SVGEO72wZbRrcDMZImvB77G6XD807a6eOPbNUfBbz
+         /Ameyj7IFG+OiBB2jR5YZlVA/jdeCIN8AKV0FJtKpjbH/2THlPKZ+yJwvI9gcEdKnHLA
+         iliSpAtzpHD3Ck+UyaG+qDJOtC+BL/Ji68zgh6dyBpvOIn5mmRZJcWYAu1Kj8hco1BQ2
+         ihVzqkzj/hTCMFH3Czmvxvct0i6QtDf3nWv1T8PyOCjOwmqlVx6hb/R4WrBXnphVtf74
+         Tilw==
+X-Received: by 10.107.31.134 with SMTP id f128mr36294424iof.19.1435730700769;
+        Tue, 30 Jun 2015 23:05:00 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:502c:1da0:e16d:2d77])
+        by mx.google.com with ESMTPSA id j4sm635289igo.0.2015.06.30.23.05.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Jun 2015 23:05:00 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0-rc0-209-g5e1f148
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273117>
 
-On Mon, Jun 29, 2015 at 12:48 PM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
-> - Having xopen() with 2 or 3 parameter is good, but the current may n=
-eed
-> some tweaks for better portability:
->
-> int xopen(const char *path, int oflag, ...)
-> {
->         mode_t mode =3D 0;
->         if (oflag & O_CREAT) {
->                 va_list ap;
->                 va_start(ap, oflag);
->                 mode =3D va_arg(ap, int);
->                 va_end(ap);
->
->             }
->
-> See e.g.
-> <http://blitiri.com.ar/git/r/libfiu/c/37f6a98110e3bb59bbb4971241baa3a=
-385c3f724/>
-> why va_arg(ap, int) should be used:
+Here is an collection of various minor clean-ups in the
+implementation of one of my most favourite feature, rerere.
 
-Ah OK. I've learned about yet another dark corner of C :-).
+This still hasn't reached the step to make the right refactoring to
+allow me to fix a bug I wanted to fix, which prompted me to look at
+this code, but it should give me a good starting point.
 
-Thanks,
-Paul
+Junio C Hamano (13):
+  rerere: fix an off-by-one non-bug
+  rerere: plug conflict ID leaks
+  rerere: lift PATH_MAX limitation
+  rerere: write out each record of MERGE_RR in one go
+  rerere: report autoupdated paths only after actually updating them
+  rerere: drop want_sp parameter from is_cmarker()
+  rerere: stop looping unnecessarily
+  rerere: explain the rerere I/O abstraction
+  rerere: explain MERGE_RR management helpers
+  rerere: explain the primary codepath
+  rerere: explain "rerere forget" codepath
+  rerere: explain the remainder
+  rerere: refactor "replay" part of do_plain_rerere()
+
+ rerere.c | 389 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 293 insertions(+), 96 deletions(-)
+
+-- 
+2.5.0-rc0-209-g5e1f148
