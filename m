@@ -1,94 +1,101 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/7] pack-protocol.txt: Mark LF in command-list as optional
-Date: Wed, 1 Jul 2015 11:21:10 -0700
-Message-ID: <CAGZ79kY-T8k7GjCUxKh5p_bf_t1+M8jRoBPDFp0hpExYmE8y=g@mail.gmail.com>
-References: <1435774099-21260-1-git-send-email-dborowitz@google.com>
-	<1435774099-21260-3-git-send-email-dborowitz@google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] rev-list: disable --use-bitmap-index when pruning commits
+Date: Wed, 1 Jul 2015 14:42:17 -0400
+Message-ID: <20150701184217.GA8079@peff.net>
+References: <1435742651-15053-1-git-send-email-lawrencesiebert@gmail.com>
+ <xmqqd20bc3cj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 20:21:18 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Lawrence Siebert <lawrencesiebert@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 20:42:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAMdI-00027G-NQ
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 20:21:17 +0200
+	id 1ZAMy7-0004Ls-SW
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 20:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbbGASVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 14:21:13 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:35106 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbbGASVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 14:21:11 -0400
-Received: by ykdy1 with SMTP id y1so46804495ykd.2
-        for <git@vger.kernel.org>; Wed, 01 Jul 2015 11:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=z+H1IQvNui1TNFQpJzNkMQW+uYlWrFBip1Tm+tJU81A=;
-        b=BPMYjZHzjeAeq2AjRm3J6IJhCIgKvxxl5ze8c8FPCXJFeNRQvqu4kBBSjycAtN23M0
-         YB56E0Y/at0yMrm6rqQFqUg3UK9wfrBKPPccemgSBBcE1w48U0Zb6Ax0vwu3kqs1FPMD
-         jzMWCBkIW/aDyE5i7yzpl+Vto3zz2pGtvfVEDhzSYbjrF+uRHs9ekhYksT+++iIyT1He
-         M5/ubdSuRNmdjM1ndKJ4gsAGMO8agzVNtrQmThM6BTQxszxK+4yTdpfKq2foFQ37W03K
-         INYFtxRw5OwO/InCFgYMctBbWJa7QIeMa+1xYEG+9/jjwb3kkUDf8kC7dsayQuVL+8d9
-         LRog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=z+H1IQvNui1TNFQpJzNkMQW+uYlWrFBip1Tm+tJU81A=;
-        b=KbgR0s++9knhML8Yx2zKMaLMOF8ZKL7N1gfTC++jIYDlK41A0iTo0y4TTEaIUsgx2t
-         q84JOw9D413lHfieptHjC1JazJQ1TA3jwl/u09+At2ItyjOFhh5EGnyFPESaAFX4ucrq
-         qGIBU5OBQRNCJDh+IJi7Q5QXA5by15jXSnV0/f7viiskFFKHQH2qtXa2YgYFZ5zfQV5w
-         mLZn3U9Z5KgjldsfUvMUMqxZiacxXBd6HmK7X65F1lYRahFzBInr/as7jIY9HpH5f4jk
-         BoCgQa9tOuwInI+85G+VI15c/DHeLVhOz1ug4FuDlcyi0rtFZ3EyCIy3BsPz4ir4BzFk
-         39rg==
-X-Gm-Message-State: ALoCoQkXzlTI9sY1Ly3upRQo64kM4Alyumhqo1f6fqrctalr/yxIafgPFT+x76N3vnq0oAmE+Td5
-X-Received: by 10.13.213.212 with SMTP id x203mr34049400ywd.174.1435774870453;
- Wed, 01 Jul 2015 11:21:10 -0700 (PDT)
-Received: by 10.37.4.80 with HTTP; Wed, 1 Jul 2015 11:21:10 -0700 (PDT)
-In-Reply-To: <1435774099-21260-3-git-send-email-dborowitz@google.com>
+	id S1754279AbbGASmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2015 14:42:42 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54422 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753786AbbGASmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 14:42:20 -0400
+Received: (qmail 13415 invoked by uid 102); 1 Jul 2015 18:42:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jul 2015 13:42:20 -0500
+Received: (qmail 27261 invoked by uid 107); 1 Jul 2015 18:42:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jul 2015 14:42:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Jul 2015 14:42:17 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqd20bc3cj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273178>
 
-On Wed, Jul 1, 2015 at 11:08 AM, Dave Borowitz <dborowitz@google.com> wrote:
-> Signed-off-by: Dave Borowitz <dborowitz@google.com>
-> ---
->  Documentation/technical/pack-protocol.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-> index 66d2d95..1386840 100644
-> --- a/Documentation/technical/pack-protocol.txt
-> +++ b/Documentation/technical/pack-protocol.txt
-> @@ -481,7 +481,7 @@ references.
->    shallow           =  PKT-LINE("shallow" SP obj-id LF)
->
->    command-list      =  PKT-LINE(command NUL capability-list LF)
+On Wed, Jul 01, 2015 at 08:19:40AM -0700, Junio C Hamano wrote:
 
-We may also want to mark it in this line above as well as in the shallow line?
+> Sounds good.  While at it, perhaps add a mention (perhaps by
+> creating a BUGS section at the end of the file) that --count
+> with --use-bitmap-index ignores pathspec silently?
 
-I think the problem with this part of the documentation is its ambiguity on
-what exactly we want to document. The sender SHOULD put an LF, while
-the receiver MUST NOT assume the LF is there always, so I guess it's best
-to mark it optional from a receivers point of view.
+I think we can just fix it rather than documenting the problem. :)
 
-> -                      *PKT-LINE(command LF)
-> +                      *PKT-LINE(command LF?)
->                        flush-pkt
->
->    command           =  create / delete / update
-> --
-> 2.4.3.573.g4eafbef
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- >8 --
+Subject: rev-list: disable --use-bitmap-index when pruning commits
+
+The reachability bitmaps do not have enough information to
+tell us which commits might have changed path "foo", so the
+current code produces wrong answers for:
+
+  git rev-list --use-bitmap-index --count HEAD -- foo
+
+(it silently ignores the "foo" limiter). Instead, we should
+fall back to doing a normal traversal (it is OK to fall
+back rather than complain, because --use-bitmap-index is a
+pure optimization, and might not kick in for other reasons,
+such as there being no bitmaps in the repository).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/rev-list.c      | 2 +-
+ t/t5310-pack-bitmaps.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ff84a82..88eddbd 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -355,7 +355,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (bisect_list)
+ 		revs.limited = 1;
+ 
+-	if (use_bitmap_index) {
++	if (use_bitmap_index && !revs.prune) {
+ 		if (revs.count && !revs.left_right && !revs.cherry_mark) {
+ 			uint32_t commit_count;
+ 			if (!prepare_bitmap_walk(&revs)) {
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 6003490..d446706 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -53,6 +53,12 @@ rev_list_tests() {
+ 		test_cmp expect actual
+ 	'
+ 
++	test_expect_success "counting commits with limiting ($state)" '
++		git rev-list --count HEAD -- 1.t >expect &&
++		git rev-list --use-bitmap-index --count HEAD -- 1.t >actual &&
++		test_cmp expect actual
++	'
++
+ 	test_expect_success "enumerate --objects ($state)" '
+ 		git rev-list --objects --use-bitmap-index HEAD >tmp &&
+ 		cut -d" " -f1 <tmp >tmp2 &&
+-- 
+2.5.0.rc0.336.g8460790
