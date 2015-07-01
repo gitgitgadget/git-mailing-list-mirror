@@ -1,69 +1,64 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Wed, 1 Jul 2015 13:16:33 -0400
-Message-ID: <CAPig+cR67ngGVSA_gSB2ydRJHT5ihf7nJzxmHKSzzQ94BMPAig@mail.gmail.com>
+Date: Wed, 01 Jul 2015 10:32:07 -0700
+Message-ID: <xmqqk2ujainc.fsf@gitster.dls.corp.google.com>
 References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
 	<xmqqr3orakex.fsf@gitster.dls.corp.google.com>
 	<CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 19:16:40 2015
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 19:34:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZALcl-0001bu-57
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 19:16:39 +0200
+	id 1ZALu7-0003zY-Em
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 19:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbbGARQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 13:16:34 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:35125 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750846AbbGARQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 13:16:34 -0400
-Received: by ykdy1 with SMTP id y1so45203102ykd.2
-        for <git@vger.kernel.org>; Wed, 01 Jul 2015 10:16:33 -0700 (PDT)
+	id S1752974AbbGARe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2015 13:34:29 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:33734 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752590AbbGAReX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 13:34:23 -0400
+Received: by igcur8 with SMTP id ur8so97517852igc.0
+        for <git@vger.kernel.org>; Wed, 01 Jul 2015 10:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=hOj0izNi2LZdLJ1KnHe0Vm498zTW5J/Hr95M2nr7NqU=;
-        b=RiAhVjXcXbv01q8z+AymAu7MaInRA3MrKXnlzs0Vc64GtTVIxlfNWHYEFCv3DhmiKh
-         /FJNz/hP9euRPB2VRGf6GRTlfW5hJufBnCr/9iJC1NM75iwIRJ3ikei5Xp8TKdYOR2iZ
-         Y8pgC/0PV4Ikoyxbf5o9MGpxb9Nu6Dh/8oI6O/vCXO/k4b3OClCp4Y0MVOIc1++zcej6
-         5UNxml35WvzQjrr7LNmCtW+WamtUr+7QtLQyJAFHv+AOIsKn9Cy60zsUYBWfcl/3D3Nu
-         p3yLy7+sNnhPUEb5ChjLgxHpTzbdrlLcJZCSJvBmCP0TP0D3OdiQkpVyMxUeR+g5Xr4h
-         g2CQ==
-X-Received: by 10.170.63.196 with SMTP id f187mr33378364ykf.82.1435770993449;
- Wed, 01 Jul 2015 10:16:33 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Wed, 1 Jul 2015 10:16:33 -0700 (PDT)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=ni3PxTYLVQjIuRiwq1d7YcyGKI0WHMw9wjgKTGwS2+M=;
+        b=yRNrr/Skz66B5Pxxdmoppnq+CoLVnAyxBhY53RF3Cup5PXu7aSUzgvh716QJOVYAjj
+         GY8lgOzIbUyUn5HVnL0D6pN5LomM8BVlzb/Z+hDY1oeeU3bVD+ZvfWKCdkpEsJ4fNiHS
+         UDsfMixEt5+271VejDRJy78MZAoOLWa58DShNCYQ1OXZeuyYE3sby4NmoZMC0ZYoxcFu
+         ldAnCNSp/lwayNIjjE+UxRvtgHckQkOY5K74og8O+a5aJlZgcbF3jj2+6VR5zCdaqdfa
+         wHcCgcIbk++I9kRy4BoSR3JA6HSQQTX58D7ep+H+OCt0u1AvIVGRBrxfi+pK5BGfZQYh
+         fK9Q==
+X-Received: by 10.107.138.87 with SMTP id m84mr37305493iod.80.1435772057290;
+        Wed, 01 Jul 2015 10:34:17 -0700 (PDT)
+Received: from localhost ([172.25.228.236])
+        by smtp.gmail.com with ESMTPSA id h2sm2714523igv.2.2015.07.01.10.34.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 01 Jul 2015 10:34:16 -0700 (PDT)
 In-Reply-To: <CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
-X-Google-Sender-Auth: QAgRRyvRqNrukJaHC7khlwJMqHU
+	(Eric Sunshine's message of "Wed, 1 Jul 2015 13:13:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273167>
 
-On Wed, Jul 1, 2015 at 1:13 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Jul 1, 2015 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> From: Eric Sunshine <sunshine@sunshineco.com>
->>
->> The command "git checkout --to <path>" is something of an anachronism,
->> encompassing functionality somewhere between "checkout" and "clone".
->> The introduction of the git-worktree command, however, provides a proper
->> and intuitive place to house such functionality. Consequently,
->> re-implement "git checkout --to" as "git worktree add".
->> ---
->>
->>  * Duy seems to think "worktree add" is coming, too, so here is a
->>    trivial tweak of your patch from the last month, with test
->>    adjustments to 7410 I sent earlier squashed in.
->
-> Thanks. I was planning on re-rolling...
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I forgot to mention that the subject needs a slight update: "worktree
-add" rather than "worktree new".
+> Thanks. I was planning on re-rolling to use the new name ...
+> ...
+> For the re-roll, I was planning on renaming it to
+> GIT_NEW_WORKTREE_MODE or something (or add a private command-line
+> option to checkout, but that may be overkill).
+
+OK, thanks, then I'll stop worrying about this and instead will wait
+an update from you ;-)
