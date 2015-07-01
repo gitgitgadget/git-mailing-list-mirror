@@ -1,89 +1,78 @@
-From: Mikael Magnusson <mikachu@gmail.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Wed, 1 Jul 2015 06:48:14 +0200
-Message-ID: <CAHYJk3QFpaiCvYfZixtKac6nfrYOWrrewy=sLCVe123GTe+zBw@mail.gmail.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
-	<CAPig+cT0a201MVTsvvLrndr40GsMkyvtao33Gt=AFhvShtr=Kg@mail.gmail.com>
-	<xmqqtwtobzn0.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 01/44] wrapper: implement xopen()
+Date: Wed, 1 Jul 2015 14:04:13 +0800
+Message-ID: <CACRoPnRN0ET17USKVFFJHc_y1jK1xdmgc0r-omaUy_+Qgg=ffg@mail.gmail.com>
+References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
+	<1435500366-31700-2-git-send-email-pyokagan@gmail.com>
+	<5590CE10.3020104@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 06:48:24 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 01 08:04:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZA9wb-0001vf-6c
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 06:48:22 +0200
+	id 1ZAB87-0003fE-CU
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 08:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750949AbbGAEsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 00:48:17 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:33462 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751119AbbGAEsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 00:48:14 -0400
-Received: by ieqy10 with SMTP id y10so27057238ieq.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2015 21:48:14 -0700 (PDT)
+	id S1750765AbbGAGEQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2015 02:04:16 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:33893 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750936AbbGAGEO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jul 2015 02:04:14 -0400
+Received: by lbnk3 with SMTP id k3so6335653lbn.1
+        for <git@vger.kernel.org>; Tue, 30 Jun 2015 23:04:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4/Qrb7pGf/3wK9ASytsgRxVtxH/sZFzXO4n93dpmsSM=;
-        b=aIlkc1PLvWnN+0uky6AdS8VmHuXjpgJjC/6u8TfVX5bgtRCpn53KgWuOxpdIbWGr5C
-         U4xnP2gT0Is5Jmzy/NelYMCbj1SmvoFgFEkjLgQkMrVPulo/pm52btwLRQX64zipjHj6
-         dgRZMZ1Mw0l9n37mfxtCjSJDUtiUef4V+2gIhFIxi2wWuARCZTTs7tJ6xwjitzAlIgwP
-         QdCD9Vf74DdATV4+XQZSIZf0w1VHV+GHcPNHKUen8TlmGg/3gI9l5ox6afLwLvgftdBk
-         6k7vPqoekAfuC74QhcGHWspHaHbfguavRQYHZgqF+oDO5+dCk+sSwQVhVOruSL/n4p5j
-         SWUg==
-X-Received: by 10.50.43.196 with SMTP id y4mr1967498igl.14.1435726094500; Tue,
- 30 Jun 2015 21:48:14 -0700 (PDT)
-Received: by 10.36.93.134 with HTTP; Tue, 30 Jun 2015 21:48:14 -0700 (PDT)
-In-Reply-To: <xmqqtwtobzn0.fsf@gitster.dls.corp.google.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=cfHxEPHq1XRChh8P4Ccf5RalTI14Z4N5ycuYzeIDt0E=;
+        b=Ff4qOrXkHUP2bNPZW9zxVxn1ZS177t3X1jVtHJsZtuTMmMW1rlUijdKIR2mkmH9rMZ
+         9DgwfkL+RRGy/WJr+A2syl45rbPzy11/pq/hYyk15gu5Aj4q9VYtm/LV+nvYmJocvn+M
+         IKxI1+r0Z1NB3Xo0LBwzJHUY4KzGF0OYk7rShndnxDZHK+GW5OcjM2UFoQ8PGhF0qxC4
+         VnVO/mxtwro24HHOITheK/HToGqdJyDnMLKSs740GvAalv9vnrvq6b6W1hISB8E8jcAk
+         p80/4KmwKpKIcfEVM7+x2dWuvCpicFMx9G0jQ0QJlByWj5hYcN1X8AtJYov6c6Cr7SK+
+         aUiw==
+X-Received: by 10.152.164.193 with SMTP id ys1mr23324554lab.65.1435730653262;
+ Tue, 30 Jun 2015 23:04:13 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 30 Jun 2015 23:04:13 -0700 (PDT)
+In-Reply-To: <5590CE10.3020104@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273116>
 
-On Wed, Jul 1, 2015 at 12:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Jun 29, 2015 at 12:48 PM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+> - Having xopen() with 2 or 3 parameter is good, but the current may n=
+eed
+> some tweaks for better portability:
 >
->> On Tue, Jun 30, 2015 at 12:56 AM, Eric Sunshine <sunshine@sunshineco.com> wrote
->> Speaking of "git worktree new --force", should we revisit "git
->> checkout --ignore-other-worktrees" before it gets set in stone? In
->> particular, I'm wondering if it makes sense to overload git-checkout's
->> existing --force option to encompass the functionality of
->> --ignore-other-worktrees as well. I don't think there would be any
->> semantic conflict by overloading --force, and I do think that --force
->> is more discoverable and more intuitive.
+> int xopen(const char *path, int oflag, ...)
+> {
+>         mode_t mode =3D 0;
+>         if (oflag & O_CREAT) {
+>                 va_list ap;
+>                 va_start(ap, oflag);
+>                 mode =3D va_arg(ap, int);
+>                 va_end(ap);
 >
-> "git checkout -f" is to throw-away local changes, which is a very
-> sensible thing to do and I can see why that would be useful, but
-> does --ignore-other-worktrees have the same kind of common-ness?
+>             }
 >
-> It primarily is a safety measure, and if the user wants to jump
-> around freely to different commits in multiple worktrees, a more
-> sensible thing to do so without getting the "nono, you have that
-> branch checked out elsewhere" is to detach HEADs in the non-primary
-> worktrees that may want to have the same commit checked out as the
-> current branch of the primary worktree.
->
-> I would mildly object to make --ignore-other-worktrees more
-> discoverable and moderately object to make that feature more
-> accessible by overloading it into "--force".  I personally would not
-> mind if we removed "--ignore-other-worktrees", but that might be
-> going too far ;-)
+> See e.g.
+> <http://blitiri.com.ar/git/r/libfiu/c/37f6a98110e3bb59bbb4971241baa3a=
+385c3f724/>
+> why va_arg(ap, int) should be used:
 
-This probably falls under "not common", but one of my uses for git
-new-workdir is to check out the current branch in another directory,
-rebase it to upstream, delete that worktree, and then git reset --hard
-in the original checkout. The result is a rebased branch that touches
-a minimum of source files so the rebuild is faster. (In some projects
-I have a lot of local commits that get rebased, but maybe upstream
-only touched a single .c file).
+Ah OK. I've learned about yet another dark corner of C :-).
 
--- 
-Mikael Magnusson
+Thanks,
+Paul
