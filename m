@@ -1,64 +1,62 @@
-From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: [PATCH v7 07/10] send-email: reduce dependencies impact on
- parse_address_line
-Date: Wed, 1 Jul 2015 09:51:52 +0200 (CEST)
-Message-ID: <950442683.78443.1435737112063.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1435666611-18429-1-git-send-email-Matthieu.Moy@imag.fr> <1435666611-18429-8-git-send-email-Matthieu.Moy@imag.fr> <xmqqfv59ca4b.fsf@gitster.dls.corp.google.com> <vpqoajx2dka.fsf@anie.imag.fr>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 31/44] builtin-am: implement -S/--gpg-sign, commit.gpgsign
+Date: Wed, 1 Jul 2015 16:01:32 +0800
+Message-ID: <CACRoPnQBhCObCaksfpmN9zcDxp676SkxEJqjcaKi1B3JRMeXVw@mail.gmail.com>
+References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
+	<1435500366-31700-32-git-send-email-pyokagan@gmail.com>
+	<CAGZ79kZSNXRfgngA6QsVwYiM=4nqk9rkuHxMOD-sPcaHKOPSkQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	antoine delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 01 09:49:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 10:01:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAClj-0006ka-CC
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 09:49:19 +0200
+	id 1ZACxe-0003oY-Mg
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 10:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886AbbGAHtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2015 03:49:15 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:36533 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752786AbbGAHtN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jul 2015 03:49:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 416258EBE;
-	Wed,  1 Jul 2015 09:49:11 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4oR8XeswhXvR; Wed,  1 Jul 2015 09:49:11 +0200 (CEST)
-Received: from zm-int-mbx4.grenet.fr (zm-int-mbx4.grenet.fr [130.190.242.143])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2FF9E84AB;
-	Wed,  1 Jul 2015 09:49:11 +0200 (CEST)
-In-Reply-To: <vpqoajx2dka.fsf@anie.imag.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Win)/8.0.9_GA_6191)
-Thread-Topic: send-email: reduce dependencies impact on parse_address_line
-Thread-Index: YvID0Jsds+TD3HsHPPQ7AhdZ3zTkJA==
+	id S1753047AbbGAIBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2015 04:01:35 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:34198 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753071AbbGAIBd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 04:01:33 -0400
+Received: by lbnk3 with SMTP id k3so7847666lbn.1
+        for <git@vger.kernel.org>; Wed, 01 Jul 2015 01:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PQHMoZMb+mTW2arxAshkYZhLjplbFM7yYDNw8ElCJpM=;
+        b=qBOHjMrbAA3UUKANlpPUkFi565GiBMr7ZEG8AuVE/SoVJDuvSklp1xg1OcpiMfXrWD
+         rPKyxTEKB2GCHjJfIFN5cRV5qbLragm/Xy8d7TplwVeunFpwDcMgwp335rI//vprRNaY
+         xZ/LbG13Z2vvSsTvZEA9nftjjLaWhHDvas3esL8ROab9hUEb2cSYEdT1tJe7PQjKTKlV
+         uuo6zYFHGR3Is+bC0K6ykIM9T8lcS6eyWGrsU3itSQNpe1wRNWdokGP51i1Hil6IYbLo
+         U3nwQrLvgfE6Kvc2nW7r+pFnXpD05L7c8mtYgH8rXVQKt745lGUA5frbX1mSIrGdUiiI
+         X0pA==
+X-Received: by 10.112.221.172 with SMTP id qf12mr12644814lbc.98.1435737692306;
+ Wed, 01 Jul 2015 01:01:32 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Wed, 1 Jul 2015 01:01:32 -0700 (PDT)
+In-Reply-To: <CAGZ79kZSNXRfgngA6QsVwYiM=4nqk9rkuHxMOD-sPcaHKOPSkQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273136>
 
-> I'd vote for keeping it simple and not having the copyright notice. Most
-> t/*.sh do not have one. The Git history + mailing-list archives are much
-> better than in-code comments to keep track of who wrote what.
+On Tue, Jun 30, 2015 at 7:51 AM, Stefan Beller <sbeller@google.com> wrote:
+> I needed to read this patch a few times as this patch introduces `sign_commit`
+> twice. This is mostly a review problem I'd guess as in the code it
+> just affects this
+> method and you'd see all the code of the method easily compared to hunks sent
+> via email. But renaming this variable doesn't hurt.
 
-> Remi: any objection on removing it?
+OK. What variable name do you want? Would "gpgsign" (to match
+commit.gpgsign) do?
 
-Sorry for not having resent the patches myself, I currently have no
-Internet access, neither at work nor at home... Here's a try on my
-phone:
-I though the copyright line was necessary, but I did not know what
-to write after, and I forgot to ask, so I'm really happy with simply
-removing it. :)
-
-Thanks!
+Regards,
+Paul
