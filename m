@@ -1,8 +1,9 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v6 1/4] status: factor two rebase-related messages together
-Date: Wed,  1 Jul 2015 23:08:33 +0200
-Message-ID: <1435784916-15456-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v6 2/4] status: differentiate interactive from non-interactive rebases
+Date: Wed,  1 Jul 2015 23:08:34 +0200
+Message-ID: <1435784916-15456-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <vpqk2ujoadw.fsf@anie.imag.fr>
+ <1435784916-15456-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,45 +13,45 @@ Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
 	antoine.delaite@ensimag.grenoble-inp.fr,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 01 23:08:54 2015
+X-From: git-owner@vger.kernel.org Wed Jul 01 23:09:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAPFV-0004Gj-TZ
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 23:08:54 +0200
+	id 1ZAPFb-0004KC-MR
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jul 2015 23:09:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753065AbbGAVIt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2015 17:08:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42059 "EHLO rominette.imag.fr"
+	id S1751932AbbGAVIz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2015 17:08:55 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42063 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752059AbbGAVIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2015 17:08:48 -0400
+	id S1753418AbbGAVIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2015 17:08:52 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L8eRZ001951
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L8fOu001958
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 1 Jul 2015 23:08:40 +0200
+	Wed, 1 Jul 2015 23:08:41 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L8hAt025569;
-	Wed, 1 Jul 2015 23:08:43 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t61L8ia3025572;
+	Wed, 1 Jul 2015 23:08:44 +0200
 Received: from moy by anie.imag.fr with local (Exim 4.80)
 	(envelope-from <moy@imag.fr>)
-	id 1ZAPFL-0004cS-74; Wed, 01 Jul 2015 23:08:43 +0200
+	id 1ZAPFM-0004d7-FV; Wed, 01 Jul 2015 23:08:44 +0200
 X-Mailer: git-send-email 2.5.0.rc0.7.ge1edd74.dirty
-In-Reply-To: <vpqk2ujoadw.fsf@anie.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 01 Jul 2015 23:08:40 +0200 (CEST)
+In-Reply-To: <1435784916-15456-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 01 Jul 2015 23:08:42 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t61L8eRZ001951
+X-MailScanner-ID: t61L8fOu001958
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1436389721.04244@UGTRL+KHPmS7V+yhjXXASA
+MailScanner-NULL-Check: 1436389726.04823@MgFgzkpHtiXeL3vKjgyevw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273201>
 
 =46rom: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-inp.fr>
 
@@ -61,70 +62,192 @@ Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
 No modification.
 
- wt-status.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ t/t7512-status-help.sh | 28 ++++++++++++++--------------
+ wt-status.c            |  5 ++++-
+ 2 files changed, 18 insertions(+), 15 deletions(-)
 
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 68ad2d7..190656d 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -136,7 +136,7 @@ test_expect_success 'status during rebase -i when c=
+onflicts unresolved' '
+ 	ONTO=3D$(git rev-parse --short rebase_i_conflicts) &&
+ 	test_must_fail git rebase -i rebase_i_conflicts &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on=
+ '\''$ONTO'\''.
+   (fix conflicts and then run "git rebase --continue")
+   (use "git rebase --skip" to skip this patch)
+@@ -162,7 +162,7 @@ test_expect_success 'status during rebase -i after =
+resolving conflicts' '
+ 	test_must_fail git rebase -i rebase_i_conflicts &&
+ 	git add main.txt &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on=
+ '\''$ONTO'\''.
+   (all conflicts fixed: run "git rebase --continue")
+=20
+@@ -190,7 +190,7 @@ test_expect_success 'status when rebasing -i in edi=
+t mode' '
+ 	ONTO=3D$(git rev-parse --short HEAD~2) &&
+ 	git rebase -i HEAD~2 &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''rebase_i_=
+edit'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -216,7 +216,7 @@ test_expect_success 'status when splitting a commit=
+' '
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently splitting a commit while rebasing branch '\''split_c=
+ommit'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -247,7 +247,7 @@ test_expect_success 'status after editing the last =
+commit with --amend during a
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''amend_las=
+t'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -277,7 +277,7 @@ test_expect_success 'status: (continue first edit) =
+second edit' '
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -299,7 +299,7 @@ test_expect_success 'status: (continue first edit) =
+second edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently splitting a commit while rebasing branch '\''several=
+_edits'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -326,7 +326,7 @@ test_expect_success 'status: (continue first edit) =
+second edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -348,7 +348,7 @@ test_expect_success 'status: (amend first edit) sec=
+ond edit' '
+ 	git commit --amend -m "a" &&
+ 	git rebase --continue &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -371,7 +371,7 @@ test_expect_success 'status: (amend first edit) sec=
+ond edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently splitting a commit while rebasing branch '\''several=
+_edits'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -399,7 +399,7 @@ test_expect_success 'status: (amend first edit) sec=
+ond edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "d" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -423,7 +423,7 @@ test_expect_success 'status: (split first edit) sec=
+ond edit' '
+ 	git commit -m "e" &&
+ 	git rebase --continue &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
+@@ -448,7 +448,7 @@ test_expect_success 'status: (split first edit) sec=
+ond edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently splitting a commit while rebasing branch '\''several=
+_edits'\'' on '\''$ONTO'\''.
+   (Once your working directory is clean, run "git rebase --continue")
+=20
+@@ -478,7 +478,7 @@ test_expect_success 'status: (split first edit) sec=
+ond edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "h" &&
+ 	cat >expected <<EOF &&
+-rebase in progress; onto $ONTO
++interactive rebase in progress; onto $ONTO
+ You are currently editing a commit while rebasing branch '\''several_e=
+dits'\'' on '\''$ONTO'\''.
+   (use "git commit --amend" to amend the current commit)
+   (use "git rebase --continue" once you are satisfied with your change=
+s)
 diff --git a/wt-status.c b/wt-status.c
-index eaed4fe..8c4b806 100644
+index 8c4b806..81610dc 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1027,6 +1027,20 @@ static int split_commit_in_progress(struct wt_st=
-atus *s)
- 	return split_in_progress;
- }
-=20
-+static void print_rebase_state(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	if (state->branch)
-+		status_printf_ln(s, color,
-+				 _("You are currently rebasing branch '%s' on '%s'."),
-+				 state->branch,
-+				 state->onto);
-+	else
-+		status_printf_ln(s, color,
-+				 _("You are currently rebasing."));
-+}
-+
- static void show_rebase_in_progress(struct wt_status *s,
- 				struct wt_status_state *state,
- 				const char *color)
-@@ -1034,14 +1048,7 @@ static void show_rebase_in_progress(struct wt_st=
-atus *s,
- 	struct stat st;
-=20
- 	if (has_unmerged(s)) {
--		if (state->branch)
--			status_printf_ln(s, color,
--					 _("You are currently rebasing branch '%s' on '%s'."),
--					 state->branch,
--					 state->onto);
--		else
--			status_printf_ln(s, color,
--					 _("You are currently rebasing."));
-+		print_rebase_state(s, state, color);
- 		if (s->hints) {
- 			status_printf_ln(s, color,
- 				_("  (fix conflicts and then run \"git rebase --continue\")"));
-@@ -1051,14 +1058,7 @@ static void show_rebase_in_progress(struct wt_st=
-atus *s,
- 				_("  (use \"git rebase --abort\" to check out the original branch)=
-"));
- 		}
- 	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), =
-&st)) {
--		if (state->branch)
--			status_printf_ln(s, color,
--					 _("You are currently rebasing branch '%s' on '%s'."),
--					 state->branch,
--					 state->onto);
--		else
--			status_printf_ln(s, color,
--					 _("You are currently rebasing."));
-+		print_rebase_state(s, state, color);
- 		if (s->hints)
- 			status_printf_ln(s, color,
- 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
+@@ -1328,7 +1328,10 @@ void wt_status_print(struct wt_status *s)
+ 		else if (!strcmp(branch_name, "HEAD")) {
+ 			branch_status_color =3D color(WT_STATUS_NOBRANCH, s);
+ 			if (state.rebase_in_progress || state.rebase_interactive_in_progres=
+s) {
+-				on_what =3D _("rebase in progress; onto ");
++				if (state.rebase_interactive_in_progress)
++					on_what =3D _("interactive rebase in progress; onto ");
++				else
++					on_what =3D _("rebase in progress; onto ");
+ 				branch_name =3D state.onto;
+ 			} else if (state.detached_from) {
+ 				branch_name =3D state.detached_from;
 --=20
 2.5.0.rc0.7.ge1edd74.dirty
