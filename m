@@ -1,80 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 3/4] status: give more information during rebase -i
-Date: Thu, 02 Jul 2015 10:10:32 +0200
-Message-ID: <vpqpp4bdlon.fsf@anie.imag.fr>
-References: <vpq7fqkz48f.fsf@anie.imag.fr>
-	<1435739433-18853-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1435739433-18853-3-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqq4mlnc0lr.fsf@gitster.dls.corp.google.com>
-	<vpqk2ujoadw.fsf@anie.imag.fr>
-	<xmqqr3or7et9.fsf@gitster.dls.corp.google.com>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] log --count: added test
+Date: Thu, 2 Jul 2015 11:09:28 +0200 (CEST)
+Message-ID: <134930107.140053.1435828168932.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1435815536-30611-1-git-send-email-lawrencesiebert@gmail.com> <1435815536-30611-3-git-send-email-lawrencesiebert@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
-	guillaume.pages@ensimag.grenoble-inp.fr,
-	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
-	antoine.delaite@ensimag.grenoble-inp.fr
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 10:15:01 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Lawrence Siebert <lawrencesiebert@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 11:06:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAZe7-0006BA-TP
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 10:15:00 +0200
+	id 1ZAaSM-0002oa-IN
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 11:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbbGBIKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 04:10:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36834 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751569AbbGBIKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 04:10:46 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t628AVAF012384
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 2 Jul 2015 10:10:31 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t628AWiw002007;
-	Thu, 2 Jul 2015 10:10:32 +0200
-In-Reply-To: <xmqqr3or7et9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 01 Jul 2015 14:23:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 02 Jul 2015 10:10:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t628AVAF012384
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1436429435.40726@r8B/wgOMcC9CI/yJhLV+vA
+	id S1752227AbbGBJGu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jul 2015 05:06:50 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:60058 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752621AbbGBJGs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jul 2015 05:06:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 288678EE4;
+	Thu,  2 Jul 2015 11:06:46 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5XGzReesfPWk; Thu,  2 Jul 2015 11:06:46 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 18CF28EBA;
+	Thu,  2 Jul 2015 11:06:46 +0200 (CEST)
+In-Reply-To: <1435815536-30611-3-git-send-email-lawrencesiebert@gmail.com>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Win)/8.0.9_GA_6191)
+Thread-Topic: log --count: added test
+Thread-Index: epe2NLoITTKQlZioSFOEZccNsu9eIw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273219>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Lawrence,
 
-> In any case, I wouldn't have much time during the remainder of the
-> day to requeue and/or comment; please check what I push out on 'pu'.
+Lawrence Siebert <lawrencesiebert@gmail.com> writes:
+> +test_expect_success 'log --count' '
+> +        git log --count HEAD > actual &&
+> +        git        rev-list --count HEAD > expect &&
 
-BTW, I do agree with this hunk:
+Why the huge space here between 'git' and 'rev-list'?
+Also no space after the redirection ('>'), it should be '>actual' and
+'>expect'.
 
-@@ -1068,18 +1064,20 @@ static void abbrev_sha1_in_line(struct strbuf *line)
- static void read_rebase_todolist(const char *fname, struct string_list *lines)
- {
-        struct strbuf line = STRBUF_INIT;
--       FILE *f = fopen(git_path(fname), "r");
-+       FILE *f = fopen(git_path("%s", fname), "r");
- 
-        if (!f)
--               die_errno("Could not open file %s for reading", git_path(fname));
-+               die_errno("Could not open file %s for reading",
-+                         git_path("%s", fname));
+> +        test_cmp expect actual
+> +'       =20
+> +       =20
 
-Let me know if you want me to resend. In any case, I'm fine with your
-"SQUASH ??" version even though I prefer mine (cf. other message).
+In the mail I see some trailing whitespace after the last two lines.
+I can't apply it myself before some time, so I can't see if 'git am'
+warns me about trailing whitespace.
+You can use 'git log --check' to see the trailing whitespace in your
+commits.
+I'll look if I see some trailing whitespace in your other parts of the
+patch but I might miss some.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+R=C3=A9mi
