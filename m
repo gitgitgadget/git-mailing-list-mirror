@@ -1,73 +1,72 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Fri, 3 Jul 2015 05:41:41 +0700
-Message-ID: <CACsJy8CwnWj80=4GGY4VnHnbxb_tL1Vg8S16rybmwGpgbSEexQ@mail.gmail.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
- <xmqqr3orakex.fsf@gitster.dls.corp.google.com> <CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
- <CACsJy8BdvLiM8Ki=N1k-fBrqqoEONhjwcN6jzGUk=3NPRRujQw@mail.gmail.com>
- <CAPig+cT=U6LxpJuUMaCd-x=gQPvh89SDNUo12+2_3uYb_q3=Og@mail.gmail.com>
- <CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
- <CACsJy8CYtey9d6dFhf+bKCPe0aKzm1GNURDR0sJ4NNEmdZeLGQ@mail.gmail.com> <CAPig+cR1uLa7yiDn9EnTzfkDTOoToc6BTDRn5sYr12yPr6rXPg@mail.gmail.com>
+From: Lawrence Siebert <lawrencesiebert@gmail.com>
+Subject: Re: [PATCH 2/4] log: add --count option to git log
+Date: Thu, 2 Jul 2015 16:45:28 -0700
+Message-ID: <CAKDoJU7uu3wXszV=Cq115CegRR2QQdGAvMpjXr4+qYU-fmEN4g@mail.gmail.com>
+References: <1435815536-30611-1-git-send-email-lawrencesiebert@gmail.com>
+	<1435815536-30611-2-git-send-email-lawrencesiebert@gmail.com>
+	<167999398.140205.1435828465233.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 00:42:21 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 03 01:45:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAnBU-0008Sa-PC
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 00:42:21 +0200
+	id 1ZAoAh-0002tx-0b
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 01:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbbGBWmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 18:42:13 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:35936 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753559AbbGBWmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 18:42:11 -0400
-Received: by iecvh10 with SMTP id vh10so66540997iec.3
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 15:42:11 -0700 (PDT)
+	id S1754261AbbGBXpa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jul 2015 19:45:30 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:33125 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753944AbbGBXp3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jul 2015 19:45:29 -0400
+Received: by obpn3 with SMTP id n3so59638333obp.0
+        for <git@vger.kernel.org>; Thu, 02 Jul 2015 16:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=dyc9nsbv41IxW0CRscIGDPEmbDIPd/1bwqS9Wyaelxk=;
-        b=lICjRrJNiz4nbEUdbuDCBdF2yRYKL4aBasfCz/y8/biORwb02+nsloB08YI2hq0PhG
-         E4SFy/Cg2fmSn+GVmVQgkKpek7dTQycfh2HS065D7OfVXNuD8ATbjKDYQKBkNCJY/ZgN
-         l+MduxB/jKVxKphYZ5zLKmNl+QIqultrz3EJzRu6vqXXx4H3IErNunpWHe0PxfxD5KQy
-         nbWGRI8HsbwMMOHP50ksxbjTP2ot8mX1H2b97hWu/vk+41k5+AfPFOeuVxhT6nxQzCdE
-         5OfNdRRR2iteNZXSj8CNRH1+E+62boIza60N/p99nirsKfH0+pEBI1aWgNGdFF2bHedW
-         vBYA==
-X-Received: by 10.42.244.4 with SMTP id lo4mr15462051icb.65.1435876931155;
- Thu, 02 Jul 2015 15:42:11 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Thu, 2 Jul 2015 15:41:41 -0700 (PDT)
-In-Reply-To: <CAPig+cR1uLa7yiDn9EnTzfkDTOoToc6BTDRn5sYr12yPr6rXPg@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PDSTWuZvHF7JjZkFmdi7F5/Hd4d5DaeqHlWK+NQbORE=;
+        b=B843+WfoBX598VgBMBFTyLBpTc9a/8T2+9WMdsNCyijZQ32eG1BYGhbRAtUo6cwJEB
+         coMZF8ZQfhtS+qWw2PUw+c8EMxuUk7I4amwMuYh0OC5hm1SVLtSs9bQE1ghFYSRvtUzQ
+         /kQsQcq2S4VBjrbqEJ9IS8CAay6uMZ3gqX7sf3PdIKqk5Xnw8VfwGdJKIq8Nz0q4bEbO
+         OFCXY8CJyBxFVnxms+/1RoHwJqnZlhga1BoxvXNpM8pRAC/fCnaoy7UYzAqn/pDO2jMK
+         5qy4OgUFle/sMEXxdG+d1FjLjf7C3N9LJieGvEF71a6WXv7YYh7Pw0bW+vPtPeRfStNu
+         xuiQ==
+X-Received: by 10.182.87.69 with SMTP id v5mr29494881obz.37.1435880728565;
+ Thu, 02 Jul 2015 16:45:28 -0700 (PDT)
+Received: by 10.76.153.101 with HTTP; Thu, 2 Jul 2015 16:45:28 -0700 (PDT)
+In-Reply-To: <167999398.140205.1435828465233.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273273>
 
-On Fri, Jul 3, 2015 at 12:06 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Unless we want to borrow fancy checkout options for "git worktree
->> add", we probably should just export checkout() function from clone.c
->> and use it instead of "git checkout". Much more lightweight and
->> simpler (it's one-way merge). Then we can revert checkout.c to the
->> version before "--to".
+Thanks.  I've modified my vim config to avoid this happening again,
+and i'll submit a fixed version of these patches.
+
+I'd love if there was a precommit hook to test for this.
+
+Lawrence
+
+On Thu, Jul 2, 2015 at 2:14 AM, Remi Galan Alfonso
+<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
+> Lawrence Siebert <lawrencesiebert@gmail.com> writes:
+>> +                prepare_revision_walk(rev);
 >
-> Interesting idea, but doesn't this lose the ability to create a new
-> branch ("worktree add foo -b bar") and other useful options like
-> --track?
+> There's trailing whitespace here.
+> (See my message in 3/4)
+>
+> R=C3=A9mi
 
-Those are what I call "fancy checkout options". I think we could start
-simple with clone.c:checkout.c() and maybe libify switch_branches()
-later on to gain --detach and stuff. There's another thing I missed,
-when the new worktree is set up, HEAD contains a dummy value. It's
-expected that the second checkout will update it with proper value (a
-ref, detached HEAD....). So if you avoid running "git chckout" in
-"worktree add" and use clone.c:checkout(), you have to re-do something
-similar.
--- 
-Duy
+
+
+--=20
+About Me: http://about.me/lawrencesiebert
+Constantly Coding: http://constantcoding.blogspot.com
