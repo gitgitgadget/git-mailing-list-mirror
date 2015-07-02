@@ -1,165 +1,107 @@
-From: Igevorse Otonnoleare <igevorse@gmail.com>
-Subject: Wrong graph output of 'git log --graph --date-order --all' command
-Date: Thu, 2 Jul 2015 15:41:00 +0500
-Message-ID: <CADk_vu1rydigy4png-zuHfMbtrR8f-4fzZ-jdviYWYqfx4kGpg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
+Date: Thu, 2 Jul 2015 19:41:44 +0700
+Message-ID: <CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
+References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
+ <xmqqr3orakex.fsf@gitster.dls.corp.google.com> <CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
+ <CACsJy8BdvLiM8Ki=N1k-fBrqqoEONhjwcN6jzGUk=3NPRRujQw@mail.gmail.com> <CAPig+cT=U6LxpJuUMaCd-x=gQPvh89SDNUo12+2_3uYb_q3=Og@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 02 12:41:08 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 14:42:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAbvX-0000V6-De
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 12:41:07 +0200
+	id 1ZAdoq-0002Y3-MJ
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 14:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbbGBKlD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jul 2015 06:41:03 -0400
-Received: from mail-vn0-f45.google.com ([209.85.216.45]:33171 "EHLO
-	mail-vn0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752737AbbGBKlB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jul 2015 06:41:01 -0400
-Received: by vnbf190 with SMTP id f190so10660166vnb.0
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 03:41:00 -0700 (PDT)
+	id S1752918AbbGBMmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 08:42:16 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:36378 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbbGBMmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 08:42:14 -0400
+Received: by iecvh10 with SMTP id vh10so55551637iec.3
+        for <git@vger.kernel.org>; Thu, 02 Jul 2015 05:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=u6R6JCSSZwSf+9kxRMd7Jnr93AsrlgDLpkGoEVz/5Do=;
-        b=iSqVgxT1cqd4g7qF2QSzj6Yg5JFwpFECA7toh4i+tXGNuSHNSAw5hdFqLlmmbU4gDQ
-         TFoa6VZbGKl8ZxHtGXQTzFasEqOAwhtLQGQtvonmL7BkE+0H5xzxm0SaIg9gxcjtZS5R
-         jG699fiq5iNZ1eaGv99gnlmAPRsLqjBC/Q8LFvs+3IaP3lQFDkYa2oObfquySuFb9sI4
-         ao41hD6Wt/zYXVSqTHVuQuyM3SxiX27Cq0Y8MiZLZjQX8qAvb3Z47WCgtmDSwKi/SWs1
-         dtG0lPtVXtiB9p4sBT04zoBoKhzP7P9tuTT4toFWsxkfL+eDzncEYdgksmmgFuVgllAX
-         5HGQ==
-X-Received: by 10.52.122.52 with SMTP id lp20mr29811107vdb.64.1435833660164;
- Thu, 02 Jul 2015 03:41:00 -0700 (PDT)
-Received: by 10.31.224.65 with HTTP; Thu, 2 Jul 2015 03:41:00 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3G3sWHslxzsJ1v5psobyuDoSqnOACOMriRSuQkVfnoo=;
+        b=Sk687Pevrm1iKp4GOFmW6U0UKhMdktFFkJcOLIhhKUe4HBfXWjUSiiog+uD7KtAcHK
+         5Q5MKEYyyem56IscFQvlJicawyxPrkVDuV8CcLUF06AxdpqWnUZQ9Vi67Av451KhB7Z3
+         hkOLTwocgrRyZrLu2ZxlVEE1Xni6te5y1X2gO7Sau3ggVRfDQbT+wpPb8pQrgZZJ5cPg
+         h4n8P6JwgANaQAfvt0E6bHCtW7ukEnYJq5kqlJ957O8jcWm9FuZZT+xN7wJVYZEAhEUb
+         0hIqWXv6WfPNDmMHoI0ir7WtaooCAdcAjEV4NCKdlWFtV6IAB4Pu3ZjwzBOh1ZQ0RrI8
+         I0Lw==
+X-Received: by 10.107.15.153 with SMTP id 25mr49083650iop.44.1435840934080;
+ Thu, 02 Jul 2015 05:42:14 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Thu, 2 Jul 2015 05:41:44 -0700 (PDT)
+In-Reply-To: <CAPig+cT=U6LxpJuUMaCd-x=gQPvh89SDNUo12+2_3uYb_q3=Og@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273225>
 
-Hello.
-Command:
-git log --graph --date-order --all
-Tested in 2.0.0.rc2, 2.1.4 and latest
-master(cbed29f37b690e0a497bd2b6ca9a5bdd7e6ea5aa Git 2.5.0-rc1)
-Importance: some software that works with generated tree could crash.
-(For example, https://github.com/bluef/gitgraph.js crashes)
+On Thu, Jul 2, 2015 at 9:52 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Jul 1, 2015 at 9:07 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Thu, Jul 2, 2015 at 12:13 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>>    I noticed GIT_CHECKOUT_NEW_WORKTREE environment variabl that does
+>>>>    not seem to be documented.  Is this something we still need?
+>>>>    The log message of 529fef20 (checkout: support checking out into
+>>>>    a new working directory, 2014-11-30) does not tell us much.
+>>>
+>>> Yes, it's still used for the same purpose as before the conversion: as
+>>> a private signal to the sub git-checkout invocation that it's
+>>> operating on a new worktree. When defined, it sets the
+>>> 'new_worktree_mode' flag in checkout.c, and there are still a few bits
+>>> of code which apparently need to know about it. It would be nice to
+>>> eliminate this special knowledge from checkout.c, however, I'm not yet
+>>> familiar enough with the checkout code to determine if doing so is
+>>> viable.
+>>
+>> I think it can go away. When "--to" is used, I have to re-execute "git
+>> checkout" command again after creating the new worktree. I could
+>> process the command line arguments from the first execution, delete
+>> "--to", then use the remaining options to run checkout the second
+>> time. But I chose to pass the entire command line to the second
+>> execution. The env is used to let the second run know it should ignore
+>> "--to" (or we get infinite recursion). With "git worktree add" this
+>> recursion disappears and this env var has no reason to exist.
+>
+> The recursion protection is indeed no longer needed and gets removed
+> by the "worktree add" patch. However, there are still a few bits of
+> code which want to know that the checkout is happening in a new
+> worktree. I haven't examined them closely yet to diagnose if this
+> specialized knowledge can be eliminated. Perhaps you can weight in. In
+> particular:
+>
+> checkout_paths:
+>     if (opts->new_worktree)
+>         die(_("'%s' cannot be used with updating paths"), "--to");
 
-When I execute this command, I get a wrong graph:
+This one is easy, as "--to" is gone, no reason to report anything about "--to"
 
-root@Repserv# git log --graph --date-order --all --pretty=3Doneline |
-grep Versioning --context=3D5
- 1:| | | | | | | | | | | *   28935fe44c21117970d229a813612b03fc373304
-Merge branch 'stable' into EditFinPlan
- 2:| | | | | | | | | | | |\
- 3:| | | | | | | | | | |/ /
- 4:| |_|_|_|_|_|_|_|_|_| /      <--- Here it is
- 5:|/| | | | | | | | | |
- 6:* | | | | | | | | | |   4ebbb6d9af1db1ddeb7a9bee120ba62d3f6ca92d
-Merge branch 'Versioning' into stable
- 7:|\ \ \ \ \ \ \ \ \ \ \
- 8:| * | | | | | | | | | | 9cafe4d5c9fa6231fc99613e183c5d1620c36624
-=D0=9E=D0=B1=D0=BD=D0=BE=D0=B2=D0=B8=D0=BB GitVersion - =D0=B7=D0=B0=D1=
-=85=D0=B0=D1=80=D0=B4=D0=BA=D0=BE=D0=B4=D0=B8=D0=BB
- 9:| * | | | | | | | | | | c388f7ea6bc59e9c908b14fb8b81ad06c8d0bfd8 =D0=
-=9E=D0=B1=D0=BD=D0=BE=D0=B2=D0=B8=D0=BB =D1=85=D1=83=D0=BA
-10:| * | | | | | | | | | | e2f94b3978b7eb9e7d6ed6bce9c7741f99fc0f16
-=D0=9D=D0=BE=D0=B2=D1=8B=D0=B9 =D1=84=D0=BE=D1=80=D0=BC=D0=B0=D1=82 =D0=
-=B2=D0=B5=D1=80=D1=81=D0=B8=D0=B8 =D0=B2=D1=8B=D0=B2=D0=BE=D0=B4=D0=B8=D1=
-=82=D1=81=D1=8F =D0=BD=D0=B0 =D0=B3=D0=BB=D0=B0=D0=B2=D0=BD=D0=BE=D0=B9
-11:| * | | | | | | | | | | 7184b727e024ba298f78f92626e7c9d5c630d806
-Additional version to assembly
+> merge_working_tree:
+>     tree = parse_tree_indirect(old->commit &&
+>         !opts->new_worktree_mode ?
+>             old->commit->object.sha1 :
+>             EMPTY_TREE_SHA1_BIN);
 
-Take a look at the line 4: new line starts from nowhere, although it
-is a part of other branch.
+I think it's to make sure empty sha-1 is used with --to. If
+old->commit->object.sha1 is used and it's something, a real two way
+merge may happen probably with not-so-fun consequences. If it's empty
+sha1, the effect is like "reset --hard", silent and reliable..
 
-Here are correct outputs of 'git log' with other parameters:
+> switch_branches:
+>     if (!opts->quiet && !old.path && old.commit &&
+>         new->commit != old.commit && !opts->new_worktree_mode)
+>             orphaned_commit_warning(old.commit, new->commit);
 
-root@Repserv# git log --graph --all --pretty=3Doneline | grep Versionin=
-g
---context=3D5
-| | | | | | | | | | | | | | | * |
-3c183e987ba101c62a4a52ee1314d5461cc3fc78 Merge branch 'stable' of
-//10.0.0.92/ER into EditFinPlan
-| | | | | | | | | | | | | | | |\ \
-| |_|_|_|_|_|_|_|_|_|_|_|_|_|_|/ /
-|/| | | | | | | | | | | | | | | /
-| | | | | | | | | | | | | | | |/
-* | | | | | | | | | | | | | | |
-4ebbb6d9af1db1ddeb7a9bee120ba62d3f6ca92d Merge branch 'Versioning'
-into stable
-|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
-| * | | | | | | | | | | | | | | |
-9cafe4d5c9fa6231fc99613e183c5d1620c36624 =D0=9E=D0=B1=D0=BD=D0=BE=D0=B2=
-=D0=B8=D0=BB GitVersion -
-=D0=B7=D0=B0=D1=85=D0=B0=D1=80=D0=B4=D0=BA=D0=BE=D0=B4=D0=B8=D0=BB
-| * | | | | | | | | | | | | | | |
-c388f7ea6bc59e9c908b14fb8b81ad06c8d0bfd8 =D0=9E=D0=B1=D0=BD=D0=BE=D0=B2=
-=D0=B8=D0=BB =D1=85=D1=83=D0=BA
-| * | | | | | | | | | | | | | | |
-e2f94b3978b7eb9e7d6ed6bce9c7741f99fc0f16 =D0=9D=D0=BE=D0=B2=D1=8B=D0=B9=
- =D1=84=D0=BE=D1=80=D0=BC=D0=B0=D1=82 =D0=B2=D0=B5=D1=80=D1=81=D0=B8=D0=
-=B8 =D0=B2=D1=8B=D0=B2=D0=BE=D0=B4=D0=B8=D1=82=D1=81=D1=8F
-=D0=BD=D0=B0 =D0=B3=D0=BB=D0=B0=D0=B2=D0=BD=D0=BE=D0=B9
-| * | | | | | | | | | | | | | | |
-7184b727e024ba298f78f92626e7c9d5c630d806 Additional version to
-assembly
-
-root@Repserv# git log --graph  --pretty=3Doneline | grep Versioning --c=
-ontext=3D5
-|\
-| *   74adc31c6c08a0d3524a6ed1bebeb7f6c79447d7 Merge branch 'stable'
-of //10.0.0.92/ER.git into 196_ErrorOnSaveSessionRegBuilding
-| |\
-* | \   4d06b0cea208865b983ce3b678276d28d51d5fc8 Merge branch 'stable'
-|\ \ \
-| * \ \   4ebbb6d9af1db1ddeb7a9bee120ba62d3f6ca92d Merge branch
-'Versioning' into stable
-| |\ \ \
-| | * | | 9cafe4d5c9fa6231fc99613e183c5d1620c36624 =D0=9E=D0=B1=D0=BD=D0=
-=BE=D0=B2=D0=B8=D0=BB GitVersion
-- =D0=B7=D0=B0=D1=85=D0=B0=D1=80=D0=B4=D0=BA=D0=BE=D0=B4=D0=B8=D0=BB
-| | * | | c388f7ea6bc59e9c908b14fb8b81ad06c8d0bfd8 =D0=9E=D0=B1=D0=BD=D0=
-=BE=D0=B2=D0=B8=D0=BB =D1=85=D1=83=D0=BA
-| | * | | e2f94b3978b7eb9e7d6ed6bce9c7741f99fc0f16 =D0=9D=D0=BE=D0=B2=D1=
-=8B=D0=B9 =D1=84=D0=BE=D1=80=D0=BC=D0=B0=D1=82 =D0=B2=D0=B5=D1=80=D1=81=
-=D0=B8=D0=B8
-=D0=B2=D1=8B=D0=B2=D0=BE=D0=B4=D0=B8=D1=82=D1=81=D1=8F =D0=BD=D0=B0 =D0=
-=B3=D0=BB=D0=B0=D0=B2=D0=BD=D0=BE=D0=B9
-| | * | | 7184b727e024ba298f78f92626e7c9d5c630d806 Additional version
-to assembly
-
-
-root@Repserv# git log --graph --date-order  --pretty=3Doneline | grep
-Versioning --context=3D5
-*   121a658305e26386b946a4eac194514ba7dfa827 Merge remote-tracking
-branch 'origin/196_ErrorOnSaveSessionRegBuilding'
-|\
-* \   4d06b0cea208865b983ce3b678276d28d51d5fc8 Merge branch 'stable'
-|\ \
-| * \   4ebbb6d9af1db1ddeb7a9bee120ba62d3f6ca92d Merge branch
-'Versioning' into stable
-| |\ \
-| | * | 9cafe4d5c9fa6231fc99613e183c5d1620c36624 =D0=9E=D0=B1=D0=BD=D0=BE=
-=D0=B2=D0=B8=D0=BB GitVersion -
-=D0=B7=D0=B0=D1=85=D0=B0=D1=80=D0=B4=D0=BA=D0=BE=D0=B4=D0=B8=D0=BB Ereg=
-ion.Web/App_code/AssemblyInfo.cs
-| | * | c388f7ea6bc59e9c908b14fb8b81ad06c8d0bfd8 =D0=9E=D0=B1=D0=BD=D0=BE=
-=D0=B2=D0=B8=D0=BB =D1=85=D1=83=D0=BA
-| | * | e2f94b3978b7eb9e7d6ed6bce9c7741f99fc0f16 =D0=9D=D0=BE=D0=B2=D1=8B=
-=D0=B9 =D1=84=D0=BE=D1=80=D0=BC=D0=B0=D1=82 =D0=B2=D0=B5=D1=80=D1=81=D0=
-=B8=D0=B8
-=D0=B2=D1=8B=D0=B2=D0=BE=D0=B4=D0=B8=D1=82=D1=81=D1=8F =D0=BD=D0=B0 =D0=
-=B3=D0=BB=D0=B0=D0=B2=D0=BD=D0=BE=D0=B9
-| | * | 7184b727e024ba298f78f92626e7c9d5c630d806 Additional version to =
-assembly
-
-
-=46eel free to write me if you need additional information.
-Thanks.
+to suppress misleading warning if old.commit happens to be something.
+-- 
+Duy
