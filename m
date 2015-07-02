@@ -1,93 +1,60 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Thu, 2 Jul 2015 13:06:25 -0400
-Message-ID: <CAPig+cR1uLa7yiDn9EnTzfkDTOoToc6BTDRn5sYr12yPr6rXPg@mail.gmail.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqr3orakex.fsf@gitster.dls.corp.google.com>
-	<CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
-	<CACsJy8BdvLiM8Ki=N1k-fBrqqoEONhjwcN6jzGUk=3NPRRujQw@mail.gmail.com>
-	<CAPig+cT=U6LxpJuUMaCd-x=gQPvh89SDNUo12+2_3uYb_q3=Og@mail.gmail.com>
-	<CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
-	<CACsJy8CYtey9d6dFhf+bKCPe0aKzm1GNURDR0sJ4NNEmdZeLGQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 05/11] ref-filter: add parse_opt_merge_filter()
+Date: Thu, 02 Jul 2015 19:06:22 +0200
+Message-ID: <vpq7fqi8p69.fsf@anie.imag.fr>
+References: <CAOLa=ZSJLsxfTGQjhsemL3r-z1e6i4DVT14NJUDYY719mzzTAg@mail.gmail.com>
+	<1435850470-5175-1-git-send-email-karthik.188@gmail.com>
+	<1435850470-5175-5-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 19:06:36 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 19:06:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAhwY-00034n-VM
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 19:06:35 +0200
+	id 1ZAhwU-000329-Ff
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 19:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbbGBRGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 13:06:30 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:36029 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753736AbbGBRG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 13:06:27 -0400
-Received: by ykdr198 with SMTP id r198so73849969ykd.3
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 10:06:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=bPXMmVll+YPBbA/GfGWi9koqDARtQbJU5AEd3YP+vq8=;
-        b=j8Smqxp36uWFfyziEBEbe2Ef4Nox8QXtshzXM0H8J2Q6eaEuG+Dq51fUnNKjxDEFZb
-         cXBTGJVPIdyr7+IXq58eH94gTkFpiY8YpMwmZ3WAvR9S3aC2ux89AvYtDfkJjC+laTOQ
-         iV9T/4RA3NmH6PpWIXGzFhLctubXYtmIyOgQn3Y+Tc7LOqDzC87SD/+Q0CDuGm2AiZGv
-         k/tPAuh+so4vh48Yf3/mVp7UFn6ODR6p9IMTjsZZHnsEuEvS4Io6gAlJ2DqxrflFV+R4
-         0JrWH8bya0JGTd4NN2/1NZlcx7oPd0mo+YtG95retz4APSfbXGTI0TWVcr2mTHab/vH3
-         z5Pw==
-X-Received: by 10.13.207.1 with SMTP id r1mr39900113ywd.166.1435856786000;
- Thu, 02 Jul 2015 10:06:26 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Thu, 2 Jul 2015 10:06:25 -0700 (PDT)
-In-Reply-To: <CACsJy8CYtey9d6dFhf+bKCPe0aKzm1GNURDR0sJ4NNEmdZeLGQ@mail.gmail.com>
-X-Google-Sender-Auth: 5kWc-BiTyMqVwcLpa83KXZN5u1E
+	id S1753723AbbGBRG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 13:06:26 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50658 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753790AbbGBRGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 13:06:25 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t62H6Kj2020485
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 2 Jul 2015 19:06:20 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t62H6MN1013157;
+	Thu, 2 Jul 2015 19:06:22 +0200
+In-Reply-To: <1435850470-5175-5-git-send-email-karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 2 Jul 2015 20:51:04 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 02 Jul 2015 19:06:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t62H6Kj2020485
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436461580.68423@WrTkF8mMsf3H7LqnhG1LCQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273248>
 
-On Thu, Jul 2, 2015 at 8:50 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Jul 2, 2015 at 7:41 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>> merge_working_tree:
->>>     tree = parse_tree_indirect(old->commit &&
->>>         !opts->new_worktree_mode ?
->>>             old->commit->object.sha1 :
->>>             EMPTY_TREE_SHA1_BIN);
->>
->> I think it's to make sure empty sha-1 is used with --to. If
->> old->commit->object.sha1 is used and it's something, a real two way
->> merge may happen probably with not-so-fun consequences. If it's empty
->> sha1, the effect is like "reset --hard", silent and reliable..
->>
->>> switch_branches:
->>>     if (!opts->quiet && !old.path && old.commit &&
->>>         new->commit != old.commit && !opts->new_worktree_mode)
->>>             orphaned_commit_warning(old.commit, new->commit);
->>
->> to suppress misleading warning if old.commit happens to be something.
->
-> Actually you may be right about not reverting these. We prepare the
-> new worktree with a valid HEAD, that would make "old" valid and may
-> trigger things if "git checkout" is used to populate the worktree. To
-> suppress those "things", we need new_worktree_mode or something
-> similar.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Indeed. Since this is merely a private implementation detail, we don't
-necessarily have to resolve the issue fully for the "checkout --to" to
-"worktree add" conversion. It can be dealt with in a follow-on patch.
+> +/*  Macros for checking --merged and --no-merged options */
+> +#define _OPT_MERGED_NO_MERGED(option, filter, h)				\
 
-> Unless we want to borrow fancy checkout options for "git worktree
-> add", we probably should just export checkout() function from clone.c
-> and use it instead of "git checkout". Much more lightweight and
-> simpler (it's one-way merge). Then we can revert checkout.c to the
-> version before "--to".
+Detail: there's a weird large space before \. Is it an attempt to align
+the \ with a non-standard tab-width?
 
-Interesting idea, but doesn't this lose the ability to create a new
-branch ("worktree add foo -b bar") and other useful options like
---track?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
