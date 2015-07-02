@@ -1,81 +1,62 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Thu, 2 Jul 2015 12:59:18 -0400
-Message-ID: <CAPig+cS+4cbSNZJEHMoj+NRRt3N2guUH_byMb=k9QHeNS--SqQ@mail.gmail.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqr3orakex.fsf@gitster.dls.corp.google.com>
-	<CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
-	<CACsJy8BdvLiM8Ki=N1k-fBrqqoEONhjwcN6jzGUk=3NPRRujQw@mail.gmail.com>
-	<CAPig+cT=U6LxpJuUMaCd-x=gQPvh89SDNUo12+2_3uYb_q3=Og@mail.gmail.com>
-	<CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 04/11] for-each-ref: add '--points-at' option
+Date: Thu, 02 Jul 2015 19:05:11 +0200
+Message-ID: <vpqegkq8p88.fsf@anie.imag.fr>
+References: <CAOLa=ZSJLsxfTGQjhsemL3r-z1e6i4DVT14NJUDYY719mzzTAg@mail.gmail.com>
+	<1435850470-5175-1-git-send-email-karthik.188@gmail.com>
+	<1435850470-5175-4-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 19:02:51 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 19:05:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAhsv-00017J-Hc
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 19:02:49 +0200
+	id 1ZAhvQ-0002Tb-Bj
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 19:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754220AbbGBRCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 13:02:45 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:35918 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753273AbbGBQ7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 12:59:19 -0400
-Received: by ykdr198 with SMTP id r198so73652150ykd.3
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 09:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=xbz40Jp415YdiHBwIcL1JDNdgL5HIir/wm10Odauhi4=;
-        b=BYT7XdJHNcw+X9jqaSBqG1CaCwtjCFflHennGxSGwyy40+PFkBX9zem5ezocviT5Wr
-         sRl+vrbFn/ysnmPF/DsZvuJ3TxsT3IG2HBj/4XpXVgQBMXoSvB+y724Cc/VIu620Blg6
-         UAXoo/w82oAIZIEwwkRwRi8x9qxeJVil96EpiTtDkl5kueZ2rBAfuK1EWMCd/1mwKkt1
-         gioQ8/ZFREP+0cx3tSLfVt666vtwGfvrsat4MzyMj6KhTaGwZQlpUpjfv7ozgBuEiNhr
-         fJkCEr78YvhyA5HJcxnBAbd3R7SHS0Syw16/DBOg6JAd4aTIMnM0k22r2A8T44+67lDQ
-         o5mQ==
-X-Received: by 10.170.220.214 with SMTP id m205mr5961169ykf.13.1435856358219;
- Thu, 02 Jul 2015 09:59:18 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Thu, 2 Jul 2015 09:59:18 -0700 (PDT)
-In-Reply-To: <CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
-X-Google-Sender-Auth: 4riyrHinQ3sBn9vXe-yv2JELLd0
+	id S1752924AbbGBRFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 13:05:20 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38051 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753455AbbGBRFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 13:05:18 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t62H597K028872
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 2 Jul 2015 19:05:09 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t62H5Bjo013139;
+	Thu, 2 Jul 2015 19:05:11 +0200
+In-Reply-To: <1435850470-5175-4-git-send-email-karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 2 Jul 2015 20:51:03 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 02 Jul 2015 19:05:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t62H597K028872
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436461513.24252@aE8PqgznpfvnISV+OEW0wg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273246>
 
-On Thu, Jul 2, 2015 at 8:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Jul 2, 2015 at 9:52 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> The recursion protection is indeed no longer needed and gets removed
->> by the "worktree add" patch. However, there are still a few bits of
->> code which want to know that the checkout is happening in a new
->> worktree. I haven't examined them closely yet to diagnose if this
->> specialized knowledge can be eliminated. Perhaps you can weight in. In
->> particular:
->>
->> checkout_paths:
->>     if (opts->new_worktree)
->>         die(_("'%s' cannot be used with updating paths"), "--to");
->
-> This one is easy, as "--to" is gone, no reason to report anything about "--to"
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-In the "worktree add" patch, I kept this one (with s/--to/worktree
-add/) assuming that your intention was that a new worktree should
-never start with a partial checkout due to specifying paths. Looking
-at it more closely, I'm still not convinced that it can be removed.
-Given:
+> Add the '--points-at' option provided by 'ref-filter'. The
+> option lets the user to list only refs which pertain to the
+> given object.
 
-    git worktree new <path> <branch> -- <file>
+You are using "pertain to" (here, in git-for-each-ref.txt and in the
+docstring), while the common use it to talk about "point to" or "point
+at". I find "point" clearer.
 
-it creates <path> and checks out <file> (and only <file>) into <path>,
-however, the resulting worktree is "not on any branch". The latter, I
-think is because switch_branches() doesn't get called in this case;
-instead, it's just at whatever HEAD was faked up to appease
-is_git_directory().
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
