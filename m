@@ -1,43 +1,45 @@
 From: Clemens Buchacher <clemens.buchacher@intel.com>
-Subject: [PATCH] filter-branch: handle deletion of annotated tags
-Date: Thu, 2 Jul 2015 14:50:48 +0200
+Subject: Re: [PATCH] filter-branch: handle deletion of annotated tags
+Date: Thu, 2 Jul 2015 14:55:02 +0200
 Organization: Intel Deutschland GmbH - Registered Address: Am Campeon 10-12, 85579 Neubiberg, Germany - Tel: +49 89 99 8853-0, www.intel.de - Managing Directors: Prof. Dr. Hermann Eul, Christin Eisenschmid - Chairperson of the Supervisory Board: Tiffany Doon Silva - Registered Office: Munich - Commercial Register: Amtsgericht Mnchen HRB 186928
-Message-ID: <20150702125048.GA15759@musxeris015.imu.intel.com>
+Message-ID: <20150702125502.GA20534@musxeris015.imu.intel.com>
+References: <20150702125048.GA15759@musxeris015.imu.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
+Cc: Thomas Rast <tr@thomasrast.ch>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Jorge Nunes <jorge.nunes@intel.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 02 14:51:06 2015
+X-From: git-owner@vger.kernel.org Thu Jul 02 14:55:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAdxF-0006kD-HG
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 14:51:01 +0200
+	id 1ZAe1K-0000GT-Tn
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 14:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905AbbGBMu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 08:50:56 -0400
-Received: from mga01.intel.com ([192.55.52.88]:55037 "EHLO mga01.intel.com"
+	id S1752072AbbGBMzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 08:55:10 -0400
+Received: from mga01.intel.com ([192.55.52.88]:18858 "EHLO mga01.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750908AbbGBMuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 08:50:51 -0400
+	id S1753419AbbGBMzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 08:55:08 -0400
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP; 02 Jul 2015 05:50:50 -0700
+  by fmsmga101.fm.intel.com with ESMTP; 02 Jul 2015 05:55:04 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.15,392,1432623600"; 
-   d="scan'208";a="739234261"
+   d="scan'208";a="739236267"
 Received: from musxeris015.imu.intel.com (HELO localhost) ([10.216.40.13])
-  by fmsmga001.fm.intel.com with ESMTP; 02 Jul 2015 05:50:48 -0700
+  by fmsmga001.fm.intel.com with ESMTP; 02 Jul 2015 05:55:03 -0700
 Content-Disposition: inline
+In-Reply-To: <20150702125048.GA15759@musxeris015.imu.intel.com>
 User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273228>
 
 If filter-branch removes a commit which an annotated tag points to,
 and that tag is in the list of refs to be rewritten, we die with an
@@ -105,11 +107,13 @@ include them in the rev-list options:
 
 I am not sure if we can afford to change behavior like that.
 
-Cc: Thomas Rast <trast@student.ethz.ch>
+Cc: Thomas Rast <tr@thomasrast.ch>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
-Reviewed-by: Jorge Nunes <jorge.nunes@intel.com>
 ---
+
+Re-send with Thomas' email address fixed.
+
  git-filter-branch.sh     | 20 +++++++++-----------
  t/t7003-filter-branch.sh | 21 +++++++++++++++++++++
  2 files changed, 30 insertions(+), 11 deletions(-)
