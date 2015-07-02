@@ -1,111 +1,85 @@
 From: Lawrence Siebert <lawrencesiebert@gmail.com>
-Subject: [PATCH 2/4] log: add --count option to git log
-Date: Wed,  1 Jul 2015 22:38:54 -0700
-Message-ID: <1435815536-30611-2-git-send-email-lawrencesiebert@gmail.com>
+Subject: [PATCH 4/4] git-log: update man documentation for --count
+Date: Wed,  1 Jul 2015 22:38:56 -0700
+Message-ID: <1435815536-30611-4-git-send-email-lawrencesiebert@gmail.com>
 References: <1435815536-30611-1-git-send-email-lawrencesiebert@gmail.com>
 Cc: gitster@pobox.com, Lawrence Siebert <lawrencesiebert@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 02 07:39:36 2015
+X-From: git-owner@vger.kernel.org Thu Jul 02 07:39:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAXDi-0001Y2-He
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 07:39:34 +0200
+	id 1ZAXDq-0001dH-CK
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 07:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbbGBFj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 01:39:28 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:35875 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750908AbbGBFjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 01:39:24 -0400
-Received: by ykdr198 with SMTP id r198so59122391ykd.3
-        for <git@vger.kernel.org>; Wed, 01 Jul 2015 22:39:23 -0700 (PDT)
+	id S1751135AbbGBFjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 01:39:35 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:35897 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbbGBFj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 01:39:26 -0400
+Received: by ykdr198 with SMTP id r198so59122920ykd.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2015 22:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Zu5aTncNzBAyCxrAXObAORBCCyaTZL9s17vx515pDY4=;
-        b=Oe+C98+bpeuVzy8sNWvTBe5G8pIcXHmE6E7/9M0R0sJ2AJ3LKdy1OrPkPwSLroYSPL
-         FjX5w+urAQza4HqYz5PyXQiq9UhD/NNzWenHocr5FMLyoxEkutkj5L/5PlD0AYFtHH9l
-         KzLfVpMZRwm5TmCnzxnw6GrnUtrE1lCjdAo7GJNwqiLBIS9GimbkjuwvlofMmtB6JxWq
-         S7jhvWe5epH9yqUk66OMkP2ACC9TDPqSLc4pfjoV1qQVDKdyj0TRDhHuER3jWQJHErar
-         V+zmkzUEThYOoVbAHjlJdjn6+prIRSoAH2kwK0YqMfaGjJyCQRB22vyTCJF2W9qBJ1XS
-         Gp5g==
-X-Received: by 10.170.125.138 with SMTP id r132mr36759616ykb.19.1435815563836;
-        Wed, 01 Jul 2015 22:39:23 -0700 (PDT)
+        bh=ImX71qlKAPgAmVJUPoYDxKGPZ944YvZOXAMcGZNk4ns=;
+        b=Wnic+2q0BW5pPLd7JNZI9S1KSZ7ZM8L35mIq7fcQ2H6ISnF103IilGr1CXBdiDl0eA
+         Y8Co1e8gz88AbbYol5HuyHxcRqWE/7dapjNQbwMX5LENCdffTeAgqXRSw1Z/knHwO/sh
+         O2jASw3C7MrH0jQE+bDck9T0sDlJ1a8+n7tkGZixFC7ZXD2SknFQyoe2zfk0tiXJNN4Q
+         p5J0jSqTtlWYWHyyyXVEMfjWOuWXc1TAb0tGRJU+suf5MnkArxtC9w3mlrPz4DibOTJN
+         DIxwqZ/J5eg9lBo20Zv1T3M68poekimVHxSoveqF4+8X4CMeq4+y+w/RtetEn50pYFSY
+         Dvbg==
+X-Received: by 10.170.143.213 with SMTP id k204mr35756575ykc.91.1435815566030;
+        Wed, 01 Jul 2015 22:39:26 -0700 (PDT)
 Received: from localhost.localdomain (24-176-234-59.dhcp.atsc.ca.charter.com. [24.176.234.59])
-        by mx.google.com with ESMTPSA id m12sm4563641ywd.22.2015.07.01.22.39.22
+        by mx.google.com with ESMTPSA id m12sm4563641ywd.22.2015.07.01.22.39.25
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 01 Jul 2015 22:39:23 -0700 (PDT)
+        Wed, 01 Jul 2015 22:39:25 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1435815536-30611-1-git-send-email-lawrencesiebert@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273214>
 
-adds --count from git rev-list to git log, without --use-bitmap-index
-for the moment.
+I'm not altogether sure the best way to update the internal usage
+from git-log -h, but this at least updates the man page.
 
 Signed-off-by: Lawrence Siebert <lawrencesiebert@gmail.com>
 ---
- builtin/log.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ Documentation/git-log.txt          | 2 ++
+ Documentation/rev-list-options.txt | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8781049..ce6df1e 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -25,6 +25,7 @@
- #include "version.h"
- #include "mailmap.h"
- #include "gpg-interface.h"
-+#include "list-objects.h"
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 5692945..0e10e44 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -90,6 +90,8 @@ include::line-range-format.txt[]
+ Paths may need to be prefixed with ``\-- '' to separate them from
+ options or the revision range, when confusion arises.
  
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
-@@ -317,12 +318,40 @@ static void finish_early_output(struct rev_info *rev)
- 	show_early_header(rev, "done", n);
- }
- 
-+static void show_object(struct object *obj,
-+			const struct name_path *path, const char *component,
-+			void *cb_data)
-+{
-+	return;
-+}
 +
-+static void show_commit(struct commit *commit, void *data)
-+{
-+	struct rev_info *revs = (struct rev_info *)data;
-+	if (commit->object.flags & PATCHSAME)
-+		revs->count_same++;
-+	else if (commit->object.flags & SYMMETRIC_LEFT)
-+		revs->count_left++;
-+	else
-+		revs->count_right++;
-+	if (commit->parents) {
-+		free_commit_list(commit->parents);
-+		commit->parents = NULL;
-+	}
-+	free_commit_buffer(commit);
-+}
-+
- static int cmd_log_walk(struct rev_info *rev)
- {
- 	struct commit *commit;
- 	int saved_nrl = 0;
- 	int saved_dcctc = 0;
++:git-log: 1
+ include::rev-list-options.txt[]
  
-+	if (rev->count) {
-+		prepare_revision_walk(rev);	
-+		traverse_commit_list(rev, show_commit, show_object, rev);
-+		get_commit_count(rev);
-+	}
- 	if (rev->early_output)
- 		setup_early_output(rev);
+ include::pretty-formats.txt[]
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 77ac439..f4e15fb 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -797,7 +797,7 @@ This implies the `--topo-order` option by default, but the
+ 	in between them in that case. If `<barrier>` is specified, it
+ 	is the string that will be shown instead of the default one.
  
+-ifdef::git-rev-list[]
++ifdef::git-log,git-rev-list[]
+ --count::
+ 	Print a number stating how many commits would have been
+ 	listed, and suppress all other output.  When used together
 -- 
 1.9.1
