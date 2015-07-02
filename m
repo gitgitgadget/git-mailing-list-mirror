@@ -1,69 +1,89 @@
-From: Clemens Buchacher <clemens.buchacher@intel.com>
-Subject: [PATCH] rebase: return non-zero error code if format-patch fails
-Date: Thu, 2 Jul 2015 11:11:33 +0200
-Organization: Intel Deutschland GmbH - Registered Address: Am Campeon 10-12, 85579 Neubiberg, Germany - Tel: +49 89 99 8853-0, www.intel.de - Managing Directors: Prof. Dr. Hermann Eul, Christin Eisenschmid - Chairperson of the Supervisory Board: Tiffany Doon Silva - Registered Office: Munich - Commercial Register: Amtsgericht Mnchen HRB 186928
-Message-ID: <20150702091133.GA13353@musxeris015.imu.intel.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PUB]What's cooking in git.git (Jul 2015, #01; Wed, 1)
+Date: Thu, 02 Jul 2015 11:33:12 +0200
+Message-ID: <vpqbnfudhuv.fsf@anie.imag.fr>
+References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Wong <andrew.kw.w@gmail.com>,
-	Jorge Nunes <jorge.nunes@intel.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 02 11:12:06 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 11:33:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAaXM-0004wb-Jj
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 11:12:04 +0200
+	id 1ZAasH-0005mk-NK
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 11:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586AbbGBJL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 05:11:57 -0400
-Received: from mga11.intel.com ([192.55.52.93]:9973 "EHLO mga11.intel.com"
+	id S1753626AbbGBJdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 05:33:36 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39316 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753588AbbGBJLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 05:11:37 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga102.fm.intel.com with ESMTP; 02 Jul 2015 02:11:37 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.15,391,1432623600"; 
-   d="scan'208";a="754660438"
-Received: from musxeris015.imu.intel.com (HELO localhost) ([10.216.40.13])
-  by fmsmga002.fm.intel.com with ESMTP; 02 Jul 2015 02:11:34 -0700
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.2i
+	id S1752426AbbGBJdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 05:33:17 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t629XB45001029
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 2 Jul 2015 11:33:12 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t629XCTF004395;
+	Thu, 2 Jul 2015 11:33:12 +0200
+In-Reply-To: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 01 Jul 2015 15:37:04 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 02 Jul 2015 11:33:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t629XB45001029
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436434392.38057@YaczosoWo00t0DjxA1NTlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273223>
 
-Since e481af06 (rebase: Handle cases where format-patch fails) we
-notice if format-patch fails and return immediately from
-git-rebase--am. We save the return value with ret=$?, but then we
-return $?, which is usually zero in this case.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Fix this by returning $ret instead.
+> * ad/bisect-terms (2015-06-29) 10 commits
+>  - bisect: allow setting any user-specified in 'git bisect start'
+>  - bisect: add 'git bisect terms' to view the current terms
+>  - bisect: add the terms old/new
+>  - bisect: sanity check on terms
+>  - bisect: don't mix option parsing and non-trivial code
+>  - bisect: simplify the addition of new bisect terms
+>  - bisect: replace hardcoded "bad|good" by variables
+>  - Documentation/bisect: revise overall content
+>  - Documentation/bisect: move getting help section to the end
+>  - bisect: correction of typo
+>
+>  The use of 'good/bad' in "git bisect" made it confusing to use when
+>  hunting for a state change that is not a regression (e.g. bugfix).
+>  The command learned 'old/new' and then allows the end user to
+>  say e.g. "bisect start --term-old=fast --term=new=slow" to find a
+>  performance regression.
+>
+>  The bottom part has been quite well cooked.  Perhaps split it into
+>  two topisc and merge the earlier ones to 'next' before the rest
+>  settles.  Michael's idea to make 'good/bad' more intelligent does
+>  have certain attractiveness ($gname/272867).
 
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
-Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
-Reviewed-by: Jorge Nunes <jorge.nunes@intel.com>
----
- git-rebase--am.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think it makes sense to merge the first patches soon:
 
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index f923732..9ae898b 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -78,7 +78,7 @@ else
- 
- 		As a result, git cannot rebase them.
- 		EOF
--		return $?
-+		return $ret
- 	fi
- 
- 	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" \
+ - bisect: don't mix option parsing and non-trivial code
+ - bisect: simplify the addition of new bisect terms
+ - bisect: replace hardcoded "bad|good" by variables
+ - Documentation/bisect: revise overall content
+ - Documentation/bisect: move getting help section to the end
+ - bisect: correction of typo
+
+I have nothing to add on the last ones, but they can cook in pu a bit
+longer.
+
+Do you expect anything from my side?
+
 -- 
-1.9.4
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
