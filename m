@@ -1,82 +1,200 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] worktree: replace "checkout --to" with "worktree new"
-Date: Thu, 2 Jul 2015 19:50:22 +0700
-Message-ID: <CACsJy8CYtey9d6dFhf+bKCPe0aKzm1GNURDR0sJ4NNEmdZeLGQ@mail.gmail.com>
-References: <1435640202-95945-1-git-send-email-sunshine@sunshineco.com>
- <xmqqr3orakex.fsf@gitster.dls.corp.google.com> <CAPig+cRLpJK-C7MApH1vigZS=gmHNeo6RL3S2wXv4B-TFfnq4g@mail.gmail.com>
- <CACsJy8BdvLiM8Ki=N1k-fBrqqoEONhjwcN6jzGUk=3NPRRujQw@mail.gmail.com>
- <CAPig+cT=U6LxpJuUMaCd-x=gQPvh89SDNUo12+2_3uYb_q3=Og@mail.gmail.com> <CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
+From: Clemens Buchacher <clemens.buchacher@intel.com>
+Subject: [PATCH] filter-branch: handle deletion of annotated tags
+Date: Thu, 2 Jul 2015 14:50:48 +0200
+Organization: Intel Deutschland GmbH - Registered Address: Am Campeon 10-12, 85579 Neubiberg, Germany - Tel: +49 89 99 8853-0, www.intel.de - Managing Directors: Prof. Dr. Hermann Eul, Christin Eisenschmid - Chairperson of the Supervisory Board: Tiffany Doon Silva - Registered Office: Munich - Commercial Register: Amtsgericht Mnchen HRB 186928
+Message-ID: <20150702125048.GA15759@musxeris015.imu.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 14:51:13 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jorge Nunes <jorge.nunes@intel.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 02 14:51:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAdxQ-0006nS-Nb
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 14:51:13 +0200
+	id 1ZAdxF-0006kD-HG
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jul 2015 14:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753692AbbGBMvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 08:51:01 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33971 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753624AbbGBMux (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 08:50:53 -0400
-Received: by igcsj18 with SMTP id sj18so160803266igc.1
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 05:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ni0PcHDATirFigz1w90EKuKnq4Z/+Xp7Lw86LKUPyGQ=;
-        b=AKOEGP6WZWEZd/tW1rbKmWnmD3Jzy+8zM/tXQyRC8J2CK7k1MYbsdXPPyFMOO+GYuj
-         t6d7S+StQhvgLAVP5B3gzy2vY9ea3cdXTVIEHWTixjaWhfwFm7G0FR0k97TP4Qe9E3Bf
-         SxFlz4/P4tNTxXSJFKqpRvMdB+tkNi+mvbSDMr9mPBYvv3HYhzJEs0oikYGlOMZabFPl
-         kU2sy8fx5sg4wAUz0D/wvEQajBWMelZ5HXj5izzmUsDIyFy6B4iU9IKhBt7XFz672zKE
-         Sdr4K7w0NMnITEPbFn789jFxLT8qmjSnvMx2Dg+Vgr2h5Fdxgle1Fdt4WAgmSwM/7vlq
-         H67w==
-X-Received: by 10.50.142.98 with SMTP id rv2mr13995996igb.41.1435841451795;
- Thu, 02 Jul 2015 05:50:51 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Thu, 2 Jul 2015 05:50:22 -0700 (PDT)
-In-Reply-To: <CACsJy8Dce4ErwaRM7zTgLmRzcHxKOr4J8St46urettr5R4DbVg@mail.gmail.com>
+	id S1753905AbbGBMu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 08:50:56 -0400
+Received: from mga01.intel.com ([192.55.52.88]:55037 "EHLO mga01.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750908AbbGBMuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 08:50:51 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP; 02 Jul 2015 05:50:50 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.15,392,1432623600"; 
+   d="scan'208";a="739234261"
+Received: from musxeris015.imu.intel.com (HELO localhost) ([10.216.40.13])
+  by fmsmga001.fm.intel.com with ESMTP; 02 Jul 2015 05:50:48 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273227>
 
-On Thu, Jul 2, 2015 at 7:41 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> merge_working_tree:
->>     tree = parse_tree_indirect(old->commit &&
->>         !opts->new_worktree_mode ?
->>             old->commit->object.sha1 :
->>             EMPTY_TREE_SHA1_BIN);
->
-> I think it's to make sure empty sha-1 is used with --to. If
-> old->commit->object.sha1 is used and it's something, a real two way
-> merge may happen probably with not-so-fun consequences. If it's empty
-> sha1, the effect is like "reset --hard", silent and reliable..
->
->> switch_branches:
->>     if (!opts->quiet && !old.path && old.commit &&
->>         new->commit != old.commit && !opts->new_worktree_mode)
->>             orphaned_commit_warning(old.commit, new->commit);
->
-> to suppress misleading warning if old.commit happens to be something.
+If filter-branch removes a commit which an annotated tag points to,
+and that tag is in the list of refs to be rewritten, we die with an
+error like this:
 
-Actually you may be right about not reverting these. We prepare the
-new worktree with a valid HEAD, that would make "old" valid and may
-trigger things if "git checkout" is used to populate the worktree. To
-suppress those "things", we need new_worktree_mode or something
-similar.
+    error: Ref refs/tags/a1t is at 699cce2774f79a0830d8c5f631deca12d4b1ee8c but expected ba247450492030b03e3d2a9d5fef7ef67519483e
+    Could not delete refs/tags/a1t
 
-Unless we want to borrow fancy checkout options for "git worktree
-add", we probably should just export checkout() function from clone.c
-and use it instead of "git checkout". Much more lightweight and
-simpler (it's one-way merge). Then we can revert checkout.c to the
-version before "--to".
+In order to update refs, we first peel the ref until we find a
+commit sha1. We then pass the commit sha1 to update-ref as the
+<oldvalue> parameter. Please consider the following scenarios:
+
+ a) The ref points to a commit object directly. In this case,
+    update-ref will find that the current value of the ref still
+    matches oldvalue, and succeeds. This check is redundant, since
+    we only just queried the current value.
+
+ b) The ref points to a tag object. In this case, update-ref will
+    error out, since the commit sha1 cannot match the current value
+    of the ref. If the commit has been removed, or rewritten into
+    multiple commits, we simply die. If the commit has been
+    rewritten, we output a warning message saying that to rewrite
+    tags one should use --tag-name-filter, and then we continue. If
+    --tag-name-filter is active, the tag will later be rewritten.
+
+There seems to be no added value in passing the <oldvalue>
+parameter. So remove it.
+
+This fixes deletion of tag objects. We also do not die any more if
+a tag object points to a commit which has been rewritten into
+multiple commits. However, we probably will die later in the
+--tag-name-filter code, because it does not seem to handle this
+case.
+
+This is a minimalist fix which leaves the following issues open:
+
+ o In the absence of --tag-name-filter, we rewrite lightweight tags, but
+   not annotated tags, which is not intuitive. We do output a warning,
+   though:
+
+   $ git filter-branch --msg-filter "cat && echo hi" -- --all
+   [...]
+   WARNING: You said to rewrite tagged commits, but not the corresponding tag.
+   WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag.
+
+ o Annotated tags are backed up as lightweight tags.
+
+ o Annotated tags are backed up even in the absence of
+   --tag-name-filter. But in this case backup is not needed because
+   they are not rewritten.
+
+These issues could be solved by moving the tag rewriting logic from
+tag-name-filter to the regular ref updating code, and
+tag-name-filter should deal only with renaming tags. However, this
+would change behavior. Currently, the following command would
+rewrite tags:
+
+    git filter-branch --msg-filter "cat && echo hi" \
+        --tag-name-filter cat -- --branches
+
+With the suggested behavior, tags would be rewritten only if we
+include them in the rev-list options:
+
+    git filter-branch --msg-filter="cat && echo hi" -- --all
+
+I am not sure if we can afford to change behavior like that.
+
+Cc: Thomas Rast <trast@student.ethz.ch>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
+Reviewed-by: Jorge Nunes <jorge.nunes@intel.com>
+---
+ git-filter-branch.sh     | 20 +++++++++-----------
+ t/t7003-filter-branch.sh | 21 +++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 11 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 5b3f63d..7ca1d99 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -399,21 +399,19 @@ do
+ 	case "$rewritten" in
+ 	'')
+ 		echo "Ref '$ref' was deleted"
+-		git update-ref -m "filter-branch: delete" -d "$ref" $sha1 ||
++		git update-ref -m "filter-branch: delete" -d "$ref" ||
+ 			die "Could not delete $ref"
+ 	;;
+ 	$_x40)
+ 		echo "Ref '$ref' was rewritten"
+-		if ! git update-ref -m "filter-branch: rewrite" \
+-					"$ref" $rewritten $sha1 2>/dev/null; then
+-			if test $(git cat-file -t "$ref") = tag; then
+-				if test -z "$filter_tag_name"; then
+-					warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
+-					warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
+-				fi
+-			else
+-				die "Could not rewrite $ref"
++		if test $(git cat-file -t "$ref") = tag; then
++			if test -z "$filter_tag_name"; then
++				warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
++				warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
+ 			fi
++		else
++			git update-ref -m "filter-branch: rewrite" "$ref" $rewritten ||
++				die "Could not rewrite $ref"
+ 		fi
+ 	;;
+ 	*)
+@@ -423,7 +421,7 @@ do
+ 		warn "WARNING: Ref '$ref' points to the first one now."
+ 		rewritten=$(echo "$rewritten" | head -n 1)
+ 		git update-ref -m "filter-branch: rewrite to first" \
+-				"$ref" $rewritten $sha1 ||
++				"$ref" $rewritten ||
+ 			die "Could not rewrite $ref"
+ 	;;
+ 	esac
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 855afda..6a34527 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -261,6 +261,7 @@ test_expect_success 'Subdirectory filter with disappearing trees' '
+ '
+ 
+ test_expect_success 'Tag name filtering retains tag message' '
++	git update-ref -d refs/tags/T &&
+ 	git tag -m atag T &&
+ 	git cat-file tag T > expect &&
+ 	git filter-branch -f --tag-name-filter cat &&
+@@ -268,6 +269,26 @@ test_expect_success 'Tag name filtering retains tag message' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success "Rewrite commit referenced by annotated tag" '
++	git update-ref -d refs/tags/T &&
++	git tag -a -m atag T &&
++	git rev-parse refs/tags/T^0 >old_commit &&
++	git filter-branch -f --msg-filter "cat && echo foo" --tag-name-filter cat refs/tags/T &&
++	echo tag >type.expect &&
++	git cat-file -t refs/tags/T >type.actual &&
++	test_cmp type.expect type.actual &&
++	git rev-parse refs/tags/T^0 >new_commit &&
++	test_must_fail test_cmp old_commit new_commit
++'
++
++test_expect_success "Remove all commits" '
++	git branch removed-branch &&
++	git tag -a -m atag removed-tag &&
++	git filter-branch -f --commit-filter "skip_commit \"\$@\"" removed-branch removed-tag &&
++	test_must_fail git rev-parse refs/heads/removed-branch &&
++	test_must_fail git rev-parse refs/tags/removed-tag
++'
++
+ faux_gpg_tag='object XXXXXX
+ type commit
+ tag S
 -- 
-Duy
+1.9.4
