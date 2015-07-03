@@ -1,112 +1,76 @@
-From: Lawrence Siebert <lawrencesiebert@gmail.com>
-Subject: [PATCH v2 2/4] log: add --count option to git log
-Date: Thu,  2 Jul 2015 16:50:09 -0700
-Message-ID: <1435881011-13879-3-git-send-email-lawrencesiebert@gmail.com>
-References: <1435881011-13879-1-git-send-email-lawrencesiebert@gmail.com>
-Cc: remi.galan-alfonso@ensimag.grenoble-inp.fr, gitster@pobox.com,
-	Lawrence Siebert <lawrencesiebert@gmail.com>
+From: Donna Benjamin <dbenjamin@openinventionnetwork.com>
+Subject: git and the open invention network - an invitation to join us.
+Date: Fri, 3 Jul 2015 13:04:28 +1000
+Message-ID: <CAKeGJYgc5uY9djYSotbmcOvQh0w6SHJdCiXri7-oTYPMUoaO-Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 03 01:50:59 2015
+X-From: git-owner@vger.kernel.org Fri Jul 03 05:04:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZAoFt-0005H0-I0
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 01:50:57 +0200
+	id 1ZArHO-0001fw-V0
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 05:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485AbbGBXuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 19:50:52 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:36277 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753888AbbGBXun (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 19:50:43 -0400
-Received: by ykdr198 with SMTP id r198so82511420ykd.3
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 16:50:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6OXvKtjRsbU0X06f77P/HaT9lVy6vZ6l7+YgB+ydO/s=;
-        b=OS4tvFanYfWsQYuI1bEvpe36yYrpof5Nnh5K5wf5q+kAP62JPCqT8vb20nCgMkM04z
-         hhoAo1qQhVmbavf3JwXbxGhoUUgh0C96fVamx9ZJj+dCvS9A3f34oB7G799NoB7uHNgF
-         aQ05y0wG1Hyl8MRkogHlj3wRz+SZZD/+3S0Ih0lcbxKsJaCjBsjbpRFHaJ9yvAeZh6sv
-         CltaMj1Jj0kMO2BGGymkulnGCaosR/lVkoUv3S1bTxazeOhOUZ/IlGfrnRFq0L54BdSK
-         GplXDHT3/0HpaGCutQ+ecW1+TTUsfILy6j0QWG2j/KTrpDDIKXK/OhCOD6+oiXNWWVbA
-         TAUw==
-X-Received: by 10.129.90.67 with SMTP id o64mr38916405ywb.21.1435881042570;
-        Thu, 02 Jul 2015 16:50:42 -0700 (PDT)
-Received: from localhost.localdomain (24-176-234-59.dhcp.atsc.ca.charter.com. [24.176.234.59])
-        by mx.google.com with ESMTPSA id b131sm7190938ywc.18.2015.07.02.16.50.41
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 02 Jul 2015 16:50:42 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1435881011-13879-1-git-send-email-lawrencesiebert@gmail.com>
+	id S1754523AbbGCDEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2015 23:04:31 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:36079 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754257AbbGCDEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2015 23:04:30 -0400
+Received: by lagc2 with SMTP id c2so72554138lag.3
+        for <git@vger.kernel.org>; Thu, 02 Jul 2015 20:04:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=1RcRLbyV61YnAQdSzc7Sqfj2QuQQC02dyr86TMpYIL8=;
+        b=RvsdoAW3y+SigGFx5aTw9WFVqULGEIku5Ac0dxR7X3YI7sCeh4qArTOfhTBq4Gyx0z
+         0CuiXW4YVYpzknDBMm7KxWZbcQeJ+vv+ptvFw8TFc9FdoJgAoMGa0dVS/Bxx2Y2Y341r
+         gfnwN703JYJHwx/isugv0RfRUBOCEz27sbzAU8sgcoAXSYkKuZkSEuzdvda3bU6c5Sep
+         hF6XFBPch/FJ5knseAyq03/APUExHRiiZ3Kcm8Iex6PgMEqgw1vH6BuU/c77ck8Dvq4D
+         vxH1voNMp+BoLszwn4m7qHCkrsStSZzFc+hRqHSPG/PC9YzhX57vmWl6XuUxWsSHoCyy
+         l89A==
+X-Gm-Message-State: ALoCoQl2/+sZx90XiUjKtArC1e/ekcAR8EcxilWWL+3wKDUBfqOcIFRhwc0cfpl0HHmuSzrndAld
+X-Received: by 10.112.159.162 with SMTP id xd2mr32814590lbb.67.1435892668656;
+ Thu, 02 Jul 2015 20:04:28 -0700 (PDT)
+Received: by 10.112.201.199 with HTTP; Thu, 2 Jul 2015 20:04:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273279>
 
-adds --count from git rev-list to git log, without --use-bitmap-index
-for the moment.
+Hello git devs!
 
-Signed-off-by: Lawrence Siebert <lawrencesiebert@gmail.com>
----
- builtin/log.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+The Open Invention Network has recently expanded the definition of the
+Linux system it seeks to defend from patent aggression.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8781049..4aaff3a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -25,6 +25,7 @@
- #include "version.h"
- #include "mailmap.h"
- #include "gpg-interface.h"
-+#include "list-objects.h"
- 
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
-@@ -317,12 +318,40 @@ static void finish_early_output(struct rev_info *rev)
- 	show_early_header(rev, "done", n);
- }
- 
-+static void show_object(struct object *obj,
-+			const struct name_path *path, const char *component,
-+			void *cb_data)
-+{
-+	return;
-+}
-+
-+static void show_commit(struct commit *commit, void *data)
-+{
-+	struct rev_info *revs = (struct rev_info *)data;
-+	if (commit->object.flags & PATCHSAME)
-+		revs->count_same++;
-+	else if (commit->object.flags & SYMMETRIC_LEFT)
-+		revs->count_left++;
-+	else
-+		revs->count_right++;
-+	if (commit->parents) {
-+		free_commit_list(commit->parents);
-+		commit->parents = NULL;
-+	}
-+	free_commit_buffer(commit);
-+}
-+
- static int cmd_log_walk(struct rev_info *rev)
- {
- 	struct commit *commit;
- 	int saved_nrl = 0;
- 	int saved_dcctc = 0;
- 
-+	if (rev->count) {
-+		prepare_revision_walk(rev);
-+		traverse_commit_list(rev, show_commit, show_object, rev);
-+		get_commit_count(rev);
-+	}
- 	if (rev->early_output)
- 		setup_early_output(rev);
- 
--- 
-1.9.1
+We're also actively reaching out to the open source community to invite as
+many projects and related organisations to join us.  There's strength in
+numbers.
+
+A recent article in the Washington Post highlighted the impact we're having.
+http://www.washingtonpost.com/blogs/innovations/wp/2015/06/30/why-its-time-to-open-up-our-patent-system/
+
+So we ask that the GIT project join us too!
+
+It's free. It's easy. It only takes a couple of minutes.
+
+Go to http://j-oin.com to add your details.
+
+If you need more information, there's lots on our website and of
+course I'd be very happy to answer
+specific questions.
+
+regards
+Donna
+
+Donna Benjamin
+Outreach lead (Oceania)
+Open Invention Network
+e: dbenjamin@openinventionnetwork.com
+p: +61 (0)418 310 414
+w: www.openinventionnetwork.com
