@@ -1,72 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pager: do not leak "GIT_PAGER_IN_USE" to the pager
-Date: Fri, 3 Jul 2015 13:56:27 -0400
-Message-ID: <20150703175627.GA9223@peff.net>
-References: <xmqqk2uh5fd6.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PUB]What's cooking in git.git (Jul 2015, #01; Wed, 1)
+Date: Fri, 03 Jul 2015 10:57:58 -0700
+Message-ID: <xmqqlhex3yzd.fsf@gitster.dls.corp.google.com>
+References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com>
+	<vpqbnfudhuv.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 19:56:44 2015
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 03 19:58:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZB5Cc-00023x-84
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 19:56:42 +0200
+	id 1ZB5Dy-0002xT-RG
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 19:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754914AbbGCR4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 13:56:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55414 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755258AbbGCR4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2015 13:56:31 -0400
-Received: (qmail 17018 invoked by uid 102); 3 Jul 2015 17:56:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jul 2015 12:56:30 -0500
-Received: (qmail 14602 invoked by uid 107); 3 Jul 2015 17:56:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jul 2015 13:56:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jul 2015 13:56:27 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqk2uh5fd6.fsf@gitster.dls.corp.google.com>
+	id S1755082AbbGCR6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 13:58:01 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:33297 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755199AbbGCR6A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2015 13:58:00 -0400
+Received: by pdjd13 with SMTP id d13so67018494pdj.0
+        for <git@vger.kernel.org>; Fri, 03 Jul 2015 10:57:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=4psR7NRXiLpTMmEKk9YqQKcdjo+5+uAhQ23JWtWgWjc=;
+        b=Uxin0KnhQtlPCaU1OKca7eXGOlKdz70/Zhi7TXxDOH2QjAkR+zY04a2VtAam2oGO0I
+         ZKaFEHkVSxHnvSoEe+8R9gf1iYKxXK9lpcnpWI81pZiqbx2i2r1MxNYK964akFGF6fcD
+         WIEG4CRCpy4NhTXQ2qRDqfVfp0EA046WJh2bvn995XSry+7pw0XiRYXfo2hNAC/LANL/
+         AuzzYz/+NsNg7WYPOsl+B/imZCvpIBItbMqgG9WjXOL84hGf/pECYcZeUP820iJZyk52
+         uL40YIAAmIh9k9JQuVGf4kAZFa/z3BNoKnog3616rffL9cv9yP8KzXvx4ULR5gqC3zxh
+         OSZQ==
+X-Received: by 10.67.14.39 with SMTP id fd7mr57065021pad.97.1435946279552;
+        Fri, 03 Jul 2015 10:57:59 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:846f:c5d0:52c9:d18a])
+        by mx.google.com with ESMTPSA id bf5sm9788845pad.43.2015.07.03.10.57.58
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 03 Jul 2015 10:57:58 -0700 (PDT)
+In-Reply-To: <vpqbnfudhuv.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	02 Jul 2015 11:33:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273306>
 
-On Fri, Jul 03, 2015 at 10:18:45AM -0700, Junio C Hamano wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Since 2e6c01e2, we export GIT_PAGER_IN_USE so that a process that
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * ad/bisect-terms (2015-06-29) 10 commits
+> ...
+>>  The bottom part has been quite well cooked.  Perhaps split it into
+>>  two topisc and merge the earlier ones to 'next' before the rest
+>>  settles.  Michael's idea to make 'good/bad' more intelligent does
+>>  have certain attractiveness ($gname/272867).
+>
+> I think it makes sense to merge the first patches soon:
+>
+>  - bisect: don't mix option parsing and non-trivial code
+>  - bisect: simplify the addition of new bisect terms
+>  - bisect: replace hardcoded "bad|good" by variables
+>  - Documentation/bisect: revise overall content
+>  - Documentation/bisect: move getting help section to the end
+>  - bisect: correction of typo
+>
+> I have nothing to add on the last ones, but they can cook in pu a bit
+> longer.
+>
+> Do you expect anything from my side?
 
-I imagine you mean 2e6c012e here.
-
-> becomes the upstream of the spawned pager can still tell that we
-> have spawned the pager and decide to do colored output even when
-> its output no longer goes to a terminal (i.e. isatty(1)).
-> 
-> But we forgot to clear it from the enviornment of the spawned pager.
-> This is not a problem in a sane world, but if you have a handful of
-> thousands Git users in your organization, somebody is bound to do
-> strange things, e.g. typing "!<ENTER>" instead of 'q' to get control
-> back from $LESS.  GIT_PAGER_IN_USE is still set in that subshell
-> spawned by "less", and all sorts of interesting things starts
-> happening, e.g. "git diff | cat" starts coloring its output.
-> 
-> We can clear the environment variable in the half of the fork that
-> runs the pager to avoid the confusion.
-
-I think this is a reasonable fix. I guess it would be possible that some
-pager would want to react differently depending on the variable, but I
-could not think of a useful case. And certainly your pager, being the
-pager itself, can assume that the pager is in use. ;) At the very worst,
-somebody can set GIT_PAGER="GIT_PAGER_IN_USE=1 my-pager" if they truly
-want to do something bizarre.
-
-So,
-
-Acked-by: Jeff King <peff@peff.net>
-
--Peff
+Not at this moment.  Thanks for helping this topic move forward.
