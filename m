@@ -1,100 +1,126 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] Change strbuf_read_file() to return ssize_t
-Date: Fri,  3 Jul 2015 15:59:32 +0200
-Message-ID: <74f6ccbe74486b1d5589e953c4cf6d39c82c5c05.1435931485.git.mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 15:59:57 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-multimail: update to release 1.1.0
+Date: Fri,  3 Jul 2015 16:53:43 +0200
+Message-ID: <1435935223-9730-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jul 03 16:53:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZB1VT-0006rV-SU
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 15:59:56 +0200
+	id 1ZB2Lm-0000ql-Uu
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 16:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674AbbGCN7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 09:59:51 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:55465 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755307AbbGCN7t (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jul 2015 09:59:49 -0400
-X-AuditID: 12074414-f794f6d000007852-7f-5596954b16a0
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 3D.7D.30802.B4596955; Fri,  3 Jul 2015 09:59:39 -0400 (EDT)
-Received: from michael.fritz.box (p5DDB0229.dip0.t-ipconnect.de [93.219.2.41])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t63Dxba8022644
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 3 Jul 2015 09:59:38 -0400
-X-Mailer: git-send-email 2.1.4
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsUixO6iqOs9dVqowaFWDYuuK91MFg29V5gt
-	bq+Yz2zxo6WH2YHF4+/7D0wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xuuFO9gL
-	pvBWrNoh28B4gKuLkZNDQsBEYteef2wQtpjEhXvrgWwuDiGBy4wS15u2QTlHmST+HL3IBFLF
-	JqArsainGcwWEVCTmNh2iAXEZhZIkeh43s0IYgsL2Eg0r9kI1MzBwSKgKrFxuglImFcgSmLl
-	8VYmiGVyEueP/2SewMi9gJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuhV5uZoleakrpJkZI
-	MIjsYDxyUu4QowAHoxIP74XTU0OFWBPLiitzDzFKcjApifIKTpoWKsSXlJ9SmZFYnBFfVJqT
-	WnyIUYKDWUmE93kwUI43JbGyKrUoHyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoNDSYL3
-	xmSgRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQmMcXAwMdJMUDtPcCSDtvcUFi
-	LlAUovUUo6KUOK/qFKCEAEgiozQPbiwsxl8xigN9KcwrClLFA0wPcN2vgAYzAQ0WMQUbXJKI
-	kJJqYAxebXxF7n/PGfP5QZd/BdfOKkyL/XVwj8/dXedvTVkxNTZz8YGEQzOPKhpsUHmg8XbN
-	h3md3K/t1hi8lHZ48PDJkYsPjCakpezNi3GImxVydH7Zw4VSr07MYMneZf712Oz7ZmuLNRdz
-	cjyI/a6+ft+8+l1Trx8vbLfo3b6jT2+rxXVVRtEE+4cPlFiKMxINtZiLihMB46Iy 
+	id S1755456AbbGCOxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 10:53:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46012 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754964AbbGCOxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2015 10:53:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t63ErjRs001391
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Jul 2015 16:53:45 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t63Erkqa031866;
+	Fri, 3 Jul 2015 16:53:46 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZB2LZ-0002rr-Tc; Fri, 03 Jul 2015 16:53:45 +0200
+X-Mailer: git-send-email 2.5.0.rc0.7.ge1edd74.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Jul 2015 16:53:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t63ErjRs001391
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1436540028.37504@PZqwSa3IxLfqJBf3pujUjA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273292>
 
-It is currently declared to return int, which could overflow for large
-files.
+The only change is a bugfix: the SMTP mailer was not working with
+Python 2.4.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-This patch is against maint, but it also rebases against master
-without conflict.
+ contrib/hooks/multimail/CHANGES          |  5 +++++
+ contrib/hooks/multimail/README           |  2 +-
+ contrib/hooks/multimail/README.Git       |  4 ++--
+ contrib/hooks/multimail/git_multimail.py | 12 +++++++++---
+ 4 files changed, 17 insertions(+), 6 deletions(-)
 
-I couldn't find any way to exploit this bug. Most callers only use
-this function for locally-generated files in the first place. And the
-correct length of the file is available in strbuf::len, so most
-callers only use the return value for a "< 0" check. And they don't do
-anything risky on the error path.
-
- strbuf.c | 5 +++--
- strbuf.h | 2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/strbuf.c b/strbuf.c
-index 88cafd4..b4da9f5 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -481,9 +481,10 @@ int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term)
- 	return 0;
- }
+diff --git a/contrib/hooks/multimail/CHANGES b/contrib/hooks/multimail/CHANGES
+index 0b823d8..6bb1230 100644
+--- a/contrib/hooks/multimail/CHANGES
++++ b/contrib/hooks/multimail/CHANGES
+@@ -1,3 +1,8 @@
++Release 1.1.1 (bugfix-only release)
++===================================
++
++* The SMTP mailer was not working with Python 2.4.
++
+ Release 1.1.0
+ =============
  
--int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
-+ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
- {
--	int fd, len;
-+	int fd;
-+	ssize_t len;
+diff --git a/contrib/hooks/multimail/README b/contrib/hooks/multimail/README
+index 3a33cb7..e552c90 100644
+--- a/contrib/hooks/multimail/README
++++ b/contrib/hooks/multimail/README
+@@ -1,4 +1,4 @@
+-git-multimail Version 1.1.0
++git-multimail Version 1.1.1
+ ===========================
  
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
-diff --git a/strbuf.h b/strbuf.h
-index 1883494..1ea9d0b 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -364,7 +364,7 @@ extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
-  * Read the contents of a file, specified by its path. The third argument
-  * can be used to give a hint about the file size, to avoid reallocs.
-  */
--extern int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint);
-+extern ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint);
+ .. image:: https://travis-ci.org/git-multimail/git-multimail.svg?branch=master
+diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimail/README.Git
+index 449d36f..f5d59a8 100644
+--- a/contrib/hooks/multimail/README.Git
++++ b/contrib/hooks/multimail/README.Git
+@@ -6,10 +6,10 @@ website:
+     https://github.com/git-multimail/git-multimail
  
- /**
-  * Read the target of a symbolic link, specified by its path.  The third
+ The version in this directory was obtained from the upstream project
+-on Jun 18 2015 and consists of the "git-multimail" subdirectory from
++on July 03 2015 and consists of the "git-multimail" subdirectory from
+ revision
+ 
+-    1f0dbb3b60035767889b913df16d9231ecdb8709 refs/tags/1.1.0
++    6d6c9eb62a054143322cfaecde3949189c065b46 refs/tags/1.1.1
+ 
+ Please see the README file in this directory for information about how
+ to report bugs or contribute to git-multimail.
+diff --git a/contrib/hooks/multimail/git_multimail.py b/contrib/hooks/multimail/git_multimail.py
+index 7cb2b36..c06ce7a 100755
+--- a/contrib/hooks/multimail/git_multimail.py
++++ b/contrib/hooks/multimail/git_multimail.py
+@@ -1745,14 +1745,20 @@ class SMTPMailer(Mailer):
+         self.username = smtpuser
+         self.password = smtppass
+         try:
++            def call(klass, server, timeout):
++                try:
++                    return klass(server, timeout=timeout)
++                except TypeError:
++                    # Old Python versions do not have timeout= argument.
++                    return klass(server)
+             if self.security == 'none':
+-                self.smtp = smtplib.SMTP(self.smtpserver, timeout=self.smtpservertimeout)
++                self.smtp = call(smtplib.SMTP, self.smtpserver, timeout=self.smtpservertimeout)
+             elif self.security == 'ssl':
+-                self.smtp = smtplib.SMTP_SSL(self.smtpserver, timeout=self.smtpservertimeout)
++                self.smtp = call(smtplib.SMTP_SSL, self.smtpserver, timeout=self.smtpservertimeout)
+             elif self.security == 'tls':
+                 if ':' not in self.smtpserver:
+                     self.smtpserver += ':587'  # default port for TLS
+-                self.smtp = smtplib.SMTP(self.smtpserver, timeout=self.smtpservertimeout)
++                self.smtp = call(smtplib.SMTP, self.smtpserver, timeout=self.smtpservertimeout)
+                 self.smtp.ehlo()
+                 self.smtp.starttls()
+                 self.smtp.ehlo()
 -- 
-2.1.4
+2.5.0.rc0.7.ge1edd74.dirty
