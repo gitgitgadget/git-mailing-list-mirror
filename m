@@ -1,76 +1,65 @@
-From: Donna Benjamin <dbenjamin@openinventionnetwork.com>
-Subject: git and the open invention network - an invitation to join us.
-Date: Fri, 3 Jul 2015 13:04:28 +1000
-Message-ID: <CAKeGJYgc5uY9djYSotbmcOvQh0w6SHJdCiXri7-oTYPMUoaO-Q@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] log: add log.follow config option
+Date: Fri, 03 Jul 2015 09:17:45 +0200
+Message-ID: <vpqr3op676u.fsf@anie.imag.fr>
+References: <1435777439-5002-1-git-send-email-dturner@twopensource.com>
+	<vpq8uazo9y6.fsf@anie.imag.fr>
+	<xmqqvbe37eyy.fsf@gitster.dls.corp.google.com>
+	<1435862617.30946.2.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 03 05:04:43 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Jul 03 09:18:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZArHO-0001fw-V0
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 05:04:43 +0200
+	id 1ZAvEU-0003C3-Pv
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 09:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754523AbbGCDEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2015 23:04:31 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:36079 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754257AbbGCDEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2015 23:04:30 -0400
-Received: by lagc2 with SMTP id c2so72554138lag.3
-        for <git@vger.kernel.org>; Thu, 02 Jul 2015 20:04:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=1RcRLbyV61YnAQdSzc7Sqfj2QuQQC02dyr86TMpYIL8=;
-        b=RvsdoAW3y+SigGFx5aTw9WFVqULGEIku5Ac0dxR7X3YI7sCeh4qArTOfhTBq4Gyx0z
-         0CuiXW4YVYpzknDBMm7KxWZbcQeJ+vv+ptvFw8TFc9FdoJgAoMGa0dVS/Bxx2Y2Y341r
-         gfnwN703JYJHwx/isugv0RfRUBOCEz27sbzAU8sgcoAXSYkKuZkSEuzdvda3bU6c5Sep
-         hF6XFBPch/FJ5knseAyq03/APUExHRiiZ3Kcm8Iex6PgMEqgw1vH6BuU/c77ck8Dvq4D
-         vxH1voNMp+BoLszwn4m7qHCkrsStSZzFc+hRqHSPG/PC9YzhX57vmWl6XuUxWsSHoCyy
-         l89A==
-X-Gm-Message-State: ALoCoQl2/+sZx90XiUjKtArC1e/ekcAR8EcxilWWL+3wKDUBfqOcIFRhwc0cfpl0HHmuSzrndAld
-X-Received: by 10.112.159.162 with SMTP id xd2mr32814590lbb.67.1435892668656;
- Thu, 02 Jul 2015 20:04:28 -0700 (PDT)
-Received: by 10.112.201.199 with HTTP; Thu, 2 Jul 2015 20:04:28 -0700 (PDT)
+	id S1754210AbbGCHRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 03:17:54 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34279 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754583AbbGCHRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2015 03:17:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t637HjWM016258
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Jul 2015 09:17:45 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t637Hjns022210;
+	Fri, 3 Jul 2015 09:17:45 +0200
+In-Reply-To: <1435862617.30946.2.camel@twopensource.com> (David Turner's
+	message of "Thu, 02 Jul 2015 14:43:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Jul 2015 09:17:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t637HjWM016258
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436512667.27747@N9Ie+WsfKI6TsIpV7Qy3ng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273280>
 
-Hello git devs!
+David Turner <dturner@twopensource.com> writes:
 
-The Open Invention Network has recently expanded the definition of the
-Linux system it seeks to defend from patent aggression.
+> Twitter's history is almost completely linear, so it's useful for us.  
+>
+> Since it looks like the patch won't be useful outside of our context,
+> I'll just rewrite it to check the pathspec count, and not upstream it
+> until follow becomes more general.
 
-We're also actively reaching out to the open source community to invite as
-many projects and related organisations to join us.  There's strength in
-numbers.
+As long as it's an opt-in and that the documentation states the
+limitations clearly enough, I think it makes sense to me to have this
+upstream.
 
-A recent article in the Washington Post highlighted the impact we're having.
-http://www.washingtonpost.com/blogs/innovations/wp/2015/06/30/why-its-time-to-open-up-our-patent-system/
-
-So we ask that the GIT project join us too!
-
-It's free. It's easy. It only takes a couple of minutes.
-
-Go to http://j-oin.com to add your details.
-
-If you need more information, there's lots on our website and of
-course I'd be very happy to answer
-specific questions.
-
-regards
-Donna
-
-Donna Benjamin
-Outreach lead (Oceania)
-Open Invention Network
-e: dbenjamin@openinventionnetwork.com
-p: +61 (0)418 310 414
-w: www.openinventionnetwork.com
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
