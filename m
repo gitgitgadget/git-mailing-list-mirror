@@ -1,79 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PUB]What's cooking in git.git (Jul 2015, #01; Wed, 1)
-Date: Fri, 03 Jul 2015 10:57:58 -0700
-Message-ID: <xmqqlhex3yzd.fsf@gitster.dls.corp.google.com>
-References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com>
-	<vpqbnfudhuv.fsf@anie.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/7] pack-protocol.txt: Mark all LFs in push-cert as
+ required
+Date: Fri, 3 Jul 2015 14:07:19 -0400
+Message-ID: <20150703180718.GB9223@peff.net>
+References: <1435774099-21260-1-git-send-email-dborowitz@google.com>
+ <1435774099-21260-4-git-send-email-dborowitz@google.com>
+ <xmqqfv578x87.fsf@gitster.dls.corp.google.com>
+ <xmqq8uaz8vjb.fsf@gitster.dls.corp.google.com>
+ <xmqq4mln8ve2.fsf@gitster.dls.corp.google.com>
+ <20150702135309.GA18286@peff.net>
+ <xmqq38155e3s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 03 19:58:08 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Dave Borowitz <dborowitz@google.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 03 20:07:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZB5Dy-0002xT-RG
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 19:58:07 +0200
+	id 1ZB5N2-0008TI-3v
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 20:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755082AbbGCR6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 13:58:01 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:33297 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755199AbbGCR6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2015 13:58:00 -0400
-Received: by pdjd13 with SMTP id d13so67018494pdj.0
-        for <git@vger.kernel.org>; Fri, 03 Jul 2015 10:57:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=4psR7NRXiLpTMmEKk9YqQKcdjo+5+uAhQ23JWtWgWjc=;
-        b=Uxin0KnhQtlPCaU1OKca7eXGOlKdz70/Zhi7TXxDOH2QjAkR+zY04a2VtAam2oGO0I
-         ZKaFEHkVSxHnvSoEe+8R9gf1iYKxXK9lpcnpWI81pZiqbx2i2r1MxNYK964akFGF6fcD
-         WIEG4CRCpy4NhTXQ2qRDqfVfp0EA046WJh2bvn995XSry+7pw0XiRYXfo2hNAC/LANL/
-         AuzzYz/+NsNg7WYPOsl+B/imZCvpIBItbMqgG9WjXOL84hGf/pECYcZeUP820iJZyk52
-         uL40YIAAmIh9k9JQuVGf4kAZFa/z3BNoKnog3616rffL9cv9yP8KzXvx4ULR5gqC3zxh
-         OSZQ==
-X-Received: by 10.67.14.39 with SMTP id fd7mr57065021pad.97.1435946279552;
-        Fri, 03 Jul 2015 10:57:59 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:846f:c5d0:52c9:d18a])
-        by mx.google.com with ESMTPSA id bf5sm9788845pad.43.2015.07.03.10.57.58
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 03 Jul 2015 10:57:58 -0700 (PDT)
-In-Reply-To: <vpqbnfudhuv.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	02 Jul 2015 11:33:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755383AbbGCSHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 14:07:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55424 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754894AbbGCSHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2015 14:07:22 -0400
+Received: (qmail 17498 invoked by uid 102); 3 Jul 2015 18:07:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jul 2015 13:07:21 -0500
+Received: (qmail 14667 invoked by uid 107); 3 Jul 2015 18:07:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jul 2015 14:07:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jul 2015 14:07:19 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq38155e3s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273307>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, Jul 03, 2015 at 10:45:59AM -0700, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> * ad/bisect-terms (2015-06-29) 10 commits
-> ...
->>  The bottom part has been quite well cooked.  Perhaps split it into
->>  two topisc and merge the earlier ones to 'next' before the rest
->>  settles.  Michael's idea to make 'good/bad' more intelligent does
->>  have certain attractiveness ($gname/272867).
->
-> I think it makes sense to merge the first patches soon:
->
->  - bisect: don't mix option parsing and non-trivial code
->  - bisect: simplify the addition of new bisect terms
->  - bisect: replace hardcoded "bad|good" by variables
->  - Documentation/bisect: revise overall content
->  - Documentation/bisect: move getting help section to the end
->  - bisect: correction of typo
->
-> I have nothing to add on the last ones, but they can cook in pu a bit
-> longer.
->
-> Do you expect anything from my side?
+> > Usually flush packets are "0000", and an empty data packet
+> > is "0004". Or are you talking about some kind of flush inside the
+> > pkt-data stream?
+> 
+> Neither.  At the wire level there is a difference, but the callers
+> of most often used function in pkt-line API, packet_read(), says
+> 
+> 	while (1) {
+> 		len = packet_read();
+> 	        if (!len) {
+> 	        	/* flush */
+> 	                break;
+> 		}
+> 	        ... do things on the "len" bytes received ...
+> 		... and then on to the next packet ...
+> 	}
 
-Not at this moment.  Thanks for helping this topic move forward.
+Ah, I see. Yeah, that is a problem. The solutions you proposed seem like
+good workarounds to me, but we are unfortunately stuck with existing
+clients and servers which did not behave that way.
+
+I wondered briefly whether this impacted the keepalives we added to
+`upload-pack` in 05e9515; those are implemented as 0-byte data packets,
+which we send during the potentially long counting/delta-compression
+phase before we send out pack data. It works there because the packets
+actually contain a single sideband byte, so they are never mistaken for
+a flush packet.
+
+Related, I recently ran into a case where I think we should do the same
+for pushes. After receiving the pack, `index-pack` may chew on the
+result for literally minutes (try pushing up the entire linux.git
+history sometime). We say nothing at all on the wire until we've
+finished that, run check_everything_connected, and run all hooks.  Some
+clients (or intermediates on the connection) may give up after a few
+minutes of silence.
+
+I think we should have:
+
+  1. Some progress eye-candy from the server to tell us that something
+     is happening, and how close we are to finishing (basically
+     "index-pack -v").
+
+  2. When progress is disabled, similar keepalive packets saying "nope,
+     no output yet".
+
+For (2), hopefully we can implement it in the same way, and rely on
+empty sideband-0 packets. I haven't tested it in practice, though (I
+have some very rough patches for (1) already).
+
+-Peff
