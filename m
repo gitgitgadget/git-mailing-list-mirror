@@ -1,93 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: return non-zero error code if format-patch fails
-Date: Fri, 03 Jul 2015 10:52:32 -0700
-Message-ID: <xmqqpp493z8f.fsf@gitster.dls.corp.google.com>
-References: <20150702091133.GA13353@musxeris015.imu.intel.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pager: do not leak "GIT_PAGER_IN_USE" to the pager
+Date: Fri, 3 Jul 2015 13:56:27 -0400
+Message-ID: <20150703175627.GA9223@peff.net>
+References: <xmqqk2uh5fd6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Andrew Wong <andrew.kw.w@gmail.com>,
-	Jorge Nunes <jorge.nunes@intel.com>
-To: Clemens Buchacher <clemens.buchacher@intel.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 19:52:40 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 03 19:56:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZB58i-00086G-8z
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 19:52:40 +0200
+	id 1ZB5Cc-00023x-84
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jul 2015 19:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754930AbbGCRwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 13:52:35 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33831 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754977AbbGCRwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2015 13:52:34 -0400
-Received: by igcsj18 with SMTP id sj18so192131012igc.1
-        for <git@vger.kernel.org>; Fri, 03 Jul 2015 10:52:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=wuUlFgw1JDZCuAUTslUoPDlzp19tR85iXOoz6MdnV+w=;
-        b=nSiagoUnVp+Rlx61Vt29v8W2+NVHK7TlrswguvZFHEDPkSFhkf6nMKTpEkdxub/oQQ
-         16QbRj3NvTSzgxtGMJ8SEKY0BeENCgWtg1gD4TRa3u0iLA1ULKuS/HQIGisC2A9iGeDs
-         Y8XtHT5sWl09wRgQR2E/C6lJQfniRtCcsfRkvnr9jyjs8Gmmdhvfv6xY/PN95vZi2L5X
-         +DbQxcC1N2uNxCgPxnZ0uqrIsoKeGHk8yBfNR/laja5IVDzt0AFALs3mn9ZZr5FOVGYO
-         vS5tXNBLkuG4jPwXFqeGNU9m6U329p2o/eNLyk9oJdm2mskjI/WaKv+Skrwnxw75e3bZ
-         Pzig==
-X-Received: by 10.107.13.201 with SMTP id 192mr45456795ion.70.1435945954321;
-        Fri, 03 Jul 2015 10:52:34 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:846f:c5d0:52c9:d18a])
-        by mx.google.com with ESMTPSA id w4sm3864729igl.22.2015.07.03.10.52.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 03 Jul 2015 10:52:33 -0700 (PDT)
-In-Reply-To: <20150702091133.GA13353@musxeris015.imu.intel.com> (Clemens
-	Buchacher's message of "Thu, 2 Jul 2015 11:11:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754914AbbGCR4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 13:56:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55414 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755258AbbGCR4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2015 13:56:31 -0400
+Received: (qmail 17018 invoked by uid 102); 3 Jul 2015 17:56:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jul 2015 12:56:30 -0500
+Received: (qmail 14602 invoked by uid 107); 3 Jul 2015 17:56:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jul 2015 13:56:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jul 2015 13:56:27 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqk2uh5fd6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273305>
 
-Clemens Buchacher <clemens.buchacher@intel.com> writes:
+On Fri, Jul 03, 2015 at 10:18:45AM -0700, Junio C Hamano wrote:
 
-> Since e481af06 (rebase: Handle cases where format-patch fails) we
-> notice if format-patch fails and return immediately from
-> git-rebase--am. We save the return value with ret=$?, but then we
-> return $?, which is usually zero in this case.
->
-> Fix this by returning $ret instead.
+> Since 2e6c01e2, we export GIT_PAGER_IN_USE so that a process that
 
-Sounds sensible.
+I imagine you mean 2e6c012e here.
 
->
-> Cc: Andrew Wong <andrew.kw.w@gmail.com>
-> Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
-> Reviewed-by: Jorge Nunes <jorge.nunes@intel.com>
+> becomes the upstream of the spawned pager can still tell that we
+> have spawned the pager and decide to do colored output even when
+> its output no longer goes to a terminal (i.e. isatty(1)).
+> 
+> But we forgot to clear it from the enviornment of the spawned pager.
+> This is not a problem in a sane world, but if you have a handful of
+> thousands Git users in your organization, somebody is bound to do
+> strange things, e.g. typing "!<ENTER>" instead of 'q' to get control
+> back from $LESS.  GIT_PAGER_IN_USE is still set in that subshell
+> spawned by "less", and all sorts of interesting things starts
+> happening, e.g. "git diff | cat" starts coloring its output.
+> 
+> We can clear the environment variable in the half of the fork that
+> runs the pager to avoid the confusion.
 
-Where was this review made?  I may have missed a recent discussion,
-and that is why I am asking, because Reviewed-by: lines that cannot
-be validated by going back to the list archive does not add much
-value.
+I think this is a reasonable fix. I guess it would be possible that some
+pager would want to react differently depending on the variable, but I
+could not think of a useful case. And certainly your pager, being the
+pager itself, can assume that the pager is in use. ;) At the very worst,
+somebody can set GIT_PAGER="GIT_PAGER_IN_USE=1 my-pager" if they truly
+want to do something bizarre.
 
-Thanks.
+So,
 
-> ---
->  git-rebase--am.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-> index f923732..9ae898b 100644
-> --- a/git-rebase--am.sh
-> +++ b/git-rebase--am.sh
-> @@ -78,7 +78,7 @@ else
->  
->  		As a result, git cannot rebase them.
->  		EOF
-> -		return $?
-> +		return $ret
->  	fi
->  
->  	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" \
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
