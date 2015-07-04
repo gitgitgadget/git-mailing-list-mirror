@@ -1,136 +1,104 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 22/23] worktree: add: auto-vivify new branch when <branch> is omitted
-Date: Fri,  3 Jul 2015 20:17:31 -0400
-Message-ID: <1435969052-540-23-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v2 12/23] checkout: drop 'checkout_opts' dependency from prepare_linked_checkout
+Date: Fri,  3 Jul 2015 20:17:21 -0400
+Message-ID: <1435969052-540-13-git-send-email-sunshine@sunshineco.com>
 References: <1435969052-540-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Mikael Magnusson <mikachu@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 04 02:19:50 2015
+X-From: git-owner@vger.kernel.org Sat Jul 04 02:19:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZBBBL-0000bU-49
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 02:19:47 +0200
+	id 1ZBBBO-0000cR-L3
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 02:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756109AbbGDATm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 20:19:42 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:34352 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755861AbbGDASq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2015 20:18:46 -0400
-Received: by igcsj18 with SMTP id sj18so196950949igc.1
-        for <git@vger.kernel.org>; Fri, 03 Jul 2015 17:18:45 -0700 (PDT)
+	id S1756114AbbGDATp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 20:19:45 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:35361 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755920AbbGDASh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2015 20:18:37 -0400
+Received: by iecuq6 with SMTP id uq6so84336446iec.2
+        for <git@vger.kernel.org>; Fri, 03 Jul 2015 17:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vFc7+8ZNqkM/E8xufLgM8syJy2DLwaDzcBNfIrzOxYo=;
-        b=MT5dN7hXzmV65zBQ9CpRUVbZCjIY40mNReOVHstt0tiIO5AwAU804E5yF5oH+GnjFl
-         LnL9HP6/umcUNQZk8hS6jvV463kw+dp7rWq4Y8kT18d7igQsubgR22VONULwsp6k2aWQ
-         pqypOXQvUqk/AM3XSGBaSvfyNAbjiBrSl3VZlaI0/OFKbWolapTFsBEvmV3pceFlL+BA
-         MYCWiOKpf5ZPpGTaloqncvFGQ3if7YNsocdEG08KDKP5GikTbAHt9G0AO4Ci3FnnBc/E
-         lmJkxlIKcL4d37/AvTa8sAkDWPJASpCODXpv86r7a5Rtmlq61Knih0BW55pdDMr+xUJA
-         ep7w==
-X-Received: by 10.50.61.130 with SMTP id p2mr25979034igr.9.1435969125740;
-        Fri, 03 Jul 2015 17:18:45 -0700 (PDT)
+        bh=+bWO6r/q1JtSyek/rtZRIh0fsLJYefuiD/SRpleHrzg=;
+        b=zPrcb2FFp51oq0zL4J14ZW6GnaEllthuXGBwBBaBvwk8BT9vIT2zmRZg8jbaU4c5f8
+         57JL3SF2iYVuK4pXGJHV07HsyM6framezcohj7+gEawSlUei2XOrFbbvCUuMQSfs3ywg
+         mroZ8nsi9xB3rlhNrsYxVFp8J4fINApGjkyHNWuZJZTzIZeom4KIa+o42uxHcl2L849m
+         cxJrt2cnCWM6BWh1wn5hZoUe/ShUh4hbNODNm5Qt4L3PmpLy37oP3Hc7QikYJv2l0jNt
+         CVvKgutOSPAfMfe4sDE+twk7uWSmn7avrY54xlJ/xwDKkVD+KRKFcrs57jBhor+C3G5c
+         10cg==
+X-Received: by 10.50.4.66 with SMTP id i2mr54736323igi.40.1435969117216;
+        Fri, 03 Jul 2015 17:18:37 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id z195sm7246110iod.33.2015.07.03.17.18.45
+        by mx.google.com with ESMTPSA id z195sm7246110iod.33.2015.07.03.17.18.36
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 03 Jul 2015 17:18:45 -0700 (PDT)
+        Fri, 03 Jul 2015 17:18:36 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.197.g417e668
 In-Reply-To: <1435969052-540-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273336>
 
-As a convenience, when <branch> is omitted from "git worktree <path>
-<branch>" and neither -b nor -B used, automatically create a new branch
-named after <path>, as if "-b $(basename <path>)" was specified. Thus,
-"git worktree add ../hotfix" creates a new branch named "hotfix" and
-associates it with new worktree "../hotfix".
+The plan is to relocate "git checkout --to" functionality to "git
+worktree add", however, worktree.c won't have access to the 'struct
+checkout_opts' passed to prepare_linked_worktree(), which it consults
+for the pathname of the new worktree and the argv[] of the command it
+should run to populate the new worktree. Facilitate relocation of
+prepare_linked_worktree() by instead having it accept the pathname and
+argv[] directly, thus eliminating the final references to 'struct
+checkout_opts'.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-worktree.txt | 8 ++++++--
- builtin/worktree.c             | 8 ++++++--
- t/t2025-worktree-add.sh        | 7 +++++++
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ builtin/checkout.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 5ca11f6..938bdab 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -9,7 +9,7 @@ git-worktree - Manage multiple worktrees
- SYNOPSIS
- --------
- [verse]
--'git worktree add' [-f] [--detach] [-b <new-branch>] <path> <branch>
-+'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
- 'git worktree prune' [-n] [-v] [--expire <expire>]
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 86b1745..30fe786 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -854,11 +854,11 @@ static void remove_junk_on_signal(int signo)
+ 	raise(signo);
+ }
  
- DESCRIPTION
-@@ -45,12 +45,16 @@ pruning should be suppressed. See section "DETAILS" for more information.
+-static int prepare_linked_checkout(const struct checkout_opts *opts)
++static int prepare_linked_checkout(const char *path, const char **child_argv)
+ {
+ 	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char *path = opts->new_worktree, *name;
++	const char *name;
+ 	struct stat st;
+ 	struct child_process cp;
+ 	int counter = 0, len, ret;
+@@ -938,7 +938,7 @@ static int prepare_linked_checkout(const struct checkout_opts *opts)
+ 	setenv(GIT_WORK_TREE_ENVIRONMENT, path, 1);
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.git_cmd = 1;
+-	cp.argv = opts->saved_argv;
++	cp.argv = child_argv;
+ 	ret = run_command(&cp);
+ 	if (!ret) {
+ 		is_junk = 0;
+@@ -1297,7 +1297,8 @@ static int checkout_branch(struct checkout_opts *opts,
+ 	if (opts->new_worktree) {
+ 		if (!new->commit)
+ 			die(_("no branch specified"));
+-		return prepare_linked_checkout(opts);
++		return prepare_linked_checkout(opts->new_worktree,
++					       opts->saved_argv);
+ 	}
  
- COMMANDS
- --------
--add <path> <branch>::
-+add <path> [<branch>]::
- 
- Check out `<branch>` into a separate working directory, `<path>`, creating
- `<path>` if necessary. The new working directory is linked to the current
- repository, sharing everything except working directory specific files
- such as HEAD, index, etc. If `<path>` already exists, it must be empty.
-++
-+If `<branch>` is omitted and neither `-b` nor `-B` used, then, as a
-+convenience, a new branch rooted at HEAD is created automatically, as if
-+`-b $(basename <path>)` was specified.
- 
- prune::
- 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index bf634a6..c8c6fa7 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -286,12 +286,16 @@ static int add(int ac, const char **av, const char *prefix)
- 		die(_("-b and -B are mutually exclusive"));
- 	if (ac < 1 || ac > 2)
- 		usage_with_options(worktree_usage, options);
--	if (ac < 2 && !new_branch && !new_branch_force)
--		usage_with_options(worktree_usage, options);
- 
- 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
- 	branch = ac < 2 ? "HEAD" : av[1];
- 
-+	if (ac < 2 && !new_branch && !new_branch_force) {
-+		int n;
-+		const char *s = worktree_basename(path, &n);
-+		new_branch = xstrndup(s, n);
-+	}
-+
- 	argv_array_push(&cmd, "checkout");
- 	if (force)
- 		argv_array_push(&cmd, "--ignore-other-worktrees");
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 95a1141..59d73ff 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -147,4 +147,11 @@ test_expect_success '"add -b" with <branch> omitted' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '"add" with <branch> omitted' '
-+	git rev-parse HEAD >expected &&
-+	git worktree add wiffle/bat &&
-+	git rev-parse bat >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+ 	if (!new->commit && opts->new_branch) {
 -- 
 2.5.0.rc1.197.g417e668
