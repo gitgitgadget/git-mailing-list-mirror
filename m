@@ -1,7 +1,7 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 06/23] Documentation/git-worktree: add high-level 'lock' overview
-Date: Fri,  3 Jul 2015 20:17:15 -0400
-Message-ID: <1435969052-540-7-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v2 05/23] Documentation/git-worktree: split technical info from general description
+Date: Fri,  3 Jul 2015 20:17:14 -0400
+Message-ID: <1435969052-540-6-git-send-email-sunshine@sunshineco.com>
 References: <1435969052-540-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
@@ -14,91 +14,142 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZBBAZ-0000B6-C5
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 02:18:59 +0200
+	id 1ZBBAT-0000AP-NP
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 02:18:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995AbbGDASw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 20:18:52 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:35340 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755864AbbGDASc (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755653AbbGDASq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 20:18:46 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:35053 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755695AbbGDASc (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 3 Jul 2015 20:18:32 -0400
-Received: by iecuq6 with SMTP id uq6so84335876iec.2
+Received: by igblr2 with SMTP id lr2so148238221igb.0
         for <git@vger.kernel.org>; Fri, 03 Jul 2015 17:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IEPcYr/kzUIU3k5pzEa8qv9we/4CosjxTf+qfDBs6uk=;
-        b=TD8t6jp6vh46OLHe5iiDYJbZttd8PojbVwabD0XkeS0Vb3tBmxhFEkX12TXzouJ28q
-         QcQJ0TwM7PXottLgNGE7GovHkIiHrsp8OENKpBaMXcQxqr0kqn5iTdi6Ux2mPzMkrr6j
-         0REFtbIpaD3nL16NsN1s3UbS/eodVkVLymSVpBB0VHeXc33+Om+HP43aL82WtAOuOsFu
-         2wOYOv8vahyQGeOHw1IklgWPybsVbFDA340qeoA4mfm4rX8GPCJ72fqAKDhJSyYvEPMA
-         70k1bC76b+9sZ+wZTAh1u7kkrt3UMJdkS5+HF1FN7vzzy3P38OdlZw3RlhNMIFejmMm1
-         4b9g==
-X-Received: by 10.50.66.167 with SMTP id g7mr25947526igt.22.1435969111884;
+        bh=OK6+smvlHzMAGFNP/34e0bi/BWJmH+RGEWeo37CbQC8=;
+        b=r1zzdtX3bA78RLiCaYyBOJZaG/K7/dc8fje7FGhDiIFKirWEPC1k3UUMvxtxiixGv0
+         78t9avgjo9N6yNVBilj61/BzSIfq8v4Rlppn+jkC0YVeqOYbeG2Auq9nWTYNWLOqvBsv
+         CSin+52vnMJe35tceLGoKrH4nFp9VwlJdfMMm/v6v2RpsBhUbnHKe3A1CAeOPD+ge9DC
+         B7XDf3nwPIFGKtdN5HAWA+27k+v5+xXKK14SIrC5v3SvKixXYzLcbmqp3IqM9bi7n/BJ
+         /8tYgyXqGY/elKu7/tsisBSCjEPQVX5bVzm/aApfoIz6U8CR9kcrgPsxGrA3CrDtG5aa
+         Uxhw==
+X-Received: by 10.50.50.98 with SMTP id b2mr24418201igo.42.1435969111026;
         Fri, 03 Jul 2015 17:18:31 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id z195sm7246110iod.33.2015.07.03.17.18.31
+        by mx.google.com with ESMTPSA id z195sm7246110iod.33.2015.07.03.17.18.30
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 03 Jul 2015 17:18:31 -0700 (PDT)
+        Fri, 03 Jul 2015 17:18:30 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.197.g417e668
 In-Reply-To: <1435969052-540-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273321>
 
-Due to the (current) absence of a "git worktree lock" command, locking
-a worktree's administrative files to prevent automatic pruning is a
-manual task, necessarily requiring low-level understanding of linked
-worktree functionality. However, this level of detail does not belong
-in the high-level DESCRIPTION section, so add a generalized discussion
-of locking to DESCRIPTION and move the technical information to DETAILS.
+The DESCRIPTION section should provide a high-level overview of linked
+worktree functionality to bring users up to speed quickly, without
+overloading them with low-level details, so relocate the technical
+information to a new DETAILS section.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-worktree.txt | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ Documentation/git-worktree.txt | 70 ++++++++++++++++++++++--------------------
+ 1 file changed, 36 insertions(+), 34 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 2fdfb3e..410f0b4 100644
+index 4fbcdd2..2fdfb3e 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -37,15 +37,11 @@ at least one git command inside the linked working directory
- (e.g. `git status`) in order to update its administrative files in the
- repository so that they do not get automatically pruned.
+@@ -24,47 +24,18 @@ tree is associated with the repository.  This new working tree is called a
+ init" or "git clone".  A repository has one main working tree (if it's not a
+ bare repository) and zero or more linked working trees.
  
--To prevent a $GIT_DIR/worktrees entry from from being pruned (which
--can be useful in some situations, such as when the
--entry's working tree is stored on a portable device), add a file named
--'locked' to the entry's directory. The file contains the reason in
--plain text. For example, if a linked working tree's `.git` file points
--to `/path/main/.git/worktrees/test-next` then a file named
--`/path/main/.git/worktrees/test-next/locked` will prevent the
--`test-next` entry from being pruned.  See
--linkgit:gitrepository-layout[5] for details.
-+If a linked working tree is stored on a portable device or network share
-+which is not always mounted, you can prevent its administrative files from
-+being pruned by creating a file named 'lock' alongside the other
-+administrative files, optionally containing a plain text reason that
-+pruning should be suppressed. See section "DETAILS" for more information.
+-Each linked working tree has a private sub-directory in the repository's
+-$GIT_DIR/worktrees directory.  The private sub-directory's name is usually
+-the base name of the linked working tree's path, possibly appended with a
+-number to make it unique.  For example, when `$GIT_DIR=/path/main/.git` the
+-command `git checkout --to /path/other/test-next next` creates the linked
+-working tree in `/path/other/test-next` and also creates a
+-`$GIT_DIR/worktrees/test-next` directory (or `$GIT_DIR/worktrees/test-next1`
+-if `test-next` is already taken).
+-
+-Within a linked working tree, $GIT_DIR is set to point to this private
+-directory (e.g. `/path/main/.git/worktrees/test-next` in the example) and
+-$GIT_COMMON_DIR is set to point back to the main working tree's $GIT_DIR
+-(e.g. `/path/main/.git`). These settings are made in a `.git` file located at
+-the top directory of the linked working tree.
+-
+-Path resolution via `git rev-parse --git-path` uses either
+-$GIT_DIR or $GIT_COMMON_DIR depending on the path. For example, in the
+-linked working tree `git rev-parse --git-path HEAD` returns
+-`/path/main/.git/worktrees/test-next/HEAD` (not
+-`/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `git
+-rev-parse --git-path refs/heads/master` uses
+-$GIT_COMMON_DIR and returns `/path/main/.git/refs/heads/master`,
+-since refs are shared across all working trees.
+-
+-See linkgit:gitrepository-layout[5] for more information. The rule of
+-thumb is do not make any assumption about whether a path belongs to
+-$GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
+-inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
+-
+ When you are done with a linked working tree you can simply delete it.
+-The working tree's entry in the repository's $GIT_DIR/worktrees
+-directory will eventually be removed automatically (see
++The working tree's administrative files in the repository (see
++"DETAILS" below) will eventually be removed automatically (see
+ `gc.pruneworktreesexpire` in linkgit::git-config[1]), or you can run
+ `git worktree prune` in the main or any linked working tree to
+-clean up any stale entries in $GIT_DIR/worktrees.
++clean up any stale administrative files.
  
- COMMANDS
- --------
-@@ -99,6 +95,16 @@ thumb is do not make any assumption about whether a path belongs to
- $GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
- inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
+ If you move a linked working directory to another file system, or
+ within a file system that does not support hard links, you need to run
+ at least one git command inside the linked working directory
+-(e.g. `git status`) in order to update its entry in $GIT_DIR/worktrees
+-so that it does not get automatically removed.
++(e.g. `git status`) in order to update its administrative files in the
++repository so that they do not get automatically pruned.
  
-+To prevent a $GIT_DIR/worktrees entry from from being pruned (which
-+can be useful in some situations, such as when the
-+entry's working tree is stored on a portable device), add a file named
-+'locked' to the entry's directory. The file contains the reason in
-+plain text. For example, if a linked working tree's `.git` file points
-+to `/path/main/.git/worktrees/test-next` then a file named
-+`/path/main/.git/worktrees/test-next/locked` will prevent the
-+`test-next` entry from being pruned.  See
-+linkgit:gitrepository-layout[5] for details.
+ To prevent a $GIT_DIR/worktrees entry from from being pruned (which
+ can be useful in some situations, such as when the
+@@ -97,6 +68,37 @@ OPTIONS
+ --expire <time>::
+ 	With `prune`, only expire unused worktrees older than <time>.
+ 
++DETAILS
++-------
++Each linked working tree has a private sub-directory in the repository's
++$GIT_DIR/worktrees directory.  The private sub-directory's name is usually
++the base name of the linked working tree's path, possibly appended with a
++number to make it unique.  For example, when `$GIT_DIR=/path/main/.git` the
++command `git checkout --to /path/other/test-next next` creates the linked
++working tree in `/path/other/test-next` and also creates a
++`$GIT_DIR/worktrees/test-next` directory (or `$GIT_DIR/worktrees/test-next1`
++if `test-next` is already taken).
++
++Within a linked working tree, $GIT_DIR is set to point to this private
++directory (e.g. `/path/main/.git/worktrees/test-next` in the example) and
++$GIT_COMMON_DIR is set to point back to the main working tree's $GIT_DIR
++(e.g. `/path/main/.git`). These settings are made in a `.git` file located at
++the top directory of the linked working tree.
++
++Path resolution via `git rev-parse --git-path` uses either
++$GIT_DIR or $GIT_COMMON_DIR depending on the path. For example, in the
++linked working tree `git rev-parse --git-path HEAD` returns
++`/path/main/.git/worktrees/test-next/HEAD` (not
++`/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `git
++rev-parse --git-path refs/heads/master` uses
++$GIT_COMMON_DIR and returns `/path/main/.git/refs/heads/master`,
++since refs are shared across all working trees.
++
++See linkgit:gitrepository-layout[5] for more information. The rule of
++thumb is do not make any assumption about whether a path belongs to
++$GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
++inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
 +
  BUGS
  ----
