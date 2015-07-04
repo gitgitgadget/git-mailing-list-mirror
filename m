@@ -1,97 +1,108 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 19/23] checkout: require worktree unconditionally
-Date: Fri,  3 Jul 2015 20:17:28 -0400
-Message-ID: <1435969052-540-20-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v2 20/23] worktree: extract basename computation to new function
+Date: Fri,  3 Jul 2015 20:17:29 -0400
+Message-ID: <1435969052-540-21-git-send-email-sunshine@sunshineco.com>
 References: <1435969052-540-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Mikael Magnusson <mikachu@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 04 02:19:23 2015
+X-From: git-owner@vger.kernel.org Sat Jul 04 02:19:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZBBAx-0000QQ-0n
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 02:19:23 +0200
+	id 1ZBBB4-0000Sl-Mc
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 02:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756067AbbGDATR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 20:19:17 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:34340 "EHLO
+	id S1756098AbbGDATZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2015 20:19:25 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:36757 "EHLO
 	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754250AbbGDASp (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755771AbbGDASp (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 3 Jul 2015 20:18:45 -0400
-Received: by igcsj18 with SMTP id sj18so196950576igc.1
-        for <git@vger.kernel.org>; Fri, 03 Jul 2015 17:18:43 -0700 (PDT)
+Received: by igrv9 with SMTP id v9so124750740igr.1
+        for <git@vger.kernel.org>; Fri, 03 Jul 2015 17:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0y48goUHpCPee91ClOqiNDChhahfkAD9fmNwynNjHzA=;
-        b=U5FidCfC8OmWKZ5wfUOdwOGF0pSSaZmk392sYYgHdnLTz7B8EE+5X1Sa5GwaqzLpzH
-         FoOaXGzEdqHTSWiRu0x+/t6H/CzBfpAZHV1fNOrcAPBo/Tk8GQEdJSK+Csut52dKenEn
-         ijvyho1tCpQjjR8NC/Om/DRF0zS2d5WhMLMmZqM8czW/6cSrF3lHm/F9/VRSuktMq/AG
-         tPrgr8my2ZLW+o30pFVwhmcusHV6YIvCKGiYMaDdQNRUUNNC66yedGTol7fwyBgEtZOC
-         XeZk7Qeai/gKBEMhvqWSYb4r71p6283KsSHWCbL3EglIohOP1knVXjmNKlYvkuWzvr7i
-         glMA==
-X-Received: by 10.42.189.201 with SMTP id df9mr20983745icb.79.1435969123467;
-        Fri, 03 Jul 2015 17:18:43 -0700 (PDT)
+        bh=TnGGL9rMMW+6Cv8NnwyS2YtpAFa5DHc1r1fCBsT+D80=;
+        b=P1mjUGCVggXAWoSysov4mCbltlfDzeMxu0SXohnPL00gxVM8Z8lvr+lTk0aJ9czKXQ
+         gfnPOswK+QyO6xZNXkMuNgTKwG0VyxNR9SbWw5LCDm363QwJHEY4YAGaNT4RI1zs/7xn
+         IxS2MazbMn7e49PxcEIPkwazcAsxN7jLpqLp6mfDS5kEeEpT1aNxmsmYHjaNqC/D/5Mw
+         VRHIMRVPkJd0FeHgFqde4NN4AS5y/UIbZt/esG8QjcTa0gHX3buPfdJkAOTfeI3yycWa
+         9hCCvceK/w948BnkJzbwIUddtNAh/NJgcad3dIMIoXy4YGlwrtJDwISuTGBCbigns2p/
+         028A==
+X-Received: by 10.42.216.199 with SMTP id hj7mr21865538icb.11.1435969124144;
+        Fri, 03 Jul 2015 17:18:44 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id z195sm7246110iod.33.2015.07.03.17.18.42
+        by mx.google.com with ESMTPSA id z195sm7246110iod.33.2015.07.03.17.18.43
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 03 Jul 2015 17:18:42 -0700 (PDT)
+        Fri, 03 Jul 2015 17:18:43 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.197.g417e668
 In-Reply-To: <1435969052-540-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273330>
 
-In order to allow linked worktree creation via "git checkout -b" from a
-bare repository, 3473ad0 (checkout: don't require a work tree when
-checking out into a new one, 2014-11-30) dropped git-checkout's
-unconditional NEED_WORK_TREE requirement and instead performed worktree
-setup conditionally based upon presence or absence of the --to option.
-Now that --to has been retired and git-checkout is no longer responsible
-for linked worktree creation, the NEED_WORK_TREE requirement can once
-again be unconditional.
-
-This effectively reverts 3473ad0, except for the tests it added which
-now check bare repository behavior of "git worktree add" instead.
+A subsequent patch will also need to compute the basename of the new
+worktree, so factor out this logic into a new function.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- builtin/checkout.c | 2 --
- git.c              | 2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ builtin/worktree.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b1e68b3..5754554 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1218,8 +1218,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 7cfaec6..a1d863d 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -152,6 +152,25 @@ static void remove_junk_on_signal(int signo)
+ 	raise(signo);
+ }
  
- 	opts.new_worktree_mode = getenv("GIT_CHECKOUT_NEW_WORKTREE") != NULL;
++static const char *worktree_basename(const char *path, int *olen)
++{
++	const char *name;
++	int len;
++
++	len = strlen(path);
++	while (len && is_dir_sep(path[len - 1]))
++		len--;
++
++	for (name = path + len - 1; name > path; name--)
++		if (is_dir_sep(*name)) {
++			name++;
++			break;
++		}
++
++	*olen = len;
++	return name;
++}
++
+ static int add_worktree(const char *path, const char **child_argv)
+ {
+ 	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
+@@ -165,15 +184,7 @@ static int add_worktree(const char *path, const char **child_argv)
+ 	if (file_exists(path) && !is_empty_dir(path))
+ 		die(_("'%s' already exists"), path);
  
--	setup_work_tree();
+-	len = strlen(path);
+-	while (len && is_dir_sep(path[len - 1]))
+-		len--;
 -
- 	if (conflict_style) {
- 		opts.merge = 1; /* implied */
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-diff --git a/git.c b/git.c
-index f227838..21a6398 100644
---- a/git.c
-+++ b/git.c
-@@ -383,7 +383,7 @@ static struct cmd_struct commands[] = {
- 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
- 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
- 	{ "check-ref-format", cmd_check_ref_format },
--	{ "checkout", cmd_checkout, RUN_SETUP },
-+	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
- 	{ "checkout-index", cmd_checkout_index,
- 		RUN_SETUP | NEED_WORK_TREE},
- 	{ "cherry", cmd_cherry, RUN_SETUP },
+-	for (name = path + len - 1; name > path; name--)
+-		if (is_dir_sep(*name)) {
+-			name++;
+-			break;
+-		}
++	name = worktree_basename(path, &len);
+ 	strbuf_addstr(&sb_repo,
+ 		      git_path("worktrees/%.*s", (int)(path + len - name), name));
+ 	len = sb_repo.len;
 -- 
 2.5.0.rc1.197.g417e668
