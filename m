@@ -1,61 +1,82 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 16/23] worktree: add -b/-B options
-Date: Sat, 4 Jul 2015 10:19:23 +0700
-Message-ID: <CACsJy8AYFC+FW1bgSJwW34p6s2zn_6A4GhBaJjB8o8rxUvY72g@mail.gmail.com>
-References: <1435969052-540-1-git-send-email-sunshine@sunshineco.com> <1435969052-540-17-git-send-email-sunshine@sunshineco.com>
+From: Chris Jones <chris@christopherjones.us>
+Subject: [PATCH] git-filter-branch.sh: clarify an error message
+Date: Sat, 04 Jul 2015 19:39:04 -0400
+Message-ID: <1436053144.3463091.315316457.1BAF8BA7@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Jul 04 05:20:06 2015
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 05 10:37:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZBDzp-0002jj-8z
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jul 2015 05:20:05 +0200
+	id 1ZBfQp-0002d2-3D
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jul 2015 10:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755369AbbGDDTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2015 23:19:54 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:33815 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755233AbbGDDTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2015 23:19:52 -0400
-Received: by iebmu5 with SMTP id mu5so85410583ieb.1
-        for <git@vger.kernel.org>; Fri, 03 Jul 2015 20:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BPm7QGJ4rlGi4wJaSccd5HhySmpF2WiIYi/c3B13s+A=;
-        b=CLVCBw5y68TC2sazk0VxMiGNfnOXfTWbwJQkwBDdBA0BHl5CB3Kw6qqKliJXz9r0Lf
-         BBG2i1WxIqAqZ1mOXrl/F8jUqFPkiI1eCTGtWrt2T8Hxm+XW1lWrmzhWbVD4QG6mmYxx
-         yY6TTlceU2K4Ozu3kPYbj4z1VXUVgCP7W0k0+/8wvjpDv2B6gxs7owT1UJycy0iUCqWs
-         U3NDBPzSuSmAmKO7k4t8dmsejVQXhnbGB/dLmHYfThHOAF5jKqqfwqalabteEbI5hThi
-         BNLIgAh0qYkj6MKtr9pef463zMaa98MDLioI84cxZ3Cg5x81u6gCQgfG6XF9F3PzaQNK
-         Lgew==
-X-Received: by 10.107.128.72 with SMTP id b69mr56206206iod.84.1435979992341;
- Fri, 03 Jul 2015 20:19:52 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Fri, 3 Jul 2015 20:19:23 -0700 (PDT)
-In-Reply-To: <1435969052-540-17-git-send-email-sunshine@sunshineco.com>
+	id S1751299AbbGEIhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jul 2015 04:37:43 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:60015 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751235AbbGEIhl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jul 2015 04:37:41 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id DEDD2203A8
+	for <git@vger.kernel.org>; Sat,  4 Jul 2015 19:39:04 -0400 (EDT)
+Received: from web4 ([10.202.2.214])
+  by compute5.internal (MEProxy); Sat, 04 Jul 2015 19:39:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	christopherjones.us; h=cc:content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=pmpc0PMVU+dZXRnQjndGauiU6Eo=; b=QT5MUM
+	rJ+HCOW6L0lacWo6Nmlhf6BVJGcfilPWcf/KVzW+PncPGWCj6DvybuNp1NdmZTAC
+	0MdDz5+MhfkIDWjHr9Pty/QJNqqpbFDEGTuQjhE6JuCqzGahSvEniEhoZTBNaOtj
+	BP4WKf9004DqfyxLrpVnpnDLaBXb9xJ+8SIyw=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=pmpc0PMVU+dZXRnQjndGauiU6Eo=; b=BadWD
+	n++/9CITMmzfBI8GWzPrcqgQVjRu4Ev5Uqs8L6W3g6e2/DJQWIoqXInc+/2XmgqX
+	3qxHnr4AbCI1tgxZoDheuHyyQIHiLn0GRoETWQ4AHw06liigsv9AN0LrkA580NF7
+	/ji9N5oAKbZC1yI8M+306dPJsjpSmsBassrZgM=
+Received: by web4.nyi.internal (Postfix, from userid 99)
+	id AA7EA112FEE; Sat,  4 Jul 2015 19:39:04 -0400 (EDT)
+X-Sasl-Enc: 70Uu/LyXxGSqMaGZVCXKVYSaljX4uP8dWU/XIi7eEw2g 1436053144
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-eecef38c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273351>
 
-On Sat, Jul 4, 2015 at 7:17 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> One of git-worktree's roles is to populate the new worktree, much like
-> git-checkout, and thus, for convenience, ought to support several of the
-> same shortcuts. Toward this goal, add -b/-B options to create a new
-> branch and check it out in the new worktree.
+Make git filter-branch output a useful error message when a single
+commit is given instead of a range.  Currently, when given a command
+like git filter-branch --msg-filter 'echo "TEST"' -- abc123, it will
+give the message "Which ref do you want to rewrite?".  Instead, what
+is needed is a range of commits to rewrite.  This makes it give an
+error message that says "You didn't provide a valid range of
+commits".
 
-There are some other  ref manipulation options we can bring over like
---orphan and --track. But you can totally leave them out and we can
-add them back when people actually need them.
+Signed-off-by: Chris W Jones <chris@christopherjones.us>
+---
+ git-filter-branch.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 5b3f63d..78e7499 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -237,7 +237,7 @@ git rev-parse --no-flags --revs-only
+--symbolic-full-name \
+ sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
+ 
+ test -s "$tempdir"/heads ||
+-       die "Which ref do you want to rewrite?"
++       die "You didn't provide a valid range of commits."
+ 
+ GIT_INDEX_FILE="$(pwd)/../index"
+ export GIT_INDEX_FILE
 -- 
-Duy
+1.9.3
