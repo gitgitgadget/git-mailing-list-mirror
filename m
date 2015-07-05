@@ -1,77 +1,82 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] git-filter-branch.sh: clarify an error message
-Date: Sun, 05 Jul 2015 16:41:31 +0200
+Subject: Re: [PATCH 02/12] t4150: am fails if index is dirty
+Date: Sun, 05 Jul 2015 17:38:25 +0200
 Organization: gmx
-Message-ID: <aca69b93d8ab5f3c610d6201ed4334e1@www.dscho.org>
-References: <1436053144.3463091.315316457.1BAF8BA7@webmail.messagingengine.com>
- <20150705130706.GA5435@peff.net>
+Message-ID: <eb790f13314192dcf4787c54d4cd3cfb@www.dscho.org>
+References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com>
+ <1435861000-25278-3-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Chris Jones <chris@christopherjones.us>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jul 05 16:41:47 2015
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 05 17:38:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZBl74-0005UA-QE
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jul 2015 16:41:47 +0200
+	id 1ZBm06-0000YP-9C
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jul 2015 17:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbbGEOln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jul 2015 10:41:43 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63549 "EHLO mout.gmx.net"
+	id S1751569AbbGEPid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jul 2015 11:38:33 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59663 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750841AbbGEOll (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jul 2015 10:41:41 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LjrDd-1YaEZ33WsD-00btwP; Sun, 05 Jul 2015 16:41:32
+	id S1751325AbbGEPic (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jul 2015 11:38:32 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LnxVE-1YW7eU1Vo8-00fxSW; Sun, 05 Jul 2015 17:38:26
  +0200
-In-Reply-To: <20150705130706.GA5435@peff.net>
+In-Reply-To: <1435861000-25278-3-git-send-email-pyokagan@gmail.com>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:c8uIXagYn7TN7Au8GMb5IgV17J5xmJQQGR5OfiHABP4klfDi4Q7
- o37XWzKLOyTnvjBbwxHE+xXL3UyQNW3y5OcsnLnqc8IrMn3SJqAW07DNST9l1lQOU1418db
- Y5ZgGvSwNVCtF9Xwt9g56L0yYCb9pC2rweHy+TcvOH4/sxGo7TmmG5kzKxci6WibGxudhDP
- V3KNyS8tuAnnk06N/hDng==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6MPNNS46v5U=:yncFIdDdqgtM7PC5odhDXy
- o8W5DZULNhultMWXw8YrXRfwcUFtimulgDqaxMyZqOTJaXWF2wn/JRcsDW7KmK+hgBoI1UWyd
- uHNsvfSNl7jwDNAgrwIS/gFWfoSQBs2wK6E/gbf24JJpJ/+1c4fmf9x2EPMPKbZxGBsWv3+J3
- +pt+k23Nf05VLhnjXrILEtqpgaSh9bZ+JCaVmwd/fH6qpALikGtmq13TOT1hUjVTt4Jv5q/eL
- DxV4TaSOe+BNZa6SlbgK40P4+AH/dLPxJXOagcb+Xb/iJwAyCc0+B8JP9F0U81H/yJ+7JCOX8
- ps7zAl31FRspntKFOX6Er5UE7UAoDwIUDeRF39984xILWjpL2J+29j9ZEQQcgcE9bMFxTODZ6
- ZczFl02Nr9nZWBRYMWS82ucz3lQHNAD2Z5G5Azh3fHoPGGli3uWb0CYlz1PNpxlG1xTERG58I
- hIdI6RdZJ+Hp/U3jnMMJ7pQ2fYljgrO0NxPdiU0ODo0ImHFhTummOpXsgVf+lchrLfqkt8MJK
- KSuPQMY/dskMPNcoVY0nXajNqR/nJtcYvd8tZNLPAB3FxbzT4wZ8hKYfqw3yQ7ilASYsY2VMM
- gaR5WWHAh8asKxCwTAS2ZBGhWoGl/9/S3ke/Oc/4rPzjPTbvjhQu7BbdO8rTEmvDSIcrMEivH
- +HxovxZZtjHW6/Nj3Hnabt+Ca+w47qBNZNa8wGOZrf3Sm7GDdo0ENk1U4Y4Q293/RIPQ=
+X-Provags-ID: V03:K0:XYMu81+r04K9cuYGB8Tsqxug5DPGkgOs/UsEjVDWR/Z8ogrpOzz
+ Hs5NhjnnT07TmULtUMonpEhW5zFnPEF4VucmZeFwC+DRnUh70ZMVfLR3J9cw6mdJibpMYXI
+ WzaF/HX/bNEKABdO20ZB9mLE/5ltUhzoCQnRos+VDnei1fxDc8Tb6urxdXy7AoczZX9t24V
+ i7KQQp8jvmvm3Q33PPZnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0HN5zC656sk=:cV/CsDJpQ0ym1b61wAnN+N
+ FncOsNQ9DpxlgikNwX2BhF0PvbIm2pjf4t7wJmlUbdIUTpvdaZXDvRGMrgqS8T8/XgXI0beEB
+ 9+eSR0z2+mXrgtMJ2sliOcn14hfMYvaIN4IoAQ6F3OtfHKiE7pVtziri8jZdl5aZCgdNq6CO9
+ wJ7pXalqS6SBXwsOWxvKVP4iTYFkp9HwKM0q9OriCRS3WCOrUaipVcU0VWhByiHgtlytxkQBX
+ qLXyPby0BGLOagf3wI4RqWS99i0EbDFtgc95ZcHxSQNN4/fJ+/1+gXiLLwQ0fs4ygtpKNi8Ny
+ /vq4Y4Fw/gQF3OV0NbP/dKU3xy7B1rokI3HpwyhCyfzaNgSgPNmW3K6v+fnNo2jmAzc6jDs7a
+ yCfy1Z67jBaO+Xjv5Hv7tV9yBXoM1LxekCwChXWD8aRRO+EDwOXQuzuKW7SFmVxkzd3SAxCd3
+ Vez/K9UceUpUrGxrD8EAxFJul+vIZR0QSjHO/iFZT7iLIWXxHrRVJGqOGWYgqnrGARIECk0rl
+ S2w9x93YPIrBDgY/dirRIBKNuhNWz26axULY9SsQOUPzOiBXTobUwpYtNaFQLLhR57kIBEdEC
+ 34wpq8EsZAfQj44ZtIyrgMbp+FcEWsAbMQ4CIKefnUeYRHLLjYRA1uFRlidDHjbYfe9OeWxpC
+ +wb0ezwynJCbeHYQPtJBSghXY4qcDymla3XJKusizAT15fCcXyvwaka0Z9ATFZtRMCKI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273366>
 
-Hi,
+Hi Paul,
 
-On 2015-07-05 15:07, Jeff King wrote:
-> On Sat, Jul 04, 2015 at 07:39:04PM -0400, Chris Jones wrote:
-> 
->> Make git filter-branch output a useful error message when a single
->> commit is given instead of a range.  Currently, when given a command
->> like git filter-branch --msg-filter 'echo "TEST"' -- abc123, it will
->> give the message "Which ref do you want to rewrite?".  Instead, what
->> is needed is a range of commits to rewrite.  This makes it give an
->> error message that says "You didn't provide a valid range of
->> commits".
-> 
-> Yeah, I agree the current message is a little confusing, and I think
-> your message is an improvement. I wonder if we can even go a step
-> further, like mentioning that at least one of the positive tips in your
-> range must be a ref.
+On 2015-07-02 20:16, Paul Tan wrote:
 
-I agree, and would even further suggest to use the "did not" form instead of the abbreviated "didn't" one.
+> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+> index 3f54bdf..0a19136 100755
+> --- a/t/t4150-am.sh
+> +++ b/t/t4150-am.sh
+> @@ -154,6 +154,17 @@ test_expect_success 'am applies patch correctly' '
+>  	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+>  '
+>  
+> +test_expect_success 'am fails if index is dirty' '
+> +	test_when_finished "rm -fr dirtyfile" &&
 
-Thanks,
+Seeing as you `git add` that file further down, how about `git rm -f dirtfile` here?
+
+> +	rm -fr .git/rebase-apply &&
+> +	git checkout -f first &&
+> +	echo dirtyfile >dirtyfile &&
+> +	git add dirtyfile &&
+> +	test_must_fail git am patch1 &&
+> +	test_path_is_dir .git/rebase-apply &&
+> +	test_cmp_rev first HEAD
+
+Ciao,
 Dscho
