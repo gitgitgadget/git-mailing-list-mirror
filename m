@@ -1,114 +1,107 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] grep: use regcomp() for icase search with non-ascii patterns
-Date: Mon,  6 Jul 2015 19:42:31 +0700
-Message-ID: <1436186551-32544-1-git-send-email-pclouds@gmail.com>
-References: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH 3/7] pack-protocol.txt: Mark all LFs in push-cert as required
+Date: Mon, 6 Jul 2015 10:46:06 -0400
+Message-ID: <CAD0k6qTDpH0H-k9h+f3X8PjXpOZ7tRzv+8wvi8HALhg9DDm4Ew@mail.gmail.com>
+References: <1435774099-21260-1-git-send-email-dborowitz@google.com>
+ <1435774099-21260-4-git-send-email-dborowitz@google.com> <xmqqfv578x87.fsf@gitster.dls.corp.google.com>
+ <CAD0k6qSN9=afCe3RumJPfP9JERy1w+tAYdjq01MsQnsOjdKu3A@mail.gmail.com> <xmqqzj3f7gde.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: plamen.totev@abv.bg,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 14:42:02 2015
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 16:46:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZC5if-0003eQ-6M
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 14:41:57 +0200
+	id 1ZC7fE-00035T-Cl
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 16:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169AbbGFMlw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2015 08:41:52 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:33895 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752725AbbGFMlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 08:41:51 -0400
-Received: by pdbep18 with SMTP id ep18so105595605pdb.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 05:41:51 -0700 (PDT)
+	id S1751182AbbGFOq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 10:46:27 -0400
+Received: from mail-vn0-f54.google.com ([209.85.216.54]:41675 "EHLO
+	mail-vn0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750873AbbGFOq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 10:46:26 -0400
+Received: by vnbf62 with SMTP id f62so7745869vnb.8
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 07:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=47baAGHaRQWHOwDsD6paUFDSzpLm9xXl/r/hdkjuqzY=;
-        b=HY2NIWC6E8o0BM9lR/fKT4YLTe0ffEmhCPcr1d6bN7e03D3O4n2D/kbOhjdiz+ikoV
-         zp9k2cx8yvcpn+a6HbUDBrkpe9BXoW6YJN4k7Kgcl+wt/yGwy052/3L0QTfgtyrtrXTf
-         6Yas5w8jfzsurr/oeyPg+mUp9kEmMxzl+8y5n4w46Jyg6Q9ij8HAjFFVomf568OuWvF0
-         uRmadUfttmfkG7ZTqFeXGzJfWUtuDknafqHBESolKFOizRIQvXPrEQ/i217LHtF2D6od
-         WOKSzq00ekDQ7It4u9fhWUcrKfxbLQqqar6fVbCZNNBKarOdM1IjJ6LkHfz6X5Pb5Nb4
-         4GTw==
-X-Received: by 10.70.31.5 with SMTP id w5mr100821267pdh.3.1436186511023;
-        Mon, 06 Jul 2015 05:41:51 -0700 (PDT)
-Received: from lanh ([115.73.39.13])
-        by mx.google.com with ESMTPSA id gi6sm18167662pbd.69.2015.07.06.05.41.48
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Jul 2015 05:41:50 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 06 Jul 2015 19:42:34 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=J71yAFVNEXqxdDdP0gKl27FwPqBaWnlRkrfBdzBnaJY=;
+        b=FoAHGWkjaF6kzOB4sELP3YrFpIgSP4mwGqpXICv2vwQmnNNezycSXoEsTjnmeZCulx
+         afH4RAyqp4nduCHlu7fihbGYk8aMirnjaO1805EiW0LXIkFJrkFzVOOfXgjhrrrmIWJV
+         pTdqACaNHtf2Q2St4Ry2IJLMXB6SwSt5d+MfCy+iy8JvxJU8yI1cfqfvCsQItWrye3j6
+         1WSJYfakpcCn5GWJOmDxyGryrdoLdW+JJ0N/3GQNkVLq6a///naIY75StNMqFrAhMlbF
+         3X6qy5NLYMCwGganasrGk5uCtRxkS1mermi/TmpYSPeAocsZbx4q29z7b5lK4LD0vl3w
+         E2Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=J71yAFVNEXqxdDdP0gKl27FwPqBaWnlRkrfBdzBnaJY=;
+        b=FYF16In9nng0aavcVqVUpoYEicHSXxmnPm0P0v3/uCkh79vH2MbngB435hN9q75jm0
+         XF1BBOe+5yTlmux3tVRWONwRw7N18yf1sQ7iZ5qO51uLqCDaGQda3yfHmI/JdNuVAf55
+         /lD0u+xzLfXI34vmdydHEB5JAm/viagpB6Fl+7bydU3RgOgCPWe6kggjdTqrVEilPqcB
+         3mLH7CjUvMB127TnumGgcbIm6Y7Gqgi6EhoTrYj5/FN++47RBiU8KH/Hw4ab2WhJrnlX
+         dlXo5efPrI6VbeCvynJYmTstrvOtBIKXYJSLw5TBCrKArAmTBBNNQUzfJ615DmGIlwR5
+         JVQQ==
+X-Gm-Message-State: ALoCoQn0dEwjyltc2gEVePE2hpxd8hajrxM8Jm927oNvMq3JEU3jFxsUJBowZ2iQLZCYsBc0kGm7
+X-Received: by 10.52.230.2 with SMTP id su2mr50311188vdc.55.1436193985637;
+ Mon, 06 Jul 2015 07:46:25 -0700 (PDT)
+Received: by 10.52.177.6 with HTTP; Mon, 6 Jul 2015 07:46:06 -0700 (PDT)
+In-Reply-To: <xmqqzj3f7gde.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273385>
 
-Noticed-by: Plamen Totev <plamen.totev@abv.bg>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- grep.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+On Wed, Jul 1, 2015 at 4:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Dave Borowitz <dborowitz@google.com> writes:
+>
+> >> I am moderately negative about this; wouldn't it make the end result
+> >> cleaner to fix the implementation?
+> >
+> > I'm not sure I understand your suggestion. Are you saying, you would
+> > prefer to make LFs optional in the push cert, for consistency with LFs
+> > being optional elsewhere?
+>
+> Absolutely.  It is not "make" it optional, but "even though it is
+> optional, the receiver has not been following the spec, and it is
+> not too late to fix it".
+>
+> The earliest these documentation updates can hit the public is 2.6;
+> by that time I'd expect the deployed receivers would be fixed with
+> 2.5.1 and 2.4.7 maintenance releases.
+>
+> If some third-party reimplemented their client not to terminate
+> with LF, they wouldn't be working correctly with the deployed
+> servers right now *anyway*.  And with the more lenient receive-pack
+> in 2.5.1 or 2.4.7, they will start working.
+>
+> And we will not change our client to drop LF termination.  So
+> overall I do not see that it is too much a price to pay for
+> consistency across the protocol.
 
-diff --git a/grep.c b/grep.c
-index b58c7c6..48db15a 100644
---- a/grep.c
-+++ b/grep.c
-@@ -378,7 +378,7 @@ static void free_pcre_regexp(struct grep_pat *p)
- }
- #endif /* !USE_LIBPCRE */
-=20
--static int is_fixed(const char *s, size_t len)
-+static int is_fixed(const char *s, size_t len, int ignore_icase)
- {
- 	size_t i;
-=20
-@@ -391,6 +391,13 @@ static int is_fixed(const char *s, size_t len)
- 	for (i =3D 0; i < len; i++) {
- 		if (is_regex_special(s[i]))
- 			return 0;
-+		/*
-+		 * The builtin substring search can only deal with case
-+		 * insensitivity in ascii range. If there is something outside
-+		 * of that range, fall back to regcomp.
-+		 */
-+		if (ignore_icase && (unsigned char)s[i] >=3D 128)
-+			return 0;
- 	}
-=20
- 	return 1;
-@@ -398,18 +405,19 @@ static int is_fixed(const char *s, size_t len)
-=20
- static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- {
-+	int ignore_icase =3D opt->regflags & REG_ICASE || p->ignore_case;
- 	int err;
-=20
- 	p->word_regexp =3D opt->word_regexp;
- 	p->ignore_case =3D opt->ignore_case;
-=20
--	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
-+	if (opt->fixed || is_fixed(p->pattern, p->patternlen, ignore_icase))
- 		p->fixed =3D 1;
- 	else
- 		p->fixed =3D 0;
-=20
- 	if (p->fixed) {
--		if (opt->regflags & REG_ICASE || p->ignore_case)
-+		if (ignore_case)
- 			p->kws =3D kwsalloc(tolower_trans_tbl);
- 		else
- 			p->kws =3D kwsalloc(NULL);
---=20
-2.3.0.rc1.137.g477eb31
+Ok, I understand your proposal now, thank you. I will drop this
+documentation patch from this series, and abandon
+https://git.eclipse.org/r/51071 in JGit. I am not volunteering to
+rewrite push cert handling in git-core though ;)
+
+> > If LF is optional, then with that approach you might end up with a
+> > section of that buffer like:
+>
+> I think I touched on this in my previous message.  You cannot send
+> an empty line anywhere, and this is not limited to push-cert section
+> of the protocol.  Strictly speaking, the wire level allows it, but I
+> do not think the deployed client APIs easily lets you deal with it.
+>
+> So you must follow the "SHOULD terminate with LF" for an empty line,
+> even when you choose to ignore the "SHOULD" in most other places.
+>
+> I do not think it is such a big loss, as long as it is properly
+> documented.
