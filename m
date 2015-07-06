@@ -1,82 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Draft of Git Rev News edition 5
-Date: Sun, 5 Jul 2015 19:12:40 -0400
-Message-ID: <CAPig+cRv6g_nAEdGtrESFiE+5+OxEHwjhEPX0Q0WL+eHzkCAGA@mail.gmail.com>
-References: <CAP8UFD2fpRiOmgL9GW-1N9ZLAY+p-nOSH-b57vJFO4e_tELrWw@mail.gmail.com>
-	<20150705191101.GB9815@flurp.local>
-	<CAP8UFD3pD_6_SrrtCWywA8x5XY_SD3bed=QhZBBrTq0zQvqFPw@mail.gmail.com>
-	<CAPig+cTpy32c13Sv=m49hzqOBisZ0v07AT0X5BYNB07acrcW8w@mail.gmail.com>
-	<CAEcj5uXiGVvLm==s_SB7GnvBfuKi7j4yH+fgNq4JZtkvK7pZwg@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 65 new messages
+Date: Mon, 6 Jul 2015 08:06:34 +0200
+Message-ID: <CAN0XMOJXq6bM+9dpvrZgu7wd3iE93raFLReij1WCc1kkP=MYJA@mail.gmail.com>
+References: <1435938622-6199-1-git-send-email-ralf.thielow@gmail.com>
+	<55992F6B.7040000@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
-	Eric Raible <raible@nextest.com>,
-	Emma Jane Hogbin Westby <emma@emmajane.net>,
-	Max Kirillov <max@max630.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>,
-	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	louis--alexandre stuber 
-	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
-	karthik nayak <karthik.188@gmail.com>,
-	Paul Tan <pyokagan@gmai
-To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 01:12:47 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
+To: Phillip Sz <phillip.szelat@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 08:06:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZBt5a-0006dT-MW
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 01:12:47 +0200
+	id 1ZBzY9-0006EA-70
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 08:06:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117AbbGEXMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jul 2015 19:12:43 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:36700 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752923AbbGEXMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jul 2015 19:12:41 -0400
-Received: by ykdr198 with SMTP id r198so134073310ykd.3
-        for <git@vger.kernel.org>; Sun, 05 Jul 2015 16:12:41 -0700 (PDT)
+	id S1752811AbbGFGGh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2015 02:06:37 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:38005 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbbGFGGg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2015 02:06:36 -0400
+Received: by wibdq8 with SMTP id dq8so142637870wib.1
+        for <git@vger.kernel.org>; Sun, 05 Jul 2015 23:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ML7degdX8yWNG6rOhNPcnN5QXjruUsRXlQQorehxVxE=;
-        b=NCCl4pMi9RooI9/06C4bagfa50Q8B6a8NUGx1JSBmoaD8wYib2qLqnVBnLdyp8oi7O
-         Q6o0tBwMFfdqcU2VLeIoG2Uaxa5f5w+kcCd6dA9efUSg8mqn+oqbKELU/OVJXr/Cxq1I
-         39f0Iv2WCik50QKpid5psxhKudQA6rBkCWQr/ul+AVJZGnNkkD74LzxSk4pyBXdvfWnC
-         V0tACmFR9bPJoF2JQotFWNz4M7Ekj2hiIVI9riIKp7LGjonpCYhcjpH5ZoxnKGGFiNCF
-         Q0mVVBT0yeHidyX5zU743zdJ/UvAVKCh/6GJWa1QrlNA1C165L56qFHzjxWVXgA8sGgg
-         8yDA==
-X-Received: by 10.170.97.9 with SMTP id o9mr55856699yka.84.1436137960942; Sun,
- 05 Jul 2015 16:12:40 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 5 Jul 2015 16:12:40 -0700 (PDT)
-In-Reply-To: <CAEcj5uXiGVvLm==s_SB7GnvBfuKi7j4yH+fgNq4JZtkvK7pZwg@mail.gmail.com>
-X-Google-Sender-Auth: Mqpoj459z0UfMwc4uQ6QoP89pHU
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5JJzKmVnVSkuvIpLjsNXEc/0xsnQ2DnLE2wurAjjf8w=;
+        b=Y2g2tMXQ+x89P50MD71zNw8p5SSmCmqcptcLP1AM8JCqe7rkfc8GQoNDoMjhY8RTTJ
+         zBqXZ7cYvPRHkYMJVCKHpg7nqNlFopIKu+FCSSLAetMbLdYDXW1gVj1QUgtC/cyCGWAX
+         uh4Y8yZwNT3tA8aHjmNP0UHYmK2WVN3hgvypkRWRKc7XCdQIKQ8r+m300Z5A9hAocmsF
+         1ZIA/RJtF77kJZS450+0s1QbRA1o3uVz4tF6qF1Qdk/EJ6yBC496sw3EY+AEgHqkIKX1
+         22554ZyyJ1i40PRGDAP8v2NJhILH47r8n07IJsPT+RBBRMdpESkg6ARws4YX8OoEXqAc
+         Yb4A==
+X-Received: by 10.194.23.106 with SMTP id l10mr97132531wjf.1.1436162795055;
+ Sun, 05 Jul 2015 23:06:35 -0700 (PDT)
+Received: by 10.194.152.197 with HTTP; Sun, 5 Jul 2015 23:06:34 -0700 (PDT)
+In-Reply-To: <55992F6B.7040000@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273376>
 
-On Sun, Jul 5, 2015 at 6:35 PM, Thomas Ferris Nicolaisen
-<tfnico@gmail.com> wrote:
-> On Mon, Jul 6, 2015 at 12:01 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Unfortunately, the non-ASCII characters
->> in Duy's name got corrupted, and the botch is present in the patch I
->> sent. Sorry. Not sure how that happened. Can you fix it locally?
->
-> Fixed [1].
->
-> [1] https://github.com/git/git.github.io/commit/b5f7d6523ca6a634d568fc9017135ff2a9ea6462
+Hi Phillip,
 
-Thanks.
+Thanks for review!
+
+2015-07-05 15:21 GMT+02:00 Phillip Sz <phillip.szelat@gmail.com>:
+>>  #: help.c:214
+>>  msgid "git commands available from elsewhere on your $PATH"
+>>  msgstr "Vorhandene Git-Kommandos irgendwo in Ihrem $PATH"
+>>
+>
+> What do you think about "Git-Kommandos sind anderwo verf=C3=BCgbar in=
+ Ihrem
+> $PATH"?
+>
+
+This message is the title of a listing of git commands, that are
+available from $PATH but not located in git's exec path.
+
+Vorhandene Git-Kommandos in '/usr/libexec/git-core'
+
+  add                       merge-octopus
+=2E..
+
+Vorhandene Git-Kommandos irgendwo in Ihrem $PATH
+
+  imerge
+=2E..
+
+What about changing it to
+"Vorhandene Git-Kommandos anderswo in Ihrem $PATH"?
