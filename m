@@ -1,66 +1,81 @@
-From: Plamen Totev <plamen.totev@abv.bg>
-Subject: Git grep does not support multi-byte characters (like UTF-8)
-Date: Mon, 6 Jul 2015 14:28:16 +0300 (EEST)
-Message-ID: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg>
+From: phillip <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 65 new messages
+Date: Mon, 06 Jul 2015 13:56:19 +0200
+Message-ID: <EEB1332A-5D87-4D44-B3C6-9628E303EACB@gmail.com>
+References: <1435938622-6199-1-git-send-email-ralf.thielow@gmail.com> <55992F6B.7040000@gmail.com> <CAN0XMOJXq6bM+9dpvrZgu7wd3iE93raFLReij1WCc1kkP=MYJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 13:28:07 2015
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	=?ISO-8859-1?Q?Matthias_R=FCster?= <matthias.ruester@gmail.com>,
+	=?ISO-8859-1?Q?Magnus_G=F6rlitz?= <magnus.goerlitz@googlemail.com>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 13:56:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZC4ZB-0005BG-PI
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 13:28:06 +0200
+	id 1ZC50g-000458-1d
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 13:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778AbbGFL17 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2015 07:27:59 -0400
-Received: from smtp-out.abv.bg ([194.153.145.80]:45753 "EHLO smtp-out.abv.bg"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754194AbbGFL16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 07:27:58 -0400
-Received: from nm33.abv.bg (nm33.ni.bg [192.168.151.4])
-	by smtp-out.abv.bg (Postfix) with ESMTP id B85BC56ED79
-	for <git@vger.kernel.org>; Mon,  6 Jul 2015 14:27:37 +0300 (EEST)
-DomainKey-Signature: a=rsa-sha1; s=smtp-out; d=abv.bg; c=simple; q=dns;
-	b=di2Sr6Iu1bs4fQObd4bgbEO9mzzXf8rtXQbBgY+3oTj7qWg8vZ1rBCzTZ83eok6Zw
-	e4JN/12YxkWTpoIFPGkRAerylUKbcdfx2rfYL70BNZd4opExN1IQlC1aDSmgSsb298a
-	RJgIOybLBBJPQs8yIFWPkCCrlvtW4VU873P4Cg4=
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=abv.bg; s=smtp-out;
-	t=1436182057; bh=azBrKzS6DN1EyGbhgBLIZKn/jJ5PpVMVOdeV3RFKK6w=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:DKIM;
-	b=NHYJjJqx+b4BdAVGuzfDwsgZbeJGY5C6Gp5GUIhOQ91xS8R1ytRoqaChRSHK+mAU6
-	 M+ub8sFSadxh044pjXxStsspczHzG0DFtyVvji4uBioSXfFgYILoW8tFObm5twiLZ5
-	 ySnKsc943kCixA5dA/m145GCiA1ZpNadhr8VztO4=
-Received: from nm33.abv.bg (localhost.localdomain [127.0.0.1])
-	by nm33.abv.bg (Postfix) with ESMTP id 88B60BDF5C
-	for <git@vger.kernel.org>; Mon,  6 Jul 2015 14:28:16 +0300 (EEST)
-X-Mailer: AbvMail 3.0
-X-Originating-IP: 95.111.52.16
+	id S1754561AbbGFL4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 07:56:25 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:34802 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753820AbbGFL4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 07:56:24 -0400
+Received: by wgqq4 with SMTP id q4so138218783wgq.1
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 04:56:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=oDmphh2HBsuGTE2/sU72ZaPuu/o5SrtW1kBKoZe4HMA=;
+        b=WcCJDW4TcES/+4gJ28cJ1VyyebLjteNHn2qPSVb5Rvl1Ax3w9KtuPI+eYkVyFuckc3
+         e0lsrpXL5wT5IJqGwykGRAsZQNDw6ZYAA9HS2B1mOL86AWm9Xx75wMQo2OD/jIx5CzKX
+         nwSRIuNrlEB8+CC2WQwStXZC62geGYLEcYoQ6J0oXpWQqmNQj8fpuoYvFSORA/SYYT8O
+         AglkqDfam9GWrTUkAO8S8vTaE8DR+3e2XQqD/5Ogoy2LQjFDuTrj1Zh255RvccJG9JxQ
+         WcZqXbxsyUf0/N1Nssyr56NO5DhpnFnMLGONykjzDK2B/lsvTOimuH0oSxNO3iFOgqPq
+         e87g==
+X-Received: by 10.180.82.230 with SMTP id l6mr87203290wiy.61.1436183783639;
+        Mon, 06 Jul 2015 04:56:23 -0700 (PDT)
+Received: from android-b7bb6bce7d91de53.fritz.box (i59F453E8.versanet.de. [89.244.83.232])
+        by mx.google.com with ESMTPSA id ei8sm27738211wjd.32.2015.07.06.04.56.21
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Jul 2015 04:56:22 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAN0XMOJXq6bM+9dpvrZgu7wd3iE93raFLReij1WCc1kkP=MYJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273382>
 
-Hello,=C2=A0
 
-It looks like the git grep command does not support multi-byte characte=
-r sets like UTF-8. As a result some of the grep functionality is not wo=
-rking. For example if you search for non Latin words the ignore case fl=
-ag does not have effect(the search is case sensitive). I suspect there =
-are some regular expressions that will not work as expected too.=C2=A0
 
-When I'm using the git from the shell I could use the GNU grep utility =
-instead. But some tools like gitweb use git grep so they are not workin=
-g properly with UTF-8 files with non Latin characters.=C2=A0
+Hi,
 
-Much of the grep code seems to be copied from the GNU grep utility but =
-the multi-byte support is left out. I just wondered what could be the r=
-eason.=C2=A0
+>This message is the title of a listing of git commands, that are
+>available from $PATH but not located in git's exec path.
+>
+>Vorhandene Git-Kommandos in '/usr/libexec/git-core'
+>
+>  add                       merge-octopus
+>...
+>
+>Vorhandene Git-Kommandos irgendwo in Ihrem $PATH
+>
+>  imerge
+>...
+>
+>What about changing it to
+>"Vorhandene Git-Kommandos anderswo in Ihrem $PATH"?
 
-Regards,=C2=A0
-Plamen Totev
+Yeah that's good.
+
+Phillip
