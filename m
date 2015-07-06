@@ -1,493 +1,97 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 18/23] checkout: retire --to option
-Date: Mon,  6 Jul 2015 13:30:55 -0400
-Message-ID: <1436203860-846-19-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v3 19/23] checkout: require worktree unconditionally
+Date: Mon,  6 Jul 2015 13:30:56 -0400
+Message-ID: <1436203860-846-20-git-send-email-sunshine@sunshineco.com>
 References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Mikael Magnusson <mikachu@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 19:32:38 2015
+X-From: git-owner@vger.kernel.org Mon Jul 06 19:32:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCAFu-0008BE-Qq
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 19:32:35 +0200
+	id 1ZCAGA-0008LT-Ti
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 19:32:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180AbbGFRcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 13:32:23 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:36010 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754064AbbGFRbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 13:31:47 -0400
-Received: by igrv9 with SMTP id v9so158918728igr.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 10:31:47 -0700 (PDT)
+	id S1754176AbbGFRcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 13:32:22 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:35644 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754071AbbGFRbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 13:31:48 -0400
+Received: by iecuq6 with SMTP id uq6so118021887iec.2
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 10:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CFqSksDH1kS3FAKH0vzonkttfexmHU5L1Tof+9HN6e4=;
-        b=Q85oNu17drGSOR8Mk/ousDDr+xxU2XPl1U30mcC18CfZpk9HSIY4ItUT3Vxq+1LGHw
-         8gac/m9MsfdFN89znBIC3cvvvh5BtHFMHoP1enbBFpELgzrXAIrtxqUkV426vmeLXVzq
-         z8duUwHG8Xirn5i/l/5JQLI9qmNLJnshnjz2dDDQPM942uET2Kl/iAVZ9PYMVpm8IYUP
-         5YaqC9lk5JbDbptEfHYJwSTg6XG8RGGPen8l/3I2wKVcj7UBHHR3p+uNVVytuQarKiNO
-         fr888H7QfMsBWkW+kNpWGySV4uclnUhCQvb1S9NRBLmyHnePBDZqM4WDF7tKYgFbhjYs
-         g9kQ==
-X-Received: by 10.42.214.144 with SMTP id ha16mr34457935icb.70.1436203907151;
+        bh=lrrOdUZqncgzl8KdvzkHvdYlaEtNBOWcqyjQk7WPILg=;
+        b=wtx3vKaonXe6eEM5WZBHox0BIPGisK4WkHzk4hqdJXuUCnCP5hUEiWiF6iQndmGOUp
+         gYFCtxt+XxTsSzbboUfM9zq4j7vBq6OTLAC1PruJf1wtIUoVNPYrAxEJS9TfxO5Jispt
+         rbUaU2GADvxTFFpjnVjR+6BBpNWJGfEWrqdK1buNDQE8GFx5gmnV8PLEGIhfPTAG2Kxq
+         7J0kNpAHj7OHtgx0z867j79HDHWEe/jKAitgBqQXoEA/XrkzY1aqc59cqdzlxrVqecwY
+         dSV4gpOre4gu38l2SR96hnf4Hkp/E/NXGSoR1MXDf1FAJfHp94Vye5REvAXD5utQaMkt
+         dWpQ==
+X-Received: by 10.107.164.22 with SMTP id n22mr27296137ioe.73.1436203907916;
         Mon, 06 Jul 2015 10:31:47 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id g18sm12861567iod.5.2015.07.06.10.31.46
+        by mx.google.com with ESMTPSA id g18sm12861567iod.5.2015.07.06.10.31.47
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Jul 2015 10:31:46 -0700 (PDT)
+        Mon, 06 Jul 2015 10:31:47 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.197.g417e668
 In-Reply-To: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273428>
 
-Now that "git worktree add" has achieved user-facing feature-parity with
-"git checkout --to", retire the latter.
+In order to allow linked worktree creation via "git checkout --to" from
+a bare repository, 3473ad0 (checkout: don't require a work tree when
+checking out into a new one, 2014-11-30) dropped git-checkout's
+unconditional NEED_WORK_TREE requirement and instead performed worktree
+setup conditionally based upon presence or absence of the --to option.
+Now that --to has been retired and git-checkout is no longer responsible
+for linked worktree creation, the NEED_WORK_TREE requirement can be
+re-instated.
 
-Move the actual linked worktree creation functionality,
-prepare_linked_checkout() and its helpers, verbatim from checkout.c to
-worktree.c.
-
-This effectively reverts changes to checkout.c by 529fef2 (checkout:
-support checking out into a new working directory, 2014-11-30) with the
-exception of merge_working_tree() and switch_branches() which still
-require specialized knowledge that a the checkout is occurring in a
-newly-created linked worktree (signaled to them by the private
-GIT_CHECKOUT_NEW_WORKTREE environment variable).
+This effectively reverts 3473ad0, except for the tests it added which
+now check bare repository behavior of "git worktree add" instead.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-checkout.txt |   7 --
- builtin/checkout.c             | 161 +----------------------------------------
- builtin/worktree.c             | 144 ++++++++++++++++++++++++++++++++++--
- 3 files changed, 139 insertions(+), 173 deletions(-)
+ builtin/checkout.c | 2 --
+ git.c              | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 77b7141..efe6a02 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -225,13 +225,6 @@ This means that you can use `git checkout -p` to selectively discard
- edits from your current working tree. See the ``Interactive Mode''
- section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
- 
----to=<path>::
--	Check out a branch in a separate working directory at
--	`<path>`. A new working directory is linked to the current
--	repository, sharing everything except working directory
--	specific files such as HEAD, index, etc. See
--	linkgit:git-worktree[1] for a description of linked worktrees.
--
- --ignore-other-worktrees::
- 	`git checkout` refuses when the wanted ref is already checked
- 	out by another worktree. This option makes it check the ref
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e4064a8..b1e68b3 100644
+index b1e68b3..5754554 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -19,8 +19,6 @@
- #include "ll-merge.h"
- #include "resolve-undo.h"
- #include "submodule.h"
--#include "argv-array.h"
--#include "sigchain.h"
+@@ -1218,8 +1218,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
  
- static const char * const checkout_usage[] = {
- 	N_("git checkout [options] <branch>"),
-@@ -51,8 +49,6 @@ struct checkout_opts {
- 	struct pathspec pathspec;
- 	struct tree *source_tree;
- 
--	const char *new_worktree;
--	const char **saved_argv;
- 	int new_worktree_mode;
- };
- 
-@@ -255,9 +251,6 @@ static int checkout_paths(const struct checkout_opts *opts,
- 		die(_("Cannot update paths and switch to branch '%s' at the same time."),
- 		    opts->new_branch);
- 
--	if (opts->new_worktree)
--		die(_("'%s' cannot be used with updating paths"), "--to");
--
- 	if (opts->patch_mode)
- 		return run_add_interactive(revision, "--patch=checkout",
- 					   &opts->pathspec);
-@@ -825,142 +818,6 @@ static int switch_branches(const struct checkout_opts *opts,
- 	return ret || writeout_error;
- }
- 
--static char *junk_work_tree;
--static char *junk_git_dir;
--static int is_junk;
--static pid_t junk_pid;
--
--static void remove_junk(void)
--{
--	struct strbuf sb = STRBUF_INIT;
--	if (!is_junk || getpid() != junk_pid)
--		return;
--	if (junk_git_dir) {
--		strbuf_addstr(&sb, junk_git_dir);
--		remove_dir_recursively(&sb, 0);
--		strbuf_reset(&sb);
--	}
--	if (junk_work_tree) {
--		strbuf_addstr(&sb, junk_work_tree);
--		remove_dir_recursively(&sb, 0);
--	}
--	strbuf_release(&sb);
--}
--
--static void remove_junk_on_signal(int signo)
--{
--	remove_junk();
--	sigchain_pop(signo);
--	raise(signo);
--}
--
--static int prepare_linked_checkout(const char *path, const char **child_argv)
--{
--	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
--	struct strbuf sb = STRBUF_INIT;
--	const char *name;
--	struct stat st;
--	struct child_process cp;
--	int counter = 0, len, ret;
--	unsigned char rev[20];
--
--	if (file_exists(path) && !is_empty_dir(path))
--		die(_("'%s' already exists"), path);
--
--	len = strlen(path);
--	while (len && is_dir_sep(path[len - 1]))
--		len--;
--
--	for (name = path + len - 1; name > path; name--)
--		if (is_dir_sep(*name)) {
--			name++;
--			break;
--		}
--	strbuf_addstr(&sb_repo,
--		      git_path("worktrees/%.*s", (int)(path + len - name), name));
--	len = sb_repo.len;
--	if (safe_create_leading_directories_const(sb_repo.buf))
--		die_errno(_("could not create leading directories of '%s'"),
--			  sb_repo.buf);
--	while (!stat(sb_repo.buf, &st)) {
--		counter++;
--		strbuf_setlen(&sb_repo, len);
--		strbuf_addf(&sb_repo, "%d", counter);
--	}
--	name = strrchr(sb_repo.buf, '/') + 1;
--
--	junk_pid = getpid();
--	atexit(remove_junk);
--	sigchain_push_common(remove_junk_on_signal);
--
--	if (mkdir(sb_repo.buf, 0777))
--		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
--	junk_git_dir = xstrdup(sb_repo.buf);
--	is_junk = 1;
--
--	/*
--	 * lock the incomplete repo so prune won't delete it, unlock
--	 * after the preparation is over.
--	 */
--	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
--	write_file(sb.buf, 1, "initializing\n");
--
--	strbuf_addf(&sb_git, "%s/.git", path);
--	if (safe_create_leading_directories_const(sb_git.buf))
--		die_errno(_("could not create leading directories of '%s'"),
--			  sb_git.buf);
--	junk_work_tree = xstrdup(path);
--
--	strbuf_reset(&sb);
--	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
--	write_file(sb.buf, 1, "%s\n", real_path(sb_git.buf));
--	write_file(sb_git.buf, 1, "gitdir: %s/worktrees/%s\n",
--		   real_path(get_git_common_dir()), name);
--	/*
--	 * This is to keep resolve_ref() happy. We need a valid HEAD
--	 * or is_git_directory() will reject the directory. Moreover, HEAD
--	 * in the new worktree must resolve to the same value as HEAD in
--	 * the current tree since the command invoked to populate the new
--	 * worktree will be handed the branch/ref specified by the user.
--	 * For instance, if the user asks for the new worktree to be based
--	 * at HEAD~5, then the resolved HEAD~5 in the new worktree must
--	 * match the resolved HEAD~5 in the current tree in order to match
--	 * the user's expectation.
--	 */
--	if (!resolve_ref_unsafe("HEAD", 0, rev, NULL))
--		die(_("unable to resolve HEAD"));
--	strbuf_reset(&sb);
--	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
--	write_file(sb.buf, 1, "%s\n", sha1_to_hex(rev));
--	strbuf_reset(&sb);
--	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
--	write_file(sb.buf, 1, "../..\n");
--
--	fprintf_ln(stderr, _("Enter %s (identifier %s)"), path, name);
--
--	setenv("GIT_CHECKOUT_NEW_WORKTREE", "1", 1);
--	setenv(GIT_DIR_ENVIRONMENT, sb_git.buf, 1);
--	setenv(GIT_WORK_TREE_ENVIRONMENT, path, 1);
--	memset(&cp, 0, sizeof(cp));
--	cp.git_cmd = 1;
--	cp.argv = child_argv;
--	ret = run_command(&cp);
--	if (!ret) {
--		is_junk = 0;
--		free(junk_work_tree);
--		free(junk_git_dir);
--		junk_work_tree = NULL;
--		junk_git_dir = NULL;
--	}
--	strbuf_reset(&sb);
--	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
--	unlink_or_warn(sb.buf);
--	strbuf_release(&sb);
--	strbuf_release(&sb_repo);
--	strbuf_release(&sb_git);
--	return ret;
--}
--
- static int git_checkout_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "diff.ignoresubmodules")) {
-@@ -1299,13 +1156,6 @@ static int checkout_branch(struct checkout_opts *opts,
- 		free(head_ref);
- 	}
- 
--	if (opts->new_worktree) {
--		if (!new->commit)
--			die(_("no branch specified"));
--		return prepare_linked_checkout(opts->new_worktree,
--					       opts->saved_argv);
--	}
--
- 	if (!new->commit && opts->new_branch) {
- 		unsigned char rev[20];
- 		int flag;
-@@ -1348,8 +1198,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 			 N_("do not limit pathspecs to sparse entries only")),
- 		OPT_HIDDEN_BOOL(0, "guess", &dwim_new_local_branch,
- 				N_("second guess 'git checkout no-such-branch'")),
--		OPT_FILENAME(0, "to", &opts.new_worktree,
--			   N_("check a branch out in a separate working directory")),
- 		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
- 			 N_("do not check if another worktree is holding the given ref")),
- 		OPT_END(),
-@@ -1360,9 +1208,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	opts.overwrite_ignore = 1;
- 	opts.prefix = prefix;
- 
--	opts.saved_argv = xmalloc(sizeof(const char *) * (argc + 2));
--	memcpy(opts.saved_argv, argv, sizeof(const char *) * (argc + 1));
--
- 	gitmodules_config();
- 	git_config(git_checkout_config, &opts);
- 
-@@ -1371,13 +1216,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
--	/* recursive execution from checkout_new_worktree() */
  	opts.new_worktree_mode = getenv("GIT_CHECKOUT_NEW_WORKTREE") != NULL;
--	if (opts.new_worktree_mode)
--		opts.new_worktree = NULL;
  
--	if (!opts.new_worktree)
--		setup_work_tree();
-+	setup_work_tree();
- 
+-	setup_work_tree();
+-
  	if (conflict_style) {
  		opts.merge = 1; /* implied */
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d6d0eee..04e6d0f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -4,6 +4,7 @@
- #include "parse-options.h"
- #include "argv-array.h"
- #include "run-command.h"
-+#include "sigchain.h"
- 
- static const char * const worktree_usage[] = {
- 	N_("git worktree add [<options>] <path> <branch>"),
-@@ -122,9 +123,144 @@ static int prune(int ac, const char **av, const char *prefix)
- 	return 0;
- }
- 
-+static char *junk_work_tree;
-+static char *junk_git_dir;
-+static int is_junk;
-+static pid_t junk_pid;
-+
-+static void remove_junk(void)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	if (!is_junk || getpid() != junk_pid)
-+		return;
-+	if (junk_git_dir) {
-+		strbuf_addstr(&sb, junk_git_dir);
-+		remove_dir_recursively(&sb, 0);
-+		strbuf_reset(&sb);
-+	}
-+	if (junk_work_tree) {
-+		strbuf_addstr(&sb, junk_work_tree);
-+		remove_dir_recursively(&sb, 0);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+static void remove_junk_on_signal(int signo)
-+{
-+	remove_junk();
-+	sigchain_pop(signo);
-+	raise(signo);
-+}
-+
-+static int add_worktree(const char *path, const char **child_argv)
-+{
-+	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *name;
-+	struct stat st;
-+	struct child_process cp;
-+	int counter = 0, len, ret;
-+	unsigned char rev[20];
-+
-+	if (file_exists(path) && !is_empty_dir(path))
-+		die(_("'%s' already exists"), path);
-+
-+	len = strlen(path);
-+	while (len && is_dir_sep(path[len - 1]))
-+		len--;
-+
-+	for (name = path + len - 1; name > path; name--)
-+		if (is_dir_sep(*name)) {
-+			name++;
-+			break;
-+		}
-+	strbuf_addstr(&sb_repo,
-+		      git_path("worktrees/%.*s", (int)(path + len - name), name));
-+	len = sb_repo.len;
-+	if (safe_create_leading_directories_const(sb_repo.buf))
-+		die_errno(_("could not create leading directories of '%s'"),
-+			  sb_repo.buf);
-+	while (!stat(sb_repo.buf, &st)) {
-+		counter++;
-+		strbuf_setlen(&sb_repo, len);
-+		strbuf_addf(&sb_repo, "%d", counter);
-+	}
-+	name = strrchr(sb_repo.buf, '/') + 1;
-+
-+	junk_pid = getpid();
-+	atexit(remove_junk);
-+	sigchain_push_common(remove_junk_on_signal);
-+
-+	if (mkdir(sb_repo.buf, 0777))
-+		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
-+	junk_git_dir = xstrdup(sb_repo.buf);
-+	is_junk = 1;
-+
-+	/*
-+	 * lock the incomplete repo so prune won't delete it, unlock
-+	 * after the preparation is over.
-+	 */
-+	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
-+	write_file(sb.buf, 1, "initializing\n");
-+
-+	strbuf_addf(&sb_git, "%s/.git", path);
-+	if (safe_create_leading_directories_const(sb_git.buf))
-+		die_errno(_("could not create leading directories of '%s'"),
-+			  sb_git.buf);
-+	junk_work_tree = xstrdup(path);
-+
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
-+	write_file(sb.buf, 1, "%s\n", real_path(sb_git.buf));
-+	write_file(sb_git.buf, 1, "gitdir: %s/worktrees/%s\n",
-+		   real_path(get_git_common_dir()), name);
-+	/*
-+	 * This is to keep resolve_ref() happy. We need a valid HEAD
-+	 * or is_git_directory() will reject the directory. Moreover, HEAD
-+	 * in the new worktree must resolve to the same value as HEAD in
-+	 * the current tree since the command invoked to populate the new
-+	 * worktree will be handed the branch/ref specified by the user.
-+	 * For instance, if the user asks for the new worktree to be based
-+	 * at HEAD~5, then the resolved HEAD~5 in the new worktree must
-+	 * match the resolved HEAD~5 in the current tree in order to match
-+	 * the user's expectation.
-+	 */
-+	if (!resolve_ref_unsafe("HEAD", 0, rev, NULL))
-+		die(_("unable to resolve HEAD"));
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
-+	write_file(sb.buf, 1, "%s\n", sha1_to_hex(rev));
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
-+	write_file(sb.buf, 1, "../..\n");
-+
-+	fprintf_ln(stderr, _("Enter %s (identifier %s)"), path, name);
-+
-+	setenv("GIT_CHECKOUT_NEW_WORKTREE", "1", 1);
-+	setenv(GIT_DIR_ENVIRONMENT, sb_git.buf, 1);
-+	setenv(GIT_WORK_TREE_ENVIRONMENT, path, 1);
-+	memset(&cp, 0, sizeof(cp));
-+	cp.git_cmd = 1;
-+	cp.argv = child_argv;
-+	ret = run_command(&cp);
-+	if (!ret) {
-+		is_junk = 0;
-+		free(junk_work_tree);
-+		free(junk_git_dir);
-+		junk_work_tree = NULL;
-+		junk_git_dir = NULL;
-+	}
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
-+	unlink_or_warn(sb.buf);
-+	strbuf_release(&sb);
-+	strbuf_release(&sb_repo);
-+	strbuf_release(&sb_git);
-+	return ret;
-+}
-+
- static int add(int ac, const char **av, const char *prefix)
- {
--	struct child_process c;
- 	int force = 0, detach = 0;
- 	const char *new_branch = NULL, *new_branch_force = NULL;
- 	const char *path, *branch;
-@@ -149,7 +285,6 @@ static int add(int ac, const char **av, const char *prefix)
- 	branch = av[1];
- 
- 	argv_array_push(&cmd, "checkout");
--	argv_array_pushl(&cmd, "--to", path, NULL);
- 	if (force)
- 		argv_array_push(&cmd, "--ignore-other-worktrees");
- 	if (new_branch)
-@@ -160,10 +295,7 @@ static int add(int ac, const char **av, const char *prefix)
- 		argv_array_push(&cmd, "--detach");
- 	argv_array_push(&cmd, branch);
- 
--	memset(&c, 0, sizeof(c));
--	c.git_cmd = 1;
--	c.argv = cmd.argv;
--	return run_command(&c);
-+	return add_worktree(path, cmd.argv);
- }
- 
- int cmd_worktree(int ac, const char **av, const char *prefix)
+ 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+diff --git a/git.c b/git.c
+index f227838..21a6398 100644
+--- a/git.c
++++ b/git.c
+@@ -383,7 +383,7 @@ static struct cmd_struct commands[] = {
+ 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
+ 	{ "check-ref-format", cmd_check_ref_format },
+-	{ "checkout", cmd_checkout, RUN_SETUP },
++	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "checkout-index", cmd_checkout_index,
+ 		RUN_SETUP | NEED_WORK_TREE},
+ 	{ "cherry", cmd_cherry, RUN_SETUP },
 -- 
 2.5.0.rc1.197.g417e668
