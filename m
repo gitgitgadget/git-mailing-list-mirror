@@ -1,142 +1,189 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 16/23] worktree: add -b/-B options
-Date: Mon,  6 Jul 2015 13:30:53 -0400
-Message-ID: <1436203860-846-17-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v3 13/23] worktree: introduce "add" command
+Date: Mon,  6 Jul 2015 13:30:50 -0400
+Message-ID: <1436203860-846-14-git-send-email-sunshine@sunshineco.com>
 References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Mikael Magnusson <mikachu@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 19:31:55 2015
+X-From: git-owner@vger.kernel.org Mon Jul 06 19:31:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCAFD-0007jC-MB
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 19:31:52 +0200
+	id 1ZCAFC-0007jC-Vm
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 19:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087AbbGFRbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 13:31:49 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37479 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754034AbbGFRbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 13:31:45 -0400
-Received: by igau2 with SMTP id u2so16962326iga.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 10:31:45 -0700 (PDT)
+	id S1754031AbbGFRbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 13:31:44 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:37441 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753857AbbGFRbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 13:31:42 -0400
+Received: by igau2 with SMTP id u2so16961213iga.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 10:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ri+v77h6swEw5C5USojwS0E0x+RQYMSkgi+XIPz8vdo=;
-        b=RQuncHF15shvHysAJXEMRAK2Atc0vtcs+XszHRbGleTDpSbRKgCt7FvuEvKwaRVmZk
-         tmlGXSbaq3ml381Y80nVkF76mep6JFoj+M8xQHPHM2/6Qqpi4bEAZ5tLQPIVjXZH31of
-         lpHgG2R6M3jtc5x2ayfsOBDl6r5k814X9ck53V8eD3cKNvgVo+l2zf4Ip7CyogSYNLAE
-         gZn/kbOl615SOxl6fnfrGV/gPOd1Ru9cD6+cXOiwBZoPMNv8pJWOkIvUUYVhEMRkDHNO
-         iN/uCal6YpWlgSS28xIybGH2iVbWFpJR1Cy4upT2IOC0gcNyyuCJT/R540GfCTrZqQIY
-         eC5A==
-X-Received: by 10.107.135.22 with SMTP id j22mr48005iod.20.1436203905219;
-        Mon, 06 Jul 2015 10:31:45 -0700 (PDT)
+        bh=hDzTPjV7F+m1nlrZVOpnvlwyQ7p7uHcQM1dccrzpZcE=;
+        b=WOB0r82wslBwwtJMmy9NziNEWyREellzoWknHaRPBWpoM4SuxaBlLs8Mx49Kgk4KZM
+         yle/MGEAw8ElbkhEOpUc9/AIWROD8vCgH0hYQVVCxN0Bht5VtQZUDTvbw11so5LxR0oC
+         XxTug9NSv0SQHChQ7KrS6FQHpyLj5Yl5UMu/PJMJvKQQnkO3oDIyu6iboOLo0b09/EYY
+         xIPmGInngOgnE2lg6EVqyUqE6osymJ40S7VO3jzS1GDweGt2u1tIfSCjzv85k1YT3RTI
+         1dVaoFTKZVAkT7gJdZowB9nzUM030YxDbhhUnIZm+x1hVaIk+nJlYbrewUOV6d5rcVcu
+         eH6A==
+X-Received: by 10.50.8.68 with SMTP id p4mr44762787iga.4.1436203901970;
+        Mon, 06 Jul 2015 10:31:41 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id g18sm12861567iod.5.2015.07.06.10.31.44
+        by mx.google.com with ESMTPSA id g18sm12861567iod.5.2015.07.06.10.31.41
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Jul 2015 10:31:44 -0700 (PDT)
+        Mon, 06 Jul 2015 10:31:41 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.197.g417e668
 In-Reply-To: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273418>
 
-One of git-worktree's roles is to populate the new worktree, much like
-git-checkout, and thus, for convenience, ought to support several of the
-same shortcuts. Toward this goal, add -b/-B options to create a new
-branch and check it out in the new worktree.
-
-(For brevity, only -b is mentioned in the synopsis; -B is omitted.)
+The plan is to relocate "git checkout --to" functionality to "git
+worktree add". As a first step, introduce a bare-bones git-worktree
+"add" command along with documentation. At this stage, "git worktree
+add" merely invokes "git checkout --to" behind the scenes, but an
+upcoming patch will move the actual functionality
+(checkout.c:prepare_linked_checkout() and its helpers) to worktree.c.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-worktree.txt | 13 ++++++++++---
- builtin/worktree.c             | 11 +++++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ Documentation/git-worktree.txt | 20 ++++++++++----------
+ builtin/worktree.c             | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 231271b..f44cd78 100644
+index 6afff1e..def3027 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -9,7 +9,7 @@ git-worktree - Manage multiple worktrees
+@@ -9,13 +9,13 @@ git-worktree - Manage multiple worktrees
  SYNOPSIS
  --------
  [verse]
--'git worktree add' [-f] [--detach] <path> <branch>
-+'git worktree add' [-f] [--detach] [-b <new-branch>] <path> <branch>
++'git worktree add' <path> <branch>
  'git worktree prune' [-n] [-v] [--expire <expire>]
  
  DESCRIPTION
-@@ -64,6 +64,14 @@ OPTIONS
- 	is already checked out by another worktree. This option overrides
- 	that safeguard.
+ -----------
  
-+-b <new-branch>::
-+-B <new-branch>::
-+	With `add`, create a new branch named `<new-branch>` starting at
-+	`<branch>`, and check out `<new-branch>` into the new worktree.
-+	By default, `-b` refuses to create a new branch if it already
-+	exists. `-B` overrides this safeguard, resetting `<new-branch>` to
-+	`<branch>`.
+-Manage multiple worktrees attached to the same repository. These are
+-created by the command `git checkout --to`.
++Manage multiple worktrees attached to the same repository.
+ 
+ A git repository can support multiple working trees, allowing you to check
+ out more than one branch at a time.  With `git checkout --to` a new working
+@@ -45,6 +45,12 @@ pruning should be suppressed. See section "DETAILS" for more information.
+ 
+ COMMANDS
+ --------
++add <path> <branch>::
 +
- --detach::
- 	With `add`, detach HEAD in the new worktree. See "DETACHED HEAD" in
- 	linkgit:git-checkout[1].
-@@ -133,8 +141,7 @@ make the emergency fix, remove it when done, and then resume your earlier
- refactoring session.
++Create `<path>` and checkout `<branch>` into it. The new working directory
++is linked to the current repository, sharing everything except working
++directory specific files such as HEAD, index, etc.
++
+ prune::
+ 
+ Prune working tree information in $GIT_DIR/worktrees.
+@@ -118,7 +124,7 @@ refactoring session.
  
  ------------
--$ git branch emergency-fix master
--$ git worktree add ../temp emergency-fix
-+$ git worktree add -b emergency-fix ../temp master
+ $ git branch emergency-fix master
+-$ git checkout --to ../temp emergency-fix
++$ git worktree add ../temp emergency-fix
  $ pushd ../temp
  # ... hack hack hack ...
  $ git commit -a -m 'emergency fix for boss'
+@@ -133,9 +139,8 @@ Multiple checkout support for submodules is incomplete. It is NOT
+ recommended to make multiple checkouts of a superproject.
+ 
+ git-worktree could provide more automation for tasks currently
+-performed manually or via other commands, such as:
++performed manually, such as:
+ 
+-- `add` to create a new linked worktree
+ - `remove` to remove a linked worktree and its administrative files (and
+   warn if the worktree is dirty)
+ - `mv` to move or rename a worktree and update its administrative files
+@@ -143,11 +148,6 @@ performed manually or via other commands, such as:
+ - `lock` to prevent automatic pruning of administrative files (for instance,
+   for a worktree on a portable device)
+ 
+-SEE ALSO
+---------
+-
+-linkgit:git-checkout[1]
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 9dc92b0..d6d0eee 100644
+index 2a729c6..e0749c0 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -126,15 +126,22 @@ static int add(int ac, const char **av, const char *prefix)
+@@ -2,8 +2,11 @@
+ #include "builtin.h"
+ #include "dir.h"
+ #include "parse-options.h"
++#include "argv-array.h"
++#include "run-command.h"
+ 
+ static const char * const worktree_usage[] = {
++	N_("git worktree add <path> <branch>"),
+ 	N_("git worktree prune [<options>]"),
+ 	NULL
+ };
+@@ -119,6 +122,32 @@ static int prune(int ac, const char **av, const char *prefix)
+ 	return 0;
+ }
+ 
++static int add(int ac, const char **av, const char *prefix)
++{
++	struct child_process c;
++	const char *path, *branch;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	struct option options[] = {
++		OPT_END()
++	};
++
++	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
++	if (ac != 2)
++		usage_with_options(worktree_usage, options);
++
++	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
++	branch = av[1];
++
++	argv_array_push(&cmd, "checkout");
++	argv_array_pushl(&cmd, "--to", path, NULL);
++	argv_array_push(&cmd, branch);
++
++	memset(&c, 0, sizeof(c));
++	c.git_cmd = 1;
++	c.argv = cmd.argv;
++	return run_command(&c);
++}
++
+ int cmd_worktree(int ac, const char **av, const char *prefix)
  {
- 	struct child_process c;
- 	int force = 0, detach = 0;
-+	const char *new_branch = NULL, *new_branch_force = NULL;
- 	const char *path, *branch;
- 	struct argv_array cmd = ARGV_ARRAY_INIT;
  	struct option options[] = {
- 		OPT__FORCE(&force, N_("checkout <branch> even if already checked out in other worktree")),
-+		OPT_STRING('b', NULL, &new_branch, N_("branch"),
-+			   N_("create a new branch")),
-+		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
-+			   N_("create or reset a branch")),
- 		OPT_BOOL(0, "detach", &detach, N_("detach HEAD at named commit")),
- 		OPT_END()
- 	};
+@@ -127,6 +156,8 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
  
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
-+	if (new_branch && new_branch_force)
-+		die(_("-b and -B are mutually exclusive"));
- 	if (ac != 2)
+ 	if (ac < 2)
  		usage_with_options(worktree_usage, options);
- 
-@@ -145,6 +152,10 @@ static int add(int ac, const char **av, const char *prefix)
- 	argv_array_pushl(&cmd, "--to", path, NULL);
- 	if (force)
- 		argv_array_push(&cmd, "--ignore-other-worktrees");
-+	if (new_branch)
-+		argv_array_pushl(&cmd, "-b", new_branch, NULL);
-+	if (new_branch_force)
-+		argv_array_pushl(&cmd, "-B", new_branch_force, NULL);
- 	if (detach)
- 		argv_array_push(&cmd, "--detach");
- 	argv_array_push(&cmd, branch);
++	if (!strcmp(av[1], "add"))
++		return add(ac - 1, av + 1, prefix);
+ 	if (!strcmp(av[1], "prune"))
+ 		return prune(ac - 1, av + 1, prefix);
+ 	usage_with_options(worktree_usage, options);
 -- 
 2.5.0.rc1.197.g417e668
