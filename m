@@ -1,146 +1,112 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH] grep: use regcomp() for icase search with non-ascii patterns
-Date: Mon, 06 Jul 2015 22:10:33 +0200
-Message-ID: <559AE0B9.2040704@web.de>
-References: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg> <1436186551-32544-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] pull: allow dirty tree when rebase.autostash enabled
+Date: Mon, 06 Jul 2015 13:39:47 -0700
+Message-ID: <xmqqd205yq98.fsf@gitster.dls.corp.google.com>
+References: <1434538880-15608-1-git-send-email-me@ikke.info>
+	<1436046158-19426-1-git-send-email-me@ikke.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: plamen.totev@abv.bg
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 22:11:14 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Kevin Daudt <me@ikke.info>
+X-From: git-owner@vger.kernel.org Mon Jul 06 22:39:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCCjS-0001JR-9T
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 22:11:14 +0200
+	id 1ZCDBD-0001lN-73
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 22:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755199AbbGFULK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2015 16:11:10 -0400
-Received: from mout.web.de ([212.227.17.11]:51641 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754220AbbGFULH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 16:11:07 -0400
-Received: from [192.168.178.27] ([79.253.167.251]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LzbLS-1YyEWI26C2-014nav; Mon, 06 Jul 2015 22:11:04
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <1436186551-32544-1-git-send-email-pclouds@gmail.com>
-X-Provags-ID: V03:K0:34qxABfQkI5KFCohalwi3ZYER8aq4IsOSVqnre3MaJlwKTxEi8p
- GMmLjJv7Gf+8N7S/X9jw3oyIv/F6F4OFDvJmCUB9J33oOWJ0gSZHDI8RyBA0BdoYhYs6WxS
- 2w1a8zNDUDcbuFSRAOd5eUUY1xFZDCQL17eMCD61/vbU3JKOzqJ2ESboRr5CKr6Lmb4Z/Ed
- h6XVVXiCujjr/RVNiP79w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jnzV2+zs5go=:NsUQW7q4LdQIQfcMKldl75
- vNckLK0J7EPLiLEfuVignkBBKyaEZHeLwzfpGefa874azm7UYZV53L081QSO90z1p4pmXQomK
- YPjOCWoUDX6l5kRZvI6+LEpzyCI8d7XUiHBn1io5gssnqADfSWjGLDIXmVWh2tcUDDsovPPhe
- QDowZv1lUYHrFW/yo5wqRyxt2NGQ+xxeBJs1LsO++QU4OUppVBObzfaccFF54in5DB81zFX6I
- VQjyCAi/+3Ag2mX0bHOl89CYSo78N1SemlVcM1JubO373xGWCcOYSAk5fjmH0GVuCSelS1JzM
- D66iqcYsI2+riH1g7bzzy1ErUByPKdICJ1MdKUZgsZX4MS0L3ooFeb5Ln+A0Kw5hLRokO4zKt
- CdzcbpDbRVtaSa9qsrjbY2UACVyWPxwo+IcyazOZyfoGwtc+Sf6azrKQRO4921ueeH7+iiBpz
- 8Uw7xWwcICwd9MPMQnm0tBeHnrjfZnmtSeJBvDbyHDF/m2KEbYbDmgha8/WC8iu+84gURKUW8
- 6Kc8PvZnfEnTA57Z3bKKFP2N5/TyjW3GLuCYtStVyB/TiHpw/2fJL4afDacOXtWSs4c/D6oUD
- 2xiyVlOo1BaDAh69SGK9Ftne7VkqrVgtUVHMjumy6/xZQNZN7wmQsCTP3kDMtO/fdfDB6v6DT
- 4ChbSxdUt0fj4zEa/EFEncbAIBjVi2h0SPU+uk0iaebHX/Vq1AA0RISFM/qp/SJCjfIk=
+	id S1755450AbbGFUjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 16:39:51 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:38360 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754541AbbGFUjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 16:39:49 -0400
+Received: by igrv9 with SMTP id v9so125117087igr.1
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 13:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Cu+MV9Vra4z08YYUI89PFG4wYP3XuAHyYeV26cAf+24=;
+        b=H99PxLuIR6Fsx3SvyE6vqvEufT74N599s4hgOgaRf3xPJ+G0ZEEupSrU1JOYaUHOrj
+         sf47okpPStuD10bFimBwDHZfpRXLYGs7aje5DXLaJtGqCkUcXsZyIOZSnLjvySkAx2JT
+         EFtxmtOm3nKHFrUwu1JhLjpdXcAjAITMq7Xo25WUMwDjW+TGFqDPJUYuRu21Eiy/emt5
+         OgrfUpIr0GriH9wJk9ZwC6u9FgJtnD4+ygGr2bSPWhQzZYrFo98CaWBXsqYtRHULgESy
+         MS26THQNERiORImLyZI0CSx/4WGCsyFIgWLawqtTVBkMGeDAMejUi+xNQ+KHRSAiFXDT
+         GeYA==
+X-Received: by 10.107.135.21 with SMTP id j21mr1028970iod.33.1436215189192;
+        Mon, 06 Jul 2015 13:39:49 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
+        by smtp.gmail.com with ESMTPSA id h2sm16812291igv.2.2015.07.06.13.39.48
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 06 Jul 2015 13:39:48 -0700 (PDT)
+In-Reply-To: <1436046158-19426-1-git-send-email-me@ikke.info> (Kevin Daudt's
+	message of "Sat, 4 Jul 2015 23:42:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273457>
 
-Am 06.07.2015 um 14:42 schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y:
-> Noticed-by: Plamen Totev <plamen.totev@abv.bg>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+Kevin Daudt <me@ikke.info> writes:
+
+> rebase learned to stash changes when it encounters a dirty work tree, but
+> git pull --rebase does not.
+>
+> Only verify if the working tree is dirty when rebase.autostash is not
+> enabled.
+>
+> Signed-off-by: Kevin Daudt <me@ikke.info>
+> Helped-by: Paul Tan <pyokagan@gmail.com>
 > ---
->   grep.c | 14 +++++++++++---
->   1 file changed, 11 insertions(+), 3 deletions(-)
+
+I applied it, tried to run today's integration cycle, and then ended
+up ejecting it from my tree for now, as this seemed to break 5520
+when merged to 'pu' X-<.
+
+Well, that is partly expected, as Paul's builtin/pull.c does not
+know about it (yet).
+
+>  git-pull.sh     |  3 ++-
+>  t/t5520-pull.sh | 11 +++++++++++
+>  2 files changed, 13 insertions(+), 1 deletion(-)
 >
-> diff --git a/grep.c b/grep.c
-> index b58c7c6..48db15a 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -378,7 +378,7 @@ static void free_pcre_regexp(struct grep_pat *p)
->   }
->   #endif /* !USE_LIBPCRE */
->
-> -static int is_fixed(const char *s, size_t len)
-> +static int is_fixed(const char *s, size_t len, int ignore_icase)
->   {
->   	size_t i;
->
-> @@ -391,6 +391,13 @@ static int is_fixed(const char *s, size_t len)
->   	for (i =3D 0; i < len; i++) {
->   		if (is_regex_special(s[i]))
->   			return 0;
-> +		/*
-> +		 * The builtin substring search can only deal with case
-> +		 * insensitivity in ascii range. If there is something outside
-> +		 * of that range, fall back to regcomp.
-> +		 */
-> +		if (ignore_icase && (unsigned char)s[i] >=3D 128)
-> +			return 0;
-
-How about "isascii(s[i])"?
-
->   	}
->
->   	return 1;
-> @@ -398,18 +405,19 @@ static int is_fixed(const char *s, size_t len)
->
->   static void compile_regexp(struct grep_pat *p, struct grep_opt *opt=
-)
->   {
-> +	int ignore_icase =3D opt->regflags & REG_ICASE || p->ignore_case;
->   	int err;
->
->   	p->word_regexp =3D opt->word_regexp;
->   	p->ignore_case =3D opt->ignore_case;
-
-Using p->ignore_case before this line, as in initialization of the new=20
-variable ignore_icase above, changes the meaning.
-
->
-> -	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
-> +	if (opt->fixed || is_fixed(p->pattern, p->patternlen, ignore_icase)=
-)
->   		p->fixed =3D 1;
->   	else
->   		p->fixed =3D 0;
->
->   	if (p->fixed) {
-> -		if (opt->regflags & REG_ICASE || p->ignore_case)
-> +		if (ignore_case)
-
-ignore_icase instead?  ignore_case is for the config variable=20
-core.ignorecase.  Tricky.
-
->   			p->kws =3D kwsalloc(tolower_trans_tbl);
->   		else
->   			p->kws =3D kwsalloc(NULL);
->
-
-So the optimization before this patch was that if a string was searched=
-=20
-for without -F then it would be treated as a fixed string anyway unless=
-=20
-it contained regex special characters.  Searching for fixed strings=20
-using the kwset functions is faster than using regcomp and regexec,=20
-which makes the exercise worthwhile.
-
-Your patch disables the optimization if non-ASCII characters are=20
-searched for because kwset handles case transformations only for ASCII=20
-chars.
-
-Another consequence of this limitation is that -Fi (explicit=20
-case-insensitive fixed-string search) doesn't work properly with=20
-non-ASCII chars neither.  How can we handle this one?  Fall back to=20
-regcomp by escaping all special characters?  Or at least warn?
-
-Tests would be nice. :)
-
-Ren=C3=A9
+> diff --git a/git-pull.sh b/git-pull.sh
+> index a814bf6..ff28d3f 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -284,7 +284,8 @@ test true = "$rebase" && {
+>  		then
+>  			die "$(gettext "updating an unborn branch with changes added to the index")"
+>  		fi
+> -	else
+> +	elif test $(git config --bool --get rebase.autostash || echo false) = false
+> +	then
+>  		require_clean_work_tree "pull with rebase" "Please commit or stash them."
+>  	fi
+>  	oldremoteref= &&
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index f4a7193..a0013ee 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -245,6 +245,17 @@ test_expect_success '--rebase fails with multiple branches' '
+>  	test modified = "$(git show HEAD:file)"
+>  '
+>  
+> +test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
+> +	test_config rebase.autostash true &&
+> +	git reset --hard before-rebase &&
+> +	echo dirty >new_file &&
+> +	git add new_file &&
+> +	git pull --rebase . copy &&
+> +	test_cmp_rev HEAD^ copy &&
+> +	test "$(cat new_file)" = dirty &&
+> +	test "$(cat file)" = "modified again"
+> +'
+> +
+>  test_expect_success 'pull.rebase' '
+>  	git reset --hard before-rebase &&
+>  	test_config pull.rebase true &&
