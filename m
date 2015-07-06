@@ -1,93 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 18/23] checkout: retire --to option
-Date: Mon, 06 Jul 2015 12:41:13 -0700
-Message-ID: <xmqqh9physyu.fsf@gitster.dls.corp.google.com>
-References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
-	<1436203860-846-19-git-send-email-sunshine@sunshineco.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Draft of Git Rev News edition 5
+Date: Mon, 6 Jul 2015 21:59:43 +0200
+Message-ID: <CAP8UFD2JkPqkXWX0EZFcSx4Dh47Esvrnviv3+DQQgPYTC3DBHQ@mail.gmail.com>
+References: <CAP8UFD2fpRiOmgL9GW-1N9ZLAY+p-nOSH-b57vJFO4e_tELrWw@mail.gmail.com>
+	<20150705191101.GB9815@flurp.local>
+	<xmqqa8v92qdf.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTfkDqSDRqDjA=CNkT1c7Fo0zaLiwi2bAbCLZxPHi5=Bg@mail.gmail.com>
+	<xmqqfv5118a3.fsf@gitster.dls.corp.google.com>
+	<20150706193941.GA1730@flurp.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <npaolucci@atlassian.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 21:41:22 2015
+X-From: git-owner@vger.kernel.org Mon Jul 06 21:59:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCCGX-00009H-2b
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 21:41:21 +0200
+	id 1ZCCYP-0002uo-Bo
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 21:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755179AbbGFTlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 15:41:16 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:33641 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753750AbbGFTlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 15:41:15 -0400
-Received: by igh16 with SMTP id 16so34060245igh.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 12:41:15 -0700 (PDT)
+	id S1754906AbbGFT7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 15:59:45 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:35978 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751017AbbGFT7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 15:59:44 -0400
+Received: by wguu7 with SMTP id u7so149850934wgu.3
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 12:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Ng+itd1Rge0kbpfNOyCdH7Tn7/vU/uj27uMrqJW/GK0=;
-        b=H+tvyudw/oAHfHM1jBBjM19Vnunz4Bd9UMLRfmNL7lhKYTi5X1dFxhQ7NrHRyaT1HQ
-         L/SmrCnFU+bYtLu9LfxuaLQGHVtoKmjxseDuXj8yfQxa3TchFwf47Zo+DmvM0uRwaWcM
-         agEusYxLn2PEvN6eSWmkiR0Z2c1ibhwPdVLVJdmzNYkaLLiVbr/H+HGFvXu5hpFm+t6C
-         5tkru31ErM1bqE3Z0wCo0hxQpgBna/Hy1CH1ee7RlG4kZsuckSY9dwz+kAQXzwrNIDkI
-         KYtz+vyvvvJhvS7mhdfAe9sfdThisVnonPwRjPglD51Bh+S8vRKAr5K5H2frm8KYPaph
-         hIAQ==
-X-Received: by 10.50.43.227 with SMTP id z3mr43354546igl.12.1436211675369;
-        Mon, 06 Jul 2015 12:41:15 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
-        by smtp.gmail.com with ESMTPSA id fv2sm10283936igb.22.2015.07.06.12.41.14
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 06 Jul 2015 12:41:14 -0700 (PDT)
-In-Reply-To: <1436203860-846-19-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Mon, 6 Jul 2015 13:30:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3q+MuDQBL3KddEPOzVnCnHkIVVFgZDweKypY0Vnrlbs=;
+        b=PRyxblrbHgBMvTadT970JykRSTl8T+tNbryOQQz1lqdeEBd4MUGTO4DbI+/jzUciET
+         4A2GPq2DpbX8p+nMHDvYEvLCQlBXdTLDGZfeDf9fLDRxoJRSBIbrgtSrQKLyqdjSwhbb
+         vWC0F4Yb0Fl+/fyTI6vBTR1BaDZEChXJ6RIqLjOvIZGTUKkF1e4gsHEFXIDSLUijMfAH
+         RNTZSAdqHvoMD3fz9mIaO0RBk9VwUqBfXaZizXD3KH8MIz02hlI6u+BmUU4gFyyDXtui
+         k8rBjq5D40Tia3t06q+W2pCDrj3k8Be7J8XUn2P/OdZTrirR/7gwezx01BgItirsL2f7
+         QRuQ==
+X-Received: by 10.180.95.10 with SMTP id dg10mr56402676wib.41.1436212783327;
+ Mon, 06 Jul 2015 12:59:43 -0700 (PDT)
+Received: by 10.194.221.229 with HTTP; Mon, 6 Jul 2015 12:59:43 -0700 (PDT)
+In-Reply-To: <20150706193941.GA1730@flurp.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273455>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> Now that "git worktree add" has achieved user-facing feature-parity with
-> "git checkout --to", retire the latter.
+On Mon, Jul 6, 2015 at 9:39 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Jul 06, 2015 at 10:54:28AM -0700, Junio C Hamano wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> > How about this instead: prefixing with "As originally implemented",
+>> > with a couple s/is/was/ thrown in...
+>> >
+>> >     As originally implemented, creation of linked-worktrees was
+>> >     accomplished via `git checkout --to <path> <branch>`, and cleanup
+>> >     of leftover administrative files, after `<path>` is deleted, was
+>> >     done with `git prune --worktrees`. However, a recent unrelated
+>> >     change to `git prune` led to a discussion that concluded that
+>> >     worktree-related maintenance functionality didn't belong in `git
+>> >     prune`.
+>> >
+>> > Is that sufficient to clue in the reader that "checkout --to" is not
+>> > final form,...
+>>
+>> Yeah, I think that is a good way to address my concern.
+>>
+>> The current draft release notes to 2.5 mentions this feature as
+>> experimental and warns that its UI is bound to change.  We will
+>> ship the upcoming release with "checkout --to" and the more places
+>> we advise the users that this UI is not final, the better.
 >
-> Move the actual linked worktree creation functionality,
-> prepare_linked_checkout() and its helpers, verbatim from checkout.c to
-> worktree.c.
->
-> This effectively reverts changes to checkout.c by 529fef2 (checkout:
-> support checking out into a new working directory, 2014-11-30) with the
-> exception of merge_working_tree() and switch_branches() which still
-> require specialized knowledge that a the checkout is occurring in a
-> newly-created linked worktree (signaled to them by the private
-> GIT_CHECKOUT_NEW_WORKTREE environment variable).
+> Here it is in patch form. (I wouldn't be surprised if the non-ASCII
+> characters in Duy's name in the context line get botched again...)
 
+Ok, the following is merged:
 
-I do not quite understand why we still need the hidden environment
-variable.  Is this a sign that the implementation is shared too much
-between unrelated codepaths (or to put it another way, perhaps API
-functions that are not best fit are being used)?
+https://github.com/git/git.github.io/pull/87
 
-Stepping back a bit, with or without the new "linked worktree"
-feature, when you came across a repository whose working tree does
-not have any file (i.e. somebody ran "git ls-files | xargs rm"), you
-do not know and care what is in .git/index right now, you do not
-know and care what branch its .git/HEAD points at, but you *do* know
-what branch you want to be on (or where you want its HEAD detached
-at), what would be the command you would use?
-
-The state immediately after a new worktree is constructed by
-populating /path/main/.git/worktrees/test-next/ and pointing it from
-/path/other/test-next/.git but before the index or the files under
-/path/other/test-next/ are populated is exactly that situation, no?
-Wouldn't "symbolic-ref HEAD the-branch-i-want" (or "update-ref HEAD
-the-commit-i-want" in the detached case) followed by "reset --hard"
-the more natural thing to use, instead of merge-working-tree and
-switch-branches that are implementation details of "checkout"?
+Thanks both,
+Christian.
