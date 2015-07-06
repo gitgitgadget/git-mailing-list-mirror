@@ -1,103 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] pack-protocol.txt: Mark all LFs in push-cert as required
-Date: Mon, 06 Jul 2015 09:57:46 -0700
-Message-ID: <xmqq615x2ph1.fsf@gitster.dls.corp.google.com>
-References: <1435774099-21260-1-git-send-email-dborowitz@google.com>
-	<1435774099-21260-4-git-send-email-dborowitz@google.com>
-	<xmqqfv578x87.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qSN9=afCe3RumJPfP9JERy1w+tAYdjq01MsQnsOjdKu3A@mail.gmail.com>
-	<xmqqzj3f7gde.fsf@gitster.dls.corp.google.com>
-	<CAJo=hJvfYfgBthFMYXnXJ6e6PVM92SsWGVNt7qNTSQH9=psGtQ@mail.gmail.com>
-	<xmqqegkl2qu2.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qRLu1d7Sa8aVrHtDCsJNtVXwzHBAyOmmUHmVAx7qHmOPg@mail.gmail.com>
+Subject: Re: [PATCH] rebase: return non-zero error code if format-patch fails
+Date: Mon, 06 Jul 2015 10:01:28 -0700
+Message-ID: <xmqq1tgl2pav.fsf@gitster.dls.corp.google.com>
+References: <20150702091133.GA13353@musxeris015.imu.intel.com>
+	<xmqqpp493z8f.fsf@gitster.dls.corp.google.com>
+	<20150706085326.GA30731@musxeris015.imu.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 18:57:57 2015
+Cc: git@vger.kernel.org, Andrew Wong <andrew.kw.w@gmail.com>,
+	Jorge Nunes <jorge.nunes@intel.com>
+To: Clemens Buchacher <clemens.buchacher@intel.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 19:01:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZC9iL-0003U9-Vf
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 18:57:54 +0200
+	id 1ZC9mD-0005xQ-6h
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 19:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254AbbGFQ5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 12:57:49 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:36244 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748AbbGFQ5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 12:57:48 -0400
-Received: by iecvh10 with SMTP id vh10so117552118iec.3
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 09:57:48 -0700 (PDT)
+	id S1753628AbbGFRBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 13:01:48 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:35530 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753495AbbGFRBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 13:01:48 -0400
+Received: by igcqs7 with SMTP id qs7so14519929igc.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 10:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=n8PyT+Szw4fa8Ft5wnP8Jey3Ng0/1w086iHL35ABNxY=;
-        b=YREqWmzTSwXTYiL1rJp3dOIuaNhBNlHoUnmVwhK863PVX9SHiA8r8ogPyManicHvVC
-         bzm6Q26M34Wrnc8JFA+99tEmENmMqZpRjhph/bfuJqPJqoYoWfceg8n1Hcrsc0z4QNM7
-         be33Bt6BoQRN6j9ODALl3Ai8MskrXeGqFxNrfcPCLZ0M30ctMGANqJxs4+V6haKc0WXN
-         O80FbWSGTuDRJhfQR0WARz9k3CD4ygzpyc2JKmACnkFoFtvvx9YUv9CvTX3Q6/Ss6Ysw
-         /fl8c5yYGXKFv5WUNbxtpsFSd00jmc4I4NQ2zpeYrXMdUSRNgBqHhBhP192+O4pXHiKV
-         OsuQ==
-X-Received: by 10.107.32.73 with SMTP id g70mr77099692iog.23.1436201868036;
-        Mon, 06 Jul 2015 09:57:48 -0700 (PDT)
+        bh=CmIR2ZiM7gIjJACgCRPXjVPwTkR4aOyC5uVaueHLsUM=;
+        b=sEcLuFFxISFCCSfKZoWCtFA6X4HEkvjZhh9nNH2+O8LJPwkWqrgXKhG1nnSLX1AIHu
+         vN0xmtuAFEPbylPfsnLlGJybHzFhhp4y5ytup1lR4HF4dN9ZXWOW2/2q/1tC+RGz9fg2
+         Gq5jISPYLPzBmRnl2Xuf6PRimph2v3PRl5Fy9pOPP5lpxjygzsuzySMhRyRnE5V7vqgL
+         4IBqMSQW/sw/oxu1Bc6Tv4ONZCPc6GrzyMD0kb21vmH0wB66bQ9ItOlDKVytEFZ6LaWW
+         e5PsUgqCXGl5aVv7Ofs2gpbI/V6tmibIjgO5aP/IAKHo1I+kxJ6oQvPUG0Y5sMvfP7xx
+         t3HA==
+X-Received: by 10.107.39.209 with SMTP id n200mr75629114ion.59.1436202090086;
+        Mon, 06 Jul 2015 10:01:30 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
-        by mx.google.com with ESMTPSA id g81sm12794971ioi.20.2015.07.06.09.57.47
+        by mx.google.com with ESMTPSA id x4sm12797695iod.26.2015.07.06.10.01.29
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 06 Jul 2015 09:57:47 -0700 (PDT)
-In-Reply-To: <CAD0k6qRLu1d7Sa8aVrHtDCsJNtVXwzHBAyOmmUHmVAx7qHmOPg@mail.gmail.com>
-	(Dave Borowitz's message of "Mon, 6 Jul 2015 12:38:20 -0400")
+        Mon, 06 Jul 2015 10:01:29 -0700 (PDT)
+In-Reply-To: <20150706085326.GA30731@musxeris015.imu.intel.com> (Clemens
+	Buchacher's message of "Mon, 6 Jul 2015 10:53:26 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273406>
 
-Dave Borowitz <dborowitz@google.com> writes:
+Clemens Buchacher <clemens.buchacher@intel.com> writes:
 
-> The server can munge pkt-lines and reinsert LFs, but it _must_ have
-> some way of reconstructing the payload that the client signed in order
-> to verify the signature. If we just naively insert LFs where missing,
-> we lose the ability to verify the signature.
-
-I still do not understand this part.
-
-There is no way to "naively" insert, is there?  You have an array of
-lines (each of which you have already stripped its terminating LF at
-its end).  How else other than adding one LF at the end of each
-element do you reconstruct the original multi-line string the client
-signed?  Are there other ways that makes the result ambiguous??
-
-> If we say the payload the client signs MUST have LFs only in certain
-> places, then that gives the server enough information to reconstruct
-> the payload and verify the signature.
+> On Fri, Jul 03, 2015 at 10:52:32AM -0700, Junio C Hamano wrote:
+>> >
+>> > Cc: Andrew Wong <andrew.kw.w@gmail.com>
+>> > Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
+>> > Reviewed-by: Jorge Nunes <jorge.nunes@intel.com>
+>> 
+>> Where was this review made?  I may have missed a recent discussion,
+>> and that is why I am asking, because Reviewed-by: lines that cannot
+>> be validated by going back to the list archive does not add much
+>> value.
 >
-> But if we say the signed payload MUST have LFs and the wire payload
-> MAY have LFs, then now we have two completely different formats, only
-> one of which is documented.
+> Jorge helped me by reviewing the patch before I submitted it to the
+> list. My intention is to give credit for his contribution, and to
+> involve him in any discussion regarding the patch. Maybe it makes more
+> sense to say Helped-by:?
 
-I thought that was what I was saying.  The wire protocol sends the
-contents of each line (both what is signed and the signature) on a
-separate packet.  When I say "contents of a line", I do not include
-the terminating LF as part of the line (iow, LF is not even
-optional; the terminating LF is not considered as part of "the
-contents of a line").  It becomes irrelevant that a pkt-line may or
-may not have a trailing optional LF.  If there is LF at the end of a
-packet between "push-cert" and "push-cert-end" packets, that LF by
-definition cannot be part of the "contents of a line" in a
-certificate.
-
-It is just a pkt-line framing artifact you can and should remove if
-you are doing a "split to array, join with LF" implementation to
-recover the original string.
-
-And that is very much consistent with the way we send other things
-with pkt-line protocol.  Each packet up to the first flush is
-expected to have <object name> and <refname> as ref advertisement.
-The pkt-line framing may or may not add a trailing LF, but LF is not
-part of <refname>.  It is not even part of the payload; merely an
-artifact of pkt-line framing.
+Thanks; I think that clarifies it, and I think that is how people
+seem to use Helped-by around here.
