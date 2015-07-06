@@ -1,70 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Git merge commit message issue
-Date: Mon, 06 Jul 2015 18:33:36 +0200
-Message-ID: <vpq8uats0tb.fsf@anie.imag.fr>
-References: <loom.20150706T173729-880@post.gmane.org>
-	<vpqtwths1yq.fsf@anie.imag.fr>
-	<CAArk4YPvO46H2HXkPyPxwirauKXYJ1qpi_GmYMh-T2xz5EdaBQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Draft of Git Rev News edition 5
+Date: Mon, 06 Jul 2015 09:38:20 -0700
+Message-ID: <xmqqa8v92qdf.fsf@gitster.dls.corp.google.com>
+References: <CAP8UFD2fpRiOmgL9GW-1N9ZLAY+p-nOSH-b57vJFO4e_tELrWw@mail.gmail.com>
+	<20150705191101.GB9815@flurp.local>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Andrey Hsiao <andreyhsiao@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 18:33:50 2015
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <npaolucci@atlassian.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 18:38:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZC9L3-0005WE-M6
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 18:33:50 +0200
+	id 1ZC9Pp-00007P-0P
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 18:38:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753706AbbGFQdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 12:33:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54227 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751375AbbGFQdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 12:33:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t66GXZXi031738
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 6 Jul 2015 18:33:35 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t66GXa9h016999;
-	Mon, 6 Jul 2015 18:33:36 +0200
-In-Reply-To: <CAArk4YPvO46H2HXkPyPxwirauKXYJ1qpi_GmYMh-T2xz5EdaBQ@mail.gmail.com>
-	(Andrey Hsiao's message of "Tue, 7 Jul 2015 00:16:19 +0800")
+	id S1754037AbbGFQid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 12:38:33 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:33959 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754696AbbGFQiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 12:38:23 -0400
+Received: by igcsj18 with SMTP id sj18so239005380igc.1
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 09:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=+uW+yoW36PwigK32xBuTjyiTbZauaOO7MbqXArUjEg8=;
+        b=LmQd/MeEr1tUuBdYTRuRNyVdCyOrHjO6+pNTn8Nlutq+IZeL+fCaMwHL5adWWc/0Jx
+         WveI3kQsFHdW2cja0C6m8veP/owSpn0NT9FzwVBmYIRgQVD+N5vWWUoBVFnKX6YHx+cY
+         kJ1hcznDGP+inOCNU5s9bDr+cyNu69kAR6R1OQcIGAff/N5LwQyqu26+cccdcfDf6hj9
+         yt6AVewjZAiPv8cAvEIiHXYcFKJwo8OKsezT6odqe1uP1dNcTC9rgjr27qzT0XW1hCiA
+         b2FsntpFTakLpmoJJFddTIZndun6tq6/HiJ9p7oJzj4IrU5Bti60GPi6nYc9Qop+sTM6
+         4tPQ==
+X-Received: by 10.107.137.41 with SMTP id l41mr62741535iod.60.1436200702348;
+        Mon, 06 Jul 2015 09:38:22 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
+        by mx.google.com with ESMTPSA id v40sm3462157ioi.37.2015.07.06.09.38.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 06 Jul 2015 09:38:21 -0700 (PDT)
+In-Reply-To: <20150705191101.GB9815@flurp.local> (Eric Sunshine's message of
+	"Sun, 5 Jul 2015 15:11:01 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 06 Jul 2015 18:33:35 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t66GXZXi031738
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1436805219.85596@1/m8/BtfOHxZPeYDEdreoA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273402>
 
-[ Please, don't top-post on this list ]
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Andrey Hsiao <andreyhsiao@gmail.com> writes:
+> I'm not familiar with the criteria for deciding what merits mention
+> in the newsletter. Is the recent introduction of git-worktree and the
+> attendant relocation of "add" and "prune" functionality worthy? If
+> so, perhaps the following write-up would be suitable?
 
-> It was a bit sad since we use scripts to do the merge, then we can
-> check the conflict list in the log message, and assign to separate
-> owners to resolve them.
->
-> Would it be possible to make it as an config option?
-
-If a script is doing the merge, then I guess you can let your script add
-the entry in .git/MERGE_MSG (based on something like 'git ls-files -u'
-or 'git status --porcelain | grep ^U'). This way, your script would work
-with any version of Git.
-
-Having a config option to restore the old behavior would make sense to
-me at least. I guess it falls in the category "patches welcome".
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+One issue I had with this text was that it was not immediately clear
+what the end-game UI of the feature was.  Is "checkout --to" they
+way the user is expected to trigger this?  It appears in the very
+early part of the multi-paragraph description and I suspect that the
+majority of the users would think that way, not with "worktree add"
+that appears a lot later.
