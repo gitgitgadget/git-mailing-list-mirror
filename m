@@ -1,257 +1,121 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v6 1/7] refs.c: add err arguments to reflog functions
-Date: Mon, 06 Jul 2015 17:53:52 +0200
-Message-ID: <559AA490.3080605@alum.mit.edu>
-References: <1435609076-8592-1-git-send-email-dturner@twopensource.com> <1435609076-8592-2-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v6 2/7] cherry-pick: treat CHERRY_PICK_HEAD and REVERT_HEAD
+ as refs
+Date: Mon, 06 Jul 2015 18:00:30 +0200
+Message-ID: <559AA61E.1010308@alum.mit.edu>
+References: <1435609076-8592-1-git-send-email-dturner@twopensource.com> <1435609076-8592-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Ronnie Sahlberg <sahlberg@google.com>
+Content-Transfer-Encoding: 7bit
 To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 17:54:52 2015
+X-From: git-owner@vger.kernel.org Mon Jul 06 18:00:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZC8jK-0006C6-GN
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 17:54:51 +0200
+	id 1ZC8p8-0001cW-IV
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 18:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753677AbbGFPyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 11:54:45 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:42811 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753270AbbGFPyH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2015 11:54:07 -0400
-X-AuditID: 1207440e-f79516d0000012b3-58-559aa492de4e
+	id S1751346AbbGFQAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 12:00:46 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:56927 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750905AbbGFQAp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2015 12:00:45 -0400
+X-AuditID: 1207440c-f79e16d000002a6e-ba-559aa620cb3d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id CE.47.04787.294AA955; Mon,  6 Jul 2015 11:53:54 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id DD.0E.10862.026AA955; Mon,  6 Jul 2015 12:00:32 -0400 (EDT)
 Received: from [192.168.69.130] (p5DDB05DB.dip0.t-ipconnect.de [93.219.5.219])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t66Frq4K015729
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t66G0Vx7016091
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 6 Jul 2015 11:53:53 -0400
+	Mon, 6 Jul 2015 12:00:32 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <1435609076-8592-2-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1J20ZFaowfO3WhbzN51gtOi60s1k
-	8W9CjQOzx4JNpR4Lnt9n9/i8SS6AOYrbJimxpCw4Mz1P3y6BO+Ntu1dBi13FlMfNTA2Miwy6
-	GDk5JARMJO7P/s8KYYtJXLi3nq2LkYtDSOAyo8TnY4+hnLNMEn/mfgByODh4BbQlfm0LBmlg
-	EVCVeHx7MzuIzSagK7Gop5kJpERUIEji9ctckDCvgKDEyZlPWEBsEQEHicu7jjKD2MwCmhKb
-	NrxgBSkXFvCUWHPACiQsJNDMKHHzAthETgEPiVsvH7JDlOtJ7Lj+ixXClpdo3jqbeQKjwCwk
-	G2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1jvdzMEr3UlNJNjJCQ5dvB2L5e
-	5hCjAAejEg9vRM3MUCHWxLLiytxDjJIcTEqivP6LZoUK8SXlp1RmJBZnxBeV5qQWH2KU4GBW
-	EuF9NB0ox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4H0CMlSwKDU9
-	tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFKPxxcAoBUnxAO19A9LOW1yQmAsUhWg9xago
-	Jc77GiQhAJLIKM2DGwtLRK8YxYG+FOYVWgxUxQNMYnDdr4AGMwENXq4LNrgkESEl1cC42uzO
-	040ljm/jpjDZ7uRl5DM7vy3x+uysliZdz2dPVexy8y07Vn4TZjDYdu9WWMipD7N3Gid01dx6
-	sW3Xoan2945LfDtodl0uoI5LIq//2j6jiRuiQoKX9v5+/3PRTWEGabt0OYOvP589 
+In-Reply-To: <1435609076-8592-3-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNIsWRmVeSWpSXmKPExsUixO6iqKuwbFaowdJVhhbzN51gtOi60s3k
+	wOSx4Pl9do/Pm+QCmKK4bZISS8qCM9Pz9O0SuDNe/rjKXvBTuKL7Tj9zA+NK/i5GTg4JAROJ
+	y9vWskHYYhIX7q0Hsrk4hAQuM0pcfPKNCcI5yyTx8mo7WBWvgLbEyTfPWbsYOThYBFQl9s9W
+	AgmzCehKLOppZgIJiwoESbx+mQtRLShxcuYTFhBbRMBB4vKuo8wgtrBApMSBtnOsEOObGSWu
+	3FnBCJLgFPCQ+Pv6JzuIzSygJ7Hj+i9WCFteYvvbOcwTGPlnIZk7C0nZLCRlCxiZVzHKJeaU
+	5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaUbmKEBCTPDsZv62QOMQpwMCrx8G6omxkqxJpY
+	VlyZe4hRkoNJSZTXf9GsUCG+pPyUyozE4oz4otKc1OJDjBIczEoivI+mA+V4UxIrq1KL8mFS
+	0hwsSuK8qkvU/YQE0hNLUrNTUwtSi2CyMhwcShK8jEuBGgWLUtNTK9Iyc0oQ0kwcnCDDuaRE
+	ilPzUlKLEktLMuJBERlfDIxJkBQP0F4ukHbe4oLEXKAoROspRkUpcV5WkIQASCKjNA9uLCzN
+	vGIUB/pSmFcPpIoHmKLgul8BDWYCGrxcF2xwSSJCSqqB0XvRuZ3vZm966Go9s2Rr/AT2iGcC
+	53Vnyy2cfbn+//fFbeWMi15yOLG8l2ieILzhZ9m8nbsOvgp783pv5IPpZb6BIS2bDObO23nu
+	VMytL0/F9bQOlh4x+NuuLC9lPLv/1OeewoNN9+8kiqTOWHhY5+U5wYAmae6PfBHs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273394>
 
 On 06/29/2015 10:17 PM, David Turner wrote:
-> Add an err argument to log_ref_setup that can explain the reason
-> for a failure. This then eliminates the need to manage errno through
-> this function since we can just add strerror(errno) to the err string
-> when meaningful. No callers relied on errno from this function for
-> anything else than the error message.
+> Instead of directly writing to and reading from files in
+> $GIT_DIR, use ref API to interact with CHERRY_PICK_HEAD
+> and REVERT_HEAD.
 > 
-> Also add err arguments to private functions write_ref_to_lockfile,
-> log_ref_write_1, commit_ref_update. This again eliminates the need to
-> manage errno in these functions.
-> 
-> Update of a patch by Ronnie Sahlberg.
-
-First a general comment: we have a convention, not yet very well adhered
-to, that error messages should start with lower-case letters. I know
-that in many cases you are just carrying along pre-existing error
-messages that are capitalized. But at a minimum, please avoid adding new
-error messages that are capitalized. And if you are feeling ambitious,
-feel free to lower-case some existing ones :-)
-
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
->  builtin/checkout.c |   8 ++--
->  refs.c             | 111 ++++++++++++++++++++++++++++-------------------------
->  refs.h             |   4 +-
->  3 files changed, 66 insertions(+), 57 deletions(-)
+>  branch.c                         |  4 ++--
+>  builtin/commit.c                 |  6 +++---
+>  builtin/merge.c                  |  2 +-
+>  contrib/completion/git-prompt.sh |  4 ++--
+>  git-gui/lib/commit.tcl           |  2 +-
+>  sequencer.c                      | 39 ++++++++++++++++++++-------------------
+>  t/t7509-commit.sh                |  4 ++--
+>  wt-status.c                      |  6 ++----
+>  8 files changed, 33 insertions(+), 34 deletions(-)
 > 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
 > [...]
-> diff --git a/refs.c b/refs.c
-> index fb568d7..c97ca02 100644
-> --- a/refs.c
-> +++ b/refs.c
-> [...]
-> @@ -3216,26 +3217,25 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
->  	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
->  				  git_committer_info(0), msg);
->  	if (result) {
-> -		int save_errno = errno;
->  		close(logfd);
-> -		error("Unable to append to %s", log_file);
-> -		errno = save_errno;
-> +		strbuf_addf(err, "Unable to append to %s. %s", log_file,
-> +			    strerror(errno));
->  		return -1;
-
-Above, the call to close(logfd) could clobber errno. It would be better
-to exchange the calls.
-
->  	}
->  	if (close(logfd)) {
-> -		int save_errno = errno;
-> -		error("Unable to append to %s", log_file);
-> -		errno = save_errno;
-> +		strbuf_addf(err, "Unable to append to %s. %s", log_file,
-> +			    strerror(errno));
->  		return -1;
->  	}
->  	return 0;
+> diff --git a/sequencer.c b/sequencer.c
+> index f8421a8..44c43e5 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -158,21 +158,22 @@ static void free_message(struct commit *commit, struct commit_message *msg)
+>  	unuse_commit_buffer(commit, msg->message);
 >  }
 >  
->  static int log_ref_write(const char *refname, const unsigned char *old_sha1,
-> -			 const unsigned char *new_sha1, const char *msg)
-> +			 const unsigned char *new_sha1, const char *msg,
-> +			 struct strbuf *err)
+> -static void write_cherry_pick_head(struct commit *commit, const char *pseudoref)
+> +static void write_cherry_pick_head(struct commit *commit, const char *ref)
 >  {
->  	struct strbuf sb = STRBUF_INIT;
-> -	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb);
-> +	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, err);
->  	strbuf_release(&sb);
->  	return ret;
->  }
-> [...]
-> @@ -3288,12 +3290,15 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
->   * necessary, using the specified lockmsg (which can be NULL).
->   */
->  static int commit_ref_update(struct ref_lock *lock,
-> -			     const unsigned char *sha1, const char *logmsg)
-> +			     const unsigned char *sha1, const char *logmsg,
-> +			     struct strbuf *err)
->  {
->  	clear_loose_ref_cache(&ref_cache);
-> -	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg) < 0 ||
-> +	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0 ||
->  	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
-> -	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg) < 0)) {
-> +	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0)) {
-> +		strbuf_addf(err, "Cannot update the ref '%s'.",
-> +			    lock->ref_name);
->  		unlock_ref(lock);
->  		return -1;
->  	}
-
-Since you are passing err into log_ref_write(), I assume that it would
-already have an error message written to it by the time you enter into
-this block. Yet in the block you append more text to it.
-
-It seems to me that you either want to clear err and replace it with
-your own message, or create a new message that looks like
-
-    Cannot update the ref '%s': %s
-
-where the second "%s" is replaced with the error from log_ref_write().
-
-> @@ -3317,7 +3322,8 @@ static int commit_ref_update(struct ref_lock *lock,
->  					      head_sha1, &head_flag);
->  		if (head_ref && (head_flag & REF_ISSYMREF) &&
->  		    !strcmp(head_ref, lock->ref_name))
-> -			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg);
-> +			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg,
-> +				      err);
-
-Here you don't check for errors from log_ref_write(). So it might or
-might not have written something to err. If it has, is that error
-handled correctly?
-
->  	}
->  	if (commit_ref(lock)) {
->  		error("Couldn't set %s", lock->ref_name);
-> @@ -3336,6 +3342,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
->  	int fd, len, written;
->  	char *git_HEAD = git_pathdup("%s", ref_target);
->  	unsigned char old_sha1[20], new_sha1[20];
+> -	const char *filename;
+> -	int fd;
+> -	struct strbuf buf = STRBUF_INIT;
 > +	struct strbuf err = STRBUF_INIT;
+> +	void *transaction;
 >  
->  	if (logmsg && read_ref(ref_target, old_sha1))
->  		hashclr(old_sha1);
-> @@ -3384,8 +3391,11 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
->  #ifndef NO_SYMLINK_HEAD
->  	done:
->  #endif
-> -	if (logmsg && !read_ref(refs_heads_master, new_sha1))
-> -		log_ref_write(ref_target, old_sha1, new_sha1, logmsg);
-> +	if (logmsg && !read_ref(refs_heads_master, new_sha1) &&
-> +		log_ref_write(ref_target, old_sha1, new_sha1, logmsg, &err)) {
-> +		error("%s", err.buf);
-> +		strbuf_release(&err);
-> +	}
+> -	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
+> +	transaction = ref_transaction_begin(&err);
+> +	if (!transaction)
+> +		die(_("Could not create transaction: %s"), err.buf);
 >  
->  	free(git_HEAD);
->  	return 0;
-> @@ -4021,14 +4031,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  				 * value, so we don't need to write it.
->  				 */
->  			} else if (write_ref_to_lockfile(update->lock,
-> -							 update->new_sha1)) {
-> +							 update->new_sha1,
-> +							 err)) {
->  				/*
->  				 * The lock was freed upon failure of
->  				 * write_ref_to_lockfile():
->  				 */
->  				update->lock = NULL;
-> -				strbuf_addf(err, "cannot update the ref '%s'.",
-> -					    update->refname);
+> -	filename = git_path("%s", pseudoref);
+> -	fd = open(filename, O_WRONLY | O_CREAT, 0666);
+> -	if (fd < 0)
+> -		die_errno(_("Could not open '%s' for writing"), filename);
+> -	if (write_in_full(fd, buf.buf, buf.len) != buf.len || close(fd))
+> -		die_errno(_("Could not write to '%s'"), filename);
+> -	strbuf_release(&buf);
+> +	if (ref_transaction_update(transaction, ref, commit->object.sha1,
+> +				   NULL, REF_NODEREF, NULL,
+> +				   &err))
+> +		die(_("Could not write ref %s: %s"), ref, err.buf);
+> +
+> +	if (ref_transaction_commit(transaction, &err))
+> +		die(_("Could not commit ref write %s: %s"), ref, err.buf);
+>  }
 
-Previously, the error generated here was "cannot update the ref '%s'."
-But now that you are letting write_ref_to_lockfile() fill err, the error
-message will be something from that function. This might be OK or it
-might not. If you think it is, it would be worth a word or two of
-justification in the commit message.
+I didn't check all the details, but this code looks a lot like what
+update_ref() does. Maybe you can use that function?
 
->  				ret = TRANSACTION_GENERIC_ERROR;
->  				goto cleanup;
->  			} else {
-> @@ -4054,11 +4063,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  
->  		if (update->flags & REF_NEEDS_COMMIT) {
->  			if (commit_ref_update(update->lock,
-> -					      update->new_sha1, update->msg)) {
-> +					      update->new_sha1, update->msg, err)) {
->  				/* freed by commit_ref_update(): */
->  				update->lock = NULL;
-> -				strbuf_addf(err, "Cannot update the ref '%s'.",
-> -					    update->refname);
+>  static void print_advice(int show_hint, struct replay_opts *opts)
+> @@ -186,7 +187,7 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+> [...]
 
-Same story here: you use whatever error message that commit_ref_update()
-emitted rather than the one that was previously chosen here.
-
->  				ret = TRANSACTION_GENERIC_ERROR;
->  				goto cleanup;
->  			} else {
-> diff --git a/refs.h b/refs.h
-> index e82fca5..debdefc 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -226,9 +226,9 @@ int pack_refs(unsigned int flags);
->  #define REF_NODEREF	0x01
->  
->  /*
-> - * Setup reflog before using. Set errno to something meaningful on failure.
-> + * Setup reflog before using. Fill in err and return -1 on failure.
->   */
-> -int log_ref_setup(const char *refname, struct strbuf *logfile);
-> +int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err);
->  
->  /** Reads log for the value of ref during at_time. **/
->  extern int read_ref_at(const char *refname, unsigned int flags,
-> 
+Otherwise, looks good to me.
 
 Michael
 
