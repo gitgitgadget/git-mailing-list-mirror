@@ -1,81 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/12] Improve git-am test coverage
-Date: Mon, 06 Jul 2015 13:42:42 -0700
-Message-ID: <xmqq8uatyq4d.fsf@gitster.dls.corp.google.com>
-References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kaisrdsguxrwMCr5TK9RQaGF-WgVE7d9_=s7GXELqYxXA@mail.gmail.com>
-	<341ac4ca31dabe768c106be1b11e8ea4@www.dscho.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v6 1/4] status: factor two rebase-related messages together
+Date: Mon,  6 Jul 2015 22:56:01 +0200
+Message-ID: <1436216164-7949-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1436216164-7949-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Paul Tan <pyokagan@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 06 22:42:51 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	antoine.delaite@ensimag.grenoble-inp.fr,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 06 22:56:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCDE1-0003Po-FF
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 22:42:49 +0200
+	id 1ZCDRA-0002qy-NR
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 22:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501AbbGFUmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 16:42:45 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37458 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001AbbGFUmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 16:42:44 -0400
-Received: by igau2 with SMTP id u2so21107678iga.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 13:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=FuH26haXs/HWGCldtVYXxGMshlRBdxDUZnv+17dRjPc=;
-        b=Fg66o5WQea2ZQocqfAAssGNDI7zGgiudWXFGg/GHeOVXX76G6gPkpiICOxUHbGzXVA
-         O6QEd7SkkpowDqcqwPeYC91haHiUxnu9GLP+P10k88msA6/vp2qL3L9SB95aWEBgEFbl
-         9Vkw73NUVoC52v+mEg3gdDwP6HcJRUbEyZqj/i1KCQpHcwsm/1UmV8rJNrnhfXFyrgMX
-         QDR8sQtwWEgaB/n5Ji5Z7ei22mnMSnReWyblMEOfWBDHaFrmU/4Z4BPzF9jS7ptplMU3
-         84bQ6RZ6Dk9kSup/xYo9IT10VuE68r9UBORInFtJ8CPCqzFjSEDZhWjVHHOW/rlTEk5i
-         8nJQ==
-X-Received: by 10.43.74.131 with SMTP id yw3mr34735253icb.97.1436215364222;
-        Mon, 06 Jul 2015 13:42:44 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
-        by mx.google.com with ESMTPSA id p4sm10387544igg.20.2015.07.06.13.42.43
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 06 Jul 2015 13:42:43 -0700 (PDT)
-In-Reply-To: <341ac4ca31dabe768c106be1b11e8ea4@www.dscho.org> (Johannes
-	Schindelin's message of "Sun, 05 Jul 2015 18:02:55 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754800AbbGFU4V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2015 16:56:21 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45743 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754788AbbGFU4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 16:56:19 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t66Ku7O7005089
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 6 Jul 2015 22:56:07 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t66KuAOW020044;
+	Mon, 6 Jul 2015 22:56:10 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZCDQw-00033O-Bs; Mon, 06 Jul 2015 22:56:10 +0200
+X-Mailer: git-send-email 2.5.0.rc0.7.ge1edd74.dirty
+In-Reply-To: <1436216164-7949-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 06 Jul 2015 22:56:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t66Ku7O7005089
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1436820972.73726@HwobFnEEMYWPqA9Mm6tCoQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273459>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+=46rom: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-inp.fr>
 
-> On 2015-07-03 18:24, Stefan Beller wrote:
->> On Thu, Jul 2, 2015 at 11:16 AM, Paul Tan <pyokagan@gmail.com> wrote:
->>> Increase test coverage of git-am.sh to help prevent regressions
->>> that could arise
->>> from the rewrite of git-am.sh to C. This patch series, along with
->>> pt/am-foreign, improved test coverage as measured by kcov from 56.5%[1] to
->>> 67.3%[2].
->>>
->>> No tests for git-am's interactive mode, though, as test_terminal does not seem
->>> to attach a pseudo-tty to stdin(?), thus making git-am's "test -t
->>> 0" check fail.
->>>
->>> This is part of my GSoC project to rewrite git-am.sh to a C builtin[3].
->> 
->> The whole series looks good to me.
->
-> I concur (my two comments really are minor nit picks).
->
-> Thanks,
-> Dscho
+Signed-off-by: Guillaume Pag=C3=A8s <guillaume.pages@ensimag.grenoble-i=
+np.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ wt-status.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-Yeah, looked more-or-less ready for 'next' to me, too.
-
-Thanks, all.
+diff --git a/wt-status.c b/wt-status.c
+index eaed4fe..8c4b806 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1027,6 +1027,20 @@ static int split_commit_in_progress(struct wt_st=
+atus *s)
+ 	return split_in_progress;
+ }
+=20
++static void print_rebase_state(struct wt_status *s,
++				struct wt_status_state *state,
++				const char *color)
++{
++	if (state->branch)
++		status_printf_ln(s, color,
++				 _("You are currently rebasing branch '%s' on '%s'."),
++				 state->branch,
++				 state->onto);
++	else
++		status_printf_ln(s, color,
++				 _("You are currently rebasing."));
++}
++
+ static void show_rebase_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
+@@ -1034,14 +1048,7 @@ static void show_rebase_in_progress(struct wt_st=
+atus *s,
+ 	struct stat st;
+=20
+ 	if (has_unmerged(s)) {
+-		if (state->branch)
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing branch '%s' on '%s'."),
+-					 state->branch,
+-					 state->onto);
+-		else
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing."));
++		print_rebase_state(s, state, color);
+ 		if (s->hints) {
+ 			status_printf_ln(s, color,
+ 				_("  (fix conflicts and then run \"git rebase --continue\")"));
+@@ -1051,14 +1058,7 @@ static void show_rebase_in_progress(struct wt_st=
+atus *s,
+ 				_("  (use \"git rebase --abort\" to check out the original branch)=
+"));
+ 		}
+ 	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), =
+&st)) {
+-		if (state->branch)
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing branch '%s' on '%s'."),
+-					 state->branch,
+-					 state->onto);
+-		else
+-			status_printf_ln(s, color,
+-					 _("You are currently rebasing."));
++		print_rebase_state(s, state, color);
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+ 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
+--=20
+2.5.0.rc0.7.ge1edd74.dirty
