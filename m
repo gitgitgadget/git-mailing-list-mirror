@@ -1,70 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: suboptimal behavior of fast-import in some cases with "from"
-Date: Mon, 06 Jul 2015 15:54:35 -0700
-Message-ID: <xmqq4mlgzyl0.fsf@gitster.dls.corp.google.com>
-References: <20150706220746.GA29367@glandium.org>
+Subject: Re: refspecs with '*' as part of pattern
+Date: Mon, 06 Jul 2015 16:01:15 -0700
+Message-ID: <xmqqzj38yjpg.fsf@gitster.dls.corp.google.com>
+References: <CA+P7+xoosLG3J5uUVakzwYoxVARs-NH4BJBtsMgw2NB39vyE6A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Jul 07 00:54:44 2015
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 01:01:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCFHe-0004gt-O2
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 00:54:43 +0200
+	id 1ZCFO7-0008EB-9c
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 01:01:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756055AbbGFWyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 18:54:38 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:33426 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755209AbbGFWyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 18:54:38 -0400
-Received: by igh16 with SMTP id 16so37879731igh.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 15:54:37 -0700 (PDT)
+	id S1756141AbbGFXBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 19:01:19 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:35206 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755886AbbGFXBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 19:01:17 -0400
+Received: by iecuq6 with SMTP id uq6so123370005iec.2
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 16:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=5AmiPEL9RH4x8rQnKQUsWxlj8I4OWK3KgWLTus9ye5s=;
-        b=kFT5M/eTnYRL9FlQ2alZU60T/JYLsx52ds3kdXSzZGibW+K/01jCNeCEuwoSrAxgHH
-         i4prz3jh+ZQHlP1ZM+n6WGrPIbpPKgNehK+4m7NOhMuTy2MJYHxcbYr0hk6CkuXllX5O
-         kkjSoarfyz7rTdywVUQmDLO5cAYXdzrRZU58DoFok5/4ci8lbW7TJGc3VpCrfyL8qX2k
-         Bkq8U0KuFSwYMTBGMDkc7NRb2Y5K52G543O9rW6icLcmEvLvYmaBhkGCgQzaBMkNEhmM
-         bLZ7Ej+k29et9gU0/Up7SiDi3QpRnqPYsZPNCAHLU0E2a4x2GdP4ws5qPWkX81VpyThE
-         6cRA==
-X-Received: by 10.107.31.134 with SMTP id f128mr1851704iof.19.1436223277495;
-        Mon, 06 Jul 2015 15:54:37 -0700 (PDT)
+        bh=US4TMcQwJKiK62/0pg97Li2wjtTxFWroqPn4H3g2mPI=;
+        b=XzBb0vNAQYwEqyPTSlfxr3ZmTxLUbcEHELpRNrkRPGsiZpNWuL7klzjfr5ZB4nF333
+         1IF1XLQ4cLiyaue+Kf5h/cUcwsLN214Eno4TUZT87PJek9QT91M5Dnn8J1US0uX0FLeP
+         kcwzUnsNNS4AXiGzfcXCtoC0XfMV7rKvovPTz9jUbtx5SXrBrb3gObnXuW5TVM87s3Yg
+         K+GpDt/MoMY4bEo7dabTWgkaE3Gm2aIK+Te/VrBHOJgNu6MlcZvFUtBo0LWSUhQIV3dH
+         GzqAxY/1zG0G2M/uq/q5F4SaPXLdUQw7XTtqbSgdP577YKliPubwC7LB9z8dqO8fyZ5l
+         A1gA==
+X-Received: by 10.50.20.200 with SMTP id p8mr44980209ige.28.1436223676921;
+        Mon, 06 Jul 2015 16:01:16 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
-        by mx.google.com with ESMTPSA id 69sm13386061ioz.10.2015.07.06.15.54.36
+        by smtp.gmail.com with ESMTPSA id fv2sm10615714igb.22.2015.07.06.16.01.16
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 06 Jul 2015 15:54:36 -0700 (PDT)
-In-Reply-To: <20150706220746.GA29367@glandium.org> (Mike Hommey's message of
-	"Tue, 7 Jul 2015 07:07:46 +0900")
+        Mon, 06 Jul 2015 16:01:16 -0700 (PDT)
+In-Reply-To: <CA+P7+xoosLG3J5uUVakzwYoxVARs-NH4BJBtsMgw2NB39vyE6A@mail.gmail.com>
+	(Jacob Keller's message of "Mon, 6 Jul 2015 11:31:42 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273467>
 
-Mike Hommey <mh@glandium.org> writes:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> One of the first things parse_from does is unconditionally throw away
-> the tree for the given branch, and then the "from" tree is loaded. So
-> when the "from" commit is the current head of the branch, that make
-> fast-import do more work than necessary.
+> I've been looking at the refspecs for git fetch, and noticed that
+> globs are partially supported. I wanted to use something like:
+>
+> refs/tags/some-prefix-*:refs/tags/some-prefix-*
+>
+> as a refspec, so that I can fetch only tags which have a specific
+> prefix. I know that I could use namespaces to separate tags, but
+> unfortunately, I am unable to fix the tag format. The specific
+> repository in question is also generating several tags which are not
+> relevant to me, in formats that are not really useful for human
+> consumption. I am also not able to fix this less than useful practice.
+>
+> However, I noticed that refspecs only support * as a single component.
+> The match algorithm works perfectly fine, as documented in
+> abd2bde78bd9 ("Support '*' in the middle of a refspec")
+>
+> What is the reason for not allowing slightly more arbitrary
+> expressions? Obviously no more than one *...
 
-If it is very common that the next commit the input stream wants to
-create is often on top of the commit that was just created, and if
-it is very common that the input stream producer knows what the
-commit object name of the commit that was just created, then
-optimising for that case does not sound too bad.  It really depends
-on two factors:
+I cannot seem to be able to find related discussions around that
+patch, so this is only my guess, but I suspect that this is to
+discourage people from doing something like:
 
- - How likely is it that other people make the same mistake?
+	refs/tags/*:refs/tags/foo-*
 
- - How bad the damage to parse_from() would be if we wanted to
-   optimize for this case?
+which would open can of worms (e.g. imagine you fetch with that
+pathspec and then push with refs/tags/*:refs/tags/* back there;
+would you now get foo-v1.0.0 and foo-foo-v1.0.0 for their v1.0.0
+tag?) we'd prefer not having to worry about.
