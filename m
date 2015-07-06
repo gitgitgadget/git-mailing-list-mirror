@@ -1,91 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] pack-protocol.txt: Mark all LFs in push-cert as required
-Date: Mon, 06 Jul 2015 11:23:30 -0700
-Message-ID: <xmqq381116xp.fsf@gitster.dls.corp.google.com>
-References: <1435774099-21260-1-git-send-email-dborowitz@google.com>
-	<1435774099-21260-4-git-send-email-dborowitz@google.com>
-	<xmqqfv578x87.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qSN9=afCe3RumJPfP9JERy1w+tAYdjq01MsQnsOjdKu3A@mail.gmail.com>
-	<xmqqzj3f7gde.fsf@gitster.dls.corp.google.com>
-	<CAJo=hJvfYfgBthFMYXnXJ6e6PVM92SsWGVNt7qNTSQH9=psGtQ@mail.gmail.com>
-	<xmqqegkl2qu2.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qRLu1d7Sa8aVrHtDCsJNtVXwzHBAyOmmUHmVAx7qHmOPg@mail.gmail.com>
-	<xmqq615x2ph1.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qT8=xQb6MRcLkyvZBm0MRdQ0Z-8ojqghovdgeJQ2EBNEA@mail.gmail.com>
-	<CAD0k6qQW3TbgXDsc2Wzid8RNyugumUbSu4KTzO21euO3y_OWGw@mail.gmail.com>
-	<xmqqsi91197o.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qRGQyFxZ8+yqkzYff_k4ZjWPaegQbBphwXyfBtUOCCw6g@mail.gmail.com>
-	<xmqq7fqd17qn.fsf@gitster.dls.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: refspecs with '*' as part of pattern
+Date: Mon, 6 Jul 2015 11:31:42 -0700
+Message-ID: <CA+P7+xoosLG3J5uUVakzwYoxVARs-NH4BJBtsMgw2NB39vyE6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 20:23:41 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 06 20:32:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCB3K-00059s-9R
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 20:23:38 +0200
+	id 1ZCBBY-0001VE-9y
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jul 2015 20:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbbGFSXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 14:23:34 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:34000 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304AbbGFSXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 14:23:33 -0400
-Received: by igcsj18 with SMTP id sj18so241525599igc.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 11:23:33 -0700 (PDT)
+	id S1751737AbbGFScE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 14:32:04 -0400
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:34681 "EHLO
+	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752574AbbGFScC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 14:32:02 -0400
+Received: by oiab3 with SMTP id b3so6027724oia.1
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 11:32:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Tmde2CKfKmE/xqWTYxkT8RARaTZU80Sd1naQBIzTyMs=;
-        b=BJyPTTphYMw1CMgcN0bWUkpBx7qygbyoiTHgP9SPq6bF3UB4iyEIxe9kp2X32SxHIL
-         SxikJzcNT0c4fNJ9412BCT7QzNE9hGUAneUlzBN9sNz4FOuq3rvFvZIOuYxCvwAHRrA/
-         R2PXQEB3t6nt9SxjIkozIdjGy+TyvG/7grNu8HxZprefZjhToGwnscOLMJpxbBoo0mos
-         BQgehvs8LdDEMF57Cjuhe3fLqJl9enHuY5h5kgclU6smYL0PT6oYlyGSyZvQB01hxJYz
-         FINO3WbX7CTM9q5f/Rj74KF7HBPcqydpo2Emyx+w/1/zR2qwI52Anb3lOtwPREy5odvR
-         Wtbg==
-X-Received: by 10.50.134.226 with SMTP id pn2mr42814195igb.21.1436207013024;
-        Mon, 06 Jul 2015 11:23:33 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:ad70:2147:d1ba:ffd8])
-        by mx.google.com with ESMTPSA id 140sm12939633ion.16.2015.07.06.11.23.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 06 Jul 2015 11:23:32 -0700 (PDT)
-In-Reply-To: <xmqq7fqd17qn.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 06 Jul 2015 11:06:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=xIQtnjlSHq1CVm2Vg3S3s/phMOekXZ7EQOxV96MYhkg=;
+        b=laIEbhKAk7l/ZwTfQ8xP/X0AeZbKWIylKq9axbN5VhrSaR7f5nZwzwH6yeYoJxGoBq
+         muK9nlmgEqrvaL2dVP7i2HXuWjqm+qjpKQTdhYhh8L9McyGRGSZGkFeIEajwdLZvWuX8
+         Z4pRBhnR6otsla/rmtbybIpOfRGf7Xi785M+7N09sbeKgLRqkLLqKrsjqjYqo+UjfvPu
+         WdUSoiwhzCk/TjrhA6IhiX5tuMTipDGDmINN17uvg7Zj/AUGhs5CEZyjzG9ISgL+gld3
+         QIqw0RtgTBzW20kymnFell3uVrmtHa6ONDBLt3jYtEuL9MWgSNWW7CRPK3OfmLCO7GCH
+         gX4Q==
+X-Received: by 10.202.0.212 with SMTP id 203mr212445oia.58.1436207522133; Mon,
+ 06 Jul 2015 11:32:02 -0700 (PDT)
+Received: by 10.76.174.8 with HTTP; Mon, 6 Jul 2015 11:31:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273447>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> By clarifying that "sender SHOULD terminate with LF, receiver MUST
-> NOT require it" is the rule (and fixing the existing implementations
-> at places where they violate the "MUST NOT" part, which I think are
-> very small number of places), I think we can drop these LF (or LF?
-> for that matter) from all of the PKT-LINE() in the construction in
-> the pack-protocol.txt, which would be a very good thing to do.
->
-> The example in your sentence will become PKT-LINE(foo SP bar) and
-> the "there may be an LF at the end" would only be at one place, as a
-> part of the definition of PKT-LINE().
+I've been looking at the refspecs for git fetch, and noticed that
+globs are partially supported. I wanted to use something like:
 
-I quickly scanned both the sources where we use packet_write() in
-the code and say PKT-LINE in the doc; aside from the actual packfile
-transfer that happens on the sideband, which technically _is_ a user
-of PKT-LINE, we do not send anything that does not end with a text
-in PKT-LINE.  I just wanted to make sure that "there may or may not
-be an LF at the end; if there is, it is not part of the payload but
-is part of the framing" does not invite new implementors to break
-their binary transfer by reading the definition of PKT-LINE too
-literally to mean "ok, so I stuffed this 998 byte binary gunk to the
-packet and insert an optional LF before sending the remainder in
-separate packets".
+refs/tags/some-prefix-*:refs/tags/some-prefix-*
 
-Thanks.
+as a refspec, so that I can fetch only tags which have a specific
+prefix. I know that I could use namespaces to separate tags, but
+unfortunately, I am unable to fix the tag format. The specific
+repository in question is also generating several tags which are not
+relevant to me, in formats that are not really useful for human
+consumption. I am also not able to fix this less than useful practice.
+
+However, I noticed that refspecs only support * as a single component.
+The match algorithm works perfectly fine, as documented in
+abd2bde78bd9 ("Support '*' in the middle of a refspec")
+
+What is the reason for not allowing slightly more arbitrary
+expressions? Obviously no more than one *...
+
+It seems like the "strict" requirements, as in the above commit, but i
+an unable to find what these requirements are, and why they can't
+allow more expressions.
+
+It's possible that users might not expect it to work, but maybe it
+could be configured behind an extra option to prevent accidental use?
+I think it's quite intuitive though.
+
+Maybe because it allows some shenanagins to rename tags, but... that's
+really the user's fault... Another reason for putting this behind an
+option possibly?
+
+Personally I would like to be able to use this as it allows much more
+fine grained control over what I fetch, and lets me stick with the
+un-namespaced tags which are something I can't change.
+
+If this isn't something that can be done I would appreciate a good
+explanation of what it might break and why it's a bad idea...
+
+Regards,
+Jake
