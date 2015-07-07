@@ -1,100 +1,170 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 22/23] worktree: add: auto-vivify new branch when <branch> is omitted
-Date: Tue, 07 Jul 2015 09:10:27 -0700
-Message-ID: <xmqqmvz83q4s.fsf@gitster.dls.corp.google.com>
-References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
-	<1436203860-846-23-git-send-email-sunshine@sunshineco.com>
-	<xmqqpp45ytzh.fsf@gitster.dls.corp.google.com>
-	<20150707013301.GA26523@flurp.local>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: No one understands diff3 "Temporary merge branch" conflict markers
+Date: Tue, 07 Jul 2015 18:16:36 +0200
+Message-ID: <vpqbnfondsr.fsf@anie.imag.fr>
+References: <CAOMsSXQVJsd0h1fnNMEJ5+cKpxbeF9mHraXva-wr6Y2zBCADbg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jul 07 18:10:36 2015
+Cc: git@vger.kernel.org
+To: Edward Anderson <nilbus@nilbus.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 18:16:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCVS7-0003U9-Im
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 18:10:35 +0200
+	id 1ZCVY8-0007a6-N6
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 18:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757239AbbGGQKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 12:10:31 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34857 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755320AbbGGQKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 12:10:30 -0400
-Received: by igcqs7 with SMTP id qs7so36188579igc.0
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 09:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=4oPmME8KGdw7tuRNnIS2I5aZiKmvuI9uukchu9dBPQM=;
-        b=xmzD6FL391ho6naF1LH2FUhynR8RsxkM7r3dYSWwiNKAvGYEcQ+hUN6VvfjCxgnOk4
-         GjY0wNfbvp5oBDYdNhm6MYw022xAtg3i8lrD15qUfUZtF1bDzFgF058BdtNsA45NU8Ym
-         ESMNYu+CJOaSXQRTqwnE72o4y/iw3Vsr8WFC+x9AkwDxnzbOIk22Q/1nL5LGegYzf0hw
-         mAzcNnVAyyU9QU5kk9YawUeoAQwFOLlln9xbObnquvY7mUtoqGr8rPYxpJMVfd30RnMN
-         bXfhz/bE7H0en7C47QZNFiVyvi6Q2t8Q0baVrS11KmisH93DIcV1tfmj4QZ8wrEfk9jD
-         BPdw==
-X-Received: by 10.50.221.107 with SMTP id qd11mr8223253igc.13.1436285429801;
-        Tue, 07 Jul 2015 09:10:29 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:7d74:6f43:1e30:fb1d])
-        by smtp.gmail.com with ESMTPSA id ot6sm12123983igb.11.2015.07.07.09.10.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 07 Jul 2015 09:10:29 -0700 (PDT)
-In-Reply-To: <20150707013301.GA26523@flurp.local> (Eric Sunshine's message of
-	"Mon, 6 Jul 2015 21:33:01 -0400")
+	id S1757516AbbGGQQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 12:16:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56422 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753747AbbGGQQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 12:16:42 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t67GGYw4018336
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 7 Jul 2015 18:16:35 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t67GGa1l008917;
+	Tue, 7 Jul 2015 18:16:36 +0200
+In-Reply-To: <CAOMsSXQVJsd0h1fnNMEJ5+cKpxbeF9mHraXva-wr6Y2zBCADbg@mail.gmail.com>
+	(Edward Anderson's message of "Tue, 7 Jul 2015 10:55:05 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 07 Jul 2015 18:16:35 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t67GGYw4018336
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436890597.61604@Xy8SqSyW8T/OHZKn7lj4IA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273584>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Edward Anderson <nilbus@nilbus.com> writes:
 
->> Which may be something we would want to have a test for, though.
+> I have the diff3 conflictstyle enabled and want to be able to
+> understand how to understand its output when there are criss-cross
+> merges requiring temporary merge branches.  Eg:
 >
-> Good idea. How about the following as a squash-in?
+>     <<<<<<< HEAD
+>       print(A);
+>     ||||||| merged common ancestors
+>     <<<<<<< Temporary merge branch 1
+>       print(B);
+>     =======
+>       print(C);
+>     >>>>>>> feature
 
-Sounds sensible.
+I guess you are seeing the result of the recursive-merge.
 
-At this point we do not have "worktree list", but if we gained that,
-we may want to add this as one more postcondition after the failed
-"worktree add":
+>> The details are too advanced for this discussion, but the default
+>> "recursive" merge strategy that git uses solves the answer by
+>> merging a and b into a temporary commit and using *that* as the
+>> merge base.
 
-       git worktree list >actual &&
-       ! grep precious actual
+That is the point. We don't have a good common ancestor, so Git builds
+one by merging the common ancestors. Then, two things can happen:
 
-but that should happen in the series that adds "worktree list" ;-)
+* The merge of the common ancestors is conflict-free. Then, we get a
+  "sane" common ancestor.
 
-> --- 8< ---
-> From: Eric Sunshine <sunshine@sunshineco.com>
-> Subject: [PATCH] fixup! worktree: add: auto-vivify new branch when <branch> is omitted
+* The merge has conflicts. In this case, the common ancestor that Git
+  built has conflict markers. It is not a big issue, since when merging
+  A, B, and ancestor(A, B), the result of the merge is either A or B,
+  but never comes from ancestor(A, B). So, you never get to see the
+  temporary ancestor(A, B), *except* when you request the common
+  ancestor in the merge conflict.
+
+It gets nasty since you get recursive merge conflicts, but you don't see
+the recursivity. Let me try to indent your conflict:
+
+ 1 <<<<<<< HEAD
+ 2     unless admin
+ 3       fail Unauthorized.new("Admin only")
+ 4     end
+ 5 ||||||| merged common ancestors
+ 6         <<<<<<< Temporary merge branch 1
+ 7             unless admin
+ 8               fail Unauthorized.new("Admin only")
+ 9             end
+10         ||||||| merged common ancestors
+11             unless admin
+12               fail Unauthorized.new
+13             end
+14         =======
+15             fail Unauthorized.new unless admin
+16         >>>>>>> Temporary merge branch 2
+17 =======
+18     unless admin
+19         fail Unauthorized.new("Admin only")
+20       fail Unauthorized.new
+21     end
+22 >>>>>>> feature
+
+> It seems lines 6-16 are a conflict that occurred when merging the
+> merge-bases.
+
+Yes.
+
+> That conflict could be resolved by merging the change in Temporary
+> merge branch 1 (add "Admin only") with Temporary merge branch 2
+> (convert multi-line unless to single-line) as this:
 >
-> ---
->  t/t2025-worktree-add.sh | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> index 8fe242f..ead8aa2 100755
-> --- a/t/t2025-worktree-add.sh
-> +++ b/t/t2025-worktree-add.sh
-> @@ -150,4 +150,13 @@ test_expect_success '"add" with <branch> omitted' '
->  	test_cmp_rev HEAD bat
->  '
->  
-> +test_expect_success '"add" auto-vivify does not clobber existing branch' '
-> +	test_commit c1 &&
-> +	test_commit c2 &&
-> +	git branch precious HEAD~1 &&
-> +	test_must_fail git worktree add precious &&
-> +	test_cmp_rev HEAD~1 precious &&
-> +	test_path_is_missing precious
-> +'
-> +
->  test_done
+>            fail Unauthorized.new("Admin only") unless admin
+
+That is probably what you would do if you resolved the conflict
+manually, but while merging the common ancestors, Git found an ancestor
+of an ancestor that was different from both ancestors being merged, and
+there was a conflict. Asking you to resolve this conflict would be
+essentially a loss of time since Git knows that the result won't appear
+in the final merge, but only in the merge base.
+
+ 1 <<<<<<< HEAD
+ 2     unless feature.enabled_for_user?(UserIdLookup.new(params).user_id)
+ 3       fail Unauthorized.new("Requires setting #{label}.")
+ 4 ||||||| merged common ancestors
+ 5         <<<<<<< Temporary merge branch 1
+ 6             unless feature.enabled_for_user?(params[:user_id])
+ 7               fail Unauthorized.new("Requires setting #{label}.")
+ 8 =======
+ 9     unless feature.enabled_for_user?(params[:user_id])
+10       fail Unauthorized.new("Requires setting #{label}.")
+11 >>>>>>> feature
+
+> This is the full conflict, and it doesn't seem to balance.
+
+Right: I guess the merge-base was stg like
+
+<<<<<<< Temporary merge branch 1
+    unless feature.enabled_for_user?(params[:user_id])
+      fail Unauthorized.new("Requires setting #{label}.")
+|||||||
+blabla 1
+=======
+blabla 2
+>>>>>>> Temporary merge branch 2
+
+But then, the actual merge happens, using this as merge-base. A conflict
+occurs when the commits being merged and the merge-base are all
+different. In your case, I guess the commits being merged were identical
+on the next different hunks (the line "blablabla 1" probably was in both
+commits being merged, which allowed the merge algorithm to move to the
+next hunk), and there were no conflict in this hunk, hence you don't see
+the merge base.
+
+I hope this helps on the "light and understanding" part of your
+question. Now, as of "what to do when I get this?", I would say: the
+recursive merge-base was computed internally, but not really meant to be
+shown to the user. You should probably ignore it and resolve the merge
+by looking only at the 2 sides of the conflict ("ours" and "theirs").
+Sorry, this is probably not the answer you expected, but it's the best I
+can give ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
