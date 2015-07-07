@@ -1,75 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git force push fails after a rejected push (unpack failed)?
-Date: Tue, 7 Jul 2015 15:49:56 -0400
-Message-ID: <20150707194956.GA13792@peff.net>
-References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
- <20150707141305.GA629@peff.net>
- <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 18/44] cache-tree: introduce write_index_as_tree()
+Date: Tue, 07 Jul 2015 13:10:30 -0700
+Message-ID: <xmqqpp433f0p.fsf@gitster.dls.corp.google.com>
+References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
+	<1436278862-2638-19-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: X H <music_is_live_lg@hotmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 07 21:50:07 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 22:10:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCYsX-00017j-2a
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 21:50:05 +0200
+	id 1ZCZCS-0003pR-GK
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 22:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932914AbbGGTuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 15:50:01 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57071 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932695AbbGGTt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 15:49:59 -0400
-Received: (qmail 8542 invoked by uid 102); 7 Jul 2015 19:49:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Jul 2015 14:49:59 -0500
-Received: (qmail 12623 invoked by uid 107); 7 Jul 2015 19:50:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Jul 2015 15:50:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jul 2015 15:49:56 -0400
-Content-Disposition: inline
-In-Reply-To: <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
+	id S932849AbbGGUKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 16:10:35 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:36202 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757731AbbGGUKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 16:10:33 -0400
+Received: by igrv9 with SMTP id v9so184872223igr.1
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 13:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=4u9z+aFEj6K8rS07Ddh9skYh2q6mr3n5DQGnjc0pt5U=;
+        b=QVr08sHFNHx0IhRs1pt3ypn83lISk/ZRtOiBdTEWqOZjaFE6B0wEs/9IViwI6A2g/w
+         56BxBWUgOvLFd91Vubj1qlG8dQCkKEm3rtsFGcmQNHIfAmee1oFAXzKKEZaVBpTjAClC
+         hPJK4opZFNbEbUL4zjp3zIF/oqOYTiX6XlTAs7V/T9Oz8461xTC4A32VBO+/mzqIzXj5
+         WIHhM0c6CjF2WQwfbMb/ZUurZWlkxSJ3A3MRTbK71fFn02e8KgnZjjVMknLdTe/BpBKW
+         ok83ELrbhlOy3ip6WK+vK+dPaMOfF9T+38m7ynTJSfg5t4NQGXl0WdoSGwsPd3EhnG5u
+         e1VA==
+X-Received: by 10.107.8.7 with SMTP id 7mr9610886ioi.15.1436299832305;
+        Tue, 07 Jul 2015 13:10:32 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:7d74:6f43:1e30:fb1d])
+        by smtp.gmail.com with ESMTPSA id d8sm250299igl.19.2015.07.07.13.10.31
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 07 Jul 2015 13:10:31 -0700 (PDT)
+In-Reply-To: <1436278862-2638-19-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Tue, 7 Jul 2015 22:20:36 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273597>
 
-On Tue, Jul 07, 2015 at 09:31:25PM +0200, X H wrote:
+Paul Tan <pyokagan@gmail.com> writes:
 
-> For the moment, I'm the only one pushing to the remote, always with
-> the same user (second user is planned). I use git-for-windows which is
-> based on MSYS2. I have mounted the network share with noacl option so
-> permissions should be handled by the Windows share. I'm in a group
-> which has read/write access. I have not configured
-> core.sharedrepository, I don't think it is useful with noacl since
-> unix group are not used in this case. The permission for the folder
-> above the file with permission denied is rw, but this file is read
-> only so if git try to modify it it won't work.
+> A caller may wish to write a temporary index as a tree. However,
+> write_cache_as_tree() assumes that the index was read from, and will
+> write to, the default index file path. Introduce write_index_as_tree()
+> which removes this limitation by allowing the caller to specify its own
+> index_state and index file path.
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>  cache-tree.c | 29 +++++++++++++++++------------
+>  cache-tree.h |  1 +
+>  2 files changed, 18 insertions(+), 12 deletions(-)
 
-Ah, so this is not a push to a server, but to a share mounted on the
-local box?
-
-That is leaving my realm of expertise. I'm not sure if it could be a
-misconfiguration in your share setup, or that git is trying to do
-something that would work on a Unix machine, but not on a Windows share.
-You might want to ask on the msysgit list:
-
-  https://groups.google.com/forum/#!forum/msysgit
-
-> Why does git try to write a file with the same name? If I amend a
-> commit isn't the sha modified?
-
-Yes, but remember that git stores all of the objects for all of the
-commits. So for some reason your push is perhaps trying to send an
-object that the other side already has. Usually this does not happen
-(the receiver says "I already have these commits, do not bother sending
-their objects"), but it's possible that you have an object that is not
-referenced by any commit, or a similar situation. It's hard to say
-without looking at the repository.
-
--Peff
+Makes sense; thanks.
