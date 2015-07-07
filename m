@@ -1,276 +1,134 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH] git: add optional support for full pattern in fetch refspecs
-Date: Tue,  7 Jul 2015 15:57:49 -0700
-Message-ID: <1436309869-19609-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 00:58:03 2015
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Whether Git supports directory level access or not?
+Date: Tue, 7 Jul 2015 16:03:47 -0700
+Message-ID: <CA+P7+xrRd9tv=cMmz+RtOtrjMwUBVpbdR5VfNG-CVzoHenCF9A@mail.gmail.com>
+References: <705bdbdc6a8195d59203bcb1f3027714@stockal.com> <CA+P7+xpqk2m2Mxv_12Mg+03GzqVa5kzVk29HAOMiW9EGpmrWww@mail.gmail.com>
+ <xmqq7fqb529c.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: saurabh@stockal.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 01:04:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCboQ-0000L0-L3
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 00:58:03 +0200
+	id 1ZCbuO-0003Pu-MX
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757282AbbGGW56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 18:57:58 -0400
-Received: from mga02.intel.com ([134.134.136.20]:65015 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752555AbbGGW54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 18:57:56 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga101.jf.intel.com with ESMTP; 07 Jul 2015 15:57:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.15,426,1432623600"; 
-   d="scan'208";a="757890445"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.85])
-  by fmsmga002.fm.intel.com with ESMTP; 07 Jul 2015 15:57:55 -0700
-X-Mailer: git-send-email 2.4.3
+	id S1757054AbbGGXEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 19:04:09 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:33906 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752555AbbGGXEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 19:04:06 -0400
+Received: by obbkm3 with SMTP id km3so139046826obb.1
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:04:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=yzhbrL6V7RBdPJjdt+dQFZG5LRYPui7KTjjxg5/lOYw=;
+        b=UkROllLFbJKkDP1z7QdRVg5oDA+VFXc5UFBJBJNoBMfA0jeMwzdVliPCwYSzH/h7v0
+         i6jUjvUVMnIyjgmyCucVrtLFCHUrvFcITG8Dt1AanA++Tk92BLpiKlvI5YswkGlSWSsi
+         DD8BGMLTL4g9ISHZkH1R1hYTlvL+lPj5Ppm/OA2Tjt2POMfukrm1W6KokVP0WNtDD2es
+         oUx9SqA9yfFz/TeiB0TuwxHgt64VlTheohnGUXkLSZrn4igpNC7OrVmyxT9xYbr0MBK7
+         6hzUdPbPqpojgBImip9xdY4h5Oiul+fn427MgiHFaTJTupLBV7aatstvsJRO9VXgsXii
+         DOAg==
+X-Received: by 10.202.108.142 with SMTP id h136mr6254185oic.5.1436310246392;
+ Tue, 07 Jul 2015 16:04:06 -0700 (PDT)
+Received: by 10.76.174.8 with HTTP; Tue, 7 Jul 2015 16:03:47 -0700 (PDT)
+In-Reply-To: <xmqq7fqb529c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273615>
 
-This patch updates the refs.c check_refname_component logic in order to
-allow for the possibility of using arbitrary patterns in fetch refspecs.
-Specifically, patterns similar to `refs/tags/prefix-*:refs/tags/prefix-*`.
+On Tue, Jul 7, 2015 at 10:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> However, in-repo per-directory permissions make no sense, as there
+>> would be no way to generate commits.
+>
+> That may be the case for the current generation of Git, but I do not
+> think you have to be so pessimistic.
+>
+> Suppose that an imaginary future version of Git allowed you to
+> "hide" one directory from you.  That is:
+>
+>  * A commit object records "tree". "git cat-file -t HEAD^{tree}"
+>    or "git ls-tree HEAD" lets you inspect its contents;
+>
+>  * The "hidden" directory shows up as one of the subtrees of that
+>    output.  It may say
+>
+>      040000 tree b4006c408979a0c6261dbfaeaa36639457469ad4   hidden
+>
+>  * However, your repository lack b4006c40... object.  So if you did
+>    "git ls-tree HEAD:hidden", you would get "no such tree object".
+>
+>  * This imaginary future version of Git has a new implementation of
+>    the index (both on-disk and in-core) that lets you keep just the
+>    "tree" entry for an unmodified directory, without having to store
+>    any of the files and subdirectories in it.
+>
+>  * All the other machinery of this imaginary future version of Git
+>    are aware of the fact that "hidden" thing is not visible, or even
+>    available, to your clone of the project repository.  That means
+>    "fsck" does not complain about missing object b4006c40..., "push"
+>    knows it should not consider it an error that you cannot enumerate
+>    and send objects that are reachable from b4006c40..., etc.
+>
+> With such a Git, you can modify anything outside the parts of the
+> project tree that are hidden from you, and make a commit.  The tree
+> recorded in a new commit object would record the same
+>
+>      040000 tree b4006c408979a0c6261dbfaeaa36639457469ad4   hidden
+>
+> for the "hidden" directory, and you can even push it back to update
+> the parts for other people to see your work outside the "hidden"
+> area.
+>
+> "All the other machinery" that would need to accomodate such a
+> hidden directory would span the entire plumbing layer and
+> transports.  The wire protocol would need to be updated, especially
+> the part that determines what needs to be sent and received, which
+> is currently purely on commit ancestry, needs to become aware of the
+> paths.
+>
+> I am *NOT* saying that this is easy.  I'd imagine if we gather all
+> the competent Gits in a room and have them work on it and doing
+> nothing else for six months, we would have some system that works.
+> It would be a lot of work.
+>
+> I think it may be worth doing in the longer term, and it will likely
+> to have other benefits as side effects.
+>
+>  - For example, did you notice that my description above does not
+>    mention "permission" even once?  Yes, that's right.  This does
+>    not have to be limited to permissions.  The user may have decided
+>    that the "hidden" part of that directory structure is not
+>    interesting and said "git clone --exclude=hidden" when she made
+>    her clone to set it up.
+>
+>  - Also notice that the "new implementation of the index" that
+>    lazily expands subtrees does not say anythying about a directory
+>    that is "hidden"---it just said "an unmodified directory" and
+>    that was deliberate.  Even when you are not doing a "narrow
+>    clone", keeping an untouched tree without expanding its subtrees
+>    and blobs flatted into the index may make it faster when you are
+>    working on a series of many small commits each of which touches
+>    only a handful of files.
+>
+> I might agree with you that "in-repo per-directory permissions make
+> no sense", but the reason to say so would not be because "there
+> would be no way to generate commits".
 
-In order to ensure that standard users do not accidentally setup refspecs
-which could cause issues, tie this feature to
-remote.<name>.arbitrary_pattern boolean configuration option. This ensures
-that no user will have this enabled on accident.
+Actually as you laid out here, it does make sense I had just assumed
+you would need the tree object to actually be able to generate the
+commits. It does sound like a lot of work though.
 
-The primary reason against this is the ability to pull refs incorrectly
-and then later push them again. Ie:
-
-refs/tags/some-prefix-*:/refs/tags/other-prefix-*
-
-This ref will essentially re-name the references locally. This is
-generally not what you would want but there is no easy way to validate
-this doesn't occur. Note this can already occur to normal pattern refspecs
-via `refs/tags/*:refs/tags/namespace/*` refspecs, but these are a bit more
-difficult to typo.
-
-However, the additional functionality is useful for specifying to pull
-certain patterns of refs, and can be useful if the power user decides to
-enable it for a given remote.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-Cc: Daniel Barkalow <barkalow@iabervon.iabervon.org>
-Cc: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt               |  7 +++++
- Documentation/git-check-ref-format.txt | 12 ++++++---
- builtin/check-ref-format.c             |  2 ++
- refs.c                                 | 48 ++++++++++++++++++++++------------
- refs.h                                 | 15 ++++++-----
- remote.c                               |  2 ++
- remote.h                               |  1 +
- 7 files changed, 61 insertions(+), 26 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3e37b93ed2ac..626492de7a7f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2331,6 +2331,13 @@ remote.<name>.prune::
- 	remote (as if the `--prune` option was given on the command line).
- 	Overrides `fetch.prune` settings, if any.
- 
-+remote.<name>.arbitrarypattern::
-+	When set to true, fetching from this remote will allow arbitrary complex
-+	patterns for the fetch refspecs. For example,
-+	refs/tags/prefix-*:refs/tags/prefix-* will work as expected. Care should be
-+	taken as you could fetch refs into names that don't exist on the remote and
-+	may end up pushing them again later by accident.
-+
- remotes.<group>::
- 	The list of remotes which are fetched by "git remote update
- 	<group>".  See linkgit:git-remote[1].
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index fc02959ba4ab..caab0e3037fa 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -43,8 +43,8 @@ Git imposes the following rules on how references are named:
-   caret `^`, or colon `:` anywhere.
- 
- . They cannot have question-mark `?`, asterisk `*`, or open
--  bracket `[` anywhere.  See the `--refspec-pattern` option below for
--  an exception to this rule.
-+  bracket `[` anywhere.  See the `--refspec-pattern` and `--arbitrary-pattern`
-+  options below for exceptions to this rule.
- 
- . They cannot begin or end with a slash `/` or contain multiple
-   consecutive slashes (see the `--normalize` option below for an
-@@ -95,7 +95,13 @@ OPTIONS
- 	(as used with remote repositories).  If this option is
- 	enabled, <refname> is allowed to contain a single `*`
- 	in place of a one full pathname component (e.g.,
--	`foo/*/bar` but not `foo/bar*`).
-+	`foo/*/bar` but not `foo/bar*`). If '--arbitrary-pattern' is set, then
-+	a single `foo/bar*baz` pattern will be accepted.
-+
-+--arbitrary-pattern::
-+	If '--refspec-pattern' is set, allow arbitrary patterns instead of the
-+	default simple case. Implies '--refspec-pattern'. Note that only one '*'
-+	pattern will be accepted.
- 
- --normalize::
- 	Normalize 'refname' by removing any leading slash (`/`)
-diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-index fd915d59841e..e0b8d00d5337 100644
---- a/builtin/check-ref-format.c
-+++ b/builtin/check-ref-format.c
-@@ -70,6 +70,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- 			flags &= ~REFNAME_ALLOW_ONELEVEL;
- 		else if (!strcmp(argv[i], "--refspec-pattern"))
- 			flags |= REFNAME_REFSPEC_PATTERN;
-+		else if (!strcmp(argv[i], "--arbitrary-pattern"))
-+			flags |= REFNAME_ARBITRARY_PATTERN | REFNAME_REFSPEC_PATTERN;
- 		else
- 			usage(builtin_check_ref_format_usage);
- 	}
-diff --git a/refs.c b/refs.c
-index 7ac05cf21a25..e4c24bfc778c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -20,11 +20,12 @@ struct ref_lock {
-  * 2: ., look for a preceding . to reject .. in refs
-  * 3: {, look for a preceding @ to reject @{ in refs
-  * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
-+ * 5: check for patterns to reject unless REFNAME_REFSPEC_PATTERN is set
-  */
- static unsigned char refname_disposition[256] = {
- 	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
- 	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
-+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-@@ -71,11 +72,14 @@ static unsigned char refname_disposition[256] = {
-  * - any path component of it begins with ".", or
-  * - it has double dots "..", or
-  * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
-- * - it ends with a "/".
-- * - it ends with ".lock"
-- * - it contains a "\" (backslash)
-+ * - it ends with a "/", or
-+ * - it ends with ".lock", or
-+ * - it contains a "\" (backslash), or
-+ * - it contains a "@{" portion, or
-+ * - it contains a simple pattern unless REFNAME_REFSPEC_PATTERN is set, or
-+ * - it contains a complex pattern unless REFNAME_ARBITRARY_PATTERN is set
-  */
--static int check_refname_component(const char *refname, int flags)
-+static int check_refname_component(const char *refname, int *flags)
- {
- 	const char *cp;
- 	char last = '\0';
-@@ -96,6 +100,24 @@ static int check_refname_component(const char *refname, int flags)
- 			break;
- 		case 4:
- 			return -1;
-+		case 5:
-+			if (!(*flags & REFNAME_REFSPEC_PATTERN))
-+				return -1; /* refspec can't be a pattern */
-+
-+			/* Unset the pattern flag so that we only accept a single pattern.
-+			 * This also conveniently makes us only accept the first '*' we
-+			 * find in a single component. */
-+			*flags &= ~ REFNAME_REFSPEC_PATTERN;
-+
-+			/* check if entire component is just a '*' */
-+			if (refname[0] == '*' &&
-+					(refname[1] == '\0' || refname[1] == '/'))
-+				return 1;
-+
-+			if (!(*flags & REFNAME_ARBITRARY_PATTERN))
-+				return -1; /* arbitrary patterns not allowed */
-+
-+			break;
- 		}
- 		last = ch;
- 	}
-@@ -120,18 +142,10 @@ int check_refname_format(const char *refname, int flags)
- 
- 	while (1) {
- 		/* We are at the start of a path component. */
--		component_len = check_refname_component(refname, flags);
--		if (component_len <= 0) {
--			if ((flags & REFNAME_REFSPEC_PATTERN) &&
--					refname[0] == '*' &&
--					(refname[1] == '\0' || refname[1] == '/')) {
--				/* Accept one wildcard as a full refname component. */
--				flags &= ~REFNAME_REFSPEC_PATTERN;
--				component_len = 1;
--			} else {
--				return -1;
--			}
--		}
-+		component_len = check_refname_component(refname, &flags);
-+		if (component_len <= 0)
-+			return -1;
-+
- 		component_count++;
- 		if (refname[component_len] == '\0')
- 			break;
-diff --git a/refs.h b/refs.h
-index 8c3d433a8a5b..1429776a975f 100644
---- a/refs.h
-+++ b/refs.h
-@@ -218,14 +218,17 @@ extern int for_each_reflog(each_ref_fn, void *);
- 
- #define REFNAME_ALLOW_ONELEVEL 1
- #define REFNAME_REFSPEC_PATTERN 2
-+#define REFNAME_ARBITRARY_PATTERN 4
- 
- /*
-- * Return 0 iff refname has the correct format for a refname according
-- * to the rules described in Documentation/git-check-ref-format.txt.
-- * If REFNAME_ALLOW_ONELEVEL is set in flags, then accept one-level
-- * reference names.  If REFNAME_REFSPEC_PATTERN is set in flags, then
-- * allow a "*" wildcard character in place of one of the name
-- * components.  No leading or repeated slashes are accepted.
-+ * Return 0 iff refname has the correct format for a refname according to the
-+ * rules described in Documentation/git-check-ref-format.txt.  If
-+ * REFNAME_ALLOW_ONELEVEL is set in flags, then accept one-level reference
-+ * names.  If REFNAME_REFSPEC_PATTERN is set in flags, then allow a "*"
-+ * wildcard character in place of one of the name components. If
-+ * REFNAME_ARBITRARY_PATTERN is set in flags, then allow an arbitrary pattern
-+ * with a single '*' wildcard character as one of the name components as well.
-+ * No leading or repeated slashes are accepted.
-  */
- extern int check_refname_format(const char *refname, int flags);
- 
-diff --git a/remote.c b/remote.c
-index 26504b744786..49df6abad4ef 100644
---- a/remote.c
-+++ b/remote.c
-@@ -420,6 +420,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		remote->skip_default_update = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".prune"))
- 		remote->prune = git_config_bool(key, value);
-+	else if (!strcmp(subkey, ".arbitrarypattern"))
-+		remote->arbitrary_pattern = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".url")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
-diff --git a/remote.h b/remote.h
-index 312b7ca131c4..c885ab34f42e 100644
---- a/remote.h
-+++ b/remote.h
-@@ -46,6 +46,7 @@ struct remote {
- 	int skip_default_update;
- 	int mirror;
- 	int prune;
-+	int arbitrary_pattern;
- 
- 	const char *receivepack;
- 	const char *uploadpack;
--- 
-2.4.3
+Regards,
+Jake
