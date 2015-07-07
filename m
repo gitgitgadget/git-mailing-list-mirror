@@ -1,134 +1,77 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Whether Git supports directory level access or not?
-Date: Tue, 7 Jul 2015 16:03:47 -0700
-Message-ID: <CA+P7+xrRd9tv=cMmz+RtOtrjMwUBVpbdR5VfNG-CVzoHenCF9A@mail.gmail.com>
-References: <705bdbdc6a8195d59203bcb1f3027714@stockal.com> <CA+P7+xpqk2m2Mxv_12Mg+03GzqVa5kzVk29HAOMiW9EGpmrWww@mail.gmail.com>
- <xmqq7fqb529c.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Git force push fails after a rejected push (unpack failed)?
+Date: Tue, 7 Jul 2015 19:05:11 -0400
+Message-ID: <CAPig+cTMqjrM=EQFaTU+9OcC=-bSPLXoMR-NEH9Q-w782KiSmA@mail.gmail.com>
+References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
+	<20150707141305.GA629@peff.net>
+	<DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
+	<20150707194956.GA13792@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: saurabh@stockal.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 01:04:13 2015
+Cc: X H <music_is_live_lg@hotmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 01:05:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCbuO-0003Pu-MX
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:04:13 +0200
+	id 1ZCbvR-0003wy-Dv
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:05:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757054AbbGGXEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 19:04:09 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:33906 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555AbbGGXEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 19:04:06 -0400
-Received: by obbkm3 with SMTP id km3so139046826obb.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:04:06 -0700 (PDT)
+	id S1756122AbbGGXFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 19:05:14 -0400
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:35938 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752555AbbGGXFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 19:05:12 -0400
+Received: by ykdr198 with SMTP id r198so192012739ykd.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:05:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yzhbrL6V7RBdPJjdt+dQFZG5LRYPui7KTjjxg5/lOYw=;
-        b=UkROllLFbJKkDP1z7QdRVg5oDA+VFXc5UFBJBJNoBMfA0jeMwzdVliPCwYSzH/h7v0
-         i6jUjvUVMnIyjgmyCucVrtLFCHUrvFcITG8Dt1AanA++Tk92BLpiKlvI5YswkGlSWSsi
-         DD8BGMLTL4g9ISHZkH1R1hYTlvL+lPj5Ppm/OA2Tjt2POMfukrm1W6KokVP0WNtDD2es
-         oUx9SqA9yfFz/TeiB0TuwxHgt64VlTheohnGUXkLSZrn4igpNC7OrVmyxT9xYbr0MBK7
-         6hzUdPbPqpojgBImip9xdY4h5Oiul+fn427MgiHFaTJTupLBV7aatstvsJRO9VXgsXii
-         DOAg==
-X-Received: by 10.202.108.142 with SMTP id h136mr6254185oic.5.1436310246392;
- Tue, 07 Jul 2015 16:04:06 -0700 (PDT)
-Received: by 10.76.174.8 with HTTP; Tue, 7 Jul 2015 16:03:47 -0700 (PDT)
-In-Reply-To: <xmqq7fqb529c.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/NXPicVRap4vEz8kUJGvIGp5x7fB/VMl2h4h6vkeUgI=;
+        b=H8KUwFxBDQAMwBWaWS8QLLYU7xt5xvOS8Z5xRKFnumnUtdY4ji699Z6Ny9of4sCBP9
+         JF5AQUBFXknXYntqDEMx6Yr6HUZV+jbnt6hXgAGRXcyC6osGojQjkNExEHH5IGYu7UqF
+         W/SiOn3qC1KmAJ974UpHx/XBqmbmyNFrcHt81JrL13DgsceDOQwbO66+qpexipf3h97u
+         tV7aMuA2FxzAEWRCGhOshKeXlJBRkRaJDfAQG04FfG/wWVJK1rbv3gxmwp8djdYsMp/H
+         WNa8//+li7ll/aiDJQj1GvAs4BShErVfCQN2nmhsYtB/9aClCDJlqL8xqLaS6WdsQuG1
+         6VBg==
+X-Received: by 10.129.91.135 with SMTP id p129mr8043082ywb.95.1436310311197;
+ Tue, 07 Jul 2015 16:05:11 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Tue, 7 Jul 2015 16:05:11 -0700 (PDT)
+In-Reply-To: <20150707194956.GA13792@peff.net>
+X-Google-Sender-Auth: hd7J_1LVVDYxmIEit3zaOO6Imq0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273616>
 
-On Tue, Jul 7, 2015 at 10:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
+On Tue, Jul 7, 2015 at 3:49 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jul 07, 2015 at 09:31:25PM +0200, X H wrote:
 >
->> However, in-repo per-directory permissions make no sense, as there
->> would be no way to generate commits.
+>> For the moment, I'm the only one pushing to the remote, always with
+>> the same user (second user is planned). I use git-for-windows which is
+>> based on MSYS2. I have mounted the network share with noacl option so
+>> permissions should be handled by the Windows share. I'm in a group
+>> which has read/write access. I have not configured
+>> core.sharedrepository, I don't think it is useful with noacl since
+>> unix group are not used in this case. The permission for the folder
+>> above the file with permission denied is rw, but this file is read
+>> only so if git try to modify it it won't work.
 >
-> That may be the case for the current generation of Git, but I do not
-> think you have to be so pessimistic.
+> Ah, so this is not a push to a server, but to a share mounted on the
+> local box?
 >
-> Suppose that an imaginary future version of Git allowed you to
-> "hide" one directory from you.  That is:
+> That is leaving my realm of expertise. I'm not sure if it could be a
+> misconfiguration in your share setup, or that git is trying to do
+> something that would work on a Unix machine, but not on a Windows share.
+> You might want to ask on the msysgit list:
 >
->  * A commit object records "tree". "git cat-file -t HEAD^{tree}"
->    or "git ls-tree HEAD" lets you inspect its contents;
->
->  * The "hidden" directory shows up as one of the subtrees of that
->    output.  It may say
->
->      040000 tree b4006c408979a0c6261dbfaeaa36639457469ad4   hidden
->
->  * However, your repository lack b4006c40... object.  So if you did
->    "git ls-tree HEAD:hidden", you would get "no such tree object".
->
->  * This imaginary future version of Git has a new implementation of
->    the index (both on-disk and in-core) that lets you keep just the
->    "tree" entry for an unmodified directory, without having to store
->    any of the files and subdirectories in it.
->
->  * All the other machinery of this imaginary future version of Git
->    are aware of the fact that "hidden" thing is not visible, or even
->    available, to your clone of the project repository.  That means
->    "fsck" does not complain about missing object b4006c40..., "push"
->    knows it should not consider it an error that you cannot enumerate
->    and send objects that are reachable from b4006c40..., etc.
->
-> With such a Git, you can modify anything outside the parts of the
-> project tree that are hidden from you, and make a commit.  The tree
-> recorded in a new commit object would record the same
->
->      040000 tree b4006c408979a0c6261dbfaeaa36639457469ad4   hidden
->
-> for the "hidden" directory, and you can even push it back to update
-> the parts for other people to see your work outside the "hidden"
-> area.
->
-> "All the other machinery" that would need to accomodate such a
-> hidden directory would span the entire plumbing layer and
-> transports.  The wire protocol would need to be updated, especially
-> the part that determines what needs to be sent and received, which
-> is currently purely on commit ancestry, needs to become aware of the
-> paths.
->
-> I am *NOT* saying that this is easy.  I'd imagine if we gather all
-> the competent Gits in a room and have them work on it and doing
-> nothing else for six months, we would have some system that works.
-> It would be a lot of work.
->
-> I think it may be worth doing in the longer term, and it will likely
-> to have other benefits as side effects.
->
->  - For example, did you notice that my description above does not
->    mention "permission" even once?  Yes, that's right.  This does
->    not have to be limited to permissions.  The user may have decided
->    that the "hidden" part of that directory structure is not
->    interesting and said "git clone --exclude=hidden" when she made
->    her clone to set it up.
->
->  - Also notice that the "new implementation of the index" that
->    lazily expands subtrees does not say anythying about a directory
->    that is "hidden"---it just said "an unmodified directory" and
->    that was deliberate.  Even when you are not doing a "narrow
->    clone", keeping an untouched tree without expanding its subtrees
->    and blobs flatted into the index may make it faster when you are
->    working on a series of many small commits each of which touches
->    only a handful of files.
->
-> I might agree with you that "in-repo per-directory permissions make
-> no sense", but the reason to say so would not be because "there
-> would be no way to generate commits".
+>   https://groups.google.com/forum/#!forum/msysgit
 
-Actually as you laid out here, it does make sense I had just assumed
-you would need the tree object to actually be able to generate the
-commits. It does sound like a lot of work though.
-
-Regards,
-Jake
+Is this possibly another case of Windows virus scanner interference?
+That could account for its variable nature.
