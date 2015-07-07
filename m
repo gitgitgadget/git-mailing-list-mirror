@@ -1,126 +1,284 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 02/44] wrapper: implement xfopen()
-Date: Tue,  7 Jul 2015 22:20:20 +0800
-Message-ID: <1436278862-2638-3-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v5 04/44] builtin-am: implement patch queue mechanism
+Date: Tue,  7 Jul 2015 22:20:22 +0800
+Message-ID: <1436278862-2638-5-git-send-email-pyokagan@gmail.com>
 References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 16:21:33 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 16:21:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTkZ-00041m-8v
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:21:31 +0200
+	id 1ZCTke-00043x-IP
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757440AbbGGOV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 10:21:27 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:34738 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757216AbbGGOVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 10:21:23 -0400
-Received: by pdbep18 with SMTP id ep18so126712736pdb.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:21:22 -0700 (PDT)
+	id S1757379AbbGGOVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 10:21:33 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:33304 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757216AbbGGOV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 10:21:28 -0400
+Received: by pdbdz6 with SMTP id dz6so31975299pdb.0
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=J22nl5xuagnKzW31qXkB4H3HqmHA0T4+bluM0apjvfs=;
-        b=uy3ydey4pPdcSkoIbwTYF04IOaE33hi6KTdS2Huhk8JH+bNP6rIdODvNBTJbvpvRS9
-         mq1fPacMWgbhcjOSm4cBOyWeui755gsLQZ7ER80DsajDhktTswd0A1BPcpE3JkyZpd2t
-         bcdIcVoYaPBVf1Cvm5YHpm0YPsXYq3s/PU0xen9bdHH/FDZ92ne6/OXbplSDG6FnFxbv
-         MzRLwIiQJFYsdObMG7apdIPbH0XAcEtmJmO/ORiD2Sj8ivaAeGjXQMPivEkjcNy908XZ
-         cHGE4OYMAsCUBgxRcz2R5pEK50KE/R6w0xqKIqXjZ4svx0KFpGq1o4SEyBx3a9TtLkP7
-         raGw==
-X-Received: by 10.68.131.104 with SMTP id ol8mr9626283pbb.39.1436278882313;
-        Tue, 07 Jul 2015 07:21:22 -0700 (PDT)
+        bh=yhALz/nLj6AJcziJvc/h2lF4hMsicp3XLujCOInXzSQ=;
+        b=ExriuWWF5pPOjGL748nBuO7q5Y36H0P7hW3skMN5nuowXQI0hDF7gHLNF61eh+lBKA
+         /8Ov/Vv+DiBNw/XLoEKp0Jk5AlEwHNl9m2VRdSkwh+s7+Jw6JuK3k3IMjjW8KltFD1th
+         G4ue3SzzdVBnKogh3Ni0xVJG79ZnHFb6loTUCzV6V22CjAo2CeNf3f8CtPBeG0rUkB4k
+         nEAHzkW96ejCyA63uJ5giZn5/HcPbSpDP+pFaRJ6lb3r0lxua/hTzdjbGEppKYuVcrvH
+         /CswrQY4126gTWAtW6oMvAptGqyrgneSAOycYsMDKooHvK1PR4OTwIRRg3anrSHXxust
+         uSqQ==
+X-Received: by 10.68.175.35 with SMTP id bx3mr9372493pbc.128.1436278888125;
+        Tue, 07 Jul 2015 07:21:28 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.21.19
+        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.21.25
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 07:21:21 -0700 (PDT)
+        Tue, 07 Jul 2015 07:21:26 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.76.gf60a929
 In-Reply-To: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273524>
 
-A common usage pattern of fopen() is to check if it succeeded, and die()
-if it failed:
+git-am applies a series of patches. If the process terminates
+abnormally, we want to be able to resume applying the series of patches.
+This requires the session state to be saved in a persistent location.
 
-	FILE *fp = fopen(path, "w");
-	if (!fp)
-		die_errno(_("could not open '%s' for writing"), path);
+Implement the mechanism of a "patch queue", represented by 2 integers --
+the index of the current patch we are applying and the index of the last
+patch, as well as its lifecycle through the following functions:
 
-Implement a wrapper function xfopen() for the above, so that we can save
-a few lines of code and make the die() messages consistent.
+* am_setup(), which will set up the state directory
+  $GIT_DIR/rebase-apply. As such, even if the process exits abnormally,
+  the last-known state will still persist.
 
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+* am_load(), which is called if there is an am session in
+  progress, to load the last known state from the state directory so we
+  can resume applying patches.
+
+* am_run(), which will do the actual patch application. After applying a
+  patch, it calls am_next() to increment the current patch index. The
+  logic for applying and committing a patch is not implemented yet.
+
+* am_destroy(), which is finally called when we successfully applied all
+  the patches in the queue, to clean up by removing the state directory
+  and its contents.
+
 Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Stefan Beller <sbeller@google.com>
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
+ builtin/am.c | 180 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 180 insertions(+)
 
-Notes:
-    v5
-    
-    * Removed assert()s since we do not need to over-zealously guard against
-      insane code.
-    
-    * The read/write error messages have returned as they are useful in
-      diagnosing permission errors. Hopefully I got the logic right this
-      time.
-
- git-compat-util.h |  1 +
- wrapper.c         | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e168dfd..392da79 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -722,6 +722,7 @@ extern ssize_t xread(int fd, void *buf, size_t len);
- extern ssize_t xwrite(int fd, const void *buf, size_t len);
- extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
- extern int xdup(int fd);
-+extern FILE *xfopen(const char *path, const char *mode);
- extern FILE *xfdopen(int fd, const char *mode);
- extern int xmkstemp(char *template);
- extern int xmkstemp_mode(char *template, int mode);
-diff --git a/wrapper.c b/wrapper.c
-index 0a4502d..e451463 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -346,6 +346,27 @@ int xdup(int fd)
- 	return ret;
- }
- 
-+/**
-+ * xfopen() is the same as fopen(), but it die()s if the fopen() fails.
-+ */
-+FILE *xfopen(const char *path, const char *mode)
-+{
-+	for (;;) {
-+		FILE *fp = fopen(path, mode);
-+		if (fp)
-+			return fp;
-+		if (errno == EINTR)
-+			continue;
+diff --git a/builtin/am.c b/builtin/am.c
+index fd32caf..292f793 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -6,9 +6,174 @@
+ #include "cache.h"
+ #include "builtin.h"
+ #include "exec_cmd.h"
++#include "parse-options.h"
++#include "dir.h"
 +
-+		if (*mode && mode[1] == '+')
-+			die_errno(_("could not open '%s' for reading and writing"), path);
-+		else if (*mode == 'w' || *mode == 'a')
-+			die_errno(_("could not open '%s' for writing"), path);
-+		else
-+			die_errno(_("could not open '%s' for reading"), path);
-+	}
++struct am_state {
++	/* state directory path */
++	char *dir;
++
++	/* current and last patch numbers, 1-indexed */
++	int cur;
++	int last;
++};
++
++/**
++ * Initializes am_state with the default values. The state directory is set to
++ * dir.
++ */
++static void am_state_init(struct am_state *state, const char *dir)
++{
++	memset(state, 0, sizeof(*state));
++
++	assert(dir);
++	state->dir = xstrdup(dir);
 +}
 +
- FILE *xfdopen(int fd, const char *mode)
++/**
++ * Releases memory allocated by an am_state.
++ */
++static void am_state_release(struct am_state *state)
++{
++	if (state->dir)
++		free(state->dir);
++}
++
++/**
++ * Returns path relative to the am_state directory.
++ */
++static inline const char *am_path(const struct am_state *state, const char *path)
++{
++	assert(state->dir);
++	assert(path);
++	return mkpath("%s/%s", state->dir, path);
++}
++
++/**
++ * Returns 1 if there is an am session in progress, 0 otherwise.
++ */
++static int am_in_progress(const struct am_state *state)
++{
++	struct stat st;
++
++	if (lstat(state->dir, &st) < 0 || !S_ISDIR(st.st_mode))
++		return 0;
++	if (lstat(am_path(state, "last"), &st) || !S_ISREG(st.st_mode))
++		return 0;
++	if (lstat(am_path(state, "next"), &st) || !S_ISREG(st.st_mode))
++		return 0;
++	return 1;
++}
++
++/**
++ * Reads the contents of `file` in the `state` directory into `sb`. Returns the
++ * number of bytes read on success, -1 if the file does not exist. If `trim` is
++ * set, trailing whitespace will be removed.
++ */
++static int read_state_file(struct strbuf *sb, const struct am_state *state,
++			const char *file, int trim)
++{
++	strbuf_reset(sb);
++
++	if (strbuf_read_file(sb, am_path(state, file), 0) >= 0) {
++		if (trim)
++			strbuf_trim(sb);
++
++		return sb->len;
++	}
++
++	if (errno == ENOENT)
++		return -1;
++
++	die_errno(_("could not read '%s'"), am_path(state, file));
++}
++
++/**
++ * Loads state from disk.
++ */
++static void am_load(struct am_state *state)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	if (read_state_file(&sb, state, "next", 1) < 0)
++		die("BUG: state file 'next' does not exist");
++	state->cur = strtol(sb.buf, NULL, 10);
++
++	if (read_state_file(&sb, state, "last", 1) < 0)
++		die("BUG: state file 'last' does not exist");
++	state->last = strtol(sb.buf, NULL, 10);
++
++	strbuf_release(&sb);
++}
++
++/**
++ * Removes the am_state directory, forcefully terminating the current am
++ * session.
++ */
++static void am_destroy(const struct am_state *state)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	strbuf_addstr(&sb, state->dir);
++	remove_dir_recursively(&sb, 0);
++	strbuf_release(&sb);
++}
++
++/**
++ * Setup a new am session for applying patches
++ */
++static void am_setup(struct am_state *state)
++{
++	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
++		die_errno(_("failed to create directory '%s'"), state->dir);
++
++	/*
++	 * NOTE: Since the "next" and "last" files determine if an am_state
++	 * session is in progress, they should be written last.
++	 */
++
++	write_file(am_path(state, "next"), 1, "%d", state->cur);
++
++	write_file(am_path(state, "last"), 1, "%d", state->last);
++}
++
++/**
++ * Increments the patch pointer, and cleans am_state for the application of the
++ * next patch.
++ */
++static void am_next(struct am_state *state)
++{
++	state->cur++;
++	write_file(am_path(state, "next"), 1, "%d", state->cur);
++}
++
++/**
++ * Applies all queued mail.
++ */
++static void am_run(struct am_state *state)
++{
++	while (state->cur <= state->last) {
++
++		/* NEEDSWORK: Patch application not implemented yet */
++
++		am_next(state);
++	}
++
++	am_destroy(state);
++}
+ 
+ int cmd_am(int argc, const char **argv, const char *prefix)
  {
- 	FILE *stream = fdopen(fd, mode);
++	struct am_state state;
++
++	const char * const usage[] = {
++		N_("git am [options] [(<mbox>|<Maildir>)...]"),
++		NULL
++	};
++
++	struct option options[] = {
++		OPT_END()
++	};
+ 
+ 	/*
+ 	 * NEEDSWORK: Once all the features of git-am.sh have been
+@@ -25,5 +190,20 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		setup_work_tree();
+ 	}
+ 
++	git_config(git_default_config, NULL);
++
++	am_state_init(&state, git_path("rebase-apply"));
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++
++	if (am_in_progress(&state))
++		am_load(&state);
++	else
++		am_setup(&state);
++
++	am_run(&state);
++
++	am_state_release(&state);
++
+ 	return 0;
+ }
 -- 
 2.5.0.rc1.76.gf60a929
