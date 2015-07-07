@@ -1,100 +1,123 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 23/23] checkout: retire --ignore-other-worktrees in
- favor of --force
-Date: Tue, 7 Jul 2015 04:24:05 -0400
-Message-ID: <CAPig+cSSooqUcR_gW6vQP5Ws5v9p47bt7JWX4HgAyD6mFZynDA@mail.gmail.com>
-References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
-	<1436203860-846-24-git-send-email-sunshine@sunshineco.com>
-	<xmqqlhetyszz.fsf@gitster.dls.corp.google.com>
+From: Plamen Totev <plamen.totev@abv.bg>
+Subject: Re: Git grep does not support multi-byte characters (like UTF-8)
+Date: Tue, 7 Jul 2015 11:58:54 +0300 (EEST)
+Message-ID: <775251698.1328032.1436259534851.JavaMail.apache@nm31.abv.bg>
+References: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg> <CACsJy8BH_QJss57uMJNE=ojNT5vBWKN=eEdrBBS38g6As-UH6A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 07 10:24:25 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 10:58:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCOAw-00068T-28
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 10:24:22 +0200
+	id 1ZCOi1-00073F-5p
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 10:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756653AbbGGIYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 04:24:19 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:36454 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756649AbbGGIYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 04:24:06 -0400
-Received: by ykdr198 with SMTP id r198so170977188ykd.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 01:24:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=oVrLn31UAfuh6UdOVOvqNHzTIg0Y9inb2a8NiOH36OQ=;
-        b=byaGWNGq/sNAmRMpCpP+5HZxjccuom6dvM6Xaurwwo3WtFroDdJ4Xy7G9Hy6xTIBDj
-         jtrNRhdFpAqxd7SNs51/IXYfTBFP+RXyqrRZZikapHEwcBqqI7TbhiF6gCq9xNr90vUV
-         nDQNKoGYBm5WXq8WbrWzIPPt9nZB8Hobu8H4oA5xq77sYIplOmRSfKplb/sWTIVsyWam
-         0bn+7lfcHn0Oo+TwayRZWXvzBoX+ao3SKeohzuMi4/L6R1Ha0YHC0+zK3dIQgghs5uRy
-         P1Axyrk0wLPkcRXhg5k41f8dnmSW79hrSA4K9FT3v3oZt/QiK9jJL1vHYh1tlLLl3fBV
-         7g0g==
-X-Received: by 10.129.76.140 with SMTP id z134mr3639707ywa.17.1436257445366;
- Tue, 07 Jul 2015 01:24:05 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Tue, 7 Jul 2015 01:24:05 -0700 (PDT)
-In-Reply-To: <xmqqlhetyszz.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: zEzP4n7ibgah8CgzhlrrpY4e5OA
+	id S932066AbbGGI61 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jul 2015 04:58:27 -0400
+Received: from smtp-out.abv.bg ([194.153.145.99]:33521 "EHLO smtp-out.abv.bg"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753991AbbGGI6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 04:58:18 -0400
+Received: from nm31.abv.bg (nm31.ni.bg [192.168.151.86])
+	by smtp-out.abv.bg (Postfix) with ESMTP id 6306114EF9D;
+	Tue,  7 Jul 2015 11:58:05 +0300 (EEST)
+DomainKey-Signature: a=rsa-sha1; s=smtp-out; d=abv.bg; c=simple; q=dns;
+	b=pyOO9Xiq4uB+LOCwaSmO8rE7SXM/NtYYn4ogCzWZL2nPQWuInuBbUfi+AMH5gpiuH
+	ZNNPQS9qAxIN0qP4thR9rTDM2+AfUCx5fKY5i++qvL0Ajbj84qn0GfKTIVqjeXAF3pG
+	Be6o4H5NtZypUeMkDSbJSzM+NVJXDhp+BhuNQTU=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=abv.bg; s=smtp-out;
+	t=1436259485; bh=+vI3l+H22ovLfQyc/J/2M92aMaHEYwNa8WeAu8RHJe0=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:DKIM; b=lZOWs2
+	Q8REF6R8Vf8xfjn54+ZHOJjMk7C/c+P7wJLoohHmO8rB2Lz51pGo+KPjno9ektZhwnV
+	2xIxHalsYHGneyKVNmViC/NbrFJ+5Rf6CoLcYRPErruKHxZWpaPJtwANg8ByZeuVgvh
+	lTY8kRT+2a8ffkGfvnoBERHm2F5gIoo=
+Received: from nm31.abv.bg (localhost.localdomain [127.0.0.1])
+	by nm31.abv.bg (Postfix) with ESMTP id D057B1CB09D;
+	Tue,  7 Jul 2015 11:58:54 +0300 (EEST)
+In-Reply-To: <CACsJy8BH_QJss57uMJNE=ojNT5vBWKN=eEdrBBS38g6As-UH6A@mail.gmail.com>
+X-Mailer: AbvMail 3.0
+X-Originating-IP: 95.111.52.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273492>
 
-On Mon, Jul 6, 2015 at 3:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> As a safeguard, checking out a branch already checked out by a different
->> worktree is disallowed. This behavior can be overridden with
->> --ignore-other-worktrees, however, this option is neither obvious nor
->> particularly discoverable. As a common safeguard override, --force is
->> more likely to come to mind. Therefore, overload it to also suppress the
->> check for a branch already checked out elsewhere.
->
-> I hate to be asking this again but why is it a good idea to allow
-> 'ignore-other-worktrees' in the first place (let alone making it
-> more discoverable)?  You'll have multiple working trees, either
-> using the new "git worktree" or using the old contrib/workdir, for
-> one of the two reasons:
->
->  * You need a separate work area to build a new history.
->
->  * You need a separate work area to expand the contents of a
->    specific commit.
->
-> Here "create binary by running make" falls into the latter category;
-> as far as Git is concerned, you are only looking at, not extending
-> the history of any specific branch.
->
-> If you are extending the history of some branch, then you would want
-> to be on that branch.  Why would you want to have another worktree
-> that will get into a confusing state once you create that commit on
-> the checked out branch in this newly created worktree?
->
-> Wasn't the whole point of making the primary repository aware of the
-> secondary worktrees via the "linked checkout" mechanism because that
-> confusion was the biggest sore point of the old contrib/workdir
-> implementation?
+Nguyen, thanks for the help and the patch. Also the escaping suggested =
+by=C2=A0Scharfe seems as good choice. But i dig some more into the prob=
+lem and I found some other thing. That's why I replied on the main thre=
+ad not on the patch. I hope you'll excuse me if this is a bad practice.
 
-Having never used contrib/get-new-workdir, and not being involved in
-the choice, nor recall seeing justification for disallowing the a
-branch to be checked out in multiple locations, I lack insight to
-answer. I do recall Mark pointing out that this restriction posed a
-barrier for his migration from git-new-workdir to "git checkout
---to"[1], and Duy adding --ignore-other-worktrees in response. Mark
-presented a use-case here [2], but then the discussion petered out.
+git grep -i -P also does not works because the PCRE_UTF8 is not set and=
+ pcre library does not treat the string as UTF-8.
 
-I likewise probably lack understanding of the finer points to make a
-cogent argument for or against.
+pickaxe search also uses kwsearch so the case insensitive search with i=
+t does not work (e.g. git log -i -S). =C2=A0Maybe this is a less of a p=
+roblem here as one is expected to search for exact string (hence knows =
+the case)
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/260387/focus=260411
-[2]: http://article.gmane.org/gmane.comp.version-control.git/260645
+There is a interesting corner case.=C2=A0is_fixed treats all patterns c=
+ontaining nulls as fixed. So what about if the string contains non-ASCI=
+I symbols as well as nulls and the search is case insensitive :) I have=
+ to admin that my knowledge in UTF-8 is not enough to answer the questi=
+on if this could occur during normal usage. For example the second byte=
+ in multi-byte symbol is NULL. I would guess that's not true as it woul=
+d break a lot of programs that depend on NULL delimited string but it's=
+ good if somebody could confirm.
+
+GNU grep indeed uses escaped regular expressions when the string is usi=
+ng multi-byte encoding and the search is case insensitive. If the encod=
+ing is UTF-8 then this strategy could be used in git too. Especially th=
+at git already have support and helper functions to work with UTF-8. As=
+ for the other multi-byte encodings - I think the things would become m=
+ore complicated. As far I know in UTF-8 the '{' character for example i=
+s two bytes not one. Maybe really a support could be added only for the=
+ UTF-8 and if the string is not UTF-8 to issue a warning.
+
+So maybe the following makes sense when a grep search is performed:
+* check if the multi-byte encoding is used. If it's and the search is c=
+ase insensitive and the encoding is not UTF-8 give a warning;
+* if pcre is used and the string is UTF-8 encoded set the=C2=A0PCRE_UTF=
+8 flag;
+* if the search is case insensitive, the string is fixed and the encodi=
+ng =C2=A0used is UTF-8 use=C2=A0regcomp instead of kwsearch and escape =
+any regex special characters in the pattern;
+
+And the question with the behavior of pickaxe search remains open. Usin=
+g kwset does not work with case insensitive non-ASCII searches. Instead=
+ of fixing grep.c maybe it's better if new function is introduced that =
+performs keyword searches so it could be used by both grep, diffcore-pi=
+ckaxe and any other code in the future that may require such functional=
+ity. Or maybe diffcore-pickaxe should use grep instead of directly kwse=
+t/regcomp
+
+Regards,
+Plamen Totev
+
+
+
+>-------- =D0=9E=D1=80=D0=B8=D0=B3=D0=B8=D0=BD=D0=B0=D0=BB=D0=BD=D0=BE =
+=D0=BF=D0=B8=D1=81=D0=BC=D0=BE --------=20
+>=D0=9E=D1=82: Duy Nguyen pclouds@gmail.com=20
+>=D0=9E=D1=82=D0=BD=D0=BE=D1=81=D0=BD=D0=BE: Re: Git grep does not supp=
+ort multi-byte characters (like UTF-8)=20
+>=D0=94=D0=BE: Plamen Totev <plamen.totev@abv.bg>=20
+>=D0=98=D0=B7=D0=BF=D1=80=D0=B0=D1=82=D0=B5=D0=BD=D0=BE =D0=BD=D0=B0: 0=
+6.07.2015 15:23=20
+
+> I think we over-optimized a bit. If you your system provides regex=20
+> with locale support (e.g. Linux) and you don't explicitly use fallbac=
+k=20
+> regex implementation, it should work. I suppose your test patterns=20
+> look "fixed" (i.e. no regex special characters)? Can you try just add=
+=20
+> "." and see if case insensitive matching works?=20
+
+This is indeed the problem. When I added the "." the matching works jus=
+t fine.
