@@ -1,148 +1,98 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 33/44] builtin-am: support automatic notes copying
-Date: Tue,  7 Jul 2015 22:20:51 +0800
-Message-ID: <1436278862-2638-34-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v5 30/44] builtin-am: implement --committer-date-is-author-date
+Date: Tue,  7 Jul 2015 22:20:48 +0800
+Message-ID: <1436278862-2638-31-git-send-email-pyokagan@gmail.com>
 References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 16:23:32 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 16:23:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTmW-0005EC-1f
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:23:32 +0200
+	id 1ZCTmN-00057X-8k
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757832AbbGGOX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 10:23:26 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36805 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757730AbbGGOWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 10:22:45 -0400
-Received: by pacgz10 with SMTP id gz10so40450518pac.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:22:45 -0700 (PDT)
+	id S1757799AbbGGOXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 10:23:19 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:36741 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757724AbbGGOWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 10:22:38 -0400
+Received: by pacgz10 with SMTP id gz10so40448933pac.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ADLmIjt32g6NlrSjGWrFSHsREKaYlUb5bDYoo9ciYtg=;
-        b=w4LTW4RJbMLIYdRbvmFAWdrH97fHHiz+MGjw7tjEdeb1BVMrV0VqJT0f6BizTVqFeI
-         n2FB4ZrlW6xz4H1QTm2A/fNUlEnNcjrBusm+j/em9F0Jl9MON5JZXFl2j/jbHk1ZboZG
-         cfz3qu9D9k/2NANYteo77iE+EMl6cMX6BX3062YFbcTFbeAxGyjAHmNbH8Kbp7/8GJTh
-         yYd2RGVQtE+F2nEIoRSyNQKFtIoFIy1Qd7xzy7a2QVjK2SuFGRHlBg030H9sPkg0sBU0
-         ukfvP6fVMyzdGHR7xu/8yLWYwfxCpnpYnUw5uA7MTVO+Y86vfRHSLxsMoI4XTjoxtl8G
-         J0sw==
-X-Received: by 10.68.239.70 with SMTP id vq6mr9400859pbc.157.1436278965137;
-        Tue, 07 Jul 2015 07:22:45 -0700 (PDT)
+        bh=zoVaDTQ5M1KGS5S6M6fCd6QLSJE8Rte80sCAC9JbOns=;
+        b=GD7alRal1hd33T/NzlEKrIvlLLQepXYhTfkrgSyg1oNpjbEhvukirIffOiMfpWtJT3
+         zsd0GzxPkWexNccBWYwS+ctIdaK1hNdiWVi4Rt7fs5NG1emBHSxT6mUCdOTfqi14gmuF
+         hLugUB9aNS6IjKUp27Vx/GLohI58gfYe/FRZoS3PRJmAGz7rdZh3FE70ETNfHql6GsWt
+         LZBAP9RjuBhMmsASiDIbfK5ZGvujcxNIK8IuT3SQ6zqjlepbpG3owTuFGa81QrQO9/q9
+         +VPWULoA53L1ivsyiwI0dUozcjidPezBKX05RlRvFXbzrHhmQ/ES8oUWf5/d3kG54q+z
+         Q5Ig==
+X-Received: by 10.66.160.1 with SMTP id xg1mr9444123pab.27.1436278958117;
+        Tue, 07 Jul 2015 07:22:38 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.22.42
+        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.22.36
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 07:22:44 -0700 (PDT)
+        Tue, 07 Jul 2015 07:22:37 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.76.gf60a929
 In-Reply-To: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273549>
 
-Since eb2151b (rebase: support automatic notes copying, 2010-03-12),
-git-am.sh supported automatic notes copying in --rebasing mode by
-invoking "git notes copy" once it has finished applying all the patches.
+Since 3f01ad6 (am: Add --committer-date-is-author-date option,
+2009-01-22), git-am.sh implemented the --committer-date-is-author-date
+option, which tells git-am to use the timestamp recorded in the email
+message as both author and committer date.
 
-Re-implement this feature in builtin/am.c.
+Re-implement this option in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ builtin/am.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index c234ee9..2255a1e 100644
+index e9eacf0..d7bb159 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -23,6 +23,7 @@
- #include "merge-recursive.h"
- #include "revision.h"
- #include "log-tree.h"
-+#include "notes-utils.h"
+@@ -120,6 +120,8 @@ struct am_state {
+ 	/* override error message when patch failure occurs */
+ 	const char *resolvemsg;
  
- /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -514,6 +515,64 @@ static int run_post_rewrite_hook(const struct am_state *state)
- }
++	int committer_date_is_author_date;
++
+ 	int ignore_date;
  
- /**
-+ * Reads the state directory's "rewritten" file, and copies notes from the old
-+ * commits listed in the file to their rewritten commits.
-+ *
-+ * Returns 0 on success, -1 on failure.
-+ */
-+static int copy_notes_for_rebase(const struct am_state *state)
-+{
-+	struct notes_rewrite_cfg *c;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *invalid_line = _("Malformed input line: '%s'.");
-+	const char *msg = "Notes added by 'git rebase'";
-+	FILE *fp;
-+	int ret = 0;
-+
-+	assert(state->rebasing);
-+
-+	c = init_copy_notes_for_rewrite("rebase");
-+	if (!c)
-+		return 0;
-+
-+	fp = xfopen(am_path(state, "rewritten"), "r");
-+
-+	while (!strbuf_getline(&sb, fp, '\n')) {
-+		unsigned char from_obj[GIT_SHA1_RAWSZ], to_obj[GIT_SHA1_RAWSZ];
-+
-+		if (sb.len != GIT_SHA1_HEXSZ * 2 + 1) {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
-+
-+		if (get_sha1_hex(sb.buf, from_obj)) {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
-+
-+		if (sb.buf[GIT_SHA1_HEXSZ] != ' ') {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
-+
-+		if (get_sha1_hex(sb.buf + GIT_SHA1_HEXSZ + 1, to_obj)) {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
-+
-+		if (copy_note_for_rewrite(c, from_obj, to_obj))
-+			ret = error(_("Failed to copy notes from '%s' to '%s'"),
-+					sha1_to_hex(from_obj), sha1_to_hex(to_obj));
-+	}
-+
-+finish:
-+	finish_copy_notes_for_rewrite(c, msg);
-+	fclose(fp);
-+	strbuf_release(&sb);
-+	return ret;
-+}
-+
-+/**
-  * Determines if the file looks like a piece of RFC2822 mail by grabbing all
-  * non-indented lines and checking if they look like they begin with valid
-  * header field names.
-@@ -1419,6 +1478,7 @@ next:
+ 	int rebasing;
+@@ -1259,6 +1261,10 @@ static void do_commit(const struct am_state *state)
+ 			state->ignore_date ? NULL : state->author_date,
+ 			IDENT_STRICT);
  
- 	if (!is_empty_file(am_path(state, "rewritten"))) {
- 		assert(state->rebasing);
-+		copy_notes_for_rebase(state);
- 		run_post_rewrite_hook(state);
- 	}
- 
++	if (state->committer_date_is_author_date)
++		setenv("GIT_COMMITTER_DATE",
++			state->ignore_date ? "" : state->author_date, 1);
++
+ 	if (commit_tree(state->msg, state->msg_len, tree, parents, commit,
+ 				author, NULL))
+ 		die(_("failed to write commit object"));
+@@ -1677,6 +1683,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE(0, "abort", &resume,
+ 			N_("restore the original branch and abort the patching operation."),
+ 			RESUME_ABORT),
++		OPT_BOOL(0, "committer-date-is-author-date",
++			&state.committer_date_is_author_date,
++			N_("lie about committer date")),
+ 		OPT_BOOL(0, "ignore-date", &state.ignore_date,
+ 			N_("use current timestamp for author date")),
+ 		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
 -- 
 2.5.0.rc1.76.gf60a929
