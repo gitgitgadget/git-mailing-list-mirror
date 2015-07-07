@@ -1,205 +1,155 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 06/44] builtin-am: auto-detect mbox patches
-Date: Tue,  7 Jul 2015 22:20:24 +0800
-Message-ID: <1436278862-2638-7-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v5 09/44] builtin-am: implement committing applied patch
+Date: Tue,  7 Jul 2015 22:20:27 +0800
+Message-ID: <1436278862-2638-10-git-send-email-pyokagan@gmail.com>
 References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 16:21:48 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 16:22:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTkl-00049b-42
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:21:43 +0200
+	id 1ZCTl9-0004Mw-1F
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757496AbbGGOVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 10:21:40 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:34084 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757216AbbGGOVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 10:21:34 -0400
-Received: by pabvl15 with SMTP id vl15so114101779pab.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:21:34 -0700 (PDT)
+	id S1757593AbbGGOWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 10:22:00 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34174 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757510AbbGGOVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 10:21:43 -0400
+Received: by pabvl15 with SMTP id vl15so114103886pab.1
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ecv8sFElK/Qemazmr3+X2es0rYjpJT7JvekJjCa44gU=;
-        b=jUmVkbGrfKVOcJBcZRRjTbM+azS5eQeYJYhr/gVK+mYroZszCQuq5bVkwTd9D8myEz
-         RlEAOs7ASXEeK3RNrIs6STVMDRpHMD0KSEyBW2+P8Kg6Q02g9EnBMa1qn+QdbT425j4B
-         JqF278xzCtI5YvqjIHANSxEXZr4/Ja7KeRUXroVXKyTGr91F36HHefveL0ep6RR1Dv6G
-         34NQOYjVe5caz9QaASNlHz7bJk9dVlY2zY6RRujh/dpKVmuYikZbFwsyfiSnyixktMAd
-         WCv3Cts16S8ri7bC64mdQKT1Kjfzm3Pr61qWRNbJRKI3dNTCk+9daqNVBSojfshbqa4N
-         QmJA==
-X-Received: by 10.70.128.79 with SMTP id nm15mr9583585pdb.28.1436278894015;
-        Tue, 07 Jul 2015 07:21:34 -0700 (PDT)
+        bh=rQFS2bXjkxgTR6CPLE7xi6IVSccZKTqoYtlBmxKhF2A=;
+        b=AAUiNrZUwOphMqmpsgMwKM9tra4qY2QB71ndFAd7qQ6Q6R1dBnc8wPVCiAbvc3PxmX
+         EG+IqfZzC0dGjIazMKYHl8mEtt/+vpPqksVgij3/G99f8PYk0p4H/9ICl+E0eNN340H7
+         qbXFh7YQw1cNKVBNb/ycPuYbeh5FaI4KItlyfjOEBR/Vq20nDkVJuSHl0/bZ2/V96Mak
+         g3cMx6nJI7k1Il37zLR6HZiAtoa6EorCDR7ni5S0P8Jb+Yz4JEm58lxd8Fh4mijn9pLA
+         askBoj5irPzaLvpUspsd8GcI3gqHkGHrpMkCsOaC5jnh8HU/INamHAaDtgx+rxE+LBWm
+         rWwQ==
+X-Received: by 10.70.43.136 with SMTP id w8mr9414571pdl.157.1436278903005;
+        Tue, 07 Jul 2015 07:21:43 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.21.31
+        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.21.40
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 07:21:32 -0700 (PDT)
+        Tue, 07 Jul 2015 07:21:41 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.76.gf60a929
 In-Reply-To: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273527>
 
-Since 15ced75 (git-am foreign patch support: autodetect some patch
-formats, 2009-05-27), git-am.sh is able to autodetect mbox, stgit and
-mercurial patches through heuristics.
+Implement do_commit(), which commits the index which contains the
+results of applying the patch, along with the extracted commit message
+and authorship information.
 
-Re-implement support for autodetecting mbox/maildir files in
-builtin/am.c.
+Since 29b6754 (am: remove rebase-apply directory before gc, 2010-02-22),
+git gc --auto is also invoked to pack the loose objects that are created
+from making the commits.
 
-RFC 2822 requires that lines are terminated by "\r\n". To support this,
-implement strbuf_getline_crlf(), which will remove both '\n' and "\r\n"
-from the end of the line.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 109 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 109 insertions(+)
+ builtin/am.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 51 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index ae93e0e..9422adc 100644
+index 9c7a6c8..bbb540c 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -10,6 +10,21 @@
- #include "dir.h"
+@@ -11,6 +11,9 @@
  #include "run-command.h"
+ #include "quote.h"
+ #include "lockfile.h"
++#include "cache-tree.h"
++#include "refs.h"
++#include "commit.h"
  
-+/**
-+ * Like strbuf_getline(), but treats both '\n' and "\r\n" as line terminators.
-+ */
-+static int strbuf_getline_crlf(struct strbuf *sb, FILE *fp)
-+{
-+	if (strbuf_getwholeline(sb, fp, '\n'))
-+		return EOF;
-+	if (sb->buf[sb->len - 1] == '\n') {
-+		strbuf_setlen(sb, sb->len - 1);
-+		if (sb->len > 0 && sb->buf[sb->len - 1] == '\r')
-+			strbuf_setlen(sb, sb->len - 1);
-+	}
-+	return 0;
-+}
-+
- enum patch_format {
- 	PATCH_FORMAT_UNKNOWN = 0,
- 	PATCH_FORMAT_MBOX
-@@ -131,6 +146,92 @@ static void am_destroy(const struct am_state *state)
+ /**
+  * Returns 1 if the file is empty or does not exist, 0 otherwise.
+@@ -696,10 +699,56 @@ static int run_apply(const struct am_state *state)
  }
  
  /**
-+ * Determines if the file looks like a piece of RFC2822 mail by grabbing all
-+ * non-indented lines and checking if they look like they begin with valid
-+ * header field names.
-+ *
-+ * Returns 1 if the file looks like a piece of mail, 0 otherwise.
++ * Commits the current index with state->msg as the commit message and
++ * state->author_name, state->author_email and state->author_date as the author
++ * information.
 + */
-+static int is_mail(FILE *fp)
++static void do_commit(const struct am_state *state)
 +{
-+	const char *header_regex = "^[!-9;-~]+:";
++	unsigned char tree[GIT_SHA1_RAWSZ], parent[GIT_SHA1_RAWSZ],
++		      commit[GIT_SHA1_RAWSZ];
++	unsigned char *ptr;
++	struct commit_list *parents = NULL;
++	const char *reflog_msg, *author;
 +	struct strbuf sb = STRBUF_INIT;
-+	regex_t regex;
-+	int ret = 1;
 +
-+	if (fseek(fp, 0L, SEEK_SET))
-+		die_errno(_("fseek failed"));
++	if (write_cache_as_tree(tree, 0, NULL))
++		die(_("git write-tree failed to write a tree"));
 +
-+	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
-+		die("invalid pattern: %s", header_regex);
-+
-+	while (!strbuf_getline_crlf(&sb, fp)) {
-+		if (!sb.len)
-+			break; /* End of header */
-+
-+		/* Ignore indented folded lines */
-+		if (*sb.buf == '\t' || *sb.buf == ' ')
-+			continue;
-+
-+		/* It's a header if it matches header_regex */
-+		if (regexec(&regex, sb.buf, 0, NULL, 0)) {
-+			ret = 0;
-+			goto done;
-+		}
++	if (!get_sha1_commit("HEAD", parent)) {
++		ptr = parent;
++		commit_list_insert(lookup_commit(parent), &parents);
++	} else {
++		ptr = NULL;
++		fprintf_ln(stderr, _("applying to an empty history"));
 +	}
 +
-+done:
-+	regfree(&regex);
++	author = fmt_ident(state->author_name, state->author_email,
++			state->author_date, IDENT_STRICT);
++
++	if (commit_tree(state->msg, state->msg_len, tree, parents, commit,
++				author, NULL))
++		die(_("failed to write commit object"));
++
++	reflog_msg = getenv("GIT_REFLOG_ACTION");
++	if (!reflog_msg)
++		reflog_msg = "am";
++
++	strbuf_addf(&sb, "%s: %.*s", reflog_msg, linelen(state->msg),
++			state->msg);
++
++	update_ref(sb.buf, "HEAD", commit, ptr, 0, UPDATE_REFS_DIE_ON_ERR);
++
 +	strbuf_release(&sb);
-+	return ret;
 +}
 +
 +/**
-+ * Attempts to detect the patch_format of the patches contained in `paths`,
-+ * returning the PATCH_FORMAT_* enum value. Returns PATCH_FORMAT_UNKNOWN if
-+ * detection fails.
-+ */
-+static int detect_patch_format(const char **paths)
-+{
-+	enum patch_format ret = PATCH_FORMAT_UNKNOWN;
-+	struct strbuf l1 = STRBUF_INIT;
-+	FILE *fp;
-+
-+	/*
-+	 * We default to mbox format if input is from stdin and for directories
-+	 */
-+	if (!*paths || !strcmp(*paths, "-") || is_directory(*paths))
-+		return PATCH_FORMAT_MBOX;
-+
-+	/*
-+	 * Otherwise, check the first few lines of the first patch, starting
-+	 * from the first non-blank line, to try to detect its format.
-+	 */
-+
-+	fp = xfopen(*paths, "r");
-+
-+	while (!strbuf_getline_crlf(&l1, fp)) {
-+		if (l1.len)
-+			break;
-+	}
-+
-+	if (starts_with(l1.buf, "From ") || starts_with(l1.buf, "From: ")) {
-+		ret = PATCH_FORMAT_MBOX;
-+		goto done;
-+	}
-+
-+	if (l1.len && is_mail(fp)) {
-+		ret = PATCH_FORMAT_MBOX;
-+		goto done;
-+	}
-+
-+done:
-+	fclose(fp);
-+	strbuf_release(&l1);
-+	return ret;
-+}
-+
-+/**
-  * Splits out individual email patches from `paths`, where each path is either
-  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
+  * Applies all queued mail.
   */
-@@ -188,6 +289,14 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
- static void am_setup(struct am_state *state, enum patch_format patch_format,
- 			const char **paths)
+ static void am_run(struct am_state *state)
  {
-+	if (!patch_format)
-+		patch_format = detect_patch_format(paths);
++	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
 +
-+	if (!patch_format) {
-+		fprintf_ln(stderr, _("Patch format detection failed."));
-+		exit(128);
-+	}
-+
- 	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
- 		die_errno(_("failed to create directory '%s'"), state->dir);
+ 	refresh_and_write_cache();
  
+ 	while (state->cur <= state->last) {
+@@ -731,16 +780,14 @@ static void am_run(struct am_state *state)
+ 			exit(128);
+ 		}
+ 
+-		/*
+-		 * NEEDSWORK: After the patch has been applied to the index
+-		 * with git-apply, we need to make commit as well.
+-		 */
++		do_commit(state);
+ 
+ next:
+ 		am_next(state);
+ 	}
+ 
+ 	am_destroy(state);
++	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+ }
+ 
+ /**
 -- 
 2.5.0.rc1.76.gf60a929
