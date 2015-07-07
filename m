@@ -1,91 +1,85 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 01/11] t6302: for-each-ref tests for ref-filter APIs
-Date: Tue,  7 Jul 2015 21:36:07 +0530
-Message-ID: <1436285177-12279-1-git-send-email-karthik.188@gmail.com>
-References: <CAOLa=ZTP+=aQL_JW4+O7jUh5jTD1bWpk7xbguYUsW1DkotAafA@mail.gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 18:06:26 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] index-pack: fix allocation of sorted_by_pos array
+Date: Tue, 7 Jul 2015 12:06:31 -0400
+Message-ID: <20150707160630.GA4456@peff.net>
+References: <1429354025-24659-1-git-send-email-pclouds@gmail.com>
+ <1429354025-24659-3-git-send-email-pclouds@gmail.com>
+ <xmqqoajt5glu.fsf@gitster.dls.corp.google.com>
+ <CACsJy8D872sj9WQec_FZrTxx=gqy++L1XLxJdEtEQNpGpFYr=Q@mail.gmail.com>
+ <xmqqzj3c3efv.fsf_-_@gitster.dls.corp.google.com>
+ <xmqqr3on369x.fsf_-_@gitster.dls.corp.google.com>
+ <CACsJy8CsUu1zEnah9Ah3tQxk8N-xPpOBuV5TpQ4EB6+nyiDW3g@mail.gmail.com>
+ <xmqqvbdw3r40.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 18:06:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCVO5-0000tz-Qd
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 18:06:26 +0200
+	id 1ZCVOJ-00012H-2Q
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 18:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757729AbbGGQGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 12:06:21 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36081 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755116AbbGGQGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 12:06:20 -0400
-Received: by pacgz10 with SMTP id gz10so41753207pac.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 09:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SCq9ClkvRmL5HimUAN5Kc/Z1lflQEVSKlujNsYxs6PQ=;
-        b=nWSZUXPU1dqIff9KCrpNFrbcalbRDBWMPxN55gopS6B2eGD7smk/tQdPRnv/H1YItT
-         z6KvQttz7Ae/iUyWitUyp003Rb/8fNwiLqViB9+RAxM5PwgwmeD9gHsITDiMZiZraRSP
-         gShLTULOAH9eKFsHTdEOlLWLq+Nu8erDb+OMVQURJjiS81TaiE3sEvM3iao7QCm6BSYO
-         9EhqRY3PUB+hf3vz2lT1PbaSiZTOFjE5UmUbqUW7ZmG83ckvUWbI3xvSaQQILX93S2V7
-         Qpwaw2iQfAL0t5hGREA/lX9xQvGS1Eyt8p1KOof6zf2sI24VJXhb1FRTSFY0J1vddo9x
-         F+kw==
-X-Received: by 10.66.221.193 with SMTP id qg1mr10162024pac.134.1436285180439;
-        Tue, 07 Jul 2015 09:06:20 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by mx.google.com with ESMTPSA id nt6sm22295515pbc.18.2015.07.07.09.06.18
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 09:06:19 -0700 (PDT)
-X-Mailer: git-send-email 2.4.5
-In-Reply-To: <CAOLa=ZTP+=aQL_JW4+O7jUh5jTD1bWpk7xbguYUsW1DkotAafA@mail.gmail.com>
+	id S1757093AbbGGQGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 12:06:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56922 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755116AbbGGQGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 12:06:34 -0400
+Received: (qmail 31545 invoked by uid 102); 7 Jul 2015 16:06:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Jul 2015 11:06:33 -0500
+Received: (qmail 10490 invoked by uid 107); 7 Jul 2015 16:06:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Jul 2015 12:06:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jul 2015 12:06:31 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqvbdw3r40.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273571>
 
-Add a test suite for testing the ref-filter APIs used
-by for-each-ref. We just intialize the test suite for now.
-More tests will be added in the following patches as more
-options are added to for-each-ref.
+On Tue, Jul 07, 2015 at 08:49:19AM -0700, Junio C Hamano wrote:
 
-Based-on-patch-by: Jeff King <peff@peff.net>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- t/t6302-for-each-ref-filter.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
- create mode 100755 t/t6302-for-each-ref-filter.sh
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > I keep tripping over this "real_type vs type" in this code. What do
+> > you think about renaming "type" field to "in_pack_type" and
+> > "real_type" to "canon_type" (or "final_type")? "Real" does not really
+> > say anything in this context..
+> 
+> An unqualified name "type" does bother me for the word to express
+> what representation the piece of data uses (i.e. is it a delta, or
+> is it a base object of "tree" type, or what).  I think I tried to
+> unconfuse myself by saying "representation type" in in-code
+> comments, reviews and log messages when it is not clear which kind
+> between "in-pack representation" or "Git object type of that stored
+> data" a sentence is talking about, and I agree "in_pack_type" would
+> be a vast improvement over just "type".
 
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-new file mode 100755
-index 0000000..44d2f24
---- /dev/null
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -0,0 +1,20 @@
-+#!/bin/sh
-+
-+test_description='test for-each-refs usage of ref-filter APIs'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-gpg.sh
-+
-+test_expect_success 'setup some history and refs' '
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	git checkout -b side &&
-+	test_commit four &&
-+	git tag -s -m "A signed tag message" signed-tag &&
-+	git tag -s -m "Annonated doubly" double-tag signed-tag &&
-+	git checkout master &&
-+	git update-ref refs/odd/spot master
-+'
-+
-+test_done
--- 
-2.4.5
+I think this is doubly confusing because pack-objects _does_ use
+in_pack_type. And its "type" is therefore the "real" object type. Which
+is the opposite of index-pack, which uses "type" for the in-pack type.
+So at the very least, we should harmonize these two uses.
+
+> Especially, if the other one is renamed with "in_pack_" prefix,
+> "real_type" is not just clear enough but is probably better because
+> it explains what it is from its "meaning" (i.e. it is the type of
+> the Git object, not how it is represented in the pack-stream) than
+> "final_type" that is named after "how" it is computed (i.e. it makes
+> sense to you only if you know that an in-pack type "this is delta"
+> does not have the full information and you have to traverse the
+> delta chain and you will finally find out what it is when you hit
+> the base representation).
+
+Yeah, I agree real_type is fine when paired with in_pack_type. We might
+consider modifying pack-objects.h to match (on top of just moving
+index-pack to in_pack_type).
+
+-Peff
