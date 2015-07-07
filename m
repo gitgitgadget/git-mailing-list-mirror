@@ -1,77 +1,66 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Git force push fails after a rejected push (unpack failed)?
-Date: Tue, 7 Jul 2015 19:05:11 -0400
-Message-ID: <CAPig+cTMqjrM=EQFaTU+9OcC=-bSPLXoMR-NEH9Q-w782KiSmA@mail.gmail.com>
-References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
-	<20150707141305.GA629@peff.net>
-	<DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
-	<20150707194956.GA13792@peff.net>
+Subject: Re: [PATCH v3 23/23] checkout: retire --ignore-other-worktrees in
+ favor of --force
+Date: Tue, 7 Jul 2015 19:10:51 -0400
+Message-ID: <CAPig+cQ_YnVbeuYN5TGaG1AyUXzBhK31LLon2RtsEhnVifVDVg@mail.gmail.com>
+References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
+	<1436203860-846-24-git-send-email-sunshine@sunshineco.com>
+	<xmqqlhetyszz.fsf@gitster.dls.corp.google.com>
+	<CAPig+cSSooqUcR_gW6vQP5Ws5v9p47bt7JWX4HgAyD6mFZynDA@mail.gmail.com>
+	<CAPig+cSz3xS-pdtsiw14A80m7UqdwfGLy6kRdguHSUyAjfnWSQ@mail.gmail.com>
+	<xmqqio9w3poi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: X H <music_is_live_lg@hotmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 08 01:05:21 2015
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 01:10:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCbvR-0003wy-Dv
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:05:17 +0200
+	id 1ZCc0v-0006X4-GT
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756122AbbGGXFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 19:05:14 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:35938 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555AbbGGXFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 19:05:12 -0400
-Received: by ykdr198 with SMTP id r198so192012739ykd.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:05:11 -0700 (PDT)
+	id S1757367AbbGGXKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 19:10:54 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:34038 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756988AbbGGXKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 19:10:52 -0400
+Received: by ykcp133 with SMTP id p133so5555094ykc.1
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:10:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=/NXPicVRap4vEz8kUJGvIGp5x7fB/VMl2h4h6vkeUgI=;
-        b=H8KUwFxBDQAMwBWaWS8QLLYU7xt5xvOS8Z5xRKFnumnUtdY4ji699Z6Ny9of4sCBP9
-         JF5AQUBFXknXYntqDEMx6Yr6HUZV+jbnt6hXgAGRXcyC6osGojQjkNExEHH5IGYu7UqF
-         W/SiOn3qC1KmAJ974UpHx/XBqmbmyNFrcHt81JrL13DgsceDOQwbO66+qpexipf3h97u
-         tV7aMuA2FxzAEWRCGhOshKeXlJBRkRaJDfAQG04FfG/wWVJK1rbv3gxmwp8djdYsMp/H
-         WNa8//+li7ll/aiDJQj1GvAs4BShErVfCQN2nmhsYtB/9aClCDJlqL8xqLaS6WdsQuG1
-         6VBg==
-X-Received: by 10.129.91.135 with SMTP id p129mr8043082ywb.95.1436310311197;
- Tue, 07 Jul 2015 16:05:11 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Tue, 7 Jul 2015 16:05:11 -0700 (PDT)
-In-Reply-To: <20150707194956.GA13792@peff.net>
-X-Google-Sender-Auth: hd7J_1LVVDYxmIEit3zaOO6Imq0
+        bh=8xCFgf9uQc8l5CDtZ3FVOFxQEHg5I+9/QmGzlFEVgl8=;
+        b=LJikNUa3PBEe3LmWZ6r/REocG5uKV2hbLAEkuyICkoQraFyOq1P4FLZFi4krfC668u
+         IDHYMvbWUJOzg2JLkYN8XEp0DftvQMDigfztL8JG125sqGCH3Wdk7zKmralZ1hp+kQOn
+         RYOvOWuvP7d1XKjtuNmJfQTLirkwYFn7Jk1c6Q64yvdrg/ginweGOvSXqWonhpMG3gSq
+         RS0O1wPWFKG9D3yfNx9LV8J3vfKXShJq3r1lMGL7psqaZBptUMVPJrASd7fFYpZn6f3u
+         1nkO4gTtL6Cd72Ly+azUoZOafdoXWOKXgEZ9+U5ZPcyh6/5aLvvpEN1JpPHjWmzBjwOa
+         ScIg==
+X-Received: by 10.170.220.214 with SMTP id m205mr7867700ykf.13.1436310651855;
+ Tue, 07 Jul 2015 16:10:51 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Tue, 7 Jul 2015 16:10:51 -0700 (PDT)
+In-Reply-To: <xmqqio9w3poi.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: _-kIgrOMZuWkJn98m5giZm5NWJ8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273617>
 
-On Tue, Jul 7, 2015 at 3:49 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 07, 2015 at 09:31:25PM +0200, X H wrote:
->
->> For the moment, I'm the only one pushing to the remote, always with
->> the same user (second user is planned). I use git-for-windows which is
->> based on MSYS2. I have mounted the network share with noacl option so
->> permissions should be handled by the Windows share. I'm in a group
->> which has read/write access. I have not configured
->> core.sharedrepository, I don't think it is useful with noacl since
->> unix group are not used in this case. The permission for the folder
->> above the file with permission denied is rw, but this file is read
->> only so if git try to modify it it won't work.
->
-> Ah, so this is not a push to a server, but to a share mounted on the
-> local box?
->
-> That is leaving my realm of expertise. I'm not sure if it could be a
-> misconfiguration in your share setup, or that git is trying to do
-> something that would work on a Unix machine, but not on a Windows share.
-> You might want to ask on the msysgit list:
->
->   https://groups.google.com/forum/#!forum/msysgit
+On Tue, Jul 7, 2015 at 12:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> I would not mind "git worktree add -f" to disable the "no multiple
+> checkouts of the same branch" safety, but I do not think it is
+> sensible to remove "-i-o-w" and conflate everything into "--force".
+> That would force people to disable other safety measures at the same
+> time (e.g. protect local changes from differences between the
+> current and next branches).
 
-Is this possibly another case of Windows virus scanner interference?
-That could account for its variable nature.
+I'm fine with dropping this patch.
