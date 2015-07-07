@@ -1,191 +1,127 @@
-From: Robert Collins <robertc@robertcollins.net>
-Subject: Subject: [PATCH] git am: Transform and skip patches via new hook
-Date: Tue, 7 Jul 2015 19:52:10 +1200
-Message-ID: <CAJ3HoZ2YdAFVt1-4dTk04=0cLTUxQocJPNSVupr09Ee01tGCAQ@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 09/12] t4150: am with post-applypatch hook
+Date: Tue, 07 Jul 2015 10:07:51 +0200
+Organization: gmx
+Message-ID: <4babfe85175ee5b2e2da3afdfe3a30c2@www.dscho.org>
+References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com>
+ <1435861000-25278-10-git-send-email-pyokagan@gmail.com>
+ <17f64cb49c820eb41d0fb58435c91c40@www.dscho.org>
+ <CACRoPnQ_bUtLuavFCdJGFAW08EY_LGV5Q=RR9Ey3jsoPk6-C3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 09:52:19 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 10:08:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCNft-0006FI-UT
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 09:52:18 +0200
+	id 1ZCNvY-0006Kr-Ie
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 10:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207AbbGGHwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 03:52:14 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:34758 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751444AbbGGHwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 03:52:12 -0400
-Received: by obbkm3 with SMTP id km3so123190153obb.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 00:52:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=mG+pqTmlSc1wwbFxkqR6muMS7RT5sMrZkhuWncpc46E=;
-        b=YEoRsQIyUOrIGmpZlnAaYsrOeUhe2vDENm7opY7M9fhhBvpF3zHXvdAww9Dakff9Ha
-         3VGy+xDP5zucMc4Y3UtJbBjMWTsflxp1p2lMgNthUHT9T9Srl9hpgqR/NO1L7yzaZOVY
-         LvZQ7UB7pI1ND8PudXurTB8pKrotSErjLFba5wbmkY4sU+MxFW4nz5N4AGnCiC0wTLoz
-         7Vw6oIpGpMeMsoennDhuVV9YKrUO079pTvmHNvxiCHkAdDyO/BS/fRY1U5hYxI1ykRLm
-         3mI2M1DPN/3s/JAN+u87I5oMzM6f9Oi6lSbtXqN5j4fdQqcemrNRMYOqTk6ltZBH2M05
-         n17A==
-X-Gm-Message-State: ALoCoQk511AziLffFEUmvGH0fnprDTftdxeqE7A6NAhtSdK9yYQUliB2xrcA8LLOFTgZouoIfeaP
-X-Received: by 10.182.103.231 with SMTP id fz7mr2700201obb.33.1436255531543;
- Tue, 07 Jul 2015 00:52:11 -0700 (PDT)
-Received: by 10.76.76.231 with HTTP; Tue, 7 Jul 2015 00:52:10 -0700 (PDT)
-X-Originating-IP: [2001:470:d:2a3:ed9f:f2e4:7094:3082]
+	id S1754126AbbGGIIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 04:08:24 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50217 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753353AbbGGIH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 04:07:58 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LmNHK-1YcV8U1qBG-00ZvFm; Tue, 07 Jul 2015 10:07:52
+ +0200
+In-Reply-To: <CACRoPnQ_bUtLuavFCdJGFAW08EY_LGV5Q=RR9Ey3jsoPk6-C3w@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:CA3gUic1FU37Pi/11R7AKf/91kM2Qs/oJ8mZEZXMoDH8JqrMrWS
+ dFfcTguvAnZ/ltjgWoC7UvJXqbK7qE59WetU7Jr4IhA0GsaE2hjV2vATDXXLNLxja6IBYcC
+ n8AlTUkIGx/BuYvPvazRVKs2ZEVmzbG1V25mI/6NQ+v5qHoorc8PSb94u3UaZ3Vz0e/qd9m
+ Ol9wc1dyknpcYkWVTAkKQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5Gwu7mZUZec=:TvR93kJOt9jsX9DdMQK/A4
+ pDQ8TPp1onmYbFhMopO3pmLD35aCyd1cDczoaCy+u/vqPXZE7MkSY+OdOHa4A0p4jPoRcoJQK
+ BqW4p96OKeuSgxp9xlDPQZO4O+Ow2cXGJudqkuj8cXv5pFaf1+qdXsIvKRgvzUeMuQlp84OL0
+ Jl10ZcJx2ZaV4KuXnYaLfzK7Mo4nd0p7cqUKD885uHhFqraWoPol+Ri7ogAhT0i/BpPzYb9pf
+ A1zaK2H75k/3nV2o989TXieB9b1MeYvAEbiGt+FCjkIsMPsYJggogizvAkmeP28nH5MpWUqWi
+ eL/uFIuhPvGCbziH99F11NMgUg7xYcuz3oF3saXIgwfCaCUm9S7/dvOfe5L0TcN7lq/8IwlzD
+ xs2dd+rd8RbItw5rQtBwj2OXVZvrl3DqtjFyczl9LdLlSGVh8KpqJq8UCNQ/JrIqq/6Q0qa3F
+ XGbQx+vWOOYowV6EV8juE91YUQuM/U/PfQ/scWtMn3llaaFe+LA+xG7msr7hOJBWppBI6xfTF
+ AsSCjK7SYa27F6QzktB5hU8LDZlKnCZb2U9XnPZE3kOKzghK5QXg65I2rudnl2/nrbYJIDVi6
+ Wp88rb64vAg9nwwg3EXxCQEo+XegYrXbOcOSbzcKyqrUV6AcbxDW7xEWGBVEPmEA9aAPiZYlv
+ RYyRYwA/7uFUQJGhbt6K37jzh2cwf4MO+Jq8tGfHu6tY2hv0f5pYuNqlER7BOJ+JMnKc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273488>
 
->From 0428b0a1248fb84c584a5a6c1f110770c6615d5e Mon Sep 17 00:00:00 2001
-From: Robert Collins <rbtcollins@hp.com>
-Date: Tue, 7 Jul 2015 15:43:24 +1200
-Subject: [PATCH] git am: Transform and skip patches via new hook
+Hi Paul,
 
-A thing I need to do quite a lot of is extracting stuff from
-Python to backported libraries. This involves changing nearly
-every patch but its automatable.
+On 2015-07-07 08:47, Paul Tan wrote:
+> On Sun, Jul 5, 2015 at 11:58 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>> On 2015-07-02 20:16, Paul Tan wrote:
+>>
+>>> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+>>> index dd6fe81..62b678c 100755
+>>> --- a/t/t4150-am.sh
+>>> +++ b/t/t4150-am.sh
+>>> @@ -275,6 +275,48 @@ test_expect_success 'am with failing pre-applypatch hook' '
+>>>       test_cmp_rev first HEAD
+>>>  '
+>>>
+>>> +test_expect_success 'am with post-applypatch hook' '
+>>> +     test_when_finished "rm -f .git/hooks/post-applypatch" &&
+>>> +     rm -fr .git/rebase-apply &&
+>>> +     git reset --hard &&
+>>> +     git checkout first &&
+>>> +     mkdir -p .git/hooks &&
+>>> +     cat >.git/hooks/post-applypatch <<-\EOF &&
+>>> +     #!/bin/sh
+>>> +     git rev-parse HEAD >head.actual
+>>> +     git diff second >diff.actual
+>>> +     exit 0
+>>> +     EOF
+>>> +     chmod +x .git/hooks/post-applypatch &&
+>>> +     git am patch1 &&
+>>> +     test_path_is_missing .git/rebase-apply &&
+>>> +     test_cmp_rev second HEAD &&
+>>> +     git rev-parse second >head.expected &&
+>>> +     test_cmp head.expected head.actual &&
+>>> +     git diff second >diff.expected &&
+>>> +     test_cmp diff.expected diff.actual
+>>> +'
+>>> +
+>>> +test_expect_success 'am with failing post-applypatch hook' '
+>>> +     test_when_finished "rm -f .git/hooks/post-applypatch" &&
+>>> +     rm -fr .git/rebase-apply &&
+>>> +     git reset --hard &&
+>>> +     git checkout first &&
+>>> +     mkdir -p .git/hooks &&
+>>> +     cat >.git/hooks/post-applypatch <<-\EOF &&
+>>> +     #!/bin/sh
+>>> +     git rev-parse HEAD >head.actual
+>>> +     exit 1
+>>> +     EOF
+>>> +     chmod +x .git/hooks/post-applypatch &&
+>>> +     git am patch1 &&
+>>> +     test_path_is_missing .git/rebase-apply &&
+>>> +     git diff --exit-code second &&
+>>> +     test_cmp_rev second HEAD &&
+>>> +     git rev-parse second >head.expected &&
+>>> +     test_cmp head.expected head.actual
+>>> +'
+>>
+>> These 2 tests as well as the previous patches look to me as if they could be refactored (the paradigm is the same: add a certain hook after resetting and then apply the patch, verify that the hook ran/failed)... do you think there is a chance for that?
+> 
+> I had a look, but I think that while it is true that the overall
+> sequence of each test is the same, the details differ enough that
+> there's no obvious way to refactor the tests sensibly. For example,
+> the contents of the hook scripts are not the same, as we need to check
+> that the hooks are run at the correct stage of git-am execution. And
+> as such, the verification tests are also different as well.
 
-Using a new hook (applypatch-transform) was sufficient to meet all my
-needs and should be acceptable upstream as far as I can tell.
+Yeah, makes sense. Thanks for the clarification!
 
-Signed-Off-By: Robert Collins <rbtcollins@hp.com>
----
- Documentation/git-am.txt                     |  6 ++---
- Documentation/githooks.txt                   | 15 ++++++++++++
- git-am.sh                                    | 15 ++++++++++++
- templates/hooks--applypatch-transform.sample | 36 ++++++++++++++++++++++++++++
- 4 files changed, 69 insertions(+), 3 deletions(-)
- create mode 100755 templates/hooks--applypatch-transform.sample
-
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index dbea6e7..9ddcd87 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -215,9 +215,9 @@ errors in the "From:" lines).
-
- HOOKS
- -----
--This command can run `applypatch-msg`, `pre-applypatch`,
--and `post-applypatch` hooks.  See linkgit:githooks[5] for more
--information.
-+This command can run `applypatch-msg`, `applypatch-transform`,
-+`pre-applypatch`, and `post-applypatch` hooks.  See
-+linkgit:githooks[5] for more information.
-
- SEE ALSO
- --------
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 7ba0ac9..251b604 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -45,6 +45,21 @@ the commit after inspecting the message file.
- The default 'applypatch-msg' hook, when enabled, runs the
- 'commit-msg' hook, if the latter is enabled.
-
-+applypatch-transform
-+~~~~~~~~~~~~~~~~~~~~
-+
-+This hook is invoked by 'git am' before attempting to apply
-+patches.  It takes two parameters - the path to the patch on
-+disk, and the path to the proposed commit message (which may
-+be absent).  Like applypatch-msg, both files may be edited.
-+
-+Exiting with 1 will cause 'git am' to skip the patch. Exiting
-+with any other non-zero value will cause 'git am' to abort.
-+
-+The sample 'applypatch-transform' hook demonstrates mangling
-+a patch from one tree shape to another while discarding irrelevant
-+patches.
-+
- pre-applypatch
- ~~~~~~~~~~~~~~
-
-diff --git a/git-am.sh b/git-am.sh
-index 8733071..796efea 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -869,6 +869,21 @@ To restore the original branch and stop patching
-run \"\$cmdline --abort\"."
-
-  case "$resolved" in
-  '')
-+ # Attempt to rewrite the patch.
-+ hook="$(git rev-parse --git-path hooks/applypatch-transform)"
-+ if test -x "$hook"
-+ then
-+ "$hook" "$dotest/patch" "$dotest/final-commit"
-+ status="$?"
-+ if test $status -eq 1
-+ then
-+ go_next
-+ elif test $status -ne 0
-+ then
-+ stop_here $this
-+ fi
-+ fi
-+
-  # When we are allowed to fall back to 3-way later, don't give
-  # false errors during the initial attempt.
-  squelch=
-diff --git a/templates/hooks--applypatch-transform.sample
-b/templates/hooks--applypatch-transform.sample
-new file mode 100755
-index 0000000..97cd789
---- /dev/null
-+++ b/templates/hooks--applypatch-transform.sample
-@@ -0,0 +1,36 @@
-+#!/bin/sh
-+#
-+# An example hook script to transform a patch taken from an email
-+# by git am.
-+#
-+# The hook should exit with non-zero status after issuing an
-+# appropriate message if it wants to stop the commit.  The hook is
-+# allowed to edit the patch file.
-+#
-+# To enable this hook, rename this file to "applypatch-transform".
-+#
-+# This example changes the path of Lib/unittest/mock.py to mock.py
-+# Lib/unittest/tests/testmock to tests and Misc/NEWS to NEWS, and
-+# finally skips any patches that did not alter mock.py or its tests.
-+
-+set -eux
-+
-+patch_path=$1
-+
-+# Pull out mock.py
-+filterdiff --clean --strip 3 --addprefix=a/ -i
-'a/Lib/unittest/mock.py' $patch_path > $patch_path.mock
-+# And the tests
-+filterdiff --clean --strip 5 --addprefix=a/tests/ -i
-'a/Lib/unittest/test/testmock/' $patch_path > $patch_path.tests
-+# Lastly we want to pick up any NEWS entries.
-+filterdiff --strip 2 --addprefix=a/ -i a/Misc/NEWS $patch_path >
-$patch_path.NEWS
-+cat $patch_path.mock $patch_path.tests > $patch_path
-+filtered=$(cat $patch_path)
-+if [ -n "${filtered}" ]; then
-+  cat $patch_path.NEWS >> $patch_path
-+  exitcode=0
-+else
-+  exitcode=1
-+fi
-+
-+rm $patch_path.mock $patch_path.tests $patch_path.NEWS
-+exit $exitcode
--- 
-2.1.0
-
-
--- 
-Robert Collins <rbtcollins@hp.com>
-Distinguished Technologist
-HP Converged Cloud
+Ciao,
+Dscho
