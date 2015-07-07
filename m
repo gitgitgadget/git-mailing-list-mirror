@@ -1,77 +1,64 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: ssh admin git accidentally deleted
-Date: Tue, 7 Jul 2015 16:47:08 +0300
-Message-ID: <20150707164708.10cd2b169187636bef4dbe6e@domain007.com>
-References: <CAF1FN5CDnUYxjChO2PZFrDnPRUiuqXhko=iDo=tuqwvJJdUg5A@mail.gmail.com>
+From: X H <music_is_live_lg@hotmail.com>
+Subject: Git force push fails after a rejected push (unpack failed)?
+Date: Tue, 7 Jul 2015 15:45:50 +0200
+Message-ID: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: agnes retnaningsih <agnes.monest@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 07 15:47:31 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 07 15:48:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTDd-0001uu-6S
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 15:47:29 +0200
+	id 1ZCTEF-0002J1-Bf
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 15:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757473AbbGGNrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 09:47:17 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:48330 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757463AbbGGNrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 09:47:12 -0400
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id t67Dl8Uk025850;
-	Tue, 7 Jul 2015 16:47:09 +0300
-In-Reply-To: <CAF1FN5CDnUYxjChO2PZFrDnPRUiuqXhko=iDo=tuqwvJJdUg5A@mail.gmail.com>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+	id S1757411AbbGGNq6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jul 2015 09:46:58 -0400
+Received: from dub004-omc3s33.hotmail.com ([157.55.2.42]:55434 "EHLO
+	DUB004-OMC3S33.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756950AbbGGNpv convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Jul 2015 09:45:51 -0400
+Received: from DUB120-W50 ([157.55.2.7]) by DUB004-OMC3S33.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
+	 Tue, 7 Jul 2015 06:45:50 -0700
+X-TMN: [Y9a8lEcWKjXDCFVdGZR1wTExeZuF3V1M]
+X-Originating-Email: [music_is_live_lg@hotmail.com]
+Importance: Normal
+X-OriginalArrivalTime: 07 Jul 2015 13:45:50.0532 (UTC) FILETIME=[3C63E840:01D0B8BB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273504>
 
-On Tue, 7 Jul 2015 20:30:59 +0700
-agnes retnaningsih <agnes.monest@gmail.com> wrote:
+Hi,
 
-> Dear git , I accidentally delete ssh admin git, unfortunately there
-> just one admin so I can't make a change in the config and push to the
-> repository. If there's a way undo the change or make an existing user
-> become an admin or is there any super admin command?
-> 
-> I use git version 1.7.5.4
+I have a remote repository on a network share configured as a file remo=
+te.
+I have pushed the HEAD of a branch to the remote, then amend the local =
+HEAD. I then try to push the HEAD again but it was rejected.
+I made multiple attempts and then try to force the push with: $ git pus=
+h -f origin branch_name but it failed with message:
 
-Git itself has no concept of users or user access controls.
-From the description of the problem, it appears you're using
-Gitolite [1] as a front-end to Git.
+remote: error: unable to write sha1 filename objects/d9/4bfb39cd0be7497=
+e493bd4045111a7b1158134: Permission denied
+remote: fatal: failed to write object
+error: unpack failed: unpack-objects abnormal exit
+To file://xxx
+=A0! [remote rejected] branch_name -> branch_name (unpacker error)
+error: failed to push some refs to 'file://xxx'
 
-I can't unambiguously decode what "delete ssh admin git" means
-because to me, it can mean at least two things:
-1) You have deleted the SSH account used to push your Gitolite
-   configuration on your server.
-2) You have deleted the public key of the Gitolite admin user
-   from your repository, and pushed.
+Sometimes the error is due to a commit sha, sometimes due to a tree sha=
+=2E
+It seems that after a rejected push some files are not deleted and sinc=
+e they are read only on the remote, the next push cannot overwrite them=
+=2E
 
-In the case you have to log into your server (via SSH or other means)
-first.
+Is it the intended behaviour? I try to reproduce this and it seems it d=
+oesn't happen always.
 
-Then, in the first case,
-1) Re-create the account;
-2) Generate another SSH key for it;
-3) Take the public part of this key, clone the Gitolite config
-   repo locally (on the server), replace the admin's key there
-   with the new key, commit, push.
-4) Transport the private admin's key to the machine you're
-   administering Gitolite from.
+git v2.3.5 (git-for-windows)
 
-In the second case,
-1) Clone the Gitolite config repo locally (on the server);
-2) Revert the commit which nuked the admin's key (by using the
-   regular `git revert` command, commit and push.
-
-Note that this all implies you have enough permissions on your server.
-
-1. https://github.com/sitaramc/gitolite
+Thank you. 		 	   		  
