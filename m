@@ -1,162 +1,210 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 26/44] builtin-am: support --keep-cr, am.keepcr
-Date: Tue,  7 Jul 2015 22:20:44 +0800
-Message-ID: <1436278862-2638-27-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v5 28/44] builtin-am: pass git-apply's options to git-apply
+Date: Tue,  7 Jul 2015 22:20:46 +0800
+Message-ID: <1436278862-2638-29-git-send-email-pyokagan@gmail.com>
 References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 16:23:14 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 16:23:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTmC-00051M-Ja
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:23:12 +0200
+	id 1ZCTmD-00051M-O7
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757751AbbGGOW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 10:22:56 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35198 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757699AbbGGOW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 10:22:29 -0400
-Received: by pactm7 with SMTP id tm7so114131786pac.2
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:22:29 -0700 (PDT)
+	id S1756993AbbGGOXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 10:23:06 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:32897 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757327AbbGGOWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 10:22:34 -0400
+Received: by pdbdz6 with SMTP id dz6so31990064pdb.0
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+Fo1eUAN1ncM42TlnkL6/tjWenh9kLedkBdMaZk015g=;
-        b=f6IEYsu3SKP69qW+y0rLwE5yCaCBassoJCz61iSITNUCQK3rr4982hDrNW+W5YPnl7
-         6AFI17P2v30+srVjJM8YoDpXtEz1oZ1InUppCeZpEGq/rT6patSO/KT20YALnUCESQOs
-         Y+KNtv09t8+6B6Yt+AaMHXDbvrrmGLaL3wU0hqHSV4E8KFY4KqeyHdkVPNuDp6qIiYoa
-         ksKhNkeTXfcWLKxN1DSjdMXNiIlXNeJ2yxN00wypV/irFqkwxbDzQsqjbcbz2agC/aM8
-         SJOzn5jVctEI0Eh5lGEga6hVAiaZgQa5RnO9wkAz8AgB2haadYn7M/nL6RuLSBj9eDh+
-         1u4Q==
-X-Received: by 10.68.69.11 with SMTP id a11mr9395993pbu.169.1436278948979;
-        Tue, 07 Jul 2015 07:22:28 -0700 (PDT)
+        bh=VqRpuXjnyPady0b5x2ZdajK+7czMRd7eHQzEzXMI38k=;
+        b=kJKEanudybX+sPwLvzEoSZAKHZAuCQqsBqqxcIrlRH6Cti7+8PDRmzTagpauKhXoUQ
+         2aSob7oqBqIlotFKqYJ5Tl/bLdOZS8CCUO680iaUyMYC+FiWY0osHkxYGnFK3PE7gb4N
+         nF2VOZ5PfpPklRgITCH3q7yA1UW427XGSs5QnBFRI47hpAgHXzLBOE4qDQM3yj4onYLN
+         8r8ylFOt5FyTgm1vESl1A2fz6luzEjJXSrRTgQhjrV9aqdMdUkMYphLlFFJe2Oe0WVFY
+         tv8b+ktARDvEPv529WlTx7tIxFDu3aNpdqscJ8A0vDF0yNxpP8GlWHgkFYQbHfhoaLT9
+         Qqnw==
+X-Received: by 10.66.249.101 with SMTP id yt5mr9493407pac.116.1436278953500;
+        Tue, 07 Jul 2015 07:22:33 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.22.26
+        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.22.31
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 07:22:28 -0700 (PDT)
+        Tue, 07 Jul 2015 07:22:32 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.76.gf60a929
 In-Reply-To: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273545>
 
-Since ad2c928 (git-am: Add command line parameter `--keep-cr` passing it
-to git-mailsplit, 2010-02-27), git-am.sh supported the --keep-cr option
-and would pass it to git-mailsplit.
+git-am.sh recognizes some of git-apply's options, and would pass them to
+git-apply:
 
-Since e80d4cb (git-am: Add am.keepcr and --no-keep-cr to override it,
-2010-02-27), git-am.sh supported the am.keepcr config setting, which
-controls whether --keep-cr is on by default.
+* --whitespace, since 8c31cb8 (git-am: --whitespace=x option.,
+  2006-02-28)
 
-Re-implement the above in builtin/am.c.
+* -C, since 67dad68 (add -C[NUM] to git-am, 2007-02-08)
+
+* -p, since 2092a1f (Teach git-am to pass -p option down to git-apply,
+  2007-02-11)
+
+* --directory, since b47dfe9 (git-am: add --directory=<dir> option,
+  2009-01-11)
+
+* --reject, since b80da42 (git-am: implement --reject option passed to
+  git-apply, 2009-01-23)
+
+* --ignore-space-change, --ignore-whitespace, since 86c91f9 (git apply:
+  option to ignore whitespace differences, 2009-08-04)
+
+* --exclude, since 77e9e49 (am: pass exclude down to apply, 2011-08-03)
+
+* --include, since 58725ef (am: support --include option, 2012-03-28)
+
+* --reject, since b80da42 (git-am: implement --reject option passed to
+  git-apply, 2009-01-23)
+
+Re-implement support for these options in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ builtin/am.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 099c6ed..59a7a2a 100644
+index 2e46a06..6006010 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -530,7 +530,7 @@ done:
-  * Splits out individual email patches from `paths`, where each path is either
-  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
-  */
--static int split_mail_mbox(struct am_state *state, const char **paths)
-+static int split_mail_mbox(struct am_state *state, const char **paths, int keep_cr)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf last = STRBUF_INIT;
-@@ -540,6 +540,8 @@ static int split_mail_mbox(struct am_state *state, const char **paths)
- 	argv_array_pushf(&cp.args, "-d%d", state->prec);
- 	argv_array_pushf(&cp.args, "-o%s", state->dir);
- 	argv_array_push(&cp.args, "-b");
-+	if (keep_cr)
-+		argv_array_push(&cp.args, "--keep-cr");
- 	argv_array_push(&cp.args, "--");
- 	argv_array_pushv(&cp.args, paths);
+@@ -115,6 +115,8 @@ struct am_state {
+ 	/* one of the enum scissors_type values */
+ 	int scissors;
  
-@@ -564,14 +566,22 @@ static int split_mail_mbox(struct am_state *state, const char **paths)
-  * state->cur will be set to the index of the first mail, and state->last will
-  * be set to the index of the last mail.
-  *
-+ * Set keep_cr to 0 to convert all lines ending with \r\n to end with \n, 1
-+ * to disable this behavior, -1 to use the default configured setting.
-+ *
-  * Returns 0 on success, -1 on failure.
-  */
- static int split_mail(struct am_state *state, enum patch_format patch_format,
--			const char **paths)
-+			const char **paths, int keep_cr)
- {
-+	if (keep_cr < 0) {
-+		keep_cr = 0;
-+		git_config_get_bool("am.keepcr", &keep_cr);
-+	}
++	struct argv_array git_apply_opts;
 +
- 	switch (patch_format) {
- 	case PATCH_FORMAT_MBOX:
--		return split_mail_mbox(state, paths);
-+		return split_mail_mbox(state, paths, keep_cr);
- 	default:
- 		die("BUG: invalid patch_format");
- 	}
-@@ -582,7 +592,7 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
-  * Setup a new am session for applying patches
-  */
- static void am_setup(struct am_state *state, enum patch_format patch_format,
--			const char **paths)
-+			const char **paths, int keep_cr)
+ 	/* override error message when patch failure occurs */
+ 	const char *resolvemsg;
+ 
+@@ -141,6 +143,8 @@ static void am_state_init(struct am_state *state, const char *dir)
+ 	git_config_get_bool("am.messageid", &state->message_id);
+ 
+ 	state->scissors = SCISSORS_UNSET;
++
++	argv_array_init(&state->git_apply_opts);
+ }
+ 
+ /**
+@@ -162,6 +166,8 @@ static void am_state_release(struct am_state *state)
+ 
+ 	if (state->msg)
+ 		free(state->msg);
++
++	argv_array_clear(&state->git_apply_opts);
+ }
+ 
+ /**
+@@ -441,6 +447,11 @@ static void am_load(struct am_state *state)
+ 	else
+ 		state->scissors = SCISSORS_UNSET;
+ 
++	read_state_file(&sb, state, "apply-opt", 1);
++	argv_array_clear(&state->git_apply_opts);
++	if (sq_dequote_to_argv_array(sb.buf, &state->git_apply_opts) < 0)
++		die(_("could not parse %s"), am_path(state, "apply-opt"));
++
+ 	state->rebasing = !!file_exists(am_path(state, "rebasing"));
+ 
+ 	strbuf_release(&sb);
+@@ -615,6 +626,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
  {
  	unsigned char curr_head[GIT_SHA1_RAWSZ];
  	const char *str;
-@@ -598,7 +608,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
- 		die_errno(_("failed to create directory '%s'"), state->dir);
++	struct strbuf sb = STRBUF_INIT;
  
--	if (split_mail(state, patch_format, paths) < 0) {
-+	if (split_mail(state, patch_format, paths, keep_cr) < 0) {
- 		am_destroy(state);
- 		die(_("Failed to split patches."));
- 	}
-@@ -1520,6 +1530,7 @@ enum resume_mode {
- int cmd_am(int argc, const char **argv, const char *prefix)
- {
- 	struct am_state state;
-+	int keep_cr = -1;
- 	int patch_format = PATCH_FORMAT_UNKNOWN;
- 	enum resume_mode resume = RESUME_FALSE;
+ 	if (!patch_format)
+ 		patch_format = detect_patch_format(paths);
+@@ -677,6 +689,9 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
  
-@@ -1543,6 +1554,12 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 			N_("pass -b flag to git-mailinfo"), KEEP_NON_PATCH),
- 		OPT_BOOL('m', "message-id", &state.message_id,
- 			N_("pass -m flag to git-mailinfo")),
-+		{ OPTION_SET_INT, 0, "keep-cr", &keep_cr, NULL,
-+		  N_("pass --keep-cr flag to git-mailsplit for mbox format"),
-+		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1},
-+		{ OPTION_SET_INT, 0, "no-keep-cr", &keep_cr, NULL,
-+		  N_("do not pass --keep-cr flag to git-mailsplit independent of am.keepcr"),
-+		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
+ 	write_file(am_path(state, "scissors"), 1, "%s", str);
+ 
++	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
++	write_file(am_path(state, "apply-opt"), 1, "%s", sb.buf);
++
+ 	if (state->rebasing)
+ 		write_file(am_path(state, "rebasing"), 1, "%s", "");
+ 	else
+@@ -701,6 +716,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	write_file(am_path(state, "next"), 1, "%d", state->cur);
+ 
+ 	write_file(am_path(state, "last"), 1, "%d", state->last);
++
++	strbuf_release(&sb);
+ }
+ 
+ /**
+@@ -1093,6 +1110,8 @@ static int run_apply(const struct am_state *state, const char *index_file)
+ 
+ 	argv_array_push(&cp.args, "apply");
+ 
++	argv_array_pushv(&cp.args, state->git_apply_opts.argv);
++
+ 	if (index_file)
+ 		argv_array_push(&cp.args, "--cached");
+ 	else
+@@ -1119,6 +1138,7 @@ static int build_fake_ancestor(const struct am_state *state, const char *index_f
+ 
+ 	cp.git_cmd = 1;
+ 	argv_array_push(&cp.args, "apply");
++	argv_array_pushv(&cp.args, state->git_apply_opts.argv);
+ 	argv_array_pushf(&cp.args, "--build-fake-ancestor=%s", index_file);
+ 	argv_array_push(&cp.args, am_path(state, "patch"));
+ 
+@@ -1610,9 +1630,36 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
+ 		OPT_BOOL('c', "scissors", &state.scissors,
+ 			N_("strip everything before a scissors line")),
++		OPT_PASSTHRU_ARGV(0, "whitespace", &state.git_apply_opts, N_("action"),
++			N_("pass it through git-apply"),
++			0),
++		OPT_PASSTHRU_ARGV(0, "ignore-space-change", &state.git_apply_opts, NULL,
++			N_("pass it through git-apply"),
++			PARSE_OPT_NOARG),
++		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &state.git_apply_opts, NULL,
++			N_("pass it through git-apply"),
++			PARSE_OPT_NOARG),
++		OPT_PASSTHRU_ARGV(0, "directory", &state.git_apply_opts, N_("root"),
++			N_("pass it through git-apply"),
++			0),
++		OPT_PASSTHRU_ARGV(0, "exclude", &state.git_apply_opts, N_("path"),
++			N_("pass it through git-apply"),
++			0),
++		OPT_PASSTHRU_ARGV(0, "include", &state.git_apply_opts, N_("path"),
++			N_("pass it through git-apply"),
++			0),
++		OPT_PASSTHRU_ARGV('C', NULL, &state.git_apply_opts, N_("n"),
++			N_("pass it through git-apply"),
++			0),
++		OPT_PASSTHRU_ARGV('p', NULL, &state.git_apply_opts, N_("num"),
++			N_("pass it through git-apply"),
++			0),
  		OPT_CALLBACK(0, "patch-format", &patch_format, N_("format"),
  			N_("format the patch(es) are in"),
  			parse_opt_patchformat),
-@@ -1637,7 +1654,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 				argv_array_push(&paths, mkpath("%s/%s", prefix, argv[i]));
- 		}
- 
--		am_setup(&state, patch_format, paths.argv);
-+		am_setup(&state, patch_format, paths.argv, keep_cr);
- 
- 		argv_array_clear(&paths);
- 	}
++		OPT_PASSTHRU_ARGV(0, "reject", &state.git_apply_opts, NULL,
++			N_("pass it through git-apply"),
++			PARSE_OPT_NOARG),
+ 		OPT_STRING(0, "resolvemsg", &state.resolvemsg, NULL,
+ 			N_("override error message when patch failure occurs")),
+ 		OPT_CMDMODE(0, "continue", &resume,
 -- 
 2.5.0.rc1.76.gf60a929
