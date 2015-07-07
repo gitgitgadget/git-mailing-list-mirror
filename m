@@ -1,75 +1,125 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] index-pack: fix allocation of sorted_by_pos array
-Date: Tue, 7 Jul 2015 07:36:23 +0700
-Message-ID: <CACsJy8CsUu1zEnah9Ah3tQxk8N-xPpOBuV5TpQ4EB6+nyiDW3g@mail.gmail.com>
-References: <1429354025-24659-1-git-send-email-pclouds@gmail.com>
- <1429354025-24659-3-git-send-email-pclouds@gmail.com> <xmqqoajt5glu.fsf@gitster.dls.corp.google.com>
- <CACsJy8D872sj9WQec_FZrTxx=gqy++L1XLxJdEtEQNpGpFYr=Q@mail.gmail.com>
- <xmqqzj3c3efv.fsf_-_@gitster.dls.corp.google.com> <xmqqr3on369x.fsf_-_@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 22/23] worktree: add: auto-vivify new branch when
+ <branch> is omitted
+Date: Mon, 6 Jul 2015 21:33:01 -0400
+Message-ID: <20150707013301.GA26523@flurp.local>
+References: <1436203860-846-1-git-send-email-sunshine@sunshineco.com>
+ <1436203860-846-23-git-send-email-sunshine@sunshineco.com>
+ <xmqqpp45ytzh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 07 02:37:00 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 03:33:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCGsd-0003iy-1Z
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 02:36:59 +0200
+	id 1ZCHlA-00018k-CV
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 03:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365AbbGGAgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2015 20:36:55 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:36135 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753238AbbGGAgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2015 20:36:53 -0400
-Received: by iecvh10 with SMTP id vh10so124629232iec.3
-        for <git@vger.kernel.org>; Mon, 06 Jul 2015 17:36:53 -0700 (PDT)
+	id S1755894AbbGGBdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2015 21:33:11 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:33396 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755824AbbGGBdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2015 21:33:08 -0400
+Received: by ieqy10 with SMTP id y10so125405896ieq.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 18:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=o1hCClVytDzVUlOVrdMaBN3y8dHijfcRmuRfKTPYmuc=;
-        b=G+GhjWvJXszGKr2YGoap+udoINuqNIYw3gZ5+0ePcxSM9faHVbLnBjioNUQ8UyFk+b
-         fbNud8yd3KSYMv0Nef3E7cqKVuXAHXPEq2P5ERtiSs5UUHJyPMAKaJYD3dFDZnE9AtZg
-         s93bdHQGLjTMdn10ebKOUeZi06QuWyDiGKeCoiOflrpSv4E0VK8Z8xUJGL/CEuFKXzWv
-         anSwZxLwZvwif/Yx0gPsQX7MMuox6c4Beq72dF8fN3lR3GtI2SD6T4fr2J+uqhuAnxsK
-         cM6Lcqj+h+BqvaKiQELHw17096gB0zwPV+yHGw8V1MuVYoFp3XQrrXp37aVyjomIl5Ju
-         uvyA==
-X-Received: by 10.42.244.4 with SMTP id lo4mr39332383icb.65.1436229413114;
- Mon, 06 Jul 2015 17:36:53 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Mon, 6 Jul 2015 17:36:23 -0700 (PDT)
-In-Reply-To: <xmqqr3on369x.fsf_-_@gitster.dls.corp.google.com>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=cLaNirEE+68UQvVRL+BrwI6ldbIHJbk5qAXr/1hadMU=;
+        b=hP3V+q0woKO9W7JbpPkCZjai51ya8w3UdaQ2671qlE6q+mPGluBP+4/rlQ9FipZr04
+         MriCWcm7WmiErPxHv9ARxbf9VrnRJQ0MkkQrNl4vXHCod6GwHZ/5k0smYgPcZALQDWF1
+         YGe777fE8PGugoq+pTkhVw9WaeE/751lbNErCEY0gyQssL/Gz+eQdbA4PpWKFbPHLcj4
+         ThAOynM3VZr24hOeDoi0bF6SHqawiilctmL4fElTrMSq0rtwAdoHcf8+w82BLKo7DX0j
+         uhoiP1T2hJApTbbPMTKN02QcPm0PVOpgX+WAvzQM1/pRm3rdfzgbnO0w/VMbU1CuQxJk
+         j01w==
+X-Received: by 10.50.114.40 with SMTP id jd8mr48298057igb.47.1436232788201;
+        Mon, 06 Jul 2015 18:33:08 -0700 (PDT)
+Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id n30sm13633142ioi.38.2015.07.06.18.33.07
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 06 Jul 2015 18:33:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqpp45ytzh.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273472>
 
-On Sun, Jul 5, 2015 at 5:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> When c6458e60 (index-pack: kill union delta_base to save memory,
-> 2015-04-18) attempted to reduce the memory footprint of index-pack,
-> one of the key thing it did was to keep track of ref-deltas and
-> ofs-deltas separately.
->
-> In fix_unresolved_deltas(), however it forgot that it now wants to
-> look only at ref deltas in one place.  The code allocated an array
-> for nr_unresolved, which is sum of number of ref- and ofs-deltas
-> minus nr_resolved, which may be larger or smaller than the number
-> ref-deltas.  Depending on nr_resolved, this was either under or over
-> allocating.
+On Mon, Jul 06, 2015 at 12:19:14PM -0700, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> > index 377ae0f..da71f50 100644
+> > --- a/Documentation/git-worktree.txt
+> > +++ b/Documentation/git-worktree.txt
+> > @@ -9,7 +9,7 @@ git-worktree - Manage multiple worktrees
+> >  SYNOPSIS
+> >  --------
+> >  [verse]
+> > -'git worktree add' [-f] [--detach] [-b <new-branch>] <path> <branch>
+> > +'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
+> 
+> Ahh, OK, this answers my previous question.
 
-It's either that or we could put back "if (real_type != OBJ_REF_DELTA)
-continue;" in the sorted_by_pos population loop. Resolved deltas can't
-have real_type == OBJ_REF_DELTA, so if we allocate nr_unresolved, it's
-guaranteed over-allocation, never under-allocation. But I guess your
-approach would make the code easier to read.
+Right. I considered squashing this patch with the previous one, in
+which case the synopsis question wouldn't have come up, but kept them
+separate since they are (or can be) conceptually distinct, and the one
+patch builds upon the other (and keeping them separate makes them a
+bit easier to review).
 
-I keep tripping over this "real_type vs type" in this code. What do
-you think about renaming "type" field to "in_pack_type" and
-"real_type" to "canon_type" (or "final_type")? "Real" does not really
-say anything in this context..
+> > +	if (ac < 2 && !new_branch && !new_branch_force) {
+> > +		int n;
+> > +		const char *s = worktree_basename(path, &n);
+> > +		new_branch = xstrndup(s, n);
+> > +	}
+> > +
+> 
+> and because this is new_branch, not new_branch_force, we will not
+> accidentally clobber an existing branch.  The "hotfix" time is when
+> the end-user tends to be less careful, and it is a good thing to
+> make sure "git worktree add ../hotfix" will not clobber an unrelated
+> "hotfix" branch.
+> 
+> Good.
+> 
+> Which may be something we would want to have a test for, though.
+
+Good idea. How about the following as a squash-in?
+
+--- 8< ---
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] fixup! worktree: add: auto-vivify new branch when <branch> is omitted
+
+---
+ t/t2025-worktree-add.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 8fe242f..ead8aa2 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -150,4 +150,13 @@ test_expect_success '"add" with <branch> omitted' '
+ 	test_cmp_rev HEAD bat
+ '
+ 
++test_expect_success '"add" auto-vivify does not clobber existing branch' '
++	test_commit c1 &&
++	test_commit c2 &&
++	git branch precious HEAD~1 &&
++	test_must_fail git worktree add precious &&
++	test_cmp_rev HEAD~1 precious &&
++	test_path_is_missing precious
++'
++
+ test_done
 -- 
-Duy
+2.5.0.rc1.201.ga12d9f8
