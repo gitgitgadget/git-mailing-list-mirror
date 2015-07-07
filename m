@@ -1,81 +1,72 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: undocumented =?UTF-8?Q?core=2EsharedRepository=3D=32=20set=20?=
- =?UTF-8?Q?by=20git=20init=20--shared=3Dworld?=
-Date: Tue, 07 Jul 2015 10:14:28 +0200
-Organization: gmx
-Message-ID: <b9f56a351da062698ad629d77d3752b7@www.dscho.org>
-References: <20150706192547.GA15396@kitenet.net>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 27/44] builtin-am: implement --[no-]scissors
+Date: Tue, 7 Jul 2015 16:23:18 +0800
+Message-ID: <CACRoPnR1kJVg-SKGJggc-gWAtDVoeyRG6G8SHx7T7XNUMyGozw@mail.gmail.com>
+References: <1435500366-31700-1-git-send-email-pyokagan@gmail.com>
+	<1435500366-31700-28-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Joey Hess <id@joeyh.name>
-X-From: git-owner@vger.kernel.org Tue Jul 07 10:14:40 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 07 10:24:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCO1X-00014Z-Jd
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 10:14:39 +0200
+	id 1ZCOAd-0005tR-Cf
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 10:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbbGGIOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 04:14:35 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51168 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752711AbbGGIOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 04:14:32 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MVsUW-1ZWIRx0U48-00X6jE; Tue, 07 Jul 2015 10:14:29
- +0200
-In-Reply-To: <20150706192547.GA15396@kitenet.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:wJ56RntX34yRYVXsH/F9BYMsPx4kwwn9liOkcP6+fRW9Di97VYl
- yIx0/wodqsN+4lq6s4VzuX3v8fBHtYhA2LP2rQdwf9qI3/YzQXiUVKV6ys9R+y/ex96toN0
- 0Zgm8U9dPTsKuFZoBync8C6iguJ/zW+2lNbUTcbibnKMrnRgfgicEQzCV49hwhkUOqfkK/j
- LY8j7XtSSVmP2HNxZrraA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BY6A5bLw3z8=:AhKXAfM0Xrt07sECj4ML3c
- JISUF89trh9zVR5eL94cl8eicjRKjShNZe+/NDyuAsty6ljEI0j+PzQXpBoJInFeTWm9wJe7H
- +xPwna6vWnzXLAcb5pN6pdo/qLBC9bAFU3SYXM7z8gajsoL88MRd6ElCSzp6Ff6/dk3LoAPlz
- wAEkwfEiwuelOhTt9O6Snjzg8Gj7siUt6mD4x+jlO3ROGnIkYOo2UIlsPNd7fiTOL2l8Lg+P+
- FVfMmxzA7P0LNzuWmv71qGyu1vbi8oVjVR/unTM3khhxAcrxg/xGPXc/UZIcNvdHb4wSHew5P
- 7zQJjRG3YCW5b6h6uy0geXPeoZ5WFi1erEi0gZc2cQ7tfGp7nP4hUOYwrq+keM8TYjzfb+ky5
- taLnI89ZyGvGlfk++dzYJT5gcUsygg03mVUXxi3j+ni+N0RYSJkPM7k2rDUYY0Vy0P/B7tG1j
- 1XRBD8JU1EkAIHyvfwcFpP0PdjgbJ2fZI6Bs0p5jjzjj/DbJLBq03GrIpQYY3uLoMFj/hSuDD
- CUvRBwwVeiWXJH4J1m9lfegf0BsfJmIcqlq5pv24JfVMK4jw5goECoFdXP8HbVhAOVbQlTyeS
- FkwWXFTkGRZdYeiSO9Eqg2+Ro64Gm6RcLPxOGdEKydQA9N3hQitAXzskBWscQaEB3p+124ucb
- mN5RjVwVh7my+cgSghisDn0tv5Bayy8M18YvVgNDW2uJXIp0H9aBYSLcTnckEn+kVJbE=
+	id S1755849AbbGGIXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 04:23:39 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:35506 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932072AbbGGIX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 04:23:27 -0400
+Received: by wgjx7 with SMTP id x7so160690309wgj.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 01:23:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+MgG1382Ru8PX1FaUu2O+2rIipea2raAXu+vIeakgs0=;
+        b=rwBQtui6GUjTYfV5DO+BHJgeYT3TrUq00MNN4BntqMUs8nJovEP4L8yWoUSwggkDuw
+         o2EKGlVtECcU08W6dkAhckqb7E7/6uYmCY1BY45B9sALuPi13qBtGFv+cc/wsYIQHzvc
+         6CqjztjyyVWipukIHzacZ3ZRFvF63R7Uq2XNuSLJ/unB9gikY0ArN+yI1Le7TcgiH0eY
+         /uBTLxvvzXouioyDn9tHJn9ySmQnw7hxD7O++pQ2Lx2UFWh3ECWyfVkRuHP4M44nbpxg
+         JAgIehLR0mvdm662++qWZlrl74kuE8wwXQmxpYEvZNoKVv0QQl98qM0wLysKM5yNeqZ+
+         5gGA==
+X-Received: by 10.180.95.101 with SMTP id dj5mr61524993wib.16.1436257398910;
+ Tue, 07 Jul 2015 01:23:18 -0700 (PDT)
+Received: by 10.194.85.113 with HTTP; Tue, 7 Jul 2015 01:23:18 -0700 (PDT)
+In-Reply-To: <1435500366-31700-28-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273490>
 
-Hi Joey,
+On Sun, Jun 28, 2015 at 10:05 PM, Paul Tan <pyokagan@gmail.com> wrote:
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 2387726..55989e5 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -74,6 +74,12 @@ enum keep_type {
+>         KEEP_NON_PATCH  /* pass -b flag to git-mailinfo */
+>  };
+>
+> +enum scissors_type {
+> +       SCISSORS_UNSET = -1,
+> +       SCISSORS_TRUE,  /* pass --scissors to git-mailinfo */
+> +       SCISSORS_FALSE  /* pass --no-scissors to git-mailinfo */
+> +};
+> +
 
-On 2015-07-06 21:25, Joey Hess wrote:
-> joey@darkstar:~/tmp>git init --shared=world testrepo
-> Initialized empty shared Git repository in /home/joey/tmp/testrepo/.git/
-> joey@darkstar:~/tmp>grep shared testrepo/.git/config 
-> 	sharedrepository = 2
-> 
-> This magic value of 2 seems to be undocumented, as is the magic value of 1
-> that's equvilant to "group".
-> 
-> I think it would be better to have git init put in "world" or "group" and not
-> these magic values. Anyway, I suppose they ought to be documented too.
+Heh, the improved test coverage[1] caught a bug here. Whooops.
 
-The rationale can be found here: https://github.com/git/git/blob/v2.4.5/builtin/init-db.c#L413-L418
+[1] http://thread.gmane.org/gmane.comp.version-control.git/273254/focus=273264
 
-		/* We do not spell "group" and such, so that
-		 * the configuration can be read by older version
-		 * of git. Note, we use octal numbers for new share modes,
-		 * and compatibility values for PERM_GROUP and
-		 * PERM_EVERYBODY.
-		 */
-
-I am sympathetic to your wish, of course, and I am sure that you understand why we cannot simply break other people's setups to satisfy it.
-
-Ciao,
-Johannes
+Regards,
+Paul
