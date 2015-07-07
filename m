@@ -1,210 +1,127 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 28/44] builtin-am: pass git-apply's options to git-apply
-Date: Tue,  7 Jul 2015 22:20:46 +0800
-Message-ID: <1436278862-2638-29-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v5 31/44] builtin-am: implement -S/--gpg-sign, commit.gpgsign
+Date: Tue,  7 Jul 2015 22:20:49 +0800
+Message-ID: <1436278862-2638-32-git-send-email-pyokagan@gmail.com>
 References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 16:23:17 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 16:23:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTmD-00051M-O7
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:23:14 +0200
+	id 1ZCTmL-00057X-SW
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756993AbbGGOXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 10:23:06 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:32897 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757327AbbGGOWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 10:22:34 -0400
-Received: by pdbdz6 with SMTP id dz6so31990064pdb.0
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:22:33 -0700 (PDT)
+	id S1757549AbbGGOXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 10:23:13 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:35978 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757592AbbGGOWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 10:22:41 -0400
+Received: by pddu5 with SMTP id u5so39245233pdd.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VqRpuXjnyPady0b5x2ZdajK+7czMRd7eHQzEzXMI38k=;
-        b=kJKEanudybX+sPwLvzEoSZAKHZAuCQqsBqqxcIrlRH6Cti7+8PDRmzTagpauKhXoUQ
-         2aSob7oqBqIlotFKqYJ5Tl/bLdOZS8CCUO680iaUyMYC+FiWY0osHkxYGnFK3PE7gb4N
-         nF2VOZ5PfpPklRgITCH3q7yA1UW427XGSs5QnBFRI47hpAgHXzLBOE4qDQM3yj4onYLN
-         8r8ylFOt5FyTgm1vESl1A2fz6luzEjJXSrRTgQhjrV9aqdMdUkMYphLlFFJe2Oe0WVFY
-         tv8b+ktARDvEPv529WlTx7tIxFDu3aNpdqscJ8A0vDF0yNxpP8GlWHgkFYQbHfhoaLT9
-         Qqnw==
-X-Received: by 10.66.249.101 with SMTP id yt5mr9493407pac.116.1436278953500;
-        Tue, 07 Jul 2015 07:22:33 -0700 (PDT)
+        bh=JmyQItKIIubxW7iVY9XWEI9fdEtmuoBNGOY4gjgpZbg=;
+        b=aUo00i10qB5f6lRiU0QM0bMkcNLwkRCGLQDQP49cQ97Q0SOip5piFSokOA1Q+8csZW
+         Z7qjfP+1yltx4jgHRW4is8sfa8FphxqfZkVQ8K3W1r0ZOE4XbnBA+WWonja5ADDyLO8R
+         NCkvM20R5toWQ8ScCrkUK0yudcGd3lNli87CSttbqEemy4z5AsFjvX94oeoqc6ao8vRV
+         dtdC26GSsa/1UoqFV6P713v9u/cRv+UPXWxEWULMiat/Gp55gna5RjTg7/XaMwjuTFoS
+         Z9GRs1PQ8W1/B7kV+AS01XtonK/AWqo4PL2d41Tc4wl8P+HhussuWGVq5/jHtRlIvKg8
+         Fu3w==
+X-Received: by 10.66.156.68 with SMTP id wc4mr9538866pab.126.1436278960295;
+        Tue, 07 Jul 2015 07:22:40 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.22.31
+        by mx.google.com with ESMTPSA id z4sm3800359pdo.88.2015.07.07.07.22.38
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 07:22:32 -0700 (PDT)
+        Tue, 07 Jul 2015 07:22:39 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.76.gf60a929
 In-Reply-To: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273546>
 
-git-am.sh recognizes some of git-apply's options, and would pass them to
-git-apply:
+Since 3b4e395 (am: add the --gpg-sign option, 2014-02-01), git-am.sh
+supported the --gpg-sign option, and would pass it to git-commit-tree,
+thus GPG-signing the commit object.
 
-* --whitespace, since 8c31cb8 (git-am: --whitespace=x option.,
-  2006-02-28)
+Re-implement this option in builtin/am.c.
 
-* -C, since 67dad68 (add -C[NUM] to git-am, 2007-02-08)
+git-commit-tree would also sign the commit by default if the
+commit.gpgsign setting is true. Since we do not run commit-tree, we
+re-implement this behavior by handling the commit.gpgsign setting
+ourselves.
 
-* -p, since 2092a1f (Teach git-am to pass -p option down to git-apply,
-  2007-02-11)
-
-* --directory, since b47dfe9 (git-am: add --directory=<dir> option,
-  2009-01-11)
-
-* --reject, since b80da42 (git-am: implement --reject option passed to
-  git-apply, 2009-01-23)
-
-* --ignore-space-change, --ignore-whitespace, since 86c91f9 (git apply:
-  option to ignore whitespace differences, 2009-08-04)
-
-* --exclude, since 77e9e49 (am: pass exclude down to apply, 2011-08-03)
-
-* --include, since 58725ef (am: support --include option, 2012-03-28)
-
-* --reject, since b80da42 (git-am: implement --reject option passed to
-  git-apply, 2009-01-23)
-
-Re-implement support for these options in builtin/am.c.
-
+Helped-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+
+Notes:
+    v5
+    
+    * Renamed local "sign_commit" variable in am_state_init() to "gpgsign"
+      to aid code review.
+
+ builtin/am.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 2e46a06..6006010 100644
+index d7bb159..81b3e31 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -115,6 +115,8 @@ struct am_state {
- 	/* one of the enum scissors_type values */
- 	int scissors;
+@@ -124,6 +124,8 @@ struct am_state {
  
-+	struct argv_array git_apply_opts;
+ 	int ignore_date;
+ 
++	const char *sign_commit;
 +
- 	/* override error message when patch failure occurs */
- 	const char *resolvemsg;
+ 	int rebasing;
+ };
  
-@@ -141,6 +143,8 @@ static void am_state_init(struct am_state *state, const char *dir)
- 	git_config_get_bool("am.messageid", &state->message_id);
- 
- 	state->scissors = SCISSORS_UNSET;
-+
-+	argv_array_init(&state->git_apply_opts);
- }
- 
- /**
-@@ -162,6 +166,8 @@ static void am_state_release(struct am_state *state)
- 
- 	if (state->msg)
- 		free(state->msg);
-+
-+	argv_array_clear(&state->git_apply_opts);
- }
- 
- /**
-@@ -441,6 +447,11 @@ static void am_load(struct am_state *state)
- 	else
- 		state->scissors = SCISSORS_UNSET;
- 
-+	read_state_file(&sb, state, "apply-opt", 1);
-+	argv_array_clear(&state->git_apply_opts);
-+	if (sq_dequote_to_argv_array(sb.buf, &state->git_apply_opts) < 0)
-+		die(_("could not parse %s"), am_path(state, "apply-opt"));
-+
- 	state->rebasing = !!file_exists(am_path(state, "rebasing"));
- 
- 	strbuf_release(&sb);
-@@ -615,6 +626,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+@@ -133,6 +135,8 @@ struct am_state {
+  */
+ static void am_state_init(struct am_state *state, const char *dir)
  {
- 	unsigned char curr_head[GIT_SHA1_RAWSZ];
- 	const char *str;
-+	struct strbuf sb = STRBUF_INIT;
- 
- 	if (!patch_format)
- 		patch_format = detect_patch_format(paths);
-@@ -677,6 +689,9 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 
- 	write_file(am_path(state, "scissors"), 1, "%s", str);
- 
-+	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
-+	write_file(am_path(state, "apply-opt"), 1, "%s", sb.buf);
++	int gpgsign;
 +
- 	if (state->rebasing)
- 		write_file(am_path(state, "rebasing"), 1, "%s", "");
- 	else
-@@ -701,6 +716,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	write_file(am_path(state, "next"), 1, "%d", state->cur);
+ 	memset(state, 0, sizeof(*state));
  
- 	write_file(am_path(state, "last"), 1, "%d", state->last);
+ 	assert(dir);
+@@ -149,6 +153,9 @@ static void am_state_init(struct am_state *state, const char *dir)
+ 	state->scissors = SCISSORS_UNSET;
+ 
+ 	argv_array_init(&state->git_apply_opts);
 +
-+	strbuf_release(&sb);
++	if (!git_config_get_bool("commit.gpgsign", &gpgsign))
++		state->sign_commit = gpgsign ? "" : NULL;
  }
  
  /**
-@@ -1093,6 +1110,8 @@ static int run_apply(const struct am_state *state, const char *index_file)
+@@ -1266,7 +1273,7 @@ static void do_commit(const struct am_state *state)
+ 			state->ignore_date ? "" : state->author_date, 1);
  
- 	argv_array_push(&cp.args, "apply");
+ 	if (commit_tree(state->msg, state->msg_len, tree, parents, commit,
+-				author, NULL))
++				author, state->sign_commit))
+ 		die(_("failed to write commit object"));
  
-+	argv_array_pushv(&cp.args, state->git_apply_opts.argv);
-+
- 	if (index_file)
- 		argv_array_push(&cp.args, "--cached");
- 	else
-@@ -1119,6 +1138,7 @@ static int build_fake_ancestor(const struct am_state *state, const char *index_f
- 
- 	cp.git_cmd = 1;
- 	argv_array_push(&cp.args, "apply");
-+	argv_array_pushv(&cp.args, state->git_apply_opts.argv);
- 	argv_array_pushf(&cp.args, "--build-fake-ancestor=%s", index_file);
- 	argv_array_push(&cp.args, am_path(state, "patch"));
- 
-@@ -1610,9 +1630,36 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
- 		OPT_BOOL('c', "scissors", &state.scissors,
- 			N_("strip everything before a scissors line")),
-+		OPT_PASSTHRU_ARGV(0, "whitespace", &state.git_apply_opts, N_("action"),
-+			N_("pass it through git-apply"),
-+			0),
-+		OPT_PASSTHRU_ARGV(0, "ignore-space-change", &state.git_apply_opts, NULL,
-+			N_("pass it through git-apply"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &state.git_apply_opts, NULL,
-+			N_("pass it through git-apply"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU_ARGV(0, "directory", &state.git_apply_opts, N_("root"),
-+			N_("pass it through git-apply"),
-+			0),
-+		OPT_PASSTHRU_ARGV(0, "exclude", &state.git_apply_opts, N_("path"),
-+			N_("pass it through git-apply"),
-+			0),
-+		OPT_PASSTHRU_ARGV(0, "include", &state.git_apply_opts, N_("path"),
-+			N_("pass it through git-apply"),
-+			0),
-+		OPT_PASSTHRU_ARGV('C', NULL, &state.git_apply_opts, N_("n"),
-+			N_("pass it through git-apply"),
-+			0),
-+		OPT_PASSTHRU_ARGV('p', NULL, &state.git_apply_opts, N_("num"),
-+			N_("pass it through git-apply"),
-+			0),
- 		OPT_CALLBACK(0, "patch-format", &patch_format, N_("format"),
- 			N_("format the patch(es) are in"),
- 			parse_opt_patchformat),
-+		OPT_PASSTHRU_ARGV(0, "reject", &state.git_apply_opts, NULL,
-+			N_("pass it through git-apply"),
-+			PARSE_OPT_NOARG),
- 		OPT_STRING(0, "resolvemsg", &state.resolvemsg, NULL,
- 			N_("override error message when patch failure occurs")),
- 		OPT_CMDMODE(0, "continue", &resume,
+ 	reflog_msg = getenv("GIT_REFLOG_ACTION");
+@@ -1688,6 +1695,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 			N_("lie about committer date")),
+ 		OPT_BOOL(0, "ignore-date", &state.ignore_date,
+ 			N_("use current timestamp for author date")),
++		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
++		  N_("GPG-sign commits"),
++		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
+ 			N_("(internal use for git-rebase)")),
+ 		OPT_END()
 -- 
 2.5.0.rc1.76.gf60a929
