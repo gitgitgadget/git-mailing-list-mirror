@@ -1,115 +1,134 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v2 09/12] t4150: am with post-applypatch hook
-Date: Tue,  7 Jul 2015 22:08:31 +0800
-Message-ID: <1436278114-28057-10-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v2 10/12] t4150: tests for am --[no-]scissors
+Date: Tue,  7 Jul 2015 22:08:32 +0800
+Message-ID: <1436278114-28057-11-git-send-email-pyokagan@gmail.com>
 References: <1436278114-28057-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 16:10:00 2015
+X-From: git-owner@vger.kernel.org Tue Jul 07 16:09:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCTZJ-000610-B2
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:09:53 +0200
+	id 1ZCTZL-000610-2j
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 16:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757800AbbGGOJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 10:09:20 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36817 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757628AbbGGOJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 10:09:13 -0400
-Received: by pacgz10 with SMTP id gz10so40282200pac.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:09:13 -0700 (PDT)
+	id S1757355AbbGGOJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 10:09:44 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:35441 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932265AbbGGOJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 10:09:16 -0400
+Received: by pactm7 with SMTP id tm7so113969107pac.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 07:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Se0qZ0CndlSh4tZkVRGs7fHnQH/0GWrwFCFBQD/bkZ4=;
-        b=xmujyEFu1xxTTcQ8+cPPrPHOSj47Ia9YekrVhOsw5fm72AOJxZn+rPOTEQQQG+Xhci
-         nFhRt+BzfJpPPoIg5gTAiFYLK42GTCKvV2m5zLVQ7Mr9vSd+T/sypEadKShEiUfRoSYY
-         XzNBiWdVr9gotvzuSDR0HfkbDpWNbFjdXcgEFyIQJi9qxwI6c5+w2B8ktFpErrJqeohM
-         zfdmO+Q4dNMJrSKzpfp9Moc0LaYEgqMwpg/ilJ1h8tnHpcbPsfa8BBq0U3yFMEowrZGd
-         ZSNGaMpcpDfmJvqch2D4rzUF6Cp4wQ1nGgxO35NNNnXDss5TgLEWt05P97nkSLXwGpqk
-         lSNQ==
-X-Received: by 10.70.100.168 with SMTP id ez8mr9230198pdb.129.1436278153209;
-        Tue, 07 Jul 2015 07:09:13 -0700 (PDT)
+        bh=rLOUcS9uU9t9V92WI7Ukw1wTz6x//buF0bbRo1xUMXI=;
+        b=gywx5drS9pUikh2VTTh/42Wqo5tKQSuEubnd0lYs471Qontw0/1Ac4VV4QEYetvbGw
+         Q8MWPaLrN+olWK/cWfz3uMItLskRmZQHgdXLNHuY8kDmTKJH2KsDSdmgucvmJe7vyX+b
+         ORCCx7Uv9OBVzu4LdEP9rGeHBkaH8ZmdDBqNwehlGAsWR+WRbWkWvAvdDRl0IAevOEn+
+         gzFSrQmPtFABNTaKOBP2TKcuFjeCtlJxGasI0gTQZxPSYfknNHdsJLPDn6vlV0+3fWg3
+         vIKJDjlz1BYDYjNWkwr5xzoL9SOK0hSQoNqEWMJ3EcBb+jQMjvw7d7HVJNXw8idkmD85
+         wpYw==
+X-Received: by 10.68.179.163 with SMTP id dh3mr9613104pbc.22.1436278156300;
+        Tue, 07 Jul 2015 07:09:16 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id im7sm22004766pbc.25.2015.07.07.07.09.11
+        by mx.google.com with ESMTPSA id im7sm22004766pbc.25.2015.07.07.07.09.13
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2015 07:09:12 -0700 (PDT)
+        Tue, 07 Jul 2015 07:09:15 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.76.gf60a929
 In-Reply-To: <1436278114-28057-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273516>
 
-Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07),
-git-am.sh will invoke the post-applypatch hook after the patch is
-applied and a commit is made. The exit code of the hook is ignored.
+Since 017678b (am/mailinfo: Disable scissors processing by default,
+2009-08-26), git-am supported the --[no-]scissors option, passing it to
+git-mailinfo.
 
-Add tests for this hook.
+Add tests to ensure that git-am will pass the --scissors option to
+git-mailinfo, and that --no-scissors will override the configuration
+setting of mailinfo.scissors.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
-
-Notes:
-    v2
-    
-    * use write_script() to shave off the shebang line and chmod
-
- t/t4150-am.sh | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ t/t4150-am.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
 diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 957c63c..7494240 100755
+index 7494240..67fbf0e 100755
 --- a/t/t4150-am.sh
 +++ b/t/t4150-am.sh
-@@ -267,6 +267,44 @@ test_expect_success 'am with failing pre-applypatch hook' '
- 	test_cmp_rev first HEAD
+@@ -67,6 +67,19 @@ test_expect_success 'setup: messages' '
+ 
+ 	EOF
+ 
++	cat >scissors-msg <<-\EOF &&
++	Test git-am with scissors line
++
++	This line should be included in the commit message.
++	EOF
++
++	cat - scissors-msg >no-scissors-msg <<-\EOF &&
++	This line should not be included in the commit message with --scissors enabled.
++
++	 - - >8 - - remove everything above this line - - >8 - -
++
++	EOF
++
+ 	signoff="Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
  '
  
-+test_expect_success 'am with post-applypatch hook' '
-+	test_when_finished "rm -f .git/hooks/post-applypatch" &&
+@@ -105,6 +118,20 @@ test_expect_success setup '
+ 		git format-patch --stdout first | sed -e "1d"
+ 	} > patch1-ws.eml &&
+ 
++	echo scissors-file >scissors-file &&
++	git add scissors-file &&
++	git commit -F scissors-msg &&
++	git tag scissors &&
++	git format-patch --stdout scissors^ >scissors-patch.eml &&
++	git reset --hard HEAD^ &&
++
++	echo no-scissors-file >no-scissors-file &&
++	git add no-scissors-file &&
++	git commit -F no-scissors-msg &&
++	git tag no-scissors &&
++	git format-patch --stdout no-scissors^ >no-scissors-patch.eml &&
++	git reset --hard HEAD^ &&
++
+ 	sed -n -e "3,\$p" msg >file &&
+ 	git add file &&
+ 	test_tick &&
+@@ -305,6 +332,27 @@ test_expect_success 'am with failing post-applypatch hook' '
+ 	test_cmp head.expected head.actual
+ '
+ 
++test_expect_success 'am --scissors cuts the message at the scissors line' '
 +	rm -fr .git/rebase-apply &&
 +	git reset --hard &&
-+	git checkout first &&
-+	mkdir -p .git/hooks &&
-+	write_script .git/hooks/post-applypatch <<-\EOF &&
-+	git rev-parse HEAD >head.actual
-+	git diff second >diff.actual
-+	exit 0
-+	EOF
-+	git am patch1 &&
++	git checkout second &&
++	git am --scissors scissors-patch.eml &&
 +	test_path_is_missing .git/rebase-apply &&
-+	test_cmp_rev second HEAD &&
-+	git rev-parse second >head.expected &&
-+	test_cmp head.expected head.actual &&
-+	git diff second >diff.expected &&
-+	test_cmp diff.expected diff.actual
++	git diff --exit-code scissors &&
++	test_cmp_rev scissors HEAD
 +'
 +
-+test_expect_success 'am with failing post-applypatch hook' '
-+	test_when_finished "rm -f .git/hooks/post-applypatch" &&
++test_expect_success 'am --no-scissors overrides mailinfo.scissors' '
 +	rm -fr .git/rebase-apply &&
 +	git reset --hard &&
-+	git checkout first &&
-+	mkdir -p .git/hooks &&
-+	write_script .git/hooks/post-applypatch <<-\EOF &&
-+	git rev-parse HEAD >head.actual
-+	exit 1
-+	EOF
-+	git am patch1 &&
++	git checkout second &&
++	test_config mailinfo.scissors true &&
++	git am --no-scissors no-scissors-patch.eml &&
 +	test_path_is_missing .git/rebase-apply &&
-+	git diff --exit-code second &&
-+	test_cmp_rev second HEAD &&
-+	git rev-parse second >head.expected &&
-+	test_cmp head.expected head.actual
++	git diff --exit-code no-scissors &&
++	test_cmp_rev no-scissors HEAD
 +'
 +
  test_expect_success 'setup: new author and committer' '
