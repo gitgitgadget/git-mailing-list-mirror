@@ -1,74 +1,118 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: undocumented core.sharedRepository=2 set by git init
- --shared=world
-Date: Tue, 7 Jul 2015 08:44:58 +0200
-Message-ID: <559B756A.2040202@web.de>
-References: <20150706192547.GA15396@kitenet.net>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 09/12] t4150: am with post-applypatch hook
+Date: Tue, 7 Jul 2015 14:47:19 +0800
+Message-ID: <CACRoPnQ_bUtLuavFCdJGFAW08EY_LGV5Q=RR9Ey3jsoPk6-C3w@mail.gmail.com>
+References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com>
+	<1435861000-25278-10-git-send-email-pyokagan@gmail.com>
+	<17f64cb49c820eb41d0fb58435c91c40@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Joey Hess <id@joeyh.name>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 08:45:17 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 07 08:47:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCMd1-00049x-Th
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 08:45:16 +0200
+	id 1ZCMf8-0005KC-Ex
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jul 2015 08:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752089AbbGGGpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 02:45:11 -0400
-Received: from mout.web.de ([212.227.17.12]:53385 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751350AbbGGGpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 02:45:09 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MGiUP-1ZGR5F2mAL-00DWFN; Tue, 07 Jul 2015 08:45:04
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.0.1
-In-Reply-To: <20150706192547.GA15396@kitenet.net>
-X-Provags-ID: V03:K0:AOLpnH794Qrt2SQ3i6NmvCk72SJQDlkWZEwmJXLtFrYlS69y3MW
- g0anI0DPSWCXDskmroZfjUsmdsUyHmVJOUiLM793pj8ohU8DvQlhnhUUnFf2hRU9K3PHKCe
- DdRAc5D09C8djBlOvoosnle0tqsq56S1OkTC+PeVjx6ptk1SfImJLSrrp1+cX++DEmOR4cP
- 1vQury1OkeMusrCrFNBNw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WntwZuUihD8=:SRpgTjIUeyFp7tF1i8wXd6
- uodmpwGefRLwT9FZRrTinM/O3ZdKuSU4BX03cn8v0Whdg53pUVmg/MSfsLtwPNBcwU2aSM8CF
- eU7hc/om5L8trHQ+vvI1tMByXW65Yn2rsNCQzIs7/bDmrXnLZmNYPCe0fThL+5U/VwxkNA/jA
- Nq4XjZljg3H/dV9TYb1zDljAwYVDEnpCwu/7+F7ukKPjB8Kv1LDNhk7PBSQeKW/a7eYoHbcV9
- 5Y0q6YOcSLTm/Vz+41HzOCiCQwelY5iWJa/sANGARTGbC82ineb6BEqau5uWk1AOMJmWgGsr1
- dUvUjlUkynnqE6UwTAGxxgTppBIFnY4oyAzI7XehUdjSoNqXSPpwoHMFipGwrpfpEhJpSH1VH
- yrewGPJIoMxMu46Qx8vn1nZ7K5w/lttPJOD+9r4J6dTR42WmMeWPw+flA9V7Rd/ZK/KweX47y
- Gs9l+otMHPfFSJnZH9onA3DYzftZ/XVGXR5KD0pWeuIIOGUGJYqy2otg2X2tvWzjOFdeScGrN
- 6HCCbKgRKi5rh2tTG/t/p9VMuqzUuckd1S0wnQ9Z1/gBC2Rz+dsBLzqV279Jeli9Z6Ran1Qsu
- Ql/tGSUfGd6QDOqdhd1VASHo6J6ws1/W8lC3JcyFGnH9UhSu9d/HP4ZkO/qQX5OI2vdKy7ZHs
- xa6RlX3bIZtvOVfgQz3FQc+N1gvm/6CrQVhcav0Qi5NDJ+aTyw/9akUCtzv/BfOdD1AM=
+	id S1751686AbbGGGrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 02:47:23 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:35742 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751134AbbGGGrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 02:47:21 -0400
+Received: by labgy5 with SMTP id gy5so30499064lab.2
+        for <git@vger.kernel.org>; Mon, 06 Jul 2015 23:47:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=IQ3TQiISAqzgLDQNre0L7Ze3cBLQ0lIEQ4KSb/FfEiI=;
+        b=ycGm6RqRT17lcaPxhfr+lFr93zfAGwd4BRxsrczzYhwWQS+D9lCAhqCx8ba0o4ScDl
+         G4q7W/z8Bb7N4Eyhx/mmf6b+k1GAnmjWg3TyqlMarT39H7J1xp5xGeN8q2KoUHtMi4o2
+         SzOjob20nHriItMZ+u1DjAQoJChfJQcwaZUFG7jVJR9STF5DkRpoTkyWV6rUZgFbxxur
+         yw12v91VcZ0bFkntDz7C1XVkMEiF6NeAEXrgygStRSeodJQfz76rBtyueGqOXxKuNmKj
+         hE+32ThHEGQG7NCPlIldSauWydLdwKJ21GbLgmNBTINbhLAatJJFzgf9L3jNII2Gsq1l
+         F54g==
+X-Received: by 10.152.6.105 with SMTP id z9mr2500239laz.98.1436251639832; Mon,
+ 06 Jul 2015 23:47:19 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Mon, 6 Jul 2015 23:47:19 -0700 (PDT)
+In-Reply-To: <17f64cb49c820eb41d0fb58435c91c40@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273481>
 
-On 2015-07-06 21.25, Joey Hess wrote:
-> joey@darkstar:~/tmp>git init --shared=world testrepo
-> Initialized empty shared Git repository in /home/joey/tmp/testrepo/.git/
-> joey@darkstar:~/tmp>grep shared testrepo/.git/config 
-> 	sharedrepository = 2
-> 
-> This magic value of 2 seems to be undocumented, as is the magic value of 1
-> that's equvilant to "group".
-> 
-> I think it would be better to have git init put in "world" or "group" and not
-> these magic values. 
-Thanks for the report.
-Changing the behavior of Git may cause problems with
-- older versions of Git
-- Other implementations of Git, like JGit, libgit2, ...
+On Sun, Jul 5, 2015 at 11:58 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> On 2015-07-02 20:16, Paul Tan wrote:
+>
+>> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+>> index dd6fe81..62b678c 100755
+>> --- a/t/t4150-am.sh
+>> +++ b/t/t4150-am.sh
+>> @@ -275,6 +275,48 @@ test_expect_success 'am with failing pre-applypatch hook' '
+>>       test_cmp_rev first HEAD
+>>  '
+>>
+>> +test_expect_success 'am with post-applypatch hook' '
+>> +     test_when_finished "rm -f .git/hooks/post-applypatch" &&
+>> +     rm -fr .git/rebase-apply &&
+>> +     git reset --hard &&
+>> +     git checkout first &&
+>> +     mkdir -p .git/hooks &&
+>> +     cat >.git/hooks/post-applypatch <<-\EOF &&
+>> +     #!/bin/sh
+>> +     git rev-parse HEAD >head.actual
+>> +     git diff second >diff.actual
+>> +     exit 0
+>> +     EOF
+>> +     chmod +x .git/hooks/post-applypatch &&
+>> +     git am patch1 &&
+>> +     test_path_is_missing .git/rebase-apply &&
+>> +     test_cmp_rev second HEAD &&
+>> +     git rev-parse second >head.expected &&
+>> +     test_cmp head.expected head.actual &&
+>> +     git diff second >diff.expected &&
+>> +     test_cmp diff.expected diff.actual
+>> +'
+>> +
+>> +test_expect_success 'am with failing post-applypatch hook' '
+>> +     test_when_finished "rm -f .git/hooks/post-applypatch" &&
+>> +     rm -fr .git/rebase-apply &&
+>> +     git reset --hard &&
+>> +     git checkout first &&
+>> +     mkdir -p .git/hooks &&
+>> +     cat >.git/hooks/post-applypatch <<-\EOF &&
+>> +     #!/bin/sh
+>> +     git rev-parse HEAD >head.actual
+>> +     exit 1
+>> +     EOF
+>> +     chmod +x .git/hooks/post-applypatch &&
+>> +     git am patch1 &&
+>> +     test_path_is_missing .git/rebase-apply &&
+>> +     git diff --exit-code second &&
+>> +     test_cmp_rev second HEAD &&
+>> +     git rev-parse second >head.expected &&
+>> +     test_cmp head.expected head.actual
+>> +'
+>
+> These 2 tests as well as the previous patches look to me as if they could be refactored (the paradigm is the same: add a certain hook after resetting and then apply the patch, verify that the hook ran/failed)... do you think there is a chance for that?
 
-Did you check what these implementations do ?
+I had a look, but I think that while it is true that the overall
+sequence of each test is the same, the details differ enough that
+there's no obvious way to refactor the tests sensibly. For example,
+the contents of the hook scripts are not the same, as we need to check
+that the hooks are run at the correct stage of git-am execution. And
+as such, the verification tests are also different as well.
 
-Anyway, I suppose they ought to be documented too.
-> 
-Yes.
-Do you want to send a patch ?
+Junio did correctly point out though that we can shave off 2 lines if
+the write_script helper is used (the shebang and the chmod).
+
+Thanks,
+Paul
