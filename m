@@ -1,79 +1,95 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 5/7] refs: new public ref function: safe_create_reflog
-Date: Tue, 07 Jul 2015 19:18:38 -0400
-Organization: Twitter
-Message-ID: <1436311118.5521.16.camel@twopensource.com>
-References: <1435609076-8592-1-git-send-email-dturner@twopensource.com>
-	 <1435609076-8592-6-git-send-email-dturner@twopensource.com>
-	 <559AAB18.1090701@alum.mit.edu>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: refspecs with '*' as part of pattern
+Date: Tue, 7 Jul 2015 16:20:33 -0700
+Message-ID: <CA+P7+xoobt_W11ruGVmJ0hzTEqNcdqk=cgRUAuYqSchPJcTsrw@mail.gmail.com>
+References: <CA+P7+xoosLG3J5uUVakzwYoxVARs-NH4BJBtsMgw2NB39vyE6A@mail.gmail.com>
+ <xmqqzj38yjpg.fsf@gitster.dls.corp.google.com> <alpine.LNX.2.00.1507062208580.2241@iabervon.iabervon.org>
+ <xmqqbnfo3paa.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 08 01:18:47 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Daniel Barkalow <barkalow@iabervon.iabervon.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 01:21:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCc8U-0001xs-RZ
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:18:47 +0200
+	id 1ZCcAc-000337-PF
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 01:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757310AbbGGXSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 19:18:43 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:35368 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752614AbbGGXSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 19:18:41 -0400
-Received: by qget71 with SMTP id t71so92183060qge.2
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:18:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=CfPQ7MyRIlaD/0ge/iCmbaEkKoCtxtss96RyMbBCfvY=;
-        b=KCagAGldwEYB0bk5wXMF/zppI0hMONuemEyjol2UhzPpIKP0ZclKc7wyzrO2JMyKbR
-         sBmX3iSd76IK6O25YhBuYXaK1MqYmRc+y0XXUQhvXIarSbBoSeDlNMqp+k/LUeZ0xxec
-         7MIuv/GqzQaCdGGX2jD2BlZqN+rq5L5GIG4Ih1NsRLngFXiuV80RUDSY2xZ+9hYEP8tO
-         Ro+hIqmSlBqzpK50nWqbmjeSNc8qMGLhDuN0STq3bnlQBHUhJU2c/+ykgQdyDv3IVRTq
-         GD28+mSR4VEj47eQfJJ0O9A2aYKfZSXKu1yu0s8NjDZ6OASFz84X8+yeRicpv7+MImV5
-         qlDQ==
-X-Gm-Message-State: ALoCoQkmaK+Frn7ijpB9dI6ondbKjrAJGqjkUFmArV7YMST4ueyLZKACNbNMhIg6qNpL8TZg20sj
-X-Received: by 10.55.31.22 with SMTP id f22mr11176861qkf.33.1436311121046;
-        Tue, 07 Jul 2015 16:18:41 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id w68sm239727qge.18.2015.07.07.16.18.39
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Jul 2015 16:18:40 -0700 (PDT)
-In-Reply-To: <559AAB18.1090701@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1757352AbbGGXUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2015 19:20:54 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:36260 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580AbbGGXUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2015 19:20:53 -0400
+Received: by obdbs4 with SMTP id bs4so139512924obd.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 16:20:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TqAc9Xg4NFEAxJM01jrs0rK8keGba9hOk0JdfW8gmWw=;
+        b=jRnkgn8++x8MxzYqynOzo22xKkymowhEmgew5UjMKSpGvh5WoHgqP2tqJkNheYkD76
+         yYvK5NJH0v9pyUBZbnRSL3mn9rdx38dqVaPdNBQA9Fy6CHVUg+GE9c+SMLIJDwfXoTQj
+         7DwaKMeeJcjrm6bDw132ro2A4k/w38C5DKmqg0aoTxkdjc+YOFwp1WiuDmIekaMB2ZR+
+         8M0v2NvRNYRGzW89WENA1kdQ+qc/nq666C6ggIT9FeV6q6FwOt62hnK0HOovVClfi6rf
+         P+pbLCt2KBmhTSIVN8u1SY4ugGdyrIlh70+3SxoNPTDv3ibNJ+YxQHKGJmAe+sIjyQGf
+         I1jg==
+X-Received: by 10.182.230.75 with SMTP id sw11mr6409605obc.17.1436311253077;
+ Tue, 07 Jul 2015 16:20:53 -0700 (PDT)
+Received: by 10.76.174.8 with HTTP; Tue, 7 Jul 2015 16:20:33 -0700 (PDT)
+In-Reply-To: <xmqqbnfo3paa.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273619>
 
-On Mon, 2015-07-06 at 18:21 +0200, Michael Haggerty wrote:
+On Tue, Jul 7, 2015 at 9:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Daniel Barkalow <barkalow@iabervon.iabervon.org> writes:
+>
+>> On Mon, 6 Jul 2015, Junio C Hamano wrote:
+>>
+>>> I cannot seem to be able to find related discussions around that
+>>> patch, so this is only my guess, but I suspect that this is to
+>>> discourage people from doing something like:
+>>>
+>>>      refs/tags/*:refs/tags/foo-*
+>>>
+>>> which would open can of worms (e.g. imagine you fetch with that
+>>> pathspec and then push with refs/tags/*:refs/tags/* back there;
+>>> would you now get foo-v1.0.0 and foo-foo-v1.0.0 for their v1.0.0
+>>> tag?) we'd prefer not having to worry about.
+>>
+>> That wouldn't be it, since refs/tags/*:refs/tags/foo/* would have the same
+>> problem, assuming you didn't set up the push refspec carefully.
+>
+> Thanks, I was wondering where you were ;-)  Nice to hear from you
+> from time to time.
+>
+>> I think it was mostly that it would be too easy to accidentally do
+>> something you don't want by having some other character instead of a
+>> slash, like refs/heads/*:refs/heads-*.
+>
+> Hmm, interesting thought.
+>
+> But refs/heads/*:refs/heade/* would not be saved, so I do not think
+> that is it, either.
 
-<snip> changes applied; will re-roll.
+In this case, I'm more in favor of just allowing these refs because
+the user already has to manually change the refspecs, which is
+something many users will never do. I also think that given the above
+comments, we're not really protecting the user from anything extra...
+aside from adding more pain because the globs don't work as expected.
 
-> > +
-> > +int safe_create_reflog(const char *refname, struct strbuf *err, int force_create)
-> > +{
-> > +	int ret;
-> > +	struct strbuf sb = STRBUF_INIT;
-> > +
-> > +	ret = log_ref_setup(refname, &sb, err, force_create);
-> > +	strbuf_release(&sb);
-> > +	return ret;
-> > +}
-> > +
-> 
-> Is it really necessary to have two functions, safe_create_reflog() and
-> log_ref_setup()? I don't see any of the callers doing anything special
-> with the sb_logfile argument from the latter, so maybe it could be
-> inlined into safe_create_reflog()? Maybe I'm overlooking something.
+I did submit a patch (from my @intel.com address since I can't seem to
+get git-for-windows to send from my home computer) but I am willing to
+re-work to drop the setting if everyone is ok with that...
 
-log_ref_write_1 does use the sb_logfile argument.
+Thoughts?
+
+Regards,
+Jake
