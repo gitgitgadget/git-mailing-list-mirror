@@ -1,179 +1,109 @@
-From: "Maria Delgao" <maria.delgao@spain.pe>
-Subject: MCSI 2015
-Date: Wed, 8 Jul 2015 13:34:13 +0300
-Message-ID: <20150708103410.CB3D23842A7D@genf174.server4you.net>
-Reply-To: "Maria Delgao" <mmmce.org@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Subject: [PATCH] git am: Transform and skip patches via new hook
+Date: Wed, 08 Jul 2015 15:57:01 -0700
+Message-ID: <xmqq8uaqxnpe.fsf@gitster.dls.corp.google.com>
+References: <CAJ3HoZ2YdAFVt1-4dTk04=0cLTUxQocJPNSVupr09Ee01tGCAQ@mail.gmail.com>
+	<CAPig+cQy-KHAaK_byw2nMM-S8cNosTpOiyejkHzAL6VavncaOw@mail.gmail.com>
+	<CAJ3HoZ317rF_JMiMnei4U8+o2Q9TN34GOHFS-i+GHAvZy9hEvg@mail.gmail.com>
+	<20150708194844.GA895@flurp.local>
+	<CAPig+cQx5TKwLk+MjsOJVHriqmwYbEcKUtARJVzef4HyN0thgg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 08 23:49:54 2015
+Content-Type: text/plain
+Cc: Robert Collins <robertc@robertcollins.net>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jul 09 00:57:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCxDz-0003tJ-9X
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 23:49:51 +0200
+	id 1ZCyHA-0008E8-47
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 00:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621AbbGHVto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 17:49:44 -0400
-Received: from genf174.server4you.net ([217.172.184.70]:37144 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909AbbGHVtl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 17:49:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id F26313842A21
-	for <git@vger.kernel.org>; Wed,  8 Jul 2015 22:43:37 +0200 (CEST)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 4pwni6OBEnKw for <git@vger.kernel.org>;
-	Wed,  8 Jul 2015 22:43:37 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 433B034EFE93
-	for <git@vger.kernel.org>; Wed,  8 Jul 2015 18:29:47 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id EnTtMTBJXim6 for <git@vger.kernel.org>;
-	Wed,  8 Jul 2015 18:29:47 +0200 (CEST)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id CB3D23842A7D
-	for <git@vger.kernel.org>; Wed,  8 Jul 2015 12:34:10 +0200 (CEST)
+	id S1751228AbbGHW5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 18:57:07 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:35107 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033AbbGHW5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 18:57:04 -0400
+Received: by igcqs7 with SMTP id qs7so67586074igc.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 15:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=X2gRveS0sIx8dw1d113yPLtOeiqKsaPE8VP0b8NblZE=;
+        b=stvFbeB0zHwZ7qTFBXcpFlAyyLjoQT4QRi6CRGjFaTPeH5WPrCHgjQbwMU16O37l9V
+         S9Jecd56BP/Kb8Y3G3P71W2QFZSnjEjI5bUw/AY6Ya/j2UOhfhR7Q3nxC4TmlP9wugj4
+         hRk0t7vaWUdIVo/D0WZFosyjauTmUsZMDDge+/HZ0e9geDTEMVX1b9WhXQ/7GFp38y4L
+         fDhsyejhLUwfaicYDUDx8Qiml+HmlllHNuBgVyCQFqVVQfyuD30Aq/AWgPO+8T/ihXKb
+         +LWXgOLaD2/1APrR4uTp7vY/6ROsm7WhsY0FeYPOX8XPe0AlXZlTQtt+exdLKe15B179
+         wnPw==
+X-Received: by 10.107.30.69 with SMTP id e66mr20602834ioe.76.1436396223741;
+        Wed, 08 Jul 2015 15:57:03 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6567:f006:f2bd:2568])
+        by smtp.gmail.com with ESMTPSA id bf10sm15216507igb.12.2015.07.08.15.57.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 08 Jul 2015 15:57:02 -0700 (PDT)
+In-Reply-To: <CAPig+cQx5TKwLk+MjsOJVHriqmwYbEcKUtARJVzef4HyN0thgg@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 8 Jul 2015 17:17:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273716>
 
- 
-                               MCSI 2015
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
+>> I forgot to mention in the previous review that this change probably
+>> ought to be accompanied by tests. However, before spending more time
+>> refining the patch, it might be worthwhile to wait to hear from Junio
+>> whether he's even interested in this new hook. (Based upon previous
+>> discussions of possible new hooks, he may not be interested in a hook
+>> which adds no apparent value. Again, more on that below.)
+>> ...
+>> The commit message mentions the use-case "git format-patch | git am",
+>> with git-am invoking a hook for each patch to transform or reject it,
+>> however, it's not clear why you need a hook at all when a simple
+>> pipeline should work just as well. For instance:
+>>
+>>     git format-patch | myfilter | git-am
+>>
+>> where myfilter is, for instance, a Perl script such as the following:
+>>
+>>     #!/usr/bin/perl
+>>...
+>>
+>> This filter performs the exact transformations and rejections
+>> described by the sample hook's comment block[*1*]. Aside from not
+>> requiring any modifications to Git, it also is *much* faster since
+>> it's only invoked once rather than once per patch (and, as a bonus,
+>> it doesn't need to invoke the 'filterdiff' command three times per
+>> patch, or create and delete several temporary files per patch).
 
-2nd Int. Conf. on Mathematics and Computers in Sciences and Industry
-                              Sliema, Malta, 
-                            August 17-19, 2015 
-                            www.mcsi-conf.org
+Very well said.  The pipeline you showed above is exactly why "am"
+reads from its standard input.  Incidentally, I have an "add-by"
+filter (found on my 'todo' branch, which is checked out in the Meta
+directory in my working tree), that I use every day when I apply
+patches from my mailbox.  When I have a patch that was reviewed by
+Eric, I type '|' (I happen to use Gnus; the '|' command asks for a
+command and pipes the message to it) and say:
 
+    Meta/add-by -r sunshine@ | git am -s
 
-       
-PLENARY SPEAKERS
-Plenary Lecture: Prof. J. WANG (IEEE Fellow)
+and the filter adds Reviewed-by: line at an appropriate place.
 
+Another reason why a hook is a bad match for the use case under
+discussion is because unlike "myfilter" in your example pipeline
+above, you cannot pass options to tweak the customization to the
+'transform patches' hook even if you wanted to.
 
-*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
-
-Conference Aim:
-The main objective of the Conference is to provide a platform for researchers, engineers, academicians as well as 
-industrial professionals from all  over the world to present their research results and development activities in 
-Mathematical Methods and Computational Techniques as well as their applications in various sciences and in industry
-
-*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
-
-Publications:
-Conference Publishing Services (CPS) of IEEE Computer Society will publish the Proceedings
-and will index it to various indexes (ISI, SCOPUS, DBLP, etc)
-Your Paper must be written in the IEEE Format
-Only full papers will be promoted to reviewers for thorough peer review.
-Indexing: IEEE Xplore, ISI, SCOPUS, DBLP, EI Compendex, IET, Ulrich,  British Library, Zentrablat, etc...
-
-*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
-
-Proceedings of MCSI 14 have been published by IEEE CSP and have been indexed in various indexes
-
-Journals:
-Extended Versions of the Accepted Papers will be promoted to various ISI and SCOPUS Journals.
-
-Organizing and Steering Committee:
-Prof. George Vachtsevanos, Georgia Institute of Technology, USA 
-Prof. Imre Rudas, IEEE Felllow, Obuda University, Budapest, Hungary 
-Prof. Kleanthis Psarris, The City University of New York, USA 
-Prof. Klimis Ntalianis, Technological Educational Inst. of Athens, Greece
-Prof. Aida Bulucea, Univ. of Craiova, Romania
-Prof. Valeri Mladenov, Technical University of Sofia, Bulgaria 
-Prof. P. Borne, Ecole Central De Lille, France
-Prof. Branimir Reljin, University of Belgrade, Belgrade, Serbia 
-
-*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
-
-Technical Program Committee:
-Prof. Panos M. Pardalos, Univ, of Florida, USA
-Prof. Dimitri Bertsekas, IEEE Fellow, MIT, USA
-Prof. Ferhan M. Atici, Western Kentucky University, Bowling Green, KY 42101, USA
-Prof. Anastassios Venetsanopoulos, IEEE Fellow, University of Toronto, Canada
-Prof. Ravi P. Agarwal, Texas A&M University - Kingsville, Kingsville, TX, USA
-Prof. Feliz Minhos, Universidade de Evora, Evora, Portugal
-Prof. Mihai Mihailescu, University of Craiova, Craiova, Romania
-Prof. Aggelos Katsaggelos, IEEE Fellow, Northwestern University, USA
-Prof. Alberto Parmeggiani, University of Bologna, Bologna, Italy
-Prof. Abraham Bers, IEEE Fellow, MIT, USA
-Prof. Lucas Jodar, Universitat Politecnica de Valencia, Valencia, Spain
-Prof. Dumitru Baleanu, Cankaya University, Ankara, Turkey
-Prof. Martin Bohner, Missouri University of Science and Technology, USA
-Prof. Dashan Fan, University of Wisconsin-Milwaukee, Milwaukee, WI, USA
-Prof. Luis Castro, University of Aveiro, Aveiro, Portugal
-Prof. Kamisetty Rao, IEEE Fellow, Univ. of Texas at Arlington, USA
-Prof. Alberto Fiorenza, Universita' di Napoli "Federico II", Napoli (Naples), Italy
-Prof. Patricia J. Y. Wong, Nanyang Technological University, Singapore
-Prof. Salvatore A. Marano, Universita degli Studi di Catania, Catania, Italy
-Prof. Martin Schechter, University of California, Irvine, USA
-Prof. Ivan G. Avramidi, New Mexico Tech, Socorro, New Mexico, USA
-Prof. Michel Chipot, University of Zurich, Zurich, Switzerland
-Prof. Narsingh Deo, IEEE Fellow, ACM Fellow, University of Central Florida, USA
-Prof. Xiaodong Yan, University of Connecticut, Connecticut USA
-Prof. Ravi P. Agarwal, Texas A&M University - Kingsville, Kingsville, TX, USA
-Prof. Yushun Wang, Nanjing Normal university, Nanjing, China
-Prof. Detlev Buchholz, Universitaet Goettingen, Goettingen, Germany
-Prof. Patricia J. Y. Wong, Nanyang Technological University, Singapore
-Prof. Andrei Korobeinikov, Centre de Recerca Matematica, Barcelona, Spain
-Prof. Jim Zhu, Western Michigan University, Kalamazoo, MI, USA
-Prof. Ferhan M. Atici, Department of Mathematics, Western Kentucky University, USA
-Prof. Meirong Zhang, Tsinghua University, Beijing, China
-Prof. Lucio Boccardo, Universita degli Studi di Roma "La Sapienza", Roma, Italy
-Prof. Shanhe Wu, Longyan University, Longyan, Fujian, China
-Prof. Natig M. Atakishiyev, National Autonomous University of Mexico, Mexico
-Prof. Jianming Zhan, Hubei University for Nationalities, Enshi, Hubei Province, China
-Prof. Narcisa C. Apreutesei, Technical University of Iasi, Iasi, Romania
-Prof. Chun-Gang Zhu, Dalian University of Technology, Dalian, China
-Prof. Abdelghani Bellouquid, University Cadi Ayyad, Morocco
-Prof. Jinde Cao, Southeast University/ King Abdulaziz University, China
-Prof. Josef Diblik, Brno University of Technology, Brno, Czech Republic
-Prof. Jianqing Chen, Fujian Normal University, Fuzhou, Fujian, China
-Prof. Naseer Shahzad, King Abdulaziz University, Jeddah, Saudi Arabia
-Prof. Sining Zheng, Dalian University of Technology, Dalian, China
-Prof. Leszek Gasinski, Uniwersytet Jagiellonski, Krakowie, Poland
-Prof. Satit Saejung, Khon Kaen University, Muang District, Khon Kaen, Thailand
-Prof. Juan J. Trujillo, Universidad de La Laguna, La Laguna, Tenerife, Spain
-Prof. Tiecheng Xia, Department of Mathematics, Shanghai University, China
-Prof. Lucas Jodar, Universitat Politecnica de Valencia, Valencia, Spain
-Prof. Noemi Wolanski, Universidad de Buenos Aires, Buenos Aires, Argentina
-Prof. Zhenya Yan, Chinese Academy of Sciences, Beijing, China
-Prof. Juan Carlos Cortes Lopez, Universidad Politecnica de Valencia, Spain
-Prof. Wei-Shih Du, National Kaohsiung Normal University, Kaohsiung City, Taiwan
-Prof. Kailash C. Patidar, University of the Western Cape, Cape Town, South Africa
-
-*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
-
-Topics
-Mathematical Methods
-Numerical Methods
-Numerical Analysis
-Differential Equations
-Boundary Value Problems
-Algorithms
-Computational techniques
-Computational Physics
-Computational Chemistry
-Computational Biology
-Computational Medicine
-Computational Engineering
-Systems Theory and Control
-Simulation
-Circuits and Electronics
-Computational Intelligence
-Optimization
- 
-
-*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
-
-To opt out of this email list: send email to us with Subject:  OPT OUT git@vger.kernel.org
+People should learn to consider that hooks and filters are the last
+resort mechanism, not the first choice.  There are cases where you
+absolutely need to have them (e.g. when Git generates something and
+then uses it internally, you _might_ want to tweak and customize
+that something), but the use case presented here is a canonical
+example of what you shouldn't use hooks for---preprocessing the
+input to a Git command.
