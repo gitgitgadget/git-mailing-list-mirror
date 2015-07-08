@@ -1,83 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 00/44] Make git-am a builtin
-Date: Wed, 08 Jul 2015 00:48:06 -0700
-Message-ID: <xmqqa8v7yts9.fsf@gitster.dls.corp.google.com>
-References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
-	<xmqqmvz7yuk4.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: RE: Git installer questions
+Date: Wed, 08 Jul 2015 09:58:29 +0200
+Organization: gmx
+Message-ID: <5be33b5f72c504a3284095ba4711bbbe@www.dscho.org>
+References: <47895290476F5048B96E7C3589EE00B821DD60F1DC@MSGICTC.kochind.com>
+ <47895290476F5048B96E7C3589EE00B821DDBE58E7@MSGICTC.kochind.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 09:48:27 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "'git@vger.kernel.org'" <git@vger.kernel.org>
+To: "McChesney, Adam" <Adam.McChesney@kbslp.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 09:59:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCk5h-0004wN-Tq
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 09:48:26 +0200
+	id 1ZCkFz-0002cY-8v
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 09:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934397AbbGHHsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 03:48:13 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:38831 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932828AbbGHHsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 03:48:08 -0400
-Received: by igrv9 with SMTP id v9so160497466igr.1
-        for <git@vger.kernel.org>; Wed, 08 Jul 2015 00:48:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=1GXVv/3apG7JjP/kheDkoT2h6U9YQ/VJpWUOKpx7Ydo=;
-        b=ZWe/t3ZUN0synQF0DI2xDDMu6j48vaAyNFtRbkiY+/6eei5nAWZVDY8b+7+WpHFheb
-         4MER5fpKkR7kRSt0HkXD2kc7PeqrDph1G/Kxz0fna1jhcoexsiElMbQjtt6MdPkjRHqW
-         vcgtLlPw/L/FmbDiKwRUCLvHV1TaUshlpHrOJY1+nkA70duRr+CPsQf3D07QqfchdHBm
-         cf7uYoDXj3DqmV1VbVaKzRzRlycottpPR3efMnVMFW1CVSZawr8hEB+ztsKEbZKnInV8
-         3OLa7j6TfQ357cq2mIcp/X4++c07C+AWdXvoiBp2E98C1mNDNeLFoAwaErF9vmEyG0Wy
-         AjDQ==
-X-Received: by 10.50.7.68 with SMTP id h4mr59605690iga.40.1436341687708;
-        Wed, 08 Jul 2015 00:48:07 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:7d74:6f43:1e30:fb1d])
-        by smtp.gmail.com with ESMTPSA id i7sm1366379igt.18.2015.07.08.00.48.06
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 08 Jul 2015 00:48:07 -0700 (PDT)
-In-Reply-To: <xmqqmvz7yuk4.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 08 Jul 2015 00:31:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S964856AbbGHH6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 03:58:55 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63971 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934665AbbGHH6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 03:58:35 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LxxKu-1YyGIN2P6i-015Igj; Wed, 08 Jul 2015 09:58:31
+ +0200
+In-Reply-To: <47895290476F5048B96E7C3589EE00B821DDBE58E7@MSGICTC.kochind.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:ECtE1hPLj2oBdS9H7fyJSRZtgQJgiR8f4rIiUIXYqZdliKyACm/
+ EoQvqOlBD1wkYnB0sYyI+u3f/L6hq5vP9Uk6aqetwXdAwwctrmUjo65an1g4k1Xr6m+y2u5
+ ySfhWNeLNCyDOHrA6DZ74c2Wq/aT3hOtbLdMT82brvT3cGThO+O9oE1byLS/f1LEENtXKCA
+ Szq7pKMCBl3LQnCFqfQpQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:D0LxhPNw6Co=:YS1AKSXPxwy0nQJtl66fPb
+ EnfHaobVQsSw/fBMqp4acYkyTvRKa2z8h/fCBNS3podIwK2pMUhzlBymQX0yJXI+dPU6/41pA
+ PNUxY4EpSuB88vJCWTm/pS6//6b9ydsQAMfZq6gjhzuMcEIwNwffTIki5uuf8wrNwsXfB+At8
+ uBSUk1d2fEDibmgZrsNMRrTm2oTYbj2jwa1Kai61Y1HCla5TR+3w7MSaSwL6pP4xOEuloCN5u
+ wyQpkwniikNGg+3378SrUYc9wG02f+h4+OUxwaRVAVVRVqaFjnwgOvryVnk4/9cK9kkSoWOm1
+ ZVECPG1hjje9tjuZvA2eO+YS0EUJCiwCL+XhaseaYaKyrtxIJY7yHmz8aewVH8j/2f25CNVYw
+ csJgRxfwRM8x8XH9UBwJy3j06e2noo0rv26CCy40UZ/i0qA2kLZsUmuHmBDM2dtiQv+ydc9Ot
+ Kb11vpfJF98jXr4nClzRBiwa93zAtuRVSDZ5J9WqjzACxuO2IE5ird+3tupU3vrcUzJQwMVXd
+ /k1TifmAGzV/9l35YW6WOuVqkv9QUMBzhxSfmiRJcsPb1RNkFAkEcvwv+i9VJfunIIouTz3eG
+ meZXBTK+yvd60w+jfstqDrVY32SNXLXlDWzjnZzKhnG/ALsU3PI89/aIv1P6jcoflHDYDdWlK
+ l3bo+DrqB2JXQx/uXmDiPP+2IeZT4jd2zoiDLPkdQWOLOmI5EZNxzpltb+iaT+cxxkqg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273651>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2015-07-07 23:39, McChesney, Adam wrote:
+> I am curious as whether or not the windows installer has silent
+> install flags that are configurable for automated installation? I was
+> looking about the documentation and haven't been able to find them, if
+> it does exist in the documentation could you point me to where they
+> might be?
 
-> Paul Tan <pyokagan@gmail.com> writes:
->
->> This patch series rewrites git-am.sh into optimized C builtin/am.c, and is
->> part of my GSoC project to rewrite git-pull and git-am into C builtins[1].
->
-> I merged this to 'jch' (that is somewhere in between 'next' and
-> 'pu', which is what I use for everyday work) and tried it to apply
-> the 8-patch series that starts at $gmane/273622 on top of 912bd49.
->
-> It appears that your builtin version makes "am -3s" barf at the
-> [PATCH 7/8] in that series, complaining about lack of author
-> identity.
-
-$ git am -s ./+dt
-...
-error: patch failed: builtin/update-ref.c:421
-error: builtin/update-ref.c: patch does not apply
-Patch failed at 0007 update-ref and tag: add --create-reflog arg
-The copy of the patch that failed is found in:.git/rebase-apply/patch
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
-$ git am -3
-git: builtin/am.c:1332: parse_mail: Assertion `!state->author_name'
-failed.
-Aborted (core dumped)
+https://github.com/msysgit/msysgit/wiki/Silent-or-Unattended-Installation
