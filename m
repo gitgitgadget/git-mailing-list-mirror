@@ -1,76 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git_open_noatime: return with errno=0 on success
-Date: Wed, 8 Jul 2015 14:51:31 -0400
-Message-ID: <CAPig+cSacM_JwZzagOVZpMJF=oE7m3rMnq1eKr=aNsGY0vvmfQ@mail.gmail.com>
-References: <20150708123820.GA25269@musxeris015.imu.intel.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v7 2/8] cherry-pick: treat CHERRY_PICK_HEAD and
+ REVERT_HEAD as refs
+Date: Wed, 08 Jul 2015 15:16:02 -0400
+Organization: Twitter
+Message-ID: <1436382962.4542.8.camel@twopensource.com>
+References: <1436316963-25520-1-git-send-email-dturner@twopensource.com>
+	 <1436316963-25520-2-git-send-email-dturner@twopensource.com>
+	 <559D6208.8090607@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	=?UTF-8?Q?Martin_Schr=C3=B6der?= <martin.h.schroeder@intel.com>
-To: Clemens Buchacher <clemens.buchacher@intel.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 20:51:38 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Jul 08 21:16:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCuRW-0005fq-6L
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 20:51:38 +0200
+	id 1ZCupH-0006ZH-7X
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 21:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933028AbbGHSve convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 14:51:34 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:34120 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932233AbbGHSvc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 14:51:32 -0400
-Received: by ykcp133 with SMTP id p133so29069027ykc.1
-        for <git@vger.kernel.org>; Wed, 08 Jul 2015 11:51:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=fotez7GoF/PRSmwAXBTOwiA7WXH6Ipiut3CGzTPo3iM=;
-        b=WPByYThEb9+gglVGaxj3Ymdk7d7hXw8+PLBafR9u3N8NgAjNJ074+0g1qfKtZSk6WI
-         VBct64NBYIBrW5gmsB3yN7SucC06GdusV1FK5uegaQp278ZUXTLRDIISz/mQo7rXowuK
-         481yjbs9F3k/7GBb2nEQoVVIHA3jSnB3RfbDWw2fJqkuV+3C3yPKYeiVw/X31qvk5fje
-         wpwcRQGvfoXA1VS0KWjDs74cxvIAByxsGGiRN4GmMkIZNi9Mnhde91R8OxeuyM0dshQn
-         +VG3HgZQy+6s24EIMk5CtqjhFQ9Uaai8TaTO8MuFVMrvI5pfNbwm2tTKh80mVqgZzaq1
-         43mA==
-X-Received: by 10.170.196.85 with SMTP id n82mr13086470yke.127.1436381491832;
- Wed, 08 Jul 2015 11:51:31 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Wed, 8 Jul 2015 11:51:31 -0700 (PDT)
-In-Reply-To: <20150708123820.GA25269@musxeris015.imu.intel.com>
-X-Google-Sender-Auth: hbNoDDgf7jfPJa2G69RlaTXkgZU
+	id S932906AbbGHTQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 15:16:07 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:35871 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754693AbbGHTQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 15:16:05 -0400
+Received: by qkei195 with SMTP id i195so170456295qke.3
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 12:16:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=WK14SJ3KVY85X0Zi+EaEK6FwXQStqG2nKH0RwijBDOA=;
+        b=AMas+LDqX1Yh2pv5lbXGOsy6nONOAZBP70SjBVpupve9slg6pVaUb4Ukmvygg/nvC0
+         nrnVMg3iZR8coM1Gu5vFKkdGOzBTKk/QMbsUa2jcvDnFhehqBfkg1LJ+69X2UZGdMfNK
+         YDFSV94a13DqbBCgIUPKxc56wCidko9eAuHPfnzjSeYyEDd7WL/VRCr8FBTNUNbdBZkG
+         jmCVmQfGg4JhOiIKjgwcngW2OQJYzLXIl2z5AjbT0zkqJ9CUOejw3wGbhbUMLmGf8WOc
+         9GuucSIsep89AY5nBHAaXqjRmK21adezUuCDs+BvkMi33Lv59X/4Y9lU5M0WxgG+gx3a
+         QaZQ==
+X-Gm-Message-State: ALoCoQmih44rSSJLsXyoRpl4psHlzxLHY2oGd6E+MiWRsm7fCW8K0aIEq2JTRZiRChC1SluI/EG2
+X-Received: by 10.140.21.138 with SMTP id 10mr18562293qgl.47.1436382964751;
+        Wed, 08 Jul 2015 12:16:04 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 16sm1287453qkt.27.2015.07.08.12.16.03
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Jul 2015 12:16:03 -0700 (PDT)
+In-Reply-To: <559D6208.8090607@kdbg.org>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273702>
 
-On Wed, Jul 8, 2015 at 8:38 AM, Clemens Buchacher
-<clemens.buchacher@intel.com> wrote:
-> In read_sha1_file_extended we die if read_object fails with a fatal
-> error. We detect a fatal error if errno is non-zero and is not
-> ENOENT. If the object could not be read because it does not exist,
-> this is not considered a fatal error and we want to return NULL.
->
-> Somewhere down the line, read_object calls git_open_noatime to open
-> a pack index file, for example. We first try open with O_NOATIME.
-> If O_NOATIME fails with EPERM, we retry without O_NOATIME. When the
-> second open succeeds, errno is however still set to EPERM from the
-> first attemt. When we finally determine that the object does not
+On Wed, 2015-07-08 at 19:46 +0200, Johannes Sixt wrote:
+> Am 08.07.2015 um 02:55 schrieb David Turner:
+> > Instead of directly writing to and reading from files in
+> > $GIT_DIR, use ref API to interact with CHERRY_PICK_HEAD
+> > and REVERT_HEAD.
+> >
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > ---
+> ...
+> > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> > index 366f0bc..e2c5583 100644
+> > --- a/contrib/completion/git-prompt.sh
+> > +++ b/contrib/completion/git-prompt.sh
+> > @@ -415,9 +415,9 @@ __git_ps1 ()
+> >   			fi
+> >   		elif [ -f "$g/MERGE_HEAD" ]; then
+> >   			r="|MERGING"
+> > -		elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
+> > +		elif git rev-parse --quiet --verify "CHERRY_PICK_HEAD" >/dev/null; then
+> >   			r="|CHERRY-PICKING"
+> > -		elif [ -f "$g/REVERT_HEAD" ]; then
+> > +		elif git rev-parse --quiet --verify "REVERT_HEAD" >/dev/null; then
+> >   			r="|REVERTING"
+> >   		elif [ -f "$g/BISECT_LOG" ]; then
+> >   			r="|BISECTING"
+> 
+> We are trying very hard not to spawn any new processes in __git_ps1(). 
+> So, I raise a moderate veto against this hunk.
 
-s/attemt/attempt/
+Do you have an alternate suggestion about how to accomplish the same
+thing? Here are my ideas:
 
-> exist, read_object returns NULL and read_sha1_file_extended dies
-> with a fatal error:
->
->     fatal: failed to read object <sha1>: Operation not permitted
->
-> Fix this by resetting errno to zero before we call open again.
->
-> Cc: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
-> Helped-by: Martin Schr=C3=B6der <martin.h.schroeder@intel.com>
+We could special-case CHERRY_PICK_HEAD and REVERT_HEAD to be files
+independent of the ref backend, but that tends to complicate the
+backends.  I think this is a mistake.
+
+We could reduce the number from two to one by providing a new
+git-am-status command which outputs one of "CHERRY-PICKING",
+"REVERTING", or "" (or maybe it would also handle rebase and am).  We
+could also generalize it to "git-prompt-helper" or something by moving
+that entire bunch of if statements inside.  This would replace calls to
+"git describe".
+
+But you probably have a better idea.
