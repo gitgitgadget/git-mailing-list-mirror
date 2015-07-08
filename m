@@ -1,162 +1,141 @@
-From: X H <music_is_live_lg@hotmail.com>
-Subject: Re: Git force push fails after a rejected push (unpack failed)?
-Date: Wed, 8 Jul 2015 22:28:51 +0200
-Message-ID: <BLU436-SMTP166B786EBE483D3F47F666F6910@phx.gbl>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v2] check_and_freshen_file: fix reversed success-check
+Date: Wed, 8 Jul 2015 16:33:52 -0400
+Message-ID: <20150708203352.GA23901@peff.net>
 References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
- <20150707141305.GA629@peff.net> <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
- <20150707194956.GA13792@peff.net> <559D60DC.4010304@kdbg.org>
+ <20150707141305.GA629@peff.net>
+ <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
+ <20150707194956.GA13792@peff.net>
+ <559D60DC.4010304@kdbg.org>
  <20150708180539.GA12353@peff.net>
+ <20150708183331.GA16138@peff.net>
+ <xmqqegkixxja.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Jul 08 22:29:00 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	X H <music_is_live_lg@hotmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 22:34:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCvxf-0006ln-HF
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:28:55 +0200
+	id 1ZCw2a-0001tH-7m
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758299AbbGHU2v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 16:28:51 -0400
-Received: from blu004-omc3s16.hotmail.com ([65.55.116.91]:52322 "EHLO
-	BLU004-OMC3S16.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757946AbbGHU2u convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 16:28:50 -0400
-Received: from BLU436-SMTP16 ([65.55.116.72]) by BLU004-OMC3S16.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
-	 Wed, 8 Jul 2015 13:28:49 -0700
-X-TMN: [UlBA4eAdIQD7ILIGghj8RDJRSc2RYr9E]
-X-Originating-Email: [music_is_live_lg@hotmail.com]
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-In-Reply-To: <20150708180539.GA12353@peff.net>
-X-OriginalArrivalTime: 08 Jul 2015 20:28:48.0014 (UTC) FILETIME=[B1B4A2E0:01D0B9BC]
+	id S933482AbbGHUd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 16:33:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57775 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933000AbbGHUdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 16:33:55 -0400
+Received: (qmail 31487 invoked by uid 102); 8 Jul 2015 20:33:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jul 2015 15:33:54 -0500
+Received: (qmail 24327 invoked by uid 107); 8 Jul 2015 20:34:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jul 2015 16:34:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jul 2015 16:33:52 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqegkixxja.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273708>
 
-Le 8/07/2015 20:05, Jeff King a =C3=A9crit :
-> On Wed, Jul 08, 2015 at 07:41:48PM +0200, Johannes Sixt wrote:
->
->>> Yes, but remember that git stores all of the objects for all of the
->>> commits. So for some reason your push is perhaps trying to send an
->>> object that the other side already has. Usually this does not happe=
-n
->>> (the receiver says "I already have these commits, do not bother sen=
-ding
->>> their objects"), but it's possible that you have an object that is =
-not
->>> referenced by any commit, or a similar situation. It's hard to say
->>> without looking at the repository.
->>
->> After a non-fast-forward push fails, a subsequent forced push sends =
-the same
->> set of objects, which are already present at the server side, but ar=
-e
->> dangling objects.
->>
->> Apparently, Git for Windows fails to replace the read-only files tha=
-t live
->> on the network file system.
->
-> I left one bit out from my original explanation, which is that
-> we generally prefer existing objects to new ones. So we would general=
-ly
-> want to throw out the new object rather than try to write it out. I'm
-> not sure why unpack-objects would try to write an object we already
-> have.
->
-> We also don't write objects directly, of course; we write to a tempor=
-ary
-> file and try to link them into place. It really sounds more like the
-> "objects/d9" directory is where the permission problems are. But, hmm=
-=2E..
->
-> The code path should be unpack-objects.c:write_object, which calls
-> sha1_file.cwrite_sha1_file, which then checks has_sha1_file(). These
-> days it uses the freshen_* functions instead of the latter, which doe=
-s a
-> similar check.  But it does report failure if we cannot call utime() =
-on
-> the file, preferring to write it out instead (this is the safer choic=
-e
-> from a preventing-prune-corruption perspective).
->
-> So it's possible that the sequence is:
->
->    - unpack-objects tries to write object 1234abcd...
->
->    - write_sha1_file calls freshen_loose_object
->
->    - we call access("12/34abcd...", F_OK) and see that it does indeed
->      exist
->
->    - we call utime("12/34abcd...") which fails (presumably due to EPE=
-RM);
->      we return failure and assume we must write out the object
->
->    - write_sha1_file then writes to a temporary file, and tries to li=
-nk
->      it into place. Now what? If we get EEXIST, we say "OK, somebody =
-else
->      beat us here", and we consider that a success. But presumably we=
- get
->      some other error here (which may even be a Windows-ism), fall ba=
-ck
->      to rename(), and that fails with EPERM, which we then report.
->
-> If that's the case, then one solution is to have the
-> timestamp-freshening code silently report success, and skip writing o=
-ut
-> the object. I'm not entirely comfortable with that, just because it i=
-s
-> loosening a safety mechanism. But perhaps we could loosen it _only_ i=
-n
-> the case of checking the loose object, and when we get EPERM. We know
-> that the next step is going to be writing out that same loose object,
-> which is almost certainly going to fail for the same reason.
->
-> I dunno. The whole concept of trying to write to an object database f=
-or
-> which you do not have permissions seems a little bit weird. This woul=
-d
-> definitely be a workaround. But I suspect it did work prior to v2.2.0=
-=2E
->
-> -Peff
->
+On Wed, Jul 08, 2015 at 12:24:41PM -0700, Junio C Hamano wrote:
 
-I've made some tests:
-1) Linux Mint:
-- ntfs share mounted (with noacl) since
-$ chacl -l /the/mountpoint gives
-chacl: cannot get access ACL on '/the/mountpoint': Operation not suppor=
-ted
-- Create a remote repository on the ntfs share
-- Push some test files
-- ls -al for files in the objects folder gives:
--rw-r--r--
-- with subsequent amend, push the permissions stays the same.
+> > If our utime() call fails, we treat this the same as not
+> > having the object in the first place; the safe thing to do
+> > is write out another copy. However, the loose-object check
+> > accidentally inverst the utime() check; it returns failure
+> 
+> s/inverst/invert/?
 
-2) On Windows:
-- ntfs share mapped as drive by windows
-- remote repository created by git on windows
-- Push some test files
-- ls -al for files in the objects folder gives:
--r--r--r--
-- chmod all files to add w permission
-- then amend commit and push, push is successful but all files rewritte=
-n=20
-by the push are again:
--r--r--r--
-but all folders under objects are:
-drwxr-xr-x
+Whoops, should be "inverts".
 
-So I suppose it some issue with Windows or MSYS2. I'm not sure it's a=20
-problem related to your explanations, I will read it whit fresh mind.
+> I think each of the functions in the check_and_freshen_* callchain
+> can at least have a comment in front of it, saying what the returned
+> value means, to unconfuse readers.  "Return 1 when the thing exists
+> and no further action is necessary; return 0 when the thing does not
+> exist or not in a good state and should be overwritten (if the
+> caller has something to overwrite it with, that is)" or something?
+> 
+> Their returning "1" instead of "-1" could be taken as a hint that
+> says "this non-zero return does not signal a _failure_", but it is a
+> rather weak hint.
+
+Fair enough. Here's a re-roll with some extra comments, and the typo-fix
+from above.
+
+-- >8 --
+Subject: check_and_freshen_file: fix reversed success-check
+
+When we want to write out a loose object file, we have
+always first made sure we don't already have the object
+somewhere. Since 33d4221 (write_sha1_file: freshen existing
+objects, 2014-10-15), we also update the timestamp on the
+file, so that a simultaneous prune knows somebody is
+likely to reference it soon.
+
+If our utime() call fails, we treat this the same as not
+having the object in the first place; the safe thing to do
+is write out another copy. However, the loose-object check
+accidentally inverts the utime() check; it returns failure
+_only_ when the utime() call actually succeeded. Thus it was
+failing to protect us there, and in the normal case where
+utime() succeeds, it caused us to pointlessly write out and
+link the object.
+
+This passed our freshening tests, because writing out the
+new object is certainly _one_ way of updating its utime. So
+the normal case was inefficient, but not wrong.
+
+While we're here, let's also drop a comment in front of the
+check_and_freshen functions, making a note of their return
+type (since it is not our usual "0 for success, -1 for
+error").
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ sha1_file.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 77cd81d..e435289 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -443,6 +443,7 @@ void prepare_alt_odb(void)
+ 	read_info_alternates(get_object_directory(), 0);
+ }
+ 
++/* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+ static int freshen_file(const char *fn)
+ {
+ 	struct utimbuf t;
+@@ -450,11 +451,18 @@ static int freshen_file(const char *fn)
+ 	return !utime(fn, &t);
+ }
+ 
++/*
++ * All of the check_and_freshen functions return 1 if the file exists and was
++ * freshened (if freshening was requested), 0 otherwise. If they return
++ * 0, you should not assume that it is safe to skip a write of the object (it
++ * either does not exist on disk, or has a stale mtime and may be subject to
++ * pruning).
++ */
+ static int check_and_freshen_file(const char *fn, int freshen)
+ {
+ 	if (access(fn, F_OK))
+ 		return 0;
+-	if (freshen && freshen_file(fn))
++	if (freshen && !freshen_file(fn))
+ 		return 0;
+ 	return 1;
+ }
+-- 
+2.5.0.rc1.340.ge59e3eb
