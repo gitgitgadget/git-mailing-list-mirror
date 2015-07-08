@@ -1,90 +1,69 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: ssh admin git accidentally deleted
-Date: Wed, 8 Jul 2015 07:38:46 +0200
-Message-ID: <20150708053846.GB7613@paksenarrion.iveqy.com>
-References: <CAF1FN5CDnUYxjChO2PZFrDnPRUiuqXhko=iDo=tuqwvJJdUg5A@mail.gmail.com>
- <20150707134942.GA7613@paksenarrion.iveqy.com>
- <CAF1FN5BMTTatfTmVYjpKcqczefur3ETjbqyEk1vSmdruY82quw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v6 3/4] status: give more information during rebase -i
+Date: Wed, 08 Jul 2015 09:10:40 +0200
+Message-ID: <vpqr3ojjf9r.fsf@anie.imag.fr>
+References: <vpqk2ujoadw.fsf@anie.imag.fr>
+	<1435784916-15456-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1435784916-15456-3-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqlher1upy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: agnes retnaningsih <agnes.monest@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 07:38:57 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, remi.lespinet@ensimag.grenoble-inp.fr,
+	guillaume.pages@ensimag.grenoble-inp.fr,
+	louis--alexandre.stuber@ensimag.grenoble-inp.fr,
+	antoine.delaite@ensimag.grenoble-inp.fr
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 09:10:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCi4P-0005Sn-3O
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 07:38:57 +0200
+	id 1ZCjVN-0000F3-TA
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 09:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758100AbbGHFix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 01:38:53 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:33604 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757370AbbGHFiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 01:38:51 -0400
-Received: by laar3 with SMTP id r3so218393086laa.0
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 22:38:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=SqVkruy22/3wDAAwgSV8UUsp+zGA5sfVTB2m+1084mw=;
-        b=eOtT+K0tK3rwmZlN+s7Vu90ciyk4dxmvEv/+tbd2aRtJYl9z94r1oKC7yO6NizxIq8
-         5p0AMWnodckXysuTYilq0/bwnrDl6CB1wyiL3ukyVw943A2SQfiGmcCscKW3vNNJSOJN
-         KXbGkpf3bIwuj+o3Hz9R9mNoQ4NEeRplaY/nb3zbZq5qHkBSdgc9vb4sgGdiWg2nNlrd
-         YbIctM/1VP3ax6ssZu6yEig5oyuyOnb6pLyoku3IKc+TR8PTQYejMHak0WbABZAOmMvo
-         OOaIK/KjnJZyhH0wZcMbqkLVaX1PcAENTLTUPWPf/IJ1U35pbY6SpL6Soi5By0ugvZhB
-         sl4w==
-X-Received: by 10.112.118.137 with SMTP id km9mr7559812lbb.28.1436333930268;
-        Tue, 07 Jul 2015 22:38:50 -0700 (PDT)
-Received: from paksenarrion.paks.iveqy.com (c83-249-17-125.bredband.comhem.se. [83.249.17.125])
-        by smtp.gmail.com with ESMTPSA id rp10sm280967lbb.8.2015.07.07.22.38.48
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Jul 2015 22:38:48 -0700 (PDT)
-Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1ZCi4F-00038i-Br; Wed, 08 Jul 2015 07:38:47 +0200
-Content-Disposition: inline
-In-Reply-To: <CAF1FN5BMTTatfTmVYjpKcqczefur3ETjbqyEk1vSmdruY82quw@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S932534AbbGHHKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 03:10:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:55984 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932497AbbGHHKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 03:10:48 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t687AeqT009188
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 8 Jul 2015 09:10:40 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t687AeOO018227;
+	Wed, 8 Jul 2015 09:10:40 +0200
+In-Reply-To: <xmqqlher1upy.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 07 Jul 2015 15:14:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 08 Jul 2015 09:10:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t687AeqT009188
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1436944242.38669@SWO0c7ZUUwPYlj/Ri4Xnfg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273640>
 
-On Wed, Jul 08, 2015 at 12:32:42AM +0700, agnes retnaningsih wrote:
-> I use gitolite on linux.
-> he2nk is account that I delete on server where gitolite-admin is repository
-> to change gitolite configuration. I still can make editing such as add user
-> to access gitolite-admin  but when I push it, it error ( file attached), I
-> think it because the he2nk has been deleted.
-> 
-> 
-> he2nk is ssh that I have deleted and push it to the server.
-> 
-> 
-> So, if there anyway to revert the change I pushed?? so that I can make a
-> change on gitolite admin.
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> By the way, does this have any potential interaction with 16cf51c7
+> (git-rebase--interactive.sh: add config option for custom
+> instruction format, 2015-06-13)?  I _think_ that the other topic
+> should only affect the collapsed format, so there hopefully
+> shouldn't be a problem, but just double checking if you folks
+> considered the ramifications already.
 
-So from what I understand he2nk is a gitolite account and not a linux
-account. And you deleted he2nk from your gitolite-admin repository.
-
-Yes you can revert this and you can also add he2nk again, whatever you
-like. But as you've seen you can't do this with gitolite. You've to do
-this directly on the server since you don't have access to edit the
-gitolite-admin repository (if I guess correct).
-
-Please don't forget to CC the git-list.
-
+16cf51c7 adds rebase.instructionFormat that allows changing the part
+after <command> <sha1> in the todo-list, but this part is not parsed by
+our patch. So it's OK.
 
 -- 
-Fredrik Gustafsson
-
-phone: +46 733-608274
-e-mail: iveqy@iveqy.com
-website: http://www.iveqy.com
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
