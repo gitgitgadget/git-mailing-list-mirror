@@ -1,69 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 8/8] git-stash: use update-ref --create-reflog instead
- of creating files
-Date: Wed, 08 Jul 2015 15:50:20 +0200
-Message-ID: <559D2A9C.80401@alum.mit.edu>
-References: <1436316963-25520-1-git-send-email-dturner@twopensource.com> <1436316963-25520-8-git-send-email-dturner@twopensource.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] pack-objects: rename the field "type" to "real_type"
+Date: Wed, 8 Jul 2015 20:57:35 +0700
+Message-ID: <CACsJy8B0OCu3-TKVztj+wCmtqXdeh6iNK5ir4Xi2BXWW14wdOQ@mail.gmail.com>
+References: <20150707160630.GA4456@peff.net> <1436356591-8148-1-git-send-email-pclouds@gmail.com>
+ <1436356591-8148-2-git-send-email-pclouds@gmail.com> <20150708134713.GA5136@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 15:50:40 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 15:58:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCpkE-0001OS-Lh
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 15:50:39 +0200
+	id 1ZCprp-0006FO-K2
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 15:58:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934106AbbGHNue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 09:50:34 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:54638 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932897AbbGHNud (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 09:50:33 -0400
-X-AuditID: 1207440f-f79df6d000007c0f-62-559d2a9e01c8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 5C.D5.31759.E9A2D955; Wed,  8 Jul 2015 09:50:22 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB0310.dip0.t-ipconnect.de [93.219.3.16])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t68DoKRW010612
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 8 Jul 2015 09:50:21 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <1436316963-25520-8-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupgleLIzCtJLcpLzFFi42IRYndR1J2nNTfUYNMjZYv5m04wWnRd6WZy
-	YPJY8Pw+u8fnTXIBTFHcNkmJJWXBmel5+nYJ3BmvO86yFbxjqTi05gZrA+NH5i5GTg4JAROJ
-	rqZfjBC2mMSFe+vZuhi5OIQELjNK3Lq0jwnCOcMk8ebnayaQKl4BTYnWVZdYQGwWAVWJLdc3
-	gtlsAroSi3qagWo4OEQFgiRev8yFKBeUODnzCViJiICDxOVdR8EWCwskSrxobYVa1soo8b3t
-	IhtIglPAU+L1qSlgDcwCehI7rv9ihbDlJZq3zmaewMg/C8ncWUjKZiEpW8DIvIpRLjGnNFc3
-	NzEzpzg1Wbc4OTEvL7VI10QvN7NELzWldBMjJCT5dzB2rZc5xCjAwajEw+sRMydUiDWxrLgy
-	9xCjJAeTkihv3COgEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeUMW5oUK8KYmVValF+TApaQ4W
-	JXFe9SXqfkIC6YklqdmpqQWpRTBZGQ4OJQneS5pAjYJFqempFWmZOSUIaSYOTpDhXFIixal5
-	KalFiaUlGfGgmIwvBkYlSIoHaO8hkHbe4oLEXKAoROspRl2OBT9ur2USYsnLz0uVEuc1AykS
-	ACnKKM2DWwFLQK8YxYE+FuZtAqniASYvuEmvgJYwAS1ZrjsLZElJIkJKqoGR6eXUDwdWXzE/
-	Gam5I5F/rdqxAJXti4VSH/B57v+jaMrz6aTfBjnR2cbuklsTOhqPJ9xfEDTHrS/xGsOuq07H
-	xZ0uzrhb8uja1vsa95be/eRZGOEqc7byOcfSgH1nrLqF2QP+L763UeIy89KevR1H 
+	id S934453AbbGHN6Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 09:58:16 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:32875 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932310AbbGHN6N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 09:58:13 -0400
+Received: by ieru20 with SMTP id u20so12517058ier.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 06:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qBMdMi3waDMxrMSriHxIoUlgz0WdRIE5NgM+85gMj0k=;
+        b=WSwSJ1kJJwKUfl68kCPsMrlm1S/zzo3BPVgtKIG6kgF4qP/SSN3CmKz2Gyz9JDWokH
+         zbZvaSIfJlk+Y1sNaKEaZ7yZU0wxEDMr9q4mKBugnquU4fidzv0GotWsgPSsiiGHYxWs
+         za9Isscmz7oYNlF0+da+yTJxznfOkiVQhvb2xol235IN4uXUnqI035DnwQRtJ3ZCNt5J
+         mDgw9M7+iDEBDehpDpHsnfFnP4CvgTlWWUAVXD4VGSuqL09IqbCsQbJRSU2yqHppSAp7
+         s90sfdIar1QsMKpFSZkxK4/UhyK1OUL6/lEJfbNYVOA+6CZSG0+wRt4kEeU/itxG+toc
+         N1Cw==
+X-Received: by 10.50.7.68 with SMTP id h4mr62603082iga.40.1436363884803; Wed,
+ 08 Jul 2015 06:58:04 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Wed, 8 Jul 2015 06:57:35 -0700 (PDT)
+In-Reply-To: <20150708134713.GA5136@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273686>
 
-I apologize for getting involved so late in the evolution of this patch
-series. Thanks for being so patient with the back-and-forth!
+On Wed, Jul 8, 2015 at 8:47 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jul 08, 2015 at 06:56:31PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy wrote:
+>
+>> This is to avoid the too generic name "type" and harmonize with the
+>> naming in index-pack. There's a subtle difference though: real_type =
+in
+>> index-pack is what the upper level see, no delta types (after delta
+>> resolution). But real_type in pack-objects is the type to be written=
+ in
+>> the pack, delta types are fine (it's actually markers for reused del=
+tas)
+>
+> Hrm, now I'm confused about whether this change is a good idea.
 
-I'm really glad that you are working on this. It is important that this
-area gets cleaned up if we are ever to support alternate reference
-backends. And I'm happy that we will be getting new commands and command
-options to deal with reflogs, because that was one case were users
-previously had to muck about within the .git directory, which is a very
-bad thing. We need to train users never to look behind the curtain!
+Oh good :) I found it not-so-good too after seeing the check "if
+(real_type =3D=3D OBJ_REF...)"
 
-Michael
+> The definition of in_pack_type says:
+>
+>>       enum object_type in_pack_type;  /* could be delta */
+>
+> so now I am confused about what exactly "type" (and now "real_type")
+> means.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+I think we just overload "type" with "this delta is detected reusable
+already" in write_object(). It only means 'real type in the output
+pack' for canonical types. For generated deltas, we already know if
+it's ref-delta or ofs-delta, we don't rely on real_type
+--=20
+Duy
