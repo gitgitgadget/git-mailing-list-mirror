@@ -1,88 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git grep does not support multi-byte characters (like UTF-8)
-Date: Wed, 8 Jul 2015 09:19:00 +0700
-Message-ID: <CACsJy8De6Wt4J5ZFx5rEg2eRBt=7PsLim=31FvtLEKsX-6SMyQ@mail.gmail.com>
-References: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg>
- <CACsJy8BH_QJss57uMJNE=ojNT5vBWKN=eEdrBBS38g6As-UH6A@mail.gmail.com>
- <775251698.1328032.1436259534851.JavaMail.apache@nm31.abv.bg>
- <xmqqr3ok3qad.fsf@gitster.dls.corp.google.com> <663318203.435786.1436292501411.JavaMail.apache@nm32.abv.bg>
+From: Colin Walters <walters@verbum.org>
+Subject: Re: weaning distributions off tarballs: extended verification of git
+ tags
+Date: Wed, 08 Jul 2015 00:00:49 -0400
+Message-ID: <1436328049.1937003.317969577.6CBA24A0@webmail.messagingengine.com>
+References: <1425134885.3150003.233627665.2E48E28B@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Plamen Totev <plamen.totev@abv.bg>
-X-From: git-owner@vger.kernel.org Wed Jul 08 04:19:37 2015
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 08 06:00:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCexU-0000nD-0q
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 04:19:36 +0200
+	id 1ZCgXY-0002x3-0f
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 06:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757967AbbGHCTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2015 22:19:32 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:36781 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756943AbbGHCTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2015 22:19:30 -0400
-Received: by iecvh10 with SMTP id vh10so147013761iec.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 19:19:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fYy8tvWgNmbNctakGn9bbiZHehZaOAOFdWBXZ8CcgGw=;
-        b=T3VEe14TQO6md5aepFyAvcsNaQhTT5gDbXiWoNSHVswMu2jIMGGgdrdOOhDZWaxlfL
-         ZKEwy6l1gjGG5b1i3p1VW4Sc822t/W4VkhrAoy74LqFf88006X437FUZppmD/0xOdTDZ
-         oJ0Ey77nuUKYfbo+0uZ6bmjj4oEdYSPcNgqn1OEroLJIZg4xIs3IZpgMyAQQjaE7hVki
-         globPYf+tvTLE6BrSbXnnfIs9s7V3/hJcLK7p+2Ohywb9KpSS19zUdx2ZQXda+O9cOFI
-         9bj6PFiw/k0sLoa5brMizSO8wz3xxu54FLca5KDMmcWD2WeQ8BysMaIsjVi04KkCEQuc
-         zqpA==
-X-Received: by 10.107.15.153 with SMTP id 25mr13033661iop.44.1436321969927;
- Tue, 07 Jul 2015 19:19:29 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Tue, 7 Jul 2015 19:19:00 -0700 (PDT)
-In-Reply-To: <663318203.435786.1436292501411.JavaMail.apache@nm32.abv.bg>
+	id S1750843AbbGHEAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 00:00:51 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:60553 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750713AbbGHEAu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 00:00:50 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id A32A620737
+	for <git@vger.kernel.org>; Wed,  8 Jul 2015 00:00:49 -0400 (EDT)
+Received: from web2 ([10.202.2.212])
+  by compute1.internal (MEProxy); Wed, 08 Jul 2015 00:00:49 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Cc53Kv/bfz+ymkc
+	watzQb06Pkww=; b=qHrI3qeTSlDt6VRLWOMsz84shtWvI7AfUojiTyMfUEQJZzG
+	skGYz3y2xnX/Hrh8jlyLVMfw6O87gPawX+kws50uO4NPl1M4OFeKlv0hNx/oKYbg
+	9B6o34mJBwF34XVhiQx/31yEtyqwrQzg0veA3EZE7/+Y69FIKapF7QLi5b5Y=
+Received: by web2.nyi.internal (Postfix, from userid 99)
+	id 648B25400BC; Wed,  8 Jul 2015 00:00:49 -0400 (EDT)
+X-Sasl-Enc: r9jDAGAs+ACe4vUJppPnqiYgf57saJrYlsxrpWv7yKHo 1436328049
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-bfc056ae
+In-Reply-To: <1425134885.3150003.233627665.2E48E28B@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273633>
 
-On Wed, Jul 8, 2015 at 1:08 AM, Plamen Totev <plamen.totev@abv.bg> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Plamen Totev <plamen.totev@abv.bg> writes:
->>
->> > pickaxe search also uses kwsearch so the case insensitive search with
->> > it does not work (e.g. git log -i -S). Maybe this is a less of a
->> > problem here as one is expected to search for exact string (hence
->> > knows the case)
->>
->> You reasoned correctly, I think. Pickaxe, as one of the building
->> blocks to implement Linus's ultimate change tracking tool [*1*],
->> should never pay attention to "-i". It is a step to finding the
->> commit that touches the exact code block given (i.e. "how do you
->> drill down?" part of $gmane/217 message).
->>
->> Thanks.
->>
->> [Footnote]
->> *1* http://article.gmane.org/gmane.comp.version-control.git/217
->
-> Now that I read the link again and gave the matter a thought I'm not so sure.
-> In some contexts the case of the words does not matter. In SQL for example.
-> Let's consider a SQL script file that contains the following line:
->
-> select name, address from customers;
->
-> At some point we decide to change the coding style to:
->
-> SELECT name, address FROM customers;
 
-On top of this, pickaxe already supports icase even kws is used. But
-it only works for ascii, so either we fix it and support non-ascii, or
-we remove icase support entirely from diffcore_pickaxe(). I vote the
-former.
--- 
-Duy
+
+On Sat, Feb 28, 2015, at 10:48 AM, Colin Walters wrote:
+> Hi, 
+> 
+> TL;DR: Let's define a standard for embedding stronger checksums in tags and commit messages:
+> https://github.com/cgwalters/homegit/blob/master/bin/git-evtag
+
+[time passes]
+
+I finally had a bit of time to pick this back up again in:
+
+https://github.com/cgwalters/git-evtag
+
+It should address the core concern here about stability of `git archive`.
+
+I prototyped it out with libgit2 because it was easier, and I'd like actually to be able to use this with older versions of git.
+
+But I think the next steps here are:
+
+- Validate the core design
+  * Tree walking order
+  * Submodule recursion
+  * Use of SHA512
+- Standardize it
+  (Would like to see at least a stupid slow shell script implementation to cross-validate)
+- Add it as an option to `git tag`?
+
+Longer term:
+- Support adding `Git-EVTag` as a git note, so I can retroactively add stronger
+  checksums to older git repositories
+- Anything else?
