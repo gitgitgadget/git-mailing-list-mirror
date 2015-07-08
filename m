@@ -1,143 +1,121 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 12/12] t3901: test git-am encoding conversion
-Date: Wed, 08 Jul 2015 22:44:16 +0200
-Message-ID: <559D8BA0.5090701@kdbg.org>
-References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com> <1435861000-25278-13-git-send-email-pyokagan@gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH v5 1/4] implement submodule config API for lookup of
+ .gitmodules values
+Date: Wed, 8 Jul 2015 16:52:14 -0400
+Message-ID: <CABURp0pyYcKvmbEeDSYqm15DtXvH7g_UXASR3utGco+=D95bOA@mail.gmail.com>
+References: <cover.1434400625.git.hvoigt@hvoigt.net> <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 22:44:27 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 22:52:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCwCg-0000dA-6x
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:44:26 +0200
+	id 1ZCwKd-0006R0-TD
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758883AbbGHUoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 16:44:22 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:20015 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758432AbbGHUoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 16:44:20 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mRXg60TRkz5tlF;
-	Wed,  8 Jul 2015 22:44:18 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id DBF5F519D;
-	Wed,  8 Jul 2015 22:44:16 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <1435861000-25278-13-git-send-email-pyokagan@gmail.com>
+	id S1758633AbbGHUwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 16:52:36 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:36222 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758261AbbGHUwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 16:52:34 -0400
+Received: by ykey15 with SMTP id y15so22642451yke.3
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 13:52:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=slqzr88Hl23RaMcam6vrUbSfa7ZPf6+FPGbhI0WO87c=;
+        b=KiCjnBjLrTKo+T+GVYN+XdLcSpzwTd6aYiL7Lgzho1DDtFQiJuPVDhRbno3KGDjGqc
+         hKXGcedGq8N7W3EuGXPDMbV1oihfEoFPzV8qBTSmUruttRpmM1WzRGyaf73ymKI/7l9F
+         luChNVC4vNfZ76Pq267xLAX+jO+2z7SH84gIv/ET2g1VYrUQRW62RGYLWTek/VF4NTcd
+         i2KJPrQ5nvlLhqj8C4phOxj5KuDKmjrnTrwRUklgqeeHCvosU35WVLAIP6nfTnYtnqvX
+         LiIqfVEblJ3qLCx6e/ssoyEbWs6a1CsVKisQmRN/21M/dBCWiKhdGTD4dUxQqJu+x64l
+         STug==
+X-Received: by 10.129.102.213 with SMTP id a204mr13394033ywc.19.1436388753817;
+ Wed, 08 Jul 2015 13:52:33 -0700 (PDT)
+Received: by 10.37.106.198 with HTTP; Wed, 8 Jul 2015 13:52:14 -0700 (PDT)
+In-Reply-To: <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273710>
 
-Am 02.07.2015 um 20:16 schrieb Paul Tan:
-> Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
-> supported the --utf8 and --no-utf8 options, and if set, would pass the
-> -u flag and the -k flag respectively.
+On Mon, Jun 15, 2015 at 5:06 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> In a superproject some commands need to interact with submodules. They
+> need to query values from the .gitmodules file either from the worktree
+> of from certain revisions. At the moment this is quite hard since a
+> caller would need to read the .gitmodules file from the history and then
+> parse the values. We want to provide an API for this so we have one
+> place to get values from .gitmodules from any revision (including the
+> worktree).
 >
-> git mailinfo -u will re-code the commit log message and authorship info
-> in the charset specified by i18n.commitencoding setting, while
-> git mailinfo -n will disable the re-coding.
+> The API is realized as a cache which allows us to lazily read
+> .gitmodules configurations by commit into a runtime cache which can then
+> be used to easily lookup values from it. Currently only the values for
+> path or name are stored but it can be extended for any value needed.
 >
-> Since d84029b (--utf8 is now default for 'git-am', 2007-01-08), --utf8
-> is set by default in git-am.
+> It is expected that .gitmodules files do not change often between
+> commits. Thats why we lookup the .gitmodules sha1 from a commit and then
+> either lookup an already parsed configuration or parse and cache an
+> unknown one for each sha1. The cache is lazily build on demand for each
+> requested commit.
 >
-> Add various encoding conversion tests to t3901 to test git-mailinfo's
-> encoding conversion. In addition, add a test for --no-utf8 to check that
-> no encoding conversion will occur if that option is set.
+> This cache can be used for all purposes which need knowledge about
+> submodule configurations. Example use cases are:
 >
-> Cc: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+>  * Recursive submodule checkout needs to lookup a submodule name from
+>    its path when a submodule first appears. This needs be done before
+>    this configuration exists in the worktree.
+>
+>  * The implementation of submodule support for 'git archive' needs to
+>    lookup the submodule name to generate the archive when given a
+>    revision that is not checked out.
+>
+>  * 'git fetch' when given the --recurse-submodules=on-demand option (or
+>    configuration) needs to lookup submodule names by path from the
+>    database rather than reading from the worktree. For new submodule it
+>    needs to lookup the name from its path to allow cloning new
+>    submodules into the .git folder so they can be checked out without
+>    any network interaction when the user does a checkout of that
+>    revision.
+>
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 > ---
->   t/t3901-i18n-patch.sh | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 62 insertions(+)
->
-> diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
-> index 75cf3ff..b49bdb7 100755
-> --- a/t/t3901-i18n-patch.sh
-> +++ b/t/t3901-i18n-patch.sh
-> @@ -251,4 +251,66 @@ test_expect_success 'rebase --merge (L/U)' '
->   	check_encoding 2 8859
->   '
->
-> +test_expect_success 'am (U/U)' '
-> +	# Apply UTF-8 patches with UTF-8 commitencoding
-> +	git config i18n.commitencoding UTF-8 &&
-> +	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-> +
-> +	git reset --hard master &&
-> +	git am out-u1 out-u2 &&
-> +
-> +	check_encoding 2
-> +'
-> +
-> +test_expect_success 'am (L/L)' '
-> +	# Apply ISO-8859-1 patches with ISO-8859-1 commitencoding
-> +	git config i18n.commitencoding ISO8859-1 &&
-> +	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-> +
-> +	git reset --hard master &&
-> +	git am out-l1 out-l2 &&
-> +
-> +	check_encoding 2 8859
-> +'
+>  .gitignore                                       |   1 +
+>  Documentation/technical/api-submodule-config.txt |  46 +++
+>  Makefile                                         |   2 +
+>  submodule-config.c                               | 445 +++++++++++++++++++++++
+>  submodule-config.h                               |  27 ++
+>  submodule.c                                      |   1 +
+>  submodule.h                                      |   1 +
+>  t/t7411-submodule-config.sh                      |  85 +++++
+>  test-submodule-config.c                          |  66 ++++
+>  9 files changed, 674 insertions(+)
+>  create mode 100644 Documentation/technical/api-submodule-config.txt
+>  create mode 100644 submodule-config.c
+>  create mode 100644 submodule-config.h
+>  create mode 100755 t/t7411-submodule-config.sh
+>  create mode 100644 test-submodule-config.c
 
-This test case must be protected by !MINGW, just like the last case 
-below and other cases that are already in the file. See 32f4cb6cee for 
-details.
 
-> +
-> +test_expect_success 'am (U/L)' '
-> +	# Apply ISO-8859-1 patches with UTF-8 commitencoding
-> +	git config i18n.commitencoding UTF-8 &&
-> +	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-> +	git reset --hard master &&
-> +
-> +	# am specifies --utf8 by default.
-> +	git am out-l1 out-l2 &&
-> +
-> +	check_encoding 2
-> +'
-> +
-> +test_expect_success 'am --no-utf8 (U/L)' '
-> +	# Apply ISO-8859-1 patches with UTF-8 commitencoding
-> +	git config i18n.commitencoding UTF-8 &&
-> +	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-> +
-> +	git reset --hard master &&
-> +	git am --no-utf8 out-l1 out-l2 2>err &&
-> +
-> +	# commit-tree will warn that the commit message does not contain valid UTF-8
-> +	# as mailinfo did not convert it
-> +	grep "did not conform" err &&
-> +
-> +	check_encoding 2
-> +'
-> +
-> +test_expect_success !MINGW 'am (L/U)' '
-> +	# Apply UTF-8 patches with ISO-8859-1 commitencoding
-> +	git config i18n.commitencoding ISO8859-1 &&
-> +	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-> +
-> +	git reset --hard master &&
-> +	# mailinfo will re-code the commit message to the charset specified by
-> +	# i18n.commitencoding
-> +	git am out-u1 out-u2 &&
-> +
-> +	check_encoding 2 8859
-> +'
-> +
->   test_done
->
+Instead of test-submodule-config.c to test this new module, it could
+be useful to implement these as extensions to rev-parse:
 
--- Hannes
+    git rev-parse --submodule-name [<ref>:]<path>
+    git rev-parse --submodule-path [<ref>:]<name>
+    git rev-parse --submodule-url [<ref>:]<name>
+    git rev-parse --submodule-ignore [<ref>:]<name>
+    git rev-parse --submodule-recurse [<ref>:]<name>
+
+Has this already been considered and rejected for some reason?
