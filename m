@@ -1,101 +1,149 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v8 01/11] t6302: for-each-ref tests for ref-filter APIs
-Date: Wed, 8 Jul 2015 10:09:37 +0200
-Message-ID: <559CDAC1.8030600@web.de>
-References: <CAOLa=ZTP+=aQL_JW4+O7jUh5jTD1bWpk7xbguYUsW1DkotAafA@mail.gmail.com>
- <1436285177-12279-1-git-send-email-karthik.188@gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v5 00/44] Make git-am a builtin
+Date: Wed, 8 Jul 2015 16:19:02 +0800
+Message-ID: <20150708081902.GA8606@yoshi.chippynet.com>
+References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
+ <xmqqmvz7yuk4.fsf@gitster.dls.corp.google.com>
+ <xmqqa8v7yts9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 10:10:13 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 10:20:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCkQj-0000Xq-Ck
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 10:10:09 +0200
+	id 1ZCkaQ-0006D6-7a
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 10:20:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933946AbbGHIKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 04:10:00 -0400
-Received: from mout.web.de ([212.227.15.3]:63994 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934093AbbGHIJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 04:09:42 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0LzEO1-1YzdQp0BFZ-014WaM; Wed, 08 Jul 2015 10:09:38
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.0.1
-In-Reply-To: <1436285177-12279-1-git-send-email-karthik.188@gmail.com>
-X-Provags-ID: V03:K0:tx/Zpb6DcXSvwuk9VqF1u8uRT0COT7cCXVtWk8Dnm9G3thzjMRE
- bcd5hbMgbQ23pmX2AZ1USMk5ELonzI1hG2Et+lJ/X3QDCVG2VrH2LA1oo+ED1pVD7awrJKn
- cqLmsvaKyrDiE9rBz2J10l+0HJH0gXmzKWcXtwNVmC78kMGf6xbfG1kb1ukYxElmshIDZGf
- bWIGoGXEjY77JGwcxeFEg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:F/k90bAwsMU=:hhm8HGjBf0WnRu0lNeHKl3
- HxBfVJ35+bkNPg4Nq1M9dfMRmiW5pI6jxCdCaOHkMB/nqNT+Sk80nhdZLq8Rd2uhcsrAztjUT
- Siqnfc9d4UB5jCegrEJvKe+uBW4BrM/TRhdMcqP5JuX4UiV7nMPr542A1i1BB31th5tIwLL/n
- XsA8YOJy6fQNBR3WrIIFEAT94OOUAZwcMd145EjNU7IcbYvl/HV33rBFOZu2MpYycsXW0YTBk
- sZw3VPZA6MNE0w6KlCR3cmPX5DFgRq43vOrubrcRzkP/AW/2sxbhYKxtU4G14LjmOUNlSE75Y
- /yxw6nGUWVYdKEa6Wwk+dCjT+cKEA+KcrK/+4Wjblbp/4Ed+ldZ72osrg4a6R2gt+bgD8v3FK
- O7eGP0zImI/uqGE/9E+NX9MWJ+iBrgjgv28dCm7td0gwehqweAakEbOjFXEMe5KtT8RVPIug+
- e+NqOva81AJ8UZ6g4Qq/vWmPu85ym0La0McELgP+e8Uv5m+PTIvy9vH1/9ynevYHskpTLS743
- AN8X6XtbTBY7dUC7RDqYziCSQockPRtumTp7WxOgBXKo5GNkCsD4QVTDrPymzZ9IpzTtjqOnU
- ph65R5m33JfAyHDffi1DP0RSiWGmNIUdOgtVQGvscVybfGhUHOhh9YMxOT9ieuztlP3Rl88eP
- LrevFFM2vd+RT7351z+l1P8oN81g8SZwH09+TJpsf4XUUSsOXkEu3Y+UxT+tyCgB41u0=
+	id S935246AbbGHITi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 04:19:38 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:36315 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933023AbbGHITK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 04:19:10 -0400
+Received: by pddu5 with SMTP id u5so54147198pdd.3
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 01:19:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NpwDjiNCXrLCMKFwrQCieyim4l/+4iNYY88gYY0nvE8=;
+        b=OVfmSQn7Un5fU37hoHFMVvXu2dBigJ7UFS9ifvCzfJ1sAA+/kK4Od+KygyJNzOAKOa
+         8VGvQiCl/uqFN82pFPeUh0r3NXjP5wGl/sj8ReUzIPG9WrShsvJFDvlWKMGqbTePUaYG
+         PbG00bJE1ZVd+Dw2QN/qAZ7JFi3Sepypi6Fk1hgYfHNNjApvWI4+K1lTQGTf1H9hDba1
+         6e4rE8/sOFSdtHv8DPPJFLdJXc2XQJG01Fnmy6HpgbRQlPJyVhGM36YOa0g0C8l0QJGT
+         1uBQMZHRygf+hTmmF/jxE3h+24WSW4iibScROn/10tDl5Xv/AfV+vqMi0s3NBU8y3Zmb
+         IPQw==
+X-Received: by 10.68.224.10 with SMTP id qy10mr18185710pbc.23.1436343549174;
+        Wed, 08 Jul 2015 01:19:09 -0700 (PDT)
+Received: from yoshi.chippynet.com ([116.86.132.138])
+        by smtp.gmail.com with ESMTPSA id ly7sm1577102pdb.17.2015.07.08.01.19.06
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Jul 2015 01:19:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqa8v7yts9.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273653>
 
-On 2015-07-07 18.06, Karthik Nayak wrote:
-> Add a test suite for testing the ref-filter APIs used
-> by for-each-ref. We just intialize the test suite for now.
-> More tests will be added in the following patches as more
-> options are added to for-each-ref.
-> 
-> Based-on-patch-by: Jeff King <peff@peff.net>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  t/t6302-for-each-ref-filter.sh | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
->  create mode 100755 t/t6302-for-each-ref-filter.sh
-> 
-> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-> new file mode 100755
-> index 0000000..44d2f24
-> --- /dev/null
-> +++ b/t/t6302-for-each-ref-filter.sh
-> @@ -0,0 +1,20 @@
-> +#!/bin/sh
-> +
-> +test_description='test for-each-refs usage of ref-filter APIs'
-> +
-> +. ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-gpg.sh
-> +
-> +test_expect_success 'setup some history and refs' '
-> +	test_commit one &&
-> +	test_commit two &&
-> +	test_commit three &&
-> +	git checkout -b side &&
-> +	test_commit four &&
-> +	git tag -s -m "A signed tag message" signed-tag &&
-> +	git tag -s -m "Annonated doubly" double-tag signed-tag &&
-> +	git checkout master &&
-> +	git update-ref refs/odd/spot master
-> +'
-> +
-> +test_done
-> 
-Could we have a tweak for people without gpg?
+On Wed, Jul 08, 2015 at 12:48:06AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> $ git am -s ./+dt
+> ...
+> error: patch failed: builtin/update-ref.c:421
+> error: builtin/update-ref.c: patch does not apply
+> Patch failed at 0007 update-ref and tag: add --create-reflog arg
+> The copy of the patch that failed is found in:.git/rebase-apply/patch
+> When you have resolved this problem, run "git am --continue".
+> If you prefer to skip this patch, run "git am --skip" instead.
+> To restore the original branch and stop patching, run "git am --abort".
+> $ git am -3
+> git: builtin/am.c:1332: parse_mail: Assertion `!state->author_name'
+> failed.
+> Aborted (core dumped)
 
-error: cannot run gpg: No such file or directory
-error: could not run gpg.
-error: unable to sign the tag
-not ok 1 - setup some history and refs
+Ah, it's because parse_mail() does not expect to be called while the
+authorship and commit msg fields have been filled up. This is a wrong
+assumption, of course.
+
+So the fix would be to remove the assert()s, as follows:
+
+diff --git a/builtin/am.c b/builtin/am.c
+index c548129..ab560ab 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1327,16 +1327,20 @@ static int parse_mail(struct am_state *state, const char *mail)
+ 	if (state->append_signoff)
+ 		append_signoff(&msg, 0, 0);
+ 
+-	assert(!state->author_name);
++	if (state->author_name)
++		free(state->author_name);
+ 	state->author_name = strbuf_detach(&author_name, NULL);
+ 
+-	assert(!state->author_email);
++	if (state->author_email)
++		free(state->author_email);
+ 	state->author_email = strbuf_detach(&author_email, NULL);
+ 
+-	assert(!state->author_date);
++	if (state->author_date)
++		free(state->author_date);
+ 	state->author_date = strbuf_detach(&author_date, NULL);
+ 
+-	assert(!state->msg);
++	if (state->msg)
++		free(state->msg);
+ 	state->msg = strbuf_detach(&msg, &state->msg_len);
+ 
+ finish:
+@@ -1392,7 +1396,9 @@ static void get_commit_info(struct am_state *state, struct commit *commit)
+ 		die(_("invalid ident line: %s"), sb.buf);
+ 	}
+ 
+-	assert(!state->author_name);
++	if (state->author_name)
++		free(state->author_name);
++
+ 	if (ident_split.name_begin) {
+ 		strbuf_add(&sb, ident_split.name_begin,
+ 			ident_split.name_end - ident_split.name_begin);
+@@ -1400,7 +1406,9 @@ static void get_commit_info(struct am_state *state, struct commit *commit)
+ 	} else
+ 		state->author_name = xstrdup("");
+ 
+-	assert(!state->author_email);
++	if (state->author_email)
++		free(state->author_email);
++
+ 	if (ident_split.mail_begin) {
+ 		strbuf_add(&sb, ident_split.mail_begin,
+ 			ident_split.mail_end - ident_split.mail_begin);
+@@ -1410,13 +1418,17 @@ static void get_commit_info(struct am_state *state, struct commit *commit)
+ 
+ 	author_date = show_ident_date(&ident_split, DATE_NORMAL);
+ 	strbuf_addstr(&sb, author_date);
+-	assert(!state->author_date);
++
++	if (state->author_date)
++		free(state->author_date);
+ 	state->author_date = strbuf_detach(&sb, NULL);
+ 
+-	assert(!state->msg);
+ 	msg = strstr(buffer, "\n\n");
+ 	if (!msg)
+ 		die(_("unable to parse commit %s"), sha1_to_hex(commit->object.sha1));
++
++	if (state->msg)
++		free(state->msg);
+ 	state->msg = xstrdup(msg + 2);
+ 	state->msg_len = strlen(state->msg);
+ }
