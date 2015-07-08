@@ -1,131 +1,73 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 0/9] icase match on non-ascii
-Date: Wed, 8 Jul 2015 19:13:27 +0700
-Message-ID: <CACsJy8DPVrVBrnmq2SBDkR+TNgaDBgnZGseHwR82ap2+6yR+rw@mail.gmail.com>
-References: <1436186551-32544-1-git-send-email-pclouds@gmail.com>
- <1436351919-2520-1-git-send-email-pclouds@gmail.com> <559D0A4F.9040307@web.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Since gc.autodetach=1 you can end up with auto-gc on every command
+ with no user notification
+Date: Wed, 8 Jul 2015 14:28:25 +0200
+Message-ID: <CACBZZX5hUr8TMRXYWRqdb1AQ=oOBpEFuoMwYHczPdHN82ceuTw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Plamen Totev <plamen.totev@abv.bg>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jul 08 14:14:06 2015
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 08 14:29:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCoEl-00070x-N1
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 14:14:04 +0200
+	id 1ZCoTM-0007nx-4x
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 14:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758554AbbGHMN7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 08:13:59 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33034 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758528AbbGHMN5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 08:13:57 -0400
-Received: by iggp10 with SMTP id p10so20239720igg.0
-        for <git@vger.kernel.org>; Wed, 08 Jul 2015 05:13:56 -0700 (PDT)
+	id S932964AbbGHM2u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 08:28:50 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:34215 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932944AbbGHM2p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2015 08:28:45 -0400
+Received: by obbkm3 with SMTP id km3so149077126obb.1
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 05:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=vDfTmB/NrqFtrIsQ7WK8xbUEE47td8L4aLRzMAsguYY=;
-        b=qeUpF+iIE2UoTW3eVgoZIQUfl0M0gjLD/0O2U0WdYpEDSomyqvVQVTbptMRrbdJm85
-         3QIO8ItZp3VnYmLOxPpcHWR3BsCjQrImwU7e/Xj6OQKJBdB1tZShV4nRbCkIxwWLiyoo
-         X9eubGT/cZjB2NBoO+1H/pbHPgequmIOlNyNYkUwIJLK4XLhiOxR6EksWIeHSzKIEacO
-         Ss71Shflb/Qbp9f4/30U7TsHVSiUilFcbthfWjYXB0ZDsBv+WkFh+U7hOKpKZVH7E4W7
-         FBNh61517+GuJOvSnnTsPKJ0qEw4JHv9F3XrK6Waa0OJaXYJ7QzUIqo/yYZxX8iPuyiM
-         9RCg==
-X-Received: by 10.50.7.68 with SMTP id h4mr61654805iga.40.1436357636881; Wed,
- 08 Jul 2015 05:13:56 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Wed, 8 Jul 2015 05:13:27 -0700 (PDT)
-In-Reply-To: <559D0A4F.9040307@web.de>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NV6/vEpLvqruUazvAPzMHI92EgN2t49yFL+S20fk7go=;
+        b=V10lthU9ID/2zBSl6+qtDxQBU2HVmC+529q1+xXR/bzidi4U8Jf6CVVgB5sfHhUSrE
+         HeLzq3HKW3/IIxXpB2fTtyz33HdXHl2EFaOlAV9AeN9hYXx6COXqU6rlDv5NgCDBuEI+
+         PBTdxROPLXdaJPVnCI6GvAzDTHLwH2vEJOds+55sXLFBr0wlgrxQp/sc9FIvgpK2OkZA
+         eSYS3FFDFC9NxqcBBLwbwnVboFuTCZilAR1XVUA3V88oLxKO4MJNUIZ/yAnOqVewdCcb
+         xquSIJu1hLU8nHcENos77v49tQYxInyIXgCBAYRfgw9uK7mjS5kQfuZ00gGItbR9DyoY
+         GZ1g==
+X-Received: by 10.202.218.132 with SMTP id r126mr8823954oig.69.1436358524681;
+ Wed, 08 Jul 2015 05:28:44 -0700 (PDT)
+Received: by 10.76.7.206 with HTTP; Wed, 8 Jul 2015 05:28:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273677>
 
-On Wed, Jul 8, 2015 at 6:32 PM, Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-> On 2015-07-08 12.38, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> Side note, I almost added the third has_non_ascii() function. Maybe =
-we
->> should consider merging the two existing has_non_ascii() functions
->> back, or rename one to something else.
->>
-> Side question:
->
-> has_non_ascii can mean different things:
->  UTF-8, ISO-8859-1, ISO-8859-x...
->
-> In short: everything.
-> Should we be more critical here ?
+Someone at work came to me with the problem that they were getting the
+"Auto packing the repository in background for optimum performance"
+notice on every Git command that they ran.
 
-=46or the purpose of this series, no. What we need to ask is "can we
-optimize this?" and that leads to "ok we can safely optimize for
-ascii-only patterns, don't optimize otherwise".
+This problem is a combination of two things:
 
-> May be this can be used from commit.c:
-> static int verify_utf8(struct strbuf *buf)
+ * Since Nguy=E1=BB=85n's v1.9-rc0-2-g9f673f9 where we started running =
+"git
+gc" in the background the user hasn't seen the "There are too many
+unreachable loose objects" message added back in v1.5.3.1-27-ga087cc9
 
-Except the pcre/utf8 patch, the rest should work for all single-byte en=
-codings..
+ * The checkout has a lot of loose objects. So even after "git prune
+--expire=3D2.week.ago" the .git/objects/17 directory has 317 objects.
+More than 27 in that directory trigger "git gc --auto".
 
-> Other question:
-> Should the "non-ascii" characters in the test scripts be octal-escape=
-d ?
+So it's partly a UI issue. Since the repacking is happening in the
+background the user never sees the message suggesting that they run
+"git prune".
 
-I would prefer something readable from a text editor. Even though I
-don't speak Icelandic (the strings were copied from gettext test
-script) I can see uppercase/lowercase of letters. But I don't know how
-many people have fonts covering more than just ascii..
+But perhaps the heuristic of "are there more than 27 objects in
+=2Egit/objects/17" could be improved, but I don't know with what
+exactly.
 
-> Third question:
-> What happens on systems, which don't have gettext, (for whatever reas=
-ons)
-> --- a/gettext.c
-> +++ b/gettext.c
-> @@ -166,12 +166,17 @@ void git_setup_gettext(void)
-> textdomain("git");
-> }
->
-> +int is_utf8_locale(void)
-> +{
-> + return !strcmp(charset, "UTF-8");
-> +}
-
-Hm.. pcre on utf-8 is screwed. I really don't want to go through
-nl_langinfo, $LC_ALL, $LC_CTYPE and $LANG to detect utf8 like what's
-done in compat/regex/regcomp.c.. But I guess there's no other way,
-people can disable gettext and expect git to work properly with utf-8
-if their pcre library supports it.
-
-> 4th question:
-> What happens on systems which don't have locale support at all ?
-
-I suppose by locale here you do not mean "gettext" any more, then
-icase does not work. We simply delegate the work to system regex/pcre.
-If they don't support locale, nothing we can do. Git itself does not
-know how to fold case outside ascii (except maybe utf8, I don't know
-how smart our utf-8 impl is). gettext support does not matter here,
-except pcre/utf8 case above.
-
-> As one may suspect, I'm not a friend of being dependent on gettext an=
-d/or
-> locale, at least not for this kind of business.
->
-> Would it make more sense to have a command line option ?
-
-I assume you only care about utf-8 here (and utf8.c knows how to fold
-case), you'll need to improve compat regex to take advantage of it
-first, maybe make sure it can live side by side with system regex,
-also make sure pcre is compiled with utf-8 support if you use pcre.
-And if setting LANG to let git know you want to use utf-8 is too
-subtle, then yes a command line option makes sense :)
---=20
-Duy
+But having something fork a gc to the background on every fetch (and
+similar object-modifying operations) is quite sub-optimal.
