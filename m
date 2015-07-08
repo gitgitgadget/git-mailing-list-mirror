@@ -1,202 +1,118 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2] refs: loosen restrictions on wildcard '*' refspecs
-Date: Wed,  8 Jul 2015 06:00:43 -0700
-Message-ID: <1436360443-26036-1-git-send-email-jacob.keller@gmail.com>
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 15:01:01 2015
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Draft of Git Rev News edition 5
+Date: Wed, 08 Jul 2015 15:02:29 +0200
+Organization: gmx
+Message-ID: <96e72d94244ef3d2b7ecdfdb83fdbafd@www.dscho.org>
+References: <CAP8UFD2fpRiOmgL9GW-1N9ZLAY+p-nOSH-b57vJFO4e_tELrWw@mail.gmail.com>
+ <20150705191101.GB9815@flurp.local>
+ <CAP8UFD3pD_6_SrrtCWywA8x5XY_SD3bed=QhZBBrTq0zQvqFPw@mail.gmail.com>
+ <CAPig+cTpy32c13Sv=m49hzqOBisZ0v07AT0X5BYNB07acrcW8w@mail.gmail.com>
+ <CAEcj5uXiGVvLm==s_SB7GnvBfuKi7j4yH+fgNq4JZtkvK7pZwg@mail.gmail.com>
+ <CAPig+cRv6g_nAEdGtrESFiE+5+OxEHwjhEPX0Q0WL+eHzkCAGA@mail.gmail.com>
+ <559CCFBE.9000702@drmicha.warpmail.net>
+ <xmqqegkjyu0b.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD1=KxcYyFfFZ++5Vty-KMv-ci8dtdo4bfX7oj_wgLOE7g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Nicola Paolucci <npaolucci@atlassian.com>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
+	Eric Raible <raible@nextest.com>,
+	Emma Jane Hogbin Westby <emma@emmajane.net>,
+	Max Kirillov <max@max630.net>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>,
+	Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	remi lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	guillaume pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	louis--alexandre stuber 
+	<louis--alexandre.stuber@ensimag.grenoble-inp.fr>,
+	karthik nayak <karthik.188@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 15:02:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCoyB-0003Aw-Ld
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 15:01:00 +0200
+	id 1ZCp00-0004Sq-Kp
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 15:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932690AbbGHNAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 09:00:50 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:36660 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932617AbbGHNAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 09:00:49 -0400
-Received: by pddu5 with SMTP id u5so58059957pdd.3
-        for <git@vger.kernel.org>; Wed, 08 Jul 2015 06:00:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=fyleEVGSc4A3uFsL85mAk644+ykNSpG8O7YyGl1JQhM=;
-        b=T3g9/OQfkkCNrGWePB+ZacXkWJCx48YR++bmP4p8QiAyM9pv2n9BryB/JoYuNHpGG7
-         CDwM4LSg8Au8wJ++J+bu6ZWdBRk3h1WM8TmPi4VZhXK4usZwAVytvcJ/gCj1q0x2z91z
-         /z0G3N1uNEFazxRAj1+1+n+YTPeOOoJ5gDVDaTGiaXSuCh4tCtD/QR8GySwj981LPt4c
-         8M5i7UhS+DKkbfHP1oyIrn/Al0cwDFeSmyQzwAh40ksgIzVfWtVMHdoyTgtp8ZzeHMUE
-         3o6YAoCpQY5zypQUqlg9JZYWXgSWRzuULjCiCXdTWZjv7sMfCr+ObM3TVpoYIdada2Hk
-         yaTA==
-X-Received: by 10.68.129.134 with SMTP id nw6mr20158040pbb.109.1436360448628;
-        Wed, 08 Jul 2015 06:00:48 -0700 (PDT)
-Received: from localhost ([2601:1c0:4701:21d3:59db:35c9:a379:6117])
-        by smtp.gmail.com with ESMTPSA id kh6sm2499435pbc.50.2015.07.08.06.00.46
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 08 Jul 2015 06:00:47 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.rc1.2.gbb9760d
+	id S932745AbbGHNCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 09:02:48 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55919 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932617AbbGHNCp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 09:02:45 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MgGDK-1ZPW1j2v26-00NjE1; Wed, 08 Jul 2015 15:02:33
+ +0200
+In-Reply-To: <CAP8UFD1=KxcYyFfFZ++5Vty-KMv-ci8dtdo4bfX7oj_wgLOE7g@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:QRg+b5O5PWnCFdjyYKPzUEFAX6my4TYVvfWOzSen5UGIxbc+bq4
+ J+wGVQxRfBN4CplqYpUNkNlBpYVaNCSSH4NR1XcmgdQ5riu7GSFUxTJPEzdX2XYZT4S5ETA
+ 7YW95YqvZo9U2f92NizRDG9Tfeh6ArTu3rPdBIX3DiAecKBbDo5VV+SQ3Cogn6xqedbzruB
+ MZ4xA+dahphark4mKrr1w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iki7G2+jcbY=:GrhEWDkXnaIwKwPHjQtDAx
+ IUMX4GswdUR2U9Vyd5Goh1WHCVptXik5advnIY066FCeMM23YbtrhdBbKE2AEMQlISpmGOsHr
+ +C8SrbFK4dnp0FCyp99H8f1jmuLyYCD7NbNDwE6vUpK9uTRrgzMHg1ffLWd64L2G1T6hovMJZ
+ b9nRNmx3uFLM1+gD8SJDPb6qxCrxsUdQPaGXiF8vyApsKCfBlz4Qfp2xoFAhQrTGVDtWxZ3Qj
+ 8dZMpfSLKMkio3cstI1/4LeZgUS9jVCJG3GAHLHrtuzcAbMlyP64kXF7dv11LBwp6qbAtj0JW
+ pa9xc9/WRqv6jxAH+Qb1PBf0IcMcFan3O9FJFOYIjUGFro5xMKu8fulsHK7qWLCEqN64eU+zE
+ dltPzcahBlyX3MxWkJtMm7OemVnBCcZh2Ne93jJecDY1F5YyKSMNZ6Q1nU71NbLODFU5nZAmZ
+ N9nslhbbNlp4AMbZGf+ls9qhPE4RywtQ8bpt18J7wFNtalJ6YQbM9AAwPJiY9Lwgm20weNztC
+ I/V7ytH0v1qlx6TbpEcDXb7EX19tfAA/LoyrCcCAWh3kXMH/XuoHNMYvHlbF4lWuL4NBfcNxG
+ BqGWE7j4v0CIY42Kz4bQb1CdjkiolqJ8YN3xoeHSEmLehcH2um1tppOoZhkaKwC8EL1O+taM+
+ h2Af6WzQErgsvBMP1F/vNiLAcpMLfgy/LMGZl4+FKCqhoimihOkqyMl55rjckhrpGpqc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273681>
 
-This patch updates the check_refname_component logic in order to allow for
-a less strict refspec format in regards to REFNAME_REFSPEC_PATTERN.
-Previously the '*' could only replace a single full component, and could
-not replace arbitrary text. Now, refs such as `foo/bar*:foo/bar*` will be
-accepted. This allows for somewhat more flexibility in references and does
-not break any current users. The ref matching code already allows this but
-the check_refname_format did not.
+Hi,
 
-This patch also streamlines the code by making this new check part of
-check_refname_component instead of checking after we error during
-check_refname_format, which makes more sense with how we check other
-issues in refname components.
+On 2015-07-08 12:29, Christian Couder wrote:
+> On Wed, Jul 8, 2015 at 9:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>
+>>> Just as an example, in the section on "visualizing merge diffs after the
+>>> fact", few people will be interested in the detail that I pointed out
+>>> the "--merges" option of rev-list to Dscho. While that recollection is
+>>> true and everything on the git-ml is public, I consider "Git Rev News"
+>>> to be "more public", targetted to a wider audience than the regulars.
+>>> They don't all know how much Git owes to Dscho. If things like this end
+>>> up in the news it makes me ponder for each on-list reply whether I'd
+>>> rather reply in private. Maybe I'm being overly sensitive (though not
+>>> affected in this case), but I just feel there are different degrees of
+>>> "public".
+>>
+>> I do not see "Michael pointed out that there was a slightly better
+>> way to do that" as saying anything bad about his contribution.
+> 
+> On the contrary I think that the way Dscho used sed shows some cli
+> proficiency and might be interesting to some people.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-Cc: Daniel Barkalow <barkalow@iabervon.iabervon.org>
-Cc: Junio C Hamano <gitster@pobox.com>
----
+Just for the record: I was really happy to learn about the --merges option. Also: I have not the faintest problem to demonstrate lack of knowledge publicly. It was kind of flattering to hear that my contributions to Git are appreciated, though ;-)
 
-- v2
-* update test suite
+>> I however do agree with you that we want to see the newsletter aim
+>> to summarize things better.  Instead of saying "Dscho suggested X,
+>> Michael then refined it to Y", with full details of what X and Y
+>> looked like, it would be more appropriate for the target audience to
+>> say "Dscho and Michael worked together to come up with a solution
+>> Y".
+> 
+> With the details, I think readers are more likely to remember the
+> --merges option.
 
- Documentation/git-check-ref-format.txt |  4 ++--
- refs.c                                 | 39 +++++++++++++++++++---------------
- refs.h                                 |  4 ++--
- t/t1402-check-ref-format.sh            |  8 ++++---
- 4 files changed, 31 insertions(+), 24 deletions(-)
+Yep, people remember things better when there is some story behind that they can relate to.
 
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index fc02959..9044dfa 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -94,8 +94,8 @@ OPTIONS
- 	Interpret <refname> as a reference name pattern for a refspec
- 	(as used with remote repositories).  If this option is
- 	enabled, <refname> is allowed to contain a single `*`
--	in place of a one full pathname component (e.g.,
--	`foo/*/bar` but not `foo/bar*`).
-+	in the refspec (e.g., `foo/bar*/baz` or `foo/bar*baz/`
-+	but not `foo/bar*/baz*`).
- 
- --normalize::
- 	Normalize 'refname' by removing any leading slash (`/`)
-diff --git a/refs.c b/refs.c
-index 7ac05cf..8702644 100644
---- a/refs.c
-+++ b/refs.c
-@@ -20,11 +20,12 @@ struct ref_lock {
-  * 2: ., look for a preceding . to reject .. in refs
-  * 3: {, look for a preceding @ to reject @{ in refs
-  * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
-+ * 5: check for patterns to reject unless REFNAME_REFSPEC_PATTERN is set
-  */
- static unsigned char refname_disposition[256] = {
- 	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
- 	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
-+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-@@ -71,11 +72,13 @@ static unsigned char refname_disposition[256] = {
-  * - any path component of it begins with ".", or
-  * - it has double dots "..", or
-  * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
-- * - it ends with a "/".
-- * - it ends with ".lock"
-- * - it contains a "\" (backslash)
-+ * - it ends with a "/", or
-+ * - it ends with ".lock", or
-+ * - it contains a "\" (backslash), or
-+ * - it contains a "@{" portion, or
-+ * - it contains a '*' unless REFNAME_REFSPEC_PATTERN is set
-  */
--static int check_refname_component(const char *refname, int flags)
-+static int check_refname_component(const char *refname, int *flags)
- {
- 	const char *cp;
- 	char last = '\0';
-@@ -96,6 +99,16 @@ static int check_refname_component(const char *refname, int flags)
- 			break;
- 		case 4:
- 			return -1;
-+		case 5:
-+			if (!(*flags & REFNAME_REFSPEC_PATTERN))
-+				return -1; /* refspec can't be a pattern */
-+
-+			/*
-+			 * Unset the pattern flag so that we only accept a single glob for
-+			 * the entire refspec.
-+			 */
-+			*flags &= ~ REFNAME_REFSPEC_PATTERN;
-+			break;
- 		}
- 		last = ch;
- 	}
-@@ -120,18 +133,10 @@ int check_refname_format(const char *refname, int flags)
- 
- 	while (1) {
- 		/* We are at the start of a path component. */
--		component_len = check_refname_component(refname, flags);
--		if (component_len <= 0) {
--			if ((flags & REFNAME_REFSPEC_PATTERN) &&
--					refname[0] == '*' &&
--					(refname[1] == '\0' || refname[1] == '/')) {
--				/* Accept one wildcard as a full refname component. */
--				flags &= ~REFNAME_REFSPEC_PATTERN;
--				component_len = 1;
--			} else {
--				return -1;
--			}
--		}
-+		component_len = check_refname_component(refname, &flags);
-+		if (component_len <= 0)
-+			return -1;
-+
- 		component_count++;
- 		if (refname[component_len] == '\0')
- 			break;
-diff --git a/refs.h b/refs.h
-index 8c3d433..1fd1272 100644
---- a/refs.h
-+++ b/refs.h
-@@ -224,8 +224,8 @@ extern int for_each_reflog(each_ref_fn, void *);
-  * to the rules described in Documentation/git-check-ref-format.txt.
-  * If REFNAME_ALLOW_ONELEVEL is set in flags, then accept one-level
-  * reference names.  If REFNAME_REFSPEC_PATTERN is set in flags, then
-- * allow a "*" wildcard character in place of one of the name
-- * components.  No leading or repeated slashes are accepted.
-+ * allow a single "*" wildcard character in the refspec. No leading or
-+ * repeated slashes are accepted.
-  */
- extern int check_refname_format(const char *refname, int flags);
- 
-diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-index e5dc62e..0790edf 100755
---- a/t/t1402-check-ref-format.sh
-+++ b/t/t1402-check-ref-format.sh
-@@ -62,9 +62,11 @@ invalid_ref 'heads/foo\bar'
- invalid_ref "$(printf 'heads/foo\t')"
- invalid_ref "$(printf 'heads/foo\177')"
- valid_ref "$(printf 'heads/fu\303\237')"
--invalid_ref 'heads/*foo/bar' --refspec-pattern
--invalid_ref 'heads/foo*/bar' --refspec-pattern
--invalid_ref 'heads/f*o/bar' --refspec-pattern
-+valid_ref 'heads/*foo/bar' --refspec-pattern
-+valid_ref 'heads/foo*/bar' --refspec-pattern
-+valid_ref 'heads/f*o/bar' --refspec-pattern
-+invalid_ref 'heads/f*o*/bar' --refspec-pattern
-+invalid_ref 'heads/foo*/bar*' --refspec-pattern
- 
- ref='foo'
- invalid_ref "$ref"
--- 
-2.5.0.rc1.2.gbb9760d
+Ciao,
+Dscho
