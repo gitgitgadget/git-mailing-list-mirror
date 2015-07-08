@@ -1,121 +1,51 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v5 1/4] implement submodule config API for lookup of
- .gitmodules values
-Date: Wed, 8 Jul 2015 16:52:14 -0400
-Message-ID: <CABURp0pyYcKvmbEeDSYqm15DtXvH7g_UXASR3utGco+=D95bOA@mail.gmail.com>
-References: <cover.1434400625.git.hvoigt@hvoigt.net> <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Git force push fails after a rejected push (unpack failed)?
+Date: Wed, 08 Jul 2015 22:56:23 +0200
+Message-ID: <559D8E77.60401@kdbg.org>
+References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl> <20150707141305.GA629@peff.net> <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl> <20150707194956.GA13792@peff.net> <559D60DC.4010304@kdbg.org> <20150708180539.GA12353@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Jul 08 22:52:46 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: X H <music_is_live_lg@hotmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 22:56:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCwKd-0006R0-TD
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:52:40 +0200
+	id 1ZCwON-0000gR-3W
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758633AbbGHUwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 16:52:36 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:36222 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758261AbbGHUwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 16:52:34 -0400
-Received: by ykey15 with SMTP id y15so22642451yke.3
-        for <git@vger.kernel.org>; Wed, 08 Jul 2015 13:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=slqzr88Hl23RaMcam6vrUbSfa7ZPf6+FPGbhI0WO87c=;
-        b=KiCjnBjLrTKo+T+GVYN+XdLcSpzwTd6aYiL7Lgzho1DDtFQiJuPVDhRbno3KGDjGqc
-         hKXGcedGq8N7W3EuGXPDMbV1oihfEoFPzV8qBTSmUruttRpmM1WzRGyaf73ymKI/7l9F
-         luChNVC4vNfZ76Pq267xLAX+jO+2z7SH84gIv/ET2g1VYrUQRW62RGYLWTek/VF4NTcd
-         i2KJPrQ5nvlLhqj8C4phOxj5KuDKmjrnTrwRUklgqeeHCvosU35WVLAIP6nfTnYtnqvX
-         LiIqfVEblJ3qLCx6e/ssoyEbWs6a1CsVKisQmRN/21M/dBCWiKhdGTD4dUxQqJu+x64l
-         STug==
-X-Received: by 10.129.102.213 with SMTP id a204mr13394033ywc.19.1436388753817;
- Wed, 08 Jul 2015 13:52:33 -0700 (PDT)
-Received: by 10.37.106.198 with HTTP; Wed, 8 Jul 2015 13:52:14 -0700 (PDT)
-In-Reply-To: <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
+	id S1759129AbbGHU40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 16:56:26 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:23024 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1759127AbbGHU4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 16:56:25 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mRXx36D9bz5tlB;
+	Wed,  8 Jul 2015 22:56:23 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 8ABC2519D;
+	Wed,  8 Jul 2015 22:56:23 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <20150708180539.GA12353@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273711>
 
-On Mon, Jun 15, 2015 at 5:06 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> In a superproject some commands need to interact with submodules. They
-> need to query values from the .gitmodules file either from the worktree
-> of from certain revisions. At the moment this is quite hard since a
-> caller would need to read the .gitmodules file from the history and then
-> parse the values. We want to provide an API for this so we have one
-> place to get values from .gitmodules from any revision (including the
-> worktree).
->
-> The API is realized as a cache which allows us to lazily read
-> .gitmodules configurations by commit into a runtime cache which can then
-> be used to easily lookup values from it. Currently only the values for
-> path or name are stored but it can be extended for any value needed.
->
-> It is expected that .gitmodules files do not change often between
-> commits. Thats why we lookup the .gitmodules sha1 from a commit and then
-> either lookup an already parsed configuration or parse and cache an
-> unknown one for each sha1. The cache is lazily build on demand for each
-> requested commit.
->
-> This cache can be used for all purposes which need knowledge about
-> submodule configurations. Example use cases are:
->
->  * Recursive submodule checkout needs to lookup a submodule name from
->    its path when a submodule first appears. This needs be done before
->    this configuration exists in the worktree.
->
->  * The implementation of submodule support for 'git archive' needs to
->    lookup the submodule name to generate the archive when given a
->    revision that is not checked out.
->
->  * 'git fetch' when given the --recurse-submodules=on-demand option (or
->    configuration) needs to lookup submodule names by path from the
->    database rather than reading from the worktree. For new submodule it
->    needs to lookup the name from its path to allow cloning new
->    submodules into the .git folder so they can be checked out without
->    any network interaction when the user does a checkout of that
->    revision.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
->  .gitignore                                       |   1 +
->  Documentation/technical/api-submodule-config.txt |  46 +++
->  Makefile                                         |   2 +
->  submodule-config.c                               | 445 +++++++++++++++++++++++
->  submodule-config.h                               |  27 ++
->  submodule.c                                      |   1 +
->  submodule.h                                      |   1 +
->  t/t7411-submodule-config.sh                      |  85 +++++
->  test-submodule-config.c                          |  66 ++++
->  9 files changed, 674 insertions(+)
->  create mode 100644 Documentation/technical/api-submodule-config.txt
->  create mode 100644 submodule-config.c
->  create mode 100644 submodule-config.h
->  create mode 100755 t/t7411-submodule-config.sh
->  create mode 100644 test-submodule-config.c
+Am 08.07.2015 um 20:05 schrieb Jeff King:
+> We also don't write objects directly, of course; we write to a temporary
+> file and try to link them into place. It really sounds more like the
+> "objects/d9" directory is where the permission problems are. But, hmm...
 
+Not on Windows: A read-only file cannot be overwritten or removed, 
+regardless of the permissions of the directory. We do treat this case 
+mingw_rename, but I have a slight suspicion that this does not work 
+sufficiently reliably on networked file systems.
 
-Instead of test-submodule-config.c to test this new module, it could
-be useful to implement these as extensions to rev-parse:
-
-    git rev-parse --submodule-name [<ref>:]<path>
-    git rev-parse --submodule-path [<ref>:]<name>
-    git rev-parse --submodule-url [<ref>:]<name>
-    git rev-parse --submodule-ignore [<ref>:]<name>
-    git rev-parse --submodule-recurse [<ref>:]<name>
-
-Has this already been considered and rejected for some reason?
+-- Hannes
