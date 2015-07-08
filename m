@@ -1,72 +1,109 @@
-From: Benjamin Poirier <bpoirier@suse.com>
-Subject: Different result with `git apply` and `patch`
-Date: Wed, 8 Jul 2015 10:50:34 -0700
-Message-ID: <20150708175034.GA16759@f1.synalogic.ca>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git force push fails after a rejected push (unpack failed)?
+Date: Wed, 8 Jul 2015 14:05:39 -0400
+Message-ID: <20150708180539.GA12353@peff.net>
+References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
+ <20150707141305.GA629@peff.net>
+ <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
+ <20150707194956.GA13792@peff.net>
+ <559D60DC.4010304@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 19:50:47 2015
+Content-Type: text/plain; charset=utf-8
+Cc: X H <music_is_live_lg@hotmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Jul 08 20:05:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCtUb-0005xs-G4
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 19:50:45 +0200
+	id 1ZCtjB-0007NS-8V
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 20:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932627AbbGHRul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 13:50:41 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:44811 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934164AbbGHRuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 13:50:40 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id 82847AAC8
-	for <git@vger.kernel.org>; Wed,  8 Jul 2015 17:50:39 +0000 (UTC)
+	id S933182AbbGHSFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 14:05:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57690 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758367AbbGHSFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 14:05:43 -0400
+Received: (qmail 25255 invoked by uid 102); 8 Jul 2015 18:05:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jul 2015 13:05:43 -0500
+Received: (qmail 23067 invoked by uid 107); 8 Jul 2015 18:05:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jul 2015 14:05:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jul 2015 14:05:39 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <559D60DC.4010304@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273699>
 
-Hi,
+On Wed, Jul 08, 2015 at 07:41:48PM +0200, Johannes Sixt wrote:
 
-Is it expected that `git apply` and `patch` produce a different result
-when given a patch that applies cleanly but with offsets?
+> >Yes, but remember that git stores all of the objects for all of the
+> >commits. So for some reason your push is perhaps trying to send an
+> >object that the other side already has. Usually this does not happen
+> >(the receiver says "I already have these commits, do not bother sending
+> >their objects"), but it's possible that you have an object that is not
+> >referenced by any commit, or a similar situation. It's hard to say
+> >without looking at the repository.
+> 
+> After a non-fast-forward push fails, a subsequent forced push sends the same
+> set of objects, which are already present at the server side, but are
+> dangling objects.
+> 
+> Apparently, Git for Windows fails to replace the read-only files that live
+> on the network file system.
 
-Specifically, using the source file and patch file found here:
-https://gist.github.com/benthaman/d4e80e1e2e5e0273f874
-https://gist.github.com/benthaman/d48d017179a8292c3f75
+I left one bit out from my original explanation, which is that
+we generally prefer existing objects to new ones. So we would generally
+want to throw out the new object rather than try to write it out. I'm
+not sure why unpack-objects would try to write an object we already
+have.
 
-ben@f1:/tmp/report$ mkdir p g
-ben@f1:/tmp/report$ cp ib_isert.c p
-ben@f1:/tmp/report$ cp ib_isert.c g
-ben@f1:/tmp/report$ cd p/
-ben@f1:/tmp/report/p$ patch -p5 < ../0123-IB-isert-pass-scatterlist-instead-of-cmd-to-fast_reg.patch
-patching file ib_isert.c
-Hunk #1 succeeded at 2322 (offset 131 lines).
-Hunk #2 succeeded at 2408 (offset 131 lines).
-Hunk #3 succeeded at 2474 (offset 131 lines).
-ben@f1:/tmp/report/p$ cd ../g
-ben@f1:/tmp/report/g$ git apply -p5 -v < ../0123-IB-isert-pass-scatterlist-instead-of-cmd-to-fast_reg.patch
-Checking patch ib_isert.c...
-Hunk #1 succeeded at 2322 (offset 131 lines).
-Hunk #2 succeeded at 2199 (offset -78 lines).
-Hunk #3 succeeded at 2474 (offset 131 lines).
-Applied patch ib_isert.c cleanly.
+We also don't write objects directly, of course; we write to a temporary
+file and try to link them into place. It really sounds more like the
+"objects/d9" directory is where the permission problems are. But, hmm...
 
+The code path should be unpack-objects.c:write_object, which calls
+sha1_file.cwrite_sha1_file, which then checks has_sha1_file(). These
+days it uses the freshen_* functions instead of the latter, which does a
+similar check.  But it does report failure if we cannot call utime() on
+the file, preferring to write it out instead (this is the safer choice
+from a preventing-prune-corruption perspective).
 
-ben@f1:/tmp/report$ git --version
-git version 2.4.3
-ben@f1:/tmp/report$ patch --version
-GNU patch 2.7.1
-[...]
+So it's possible that the sequence is:
 
-I see why it happens, but I'd like the two tools to produce the same
-result!
+  - unpack-objects tries to write object 1234abcd...
 
-Thanks,
--Benjamin
+  - write_sha1_file calls freshen_loose_object
+
+  - we call access("12/34abcd...", F_OK) and see that it does indeed
+    exist
+
+  - we call utime("12/34abcd...") which fails (presumably due to EPERM);
+    we return failure and assume we must write out the object
+
+  - write_sha1_file then writes to a temporary file, and tries to link
+    it into place. Now what? If we get EEXIST, we say "OK, somebody else
+    beat us here", and we consider that a success. But presumably we get
+    some other error here (which may even be a Windows-ism), fall back
+    to rename(), and that fails with EPERM, which we then report.
+
+If that's the case, then one solution is to have the
+timestamp-freshening code silently report success, and skip writing out
+the object. I'm not entirely comfortable with that, just because it is
+loosening a safety mechanism. But perhaps we could loosen it _only_ in
+the case of checking the loose object, and when we get EPERM. We know
+that the next step is going to be writing out that same loose object,
+which is almost certainly going to fail for the same reason.
+
+I dunno. The whole concept of trying to write to an object database for
+which you do not have permissions seems a little bit weird. This would
+definitely be a workaround. But I suspect it did work prior to v2.2.0.
+
+-Peff
