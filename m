@@ -1,53 +1,92 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] check_and_freshen_file: fix reversed success-check
-Date: Wed, 08 Jul 2015 23:03:02 +0200
-Message-ID: <559D9006.20102@kdbg.org>
-References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl> <20150707141305.GA629@peff.net> <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl> <20150707194956.GA13792@peff.net> <559D60DC.4010304@kdbg.org> <20150708180539.GA12353@peff.net> <20150708183331.GA16138@peff.net>
+Subject: Re: [PATCH v7 2/8] cherry-pick: treat CHERRY_PICK_HEAD and REVERT_HEAD
+ as refs
+Date: Wed, 08 Jul 2015 23:14:55 +0200
+Message-ID: <559D92CF.7000408@kdbg.org>
+References: <1436316963-25520-1-git-send-email-dturner@twopensource.com>	 <1436316963-25520-2-git-send-email-dturner@twopensource.com>	 <559D6208.8090607@kdbg.org> <1436382962.4542.8.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-	X H <music_is_live_lg@hotmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 08 23:03:13 2015
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 23:15:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCwUp-0005Mj-8m
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 23:03:11 +0200
+	id 1ZCwgJ-0005AK-Qc
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 23:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758504AbbGHVDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 17:03:06 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:24857 "EHLO bsmtp.bon.at"
+	id S1759034AbbGHVO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 17:14:59 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:33673 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758380AbbGHVDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 17:03:04 -0400
+	id S1758935AbbGHVO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 17:14:58 -0400
 Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mRY4k3X0Kz5tlL;
-	Wed,  8 Jul 2015 23:03:02 +0200 (CEST)
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mRYLS3Jvhz5tlJ;
+	Wed,  8 Jul 2015 23:14:56 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 09F81519D;
-	Wed,  8 Jul 2015 23:03:02 +0200 (CEST)
+	by dx.site (Postfix) with ESMTP id C81F452BD;
+	Wed,  8 Jul 2015 23:14:55 +0200 (CEST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <20150708183331.GA16138@peff.net>
+In-Reply-To: <1436382962.4542.8.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273713>
 
-Am 08.07.2015 um 20:33 schrieb Jeff King:
-> ...or maybe in the utime() step there is actually a bug, and we report
-> failure for no good reason. Ugh.
+Am 08.07.2015 um 21:16 schrieb David Turner:
+> On Wed, 2015-07-08 at 19:46 +0200, Johannes Sixt wrote:
+>> Am 08.07.2015 um 02:55 schrieb David Turner:
+>>> Instead of directly writing to and reading from files in
+>>> $GIT_DIR, use ref API to interact with CHERRY_PICK_HEAD
+>>> and REVERT_HEAD.
+>>>
+>>> Signed-off-by: David Turner <dturner@twopensource.com>
+>>> ---
+>> ...
+>>> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+>>> index 366f0bc..e2c5583 100644
+>>> --- a/contrib/completion/git-prompt.sh
+>>> +++ b/contrib/completion/git-prompt.sh
+>>> @@ -415,9 +415,9 @@ __git_ps1 ()
+>>>    			fi
+>>>    		elif [ -f "$g/MERGE_HEAD" ]; then
+>>>    			r="|MERGING"
+>>> -		elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
+>>> +		elif git rev-parse --quiet --verify "CHERRY_PICK_HEAD" >/dev/null; then
+>>>    			r="|CHERRY-PICKING"
+>>> -		elif [ -f "$g/REVERT_HEAD" ]; then
+>>> +		elif git rev-parse --quiet --verify "REVERT_HEAD" >/dev/null; then
+>>>    			r="|REVERTING"
+>>>    		elif [ -f "$g/BISECT_LOG" ]; then
+>>>    			r="|BISECTING"
+>>
+>> We are trying very hard not to spawn any new processes in __git_ps1().
+>> So, I raise a moderate veto against this hunk.
+>
+> Do you have an alternate suggestion about how to accomplish the same
+> thing? Here are my ideas:
+>
+> We could special-case CHERRY_PICK_HEAD and REVERT_HEAD to be files
+> independent of the ref backend, but that tends to complicate the
+> backends.  I think this is a mistake.
+>
+> We could reduce the number from two to one by providing a new
+> git-am-status command which outputs one of "CHERRY-PICKING",
+> "REVERTING", or "" (or maybe it would also handle rebase and am).  We
+> could also generalize it to "git-prompt-helper" or something by moving
+> that entire bunch of if statements inside.  This would replace calls to
+> "git describe".
+>
+> But you probably have a better idea.
 
-Ah! That code is less than a year old. When I began to adopt a workflow 
-requiring force-pushes lately, I wondered why I haven't seen these 
-failures earlier, because I did do force pushes in the past, but not 
-that frequently. I thought that I had just been lucky. But this would 
-explain it.
+Isn't it mere coincidence that the content of these two files looks like 
+a non-packed ref? Wouldn't it be better to consider the two akin to 
+MERGE_HEAD (which is not a ref because it records more than just a 
+commit name)?
 
 -- Hannes
