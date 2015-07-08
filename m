@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 5/9] grep/pcre: prepare locale-dependent tables for icase matching
-Date: Wed,  8 Jul 2015 17:38:35 +0700
-Message-ID: <1436351919-2520-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 7/9] grep/pcre: support utf-8
+Date: Wed,  8 Jul 2015 17:38:37 +0700
+Message-ID: <1436351919-2520-8-git-send-email-pclouds@gmail.com>
 References: <1436186551-32544-1-git-send-email-pclouds@gmail.com>
  <1436351919-2520-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,130 +13,96 @@ Cc: plamen.totev@abv.bg, l.s.r@web.de,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 12:38:46 2015
+X-From: git-owner@vger.kernel.org Wed Jul 08 12:38:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCmkU-0006pu-0u
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 12:38:42 +0200
+	id 1ZCmkf-0006vp-HD
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 12:38:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934920AbbGHKig convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 06:38:36 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33253 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933815AbbGHKid (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 06:38:33 -0400
-Received: by pacws9 with SMTP id ws9so131164630pac.0
-        for <git@vger.kernel.org>; Wed, 08 Jul 2015 03:38:32 -0700 (PDT)
+	id S964837AbbGHKit convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2015 06:38:49 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35401 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964821AbbGHKip (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 06:38:45 -0400
+Received: by pactm7 with SMTP id tm7so129736625pac.2
+        for <git@vger.kernel.org>; Wed, 08 Jul 2015 03:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=FibJrP3vL0suJ2St4fRalIZ/9VDgyV9vLmIB1IyHSXI=;
-        b=V66COFCo5h/cQGUYU5j+y8C2iBH3JKdiX1o3wYZc1twWQTdVEPQN7gynName63Grat
-         hfd0GoEQPNzFN9EYz0JkTpvAXVnISgHPcVFtMlAFsuxhiCINJNOi7SOdwcDsLQ8Nxs6r
-         oA7wSzS6tP9epYHTegqVkDCfIinlLdYjlIQtSsTx5w0rhZ7tXcQqxL/zV2DnUru2JkO0
-         XXcuPUoiQGLUd7Jpul+FEa2sWVgwEHr3Y5zxfJO1wzRJsg/xZyR2kB+KAuAjfZelgv2f
-         gvr+1inL9QpMaMzoFIQU6rc3WXwFrFtp3BH6zx2/IH76LA2dZNEU1Y/qs1h09t4CFQFz
-         q3BQ==
-X-Received: by 10.70.49.73 with SMTP id s9mr18875748pdn.149.1436351912616;
-        Wed, 08 Jul 2015 03:38:32 -0700 (PDT)
+        bh=PVStU0YjgC4uoel+Z4Bfw6s8eooAOxDNxIMwWNynXus=;
+        b=eWnpJfdBS2AVnFa57Qgh6UCiiktfLX/ofgULXsdECIrHruuir5cqYZfa4ToJMQVPDi
+         hCeSqDnPsA5pWniNFiJHXa9gN55a13aingMuHnCcpxGt/HiPsFh/9FVmVpyP1oKzKY9n
+         v8uer2M+6wLQwGYssJhhXJqp4ZeXCNKcpOufBaVB7SttXJA8ZVPLrU4LDhFcvIa12mfT
+         lL4U0/XkhKG3phfaYFZCKr7JZFg3um3ypqCNeYE2/mRRjpl3Sbt16QUz7p3wX2x8hjy5
+         l5YP08eSK0ko18vB3Ftbss3MQbnnueACPY5xYz8EKM5zQVXiL83oRBXoAiV1f0se1Sgr
+         H+8g==
+X-Received: by 10.70.128.226 with SMTP id nr2mr19180541pdb.139.1436351924446;
+        Wed, 08 Jul 2015 03:38:44 -0700 (PDT)
 Received: from lanh ([115.73.45.219])
-        by smtp.gmail.com with ESMTPSA id g2sm2065808pdh.11.2015.07.08.03.38.29
+        by smtp.gmail.com with ESMTPSA id dp1sm2042805pbb.53.2015.07.08.03.38.41
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Jul 2015 03:38:32 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 08 Jul 2015 17:39:18 +0700
+        Wed, 08 Jul 2015 03:38:43 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 08 Jul 2015 17:39:30 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1436351919-2520-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273665>
 
-The default tables are usually built with C locale and only suitable
-for LANG=3DC or similar.  This should make case insensitive search work
-correctly for all single-byte charsets.
+In the previous change in this function, we add locale support for
+single-byte encodings only. It looks like pcre only supports utf-* as
+multibyte encodings, the others are left in the cold (which is
+fine). We need to enable PCRE_UTF8 so pcre can parse the string
+correctly before folding case.
 
+Noticed-by: Plamen Totev <plamen.totev@abv.bg>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- grep.c                                   |  7 +++++--
- grep.h                                   |  1 +
- t/t7813-grep-icase-non-ascii.sh (new +x) | 19 +++++++++++++++++++
- 3 files changed, 25 insertions(+), 2 deletions(-)
- create mode 100755 t/t7813-grep-icase-non-ascii.sh
+ grep.c                          | 2 ++
+ t/t7812-grep-icase-non-ascii.sh | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
 diff --git a/grep.c b/grep.c
-index 8fce54f..c79aa70 100644
+index c79aa70..7c9e437 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -324,11 +324,13 @@ static void compile_pcre_regexp(struct grep_pat *=
-p, const struct grep_opt *opt)
- 	int erroffset;
- 	int options =3D PCRE_MULTILINE;
+@@ -326,6 +326,8 @@ static void compile_pcre_regexp(struct grep_pat *p,=
+ const struct grep_opt *opt)
 =20
--	if (opt->ignore_case)
-+	if (opt->ignore_case) {
-+		p->pcre_tables =3D pcre_maketables();
+ 	if (opt->ignore_case) {
+ 		p->pcre_tables =3D pcre_maketables();
++		if (is_utf8_locale())
++			options |=3D PCRE_UTF8;
  		options |=3D PCRE_CASELESS;
-+	}
+ 	}
 =20
- 	p->pcre_regexp =3D pcre_compile(p->pattern, options, &error, &erroffs=
-et,
--			NULL);
-+				      p->pcre_tables);
- 	if (!p->pcre_regexp)
- 		compile_regexp_failed(p, error);
-=20
-@@ -362,6 +364,7 @@ static void free_pcre_regexp(struct grep_pat *p)
- {
- 	pcre_free(p->pcre_regexp);
- 	pcre_free(p->pcre_extra_info);
-+	pcre_free((void *)p->pcre_tables);
- }
- #else /* !USE_LIBPCRE */
- static void compile_pcre_regexp(struct grep_pat *p, const struct grep_=
-opt *opt)
-diff --git a/grep.h b/grep.h
-index 95f197a..cee4357 100644
---- a/grep.h
-+++ b/grep.h
-@@ -48,6 +48,7 @@ struct grep_pat {
- 	regex_t regexp;
- 	pcre *pcre_regexp;
- 	pcre_extra *pcre_extra_info;
-+	const unsigned char *pcre_tables;
- 	kwset_t kws;
- 	unsigned fixed:1;
- 	unsigned ignore_case:1;
-diff --git a/t/t7813-grep-icase-non-ascii.sh b/t/t7813-grep-icase-non-a=
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
 scii.sh
-new file mode 100755
-index 0000000..efef7fb
---- /dev/null
-+++ b/t/t7813-grep-icase-non-ascii.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description=3D'grep icase on non-English locales'
-+
-+. ./lib-gettext.sh
-+
-+test_expect_success GETTEXT_ISO_LOCALE 'setup' '
-+	printf "TILRAUN: Hall=F3 Heimur!" >file &&
-+	git add file &&
-+	LC_ALL=3D"$is_IS_iso_locale" &&
-+	export LC_ALL
+index c945589..1306cc0 100755
+--- a/t/t7812-grep-icase-non-ascii.sh
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -16,6 +16,12 @@ test_expect_success GETTEXT_LOCALE 'grep literal str=
+ing, no -F' '
+ 	git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
+ '
+=20
++test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pcre string' '
++	git grep --perl-regexp    "TILRAUN: H.ll=C3=B3 Heimur!" &&
++	git grep --perl-regexp -i "TILRAUN: H.ll=C3=B3 Heimur!" &&
++	git grep --perl-regexp -i "TILRAUN: H.LL=C3=93 HEIMUR!"
 +'
 +
-+test_expect_success GETTEXT_ISO_LOCALE,LIBPCRE 'grep pcre string' '
-+	git grep --perl-regexp -i "TILRAUN: H.ll=F3 Heimur!" &&
-+	git grep --perl-regexp -i "TILRAUN: H.LL=D3 HEIMUR!"
-+'
-+
-+test_done
+ test_expect_success GETTEXT_LOCALE 'grep literal string, with -F' '
+ 	git grep --debug -i -F "TILRAUN: Hall=C3=B3 Heimur!"  2>&1 >/dev/null=
+ |
+ 		 grep fixed >debug1 &&
 --=20
 2.3.0.rc1.137.g477eb31
