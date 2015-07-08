@@ -1,103 +1,100 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] git: add optional support for full pattern in fetch refspecs
-Date: Tue, 7 Jul 2015 21:47:46 -0700
-Message-ID: <CA+P7+xpBrZPXFWpmzhkmHH7aAWiY-ews63_eex68kKc=ViHC3A@mail.gmail.com>
-References: <1436309869-19609-1-git-send-email-jacob.e.keller@intel.com> <xmqq615v1dlr.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git grep does not support multi-byte characters (like UTF-8)
+Date: Tue, 07 Jul 2015 21:52:30 -0700
+Message-ID: <xmqq1tgj1ca9.fsf@gitster.dls.corp.google.com>
+References: <2008630603.1189842.1436182096558.JavaMail.apache@nm33.abv.bg>
+	<CACsJy8BH_QJss57uMJNE=ojNT5vBWKN=eEdrBBS38g6As-UH6A@mail.gmail.com>
+	<775251698.1328032.1436259534851.JavaMail.apache@nm31.abv.bg>
+	<xmqqr3ok3qad.fsf@gitster.dls.corp.google.com>
+	<663318203.435786.1436292501411.JavaMail.apache@nm32.abv.bg>
+	<CACsJy8De6Wt4J5ZFx5rEg2eRBt=7PsLim=31FvtLEKsX-6SMyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 06:48:22 2015
+Content-Type: text/plain
+Cc: Plamen Totev <plamen.totev@abv.bg>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 06:52:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZChHQ-0002Zg-Bm
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 06:48:20 +0200
+	id 1ZChLa-0004qL-Fh
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 06:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbbGHEsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 00:48:08 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:35871 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbbGHEsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 00:48:06 -0400
-Received: by obdbs4 with SMTP id bs4so143188491obd.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2015 21:48:05 -0700 (PDT)
+	id S1754782AbbGHEwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 00:52:35 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:33431 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751564AbbGHEwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 00:52:33 -0400
+Received: by ieru20 with SMTP id u20so4933770ier.0
+        for <git@vger.kernel.org>; Tue, 07 Jul 2015 21:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=bleDJo61tE8tTgVlkMyt8kPubkpaCokFO2j41jVlDOo=;
-        b=wkYPHx6oxJluxhZ9tR4uUrtjjam590CrAYpLZufd8eG+s2/v+K2Xqrl1fxXJZNvxyO
-         Yhd6Yadq2CIde+ZqUZf2D/VJIBd3uiGKwxCESegpifQptq6sDLX4Hv6YszD8AStMOYKX
-         yY6uUrCVIqV7wmx0EchuXMhYYrpAIwdm6m/vqYIun+r9cOVSAAKRKKRH9CNvmNIKmE1l
-         NP1tWoXKsn/V+mnVY5TTG3RNmXa6McHjopbrwYtDur9PchrvS7qaD4AGCCxRW2M/Z45q
-         xxJE9VyZ+QG1MSpwj5Ht0Skuf2kXmGSQR+nf4MN9h+mj7tfTl40txXZJnMx/3oR9Hh2Y
-         bSEQ==
-X-Received: by 10.202.190.11 with SMTP id o11mr7274157oif.20.1436330885777;
- Tue, 07 Jul 2015 21:48:05 -0700 (PDT)
-Received: by 10.76.174.8 with HTTP; Tue, 7 Jul 2015 21:47:46 -0700 (PDT)
-In-Reply-To: <xmqq615v1dlr.fsf@gitster.dls.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=+tqpj5lDaHLaCW9eirB6lUAUYr0A9rRnTnlhicO3vhA=;
+        b=HVtkp3X9sBxHxfxLEFQpCVcXdodGnSj7glDIxbrhMleRfMrt54SQYGX3yLjb658z1N
+         fnq2KKYtHk1a+GI0TR0q9qeC6qHp+6BMUjboD5XcbCL79wW4Q8YQXF7d6zOYOFuorVZg
+         UjxJYTRsu1yz5SLfHmk1fWWvpCWJGRDzXFLkPVwszYLagwVSju9bGTb5Qf4SHcos0lA/
+         cnUj5OzyleAMIvJdgFOmCnLkfUkOyIUB0K+/UWHIsrq9zWpWghRB+h0FFSMYqjfzLtW9
+         iAkP+WC3nEpzA0Y0o8H4eZelwVx+f7EHhQasfHvVchYUkI2yoXRTaYF7p/1lqiw+q75J
+         KrhA==
+X-Received: by 10.107.154.196 with SMTP id c187mr3341575ioe.64.1436331152637;
+        Tue, 07 Jul 2015 21:52:32 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:7d74:6f43:1e30:fb1d])
+        by smtp.gmail.com with ESMTPSA id q16sm1136434igr.12.2015.07.07.21.52.30
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 07 Jul 2015 21:52:30 -0700 (PDT)
+In-Reply-To: <CACsJy8De6Wt4J5ZFx5rEg2eRBt=7PsLim=31FvtLEKsX-6SMyQ@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 8 Jul 2015 09:19:00 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273637>
 
-On Tue, Jul 7, 2015 at 9:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->
->> +remote.<name>.arbitrarypattern::
->> +     When set to true, fetching from this remote will allow arbitrary complex
->> +     patterns for the fetch refspecs. For example,
->> +     refs/tags/prefix-*:refs/tags/prefix-* will work as expected. Care should be
->> +     taken as you could fetch refs into names that don't exist on the remote and
->> +     may end up pushing them again later by accident.
->
-> Bad name and explanation, unless you truly mean "arbitrary", like
-> taking something like "refs/ta*/prefix-*-*-foo:refs/*".
->
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I couldn't figure out what to use, and the original intent was to add
-an option.. but see below,
+> On top of this, pickaxe already supports icase even kws is used. But
+> it only works for ascii, so either we fix it and support non-ascii, or
+> we remove icase support entirely from diffcore_pickaxe(). I vote the
+> former.
 
-> More importantly, this is not "pattern"; you are talking about
-> refspec, I think.
->
+I think that is a different issue.  The pickaxe has a single very
+narrowly-defined intended use case [*1*] and I do not care too much
+how any use that is outside the intended use case behaves.  As long
+as its intended use case does not suffer (1) correctness-wise, (2)
+performance-wise and (3) code-cleanliness-wise, due to changes to
+support such enhancements, I am perfectly fine.
 
-In this case the option was an additional modifier to the
-refspec_patterns, and I was talking about how the pattern could be
-slightly more arbitrary. I do agree it is a bad name, but i couldn't
-actually come up with anything better.
+Ascii-only icase match is one example of a feature that is outside
+the intended use case, and implementation of it using kws is nearly
+free if I am not mistaken, not making the primary use case suffer in
+any way.
 
-> But that probably does not matter.  I do not think this even needs
-> to exist as an option.
->
+I however am highly skeptical that the same thing can be done with
+non-ascii icase.  As long as it can be added without makinng the
+primary use case suffer in any way, I do not mind it very much.
 
-Yes, I agree especially as I look at it more. I'll work up a patch
-version which does this without the option.
+Thanks.
 
-> People's existing settings would not have anything other than an
-> asterisk as a whole path component on each side (or no asterisk
-> anywhere), and if they had an asterisk anywhere else they would have
-> gotten an error and wouldn't have made any progress until they fixed
-> it.  So if you loosen the current rule sligntly and tell them "If
-> your refspec has an asterisk in it, then you must have one asterisk
-> on each side of it. That rule hasn't changed. But your asterisks no
-> longer have to be a whole path component", such a change would not
-> hurt them.  Their existing setting that work would not notice, and
-> existing users would not be relying on a refspec with an asterisk as
-> part of a path component to error out.
->
 
-Right. We aren't breaking anyones current functionality, just adding
-new functionality. We already check for a * in both sides, and my code
-will ensure only 1 star total. It will then work for the new somewhat
-more expanded patterns and we don't need an option.
+[Footnote]
 
-I'll work up a v2.
+*1* The requirement is very simple.  You get a string that is unique
+in a blob that exists at the revision your traversal begins, and you
+want to find the point where the blob at the corresponding path does
+not have that exact string with minimal effort.  You do not need to
+ensure that the input string is unique (it is a user error and the
+behaviour is undefined) and for simplicity you are also allowed to
+fire when the blob has more than one copies of the string (even
+though the expected use is to find the place where the blob has
+zero).
 
-Regards,
-Jake
+Any other cases, e.g. the string was not unique in the blob, the
+user specified "ignore-case" and other irrelevant options, are
+allowed to be incorrect or slow or both, as $gmane/217 does not need
+such uses to implement it ;-)
