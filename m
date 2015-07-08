@@ -1,141 +1,143 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2] check_and_freshen_file: fix reversed success-check
-Date: Wed, 8 Jul 2015 16:33:52 -0400
-Message-ID: <20150708203352.GA23901@peff.net>
-References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
- <20150707141305.GA629@peff.net>
- <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
- <20150707194956.GA13792@peff.net>
- <559D60DC.4010304@kdbg.org>
- <20150708180539.GA12353@peff.net>
- <20150708183331.GA16138@peff.net>
- <xmqqegkixxja.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 12/12] t3901: test git-am encoding conversion
+Date: Wed, 08 Jul 2015 22:44:16 +0200
+Message-ID: <559D8BA0.5090701@kdbg.org>
+References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com> <1435861000-25278-13-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	X H <music_is_live_lg@hotmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 22:34:00 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 22:44:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZCw2a-0001tH-7m
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:34:00 +0200
+	id 1ZCwCg-0000dA-6x
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jul 2015 22:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933482AbbGHUd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2015 16:33:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57775 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933000AbbGHUdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2015 16:33:55 -0400
-Received: (qmail 31487 invoked by uid 102); 8 Jul 2015 20:33:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jul 2015 15:33:54 -0500
-Received: (qmail 24327 invoked by uid 107); 8 Jul 2015 20:34:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jul 2015 16:34:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jul 2015 16:33:52 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqegkixxja.fsf@gitster.dls.corp.google.com>
+	id S1758883AbbGHUoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2015 16:44:22 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:20015 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758432AbbGHUoU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2015 16:44:20 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mRXg60TRkz5tlF;
+	Wed,  8 Jul 2015 22:44:18 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id DBF5F519D;
+	Wed,  8 Jul 2015 22:44:16 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <1435861000-25278-13-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273709>
 
-On Wed, Jul 08, 2015 at 12:24:41PM -0700, Junio C Hamano wrote:
+Am 02.07.2015 um 20:16 schrieb Paul Tan:
+> Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
+> supported the --utf8 and --no-utf8 options, and if set, would pass the
+> -u flag and the -k flag respectively.
+>
+> git mailinfo -u will re-code the commit log message and authorship info
+> in the charset specified by i18n.commitencoding setting, while
+> git mailinfo -n will disable the re-coding.
+>
+> Since d84029b (--utf8 is now default for 'git-am', 2007-01-08), --utf8
+> is set by default in git-am.
+>
+> Add various encoding conversion tests to t3901 to test git-mailinfo's
+> encoding conversion. In addition, add a test for --no-utf8 to check that
+> no encoding conversion will occur if that option is set.
+>
+> Cc: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>   t/t3901-i18n-patch.sh | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 62 insertions(+)
+>
+> diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
+> index 75cf3ff..b49bdb7 100755
+> --- a/t/t3901-i18n-patch.sh
+> +++ b/t/t3901-i18n-patch.sh
+> @@ -251,4 +251,66 @@ test_expect_success 'rebase --merge (L/U)' '
+>   	check_encoding 2 8859
+>   '
+>
+> +test_expect_success 'am (U/U)' '
+> +	# Apply UTF-8 patches with UTF-8 commitencoding
+> +	git config i18n.commitencoding UTF-8 &&
+> +	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
+> +
+> +	git reset --hard master &&
+> +	git am out-u1 out-u2 &&
+> +
+> +	check_encoding 2
+> +'
+> +
+> +test_expect_success 'am (L/L)' '
+> +	# Apply ISO-8859-1 patches with ISO-8859-1 commitencoding
+> +	git config i18n.commitencoding ISO8859-1 &&
+> +	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
+> +
+> +	git reset --hard master &&
+> +	git am out-l1 out-l2 &&
+> +
+> +	check_encoding 2 8859
+> +'
 
-> > If our utime() call fails, we treat this the same as not
-> > having the object in the first place; the safe thing to do
-> > is write out another copy. However, the loose-object check
-> > accidentally inverst the utime() check; it returns failure
-> 
-> s/inverst/invert/?
+This test case must be protected by !MINGW, just like the last case 
+below and other cases that are already in the file. See 32f4cb6cee for 
+details.
 
-Whoops, should be "inverts".
+> +
+> +test_expect_success 'am (U/L)' '
+> +	# Apply ISO-8859-1 patches with UTF-8 commitencoding
+> +	git config i18n.commitencoding UTF-8 &&
+> +	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
+> +	git reset --hard master &&
+> +
+> +	# am specifies --utf8 by default.
+> +	git am out-l1 out-l2 &&
+> +
+> +	check_encoding 2
+> +'
+> +
+> +test_expect_success 'am --no-utf8 (U/L)' '
+> +	# Apply ISO-8859-1 patches with UTF-8 commitencoding
+> +	git config i18n.commitencoding UTF-8 &&
+> +	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
+> +
+> +	git reset --hard master &&
+> +	git am --no-utf8 out-l1 out-l2 2>err &&
+> +
+> +	# commit-tree will warn that the commit message does not contain valid UTF-8
+> +	# as mailinfo did not convert it
+> +	grep "did not conform" err &&
+> +
+> +	check_encoding 2
+> +'
+> +
+> +test_expect_success !MINGW 'am (L/U)' '
+> +	# Apply UTF-8 patches with ISO-8859-1 commitencoding
+> +	git config i18n.commitencoding ISO8859-1 &&
+> +	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
+> +
+> +	git reset --hard master &&
+> +	# mailinfo will re-code the commit message to the charset specified by
+> +	# i18n.commitencoding
+> +	git am out-u1 out-u2 &&
+> +
+> +	check_encoding 2 8859
+> +'
+> +
+>   test_done
+>
 
-> I think each of the functions in the check_and_freshen_* callchain
-> can at least have a comment in front of it, saying what the returned
-> value means, to unconfuse readers.  "Return 1 when the thing exists
-> and no further action is necessary; return 0 when the thing does not
-> exist or not in a good state and should be overwritten (if the
-> caller has something to overwrite it with, that is)" or something?
-> 
-> Their returning "1" instead of "-1" could be taken as a hint that
-> says "this non-zero return does not signal a _failure_", but it is a
-> rather weak hint.
-
-Fair enough. Here's a re-roll with some extra comments, and the typo-fix
-from above.
-
--- >8 --
-Subject: check_and_freshen_file: fix reversed success-check
-
-When we want to write out a loose object file, we have
-always first made sure we don't already have the object
-somewhere. Since 33d4221 (write_sha1_file: freshen existing
-objects, 2014-10-15), we also update the timestamp on the
-file, so that a simultaneous prune knows somebody is
-likely to reference it soon.
-
-If our utime() call fails, we treat this the same as not
-having the object in the first place; the safe thing to do
-is write out another copy. However, the loose-object check
-accidentally inverts the utime() check; it returns failure
-_only_ when the utime() call actually succeeded. Thus it was
-failing to protect us there, and in the normal case where
-utime() succeeds, it caused us to pointlessly write out and
-link the object.
-
-This passed our freshening tests, because writing out the
-new object is certainly _one_ way of updating its utime. So
-the normal case was inefficient, but not wrong.
-
-While we're here, let's also drop a comment in front of the
-check_and_freshen functions, making a note of their return
-type (since it is not our usual "0 for success, -1 for
-error").
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- sha1_file.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 77cd81d..e435289 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -443,6 +443,7 @@ void prepare_alt_odb(void)
- 	read_info_alternates(get_object_directory(), 0);
- }
- 
-+/* Returns 1 if we have successfully freshened the file, 0 otherwise. */
- static int freshen_file(const char *fn)
- {
- 	struct utimbuf t;
-@@ -450,11 +451,18 @@ static int freshen_file(const char *fn)
- 	return !utime(fn, &t);
- }
- 
-+/*
-+ * All of the check_and_freshen functions return 1 if the file exists and was
-+ * freshened (if freshening was requested), 0 otherwise. If they return
-+ * 0, you should not assume that it is safe to skip a write of the object (it
-+ * either does not exist on disk, or has a stale mtime and may be subject to
-+ * pruning).
-+ */
- static int check_and_freshen_file(const char *fn, int freshen)
- {
- 	if (access(fn, F_OK))
- 		return 0;
--	if (freshen && freshen_file(fn))
-+	if (freshen && !freshen_file(fn))
- 		return 0;
- 	return 1;
- }
--- 
-2.5.0.rc1.340.ge59e3eb
+-- Hannes
