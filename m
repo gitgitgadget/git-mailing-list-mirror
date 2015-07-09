@@ -1,125 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reset sometimes updates mtime
-Date: Thu, 09 Jul 2015 10:56:57 -0700
-Message-ID: <xmqqa8v5w6xi.fsf@gitster.dls.corp.google.com>
-References: <1436450534.15519.49.camel@kaarsemaker.net>
+Subject: Re: [PATCH v2] clone: Simplify string handling in guess_dir_name()
+Date: Thu, 09 Jul 2015 11:05:04 -0700
+Message-ID: <xmqq1tghw6jz.fsf@gitster.dls.corp.google.com>
+References: <CAHGBnuPkia6UYeN4jekfGzypV2MpyiMs2W+O=SSJR3hR=K3g0A@mail.gmail.com>
+	<0000014e73d7c3d8-413991dd-3907-430c-ab99-a0a3d93dcab0-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Thu Jul 09 19:59:10 2015
+Cc: git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 09 20:05:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDG6G-0006DK-BR
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 19:59:08 +0200
+	id 1ZDGC9-0001iz-Cz
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 20:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239AbbGIR7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 13:59:03 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:35604 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753203AbbGIR5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 13:57:00 -0400
-Received: by igcqs7 with SMTP id qs7so85561156igc.0
-        for <git@vger.kernel.org>; Thu, 09 Jul 2015 10:57:00 -0700 (PDT)
+	id S1754144AbbGISFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 14:05:08 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37438 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753850AbbGISFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 14:05:07 -0400
+Received: by igpy18 with SMTP id y18so2412110igp.0
+        for <git@vger.kernel.org>; Thu, 09 Jul 2015 11:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=g8lzLMu9j/yCVGbbW5EwH+H4fVWG0LXFyB7nz4u+wRg=;
-        b=kTqUogFiNzDc+VZsuJJzcOJLrKw4cWzc0s2IHWa44/BwB/hoWnbGW7w8BenOXm0GFm
-         TiKBDwi+ZKPiOsNzMumWVHNFbEqE9BQKiPiYLr/a27liiMl1M0d6MTNHQcpXnQjFyTwx
-         IS7Y8XFXMoKRH03LrLeTWR9TZLDbx679FgxFyMUvLelfJzAjesol9AjHzc+2aBkAjgfI
-         aiiKRk1r7EY6OuSxHOZCSyVGagkczQB/TT8TYjWj4T2LZ4XlBJNptcoMIq/Iaj3AQB1G
-         FCaJzihdIzGAyBCIOrs74AAM92WVcYTv6Hlz3CjWPWjlvKv4qu6XXLGmVNFbc0Fq8VEE
-         SIog==
-X-Received: by 10.107.30.195 with SMTP id e186mr29036704ioe.57.1436464620182;
-        Thu, 09 Jul 2015 10:57:00 -0700 (PDT)
+        bh=xSoKnXF6pkIBLQsEd/IHThBNLdUwEvdeX2uLlqXHjXE=;
+        b=IzPFCU4t3Ss9rHSDRHAIg3EqyKES94N+2Wju9Bt8jgw2OaFPTh3fqCZaSdijxNibEW
+         7ug529PsYkL57/EpKCZE/YeJMKDAMi0I7+jED7jXVpeR9BXls2bFfohhyaRckRgyLWiV
+         mm7936n/omNclcddV7FJ4WFosR5OYDeQ2PaMBYGHxSRqayJtuo5GUyUBihGylO7fPZ1w
+         BFekMQ6epAzC1dzW2fp58CDR2zoQJHNg4AmVQYLE2F67y5GG5gUxoa0nb8a/6agFi61/
+         sK9YXAnj2axxAKCNk2CXv5UL+L0lgp0Na+izt/oGCTY0S9tWW33E4Dhg0Jw+nj4mBQQ/
+         bbjQ==
+X-Received: by 10.107.164.22 with SMTP id n22mr27349489ioe.73.1436465107297;
+        Thu, 09 Jul 2015 11:05:07 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:647a:d824:a8a3:7bb0])
-        by smtp.gmail.com with ESMTPSA id y98sm4656452ioi.25.2015.07.09.10.56.59
+        by smtp.gmail.com with ESMTPSA id a82sm4671697ioe.22.2015.07.09.11.05.06
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 09 Jul 2015 10:56:59 -0700 (PDT)
-In-Reply-To: <1436450534.15519.49.camel@kaarsemaker.net> (Dennis Kaarsemaker's
-	message of "Thu, 09 Jul 2015 16:02:14 +0200")
+        Thu, 09 Jul 2015 11:05:06 -0700 (PDT)
+In-Reply-To: <0000014e73d7c3d8-413991dd-3907-430c-ab99-a0a3d93dcab0-000000@eu-west-1.amazonses.com>
+	(Sebastian Schuberth's message of "Thu, 9 Jul 2015 17:23:17 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273766>
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> I'm seeing some behaviour with git reset that I find odd. Basically if I
-> do
+> Subject: Re: [PATCH v2] clone: Simplify string handling in guess_dir_name()
+
+We seem not to capitalize the first word on the subject line.
+
+> Content-Type: multipart/mixed;  boundary="----=_Part_8_836493213.1436462597065"
+
+Please don't.
+
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> ---
+>  builtin/clone.c | 16 +++-------------
+>  1 file changed, 3 insertions(+), 13 deletions(-)
 >
-> git fetch && \
-> git reset --hard simple-tag-that-points-to-the-current-commit
->
-> sometimes the reset will update the mtime of all files and directories
-> in the repo and sometimes it will leave them alone. Changing it to
->
-> git fetch && \
-> git status && \
-> git reset --hard simple-tag-that-points-to-the-current-commit
->
-> Cause the mtime update to reliably not happen.
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 00535d0..afdc004 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -147,6 +147,7 @@ static char *get_repo_path(const char *repo, int *is_bundle)
+>  static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+>  {
+>  	const char *end = repo + strlen(repo), *start;
+> +	size_t len;
+>  	char *dir;
+>  
+>  	/*
+> @@ -173,20 +174,9 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+>  	/*
+>  	 * Strip .{bundle,git}.
+>  	 */
+> -	if (is_bundle) {
+> -		if (end - start > 7 && !strncmp(end - 7, ".bundle", 7))
+> -			end -= 7;
+> -	} else {
+> -		if (end - start > 4 && !strncmp(end - 4, ".git", 4))
+> -			end -= 4;
+> -	}
+> +	strip_suffix(start, is_bundle ? ".bundle" : ".git" , &len);
 
-If my theory on what is happening is correct, I do not think there
-is any bug in what "reset --hard" is doing.
+This looks vastly nicer than the original.
 
-My theory is that something is causing the stat info that is cached
-in your index and the lstat(2) return you get from your working tree
-files go out of sync.  Even though you are not actively touching any
-working tree files (otherwise, you wouldn't be complaining about
-mtime changing in the first place), perhaps your build of Git
-records timestamps in NS but your filesystem and the operating
-system does not preserve nanosecond resolution of timestamps when it
-evicts inode data from the core, or something like that?  If that is
-what is happening, I think that "fetch" is a red herring, but any
-operation that takes some time and/or hits filesystem reasonably
-hard would trigger it.
+> -	if (is_bare) {
+> -		struct strbuf result = STRBUF_INIT;
+> -		strbuf_addf(&result, "%.*s.git", (int)(end - start), start);
+> -		dir = strbuf_detach(&result, NULL);
+> -	} else
+> -		dir = xstrndup(start, end - start);
+> +	dir = is_bare ? xstrfmt("%.*s.git", (int)len, start) : xstrndup(start, len);
 
-And the reason why I say there is no bug in what "reset --hard" is
-doing here, if the above theory is correct, is because:
+This however I had to read twice.  I'd say
 
- - The user asked "reset --hard" to "make sure that my working tree
-   files are identical to those of HEAD";
+	if (is_bare)
+        	dir = xstrfmt(...);
+	else
+        	dir = xstrndup(...);
 
- - "reset --hard" looks at lstat(2) return and the cached stat info
-   in the index and find them not to match.  It can do one of two
-   things:
-
-   (1) see if the user did something stupid, like "touch file", that
-       modifies only lstat(2) info without actually changing its
-       contents, by reading from the working tree, reading HEAD:file
-       from the object database, and comparing them, and overwrite
-       the working tree file only when they do not match.
-
-       or
-
-   (2) the contents might happen to be the same, but the end result
-       user desires to have is that the contents of the working tree
-       file is the same as that from the HEAD, so overwrite it
-       without wasting time reading two and compare before doing so.
-
-   and it is perfectly reasonable to do the latter.  After all, the
-   whole point of having its cached lstat(2) data in the index is to
-   so that we do not have to always compare the contents before
-   deciding something has changed in the working tree.
-
-Running "git update-index --refresh" immediately before "reset" may
-alleviate the issue.  "git status" has the same effect, only because
-it does "update-index --refresh" at the beginning of its processing,
-but it wastes a lot more time and resource doing other things.
-
-But unless/until you know _why_ the cached stat info in your index
-goes stale relative to what lstat(2) tells you, it would not "solve"
-it, because that magical thing (and my theory is cached data in your
-operating system that keeps a file timestamp with more precision
-than your underlying filesystem can represent is being flushed, and
-reading the file timestamp back from the disk has to truncate the
-nanoseconds part) can happen at any time between the "--refresh" and
-your "reset".
+is much easier to read.
