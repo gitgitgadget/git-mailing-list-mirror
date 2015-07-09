@@ -1,79 +1,80 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Reset sometimes updates mtime
-Date: Thu, 09 Jul 2015 16:02:14 +0200
-Message-ID: <1436450534.15519.49.camel@kaarsemaker.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 1/4] implement submodule config API for lookup of
+ .gitmodules values
+Date: Thu, 9 Jul 2015 11:49:03 -0400
+Message-ID: <20150709154903.GA14320@peff.net>
+References: <cover.1434400625.git.hvoigt@hvoigt.net>
+ <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
+ <CABURp0pyYcKvmbEeDSYqm15DtXvH7g_UXASR3utGco+=D95bOA@mail.gmail.com>
+ <20150709120900.GA24040@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 09 16:02:24 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git <git@vger.kernel.org>, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Jul 09 17:49:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDCP9-0006ca-4R
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 16:02:23 +0200
+	id 1ZDE4Y-000464-T8
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 17:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbbGIOCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 10:02:19 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:36735 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750760AbbGIOCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 10:02:18 -0400
-Received: by wgxm20 with SMTP id m20so41156026wgx.3
-        for <git@vger.kernel.org>; Thu, 09 Jul 2015 07:02:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:content-type
-         :mime-version:content-transfer-encoding;
-        bh=bj6jo3itDd987W4X3fcl/6DO0Ehwe1mSa8wlO96OT98=;
-        b=K76TPQGlr9oFOBHhf6QotsrgkT/R3aHdolZfDepMSYAB7FXSpeVQou9ZN9WO/JStVu
-         Kiwbf6duV4XyiDyaXbsCCcXpuhQNtq1pUOT7UsiLgEWDidkCsWfFzKkG6ot5b0hRzfqd
-         oxEG7GOXBOIh7tNuwAWvEwJ9gAegz2J7jxXsxNxY3E2gSata8xupT+tsXX2Kt+ot18dJ
-         eEYJRkE+B1VjFh41Be5by1Dm8PuIZIDXz9dsoepXtZqU/xfwL7ThKfkT13L23a1np0cQ
-         z79JHRkUWkmfGUijGeRannYMgLlFRRPrT+08HvHCnzOw6YlsQrfmofryvk7DUX2mirLl
-         35nA==
-X-Gm-Message-State: ALoCoQnJhQmc8umUH7mHQvkqDnD6bgMLRpJoHJMC/uheL/NUCkX7foT0goAFnUJbbS6RGAJHrWNw
-X-Received: by 10.194.2.51 with SMTP id 19mr32680990wjr.40.1436450537319;
-        Thu, 09 Jul 2015 07:02:17 -0700 (PDT)
-Received: from seahawk.local (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id lk5sm8449870wic.24.2015.07.09.07.02.15
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Jul 2015 07:02:16 -0700 (PDT)
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1753939AbbGIPtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 11:49:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58104 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753339AbbGIPtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 11:49:07 -0400
+Received: (qmail 16985 invoked by uid 102); 9 Jul 2015 15:49:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jul 2015 10:49:06 -0500
+Received: (qmail 31617 invoked by uid 107); 9 Jul 2015 15:49:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jul 2015 11:49:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jul 2015 11:49:03 -0400
+Content-Disposition: inline
+In-Reply-To: <20150709120900.GA24040@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.4 points;
- *  3.2 RCVD_ILLEGAL_IP Received: contains illegal IP address
- *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?5.57.20.8>]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273757>
 
-I'm seeing some behaviour with git reset that I find odd. Basically if I
-do
+On Thu, Jul 09, 2015 at 02:09:01PM +0200, Heiko Voigt wrote:
 
-git fetch && \
-git reset --hard simple-tag-that-points-to-the-current-commit
+> > Instead of test-submodule-config.c to test this new module, it could
+> > be useful to implement these as extensions to rev-parse:
+> > 
+> >     git rev-parse --submodule-name [<ref>:]<path>
+> >     git rev-parse --submodule-path [<ref>:]<name>
+> >     git rev-parse --submodule-url [<ref>:]<name>
+> >     git rev-parse --submodule-ignore [<ref>:]<name>
+> >     git rev-parse --submodule-recurse [<ref>:]<name>
+> > 
+> > Has this already been considered and rejected for some reason?
+> 
+> No that has not been considered. But I am open to it if others agree
+> that this is a sensible thing to do. We should be able to adapt the
+> existing tests right?
 
-sometimes the reset will update the mtime of all files and directories
-in the repo and sometimes it will leave them alone. Changing it to
+How does git-submodule access this information? It looks like it just
+hits "git config -f .gitmodules" directly. Perhaps whatever interface is
+designed should be suitable for its use here (and if there really is no
+more interesting interface needed, then why is "git config" not good
+enough for other callers?).
 
-git fetch && \
-git status && \
-git reset --hard simple-tag-that-points-to-the-current-commit
+Just my two cents as an observer who does not really work on submodules.
 
-Cause the mtime update to reliably not happen.
+Also, I'm not excited to see more options go into the kitchen-sink of
+rev-parse, but I cannot think of a better place (I would have said "git
+submodule config" or something, but that is a chicken-and-egg with the
+suggestion I made above :) ).
 
-Bad thing is that I am relying on the mtime updates not to happen if the
-files don't actually change. Is this an assumption I can safely make? If
-it is, then I'll debug further (e.g. I don't even know yet if the file
-gets rewritten or just touched, why the index gets updated as well
-etc.).
-
--- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+-Peff
