@@ -1,67 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 08/10] tag.c: use 'ref-filter' APIs
-Date: Thu, 09 Jul 2015 15:43:41 +0200
-Message-ID: <vpqvbdt5tv6.fsf@anie.imag.fr>
-References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
-	<1436437671-25600-1-git-send-email-karthik.188@gmail.com>
-	<559E5333.7080901@gmail.com> <vpqa8v58pka.fsf@anie.imag.fr>
-	<CAOLa=ZSp-X0Mo5BGWghdk56sM2AEAmnXZt7Y3VkfXWvf8rh96w@mail.gmail.com>
+From: Stefan Tatschner <rumpelsepp@sevenbyte.org>
+Subject: git svn timezone issue?
+Date: Thu, 09 Jul 2015 15:28:14 +0200
+Message-ID: <1436448494.1480.5.camel@sevenbyte.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 15:43:51 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 09 15:48:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDC7C-00033Y-Og
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 15:43:51 +0200
+	id 1ZDCBi-00067N-Sp
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 15:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752765AbbGINnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 09:43:47 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38967 "EHLO rominette.imag.fr"
+	id S1752846AbbGINs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 09:48:27 -0400
+Received: from mail.sevenbyte.org ([5.9.90.188]:40828 "EHLO mail.sevenbyte.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752638AbbGINnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 09:43:46 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t69DhdXP011665
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 9 Jul 2015 15:43:39 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t69DhfUP018509;
-	Thu, 9 Jul 2015 15:43:41 +0200
-In-Reply-To: <CAOLa=ZSp-X0Mo5BGWghdk56sM2AEAmnXZt7Y3VkfXWvf8rh96w@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 9 Jul 2015 18:25:57 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 09 Jul 2015 15:43:39 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t69DhdXP011665
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1437054221.98496@j0gyFted8B2Flw5m+ap6SQ
+	id S1751125AbbGINsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 09:48:25 -0400
+X-Greylist: delayed 1209 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Jul 2015 09:48:25 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.sevenbyte.org (Postfix) with ESMTP id 51346126062E
+	for <git@vger.kernel.org>; Thu,  9 Jul 2015 15:28:16 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at sevenbyte.org
+Received: from mail.sevenbyte.org ([127.0.0.1])
+	by localhost (mail.sevenbyte.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CMEZbV2QnlrQ for <git@vger.kernel.org>;
+	Thu,  9 Jul 2015 15:28:15 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273754>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Hi,
 
-> If anyone can help, this is what it's saying.
-> "[Net::SMTP::SSL] Connection closed at
+at work we use svn, so I used "git svn" to import that stuff to git.
+Now it seems that there are some timezone issues. "git log" shows +0000
+as timezone, while "git svn log" shows the correct timezone +0200. 
 
-Perhaps your SMTP server thought you were sending too many emails to too
-many people and closed the connection thinking you were a spammer.
+$ git log -1
+commit ceb8a8647e257d6caf2ad0ecc2298f8b269c9727
+Author: John Doe <john@doe.com>
+Date:   Thu Jul 9 12:05:22 2015 +0000
 
-If you're having this kind of issues, it may make sense to run
-"format-patch" and "send-email" as two separate steps. This way, you can
-re-run "send-email" on the pieces which failed manually (adjusting
---in-reply-to).
+$ git svn log -1                                                       
+-----------------------------------------------------------------------
+r1967 | doe | 2015-07-09 14:05:22 +0200 (Do, 09 Jul 2015) | 2 lines
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+$ git --version
+git version 2.4.5
+
+$ git svn --version
+git-svn version 2.4.5 (svn 1.8.13)
+
+Any ideas?
+
+Thanks,
+Stefan
