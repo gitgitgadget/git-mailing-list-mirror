@@ -1,88 +1,78 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] fast-import: Do less work when given "from" matches
- current branch head
-Date: Fri, 10 Jul 2015 07:30:18 +0900
-Message-ID: <20150709223018.GA3403@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: Do less work when given "from" matches current branch head
+Date: Thu, 09 Jul 2015 15:44:27 -0700
+Message-ID: <xmqq7fq9uf1w.fsf@gitster.dls.corp.google.com>
 References: <20150709055227.GA32360@glandium.org>
- <1436424609-26159-1-git-send-email-mh@glandium.org>
- <xmqqk2u9uky9.fsf@gitster.dls.corp.google.com>
+	<1436424609-26159-1-git-send-email-mh@glandium.org>
+	<xmqqk2u9uky9.fsf@gitster.dls.corp.google.com>
+	<20150709223018.GA3403@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
 	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 00:30:36 2015
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Jul 10 00:44:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDKKv-0001IP-3w
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 00:30:33 +0200
+	id 1ZDKYU-0002RH-Fm
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 00:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754319AbbGIWa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 18:30:29 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:55456 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754135AbbGIWa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 18:30:27 -0400
-Received: from glandium by zenigata with local (Exim 4.86_RC4)
-	(envelope-from <glandium@glandium.org>)
-	id 1ZDKKg-0001BC-6F; Fri, 10 Jul 2015 07:30:18 +0900
-Content-Disposition: inline
-In-Reply-To: <xmqqk2u9uky9.fsf@gitster.dls.corp.google.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1750927AbbGIWob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 18:44:31 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:33472 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbbGIWo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 18:44:29 -0400
+Received: by iggp10 with SMTP id p10so24160571igg.0
+        for <git@vger.kernel.org>; Thu, 09 Jul 2015 15:44:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=MsGM+iJgFq7XTniFxYGdGMYbZB+OaduN1vte/fgV1Bk=;
+        b=kRH+tcA+JsfXwMhmIcS2Apa52JFJxPobBQvOMjEdE8qlyt9y67RWe2C9XYz+ZN1SM2
+         UBiAwLw/LKz+hNld3SVTM5EsPEMAu/TiZ3X8PAcpRUpCCrTTGiImhs5y2oVKC0p/RB9+
+         wRpkRobIdNT9WLO2lKxs18igywdgMtr2LcXucW8GEcCgzaoEaskespVYBYXTU/fscwuj
+         15yBDQYGhFFqwjmpppRTgDtkWzeIDlfiy2RuEPHwMwPOqPHQa1S35u3ClYffE5IxZfwp
+         wcQbTz/oNzgYSG1x5enWY9kzGarY+z07ueR5F0AQedSBxeHWya+dDi2zBjfFKPnDvQkM
+         089w==
+X-Received: by 10.107.152.146 with SMTP id a140mr28667633ioe.72.1436481869038;
+        Thu, 09 Jul 2015 15:44:29 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:647a:d824:a8a3:7bb0])
+        by smtp.gmail.com with ESMTPSA id kk9sm102337igb.7.2015.07.09.15.44.27
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 09 Jul 2015 15:44:28 -0700 (PDT)
+In-Reply-To: <20150709223018.GA3403@glandium.org> (Mike Hommey's message of
+	"Fri, 10 Jul 2015 07:30:18 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273783>
 
-On Thu, Jul 09, 2015 at 01:37:02PM -0700, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> Cc'ed a few people who appear at the top of "shortlog --no-merges";
-> I think the end result is not incorrect, but I want to hear second
-> opinions on this one.  I do not know Shawn still remembers this
-> code, but what is under discussion seems to have come mostly from
-> ea5e370a (fast-import: Support reusing 'from' and brown paper bag
-> fix reset., 2007-02-12).
-> 
-> >  	if (!skip_prefix(command_buf.buf, "from ", &from))
-> >  		return 0;
-> >  
-> > -	if (b->branch_tree.tree) {
-> > -		release_tree_content_recursive(b->branch_tree.tree);
-> > -		b->branch_tree.tree = NULL;
-> > -	}
-> > +	hashcpy(sha1, b->branch_tree.versions[1].sha1);
-> >  
-> >  	s = lookup_branch(from);
-> >  	if (b == s)
-> 
-> The part that deals with a branch that is different from the current
-> one is not visible in the context (i.e. when s = lookup_branch(from)
-> returned a non-NULL result that is different from b) but it used to,
-> and continues to with this patch, copy sha1 from branch_tree.sha1
-> and branch_tree.versions[] from sha1 and branch_tree.versions[1] of
-> the specified branch.
-> 
-> That codepath used to release the contents of branch_tree.tree when
-> it did so, but it no longer does so after this patch because of the
-> removal we see above.
-> 
-> Does that mean the original code was doing a release that was
-> unnecessary?  Or does it mean this patch changes what happens on
-> that codepath, namely (1) leaking resource, and/or (2) keeping a
-> tree of the original 'b' that does not have anything to do with the
-> tree of 's', preventing the later lazy-load code from reading the
-> tree of 's' and instead of building on top of a wrong tree content?
+Mike Hommey <mh@glandium.org> writes:
 
-I guess the question is whether branch_tree.tree can be in a state that
-doesn't match that of branch_tree.versions[1].sha1. If not, then if s
-and b have the same branch_tree.versions[1].sha1 for some reason, then
-keeping the old branch_tree.tree makes no practical difference from
-resetting it. Except it skips the busy-work.
+>> Does that mean the original code was doing a release that was
+>> unnecessary?  Or does it mean this patch changes what happens on
+>> that codepath, namely (1) leaking resource, and/or (2) keeping a
+>> tree of the original 'b' that does not have anything to do with the
+>> tree of 's', preventing the later lazy-load code from reading the
+>> tree of 's' and instead of building on top of a wrong tree content?
+>
+> I guess the question is whether branch_tree.tree can be in a state that
+> doesn't match that of branch_tree.versions[1].sha1. If not, then if s
+> and b have the same branch_tree.versions[1].sha1 for some reason, then
+> keeping the old branch_tree.tree makes no practical difference from
+> resetting it. Except it skips the busy-work.
 
-Mike
+Perhaps my comment was misleading.  I _think_ the state at the end
+of this function (i.e. the latter hunk you added to the function
+makes the above issue I raised go away).  It just made me feel
+uneasy to leave branch_tree.tree and branch_tree.versions[] in an
+inconsistent state inside this function, while it calls a few helper
+functions (hence my comment on the fact that they do not seem to be
+affected by this inconsistency).
