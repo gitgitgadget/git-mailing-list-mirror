@@ -1,83 +1,68 @@
-From: Jeff King <peff@peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [PATCH] clone: Make use of the strip_suffix() helper method
-Date: Thu, 9 Jul 2015 13:00:54 -0400
-Message-ID: <20150709170054.GA15820@peff.net>
+Date: Thu, 9 Jul 2015 19:16:33 +0200
+Message-ID: <CAHGBnuPkia6UYeN4jekfGzypV2MpyiMs2W+O=SSJR3hR=K3g0A@mail.gmail.com>
 References: <0000014e73738297-cce3a38b-a85d-40be-b501-354686c25eee-000000@eu-west-1.amazonses.com>
+	<20150709170054.GA15820@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 19:01:05 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 09 19:16:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDFC3-0001yx-5N
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 19:01:03 +0200
+	id 1ZDFR9-00049A-Kf
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 19:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133AbbGIRA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 13:00:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58160 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751866AbbGIRA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 13:00:57 -0400
-Received: (qmail 20025 invoked by uid 102); 9 Jul 2015 17:00:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jul 2015 12:00:57 -0500
-Received: (qmail 32427 invoked by uid 107); 9 Jul 2015 17:00:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jul 2015 13:00:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jul 2015 13:00:54 -0400
-Content-Disposition: inline
-In-Reply-To: <0000014e73738297-cce3a38b-a85d-40be-b501-354686c25eee-000000@eu-west-1.amazonses.com>
+	id S1753203AbbGIRQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 13:16:34 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:33775 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753148AbbGIRQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 13:16:34 -0400
+Received: by ietj16 with SMTP id j16so7845810iet.0
+        for <git@vger.kernel.org>; Thu, 09 Jul 2015 10:16:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SqAgl9AmG5fq57nf7AESoPtIKkkzVCCRH9M1CjOtVqA=;
+        b=yEUbgRhUJgChWYBNtwiX33Ay+h5TiSP9+LSAZgTy20u+/Ax+KqjGxuze3YEjG5i7zs
+         gmnqAzsVngNHhdqJ5Thp1A0Zi2eCO5G93DiFSrERw+Xeu8DiBzS1dvUEYBmi7oEIjAfc
+         0KhfoagNcdZNuC4lFrsp4KylDkaurFDY1dWRaYU53GLzVbnYdO74wGGjJX3ry2cPuEv2
+         tNmKPengd3NNNfmz+N/vU2MGk+jVv+Nge3hfuGcSNI/PUBGVurHuWTGlKoh04F+rsY7P
+         WXGOsFrMnKcsdyPMn+W8AxXcXN5tRDy+Gt7uSKVi7NBOjQMqJjzlD46rXDUMQ/7VPHUj
+         Jt3Q==
+X-Received: by 10.50.43.227 with SMTP id z3mr69969759igl.12.1436462193707;
+ Thu, 09 Jul 2015 10:16:33 -0700 (PDT)
+Received: by 10.107.29.149 with HTTP; Thu, 9 Jul 2015 10:16:33 -0700 (PDT)
+In-Reply-To: <20150709170054.GA15820@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273760>
 
-On Thu, Jul 09, 2015 at 03:33:46PM +0000, Sebastian Schuberth wrote:
+On Thu, Jul 9, 2015 at 7:00 PM, Jeff King <peff@peff.net> wrote:
 
-> @@ -174,19 +175,17 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
->  	 * Strip .{bundle,git}.
->  	 */
->  	if (is_bundle) {
-> -		if (end - start > 7 && !strncmp(end - 7, ".bundle", 7))
-> -			end -= 7;
-> +		strip_suffix(start, ".bundle", &len);
->  	} else {
-> -		if (end - start > 4 && !strncmp(end - 4, ".git", 4))
-> -			end -= 4;
-> +		strip_suffix(start, ".git", &len);
->  	}
+> If you wanted to get really fancy, I think you could put a ternary
+> operator in the middle of the strip_suffix call. That makes it clear
+> that "len" is set in all code paths, but I think some people find
+> ternary operators unreadable. :)
 
-Yay, always glad to see complicated string handling like this go away.
-As the resulting conditional blocks are one-liners, I think you can drop
-the curly braces, which will match our usual style:
+I like the idea about the ternary operator, will do.
 
-  if (is_bundle)
-	strip_suffix(start, ".bundle", &len);
-  else
-	strip_suffix(start, ".git", &len);
+> This one can also be simplified using xstrfmt to:
 
-If you wanted to get really fancy, I think you could put a ternary
-operator in the middle of the strip_suffix call. That makes it clear
-that "len" is set in all code paths, but I think some people find
-ternary operators unreadable. :)
+Nice, will also do.
 
->  	if (is_bare) {
->  		struct strbuf result = STRBUF_INIT;
-> -		strbuf_addf(&result, "%.*s.git", (int)(end - start), start);
-> +		strbuf_addf(&result, "%.*s.git", len, start);
->  		dir = strbuf_detach(&result, NULL);
+> Do we still need to cast "len" to an int to use it with "%.*" (it is
+> defined by the standard as an int, not a size_t)?
 
-This one can also be simplified using xstrfmt to:
+I think we're more on the safe side by keeping the cast, so I'll do that, too.
 
-  if (is_bare)
-	dir = xstrfmt("%.*s.git", len, start);
-
-Do we still need to cast "len" to an int to use it with "%.*" (it is
-defined by the standard as an int, not a size_t)?
-
--Peff
+-- 
+Sebastian Schuberth
