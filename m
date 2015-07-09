@@ -1,80 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 1/4] implement submodule config API for lookup of
- .gitmodules values
-Date: Thu, 9 Jul 2015 11:49:03 -0400
-Message-ID: <20150709154903.GA14320@peff.net>
-References: <cover.1434400625.git.hvoigt@hvoigt.net>
- <ef740bdea9af35564c75efd2a6daae65f3108df5.1434400625.git.hvoigt@hvoigt.net>
- <CABURp0pyYcKvmbEeDSYqm15DtXvH7g_UXASR3utGco+=D95bOA@mail.gmail.com>
- <20150709120900.GA24040@book.hvoigt.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] clone: Make use of the strip_suffix() helper method
+Date: Thu, 9 Jul 2015 15:33:46 +0000
+Message-ID: <0000014e73738297-cce3a38b-a85d-40be-b501-354686c25eee-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git <git@vger.kernel.org>, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Thu Jul 09 17:49:15 2015
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2_290928937.1436456026732"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 09 17:49:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDE4Y-000464-T8
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 17:49:15 +0200
+	id 1ZDE4y-0004PJ-6k
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 17:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939AbbGIPtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 11:49:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58104 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753339AbbGIPtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 11:49:07 -0400
-Received: (qmail 16985 invoked by uid 102); 9 Jul 2015 15:49:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jul 2015 10:49:06 -0500
-Received: (qmail 31617 invoked by uid 107); 9 Jul 2015 15:49:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jul 2015 11:49:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jul 2015 11:49:03 -0400
-Content-Disposition: inline
-In-Reply-To: <20150709120900.GA24040@book.hvoigt.net>
+	id S1751976AbbGIPth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 11:49:37 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:48845
+	"EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751885AbbGIPtf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2015 11:49:35 -0400
+X-Greylist: delayed 947 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Jul 2015 11:49:35 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1436456026;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Date:Feedback-ID;
+	bh=2zvD+/HgmLBYtJkKEIAKpbyP3ebBhk79paE2NM5pa3U=;
+	b=WPsMXqRpDxJuEgn4bH3gYGZregJaqfafYVdJe/91cPxvf+3pmQ8EU2u85DAycwlJ
+	swON2UrTISEfnpwQBXV5Z+XmE6AkEyAJ7O/7XIgZBYUfVRqTfHteObo1/ftsrccQeYB
+	X4ySIn0VFVMAd4UanwcA5srTsI8oy6yAwwFZlJzE=
+X-SES-Outgoing: 2015.07.09-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273758>
 
-On Thu, Jul 09, 2015 at 02:09:01PM +0200, Heiko Voigt wrote:
+------=_Part_2_290928937.1436456026732
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
-> > Instead of test-submodule-config.c to test this new module, it could
-> > be useful to implement these as extensions to rev-parse:
-> > 
-> >     git rev-parse --submodule-name [<ref>:]<path>
-> >     git rev-parse --submodule-path [<ref>:]<name>
-> >     git rev-parse --submodule-url [<ref>:]<name>
-> >     git rev-parse --submodule-ignore [<ref>:]<name>
-> >     git rev-parse --submodule-recurse [<ref>:]<name>
-> > 
-> > Has this already been considered and rejected for some reason?
-> 
-> No that has not been considered. But I am open to it if others agree
-> that this is a sensible thing to do. We should be able to adapt the
-> existing tests right?
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ builtin/clone.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-How does git-submodule access this information? It looks like it just
-hits "git config -f .gitmodules" directly. Perhaps whatever interface is
-designed should be suitable for its use here (and if there really is no
-more interesting interface needed, then why is "git config" not good
-enough for other callers?).
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 00535d0..d35b2b9 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -147,6 +147,7 @@ static char *get_repo_path(const char *repo, int *is_bundle)
+ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ {
+ 	const char *end = repo + strlen(repo), *start;
++	size_t len;
+ 	char *dir;
+ 
+ 	/*
+@@ -174,19 +175,17 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ 	 * Strip .{bundle,git}.
+ 	 */
+ 	if (is_bundle) {
+-		if (end - start > 7 && !strncmp(end - 7, ".bundle", 7))
+-			end -= 7;
++		strip_suffix(start, ".bundle", &len);
+ 	} else {
+-		if (end - start > 4 && !strncmp(end - 4, ".git", 4))
+-			end -= 4;
++		strip_suffix(start, ".git", &len);
+ 	}
+ 
+ 	if (is_bare) {
+ 		struct strbuf result = STRBUF_INIT;
+-		strbuf_addf(&result, "%.*s.git", (int)(end - start), start);
++		strbuf_addf(&result, "%.*s.git", len, start);
+ 		dir = strbuf_detach(&result, NULL);
+ 	} else
+-		dir = xstrndup(start, end - start);
++		dir = xstrndup(start, len);
+ 	/*
+ 	 * Replace sequences of 'control' characters and whitespace
+ 	 * with one ascii space, remove leading and trailing spaces.
 
-Just my two cents as an observer who does not really work on submodules.
-
-Also, I'm not excited to see more options go into the kitchen-sink of
-rev-parse, but I cannot think of a better place (I would have said "git
-submodule config" or something, but that is a chicken-and-egg with the
-suggestion I made above :) ).
-
--Peff
+---
+https://github.com/git/git/pull/160
+------=_Part_2_290928937.1436456026732--
