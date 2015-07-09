@@ -1,111 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] clone: Simplify string handling in guess_dir_name()
-Date: Thu, 09 Jul 2015 11:05:04 -0700
-Message-ID: <xmqq1tghw6jz.fsf@gitster.dls.corp.google.com>
-References: <CAHGBnuPkia6UYeN4jekfGzypV2MpyiMs2W+O=SSJR3hR=K3g0A@mail.gmail.com>
-	<0000014e73d7c3d8-413991dd-3907-430c-ab99-a0a3d93dcab0-000000@eu-west-1.amazonses.com>
+From: John Norris <john@norricorp.f9.co.uk>
+Subject: Building git 2.4.5 on AIX 6.1 problems
+Date: Thu, 09 Jul 2015 18:06:22 +0000
+Message-ID: <516b832bd9db48e4bdb486d63b2a3977@imap.force9.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 20:05:14 2015
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 09 20:14:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDGC9-0001iz-Cz
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 20:05:13 +0200
+	id 1ZDGKp-0007du-3Q
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 20:14:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754144AbbGISFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 14:05:08 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:37438 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753850AbbGISFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 14:05:07 -0400
-Received: by igpy18 with SMTP id y18so2412110igp.0
-        for <git@vger.kernel.org>; Thu, 09 Jul 2015 11:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=xSoKnXF6pkIBLQsEd/IHThBNLdUwEvdeX2uLlqXHjXE=;
-        b=IzPFCU4t3Ss9rHSDRHAIg3EqyKES94N+2Wju9Bt8jgw2OaFPTh3fqCZaSdijxNibEW
-         7ug529PsYkL57/EpKCZE/YeJMKDAMi0I7+jED7jXVpeR9BXls2bFfohhyaRckRgyLWiV
-         mm7936n/omNclcddV7FJ4WFosR5OYDeQ2PaMBYGHxSRqayJtuo5GUyUBihGylO7fPZ1w
-         BFekMQ6epAzC1dzW2fp58CDR2zoQJHNg4AmVQYLE2F67y5GG5gUxoa0nb8a/6agFi61/
-         sK9YXAnj2axxAKCNk2CXv5UL+L0lgp0Na+izt/oGCTY0S9tWW33E4Dhg0Jw+nj4mBQQ/
-         bbjQ==
-X-Received: by 10.107.164.22 with SMTP id n22mr27349489ioe.73.1436465107297;
-        Thu, 09 Jul 2015 11:05:07 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:647a:d824:a8a3:7bb0])
-        by smtp.gmail.com with ESMTPSA id a82sm4671697ioe.22.2015.07.09.11.05.06
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 09 Jul 2015 11:05:06 -0700 (PDT)
-In-Reply-To: <0000014e73d7c3d8-413991dd-3907-430c-ab99-a0a3d93dcab0-000000@eu-west-1.amazonses.com>
-	(Sebastian Schuberth's message of "Thu, 9 Jul 2015 17:23:17 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753942AbbGISOB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 14:14:01 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:39632 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753620AbbGISN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 14:13:59 -0400
+X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Jul 2015 14:13:59 EDT
+Received: from webmail.plus.net ([84.93.228.66])
+	by avasout07 with smtp
+	id qJ6N1q0081SbfYc01J6NLT; Thu, 09 Jul 2015 19:06:22 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=IdN6Ijea c=1 sm=1 tr=0
+ a=C5+YawzV8SR07mwocaP9vA==:117 a=6JrruMomGWIwZufWOQ3PvA==:17 a=0Bzu9jTXAAAA:8
+ a=GCZBuicCAAAA:8 a=mrHjP8x4AAAA:8 a=6_JOMXYOAAAA:8 a=cyCaf7Y57g0A:10
+ a=M-Fncn8uHW8A:10 a=IkcTkHD0fZMA:10 a=zOBTXjUuO1YA:10
+ a=fzm92UZ8Rl_E7fVlYCQA:9 a=QEXdDO2ut3YA:10
+X-AUTH: norricorp@:2501
+Received: from 5-148-128-42.cust-5.exponential-e.net ([5.148.128.42])
+ by webmail.plus.net
+ with HTTP (HTTP/1.1 POST); Thu, 09 Jul 2015 19:06:22 +0100
+X-Sender: john@norricorp.f9.co.uk
+User-Agent: Roundcube Webmail/0.7.4
+X-Originating-IP: [5.148.128.42]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273767>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> Subject: Re: [PATCH v2] clone: Simplify string handling in guess_dir_name()
 
-We seem not to capitalize the first word on the subject line.
+I am trying to compile git 2.4.5 which I downloaded as a tar file on 
+AIX 6.1. The machine has gcc installed.
+Having read through the INSTALL file, there appear to be several ways, 
+either using configure, make, make install or just make, make install 
+with prefix of where to install.
+Anyway whichever approach I try I end up with the same error.
+     LINK git-credential-store
+ld: 0711-224 WARNING: Duplicate symbol: .bcopy
+ld: 0711-224 WARNING: Duplicate symbol: .memmove
+ld: 0711-345 Use the -bloadmap or -bnoquiet option to obtain more 
+information.
+ld: 0711-317 ERROR: Undefined symbol: .trace_argv_printf_fl
+ld: 0711-317 ERROR: Undefined symbol: .trace_printf_key_fl
+ld: 0711-317 ERROR: Undefined symbol: .trace_want
+ld: 0711-317 ERROR: Undefined symbol: .trace_strbuf_fl
+ld: 0711-317 ERROR: Undefined symbol: .trace_disable
+ld: 0711-317 ERROR: Undefined symbol: .diff_can_quit_early
+ld: 0711-317 ERROR: Undefined symbol: diff_queued_diff
+ld: 0711-317 ERROR: Undefined symbol: .diff_setup
+ld: 0711-317 ERROR: Undefined symbol: .diff_setup_done
+ld: 0711-317 ERROR: Undefined symbol: .diffcore_std
+ld: 0711-317 ERROR: Undefined symbol: .diff_free_filepair
+ld: 0711-317 ERROR: Undefined symbol: .parse_long_opt
+ld: 0711-317 ERROR: Undefined symbol: .diff_get_color
+ld: 0711-317 ERROR: Undefined symbol: mime_boundary_leader
+ld: 0711-317 ERROR: Undefined symbol: .getnanotime
+ld: 0711-317 ERROR: Undefined symbol: .diff_flush
+ld: 0711-317 ERROR: Undefined symbol: .diff_line_prefix
+ld: 0711-317 ERROR: Undefined symbol: .diff_unique_abbrev
+ld: 0711-317 ERROR: Undefined symbol: .alloc_filespec
+ld: 0711-317 ERROR: Undefined symbol: .fill_filespec
+ld: 0711-317 ERROR: Undefined symbol: .fill_textconv
+ld: 0711-317 ERROR: Undefined symbol: .free_filespec
+ld: 0711-317 ERROR: Undefined symbol: .diff_unmodified_pair
+ld: 0711-317 ERROR: Undefined symbol: .diff_warn_rename_limit
+ld: 0711-317 ERROR: Undefined symbol: .parse_algorithm_value
+ld: 0711-317 ERROR: Undefined symbol: .parse_rename_score
+ld: 0711-317 ERROR: Undefined symbol: .diff_change
+ld: 0711-317 ERROR: Undefined symbol: .diff_unmerge
+ld: 0711-317 ERROR: Undefined symbol: .diff_addremove
+ld: 0711-317 ERROR: Undefined symbol: .diff_set_mnemonic_prefix
+ld: 0711-317 ERROR: Undefined symbol: .diffcore_fix_diff_index
+ld: 0711-317 ERROR: Undefined symbol: .diff_queue_is_empty
+ld: 0711-317 ERROR: Undefined symbol: .diff_populate_filespec
+ld: 0711-317 ERROR: Undefined symbol: .diff_q
+ld: 0711-317 ERROR: Undefined symbol: .diff_opt_parse
+ld: 0711-317 ERROR: Undefined symbol: .diff_flush_patch_id
+collect2: error: ld returned 8 exit status
+Makefile:1958: recipe for target 'git-credential-store' failed
+gmake: *** [git-credential-store] Error 1
 
-> Content-Type: multipart/mixed;  boundary="----=_Part_8_836493213.1436462597065"
 
-Please don't.
+The machine I am building on has built git in the past (not by me).
 
-> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
-> ---
->  builtin/clone.c | 16 +++-------------
->  1 file changed, 3 insertions(+), 13 deletions(-)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 00535d0..afdc004 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -147,6 +147,7 @@ static char *get_repo_path(const char *repo, int *is_bundle)
->  static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
->  {
->  	const char *end = repo + strlen(repo), *start;
-> +	size_t len;
->  	char *dir;
->  
->  	/*
-> @@ -173,20 +174,9 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
->  	/*
->  	 * Strip .{bundle,git}.
->  	 */
-> -	if (is_bundle) {
-> -		if (end - start > 7 && !strncmp(end - 7, ".bundle", 7))
-> -			end -= 7;
-> -	} else {
-> -		if (end - start > 4 && !strncmp(end - 4, ".git", 4))
-> -			end -= 4;
-> -	}
-> +	strip_suffix(start, is_bundle ? ".bundle" : ".git" , &len);
+I have downloaded the source for 2.1.0 and 1.9.2 and both of those have 
+the same problem and the latter was built about 12 months ago. I had 
+hoped the version of gcc was too old but I presume not. So possibly a 
+problem with the environment as building as different user?
 
-This looks vastly nicer than the original.
+But really need help as this is very frustrating and googling has not 
+found anything that quite matches it.
 
-> -	if (is_bare) {
-> -		struct strbuf result = STRBUF_INIT;
-> -		strbuf_addf(&result, "%.*s.git", (int)(end - start), start);
-> -		dir = strbuf_detach(&result, NULL);
-> -	} else
-> -		dir = xstrndup(start, end - start);
-> +	dir = is_bare ? xstrfmt("%.*s.git", (int)len, start) : xstrndup(start, len);
-
-This however I had to read twice.  I'd say
-
-	if (is_bare)
-        	dir = xstrfmt(...);
-	else
-        	dir = xstrndup(...);
-
-is much easier to read.
+Regards,
+John
