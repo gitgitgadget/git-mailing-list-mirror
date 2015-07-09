@@ -1,7 +1,7 @@
 From: Karthik Nayak <karthik.188@gmail.com>
 Subject: [PATCH v2 08/10] tag.c: use 'ref-filter' APIs
-Date: Thu, 9 Jul 2015 16:25:47 +0530
-Message-ID: <559E5333.7080901@gmail.com>
+Date: Thu, 9 Jul 2015 16:28:36 +0530
+Message-ID: <559E53DC.2040804@gmail.com>
 References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
  <1436437671-25600-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
@@ -9,40 +9,40 @@ Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 09 12:56:09 2015
+X-From: git-owner@vger.kernel.org Thu Jul 09 12:58:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZD9Us-0006hQ-Dr
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 12:56:07 +0200
+	id 1ZD9XM-00008i-9S
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 12:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803AbbGIK4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 06:56:01 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:32843 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751261AbbGIKz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 06:55:59 -0400
-Received: by pacws9 with SMTP id ws9so150392648pac.0
-        for <git@vger.kernel.org>; Thu, 09 Jul 2015 03:55:59 -0700 (PDT)
+	id S1751976AbbGIK6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 06:58:35 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36707 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728AbbGIK6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 06:58:35 -0400
+Received: by pacgz10 with SMTP id gz10so75511447pac.3
+        for <git@vger.kernel.org>; Thu, 09 Jul 2015 03:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-type:content-transfer-encoding;
         bh=o5nu7ZGXKsMydc2vckAiS1tjyn+WwM2vxvxHo+CBWi8=;
-        b=KjgTtXC1QArycoSSeOkem//1ysToHEeo/EtUyo+V3F5kh/RhHDc++IYz54WVhcDl6h
-         Tl3FYub1neC/eBJwXn7J9ZEt4WP7uIFl5OgOxzEbsxvdtJzQV9pxjM1WNNqQME/Gr9IO
-         iC2wrDYO8ltAtV6/Ay1vQbnzOiLas/ROiIyg7wH/c/vf3OiQZYjye1mFgjwRhDB2yULQ
-         2z8KhQgq9I33c0dIzSoUGvVWkm0/8J96nMnNLuCluAfUJT2FbtevGb5i6JVbrZPK4Pdh
-         1eG3a5yTPLocDxRfucnP0rIpB+KiyBrhfNR1266lyNuoKmPq2phoL9QOCFQcdmr27p4p
-         rxDA==
-X-Received: by 10.66.159.1 with SMTP id wy1mr30747154pab.103.1436439359348;
-        Thu, 09 Jul 2015 03:55:59 -0700 (PDT)
+        b=lx7AVWsNJ0IRT2dQEOpuPbw35iXmkCkBGVrAJT/oMuhR5exHXAnA7Jk8zbNLhD7fep
+         R1jejMy3kArfv/CLHh6k4ME6JpksItSIaw3WvX3VCTo8348Da1MbRlj3rKsi1tvXjmPi
+         43wSKtBx91bXH/AjQbliUvVd++FQehleCt2hfPwzTGTZqYmHQjZp8qCg2AHDVhVGKyVt
+         dsUyHJnbN6U131wKf8PQ5OMy66WY09KMIoxa1EcHTRXMNFO7q5EmjdpXq0XbYu/hf0Z7
+         Ogxo7gwTBoAS5WOrohjY9c6Fv70U09O45ZVboxO0zR/fmzvBZialUo2KEHllWRnEf/cQ
+         TUNg==
+X-Received: by 10.68.111.37 with SMTP id if5mr30461795pbb.94.1436439514374;
+        Thu, 09 Jul 2015 03:58:34 -0700 (PDT)
 Received: from [192.168.43.24] ([49.203.67.70])
-        by smtp.googlemail.com with ESMTPSA id ml6sm5556297pdb.69.2015.07.09.03.55.47
+        by smtp.googlemail.com with ESMTPSA id qo6sm5585826pab.23.2015.07.09.03.58.31
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Jul 2015 03:55:58 -0700 (PDT)
+        Thu, 09 Jul 2015 03:58:33 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.0.1
 In-Reply-To: <1436437671-25600-1-git-send-email-karthik.188@gmail.com>
@@ -50,7 +50,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273740>
 
 Make 'tag.c' use 'ref-filter' APIs for iterating through refs
 sorting and printing of refs. This removes most of the code
