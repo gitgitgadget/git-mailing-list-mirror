@@ -1,82 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4] log: add log.follow config option
-Date: Thu, 09 Jul 2015 10:38:10 +0200
-Message-ID: <vpqfv4xafpp.fsf@anie.imag.fr>
-References: <1436377321-8495-1-git-send-email-dturner@twopensource.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v2 00/10] Port tag.c to use ref-filter APIs
+Date: Thu, 9 Jul 2015 15:57:13 +0530
+Message-ID: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 10:38:24 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <christian.couder@gmail.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 09 12:27:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZD7Lc-00071F-0T
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 10:38:24 +0200
+	id 1ZD93U-00037S-RD
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 12:27:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbbGIIiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 04:38:19 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45495 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751064AbbGIIiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 04:38:17 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t698c9cn023078
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 9 Jul 2015 10:38:09 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t698cALS011305;
-	Thu, 9 Jul 2015 10:38:10 +0200
-In-Reply-To: <1436377321-8495-1-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 8 Jul 2015 13:42:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 09 Jul 2015 10:38:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t698c9cn023078
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1437035893.36826@sy/1TLbmoIEnhPMB1D16gw
+	id S1753052AbbGIK1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 06:27:44 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:36488 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751091AbbGIK1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 06:27:43 -0400
+Received: by obdbs4 with SMTP id bs4so168978801obd.3
+        for <git@vger.kernel.org>; Thu, 09 Jul 2015 03:27:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=GRrGBKjlPwSbFQeqTAPXyspfZgfUzKdq3eE94ikZGdU=;
+        b=TZ25ph493zuNYMDwEiI/nu1BM+yeAwS03HgGfwVt1NCfh3pH0I8vOZthu3MqnVTz+B
+         mmQoxk5WAh7g/Z4pbdrvl2Og4+V2jvLFqswG1eDRqKwmZyvvxVtKtPxsgGXbOiD8CCgJ
+         lJxyRT9/f2OL5rBFGQkNSAQ2Wh2l8W2Esrn8VApypNvjMyudxngoSekcaGwllZhFVxQH
+         ZRsNiEWhDWk/1sSYVKhK8I3hkkbAdLCnyXUZLWHsBAGkRyu5YTELeV6PSEGLJO5dNZl3
+         j1+veyI79LxkuHOjZ6j1ol7hc/yq4BsZzI7/sbvMcJFXz9LP61ue3udEQYUdWMYVSDMj
+         Xu7w==
+X-Received: by 10.202.200.151 with SMTP id y145mr2549095oif.111.1436437663209;
+ Thu, 09 Jul 2015 03:27:43 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Thu, 9 Jul 2015 03:27:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273731>
 
-David Turner <dturner@twopensource.com> writes:
+This is part of my GSoC project to unify git tag -l, git branch -l,
+git for-each-ref
+This patch series is continued from:
+http://article.gmane.org/gmane.comp.version-control.git/273569
 
-> This version uses tweak, and also includes Matthieu Moy's suggested
-> whitespace fix.
+The previous RFC version is here:
+http://thread.gmane.org/gmane.comp.version-control.git/272654
 
-This comment should come below the --- after the commit message (right
-before the diffstat). Otherwise, Junio will get this as the commit
-message when applying, and your actual commit message will be ignored.
+Changes in this version:
+* Cleanup Documentation/tag
+* Fixed grammatical errors
+* Fixed a small merge conflict
+* Other small changes
 
-> ---
-> Many users prefer to always use --follow with logs.  Rather than
-> aliasing the command, an option might be more convenient for some.
->
-> Junio C Hamano <gitster@pobox.com> suggested using the tweak
-> functionality for this, which is much nicer than what I had before.
-
-I would avoid using "what I had before" in the commit message: readers
-of "git log" do not know what you had before. OTOH, crediting Junio for
-the idea is good.
-
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
-
-(This is the place for comments)
-
->  Documentation/git-log.txt |  6 ++++++
->  builtin/log.c             | 16 ++++++++++++++++
->  diff.c                    |  5 +++--
->  diff.h                    |  1 +
->  t/t4202-log.sh            | 23 +++++++++++++++++++++++
->  5 files changed, 49 insertions(+), 2 deletions(-)
+ Documentation/git-tag.txt |  39 ++++++++++---
+ builtin/for-each-ref.c    |   3 +-
+ builtin/tag.c             | 368
+++++++++++++++++++++------------------------------------------------------------------------------------------------
+ ref-filter.c              |  95 ++++++++++++++++++++++++++++--
+ ref-filter.h              |   7 ++-
+ t/t7004-tag.sh            |  51 +++++++++++++---
+ 6 files changed, 234 insertions(+), 329 deletions(-)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Karthik Nayak
