@@ -1,70 +1,57 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 05/10] ref-filter: add option to match literal pattern
-Date: Thu, 09 Jul 2015 15:32:45 +0200
-Message-ID: <vpq8uap78xu.fsf@anie.imag.fr>
+Subject: Re: [PATCH v2 08/10] tag.c: use 'ref-filter' APIs
+Date: Thu, 09 Jul 2015 15:41:03 +0200
+Message-ID: <vpq1tgh78k0.fsf@anie.imag.fr>
 References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
 	<1436437671-25600-1-git-send-email-karthik.188@gmail.com>
-	<1436437671-25600-5-git-send-email-karthik.188@gmail.com>
+	<559E5333.7080901@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, christian.couder@gmail.com
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 15:32:59 2015
+X-From: git-owner@vger.kernel.org Thu Jul 09 15:41:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDBwe-0004QA-I3
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 15:32:56 +0200
+	id 1ZDC4g-0001Ql-UK
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jul 2015 15:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752506AbbGINcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2015 09:32:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:53495 "EHLO shiva.imag.fr"
+	id S1752564AbbGINlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2015 09:41:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53755 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751803AbbGINcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2015 09:32:51 -0400
+	id S1751315AbbGINlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2015 09:41:08 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t69DWiTH006919
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t69Df2Wt009335
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 9 Jul 2015 15:32:44 +0200
+	Thu, 9 Jul 2015 15:41:02 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t69DWjB9018294;
-	Thu, 9 Jul 2015 15:32:45 +0200
-In-Reply-To: <1436437671-25600-5-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Thu, 9 Jul 2015 15:57:46 +0530")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t69Df30N018466;
+	Thu, 9 Jul 2015 15:41:03 +0200
+In-Reply-To: <559E5333.7080901@gmail.com> (Karthik Nayak's message of "Thu, 9
+	Jul 2015 16:25:47 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 09 Jul 2015 15:32:44 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 09 Jul 2015 15:41:02 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t69DWiTH006919
+X-MailScanner-ID: t69Df2Wt009335
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1437053568.17685@rXy5uIDZ3qtxBJpoECyxVQ
+MailScanner-NULL-Check: 1437054064.70341@F4eLRK0g5LMkRFHPeyQrsA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273752>
 
 Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Since 'ref-filter' only has an option to match path names
-> add an option for regular pattern matching.
+> +	s->atom = parse_ref_filter_atom(arg, arg+len);
 
-Here also, a hint on why this is needed would be welcome.
-
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -956,6 +956,20 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
->  
->  /*
->   * Return 1 if the refname matches one of the patterns, otherwise 0.
-> + * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
-> + * matches a pattern "refs/heads/m") or a wildcard (e.g. the same ref
-> + * matches "refs/heads/m*",too).
-
-Missing space after , (same in the hunk context below)
+Spaces around +.
 
 -- 
 Matthieu Moy
