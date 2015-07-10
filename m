@@ -1,89 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] ident: support per-path configs by matching the path against a pattern
-Date: Fri, 10 Jul 2015 13:23:07 -0700
-Message-ID: <xmqqtwtbkbis.fsf@gitster.dls.corp.google.com>
-References: <0000014e7752e758-a0bf7acb-2d0f-4492-8004-8eeeb9b2f042-000000@eu-west-1.amazonses.com>
-	<xmqqr3ogkpz5.fsf@gitster.dls.corp.google.com>
-	<20150710154308.GA29395@peff.net> <20150710164652.GA30113@peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] p5310: mend broken &&-chain
+Date: Fri, 10 Jul 2015 22:40:57 +0200
+Message-ID: <55A02DD9.3020909@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 10 22:23:17 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 10 22:41:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDepI-000418-7E
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 22:23:16 +0200
+	id 1ZDf7K-0006io-DW
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 22:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933107AbbGJUXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 16:23:12 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:34991 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932963AbbGJUXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 16:23:09 -0400
-Received: by igcqs7 with SMTP id qs7so20748926igc.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2015 13:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=R44G2EsxbCclreh0YYjWkDLqoQz+Px7JG6a314ZJO2Q=;
-        b=it4XdE1PM7W+U40Yw6AlwShXruXIBJTRRHaBSS0/KFROs+JNaZnl1IINuoQ7/CUzVp
-         Kr5ay9XU2XXHUrt3P/0upxckrW0ftXB4jUnsQ3dMdFxfRRpKR4pnVl3ksYmuHx1cVVRq
-         1FNh5fpF4IPhWpeRxev+gprFPizquTd3BSOySbgYdTmDPIgYPaGyqSdD2deiGzLcNuNL
-         0UclRKteqDi2RU70dooPX4o7aN5V5Q08N8kud1wkY6zukaA2Y2PWip6gFUJnsZUZXqnV
-         ox1odtYPjrf2GGd3UK2Ad1Vwpf3Jy5NxyUgz2Md1wsxOJO8XZW2//9bL1y0UuDIJK2gh
-         /cRQ==
-X-Received: by 10.107.38.129 with SMTP id m123mr6048855iom.22.1436559789158;
-        Fri, 10 Jul 2015 13:23:09 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6de3:8019:a2a4:79ec])
-        by smtp.gmail.com with ESMTPSA id pg5sm287601igb.4.2015.07.10.13.23.08
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 10 Jul 2015 13:23:08 -0700 (PDT)
-In-Reply-To: <20150710164652.GA30113@peff.net> (Jeff King's message of "Fri,
-	10 Jul 2015 12:46:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S933253AbbGJUlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2015 16:41:47 -0400
+Received: from mout.web.de ([212.227.15.3]:59955 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933243AbbGJUlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2015 16:41:39 -0400
+Received: from [192.168.178.27] ([79.253.139.191]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MVLsk-1ZUkeD1c7y-00Ygod; Fri, 10 Jul 2015 22:41:15
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+X-Provags-ID: V03:K0:G9jaFpxGVgwJHsWyQXXKVNppeAxjx/DlppD+3Pg2gl95Z+EbOa5
+ m99PYv756zarv6dLBIIhkPC9A/56bG9bRusHyl5d1mEfW+lnJ48lfl9sjgLIKSTrVR1ZDXc
+ B9+yQSVL9fLPXnb6471JOV5m/KT2+T2ywu2VmaNQAm/7DnsrAs/AmO0kUhYAum55OzD0NrQ
+ sQW9DJJmjNSSyLTk3hV3A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PfEdLQv25tE=:zT4ZB0Hb81Sxw0vQuH5A1u
+ W64sL0Yvye/kZK5YDCtCIWAW8tfErcvw0URckui66HftpYJJtGA7Hv4J7AW3hciioNHFtvWu+
+ t1SNyZM4App0W007zfsJxsHqYM1pACYuzCRiSiZtw0KI2YY6G6DwIoG7B6sDDjV/bXNtTNWTD
+ z/lHCGCxqdf4AX+v2dyk2XMd/cDxc6pXfFLAo0hvjnLZ1YhyJJ+A5oEQzJhzCc4kQ6sEnBmwe
+ ZB6uXkpbGHOhjOebq/FQVmAu+r74hWN7m+EB9Hj82fCKWofAHjhnaBs5dwrC4gXYNBfNXd3dZ
+ muKNKbkreK+RJoS+ne5dv6ufBwO7R2ly2XEs3R1ImNGWa4JMBxU0oik1U7HCx5Q4bF0PFQNlU
+ ON9rWBab6h6fOTaOJpcru7E3XQxklldV5gRUPcRSWu9bOiHd0fj1/Bjb3FpcChn2CA5+WK9mB
+ hJVCLkHR6qo/uBbYDR0NmZRZRf5qgPIFcsr6Ps3OAv1s8SIDHvkC4ZHSpUoxmEPTmXKJNEnbD
+ vpF5pZ4lKgKvq5QijBnstwpqZa8J2DZmns7DNE6cT8LAcz0X4adymuqSyDKZrDNG1XH2L/zPK
+ zdvibVcyBYlErL1nyXSCMuOAGnQLgHOEGYiKKfk2ygwWu+GZArDyM1l7GxhD1LzAeimSYhd67
+ T7qHVykK8e+65RiVHJCTPTxQmUkqC5zDRbGTen/llEQZK6g8njx2+VXRvRQ1uN7f3nuU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273833>
 
-Jeff King <peff@peff.net> writes:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+GIT_TEST_CHAIN_LINT complains about the missing &&s and is enabled
+by default now.
 
-> Here's a sketch if anybody is inclined to pick it up and run with it.
-> Note that I did not think too hard about little things like the
-> de-anchoring.
-> ...
->  int git_config_include(const char *var, const char *value, void *data)
->  {
->  	struct config_include_data *inc = data;
-> +	const char *cond, *key;
-> +	int cond_len;
->  	int ret;
->  
->  	/*
-> @@ -152,8 +188,12 @@ int git_config_include(const char *var, const char *value, void *data)
->  	if (ret < 0)
->  		return ret;
->  
-> -	if (!strcmp(var, "include.path"))
-> -		ret = handle_path_include(value, inc);
-> +	if (!parse_config_key(var, "include", &cond, &cond_len, &key) &&
-> +	    include_condition_is_true(cond, cond_len)) {
+ t/perf/p5310-pack-bitmaps.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-I really like these two lines.
-
-Whoever designed that parse_config_key() interface either is a
-genious or had a foresight with a crystal ball, or perhaps both.
-
-> +		if (!strcmp(key, "path"))
-> +			ret = handle_path_include(value, inc);
-> +		/* else we do not know about this type of include; ignore */
-> +	}
->  	return ret;
->  }
->  
+diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
+index f8ed857..de2a224 100755
+--- a/t/perf/p5310-pack-bitmaps.sh
++++ b/t/perf/p5310-pack-bitmaps.sh
+@@ -39,14 +39,14 @@ test_expect_success 'create partial bitmap state' '
+ 
+ 	# now kill off all of the refs and pretend we had
+ 	# just the one tip
+-	rm -rf .git/logs .git/refs/* .git/packed-refs
+-	git update-ref HEAD $cutoff
++	rm -rf .git/logs .git/refs/* .git/packed-refs &&
++	git update-ref HEAD $cutoff &&
+ 
+ 	# and then repack, which will leave us with a nice
+ 	# big bitmap pack of the "old" history, and all of
+ 	# the new history will be loose, as if it had been pushed
+ 	# up incrementally and exploded via unpack-objects
+-	git repack -Ad
++	git repack -Ad &&
+ 
+ 	# and now restore our original tip, as if the pushes
+ 	# had happened
+-- 
+2.4.4
