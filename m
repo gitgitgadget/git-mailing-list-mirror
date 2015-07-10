@@ -1,347 +1,77 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] notes: Allow treeish expressions as notes ref
-Date: Fri, 10 Jul 2015 17:39:11 +0900
-Message-ID: <1436517551-12172-1-git-send-email-mh@glandium.org>
-References: <CALKQrgdGJy6vtBRL413bbSHSi+=KTh4Q98hpbgg29j4J191=bA@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 10 10:39:29 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 08/10] tag.c: use 'ref-filter' APIs
+Date: Fri, 10 Jul 2015 15:11:49 +0530
+Message-ID: <CAOLa=ZTonG-TVwxdcmt3rc_5c5Vm+uGgXo_Mc4mNe6n_VKb7KA@mail.gmail.com>
+References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
+ <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <559E5333.7080901@gmail.com>
+ <vpqa8v58pka.fsf@anie.imag.fr> <CAOLa=ZSp-X0Mo5BGWghdk56sM2AEAmnXZt7Y3VkfXWvf8rh96w@mail.gmail.com>
+ <vpqvbdt5tv6.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 10 11:42:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDTqB-0005OE-Eh
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 10:39:28 +0200
+	id 1ZDUpA-00014C-IJ
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 11:42:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbbGJIjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 04:39:23 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:41507 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753339AbbGJIjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 04:39:20 -0400
-Received: from glandium by zenigata with local (Exim 4.86_RC4)
-	(envelope-from <glandium@glandium.org>)
-	id 1ZDTpv-0003Az-KY; Fri, 10 Jul 2015 17:39:11 +0900
-X-Mailer: git-send-email 2.4.3.3.g2dde64c.dirty
-In-Reply-To: <CALKQrgdGJy6vtBRL413bbSHSi+=KTh4Q98hpbgg29j4J191=bA@mail.gmail.com>
+	id S1753868AbbGJJmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2015 05:42:24 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:32815 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753861AbbGJJmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2015 05:42:19 -0400
+Received: by obbgp5 with SMTP id gp5so75848039obb.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2015 02:42:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BDUhxewXAFGaNDpb9UCpgnCEE15oGQ6YyQW5en5cWPY=;
+        b=qO4l6r3MP9q0AiZcLhucOzZUChBcUsZGvsVi80CsCaFUcyscpMTTdD3rFqcsZPY7ov
+         WHe9yn+ma+9mwXtHKoUXqXhQv4ZqDH8dD+LM70VFL1hdOOIZBkMh511/4YuoIixmF2T4
+         FRytr5TJvJWHDSARGoJg172DZdlQtwZTgZbO7oc+v7kUTCCttjhX/CcQrbS9F9n97ZJ+
+         2Aoo4Y7ER5oTUrkgn22rGukoM9x6ZXs8vcj3gnXiE6bq/gNKhRw8rQII0Ewce5BsIPnY
+         7oQ8v6hYJ25jgYBkDnaeG0o+AJWJ6Cs08leY5NSPV/D0oS/SZUy3VcbWyRCnluXFB6QG
+         kD+A==
+X-Received: by 10.182.153.161 with SMTP id vh1mr18124118obb.34.1436521339050;
+ Fri, 10 Jul 2015 02:42:19 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Fri, 10 Jul 2015 02:41:49 -0700 (PDT)
+In-Reply-To: <vpqvbdt5tv6.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273810>
 
-init_notes() is the main point of entry to the notes API. It is an arbitrary
-restriction that all it allows as input is a strict ref name, when callers
-may want to give an arbitrary treeish.
+On Thu, Jul 9, 2015 at 7:13 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> If anyone can help, this is what it's saying.
+>> "[Net::SMTP::SSL] Connection closed at
+>
+> Perhaps your SMTP server thought you were sending too many emails to too
+> many people and closed the connection thinking you were a spammer.
+>
+> If you're having this kind of issues, it may make sense to run
+> "format-patch" and "send-email" as two separate steps. This way, you can
+> re-run "send-email" on the pieces which failed manually (adjusting
+> --in-reply-to).
+>
 
-However, some operations that require updating the notes tree require a
-strict ref name, because they wouldn't be able to update e.g. foo@{1}.
+I'm guessing the same. That's what I usually do, separate format-patch and
+send-email.
 
-So we allow treeish expressions to be used in the case the notes tree is
-going to be used without write "permissions", and to distinguish whether
-the notes tree is intended to be used for reads only, or will be updated,
-a flag is added.
+>Spaces around +.
 
-This has the side effect of enabling the use of treeish as notes refs in
-commands allowing them, e.g. git log --notes=foo@{1}.
+Thanks :)
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- builtin/notes.c  | 29 ++++++++++++++++-------------
- notes-cache.c    | 11 ++++++-----
- notes-utils.c    |  6 +++---
- notes.c          | 11 +++++++----
- notes.h          | 10 +++++++++-
- t/t3301-notes.sh | 10 ++++++++++
- 6 files changed, 51 insertions(+), 26 deletions(-)
-
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 63f95fc..0fc6e7a 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -285,7 +285,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 		if (!c)
- 			return 0;
- 	} else {
--		init_notes(NULL, NULL, NULL, 0);
-+		init_notes(NULL, NULL, NULL, NOTES_INIT_WRITABLE);
- 		t = &default_notes_tree;
- 	}
- 
-@@ -328,15 +328,18 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 	return ret;
- }
- 
--static struct notes_tree *init_notes_check(const char *subcommand)
-+static struct notes_tree *init_notes_check(const char *subcommand,
-+					   int flags)
- {
- 	struct notes_tree *t;
--	init_notes(NULL, NULL, NULL, 0);
-+	const char *ref;
-+	init_notes(NULL, NULL, NULL, flags);
- 	t = &default_notes_tree;
- 
--	if (!starts_with(t->ref, "refs/notes/"))
-+	ref = (flags & NOTES_INIT_WRITABLE) ? t->update_ref : t->ref;
-+	if (!starts_with(ref, "refs/notes/"))
- 		die("Refusing to %s notes in %s (outside of refs/notes/)",
--		    subcommand, t->ref);
-+		    subcommand, ref);
- 	return t;
- }
- 
-@@ -359,7 +362,7 @@ static int list(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_list_usage, options);
- 	}
- 
--	t = init_notes_check("list");
-+	t = init_notes_check("list", 0);
- 	if (argc) {
- 		if (get_sha1(argv[0], object))
- 			die(_("Failed to resolve '%s' as a valid ref."), argv[0]);
-@@ -419,7 +422,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
- 
--	t = init_notes_check("add");
-+	t = init_notes_check("add", NOTES_INIT_WRITABLE);
- 	note = get_note(t, object);
- 
- 	if (note) {
-@@ -510,7 +513,7 @@ static int copy(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
- 
--	t = init_notes_check("copy");
-+	t = init_notes_check("copy", NOTES_INIT_WRITABLE);
- 	note = get_note(t, object);
- 
- 	if (note) {
-@@ -588,7 +591,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
- 
--	t = init_notes_check(argv[0]);
-+	t = init_notes_check(argv[0], NOTES_INIT_WRITABLE);
- 	note = get_note(t, object);
- 
- 	prepare_note_data(object, &d, edit ? note : NULL);
-@@ -651,7 +654,7 @@ static int show(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
- 
--	t = init_notes_check("show");
-+	t = init_notes_check("show", 0);
- 	note = get_note(t, object);
- 
- 	if (!note)
-@@ -812,7 +815,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	t = init_notes_check("merge");
-+	t = init_notes_check("merge", NOTES_INIT_WRITABLE);
- 
- 	strbuf_addf(&msg, "notes: Merged notes from %s into %s",
- 		    remote_ref.buf, default_notes_ref());
-@@ -878,7 +881,7 @@ static int remove_cmd(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_notes_remove_usage, 0);
- 
--	t = init_notes_check("remove");
-+	t = init_notes_check("remove", NOTES_INIT_WRITABLE);
- 
- 	if (!argc && !from_stdin) {
- 		retval = remove_one_note(t, "HEAD", flag);
-@@ -920,7 +923,7 @@ static int prune(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_prune_usage, options);
- 	}
- 
--	t = init_notes_check("prune");
-+	t = init_notes_check("prune", NOTES_INIT_WRITABLE);
- 
- 	prune_notes(t, (verbose ? NOTES_PRUNE_VERBOSE : 0) |
- 		(show_only ? NOTES_PRUNE_VERBOSE|NOTES_PRUNE_DRYRUN : 0) );
-diff --git a/notes-cache.c b/notes-cache.c
-index c4e9bb7..5dfc5cb 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -32,14 +32,14 @@ void notes_cache_init(struct notes_cache *c, const char *name,
- 		     const char *validity)
- {
- 	struct strbuf ref = STRBUF_INIT;
--	int flags = 0;
-+	int flags = NOTES_INIT_WRITABLE;
- 
- 	memset(c, 0, sizeof(*c));
- 	c->validity = xstrdup(validity);
- 
- 	strbuf_addf(&ref, "refs/notes/%s", name);
- 	if (!notes_cache_match_validity(ref.buf, validity))
--		flags = NOTES_INIT_EMPTY;
-+		flags |= NOTES_INIT_EMPTY;
- 	init_notes(&c->tree, ref.buf, combine_notes_overwrite, flags);
- 	strbuf_release(&ref);
- }
-@@ -49,7 +49,8 @@ int notes_cache_write(struct notes_cache *c)
- 	unsigned char tree_sha1[20];
- 	unsigned char commit_sha1[20];
- 
--	if (!c || !c->tree.initialized || !c->tree.ref || !*c->tree.ref)
-+	if (!c || !c->tree.initialized || !c->tree.update_ref ||
-+	    !*c->tree.update_ref)
- 		return -1;
- 	if (!c->tree.dirty)
- 		return 0;
-@@ -59,8 +60,8 @@ int notes_cache_write(struct notes_cache *c)
- 	if (commit_tree(c->validity, strlen(c->validity), tree_sha1, NULL,
- 			commit_sha1, NULL, NULL) < 0)
- 		return -1;
--	if (update_ref("update notes cache", c->tree.ref, commit_sha1, NULL,
--		       0, UPDATE_REFS_QUIET_ON_ERR) < 0)
-+	if (update_ref("update notes cache", c->tree.update_ref, commit_sha1,
-+		       NULL, 0, UPDATE_REFS_QUIET_ON_ERR) < 0)
- 		return -1;
- 
- 	return 0;
-diff --git a/notes-utils.c b/notes-utils.c
-index ccbf073..f65edba 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -37,7 +37,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
- 
- 	if (!t)
- 		t = &default_notes_tree;
--	if (!t->initialized || !t->ref || !*t->ref)
-+	if (!t->initialized || !t->update_ref || !*t->update_ref)
- 		die(_("Cannot commit uninitialized/unreferenced notes tree"));
- 	if (!t->dirty)
- 		return; /* don't have to commit an unchanged tree */
-@@ -48,7 +48,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
- 
- 	create_notes_commit(t, NULL, buf.buf, buf.len, commit_sha1);
- 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
--	update_ref(buf.buf, t->ref, commit_sha1, NULL, 0,
-+	update_ref(buf.buf, t->update_ref, commit_sha1, NULL, 0,
- 		   UPDATE_REFS_DIE_ON_ERR);
- 
- 	strbuf_release(&buf);
-@@ -130,7 +130,7 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
- 		free(c);
- 		return NULL;
- 	}
--	c->trees = load_notes_trees(c->refs);
-+	c->trees = load_notes_trees(c->refs, NOTES_INIT_WRITABLE);
- 	string_list_clear(c->refs, 0);
- 	free(c->refs);
- 	return c;
-diff --git a/notes.c b/notes.c
-index 2be4d7f..25ed506 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1007,13 +1007,16 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 	t->first_non_note = NULL;
- 	t->prev_non_note = NULL;
- 	t->ref = xstrdup_or_null(notes_ref);
-+	t->update_ref = (flags & NOTES_INIT_WRITABLE) ? t->ref : NULL;
- 	t->combine_notes = combine_notes;
- 	t->initialized = 1;
- 	t->dirty = 0;
- 
- 	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
--	    read_ref(notes_ref, object_sha1))
-+	    get_sha1_treeish(notes_ref, object_sha1))
- 		return;
-+	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, object_sha1))
-+		die("Cannot use notes ref %s", notes_ref);
- 	if (get_tree_entry(object_sha1, "", sha1, &mode))
- 		die("Failed to read notes tree referenced by %s (%s)",
- 		    notes_ref, sha1_to_hex(object_sha1));
-@@ -1023,7 +1026,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 	load_subtree(t, &root_tree, t->root, 0);
- }
- 
--struct notes_tree **load_notes_trees(struct string_list *refs)
-+struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
- {
- 	struct string_list_item *item;
- 	int counter = 0;
-@@ -1031,7 +1034,7 @@ struct notes_tree **load_notes_trees(struct string_list *refs)
- 	trees = xmalloc((refs->nr+1) * sizeof(struct notes_tree *));
- 	for_each_string_list_item(item, refs) {
- 		struct notes_tree *t = xcalloc(1, sizeof(struct notes_tree));
--		init_notes(t, item->string, combine_notes_ignore, 0);
-+		init_notes(t, item->string, combine_notes_ignore, flags);
- 		trees[counter++] = t;
- 	}
- 	trees[counter] = NULL;
-@@ -1067,7 +1070,7 @@ void init_display_notes(struct display_notes_opt *opt)
- 						     item->string);
- 	}
- 
--	display_notes_trees = load_notes_trees(&display_notes_refs);
-+	display_notes_trees = load_notes_trees(&display_notes_refs, 0);
- 	string_list_clear(&display_notes_refs, 0);
- }
- 
-diff --git a/notes.h b/notes.h
-index 2a3f923..e5d67fd 100644
---- a/notes.h
-+++ b/notes.h
-@@ -44,6 +44,7 @@ extern struct notes_tree {
- 	struct int_node *root;
- 	struct non_note *first_non_note, *prev_non_note;
- 	char *ref;
-+	char *update_ref;
- 	combine_notes_fn combine_notes;
- 	int initialized;
- 	int dirty;
-@@ -72,6 +73,13 @@ const char *default_notes_ref(void);
- #define NOTES_INIT_EMPTY 1
- 
- /*
-+ * By default, the notes tree is only readable, and the notes ref can be
-+ * any treeish. The notes tree can however be made writable with this flag,
-+ * in which case only strict ref names can be used.
-+ */
-+#define NOTES_INIT_WRITABLE 2
-+
-+/*
-  * Initialize the given notes_tree with the notes tree structure at the given
-  * ref. If given ref is NULL, the value of the $GIT_NOTES_REF environment
-  * variable is used, and if that is missing, the default notes ref is used
-@@ -276,7 +284,7 @@ void format_display_notes(const unsigned char *object_sha1,
-  * Load the notes tree from each ref listed in 'refs'.  The output is
-  * an array of notes_tree*, terminated by a NULL.
-  */
--struct notes_tree **load_notes_trees(struct string_list *refs);
-+struct notes_tree **load_notes_trees(struct string_list *refs, int flags);
- 
- /*
-  * Add all refs that match 'glob' to the 'list'.
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 8cffd35..06b4584 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -83,6 +83,16 @@ test_expect_success 'edit existing notes' '
- 	test_must_fail git notes show HEAD^
- '
- 
-+test_expect_success 'show notes from treeish' '
-+	test "b3" = "$(git notes --ref commits^{tree} show)" &&
-+	test "b4" = "$(git notes --ref commits@{1} show)"
-+'
-+
-+test_expect_success 'cannot edit notes from non-ref' '
-+	test_must_fail git notes --ref commits^{tree} edit &&
-+	test_must_fail git notes --ref commits@{1} edit
-+'
-+
- test_expect_success 'cannot "git notes add -m" where notes already exists' '
- 	test_must_fail git notes add -m "b2" &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
 -- 
-2.4.3.3.g2dde64c.dirty
+Regards,
+Karthik Nayak
