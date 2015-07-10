@@ -1,125 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] ident: support per-path configs by matching the path
- against a pattern
-Date: Fri, 10 Jul 2015 12:46:52 -0400
-Message-ID: <20150710164652.GA30113@peff.net>
-References: <0000014e7752e758-a0bf7acb-2d0f-4492-8004-8eeeb9b2f042-000000@eu-west-1.amazonses.com>
- <xmqqr3ogkpz5.fsf@gitster.dls.corp.google.com>
- <20150710154308.GA29395@peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v8 0/7] ref backend preamble
+Date: Fri, 10 Jul 2015 15:34:09 +0100
+Organization: OPDS
+Message-ID: <8C71190FFE324B1599E89376429C8F84@PhilipOakley>
+References: <1436482260-28088-1-git-send-email-dturner@twopensource.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 18:47:01 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "David Turner" <dturner@twopensource.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Jul 10 19:02:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDbS0-0001Kk-3r
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 18:47:00 +0200
+	id 1ZDbgU-0001zK-Ow
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 19:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932390AbbGJQq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 12:46:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58629 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932349AbbGJQqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 12:46:55 -0400
-Received: (qmail 18018 invoked by uid 102); 10 Jul 2015 16:46:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 11:46:54 -0500
-Received: (qmail 9655 invoked by uid 107); 10 Jul 2015 16:46:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 12:46:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Jul 2015 12:46:52 -0400
-Content-Disposition: inline
-In-Reply-To: <20150710154308.GA29395@peff.net>
+	id S932641AbbGJRBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2015 13:01:54 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:50558 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932450AbbGJRBx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jul 2015 13:01:53 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CRLQCe+Z9VPOu1BlxbDoMEgTSGTm27XwQEgU1NAQEBAQEBBwEBAQFBJBtBAQICg1gFAQEBAQIBCAEBLh4BASYGAgMFAgEDDgcMJRQBBBoGBwMUBgESCAIBAgMBiBUMwCuQFYtLiCSBFAWMZIdNAYEGo2iBCWYMAYFnPz0xgksBAQE
+X-IPAS-Result: A2CRLQCe+Z9VPOu1BlxbDoMEgTSGTm27XwQEgU1NAQEBAQEBBwEBAQFBJBtBAQICg1gFAQEBAQIBCAEBLh4BASYGAgMFAgEDDgcMJRQBBBoGBwMUBgESCAIBAgMBiBUMwCuQFYtLiCSBFAWMZIdNAYEGo2iBCWYMAYFnPz0xgksBAQE
+X-IronPort-AV: E=Sophos;i="5.15,447,1432594800"; 
+   d="scan'208";a="793778757"
+Received: from host-92-6-181-235.as43234.net (HELO PhilipOakley) ([92.6.181.235])
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 10 Jul 2015 18:01:49 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273826>
 
-On Fri, Jul 10, 2015 at 11:43:08AM -0400, Jeff King wrote:
+From: "David Turner" <dturner@twopensource.com>
+> The current state of the discussion on alternate ref backends is that
+> we're going to continue to store pseudorefs (e.g. CHERRY_PICK_HEAD) as
 
-> But something like:
-> 
->   [include "gitdir:bar"]
->   path = foo
-> 
-> could do so only when the "gitdir:bar" conditional is satisfied (where
-> that is just a syntax I made up to mean fnmatch("bar", $GIT_DIR)). So
-> like user.<pattern>.*, we still put our section-specific hack into one
-> special section, but that one place is capable of chaining to multiple
-> other config keys. :)
+Assuming this is accepted, should the definition of pseudorefs be 
+included in the gitglossary?
 
-Here's a sketch if anybody is inclined to pick it up and run with it.
-Note that I did not think too hard about little things like the
-de-anchoring.
+Once ref backends become common, the distinction will needed in the 
+docs.
 
----
-diff --git a/config.c b/config.c
-index 29fa012..47b01f0 100644
---- a/config.c
-+++ b/config.c
-@@ -139,9 +139,45 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 	return ret;
- }
- 
-+static int include_condition_is_true(const char *cond, int cond_len)
-+{
-+	const char *value;
-+
-+	/* no condition (i.e., "include.path") is always true */
-+	if (!cond)
-+		return 1;
-+
-+	/*
-+	 * It's OK to run over cond_len in our checks here, as that just pushes
-+	 * us past the final ".", which cannot match any of our prefixes.
-+	 */
-+	if (skip_prefix(cond, "gitdir:", &value)) {
-+		struct strbuf text = STRBUF_INIT;
-+		struct strbuf pattern = STRBUF_INIT;
-+		int ret;
-+
-+		strbuf_add_absolute_path(&text, get_git_dir());
-+
-+		/* de-anchor match for convenience */
-+		strbuf_addstr(&pattern, "**");
-+		strbuf_add(&pattern, value, cond_len - (value - cond));
-+		strbuf_addstr(&pattern, "**");
-+
-+		ret = !wildmatch(pattern.buf, text.buf, 0, NULL);
-+		strbuf_release(&pattern);
-+		strbuf_release(&text);
-+		return ret;
-+	}
-+
-+	/* unknown conditionals are always false */
-+	return 0;
-+}
-+
- int git_config_include(const char *var, const char *value, void *data)
- {
- 	struct config_include_data *inc = data;
-+	const char *cond, *key;
-+	int cond_len;
- 	int ret;
- 
- 	/*
-@@ -152,8 +188,12 @@ int git_config_include(const char *var, const char *value, void *data)
- 	if (ret < 0)
- 		return ret;
- 
--	if (!strcmp(var, "include.path"))
--		ret = handle_path_include(value, inc);
-+	if (!parse_config_key(var, "include", &cond, &cond_len, &key) &&
-+	    include_condition_is_true(cond, cond_len)) {
-+		if (!strcmp(key, "path"))
-+			ret = handle_path_include(value, inc);
-+		/* else we do not know about this type of include; ignore */
-+	}
- 	return ret;
- }
- 
+> files in $GIT_DIR.  So this re-roll of the refs backend preamble
+> doesn't do anything to pseudorefs.  It just does reflog stuff.
+>
+--
+Philip 
