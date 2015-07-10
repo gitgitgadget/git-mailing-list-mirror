@@ -1,81 +1,63 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] p5310: mend broken &&-chain
-Date: Fri, 10 Jul 2015 22:40:57 +0200
-Message-ID: <55A02DD9.3020909@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] p5310: mend broken &&-chain
+Date: Fri, 10 Jul 2015 16:50:29 -0400
+Message-ID: <20150710205029.GA1181@peff.net>
+References: <55A02DD9.3020909@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 10 22:41:58 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 10 22:50:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDf7K-0006io-DW
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 22:41:54 +0200
+	id 1ZDfFl-0004J6-Jj
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 22:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933253AbbGJUlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 16:41:47 -0400
-Received: from mout.web.de ([212.227.15.3]:59955 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933243AbbGJUlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 16:41:39 -0400
-Received: from [192.168.178.27] ([79.253.139.191]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MVLsk-1ZUkeD1c7y-00Ygod; Fri, 10 Jul 2015 22:41:15
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-X-Provags-ID: V03:K0:G9jaFpxGVgwJHsWyQXXKVNppeAxjx/DlppD+3Pg2gl95Z+EbOa5
- m99PYv756zarv6dLBIIhkPC9A/56bG9bRusHyl5d1mEfW+lnJ48lfl9sjgLIKSTrVR1ZDXc
- B9+yQSVL9fLPXnb6471JOV5m/KT2+T2ywu2VmaNQAm/7DnsrAs/AmO0kUhYAum55OzD0NrQ
- sQW9DJJmjNSSyLTk3hV3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PfEdLQv25tE=:zT4ZB0Hb81Sxw0vQuH5A1u
- W64sL0Yvye/kZK5YDCtCIWAW8tfErcvw0URckui66HftpYJJtGA7Hv4J7AW3hciioNHFtvWu+
- t1SNyZM4App0W007zfsJxsHqYM1pACYuzCRiSiZtw0KI2YY6G6DwIoG7B6sDDjV/bXNtTNWTD
- z/lHCGCxqdf4AX+v2dyk2XMd/cDxc6pXfFLAo0hvjnLZ1YhyJJ+A5oEQzJhzCc4kQ6sEnBmwe
- ZB6uXkpbGHOhjOebq/FQVmAu+r74hWN7m+EB9Hj82fCKWofAHjhnaBs5dwrC4gXYNBfNXd3dZ
- muKNKbkreK+RJoS+ne5dv6ufBwO7R2ly2XEs3R1ImNGWa4JMBxU0oik1U7HCx5Q4bF0PFQNlU
- ON9rWBab6h6fOTaOJpcru7E3XQxklldV5gRUPcRSWu9bOiHd0fj1/Bjb3FpcChn2CA5+WK9mB
- hJVCLkHR6qo/uBbYDR0NmZRZRf5qgPIFcsr6Ps3OAv1s8SIDHvkC4ZHSpUoxmEPTmXKJNEnbD
- vpF5pZ4lKgKvq5QijBnstwpqZa8J2DZmns7DNE6cT8LAcz0X4adymuqSyDKZrDNG1XH2L/zPK
- zdvibVcyBYlErL1nyXSCMuOAGnQLgHOEGYiKKfk2ygwWu+GZArDyM1l7GxhD1LzAeimSYhd67
- T7qHVykK8e+65RiVHJCTPTxQmUkqC5zDRbGTen/llEQZK6g8njx2+VXRvRQ1uN7f3nuU=
+	id S932506AbbGJUue convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jul 2015 16:50:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58739 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754508AbbGJUuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2015 16:50:32 -0400
+Received: (qmail 32212 invoked by uid 102); 10 Jul 2015 20:50:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 15:50:32 -0500
+Received: (qmail 11570 invoked by uid 107); 10 Jul 2015 20:50:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 16:50:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Jul 2015 16:50:29 -0400
+Content-Disposition: inline
+In-Reply-To: <55A02DD9.3020909@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273834>
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-GIT_TEST_CHAIN_LINT complains about the missing &&s and is enabled
-by default now.
+On Fri, Jul 10, 2015 at 10:40:57PM +0200, Ren=C3=A9 Scharfe wrote:
 
- t/perf/p5310-pack-bitmaps.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps=
+=2Esh
+> index f8ed857..de2a224 100755
+> --- a/t/perf/p5310-pack-bitmaps.sh
+> +++ b/t/perf/p5310-pack-bitmaps.sh
+> @@ -39,14 +39,14 @@ test_expect_success 'create partial bitmap state'=
+ '
+> =20
+>  	# now kill off all of the refs and pretend we had
+>  	# just the one tip
+> -	rm -rf .git/logs .git/refs/* .git/packed-refs
+> -	git update-ref HEAD $cutoff
+> +	rm -rf .git/logs .git/refs/* .git/packed-refs &&
+> +	git update-ref HEAD $cutoff &&
 
-diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
-index f8ed857..de2a224 100755
---- a/t/perf/p5310-pack-bitmaps.sh
-+++ b/t/perf/p5310-pack-bitmaps.sh
-@@ -39,14 +39,14 @@ test_expect_success 'create partial bitmap state' '
- 
- 	# now kill off all of the refs and pretend we had
- 	# just the one tip
--	rm -rf .git/logs .git/refs/* .git/packed-refs
--	git update-ref HEAD $cutoff
-+	rm -rf .git/logs .git/refs/* .git/packed-refs &&
-+	git update-ref HEAD $cutoff &&
- 
- 	# and then repack, which will leave us with a nice
- 	# big bitmap pack of the "old" history, and all of
- 	# the new history will be loose, as if it had been pushed
- 	# up incrementally and exploded via unpack-objects
--	git repack -Ad
-+	git repack -Ad &&
- 
- 	# and now restore our original tip, as if the pushes
- 	# had happened
--- 
-2.4.4
+Thanks, this definitely is a problem, but we already have a fix in the
+sb/p5310-and-chain topic. I thought that had been merged-up, but it
+looks like it is only in "next" right now.
+
+-Peff
