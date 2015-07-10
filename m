@@ -1,185 +1,163 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v7 2/8] cherry-pick: treat CHERRY_PICK_HEAD and
- REVERT_HEAD as refs
-Date: Fri, 10 Jul 2015 13:59:07 -0400
-Organization: Twitter
-Message-ID: <1436551147.4542.72.camel@twopensource.com>
-References: <1436316963-25520-1-git-send-email-dturner@twopensource.com>
-		<1436316963-25520-2-git-send-email-dturner@twopensource.com>
-		<559D6208.8090607@kdbg.org> <1436382962.4542.8.camel@twopensource.com>
-		<559D92CF.7000408@kdbg.org>	<xmqq4mlexmh3.fsf@gitster.dls.corp.google.com>
-		<1436399058.4542.26.camel@twopensource.com>
-		<xmqqmvz5x4cc.fsf@gitster.dls.corp.google.com>
-		<1436478800.4542.61.camel@twopensource.com>
-	 <xmqqbnflugsw.fsf@gitster.dls.corp.google.com>
-	 <559F4A55.1070309@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation clarification on git-checkout regarding ours/theirs
+Date: Fri, 10 Jul 2015 13:07:11 -0700
+Message-ID: <xmqqy4inkc9c.fsf@gitster.dls.corp.google.com>
+References: <1436516877-21064-1-git-send-email-simon.eu@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jul 10 19:59:21 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Simon A. Eugster" <simon.eugster@eps.ch>
+To: "Simon A. Eugster" <simon.eu@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 10 22:07:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDcZy-0002Tk-RK
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 19:59:19 +0200
+	id 1ZDeZt-000319-2B
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 22:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933156AbbGJR7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 13:59:14 -0400
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:35660 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932507AbbGJR7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 13:59:11 -0400
-Received: by qget71 with SMTP id t71so132705974qge.2
-        for <git@vger.kernel.org>; Fri, 10 Jul 2015 10:59:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=Cg61iMDtBQsibqIADOUsok8Bp93W879cHFZdxpXlHLQ=;
-        b=VojUi9+CjszO74NKyOe0f0lVBnkuEJyOw2fEestBYjRNVNXwxD0Fed3U8rUYk223wA
-         4N9DajH9enTMXwiHaUImTFaQaCd9vi4Ws0WrYVw8OuIKQ8DoJ8lD1BsMano1VHCEMkI9
-         msyjuySHQkbDU+qpB29zPIgjVfvDt8LKeqHwa2FRShiv7ryU4rdtQGC/aY/Og38UFWFj
-         Z7VnTfu6YWgDRjaZNH5LALTl+d6rI+0nryVd8W6p7SfxALpjjluAALiNdhn+1V87RVVK
-         mTyq5KYexxvCb6hKYanaZ0iyJU75WYamsWiwUGKQPQE+zufQLlXerKgKyRgVbkGpUfuv
-         hjIA==
-X-Gm-Message-State: ALoCoQlj1FicW3ay+9aap88PZWfY5GibvukIVn8ennqjsQoxcbEbEI4ER6X+XxqDHGi+QDNmGtc/
-X-Received: by 10.140.217.149 with SMTP id n143mr37293620qhb.9.1436551150278;
-        Fri, 10 Jul 2015 10:59:10 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id q22sm5816177qkh.35.2015.07.10.10.59.08
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Jul 2015 10:59:09 -0700 (PDT)
-In-Reply-To: <559F4A55.1070309@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S932906AbbGJUHQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jul 2015 16:07:16 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:33656 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932650AbbGJUHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2015 16:07:14 -0400
+Received: by iggp10 with SMTP id p10so42532638igg.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2015 13:07:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=vwv14E3m7dYCyYWBwIICg5Y3rbKRYgI15TZu+vthAxk=;
+        b=ajKSTVXkPtQ33NuvWvj4ZrL7MvxEAyM51WQ+ZncSEEMREkwhc6eEYeWgwFsVsMbus6
+         FTIzXcgdvELWGCOsa/4iZZnIGG2klm8VWy/CoFge/oxyd+NcUujH8OFffAk5vKlRniTt
+         FAf+gv6WW9CmiCbThnMUYItVm4yTzbiOsTE3ozaJumIPKagTRsgR3WD5gHM/E/S27/ss
+         7XyubmrX6hwycKohhpbS1pBZQ+jS5I0UxReNnySswgCI/erpWlTpXoy8B9IfNSOAxt3e
+         W4YoCIG/hNzMPJCanmdspURsqI25THqsrLmm6BJQ+BNf0VxSPyibYVNPUKZApyKoaTPz
+         cGDQ==
+X-Received: by 10.107.11.166 with SMTP id 38mr35796115iol.8.1436558834044;
+        Fri, 10 Jul 2015 13:07:14 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:6de3:8019:a2a4:79ec])
+        by smtp.gmail.com with ESMTPSA id kl8sm247110igb.15.2015.07.10.13.07.12
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 10 Jul 2015 13:07:13 -0700 (PDT)
+In-Reply-To: <1436516877-21064-1-git-send-email-simon.eu@gmail.com> (Simon
+	A. Eugster's message of "Fri, 10 Jul 2015 10:27:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273831>
 
-On Fri, 2015-07-10 at 06:30 +0200, Michael Haggerty wrote:
-> On 07/10/2015 12:06 AM, Junio C Hamano wrote:
-> > David Turner <dturner@twopensource.com> writes:
-> > 
-> >> OK, here's my current best idea:
-> >>
-> >> 1. A "pseudoref" is an all-caps file in $GIT_DIR/ that always contains
-> >> at least a SHA1.  CHERRY_PICK_HEAD and REVERT_HEAD are examples. Because
-> >> HEAD might be a symbolic ref, it is not a pseudoref. 
-> >>
-> >> Refs backends do not manage pseudorefs.  Instead, when a pseudoref (an
-> >> all-caps ref containing no slashes) is requested (e.g. git rev-parse
-> >> FETCH_HEAD) the generic refs code checks for the existence of that
-> >> file and if it exists, returns immediately without hitting the backend.
-> >> The generic code will refuse to allow updates to pseudorefs.
-> >>
-> >> 2. The pluggable refs backend manages all refs other than HEAD.
-> >>
-> >> 3. The "files" backend always manages HEAD.  This allows for a reflog
-> >> and for HEAD to be a symbolic ref.
-> >>
-> >> The major complication here is ref transactions -- what if there's a
-> >> transaction that wants to update e.g. both HEAD and refs/heads/master?
-> > 
-> > An update to the current branch (e.g. "git commit") does involve at
-> > least update to the reflog of HEAD, the current branch somewhere in
-> > refs/heads/ and its log, so it is not "what if" but is a norm [*1*].
-> 
-> The updating of symlink reflogs in general, and particularly that of
-> HEAD, is not done very cleanly. You can see the code in
-> `commit_ref_update()` (some of it helpfully commented to be a "Special
-> hack"):
-> 
-> * If a reference is modified through a symlink, the symlink is locked
-> rather than the reference itself.
-> * If a reference is modified directly, and HEAD points at it, then the
-> HEAD reflog is amended without locking HEAD.
-> 
-> Aside from the lack of proper locking, which could result in races with
-> other processes, we also have the problem that the same reference that
-> is being changed via one of these implicit updates could *also* be being
-> changed directly in the same transaction. Such an update would evade the
-> `ref_update_reject_duplicates()` check.
-> 
-> Previously my thinking was that the locking should be done differently:
-> when the transaction is being processed, extra ref_update records could
-> be created for the extra reference(s) that have to be modified, then
-> these could be handled more straightforwardly. So supposing that HEAD
-> points at refs/heads/master,
-> 
-> * An update of HEAD would be turned into a reflog update and also add a
-> synthetic update to refs/heads/master.
-> * An update of refs/heads/master would add a synthetic update to the
-> HEAD reflog
-> 
-> The first point would obviously apply to any updates via symbolic refs.
-> The second one should too, thought this is a case that we currently punt
-> on to avoid the need to do reverse symbolic ref lookups.
+"Simon A. Eugster" <simon.eu@gmail.com> writes:
 
-All of this is worth fixing, but I don't know that it needs to be fixed
-before ref backends hit.  What do you think?
+> From: "Simon A. Eugster" <simon.eugster@eps.ch>
+>
+> Signed-off-by: Simon A. Eugster <simon.eugster@eps.ch>
+> ---
 
-> >> It may be the case that this never happens; I have not actually audited
-> >> the code to figure it out.  If someone knows for sure that it does not
-> >> happen, please say so. But assuming it does happen, here's my idea:
-> >>
-> >> If the refs backend is the files backend, we can simply treat HEAD like
-> >> any other ref.
-> >>
-> >> If the refs backend is different, then the refs code needs to hold a
-> >> files-backend transaction for HEAD, which it will commit immediately
-> >> after the other transaction succeeds.  We can stick a pointer to the
-> >> extra transaction in the generic struct ref_transaction, which (as
-> >> Michael Haggerty suggests) specific backends will extend.
-> >>
-> >> A failure to commit either transaction will be reported as a failure,
-> >> and we'll give an additional inconsistent state warning if the main
-> >> transaction succeeds but the HEAD transaction fails.
-> > 
-> > Yeah, I was thinking along those lines, too.  Thanks for clearly
-> > writing it down.
-> > 
-> >> What do other folks think?
-> > 
-> > Me too ;-)
-> 
-> I don't have an answer right now, and I have to get on an airplane in a
-> few hours so I can't think hard about it at the moment. But let me also
-> braindump another vague plan that I have had for a long time:
-> overlayable reference storage schemes. Think of the way that loose refs
-> are currently overlaid on top of packed refs. I think it might be useful
-> to support overlaying more generally.
-> 
-> In this particular case there could be a workspace-local reference
-> storage that only handles HEAD and perhaps some of the other
-> pseudoreferences. That could be overlaid onto loose reference storage
-> (which would then only concern itself with references under "refs/"),
-> which would in turn be overlaid onto packed refs. The workspace-local
-> reference storage layer would have evil special-cased code for dealing
-> with the references that live outside of "refs/".
-> 
-> A `ref_transaction_commit()` would be broken into phases: first each of
-> the stacked backends would be asked to verify that the transaction is
-> possible and acquire any necessary locks, then each backend would get
-> the final "commit" command.
-> 
-> This construct would make it easy for different backends to share the
-> same implementation for HEAD (and potentially other workspace-local)
-> references, by simply layering that one storage mechanism on top of
-> their own.
-> 
-> That would probably be overengineering if it were only used to deal with
-> HEAD, but I think it is a nice general mechanism that could have other
-> applications.
+=46or those who are looking from the sideline, this is a reroll from a
+month-old thread $gmane/271680.
 
-Interesting concept.  I think the semantics could get rather
-complicated, but maybe it's worth thinking about.
+>  Documentation/git-checkout.txt | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-check=
+out.txt
+> index d263a56..d69306f 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -115,7 +115,21 @@ entries; instead, unmerged entries are ignored.
+>  --ours::
+>  --theirs::
+>  	When checking out paths from the index, check out stage #2
+> -	('ours') or #3 ('theirs') for unmerged paths.
+> +	('ours', HEAD) or #3 ('theirs', MERGE_HEAD) for unmerged paths.
 
-But for now, I think it would be better to special-case pseudorefs, with
-the option to expand that to full layering later if we see a need.
+I'd drop the change on this line.  Your conflict may or may not be
+from these two places when you are using "checkout".  Even if it
+came from "git merge", when you are doing "merge", the roles 'ours'
+and 'theirs' are very clear and mentioning HEAD/MERGE_HEAD does not
+add more clarity than it clutters the description, I would think.
+
+> +	See linkgit:git-merge[1] for details about stages #2 and #3.
+> ++
+> +Note that during `git rebase` and `git pull --rebase`, 'theirs' chec=
+ks out
+> +the local version, and 'ours' the remote version or the history that=
+ is rebased
+> +against.
+> ++
+> +The reason ours/theirs appear to be swapped during a rebase is that =
+we
+> +define the remote history as the canonical history, on top of which =
+our
+> +private commits are applied on, as opposed to normal merging where t=
+he
+> +local history is the canonical one.
+
+It appears to me that this patch text predates my comment in
+$gmane/271720 and your response to it?
+
+> +During merging, we assume the role of the canonical history=E2=80=99=
+s keeper,
+> +which, in case of a rebase, is the remote history, and our private c=
+ommits
+> +look to the keeper as =E2=80=9Ctheir=E2=80=9D commits which need to =
+be integrated on top
+> +of =E2=80=9Cour=E2=80=9D work.
+> =20
+>  -b <new_branch>::
+>  	Create a new branch named <new_branch> and start it at
+
+Thanks for reminding of the discussion that did not conclude with a
+patch.
+
+How about this?
+
+-- >8 --
+=46rom: "Simon A. Eugster" <simon.eugster@eps.ch>
+Subject: checkout: document subtlety around --ours/--theirs
+
+During a 'rebase' (hence 'pull --rebase'), --ours/--theirs may
+appear to be swapped to those who are not aware of the fact that
+they are temporarily playing the role of the keeper of the more
+authoritative history.
+
+Add a note to clarify.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Simon A. Eugster <simon.eugster@eps.ch>
+---
+ Documentation/git-checkout.txt | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
+t.txt
+index d263a565..8c921e7 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -116,6 +116,21 @@ entries; instead, unmerged entries are ignored.
+ --theirs::
+ 	When checking out paths from the index, check out stage #2
+ 	('ours') or #3 ('theirs') for unmerged paths.
+++
++Note that during `git rebase` and `git pull --rebase`, 'ours' and
++'theirs' may appear swapped; `--ours` gives the version from the
++branch the changes are rebased onto, while `--theirs` gives the
++version from the branch that holds your work that is being rebased.
+++
++This is because `rebase` is used in a workflow that treats the
++history at the remote as the shared canonical one, and treat the
++work done on the branch you are rebasing as the third-party work to
++be integrated, and you are temporarily assuming the role of the
++keeper of the canonical history during the rebase.  As the keeper of
++the canonical history, you need to view the history from the remote
++as `ours` (i.e. "our shared canonical history"), while what you did
++on your side branch as `theirs` (i.e. "one contributor's work on top
++of it").
+=20
+ -b <new_branch>::
+ 	Create a new branch named <new_branch> and start it at
