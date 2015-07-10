@@ -1,116 +1,90 @@
-From: Markos Chandras <Markos.Chandras@imgtec.com>
-Subject: Re: git rerere is confused with identical conflicts in multiple files
-Date: Fri, 10 Jul 2015 16:21:52 +0100
-Message-ID: <559FE310.5060204@imgtec.com>
-References: <559F7C81.50805@imgtec.com>
- <xmqqvbdsksmv.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] ident: support per-path configs by matching the path
+ against a pattern
+Date: Fri, 10 Jul 2015 11:43:08 -0400
+Message-ID: <20150710154308.GA29395@peff.net>
+References: <0000014e7752e758-a0bf7acb-2d0f-4492-8004-8eeeb9b2f042-000000@eu-west-1.amazonses.com>
+ <xmqqr3ogkpz5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 17:22:00 2015
+X-From: git-owner@vger.kernel.org Fri Jul 10 17:43:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDa7j-0000e6-Fs
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 17:21:59 +0200
+	id 1ZDaSK-0005Bf-Kh
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 17:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932929AbbGJPV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 11:21:56 -0400
-Received: from mailapp01.imgtec.com ([195.59.15.196]:53423 "EHLO
-	mailapp01.imgtec.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932702AbbGJPVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 11:21:54 -0400
-Received: from KLMAIL01.kl.imgtec.org (unknown [192.168.5.35])
-	by Websense Email Security Gateway with ESMTPS id 2C1B7704DB13D;
-	Fri, 10 Jul 2015 16:21:50 +0100 (IST)
-Received: from LEMAIL01.le.imgtec.org (192.168.152.62) by
- KLMAIL01.kl.imgtec.org (192.168.5.35) with Microsoft SMTP Server (TLS) id
- 14.3.195.1; Fri, 10 Jul 2015 16:21:53 +0100
-Received: from [192.168.154.48] (192.168.154.48) by LEMAIL01.le.imgtec.org
- (192.168.152.62) with Microsoft SMTP Server (TLS) id 14.3.210.2; Fri, 10 Jul
- 2015 16:21:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-In-Reply-To: <xmqqvbdsksmv.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [192.168.154.48]
+	id S1754181AbbGJPnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2015 11:43:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58589 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754023AbbGJPnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2015 11:43:11 -0400
+Received: (qmail 13847 invoked by uid 102); 10 Jul 2015 15:43:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 10:43:11 -0500
+Received: (qmail 8999 invoked by uid 107); 10 Jul 2015 15:43:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 11:43:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Jul 2015 11:43:08 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqr3ogkpz5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273821>
 
-Hi,
+On Fri, Jul 10, 2015 at 08:10:54AM -0700, Junio C Hamano wrote:
 
-On 07/10/2015 03:13 PM, Junio C Hamano wrote:
-> Markos Chandras <Markos.Chandras@imgtec.com> writes:
+> I do agree it is a good feature to have to allow you to keep a
+> centralized registry of possible configuration in a single place,
+> e.g. $HOME/.gitconfig, and selectively apply pieces for multiple
+> places.
 > 
->> $ cat .git/MERGE_RR
->> 5563edc0fb427275a0ca5677c93c40def8b53258
->> arch/mips/include/asm/cpu-type.hf175ff6228f624296b661664bce4ab4e84d712cc
->>
->> arch/mips/include/asm/cpu.h5563edc0fb427275a0ca5677c93c40def8b53258
->>    arch/mips/kernel/idle.c5563edc0fb427275a0ca5677c93c40def8b53258
->> arch/mips/kernel/spram.c5563edc0fb427275a0ca5677c93c40def8b53258
->> arch/mips/kernel/traps.c5563edc0fb427275a0ca5677c93c40def8b53258
->> arch/mips/mm/c-r4k.c
->>
->> so as you see, multiple files share the same hash. That's probably
->> because the "conflicting context ( the part between >>> <<<<)" in every
->> file but cpu.h is identical and git seems to calculate the hash purely
->> on the conflicting context. That makes git rerere thinks that it only
->> has to resolve 2 conflicts instead of 6.
+> Having said that, a few comments.
 > 
-> Yes, that is by design, and should not change.  The thing is, you do
-> want to share the same resolution across files, regardless of the
-> path, when the recorded resolution replays cleanly [*1*].
+>  - It feels very hacky to only do this for the ident.  You would
+>    want to have, (conceptually, not necessarily at the syntax level)
+>    something more along the lines of:
+> 
+>    	if path matches this pattern
+>         	[user]
+>                 	email = address
+>                         name = name
+> 	end
+> 
+>    to allow any configuration to be covered by this new "selectively
+>    use from the centralized registry" feature.
 
-I see.
+Yeah, I agree it would be nice to cover all config keys. Since it's
+syntactically difficult to add conditionals to the existing config
+format, I tried to leave open a space for this in the "include" design.
+That is, right now:
 
-> [...]
-> 
-> The thing to fix is "did it conflict, if so punt" step.  Within the
-> same conflict ID, we would introduce the concept of "variant", and
-> allow you to keep rr_cache/$ID/{preimage,postimage}.$variant.  The
-> first part of the per MERGE_RR entry process would instead go like
-> so:
-> 
->     - Does rr-cache/$ID/ has one or more postimages?
->       - If so, for each variant, attempt three-way merge using
->         preimage, postimage and thisimage.
->       - Did one of the three-way merges replay cleanly?
->         - If so, be happy.
->         - If not, assign an unused variant to this path and change
->           its MERGE_RR entry from $ID to $ID.$variant
-> 
->     - Does path still have conflicts?
->       - If not, record rr-cache/$ID/postimage for "variant".
-> 
-> The current "preimage", "postimage" will be kept as the first
-> variant in rr-cache/$ID/ directory.  The second variant will likely
-> be named (I don't have a code yet but have been slowly laying out
-> the fundation to allow us to do this) "preimage.0" and "postimage.0",
-> and the third one will have ".1" suffix.
-> 
-> This approach has the added benefit that existing rr-cache entries
-> will stay valid (in addition to being able to replay the same
-> resolution even after you renamed the path that conflict, unlike the
-> case when you hashed the pathname together to break the conflict ID
-> computtion).
+  [include]
+  path = foo
 
-I understand. Thanks for the explanation.
+will unconditionally include "foo". But something like:
 
-> 
-> A WIP has been published on jc/rerere topic in my repository for the
-> past few weeks, but I haven't reached the interesting "multi variant"
-> part yet, as I said.
+  [include "gitdir:bar"]
+  path = foo
 
-I am happy to test it when you have something more complete. If you can
-reply to this e-mail when the 'variant' patch finds its way into the
-master branch that would be great as well
+could do so only when the "gitdir:bar" conditional is satisfied (where
+that is just a syntax I made up to mean fnmatch("bar", $GIT_DIR)). So
+like user.<pattern>.*, we still put our section-specific hack into one
+special section, but that one place is capable of chaining to multiple
+other config keys. :)
 
--- 
-markos
+My only request is that any conditional we add have some prefix (like
+"gitdir:") so that we have space to add more types later if we choose.
+
+There's discussion on this topic somewhere on the list, but I didn't
+bother to dig it up. I don't think it adds anything over what I
+summarized above.
+
+-Peff
