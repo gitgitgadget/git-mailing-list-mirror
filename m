@@ -1,83 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/10] Documentation/tag: remove double occurance of "<pattern>"
-Date: Fri, 10 Jul 2015 09:44:46 -0700
-Message-ID: <xmqqbnfkklmp.fsf@gitster.dls.corp.google.com>
-References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
-	<1436437671-25600-1-git-send-email-karthik.188@gmail.com>
-	<1436437671-25600-6-git-send-email-karthik.188@gmail.com>
-	<CAP8UFD0mSZ_FyPcaMoWRbrR=i9vFJvVYyqM+0B-3L3dQpA6SsA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] ident: support per-path configs by matching the path
+ against a pattern
+Date: Fri, 10 Jul 2015 12:46:52 -0400
+Message-ID: <20150710164652.GA30113@peff.net>
+References: <0000014e7752e758-a0bf7acb-2d0f-4492-8004-8eeeb9b2f042-000000@eu-west-1.amazonses.com>
+ <xmqqr3ogkpz5.fsf@gitster.dls.corp.google.com>
+ <20150710154308.GA29395@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 18:44:59 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 10 18:47:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDbQ2-0008Sl-9I
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 18:44:58 +0200
+	id 1ZDbS0-0001Kk-3r
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jul 2015 18:47:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520AbbGJQot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2015 12:44:49 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:37390 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754327AbbGJQos (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2015 12:44:48 -0400
-Received: by igpy18 with SMTP id y18so17089559igp.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2015 09:44:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=r180JeubcgeY1PJokem9NlRlcSv7lq+0qP7qsMsv6EA=;
-        b=aLR6Y0Y8gIXiMPzZ3MotaFDAztqndzDQ+cXMrofb/P3w3cAYUTmVkbslvWmsTF2+R+
-         JHqK6xHg74owp3rouKT27yX299OmZOO08A6icf04/WZj6KVmNxSuu9fHndh06tu+GiJC
-         Ggzv1FgcdVQOOGVAOiBbvBh/Z3vTd6LiVZL32hN2Rjx8L7ot3xbj1vpoIOui+Q7Vvx+X
-         HjQXZwkwOVOT0BdvPqgoXwzjTGQNZ6c03xyClttH+Za1Ljua6adRzwMEa70xpv32cQW5
-         fkUFVyNSDZuTM5Ba/gVQB4GMENI/F43CNxxeWAdWUWIlUKqASZZRVKdGpKL998etF1sk
-         J7kQ==
-X-Received: by 10.50.50.175 with SMTP id d15mr4439483igo.18.1436546687992;
-        Fri, 10 Jul 2015 09:44:47 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6de3:8019:a2a4:79ec])
-        by smtp.gmail.com with ESMTPSA id j2sm6787295ioo.43.2015.07.10.09.44.47
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 10 Jul 2015 09:44:47 -0700 (PDT)
-In-Reply-To: <CAP8UFD0mSZ_FyPcaMoWRbrR=i9vFJvVYyqM+0B-3L3dQpA6SsA@mail.gmail.com>
-	(Christian Couder's message of "Thu, 9 Jul 2015 14:19:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932390AbbGJQq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2015 12:46:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58629 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932349AbbGJQqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2015 12:46:55 -0400
+Received: (qmail 18018 invoked by uid 102); 10 Jul 2015 16:46:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 11:46:54 -0500
+Received: (qmail 9655 invoked by uid 107); 10 Jul 2015 16:46:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jul 2015 12:46:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Jul 2015 12:46:52 -0400
+Content-Disposition: inline
+In-Reply-To: <20150710154308.GA29395@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273825>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Fri, Jul 10, 2015 at 11:43:08AM -0400, Jeff King wrote:
 
-> On Thu, Jul 9, 2015 at 12:27 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  Documentation/git-tag.txt | 1 -
->>  1 file changed, 1 deletion(-)
->>
->> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
->> index 034d10d..4b04c2b 100644
->> --- a/Documentation/git-tag.txt
->> +++ b/Documentation/git-tag.txt
->> @@ -14,7 +14,6 @@ SYNOPSIS
->>  'git tag' -d <tagname>...
->>  'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
->>         [--column[=<options>] | --no-column] [<pattern>...]
->> -       [<pattern>...]
->>  'git tag' -v <tagname>...
->
-> As this patch could be applied directly to master and to maint maybe
-> you could send it at the top of this patch series or alone outside of
-> this patch series.
+> But something like:
+> 
+>   [include "gitdir:bar"]
+>   path = foo
+> 
+> could do so only when the "gitdir:bar" conditional is satisfied (where
+> that is just a syntax I made up to mean fnmatch("bar", $GIT_DIR)). So
+> like user.<pattern>.*, we still put our section-specific hack into one
+> special section, but that one place is capable of chaining to multiple
+> other config keys. :)
 
-Thanks. I'll pick this patch from the remainder of the series and
-queue it on a separate topic.
+Here's a sketch if anybody is inclined to pick it up and run with it.
+Note that I did not think too hard about little things like the
+de-anchoring.
+
+---
+diff --git a/config.c b/config.c
+index 29fa012..47b01f0 100644
+--- a/config.c
++++ b/config.c
+@@ -139,9 +139,45 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 	return ret;
+ }
+ 
++static int include_condition_is_true(const char *cond, int cond_len)
++{
++	const char *value;
++
++	/* no condition (i.e., "include.path") is always true */
++	if (!cond)
++		return 1;
++
++	/*
++	 * It's OK to run over cond_len in our checks here, as that just pushes
++	 * us past the final ".", which cannot match any of our prefixes.
++	 */
++	if (skip_prefix(cond, "gitdir:", &value)) {
++		struct strbuf text = STRBUF_INIT;
++		struct strbuf pattern = STRBUF_INIT;
++		int ret;
++
++		strbuf_add_absolute_path(&text, get_git_dir());
++
++		/* de-anchor match for convenience */
++		strbuf_addstr(&pattern, "**");
++		strbuf_add(&pattern, value, cond_len - (value - cond));
++		strbuf_addstr(&pattern, "**");
++
++		ret = !wildmatch(pattern.buf, text.buf, 0, NULL);
++		strbuf_release(&pattern);
++		strbuf_release(&text);
++		return ret;
++	}
++
++	/* unknown conditionals are always false */
++	return 0;
++}
++
+ int git_config_include(const char *var, const char *value, void *data)
+ {
+ 	struct config_include_data *inc = data;
++	const char *cond, *key;
++	int cond_len;
+ 	int ret;
+ 
+ 	/*
+@@ -152,8 +188,12 @@ int git_config_include(const char *var, const char *value, void *data)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	if (!strcmp(var, "include.path"))
+-		ret = handle_path_include(value, inc);
++	if (!parse_config_key(var, "include", &cond, &cond_len, &key) &&
++	    include_condition_is_true(cond, cond_len)) {
++		if (!strcmp(key, "path"))
++			ret = handle_path_include(value, inc);
++		/* else we do not know about this type of include; ignore */
++	}
+ 	return ret;
+ }
+ 
