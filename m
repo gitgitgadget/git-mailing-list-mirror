@@ -1,110 +1,93 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 16/16] checkout: drop intimate knowledge of new worktree initial population
-Date: Fri, 10 Jul 2015 20:05:46 -0400
-Message-ID: <1436573146-3893-17-git-send-email-sunshine@sunshineco.com>
-References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
+Date: Fri, 10 Jul 2015 20:05:30 -0400
+Message-ID: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
 Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Mikael Magnusson <mikachu@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 11 09:07:46 2015
+X-From: git-owner@vger.kernel.org Sat Jul 11 09:10:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDosz-00070n-So
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 09:07:46 +0200
+	id 1ZDovr-00007d-Tn
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 09:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753433AbbGKHHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 03:07:41 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:34340 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422AbbGKHHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 03:07:41 -0400
-Received: by iebmu5 with SMTP id mu5so208152997ieb.1
-        for <git@vger.kernel.org>; Sat, 11 Jul 2015 00:07:40 -0700 (PDT)
+	id S1752687AbbGKHKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 03:10:39 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:32891 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751957AbbGKHKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 03:10:39 -0400
+Received: by ietj16 with SMTP id j16so35700895iet.0
+        for <git@vger.kernel.org>; Sat, 11 Jul 2015 00:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B92DjJvKi4YeDyAJcMEyKhlZdx2HflbqftZy3VsPikA=;
-        b=DFkGCcjGsk39MRu2N4/HuvIyeOq3b7x68aL71FX56QYCF60NwUxpO+d8swqzccbJrE
-         jqxTciKafZR6CDVYzhwAK+iqEgwuAopFSakRi6ZrO993PZ7yDgQHbj2pSvxb8sVSsnaq
-         FU/mI/DnbpHTsxMTvjbrVOhmuAtavB4RQj6yO5DGJS/FkLDwnpohC3kte2GgqUTKKbbc
-         kOUFt7MSM2Pj4CPLhnqsyKVp8L5Fu+KM0sjMxkK1rgUloCFfX7+YRFPS+Fha6xa9B4jb
-         swdGeDamC8h83SDGR5Ut2B2vagT2SQE0JGzDbWP7Y7mIGCOWJPXPtwzJ5ONOColCbqzI
-         ZK/w==
-X-Received: by 10.107.46.159 with SMTP id u31mr35092074iou.69.1436573201705;
-        Fri, 10 Jul 2015 17:06:41 -0700 (PDT)
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=s29//Nx5JSXhy0UqymcDhIY1jSogH12uKfBP3oQX89I=;
+        b=N0PCiyDCIGEPF++kYy+nj1UoM3PhyeYMuFYqGDQArUHUjm2wUyYtKe1hrby5QBL9xA
+         5RB88s2zs6BjlrrFhObebGROlgeyRb/6rCFxT9Yz0jejG0hji5Iz3lcmKdZT/m5vf9Bh
+         vNyAkH4G/aFm3P19E3fy989owcSc/YBBLZQUMbcAWYtBfZyQx3m0fWH6/zH4yUuKbhGX
+         NBFeL52S+noo4wLMb2ZZrTT5ZugwT7An0Abte4mPXRVIEgQZzuRdSV3NZbQgcCCkKDEU
+         kgZ51HgXW/zGPJt5xGl7YbwwAoHHU1iP8Xhf6wNBCLcuzlXx12i6E9QbngSRK4mJ0nuU
+         lo/A==
+X-Received: by 10.107.8.17 with SMTP id 17mr6094111ioi.15.1436573187956;
+        Fri, 10 Jul 2015 17:06:27 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id g81sm7533321ioi.20.2015.07.10.17.06.40
+        by smtp.gmail.com with ESMTPSA id g81sm7533321ioi.20.2015.07.10.17.06.26
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jul 2015 17:06:41 -0700 (PDT)
+        Fri, 10 Jul 2015 17:06:27 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc1.201.ga12d9f8
-In-Reply-To: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273856>
 
-Now that git-worktree no longer relies upon git-checkout to perform
-initial population of the new worktree, git-checkout no longer needs
-intimate knowledge that it may be working on a newly created worktree.
-Therefore, drop 'new_worktree_mode' and the private
-GIT_CHECKOUT_NEW_WORKTREE environment variable by which git-worktree
-communicated to git-checkout that it was being invoked to populate a new
-worktree.
+This is a follow-on series to [1], which migrated "git checkout --to"
+functionality to "git worktree add". That series continued using "git
+checkout" for the initial population of the new worktree, which required
+git-checkout to have too intimate knowledge that it was operating in a
+newly created worktree.
 
-This reverts the remaining changes to checkout.c by 529fef2 (checkout:
-support checking out into a new working directory, 2014-11-30).
+This series eliminates git-checkout from the picture by instead
+employing "git reset --hard"[2] to populate the new worktree initially.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- builtin/checkout.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+It is built atop 1eb07d8 (worktree: add: auto-vivify new branch when
+<branch> is omitted, 2015-07-06), currently in 'next', which is
+es/worktree-add except for the final patch (which retires
+--ignore-other-worktrees) since the intention[3] was to drop that patch.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4ae895c..02d78ba 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -48,8 +48,6 @@ struct checkout_opts {
- 	const char *prefix;
- 	struct pathspec pathspec;
- 	struct tree *source_tree;
--
--	int new_worktree_mode;
- };
- 
- static int post_checkout_hook(struct commit *old, struct commit *new,
-@@ -491,7 +489,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			topts.dir->flags |= DIR_SHOW_IGNORED;
- 			setup_standard_excludes(topts.dir);
- 		}
--		tree = parse_tree_indirect(old->commit && !opts->new_worktree_mode ?
-+		tree = parse_tree_indirect(old->commit ?
- 					   old->commit->object.sha1 :
- 					   EMPTY_TREE_SHA1_BIN);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
-@@ -807,8 +805,7 @@ static int switch_branches(const struct checkout_opts *opts,
- 		return ret;
- 	}
- 
--	if (!opts->quiet && !old.path && old.commit &&
--	    new->commit != old.commit && !opts->new_worktree_mode)
-+	if (!opts->quiet && !old.path && old.commit && new->commit != old.commit)
- 		orphaned_commit_warning(old.commit, new->commit);
- 
- 	update_refs_for_switch(opts, &old, new);
-@@ -1151,8 +1148,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
--	opts.new_worktree_mode = getenv("GIT_CHECKOUT_NEW_WORKTREE") != NULL;
--
- 	if (conflict_style) {
- 		opts.merge = 1; /* implied */
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/273415
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/273415/focus=273454
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/273415/focus=273585
+
+Eric Sunshine (16):
+  checkout: avoid resolving HEAD unnecessarily
+  checkout: name check_linked_checkouts() more meaningfully
+  checkout: improve die_if_checked_out() robustness
+  checkout: die_if_checked_out: simplify strbuf management
+  checkout: generalize die_if_checked_out() branch name argument
+  branch: publish die_if_checked_out()
+  worktree: simplify new branch (-b/-B) option checking
+  worktree: introduce options container
+  worktree: make --detach mutually exclusive with -b/-B
+  worktree: make branch creation distinct from worktree population
+  worktree: add_worktree: construct worktree-population command locally
+  worktree: detect branch symref/detach and error conditions locally
+  worktree: make setup of new HEAD distinct from worktree population
+  worktree: avoid resolving HEAD unnecessarily
+  worktree: populate via "git reset --hard" rather than "git checkout"
+  checkout: drop intimate knowledge of new worktree initial population
+
+ branch.c           |  65 +++++++++++++++++++++++++++++++
+ branch.h           |   7 ++++
+ builtin/checkout.c |  82 +++------------------------------------
+ builtin/worktree.c | 110 +++++++++++++++++++++++++++++++++++------------------
+ 4 files changed, 151 insertions(+), 113 deletions(-)
+
 -- 
 2.5.0.rc1.201.ga12d9f8
