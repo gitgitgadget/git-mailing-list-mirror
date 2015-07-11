@@ -1,79 +1,86 @@
-From: X H <music_is_live_lg@hotmail.com>
-Subject: Re: [PATCH] check_and_freshen_file: fix reversed success-check
-Date: Sun, 12 Jul 2015 00:21:33 +0200
-Message-ID: <BLU437-SMTP311678316C434857657D6BF69E0@phx.gbl>
-References: <DUB120-W5049F72955243F44BB2511F6920@phx.gbl>
- <20150707141305.GA629@peff.net> <DUB120-W36B78FEE6DC80BDCB05D7FF6920@phx.gbl>
- <20150707194956.GA13792@peff.net> <559D60DC.4010304@kdbg.org>
- <20150708180539.GA12353@peff.net> <20150708183331.GA16138@peff.net>
- <559D9006.20102@kdbg.org> <559EDEE6.1040807@kdbg.org>
- <20150709224830.GA24998@peff.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Git Smart HTTP with HTTP/2.0
+Date: Sat, 11 Jul 2015 16:10:06 -0700
+Message-ID: <CAJo=hJuM70o8+U3Wt3rRzyrB1O=Q+wz3bGZVFa07zRQ0Ughk9g@mail.gmail.com>
+References: <BLU403-EAS33258611CF3B5B553B1C996A09E0@phx.gbl>
+ <20150711070055.GA4061@LK-Perkele-VII> <CAJo=hJs21m1C6+rdvCid311-TapK=QKLkqrH8aUZmzHH7CpVug@mail.gmail.com>
+ <20150711182657.GA8589@LK-Perkele-VII>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jul 12 00:21:41 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: ForceCharlie <fbcharlie@outlook.com>, git <git@vger.kernel.org>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sun Jul 12 01:10:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZE39P-0007J1-Nn
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jul 2015 00:21:40 +0200
+	id 1ZE3ui-0005AB-NG
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jul 2015 01:10:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751822AbbGKWVa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jul 2015 18:21:30 -0400
-Received: from blu004-omc3s3.hotmail.com ([65.55.116.78]:50786 "EHLO
-	BLU004-OMC3S3.hotmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751797AbbGKWV3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Jul 2015 18:21:29 -0400
-Received: from BLU437-SMTP31 ([65.55.116.74]) by BLU004-OMC3S3.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
-	 Sat, 11 Jul 2015 15:21:28 -0700
-X-TMN: [csZHCP2sNf1mgc+X8ykGvRUaD/CRWnhb]
-X-Originating-Email: [music_is_live_lg@hotmail.com]
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-In-Reply-To: <20150709224830.GA24998@peff.net>
-X-OriginalArrivalTime: 11 Jul 2015 22:21:27.0118 (UTC) FILETIME=[EDAF4EE0:01D0BC27]
+	id S1751928AbbGKXK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 19:10:27 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:36223 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918AbbGKXK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 19:10:27 -0400
+Received: by widjy10 with SMTP id jy10so40558098wid.1
+        for <git@vger.kernel.org>; Sat, 11 Jul 2015 16:10:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Z0kw4RhDP2RU+M1YuRtxijxE1le00pfD+p7dyX2Ai7w=;
+        b=OJH4F8Yigj2S5Gydj3/KlsGWunyyFrj2RYngB7eOqTJuIcIY7n++OhNn4PuSw3lpJH
+         QlV2M3Q5YmTP/2e/JBr7kvAWX8Vfw4hY2vrNqKHmLUuYQeyc7tls/lZqfNy2wmC9cjVT
+         a1hHmeZxQvSh4oB220prB0YLzAqD05VmvXzgA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=Z0kw4RhDP2RU+M1YuRtxijxE1le00pfD+p7dyX2Ai7w=;
+        b=SVuf93sB9XZAeTslpCrVHaR38IETlNRkDo42LEiicmIblgUGn+2gymThrU5DG8x6aj
+         WTZPBgwhkcuEMmgmb2kO9bAEku5U6ca/ftncqSHOCtBL0C4TfLlXIKcpV6eYtmx73cVM
+         i/Ze73LNTDqhjEskrK4EQGBba9ssvmNqyi/L994J5aK58nRfNBua13tBTpTcz8gEXFJs
+         WmB0x8OQlJHpb0NERaQ49Z79nqVBMwo7Za4Z6JwGaZLzkOsPyLTLSFg2HeVZ4VrHj4Ld
+         vlufss4g9BnoZkwbphzrCQq5dzdRnjwScdOb6Fgz2wC8/rdBUJMf4L0ZgJXi3g6eEMs+
+         izWg==
+X-Gm-Message-State: ALoCoQmX9gG+hfavC9dTqkoKbirUEm7yJ8ovVofQiScAZj5uJlwki2wZjJq+1dOFwsKbeDronpGQ
+X-Received: by 10.194.52.105 with SMTP id s9mr53744665wjo.53.1436656225619;
+ Sat, 11 Jul 2015 16:10:25 -0700 (PDT)
+Received: by 10.28.228.70 with HTTP; Sat, 11 Jul 2015 16:10:06 -0700 (PDT)
+In-Reply-To: <20150711182657.GA8589@LK-Perkele-VII>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273878>
 
-Le 10/07/2015 0:48, Jeff King a =C3=A9crit :
-> On Thu, Jul 09, 2015 at 10:51:50PM +0200, Johannes Sixt wrote:
->
->>> Ah! That code is less than a year old. When I began to adopt a work=
-flow
->>> requiring force-pushes lately, I wondered why I haven't seen these
->>> failures earlier, because I did do force pushes in the past, but no=
-t
->>> that frequently. I thought that I had just been lucky. But this wou=
-ld
->>> explain it.
+On Sat, Jul 11, 2015 at 11:26 AM, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> On Sat, Jul 11, 2015 at 10:23:09AM -0700, Shawn Pearce wrote:
 >>
->> And, in fact, with this patch these particular failures are gone! Th=
-ank you
->> so much!
+>> > Websockets over HTTP/2 (a.k.a. "websockets2") has not been defined yet.
+>> > With Websockets(1), it would probably already be possible to tunnel the
+>> > native git smart transport protocol over it. Probably not worth it.
+>>
+>> Another option is to tunnel using gRPC (grpc.io). libcurl probably
+>> can't do this. And linking grpc.io library into git-core is crazy. So
+>> its probably a non-starter. But food for thought.
 >
-> Great, thanks for testing. You can temper your appreciation by notici=
-ng
-> that I introduced the bug in the first place. ;)
+> Wouldn't it link into git-remote-http (and on the server side, one
+> could use pipes to talk to git)?
 >
-> -Peff
->
-Hi,
+> But supporting websockets in git-remote-http could get annoying,
+> especially for wss:// (https://). Dunno how bad gRPC would be.
 
-Thank you for the patch. I hope it will solve the problem and permit to=
-=20
-have a second user using the same repository.
+We wrote it as git-remote-$THING, invoked with $THING:// URLs. And
+git-remote-$THING just implements the "connect" helper protocol. Its
+much simpiler than git-remote-http.
 
-How are the permission handled, is it git that is asking to create a=20
-file read only or rw on the remote or is it the environment with umask=20
-ans so on that decides it, or Windows when the drive is mounted with no=
-acl?
+Maybe its done that way in git-core as http2:// aka git-remote-http2.
+
+Or the git-remote-http helper connects to the remote system and tries
+to guess if it supports Git on HTTP/2 before responding to the
+capabilities request from transport code. If yes, it replies with
+connect, if no, it does the current fetch and push protocol.
