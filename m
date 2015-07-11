@@ -1,107 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 14/16] worktree: avoid resolving HEAD unnecessarily
-Date: Fri, 10 Jul 2015 20:05:44 -0400
-Message-ID: <1436573146-3893-15-git-send-email-sunshine@sunshineco.com>
-References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 11 09:34:10 2015
+From: Plamen Totev <plamen.totev@abv.bg>
+Subject: Re: [PATCH v2 7/9] grep/pcre: support utf-8
+Date: Sat, 11 Jul 2015 11:07:25 +0300 (EEST)
+Message-ID: <1115951657.770231.1436602045776.JavaMail.apache@nm32.abv.bg>
+References: <1436186551-32544-1-git-send-email-pclouds@gmail.com>
+ <1436351919-2520-1-git-send-email-pclouds@gmail.com> <1436351919-2520-8-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, l.s.r@web.de,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 11 10:07:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDpIX-0003fb-RG
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 09:34:10 +0200
+	id 1ZDpou-0005eH-Aa
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 10:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672AbbGKHeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 03:34:05 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:33973 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752409AbbGKHeD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 03:34:03 -0400
-Received: by igvi1 with SMTP id i1so4453896igv.1
-        for <git@vger.kernel.org>; Sat, 11 Jul 2015 00:34:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=63olkHHMVqks3O3NTjrTEuEPfFC7cyPSnH6Zb//E9iM=;
-        b=pSg0GV5jWei/PgJnEYoBLQ1oU6p2uU+uyORWNAl1R3+oaHkCZyrUxmxnJqFYVgzQjL
-         moRgYV8/94BWOatFrxgdEdY5Cqzg7/oCk95DFTcOCTGU6ORyqpVKq0qyfYF8XQJQPa+l
-         gR+M4I99WlO+FnsVgBE+iEHNmMgv1AksAFSHDO9bbgYe+h/XR3mNwvNM2Z4PxV5uMUGr
-         PStvKpCt7c2d8C2SFm091rsa/YeEnpx5aqg6sOYDMI0olbZPQrFGr7skGrAoBv8xyjmK
-         0a8MG2UNecatG04CkHuzhpdv4BLXP+sXk1kCi+lBY3LvHRvJA1fJdNsbvs9aGNUclSEH
-         EdIA==
-X-Received: by 10.50.90.179 with SMTP id bx19mr1216926igb.43.1436573200083;
-        Fri, 10 Jul 2015 17:06:40 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id g81sm7533321ioi.20.2015.07.10.17.06.39
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jul 2015 17:06:39 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.rc1.201.ga12d9f8
-In-Reply-To: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
+	id S1753195AbbGKIHb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jul 2015 04:07:31 -0400
+Received: from smtp-out.abv.bg ([194.153.145.99]:60870 "EHLO smtp-out.abv.bg"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752617AbbGKIHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 04:07:31 -0400
+Received: from nm32.abv.bg (nm32.ni.bg [192.168.151.8])
+	by smtp-out.abv.bg (Postfix) with ESMTP id A4BCC14EC55;
+	Sat, 11 Jul 2015 11:07:25 +0300 (EEST)
+DomainKey-Signature: a=rsa-sha1; s=smtp-out; d=abv.bg; c=simple; q=dns;
+	b=F3O5xMt2Y+epbSBWA0awItX4EEPxfplwilMmexuEWjhxSQMPWK14DkKRHwPhMX82f
+	Sr2wPTZHByFDIyeSh3YHUGnwvv41NU6XvR5iM8n8vTtlalQar/BzpXl+r/RU5GinKF5
+	XnjYbJkoxJhydd3D/CsIT0zmEg+7KCKRfdTb8uM=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=abv.bg; s=smtp-out;
+	t=1436602045; bh=qgs1wKgormIk0OjVcWZvwDgI1mYdOxlw3qMKLeOI2xM=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:DKIM; b=Qw/26r
+	3GCVFvkwKd5QehrI3T0gXv/5hC1ph/GUfRxz/KAxDHhy5TYQWKyAgriQkYdkJqRyJVc
+	uZwplMUaczeH6yV66CbptkI1psPXGkn8Q7wSCOFM1A7ci5v7tXSlgYsnl8p/BOfsB9N
+	OBIDEsMN/3M+QWmWlZVf6bmJi6Z4WXg=
+Received: from nm32.abv.bg (localhost.localdomain [127.0.0.1])
+	by nm32.abv.bg (Postfix) with ESMTP id BE34122A02C;
+	Sat, 11 Jul 2015 11:07:25 +0300 (EEST)
+In-Reply-To: <1436351919-2520-8-git-send-email-pclouds@gmail.com>
+X-Mailer: AbvMail 3.0
+X-Originating-IP: 95.111.52.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273867>
 
-Now that git-worktree sets HEAD explicitly to its final value via either
-git-symbolic-ref or git-update-ref, rather than relying upon
-git-checkout to do so, the "hack" for pacifying is_git_directory() with
-a temporary HEAD, though still necessary, can be simplified.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=C2=A0writ=
+es:
+> In the previous change in this function, we add locale support for=20
+> single-byte encodings only. It looks like pcre only supports utf-* as=
+=20
+> multibyte encodings, the others are left in the cold (which is=20
+> fine). We need to enable PCRE_UTF8 so pcre can parse the string=20
+> correctly before folding case.=20
 
-Since the real HEAD is now populated with its proper final value, the
-value of the temporary HEAD truly no longer matters, and any value which
-looks like an object ID is good enough to satisfy is_git_directory().
-Therefore, just set the temporary HEAD to a literal value rather than
-going through the effort of resolving the current branch's HEAD.
+> if (opt->ignore_case) {=20
+> p->pcre_tables =3D pcre_maketables();=20
+> +	if (is_utf8_locale())=20
+> +	options |=3D PCRE_UTF8;=20
+> options |=3D PCRE_CASELESS;=20
+> }=20
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- builtin/worktree.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+We need to set the PCRE_UTF8 flag in all cases when the locale is UTF-8
+not only when the search is case insensitive.
+Otherwise pcre threats the encoding as single byte and if the regex con=
+tains
+quantifiers it will not work as expected. The quantifier will try to ma=
+tch the
+second byte of the multi-byte symbol instead of the whole symbol.
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 94c1701..9101a3c 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -191,7 +191,6 @@ static int add_worktree(const char *path, const char *refname,
- 	int counter = 0, len, ret;
- 	struct strbuf symref = STRBUF_INIT;
- 	struct commit *commit = NULL;
--	unsigned char rev[20];
- 
- 	if (file_exists(path) && !is_empty_dir(path))
- 		die(_("'%s' already exists"), path);
-@@ -249,20 +248,14 @@ static int add_worktree(const char *path, const char *refname,
- 		   real_path(get_git_common_dir()), name);
- 	/*
- 	 * This is to keep resolve_ref() happy. We need a valid HEAD
--	 * or is_git_directory() will reject the directory. Moreover, HEAD
--	 * in the new worktree must resolve to the same value as HEAD in
--	 * the current tree since the command invoked to populate the new
--	 * worktree will be handed the branch/ref specified by the user.
--	 * For instance, if the user asks for the new worktree to be based
--	 * at HEAD~5, then the resolved HEAD~5 in the new worktree must
--	 * match the resolved HEAD~5 in the current tree in order to match
--	 * the user's expectation.
-+	 * or is_git_directory() will reject the directory. Any value which
-+	 * looks like an object ID will do since it will be immediately
-+	 * replaced by the symbolic-ref or update-ref invocation in the new
-+	 * worktree.
- 	 */
--	if (!resolve_ref_unsafe("HEAD", 0, rev, NULL))
--		die(_("unable to resolve HEAD"));
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
--	write_file(sb.buf, 1, "%s\n", sha1_to_hex(rev));
-+	write_file(sb.buf, 1, "0000000000000000000000000000000000000000\n");
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- 	write_file(sb.buf, 1, "../..\n");
--- 
-2.5.0.rc1.201.ga12d9f8
+=46or example lets have file that contains the string
+
+TILRAUN: HALL=C3=93=C3=93=C3=93 HEIMUR!
+
+the following command
+
+git grep -P "HALL=C3=93{3}"
+
+will not match the file while=C2=A0
+
+git grep -P "HAL{2}=C3=93=C3=93=C3=93"
+
+will. That's because the L symbol is a single byte.
+
+Regards,
+Plamen Totev
