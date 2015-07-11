@@ -1,78 +1,99 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] diff: parse ws-error-highlight option more strictly
-Date: Sat, 11 Jul 2015 14:58:21 +0200
-Message-ID: <55A112ED.3090004@web.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Git Smart HTTP with HTTP/2.0
+Date: Sat, 11 Jul 2015 10:23:09 -0700
+Message-ID: <CAJo=hJs21m1C6+rdvCid311-TapK=QKLkqrH8aUZmzHH7CpVug@mail.gmail.com>
+References: <BLU403-EAS33258611CF3B5B553B1C996A09E0@phx.gbl> <20150711070055.GA4061@LK-Perkele-VII>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 11 14:58:47 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: ForceCharlie <fbcharlie@outlook.com>, git <git@vger.kernel.org>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sat Jul 11 19:23:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDuMg-0006Lg-Ck
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 14:58:46 +0200
+	id 1ZDyUy-0004oL-Ru
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 19:23:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082AbbGKM6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 08:58:42 -0400
-Received: from mout.web.de ([212.227.17.12]:54098 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750751AbbGKM6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 08:58:41 -0400
-Received: from [192.168.178.27] ([79.250.167.41]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0Mas22-1ZYKco2hNS-00KS1M; Sat, 11 Jul 2015 14:58:36
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-X-Provags-ID: V03:K0:x48iD9EJATex7HEpHhRetK38EDEBJHMjB9oEKCpQ1p8QuYMLaSL
- KIDN07QkK3NgULA1WHVWJwjXMvKwMQO/V/oSiaYsX/lbxkW1tMpzdqYBZKL0h9XLTM641jH
- tEeo37xcB1lTbTqfXfOE1s0AHZDjYTyMiNBDe5zhTBfZSQsHB+EuY3D0GV0FgL/DsEel8SM
- tw+GwRXoedy6xszwcVgjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wcQTxsVuZ8k=:Knpw/6TL4mhXwHaAlRHYiO
- OmBXZ0C+FR6g6KTe1lfX4MaiEax5D8tBXcF9ZifdTxcd070gU8oxcXEZjtET6q4W3Jh79SdTL
- sCLT2FDYkY31lK+97Iep1WAndcotIfAhhMJR/ba9onx+Uwcw7trV0cXk+77pcpGoPNo9WNbxk
- wlKDWbaPChFliZ/EN1w2w4Zom9fbLgw6o80HTmqvF9tm5o1X+JnH1Q1KqkRVWhDt5qG5LH+xe
- CRcjGMPnOS7mDsU+sz/ozlZFHTKDkwh6sdEJZdyOKliaCme9DmwvYXolah57UcFJJ5Mhswr6p
- ChPBQJXYWgOSX1dbpJkm3IaB7nUZFp1HJszg0TNr1POPIUXKRTvhM6i9TcbBXVPwyMCGjJ818
- t+3xtL0hbRTime4kbVxjebJHfRVa/odH4zLk45w+w5WTNUm22RjOaS5mDq0IXyG2vWM7U+hob
- 9Swx241vN+xZY9pxKtKnIMXdDAxTlOI/Gnqsua4gSxXa3uDWEZ+wVtwrxlxT2PuDGts3vygvc
- 5ZLCK8G/ItypIb05vvzgv2Xt2ZAiJPijkOzN9Dm0HS0I4bw1ORY1MzTBvGrfU3WVpFoyp4Ux3
- NU0W8iNb9/BhaeAZ4TdaZ2vH9bf++9hXnvbGdEBIuqqfjiIGur4BM+Hpcp6VhgMjqpQ0p7Peo
- HhWKEC39rqrEXIa8fSozgvJIBkoaI+lAT4xWxMBcdICJTSpnyziCSRBjFL46qRzO/pFw=
+	id S1750962AbbGKRXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 13:23:31 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:32868 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907AbbGKRXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 13:23:30 -0400
+Received: by wgmn9 with SMTP id n9so16605820wgm.0
+        for <git@vger.kernel.org>; Sat, 11 Jul 2015 10:23:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=j56Z40bYXYY3FGbybhCdd9ZG0jz+2/QKsKG8BRUVtZI=;
+        b=X3e1wFv1LKFnW5e5qqBQxD36KuRW/WgirAWTwpQiwFhm96UyqWxDnGcD54ML+Val7F
+         o1VpjKcokhNJziCB2Fi/poEPuznTGJswm9cJebnJq9gy9aooFnk1mJyk9mFtwNdA/biK
+         Dlh6CpLS86U+SB2R/XsDRkcSffRDs7M61WAVw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=j56Z40bYXYY3FGbybhCdd9ZG0jz+2/QKsKG8BRUVtZI=;
+        b=YRZeD44WXlHtnEMz2MBe6oDqEqNDGBZMvQofAtCtYaTJZdIOUmtZOB+JR8m8RPxHOX
+         u4shQq4LBJD55oxc/83ZiECj3lmBvVZ/ghJuwtK+QHQT7CxXkoIhdMUNTjiD+VsqC/xh
+         w9zs0v9NTdi2JHM5vQSZJb137EnVvRtOacNqKKN2nIkqblJdK51JyJm2zS1J3oIr03Di
+         v/TlN5NVddEN1bnuRw+Ci72kA979kCorjwhxytUqGF/fpTkmgcP41rSKxFQIOPkfTuzt
+         EeQRslXrlXWpVobvD6jKCwrpFwuOER3Y9pWec4xH9BpiSXji8wFKpfpVoj8lro08MSWX
+         5O2w==
+X-Gm-Message-State: ALoCoQlpt7Qndmg8LuDWMSAGaTKq5hlwU49j4bwxIRCoCx1ubVbq9z7OWoViK1ybLP5r49EhrDFJ
+X-Received: by 10.180.84.194 with SMTP id b2mr7782083wiz.36.1436635408642;
+ Sat, 11 Jul 2015 10:23:28 -0700 (PDT)
+Received: by 10.28.228.70 with HTTP; Sat, 11 Jul 2015 10:23:09 -0700 (PDT)
+In-Reply-To: <20150711070055.GA4061@LK-Perkele-VII>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273875>
 
-Check if a matched token is followed by a delimiter before advancing the
-pointer arg.  This avoids accepting composite words like "allnew" or
-"defaultcontext".
+On Sat, Jul 11, 2015 at 12:00 AM, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> On Sat, Jul 11, 2015 at 11:10:48AM +0800, ForceCharlie wrote:
+>> As we known, HTTP/2.0 has been released. All Git-Smart-HTTP are currently
+>> implemented using HTTP/1.1.
+>
+> Nit: It is HTTP/2.
+>
+>> Frequently used Git developers often feel Git HTTP protocol is not
+>> satisfactory, slow and unstable.This is because the HTTP protocol itself
+>> decides
+>
+> Note that there are already two versions of HTTP transport, the old "dumb"
+> one and the newer "smart" one.
+>
+> The smart one is difficult to speed up (due to nature of the negotiations),
+> but usually is pretty reliable (the efficiency isn't horrible).
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- diff.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+The negotiation in smart-HTTP actually has some bad corner cases. Each
+round of negotiation requires a new POST resupplying all previously
+agreed upon SHA-1s, and a batch of new SHA-1s. We have observed many
+rounds where this POST is MiBs in size because the peers can't quite
+agree and have to keep digging through history.
 
-diff --git a/diff.c b/diff.c
-index 87b16d5..0f17ec5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3653,7 +3653,12 @@ static void enable_patch_output(int *fmt) {
- 
- static int parse_one_token(const char **arg, const char *token)
- {
--	return skip_prefix(*arg, token, arg) && (!**arg || **arg == ',');
-+	const char *rest;
-+	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
-+		*arg = rest;
-+		return 1;
-+	}
-+	return 0;
- }
- 
- static int parse_ws_error_highlight(struct diff_options *opt, const char *arg)
--- 
-2.4.4
+The native protocol on git:// and SSH is not as bad. Negotiation is
+still many rounds, but these are pipelined and each round does not
+need to repeat the prior round, as the server has a single stream and
+is saving state.
+
+> Now, the old "dumb" protocol is pretty unreliable and slow. HTTP/2 probably
+> can't do anything with the reliability problems, but probably could improve
+> the speed a bit.
+>
+> Websockets over HTTP/2 (a.k.a. "websockets2") has not been defined yet.
+> With Websockets(1), it would probably already be possible to tunnel the
+> native git smart transport protocol over it. Probably not worth it.
+
+Another option is to tunnel using gRPC (grpc.io). libcurl probably
+can't do this. And linking grpc.io library into git-core is crazy. So
+its probably a non-starter. But food for thought.
+
+But, at $DAY_JOB we tunnel the native bidirectional protocol in
+grpc.io's predecessor, and it works quite well for us.
