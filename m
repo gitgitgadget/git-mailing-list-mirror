@@ -1,87 +1,78 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 05/10] ref-filter: add option to match literal pattern
-Date: Sat, 11 Jul 2015 18:24:00 +0530
-Message-ID: <CAOLa=ZTvtQrkUqhq5u9h+RfQiqHJmQRAfzZ9KwT5X=-GMuWv+A@mail.gmail.com>
-References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
- <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <1436437671-25600-5-git-send-email-karthik.188@gmail.com>
- <xmqqfv4wklph.fsf@gitster.dls.corp.google.com> <CAOLa=ZT+59dcCW+QHhvK8Wp5Q_1YhkfCxV0=PirOWtVKWFCvCw@mail.gmail.com>
- <vpqvbdryrhh.fsf@anie.imag.fr>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] diff: parse ws-error-highlight option more strictly
+Date: Sat, 11 Jul 2015 14:58:21 +0200
+Message-ID: <55A112ED.3090004@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Jul 11 14:54:35 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 11 14:58:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDuIc-000411-3X
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 14:54:34 +0200
+	id 1ZDuMg-0006Lg-Ck
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 14:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750938AbbGKMyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 08:54:32 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:33434 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750873AbbGKMya (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 08:54:30 -0400
-Received: by obbgp5 with SMTP id gp5so93785548obb.0
-        for <git@vger.kernel.org>; Sat, 11 Jul 2015 05:54:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mMSmI+uai6aAhx09VTvrEcFqnrbb8O+R7ltbSvPnk58=;
-        b=m2zP3ZJDxdO1S5SdbxNVzxZoIQk72duXrODputlhAqYtHQNQ2vykiWWEuIh0aXRH/4
-         Gvgkis+qsIER1ZTnDSYqPMmerdwHqxNPtWmZormbDCNqe90GtTsqdCS9Ulu8VE2NVEtC
-         aAgoI1f01cznjcJlAFfLuf0AKmkaO8fRjEFj9rXnlOerfelpIZc+gxcNMjD4qahsVSid
-         AtDMU4CDKAxZJ5QNvknhzD+5nNjSg6jQ8o3bnKwGrHW8BrdvTzDMfzy22oQd4r9qRbA8
-         v3ylHrxmkYhG/ybENlDfyMlll3tiWuhZgSrgQky0zEviXz+dLiyVpIPPRa+GV0qRT6wF
-         Op/Q==
-X-Received: by 10.60.52.174 with SMTP id u14mr24492545oeo.9.1436619270182;
- Sat, 11 Jul 2015 05:54:30 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Sat, 11 Jul 2015 05:54:00 -0700 (PDT)
-In-Reply-To: <vpqvbdryrhh.fsf@anie.imag.fr>
+	id S1751082AbbGKM6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 08:58:42 -0400
+Received: from mout.web.de ([212.227.17.12]:54098 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750751AbbGKM6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 08:58:41 -0400
+Received: from [192.168.178.27] ([79.250.167.41]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Mas22-1ZYKco2hNS-00KS1M; Sat, 11 Jul 2015 14:58:36
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+X-Provags-ID: V03:K0:x48iD9EJATex7HEpHhRetK38EDEBJHMjB9oEKCpQ1p8QuYMLaSL
+ KIDN07QkK3NgULA1WHVWJwjXMvKwMQO/V/oSiaYsX/lbxkW1tMpzdqYBZKL0h9XLTM641jH
+ tEeo37xcB1lTbTqfXfOE1s0AHZDjYTyMiNBDe5zhTBfZSQsHB+EuY3D0GV0FgL/DsEel8SM
+ tw+GwRXoedy6xszwcVgjg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wcQTxsVuZ8k=:Knpw/6TL4mhXwHaAlRHYiO
+ OmBXZ0C+FR6g6KTe1lfX4MaiEax5D8tBXcF9ZifdTxcd070gU8oxcXEZjtET6q4W3Jh79SdTL
+ sCLT2FDYkY31lK+97Iep1WAndcotIfAhhMJR/ba9onx+Uwcw7trV0cXk+77pcpGoPNo9WNbxk
+ wlKDWbaPChFliZ/EN1w2w4Zom9fbLgw6o80HTmqvF9tm5o1X+JnH1Q1KqkRVWhDt5qG5LH+xe
+ CRcjGMPnOS7mDsU+sz/ozlZFHTKDkwh6sdEJZdyOKliaCme9DmwvYXolah57UcFJJ5Mhswr6p
+ ChPBQJXYWgOSX1dbpJkm3IaB7nUZFp1HJszg0TNr1POPIUXKRTvhM6i9TcbBXVPwyMCGjJ818
+ t+3xtL0hbRTime4kbVxjebJHfRVa/odH4zLk45w+w5WTNUm22RjOaS5mDq0IXyG2vWM7U+hob
+ 9Swx241vN+xZY9pxKtKnIMXdDAxTlOI/Gnqsua4gSxXa3uDWEZ+wVtwrxlxT2PuDGts3vygvc
+ 5ZLCK8G/ItypIb05vvzgv2Xt2ZAiJPijkOzN9Dm0HS0I4bw1ORY1MzTBvGrfU3WVpFoyp4Ux3
+ NU0W8iNb9/BhaeAZ4TdaZ2vH9bf++9hXnvbGdEBIuqqfjiIGur4BM+Hpcp6VhgMjqpQ0p7Peo
+ HhWKEC39rqrEXIa8fSozgvJIBkoaI+lAT4xWxMBcdICJTSpnyziCSRBjFL46qRzO/pFw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273874>
 
-On Sat, Jul 11, 2015 at 2:56 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On Fri, Jul 10, 2015 at 10:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>>> Since 'ref-filter' only has an option to match path names
->>>> add an option for regular pattern matching.
->>>
->>> There is nothing "regular" about the pattern matching you are
->>> adding.
->>>
->>> Everywhere else we use patterns on refs we call wildmatch(), which
->>> is an enhanced implementation of fnmatch(3), and you are doing the
->>> same in this new codepath.
->>>
->>> Just drop that word from here (and if you said something similar in
->>> the documentation, drop "regular" ffrom there as well).  It would
->>> invite confusion with regular expression matching, which we will not
->>> do for refs.
->>
->> Ok, will do. Thanks
->
-> Just dropping "regular" leads to a strange sentence, since the path name
-> match is also a kind of pattern-matching. I'd write
->
-> Since 'ref-filter' only has an option to match path names, add an option
-> for plain fnmatch pattern-matching.
->
+Check if a matched token is followed by a delimiter before advancing the
+pointer arg.  This avoids accepting composite words like "allnew" or
+"defaultcontext".
 
-Thanks for the heads up :)
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ diff.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/diff.c b/diff.c
+index 87b16d5..0f17ec5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3653,7 +3653,12 @@ static void enable_patch_output(int *fmt) {
+ 
+ static int parse_one_token(const char **arg, const char *token)
+ {
+-	return skip_prefix(*arg, token, arg) && (!**arg || **arg == ',');
++	const char *rest;
++	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
++		*arg = rest;
++		return 1;
++	}
++	return 0;
+ }
+ 
+ static int parse_ws_error_highlight(struct diff_options *opt, const char *arg)
 -- 
-Regards,
-Karthik Nayak
+2.4.4
