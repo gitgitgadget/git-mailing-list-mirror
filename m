@@ -1,74 +1,73 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 05/10] ref-filter: add option to match literal pattern
-Date: Sat, 11 Jul 2015 11:25:44 +0530
-Message-ID: <CAOLa=ZT+59dcCW+QHhvK8Wp5Q_1YhkfCxV0=PirOWtVKWFCvCw@mail.gmail.com>
-References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
- <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <1436437671-25600-5-git-send-email-karthik.188@gmail.com>
- <xmqqfv4wklph.fsf@gitster.dls.corp.google.com>
+From: norricorp <john@norricorp.f9.co.uk>
+Subject: Re: Building git 2.4.5 on AIX 6.1 problems
+Date: Fri, 10 Jul 2015 23:31:06 -0700 (MST)
+Message-ID: <1436596266437-7635513.post@n2.nabble.com>
+References: <516b832bd9db48e4bdb486d63b2a3977@imap.force9.net> <xmqqwpy9uqth.fsf@gitster.dls.corp.google.com> <a4eee6a136cafece6be5dbd5ee934f7a@imap.force9.net> <xmqq1tggmwdc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 11 08:22:23 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 11 08:37:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZDoB5-0007Hn-8F
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 08:22:23 +0200
+	id 1ZDoPo-0007M2-Nt
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jul 2015 08:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552AbbGKGWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 02:22:19 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:34773 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752327AbbGKGWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 02:22:19 -0400
-Received: by obbkm3 with SMTP id km3so203109683obb.1
-        for <git@vger.kernel.org>; Fri, 10 Jul 2015 23:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Dtfwvz1iB5NjTl4uYxBeVDXHK2OK3jYuTXDNV+/Bv4Y=;
-        b=npjTDNtJGqKDPMRMQ16USAW9Wq4SmaOF2mVjAkf/t2TDuMbBxm7UHOZr/Q38825Ev2
-         nTWUyKudqJKAKCrDt21V3KLfh2FdBlt3tqnOqWHrkA1nlYpt30cCoSDxZWPY/lAsSHpY
-         Eg+0TihNwkwyAYJnrh+BQ1xOTxSOczdNqgFUD8FrxJK4EiUSg09kvjTBWbCmk+ElsPyV
-         9fI43/D+bXKe5SNpSsUjEXyCkPfjL96gRt83m5Ts7PzlBp8eYr6Ik2VsXcp9tK/y2wrU
-         Y5oE1oAZj3TDMu6kAgen1PCwpMbiUhLnpqCCkdJ6s3DM85iAkz08tkdlk7iRod02hdt+
-         aWEQ==
-X-Received: by 10.60.58.136 with SMTP id r8mr22013278oeq.30.1436594174137;
- Fri, 10 Jul 2015 22:56:14 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Fri, 10 Jul 2015 22:55:44 -0700 (PDT)
-In-Reply-To: <xmqqfv4wklph.fsf@gitster.dls.corp.google.com>
+	id S1752787AbbGKGhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 02:37:32 -0400
+Received: from mwork.nabble.com ([162.253.133.43]:61186 "EHLO mwork.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751809AbbGKGhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 02:37:31 -0400
+X-Greylist: delayed 386 seconds by postgrey-1.27 at vger.kernel.org; Sat, 11 Jul 2015 02:37:31 EDT
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+	by mwork.nabble.com (Postfix) with ESMTP id 2276D2334191
+	for <git@vger.kernel.org>; Fri, 10 Jul 2015 23:31:06 -0700 (PDT)
+In-Reply-To: <xmqq1tggmwdc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273845>
 
-On Fri, Jul 10, 2015 at 10:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Since 'ref-filter' only has an option to match path names
->> add an option for regular pattern matching.
->
-> There is nothing "regular" about the pattern matching you are
-> adding.
->
-> Everywhere else we use patterns on refs we call wildmatch(), which
-> is an enhanced implementation of fnmatch(3), and you are doing the
-> same in this new codepath.
->
-> Just drop that word from here (and if you said something similar in
-> the documentation, drop "regular" ffrom there as well).  It would
-> invite confusion with regular expression matching, which we will not
-> do for refs.
+This is the output I got from using V=1 with make
+gcc  -g -O2 -I. -D_LARGE_FILES -DNO_D_TYPE_IN_DIRENT -DNO_NSEC -DOLD_ICONV
+-pthread -DHAVE_PATHS_H -DHAVE_ 
+LIBCHARSET_H -DHAVE_STRINGS_H -DSHA1_HEADER='<openssl/sha.h>' 
+-DFREAD_READS_DIRECTORIES -DNO_STRCASESTR - 
+DNO_STRLCPY -Icompat/fnmatch -DNO_FNMATCH_CASEFOLD -DUSE_WILDMATCH
+-DNO_MKSTEMPS -DINTERNAL_QSORT -Icompat 
+/regex -DDEFAULT_PAGER='"more"' -DSHELL_PATH='"/bin/sh"' -o
+git-credential-store   credential-store.o libg 
+it.a xdiff/lib.a  -lz  -liconv -lintl  -lcrypto -pthread 
 
-Ok, will do. Thanks
+Also, the undefined symbol errors - does anyone know which library these are
+supposed to be in?
+So when I grep for one undefined symbol
+$: git-2.4.5 $ grep -R diff_queued_diff * 
+builtin/blame.c:        if (!diff_queued_diff.nr) { 
+builtin/blame.c:                for (i = 0; i < diff_queued_diff.nr; i++) { 
+builtin/blame.c:                        p = diff_queued_diff.queue[i]; 
+...... 
+builtin/diff.c: diff_queue(&diff_queued_diff, one, two); 
+builtin/fast-export.c:  for (i = 0; i < diff_queued_diff.nr; i++) 
+builtin/fast-export.c:          if
+(!S_ISGITLINK(diff_queued_diff.queue[i]->two->mode)) 
+builtin/fast-export.c:                 
+export_blob(diff_queued_diff.queue[i]->two->sha1); 
+........ 
+diff.c: struct diff_queue_struct *q = &diff_queued_diff; 
+diff.c: struct diff_queue_struct *q = &diff_queued_diff; 
 
--- 
-Regards,
-Karthik Nayak
+So it is obviously a structure or variable that is being used so does anyone
+know the library that this is defined in?
+
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Building-git-2-4-5-on-AIX-6-1-problems-tp7635435p7635513.html
+Sent from the git mailing list archive at Nabble.com.
