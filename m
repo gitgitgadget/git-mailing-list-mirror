@@ -1,95 +1,93 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 01/10] ref-filter: add %(refname:shortalign=X) option
-Date: Sun, 12 Jul 2015 08:47:39 +0700
-Message-ID: <CACsJy8BsLnkPFX04WujMdnBiRGmXacF1QSQudb3T8nxGrZ_1Fg@mail.gmail.com>
-References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
- <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <xmqqk2u8kmre.fsf@gitster.dls.corp.google.com>
- <CAOLa=ZTNGV=NAXDPB3HX=fanPMQaQQc4ZpFdDFeg+LJ8SFuVOQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 10/16] worktree: make branch creation distinct from
+ worktree population
+Date: Sat, 11 Jul 2015 22:36:49 -0400
+Message-ID: <CAPig+cSiPeJskyanLAv71LuFoqPirUJ2FL0B0BsoT8BEVrE3LA@mail.gmail.com>
+References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
+	<1436573146-3893-11-git-send-email-sunshine@sunshineco.com>
+	<CACsJy8A8QkeFa3FyCkv8dp-J52NGGaN-AV3oG7W8tNtYqDO-cw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 12 03:48:15 2015
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 12 04:47:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZE6NL-00014J-2l
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jul 2015 03:48:15 +0200
+	id 1ZE7IP-0002aP-2T
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jul 2015 04:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbbGLBsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 21:48:10 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:35780 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752017AbbGLBsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 21:48:09 -0400
-Received: by igcqs7 with SMTP id qs7so36137382igc.0
-        for <git@vger.kernel.org>; Sat, 11 Jul 2015 18:48:08 -0700 (PDT)
+	id S1752177AbbGLCgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 22:36:51 -0400
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:35505 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845AbbGLCgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 22:36:50 -0400
+Received: by ykee186 with SMTP id e186so91105108yke.2
+        for <git@vger.kernel.org>; Sat, 11 Jul 2015 19:36:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fFJnvde4awl4gKamsjk39VvGbs5as0YOUU+OWxvQwt0=;
-        b=Qb+5CsjJcrKdBzcoLNk1rGEduAx5rBYdECvF6BlrsGtSLmEA1cJ+JcqIaV6c7Gkvqc
-         X98PBHvexcY5j8X3VvuJsTTKhpMDYMnmdzzZsPhKGVvpYnkoOSBo2/BG7Xht/QZw48og
-         p2/1RWJTXrHQu4I0aLwHp3heDNfagNmOlUNBYw71/oN+Ccp7PZXSaFYu5o/yANxOGRla
-         NtLQyp7JNRMRi+LuTPw6z/hOXqhMYnyo/OovV1IAZb3RaonnQzr3gSJ8J1AdRAdPFwGX
-         LxzvvFQzO81snHBjeuVu/zJb40uBk2J38qHfL+hePQtibfXtj2La5lA6VFRL7TPlXuyE
-         GhMw==
-X-Received: by 10.107.168.99 with SMTP id r96mr10864116ioe.141.1436665688490;
- Sat, 11 Jul 2015 18:48:08 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Sat, 11 Jul 2015 18:47:39 -0700 (PDT)
-In-Reply-To: <CAOLa=ZTNGV=NAXDPB3HX=fanPMQaQQc4ZpFdDFeg+LJ8SFuVOQ@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=sjikLxVntf1QadSg4rniFNbweSv89HyG60uEiGAD9zI=;
+        b=0H1YlTDod8Hy0Z7QFUIffwsiM92rDP8/3QOzo+oyW0aWxmxwb1LJDGQRw71Fb34nnW
+         LAbBbLEWnmySL+aC7pkBbMzHAKpAYpHYDWrn/FBNYiMXr+6wdTh/4P2PlfW8R0CFFJRd
+         NSPXAkUsfcV6WcTDOTk9cdeuc1vpqTDfAGmA/i/nXiQTkNzDbn2NxVb5Rk189ZwLcp7v
+         r9+UVNDvKKGt2Z6Pcx0r2vdmfRJgRwlj7cfAIb3Z3QWru0215UMDy3gKEwEO6C6PP8m4
+         pfrkGxnaESwdqQx9ad9/Pv0j0LGj0fRAyvCAFijnes/8GosOZXo2AAehDkCTzVd8+TLM
+         5Dmw==
+X-Received: by 10.170.138.134 with SMTP id f128mr31649628ykc.90.1436668609493;
+ Sat, 11 Jul 2015 19:36:49 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Sat, 11 Jul 2015 19:36:49 -0700 (PDT)
+In-Reply-To: <CACsJy8A8QkeFa3FyCkv8dp-J52NGGaN-AV3oG7W8tNtYqDO-cw@mail.gmail.com>
+X-Google-Sender-Auth: f1wqs6jN6-o9vF4Bf4nzWfScgn8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273881>
 
-On Sat, Jul 11, 2015 at 7:05 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Fri, Jul 10, 2015 at 9:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Jul 11, 2015 at 9:20 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Jul 11, 2015 at 7:05 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> The plan is eventually to populate the new worktree via "git reset
+>> --hard" rather than "git checkout". Thus, rather than piggybacking on
+>> git-checkout's -b/-B ability to create a new branch at checkout time,
+>> git-worktree will need to do so itself.
 >>
->> This may be enough to support the various existing formats that are
->> offered by "git branch" and/or "git tag", but I do not think if this
->> is the right approach in the longer term, or if we are painting
->> ourselves in a corner we cannot cleanly get out of later [*1*].
->> Will the "refname" stay to be the only thing that may want alignment
->> padding appended in the future?  Will it stay true that we want to
->> align only to the left?  Etc., etc.
+>> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+>> ---
 >>
->> Cc'ed Duy as %< in the pretty-format was his invention at around
->> a5752342 (pretty: support padding placeholders, %< %> and %><,
->> 2013-04-19).
->>
+>> I considered calling branch-related API, such as create_branch(),
+>> directly, however, git-branch provides extra value which may be useful
+>> in the future (such as when --track and --orphan get added to
+>> git-worktree), so it seemed wise to re-use git-branch's implementation
+>> rather than duplicating the functionality. If this proves the wrong
+>> choice, then the series can either be re-rolled or follow-on patches can
+>> address the issue.
 >
-> I kinda had the same though, my only justification was that it was only being
-> internally used. I'll have another look if as to see if I can make it
-> universal somehow.
-> Let's see what Duy has to suggest.
+> I don't know much about ref handling code (especially after the big
+> transaction update), so i may be wrong, but do we need to invalidate
+> some caches in refs.c after this? The same for update-ref in the other
+> patch. We may need to re-read the index after 'reset --hard' too if we
+> ever need to do touch the index after that (unlikely though in the
+> case of 'worktree add')
 
-I guess if you can have multiple arguments after ':' in an atom, then
-you have wiggle room for future. But it looks like you only accept one
-argument after ':'.. (I only checked the version on 'pu'). Having an
-"alignment atom" to augment the real one (like %< changes the behavior
-of the next placeholder), could also work, but it adds dependency
-between atoms, something I don't think ref-filter.c is ready for.
+I'm not sure I understand. Are you talking about this patch's
+implementation or a possible future change which uses the C API rather
+than git-branch?
 
-Another thing, the atom value is also used for sorting. When used for
-sorting, I think these padding spaces should not be generated or it
-may confuse the sort algorithm. Left alignment may be ok, right or
-center alignment (in future?), not  so much. Perhaps we should do the
-padding in a separate phase, outside populate_value(). If you go this
-route, having separate atoms for alignment works better: you don't
-have to parse them in populate_value() which is for actual values, and
-you can handle dependency easily (I think).
+If you're talking about this patch, then I don't think we need to do
+anything more, as the "git branch" and "git reset --hard" invocations
+are separate process invocations which shouldn't affect the current
+worktree or the current "git worktree add" process.
 
-By the way, please consider adding _() back to translatable strings,
-usually those die() or warn(), or "[ahead %s]"... In the last case,
-because you don't really know how long the string is after
-translation, avoid hard coding buffer size (to 40).
--- 
-Duy
+If you're talking about a future patch switching over to the C API,
+and avoiding run_command(), then perhaps (but I haven't investigated
+that avenue thoroughly enough to answer).
+
+Or, am I totally misunderstanding you?
