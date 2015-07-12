@@ -1,86 +1,76 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Git Smart HTTP with HTTP/2.0
-Date: Sat, 11 Jul 2015 16:10:06 -0700
-Message-ID: <CAJo=hJuM70o8+U3Wt3rRzyrB1O=Q+wz3bGZVFa07zRQ0Ughk9g@mail.gmail.com>
-References: <BLU403-EAS33258611CF3B5B553B1C996A09E0@phx.gbl>
- <20150711070055.GA4061@LK-Perkele-VII> <CAJo=hJs21m1C6+rdvCid311-TapK=QKLkqrH8aUZmzHH7CpVug@mail.gmail.com>
- <20150711182657.GA8589@LK-Perkele-VII>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 10/16] worktree: make branch creation distinct from
+ worktree population
+Date: Sun, 12 Jul 2015 08:20:20 +0700
+Message-ID: <CACsJy8A8QkeFa3FyCkv8dp-J52NGGaN-AV3oG7W8tNtYqDO-cw@mail.gmail.com>
+References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com> <1436573146-3893-11-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: ForceCharlie <fbcharlie@outlook.com>, git <git@vger.kernel.org>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sun Jul 12 01:10:34 2015
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Jul 12 03:20:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZE3ui-0005AB-NG
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jul 2015 01:10:33 +0200
+	id 1ZE5wt-00023I-Dm
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jul 2015 03:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbbGKXK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2015 19:10:27 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:36223 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751918AbbGKXK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jul 2015 19:10:27 -0400
-Received: by widjy10 with SMTP id jy10so40558098wid.1
-        for <git@vger.kernel.org>; Sat, 11 Jul 2015 16:10:25 -0700 (PDT)
+	id S1752130AbbGLBUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2015 21:20:50 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:35794 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751859AbbGLBUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2015 21:20:50 -0400
+Received: by iecuq6 with SMTP id uq6so216525948iec.2
+        for <git@vger.kernel.org>; Sat, 11 Jul 2015 18:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Z0kw4RhDP2RU+M1YuRtxijxE1le00pfD+p7dyX2Ai7w=;
-        b=OJH4F8Yigj2S5Gydj3/KlsGWunyyFrj2RYngB7eOqTJuIcIY7n++OhNn4PuSw3lpJH
-         QlV2M3Q5YmTP/2e/JBr7kvAWX8Vfw4hY2vrNqKHmLUuYQeyc7tls/lZqfNy2wmC9cjVT
-         a1hHmeZxQvSh4oB220prB0YLzAqD05VmvXzgA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=Z0kw4RhDP2RU+M1YuRtxijxE1le00pfD+p7dyX2Ai7w=;
-        b=SVuf93sB9XZAeTslpCrVHaR38IETlNRkDo42LEiicmIblgUGn+2gymThrU5DG8x6aj
-         WTZPBgwhkcuEMmgmb2kO9bAEku5U6ca/ftncqSHOCtBL0C4TfLlXIKcpV6eYtmx73cVM
-         i/Ze73LNTDqhjEskrK4EQGBba9ssvmNqyi/L994J5aK58nRfNBua13tBTpTcz8gEXFJs
-         WmB0x8OQlJHpb0NERaQ49Z79nqVBMwo7Za4Z6JwGaZLzkOsPyLTLSFg2HeVZ4VrHj4Ld
-         vlufss4g9BnoZkwbphzrCQq5dzdRnjwScdOb6Fgz2wC8/rdBUJMf4L0ZgJXi3g6eEMs+
-         izWg==
-X-Gm-Message-State: ALoCoQmX9gG+hfavC9dTqkoKbirUEm7yJ8ovVofQiScAZj5uJlwki2wZjJq+1dOFwsKbeDronpGQ
-X-Received: by 10.194.52.105 with SMTP id s9mr53744665wjo.53.1436656225619;
- Sat, 11 Jul 2015 16:10:25 -0700 (PDT)
-Received: by 10.28.228.70 with HTTP; Sat, 11 Jul 2015 16:10:06 -0700 (PDT)
-In-Reply-To: <20150711182657.GA8589@LK-Perkele-VII>
+        bh=gGVoqnMmAYpLYkESE6JQsPbiUjhuKrTQO/Dx8SGXHDU=;
+        b=tIuBPM9DogRYIMd0ndiCc8VOyaj1B7X1Uz0q+BQwN1c0KcYF2TuCpr/UhtG6SXXVfS
+         v7C5r0HKOR8TW6M5bOoV691iVefcweLBS8NOpfEsMmfB16Uk1FVhH6GZOCOoJafDLo1z
+         Uvvc4/ouek2zfy29DZWa1u9CQweCjr1CRhHGwKZVF77HhXiiaJ0PmiDc7QVfZMHLC0mf
+         VJHTcv3KiFCcNl+tcmCkTwNiUGsZCWYYhJBoUEOWUEjhLTqXx6c28dOwqZw5AghWkxPv
+         RKu29uqGDq7OlKYxxzVRNR5lWU8fMGv0G81VxoinWyepTgA4TFkWCrdjd1k6XcuuU5Na
+         s5vg==
+X-Received: by 10.107.134.22 with SMTP id i22mr11586299iod.111.1436664049403;
+ Sat, 11 Jul 2015 18:20:49 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Sat, 11 Jul 2015 18:20:20 -0700 (PDT)
+In-Reply-To: <1436573146-3893-11-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273879>
 
-On Sat, Jul 11, 2015 at 11:26 AM, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> On Sat, Jul 11, 2015 at 10:23:09AM -0700, Shawn Pearce wrote:
->>
->> > Websockets over HTTP/2 (a.k.a. "websockets2") has not been defined yet.
->> > With Websockets(1), it would probably already be possible to tunnel the
->> > native git smart transport protocol over it. Probably not worth it.
->>
->> Another option is to tunnel using gRPC (grpc.io). libcurl probably
->> can't do this. And linking grpc.io library into git-core is crazy. So
->> its probably a non-starter. But food for thought.
+On Sat, Jul 11, 2015 at 7:05 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> The plan is eventually to populate the new worktree via "git reset
+> --hard" rather than "git checkout". Thus, rather than piggybacking on
+> git-checkout's -b/-B ability to create a new branch at checkout time,
+> git-worktree will need to do so itself.
 >
-> Wouldn't it link into git-remote-http (and on the server side, one
-> could use pipes to talk to git)?
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
 >
-> But supporting websockets in git-remote-http could get annoying,
-> especially for wss:// (https://). Dunno how bad gRPC would be.
+> I considered calling branch-related API, such as create_branch(),
+> directly, however, git-branch provides extra value which may be useful
+> in the future (such as when --track and --orphan get added to
+> git-worktree), so it seemed wise to re-use git-branch's implementation
+> rather than duplicating the functionality. If this proves the wrong
+> choice, then the series can either be re-rolled or follow-on patches can
+> address the issue.
 
-We wrote it as git-remote-$THING, invoked with $THING:// URLs. And
-git-remote-$THING just implements the "connect" helper protocol. Its
-much simpiler than git-remote-http.
-
-Maybe its done that way in git-core as http2:// aka git-remote-http2.
-
-Or the git-remote-http helper connects to the remote system and tries
-to guess if it supports Git on HTTP/2 before responding to the
-capabilities request from transport code. If yes, it replies with
-connect, if no, it does the current fetch and push protocol.
+I don't know much about ref handling code (especially after the big
+transaction update), so i may be wrong, but do we need to invalidate
+some caches in refs.c after this? The same for update-ref in the other
+patch. We may need to re-read the index after 'reset --hard' too if we
+ever need to do touch the index after that (unlikely though in the
+case of 'worktree add')
+-- 
+Duy
