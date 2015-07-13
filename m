@@ -1,95 +1,89 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 08/10] tag.c: use 'ref-filter' APIs
-Date: Tue, 14 Jul 2015 02:04:46 +0530
-Message-ID: <CAOLa=ZQjYi=PAddDnFNd-Q3+C43O9ELDqXgynF0kya9SJbPagg@mail.gmail.com>
+Subject: Re: [PATCH v2 01/10] ref-filter: add %(refname:shortalign=X) option
+Date: Tue, 14 Jul 2015 02:06:15 +0530
+Message-ID: <CAOLa=ZRuCa=7QzS7K86eikApiGgYsGLeaP0mw5Ax=k5en72jxA@mail.gmail.com>
 References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
- <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <559E53DC.2040804@gmail.com>
- <CACsJy8AEEDEUE=nBvWVv426MWYzEmRSFFR1xF-cKKD2Lid9n4w@mail.gmail.com>
- <CAOLa=ZSR+QPnE36F=kX5w7q_ANobso+MM2q9-SKBARYghoJvrA@mail.gmail.com> <CACsJy8DRYGSoiyPRi3hCD54NA1TF2mr5+9xwReX333ppdoAg+A@mail.gmail.com>
+ <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <xmqqk2u8kmre.fsf@gitster.dls.corp.google.com>
+ <CAOLa=ZTNGV=NAXDPB3HX=fanPMQaQQc4ZpFdDFeg+LJ8SFuVOQ@mail.gmail.com>
+ <CACsJy8BsLnkPFX04WujMdnBiRGmXacF1QSQudb3T8nxGrZ_1Fg@mail.gmail.com>
+ <CACsJy8BL0ccxNYLE0gqBx5KTpqTOt=Ut6-k3fauxXNt2wpxSEw@mail.gmail.com>
+ <CAOLa=ZThDcmM79hL0TUh6+8=NkQBWOWK=Ti+-v+2PCysquw-1w@mail.gmail.com> <CACsJy8D6XOJbVb9LiDmmNuH9UWmyj9BRc0V5GYq-0wwi2uvN0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 13 22:35:27 2015
+X-From: git-owner@vger.kernel.org Mon Jul 13 22:36:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEkRi-0007N2-Vd
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 22:35:27 +0200
+	id 1ZEkT4-00083a-3s
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 22:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753230AbbGMUfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2015 16:35:19 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:33872 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753166AbbGMUfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2015 16:35:16 -0400
-Received: by obre1 with SMTP id e1so8486476obr.1
-        for <git@vger.kernel.org>; Mon, 13 Jul 2015 13:35:16 -0700 (PDT)
+	id S1752744AbbGMUgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2015 16:36:46 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:33050 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751760AbbGMUgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2015 16:36:45 -0400
+Received: by obbgp5 with SMTP id gp5so124676139obb.0
+        for <git@vger.kernel.org>; Mon, 13 Jul 2015 13:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=HyetOvr96hl8tgdVWugfUcHWzAYTWEFVqFVE5O5xTF8=;
-        b=cW3XAzbdXtGdrANTecAsVJeAUhkUNkazqFbEOrwvCAg9v0nCaXSrgkKO52Z3x9o8z7
-         8ji0ShCQ/uQsqJiIqxY/KejvFFEeXSuSq2KFVSmNEJ3yLDCU0g/LEK5Xzd/EapidePvD
-         QU4ebSZrrgicEMWNjzQe+tLQvcAYNw/LanPPDVmR3JKWhQ4Hf9EA6V+C1+G31OlSQX91
-         4J12F7iNN0BiY6t+9kkA5ta1QdPf9+SZair0r9Gfugdc+3OsYvCkM3u0CbuYyAut2IGI
-         7oeJpMqe9Qpz7UumIGdwuy9+92G7Gfric3UNLguvpgTkzr1C2WOK5IBLreVo7BaSY7Js
-         3/Og==
-X-Received: by 10.182.153.161 with SMTP id vh1mr31539610obb.34.1436819715980;
- Mon, 13 Jul 2015 13:35:15 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 13 Jul 2015 13:34:46 -0700 (PDT)
-In-Reply-To: <CACsJy8DRYGSoiyPRi3hCD54NA1TF2mr5+9xwReX333ppdoAg+A@mail.gmail.com>
+        bh=SDrB9gvhCMkEsHVk6+SfkAZhF0nhpco9kuknTfx4XCY=;
+        b=eki2PrAkl4A4w1Lc37clFvPtGXrssHRe+RGC6ebVm3kncWfrNOy8a5XhPtuqzwaxCt
+         DH9qYL2SvO5nr+/Eiw4lNh5BKNmHsmR0+fW3XZqWczC8mnh2xI//POfB09++QevJiqwo
+         E2wOMTxs5hMtb1aRm9lSdeguvv2vhlPX6OF9mdSvs+ikIMdke5PZi5z5nZRjiS4I3j4H
+         Z5qFqUv/moe1alsBUXDBExTZkoZgWapm7GD4i84YfNGIwOj+VQX+TifdsSs6w+KojpZf
+         0zcwHk6qnzfoVKJq1tOdLKV309S78ucN9DRQpyox+eReZCCvK/5qFdygzQ9aB9vKcRKU
+         YxMw==
+X-Received: by 10.60.177.195 with SMTP id cs3mr24925613oec.37.1436819804857;
+ Mon, 13 Jul 2015 13:36:44 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Mon, 13 Jul 2015 13:36:15 -0700 (PDT)
+In-Reply-To: <CACsJy8D6XOJbVb9LiDmmNuH9UWmyj9BRc0V5GYq-0wwi2uvN0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273926>
 
-On Mon, Jul 13, 2015 at 4:16 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Jul 13, 2015 at 2:36 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> What I was thinking of was getting rid of the whole "align" feature where
->> you provide a value to which it would align.
+On Mon, Jul 13, 2015 at 4:21 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Jul 13, 2015 at 2:56 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Sun, Jul 12, 2015 at 7:17 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>>
+>>> I guess if you can have multiple arguments after ':' in an atom, then
+>>> you have wiggle room for future. But it looks like you only accept one
+>>> argument after ':'.. (I only checked the version on 'pu'). Having an
+>>> "alignment atom" to augment the real one (like %< changes the behavior
+>>> of the next placeholder), could also work, but it adds dependency
+>>> between atoms, something I don't think ref-filter.c is ready for.
+>>>
 >>
->> Something like:  --format="%(item:modifieralign)" which would use something
->> on the lines of what the max-width calculator in branch -l uses, to get the max
->> alignment size. But the problem is that ref-filter goes through the refs using
->> a function which has no connections with the atoms used. So a more practical
->> solution would be --format="%(item:modifieralign=X)" where we could provide a
->> means of calculating X via ref-filter. Something like this in tag.c:
+>> I was thinking of something on the lines of having a function which right
+>> before printing checks if any "align" option is given to the end of a given
+>> item and aligns it accordingly, this ensures that any item which needs to
+>> have such an option can easily do so.
 >>
->> int max_width = get_max_width("<item to get max_width of>");
->> use this max_width to then do a
->> --format="%(item:modifieralign=X)", where X = max_width
+>> https://github.com/KarthikNayak/git/commit/0284320483d6442a6425fc665e740f9f975654a1
 >>
->> What do you think?
+>> This is what I came up with, you could have a look and let me know if
+>> you have any
+>> suggestions.
 >
-> This is where separate "alignment atoms" (instead of alignment
-> modifiers) make sense. Suppose you introduce another function, let's
-> say print_all() for now, to wrap the "for (i < maxcount)" loop at the
-> end of for-each-ref, you would have total control over display and
-> formatting. populate_value() generates empty strings for these
-> alignment atoms (because they don't really have true values). Those
-> alignment atoms are recognized in print_all() and
-> show_ref_array_item(). In print_all(), if it sees max width needs to
-> be calculated (because the user does not specify the width), it can
-> call populate_value() for an atom for all rows. show_ref_array_item()
-> does the padding and even truncating if needed. This pattern is
-> similar to how print_columns() works, first we collect data of the
-> whole "table", then we place them line by line.
->
-> It sounds good to me. But it may not be the best option, I don't know.
-> And it may create unnecessary work. So you and your mentors decide.
+> Yeah, pretty close to what I described in the other mail. Now if you
+> make "align" a separate atom, I think it would reduce clutter in
+> populate_value() (my personal opinion is this function looks too messy
+> already) and we can easily add more alignment options in future :)
 > --
 > Duy
 
-Sounds good, but what you're saying goes on the lines of interdependence of
-atoms, since we would have separate atoms. Not sure we want to do that right
-now.
+Yeah, that seems like the way to go, eventually :)
 
 -- 
 Regards,
