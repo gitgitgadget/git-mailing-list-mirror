@@ -1,90 +1,111 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 01/10] ref-filter: add %(refname:shortalign=X) option
-Date: Tue, 14 Jul 2015 02:06:15 +0530
-Message-ID: <CAOLa=ZRuCa=7QzS7K86eikApiGgYsGLeaP0mw5Ax=k5en72jxA@mail.gmail.com>
-References: <CAOLa=ZQyHwza6L9r6iFX1GkVrC+F-XNwegO=bGyxafjY3JoYpw@mail.gmail.com>
- <1436437671-25600-1-git-send-email-karthik.188@gmail.com> <xmqqk2u8kmre.fsf@gitster.dls.corp.google.com>
- <CAOLa=ZTNGV=NAXDPB3HX=fanPMQaQQc4ZpFdDFeg+LJ8SFuVOQ@mail.gmail.com>
- <CACsJy8BsLnkPFX04WujMdnBiRGmXacF1QSQudb3T8nxGrZ_1Fg@mail.gmail.com>
- <CACsJy8BL0ccxNYLE0gqBx5KTpqTOt=Ut6-k3fauxXNt2wpxSEw@mail.gmail.com>
- <CAOLa=ZThDcmM79hL0TUh6+8=NkQBWOWK=Ti+-v+2PCysquw-1w@mail.gmail.com> <CACsJy8D6XOJbVb9LiDmmNuH9UWmyj9BRc0V5GYq-0wwi2uvN0w@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] notes: Allow treeish expressions as notes ref
+Date: Tue, 14 Jul 2015 05:53:04 +0900
+Message-ID: <20150713205304.GA26911@glandium.org>
+References: <CALKQrgdGJy6vtBRL413bbSHSi+=KTh4Q98hpbgg29j4J191=bA@mail.gmail.com>
+ <1436517551-12172-1-git-send-email-mh@glandium.org>
+ <xmqqzj30yq03.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 13 22:36:50 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 13 22:53:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEkT4-00083a-3s
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 22:36:50 +0200
+	id 1ZEkj3-0007B4-KF
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 22:53:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744AbbGMUgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2015 16:36:46 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:33050 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760AbbGMUgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2015 16:36:45 -0400
-Received: by obbgp5 with SMTP id gp5so124676139obb.0
-        for <git@vger.kernel.org>; Mon, 13 Jul 2015 13:36:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SDrB9gvhCMkEsHVk6+SfkAZhF0nhpco9kuknTfx4XCY=;
-        b=eki2PrAkl4A4w1Lc37clFvPtGXrssHRe+RGC6ebVm3kncWfrNOy8a5XhPtuqzwaxCt
-         DH9qYL2SvO5nr+/Eiw4lNh5BKNmHsmR0+fW3XZqWczC8mnh2xI//POfB09++QevJiqwo
-         E2wOMTxs5hMtb1aRm9lSdeguvv2vhlPX6OF9mdSvs+ikIMdke5PZi5z5nZRjiS4I3j4H
-         Z5qFqUv/moe1alsBUXDBExTZkoZgWapm7GD4i84YfNGIwOj+VQX+TifdsSs6w+KojpZf
-         0zcwHk6qnzfoVKJq1tOdLKV309S78ucN9DRQpyox+eReZCCvK/5qFdygzQ9aB9vKcRKU
-         YxMw==
-X-Received: by 10.60.177.195 with SMTP id cs3mr24925613oec.37.1436819804857;
- Mon, 13 Jul 2015 13:36:44 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 13 Jul 2015 13:36:15 -0700 (PDT)
-In-Reply-To: <CACsJy8D6XOJbVb9LiDmmNuH9UWmyj9BRc0V5GYq-0wwi2uvN0w@mail.gmail.com>
+	id S1753582AbbGMUxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2015 16:53:15 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:47983 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752839AbbGMUxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2015 16:53:13 -0400
+Received: from glandium by zenigata with local (Exim 4.86_RC4)
+	(envelope-from <glandium@glandium.org>)
+	id 1ZEkim-000719-HS; Tue, 14 Jul 2015 05:53:04 +0900
+Content-Disposition: inline
+In-Reply-To: <xmqqzj30yq03.fsf@gitster.dls.corp.google.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273927>
 
-On Mon, Jul 13, 2015 at 4:21 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Jul 13, 2015 at 2:56 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> On Sun, Jul 12, 2015 at 7:17 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->>>
->>> I guess if you can have multiple arguments after ':' in an atom, then
->>> you have wiggle room for future. But it looks like you only accept one
->>> argument after ':'.. (I only checked the version on 'pu'). Having an
->>> "alignment atom" to augment the real one (like %< changes the behavior
->>> of the next placeholder), could also work, but it adds dependency
->>> between atoms, something I don't think ref-filter.c is ready for.
->>>
->>
->> I was thinking of something on the lines of having a function which right
->> before printing checks if any "align" option is given to the end of a given
->> item and aligns it accordingly, this ensures that any item which needs to
->> have such an option can easily do so.
->>
->> https://github.com/KarthikNayak/git/commit/0284320483d6442a6425fc665e740f9f975654a1
->>
->> This is what I came up with, you could have a look and let me know if
->> you have any
->> suggestions.
->
-> Yeah, pretty close to what I described in the other mail. Now if you
-> make "align" a separate atom, I think it would reduce clutter in
-> populate_value() (my personal opinion is this function looks too messy
-> already) and we can easily add more alignment options in future :)
-> --
-> Duy
+On Mon, Jul 13, 2015 at 09:35:40AM -0700, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > init_notes() is the main point of entry to the notes API. It is an arbitrary
+> > restriction that all it allows as input is a strict ref name, when callers
+> > may want to give an arbitrary treeish.
+> >
+> > However, some operations that require updating the notes tree require a
+> > strict ref name, because they wouldn't be able to update e.g. foo@{1}.
+> >
+> > So we allow treeish expressions to be used in the case the notes tree is
+> > going to be used without write "permissions", and to distinguish whether
+> > the notes tree is intended to be used for reads only, or will be updated,
+> > a flag is added.
+> 
+> It is unfair to call the current check arbitrary, though.  From the
+> point of view of the person who views notes as a database, it is
+> entirely a sensible thing to treat it as an read/write data store.
+> 
+> > This has the side effect of enabling the use of treeish as notes refs in
+> > commands allowing them, e.g. git log --notes=foo@{1}.
+> 
+> I do not think it is a "side effect".  It's the primary benefit this
+> change brings in.
 
-Yeah, that seems like the way to go, eventually :)
+My original motivation for this change was for init_notes() to take a
+committish so that I can feed it with one in a C program that uses the
+notes API. So from that perspective, that command lines can now use them
+is a side effect.
 
--- 
-Regards,
-Karthik Nayak
+> I'd flip the attitude around and sell this as "an enhancement",
+> perhaps like this:
+> 
+>     notes: allow treeish expressions as notes ref
+>     
+>     init_notes() is the main point of entry to the notes API. It ensures
+>     that the input can be used as ref, because it needs a ref to update
+>     to store notes tree after modifying it.
+>     
+>     There however are many use cases where notes tree is only read, e.g.
+>     "git log --notes=...".  Any notes-shaped treeish could be used for
+>     such purpose, but it is not allowed due to existing restriction.
+>     
+>     Allow treeish expressions to be used in the case the notes tree is
+>     going to be used without write "permissions".  Add a flag to
+>     distinguish whether the notes tree is intended to be used read-only,
+>     or will be updated.
+>     
+>     With this change, operations that use notes read-only can be fed any
+>     notes-shaped tree-ish can be used, e.g. git log --notes=notes@{1}.
+>     
+>     Signed-off-by: Mike Hommey <mh@glandium.org>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+WFM.
+
+> We probably should do a few more things:
+> 
+>  - Make sure that we show "there is no such tree-ish, no way to look
+>    up any note to any commit from there" and "I understood the tree
+>    you gave me, but there is no note for that commit" differently.
+
+How would you reconcile that with the usual "there are only a couple
+commits with a note in the hundreds you make me display"?
+
+>  - Decide if we want to "fail" the operation when the notes tree
+>    given by the user is not even a tree-ish or just "warn" and keep
+>    going.  And do so consistently.
+
+Is this something you want to be figured before merging this patch?
+
+Mike
