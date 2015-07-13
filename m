@@ -1,789 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.5.0-rc2
-Date: Mon, 13 Jul 2015 14:52:41 -0700
-Message-ID: <xmqqmvyzybbq.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCHv2] rev-parse --parseopt: allow [*=?!] in argument hints
+Date: Mon, 13 Jul 2015 14:55:27 -0700
+Message-ID: <xmqqlhejyb74.fsf@gitster.dls.corp.google.com>
+References: <1436693990-2908-1-git-send-email-ilya.bobyr@gmail.com>
+	<1436782355-3576-1-git-send-email-ilya.bobyr@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Jul 13 23:53:07 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>,
+	Philip Oakley <philipoakley@iee.org>
+To: ilya.bobyr@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jul 13 23:55:35 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1ZElem-0002T6-QG
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 13 Jul 2015 23:53:01 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1ZElhF-0003ZA-A0
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 23:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586AbbGMVwr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 13 Jul 2015 17:52:47 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:35142 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751115AbbGMVwo (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 13 Jul 2015 17:52:44 -0400
-Received: by iecuq6 with SMTP id uq6so244757096iec.2;
-        Mon, 13 Jul 2015 14:52:43 -0700 (PDT)
+	id S1751767AbbGMVz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2015 17:55:29 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:36156 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751140AbbGMVz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2015 17:55:29 -0400
+Received: by igbij6 with SMTP id ij6so32594626igb.1
+        for <git@vger.kernel.org>; Mon, 13 Jul 2015 14:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=JIbzLWCHDhJ2Co92XgtulWqn0PhTXOqwj2iDgUDN3ds=;
-        b=akAY2vp412fpRjDT7W/uLwPU1MNyk6VKhTVOjuLtfSeGXsDKgrx+T+8gPskzx16CqK
-         6cijZuKVJJTnnSm9zwNs0QE7Bp0aDIzQsJyoQNpUxSD6nNhfUmoSJXwSBrfUpnZ5QLOu
-         vO2buV8dry/bAyr8QBz2k/WJxuIlmsO8pP9ridjsHg/XGnYwg8t8XQb2vWjVtE8GbYvo
-         d6zGCSiRZtWMoGm4IbuIWHBWe3hMFIF0OGxsnKA0/B6Iq8HRc92r3y4sj3LT/xYGI8F/
-         RPPNBGt0+UUqm0QBLouqZDs/kmytluxLrdYfs7Ki2DOJ/17g+i1REdLCwiDBclfUJGMT
-         kRzg==
-X-Received: by 10.107.6.87 with SMTP id 84mr21386898iog.35.1436824363208;
-        Mon, 13 Jul 2015 14:52:43 -0700 (PDT)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Zrn7FUcLdKaFUVNbgirsnkdvcAz2erhtnZOXJXEgMsA=;
+        b=wMnI5qLIlIPxK74iKMGsR166QeBPqq1id0buNoYsv+vDMgyRJu1Fr7FUtnpKnoUffQ
+         iHmbw96sfgn+0Y81DNcHyn1mY3MOobobr2MlU1G2CN0lyqY9ghsQbM+Wta3t5XJaRsQH
+         ukdYEJwJYdE1B84F3wpDe8M86ny3SoNulKMkHXNz+cYl+WbsoX+nwHvKUM2KiYyZef6m
+         blSFefW4LxURiarYyhNXGht8YqrnLsYcK1vnQobUyU/RCD247/pkolMjyzbgaCLcPK05
+         FfmiI6ntSFvEAGX3l4LFya8Ng+eYfzPNGk0ustQCbREkV/KfjCATb3a20zfSeAxYEamD
+         IKOQ==
+X-Received: by 10.107.162.142 with SMTP id l136mr19247086ioe.166.1436824528363;
+        Mon, 13 Jul 2015 14:55:28 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:4d10:ec6a:e89:91cb])
-        by smtp.gmail.com with ESMTPSA id pg7sm6539306igb.6.2015.07.13.14.52.42
+        by smtp.gmail.com with ESMTPSA id o66sm13409111ioo.5.2015.07.13.14.55.27
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 Jul 2015 14:52:42 -0700 (PDT)
+        Mon, 13 Jul 2015 14:55:27 -0700 (PDT)
+In-Reply-To: <1436782355-3576-1-git-send-email-ilya.bobyr@gmail.com> (ilya
+	bobyr's message of "Mon, 13 Jul 2015 03:12:35 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273931>
-
-A release candidate Git v2.5.0-rc2 is now available for testing
-at the usual places.  It is comprised of 552 non-merge commits
-since v2.4.0, contributed by 63 people, 21 of which are new faces.
-
-To avoid user-facing interface to a new experimental feature that
-replaces contrib/workdir after the release, I've merged another
-topic to move that feature to "git worktree add", which is going to
-be its final location.  We'll need to extend the pre-release freeze
-a bit longer than we originally planned to make sure we have a
-reasonably solid 2.5 final.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/testing/
-
-The following public repositories all have a copy of the
-'v2.5.0-rc2' tag and the 'master' branch that the tag points at:
-
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
-
-New contributors whose contributions weren't in v2.4.0 are as follows.
-Welcome to the Git development community!
-
-  Allen Hubbe, Ariel Faigon, Blair Holloway, Christian Neukirchen,
-  Danny Lin, Enrique Tobis, Frans Klaver, Fredrik Medley, Joe
-  Cridge, Lars Kellogg-Stedman, Lawrence Siebert, Lex Spoon, Luke
-  Mewburn, Miguel Torroja, Mike Edgar, Ossi Herrala, Panagiotis
-  Astithas, Quentin Neill, Remi Lespinet, S=C3=A9bastien Guimmara,
-  and Thomas Schneider.
-
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Alex Henrie, brian m. carlson, Carlos Mart=C3=ADn Nieto, Charles
-  Bailey, Clemens Buchacher, David Aguilar, David Turner, Dennis
-  Kaarsemaker, Elia Pinto, Eric Sunshine, Fredrik Gustafsson,
-  Jean-Noel Avila, Jeff King, Jim Hill, Johannes Schindelin,
-  Johannes Sixt, Jonathan Nieder, Junio C Hamano, Karsten Blees,
-  Karthik Nayak, Luke Diamand, Matthieu Moy, Max Kirillov, Michael
-  Coleman, Michael Haggerty, Michael J Gruber, Mike Hommey,
-  Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy, Patrick Steinhardt, Paul T=
-an, Phil
-  Hord, Phillip Sz, Ramsay Allan Jones, Ren=C3=A9 Scharfe, Richard
-  Hansen, Sebastian Schuberth, Stefan Beller, SZEDER G=C3=A1bor, Thomas
-  Braun, Thomas Gummerer, Torsten B=C3=B6gershausen, and Vitor Antunes.
-
-----------------------------------------------------------------
-
-Git 2.5 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-
-Updates since v2.4
-------------------
-
-UI, Workflows & Features
-
- * The bash completion script (in contrib/) learned a few options that
-   "git revert" takes.
-
- * Whitespace breakages in deleted and context lines can also be
-   painted in the output of "git diff" and friends with the new
-   --ws-error-highlight option.
-
- * List of commands shown by "git help" are grouped along the workflow
-   elements to help early learners.
-
- * "git p4" now detects the filetype (e.g. binary) correctly even when
-   the files are opened exclusively.
-
- * git p4 attempts to better handle branches in Perforce.
-
- * "git p4" learned "--changes-block-size <n>" to read the changes in
-   chunks from Perforce, instead of making one call to "p4 changes"
-   that may trigger "too many rows scanned" error from Perforce.
-
- * More workaround for Perforce's row number limit in "git p4".
-
- * Unlike "$EDITOR" and "$GIT_EDITOR" that can hold the path to the
-   command and initial options (e.g. "/path/to/emacs -nw"), 'git p4'
-   did not let the shell interpolate the contents of the environment
-   variable that name the editor "$P4EDITOR" (and "$EDITOR", too).
-   This release makes it in line with the rest of Git, as well as with
-   Perforce.
-
- * A new short-hand <branch>@{push} denotes the remote-tracking branch
-   that tracks the branch at the remote the <branch> would be pushed
-   to.
-
- * "git show-branch --topics HEAD" (with no other arguments) did not
-   do anything interesting.  Instead, contrast the given revision
-   against all the local branches by default.
-
- * A replacement for contrib/workdir/git-new-workdir that does not
-   rely on symbolic links and make sharing of objects and refs safer
-   by making the borrowee and borrowers aware of each other.
-
-   Consider this as still an experimental feature; its UI is still
-   likely to change.
-
- * Tweak the sample "store" backend of the credential helper to honor
-   XDG configuration file locations when specified.
-
- * A heuristic we use to catch mistyped paths on the command line
-   "git <cmd> <revs> <pathspec>" is to make sure that all the non-rev
-   parameters in the later part of the command line are names of the
-   files in the working tree, but that means "git grep $str -- \*.c"
-   must always be disambiguated with "--", because nobody sane will
-   create a file whose name literally is asterisk-dot-see.  Loosen the
-   heuristic to declare that with a wildcard string the user likely
-   meant to give us a pathspec.
-
- * "git merge FETCH_HEAD" learned that the previous "git fetch" could
-   be to create an Octopus merge, i.e. recording multiple branches
-   that are not marked as "not-for-merge"; this allows us to lose an
-   old style invocation "git merge <msg> HEAD $commits..." in the
-   implementation of "git pull" script; the old style syntax can now
-   be deprecated (but not removed yet).
-
- * Filter scripts were run with SIGPIPE disabled on the Git side,
-   expecting that they may not read what Git feeds them to filter.
-   We however treated a filter that does not read its input fully
-   before exiting as an error.  We no longer do and ignore EPIPE
-   when writing to feed the filter scripts.
-
-   This changes semantics, but arguably in a good way.  If a filter
-   can produce its output without fully consuming its input using
-   whatever magic, we now let it do so, instead of diagnosing it
-   as a programming error.
-
- * Instead of dying immediately upon failing to obtain a lock, the
-   locking (of refs etc) retries after a short while with backoff.
-
- * Introduce http.<url>.SSLCipherList configuration variable to tweak
-   the list of cipher suite to be used with libcURL when talking with
-   https:// sites.
-
- * "git subtree" script (in contrib/) used "echo -n" to produce
-   progress messages in a non-portable way.
-
- * "git subtree" script (in contrib/) does not have --squash option
-   when pushing, but the documentation and help text pretended as if
-   it did.
-
- * The Git subcommand completion (in contrib/) no longer lists credenti=
-al
-   helpers among candidates; they are not something the end user would
-   invoke interactively.
-
- * The index file can be taught with "update-index --untracked-cache"
-   to optionally remember already seen untracked files, in order to
-   speed up "git status" in a working tree with tons of cruft.
-
- * "git mergetool" learned to drive WinMerge as a backend.
-
- * "git upload-pack" that serves "git fetch" can be told to serve
-   commits that are not at the tip of any ref, as long as they are
-   reachable from a ref, with uploadpack.allowReachableSHA1InWant
-   configuration variable.
-
- * "git cat-file --batch(-check)" learned the "--follow-symlinks"
-   option that follows an in-tree symbolic link when asked about an
-   object via extended SHA-1 syntax, e.g. HEAD:RelNotes that points at
-   Documentation/RelNotes/2.5.0.txt.  With the new option, the command
-   behaves as if HEAD:Documentation/RelNotes/2.5.0.txt was given as
-   input instead.
-
-   Consider this as still an experimental and incomplete feature:
-
-    - We may want to do the same for in-index objects, e.g.
-      asking for :RelNotes with this option should give
-      :Documentation/RelNotes/2.5.0.txt, too
-
-    - "git cat-file --follow-symlinks blob HEAD:RelNotes"
-      may also be something we want to allow in the future.
-
- * "git send-email" learned the alias file format used by the sendmail
-   program (in a simplified form; we obviously do not feed pipes).
-
- * "git am" learned am.threeWay configuration variable.
-
- * Traditionally, external low-level 3-way merge drivers are expected
-   to produce their results based solely on the contents of the three
-   variants given in temporary files named by %O, %A and %B on their
-   command line.  Additionally allow them to look at the final path
-   (given by %P).
-
- * "git blame" learned blame.showEmail configuration variable.
-
- * "git apply" cannot diagnose a patch corruption when the breakage is
-   to mark the length of the hunk shorter than it really is on the
-   hunk header line "@@ -l,k +m,n @@"; one special case it could is
-   when the hunk becomes no-op (e.g. k =3D=3D n =3D=3D 2 for two-line c=
-ontext
-   patch output), and it learned to do so in this special case.
-
- * Add the "--allow-unknown-type" option to "cat-file" to allow
-   inspecting loose objects of an experimental or a broken type.
-
- * Many long-running operations show progress eye-candy, even when
-   they are later backgrounded.  Hide the eye-candy when the process
-   is sent to the background instead.
-   (merge a4fb76c lm/squelch-bg-progress later to maint).
-
-
-Performance, Internal Implementation, Development Support etc.
-
- * "unsigned char [20]" used throughout the code to represent object
-   names are being converted into a semi-opaque "struct object_id".
-   This effort is expected to interfere with other topics in flight,
-   but hopefully will give us one extra level of abstraction in the
-   end, when completed.
-
- * for_each_ref() callback functions were taught to name the objects
-   not with "unsigned char sha1[20]" but with "struct object_id".
-
- * Catch a programmer mistake to feed a pointer not an array to
-   ARRAY_SIZE() macro, by using a couple of GCC extensions.
-
- * Some error messages in "git config" were emitted without calling
-   the usual error() facility.
-
- * When "add--interactive" splits a hunk into two overlapping hunks
-   and then let the user choose only one, it sometimes feeds an
-   incorrect patch text to "git apply".  Add tests to demonstrate
-   this.
-
-   I have a slight suspicion that this may be $gmane/87202 coming back
-   and biting us (I seem to have said "let's run with this and see
-   what happens" back then).
-
- * More line-ending tests.
-
- * An earlier rewrite to use strbuf_getwholeline() instead of fgets(3)
-   to read packed-refs file revealed that the former is unacceptably
-   inefficient.  It has been optimized by using getdelim(3) when
-   available.
-
- * The refs API uses ref_lock struct which had its own "int fd", even
-   though the same file descriptor was in the lock struct it contains.
-   Clean-up the code to lose this redundant field.
-
- * There was a dead code that used to handle "git pull --tags" and
-   show special-cased error message, which was made irrelevant when
-   the semantics of the option changed back in Git 1.9 days.
-   (merge 19d122b pt/pull-tags-error-diag later to maint).
-
- * Help us to find broken test script that splits the body part of the
-   test by mistaken use of wrong kind of quotes.
-   (merge d93d5d5 jc/test-prereq-validate later to maint).
-
- * Developer support to automatically detect broken &&-chain in the
-   test scripts is now turned on by default.
-   (merge 92b269f jk/test-chain-lint later to maint).
-
- * Error reporting mechanism used in "refs" API has been made more
-   consistent.
-
- * "git pull" has more test coverage now.
-
- * "git pull" has become more aware of the options meant for
-   underlying "git fetch" and then learned to use parse-options
-   parser.
-
- * Clarify in the Makefile a guideline to decide use of USE_NSEC.
-
-Also contains various documentation updates and code clean-ups.
-
-
-=46ixes since v2.4
-----------------
-
-Unless otherwise noted, all the fixes since v2.4 in the maintenance
-track are contained in this release (see the maintenance releases'
-notes for details).
-
- * Git 2.4 broke setting verbosity and progress levels on "git clone"
-   with native transports.
-   (merge 822f0c4 mh/clone-verbosity-fix later to maint).
-
- * "git add -e" did not allow the user to abort the operation by
-   killing the editor.
-   (merge cb64800 jk/add-e-kill-editor later to maint).
-
- * Memory usage of "git index-pack" has been trimmed by tens of
-   per-cent.
-   (merge f0e7f11 nd/slim-index-pack-memory-usage later to maint).
-
- * "git rev-list --objects $old --not --all" to see if everything that
-   is reachable from $old is already connected to the existing refs
-   was very inefficient.
-   (merge b6e8a3b jk/still-interesting later to maint).
-
- * "hash-object --literally" introduced in v2.2 was not prepared to
-   take a really long object type name.
-   (merge 1427a7f jc/hash-object later to maint).
-
- * "git rebase --quiet" was not quite quiet when there is nothing to
-   do.
-   (merge 22946a9 jk/rebase-quiet-noop later to maint).
-
- * The completion for "log --decorate=3D" parameter value was incorrect=
-=2E
-   (merge af16bda sg/complete-decorate-full-not-long later to maint).
-
- * "filter-branch" corrupted commit log message that ends with an
-   incomplete line on platforms with some "sed" implementations that
-   munge such a line.  Work it around by avoiding to use "sed".
-   (merge df06201 jk/filter-branch-use-of-sed-on-incomplete-line later =
-to maint).
-
- * "git daemon" fails to build from the source under NO_IPV6
-   configuration (regression in 2.4).
-   (merge d358f77 jc/daemon-no-ipv6-for-2.4.1 later to maint).
-
- * Some time ago, "git blame" (incorrectly) lost the convert_to_git()
-   call when synthesizing a fake "tip" commit that represents the
-   state in the working tree, which broke folks who record the history
-   with LF line ending to make their project portable across platforms
-   while terminating lines in their working tree files with CRLF for
-   their platform.
-   (merge 4bf256d tb/blame-resurrect-convert-to-git later to maint).
-
- * We avoid setting core.worktree when the repository location is the
-   ".git" directory directly at the top level of the working tree, but
-   the code misdetected the case in which the working tree is at the
-   root level of the filesystem (which arguably is a silly thing to
-   do, but still valid).
-   (merge 84ccad8 jk/init-core-worktree-at-root later to maint).
-
- * "git commit --date=3Dnow" or anything that relies on approxidate los=
-t
-   the daylight-saving-time offset.
-   (merge f6e6362 jc/epochtime-wo-tz later to maint).
-
- * Access to objects in repositories that borrow from another one on a
-   slow NFS server unnecessarily got more expensive due to recent code
-   becoming more cautious in a naive way not to lose objects to pruning=
-=2E
-   (merge ee1c6c3 jk/prune-mtime later to maint).
-
- * The codepaths that read .gitignore and .gitattributes files have bee=
-n
-   taught that these files encoded in UTF-8 may have UTF-8 BOM marker a=
-t
-   the beginning; this makes it in line with what we do for configurati=
-on
-   files already.
-   (merge 27547e5 cn/bom-in-gitignore later to maint).
-
- * a few helper scripts in the test suite did not report errors
-   correctly.
-   (merge de248e9 ep/fix-test-lib-functions-report later to maint).
-
- * The default $HOME/.gitconfig file created upon "git config --global"
-   that edits it had incorrectly spelled user.name and user.email
-   entries in it.
-   (merge 7e11052 oh/fix-config-default-user-name-section later to main=
-t).
-
- * "git cat-file bl $blob" failed to barf even though there is no
-   object type that is "bl".
-   (merge b7994af jk/type-from-string-gently later to maint).
-
- * The usual "git diff" when seeing a file turning into a directory
-   showed a patchset to remove the file and create all files in the
-   directory, but "git diff --no-index" simply refused to work.  Also,
-   when asked to compare a file and a directory, imitate POSIX "diff"
-   and compare the file with the file with the same name in the
-   directory, instead of refusing to run.
-   (merge 0615173 jc/diff-no-index-d-f later to maint).
-
- * "git rebase -i" moved the "current" command from "todo" to "done" a
-   bit too prematurely, losing a step when a "pick" did not even start.
-   (merge 8cbc57c ph/rebase-i-redo later to maint).
-
- * The connection initiation code for "ssh" transport tried to absorb
-   differences between the stock "ssh" and Putty-supplied "plink" and
-   its derivatives, but the logic to tell that we are using "plink"
-   variants were too loose and falsely triggered when "plink" appeared
-   anywhere in the path (e.g. "/home/me/bin/uplink/ssh").
-   (merge baaf233 bc/connect-plink later to maint).
-
- * We have prepended $GIT_EXEC_PATH and the path "git" is installed in
-   (typically "/usr/bin") to $PATH when invoking subprograms and hooks
-   for almost eternity, but the original use case the latter tried to
-   support was semi-bogus (i.e. install git to /opt/foo/git and run it
-   without having /opt/foo on $PATH), and more importantly it has
-   become less and less relevant as Git grew more mainstream (i.e. the
-   users would _want_ to have it on their $PATH).  Stop prepending the
-   path in which "git" is installed to users' $PATH, as that would
-   interfere the command search order people depend on (e.g. they may
-   not like versions of programs that are unrelated to Git in /usr/bin
-   and want to override them by having different ones in /usr/local/bin
-   and have the latter directory earlier in their $PATH).
-   (merge a0b4507 jk/git-no-more-argv0-path-munging later to maint).
-
- * core.excludesfile (defaulting to $XDG_HOME/git/ignore) is supposed
-   to be overridden by repository-specific .git/info/exclude file, but
-   the order was swapped from the beginning. This belatedly fixes it.
-   (merge 099d2d8 jc/gitignore-precedence later to maint).
-
- * There was a commented-out (instead of being marked to expect
-   failure) test that documented a breakage that was fixed since the
-   test was written; turn it into a proper test.
-   (merge 66d2e04 sb/t1020-cleanup later to maint).
-
- * The "log --decorate" enhancement in Git 2.4 that shows the commit
-   at the tip of the current branch e.g. "HEAD -> master", did not
-   work with --decorate=3Dfull.
-   (merge 429ad20 mg/log-decorate-HEAD later to maint).
-
- * The ref API did not handle cases where 'refs/heads/xyzzy/frotz' is
-   removed at the same time as 'refs/heads/xyzzy' is added (or vice
-   versa) very well.
-   (merge c628edf mh/ref-directory-file later to maint).
-
- * Multi-ref transaction support we merged a few releases ago
-   unnecessarily kept many file descriptors open, risking to fail with
-   resource exhaustion.  This is for 2.4.x track.
-   (merge 185ce3a mh/write-refs-sooner-2.4 later to maint).
-
- * "git bundle verify" did not diagnose extra parameters on the
-   command line.
-   (merge 7886cfa ps/bundle-verify-arg later to maint).
-
- * Various documentation mark-up fixes to make the output more
-   consistent in general and also make AsciiDoctor (an alternative
-   formatter) happier.
-   (merge d0258b9 jk/asciidoc-markup-fix later to maint).
-   (merge ad3967a jk/stripspace-asciidoctor-fix later to maint).
-   (merge 975e382 ja/tutorial-asciidoctor-fix later to maint).
-
- * The code to read pack-bitmap wanted to allocate a few hundred
-   pointers to a structure, but by mistake allocated and leaked memory
-   enough to hold that many actual structures.  Correct the allocation
-   size and also have it on stack, as it is small enough.
-   (merge 599dc76 rs/plug-leak-in-pack-bitmaps later to maint).
-
- * The pull.ff configuration was supposed to override the merge.ff
-   configuration, but it didn't.
-   (merge db9bb28 pt/pull-ff-vs-merge-ff later to maint).
-
- * "git pull --log" and "git pull --no-log" worked as expected, but
-   "git pull --log=3D20" did not.
-   (merge 5061a44 pt/pull-log-n later to maint).
-
- * "git rerere forget" in a repository without rerere enabled gave a
-   cryptic error message; it should be a silent no-op instead.
-   (merge 0544574 jk/rerere-forget-check-enabled later to maint).
-
- * "git rebase -i" fired post-rewrite hook when it shouldn't (namely,
-   when it was told to stop sequencing with 'exec' insn).
-   (merge 141ff8f mm/rebase-i-post-rewrite-exec later to maint).
-
- * Clarify that "log --raw" and "log --format=3Draw" are unrelated
-   concepts.
-   (merge 92de921 mm/log-format-raw-doc later to maint).
-
- * Make "git stash something --help" error out, so that users can
-   safely say "git stash drop --help".
-   (merge 5ba2831 jk/stash-options later to maint).
-
- * The clean/smudge interface did not work well when filtering an
-   empty contents (failed and then passed the empty input through).
-   It can be argued that a filter that produces anything but empty for
-   an empty input is nonsense, but if the user wants to do strange
-   things, then why not?
-   (merge f6a1e1e jh/filter-empty-contents later to maint).
-
- * Communication between the HTTP server and http_backend process can
-   lead to a dead-lock when relaying a large ref negotiation request.
-   Diagnose the situation better, and mitigate it by reading such a
-   request first into core (to a reasonable limit).
-   (merge 636614f jk/http-backend-deadlock later to maint).
-
- * "git clean pathspec..." tried to lstat(2) and complain even for
-   paths outside the given pathspec.
-   (merge 838d6a9 dt/clean-pathspec-filter-then-lstat later to maint).
-
- * Recent "git prune" traverses young unreachable objects to safekeep
-   old objects in the reachability chain from them, which sometimes
-   caused error messages that are unnecessarily alarming.
-   (merge ce4e7b2 jk/squelch-missing-link-warning-for-unreachable later=
- to maint).
-
- * The configuration reader/writer uses mmap(2) interface to access
-   the files; when we find a directory, it barfed with "Out of memory?"=
-=2E
-   (merge 9ca0aaf jk/diagnose-config-mmap-failure later to maint).
-
- * "color.diff.plain" was a misnomer; give it 'color.diff.context' as
-   a more logical synonym.
-   (merge 8dbf3eb jk/color-diff-plain-is-context later to maint).
-
- * The setup code used to die when core.bare and core.worktree are set
-   inconsistently, even for commands that do not need working tree.
-   (merge fada767 jk/die-on-bogus-worktree-late later to maint).
-
- * Recent Mac OS X updates breaks the logic to detect that the machine
-   is on the AC power in the sample pre-auto-gc script.
-   (merge c54c7b3 pa/auto-gc-mac-osx later to maint).
-
- * "git commit --cleanup=3Dscissors" was not careful enough to protect
-   against getting fooled by a line that looked like scissors.
-   (merge fbfa097 sg/commit-cleanup-scissors later to maint).
-
- * "Have we lost a race with competing repack?" check was too
-   expensive, especially while receiving a huge object transfer
-   that runs index-pack (e.g. "clone" or "fetch").
-   (merge 0eeb077 jk/index-pack-reduce-recheck later to maint).
-
- * The tcsh completion writes a bash scriptlet but that would have
-   failed for users with noclobber set.
-   (merge 0b1f688 af/tcsh-completion-noclobber later to maint).
-
- * "git for-each-ref" reported "missing object" for 0{40} when it
-   encounters a broken ref.  The lack of object whose name is 0{40} is
-   not the problem; the ref being broken is.
-   (merge 501cf47 mh/reporting-broken-refs-from-for-each-ref later to m=
-aint).
-
- * Various fixes around "git am" that applies a patch to a history
-   that is not there yet.
-   (merge 6ea3b67 pt/am-abort-fix later to maint).
-
- * "git fsck" used to ignore missing or invalid objects recorded in ref=
-log.
-   (merge 19bf6c9 mh/fsck-reflog-entries later to maint).
-
- * "git format-patch --ignore-if-upstream A..B" did not like to be fed
-   tags as boundary commits.
-   (merge 9b7a61d jc/do-not-feed-tags-to-clear-commit-marks later to ma=
-int).
-
- * "git fetch --depth=3D<depth>" and "git clone --depth=3D<depth>" issu=
-ed
-   a shallow transfer request even to an upload-pack that does not
-   support the capability.
-   (merge eb86a50 me/fetch-into-shallow-safety later to maint).
-
- * "git rebase" did not exit with failure when format-patch it invoked
-   failed for whatever reason.
-   (merge 60d708b cb/rebase-am-exit-code later to maint).
-
- * Fix a small bug in our use of umask() return value.
-   (merge 3096b2e jk/fix-refresh-utime later to maint).
-
- * An ancient test framework enhancement to allow color was not
-   entirely correct; this makes it work even when tput needs to read
-   from the ~/.terminfo under the user's real HOME directory.
-   (merge d5c1b7c rh/test-color-avoid-terminfo-in-original-home later t=
-o maint).
-
- * A minor bugfix when pack bitmap is used with "rev-list --count".
-   (merge c8a70d3 jk/rev-list-no-bitmap-while-pruning later to maint).
-
- * "git config" failed to update the configuration file when the
-   underlying filesystem is incapable of renaming a file that is still
-   open.
-   (merge 7a64592 kb/config-unmap-before-renaming later to maint).
-
- * Avoid possible ssize_t to int truncation.
-   (merge 6c8afe4 mh/strbuf-read-file-returns-ssize-t later to maint).
-
- * When you say "!<ENTER>" while running say "git log", you'd confuse
-   yourself in the resulting shell, that may look as if you took
-   control back to the original shell you spawned "git log" from but
-   that isn't what is happening.  To that new shell, we leaked
-   GIT_PAGER_IN_USE environment variable that was meant as a local
-   communication between the original "Git" and subprocesses that was
-   spawned by it after we launched the pager, which caused many
-   "interesting" things to happen, e.g. "git diff | cat" still paints
-   its output in color by default.
-
-   Stop leaking that environment variable to the pager's half of the
-   fork; we only need it on "Git" side when we spawn the pager.
-   (merge 124b519 jc/unexport-git-pager-in-use-in-pager later to maint)=
-=2E
-
- * Abandoning an already applied change in "git rebase -i" with
-   "--continue" left CHERRY_PICK_HEAD and confused later steps.
-   (merge 0e0aff4 js/rebase-i-clean-up-upon-continue-to-skip later to m=
-aint).
-
- * We used to ask libCURL to use the most secure authentication method
-   available when talking to an HTTP proxy only when we were told to
-   talk to one via configuration variables.  We now ask libCURL to
-   always use the most secure authentication method, because the user
-   can tell libCURL to use an HTTP proxy via an environment variable
-   without using configuration variables.
-   (merge 5841520 et/http-proxyauth later to maint).
-
- * A fix to a minor regression to "git fsck" in v2.2 era that started
-   complaining about a body-less tag object when it lacks a separator
-   empty line after its header to separate it with a non-existent body.
-   (merge 84d18c0 jc/fsck-retire-require-eoh later to maint).
-
- * Code cleanups and documentation updates.
-   (merge 0269f96 mm/usage-log-l-can-take-regex later to maint).
-   (merge 64f2589 nd/t1509-chroot-test later to maint).
-   (merge d201a1e sb/test-bitmap-free-at-end later to maint).
-   (merge 05bfc7d sb/line-log-plug-pairdiff-leak later to maint).
-   (merge 846e5df pt/xdg-config-path later to maint).
-   (merge 1154aa4 jc/plug-fmt-merge-msg-leak later to maint).
-   (merge 319b678 jk/sha1-file-reduce-useless-warnings later to maint).
-   (merge 9a35c14 fg/document-commit-message-stripping later to maint).
-   (merge bbf431c ps/doc-packfile-vs-pack-file later to maint).
-   (merge 309a9e3 jk/skip-http-tests-under-no-curl later to maint).
-   (merge ccd593c dl/branch-error-message later to maint).
-   (merge 22570b6 rs/janitorial later to maint).
-   (merge 5c2a581 mc/commit-doc-grammofix later to maint).
-   (merge ce41720 ah/usage-strings later to maint).
-   (merge e6a268c sb/glossary-submodule later to maint).
-   (merge ec48a76 sb/submodule-doc-intro later to maint).
-   (merge 14f8b9b jk/clone-dissociate later to maint).
-   (merge 055c7e9 sb/pack-protocol-mention-smart-http later to maint).
-   (merge 7c37a5d jk/make-fix-dependencies later to maint).
-   (merge fc0aa39 sg/merge-summary-config later to maint).
-   (merge 329af6c pt/t0302-needs-sanity later to maint).
-   (merge d614f07 fk/doc-format-patch-vn later to maint).
-   (merge 72dbb36 sg/completion-commit-cleanup later to maint).
-   (merge e654eb2 es/utf8-stupid-compiler-workaround later to maint).
-   (merge 34b935c es/osx-header-pollutes-mask-macro later to maint).
-   (merge ab7fade jc/prompt-document-ps1-state-separator later to maint=
-).
-   (merge 25f600e mm/describe-doc later to maint).
-   (merge 83fe167 mm/branch-doc-updates later to maint).
-   (merge 75d2e5a ls/hint-rev-list-count later to maint).
-   (merge edc8f71 cb/subtree-tests-update later to maint).
-   (merge 5330e6e sb/p5310-and-chain later to maint).
-   (merge c4ac525 tb/checkout-doc later to maint).
-   (merge e479c5f jk/pretty-encoding-doc later to maint).
-   (merge 7e837c6 ss/clone-guess-dir-name-simplify later to maint).
-
-----------------------------------------------------------------
-
-Changes since v2.5.0-rc1 are as follows:
-
-Charles Bailey (3):
-      contrib/subtree: use tabs consitently for indentation in tests
-      contrib/subtree: fix broken &&-chains and revealed test error
-      contrib/subtree: small tidy-up to test
-
-Clemens Buchacher (1):
-      rebase: return non-zero error code if format-patch fails
-
-Enrique Tobis (1):
-      http: always use any proxy auth method available
-
-Eric Sunshine (23):
-      Documentation/git-checkout: fix incorrect worktree prune command
-      Documentation/git-worktree: associate options with commands
-      Documentation: move linked worktree description from checkout to =
-worktree
-      Documentation/git-worktree: add BUGS section
-      Documentation/git-worktree: split technical info from general des=
-cription
-      Documentation/git-worktree: add high-level 'lock' overview
-      Documentation/git-worktree: add EXAMPLES section
-      checkout: fix bug with --to and relative HEAD
-      checkout: relocate --to's "no branch specified" check
-      checkout: prepare_linked_checkout: drop now-unused 'new' argument
-      checkout: make --to unconditionally verbose
-      checkout: drop 'checkout_opts' dependency from prepare_linked_che=
-ckout
-      worktree: introduce "add" command
-      worktree: add --force option
-      worktree: add --detach option
-      worktree: add -b/-B options
-      tests: worktree: retrofit "checkout --to" tests for "worktree add=
-"
-      checkout: retire --to option
-      checkout: require worktree unconditionally
-      worktree: extract basename computation to new function
-      worktree: add: make -b/-B default to HEAD when <branch> is omitte=
-d
-      worktree: add: auto-vivify new branch when <branch> is omitted
-      checkout: retire --ignore-other-worktrees in favor of --force
-
-Jeff King (4):
-      docs: clarify that --encoding can produce invalid sequences
-      for_each_packed_object: automatically open pack index
-      rev-list: disable --use-bitmap-index when pruning commits
-      check_and_freshen_file: fix reversed success-check
-
-Johannes Schindelin (2):
-      t3404: demonstrate CHERRY_PICK_HEAD bug
-      rebase -i: do not leave a CHERRY_PICK_HEAD file behind
-
-Junio C Hamano (6):
-      fsck: it is OK for a tag and a commit to lack the body
-      pager: do not leak "GIT_PAGER_IN_USE" to the pager
-      index-pack: fix allocation of sorted_by_pos array
-      The last minute bits of fixes
-      Revert "checkout: retire --ignore-other-worktrees in favor of --f=
-orce"
-      Git 2.5.0-rc2
-
-Karsten Blees (2):
-      config.c: fix writing config files on Windows network shares
-      Makefile / racy-git.txt: clarify USE_NSEC prerequisites
-
-Lawrence Siebert (1):
-      rev-list: add --count to usage guide
-
-Matthieu Moy (3):
-      git-multimail: update to release 1.1.1
-      Documentation/branch: document -d --force and -m --force
-      Documentation/branch: document -M and -D in terms of --force
-
-Michael Haggerty (1):
-      strbuf: strbuf_read_file() should return ssize_t
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-      checkout: don't check worktrees when not necessary
-      worktree: new place for "git prune --worktrees"
-      Add tests for wildcard "path vs ref" disambiguation
-
-Richard Hansen (2):
-      Revert "test-lib.sh: do tests for color support after changing HO=
-ME"
-      test-lib.sh: fix color support when tput needs ~/.terminfo
-
-Sebastian Schuberth (1):
-      clone: simplify string handling in guess_dir_name()
-
-Stefan Beller (1):
-      p5310: Fix broken && chain in performance test
-
-Torsten B=C3=B6gershausen (1):
-      git-checkout.txt: document "git checkout <pathspec>" better
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273932>
+
+ilya.bobyr@gmail.com writes:
+
+> Junio, thank you very much for all the comments.  I hope I have included
+> all of the suggestions you made.  Please, let me know if I have missed
+> anything or if there is something else you think should be improved.
+
+There were a few that still remained, which I locally amended.
+Please check what is queued on 'pu'.
+
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index c483100..2ea169d 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -311,8 +311,8 @@ Each line of options has this format:
+>  `<opt-spec>`::
+>  	its format is the short option character, then the long option name
+>  	separated by a comma. Both parts are not required, though at least one
+> -	is necessary. `h,help`, `dry-run` and `f` are all three correct
+> -	`<opt-spec>`.
+> +	is necessary. May not contain any of the `<flags>` characters.
+> +	`h,help`, `dry-run` and `f` are all three correct `<opt-spec>`.
+
+"are examples of correct <opt-spec>"?
+
+>  
+>  `<flags>`::
+>  	`<flags>` are of `*`, `=`, `?` or `!`.
+> @@ -331,8 +331,9 @@ Each line of options has this format:
+>  `<arg-hint>`::
+>  	`<arg-hint>`, if specified, is used as a name of the argument in the
+>  	help output, for options that take arguments. `<arg-hint>` is
+> -	terminated by the first whitespace.  It is customary to use a
+> -	dash to separate words in a multi-word argument hint.
+> +	terminated by the first whitespace.  It may contain any of the
+> +	`<flags>` characters after the first character. It is customary to
+> +	use a dash to separate words in a multi-word argument hint.
+
+I think no change in this hunk is necessary for two reasons:
+
+ - You already said in <opt-spec> that any letters used for flags
+   cannot be used there, implying that the way rules are described
+   in the document around here is that anything is allowed unless
+   explicitly prohibited, which makes "It may contain..."
+   unnecessary.
+
+ - It may be worth saying "It may not contains any whitespace", but
+   that is already implied with the existing "is terminated by the
+   first whitespace".
+
+> +		if (s - sb.buf == 1) /* short option only */
+> +			o->short_name = *sb.buf;
+> +		else if (sb.buf[1] != ',') /* long option only */
+> +			o->long_name = xmemdupz(sb.buf, s - sb.buf);
+> +		else {
+> +			o->short_name = *sb.buf;
+> +			o->long_name = xmemdupz(sb.buf + 2, s - sb.buf - 2);
+> +		}
+> +
+> +		/* type */
+
+s/type/flags/?
+
+> +		while (s < help) {
+> +			switch (*s++) {
+>  			case '=':
+>  				o->flags &= ~PARSE_OPT_NOARG;
+> -				break;
+> +				continue;
+>  			case '?':
+>  				o->flags &= ~PARSE_OPT_NOARG;
+>  				o->flags |= PARSE_OPT_OPTARG;
+> -				break;
+> +				continue;
+
+The updated code was a lot more pleasant read compared to the
+original (and the v1 patch).
+
+Thanks.
