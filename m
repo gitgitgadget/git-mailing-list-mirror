@@ -1,111 +1,244 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
-Date: Mon, 13 Jul 2015 11:36:11 -0700
-Message-ID: <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
-References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v5 12/44] builtin-am: implement --skip
+Date: Mon, 13 Jul 2015 12:05:21 -0700
+Message-ID: <CAGZ79kaWV-hMEgJ8HJP2Jgq78su+YbyBbcYD3sZ0474UUNw=pA@mail.gmail.com>
+References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
+	<1436278862-2638-13-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 13 20:38:27 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 13 21:05:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEicQ-0003Vi-IK
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 20:38:22 +0200
+	id 1ZEj2p-0000MH-57
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 21:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548AbbGMSgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2015 14:36:14 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33670 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752032AbbGMSgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2015 14:36:13 -0400
-Received: by iggp10 with SMTP id p10so82168223igg.0
-        for <git@vger.kernel.org>; Mon, 13 Jul 2015 11:36:13 -0700 (PDT)
+	id S1752066AbbGMTFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2015 15:05:23 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:34280 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751866AbbGMTFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2015 15:05:22 -0400
+Received: by ykax123 with SMTP id x123so75874011yka.1
+        for <git@vger.kernel.org>; Mon, 13 Jul 2015 12:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=GtzFgYnlavheuZm+sTOHzdCZlHneJ+yJr0rmtb1kPOs=;
-        b=LuyUIxDWtls++2rJsU2R3AFwwLYdK4kYWdvGTvKb3fGbhmOypochPkL/GHCcORIkFs
-         PLhz6E3C78tJZjciLPD1K75elG70vDeLD6l0QCqRgTkLGAy3HdhCItLOxDc22lVYnHP6
-         zlg+Fd/wYRF5130fL/hz6WhsoARQtIjVdagRkXPZ+qv4NckRsLi1OA/8QGHqF/NvYBNw
-         KRX33JQccoi2qYgfAnPCNey7/JcDHB/exiaCWtrYMy8OE2ZZM0v52HnN/Xs2kGr7A1QK
-         wMs9eNiZk82ttS1zyXOElT6F9rzscRRqLDPKz1KJ0tspWJBv2Xn2i1YFSknvNQYfMIUy
-         RzHA==
-X-Received: by 10.50.72.41 with SMTP id a9mr13081622igv.51.1436812573153;
-        Mon, 13 Jul 2015 11:36:13 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4d10:ec6a:e89:91cb])
-        by smtp.gmail.com with ESMTPSA id t29sm8411210ioi.24.2015.07.13.11.36.12
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 Jul 2015 11:36:12 -0700 (PDT)
-In-Reply-To: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Fri, 10 Jul 2015 20:05:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/xl88W9/Yb22FWOAzuTK533LSsfkl6qdLSK8mUeIk9g=;
+        b=Lm51RQqIVL7zy3yWl+4aTFCjxcqrVCq874cZZjl73WyoRiVLwmldNH8YzIgLiYd9PD
+         z013HY5gHJ+bCJSV1eP5PCez29dkHYu/Px4wI4z6ixSHVoSW8aqvcAb9e52l5Oq9q8XW
+         Y/rR8XUrtDVsASWBxgDapVC12lluZS8u87c2jo4HsZWe5EcwWpej7QmX6EWQRdonvU2F
+         uveXWnNpGrIAJe9BwrapSza8uX73Y4y844fyyaqfZNqhNogyNsY3Cuerzp/0QHkXSt2S
+         BM+jq3B8b17DeUxHnezqIxp1cD3y1WPZJgA+WCknt1QkKijFyq0BFXoM4cgRWIMGJ+Za
+         pu7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=/xl88W9/Yb22FWOAzuTK533LSsfkl6qdLSK8mUeIk9g=;
+        b=jl87CnMcfEAmiXAvui6W+L0OVXDUDg5VmLuKgXNJ2/aklDIdPxxeEEYSewsh2uKhGV
+         7NTAJ9jbBOzAn8yUASJXGeOnEdZI+IZfQspoiC1gWmfPA5u4kJ0wZaelzq1R1OGLdIRa
+         w6u2p9j54g0eETR7AvfnqQe9Z3rZ+UOiUgrvoCDAXTXbFmc3P4JBY9CHeIIDwi6o8rmr
+         yLfJzUh85wT+nkgsfnu1L0yEhT2mhiRo40dr3FbTbgvaB+s2WBqHr3KCRRbuPkWNatJs
+         I9mYMajztNDZby8hkhGOYZZzXXU6ChtCSvhh9onrJ02pnRbE4vfnNC7G8JQgHViXTisK
+         NObw==
+X-Gm-Message-State: ALoCoQkaAAWcLluSxrZZMV4LiJXv4kLj8DR0s55VHO/7mbG+BqE1I9GOTTXJ4Efb7FsfX2xBbN5q
+X-Received: by 10.129.101.135 with SMTP id z129mr38209414ywb.81.1436814321613;
+ Mon, 13 Jul 2015 12:05:21 -0700 (PDT)
+Received: by 10.37.21.129 with HTTP; Mon, 13 Jul 2015 12:05:21 -0700 (PDT)
+In-Reply-To: <1436278862-2638-13-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273922>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> This is a follow-on series to [1], which migrated "git checkout --to"
-> functionality to "git worktree add". That series continued using "git
-> checkout" for the initial population of the new worktree, which required
-> git-checkout to have too intimate knowledge that it was operating in a
-> newly created worktree.
+On Tue, Jul 7, 2015 at 7:20 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
+> supported resuming from a failed patch application by skipping the
+> current patch. Re-implement this feature by introducing am_skip().
 >
-> This series eliminates git-checkout from the picture by instead
-> employing "git reset --hard"[2] to populate the new worktree initially.
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>  builtin/am.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 119 insertions(+), 2 deletions(-)
 >
-> It is built atop 1eb07d8 (worktree: add: auto-vivify new branch when
-> <branch> is omitted, 2015-07-06), currently in 'next', which is
-> es/worktree-add except for the final patch (which retires
-> --ignore-other-worktrees) since the intention[3] was to drop that patch.
+> diff --git a/builtin/am.c b/builtin/am.c
+> index f21565b..5087094 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -16,6 +16,8 @@
+>  #include "commit.h"
+>  #include "diff.h"
+>  #include "diffcore.h"
+> +#include "unpack-trees.h"
+> +#include "branch.h"
+>
+>  /**
+>   * Returns 1 if the file is empty or does not exist, 0 otherwise.
+> @@ -872,6 +874,114 @@ static void am_resolve(struct am_state *state)
+>  }
+>
+>  /**
+> + * Performs a checkout fast-forward from `head` to `remote`. If `reset` is
+> + * true, any unmerged entries will be discarded. Returns 0 on success, -1 on
+> + * failure.
+> + */
+> +static int fast_forward_to(struct tree *head, struct tree *remote, int reset)
+> +{
+> +       struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+> +       struct unpack_trees_options opts;
+> +       struct tree_desc t[2];
+> +
+> +       if (parse_tree(head) || parse_tree(remote))
+> +               return -1;
+> +
+> +       hold_locked_index(lock_file, 1);
+> +
+> +       refresh_cache(REFRESH_QUIET);
+> +
+> +       memset(&opts, 0, sizeof(opts));
+> +       opts.head_idx = 1;
+> +       opts.src_index = &the_index;
+> +       opts.dst_index = &the_index;
+> +       opts.update = 1;
+> +       opts.merge = 1;
+> +       opts.reset = reset;
+> +       opts.fn = twoway_merge;
+> +       init_tree_desc(&t[0], head->buffer, head->size);
+> +       init_tree_desc(&t[1], remote->buffer, remote->size);
+> +
+> +       if (unpack_trees(2, t, &opts)) {
+> +               rollback_lock_file(lock_file);
+> +               return -1;
+> +       }
+> +
+> +       if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+> +               die(_("unable to write new index file"));
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * Clean the index without touching entries that are not modified between
+> + * `head` and `remote`.
+> + */
+> +static int clean_index(const unsigned char *head, const unsigned char *remote)
+> +{
+> +       struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+> +       struct tree *head_tree, *remote_tree, *index_tree;
+> +       unsigned char index[GIT_SHA1_RAWSZ];
+> +       struct pathspec pathspec;
+> +
+> +       head_tree = parse_tree_indirect(head);
+> +       if (!head_tree)
+> +               return error(_("Could not parse object '%s'."), sha1_to_hex(head));
+> +
+> +       remote_tree = parse_tree_indirect(remote);
+> +       if (!remote_tree)
+> +               return error(_("Could not parse object '%s'."), sha1_to_hex(remote));
+> +
+> +       read_cache_unmerged();
+> +
+> +       if (fast_forward_to(head_tree, head_tree, 1))
+> +               return -1;
+> +
+> +       if (write_cache_as_tree(index, 0, NULL))
+> +               return -1;
+> +
+> +       index_tree = parse_tree_indirect(index);
+> +       if (!index_tree)
+> +               return error(_("Could not parse object '%s'."), sha1_to_hex(index));
+> +
+> +       if (fast_forward_to(index_tree, remote_tree, 0))
+> +               return -1;
+> +
+> +       memset(&pathspec, 0, sizeof(pathspec));
+> +
 
-A few comments on things I noticed while reading (mostly coming from
-the original before this patch series):
+All returns before this point leak the memory of `lock_file`.
 
- - What does this comment apply to?
-
-        /*
-         * $GIT_COMMON_DIR/HEAD is practically outside
-         * $GIT_DIR so resolve_ref_unsafe() won't work (it
-         * uses git_path). Parse the ref ourselves.
-         */
-
-   It appears in front of a call to check-linked-checkout, but I
-   think the comment attempts to explain why it manually decides
-   what the path should be in that function, so perhaps move it to
-   the callee from the caller?
-
- - check_linked_checkout() when trying to decide what branch is
-   checked out assumes HEAD is always a regular file, but I do not
-   think we have dropped the support of SYMLINK_HEAD yet.  It needs
-   to check st_mode and readlink(2), like resolve_ref_unsafe() does.
-
- - After a new skelton worktree is set up, the code runs a few
-   commands to finish populating it, under a different pair of
-   GIT_DIR/GIT_WORK_TREE, but the function does so with setenv(); it
-   may be cleaner to use cp.env[] for it, as the process we care
-   about using the updated environment is not "worktree add" command
-   we are running ourselves, but "update-ref/symbolic-ref" and
-   "reset" commands that run in the new worktree.
-
-Other than that, looks nicely done.
-
-I however have to wonder if the stress on "reset --hard" on log
-messages of various commits (and in the endgame) is somewhat
-misplaced.
-
-The primary thing we wanted to see, which this series nicely brings
-us, is to remove "new-worktree-mode" hack from "checkout" (in other
-words, instead of "reset --hard", "checkout -f" would also have been
-a satisfactory endgame).
-
-Thanks.
+> +       hold_locked_index(lock_file, 1);
+> +
+> +       if (read_tree(remote_tree, 0, &pathspec)) {
+> +               rollback_lock_file(lock_file);
+> +               return -1;
+> +       }
+> +
+> +       if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+> +               die(_("unable to write new index file"));
+> +
+> +       remove_branch_state();
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * Resume the current am session by skipping the current patch.
+> + */
+> +static void am_skip(struct am_state *state)
+> +{
+> +       unsigned char head[GIT_SHA1_RAWSZ];
+> +
+> +       if (get_sha1("HEAD", head))
+> +               hashcpy(head, EMPTY_TREE_SHA1_BIN);
+> +
+> +       if (clean_index(head, head))
+> +               die(_("failed to clean index"));
+> +
+> +       am_next(state);
+> +       am_run(state);
+> +}
+> +
+> +/**
+>   * parse_options() callback that validates and sets opt->value to the
+>   * PATCH_FORMAT_* enum value corresponding to `arg`.
+>   */
+> @@ -888,7 +998,8 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
+>
+>  enum resume_mode {
+>         RESUME_FALSE = 0,
+> -       RESUME_RESOLVED
+> +       RESUME_RESOLVED,
+> +       RESUME_SKIP
+>  };
+>
+>  int cmd_am(int argc, const char **argv, const char *prefix)
+> @@ -899,7 +1010,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>
+>         const char * const usage[] = {
+>                 N_("git am [options] [(<mbox>|<Maildir>)...]"),
+> -               N_("git am [options] --continue"),
+> +               N_("git am [options] (--continue | --skip)"),
+>                 NULL
+>         };
+>
+> @@ -913,6 +1024,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>                 OPT_CMDMODE('r', "resolved", &resume,
+>                         N_("synonyms for --continue"),
+>                         RESUME_RESOLVED),
+> +               OPT_CMDMODE(0, "skip", &resume,
+> +                       N_("skip the current patch"),
+> +                       RESUME_SKIP),
+>                 OPT_END()
+>         };
+>
+> @@ -968,6 +1082,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>         case RESUME_RESOLVED:
+>                 am_resolve(&state);
+>                 break;
+> +       case RESUME_SKIP:
+> +               am_skip(&state);
+> +               break;
+>         default:
+>                 die("BUG: invalid resume value");
+>         }
+> --
+> 2.5.0.rc1.76.gf60a929
+>
