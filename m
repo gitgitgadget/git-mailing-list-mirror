@@ -1,78 +1,85 @@
-From: Christoph Murczek <Christoph.Murczek@iteratec.at>
-Subject: AW: "unable to remap" error with git svn after upgrade to Win10
-Date: Mon, 13 Jul 2015 12:24:00 +0000
-Message-ID: <8e6220ba0ffb43dbbc7c4eaefd2ab753@CIPEXMB03N1.ci04.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] completion: Add '--edit-todo' to rebase
+Date: Mon, 13 Jul 2015 14:11:07 +0100
+Message-ID: <20150713131107.GC1451@serenity.lan>
+References: <1436786876.6619.0.camel@virtuell-zuhause.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 13 14:24:30 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+X-From: git-owner@vger.kernel.org Mon Jul 13 15:11:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEcmb-0005uw-UD
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 14:24:30 +0200
+	id 1ZEdWB-0000rE-QG
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jul 2015 15:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701AbbGMMYX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jul 2015 08:24:23 -0400
-Received: from mx58.system-hoster.com ([193.143.122.58]:52026 "EHLO
-	mx58.system-hoster.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbbGMMYW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2015 08:24:22 -0400
-Received: from CIPEXMB03N2.ci04.de (172.18.1.230) by CIPEXHUB20.ci04.de
- (172.18.1.225) with Microsoft SMTP Server (TLS) id 15.0.847.32; Mon, 13 Jul
- 2015 14:24:02 +0200
-Received: from CIPEXMB03N1.ci04.de (172.18.1.229) by CIPEXMB03N2.ci04.de
- (172.18.1.230) with Microsoft SMTP Server (TLS) id 15.0.847.32; Mon, 13 Jul
- 2015 14:24:01 +0200
-Received: from CIPEXMB03N1.ci04.de ([::1]) by CIPEXMB03N1.ci04.de
- ([fe80::b583:2a88:608e:ee53%21]) with mapi id 15.00.0847.030; Mon, 13 Jul
- 2015 14:24:01 +0200
-Thread-Topic: "unable to remap" error with git svn after upgrade to Win10 
-Thread-Index: AdC9X5sYdTsXJAMfSKG4G+DvXKFKogABxv/w
-Accept-Language: de-AT, de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [91.217.118.58]
-X-OLX-Disclaimer: Done
+	id S1751560AbbGMNLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2015 09:11:31 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:47555 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751149AbbGMNLb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2015 09:11:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 42FD186600F;
+	Mon, 13 Jul 2015 14:11:30 +0100 (BST)
+X-Quarantine-ID: <RwryK8kYCm6x>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.5
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.5 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_05=-0.5] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id RwryK8kYCm6x; Mon, 13 Jul 2015 14:11:23 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 52A67CDA5E8;
+	Mon, 13 Jul 2015 14:11:09 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <1436786876.6619.0.camel@virtuell-zuhause.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273918>
 
-Just wanted to let you know: a re-install of git also fixed the problem=
-=2E
+On Mon, Jul 13, 2015 at 01:27:56PM +0200, Thomas Braun wrote:
+> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+> ---
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index c97c648..2567a61 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1668,7 +1668,7 @@ _git_rebase ()
+>  {
+>  	local dir="$(__gitdir)"
+>  	if [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
+> -		__gitcomp "--continue --skip --abort"
+> +		__gitcomp "--continue --skip --abort --edit-todo"
 
-Cheers,
-Christoph
+git-rebase.sh contains:
 
------Urspr=FCngliche Nachricht-----
-Von: Christoph Murczek=20
-Gesendet: Monday, July 13, 2015 14:10
-An: 'git@vger.kernel.org'
-Betreff: "unable to remap" error with git svn after upgrade to Win10=20
+	if test "$action" = "edit-todo" && test "$type" != "interactive"
+	then
+		die "$(gettext "The --edit-todo action can only be used during interactive rebase.")"
+	fi
 
-Hi,
-I'm using git for windows 1.9.5-preview20150319 and was successfully us=
-ing git svn, but after upgrading (from Win8.1) to Win10 git svn doesn't=
- work anymore. I get
-	C:\Program Files (x86)\Git\bin\perl.exe: *** unable to remap C:\Progra=
-m Files (x86)\Git\bin\libsvn_repos-1-0.dll to same address as parent --=
- 0xC30000
+I wonder if it's worth doing a similar check here, which presumably
+means testing if "$dir"/interactive exists.
 
-I found a couple of issue reports on github referring to a workaround f=
-or similar problems using rebase.exe, but are somewhat reluctant to ass=
-ign memory on a trial and error basis. Can someone give me some pointer=
-s on how to deduce a meaningful base address for libsvn_repos-1-0.dll t=
-o pass to rebase.exe?
-
-Also with the release date of Win10 approaching you might want to consi=
-der a new release addressing the issue. I'd be surprised if I was the o=
-nly one affected.
-
-Best Regards,
-Christoph
+>  		return
+>  	fi
+>  	__git_complete_strategy && return
+> 
+> 
