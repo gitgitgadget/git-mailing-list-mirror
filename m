@@ -1,55 +1,83 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Git has a healthy truck factor..
-Date: Tue, 14 Jul 2015 00:05:58 +0100
-Organization: OPDS
-Message-ID: <2E436A2846834D6CBD77FBEAD1EFB43C@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff of translation for Git 2.5.0 round 2
+Date: Tue, 14 Jul 2015 07:54:48 +0800
+Message-ID: <CANYiYbHNFCBoXnr0BTXg5BW+xZou0O1b6XH=p1cpb4uDA8B41g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 01:05:56 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 01:54:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEmnL-0007ky-R9
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 01:05:56 +0200
+	id 1ZEnYk-0002Lw-BP
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 01:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbbGMXFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2015 19:05:53 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:63843 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751507AbbGMXFw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2015 19:05:52 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CcSABQQ6RVPBazYwJbgxIBAVM0F4dctA+BZQuFcQQEgUM7EgEBAQEBAQEGAQEBAUEkG0EFg1gUAQEuHgEBLAIIAgEkOQEEGgYHAxobAgECAwGIIQmlbYdTjmCQBwSTcIEUBYxkh00BgQaDYqAGgW8LAQEBgiU9gnwBAQE
-X-IPAS-Result: A2CcSABQQ6RVPBazYwJbgxIBAVM0F4dctA+BZQuFcQQEgUM7EgEBAQEBAQEGAQEBAUEkG0EFg1gUAQEuHgEBLAIIAgEkOQEEGgYHAxobAgECAwGIIQmlbYdTjmCQBwSTcIEUBYxkh00BgQaDYqAGgW8LAQEBgiU9gnwBAQE
-X-IronPort-AV: E=Sophos;i="5.15,466,1432594800"; 
-   d="scan'208";a="38718421"
-Received: from host-2-99-179-22.as13285.net (HELO PhilipOakley) ([2.99.179.22])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 14 Jul 2015 00:05:50 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752359AbbGMXyu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jul 2015 19:54:50 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:36669 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751767AbbGMXyt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2015 19:54:49 -0400
+Received: by wgxm20 with SMTP id m20so124872396wgx.3
+        for <git@vger.kernel.org>; Mon, 13 Jul 2015 16:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0c1pg55I4/N86Ly8AF1PblCev40ktqXxljdcJuJ2czA=;
+        b=nH6cFAHtXlcrJ75BDT8PSv68OqJZaRgX4dp4SlPOZBwLZIzb1t3gtzENS4dQ2qV0uC
+         0EfX+CIzSTZuyEizRwtqjAQVNbaa42AkCKRisgwsdKM+5cXOInkwrlVemny+VWCyN6aQ
+         TEj4tysmeDbiuuPTNcchHJIrF4Nxyf4KM0gtqBKjTnnvitJpAIua6iUl46y/SVijV8Ww
+         RhyE72BpYeylkdbqXwexzP8SIbxIHHPuGJyx0QcYIle1vwop54aj8u+Qsr7jEKu7afnv
+         CwqVxzbdZSUp7TuP1Ly04z3cGor9mrncQZftcizfiJXQX8dHsMa3aeU/VOoyAoa43K/g
+         JKAw==
+X-Received: by 10.180.149.206 with SMTP id uc14mr28747011wib.12.1436831688261;
+ Mon, 13 Jul 2015 16:54:48 -0700 (PDT)
+Received: by 10.194.65.106 with HTTP; Mon, 13 Jul 2015 16:54:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273935>
 
-It looks like Git has a healthy truck factor of 8, as reported in 
-https://mtov.github.io/Truck-Factor/, which has Git eighth in the list 
-of projects it analyzed, with Linux at second place.
+Hi,
 
-The analysis method paper is behind a pay wall, so I couldn't see how 
-sensible the methodology, but it's nice to know Git's a broad team.
+Thanks to all the l10n teams, and the 1st round of translations for Git=
+ 2.5.0
+has been merged.  While there are some new messages need to be
+translated for the new released Git v2.5.0-rc2, let's start new round o=
+f l10n.
+The l10n window has less than 2 weeks for us, see: http://tinyurl.com/g=
+itcal .
 
-Keep safe everyone.
+This time there are 9 updated messages need to be translated since last
+update:
+
+    l10n: git.pot: v2.5.0 round 2 (9 new, 5 removed)
+
+    Generate po/git.pot from v2.5.0-rc2 for git v2.5.0 l10n round 2.
+
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
 --
-Philip
+Jiang Xin
