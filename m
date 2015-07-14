@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 5/9] grep/pcre: prepare locale-dependent tables for icase matching
-Date: Tue, 14 Jul 2015 20:24:36 +0700
-Message-ID: <1436880280-18194-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 6/9] gettext: add is_utf8_locale()
+Date: Tue, 14 Jul 2015 20:24:37 +0700
+Message-ID: <1436880280-18194-7-git-send-email-pclouds@gmail.com>
 References: <1436351919-2520-1-git-send-email-pclouds@gmail.com>
  <1436880280-18194-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -14,130 +14,131 @@ Cc: Junio C Hamano <gitster@pobox.com>, plamen.totev@abv.bg,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 14 15:24:37 2015
+X-From: git-owner@vger.kernel.org Tue Jul 14 15:24:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF0CK-0006T5-AD
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 15:24:36 +0200
+	id 1ZF0CT-0006WV-2x
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 15:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbbGNNYc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 09:24:32 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:34991 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567AbbGNNYb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 09:24:31 -0400
-Received: by pdrg1 with SMTP id g1so6032186pdr.2
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 06:24:31 -0700 (PDT)
+	id S1752919AbbGNNYk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 09:24:40 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:36216 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752671AbbGNNYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 09:24:40 -0400
+Received: by pdjr16 with SMTP id r16so6048065pdj.3
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 06:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=LMowQcmcfh+76Cqjr/cIY5tM11Et+mt9/P26wWtr0e0=;
-        b=WPTP0Cd8DUv0qGhuYbMjukX55BItGqNfbD5BMs0V8moTCwR8z+2bfa8qgM5lO4efqk
-         5VhGe6tUZtaLz5XJe4RD3UTg677nCNgwtcEuz6VAH+d5X6S0uzC0pUoST7VDup+zqoEp
-         9HuERrZzzQMjDU4tx7tDpQe4R2esRo8U+sYnJsRv3/oPzWlzbI9cxYb0y4jcmWWnfc2L
-         06tm3fWr73AyZ0+vUZrR9GxkHMr4lzW8XrnBaFCx5hkFmyLJ/uxeu0fg6PuLrRiphbHW
-         3JE9FfbXIHj4ZoSwfm8M/nQtlF+Y8MUuXZZY8YirbBVwfpxo039AJqXn4NT3UYVVgUnJ
-         Uqgg==
-X-Received: by 10.70.128.204 with SMTP id nq12mr31462856pdb.34.1436880270945;
-        Tue, 14 Jul 2015 06:24:30 -0700 (PDT)
+        bh=HNH6Os/KBbnbB4FUyRl3phsbSgEmO/hyZaw870axFqI=;
+        b=i2RoI6Ieny9yZxZJcasVfWozEh1jDQVcI+r3bOmkbfRGzn0UUz8v74VzBg1/lt02kx
+         S8mu8vOXHQ7rS8J0DhWf7uFIIp2DvChmTj2sohfEvZHgpJTJahKqhcVNQCOcpJXb4qY7
+         T6da4qx/Kb69V6shi5m4e+oADh9WqSkxdxlSf4JpYd6ZnM0Ihv3pUtisK7LhNX5Cy2PQ
+         REmzRVu5zo2EUhuSfWXLFhouH5gW86juK2leMN/kcSAZQ5A/xb1XcEXeboCVBlm4ViZO
+         qO8bRMeo6IMpqdeYFYn9TkYe3i8ZzLdGMibOtIAzMa73nCQHmqCWAZ/ZJHBSpZnmNgZj
+         IEPw==
+X-Received: by 10.66.65.229 with SMTP id a5mr81247746pat.11.1436880279641;
+        Tue, 14 Jul 2015 06:24:39 -0700 (PDT)
 Received: from lanh ([115.73.59.196])
-        by smtp.gmail.com with ESMTPSA id p1sm1455531pdb.3.2015.07.14.06.24.27
+        by smtp.gmail.com with ESMTPSA id pa1sm1397627pdb.73.2015.07.14.06.24.35
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Jul 2015 06:24:30 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 14 Jul 2015 20:25:22 +0700
+        Tue, 14 Jul 2015 06:24:39 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 14 Jul 2015 20:25:29 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1436880280-18194-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273958>
 
-The default tables are usually built with C locale and only suitable
-for LANG=3DC or similar.  This should make case insensitive search work
-correctly for all single-byte charsets.
+This function returns true if git is running under an UTF-8
+locale. pcre in the next patch will need this.
 
+is_encoding_utf8() is used instead of strcmp() to catch both "utf-8"
+and "utf8" suffixes.
+
+When built with no gettext support, we peek in several env variables
+to detect UTF-8. pcre library might support utf-8 even if libc or git
+is built without locale support.. The peeking code is a copy from
+compat/regex/regcomp.c.
+
+Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- grep.c                             |  8 ++++++--
- grep.h                             |  1 +
- t/t7813-grep-icase-iso.sh (new +x) | 19 +++++++++++++++++++
- 3 files changed, 26 insertions(+), 2 deletions(-)
- create mode 100755 t/t7813-grep-icase-iso.sh
+ gettext.c | 24 ++++++++++++++++++++++--
+ gettext.h |  1 +
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/grep.c b/grep.c
-index 8fce54f..f0fbf99 100644
---- a/grep.c
-+++ b/grep.c
-@@ -324,11 +324,14 @@ static void compile_pcre_regexp(struct grep_pat *=
-p, const struct grep_opt *opt)
- 	int erroffset;
- 	int options =3D PCRE_MULTILINE;
+diff --git a/gettext.c b/gettext.c
+index 7378ba2..aaf1688 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -18,6 +18,8 @@
+ #	endif
+ #endif
 =20
--	if (opt->ignore_case)
-+	if (opt->ignore_case) {
-+		if (has_non_ascii(p->pattern))
-+			p->pcre_tables =3D pcre_maketables();
- 		options |=3D PCRE_CASELESS;
-+	}
-=20
- 	p->pcre_regexp =3D pcre_compile(p->pattern, options, &error, &erroffs=
-et,
--			NULL);
-+				      p->pcre_tables);
- 	if (!p->pcre_regexp)
- 		compile_regexp_failed(p, error);
-=20
-@@ -362,6 +365,7 @@ static void free_pcre_regexp(struct grep_pat *p)
- {
- 	pcre_free(p->pcre_regexp);
- 	pcre_free(p->pcre_extra_info);
-+	pcre_free((void *)p->pcre_tables);
++static const char *charset;
++
+ /*
+  * Guess the user's preferred languages from the value in LANGUAGE env=
+ironment
+  * variable and LC_MESSAGES locale category if NO_GETTEXT is not defin=
+ed.
+@@ -65,7 +67,6 @@ static int test_vsnprintf(const char *fmt, ...)
+ 	return ret;
  }
- #else /* !USE_LIBPCRE */
- static void compile_pcre_regexp(struct grep_pat *p, const struct grep_=
-opt *opt)
-diff --git a/grep.h b/grep.h
-index 95f197a..cee4357 100644
---- a/grep.h
-+++ b/grep.h
-@@ -48,6 +48,7 @@ struct grep_pat {
- 	regex_t regexp;
- 	pcre *pcre_regexp;
- 	pcre_extra *pcre_extra_info;
-+	const unsigned char *pcre_tables;
- 	kwset_t kws;
- 	unsigned fixed:1;
- 	unsigned ignore_case:1;
-diff --git a/t/t7813-grep-icase-iso.sh b/t/t7813-grep-icase-iso.sh
-new file mode 100755
-index 0000000..efef7fb
---- /dev/null
-+++ b/t/t7813-grep-icase-iso.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
+=20
+-static const char *charset;
+ static void init_gettext_charset(const char *domain)
+ {
+ 	/*
+@@ -171,8 +172,27 @@ int gettext_width(const char *s)
+ {
+ 	static int is_utf8 =3D -1;
+ 	if (is_utf8 =3D=3D -1)
+-		is_utf8 =3D !strcmp(charset, "UTF-8");
++		is_utf8 =3D is_utf8_locale();
+=20
+ 	return is_utf8 ? utf8_strwidth(s) : strlen(s);
+ }
+ #endif
 +
-+test_description=3D'grep icase on non-English locales'
-+
-+. ./lib-gettext.sh
-+
-+test_expect_success GETTEXT_ISO_LOCALE 'setup' '
-+	printf "TILRAUN: Hall=F3 Heimur!" >file &&
-+	git add file &&
-+	LC_ALL=3D"$is_IS_iso_locale" &&
-+	export LC_ALL
-+'
-+
-+test_expect_success GETTEXT_ISO_LOCALE,LIBPCRE 'grep pcre string' '
-+	git grep --perl-regexp -i "TILRAUN: H.ll=F3 Heimur!" &&
-+	git grep --perl-regexp -i "TILRAUN: H.LL=D3 HEIMUR!"
-+'
-+
-+test_done
++int is_utf8_locale(void)
++{
++#ifdef NO_GETTEXT
++	if (!charset) {
++		const char *env =3D getenv("LC_ALL");
++		if (!env || !*env)
++			env =3D getenv("LC_CTYPE");
++		if (!env || !*env)
++			env =3D getenv("LANG");
++		if (!env)
++			env =3D "";
++		if (strchr(env, '.'))
++			env =3D strchr(env, '.') + 1;
++		charset =3D xstrdup(env);
++	}
++#endif
++	return is_encoding_utf8(charset);
++}
+diff --git a/gettext.h b/gettext.h
+index 33696a4..7eee64a 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -90,5 +90,6 @@ const char *Q_(const char *msgid, const char *plu, un=
+signed long n)
+ #endif
+=20
+ const char *get_preferred_languages(void);
++extern int is_utf8_locale(void);
+=20
+ #endif
 --=20
 2.3.0.rc1.137.g477eb31
