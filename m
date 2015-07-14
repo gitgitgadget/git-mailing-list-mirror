@@ -1,146 +1,203 @@
-From: phillip <phillip.szelat@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 9 new messages
-Date: Tue, 14 Jul 2015 23:06:52 +0200
-Message-ID: <48E68E08-9873-4F2F-B96F-F35465F4A33E@gmail.com>
-References: <1436896778-8159-1-git-send-email-ralf.thielow@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 04/17] Makefile: a dry-run can error out if no
+ perl. Document the issue
+Date: Tue, 14 Jul 2015 23:42:13 +0100
+Organization: OPDS
+Message-ID: <0D1AA32B8D59471B8C528002A460E912@PhilipOakley>
+References: <1435190633-2208-1-git-send-email-philipoakley@iee.org><1435190633-2208-5-git-send-email-philipoakley@iee.org><xmqq8ub724ls.fsf@gitster.dls.corp.google.com><DBFC4D88D6F34023BA43F5F10134331E@PhilipOakley> <xmqqmvzny1xe.fsf@gitster.dls.corp.google.com> <45344004B4CA4B16BD7FB174B4849D77@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 14 23:07:05 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=response
+Cc: "GitList" <git@vger.kernel.org>,
+	"MsysGitList" <msysgit@googlegroups.com>
+To: "Philip Oakley" <philipoakley@iee.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: msysgit+bncBDSOTWHYX4PBBF5AS2WQKGQEIPNUAXQ@googlegroups.com Wed Jul 15 00:41:30 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBF5AS2WQKGQEIPNUAXQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF7Pq-0000DT-IK
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 23:07:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbbGNVG6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 17:06:58 -0400
-Received: from mail-wg0-f66.google.com ([74.125.82.66]:36140 "EHLO
-	mail-wg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752683AbbGNVG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 17:06:58 -0400
-Received: by wgbbj7 with SMTP id bj7so1740791wgb.3
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 14:06:57 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBF5AS2WQKGQEIPNUAXQ@googlegroups.com>)
+	id 1ZF8tE-0006VK-MU
+	for gcvm-msysgit@m.gmane.org; Wed, 15 Jul 2015 00:41:28 +0200
+Received: by widic2 with SMTP id ic2sf14398265wid.1
+        for <gcvm-msysgit@m.gmane.org>; Tue, 14 Jul 2015 15:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:content-type:subject:from:date:to:cc
-         :message-id;
-        bh=FE+EAFSPwDTxCMj8UlyAUNzYrB9YhZewvtO6zcE5DXc=;
-        b=e/Q+2cXH0bBga1ZfXHx1itQwcKJ5OVcKuuyiJ92ObaD7sDZ3HM48VqGkBzAhB+yIs5
-         dEikEphdsm8uJj8UAjiK/8syuzdEGj/H0OucWJVWpkDTjK/l5iomMPsyTBHJTEljjAHo
-         G17nHMd2+saGzdMS+ZGVltd+S+VIZyRkTLmBg4bT5Yf553402kJQo029g7eoWtFxHTLF
-         P6QoHHggP10GHDYlDe/D+6gNhtZYK46fqZexamEFFc5zjI/HWc8/88r2MRRfylft+iIw
-         oyzwFNQEcHg0MvNquaTefXaxkWIxbBjc//bVL9Ep+NXd4gKQj1av7Px2gMWRgaDueDDk
-         fWbg==
-X-Received: by 10.180.78.136 with SMTP id b8mr8745553wix.89.1436908016978;
-        Tue, 14 Jul 2015 14:06:56 -0700 (PDT)
-Received: from android-b7bb6bce7d91de53.fritz.box (i59F45643.versanet.de. [89.244.86.67])
-        by smtp.gmail.com with ESMTPSA id se11sm22939353wic.2.2015.07.14.14.06.55
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Jul 2015 14:06:56 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <1436896778-8159-1-git-send-email-ralf.thielow@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273977>
+        d=googlegroups.com; s=20120806;
+        h=message-id:reply-to:from:to:cc:references:subject:date:organization
+         :mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=PsRu3oPRyxn0D8pXbggCj0V7qd9nYVTKt9czHMIkM/k=;
+        b=lQvSQ4A0IVlYH3jaNNXBYJ8SevY26wmju+jjGAYaIIGAw8M9WBvMnoxrML2c3Ch+cQ
+         wTGb97SCRbs/E9nCXUeJDYln3i5on0+LRvIcD40aUyeC5aVcpmjAhvsZrMz1Clydgzx5
+         YbYDwOY6CGPnPzZTW/+Iv0Bzs6hfe1bHVzxtt0utGlhahArWfCQjWpyyiH2AKcWOuCfW
+         Nm1oC7QwWRe3aLmeZq30jYCG2UHxN4+GHg+mfxiMQyejgLhsmGnpxKtrXXZGE/5Sbz2R
+         Tq/u2DXeVBgM7JRBmGOKVL5KlWMys8vpphx/7jSQmolPWy+u3bgeTN34xhvfVOQ9ybWY
+         7hUA==
+X-Received: by 10.152.37.7 with SMTP id u7mr20549laj.22.1436913688360;
+        Tue, 14 Jul 2015 15:41:28 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.178.164 with SMTP id cz4ls122650lac.3.gmail; Tue, 14 Jul
+ 2015 15:41:26 -0700 (PDT)
+X-Received: by 10.112.122.12 with SMTP id lo12mr468953lbb.5.1436913686746;
+        Tue, 14 Jul 2015 15:41:26 -0700 (PDT)
+Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
+        by gmr-mx.google.com with ESMTP id q10si158723wiz.0.2015.07.14.15.41.26
+        for <msysgit@googlegroups.com>;
+        Tue, 14 Jul 2015 15:41:26 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2B4EABUj6VVPJK+BlxVBoMTgS8OhlJttCCHYgQEAoFLOxIBAQEBAQEBBgEBAQFBP0EDg1oFAQEBAQIBCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBwMUBgESCAIBAgMBCogLDL9fj2QBAQEBAQEEAQEBAQEdi0yEQ0ODHoEUBYxkh04BgQeMPocnh3mEL4MTTIEJgVqBPz0xgksBAQE
+X-IPAS-Result: A2B4EABUj6VVPJK+BlxVBoMTgS8OhlJttCCHYgQEAoFLOxIBAQEBAQEBBgEBAQFBP0EDg1oFAQEBAQIBCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBwMUBgESCAIBAgMBCogLDL9fj2QBAQEBAQEEAQEBAQEdi0yEQ0ODHoEUBYxkh04BgQeMPocnh3mEL4MTTIEJgVqBPz0xgksBAQE
+X-IronPort-AV: E=Sophos;i="5.15,475,1432594800"; 
+   d="scan'208";a="38816411"
+Received: from host-92-6-190-146.as43234.net (HELO PhilipOakley) ([92.6.190.146])
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 14 Jul 2015 23:41:26 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273978>
 
+From: "Philip Oakley" <philipoakley@iee.org>
+Sent: Friday, June 26, 2015 12:34 AM
+> From: "Junio C Hamano" <gitster@pobox.com>
+>> "Philip Oakley" <philipoakley@iee.org> writes:
+>>
+>>> From: "Junio C Hamano" <gitster@pobox.com>
+>>>>
+>>>> I am not sure what this patch is trying to achieve.
 
+I have been able to repeat the issue, more below.
 
-Acked-by: Phillip Sz <phillip.szelat@gmail.com>
+>>>
+>>> It was probably a bit of 'don't mess with working code', given that
+>>> I'd used the NO_PERL solution, rather 'document the issue'....
+>>
+>> Then this part applies, I think.
+>>
+>>>> If you are not touching what this Makefile actually does, then I
+>>>> would imagine that you are running the "buildsystems code" that
+>>>> actually drives 'make -n' with some "available solution" (perhaps
+>>>> you are running 'make -n NO_PERL=NoThanks' or something like that)?
+>>>> Then instead of a command like this that nobody would read in this
+>>>> file, the same command can instead go there to explain what the
+>>>> "workaround" (e.g. unusual-looking 'make -n NO_PERL=NoThanks') is
+>>>> doing?
 
->Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->---
-> po/de.po | 28 ++++++++++------------------
-> 1 file changed, 10 insertions(+), 18 deletions(-)
+The command sequence:
+ $ git clean -dfx
+ $ make -n MSVC=1 V=1 2>ErrsFile.txt 1>MakeDry.txt
+
+produces the error
+ make[1]: *** No rule to make target 'PM.stamp', needed by 'perl.mak'. 
+Stop.
+ make: *** [perl/perl.mak] Error 2
+
+the actual MakeDry.txt reaches
+
+ echo "$FLAGS" >GIT-CFLAGS; \
+            fi
+ make[2]: Leaving directory '/c/msysgit195/git'
+ make[1]: Leaving directory '/c/msysgit195/git/perl'
+ Makefile:1758: recipe for target 'perl/perl.mak' failed
+
+My understanding of the error is that, first, the PM.stamp is removed by 
+the clean, then the dryrun has by the error time passed the initial 
+PM.stamp update code, but doesn't execute it (being a dry run), thus the 
+file PM.stamp still does not exist.
+
+The makefile then descends into the 'perl/Makefile' pre-requisite to 
+'perl/perl.mak', and (IIUC) at this point the L25#$(makfile): PM.stamp 
+then barfs because there is no PM.stamp to be a prerequisite for that 
+line.
+
+As noted in the patch, my response at the time (not fully understanding 
+why) was simply to annotate the Makefile's PM.stamp (which is where the 
+error would first leads any future debugging).
+
+Possibly other options would be to add an extra PM.stamp target which, 
+for a dry-run (+recipe), creates any empty PM.stamp file if one does not 
+exist, simply to allow the perl/perl.mak to succeed. Or perhaps simply 
+add the PM.stamp file to the code (or maybe not).
+
+A third option would be to simply convert the PM.stamp recipe to a 
++recipe so that it's executed during the dry-run, but that may be 
+contrary to the idea of being a dry-run.
+
+Do you have any preference for how I should resolve this? Ideally I like 
+to drop the use of the NO_PERL in the dry run.
+
+--
+Philip
+
+>>
+> I was more of the view that this was about prevention (here), rather
+> than retrospective explanation of the code (there).
 >
->diff --git a/po/de.po b/po/de.po
->index 64070cd..6ed3509 100644
->--- a/po/de.po
->+++ b/po/de.po
->@@ -10463,14 +10463,12 @@ msgid "print tag contents"
-> msgstr "Tag-Inhalte ausgeben"
->=20
-> #: builtin/worktree.c:11
->-#, fuzzy
-> msgid "git worktree add [<options>] <path> <branch>"
->-msgstr "git remote add [<Optionen>] <Name> <URL>"
->+msgstr "git worktree add [<Optionen>] <Pfad> <Branch>"
->=20
-> #: builtin/worktree.c:12
->-#, fuzzy
-> msgid "git worktree prune [<options>]"
->-msgstr "git notes prune [<Optionen>]"
->+msgstr "git worktree prune [<Optionen>]"
->=20
-> #: builtin/worktree.c:27
-> #, c-format
->@@ -10513,9 +10511,8 @@ msgid "could not create directory of '%s'"
-> msgstr "Konnte Verzeichnis '%s' nicht erstellen."
->=20
-> #: builtin/worktree.c:241
->-#, fuzzy
-> msgid "unable to resolve HEAD"
->-msgstr "kann HEAD nicht aufl=C3=B6sen"
->+msgstr "Konnte HEAD nicht aufl=C3=B6sen."
->=20
-> #: builtin/worktree.c:249
-> #, c-format
->@@ -10523,29 +10520,25 @@ msgid "Enter %s (identifier %s)"
-> msgstr "Betrete %s (Identifikation %s)"
->=20
-> #: builtin/worktree.c:281
->-#, fuzzy
->msgid "checkout <branch> even if already checked out in other worktree=
-"
->-msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
->+msgstr "<Branch> auschecken, auch wenn dieser bereits in einem andere=
-n
->"
->+"Arbeitsverzeichnis ausgecheckt ist"
->=20
-> #: builtin/worktree.c:283
->-#, fuzzy
-> msgid "create a new branch"
->-msgstr "das Reflog f=C3=BCr den neuen Branch erzeugen"
->+msgstr "neuen Branch erstellen"
->=20
-> #: builtin/worktree.c:285
->-#, fuzzy
-> msgid "create or reset a branch"
->-msgstr "Branches anzeigen, erstellen oder entfernen"
->+msgstr "Branch erstellen oder umsetzen"
->=20
-> #: builtin/worktree.c:286
->-#, fuzzy
-> msgid "detach HEAD at named commit"
->-msgstr "HEAD zu benanntem Commit setzen"
->+msgstr "HEAD bei benanntem Commit losl=C3=B6sen"
->=20
-> #: builtin/worktree.c:292
->-#, fuzzy
-> msgid "-b and -B are mutually exclusive"
->-msgstr "Die Optionen -n und -k schlie=C3=9Fen sich gegenseitig aus."
->+msgstr "-b und -B schlie=C3=9Fen sich gegenseitig aus"
->=20
-> #: builtin/write-tree.c:13
-> msgid "git write-tree [--missing-ok] [--prefix=3D<prefix>/]"
->@@ -10612,9 +10605,8 @@ msgid "List, create, or delete branches"
-> msgstr "Branches anzeigen, erstellen oder entfernen"
->=20
-> #: common-cmds.h:21
->-#, fuzzy
-> msgid "Switch branches or restore working tree files"
->-msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
->+msgstr "Branches wechseln oder Dateien im Arbeitsverzeichnis
->wiederherstellen"
->=20
-> #: common-cmds.h:22
-> msgid "Clone a repository into a new directory"
+> In my case the errors were showing problems with the PM.stamp in the
+> makefile (I didn't have the solution at that point).
+>
+> So either a short comment "#  consider using 'NO_PERL=YesPlease' for 
+> dry
+> run invocations" (beware your double negative ;-), or the addition of
+> the '+recipe', would still be my preferred change, rather than leaving
+> the open manhole for others to fall into.
+>
+> The thread on my difficulties is at $gmane/263656 (2015-02-10 22:51)
+> "
+>    At the moment I'm getting (on my old WinXP machine, using Msysgit
+>    1.9.5 as a basis)
+>
+>    $ make -n MSVC=1 V=1 1>makedry.txt
+>    make[1]: *** No rule to make target `PM.stamp', needed by 
+> `perl.mak'.
+>    Stop.
+>    make: *** [perl/perl.mak] Error 2
+> "
+> As you can see, at that time the place to look would be the makefile,
+> so I would do think a 'fix' there would still be appropriate.
+>
+> Do you have a preference among the three options (comment, +recipe, 
+> drop)?
+> --
+> Philip
+>
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
