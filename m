@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 1/9] grep: allow -F -i combination
-Date: Tue, 14 Jul 2015 20:24:32 +0700
-Message-ID: <1436880280-18194-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 2/9] grep: break down an "if" stmt in preparation for next changes
+Date: Tue, 14 Jul 2015 20:24:33 +0700
+Message-ID: <1436880280-18194-3-git-send-email-pclouds@gmail.com>
 References: <1436351919-2520-1-git-send-email-pclouds@gmail.com>
  <1436880280-18194-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -14,70 +14,73 @@ Cc: Junio C Hamano <gitster@pobox.com>, plamen.totev@abv.bg,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 14 15:24:12 2015
+X-From: git-owner@vger.kernel.org Tue Jul 14 15:24:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF0Bu-0006IB-Gh
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 15:24:10 +0200
+	id 1ZF0C1-0006KQ-6z
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 15:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbbGNNYF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 09:24:05 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33987 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751811AbbGNNYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 09:24:04 -0400
-Received: by pacan13 with SMTP id an13so5913266pac.1
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 06:24:03 -0700 (PDT)
+	id S1752625AbbGNNYM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 09:24:12 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:33756 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277AbbGNNYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 09:24:11 -0400
+Received: by pdbqm3 with SMTP id qm3so6070802pdb.0
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 06:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=VrHPehr4Ext1uf6eBIOLoPGMMdkktTF9sYiMqDUOuiY=;
-        b=XB8/HydT01xPMhCij8xtboEgGcMFUHjmPMvCFDelRYXDGMslke2mUvi+ogKH2t+G7/
-         aTo9xlljFmrsrABXvgF00R6L6WQ3fHJjIeFFm8lhJNtMgEm8R4iXuVkeeoh56PHsZC1A
-         SlDeRob7h0R+GpCxzAUd8wI1z2Dc7GY3e2LN95c5p5aAlHuLnRy0oOA+8x8LUsav2YYm
-         YVxFIXjJdowNAkpRn/0fz3bCt2kvSZFDdfZdZFe5Xkore6DoAZ2WW7yeRth4EUIHM1m0
-         nCSu/4TDR37zIwofuRuUAA2Zrxwdv6bgzfzqKoV/8IM/6s91JLxyltmWjqkH1jUCHnx5
-         kAuQ==
-X-Received: by 10.68.238.39 with SMTP id vh7mr80924591pbc.12.1436880243944;
-        Tue, 14 Jul 2015 06:24:03 -0700 (PDT)
+        bh=ge6akOBv2UFVjNAoFaKDt6CTNklIJTNYzhI+rxrrEvk=;
+        b=0ftzwOiVnJldZprns4u7YoqNmkxzEZlMqONz1CL1n2xraqE9mcw1p9WtPWNnm2iiF8
+         fGtFJKsRaRpXe8LrLrIpHWrK790xyq9oHUaUVC9aVO71vyPuTQgXmDixtwbP3zuO5vQs
+         MuE87iie24JH24ehbPeGKbxc2mb3VBf0tidfJ7VlIme0r5p72MeOmaNK3SJ/gdq2z01Z
+         U+U0tsBcfrnBC3t3Tjg6YujZYO0BEgvHpT/L6LHqU8xUs1pv2RWVIRIeWqpdtQwiddsF
+         L/Z7GssnlHoiMhwil35e4+XVNOgf/f6/CFimvv8IHGv41eOrOPZ3bF08fiOe+Xqdk22Y
+         T+og==
+X-Received: by 10.68.229.40 with SMTP id sn8mr79103114pbc.59.1436880250863;
+        Tue, 14 Jul 2015 06:24:10 -0700 (PDT)
 Received: from lanh ([115.73.59.196])
-        by smtp.gmail.com with ESMTPSA id sh2sm1397614pbc.62.2015.07.14.06.23.59
+        by smtp.gmail.com with ESMTPSA id b12sm1434034pbu.20.2015.07.14.06.24.07
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Jul 2015 06:24:03 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 14 Jul 2015 20:24:53 +0700
+        Tue, 14 Jul 2015 06:24:10 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 14 Jul 2015 20:25:02 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1436880280-18194-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273953>
-
--F means "no regex", not "case sensitive" so it should not override -i
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273954>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ grep.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index d04f440..2d392e9 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -806,7 +806,7 @@ int cmd_grep(int argc, const char **argv, const cha=
-r *prefix)
+diff --git a/grep.c b/grep.c
+index b58c7c6..bd32f66 100644
+--- a/grep.c
++++ b/grep.c
+@@ -403,9 +403,11 @@ static void compile_regexp(struct grep_pat *p, str=
+uct grep_opt *opt)
+ 	p->word_regexp =3D opt->word_regexp;
+ 	p->ignore_case =3D opt->ignore_case;
 =20
- 	if (!opt.pattern_list)
- 		die(_("no pattern given."));
--	if (!opt.fixed && opt.ignore_case)
-+	if (opt.ignore_case)
- 		opt.regflags |=3D REG_ICASE;
+-	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
++	if (is_fixed(p->pattern, p->patternlen))
+ 		p->fixed =3D 1;
+-	else
++	else if (opt->fixed) {
++		p->fixed =3D 1;
++	} else
+ 		p->fixed =3D 0;
 =20
- 	compile_grep_patterns(&opt);
+ 	if (p->fixed) {
 --=20
 2.3.0.rc1.137.g477eb31
