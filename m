@@ -1,32 +1,32 @@
 From: Sunil Kata <katasunil@gmail.com>
 Subject: [PATCH] rerere-autocommit option is added to facilitate auto-merge when rerere resolves all the conflicts automatically.
-Date: Tue, 14 Jul 2015 15:58:19 +0530
-Message-ID: <1436869699-52765-1-git-send-email-katasunil@gmail.com>
+Date: Tue, 14 Jul 2015 16:04:10 +0530
+Message-ID: <1436870050-53659-1-git-send-email-katasunil@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 14 12:31:12 2015
+X-From: git-owner@vger.kernel.org Tue Jul 14 12:31:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZExUW-0007AG-72
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 12:31:12 +0200
+	id 1ZExUl-0007Fd-IE
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 12:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753665AbbGNKbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 06:31:07 -0400
-Received: from 121.244.95.222.static-Banglore.vsnl.net.in ([121.244.95.222]:31018
+	id S1754129AbbGNKbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2015 06:31:21 -0400
+Received: from 121.244.95.222.static-Banglore.vsnl.net.in ([121.244.95.222]:8706
 	"EHLO flip-ad.local" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753492AbbGNKbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 06:31:05 -0400
-X-Greylist: delayed 333 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2015 06:31:04 EDT
-Received: by gmail.com (Postfix, from userid 1533623177)
-	id 703F83DC9216; Tue, 14 Jul 2015 15:58:19 +0530 (IST)
+	with ESMTP id S1753841AbbGNKbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 06:31:20 -0400
+X-Greylist: delayed 1119 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2015 06:31:19 EDT
+Received: by flip-ad.local (Postfix, from userid 1533623177)
+	id 66F523DC9608; Tue, 14 Jul 2015 16:04:10 +0530 (IST)
 X-Mailer: git-send-email 2.3.2 (Apple Git-55)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273950>
 
 Signed-off-by: Sunil Kata <katasunil@gmail.com>
 ---
