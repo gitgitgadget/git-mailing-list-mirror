@@ -1,64 +1,92 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v5 12/44] builtin-am: implement --skip
-Date: Tue, 14 Jul 2015 17:34:23 +0800
-Message-ID: <CACRoPnRri5Nu5rj9O7id+PyiDBJpZkBDk8kB0WCuB3Uef76M3g@mail.gmail.com>
-References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
-	<1436278862-2638-13-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kaWV-hMEgJ8HJP2Jgq78su+YbyBbcYD3sZ0474UUNw=pA@mail.gmail.com>
+Subject: Re: [PATCH 12/12] t3901: test git-am encoding conversion
+Date: Tue, 14 Jul 2015 17:43:06 +0800
+Message-ID: <CACRoPnTZap1bn99kB37eJ3N61EprSa9oyXozRJ5qmN9JPTDVkw@mail.gmail.com>
+References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com>
+	<1435861000-25278-13-git-send-email-pyokagan@gmail.com>
+	<559D8BA0.5090701@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 11:34:30 2015
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 11:43:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEwbd-0003sw-IW
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 11:34:30 +0200
+	id 1ZEwkU-0007K4-3G
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 11:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752175AbbGNJeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 05:34:25 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:36066 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067AbbGNJeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 05:34:24 -0400
-Received: by lbbpo10 with SMTP id po10so2630986lbb.3
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 02:34:23 -0700 (PDT)
+	id S1754243AbbGNJnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2015 05:43:11 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:32805 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753599AbbGNJnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 05:43:07 -0400
+Received: by laem6 with SMTP id m6so2768476lae.0
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 02:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=HCl8/4CjP7TrjuMHOuEhWpzwLpUmUxGgnwvCgAN0IV8=;
-        b=qTu5DxUZOvIRknouvFHpbghecLoghL48N7i2aFIUM7VLYs8rkiNrPVZo+05w1BLIsL
-         1qR+gh9mZ1ZnJ7nB5+Fnx/sLLKf9DZX1clTZzbwLOhJuQaktp3yJJht0HgUdCZnHY2Zj
-         8Ohnn1aqRIYUBj9KWjYXWI73tFroR1BMTgyXl6+VRC9uf8C5Hw2zbhCMJBpBSk6Pa+6V
-         vZJSiBSm2rIcnFWY7SjQ5zHiMfzg8j1ZFz96l347H9Cex7a4NjqAKxFjX7bYYRzl5WEg
-         pyTKnIA+ZzR3T2LEST7skDlLnFZYFmasdlbtJ177kKXK2ABKCcZhoAOaU2yeeXmcFraZ
-         BH5Q==
-X-Received: by 10.152.4.163 with SMTP id l3mr37266430lal.35.1436866463661;
- Tue, 14 Jul 2015 02:34:23 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Tue, 14 Jul 2015 02:34:23 -0700 (PDT)
-In-Reply-To: <CAGZ79kaWV-hMEgJ8HJP2Jgq78su+YbyBbcYD3sZ0474UUNw=pA@mail.gmail.com>
+        bh=wjEQfNgExvzl3CwROHoxY0ZIfhPHjeik9mriq2mMkNU=;
+        b=lA6Q3ntuIruwAvwSc2uTHIMUFco4F5wtF/N3CdtdoVoXUD1GVXHtckgkROtsXaLrzL
+         QiHm96Z99ZjKvF/38M7ZNSV4wgZQbh8Gf0vAhpjysCRRQJRlAgxcgDcf7dgi9+MKwLdw
+         nfKDnyFFLzw1QoNW+TGGS43BeNmKBK+OtFu4VDUc3HCjtkQuhOW/yaEx3A2hoqUAf1j6
+         GVOnkXIRbzAYCl9Qs1+0xSpZYIq2/ochYzn58dewwwHl75E99GMy2xmhQ0bLQiE7EVf5
+         YssErEz4Ci61rpioJHJndBs6M5iIdpXHF8vSEzg+gTJbJ4WXx8A8Aa3p6lG0b4xPGcPh
+         ebsA==
+X-Received: by 10.152.22.99 with SMTP id c3mr37509990laf.32.1436866986238;
+ Tue, 14 Jul 2015 02:43:06 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 14 Jul 2015 02:43:06 -0700 (PDT)
+In-Reply-To: <559D8BA0.5090701@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273944>
 
-On Tue, Jul 14, 2015 at 3:05 AM, Stefan Beller <sbeller@google.com> wrote:
-> All returns before this point leak the memory of `lock_file`.
+On Thu, Jul 9, 2015 at 4:44 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 02.07.2015 um 20:16 schrieb Paul Tan:
+>> diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
+>> index 75cf3ff..b49bdb7 100755
+>> --- a/t/t3901-i18n-patch.sh
+>> +++ b/t/t3901-i18n-patch.sh
+>> @@ -251,4 +251,66 @@ test_expect_success 'rebase --merge (L/U)' '
+>>         check_encoding 2 8859
+>>   '
+>>
+>> +test_expect_success 'am (U/U)' '
+>> +       # Apply UTF-8 patches with UTF-8 commitencoding
+>> +       git config i18n.commitencoding UTF-8 &&
+>> +       . "$TEST_DIRECTORY"/t3901-utf8.txt &&
+>> +
+>> +       git reset --hard master &&
+>> +       git am out-u1 out-u2 &&
+>> +
+>> +       check_encoding 2
+>> +'
+>> +
+>> +test_expect_success 'am (L/L)' '
+>> +       # Apply ISO-8859-1 patches with ISO-8859-1 commitencoding
+>> +       git config i18n.commitencoding ISO8859-1 &&
+>> +       . "$TEST_DIRECTORY"/t3901-8859-1.txt &&
+>> +
+>> +       git reset --hard master &&
+>> +       git am out-l1 out-l2 &&
+>> +
+>> +       check_encoding 2 8859
+>> +'
+>
+>
+> This test case must be protected by !MINGW, just like the last case below
+> and other cases that are already in the file. See 32f4cb6cee for details.
 
-Yeah, it's intentional. From Documentation/technical/api-lockfile.txt:
-
-* Allocates a `struct lock_file` either as a static variable or on the
-  heap, initialized to zeros. Once you use the structure to call the
-  `hold_lock_file_*` family of functions, it belongs to the lockfile
-  subsystem and its storage must remain valid throughout the life of
-  the program (i.e. you cannot use an on-stack variable to hold this
-  structure).
+Ah, OK.
 
 Thanks,
 Paul
