@@ -1,64 +1,164 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: AW: "unable to remap" error with git svn after upgrade to Win10
-Date: Tue, 14 Jul 2015 10:37:03 +0200
-Organization: gmx
-Message-ID: <cca8143375b9134b7a29f3748a3c4389@www.dscho.org>
-References: <8e6220ba0ffb43dbbc7c4eaefd2ab753@CIPEXMB03N1.ci04.de>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v5 19/44] builtin-am: implement --3way, am.threeWay
+Date: Tue, 14 Jul 2015 17:32:48 +0800
+Message-ID: <CACRoPnTh+rWhOah3u5Q4td5NDLj9CLU3krvw9xCO2DE-VaPudg@mail.gmail.com>
+References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
+	<1436278862-2638-20-git-send-email-pyokagan@gmail.com>
+	<xmqqfv4z3etn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christoph Murczek <Christoph.Murczek@iteratec.at>
-X-From: git-owner@vger.kernel.org Tue Jul 14 10:37:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 11:32:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEviI-0002E9-DD
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 10:37:18 +0200
+	id 1ZEwa6-0003Ol-BK
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 11:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753861AbbGNIhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 04:37:10 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57848 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753231AbbGNIhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 04:37:06 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M8eAd-1Z2Mm43UQd-00wBUw; Tue, 14 Jul 2015 10:37:03
- +0200
-In-Reply-To: <8e6220ba0ffb43dbbc7c4eaefd2ab753@CIPEXMB03N1.ci04.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:9hsBU96CjUsA/Pj11FNJUqGBDdjAhbY9XA1vu3H5eiVcz9Gil4H
- YIlsIb+KZvJ1UFLUuYQwS2o2/bs1wkg1D0cNvMDDEANBGn7s9HD2tBIK7bRixJvACK1qjyO
- aAaCYpCGH7SYh3kDprEggmQ78OANo+9C6Xm6G4ETKkhrKeoyZfNKaDwW+NP55d1MdUxLgoa
- dmppKOfhFTS5XJPVxTn6w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7IMRKIQnMk0=:NLaOO2PsGj3R7h/gtd7m7L
- bynEce7PyrObwhaCxiwnYnd+BLFPvYx0J2d6I+XY29MMqtFES+TXOolzX9xsf22PevIsgnbvS
- hAJHrZbpc3loPFYFmMxEsIHxYTYu+wxhFMUJRZo1IVAYok7LEdd6jEZsG5xrGeKm0HJqVDrcH
- ClAU9ElxLgxQjCbq9OgM18zhOAY1w3hK1p5hHS2Ubp51/NkX6OAjUuu8tG2xCI19863/g4fdl
- yTBsfSxMuiMGfX/8oiQloh29uJP01kQ4myhuYWZtaG0YQhnhsBNEz7eb2abZgDEf/fbs4vMjW
- uCDjiGZhmKoKsh/bMHDLOofFrkLC0GBjpTLaV1OCkFKcl4nt+2tp2rwWE0UJUo1T/YIMibgCB
- 0nBCxFifupXru3dOJpYSkhLrOCai9wqXuM4/tdt9lPqJCUzVd/r09FsWFeeOFtMgPWI6YZiub
- L8shEqymu4n6CUFPyS1AWqJ9sngZWuwsnffJa24Yl6WSb64t3HurO+RLSmrocNIZezyuGTsRI
- E8zIhtGot9YayjALR/cLBaJiFM0iuK0tOgGqEeog78UngNS/vhlqKrzh/vujImOGNaYNgq5ew
- q4ZfuAjxr3/pptBxTokjLdal88Uy5wjiGDE7FHDZaq7yyvyA+t3cK/v1o4MIOIQpdbpgOZ+8+
- IUzSF18tsrqDHkkyZououS9DBr7sg63OGTZa7pQghNyYHGB1GoH0PzOpl3iqnniKevhc=
+	id S1753168AbbGNJcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2015 05:32:50 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:35365 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447AbbGNJct (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 05:32:49 -0400
+Received: by lblf12 with SMTP id f12so2638297lbl.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 02:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vYV0dY62VmdfzgH1IeoMVYhOBOcybNA1RaKnAbFdk9E=;
+        b=OBd0PO29hDageJFMnMhNUrEElXMXFMTOgDlgjpqD/l7RQLYdVBIvdRZ0o3LUtv9Ovf
+         y1caQIk/+ZZ+vtKYkZgCmQMR21BDUHcchBQlkpZZxzyTL0l0Gnd1N3Q8QwCItb8/KoHG
+         Olq2A3OswkPKaTgMeJ/K7jGbKQCBVSCPdDrky6eIIQuy+C3iRVP7YzHQbm/+NdFuJ1Tg
+         +x5cgaH4DMFytsVTaszmru1mAbkBOXJOfTGH9by9Hg9za5AXQVdcP0ZX0rp8YyATg87/
+         iGEIbv7AR0QXADpvK5gr56ajbf9gMBE1JAj5/DhRDsgMHzWuxrvsBIdeSGBZNRQiZE68
+         ROLQ==
+X-Received: by 10.152.30.4 with SMTP id o4mr35588086lah.74.1436866368316; Tue,
+ 14 Jul 2015 02:32:48 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 14 Jul 2015 02:32:48 -0700 (PDT)
+In-Reply-To: <xmqqfv4z3etn.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273942>
 
-Hi Christoph,
+On Wed, Jul 8, 2015 at 4:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> @@ -82,6 +84,8 @@ struct am_state {
+>>       /* number of digits in patch filename */
+>>       int prec;
+>>
+>> +     int threeway;
+>> +
+>>       int quiet;
+>>
+>>       int append_signoff;
+>
+> These "one line surrounded by blank on both sides" starts to get
+> irritating, and the structure looksq horrifying after you apply all
+> these patches.  Perhaps have a clean-up patch at the end to make
+> them look more like this?
+>
+> struct am_state {
+>         /* state directory path */
+>         char *dir;
+>
+>         /* current and last patch numbers, 1-indexed */
+>         int cur;
+>         int last;
+>
+>         /* commit metadata and message */
+>         char *author_name;
+>         char *author_email;
+>         char *author_date;
+>         char *msg;
+>         size_t msg_len;
+>
+>         /* when --rebasing, records the original commit the patch came from */
+>         unsigned char orig_commit[GIT_SHA1_RAWSZ];
+>
+>         /* number of digits in patch filename */
+>         int prec;
+>
+>         /* various operating modes and command line options */
+>         int interactive;
+>         int threeway;
+>         int quiet;
+>         int append_signoff;
+>         int utf8;
+>         int committer_date_is_author_date;
+>         int ignore_date;
+>         int allow_rerere_autoupdate;
+>         const char *sign_commit;
+>         int rebasing;
+>
+>         /* one of the enum keep_type values */
+>         int keep;
+>
+>         /* pass -m flag to git-mailinfo */
+>         int message_id;
+>
+>         /* one of the enum scissors_type values */
+>         int scissors;
+>
+>         /* used when spawning "git apply" via run_command() */
+>         struct argv_array git_apply_opts;
+>
+>         /* override error message when patch failure occurs */
+>         const char *resolvemsg;
 
-On 2015-07-13 14:24, Christoph Murczek wrote:
-> Just wanted to let you know: a re-install of git also fixed the problem.
+Okay. I would prefer to keep the above fields all in the same block
+though, as they are all "various operating modes and command line
+options". And in retrospect, the comments don't really add much value,
+with the exception of the "enum" comments to make it explicit that we
+expect an enum value in that field. So, something like this, perhaps?
 
-That is probably because your original report (which I do not quote because that was made too inconvenient by top-posting, sorry) suggests that the culprit was overlapping `.dll` ranges that need to be fixed using the `rebase.exe` tool (which is confusingly completely unrelated to `git rebase`), and that step is part of the installing process.
+struct am_state {
+    /* state directory path */
+    char *dir;
 
-BTW assuming that you're on a 64-bit setup (Win10 and all...), why do you stick to the 32-bit version of Git for Windows?
+    /* current and last patch numbers, 1-indexed */
+    int cur;
+    int last;
 
-Ciao,
-Johannes
+    /* commit metadata and message */
+    char *author_name;
+    char *author_email;
+    char *author_date;
+    char *msg;
+    size_t msg_len;
+
+    /* when --rebasing, records the original commit the patch came from */
+    unsigned char orig_commit[GIT_SHA1_RAWSZ];
+
+    /* number of digits in patch filename */
+    int prec;
+
+    /* various operating modes and command line options */
+    int interactive;
+    int threeway;
+    int quiet;
+    int append_signoff;
+    int utf8;
+    int keep; /* enum keep_type */
+    int message_id;
+    int scissors; /* enum scissors_type */
+    struct argv_array git_apply_opts;
+    const char *resolvemsg;
+    int committer_date_is_author_date;
+    int ignore_date;
+    int allow_rerere_autoupdate;
+    const char *sign_commit;
+    int rebasing;
+};
+
+Thanks,
+Paul
