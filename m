@@ -1,82 +1,145 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git log fails to show all changes for a file
-Date: Tue, 14 Jul 2015 19:54:09 +0200
-Message-ID: <87615maam6.fsf@igel.home>
-References: <20150714073035.GA22707@aepfle.de>
-	<20150714074508.GE1451@serenity.lan>
-	<20150714075955.GA24577@aepfle.de>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: translate 9 new messages
+Date: Tue, 14 Jul 2015 19:59:38 +0200
+Message-ID: <1436896778-8159-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-To: Olaf Hering <olaf@aepfle.de>
-X-From: git-owner@vger.kernel.org Tue Jul 14 19:54:19 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 14 19:59:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF4PK-00042U-Dn
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 19:54:18 +0200
+	id 1ZF4Uh-0005uC-F0
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 19:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585AbbGNRyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 13:54:14 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:46031 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751958AbbGNRyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 13:54:13 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3mW8c312hMz3hjcC;
-	Tue, 14 Jul 2015 19:54:11 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3mW8c30Gsrzvh1v;
-	Tue, 14 Jul 2015 19:54:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id QgrLOimOz-At; Tue, 14 Jul 2015 19:54:10 +0200 (CEST)
-X-Auth-Info: 7cAShYUCa0eqmZo70TsFkU76DJaUWVXd6vj3AC4l/XLkjmXDv7W4pQPKVXARstqp
-Received: from igel.home (host-188-174-218-179.customer.m-online.net [188.174.218.179])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Tue, 14 Jul 2015 19:54:09 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id A58CD2C13E4; Tue, 14 Jul 2015 19:54:09 +0200 (CEST)
-X-Yow: Can you MAIL a BEAN CAKE?
-In-Reply-To: <20150714075955.GA24577@aepfle.de> (Olaf Hering's message of
-	"Tue, 14 Jul 2015 09:59:55 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1752647AbbGNR7q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 13:59:46 -0400
+Received: from mail-wg0-f67.google.com ([74.125.82.67]:35826 "EHLO
+	mail-wg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751958AbbGNR7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 13:59:46 -0400
+Received: by wgkl9 with SMTP id l9so1311407wgk.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 10:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=xnpT/rWoKB2t8aAn6wgyHregR9hmmj0i38RoBS/u0/0=;
+        b=ZKJ1ujGCh0o3YgD6/xYutnrSzDKIlrbaUfc994PY7NipGoHFRnaO6zr+GJgRSxQObR
+         AqoR/hTPsFmIkta1iCA5WGrT1ZDzJsLjHysPH0U8pbRBw0a+WxVg1T9/7wYAF0bVsb2R
+         FEQTIOwNULm+N2QcZ+DGo0MvyfNeBGJxJZQA6QPttoqYJQtgg9QQd3c8vrZkGOiGGmzc
+         F4edwrW2dyFVKtOciF0z+Lkl5AWOueWgFtZNfD2GVZmiThTV5Kz74sru/mpwGmbKstxq
+         OokzyxVPFmDyNI8a9C9NezyHIi/av/4V31+Jz1WFJ2ua51yIVeP5WwK7hKELO+XukS+q
+         66Qg==
+X-Received: by 10.180.79.134 with SMTP id j6mr7907561wix.83.1436896784880;
+        Tue, 14 Jul 2015 10:59:44 -0700 (PDT)
+Received: from localhost (cable-86-56-33-117.cust.telecolumbus.net. [86.56.33.117])
+        by smtp.gmail.com with ESMTPSA id x10sm3286610wjr.25.2015.07.14.10.59.43
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 14 Jul 2015 10:59:43 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.rc1.388.g757bd17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273970>
 
-Olaf Hering <olaf@aepfle.de> writes:
+Translate 9 new messages came from git.pot update in a4156d2
+(l10n: git.pot: v2.5.0 round 2 (9 new, 5 removed)).
 
-> On Tue, Jul 14, John Keeping wrote:
->
->> It was added in an evil merge (f9da455b93f6ba076935b4ef4589f61e529ae046),
->> try:
->> 
->> 	git log -p -M --stat --cc -- drivers/hv/channel_mgmt.c
->
-> Thanks. Thats rather useless output...
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-Why do you think this is useless?
-
-> @@@ -404,7 -365,7 +404,7 @@@ static u32  next_vp
->    * performance critical channels (IDE, SCSI and Network) will be uniformly
->    * distributed across all available CPUs.
->    */
-> - static void init_vp_index(struct vmbus_channel *channel, uuid_le *type_guid)
->  -static u32 get_vp_index(const uuid_le *type_guid)
-> ++static void init_vp_index(struct vmbus_channel *channel, const uuid_le *type_guid)
-
-One branch renamed get_vp_index to init_vp_index, the other branch added
-the const attribute.  This hunk combines both changes.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+diff --git a/po/de.po b/po/de.po
+index 64070cd..6ed3509 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -10463,14 +10463,12 @@ msgid "print tag contents"
+ msgstr "Tag-Inhalte ausgeben"
+=20
+ #: builtin/worktree.c:11
+-#, fuzzy
+ msgid "git worktree add [<options>] <path> <branch>"
+-msgstr "git remote add [<Optionen>] <Name> <URL>"
++msgstr "git worktree add [<Optionen>] <Pfad> <Branch>"
+=20
+ #: builtin/worktree.c:12
+-#, fuzzy
+ msgid "git worktree prune [<options>]"
+-msgstr "git notes prune [<Optionen>]"
++msgstr "git worktree prune [<Optionen>]"
+=20
+ #: builtin/worktree.c:27
+ #, c-format
+@@ -10513,9 +10511,8 @@ msgid "could not create directory of '%s'"
+ msgstr "Konnte Verzeichnis '%s' nicht erstellen."
+=20
+ #: builtin/worktree.c:241
+-#, fuzzy
+ msgid "unable to resolve HEAD"
+-msgstr "kann HEAD nicht aufl=C3=B6sen"
++msgstr "Konnte HEAD nicht aufl=C3=B6sen."
+=20
+ #: builtin/worktree.c:249
+ #, c-format
+@@ -10523,29 +10520,25 @@ msgid "Enter %s (identifier %s)"
+ msgstr "Betrete %s (Identifikation %s)"
+=20
+ #: builtin/worktree.c:281
+-#, fuzzy
+ msgid "checkout <branch> even if already checked out in other worktree=
+"
+-msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
++msgstr "<Branch> auschecken, auch wenn dieser bereits in einem anderen=
+ "
++"Arbeitsverzeichnis ausgecheckt ist"
+=20
+ #: builtin/worktree.c:283
+-#, fuzzy
+ msgid "create a new branch"
+-msgstr "das Reflog f=C3=BCr den neuen Branch erzeugen"
++msgstr "neuen Branch erstellen"
+=20
+ #: builtin/worktree.c:285
+-#, fuzzy
+ msgid "create or reset a branch"
+-msgstr "Branches anzeigen, erstellen oder entfernen"
++msgstr "Branch erstellen oder umsetzen"
+=20
+ #: builtin/worktree.c:286
+-#, fuzzy
+ msgid "detach HEAD at named commit"
+-msgstr "HEAD zu benanntem Commit setzen"
++msgstr "HEAD bei benanntem Commit losl=C3=B6sen"
+=20
+ #: builtin/worktree.c:292
+-#, fuzzy
+ msgid "-b and -B are mutually exclusive"
+-msgstr "Die Optionen -n und -k schlie=C3=9Fen sich gegenseitig aus."
++msgstr "-b und -B schlie=C3=9Fen sich gegenseitig aus"
+=20
+ #: builtin/write-tree.c:13
+ msgid "git write-tree [--missing-ok] [--prefix=3D<prefix>/]"
+@@ -10612,9 +10605,8 @@ msgid "List, create, or delete branches"
+ msgstr "Branches anzeigen, erstellen oder entfernen"
+=20
+ #: common-cmds.h:21
+-#, fuzzy
+ msgid "Switch branches or restore working tree files"
+-msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
++msgstr "Branches wechseln oder Dateien im Arbeitsverzeichnis wiederher=
+stellen"
+=20
+ #: common-cmds.h:22
+ msgid "Clone a repository into a new directory"
+--=20
+2.5.0.rc1.388.g757bd17
