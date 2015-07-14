@@ -1,79 +1,88 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: git on vagrant shared folder
-Date: Tue, 14 Jul 2015 11:53:52 -0700
-Message-ID: <CAGZ79kbBKzbjbg5u7A7BgnV1JF=5A+-gb0OdYs11g6kx_UQu_A@mail.gmail.com>
-References: <7C05ACF4-6536-4E60-BC92-FF7F0E266C0D@e-confirm.de>
-	<20150714183215.GG7613@paksenarrion.iveqy.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git log fails to show all changes for a file
+Date: Tue, 14 Jul 2015 12:16:48 -0700
+Message-ID: <CA+55aFzPvwAghGtA-WH8i1PcNe55XORokaXF9hNu7OUXBx++6Q@mail.gmail.com>
+References: <20150714073035.GA22707@aepfle.de>
+	<20150714074508.GE1451@serenity.lan>
+	<20150714075955.GA24577@aepfle.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Peter_H=C3=BCfner?= <p.huefner@e-confirm.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 20:53:58 2015
+Cc: John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Olaf Hering <olaf@aepfle.de>
+X-From: git-owner@vger.kernel.org Tue Jul 14 21:16:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF5L3-0006l6-U1
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 20:53:58 +0200
+	id 1ZF5hG-0005sv-1g
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 21:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386AbbGNSxx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 14:53:53 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:32889 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125AbbGNSxx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2015 14:53:53 -0400
-Received: by ykeo3 with SMTP id o3so16322872yke.0
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 11:53:52 -0700 (PDT)
+	id S1752827AbbGNTQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2015 15:16:50 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:33916 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752422AbbGNTQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 15:16:49 -0400
+Received: by igvi1 with SMTP id i1so61505611igv.1
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 12:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=lEx0uuZAopxWiwho89KSvv/HUxgZ4Eg8VXHMcebd7YE=;
-        b=X+9u8DB0pKEf5ARGN3sNbGSqZWs3RA6wAE9Z/JGA4Ex5Js2rjIKu17u+zgJyjC1J8d
-         IR0jtp0ZGm7KwepqjNvUNVkpTlJg6XOR2I+3FSpsZQkv6ASfjLQnaEuJ+AvgyRcCYob5
-         UdBOuyyhvDEehEd2LV0Atsktbs1MLM7U4CzlNVet+luK8UDlXGTHOWtnFCuSq3RBCELB
-         YaFxbhRlRI4YHffOdOyPe2DBC07LVrCYuSidz+MtuSlTEKg3fbrUwNhL7GW/Rs/1f6Tf
-         iVPJ4xduykiYX7wL5RNKmdDl5DWGb+INLCAz5RUNxjgSYv/VWyP5mdezNx8cx+Jk/6gg
-         E8EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lEx0uuZAopxWiwho89KSvv/HUxgZ4Eg8VXHMcebd7YE=;
-        b=XyTOee/iAUlh2O4aj3NsZwktN2TN21OuRJRFdxh3L4wMvWY97yJIrU82HF8e56/B8O
-         re5RhSUUckEYmu9vveYmAqWMMppWNfKWpNT9Woo2mBTTvPQ6nROlQ0d/Kuh3q1EgTOy/
-         4vTb8YbXjx03P6fBw3L+R+ZREIu7ZDmtR9pva7cQIUAzARUx01JaA/ew6c3xXuI9WfcE
-         caseCos9qnIxpDYw/AuJ88gLweHRflt5RVEfNUP0cnXauAnHVKt2tbtNdTQL9D+DkcYZ
-         VLD8zOx6NPCmXOnj7Hu6fqxTE93Bk6xvuhfCFl9FzbmPoKiXJxJ8RJjtlkMerRAG6pE+
-         h0+A==
-X-Gm-Message-State: ALoCoQmOQjYYk3fEgJQrw4beMXfPxWzYCkubxuHlT4NPUJMdrA7kbmtbt06n5TTlaqtOdnagPd+/
-X-Received: by 10.170.82.131 with SMTP id y125mr23561yky.115.1436900032563;
- Tue, 14 Jul 2015 11:53:52 -0700 (PDT)
-Received: by 10.37.21.129 with HTTP; Tue, 14 Jul 2015 11:53:52 -0700 (PDT)
-In-Reply-To: <20150714183215.GG7613@paksenarrion.iveqy.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=44+m2To6wYBU8pvzVryQvdScyR745sLoktaSwWRzb1w=;
+        b=0UCtFHDNpmOjEkQf0f1EuccGaB5pOOoJyERH6AtBTO+eSW85NqxJVtuiRKr8R1GqSd
+         gHw2hWSGn/ckB3fvFRHeiXNu3LUi255gJJfKvnEjmvishS1/6Rn7L6DA8G/YL+4m3LUH
+         rpsMQCsHh9JexX3HKWam+W50IbMgHy3WNI43t/0isoFVClZqr1754pfTyF99N2qy25sT
+         6V2J+wT8WOnDnTfqDsQJmSJJG2XhsuiogWL4zPj+ScsFXHFYxuTXJtnJJVv100HVjazt
+         Vl19dda4ZO4PtGb5y+xTV5mgGy2x6mtyrgXCJkSv3CpPOnTm/FjAFtS61wv/fx+oLUta
+         RZ0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=44+m2To6wYBU8pvzVryQvdScyR745sLoktaSwWRzb1w=;
+        b=X2isd1TvrBjt3j9OXfPl4s71PPEUCZTO3aooSiAFVfMrCrXAhF1I4t6tOgFN6JeYq+
+         Sika/aXY6R06MsBDwbTYWUphwjsQzP8cJHl8/wTL+XnkC0N5YNlAAzoO1WQYhpHyyIF/
+         6x4vvYvw5fRjIrl4BCv6Z5sramvYa1HXkYJ5c=
+X-Received: by 10.107.157.4 with SMTP id g4mr254815ioe.66.1436901408851; Tue,
+ 14 Jul 2015 12:16:48 -0700 (PDT)
+Received: by 10.36.78.7 with HTTP; Tue, 14 Jul 2015 12:16:48 -0700 (PDT)
+In-Reply-To: <20150714075955.GA24577@aepfle.de>
+X-Google-Sender-Auth: Oad3oTY5OCIfISMlucqjyHO1sNQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273973>
 
+On Tue, Jul 14, 2015 at 12:59 AM, Olaf Hering <olaf@aepfle.de> wrote:
+> On Tue, Jul 14, John Keeping wrote:
 >
->> A few weeks ago we weren=E2=80=99t able to clone and get an error: c=
-ould not commit /vagrant/.git/config file. Manually we were able to cha=
-nge that file and also the clone command works outside the shared folde=
-r.
->
-> Why are you trying to commit a file inside the .git dir? Files in tha=
-t
-> dir should not be commited (and I'm pretty sure there was a patch abo=
-ut
-> this a while ago). The .git/config file for example is local to each =
-git
-> repo and should not be commited.
+>> It was added in an evil merge (f9da455b93f6ba076935b4ef4589f61e529ae046),
 
-Actually it is considered a security risk, see
-http://article.gmane.org/gmane.linux.kernel/1853266
+That's not an evil merge. That's just a regular merge. One side had
+changed the argument to "const":
+
+ - 1b9d48f2a579 ("hyper-v: make uuid_le const")
+
+while the other side had renamed the function and added an argument,
+and changed the return type:
+
+ - d3ba720dd58c ("Drivers: hv: Eliminate the channel spinlock in the
+callback path")
+
+an "evil merge" is something that makes changes that came from neither
+side and aren't actually resolving a conflict.
+
+That said, I do wonder if we should just make "-p" imply "--cc". Right
+now we have the kind of odd situation that "git log -p" doesn't show
+merge patches, but "git show <cmit>" does show them. And you kind of
+have to know a lot about git to know the "--cc" option.
+
+In fact, that "git show" behavior really is very subtle, but very
+useful. It comes from show_rev_tweak_rev(), which is a magic git-show
+thing.
+
+               Linus
