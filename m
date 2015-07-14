@@ -1,118 +1,185 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
-Date: Tue, 14 Jul 2015 12:40:46 -0400
-Message-ID: <CAPig+cS9RVvLd8+uY1CsJzFYmLsNn9S0Z=FLQvpLQYYDX0LiBw@mail.gmail.com>
-References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
-	<55A4DC1C.90908@drmicha.warpmail.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v3 0/9] icase match on non-ascii
+Date: Tue, 14 Jul 2015 18:42:59 +0200
+Message-ID: <55A53C13.5090405@web.de>
+References: <1436351919-2520-1-git-send-email-pclouds@gmail.com>
+ <1436880280-18194-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jul 14 18:40:58 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, plamen.totev@abv.bg,
+	l.s.r@web.de, tboegi@web.de
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 14 18:43:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF3GH-0003dG-So
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 18:40:54 +0200
+	id 1ZF3IV-0004f0-Ls
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 18:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562AbbGNQkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 12:40:47 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:35905 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752506AbbGNQkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 12:40:47 -0400
-Received: by ykay190 with SMTP id y190so12933139yka.3
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 09:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=evrc46x0kwmLjRqNG92+HxjGSqYlAVJ0fa6x9DzyXPk=;
-        b=zBz2YtD7WiN1eqseh5zBmAyvcicYdfU2G6asl64d+ku16pp64jHPt1WRr7OotLAE/Y
-         MAdAcXD1uV19DtYP2IKVpYABLocAA3U2ntqMbk858GZmBFhJxq3fJr/ncnEZNP6bSj4V
-         csLGqt9qnGa5F29gEWh+qR1w5cuB+432LtBynCYBy2bQUEoqYqX6lGQkaEZ0Uh3X2PmY
-         +yYv869nEwW9mCbgN1Bq3JGNEc+Xlipx1ksSuZNdQdPlNjm4OqP2MkJ+V4Pssvjw6K+b
-         kltrYBTRXk1wehEeefrpxswHvBlITFHgqJi/MBNpTOd4UdxlZM8ynsZiQH5yH8+3asDP
-         yRKw==
-X-Received: by 10.129.70.69 with SMTP id t66mr45162961ywa.4.1436892046218;
- Tue, 14 Jul 2015 09:40:46 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Tue, 14 Jul 2015 09:40:46 -0700 (PDT)
-In-Reply-To: <55A4DC1C.90908@drmicha.warpmail.net>
-X-Google-Sender-Auth: dOZmkO60kQvGbZsiXpgeCtHBZoM
+	id S1753125AbbGNQnG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 12:43:06 -0400
+Received: from mout.web.de ([212.227.15.14]:63608 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752590AbbGNQnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 12:43:05 -0400
+Received: from macce.local ([62.75.239.21]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0Lgs1W-1YazNz1v3W-00oE8f; Tue, 14 Jul 2015 18:43:01
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.0.1
+In-Reply-To: <1436880280-18194-1-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V03:K0:TXbiAI/nPv1MBrGrhfPRqMj6PqV9INljkG3/vHMWPGTcV8sJv0I
+ mmPQ/ldHa3bSDXjXOP4J5ffHDedteG32rNK90FcLaq4MuICaNsYBrVk0MIL1U2rsnB7cdht
+ XoRruQ+IaDHss9DapncPxNl+EmdTxGCQKQhcNOgdXQIxRhC6pdowKnTcOOF4w01qytD9xrY
+ qzltNHM2QziCZ8dbEYuAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jdcYfJi554M=:6QzfBbnxCYXSoxOA5S7hrm
+ F33UwS1R3hEJAQoe5tMZla32lYBB8c2/kJsofFLEKIlll4ZoFzkEuWpjWVV4hfLieVmTnaHmj
+ vvadDU26K+QGU2PH8lW1w3iPF3T2+75ds7hbA/6Uwk9QA6rpDlxEccp33X4XKJxZnVJYnbKaL
+ 4E5exryiUCEMDKrCoDALxw3eYE9i0z/43QtA8SWvgoTm9VjKd/ji+zoIzEX3ZpLSxlHPpQkZI
+ hyeMT+3ibKTEvhDIBatlFT3u2uMXYVpHrBuR6mk5qIvNeqnoFiyv2YUUkhc2i6vcwxiDZIfgR
+ mvUG9dRkhU8ncLKsiOl6N7cq9uNm7MsUzu1b4Z7/WU9v4OS+tK0OvmYIwihdcUczs0xE3FsQa
+ 9vuH5ogixTEEcpJLX6uPE5/bBQ+1JvjOMWIj6D9cBeSrRoCBu0UvZ8gG93G2UAO7ZtzCPdF6z
+ 7zbvewEQVn3ETxsSUfqplR3InjbWSARfEdh1UJfSRz4rMX1tvNy0Se+9UUyARX7l2j/gYESL2
+ 2GCwDtufVgsauABJHKXPeFwXPe1JkNh+y8XzRUux4njy/lIic44coSBic58MTGiIc0YLmWQCr
+ eQRBpFQEptKEcCb9sbapYn9uiEdYgEQ8cERLq+Bpxzcx2Dbw7xWx5HPvjjCRaXjXk1dOoGQsm
+ PN5D/KvOn48c+YU5+Pd1TYq7MjjzDGxVRFXge4QHXk64DC7hrrrVzqOHLRqKCXl55NF8zHuKq
+ C3uPevE3+yr2YB4X
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273966>
 
-On Tue, Jul 14, 2015 at 5:53 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>> This is a follow-on series to [1], which migrated "git checkout --to"
->>> functionality to "git worktree add". That series continued using "git
->>> checkout" for the initial population of the new worktree, which required
->>> git-checkout to have too intimate knowledge that it was operating in a
->>> newly created worktree.
-> Related to that, I'm interested in "worktree list", and I'm wondering
-> how many more worktree commands we foresee[...]
+(I haven't been able to do more debugging yet,
+but this doesn't fully work on my Mac OS X box:)
 
-The ones I and others came up with (beyond 'add' and 'prune') are
-'list', 'remove', 'mv', and 'lock' (for locking and unlocking). I
-specifically added a BUGS section to the documentation[1] as a
-reminder.
+Initialized empty Git repository in
+/Users/tb/NoBackup/projects/git/tb.150714_Duy_grep_utf8/t/trash
+directory.t7812-grep-icase-non-ascii/.git/
+# lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
+# lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
+expecting success:
+    printf "TILRAUN: Hall=C3=B3 Heimur!" >file &&
+    git add file &&
+    LC_ALL=3D"$is_IS_locale" &&
+    export LC_ALL
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/273431
+ok 1 - setup
 
-> , and therefore how much
-> refactoring should be done: Currently, the parsing of the contents of
-> .../worktrees/ into worktree information is done right in prune-spcefic
-> functions. They will have to be refactored. The following questions come
-> to my mind:
->
-> - Is a simple funtion refactoring enough, or should we introduce a
-> worktree struct (and a list of such)?
-> - Should each command do its own looping, or do we want
-> for_each_worktree() with a callback?
+expecting success:
+    git grep -i "TILRAUN: Hall=C3=B3 Heimur!" &&
+    git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
 
-for_each_worktree() might be overkill at this time, as I think only
-'prune' and 'list' would benefit directly. 'remove', 'lock', and 'mv'
-probably just want to lookup a particular worktree (with 'mv', when
-renaming, also possibly looking up the destination worktree to check
-if it already exist).
+file:TILRAUN: Hall=C3=B3 Heimur!
+not ok 2 - grep literal string, no -F
+#  =20
+#        git grep -i "TILRAUN: Hall=C3=B3 Heimur!" &&
+#        git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
+#  =20
 
-> - Is a fixed output format for "list"[1] enough, or do we want something
-> like for-each-ref or log formats (GSOC project...)?
-> - Finally: Who will be stepping on whose toes doing this?
+skipping test: grep pcre utf-8 icase
+    git grep --perl-regexp    "TILRAUN: H.ll=C3=B3 Heimur!" &&
+    git grep --perl-regexp -i "TILRAUN: H.ll=C3=B3 Heimur!" &&
+    git grep --perl-regexp -i "TILRAUN: H.LL=C3=93 HEIMUR!"
 
-I had considered working on some of the commands as time permits, but
-don't currently have concrete plans to do so. You're welcome to jump
-in and tackle these ideas (but perhaps let us know, so toes don't get
-trod upon).
+ok 3 # skip grep pcre utf-8 icase (missing LIBPCRE of GETTEXT_LOCALE,LI=
+BPCRE)
 
-> [1] Something like:
->
-> * fooworktree (master)
->   barworktree (HEAD detached from deadbeef)
->
-> with "*" denoting the worktree you're in (if any) and (optionally?)
+skipping test: grep pcre utf-8 string with "+"
+    printf "TILRAUN: Hall=C3=B3=C3=B3 Heimur!" >file2 &&
+    git add file2 &&
+    git grep -l --perl-regexp "TILRAUN: H.ll=C3=B3+ Heimur!" >actual &&
+    echo file >expected &&
+    echo file2 >>expected &&
+    test_cmp expected actual
 
-Considering that "git worktree list" can be invoked from the main
-worktree or any linked worktree, it would be a good idea to include
-the main worktree in the output as well.
+ok 4 # skip grep pcre utf-8 string with "+" (missing LIBPCRE of
+GETTEXT_LOCALE,LIBPCRE)
 
-> adding the "on" info from "git branch" in parentheses after each
-> worktree (checked out branch name, or detached info). Maybe the path, too?
+expecting success:
+    git grep --debug -i -F "TILRAUN: Hall=C3=B3 Heimur!"  2>&1 >/dev/nu=
+ll |
+         grep fixed >debug1 &&
+    echo "fixedTILRAUN: Hall=C3=B3 Heimur!" >expect1 &&
+    test_cmp expect1 debug1 &&
 
-I also had something very much like this in mind, possibly extending
-the output either with --verbose or custom format capability (keeping
-the GSoC project in mind), but otherwise hadn't put much thought into
-it.
+    git grep --debug -i -F "TILRAUN: HALL=C3=93 HEIMUR!"  2>&1 >/dev/nu=
+ll |
+         grep fixed >debug2 &&
+    echo "fixedTILRAUN: HALL=C3=93 HEIMUR!" >expect2 &&
+    test_cmp expect2 debug2
 
-Showing the path seems quite important, so I'd say yes to that
-question, probably by default.
+ok 5 - grep literal string, with -F
+
+expecting success:
+    printf "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" >file &&
+
+    git grep --debug -i -F "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" 2=
+>&1 >/dev/null |
+         grep fixed >debug1 &&
+    echo "fixed\\^*TILR^AUN:\\.\\* \\\\Hall=C3=B3 \$He\\[]imur!\\\$" >e=
+xpect1 &&
+    test_cmp expect1 debug1 &&
+
+    git grep --debug -i -F "^*TILR^AUN:.* \\HALL=C3=93 \$HE[]IMUR!\$"  =
+2>&1 >/dev/null |
+         grep fixed >debug2 &&
+    echo "fixed\\^*TILR^AUN:\\.\\* \\\\HALL=C3=93 \$HE\\[]IMUR!\\\$" >e=
+xpect2 &&
+    test_cmp expect2 debug2
+
+--- expect1    2015-07-14 16:38:22.000000000 +0000
++++ debug1    2015-07-14 16:38:22.000000000 +0000
+@@ -1 +1 @@
+-fixed\^*TILR^AUN:\.\* \Hall=C3=B3 $He\[]imur!\$
++fixed\^*TILR^AUN:\.\* \\Hall=C3=B3 $He\[]imur!\$
+not ok 6 - grep string with regex, with -F
+#  =20
+#        printf "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" >file &&
+#  =20
+#        git grep --debug -i -F "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!=
+\$" 2>&1
+>/dev/null |
+#             grep fixed >debug1 &&
+#        echo "fixed\\^*TILR^AUN:\\.\\* \\\\Hall=C3=B3 \$He\\[]imur!\\\=
+$" >expect1 &&
+#        test_cmp expect1 debug1 &&
+#  =20
+#        git grep --debug -i -F "^*TILR^AUN:.* \\HALL=C3=93 \$HE[]IMUR!=
+\$"  2>&1
+>/dev/null |
+#             grep fixed >debug2 &&
+#        echo "fixed\\^*TILR^AUN:\\.\\* \\\\HALL=C3=93 \$HE\\[]IMUR!\\\=
+$" >expect2 &&
+#        test_cmp expect2 debug2
+#  =20
+
+expecting success:
+    git commit -m first &&
+    git log --format=3D%f -i -S"TILRAUN: HALL=C3=93 HEIMUR!" >actual &&
+    echo first >expected &&
+    test_cmp expected actual
+
+[master (root-commit) e6052d5] first
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file
+--- expected    2015-07-14 16:38:22.000000000 +0000
++++ actual    2015-07-14 16:38:22.000000000 +0000
+@@ -1 +0,0 @@
+-first
+not ok 7 - pickaxe -i on non-ascii
+#  =20
+#        git commit -m first &&
+#        git log --format=3D%f -i -S"TILRAUN: HALL=C3=93 HEIMUR!" >actu=
+al &&
+#        echo first >expected &&
+#        test_cmp expected actual
+#  =20
+
+# failed 3 among 7 test(s)
+1..7
