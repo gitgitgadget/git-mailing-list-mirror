@@ -1,95 +1,146 @@
-From: Christoph Murczek <Christoph.Murczek@iteratec.at>
-Subject: AW: AW: "unable to remap" error with git svn after upgrade to Win10
-Date: Tue, 14 Jul 2015 21:04:57 +0000
-Message-ID: <8e9a6445d54343708757e16052539b6a@CIPEXMB03N1.ci04.de>
-References: <8e6220ba0ffb43dbbc7c4eaefd2ab753@CIPEXMB03N1.ci04.de>
- <cca8143375b9134b7a29f3748a3c4389@www.dscho.org>
+From: phillip <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 9 new messages
+Date: Tue, 14 Jul 2015 23:06:52 +0200
+Message-ID: <48E68E08-9873-4F2F-B96F-F35465F4A33E@gmail.com>
+References: <1436896778-8159-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 14 23:05:12 2015
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 14 23:07:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZF7O1-0007n0-Ld
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 23:05:10 +0200
+	id 1ZF7Pq-0000DT-IK
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 23:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbbGNVFE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 17:05:04 -0400
-Received: from mx68.system-hoster.com ([193.143.122.68]:60722 "EHLO
-	mx58.system-hoster.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752683AbbGNVFD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2015 17:05:03 -0400
-Received: from CIPEXMB03N1.ci04.de (172.18.1.229) by CIPEXHUB21.ci04.de
- (172.18.1.226) with Microsoft SMTP Server (TLS) id 15.0.847.32; Tue, 14 Jul
- 2015 23:04:59 +0200
-Received: from CIPEXMB03N1.ci04.de (172.18.1.229) by CIPEXMB03N1.ci04.de
- (172.18.1.229) with Microsoft SMTP Server (TLS) id 15.0.847.32; Tue, 14 Jul
- 2015 23:04:58 +0200
-Received: from CIPEXMB03N1.ci04.de ([::1]) by CIPEXMB03N1.ci04.de
- ([fe80::b583:2a88:608e:ee53%21]) with mapi id 15.00.0847.030; Tue, 14 Jul
- 2015 23:04:58 +0200
-Thread-Topic: AW: "unable to remap" error with git svn after upgrade to Win10
-Thread-Index: AQHQvhBG1Jc1GKW2PEqh7Lcn+V/18J3bcfwQ
-In-Reply-To: <cca8143375b9134b7a29f3748a3c4389@www.dscho.org>
-Accept-Language: de-AT, de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [213.143.102.67]
-X-OLX-Disclaimer: Done
+	id S1752989AbbGNVG6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2015 17:06:58 -0400
+Received: from mail-wg0-f66.google.com ([74.125.82.66]:36140 "EHLO
+	mail-wg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752683AbbGNVG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 17:06:58 -0400
+Received: by wgbbj7 with SMTP id bj7so1740791wgb.3
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 14:06:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=FE+EAFSPwDTxCMj8UlyAUNzYrB9YhZewvtO6zcE5DXc=;
+        b=e/Q+2cXH0bBga1ZfXHx1itQwcKJ5OVcKuuyiJ92ObaD7sDZ3HM48VqGkBzAhB+yIs5
+         dEikEphdsm8uJj8UAjiK/8syuzdEGj/H0OucWJVWpkDTjK/l5iomMPsyTBHJTEljjAHo
+         G17nHMd2+saGzdMS+ZGVltd+S+VIZyRkTLmBg4bT5Yf553402kJQo029g7eoWtFxHTLF
+         P6QoHHggP10GHDYlDe/D+6gNhtZYK46fqZexamEFFc5zjI/HWc8/88r2MRRfylft+iIw
+         oyzwFNQEcHg0MvNquaTefXaxkWIxbBjc//bVL9Ep+NXd4gKQj1av7Px2gMWRgaDueDDk
+         fWbg==
+X-Received: by 10.180.78.136 with SMTP id b8mr8745553wix.89.1436908016978;
+        Tue, 14 Jul 2015 14:06:56 -0700 (PDT)
+Received: from android-b7bb6bce7d91de53.fritz.box (i59F45643.versanet.de. [89.244.86.67])
+        by smtp.gmail.com with ESMTPSA id se11sm22939353wic.2.2015.07.14.14.06.55
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Jul 2015 14:06:56 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <1436896778-8159-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273977>
 
-Hi Johannes,
-thanks for explaining why re-installing fixed my problem. Although I st=
-ill can't wrap my head around why it happened in the first place. It co=
-uld only be caused by Windows moving the base address of one, but not t=
-he other thus causing the overlap. Sounds weird. But then again, what d=
-o I know what's going on under the hoods when upgrading to Win10. ;)
 
-In regards to your question: Yes I am running 64bit Windows, but the 32=
--bit version of git is the only thing I can download. I just double-che=
-cked on the webpage, but there's no option to get a 64 bit download lin=
-k, and if there was some logic determining whether I should get 32 or 6=
-4 bit it puts me in the first bucket for some reason.
-I haven't considered building from source yet, mostly because the 32bit=
- works fine so far. What would be the benefit? I guess performance when=
- dealing with large repos? If you have a 64bit version available and ne=
-ed feedback let know. Always happy to help out :)
 
-Cheers,
-Christoph
+Acked-by: Phillip Sz <phillip.szelat@gmail.com>
 
------Urspr=FCngliche Nachricht-----
-Von: Johannes Schindelin [mailto:johannes.schindelin@gmx.de]=20
-Gesendet: Tuesday, July 14, 2015 10:37
-An: Christoph Murczek
-Cc: git@vger.kernel.org
-Betreff: Re: AW: "unable to remap" error with git svn after upgrade to =
-Win10
-
-Hi Christoph,
-
-On 2015-07-13 14:24, Christoph Murczek wrote:
-> Just wanted to let you know: a re-install of git also fixed the probl=
-em.
-
-That is probably because your original report (which I do not quote bec=
-ause that was made too inconvenient by top-posting, sorry) suggests tha=
-t the culprit was overlapping `.dll` ranges that need to be fixed using=
- the `rebase.exe` tool (which is confusingly completely unrelated to `g=
-it rebase`), and that step is part of the installing process.
-
-BTW assuming that you're on a 64-bit setup (Win10 and all...), why do y=
-ou stick to the 32-bit version of Git for Windows?
-
-Ciao,
-Johannes
+>Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+>---
+> po/de.po | 28 ++++++++++------------------
+> 1 file changed, 10 insertions(+), 18 deletions(-)
+>
+>diff --git a/po/de.po b/po/de.po
+>index 64070cd..6ed3509 100644
+>--- a/po/de.po
+>+++ b/po/de.po
+>@@ -10463,14 +10463,12 @@ msgid "print tag contents"
+> msgstr "Tag-Inhalte ausgeben"
+>=20
+> #: builtin/worktree.c:11
+>-#, fuzzy
+> msgid "git worktree add [<options>] <path> <branch>"
+>-msgstr "git remote add [<Optionen>] <Name> <URL>"
+>+msgstr "git worktree add [<Optionen>] <Pfad> <Branch>"
+>=20
+> #: builtin/worktree.c:12
+>-#, fuzzy
+> msgid "git worktree prune [<options>]"
+>-msgstr "git notes prune [<Optionen>]"
+>+msgstr "git worktree prune [<Optionen>]"
+>=20
+> #: builtin/worktree.c:27
+> #, c-format
+>@@ -10513,9 +10511,8 @@ msgid "could not create directory of '%s'"
+> msgstr "Konnte Verzeichnis '%s' nicht erstellen."
+>=20
+> #: builtin/worktree.c:241
+>-#, fuzzy
+> msgid "unable to resolve HEAD"
+>-msgstr "kann HEAD nicht aufl=C3=B6sen"
+>+msgstr "Konnte HEAD nicht aufl=C3=B6sen."
+>=20
+> #: builtin/worktree.c:249
+> #, c-format
+>@@ -10523,29 +10520,25 @@ msgid "Enter %s (identifier %s)"
+> msgstr "Betrete %s (Identifikation %s)"
+>=20
+> #: builtin/worktree.c:281
+>-#, fuzzy
+>msgid "checkout <branch> even if already checked out in other worktree=
+"
+>-msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
+>+msgstr "<Branch> auschecken, auch wenn dieser bereits in einem andere=
+n
+>"
+>+"Arbeitsverzeichnis ausgecheckt ist"
+>=20
+> #: builtin/worktree.c:283
+>-#, fuzzy
+> msgid "create a new branch"
+>-msgstr "das Reflog f=C3=BCr den neuen Branch erzeugen"
+>+msgstr "neuen Branch erstellen"
+>=20
+> #: builtin/worktree.c:285
+>-#, fuzzy
+> msgid "create or reset a branch"
+>-msgstr "Branches anzeigen, erstellen oder entfernen"
+>+msgstr "Branch erstellen oder umsetzen"
+>=20
+> #: builtin/worktree.c:286
+>-#, fuzzy
+> msgid "detach HEAD at named commit"
+>-msgstr "HEAD zu benanntem Commit setzen"
+>+msgstr "HEAD bei benanntem Commit losl=C3=B6sen"
+>=20
+> #: builtin/worktree.c:292
+>-#, fuzzy
+> msgid "-b and -B are mutually exclusive"
+>-msgstr "Die Optionen -n und -k schlie=C3=9Fen sich gegenseitig aus."
+>+msgstr "-b und -B schlie=C3=9Fen sich gegenseitig aus"
+>=20
+> #: builtin/write-tree.c:13
+> msgid "git write-tree [--missing-ok] [--prefix=3D<prefix>/]"
+>@@ -10612,9 +10605,8 @@ msgid "List, create, or delete branches"
+> msgstr "Branches anzeigen, erstellen oder entfernen"
+>=20
+> #: common-cmds.h:21
+>-#, fuzzy
+> msgid "Switch branches or restore working tree files"
+>-msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
+>+msgstr "Branches wechseln oder Dateien im Arbeitsverzeichnis
+>wiederherstellen"
+>=20
+> #: common-cmds.h:22
+> msgid "Clone a repository into a new directory"
