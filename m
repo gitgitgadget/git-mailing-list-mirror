@@ -1,146 +1,221 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
-Date: Tue, 14 Jul 2015 11:53:32 +0200
-Message-ID: <55A4DC1C.90908@drmicha.warpmail.net>
-References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com> <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v5 00/44] Make git-am a builtin
+Date: Tue, 14 Jul 2015 18:08:03 +0800
+Message-ID: <20150714100803.GA23901@yoshi.chippynet.com>
+References: <1436278862-2638-1-git-send-email-pyokagan@gmail.com>
+ <xmqqh9p7y9iu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 12:03:04 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 12:08:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEx3H-0006Cl-L3
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 12:03:04 +0200
+	id 1ZEx8M-0007vl-Uc
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 12:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175AbbGNKC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 06:02:58 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:41691 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753919AbbGNKC5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2015 06:02:57 -0400
-X-Greylist: delayed 562 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2015 06:02:57 EDT
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0D1CE20334
-	for <git@vger.kernel.org>; Tue, 14 Jul 2015 05:53:34 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 14 Jul 2015 05:53:34 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=W7jS6cQZoJa0t4FiDVE2PBTbRHU=; b=Au/eQl
-	iPM5wsQPWmwS/4Be3qj6p74uWNol8ksNg3MNaMiXpM73NZ6StwoU1/odWmNc6LeY
-	Km73Kk0b4usnka3ySuKbDe9oeOJfChlhv8tc5QcTZh95lR9GRcP+JW8b2iOa/KiB
-	Q0jXKyksf4kF7MtC9oG82LlaJo786GFTIm/O8=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=W7jS6cQZoJa0t4F
-	iDVE2PBTbRHU=; b=ZulivlRp/ZjQ2JFxqdw3+k1Z9QxB5q+wrrBjkb+wUlU2HqK
-	06A2by+b3OEMIuA5fWUozXKI5EJDYZgi5cfMtDRAFdOI6NJwD4ZoSlPLSzC3MHdc
-	CFmoaYwAB22YLhGhUEexUr366gbzunNEGejy+4nYpy15s+IRYeG7kYVcoOi8=
-X-Sasl-enc: fdDdItvNP3m09TqIZePP7XyUcwS+wDnxJ0ZH1dZp0Mbt 1436867613
-Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 18894680120;
-	Tue, 14 Jul 2015 05:53:32 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
+	id S1754170AbbGNKIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2015 06:08:13 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:34918 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092AbbGNKIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2015 06:08:09 -0400
+Received: by pdrg1 with SMTP id g1so3525511pdr.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2015 03:08:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Vk1STmCokjI/w7lZ11HKvK9e+sDVCO7lZH53ZGsv/LA=;
+        b=M2X9G+TKLJVW/oZZCBh+iG7ellG24lXiiPKr7gp/TSd4kDB/JC/zNjpNFmZ5AEQp44
+         cAQVQ77iVQi3VsHFdUcdrcVex50Awsjp6EOOmBK/pWzUDx9WuFxTrgf5QTUCg6PIh0wP
+         I71FtG8q6jHSCm8jX+SclGY5RKLasaABsZNIO2xerAZDJqvqNFyCe7uGGhklgZBXWu4+
+         e+8BaEUpl46G+ruilYVE+ox+h4cLKM3NHBTPipfiHjbfZ8la6JSE1+wXeJaaBRNh+pjk
+         AKnuU+hh7Afg8z614CJSEpg7qr9IJ/H4qCs78uNnXRDuzRJPhiIppQe7MDa3TVW7SX2M
+         kPvw==
+X-Received: by 10.66.161.135 with SMTP id xs7mr80016430pab.154.1436868489430;
+        Tue, 14 Jul 2015 03:08:09 -0700 (PDT)
+Received: from yoshi.chippynet.com ([116.86.132.138])
+        by smtp.gmail.com with ESMTPSA id cq5sm819093pad.11.2015.07.14.03.08.06
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Jul 2015 03:08:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqh9p7y9iu.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273946>
 
-Junio C Hamano venit, vidit, dixit 13.07.2015 20:36:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Jul 13, 2015 at 03:31:37PM -0700, Junio C Hamano wrote:
+> A fix is to edit the patch to replace that "flags);" line with full
+> "return delete_ref()" line and save it.  Then running
 > 
->> This is a follow-on series to [1], which migrated "git checkout --to"
->> functionality to "git worktree add". That series continued using "git
->> checkout" for the initial population of the new worktree, which required
->> git-checkout to have too intimate knowledge that it was operating in a
->> newly created worktree.
->>
->> This series eliminates git-checkout from the picture by instead
->> employing "git reset --hard"[2] to populate the new worktree initially.
->>
->> It is built atop 1eb07d8 (worktree: add: auto-vivify new branch when
->> <branch> is omitted, 2015-07-06), currently in 'next', which is
->> es/worktree-add except for the final patch (which retires
->> --ignore-other-worktrees) since the intention[3] was to drop that patch.
+>   $ git am
 > 
-> A few comments on things I noticed while reading (mostly coming from
-> the original before this patch series):
+> (no argument) is supposed to read from the corrected patch file and
+> continue the application.
 > 
->  - What does this comment apply to?
-> 
->         /*
->          * $GIT_COMMON_DIR/HEAD is practically outside
->          * $GIT_DIR so resolve_ref_unsafe() won't work (it
->          * uses git_path). Parse the ref ourselves.
->          */
-> 
->    It appears in front of a call to check-linked-checkout, but I
->    think the comment attempts to explain why it manually decides
->    what the path should be in that function, so perhaps move it to
->    the callee from the caller?
-> 
->  - check_linked_checkout() when trying to decide what branch is
->    checked out assumes HEAD is always a regular file, but I do not
->    think we have dropped the support of SYMLINK_HEAD yet.  It needs
->    to check st_mode and readlink(2), like resolve_ref_unsafe() does.
-> 
->  - After a new skelton worktree is set up, the code runs a few
->    commands to finish populating it, under a different pair of
->    GIT_DIR/GIT_WORK_TREE, but the function does so with setenv(); it
->    may be cleaner to use cp.env[] for it, as the process we care
->    about using the updated environment is not "worktree add" command
->    we are running ourselves, but "update-ref/symbolic-ref" and
->    "reset" commands that run in the new worktree.
-> 
-> Other than that, looks nicely done.
-> 
-> I however have to wonder if the stress on "reset --hard" on log
-> messages of various commits (and in the endgame) is somewhat
-> misplaced.
-> 
-> The primary thing we wanted to see, which this series nicely brings
-> us, is to remove "new-worktree-mode" hack from "checkout" (in other
-> words, instead of "reset --hard", "checkout -f" would also have been
-> a satisfactory endgame).
-> 
-> Thanks.
-> 
+> This no longer works with the version with this series, it seems.
 
-Related to that, I'm interested in "worktree list", and I'm wondering
-how many more worktree commands we foresee, and therefore how much
-refactoring should be done: Currently, the parsing of the contents of
-.../worktrees/ into worktree information is done right in prune-spcefic
-functions. They will have to be refactored. The following questions come
-to my mind:
+Ah, this is actually the same bug as the previous one, and it actually
+all stems from the fact that I completely overlooked the code path
+change introduced by 271440e (git-am: make it easier after fixing up an
+unapplicable patch., 2005-10-25). When "git am" is run again while
+paused, the mail message should not be re-parsed at all.
 
-- Is a simple funtion refactoring enough, or should we introduce a
-worktree struct (and a list of such)?
-- Should each command do its own looping, or do we want
-for_each_worktree() with a callback?
-- Is a fixed output format for "list"[1] enough, or do we want something
-like for-each-ref or log formats (GSOC project...)?
-- Finally: Who will be stepping on whose toes doing this?
+So, I'm thinking of something like the following as a separate patch in
+this series to re-implement the feature:
 
-Michael
+diff a/builtin/am.c b/builtin/am.c
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1714,6 +1692,21 @@ static void do_commit(const struct am_state *state)
+ }
+ 
+ /**
++ * Validates the am_state for resuming -- the "msg" and authorship fields must
++ * be filled up.
++ */
++static void validate_resume_state(const struct am_state *state)
++{
++	if (!state->msg)
++		die(_("cannot resume: %s does not exist."),
++			am_path(state, "final-commit"));
++
++	if (!state->author_name || !state->author_email || !state->author_date)
++		die(_("cannot resume: %s does not exist."),
++			am_path(state, "author-script"));
++}
++
++/**
+  * Interactively prompt the user on whether the current patch should be
+  * applied.
+  *
+@@ -1774,8 +1767,12 @@ static int do_interactive(struct am_state *state)
+ 
+ /**
+  * Applies all queued mail.
++ *
++ * If `resume` is true, we are "resuming". The "msg" and authorship fields, as
++ * well as the state directory's "patch" file is used as-is for applying the
++ * patch and committing it.
+  */
+-static void am_run(struct am_state *state)
++static void am_run(struct am_state *state, int resume)
+ {
+ 	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -1793,21 +1790,28 @@ static void am_run(struct am_state *state)
+ 
+ 	while (state->cur <= state->last) {
+ 		const char *mail = am_path(state, msgnum(state));
+-		int apply_status, skip;
++		int apply_status;
+ 
+ 		if (!file_exists(mail))
+ 			goto next;
+ 
+-		if (state->rebasing)
+-			skip = parse_mail_rebase(state, mail);
+-		else
+-			skip = parse_mail(state, mail);
++		if (resume) {
++			validate_resume_state(state);
++			resume = 0;
++		} else {
++			int skip;
++
++			if (state->rebasing)
++				skip = parse_mail_rebase(state, mail);
++			else
++				skip = parse_mail(state, mail);
+ 
+-		if (skip)
+-			goto next; /* mail should be skipped */
++			if (skip)
++				goto next; /* mail should be skipped */
+ 
+-		write_author_script(state);
+-		write_commit_msg(state);
++			write_author_script(state);
++			write_commit_msg(state);
++		}
+ 
+ 		if (state->interactive && do_interactive(state))
+ 			goto next;
+@@ -1880,13 +1884,7 @@ next:
+  */
+ static void am_resolve(struct am_state *state)
+ {
+-	if (!state->msg)
+-		die(_("cannot resume: %s does not exist."),
+-			am_path(state, "final-commit"));
+-
+-	if (!state->author_name || !state->author_email || !state->author_date)
+-		die(_("cannot resume: %s does not exist."),
+-			am_path(state, "author-script"));
++	validate_resume_state(state);
+ 
+ 	say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
+ 
+@@ -1915,7 +1913,7 @@ static void am_resolve(struct am_state *state)
+ 
+ next:
+ 	am_next(state);
+-	am_run(state);
++	am_run(state, 0);
+ }
+ 
+ /**
+@@ -2040,7 +2038,7 @@ static void am_skip(struct am_state *state)
+ 		die(_("failed to clean index"));
+ 
+ 	am_next(state);
+-	am_run(state);
++	am_run(state, 0);
+ }
+ 
+ /**
+@@ -2136,6 +2134,7 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
+ 
+ enum resume_mode {
+ 	RESUME_FALSE = 0,
++	RESUME_APPLY,
+ 	RESUME_RESOLVED,
+ 	RESUME_SKIP,
+ 	RESUME_ABORT
+@@ -2271,6 +2270,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 			die(_("previous rebase directory %s still exists but mbox given."),
+ 				state.dir);
+ 
++		if (resume == RESUME_FALSE)
++			resume = RESUME_APPLY;
++
+ 		am_load(&state);
+ 	} else {
+ 		struct argv_array paths = ARGV_ARRAY_INIT;
+@@ -2310,7 +2312,10 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 
+ 	switch (resume) {
+ 	case RESUME_FALSE:
+-		am_run(&state);
++		am_run(&state, 0);
++		break;
++	case RESUME_APPLY:
++		am_run(&state, 1);
+ 		break;
+ 	case RESUME_RESOLVED:
+ 		am_resolve(&state);
 
-[1] Something like:
+At this point I've accumulated a lot of changes on my end so I'll do a
+re-roll.
 
-* fooworktree (master)
-  barworktree (HEAD detached from deadbeef)
-
-with "*" denoting the worktree you're in (if any) and (optionally?)
-adding the "on" info from "git branch" in parentheses after each
-worktree (checked out branch name, or detached info). Maybe the path, too?
+Thanks,
+Paul
