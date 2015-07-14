@@ -1,92 +1,146 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH 12/12] t3901: test git-am encoding conversion
-Date: Tue, 14 Jul 2015 17:43:06 +0800
-Message-ID: <CACRoPnTZap1bn99kB37eJ3N61EprSa9oyXozRJ5qmN9JPTDVkw@mail.gmail.com>
-References: <1435861000-25278-1-git-send-email-pyokagan@gmail.com>
-	<1435861000-25278-13-git-send-email-pyokagan@gmail.com>
-	<559D8BA0.5090701@kdbg.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
+Date: Tue, 14 Jul 2015 11:53:32 +0200
+Message-ID: <55A4DC1C.90908@drmicha.warpmail.net>
+References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com> <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 11:43:38 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 12:03:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZEwkU-0007K4-3G
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 11:43:38 +0200
+	id 1ZEx3H-0006Cl-L3
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jul 2015 12:03:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243AbbGNJnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2015 05:43:11 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:32805 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753599AbbGNJnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2015 05:43:07 -0400
-Received: by laem6 with SMTP id m6so2768476lae.0
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 02:43:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wjEQfNgExvzl3CwROHoxY0ZIfhPHjeik9mriq2mMkNU=;
-        b=lA6Q3ntuIruwAvwSc2uTHIMUFco4F5wtF/N3CdtdoVoXUD1GVXHtckgkROtsXaLrzL
-         QiHm96Z99ZjKvF/38M7ZNSV4wgZQbh8Gf0vAhpjysCRRQJRlAgxcgDcf7dgi9+MKwLdw
-         nfKDnyFFLzw1QoNW+TGGS43BeNmKBK+OtFu4VDUc3HCjtkQuhOW/yaEx3A2hoqUAf1j6
-         GVOnkXIRbzAYCl9Qs1+0xSpZYIq2/ochYzn58dewwwHl75E99GMy2xmhQ0bLQiE7EVf5
-         YssErEz4Ci61rpioJHJndBs6M5iIdpXHF8vSEzg+gTJbJ4WXx8A8Aa3p6lG0b4xPGcPh
-         ebsA==
-X-Received: by 10.152.22.99 with SMTP id c3mr37509990laf.32.1436866986238;
- Tue, 14 Jul 2015 02:43:06 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Tue, 14 Jul 2015 02:43:06 -0700 (PDT)
-In-Reply-To: <559D8BA0.5090701@kdbg.org>
+	id S1754175AbbGNKC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2015 06:02:58 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:41691 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753919AbbGNKC5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2015 06:02:57 -0400
+X-Greylist: delayed 562 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2015 06:02:57 EDT
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 0D1CE20334
+	for <git@vger.kernel.org>; Tue, 14 Jul 2015 05:53:34 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 14 Jul 2015 05:53:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=W7jS6cQZoJa0t4FiDVE2PBTbRHU=; b=Au/eQl
+	iPM5wsQPWmwS/4Be3qj6p74uWNol8ksNg3MNaMiXpM73NZ6StwoU1/odWmNc6LeY
+	Km73Kk0b4usnka3ySuKbDe9oeOJfChlhv8tc5QcTZh95lR9GRcP+JW8b2iOa/KiB
+	Q0jXKyksf4kF7MtC9oG82LlaJo786GFTIm/O8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=W7jS6cQZoJa0t4F
+	iDVE2PBTbRHU=; b=ZulivlRp/ZjQ2JFxqdw3+k1Z9QxB5q+wrrBjkb+wUlU2HqK
+	06A2by+b3OEMIuA5fWUozXKI5EJDYZgi5cfMtDRAFdOI6NJwD4ZoSlPLSzC3MHdc
+	CFmoaYwAB22YLhGhUEexUr366gbzunNEGejy+4nYpy15s+IRYeG7kYVcoOi8=
+X-Sasl-enc: fdDdItvNP3m09TqIZePP7XyUcwS+wDnxJ0ZH1dZp0Mbt 1436867613
+Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 18894680120;
+	Tue, 14 Jul 2015 05:53:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273945>
 
-On Thu, Jul 9, 2015 at 4:44 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 02.07.2015 um 20:16 schrieb Paul Tan:
->> diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
->> index 75cf3ff..b49bdb7 100755
->> --- a/t/t3901-i18n-patch.sh
->> +++ b/t/t3901-i18n-patch.sh
->> @@ -251,4 +251,66 @@ test_expect_success 'rebase --merge (L/U)' '
->>         check_encoding 2 8859
->>   '
+Junio C Hamano venit, vidit, dixit 13.07.2015 20:36:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> This is a follow-on series to [1], which migrated "git checkout --to"
+>> functionality to "git worktree add". That series continued using "git
+>> checkout" for the initial population of the new worktree, which required
+>> git-checkout to have too intimate knowledge that it was operating in a
+>> newly created worktree.
 >>
->> +test_expect_success 'am (U/U)' '
->> +       # Apply UTF-8 patches with UTF-8 commitencoding
->> +       git config i18n.commitencoding UTF-8 &&
->> +       . "$TEST_DIRECTORY"/t3901-utf8.txt &&
->> +
->> +       git reset --hard master &&
->> +       git am out-u1 out-u2 &&
->> +
->> +       check_encoding 2
->> +'
->> +
->> +test_expect_success 'am (L/L)' '
->> +       # Apply ISO-8859-1 patches with ISO-8859-1 commitencoding
->> +       git config i18n.commitencoding ISO8859-1 &&
->> +       . "$TEST_DIRECTORY"/t3901-8859-1.txt &&
->> +
->> +       git reset --hard master &&
->> +       git am out-l1 out-l2 &&
->> +
->> +       check_encoding 2 8859
->> +'
->
->
-> This test case must be protected by !MINGW, just like the last case below
-> and other cases that are already in the file. See 32f4cb6cee for details.
+>> This series eliminates git-checkout from the picture by instead
+>> employing "git reset --hard"[2] to populate the new worktree initially.
+>>
+>> It is built atop 1eb07d8 (worktree: add: auto-vivify new branch when
+>> <branch> is omitted, 2015-07-06), currently in 'next', which is
+>> es/worktree-add except for the final patch (which retires
+>> --ignore-other-worktrees) since the intention[3] was to drop that patch.
+> 
+> A few comments on things I noticed while reading (mostly coming from
+> the original before this patch series):
+> 
+>  - What does this comment apply to?
+> 
+>         /*
+>          * $GIT_COMMON_DIR/HEAD is practically outside
+>          * $GIT_DIR so resolve_ref_unsafe() won't work (it
+>          * uses git_path). Parse the ref ourselves.
+>          */
+> 
+>    It appears in front of a call to check-linked-checkout, but I
+>    think the comment attempts to explain why it manually decides
+>    what the path should be in that function, so perhaps move it to
+>    the callee from the caller?
+> 
+>  - check_linked_checkout() when trying to decide what branch is
+>    checked out assumes HEAD is always a regular file, but I do not
+>    think we have dropped the support of SYMLINK_HEAD yet.  It needs
+>    to check st_mode and readlink(2), like resolve_ref_unsafe() does.
+> 
+>  - After a new skelton worktree is set up, the code runs a few
+>    commands to finish populating it, under a different pair of
+>    GIT_DIR/GIT_WORK_TREE, but the function does so with setenv(); it
+>    may be cleaner to use cp.env[] for it, as the process we care
+>    about using the updated environment is not "worktree add" command
+>    we are running ourselves, but "update-ref/symbolic-ref" and
+>    "reset" commands that run in the new worktree.
+> 
+> Other than that, looks nicely done.
+> 
+> I however have to wonder if the stress on "reset --hard" on log
+> messages of various commits (and in the endgame) is somewhat
+> misplaced.
+> 
+> The primary thing we wanted to see, which this series nicely brings
+> us, is to remove "new-worktree-mode" hack from "checkout" (in other
+> words, instead of "reset --hard", "checkout -f" would also have been
+> a satisfactory endgame).
+> 
+> Thanks.
+> 
 
-Ah, OK.
+Related to that, I'm interested in "worktree list", and I'm wondering
+how many more worktree commands we foresee, and therefore how much
+refactoring should be done: Currently, the parsing of the contents of
+.../worktrees/ into worktree information is done right in prune-spcefic
+functions. They will have to be refactored. The following questions come
+to my mind:
 
-Thanks,
-Paul
+- Is a simple funtion refactoring enough, or should we introduce a
+worktree struct (and a list of such)?
+- Should each command do its own looping, or do we want
+for_each_worktree() with a callback?
+- Is a fixed output format for "list"[1] enough, or do we want something
+like for-each-ref or log formats (GSOC project...)?
+- Finally: Who will be stepping on whose toes doing this?
+
+Michael
+
+[1] Something like:
+
+* fooworktree (master)
+  barworktree (HEAD detached from deadbeef)
+
+with "*" denoting the worktree you're in (if any) and (optionally?)
+adding the "on" info from "git branch" in parentheses after each
+worktree (checked out branch name, or detached info). Maybe the path, too?
