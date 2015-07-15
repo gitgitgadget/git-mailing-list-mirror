@@ -1,113 +1,90 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
-Date: Wed, 15 Jul 2015 02:48:17 -0400
-Message-ID: <CAPig+cTXAdGFmq+QkNAgmHJuZgM6-Ckg_-StrTQUxmJSpX4=Qg@mail.gmail.com>
-References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 0/9] icase match on non-ascii
+Date: Wed, 15 Jul 2015 16:39:24 +0700
+Message-ID: <CACsJy8BXGt25tGoarry=UQS6E4Q54kicG5oY9uoU6W_hw1wYtg@mail.gmail.com>
+References: <1436351919-2520-1-git-send-email-pclouds@gmail.com>
+ <1436880280-18194-1-git-send-email-pclouds@gmail.com> <55A53C13.5090405@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 08:48:34 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Plamen Totev <plamen.totev@abv.bg>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 15 11:40:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFGUa-00050P-Vp
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 08:48:33 +0200
+	id 1ZFJAW-00006o-1r
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 11:40:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839AbbGOGsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2015 02:48:22 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:35402 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753711AbbGOGsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2015 02:48:18 -0400
-Received: by ykdu72 with SMTP id u72so28465835ykd.2
-        for <git@vger.kernel.org>; Tue, 14 Jul 2015 23:48:17 -0700 (PDT)
+	id S1753257AbbGOJj4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2015 05:39:56 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35913 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085AbbGOJjy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2015 05:39:54 -0400
+Received: by igbij6 with SMTP id ij6so66847162igb.1
+        for <git@vger.kernel.org>; Wed, 15 Jul 2015 02:39:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FAeGt5bkYvFFWZkFTTEld/OIosuUisrnLcHe62NGcRI=;
-        b=PLVtVi5sbqcUDgKpQBmrrkAuge1L1x7GWE5LOvSt6JROFylJ/15oJZhkChD5t6V+rO
-         4DHxuAnBErTiL9edaL3q4iDSJN85msoUpdOLLx5+Xt8WeBkkpoLbcJ+5ODSSMiGUUyGY
-         1z6g9ghC7zDyQXSIs+znvHYh5JFNVO8fPzHAJpGSf7wbEka9sT4kdYCnYrcUj3t8SUSy
-         YXIBhW4YM6m6lP3AL7y5vpr0jkhq4zCEvOTKYO1oBmnMayOxfHTEl8jPiQpwkFxKwwlf
-         r4lyGE82QLOzYErZgVWv9nmapsM/c0qz0PjidMLIMz/zCN5yBgjlD0zytXSOv/Qoax7P
-         e4dw==
-X-Received: by 10.170.138.134 with SMTP id f128mr2657702ykc.90.1436942897777;
- Tue, 14 Jul 2015 23:48:17 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Tue, 14 Jul 2015 23:48:17 -0700 (PDT)
-In-Reply-To: <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: PBoFrpYU2HCwpaEOum7aT5K1U-Y
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/XrW4xKt2JTGygB8lXluvAmj10lW3IcaBxKRLJBRUko=;
+        b=zefLEz7MZLcahLSDokb3CkV76zLtdhINFA1JQRaZgk1Wm2y4xdGWSwqnVid2q6g+Wd
+         unMGG/Gll1Y8CtIwTc+xI0N8VCRkUwkSNiaIVjLoWPV3Y1Tr8APhUjpYAvgNRxswz76M
+         1JjAD4Qp9CkEA+2p1uLti6BQnqtwQW8TLsBqATuq+vonAhLdOENXlTHn43PG1wZTajRD
+         Q3pJTahGU5teo8UzC1a53kdnoW7i1sflXN/7K2sUfrK9+235cryQSSmHJqr2DaIcbU8/
+         Uhw5GHjA80d2ve8S+O1I6ssNCTdDrq8Yi/Xt1tAN3NPVjOsGUBBM2TWI76QlaLm6UxbE
+         dTEg==
+X-Received: by 10.50.62.148 with SMTP id y20mr24930399igr.17.1436953193907;
+ Wed, 15 Jul 2015 02:39:53 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Wed, 15 Jul 2015 02:39:24 -0700 (PDT)
+In-Reply-To: <55A53C13.5090405@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273981>
 
-On Mon, Jul 13, 2015 at 2:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> This series eliminates git-checkout from the picture by instead
->> employing "git reset --hard"[2] to populate the new worktree initially.
+On Tue, Jul 14, 2015 at 11:42 PM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+> (I haven't been able to do more debugging yet,
+> but this doesn't fully work on my Mac OS X box:)
 >
-> A few comments on things I noticed while reading (mostly coming from
-> the original before this patch series):
+> Initialized empty Git repository in
+> /Users/tb/NoBackup/projects/git/tb.150714_Duy_grep_utf8/t/trash
+> directory.t7812-grep-icase-non-ascii/.git/
+> # lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
+> # lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
+> expecting success:
+>     printf "TILRAUN: Hall=C3=B3 Heimur!" >file &&
+>     git add file &&
+>     LC_ALL=3D"$is_IS_locale" &&
+>     export LC_ALL
 >
->  - What does this comment apply to?
+> ok 1 - setup
 >
->         /*
->          * $GIT_COMMON_DIR/HEAD is practically outside
->          * $GIT_DIR so resolve_ref_unsafe() won't work (it
->          * uses git_path). Parse the ref ourselves.
->          */
+> expecting success:
+>     git grep -i "TILRAUN: Hall=C3=B3 Heimur!" &&
+>     git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
 >
->    It appears in front of a call to check-linked-checkout, but I
->    think the comment attempts to explain why it manually decides
->    what the path should be in that function, so perhaps move it to
->    the callee from the caller?
+> file:TILRAUN: Hall=C3=B3 Heimur!
+> not ok 2 - grep literal string, no -F
+> #
+> #        git grep -i "TILRAUN: Hall=C3=B3 Heimur!" &&
+> #        git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
+> #
 
-The placement of the comment in the original code wasn't bad, but
-after patch 3/16 moves code around, the comment does become somewhat
-confusing, so moving it to the callee seems a reasonable idea.
+I don't know if there's an easy way to test if regexec() on your
+system supports locale (at least for is_IS). I can reproduce the same
+by using compat regex. So it's not a good news because compat regex is
+used in a few platforms, so this test will fail on those.
 
->  - check_linked_checkout() when trying to decide what branch is
->    checked out assumes HEAD is always a regular file, but I do not
->    think we have dropped the support of SYMLINK_HEAD yet.  It needs
->    to check st_mode and readlink(2), like resolve_ref_unsafe() does.
-
-Hmm, I wasn't aware of SYMLINK_HEAD (and don't know if Duy was). The
-related code in resolve_ref_unsafe() is fairly involved, worrying
-about race conditions and such, however, I guess
-check_linked_checkout()'s implementation can perhaps be simpler, as
-it's probably far less catastrophic for it to give the wrong answer
-(or just die) under such a race?
-
->  - After a new skelton worktree is set up, the code runs a few
->    commands to finish populating it, under a different pair of
->    GIT_DIR/GIT_WORK_TREE, but the function does so with setenv(); it
->    may be cleaner to use cp.env[] for it, as the process we care
->    about using the updated environment is not "worktree add" command
->    we are running ourselves, but "update-ref/symbolic-ref" and
->    "reset" commands that run in the new worktree.
-
-After sending the series, I was realized that this could be done more
-cleanly with -C, but that would have to be repeated for each command,
-so cp.env[] might indeed be a better choice.
-
-> Other than that, looks nicely done.
->
-> I however have to wonder if the stress on "reset --hard" on log
-> messages of various commits (and in the endgame) is somewhat
-> misplaced.
->
-> The primary thing we wanted to see, which this series nicely brings
-> us, is to remove "new-worktree-mode" hack from "checkout" (in other
-> words, instead of "reset --hard", "checkout -f" would also have been
-> a satisfactory endgame).
-
-I'll see if the commit messages can be reworded a bit without becoming
-too wordy. ("git reset --hard" has a nice conciseness.)
+I don't see any way around it, except dropping all the tests. I don't
+think there is a way for us to test regex locale support at runtime.
+--=20
+Duy
