@@ -1,98 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log fails to show all changes for a file
-Date: Wed, 15 Jul 2015 12:22:32 -0700
-Message-ID: <xmqqpp3tw7if.fsf@gitster.dls.corp.google.com>
-References: <20150714073035.GA22707@aepfle.de>
-	<20150714074508.GE1451@serenity.lan>
-	<20150714075955.GA24577@aepfle.de>
-	<CA+55aFzPvwAghGtA-WH8i1PcNe55XORokaXF9hNu7OUXBx++6Q@mail.gmail.com>
-	<xmqq8uahxu3e.fsf@gitster.dls.corp.google.com>
-	<CA+55aFy8urE+0w7mfgywcAnyoUu+6LMz-GGaOrUQYJ59gT9FfA@mail.gmail.com>
-	<xmqqy4ihwbdr.fsf@gitster.dls.corp.google.com>
-	<CA+55aFw=PJtc7jXLUx+tJhAeVO3vpQjsd+oYW+OwCU20_Qft-w@mail.gmail.com>
-	<xmqqtwt5wai9.fsf@gitster.dls.corp.google.com>
-	<20150715185717.GA11146@peff.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v3 0/9] icase match on non-ascii
+Date: Wed, 15 Jul 2015 21:51:53 +0200
+Message-ID: <55A6B9D9.2070102@web.de>
+References: <1436351919-2520-1-git-send-email-pclouds@gmail.com>
+ <1436880280-18194-1-git-send-email-pclouds@gmail.com>
+ <55A53C13.5090405@web.de>
+ <CACsJy8BXGt25tGoarry=UQS6E4Q54kicG5oY9uoU6W_hw1wYtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Olaf Hering <olaf@aepfle.de>,
-	John Keeping <john@keeping.me.uk>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 15 21:22:41 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Plamen Totev <plamen.totev@abv.bg>,
+	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To: Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 15 21:52:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFSGO-0006HZ-TQ
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 21:22:41 +0200
+	id 1ZFSiz-0001RJ-A6
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 21:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753312AbbGOTWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2015 15:22:36 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:37936 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753279AbbGOTWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2015 15:22:36 -0400
-Received: by iggf3 with SMTP id f3so44082987igg.1
-        for <git@vger.kernel.org>; Wed, 15 Jul 2015 12:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=pTe1TmCJQx7kowVRDnkmID00/nmIyjrEU01Ic3YyzRg=;
-        b=i/QtzkZQMT/2j1HP6+THjk4hbi+/Fj4tx708+rw3K/vk8RaEDnl5EimG03OVhs9rN4
-         WQ+k9fyYfrqcGgYsXof/V7Cgr7fY+PbqL76f1UWG3DdMviTsek+KMQYmtKkUZ6Na117T
-         K0GHGfToRd/Wf3D3q4NoHEF7F2MUj7b2vlyLyTsXcAwd32gJVdmcDIOCC+mztIBvvrI2
-         JpDv9MGbSYzdx2wY0fIm/KG3pZgTV5RFlyDQhnSEgdwpU4KOh24zy0ykU4wlw4Ci7vgG
-         +173yTl2w0q/kKAQGYb8qhTBakkXnUBP1/HmW29pUV8odqEunVPMV/gD9L3zAlc65L/M
-         jFhQ==
-X-Received: by 10.50.78.170 with SMTP id c10mr12674934igx.0.1436988155576;
-        Wed, 15 Jul 2015 12:22:35 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:91d4:b530:378d:909b])
-        by smtp.gmail.com with ESMTPSA id j3sm3808734igx.21.2015.07.15.12.22.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 15 Jul 2015 12:22:33 -0700 (PDT)
-In-Reply-To: <20150715185717.GA11146@peff.net> (Jeff King's message of "Wed,
-	15 Jul 2015 11:57:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753419AbbGOTwI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2015 15:52:08 -0400
+Received: from mout.web.de ([212.227.17.11]:63687 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753333AbbGOTwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2015 15:52:06 -0400
+Received: from macce.local ([80.237.177.148]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MWj6V-1ZUaza1yEl-00XxS5; Wed, 15 Jul 2015 21:52:01
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.0.1
+In-Reply-To: <CACsJy8BXGt25tGoarry=UQS6E4Q54kicG5oY9uoU6W_hw1wYtg@mail.gmail.com>
+X-Provags-ID: V03:K0:y/JAymiL1GIEm0giFjvf5xlLVTa4FHsW+pJ0mgy00CK0ig6VHex
+ qBi706O4k4DQikftVoGEt1hVHjcj8skyUgPpoNRsBYciuSyp4pgdYcpO6x7UiD8DR9tl3WB
+ UuPr6L8EF6szTAWhDyRJt8XOBNqUXNoJt8acQ5ZomFyE7q0MZSTUrJDviXxAXasrzIxI9jR
+ 8++zw3BE3DRd7W8E9xQuw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SzkcTALxtiU=:9GW82LC+7QXIYDQaIQoqPj
+ P4nAuJBeeccYumRxSgNs8thglGKI+nxGL/VClm6Oq42zUoAKCLzaVfT+BjYs8niMBq4mRBa3C
+ kRCWzmXgFzWR0OGSrpwbfvzENtVVIJpp/8mrDTKMmNjxk5QrWJXqrWzY3dgDC5sAbk+YnESw2
+ 43du/lwlAJVyOMyFqf4O1HiY39gD+S5IKu8lLrA+fZNrVkeHQ52uoM+I1Guf+kMaYBfog0sWy
+ iUnV+wWStRbQDVwPfECW0Cr7X19VqyPV/789DKn9cZw+HBGXeXg0vjjjoSEGTDs/z5Vm3LP64
+ IoAXEpm4R5dzgzWpjNukZzRMsQ8Tx4ZOwLYfYdqWSUDFHyOJekOfAWB9NlNvEAgVN7dyjSWQ3
+ kvhh0dENOVvi9RorBHaJHSO2bBQQVsNCYxLlyAM/+JAvPKqJVmSgPBKXt6YUS1OON7tkEdl5Q
+ SDPBhPNRyro+G0eFos1TCpDqSyPnohjMF23EMQI3J/4AWUsRrk6BxEmWDwSgZKnNBtWT3jmRE
+ +RmZ7TTcGADFXn2qnfWPsw5pyV7DCFVFXDuyM0KGM/jqPBcQz4WgWmcmUe/fbEQWVmgk9t6WU
+ o77+nZHamaGkiKoXimieZSGLzh1r+TA0uAUSiCEaB3y/z1SxdH4h3Y2M+weB7cP+KwwerOQKo
+ m3exBCkk4oD2N+ZND0rh0iR2HWiu4CrgVISkPLJQPGFB9jWE0NqhL3vSv8C5Sa7zNsJjk1VJ/
+ Ze3VwImvYktfH9Fk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273996>
 
-Jeff King <peff@peff.net> writes:
+> I don't see any way around it, except dropping all the tests. I don't
+> think there is a way for us to test regex locale support at runtime.
+>=20
+(I don't think dropping all tests is a good way forward)
+Either there is runtime code similar to test-regex.c,
+or how about something like this:
 
-> On Wed, Jul 15, 2015 at 11:17:50AM -0700, Junio C Hamano wrote:
->
->> > So this is a suggested change to "-p -m" behavior?
->> 
->> Not really.  This is a suggested behaviour for "git log -p"; I
->> wasn't very enthused by the idea to turn --cc when user said -p
->> without telling them what we are doing.  In other words, if the
->> users want combined, they should say --cc (and they will get a
->> single-parent patch for non-merges with --cc) so there is no reason
->> not to do this, as long as we fix --cc so that "git log --cc"
->> implies "git log --cc -p".
->
-> Like you, I frequently use "--first-parent -m". If I understand your
-> proposal, a regular "git log" would have the first-parent-diff behavior
-> of those options, but still traverse other parents.
->
-> One oddity of that proposal is that the user ends up seeing any given
-> change on a side-branch _twice_. Once in the original commit that
-> introduced it, and once in the merge of the branch. And commit-selection
-> tools like "git log -Ssome_code" will select both, too, and they'll see
-> the merge commit along with the original. I can't decide if that's a
-> good thing or not.
+commit a1cdac0fc0df1dad20f4dc196688a73c11b00480
+Author: Torsten B=C3=B6gershausen <tboegi@web.de>
+Date:   Wed Jul 15 21:43:47 2015 +0200
 
-Hmm, you are right.  That may be a problem, and Linus's makes tons
-of practical sense (especially for us experienced Git users).
+    t7812: More LIBPCRE preconditions
 
-It just is that '-p', that clearly stands for 'patch' but does more
-than 'patch' to produce something that cannot be fed to 'apply' by
-defaulting to '--cc', makes me hesitate.  By making it a lot more
-convenient for experienced people who understand these issues, I
-have this suspicion that it would make the options less orthgonal
-and harder to explain to new people.
+    Some (e.g. BSD based) regex libraries are not able to handle
+    UTF-8 strings case-insensitive (if asked so)
+
+    Exclude some test cases by using the LIBPCRE precondition
+
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
+scii.sh
+index d07fa20..30d3d68 100755
+--- a/t/t7812-grep-icase-non-ascii.sh
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -11,9 +11,12 @@ test_expect_success GETTEXT_LOCALE 'setup' '
+ 	export LC_ALL
+ '
+
+-test_expect_success GETTEXT_LOCALE 'grep literal string, no -F' '
+-	git grep -i "TILRAUN: Hall=C3=B3 Heimur!" &&
+-	git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
++test_expect_success GETTEXT_LOCALE 'grep literal low string, no -F' '
++	git grep -i "TILRAUN: Hall=C3=B3 Heimur!"
++'
++
++test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep literal up string, no=
+ -F' '
++	git grep -i "TILRAUN: HALL=C3=93. HEIMUR!"
+ '
+
+ test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pcre utf-8 icase' '
+@@ -31,33 +34,37 @@ test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pc=
+re utf-8
+string with "+"' '
+ 	test_cmp expected actual
+ '
+
+-test_expect_success GETTEXT_LOCALE 'grep literal string, with -F' '
++test_expect_success GETTEXT_LOCALE 'grep literal low string, with -F' =
+'
+ 	git grep --debug -i -F "TILRAUN: Hall=C3=B3 Heimur!"  2>&1 >/dev/null=
+ |
+ 		 grep fixed >debug1 &&
+ 	echo "fixedTILRAUN: Hall=C3=B3 Heimur!" >expect1 &&
+-	test_cmp expect1 debug1 &&
++	test_cmp expect1 debug1
++'
+
++test_expect_success GETTEXT_LOCALE 'grep literal up string, with -F' '
+ 	git grep --debug -i -F "TILRAUN: HALL=C3=93 HEIMUR!"  2>&1 >/dev/null=
+ |
+ 		 grep fixed >debug2 &&
+ 	echo "fixedTILRAUN: HALL=C3=93 HEIMUR!" >expect2 &&
+ 	test_cmp expect2 debug2
+ '
+
+-test_expect_success GETTEXT_LOCALE 'grep string with regex, with -F' '
++test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep string with regex, wi=
+th -F' '
+ 	printf "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" >file &&
+
+ 	git grep --debug -i -F "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" 2>&=
+1 >/dev/null |
+ 		 grep fixed >debug1 &&
+ 	echo "fixed\\^*TILR^AUN:\\.\\* \\\\Hall=C3=B3 \$He\\[]imur!\\\$" >exp=
+ect1 &&
+-	test_cmp expect1 debug1 &&
++	test_cmp expect1 debug1
++'
+
++test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep up string with regex,=
+ with -F' '
+ 	git grep --debug -i -F "^*TILR^AUN:.* \\HALL=C3=93 \$HE[]IMUR!\$"  2>=
+&1 >/dev/null |
+ 		 grep fixed >debug2 &&
+ 	echo "fixed\\^*TILR^AUN:\\.\\* \\\\HALL=C3=93 \$HE\\[]IMUR!\\\$" >exp=
+ect2 &&
+ 	test_cmp expect2 debug2
+ '
+
+-test_expect_success GETTEXT_LOCALE 'pickaxe -i on non-ascii' '
++test_expect_success GETTEXT_LOCALE,LIBPCRE 'pickaxe -i on non-ascii' '
+ 	git commit -m first &&
+ 	git log --format=3D%f -i -S"TILRAUN: HALL=C3=93 HEIMUR!" >actual &&
+ 	echo first >expected &&
