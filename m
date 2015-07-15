@@ -1,74 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git log fails to show all changes for a file
-Date: Wed, 15 Jul 2015 09:29:25 -0700
-Message-ID: <xmqq8uahxu3e.fsf@gitster.dls.corp.google.com>
+Date: Wed, 15 Jul 2015 10:13:12 -0700
+Message-ID: <CA+55aFy8urE+0w7mfgywcAnyoUu+6LMz-GGaOrUQYJ59gT9FfA@mail.gmail.com>
 References: <20150714073035.GA22707@aepfle.de>
 	<20150714074508.GE1451@serenity.lan>
 	<20150714075955.GA24577@aepfle.de>
 	<CA+55aFzPvwAghGtA-WH8i1PcNe55XORokaXF9hNu7OUXBx++6Q@mail.gmail.com>
+	<xmqq8uahxu3e.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Olaf Hering <olaf@aepfle.de>, John Keeping <john@keeping.me.uk>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jul 15 18:29:33 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 15 19:13:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFPYq-0008R2-GG
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 18:29:32 +0200
+	id 1ZFQFC-0000m5-1p
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 19:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081AbbGOQ32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2015 12:29:28 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:35406 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924AbbGOQ31 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2015 12:29:27 -0400
-Received: by iecuq6 with SMTP id uq6so37485701iec.2
-        for <git@vger.kernel.org>; Wed, 15 Jul 2015 09:29:27 -0700 (PDT)
+	id S1752567AbbGORNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2015 13:13:13 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:36139 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751592AbbGORNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2015 13:13:13 -0400
+Received: by ieik3 with SMTP id k3so38588673iei.3
+        for <git@vger.kernel.org>; Wed, 15 Jul 2015 10:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=7HPQxGXq7s1882PQe/XGPEd/TexHatwMvrdyFkXz8Vc=;
-        b=YymHFjC3negQ+5Wz62V0E8naJeclN+tWJkpy0KkgmioD8kBhv5hPm9VkT1l4n13YOr
-         6pt9FtnagLdPkO4FzZYNv3/41ztVOotKpK2LlwoDZwjo06cE8aXAHRDgYnyT9v6t0MS/
-         cD2e6l1YjrZ0XMyrjPqXNdNWoNUVtZgsE80AO3aNiC8PjYEKYeZ4X1bdWQ9Uq3mTqIPm
-         FgOjf0vpRmP1w6vYRC4xe8ejIF6X6d0EFAXsM+Zm7XN5rsIB3dD7T2AU1vin1FWj5nw8
-         J34o74cpJuZTajTd0N7CBgj6sDav3yGAoAajDgh2byzGQ8POUDmgO13qkz7Ad+xmjm3u
-         h+rg==
-X-Received: by 10.50.28.78 with SMTP id z14mr27583423igg.61.1436977766984;
-        Wed, 15 Jul 2015 09:29:26 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:91d4:b530:378d:909b])
-        by smtp.gmail.com with ESMTPSA id i66sm3097867ioe.0.2015.07.15.09.29.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 15 Jul 2015 09:29:26 -0700 (PDT)
-In-Reply-To: <CA+55aFzPvwAghGtA-WH8i1PcNe55XORokaXF9hNu7OUXBx++6Q@mail.gmail.com>
-	(Linus Torvalds's message of "Tue, 14 Jul 2015 12:16:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WvX7yR96brm8HnzJ7D57vOdcG3IIIhKq1OWNeJJ3DMs=;
+        b=oDAkjG7NIh5q6sWdiaJp/W4d3Iu27S0WAcMvu6G1HOKeycqsfv65C4H4vGi9Q4KMI6
+         +l7LO4K+IW446BBkSeQ3CJnV5M/XTOZ72squ1wMaamtNwqZhwuE0xhmge3q4EbZA9ZeT
+         D1yK313Jl3HXrO7Xw8rl9qBj6f8wNwGoLoZlLS/cyaYCYxAztGtyPcXY2k3ZBdzeumqu
+         IK5hfRDewggfQ6hbklIw6UF/7T8rr8n9VzoXclqXInao3BmnXfUTwwKOU9hfr9LpH/yF
+         kCcE7Mc8JDId3cP+F80iNE6pftmdkmnLmMJOKkh0zUb5cZUF3KGd2IrVc1NUKB1jwMLG
+         rLDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WvX7yR96brm8HnzJ7D57vOdcG3IIIhKq1OWNeJJ3DMs=;
+        b=e55BYPbn1wS83QXKmOK4rRWJM+/cO+THap4vCJoD9W1XWcoM3F/We+KcqLobNOy0aJ
+         xNhbf71ndkVTrmzhF57KJIMXg94NjB8PvodlYAhN3fry/viKAe61DrZ1Ir2o4Ooc0Tyk
+         3J7j//0DPVcvQIod5G3+Vv60AVTFu/+oi3z7Q=
+X-Received: by 10.50.176.164 with SMTP id cj4mr25160636igc.55.1436980392374;
+ Wed, 15 Jul 2015 10:13:12 -0700 (PDT)
+Received: by 10.36.78.7 with HTTP; Wed, 15 Jul 2015 10:13:12 -0700 (PDT)
+In-Reply-To: <xmqq8uahxu3e.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: OqGhKgTILqTQA8ziblBQpxnDu10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273988>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> That said, I do wonder if we should just make "-p" imply "--cc". Right
-> now we have the kind of odd situation that "git log -p" doesn't show
-> merge patches, but "git show <cmit>" does show them. And you kind of
-> have to know a lot about git to know the "--cc" option.
+On Wed, Jul 15, 2015 at 9:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> In fact, that "git show" behavior really is very subtle, but very
-> useful. It comes from show_rev_tweak_rev(), which is a magic git-show
-> thing.
+> I would think "git log -p" that implies "--cc" would be a good
+> change, as long as there is an easy escape hatch to let us do what
+> we have to do with a rather lengthy "git log -p --first-parent -m"
+> (i.e. show the change relative to its first parent while traversing
+> the first parent chain) today.  Perhaps only when there is no
+> explicit "-m" but "-p" is given, automatically enable "--cc", or
+> something like that.
 
-I would think "git log -p" that implies "--cc" would be a good
-change, as long as there is an easy escape hatch to let us do what
-we have to do with a rather lengthy "git log -p --first-parent -m"
-(i.e. show the change relative to its first parent while traversing
-the first parent chain) today.  Perhaps only when there is no
-explicit "-m" but "-p" is given, automatically enable "--cc", or
-something like that.
+That's very close to what "git show" does through that magic
+show_rev_tweak_rev() logic, with the crucial difference being that
+"git show" is designed to always show the diff, so the "-p" is
+implied.
+
+That said, having thought about it more, I'm not entirely sure we can
+do it.  The big conceptual difference between "git log" and "git show"
+is obviously that "git show" doesn't walk the revision list, and you
+always explicitly say "show _this_ commit".
+
+And that means that with "git show", you kind of _know_ that the
+commit is relevant and interesting, in a way that "git log" does not.
+So got "git show", it's very natural to say "show all the relevant
+information", while for "git log" we did make the choice that maybe
+commit diffs aren't relevant by default.
+
+And the whole issue ends up boiling down to "maybe we picked the wrong
+choice default". We default to that "ignore_merges = 1" behavior.
+
+Now, we defaulted to ignoring merge diffs because long long ago, in a
+galaxy far away, we didn't have a great way to show the diffs. The
+whole "--cc" option goes back to January -06 and commit d8f4790e6fe7
+("diff-tree --cc: denser combined diff output for a merge commit") .
+And before that option - so for about 8 months - we had no good way to
+show the diffs of merges in a good dense way.
+
+So the whole "don't show diffs for merges by default" actually made a
+lot of sense originally, because our merge diffs were not very useful.
+
+But that does mean that if we now enable "--cc" by default when you
+ask for diffs, we have no good way to _disable_ it. We picked "disable
+by default", and "-m" means "enable merge diffs". And that made sense
+back in 2005 because we really wanted to disable the whole "show diffs
+for merges" thing.
+
+Of course, you can use "--no-merges" to basically not show merges at
+all, so maybe that's ok. But I get the feeling that if we make "-p"
+imply "--cc", we should probably add a "--no-merge-diff" option too to
+replace the (broken) "-m" flag properly. And I'm a tiny bit worried
+that it might break some script (although I'm really not seeing
+how/why you'd script "git log -p" output and not want to get a --cc
+patch for a merge).
+
+And "-m"? We should probably get rid of it. The diffs we get for
+merges when "-c" or "--cc" isn't given are _not_ useful. The original
+non-combined diff format was really just useful for showing that
+"yeah, we have multiple parents, and they are different in all these
+ways".  So there is no actual valid use for "-m" that I can imagine.
+It's simply just an odd historical artifact from a time when we didn't
+know how to show merges.
+
+                 Linus
