@@ -1,85 +1,74 @@
-From: =?UTF-8?Q?Bj=C3=B8rnar_Snoksrud?= <snoksrud@gmail.com>
-Subject: workdirs: cannot clone a local workdir directory
-Date: Wed, 15 Jul 2015 11:40:18 +0200
-Message-ID: <CA+cck7GR1Gs+OvhweQZFs0=5uKu=RwEgY=0_0CZSCDqtDWrR2A@mail.gmail.com>
-Reply-To: bjornar@snoksrud.no
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 00/16] worktree: use "git reset --hard" to populate worktree
+Date: Wed, 15 Jul 2015 16:59:33 +0700
+Message-ID: <CACsJy8DF_GXgmZWJ-1iOvoy6SD6kj6u=zprbQA9k6W-Ev6V38w@mail.gmail.com>
+References: <1436573146-3893-1-git-send-email-sunshine@sunshineco.com>
+ <xmqqsi8rzyzo.fsf@gitster.dls.corp.google.com> <CAPig+cTXAdGFmq+QkNAgmHJuZgM6-Ckg_-StrTQUxmJSpX4=Qg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 15 11:40:28 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 15 12:00:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFJAw-0000GI-By
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 11:40:26 +0200
+	id 1ZFJU5-0006zp-3p
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jul 2015 12:00:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052AbbGOJkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2015 05:40:21 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:36785 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753929AbbGOJkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2015 05:40:19 -0400
-Received: by ykay190 with SMTP id y190so31304853yka.3
-        for <git@vger.kernel.org>; Wed, 15 Jul 2015 02:40:19 -0700 (PDT)
+	id S1754565AbbGOKAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2015 06:00:06 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:38003 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754561AbbGOKAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2015 06:00:03 -0400
+Received: by iggf3 with SMTP id f3so32176428igg.1
+        for <git@vger.kernel.org>; Wed, 15 Jul 2015 03:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        bh=2YZoEQocMEKV9cKGvzTniJz2ABANtM3ms1cVKVBKb7E=;
-        b=hfiHnucPEcT8pie+Oxv2S27OZnxDqSmHcqECxx5twrWQGPwu8GfGDVG3cKsP8ZZf66
-         Gk9Vr2vy1e/4Vuqxtt3gtSUKCjEQ6CtgkTPsBAVMhUCI14/JI9ca6Sk9KTTJLOM6y9Dg
-         KwgvOQZUbpPP3ZEE4QbAIfCDyNtlZyhrMYaJzvawhH4iGMRXsZ9NtJY7xc3QEBR/S0v6
-         uhOnEYSu2ycx1bb4X4rpvxJMv5Q/HCUKyX8/KagcfwNg/1uZqxnaUoRNn5kJmksfgb+M
-         +0yvOUFfRCkTDUNQin68LJazaovaGrbIOn2DILvCCwxjjB4MNLnF3g/t1xAtGSHS5xH1
-         A4Ag==
-X-Received: by 10.13.197.3 with SMTP id h3mr3110396ywd.139.1436953218944; Wed,
- 15 Jul 2015 02:40:18 -0700 (PDT)
-Received: by 10.129.71.3 with HTTP; Wed, 15 Jul 2015 02:40:18 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QqZgJwzevBCBABNuJJNa1YrA6gxJ/jdFgKTUSQhK4LY=;
+        b=YOJfWeygIEkNs/5YLaasPrZ2Gr4R+lOkiqJ2xQImJ875+kbyIktHdrFC0HXScxQ0dT
+         B9Xw59/H0W2Kcgl7ng2WNQOmyrmCpWlQ07ckuLKsjLV9Y9E0L004hA8L6zXLVJbFauFE
+         43lTci7fukm7f3hULfGtKjneypFigDHwC1PqmSw29kcdinzaMc/TOylah/g2dG80fqXn
+         nKQmC2o2kpYSVVD+6wKWFaKl9nuxWTUxi8T141b2jXiXkpWvgf1gdLkViq4R3er4QdB9
+         t/170WJeUdbqPRBzPUjICyE241AhPAK/OYV2yTXdJDNo6Uy0gi6hpRekMFEyigXzIjs8
+         gpJw==
+X-Received: by 10.107.155.12 with SMTP id d12mr4176960ioe.131.1436954402508;
+ Wed, 15 Jul 2015 03:00:02 -0700 (PDT)
+Received: by 10.107.16.15 with HTTP; Wed, 15 Jul 2015 02:59:33 -0700 (PDT)
+In-Reply-To: <CAPig+cTXAdGFmq+QkNAgmHJuZgM6-Ckg_-StrTQUxmJSpX4=Qg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/273983>
 
-I reported this before, but now I have a nice topic to hang it on -
+On Wed, Jul 15, 2015 at 1:48 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>  - check_linked_checkout() when trying to decide what branch is
+>>    checked out assumes HEAD is always a regular file, but I do not
+>>    think we have dropped the support of SYMLINK_HEAD yet.  It needs
+>>    to check st_mode and readlink(2), like resolve_ref_unsafe() does.
+>
+> Hmm, I wasn't aware of SYMLINK_HEAD (and don't know if Duy was). The
 
-I have re-reproduced the bug using a build from master as of today,
-using the new worktree commands.
+I'm aware of it. I just didn't remember it when I wrote this code.
 
-Reproduction:
-Creating a repo `foo`, checkout --to'ing it to ../bar, then try to
-clone both resulting repositories..
+> related code in resolve_ref_unsafe() is fairly involved, worrying
+> about race conditions and such, however, I guess
+> check_linked_checkout()'s implementation can perhaps be simpler, as
+> it's probably far less catastrophic for it to give the wrong answer
+> (or just die) under such a race?
 
-$ git --version
-git version 2.4.4.600.g6397abd
-$ mkdir foo
-$ cd foo
-$ git init
-Initialized empty Git repository in /bar/foo/.git/
-$ git commit -m init --allow-empty
-[master (root-commit) c6da399] init
-$ git branch bar
-$ git checkout bar --to ../bar
-Enter ../bar (identifier bar)
-Switched to branch 'bar'
-$ cd ../bar
-$ cd bar
-$ git status -sb
-## bar
-$ cd ..
-$ git clone bar baz
-Cloning into 'baz'...
-fatal: '/path/bar' does not appear to be a git repository
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-$ git clone foo baz
-Cloning into 'baz'...
-done.
-
-
-
+And if I remember correctly Mike Haggerty had a series to refactor ref
+parsing code and reuse in this place (it was my promise to do it, but
+he took over). I think the series was halted because refs.c was going
+through a major update at that time. I think we could leave it as is
+for now and completely replace it at some point in future.
 -- 
-bjornar@snoksrud.no
+Duy
