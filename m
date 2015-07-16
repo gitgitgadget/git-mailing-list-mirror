@@ -1,104 +1,90 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Bug: send-pack does not respect http.signingkey
-Date: Thu, 16 Jul 2015 12:45:16 -0700
-Message-ID: <CAD0k6qQ=ovEBZn_wje-exBhvW8brRbTgULDr68rmeiw-ZdsozQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug: send-pack does not respect http.signingkey
+Date: Thu, 16 Jul 2015 13:06:36 -0700
+Message-ID: <xmqqlhef50kz.fsf@gitster.dls.corp.google.com>
+References: <CAD0k6qQ=ovEBZn_wje-exBhvW8brRbTgULDr68rmeiw-ZdsozQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 16 21:45:44 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 22:06:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFp6E-0003CF-J0
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jul 2015 21:45:42 +0200
+	id 1ZFpQb-0002ag-VC
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jul 2015 22:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203AbbGPTpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2015 15:45:38 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:37168 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751637AbbGPTph (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2015 15:45:37 -0400
-Received: by igbpg9 with SMTP id pg9so21838906igb.0
-        for <git@vger.kernel.org>; Thu, 16 Jul 2015 12:45:36 -0700 (PDT)
+	id S1753140AbbGPUGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2015 16:06:41 -0400
+Received: from mail-ie0-f193.google.com ([209.85.223.193]:35181 "EHLO
+	mail-ie0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751769AbbGPUGk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2015 16:06:40 -0400
+Received: by iebmx2 with SMTP id mx2so4626995ieb.2
+        for <git@vger.kernel.org>; Thu, 16 Jul 2015 13:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=3gV7e4vk1zVLSumzJlS2INIgbaRae/1kpornIFS2+Cw=;
-        b=ekrnBLaSTKIl4CDxEpEuWTbDLvq46SxdQ2oo4CH/KlCoPEv9numXU03xsiVebOJmm/
-         iRaw3jmaYIf4szh7wV0xIkywlZmwTs/q7wIpgddx3OxsTyYy5vVYUXoL+8aOhc0tuVRf
-         xtLssYQ3zJZatjz5RCqqFYroDOMiMZq0ZqMOoHY1uAae21dxdGFITfiU3gb4GpI8AIOS
-         hZeUmGGQSVXaDUU09BKv7JgQ2wq/O+wvlwkuOJ7Ih+00cyS5dugfRDLuTxYcwnQI/FWS
-         QDrk8gzdUymrL4O5wWW0aDJmXmFZWdBY5MaFvWT4HsVDXBViKUPmKxEAPDGrZtGrRUwE
-         K7KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=3gV7e4vk1zVLSumzJlS2INIgbaRae/1kpornIFS2+Cw=;
-        b=EVQnLWaSb08vsUqshmxWVDw+aO/f0iK5Nzyo6QswnOxKuNyoQkT/vGaR0lsfqIZbzm
-         +EnQDWGAQkc3rZY7OI4jDKbAKvXVmt7S1dVETTSxa6RdCGLFr3x2XFT2ZIKBdAFENOZt
-         326MQ51EgEoDXO/wCFFQXU2HJv3pLT/gX453Hols7q4RtBoTRLPH4McWI3vE5LEQ6A+P
-         wbUVqINL6yA/ACRwm6TjVsMrLFGP/Y4GD4tz7nhXEsuMAPQRDvTpKMMcHu/5SMlD+hdO
-         3ewRz7UA+wg3Ru2SPmicuftHwKqLgHQcmt8AxIhhHc+FWB59AgprTaZlRo49RGN66Hh2
-         3kFg==
-X-Gm-Message-State: ALoCoQmN17O76splV5mxqoi+9xFyF9NoXA8+spMA4xMOhnMebRC8x8tje8S8rjY1afuzgaZkjOut
-X-Received: by 10.107.132.7 with SMTP id g7mr13898722iod.9.1437075936341; Thu,
- 16 Jul 2015 12:45:36 -0700 (PDT)
-Received: by 10.107.4.201 with HTTP; Thu, 16 Jul 2015 12:45:16 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=wtBCvyFJ+r4bNbhxpvS/vZew7mH0cNHDHrcJCXAcWr4=;
+        b=XSWuX2jtolH3qII6hzfak6AfnbWSuho3rpmgTHTMjzuIhXGHYw6Z+nRkLiUWx+2WpF
+         +2HGLF2AlG2XK54ejfhnuyi7pQyTV3o//r55YWegEHQWlIG7/9BOoM/NylsJb5AORe4e
+         yqis0s+xT1XK7q9HiaO/oxqHiWdb0fXT9Sze+fGoR5TXjhVkNIwF7kWIvzFq+nhSvMz3
+         EuuoS27H+hjO9nHuEQHXoecs+IO6/gC11+gozzYAOIZINZDsfkyuhrq/wBMHTX33N2Y4
+         cf8Ibf374tXQdW9UuZppZkyzR53ZI4uPVuHGLlS9njgRdFMEc7VigqAt5tVLMujtDGjf
+         tR4w==
+X-Received: by 10.107.10.17 with SMTP id u17mr13872977ioi.16.1437077199712;
+        Thu, 16 Jul 2015 13:06:39 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:117b:74b0:a5d4:7d4c])
+        by smtp.gmail.com with ESMTPSA id w4sm2001273igl.22.2015.07.16.13.06.38
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 16 Jul 2015 13:06:39 -0700 (PDT)
+In-Reply-To: <CAD0k6qQ=ovEBZn_wje-exBhvW8brRbTgULDr68rmeiw-ZdsozQ@mail.gmail.com>
+	(Dave Borowitz's message of "Thu, 16 Jul 2015 12:45:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274039>
 
-When git-send-pack is exec'ed, as is done by git-remote-http, it does
-not reread the config, so it does not respect the configured
-http.signingkey, either from the config file or -c on the command
-line. Thus it is currently impossible to specify a signing key over
-HTTP, other than the default one matching the "Name <email>" format in
-the keyring.
+Dave Borowitz <dborowitz@google.com> writes:
 
-This is not an issue for git:// as send-pack is executed directly in
-the same process that reads the config.
+> When git-send-pack is exec'ed, as is done by git-remote-http, it does
+> not reread the config, so it does not respect the configured
+> http.signingkey, either from the config file or -c on the command
+> line. Thus it is currently impossible to specify a signing key over
+> HTTP, other than the default one matching the "Name <email>" format in
+> the keyring.
+>
+> This is not an issue for git:// as send-pack is executed directly in
+> the same process that reads the config.
 
----
- gpg-interface.c | 1 +
- run-command.c   | 3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+Interesting.  I agree that it would be a problem not to be able to
+specify which signing key to use.
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 68b0c81..e0ffcb0 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -87,6 +87,7 @@ void set_signing_key(const char *key)
- int git_gpg_config(const char *var, const char *value, void *cb)
- {
-  if (!strcmp(var, "user.signingkey")) {
-+ fprintf(stderr, "setting %s\n", value);
-  set_signing_key(value);
-  }
-  if (!strcmp(var, "gpg.program")) {
-diff --git a/run-command.c b/run-command.c
-index 4d73e90..39ae8d5 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "run-command.h"
+Perhaps something like this?
+
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index b564a77..57c3a9c 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -11,6 +11,7 @@
+ #include "transport.h"
+ #include "version.h"
+ #include "sha1-array.h"
 +#include "gpg-interface.h"
- #include "exec_cmd.h"
- #include "sigchain.h"
- #include "argv-array.h"
-@@ -344,7 +345,7 @@ fail_pipe:
-  cmd->err = fderr[0];
-  }
-
-- trace_argv_printf(cmd->argv, "trace: run_command:");
-+ trace_argv_printf(cmd->argv, "trace: run_command (%s):", get_signing_key());
-  fflush(NULL);
-
- #ifndef GIT_WINDOWS_NATIVE
--- 
-2.4.3.573.g4eafbef
+ 
+ static const char send_pack_usage[] =
+ "git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
+@@ -113,6 +114,8 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	int from_stdin = 0;
+ 	struct push_cas_option cas = {0};
+ 
++	git_config(git_gpg_config, NULL);
++
+ 	argv++;
+ 	for (i = 1; i < argc; i++, argv++) {
+ 		const char *arg = *argv;
