@@ -1,73 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: A few "linked checkout" niggles
-Date: Fri, 17 Jul 2015 06:13:48 +0700
-Message-ID: <CACsJy8CC_fju1Vy-hN69rKdpZ=XDUdZ_H_pmUb0bJdt-LdiPew@mail.gmail.com>
-References: <xmqqoajdui8w.fsf@gitster.dls.corp.google.com> <xmqqd1zr4z28.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] Documentation/git-worktree: fix stale "git checkout
+ --to" references
+Date: Thu, 16 Jul 2015 19:26:32 -0400
+Message-ID: <CAPig+cTPfOs-VkkDJ3LNrQ3ZC14PixOcx_Y4k=pMjMOYVHzO=g@mail.gmail.com>
+References: <1437084583-6382-1-git-send-email-sunshine@sunshineco.com>
+	<xmqq4ml34snd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 01:14:23 2015
+X-From: git-owner@vger.kernel.org Fri Jul 17 01:26:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFsMB-0003ym-AP
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 01:14:23 +0200
+	id 1ZFsY3-0007mP-3T
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 01:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567AbbGPXOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2015 19:14:18 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:36193 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751443AbbGPXOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2015 19:14:18 -0400
-Received: by igbij6 with SMTP id ij6so25739380igb.1
-        for <git@vger.kernel.org>; Thu, 16 Jul 2015 16:14:17 -0700 (PDT)
+	id S1756728AbbGPX0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2015 19:26:34 -0400
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:32953 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755926AbbGPX0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2015 19:26:33 -0400
+Received: by ykeo3 with SMTP id o3so76833709yke.0
+        for <git@vger.kernel.org>; Thu, 16 Jul 2015 16:26:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nRdkRWaGPTr/U6cTGGZQRnz56jHrJuDlhuOLj+ddt8A=;
-        b=qbSW6jdJGVw3kgP10CQvF1geB7EjTQg07epTlme1ipizD73x0a/tdCv5ZXdj0sYVC6
-         f1sYDn7in86aSC8tLbERDloWw5Y2t6aIKmT2CP/th4aZhs0G0wtqI84w7mi2Rk/6ftgI
-         JkGopJsoBCJmIcHCrRhr8eHzN0NWCEdrcpp29Q/OJ2jxr1xD/O4eWDFtm2rxDO8zFnRZ
-         2JxhOPVUgJe9c6Y7WuFuleFC4bySWYPwiY8wYo6HLn8gQCV6IVdROv+133VzcXmsoAYt
-         LL1+5Wg2qMj4xIbIg1r7gKKscp385bl7PUkqsyoEN6f0oOhnGFMAlpwZXtvMeVaRH3Am
-         Nw/Q==
-X-Received: by 10.50.28.78 with SMTP id z14mr6754990igg.61.1437088457445; Thu,
- 16 Jul 2015 16:14:17 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Thu, 16 Jul 2015 16:13:48 -0700 (PDT)
-In-Reply-To: <xmqqd1zr4z28.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=GPB/L7+057uHKcwzLY54tdQY85OUxO8b4vWeG+7JBw8=;
+        b=iQ4kSZe6RzX3PKf+pC0iyH0A/ZD93fK5L0vfn5+YZSVsfAOQmJBrK/9UvQt3NBXYCB
+         X1WpOHSbM8YnPZ/Iv6H4ts5HV5kH9nqXRZSJTFeUDL2alTye4q/Kh3VQI7qPtLohoB2y
+         u7r2+UJWN5NRwHK1Cdsg2CVSgiUfq27s/poqzamiL7bRc/sW2734ZQ9TMCv4sXRI3p/9
+         MEJyXu3P+wBwy9YaH1AclFOfNUOZNwGXIKhLvuwPARGx5JLYw9smfcInypcrCdEsPpu5
+         +fvex1Eby01Rpb+CSxv3JgMC2BEkmLlYa6YOdBuF+jVT0FhooY/WSia5yGJRkV1tRfrE
+         mcpw==
+X-Received: by 10.13.192.132 with SMTP id b126mr12404458ywd.163.1437089193031;
+ Thu, 16 Jul 2015 16:26:33 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Thu, 16 Jul 2015 16:26:32 -0700 (PDT)
+In-Reply-To: <xmqq4ml34snd.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: bDCrM_Ooc_2mfVqAEZM9kOPk54Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274051>
 
-On Fri, Jul 17, 2015 at 3:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Also in a linked checkout of git.git itself, t5601.21 seems to fail
-> with:
+On Thu, Jul 16, 2015 at 6:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> These should have been changed to "git worktree add" by fc56361
+>> (worktree: introduce "add" command, 2015-07-06.
+>>
+>> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+>> ---
+> By the way, given the rate of bugs and glitches I am finding in this
+> code with a very superficial use in real work only for a few days,
+> perhaps we would want to add a warning to the documentation of "git
+> worktree", in addition to the "this is still experimental" mention
+> in the release notes, to discourage people to keep their only copy
+> of the work in a secondary worktree for now?
 >
-> fatal: Not a git repository: /home/gitster/w/src/.git/worktrees/rerere
-> not ok 21 - clone respects global branch.autosetuprebase
-> #
-> #               (
-> #                       test_config="$HOME/.gitconfig" &&
-> #                       git config -f "$test_config" branch.autosetuprebase remote &&
-> #                       rm -fr dst &&
-> #                       git clone src dst &&
-> #                       cd dst &&
-> #                       actual="z$(git config branch.master.rebase)" &&
-> #                       test ztrue = $actual
-> #               )
-> #
->
-> This test is running in /home/gitster/w/rerere, whose .git points at
-> that directory the fatail: message complains about.
+>  BUGS
+>  ----
+> -Multiple checkout support for submodules is incomplete. It is NOT
+> -recommended to make multiple checkouts of a superproject.
+> +Multiple checkout in general is still experimental, and the support
+> +for submodules is incomplete. It is NOT recommended to make multiple
+> +checkouts of a superproject.
 
-I can't reproduce with either master, next or pu. Seems strange that
-git.git info is leaking into this test..
--- 
-Duy
+Maybe, maybe not.
+
+The submodule item is at least (hopefully) quantitative. That is,
+there should be some point after specific shortcomings have been
+addressed when we can say "submodules are now supported", and remove
+the item from BUGS.
+
+But, "in general is still experimental" is nebulous and open-ended. At
+what point do we stop considering it experimental, and who will
+remember to remove the entry from BUGS when that day comes?
+
+Other than that concern, the revised text seems reasonable.
