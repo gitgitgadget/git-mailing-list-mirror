@@ -1,113 +1,101 @@
-From: =?utf-8?Q?Peter_H=C3=BCfner?= <p.huefner@e-confirm.de>
-Subject: Re: git on vagrant shared folder
-Date: Thu, 16 Jul 2015 09:09:33 +0200
-Message-ID: <ABFD6E6C-A59B-49FB-8B39-D86F00EA2A8D@e-confirm.de>
-References: <7C05ACF4-6536-4E60-BC92-FF7F0E266C0D@e-confirm.de> <20150714183215.GG7613@paksenarrion.iveqy.com> <CAGZ79kbBKzbjbg5u7A7BgnV1JF=5A+-gb0OdYs11g6kx_UQu_A@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2102\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jul 16 09:09:47 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 07/20] checkout: check_linked_checkout: simplify symref parsing
+Date: Thu, 16 Jul 2015 04:20:12 -0400
+Message-ID: <1437034825-32054-8-git-send-email-sunshine@sunshineco.com>
+References: <1437034825-32054-1-git-send-email-sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 16 10:21:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFdIg-00083j-9V
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jul 2015 09:09:46 +0200
+	id 1ZFePg-0008HB-Sy
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jul 2015 10:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965AbbGPHJh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2015 03:09:37 -0400
-Received: from mailrelay4.qsc.de ([195.158.160.129]:45330 "EHLO
-	mailrelay4.qsc.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753905AbbGPHJh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2015 03:09:37 -0400
-Received: from s029.bre.qsc.de ([195.90.7.69]) by mailgate4.qsc.de;
- Thu, 16 Jul 2015 09:09:33 +0200
-Received: from [192.168.53.205] (unknown [212.84.220.117])
-	by s029.bre.qsc.de (Postfix) with ESMTPSA id 43CDB36C0049;
-	Thu, 16 Jul 2015 09:09:33 +0200 (CEST)
-In-Reply-To: <CAGZ79kbBKzbjbg5u7A7BgnV1JF=5A+-gb0OdYs11g6kx_UQu_A@mail.gmail.com>
-X-Mailer: Apple Mail (2.2102)
-X-cloud-security-sender: p.huefner@e-confirm.de
-X-cloud-security-recipient: git@vger.kernel.org
-X-cloud-security-Virusscan: CLEAN
-X-cloud-security-disclaimer: This E-Mail was scanned by E-Mailservice on mailgate4 with 70FFD1490001
-X-cloud-security-connect: s029.bre.qsc.de[195.90.7.69], TLS=, IP=195.90.7.69
-X-cloud-security: scantime:.2610
+	id S1754108AbbGPIVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2015 04:21:00 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:37632 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753954AbbGPIUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2015 04:20:54 -0400
+Received: by igbpg9 with SMTP id pg9so8106976igb.0
+        for <git@vger.kernel.org>; Thu, 16 Jul 2015 01:20:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=NfRuMEgPOfIriITa9jfUwfdmgIlObioSAzoqM3PwYBo=;
+        b=GBUrzcXdjsGObWp7Bf0aSsKdK8gqQKcPDenje3T6Q1CCqll6jsnOlMYVEMrFQVi3an
+         q5QQZRk2lMgr6Y9rgOh4G/qj/iNhHfLdc36TPKhDjdAVKUcvGTVVEViFiZiPi9eZwQnn
+         i21vOoWbwJCnbQAefPxOAyTcDmP7oHCj9Nj7C5FTHBAlExFkjscPBeluiF0Fv2Svzk2M
+         o8Rb8/PEMp5aTylFvVvbU+5HE7rkIwyM2iwLSWiq259Zv4BRZejKNU3ObtbtjVhdrzv5
+         hEu/QQzr1VWuCBPsnZ1yt0XI4PgY2k+kinWYxsgqw/p4F2TguAa7IQ6Ecx99Yf1r31L7
+         JRYg==
+X-Received: by 10.107.156.140 with SMTP id f134mr11500771ioe.34.1437034853698;
+        Thu, 16 Jul 2015 01:20:53 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by smtp.gmail.com with ESMTPSA id j83sm4581146iod.25.2015.07.16.01.20.52
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 16 Jul 2015 01:20:53 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.rc2.378.g0af52e8
+In-Reply-To: <1437034825-32054-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274009>
 
-Hi Stefan, Hi Frederik,
+check_linked_checkout() only understands symref-style HEAD (i.e. "ref:
+refs/heads/master"), however, HEAD may also be a an actual symbolic link
+(on platforms which support it), thus it will need to check that style
+HEAD, as well (via readlink()). As a preparatory step, simplify parsing
+of symref-style HEAD so the actual branch check can be re-used easily
+for symbolic links (in an upcoming patch).
 
-maybe I stated the case not clearly enough.
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-The repo is just inside an shared/mounted folder from the VM to the Hos=
-t, so that we can access the sourcecode via an IDE running on the host.=
- The git commands are executed inside the VM on an ubuntu system. So th=
-ere is no mix of operating systems in the repos directly. The shared/mo=
-unted folder is underlying some restrictions, such as no filemode and c=
-ase insensitive filenames. But with git we can handle this.
+New in v2: code cleanup in preparation for new patch 08/20.
 
-We do not commit any file inside the .git folder. The error (could not =
-commit .git/config file) comes up while the git-clone command executed =
-inside the shared folder.
+ builtin/checkout.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-I tried to clone the repo outside the shared folder and copied it insid=
-e afterwards. As I was doing the configuration for filemode and case wi=
-th the git-config command, I got the same error (could not commit .git/=
-config file). But I was able to update the .git/config manually. So it =
-is not only an access problem, because I can access the file.
-
-The security risk is stated with version 2.2.1, but we were able clone =
-in the shared folder with git 2.3. So the change must be in an higher v=
-ersion.
-
-Maybe I am able to install a few versions of git and try the scenario f=
-or them, then i should be able to determine the version explicit.
-
-Thanks again for your help. I hope I could state the problem a bit more=
- detailed for you.
-
-
-Mit freundlichen Gr=C3=BC=C3=9Fen
-=20
-Peter H=C3=BCfner
-=2E........................................................
-e=C2=B7confirm GmbH ..
-Travel.Software.Training.Consulting
-=20
-Gesch=C3=A4ftsf=C3=BChrer: Roman Borch und Michael Posthoff
-HRB 35653B   Steuernummer 37/211/10880
-10119 Berlin Linienstr. 214
-=20
-Tel.  +49 (0) 30 28 00 28 24=20
-=46ax. +49 (0) 30 28 00 28 28
-=20
-www.e-confirm.de
-=2E....................................................................=
-=2E...........................
-
-> Am 14.07.2015 um 20:53 schrieb Stefan Beller <sbeller@google.com>:
->=20
->>=20
->>> A few weeks ago we weren=E2=80=99t able to clone and get an error: =
-could not commit /vagrant/.git/config file. Manually we were able to ch=
-ange that file and also the clone command works outside the shared fold=
-er.
->>=20
->> Why are you trying to commit a file inside the .git dir? Files in th=
-at
->> dir should not be commited (and I'm pretty sure there was a patch ab=
-out
->> this a while ago). The .git/config file for example is local to each=
- git
->> repo and should not be commited.
->=20
-> Actually it is considered a security risk, see
-> http://article.gmane.org/gmane.linux.kernel/1853266
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a331345..3487712 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -878,7 +878,6 @@ static void check_linked_checkout(const char *branch, const char *id)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf gitdir = STRBUF_INIT;
+-	const char *start, *end;
+ 
+ 	/*
+ 	 * $GIT_COMMON_DIR/HEAD is practically outside
+@@ -890,15 +889,13 @@ static void check_linked_checkout(const char *branch, const char *id)
+ 	else
+ 		strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+ 
+-	if (strbuf_read_file(&sb, path.buf, 0) < 0 ||
+-	    !skip_prefix(sb.buf, "ref:", &start))
++	if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
++	    starts_with(sb.buf, "ref:")) {
++		strbuf_remove(&sb, 0, strlen("ref:"));
++		strbuf_trim(&sb);
++	} else
+ 		goto done;
+-	while (isspace(*start))
+-		start++;
+-	end = start;
+-	while (*end && !isspace(*end))
+-		end++;
+-	if (strncmp(start, branch, end - start) || branch[end - start] != '\0')
++	if (strcmp(sb.buf, branch))
+ 		goto done;
+ 	if (id) {
+ 		strbuf_reset(&path);
+-- 
+2.5.0.rc2.378.g0af52e8
