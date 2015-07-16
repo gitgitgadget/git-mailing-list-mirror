@@ -1,98 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] gitk: Add a "Copy commit summary" command
-Date: Thu, 16 Jul 2015 10:02:41 -0700
-Message-ID: <xmqq380o593i.fsf@gitster.dls.corp.google.com>
-References: <1437060565-4716-1-git-send-email-dev+git@drbeat.li>
+From: Joey Hess <joey@joeyh.name>
+Subject: [PATCH] support bash completion for add-on commands
+Date: Thu, 16 Jul 2015 13:22:34 -0400
+Message-ID: <20150716172234.GA3865@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Beat Bolli <dev+git@drbeat.li>
-X-From: git-owner@vger.kernel.org Thu Jul 16 19:02:50 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 16 19:22:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFmYb-0000Sd-2D
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jul 2015 19:02:49 +0200
+	id 1ZFmrx-00086P-3i
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jul 2015 19:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbbGPRCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2015 13:02:45 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:36347 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434AbbGPRCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2015 13:02:44 -0400
-Received: by igbij6 with SMTP id ij6so18702326igb.1
-        for <git@vger.kernel.org>; Thu, 16 Jul 2015 10:02:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=lvhxH9aYa3xTEbjy8IkVRmSL3VIduj0PdFnBZx8rYHw=;
-        b=J8RXfzlXs//q64qWk0DNvRJ5TCkSRTNt4tqVWMvEsFoiYuBCNOPZKPhe8oAFA4GgEY
-         rTIrAYQmv4er5JUJfwJyOdCKdTcd//21qxPfrVXqYWTV0uVP+bejzblu6fJmGM4JC+ZE
-         heT/bTk14GDkGoK7oOEi0lEg6wRQgf9ieI+C0EOjwlnMXp+S4pVODcq4OrMiZaYASdF8
-         p3ZiCSqRYHqJL8/JYQrPduy4vMynokvVn1fME+0Fj4235gdSeqmEGHeOH/OvPXa7NQUo
-         BW1CVp3e/FW26mNgXq/NW5hxHlGU0h33fN0Z1Y1iy4DL2mszGHPKXzVNxC7DoSIx1pjQ
-         8cxw==
-X-Received: by 10.50.136.194 with SMTP id qc2mr5931417igb.6.1437066163703;
-        Thu, 16 Jul 2015 10:02:43 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:117b:74b0:a5d4:7d4c])
-        by smtp.gmail.com with ESMTPSA id q10sm1691110ige.16.2015.07.16.10.02.42
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 16 Jul 2015 10:02:42 -0700 (PDT)
-In-Reply-To: <1437060565-4716-1-git-send-email-dev+git@drbeat.li> (Beat
-	Bolli's message of "Thu, 16 Jul 2015 17:29:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755118AbbGPRWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2015 13:22:45 -0400
+Received: from kitenet.net ([66.228.36.95]:53728 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751986AbbGPRWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2015 13:22:44 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=kVB/G+GK;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1437067354; bh=S41M8xrs0gjLpTaf2Y78ysFHAKcge7Ulwdhy/OHE+N8=;
+	h=Date:From:To:Subject:From;
+	b=kVB/G+GKKLHrAS99NIkJVVzUp5fFhkDT+KmoUt4RAfoInQq+gOpPDIHOoT8uo/ikU
+	 5KuhVw2HYK7SKgPUi+h5okRafG+i0Y65RlM49f4k9jFoJ43oU0F3p4k3npGYsM3Tef
+	 OwtYrGNA0M4+15XcBl0yKMcBSpRIFfj9hI2uoLgg=
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Status: No, score=-91.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BRBL_LASTEXT,RCVD_IN_PBL,
+	RCVD_IN_RP_RNBL,RCVD_IN_SORBS_DUL,RDNS_NONE,SPF_SOFTFAIL,URIBL_BLOCKED,
+	USER_IN_WHITELIST autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274034>
 
-Beat Bolli <dev+git@drbeat.li> writes:
+This makes it possible to implement bash completion for add-on commands,
+that will work even when the bash completion scripts are being loaded
+on-demand, as is done by the bash-completion package.
 
-> When referring to earlier commits in commit messages or other text, one
-> of the established formats is
->
->     <abbrev-sha> ("<summary>", <author-date>)
-> ...
-> +proc copysummary {} {
-> +    global rowmenuid commitinfo
-> +
-> +    set id [string range $rowmenuid 0 7]
-> +    set info $commitinfo($rowmenuid)
-> +    set commit [lindex $info 0]
+git's bash completion handles subcommands by running a _git_$command
+function. As well as the many such functions included in
+git-completion.bash, there can be other functions defined elsewhere
+to support third-party add-on git commands, and they'll happily be used.
 
-7 hexdigits is not always an appropriate value for all projects.
-The minimum necessary to guarantee uniqueness varies on project, and
-it is not a good idea to hardcode such a small value.  Not-so-old
-Linux kernel history seems to use at least 12, for example.
+But, bash completion scripts are often loaded on demand, as shown in the
+completion_loader example in bash's man page, and the bash-completion
+implementation that is commonly used on many Linux systems. The demand
+loading will load this very script from some place like
+/usr/share/bash-completion/completions/git, when the user complete a git
+command. But, completion scripts for git add-on commands don't get loaded.
 
-I believe that the "one of the established formats" comes from a
-"git one" alias I published somewhere long time ago, that did
-something like this:
+For example, when I wrote a git-annex bash completion script,
+bash was unable to tab complete "git annex foo", until I tab completed a
+"git-annex" command. Which loaded the git-annex completion, and then
+that same completion worked to make "git annex foo" tab complete. An
+inconsistent UI..
 
-  git show -s --abbrev=8 --pretty='format:%h (%s, %ai' "$@" |
-  sed -e 's/ [012][0-9]:[0-5][0-9]:[0-5][0-9] [-+][0-9][0-9][0-9][0-9]$/)/'
+So, if the git completion script is unable to find the wanted
+_git_$command function, have it fall-back to looking for a git-$command
+completion script, and loading it. The add-on script is looked for in the
+same directory as the git completion script, which we can find by looking
+at BASH_SOURCE.
 
-where the combination of --abbrev=8 and format:%h asks for a unique
-abbreviation that is at least 8 hexdigits long but can use more than
-8 if it is not long enough to uniquely identify the given commit.
+Signed-off-by: Joey Hess <joeyh@joeyh.name>
+---
+ contrib/completion/git-completion.bash | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-I do not offhand know how $commitinfo is populated, but perhaps you
-can tweak that code to ask for both %H (for the full commit object
-ID) and %h (for the unique abbreviation of appropriate length) and
-store the value for %h to a new field in the $commitinfo($rowmenuid)
-array, so that you do not have to have such a hard-coded truncation
-here?
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c97c648..ba91b2a 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2614,7 +2614,16 @@ __git_main ()
+ 	if [ -n "$expansion" ]; then
+ 		words[1]=$expansion
+ 		completion_func="_git_${expansion//-/_}"
+-		declare -f $completion_func >/dev/null && $completion_func
++		declare -f $completion_func >/dev/null && $completion_func && return
++	fi
++
++	# As a fallback, if no completion function is defined for the
++	# command, look for add-on command completion script in same
++	# directory as this completion script, and if found, source it,
++	# and restart completion using it.
++	local compdir="${BASH_SOURCE%/*}"
++	if [ -e "$compdir/git-$command" ]; then
++		source "$compdir/git-$command" && __git_main "$@"
+ 	fi
+ }
+ 
 
-> +    set date [formatdate [lindex $info 2]]
-> +    set summary "$id (\"$commit\", $date)"
-> +
-> +    clipboard clear
-> +    clipboard append $summary
-> +}
-> +
->  proc writecommit {} {
->      global rowmenuid wrcomtop commitinfo wrcomcmd NS
+-- 
+2.1.4
