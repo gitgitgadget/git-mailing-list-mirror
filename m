@@ -1,81 +1,63 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: A few "linked checkout" niggles
-Date: Fri, 17 Jul 2015 13:07:14 -0400
-Message-ID: <CAPig+cSLs4-uKicVMBSKnEro_FYD722Hs1_U6qzTriM8Ciok2Q@mail.gmail.com>
-References: <xmqqoajdui8w.fsf@gitster.dls.corp.google.com>
-	<55A8F4B1.9060304@drmicha.warpmail.net>
-	<CACsJy8BZEhMJPdw4K_kihA1kTPBVsAt=zW-cemzO7V+xfDih8Q@mail.gmail.com>
-	<xmqqzj2u3j7m.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix detection of uname failure
+Date: Fri, 17 Jul 2015 10:09:13 -0700
+Message-ID: <xmqq615i3e4m.fsf@gitster.dls.corp.google.com>
+References: <1437135095-6244-1-git-send-email-charles@hashpling.org>
+	<ef7d56584c3b5d6431f895df1d94eba8@www.dscho.org>
+	<20150717170142.GA9616@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 19:07:25 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri Jul 17 19:09:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZG96Y-0003Uk-Br
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 19:07:22 +0200
+	id 1ZG98S-0004JT-Gz
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 19:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752464AbbGQRHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 13:07:16 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:34732 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752076AbbGQRHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 13:07:15 -0400
-Received: by ykax123 with SMTP id x123so94679872yka.1
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 10:07:14 -0700 (PDT)
+	id S1752766AbbGQRJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 13:09:16 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34825 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566AbbGQRJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 13:09:15 -0400
+Received: by pactm7 with SMTP id tm7so64218807pac.2
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 10:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=nqe6DCZTxGPCnAQe4CJ+lDonlIBh9WGiC+nfLEmjGBw=;
-        b=IqdTe9b9D3tLanHYGd/9xULAhbNAKpAK3jTztm5IvdR8YDIfT6oMg7qRS5+0d1j01B
-         +C1FCbqXUUNbHhUOZJVcuXoViVMK4Nt+w9ESprexYeYFxxYMs3HSOQjzALsuuvdetRw5
-         SdKyeMLW6kq6fcVs22PLQ9TRZ8DNpc4cutePAiMsML8FVvB8tagIhBkXXpR9BzrF95Mv
-         5InsUqrEEzWhm8RFR/kdIvdKNFkvszW5zz5lbHfNtag6uU7kZ1cmNmU/dVuZ8QUwBJLZ
-         m6f8Z7r8+9HvJEucPCqES3TPtBLL57RQQemE6er5Odr/5/yJ29NSDXd+hBAVx8uTU9zj
-         /NJA==
-X-Received: by 10.129.50.140 with SMTP id y134mr16401863ywy.39.1437152834822;
- Fri, 17 Jul 2015 10:07:14 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Fri, 17 Jul 2015 10:07:14 -0700 (PDT)
-In-Reply-To: <xmqqzj2u3j7m.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: w-LnTtJn2itVPl_-AIU4JoO2csU
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=tnnNgKNq4Sx4kUzR/0kyPiGqNnjcFfXhGJiz0WVgjJU=;
+        b=xEwgc7vicSbGeABu6ynWCniFhtNV9JsGrXsaQnNjcCXq1R+xLsbhImuLWNAsn1DQ4V
+         hUeblmZsP1wu1Ke1MxP0FB2xVkVX/+JDgWEu3+hCLO/g4ZRaVwg7ffwEbpRfQkRmdUEI
+         EMpIILdMGb0jW9W32OwpqaNuJfZWRsw1hXsNqFTmzTC+WFYW6F2pMiuCARRRiqgKLXfo
+         oT1fWPOZjWUnJ13c+gbrugZIxK8J1TFtiYCTxZrMTyY6fyeB935hlX7w8XM9uvj3rfkq
+         PeIj5r0fduza5shLumhCJjkSHJI2q1tLNWMq9AvnAORYOMA1Ehsy/mFuoIDreL4lmW1h
+         60fA==
+X-Received: by 10.68.167.131 with SMTP id zo3mr31399156pbb.123.1437152954701;
+        Fri, 17 Jul 2015 10:09:14 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
+        by smtp.gmail.com with ESMTPSA id gs7sm11821387pbc.6.2015.07.17.10.09.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 17 Jul 2015 10:09:13 -0700 (PDT)
+In-Reply-To: <20150717170142.GA9616@hashpling.org> (Charles Bailey's message
+	of "Fri, 17 Jul 2015 18:01:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274086>
 
-On Fri, Jul 17, 2015 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Fri, Jul 17, 2015 at 7:27 PM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Two more observations:
->>>
->>> $ git worktree add /tmp/gitwt
->>> Enter /tmp/gitwt (identifier gitwt)
->>> Switched to a new branch 'gitwt'
->>>
->>> Now I'm in /tmp/gitwt at branch gitwt. Right? No. I'm in the original wd
->>> at the original branch.
->>>
->>> So either we cd to the new location or quelch these messages or add a
->>> message that we're actually back.
->>
->> s/Enter/Preparing/ ?
->
-> Hmm, do we even need that message?  I assumed it was a leftover
-> debugging stuff ;-)
+Charles Bailey <charles@hashpling.org> writes:
 
-It helps give context to messages which follow it, such as "Checking
-out files:..." and "HEAD is now at...", letting the user know that
-those messages apply to the new worktree rather than the current one.
-In this case, s/Enter/Preparing/ makes sense.
+> ... I think '< 0' is
+> probably better. In POSIX, we shouldn't ever get a negative value which
+> isn't -1, but if we ever do it is probably safer to fail. I'll send and
+> update.
 
-("Switched to a new branch..." is gone in 'pu'.)
+Thanks; I was about to type the same reasoning and conclusion ;-)
