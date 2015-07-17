@@ -1,107 +1,107 @@
-From: Jacob Keller <jacob.keller-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: GNU diff and git diff - difference on myers algorithm?
-Date: Thu, 16 Jul 2015 21:23:54 -0700
-Message-ID: <CA+P7+xq=J76N16XETKkUhRJKyShPtg4-K0aMjE5+_LzBJQ-t3A@mail.gmail.com>
-References: <CAB=NE6XRnKAY6t+dxT7vO_4wqngXvULh-CqezEAs2r99FkNCTg@mail.gmail.com>
- <0add7d95076f5b112af90d8566c29203@www.dscho.org> <CAB=NE6VGX332=CvhQM4sc27AM8ae5S1kdRnm5sMfoqkU=b=ebg@mail.gmail.com>
- <CAB=NE6UFMv0qu8fJ1P2-pJCF0tSGKoW+uKhfwt0jV5fj2wZGSQ@mail.gmail.com> <CA+P7+xrOPS6NeQhte-ATdm2Nqo0PpmUAxS+XYzWDvZGtwPtWMw@mail.gmail.com>
+From: Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH v3] gitk: Add a "Copy commit summary" command
+Date: Fri, 17 Jul 2015 10:39:03 +0200
+Message-ID: <205a18f7f8a7892a1fa63a91a84bfd9b@drbeat.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin-Mmb7MZpHnFY@public.gmane.org>,
-	git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Julia Lawall <julia.lawall-L2FTfq7BK8M@public.gmane.org>,
-	"Luis R. Rodriguez" <mcgrof-IBi9RG/b67k@public.gmane.org>,
-	"cocci-/FJkirnvOdkvYVN+rsErww@public.gmane.org" <cocci-/FJkirnvOdkvYVN+rsErww@public.gmane.org>,
-	"backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-To: "Luis R. Rodriguez" <mcgrof-3uybbJdB1yH774rrrx3eTA@public.gmane.org>
-X-From: backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Fri Jul 17 06:24:17 2015
-Return-path: <backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-Envelope-to: glb-backports-wOFGN7rlS/M9smdsby/KFg@public.gmane.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 17 10:46:05 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>)
-	id 1ZFxC5-00022e-4r
-	for glb-backports-wOFGN7rlS/M9smdsby/KFg@public.gmane.org; Fri, 17 Jul 2015 06:24:17 +0200
-Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
-	id S1750796AbbGQEYP (ORCPT <rfc822;glb-backports@m.gmane.org>);
-	Fri, 17 Jul 2015 00:24:15 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:34077 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750699AbbGQEYO (ORCPT
-	<rfc822;backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>); Fri, 17 Jul 2015 00:24:14 -0400
-Received: by igvi1 with SMTP id i1so27804779igv.1;
-        Thu, 16 Jul 2015 21:24:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=tsDw4XP/ta1egA5Gg6tplTeDMzTBE3+eOPtHHLfqj4g=;
-        b=AUmzxPYCkRbp5zh52wKPnNfCr1ONCu4yKapggZ0eP+OBJBZ2VQzm2cq+Xp/pcFcav4
-         6tHvHExpFetolhQ0fSo1cs/0aMr4xUcg0UOZ7nz8dlcu2B5EbkEW2oXUuc7Cibq7vH1q
-         AD5BAkc8/XFzlSAuvkPDmN741TZP6KpzKkAoLlHwYrPMl+Dt0Op1iNtGOTVWFTKz8Ras
-         lC08At0ZZ1SD5/fKf7kJ2ROaTDytVlt5x8r+xMZl/I2bJIOmcoMRCIEZl8FaBspaHslJ
-         JzjeBkDIjhKoARbZ51e2WtZ99z/msDkM6YPiknfi4O7xCQIQI12UnC96SMNLBLncLSkF
-         UzCA==
-X-Received: by 10.50.23.98 with SMTP id l2mr7972740igf.25.1437107053857; Thu,
- 16 Jul 2015 21:24:13 -0700 (PDT)
-Received: by 10.107.157.75 with HTTP; Thu, 16 Jul 2015 21:23:54 -0700 (PDT)
-In-Reply-To: <CA+P7+xrOPS6NeQhte-ATdm2Nqo0PpmUAxS+XYzWDvZGtwPtWMw-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-Sender: backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1ZG1HM-00057u-7u
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 10:46:00 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757277AbbGQIpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 04:45:54 -0400
+Received: from mx1.2b3w.ch ([92.42.186.250]:33060 "EHLO mx1.2b3w.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754746AbbGQIpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 04:45:52 -0400
+X-Greylist: delayed 405 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jul 2015 04:45:52 EDT
+Received: from mx1.2b3w.ch (localhost [127.0.0.1])
+	by mx1.2b3w.ch (Postfix) with ESMTP id E1C2CC343E;
+	Fri, 17 Jul 2015 10:39:03 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RELAYS
+	autolearn=ham version=3.3.2
+Received: by mx1.2b3w.ch (Postfix, from userid 33)
+	id C401FC3442; Fri, 17 Jul 2015 10:39:03 +0200 (CEST)
+X-PHP-Originating-Script: 0:main.inc
+X-Sender: dev+git@drbeat.li
+User-Agent: Roundcube Webmail/0.7.2
+X-Virus-Scanned: ClamAV using ClamSMTP
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <backports.vger.kernel.org>
-X-Mailing-List: backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274059>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274060>
 
-On Thu, Jul 16, 2015 at 9:22 PM, Jacob Keller <jacob.keller-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
-> On Thu, Jul 16, 2015 at 12:07 PM, Luis R. Rodriguez
-> <mcgrof-3uybbJdB1yH774rrrx3eTA@public.gmane.org> wrote:
->> On Fri, Jun 12, 2015 at 11:52 AM, Luis R. Rodriguez
->> <mcgrof-3uybbJdB1yH774rrrx3eTA@public.gmane.org> wrote:
->>> OK wells I'm curious about more research / effort when trying to
->>> evaluate a diff with two seprate but adjoining preprocessor directives
->>> and if anyone has implemented an optimizaiton option to let the diff
->>> generator join them.
->>>
->>> For example, to let it infer that:
->>>
->>> --- a/test.c
->>> +++ b/test.c
->>> @@ -10,8 +10,6 @@ int main(int argc, char *argv[])
->>>
->>>  #ifdef FOO
->>>         a = 4;
->>> -#endif /* FOO */
->>> -#ifdef FOO
->>>         a = 5;
->>>  #endif /* FOO */
->>>
->>> is possible.
->>
->> Anyone familiar if any tool exists today that would optimize this? Is
->> anyone working on it? Would git be a good place for such a thing? I'd
->> consider it as an option to optimize a diff. This for example is
->> extremely useful for us working with Coccinelle where we have a tool
->> writing code for us, while such an optimization might be useful to
->> Coccinelle it would seem like a rather generic feature, its just not
->> clear to me where to give such a tool a proper home.
->>
->>  Luis
->
-> I do not understand exactly what would be optimized in this case?
->
-> In any regards, that's not a diff transformation, that is a code
-> transformation, and I would suggest starting with Coccinelle and
-> seeing if you can get that to do what you want.
-> http://coccinelle.lip6.fr/
->
-> Regards,
-> Jake
+When referring to earlier commits in commit messages or other text, one
+of the established formats is
 
-I misread your comment. Coccinelle is a tool that could probably be
-coerced into doing this, but this is not a diff optimization unless I
-am completely understanding it. This is a code transformation concept,
-and doesn't have much to do with finding differences or code changes.
-My above comment is correct, but I don't think this belongs in diff
-parsing, but rather as part of something like Coccinelle
+     <abbrev-sha> ("<summary>", <author-date>)
 
-Regards,
-Jake
+Add a "Copy commit summary" command to the context menu that puts this
+text for the currently selected commit on the clipboard. This makes it
+easy for our users to create well-formatted commit references.
+
+The <abbrev-sha> is produced with the %h format specifier to make it
+unique. Its minimum length can be controlled with the config setting
+core.abbrev.
+
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Reviewed-by: Johannes Sixt <j6t@kdbg.org>
+Cc: Paul Mackerras <paulus@samba.org>
+
+---
+Changes since v2:
+- call git log to produce a unique <abbrev-sha>
+- use the short date format
+
+Changes since v1:
+- drop the "commit " literal in front of the <abbrev-sha>
+---
+  gitk-git/gitk | 12 ++++++++++++
+  1 file changed, 12 insertions(+)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 9a2daf3..4915f53 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -2617,6 +2617,7 @@ proc makewindow {} {
+  	{mc "Diff selected -> this" command {diffvssel 1}}
+  	{mc "Make patch" command mkpatch}
+  	{mc "Create tag" command mktag}
++	{mc "Copy commit summary" command copysummary}
+  	{mc "Write commit to file" command writecommit}
+  	{mc "Create new branch" command mkbranch}
+  	{mc "Cherry-pick this commit" command cherrypick}
+@@ -9341,6 +9342,17 @@ proc mktaggo {} {
+      mktagcan
+  }
+
++proc copysummary {} {
++    global rowmenuid
++
++    set format "%h (\"%s\", %ad)"
++    set summary [exec git show -s --pretty=format:$format --date=short 
+\
++                 $rowmenuid]
++
++    clipboard clear
++    clipboard append $summary
++}
++
+  proc writecommit {} {
+      global rowmenuid wrcomtop commitinfo wrcomcmd NS
+
+-- 
+2.4.0
