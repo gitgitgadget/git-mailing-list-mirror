@@ -1,98 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Documentation/git: fix stale "MULTIPLE CHECKOUT MODE" reference
-Date: Fri, 17 Jul 2015 14:09:35 -0700
-Message-ID: <xmqqfv4m1ofk.fsf@gitster.dls.corp.google.com>
-References: <1437092222-11131-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqa8uu3edr.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQvVA0Cb60AxA=9RAUj6bBN419FQHObM6PARiDwGLiHow@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 23:09:46 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v2] unpack-trees: don't update files with CE_WT_REMOVE set
+Date: Fri, 17 Jul 2015 17:19:27 -0400
+Message-ID: <1437167967-5933-1-git-send-email-dturner@twopensource.com>
+References: <xmqqk2ty1reo.fsf@gitster.dls.corp.google.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Anatole Shaw <git-devel@omni.poc.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 17 23:20:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGCt6-0004CB-9T
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 23:09:44 +0200
+	id 1ZGD34-0000wx-6t
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 23:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323AbbGQVJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 17:09:39 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:34831 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755313AbbGQVJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 17:09:37 -0400
-Received: by pdrg1 with SMTP id g1so67197681pdr.2
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 14:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=JjUakNPOmBUS98L/MEwbXqMm++gMx9jkiqyvZ1Wnoo4=;
-        b=saspxIzaIOTsZEjVw1ImWjgAxBahWnW412qcHpAFMpH+cIwnDBlPTz5denp82PoGcI
-         d5EAheGat1EAVSh5bjyuqOJVx1sTCqYjOui5YsYGp+d8IETg9Vt10fP8IrD3XvdmLAGQ
-         /lRIAtDw2S9P2neQ8kP9ZVg/oYUw8bBQ4WUmq2UJfwyFBRSVXrJTGjhcuxpMOgtzaNM3
-         Ngyg3Yj7t7iZXloQ1MDoMJRt7oDvurNUg744lWFOAIOPS6q1a+uthNKWrV/f+Q+Q5Uwf
-         FUTo4IfESdjuQ50yYhBXYBps61veDxTWbtieONbngrABoGK5Ee9+Zz3tU24ZNxB4ESeE
-         opSA==
-X-Received: by 10.66.121.230 with SMTP id ln6mr33176708pab.17.1437167377407;
-        Fri, 17 Jul 2015 14:09:37 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
-        by smtp.gmail.com with ESMTPSA id m3sm12251158pdd.29.2015.07.17.14.09.36
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jul 2015 14:09:36 -0700 (PDT)
-In-Reply-To: <CAPig+cQvVA0Cb60AxA=9RAUj6bBN419FQHObM6PARiDwGLiHow@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 17 Jul 2015 16:52:46 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753489AbbGQVTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 17:19:52 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:35057 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751901AbbGQVTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 17:19:50 -0400
+Received: by qgii95 with SMTP id i95so21956117qgi.2
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 14:19:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Zp3ixchjx7qGQcwr7qkJ9BxWmK4bwfjlwDYbgPxICIM=;
+        b=l5UjILcFxDhRBOEMZqGBMYLNKKF8UGjymGEdtIEXFeGDqxR7iYrpeHQkaraMVJOSds
+         MyyOZ7ky9qs2GfjcpUP8R3Ny6XBEIrHbM0ppSfgx9NzbyCoSir3RlR1e6KHBdzCoWvtl
+         di4B19IbNUFgAWfyi4x/4LGK9JLyLwfyNlbZitoG4pxQ42cW9L55hxBm01hsllWlVxdH
+         0RgvlU+bUmHdbzrTTIOHZKFfCjdHDOq07rxZJYJw5eaQfQf4cAyeRaVHYPujUbFtIG1S
+         HespnxlehrUY0a1S5vJQzHR3gfWzCOGtohHx8/MKE8oGjP9IpWVfsGvq+aTxrh3qceKY
+         gDHg==
+X-Gm-Message-State: ALoCoQkHcfSxWwDmAt7yhj6Ap446Kp4il0W/S0uCUrSNeVp6Z2qoIuB5ol5kB+g3Z5oshHlVURXH
+X-Received: by 10.55.43.95 with SMTP id r92mr28174196qkh.67.1437167990211;
+        Fri, 17 Jul 2015 14:19:50 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id o25sm6505275qkh.25.2015.07.17.14.19.48
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 17 Jul 2015 14:19:49 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
+In-Reply-To: <xmqqk2ty1reo.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274104>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Don't update files in the worktree from cache entries which are
+flagged with CE_WT_REMOVE.
 
->> Thanks.  I have two comments.
->>
->> "if using Cogito etc.", which is totally outside the topic of this
->> patch, is way outdated. Perhaps we would want to remove or replace
->> it.
->
-> Do you want me to re-roll the current patch to also include the
-> "Cogito" change as a "while here..." add-on?
+When a user does a sparse checkout, git removes files that are marked
+with CE_WT_REMOVE (because they are out-of-scope for the sparse
+checkout). If those files are also marked CE_UPDATE (for instance,
+because they differ in the branch that is being checked out and the
+outgoing branch), git would previously recreate them.  This patch
+prevents them from being recreated.
 
-No.  That is totally outside the topic of this patch series.
+These erroneously-created files would also interfere with merges,
+causing pre-merge revisions of out-of-scope files to appear in the
+worktree.
 
-> Also, I have v3 of "rid git-checkout of too-intimate knowledge of new
-> worktree"[1] ready to roll. Do you want me to fold the current
-> patch[2] and its brother [3] into v3?
+Signed-off-by: Anatole Shaw <git-devel@omni.poc.net>
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ t/t1090-sparse-checkout-scope.sh | 52 ++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c                   |  2 +-
+ 2 files changed, 53 insertions(+), 1 deletion(-)
+ create mode 100755 t/t1090-sparse-checkout-scope.sh
 
-I think I took them and merged them to 'master' today.
-
-> ... since he plans
-> on adding more tests[4] when fixing the can't-clone-a-linked-worktree
-> problem.)
-
-I saw that issue myself yesterday, too, I think, with a failed
-attempt to fetch from one.  I do not think it is such a huge issue
-in a sense that we can always say "don't do that", as cloning and
-fetching only from the primary location is not something that would
-make users feel unnatural.  After all, we sell this as "allowing
-secondary checkout", meaning that it is perfectly OK for us to keep
-secondaries second-class citizens compared to the primary one.  So
-being able to fetch from and clone from is "nice to have".
-
-> Other than that, the only consumer of GIT_COMMON_DIR seems to be
-> setup.c, and, based upon a quick scan, it looks like it can be easily
-> dropped, thus alleviating your concerns (but hopefully as a series
-> separate from v3 of [1] which I'd like to see land).
-
-One step at a time is perfectly fine.  We will be cautioning users
-to avoid storing the only copy of their data in repositories that
-employ this feature for a few releases until it matures by marking
-it experimental exactly so that we can tweak external interfaces
-like that incrementally.
-
-Thanks.
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+new file mode 100755
+index 0000000..1f61eb3
+--- /dev/null
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++test_description='sparse checkout scope tests'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo "initial" >a &&
++	echo "initial" >b &&
++	echo "initial" >c &&
++	git add a b c &&
++	git commit -m "initial commit"
++'
++
++test_expect_success 'create feature branch' '
++	git checkout -b feature &&
++	echo "modified" >b &&
++	echo "modified" >c &&
++	git add b c &&
++	git commit -m "modification"
++'
++
++test_expect_success 'perform sparse checkout of master' '
++	git config --local --bool core.sparsecheckout true &&
++	echo "!/*" >.git/info/sparse-checkout &&
++	echo "/a" >>.git/info/sparse-checkout &&
++	echo "/c" >>.git/info/sparse-checkout &&
++	git checkout master &&
++	test_path_is_file a &&
++	test_path_is_missing b &&
++	test_path_is_file c
++'
++
++test_expect_success 'merge feature branch into sparse checkout of master' '
++	git merge feature &&
++	test_path_is_file a &&
++	test_path_is_missing b &&
++	test_path_is_file c &&
++	test "$(cat c)" = "modified"
++'
++
++test_expect_success 'return to full checkout of master' '
++	git checkout feature &&
++	echo "/*" >.git/info/sparse-checkout &&
++	git checkout master &&
++	test_path_is_file a &&
++	test_path_is_file b &&
++	test_path_is_file c &&
++	test "$(cat b)" = "modified"
++'
++
++test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 2927660..11a5300 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -223,7 +223,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+-		if (ce->ce_flags & CE_UPDATE) {
++		if (ce->ce_flags & CE_UPDATE && !(ce->ce_flags & CE_WT_REMOVE)) {
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+-- 
+2.0.4.315.gad8727a-twtrsrc
