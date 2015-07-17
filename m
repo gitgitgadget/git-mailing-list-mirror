@@ -1,101 +1,57 @@
-From: Beat Bolli <dev+git@drbeat.li>
+From: Paul Mackerras <paulus@samba.org>
 Subject: Re: [PATCH v2] gitk: Add a "Copy commit summary" command
-Date: Fri, 17 Jul 2015 11:16:56 +0200
-Message-ID: <748fbe6a4bf00ec8afcd6e4c7d5176bb@drbeat.li>
-References: <1m7p7z9.36ajnyli8ph2M%lists@haller-berlin.de>
+Date: Fri, 17 Jul 2015 19:22:51 +1000
+Message-ID: <20150717092251.GB5916@iris.ozlabs.ibm.com>
+References: <1437060565-4716-1-git-send-email-dev+git@drbeat.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <gitster@pobox.com>, <git@vger.kernel.org>, <paulus@samba.org>
-To: <lists@haller-berlin.de>
-X-From: git-owner@vger.kernel.org Fri Jul 17 11:17:15 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Beat Bolli <dev+git@drbeat.li>
+X-From: git-owner@vger.kernel.org Fri Jul 17 11:23:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZG1lW-0000rz-S3
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 11:17:11 +0200
+	id 1ZG1rD-00036O-Qa
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 11:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932551AbbGQJRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 05:17:04 -0400
-Received: from mx1.2b3w.ch ([92.42.186.250]:33171 "EHLO mx1.2b3w.ch"
+	id S1757008AbbGQJW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 05:22:58 -0400
+Received: from ozlabs.org ([103.22.144.67]:54627 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932546AbbGQJQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 05:16:59 -0400
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-	by mx1.2b3w.ch (Postfix) with ESMTP id D4137C33DD;
-	Fri, 17 Jul 2015 11:16:56 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RELAYS
-	autolearn=ham version=3.3.2
-Received: by mx1.2b3w.ch (Postfix, from userid 33)
-	id BAB40C3442; Fri, 17 Jul 2015 11:16:56 +0200 (CEST)
-X-PHP-Originating-Script: 0:main.inc
-In-Reply-To: <1m7p7z9.36ajnyli8ph2M%lists@haller-berlin.de>
-X-Sender: dev+git@drbeat.li
-User-Agent: Roundcube Webmail/0.7.2
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1752398AbbGQJW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 05:22:57 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 216E2140B04; Fri, 17 Jul 2015 19:22:56 +1000 (AEST)
+Content-Disposition: inline
+In-Reply-To: <1437060565-4716-1-git-send-email-dev+git@drbeat.li>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274064>
 
-On 2015-07-17 10:50, lists@haller-berlin.de wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
->
->> Beat Bolli <dev+git@drbeat.li> writes:
->>
->> > When referring to earlier commits in commit messages or other 
->> text, one
->> > of the established formats is
->> >
->> >     <abbrev-sha> ("<summary>", <author-date>)
->> > ...
->> > +proc copysummary {} {
->> > +    global rowmenuid commitinfo
->> > +
->> > +    set id [string range $rowmenuid 0 7]
->> > +    set info $commitinfo($rowmenuid)
->> > +    set commit [lindex $info 0]
->>
->> 7 hexdigits is not always an appropriate value for all projects.
->> The minimum necessary to guarantee uniqueness varies on project, and
->> it is not a good idea to hardcode such a small value.  Not-so-old
->> Linux kernel history seems to use at least 12, for example.
->>
->> I believe that the "one of the established formats" comes from a
->> "git one" alias I published somewhere long time ago, that did
->> something like this:
->>
->>   git show -s --abbrev=8 --pretty='format:%h (%s, %ai' "$@" |
->>   sed -e 's/ [012][0-9]:[0-5][0-9]:[0-5][0-9] 
->> [-+][0-9][0-9][0-9][0-9]$/)/'
->>
->> where the combination of --abbrev=8 and format:%h asks for a unique
->> abbreviation that is at least 8 hexdigits long but can use more than
->> 8 if it is not long enough to uniquely identify the given commit.
->
-> For the intended use case of this feature (referring to earlier 
-> commits
-> in commit messages), guaranteeing uniqueness isn't sufficiant either.
-> What is unique at the time of creating the commit might no longer be
-> unique a few years later.
+On Thu, Jul 16, 2015 at 05:29:25PM +0200, Beat Bolli wrote:
+> When referring to earlier commits in commit messages or other text, one
+> of the established formats is
+> 
+>     <abbrev-sha> ("<summary>", <author-date>)
+> 
+> Add a "Copy commit summary" command to the context menu that puts this
+> text for the currently selected commit on the clipboard. This makes it
+> easy for our users to create well-formatted commit references.
 
-This is true, but the purpose of the format with the summary text and 
-date
-is exactly to make it redundant enough that the hash doesn't have to be 
-unique
-in eternity.
+I really like this idea, but as others have noted, 8 characters may
+not be the right choice for the SHA1 length in all cases.
 
-> So one strategy would be to add one or two digits to what %h returns, 
-> to
-> give some future leeway; or rely on the user to configure core.abbrev
-> appropriatly for their project; or just make the hard-coded value
-> configurable, as Hannes suggests.
->
-> FWIW, a discussion of this that I find useful can be found here:
-> <http://blog.cuviper.com/2013/11/10/how-short-can-git-abbreviate/>.
+We have an item in the preferences menu to control the SHA1 length
+that is automatically selected when going to a new commit.  It's
+stored in the variable $autosellen.  That seems like it would be a
+reasonable choice for the SHA1 length to use here.  The only possible
+problem is that it defaults to 40 and so might give an overly long
+result for some users.  Maybe you could use $autosellen but limit it
+to at most 12 or 16 or something like that.
+
+Paul.
