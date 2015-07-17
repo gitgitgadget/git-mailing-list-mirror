@@ -1,7 +1,7 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 11/22] worktree: simplify new branch (-b/-B) option checking
-Date: Fri, 17 Jul 2015 19:00:06 -0400
-Message-ID: <1437174017-81687-12-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v3 13/22] worktree: make --detach mutually exclusive with -b/-B
+Date: Fri, 17 Jul 2015 19:00:08 -0400
+Message-ID: <1437174017-81687-14-git-send-email-sunshine@sunshineco.com>
 References: <1437174017-81687-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
@@ -13,92 +13,88 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGEdi-0002al-Gg
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 01:01:58 +0200
+	id 1ZGEdj-0002al-2o
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 01:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753950AbbGQXBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753097AbbGQXBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 19:01:54 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:33408 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753891AbbGQXBZ (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 17 Jul 2015 19:01:25 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:38760 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752812AbbGQXBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 19:01:23 -0400
-Received: by iggf3 with SMTP id f3so47295097igg.1
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 16:01:22 -0700 (PDT)
+Received: by ietj16 with SMTP id j16so86625541iet.0
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 16:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fvnp5gCRusnSECHNBQBUFsew4X+845aPG9V4oas3fLw=;
-        b=Z54zpI+bexW2YZogMg16l8XkEweGr7Po3FcembQksB+QMi8/LR0KnfbUUW77ShMJWm
-         MyQZN6gVSRIsLSM+lGi/yu6W3arjXnL0+8UQBpZ+cqL55q0RPlChRboatOkmtEiEKoaF
-         /eYBs3qMA40j+NGaYWeoMNfN2MpM5ZPd9ZDCUc/T7NSs6St/fRB9uraPnVYxbVGbnUfF
-         i3jZ3QLu2GMSgtDy+cpyX5n9NHlmYk3QyxTZQViR5dh2RuAP7tnXBRPP0+YpaHpXUP30
-         02htgUe14ssWHXYysqhNBk8OyvMBV49ytC5MWQo39ehHSj3mTPm7cmCe0ur+EqRCLml5
-         4ALg==
-X-Received: by 10.107.132.215 with SMTP id o84mr23415742ioi.36.1437174082766;
-        Fri, 17 Jul 2015 16:01:22 -0700 (PDT)
+        bh=xmO4+ebdtfNFXKDRkqH5LcNKajXN9pr9QSQLVSQi8o8=;
+        b=kgb1lCwhppUFQUq7RcQyD7oZyRfI+OPpI3D1zFrlz/GPUtYOfjYqBsyheXmxatp/qP
+         +dAMlbJK7g/TrsgzWviTmwJl5EO/bqhu40zScU/ehpbjgAA0DB4Kwt/wil2hTlvzcp4b
+         0x1PXafcYIC6K4OG+jrydAmWn5IqQ6iK3NqXfQJTKvUhGhoyXNmXosoPfBzWFFdr1BqL
+         VUS1HNlVxXESONgkKdPaKlL082UD7am/mZ3QOP6zHWWbLShfimqmkZs2DrTYdDP1xfzD
+         IALdE+Z/r7OqttuhW6h/jvDxFiHcmr9IAFUvllctB+TVRxoDKLwb1lu/MehGWo0l0ht3
+         J6yQ==
+X-Received: by 10.107.169.10 with SMTP id s10mr20838072ioe.138.1437174084825;
+        Fri, 17 Jul 2015 16:01:24 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id 140sm8414824ion.16.2015.07.17.16.01.21
+        by smtp.gmail.com with ESMTPSA id 140sm8414824ion.16.2015.07.17.16.01.23
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 17 Jul 2015 16:01:22 -0700 (PDT)
+        Fri, 17 Jul 2015 16:01:24 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.378.g0af52e8
 In-Reply-To: <1437174017-81687-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274145>
 
-Make 'new_branch' be the name of the new branch for both forced and
-non-forced cases; and add boolean 'force_new_branch' to indicate forced
-branch creation. This will simplify logic later on when git-worktree
-handles branch creation locally rather than delegating it to
-git-checkout as part of the worktree population phase.
+Be consistent with git-checkout which disallows this (not particularly
+meaningful) combination.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
 
-No changes since v2.
+Changes since v2: add tests
 
- builtin/worktree.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ builtin/worktree.c      |  4 ++--
+ t/t2025-worktree-add.sh | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 5f0e3c2..bf4db9f 100644
+index 7d70eb6..813e016 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -272,7 +272,7 @@ static int add_worktree(const char *path, const char **child_argv)
+@@ -296,8 +296,8 @@ static int add(int ac, const char **av, const char *prefix)
  
- static int add(int ac, const char **av, const char *prefix)
- {
--	int force = 0, detach = 0;
-+	int force = 0, detach = 0, force_new_branch;
- 	const char *new_branch = NULL, *new_branch_force = NULL;
- 	const char *path, *branch;
- 	struct argv_array cmd = ARGV_ARRAY_INIT;
-@@ -295,7 +295,11 @@ static int add(int ac, const char **av, const char *prefix)
- 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
- 	branch = ac < 2 ? "HEAD" : av[1];
+ 	memset(&opts, 0, sizeof(opts));
+ 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
+-	if (opts.new_branch && new_branch_force)
+-		die(_("-b and -B are mutually exclusive"));
++	if (!!opts.detach + !!opts.new_branch + !!new_branch_force > 1)
++		die(_("-b, -B, and --detach are mutually exclusive"));
+ 	if (ac < 1 || ac > 2)
+ 		usage_with_options(worktree_usage, options);
  
--	if (ac < 2 && !new_branch && !new_branch_force) {
-+	force_new_branch = !!new_branch_force;
-+	if (force_new_branch)
-+		new_branch = new_branch_force;
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 9e30690..249e454 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -167,4 +167,16 @@ test_expect_success '"add" auto-vivify does not clobber existing branch' '
+ 	test_path_is_missing precious
+ '
+ 
++test_expect_success '"add" -b/-B mutually exclusive' '
++	test_must_fail git worktree add -b poodle -B poodle bamboo master
++'
 +
-+	if (ac < 2 && !new_branch) {
- 		int n;
- 		const char *s = worktree_basename(path, &n);
- 		new_branch = xstrndup(s, n);
-@@ -305,9 +309,8 @@ static int add(int ac, const char **av, const char *prefix)
- 	if (force)
- 		argv_array_push(&cmd, "--ignore-other-worktrees");
- 	if (new_branch)
--		argv_array_pushl(&cmd, "-b", new_branch, NULL);
--	if (new_branch_force)
--		argv_array_pushl(&cmd, "-B", new_branch_force, NULL);
-+		argv_array_pushl(&cmd, force_new_branch ? "-B" : "-b",
-+				 new_branch, NULL);
- 	if (detach)
- 		argv_array_push(&cmd, "--detach");
- 	argv_array_push(&cmd, branch);
++test_expect_success '"add" -b/--detach mutually exclusive' '
++	test_must_fail git worktree add -b poodle --detach bamboo master
++'
++
++test_expect_success '"add" -B/--detach mutually exclusive' '
++	test_must_fail git worktree add -B poodle --detach bamboo master
++'
++
+ test_done
 -- 
 2.5.0.rc2.378.g0af52e8
