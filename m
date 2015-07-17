@@ -1,84 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 06/20] checkout: check_linked_checkout: improve
- "already checked out" aesthetic
-Date: Fri, 17 Jul 2015 08:42:59 +0700
-Message-ID: <CACsJy8AGp7Y+nJjVvp2sgfTvPuKE2ODdfa3wsJ9YhPk57YOtCg@mail.gmail.com>
-References: <1437034825-32054-1-git-send-email-sunshine@sunshineco.com>
- <1437034825-32054-7-git-send-email-sunshine@sunshineco.com>
- <xmqqy4ig3s3q.fsf@gitster.dls.corp.google.com> <CAPig+cRtCon=jaqbjZyHTvJ3cydiyAz+5OC=3x30VfAJniYYMQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: A few "linked checkout" niggles
+Date: Thu, 16 Jul 2015 23:11:15 -0400
+Message-ID: <CAPig+cSB67wMs0T4OE9YS=2067bTvHeidx32PDGtu4O4q=nT2Q@mail.gmail.com>
+References: <xmqqoajdui8w.fsf@gitster.dls.corp.google.com>
+	<xmqqd1zr4z28.fsf@gitster.dls.corp.google.com>
+	<CACsJy8CC_fju1Vy-hN69rKdpZ=XDUdZ_H_pmUb0bJdt-LdiPew@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 03:43:45 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 05:11:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFugZ-0005n1-Sr
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 03:43:36 +0200
+	id 1ZFw3U-00084N-R3
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 05:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752242AbbGQBna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2015 21:43:30 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:38220 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754567AbbGQBn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2015 21:43:29 -0400
-Received: by iggf3 with SMTP id f3so27295618igg.1
-        for <git@vger.kernel.org>; Thu, 16 Jul 2015 18:43:28 -0700 (PDT)
+	id S1753212AbbGQDLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2015 23:11:16 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:36349 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbGQDLQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2015 23:11:16 -0400
+Received: by ykay190 with SMTP id y190so80102348yka.3
+        for <git@vger.kernel.org>; Thu, 16 Jul 2015 20:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=2qY9vD43RErVC1nxtzL/FijBwPGeVzSER76aksOT8F8=;
-        b=kxXnivI++e7Gt4JQuQH3dO/4H+fsFAQSDzRRSdrDl5XNpuf2Fh8rBSdSVfYCornmVw
-         1FEwHFMKVl6+V9U9weKLvcg+Zdb2LQz7WVnZI2BZPDxlADOJS2ZLsEP8ZlrtT7M2F1eR
-         4J1qdOINAprtpB2+1B3x3393BOK6NM0pgcj12UujtZf34DBZA9kSV9gJ6bt6Xyc2yxAb
-         aQfPZzGpe1YiSV0C7wkfpRXodfyC0LfmmWPwJ2+58n1dYyTZ+1Lit7CV+kCnrDkNAzpi
-         F6EsZe8ZwgIfbSkRZPCAwHlh9MbTv8ILhWzcQeOFOQfda3a9jSm0yJdcUcfvql6EQ4Ot
-         v7ug==
-X-Received: by 10.50.137.100 with SMTP id qh4mr7700602igb.1.1437097408782;
- Thu, 16 Jul 2015 18:43:28 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Thu, 16 Jul 2015 18:42:59 -0700 (PDT)
-In-Reply-To: <CAPig+cRtCon=jaqbjZyHTvJ3cydiyAz+5OC=3x30VfAJniYYMQ@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=RFLgI+EM5ydAU3FKCdlRYU4X6TVrCpZRmOjKT2oe2Xg=;
+        b=Qn4t5yanHsQDpXhEEE8TMGvxO/+0sfTKDT6iuz25SM0V5TUkZOZMbHgHYU1zeChoEU
+         zbuq+M6QcoNZ5v3+yJT/Shm0Bqhw0l8Et/v0v/2viGi3xrmXTaDeacTCWSQPl/gQC9lB
+         BMNQNWPZIZs4jpDl+2Uhg0VnOizrZU85yyrP8ECFPSXVrFSkWK+elnPPaBP5RBW2lpb6
+         rdqyTl0FzBoZzhCY3aqm7vS3kqL0xBN/65j3kt2BIpWWVE0KgR5mwJwn5+TM8GlXGT/K
+         jh98aGLMtMkOM0XZ/t/QjMlpkE7RqFtti+fRJjp0KbfNCRR2WZFjiUfB0HTSMOXD66Oh
+         a5uQ==
+X-Received: by 10.170.97.9 with SMTP id o9mr13399687yka.84.1437102675451; Thu,
+ 16 Jul 2015 20:11:15 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Thu, 16 Jul 2015 20:11:15 -0700 (PDT)
+In-Reply-To: <CACsJy8CC_fju1Vy-hN69rKdpZ=XDUdZ_H_pmUb0bJdt-LdiPew@mail.gmail.com>
+X-Google-Sender-Auth: zUGaTCKXlc4DicDso9KL8pslv1M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274057>
 
-On Fri, Jul 17, 2015 at 7:32 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> In the new world order with GIT_DIR and GIT_COMMON_DIR, does
->> "$GIT_DIR" always have to be the same as "$GIT_WORK_TREE/.git"?  Do
->> we need some sanity check if that is the case?  Perhaps: if you have
->> $GIT_DIR set to $somewhere/.git/worktrees/$name, then
+On Thu, Jul 16, 2015 at 7:13 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Jul 17, 2015 at 3:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Also in a linked checkout of git.git itself, t5601.21 seems to fail
+>> with:
 >>
->>  - $GIT_COMMON_DIR must match $somewhere/.git,
+>> fatal: Not a git repository: /home/gitster/w/src/.git/worktrees/rerere
+>> not ok 21 - clone respects global branch.autosetuprebase
+>> #
+>> #               (
+>> #                       test_config="$HOME/.gitconfig" &&
+>> #                       git config -f "$test_config" branch.autosetuprebase remote &&
+>> #                       rm -fr dst &&
+>> #                       git clone src dst &&
+>> #                       cd dst &&
+>> #                       actual="z$(git config branch.master.rebase)" &&
+>> #                       test ztrue = $actual
+>> #               )
+>> #
 >>
->>  - $somewhere/.git/worktrees/$name/commondir must point at
->>    $GIT_COMMON_DIR,
->>
->>  - $GIT_WORK_TREE/.git must match $GIT_DIR
->>
->> or something like that?
+>> This test is running in /home/gitster/w/rerere, whose .git points at
+>> that directory the fatail: message complains about.
 >
-> Duy is probably better suited to answer this, as he would likely have
-> taken these issues into consideration when implementing the feature.
-> (I've been poking through documentation and code for quite a while
-> trying to answer this email but don't yet have a sufficient grasp to
-> do it justice. I'm not even sure where such a sanity check would be
-> placed.)
+> I can't reproduce with either master, next or pu. Seems strange that
+> git.git info is leaking into this test..
 
-The thing is, we just don't know where the worktree is. All we know is
-somewhere there is a .git file sharing this repository. People can
-create a linked worktree, then move the actual linked worktree away,
-set GIT_DIR/GIT_WORK_TREE to reflect that, and everything must still
-work. So, we could say "foo is already checked out at the worktree
-that is linked to /some/path/.git" to be technically correct. But
-that's not so friendly? We could cache the $GIT_WORK_TREE, when the
-user accesses the linked checkout, somewhere in .git/worktrees/foo and
-show it instead of /some/path/.git. But that's not always accurate.
--- 
-Duy
+I also am unable to reproduce the failure...
