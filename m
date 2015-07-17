@@ -1,49 +1,60 @@
-From: "GORDON CHANG" <formacion@reddesolidaridadpopular.org>
-Subject: MESSAGE
-Date: Sat, 18 Jul 2015 00:13:17 +0800
-Message-ID: <20150717161502.097CD5BB2F@spinoza.libradmin.org>
-Reply-To: <gordch101@yahoo.com.hk>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] Fix detection of uname failure
+Date: Fri, 17 Jul 2015 18:01:42 +0100
+Message-ID: <20150717170142.GA9616@hashpling.org>
+References: <1437135095-6244-1-git-send-email-charles@hashpling.org>
+ <ef7d56584c3b5d6431f895df1d94eba8@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="_iso-2022-jp$ESC"
-Content-Transfer-Encoding: 7bit
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Fri Jul 17 18:42:34 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 17 19:01:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZG8iX-0000FP-0Z
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 18:42:33 +0200
+	id 1ZG91E-0000zB-Dn
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 19:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754820AbbGQQm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 12:42:28 -0400
-Received: from libradmin.org ([91.121.146.153]:43453 "EHLO
-	spinoza.libradmin.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752307AbbGQQmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 12:42:24 -0400
-Received: from User (unknown [121.121.39.90])
-	(Authenticated sender: formacion@reddesolidaridadpopular.org)
-	by spinoza.libradmin.org (Postfix) with ESMTPA id 097CD5BB2F;
-	Fri, 17 Jul 2015 18:15:01 +0200 (CEST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+	id S1755005AbbGQRBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 13:01:48 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:57846 "EHLO
+	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752454AbbGQRBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 13:01:47 -0400
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout05 with smtp
+	id tV1i1q0062iA9hg01V1jWA; Fri, 17 Jul 2015 18:01:44 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=FZvKv8K6 c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
+ a=0Bzu9jTXAAAA:8 a=Ew9TdX-QAAAA:8 a=yEdEr6MRgwAA:10 a=kj9zAlcOel0A:10
+ a=zOBTXjUuO1YA:10 a=FygwMpgOUyCzh_P2Mt0A:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.84)
+	(envelope-from <charles@hashpling.plus.com>)
+	id 1ZG914-0002XL-Or; Fri, 17 Jul 2015 18:01:42 +0100
+Content-Disposition: inline
+In-Reply-To: <ef7d56584c3b5d6431f895df1d94eba8@www.dscho.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.7 points;
- *  2.8 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
- *  0.7 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  4.2 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274082>
 
-Hello,
-I have a sensitive message which I believe will be of mutual business benefit to us. Due to the sensitive nature of this message, I want you to please confirm your name and email so that I can be sure that email delivery is to the correct recipient.
+On Fri, Jul 17, 2015 at 03:06:57PM +0200, Johannes Schindelin wrote:
+> 
+> From a quick `git grep '== -1'` and another quick `git grep '< 0'` it appears to me that we prefer the latter. Maybe you want to adjust it in the patch, too?
 
-Thank you.
+I did the same grep and found lots of examples of both. Many of the "<
+0" applied to comparisons with variables and not API calls and many were
+internal (to git) calls and not POSIX or C library calls so I wasn't
+convinced to change my initial fix.
 
-Gordon.
+Having said that and thought about it some more, I think '< 0' is
+probably better. In POSIX, we shouldn't ever get a negative value which
+isn't -1, but if we ever do it is probably safer to fail. I'll send and
+update.
+
+Charles.
