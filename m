@@ -1,65 +1,98 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] Fix detection of uname failure
-Date: Fri, 17 Jul 2015 23:07:55 +0200
-Organization: gmx
-Message-ID: <7cf6757e8e81c2f9e102db24efbedb2a@www.dscho.org>
-References: <ef7d56584c3b5d6431f895df1d94eba8@www.dscho.org>
- <1437152981-28855-1-git-send-email-charles@hashpling.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Documentation/git: fix stale "MULTIPLE CHECKOUT MODE" reference
+Date: Fri, 17 Jul 2015 14:09:35 -0700
+Message-ID: <xmqqfv4m1ofk.fsf@gitster.dls.corp.google.com>
+References: <1437092222-11131-1-git-send-email-sunshine@sunshineco.com>
+	<xmqqa8uu3edr.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQvVA0Cb60AxA=9RAUj6bBN419FQHObM6PARiDwGLiHow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Jul 17 23:08:22 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 23:09:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGCrk-0003O8-8I
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 23:08:20 +0200
+	id 1ZGCt6-0004CB-9T
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 23:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753307AbbGQVIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 17:08:13 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62206 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752682AbbGQVIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 17:08:10 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Ld0E0-1YYJO11DQe-00iG1x; Fri, 17 Jul 2015 23:07:57
- +0200
-In-Reply-To: <1437152981-28855-1-git-send-email-charles@hashpling.org>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:LlHQNFU16DKVJ6u+95Kljq0goSjPcYC4hX/afZtqnfEAyvP1FFV
- mOUD2XFebMzmKlLYdWD8vbI0iGLR7Msr4fA6jtnIBV0QXEMYP+s5jYr16Vc28i2grQGRxmC
- kFLEnizR18OWFe+B9qIw4O0lL0aKP0LBjoQxCaAhT5eb3Vv99ie3YLF+oHF8SrOINVbD9Mf
- m0Befah/nnwyyjjY1ZHoQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:62Pdhxc6ueA=:knr0QFIcw7F220v/rNzLOd
- mAMZiGvsw5hW5XOgKHzvihWcPgtIgJVODDCKJru1IH3ziBEBoTzXp/0ApBPvaqpbJM088S1bp
- w3I+jANnyYL34bhXqiZEpjUowlQmadp5LRO3HbfBXmXEF0mu2Dg5rVoJN1rl6v7v+NGAX/kI/
- 0TmsTq2OYxYo8Bq3w8EfZLIAe0RdOQi8OESM7ocJL1IpoX9IN8HMFIgllXmv0t3MZ1E4xvNGD
- mWwBSptt9n+JDKwl0JNpUoIDg4DAGj1NYgZIG9RvzQpRKl6jz7+bHSWvfynE438bMX5As3mSW
- P8riJJ1iIjVWWNtQcsfmufAo/DpLzF7QGxcQcp89QDzTKYxEcLK/37yGQQCBTKo5B06uyIMdZ
- /AQUw/KqmQ2EVZGLruhIhr7nWa24FZJlb7cP90EbzWtSib0KBZe/Dbl/Q0iGBvCrtZfcGzAaa
- uoCNCjw5aOuiq37T8/R3RwOiInBkLlbgnzCwlIAGh/S3PMbkeg60MW4lc0E7pvoHYqkjOwtgI
- 4VlhuILhdK+v2/cCytlVFLozuwXQdhn83Db8j/kY7O3UYnmRUZPdF0nITIhPDiv0GRxmfbGYE
- G+7fdahndnglXmCuIktiQFgr2cC3euqcB9hLCZd7ZUS4IqtggrZls9eUA8qoJF6kUsMjjspc1
- /6uNAJl5ncwVf44UoVSDpE1KEAMNju9ppixU31cLHxlVxk67qqALBWR6gaCtRcxFmWJE=
+	id S1755323AbbGQVJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 17:09:39 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:34831 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755313AbbGQVJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 17:09:37 -0400
+Received: by pdrg1 with SMTP id g1so67197681pdr.2
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 14:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=JjUakNPOmBUS98L/MEwbXqMm++gMx9jkiqyvZ1Wnoo4=;
+        b=saspxIzaIOTsZEjVw1ImWjgAxBahWnW412qcHpAFMpH+cIwnDBlPTz5denp82PoGcI
+         d5EAheGat1EAVSh5bjyuqOJVx1sTCqYjOui5YsYGp+d8IETg9Vt10fP8IrD3XvdmLAGQ
+         /lRIAtDw2S9P2neQ8kP9ZVg/oYUw8bBQ4WUmq2UJfwyFBRSVXrJTGjhcuxpMOgtzaNM3
+         Ngyg3Yj7t7iZXloQ1MDoMJRt7oDvurNUg744lWFOAIOPS6q1a+uthNKWrV/f+Q+Q5Uwf
+         FUTo4IfESdjuQ50yYhBXYBps61veDxTWbtieONbngrABoGK5Ee9+Zz3tU24ZNxB4ESeE
+         opSA==
+X-Received: by 10.66.121.230 with SMTP id ln6mr33176708pab.17.1437167377407;
+        Fri, 17 Jul 2015 14:09:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
+        by smtp.gmail.com with ESMTPSA id m3sm12251158pdd.29.2015.07.17.14.09.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 17 Jul 2015 14:09:36 -0700 (PDT)
+In-Reply-To: <CAPig+cQvVA0Cb60AxA=9RAUj6bBN419FQHObM6PARiDwGLiHow@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 17 Jul 2015 16:52:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274103>
 
-On 2015-07-17 19:09, Charles Bailey wrote:
-> From: Charles Bailey <cbailey32@bloomberg.net>
-> 
-> According to POSIX specification uname must return -1 on failure and a
-> non-negative value on success. Although many implementations do return 0
-> on success it is valid to return any positive value for success.  In
-> particular, Solaris returns 1.
-> 
-> Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Thanks.  I have two comments.
+>>
+>> "if using Cogito etc.", which is totally outside the topic of this
+>> patch, is way outdated. Perhaps we would want to remove or replace
+>> it.
+>
+> Do you want me to re-roll the current patch to also include the
+> "Cogito" change as a "while here..." add-on?
+
+No.  That is totally outside the topic of this patch series.
+
+> Also, I have v3 of "rid git-checkout of too-intimate knowledge of new
+> worktree"[1] ready to roll. Do you want me to fold the current
+> patch[2] and its brother [3] into v3?
+
+I think I took them and merged them to 'master' today.
+
+> ... since he plans
+> on adding more tests[4] when fixing the can't-clone-a-linked-worktree
+> problem.)
+
+I saw that issue myself yesterday, too, I think, with a failed
+attempt to fetch from one.  I do not think it is such a huge issue
+in a sense that we can always say "don't do that", as cloning and
+fetching only from the primary location is not something that would
+make users feel unnatural.  After all, we sell this as "allowing
+secondary checkout", meaning that it is perfectly OK for us to keep
+secondaries second-class citizens compared to the primary one.  So
+being able to fetch from and clone from is "nice to have".
+
+> Other than that, the only consumer of GIT_COMMON_DIR seems to be
+> setup.c, and, based upon a quick scan, it looks like it can be easily
+> dropped, thus alleviating your concerns (but hopefully as a series
+> separate from v3 of [1] which I'd like to see land).
+
+One step at a time is perfectly fine.  We will be cautioning users
+to avoid storing the only copy of their data in repositories that
+employ this feature for a few releases until it matures by marking
+it experimental exactly so that we can tweak external interfaces
+like that incrementally.
+
+Thanks.
