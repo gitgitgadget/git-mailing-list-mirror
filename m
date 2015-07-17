@@ -1,77 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: A few "linked checkout" niggles
-Date: Thu, 16 Jul 2015 23:11:15 -0400
-Message-ID: <CAPig+cSB67wMs0T4OE9YS=2067bTvHeidx32PDGtu4O4q=nT2Q@mail.gmail.com>
-References: <xmqqoajdui8w.fsf@gitster.dls.corp.google.com>
-	<xmqqd1zr4z28.fsf@gitster.dls.corp.google.com>
-	<CACsJy8CC_fju1Vy-hN69rKdpZ=XDUdZ_H_pmUb0bJdt-LdiPew@mail.gmail.com>
+From: Jacob Keller <jacob.keller-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: GNU diff and git diff - difference on myers algorithm?
+Date: Thu, 16 Jul 2015 21:22:27 -0700
+Message-ID: <CA+P7+xrOPS6NeQhte-ATdm2Nqo0PpmUAxS+XYzWDvZGtwPtWMw@mail.gmail.com>
+References: <CAB=NE6XRnKAY6t+dxT7vO_4wqngXvULh-CqezEAs2r99FkNCTg@mail.gmail.com>
+ <0add7d95076f5b112af90d8566c29203@www.dscho.org> <CAB=NE6VGX332=CvhQM4sc27AM8ae5S1kdRnm5sMfoqkU=b=ebg@mail.gmail.com>
+ <CAB=NE6UFMv0qu8fJ1P2-pJCF0tSGKoW+uKhfwt0jV5fj2wZGSQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 05:11:21 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Johannes Schindelin <johannes.schindelin-Mmb7MZpHnFY@public.gmane.org>,
+	git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Julia Lawall <julia.lawall-L2FTfq7BK8M@public.gmane.org>,
+	"Luis R. Rodriguez" <mcgrof-IBi9RG/b67k@public.gmane.org>,
+	"cocci-/FJkirnvOdkvYVN+rsErww@public.gmane.org" <cocci-/FJkirnvOdkvYVN+rsErww@public.gmane.org>,
+	"backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+To: "Luis R. Rodriguez" <mcgrof-3uybbJdB1yH774rrrx3eTA@public.gmane.org>
+X-From: backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Fri Jul 17 06:22:50 2015
+Return-path: <backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Envelope-to: glb-backports-wOFGN7rlS/M9smdsby/KFg@public.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFw3U-00084N-R3
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 05:11:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212AbbGQDLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2015 23:11:16 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:36349 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751322AbbGQDLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2015 23:11:16 -0400
-Received: by ykay190 with SMTP id y190so80102348yka.3
-        for <git@vger.kernel.org>; Thu, 16 Jul 2015 20:11:15 -0700 (PDT)
+	(envelope-from <backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>)
+	id 1ZFxAg-0001UY-AX
+	for glb-backports-wOFGN7rlS/M9smdsby/KFg@public.gmane.org; Fri, 17 Jul 2015 06:22:50 +0200
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
+	id S1750824AbbGQEWr (ORCPT <rfc822;glb-backports@m.gmane.org>);
+	Fri, 17 Jul 2015 00:22:47 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:32794 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742AbbGQEWr (ORCPT
+	<rfc822;backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>); Fri, 17 Jul 2015 00:22:47 -0400
+Received: by ietj16 with SMTP id j16so69869428iet.0;
+        Thu, 16 Jul 2015 21:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=RFLgI+EM5ydAU3FKCdlRYU4X6TVrCpZRmOjKT2oe2Xg=;
-        b=Qn4t5yanHsQDpXhEEE8TMGvxO/+0sfTKDT6iuz25SM0V5TUkZOZMbHgHYU1zeChoEU
-         zbuq+M6QcoNZ5v3+yJT/Shm0Bqhw0l8Et/v0v/2viGi3xrmXTaDeacTCWSQPl/gQC9lB
-         BMNQNWPZIZs4jpDl+2Uhg0VnOizrZU85yyrP8ECFPSXVrFSkWK+elnPPaBP5RBW2lpb6
-         rdqyTl0FzBoZzhCY3aqm7vS3kqL0xBN/65j3kt2BIpWWVE0KgR5mwJwn5+TM8GlXGT/K
-         jh98aGLMtMkOM0XZ/t/QjMlpkE7RqFtti+fRJjp0KbfNCRR2WZFjiUfB0HTSMOXD66Oh
-         a5uQ==
-X-Received: by 10.170.97.9 with SMTP id o9mr13399687yka.84.1437102675451; Thu,
- 16 Jul 2015 20:11:15 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Thu, 16 Jul 2015 20:11:15 -0700 (PDT)
-In-Reply-To: <CACsJy8CC_fju1Vy-hN69rKdpZ=XDUdZ_H_pmUb0bJdt-LdiPew@mail.gmail.com>
-X-Google-Sender-Auth: zUGaTCKXlc4DicDso9KL8pslv1M
-Sender: git-owner@vger.kernel.org
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Is7aiCOVNStYH0lwtAI4SDL7EEPyuwm/75DLnXadlyw=;
+        b=Pl4laolhoRLcAtlT21+2kU2g2A9ycup5ZX58uRikDuqgZrnlRgdIKlBDWfXuQkS20R
+         8lnEmyKlKcX3wHUQ5b1hUsrgtRD0X9Z4x9XbW06hqUal2wkjRZs3WXBJWHaTqftExgbh
+         UnOH5hZWGYWQdW3DTijVRkEHoKNPHt+Z/+CqI6SHHFOQ/utBvcm/NDj62WGGQzap7xy4
+         87LJrY8IcpF0jdawPgmSQndDDZ9sl/LQNV26gP+QuTkkSIV3EX+/dTkpgGStzADkQqdE
+         lZD31KKrvCi3hB37PsmNKXg+xNJN3Q/bkTcir9v6xgtohejPCT0g7TOf/XO3wZECvDyL
+         1CiA==
+X-Received: by 10.107.6.231 with SMTP id f100mr7615522ioi.61.1437106966433;
+ Thu, 16 Jul 2015 21:22:46 -0700 (PDT)
+Received: by 10.107.157.75 with HTTP; Thu, 16 Jul 2015 21:22:27 -0700 (PDT)
+In-Reply-To: <CAB=NE6UFMv0qu8fJ1P2-pJCF0tSGKoW+uKhfwt0jV5fj2wZGSQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+Sender: backports-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274057>
+List-ID: <backports.vger.kernel.org>
+X-Mailing-List: backports-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274058>
 
-On Thu, Jul 16, 2015 at 7:13 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Fri, Jul 17, 2015 at 3:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Also in a linked checkout of git.git itself, t5601.21 seems to fail
->> with:
+On Thu, Jul 16, 2015 at 12:07 PM, Luis R. Rodriguez
+<mcgrof-3uybbJdB1yH774rrrx3eTA@public.gmane.org> wrote:
+> On Fri, Jun 12, 2015 at 11:52 AM, Luis R. Rodriguez
+> <mcgrof-3uybbJdB1yH774rrrx3eTA@public.gmane.org> wrote:
+>> OK wells I'm curious about more research / effort when trying to
+>> evaluate a diff with two seprate but adjoining preprocessor directives
+>> and if anyone has implemented an optimizaiton option to let the diff
+>> generator join them.
 >>
->> fatal: Not a git repository: /home/gitster/w/src/.git/worktrees/rerere
->> not ok 21 - clone respects global branch.autosetuprebase
->> #
->> #               (
->> #                       test_config="$HOME/.gitconfig" &&
->> #                       git config -f "$test_config" branch.autosetuprebase remote &&
->> #                       rm -fr dst &&
->> #                       git clone src dst &&
->> #                       cd dst &&
->> #                       actual="z$(git config branch.master.rebase)" &&
->> #                       test ztrue = $actual
->> #               )
->> #
+>> For example, to let it infer that:
 >>
->> This test is running in /home/gitster/w/rerere, whose .git points at
->> that directory the fatail: message complains about.
+>> --- a/test.c
+>> +++ b/test.c
+>> @@ -10,8 +10,6 @@ int main(int argc, char *argv[])
+>>
+>>  #ifdef FOO
+>>         a = 4;
+>> -#endif /* FOO */
+>> -#ifdef FOO
+>>         a = 5;
+>>  #endif /* FOO */
+>>
+>> is possible.
 >
-> I can't reproduce with either master, next or pu. Seems strange that
-> git.git info is leaking into this test..
+> Anyone familiar if any tool exists today that would optimize this? Is
+> anyone working on it? Would git be a good place for such a thing? I'd
+> consider it as an option to optimize a diff. This for example is
+> extremely useful for us working with Coccinelle where we have a tool
+> writing code for us, while such an optimization might be useful to
+> Coccinelle it would seem like a rather generic feature, its just not
+> clear to me where to give such a tool a proper home.
+>
+>  Luis
 
-I also am unable to reproduce the failure...
+I do not understand exactly what would be optimized in this case?
+
+In any regards, that's not a diff transformation, that is a code
+transformation, and I would suggest starting with Coccinelle and
+seeing if you can get that to do what you want.
+http://coccinelle.lip6.fr/
+
+Regards,
+Jake
