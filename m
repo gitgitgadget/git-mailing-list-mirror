@@ -1,98 +1,135 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch: fix usage string for specific git-branch options
-Date: Fri, 17 Jul 2015 12:16:19 -0700
-Message-ID: <xmqqsi8m1toc.fsf@gitster.dls.corp.google.com>
-References: <1437157020-16672-1-git-send-email-ralf.thielow@gmail.com>
+Subject: Re: Git tag: pre-receive hook issue
+Date: Fri, 17 Jul 2015 12:30:21 -0700
+Message-ID: <xmqqoaja1t0y.fsf@gitster.dls.corp.google.com>
+References: <1437159533304-7635764.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 21:16:27 2015
+To: Garbageyard <varuag.chhabra@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 21:30:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGB7S-00036z-7O
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 21:16:26 +0200
+	id 1ZGBL4-0000uY-ED
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 21:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752200AbbGQTQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 15:16:22 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:33877 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670AbbGQTQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 15:16:21 -0400
-Received: by pdbbh15 with SMTP id bh15so20580588pdb.1
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 12:16:21 -0700 (PDT)
+	id S1753295AbbGQTaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 15:30:25 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36795 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752986AbbGQTaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 15:30:24 -0400
+Received: by pachj5 with SMTP id hj5so65605289pac.3
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 12:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=1POgp6TahxlKmZ076JDWA8Bp0k6zev59emtI05DNGvs=;
-        b=Wjj+ic+iVMTmGerGY+uFfFS7ZhPeI6sT/b/0DY6Abtzd5hWlik09ZZeytXgKDch0ZI
-         HRlfdp4yvP4PbThrdu68XeCvWNnh2X0SHyWHFCy5uotsBrog4yIYGB3GYn0FTvpv6dNy
-         Do35yMMEfgtZBf8FcSacD3UPF5B8uZZA0nasAs4MwmvbVCknljaMKZgNijwMosgaN/tw
-         xoUNvNTBcN2PsWB0Fx9aHWH3cF3Cf6B3fmRJMBdnqFUB98WFH4MXQVCUZell9/I3us4s
-         wTJFpLB+G8xs1AzgHkXWHQ0EkxDtQHDjJG8VJknyONag72N3CaI1iEo8ULcCHmENmpvf
-         LFQg==
-X-Received: by 10.67.29.175 with SMTP id jx15mr32113656pad.99.1437160580960;
-        Fri, 17 Jul 2015 12:16:20 -0700 (PDT)
+        bh=8mhyc1KvHZ9l+5IvwLfrjIc5GkmXjeJZVz7hNJKXK90=;
+        b=SfcSNJrWnIh3GBUtskWXfughuwWQdWmA6eljfntDIcwqkzRcWL9I8lYuhPEFVXdeaz
+         RV/eQZv3PuMm3e6h/uWR8zKQyUPhZuQVGsDjVnw3atWYOjOp5baNOtZ5FLeIzefbiMiE
+         jTwQ6VLpfo8MYw/dnTjHVDFkOgnzEjbL2sNs1JqBIyHXhzAGZtUuN+G/OSyUc3E9k0iZ
+         iOwecAieRjdnfq7dZfxnqGJMPNkEMYlxXXWaIc/pvUwGTWJ30gknf3f7+/NvKjND7QSX
+         ajQEgKpUApwIy4xEhPWsjSlj2hSHQ5+pML/EG/lSflHA9ELPZgJGWoz1u79qBnGa8l/n
+         o/mQ==
+X-Received: by 10.70.89.170 with SMTP id bp10mr32533138pdb.30.1437161423956;
+        Fri, 17 Jul 2015 12:30:23 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
-        by smtp.gmail.com with ESMTPSA id cf7sm12099503pac.41.2015.07.17.12.16.19
+        by smtp.gmail.com with ESMTPSA id qo6sm12124159pab.23.2015.07.17.12.30.21
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jul 2015 12:16:20 -0700 (PDT)
-In-Reply-To: <1437157020-16672-1-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Fri, 17 Jul 2015 20:17:00 +0200")
+        Fri, 17 Jul 2015 12:30:22 -0700 (PDT)
+In-Reply-To: <1437159533304-7635764.post@n2.nabble.com> (Garbageyard's message
+	of "Fri, 17 Jul 2015 11:58:53 -0700 (MST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274097>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Garbageyard <varuag.chhabra@gmail.com> writes:
 
-> The usage string of git-branch shows generic options and specific
-> options. However, the specific options are called "actions".
-> Call them both options.
+> We have a pre-receive hook that checks for JIRA ID whenever someone pushes
+> code to Git server. I'm trying to avoid this check when someone is applying
+> a tag. Here's the link for the script: http://pastebin.com/VnMQp5ar
+>
+> This is the link for output: http://pastebin.com/tBGmYaZF
+>
+> Problem is that if i run the following command, the output that i get on
+> command line is 0
+>
+> git describe --exact-match ac28ca721e67adc04078786164939989a5112d98 2>&1 |
+> grep -o fatal | wc -w
 
-I think this is a valid problem to address, but I do not know if the
-proposed solution is the right one.
+I am not sure what you are trying to do in the first place.
 
-Originally, the word "action" there really meant to mean "action".
-"git branch" can "list" existing ones, "create" new ones, "delete"
-existing ones, "edit" upstream info or description for, etc.  These
-are distinct actions.
+  : gitster x; git init garbage
+  Initialized empty Git repository in /var/tmp/x/garbage/.git/
+  : gitster x; cd garbage
+  : gitster garbage/master; git commit --allow-empty -m initial
+  [master (root-commit) b18cac2] initial
+  : gitster garbage/master; git tag v0.0 ;# lightweight
+  : gitster garbage/master; git commit --allow-empty -m second
+  [master d1de78e] second
+  : gitster garbage/master; git tag -a 'v0.1' v0.1
+  fatal: Failed to resolve 'v0.1' as a valid ref.
+  : gitster garbage/master; git tag -a -m 'v0.1' v0.1
+  : gitster garbage/master; git commit --allow-empty -m third
+  [master d1f1360] third
+  : gitster garbage/master; git describe --exact-match HEAD ;# third
+  fatal: no tag exactly matches 'd1f1360b46dfde8c6f341e48ce45d761ed37e357'
+  : gitster garbage/master; git describe --exact-match HEAD^ ;# second
+  v0.1
+  : gitster garbage/master; git describe --exact-match HEAD^^ ;# first
+  fatal: no tag exactly matches 'b18cac237055d9518f9f92bb4c0a4dac825dce17'
+  : gitster garbage/master; exit
 
-For a single "action", there are various ways to perform it.
-Different ways to affect "list", for example, are like "choosing
-which ones are listed", "deciding if the output is colored", etc..
-The "options" section was meant to cover these modifiers.
+I am feeding three _commits_, not tags.  But one of them (i.e. the
+one that happens to have an annotated tag) yields the "exact match"
+tagname, as designed and expected.
 
-I think the real issues may be coming from one or both of the two:
+But is it really what you want to do to skip such a commit?  Why?
 
- (1) some are grossly miscategorized.  "--all" is not an action.  It
-     just affects how "listing" works.  "--no-merged" and "--merged"
-     are the same way and should sit next to "--contains".
+I also see a questionable thing in the earlier part of your script:
 
-     "--set-upstream" and "--unset-upstream" on the other hand are
-     not modifiers for some other actions, but are their own actions.
+   while read old_sha1 new_sha1 refname ; do
+           echo "stdin: [$old_sha1] [$new_sha1] [$refname]"
+           if [ "$old_sha1" == "0000000000000000000000000000000000000000" ] ; then
+               commits=$new_sha1
+           else
+               commits=`git rev-list $old_sha1..$new_sha1`
+           fi
 
- (2) "Generic options" would need to show things like "-v/-q/-f"
-     that would want to consistently apply to any action that you
-     might want to invoke.  Because not all modifiers apply to all
-     actions, there is no good place to put things like "-t" (that
-     has no meaning when you are invoking "delete" action) that are
-     specific to only a subset of available actions, i.e. "Not
-     generic" ones.
+           for commit in $commits
+           do
+		...
 
-So the real way forward would be probably to do three things.
+When somebody pushes to an existing branch, you list all the new
+commits that came in (i.e. 'git rev-list' is bounded by $old_sha1 at
+the bottom).  But when somebody pushes to a new branch, you only
+include the tip to the list.
 
- * Keep the same two categorization as we have, i.e. "generic
-   options" and "specific actions";
+And you check everything on that list.  Why?  If I push three-commit
+series to a new branch, wouldn't you want to validate all three of
+them, just like you validate my push of a three-commit enhancement
+to an existing branch?
 
- * Move the miscategorized non-actions to "generic options" section;
+	while read old new name
+        do
+		case "$name" in refs/heads/tags/*) continue ;; esac
+		if test "$old" = 0000000000000000000000000000000000000000
+		then
+			git rev-list $old
+		else
+                	git rev-list $old..$new
+		fi
+	done |
+	while read commit
+        do
+        	Do a check on $commit
+	done
 
- * Move action-specific modifiers out of "generic options" and
-   clearly state what action they work with to modify the behaviour
-   of the action.
+or something instead?
