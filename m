@@ -1,137 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: add support for Fountain documents
-Date: Fri, 17 Jul 2015 10:12:04 -0700
-Message-ID: <xmqq1tg63dzv.fsf@gitster.dls.corp.google.com>
-References: <1437142912-25380-1-git-send-email-zoe@bytenoise.co.uk>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] gitk: Add a "Copy commit summary" command
+Date: Fri, 17 Jul 2015 13:17:33 -0400
+Message-ID: <CAPig+cR=u_ak_=J=gSAWfiNB01R7FBG+bCrx+k1HNAE0xHtwFQ@mail.gmail.com>
+References: <205a18f7f8a7892a1fa63a91a84bfd9b@drbeat.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Zoe=CC=88?= Blade <zoe@bytenoise.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 17 19:12:15 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Paul Mackerras <paulus@samba.org>
+To: Beat Bolli <dev+git@drbeat.li>
+X-From: git-owner@vger.kernel.org Fri Jul 17 19:18:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZG9BF-0005e0-Jy
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 19:12:13 +0200
+	id 1ZG9Gr-00087S-Lu
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 19:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbbGQRMI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jul 2015 13:12:08 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35358 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752302AbbGQRMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 13:12:07 -0400
-Received: by pactm7 with SMTP id tm7so64256586pac.2
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 10:12:06 -0700 (PDT)
+	id S1755538AbbGQRR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 13:17:56 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:33857 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269AbbGQRRf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 13:17:35 -0400
+Received: by ykax123 with SMTP id x123so94903332yka.1
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 10:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=ADCnCHJ/1KCK7nvzv5Q7f37ZHDYOpKz4DcgLBDfaPag=;
-        b=Vv9Gfp0JwyA4N/bWGQ55vZCkaSsV+rNl8EDAdulXwEi6pbvfTwNzYQOFw1y5tjoO0L
-         u8mbwYe6QSh0g4b+3Va9fKhACNAnJGoPJrvKtaSn3r3k/tuXhjb5IXIPlcMgq1bmB3ch
-         vCk+oQnupPYDfHTNik2lSB0jrAaqScfBQxE5FOI7W4ra2lo44zO0+YXOIEMAJeac0+GE
-         UNyOMR8IKRs0b2yKwCkYmK0elQbXClKCBLsYVhTG0RhDCO43u5nRHWa4+ePAPJP63GTH
-         0f6UByPx2Qg4J9sE0TmEzyorQpWwKPUJVx3jSZVI3ktyFONeBR2vD7wDuzx5U2WK6mu8
-         CRCw==
-X-Received: by 10.66.160.1 with SMTP id xg1mr31505877pab.27.1437153126169;
-        Fri, 17 Jul 2015 10:12:06 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
-        by smtp.gmail.com with ESMTPSA id ml6sm11799710pdb.69.2015.07.17.10.12.05
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jul 2015 10:12:05 -0700 (PDT)
-In-Reply-To: <1437142912-25380-1-git-send-email-zoe@bytenoise.co.uk>
- (=?utf-8?Q?=22Zoe=CC=88?=
-	Blade"'s message of "Fri, 17 Jul 2015 15:21:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=hIJz7azw90vAO1HegGJ03lfrQBF09Ntr9GupF88GO48=;
+        b=RQBTAicHCdRpyAxG4KNfZIL+BTLVAfIKr1u+RZN5CfAyi0qB53LD9Xa3G6lLGsPYhm
+         T/BXkaHLVJ7QibUJcwR80ZSrYJ9ro5sGYsYn2DZnTZ18uMOp0/RcVgKTqseS6AFmos9v
+         qDtrt92IPVsK3AMbAxWnyebSFPazmB7JXtWemqyPNkJUXUCjbj46Xy6PIf9u2IPSnd3v
+         hYvSEI6xV1Rp6lIrqh4FpsMxBou5hhQbwV/EnAbKs2CI3ELEYOKzJhkYTfuQgBjQXqkh
+         MxU8HPay5rxlSwopNGAwajsQQKLx1szKlxP6lMDR/wN221y8D0VkgvYKJ6dSyuFaHShX
+         s84g==
+X-Received: by 10.170.138.134 with SMTP id f128mr16531456ykc.90.1437153454001;
+ Fri, 17 Jul 2015 10:17:34 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Fri, 17 Jul 2015 10:17:33 -0700 (PDT)
+In-Reply-To: <205a18f7f8a7892a1fa63a91a84bfd9b@drbeat.li>
+X-Google-Sender-Auth: VWE8b-EphKrSTeI_4Tymfnh7Xls
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274090>
 
-Zoe=CC=88 Blade <zoe@bytenoise.co.uk> writes:
+On Fri, Jul 17, 2015 at 4:39 AM, Beat Bolli <dev+git@drbeat.li> wrote:
+> When referring to earlier commits in commit messages or other text, one
+> of the established formats is
+>
+>     <abbrev-sha> ("<summary>", <author-date>)
+>
+> Add a "Copy commit summary" command to the context menu that puts this
+> text for the currently selected commit on the clipboard. This makes it
+> easy for our users to create well-formatted commit references.
+>
+> The <abbrev-sha> is produced with the %h format specifier to make it
+> unique. Its minimum length can be controlled with the config setting
+> core.abbrev.
+>
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> Reviewed-by: Johannes Sixt <j6t@kdbg.org>
 
-> Add support for Fountain, a plain text screenplay format.  Git
-> facilitates not just programming specifically, but creative writing
-> in general, so it makes sense to also support other plain text
-> documents besides source code.
+You should drop these Reviewed-by: footers, as they imply that the
+code was thoroughly digested and the implementation deemed correct.
+Hannes at least gave advice about abbreviation length and may deserve
+mention via a Helped-by: footer (if you take his advice and feel his
+contribution worthy); however, in my case, I merely made a very minor
+observation about the output format, not even worth a Helped-by: (and
+certainly not a Reviewed-by:).
+
+> Cc: Paul Mackerras <paulus@samba.org>
 >
-> In the structure of a screenplay specifically, scenes are roughly
-> analogous to functions, in the sense that it makes your job easier
-> if you can see which ones were changed in a given range of patches.
->
-> More information about the Fountain format can be found on its
-> official website, at http://fountain.io .
->
-> Signed-off-by: Zoe=CC=88 Blade <zoe@bytenoise.co.uk>
 > ---
-
-The test looks a bit too brief (i.e. there is only one obvious
-candidate to be picked as the funcname header in the input, so it is
-very hard to break the expectation of the test even when the code or
-pattern is modified incorrectly), but it would do for now.
-Everything else looks trivially OK ;-)
-
-Thanks, will queue.
-
-
->  Documentation/gitattributes.txt | 2 ++
->  t/t4018-diff-funcname.sh        | 1 +
->  t/t4018/fountain-scene          | 4 ++++
->  userdiff.c                      | 2 ++
->  4 files changed, 9 insertions(+)
->  create mode 100644 t/t4018/fountain-scene
+> Changes since v2:
+> - call git log to produce a unique <abbrev-sha>
+> - use the short date format
 >
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattri=
-butes.txt
-> index 81fe586..e3b1de8 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -527,6 +527,8 @@ patterns are available:
-> =20
->  - `fortran` suitable for source code in the Fortran language.
-> =20
-> +- `fountain` suitable for Fountain documents.
+> Changes since v1:
+> - drop the "commit " literal in front of the <abbrev-sha>
+> ---
+>  gitk-git/gitk | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 9a2daf3..4915f53 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -2617,6 +2617,7 @@ proc makewindow {} {
+>         {mc "Diff selected -> this" command {diffvssel 1}}
+>         {mc "Make patch" command mkpatch}
+>         {mc "Create tag" command mktag}
+> +       {mc "Copy commit summary" command copysummary}
+>         {mc "Write commit to file" command writecommit}
+>         {mc "Create new branch" command mkbranch}
+>         {mc "Cherry-pick this commit" command cherrypick}
+> @@ -9341,6 +9342,17 @@ proc mktaggo {} {
+>      mktagcan
+>  }
+>
+> +proc copysummary {} {
+> +    global rowmenuid
 > +
->  - `html` suitable for HTML/XHTML documents.
-> =20
->  - `java` suitable for source code in the Java language.
-> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-> index 1dbaa38..67373dc 100755
-> --- a/t/t4018-diff-funcname.sh
-> +++ b/t/t4018-diff-funcname.sh
-> @@ -31,6 +31,7 @@ diffpatterns=3D"
->  	cpp
->  	csharp
->  	fortran
-> +	fountain
->  	html
->  	java
->  	matlab
-> diff --git a/t/t4018/fountain-scene b/t/t4018/fountain-scene
-> new file mode 100644
-> index 0000000..6b3257d
-> --- /dev/null
-> +++ b/t/t4018/fountain-scene
-> @@ -0,0 +1,4 @@
-> +EXT. STREET RIGHT OUTSIDE - DAY
+> +    set format "%h (\"%s\", %ad)"
+> +    set summary [exec git show -s --pretty=format:$format --date=short \
+> +                 $rowmenuid]
 > +
-> +CHARACTER
-> +You didn't say the magic phrase, "ChangeMe".
-> diff --git a/userdiff.c b/userdiff.c
-> index 2ccbee5..5316b48 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -35,6 +35,8 @@ IPATTERN("fortran",
->  	  * they would have been matched above as a variable anyway. */
->  	 "|[-+]?[0-9.]+([AaIiDdEeFfLlTtXx][Ss]?[-+]?[0-9.]*)?(_[a-zA-Z0-9][=
-a-zA-Z0-9_]*)?"
->  	 "|//|\\*\\*|::|[/<>=3D]=3D"),
-> +PATTERNS("fountain", "^((INT|EST|EXT)?\\.[A-Z0-9' -]+)$",
-> +	 "[^ \t-]+"),
->  PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
->  	 "[^<>=3D \t]+"),
->  PATTERNS("java",
+> +    clipboard clear
+> +    clipboard append $summary
+> +}
+> +
+>  proc writecommit {} {
+>      global rowmenuid wrcomtop commitinfo wrcomcmd NS
+>
+> --
+> 2.4.0
