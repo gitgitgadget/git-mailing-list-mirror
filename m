@@ -1,57 +1,85 @@
-From: Christian Weiske <cweiske@cweiske.de>
-Subject: git clone --recursive and URL overrides
-Date: Fri, 17 Jul 2015 10:48:48 +0200
-Message-ID: <20150717104848.31ab4c3f@csystems>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 17 10:56:49 2015
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [PATCH v2] gitk: Add a "Copy commit summary" command
+Date: Fri, 17 Jul 2015 10:50:56 +0200
+Message-ID: <1m7p7z9.36ajnyli8ph2M%lists@haller-berlin.de>
+References: <xmqq380o593i.fsf@gitster.dls.corp.google.com>
+Cc: dev+git@drbeat.li (Beat Bolli), git@vger.kernel.org,
+	paulus@samba.org (Paul Mackerras)
+To: gitster@pobox.com (Junio C Hamano)
+X-From: git-owner@vger.kernel.org Fri Jul 17 10:58:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZG1Rn-0001Qa-9R
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 10:56:47 +0200
+	id 1ZG1TL-00024k-HM
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 10:58:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946123AbbGQI4l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jul 2015 04:56:41 -0400
-Received: from cweiske.de ([5.35.241.22]:43402 "EHLO mail.cweiske.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946018AbbGQI4j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2015 04:56:39 -0400
-X-Greylist: delayed 467 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jul 2015 04:56:38 EDT
-Received: by mail.cweiske.de (Postfix, from userid 65534)
-	id 9F3F92E530B; Fri, 17 Jul 2015 10:48:49 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on ahso2
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.2
-Received: from csystems (proxy.lpz.netresearch.de [85.232.25.153])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by mail.cweiske.de (Postfix) with ESMTPSA id 6D6762E52EB
-	for <git@vger.kernel.org>; Fri, 17 Jul 2015 10:48:49 +0200 (CEST)
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+	id S1757342AbbGQI6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 04:58:10 -0400
+Received: from server90.greatnet.de ([178.254.50.90]:34530 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757339AbbGQI6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 04:58:07 -0400
+X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jul 2015 04:58:07 EDT
+Received: from [10.1.0.140] (nat1.ableton.net [217.110.199.117])
+	by server90.greatnet.de (Postfix) with ESMTPA id 4DA5D2B400A;
+	Fri, 17 Jul 2015 10:50:57 +0200 (CEST)
+In-Reply-To: <xmqq380o593i.fsf@gitster.dls.corp.google.com>
+User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.10.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274062>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> wrote:
+
+> Beat Bolli <dev+git@drbeat.li> writes:
+> 
+> > When referring to earlier commits in commit messages or other text, one
+> > of the established formats is
+> >
+> >     <abbrev-sha> ("<summary>", <author-date>)
+> > ...
+> > +proc copysummary {} {
+> > +    global rowmenuid commitinfo
+> > +
+> > +    set id [string range $rowmenuid 0 7]
+> > +    set info $commitinfo($rowmenuid)
+> > +    set commit [lindex $info 0]
+> 
+> 7 hexdigits is not always an appropriate value for all projects.
+> The minimum necessary to guarantee uniqueness varies on project, and
+> it is not a good idea to hardcode such a small value.  Not-so-old
+> Linux kernel history seems to use at least 12, for example.
+> 
+> I believe that the "one of the established formats" comes from a
+> "git one" alias I published somewhere long time ago, that did
+> something like this:
+> 
+>   git show -s --abbrev=8 --pretty='format:%h (%s, %ai' "$@" |
+>   sed -e 's/ [012][0-9]:[0-5][0-9]:[0-5][0-9] [-+][0-9][0-9][0-9][0-9]$/)/'
+> 
+> where the combination of --abbrev=8 and format:%h asks for a unique
+> abbreviation that is at least 8 hexdigits long but can use more than
+> 8 if it is not long enough to uniquely identify the given commit.
+
+For the intended use case of this feature (referring to earlier commits
+in commit messages), guaranteeing uniqueness isn't sufficiant either.
+What is unique at the time of creating the commit might no longer be
+unique a few years later.
+
+So one strategy would be to add one or two digits to what %h returns, to
+give some future leeway; or rely on the user to configure core.abbrev
+appropriatly for their project; or just make the hard-coded value
+configurable, as Hannes suggests.
+
+FWIW, a discussion of this that I find useful can be found here:
+<http://blog.cuviper.com/2013/11/10/how-short-can-git-abbreviate/>.
 
 
-I'm setting some URL overrides via
-> -c foo.insteadof=3Dbar
-to "git clone --recursive", but they are not used in the subsequent
-submodule requests on git 1.9.1.
-
-Is this expected behavior, or a bug?
-
---=20
-Regards/Mit freundlichen Gr=C3=BC=C3=9Fen
-Christian Weiske
-
--=3D Geeking around in the name of science since 1982 =3D-
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
