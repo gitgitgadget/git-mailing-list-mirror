@@ -1,161 +1,123 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 12/22] worktree: introduce options container
-Date: Fri, 17 Jul 2015 19:00:07 -0400
-Message-ID: <1437174017-81687-13-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v3 03/22] checkout: improve die_if_checked_out() robustness
+Date: Fri, 17 Jul 2015 18:59:58 -0400
+Message-ID: <1437174017-81687-4-git-send-email-sunshine@sunshineco.com>
 References: <1437174017-81687-1-git-send-email-sunshine@sunshineco.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 18 01:02:13 2015
+X-From: git-owner@vger.kernel.org Sat Jul 18 01:02:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGEdu-0002hL-GI
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 01:02:10 +0200
+	id 1ZGEe1-0002lq-AG
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 01:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327AbbGQXCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 19:02:03 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34642 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753898AbbGQXBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 19:01:24 -0400
-Received: by igvi1 with SMTP id i1so45053897igv.1
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 16:01:23 -0700 (PDT)
+	id S1754019AbbGQXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 19:02:12 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:32949 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753712AbbGQXBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 19:01:15 -0400
+Received: by igbpg9 with SMTP id pg9so5819928igb.0
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 16:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hV523HhrErKqYm0AfzyMSzpQ7gRfJE1ePU7C6XiPfe0=;
-        b=p8R14UlBTLnlAAy3irlB1XRkzD5qmM3Co3DeTSnG7+YVIiQql7b33JVJGwPm4fRkHO
-         yZ7OV0UwklgjafTfwmz+GohnM5wg6tfqRHbnbaHnyQXjcD8OR8+VKL77sdDbL2Z8xqCx
-         XpQbOGR/Js17s3uAAA0uBpdWgRWEvoHi/Ix1o+JLHxwGMaMGFWYJ1PCmQ9R0DiyznTYe
-         qpWBvNkjt2fVOPkRhZkAPUZDwbocoAoSsREgQoad/6TbG1ZmAu7TsqPtV/mCTlHx+IrW
-         2RwFkUJY36bslPb9CJxMHx7O99chm8dF+hQUDAy/gmX4kzhmHLkssPBpRwHMAFBW91oo
-         ACZw==
-X-Received: by 10.107.137.96 with SMTP id l93mr21652843iod.60.1437174083631;
-        Fri, 17 Jul 2015 16:01:23 -0700 (PDT)
+        bh=x6StjCbJpGTZ7e9+ueGED6bJ+jqHQWJ3eAQ3BMiXtw8=;
+        b=ZFOropkCUGKbY819EAYJq3CcDsoW5PCFoyAn8zNEqCKLmVum300OinyG/SrCGTnEVk
+         itwHEvbCE2t2MgGZQDku6uzbqOZxUwBj0inVJvGndMaJ1OvU/I0uQJfC/YPClF49GFQo
+         Ey3j1EbrexzNxAtiOFOxNQRFhHt9phu2Ywli7i7+6EpLiKRsak4+/k9yeZOXqoUZ2aGa
+         6TAsY37ENP8jZ2df4TtjTzWab3J66rlaG3Pt8vpz34D8RqRyehP+CyKMcZ5GiPpz5UrS
+         khCm2PqW8gOAvQ5y5Ogc/I6krzN0i3HJa6s1AgH+BtP8cDGmyXGBlBWEvAKIcFABUVIO
+         nQ+A==
+X-Received: by 10.107.3.104 with SMTP id 101mr21979003iod.48.1437174074871;
+        Fri, 17 Jul 2015 16:01:14 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id 140sm8414824ion.16.2015.07.17.16.01.22
+        by smtp.gmail.com with ESMTPSA id 140sm8414824ion.16.2015.07.17.16.01.14
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 17 Jul 2015 16:01:23 -0700 (PDT)
+        Fri, 17 Jul 2015 16:01:14 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.378.g0af52e8
 In-Reply-To: <1437174017-81687-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274149>
 
-add_worktree() will eventually need to deal with some options itself, so
-introduce a structure into which options can be conveniently bundled,
-and pass it along to add_worktree().
+die_if_checked_out() is intended to check if the branch about to be
+checked out is already checked out either in the main worktree or in a
+linked worktree. However, if .git/worktrees directory does not exist,
+then it never bothers checking the main worktree, even though the
+specified branch might indeed be checked out there, which is fragile
+behavior.
+
+This hasn't been a problem in practice since the current implementation
+of "git worktree add" (and, earlier, "git checkout --to") always creates
+.git/worktrees before die_if_checked_out() is called by the child "git
+checkout" invocation which populates the new worktree.
+
+However, git-worktree will eventually want to call die_if_checked_out()
+itself rather than only doing so indirectly as a side-effect of invoking
+git-checkout, and reliance upon order of operations (creating
+.git/worktrees before checking if a branch is already checked out) is
+fragile. As a general function, callers should not be expected to abide
+by this undocumented and unwarranted restriction. Therefore, make
+die_if_checked_out() more robust by checking the main worktree whether
+.git/worktrees exists or not.
+
+While here, also move a comment explaining why die_if_checked_out()'s
+helper parses HEAD manually. Such information resides more naturally
+with the helper itself rather than at its first point of call.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
 
 No changes since v2.
 
- builtin/worktree.c | 45 +++++++++++++++++++++++++++------------------
- 1 file changed, 27 insertions(+), 18 deletions(-)
+ builtin/checkout.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index bf4db9f..7d70eb6 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -12,6 +12,13 @@ static const char * const worktree_usage[] = {
- 	NULL
- };
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index e75fb5e..1992c41 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -880,6 +880,11 @@ static void check_linked_checkout(struct branch_info *new, const char *id)
+ 	struct strbuf gitdir = STRBUF_INIT;
+ 	const char *start, *end;
  
-+struct add_opts {
-+	int force;
-+	int detach;
-+	const char *new_branch;
-+	int force_new_branch;
-+};
++	/*
++	 * $GIT_COMMON_DIR/HEAD is practically outside
++	 * $GIT_DIR so resolve_ref_unsafe() won't work (it
++	 * uses git_path). Parse the ref ourselves.
++	 */
+ 	if (id)
+ 		strbuf_addf(&path, "%s/worktrees/%s/HEAD", get_git_common_dir(), id);
+ 	else
+@@ -916,19 +921,14 @@ static void die_if_checked_out(struct branch_info *new)
+ 	DIR *dir;
+ 	struct dirent *d;
+ 
++	check_linked_checkout(new, NULL);
 +
- static int show_only;
- static int verbose;
- static unsigned long expire;
-@@ -171,7 +178,8 @@ static const char *worktree_basename(const char *path, int *olen)
- 	return name;
- }
- 
--static int add_worktree(const char *path, const char **child_argv)
-+static int add_worktree(const char *path, const char **child_argv,
-+			const struct add_opts *opts)
- {
- 	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -272,22 +280,23 @@ static int add_worktree(const char *path, const char **child_argv)
- 
- static int add(int ac, const char **av, const char *prefix)
- {
--	int force = 0, detach = 0, force_new_branch;
--	const char *new_branch = NULL, *new_branch_force = NULL;
-+	struct add_opts opts;
-+	const char *new_branch_force = NULL;
- 	const char *path, *branch;
- 	struct argv_array cmd = ARGV_ARRAY_INIT;
- 	struct option options[] = {
--		OPT__FORCE(&force, N_("checkout <branch> even if already checked out in other worktree")),
--		OPT_STRING('b', NULL, &new_branch, N_("branch"),
-+		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
-+		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
- 			   N_("create a new branch")),
- 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
- 			   N_("create or reset a branch")),
--		OPT_BOOL(0, "detach", &detach, N_("detach HEAD at named commit")),
-+		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_END()
- 	};
- 
-+	memset(&opts, 0, sizeof(opts));
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
--	if (new_branch && new_branch_force)
-+	if (opts.new_branch && new_branch_force)
- 		die(_("-b and -B are mutually exclusive"));
- 	if (ac < 1 || ac > 2)
- 		usage_with_options(worktree_usage, options);
-@@ -295,27 +304,27 @@ static int add(int ac, const char **av, const char *prefix)
- 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
- 	branch = ac < 2 ? "HEAD" : av[1];
- 
--	force_new_branch = !!new_branch_force;
--	if (force_new_branch)
--		new_branch = new_branch_force;
-+	opts.force_new_branch = !!new_branch_force;
-+	if (opts.force_new_branch)
-+		opts.new_branch = new_branch_force;
- 
--	if (ac < 2 && !new_branch) {
-+	if (ac < 2 && !opts.new_branch) {
- 		int n;
- 		const char *s = worktree_basename(path, &n);
--		new_branch = xstrndup(s, n);
-+		opts.new_branch = xstrndup(s, n);
+ 	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
+ 	if ((dir = opendir(path.buf)) == NULL) {
+ 		strbuf_release(&path);
+ 		return;
  	}
  
- 	argv_array_push(&cmd, "checkout");
--	if (force)
-+	if (opts.force)
- 		argv_array_push(&cmd, "--ignore-other-worktrees");
--	if (new_branch)
--		argv_array_pushl(&cmd, force_new_branch ? "-B" : "-b",
--				 new_branch, NULL);
--	if (detach)
-+	if (opts.new_branch)
-+		argv_array_pushl(&cmd, opts.force_new_branch ? "-B" : "-b",
-+				 opts.new_branch, NULL);
-+	if (opts.detach)
- 		argv_array_push(&cmd, "--detach");
- 	argv_array_push(&cmd, branch);
- 
--	return add_worktree(path, cmd.argv);
-+	return add_worktree(path, cmd.argv, &opts);
- }
- 
- int cmd_worktree(int ac, const char **av, const char *prefix)
+-	/*
+-	 * $GIT_COMMON_DIR/HEAD is practically outside
+-	 * $GIT_DIR so resolve_ref_unsafe() won't work (it
+-	 * uses git_path). Parse the ref ourselves.
+-	 */
+-	check_linked_checkout(new, NULL);
+-
+ 	while ((d = readdir(dir)) != NULL) {
+ 		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+ 			continue;
 -- 
 2.5.0.rc2.378.g0af52e8
