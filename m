@@ -1,135 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git tag: pre-receive hook issue
-Date: Fri, 17 Jul 2015 12:30:21 -0700
-Message-ID: <xmqqoaja1t0y.fsf@gitster.dls.corp.google.com>
-References: <1437159533304-7635764.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Garbageyard <varuag.chhabra@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 21:30:32 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH] unpack-trees: don't update files flagged for deletion
+Date: Fri, 17 Jul 2015 15:48:52 -0400
+Message-ID: <1437162532-31933-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Anatole Shaw <git-devel@omni.poc.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 17 21:49:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGBL4-0000uY-ED
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 21:30:30 +0200
+	id 1ZGBdH-0000Lf-Q0
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 21:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbbGQTaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 15:30:25 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36795 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752986AbbGQTaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 15:30:24 -0400
-Received: by pachj5 with SMTP id hj5so65605289pac.3
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 12:30:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=8mhyc1KvHZ9l+5IvwLfrjIc5GkmXjeJZVz7hNJKXK90=;
-        b=SfcSNJrWnIh3GBUtskWXfughuwWQdWmA6eljfntDIcwqkzRcWL9I8lYuhPEFVXdeaz
-         RV/eQZv3PuMm3e6h/uWR8zKQyUPhZuQVGsDjVnw3atWYOjOp5baNOtZ5FLeIzefbiMiE
-         jTwQ6VLpfo8MYw/dnTjHVDFkOgnzEjbL2sNs1JqBIyHXhzAGZtUuN+G/OSyUc3E9k0iZ
-         iOwecAieRjdnfq7dZfxnqGJMPNkEMYlxXXWaIc/pvUwGTWJ30gknf3f7+/NvKjND7QSX
-         ajQEgKpUApwIy4xEhPWsjSlj2hSHQ5+pML/EG/lSflHA9ELPZgJGWoz1u79qBnGa8l/n
-         o/mQ==
-X-Received: by 10.70.89.170 with SMTP id bp10mr32533138pdb.30.1437161423956;
-        Fri, 17 Jul 2015 12:30:23 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
-        by smtp.gmail.com with ESMTPSA id qo6sm12124159pab.23.2015.07.17.12.30.21
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jul 2015 12:30:22 -0700 (PDT)
-In-Reply-To: <1437159533304-7635764.post@n2.nabble.com> (Garbageyard's message
-	of "Fri, 17 Jul 2015 11:58:53 -0700 (MST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753170AbbGQTtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 15:49:15 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:33059 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752399AbbGQTtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 15:49:14 -0400
+Received: by qged69 with SMTP id d69so22673006qge.0
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 12:49:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Y1rmFBl8w1iVP1PdLY9N6hXeILwlcQvJiFLyVuCnkGw=;
+        b=N9VETqTr6iyUZoM4sshWq0hkmQVT9Te0CiruqbxLBpxcHrK567HwtgdAW8dVGDFn/A
+         RvYrICC5C2eKgTymCaQxH+9gEHuoatFUGxPyZo8GqFoQG39oMaS2w9bdL/o9gP3l7IRY
+         8Fs33NLhSWe1LXGRGZ54Ygd7ZZ5UpvmJVRhgPxM27noKqkZA9CH+2irits8LJqPwrH6F
+         Wv+D2flcXwVL6cKjo5KEVnjrSVUqwskv4b4sxWrg8eahCAn+CZhbEG7G55lbEnuD7zhP
+         UBcs1vU2Ys0IRu8f1/s0x873I5vpNrlLJBLmKwhSmqaJLwVkJdibca68MxXo5RXE1sDw
+         GIVg==
+X-Gm-Message-State: ALoCoQlLRWPzEESXEwJEnw8K4V4CdDA6a+kjin8jM8SJa+Sk7NcE6nyWBgc3DwZAdhFVc+BTlltR
+X-Received: by 10.140.91.81 with SMTP id y75mr27864875qgd.3.1437162554115;
+        Fri, 17 Jul 2015 12:49:14 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id m48sm6372093qgd.35.2015.07.17.12.49.12
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 17 Jul 2015 12:49:12 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274098>
 
-Garbageyard <varuag.chhabra@gmail.com> writes:
+Don't update files in the worktree from cache entries which are
+flagged with CE_WT_REMOVE.  This is fixes merges in sparse
+checkouts.
 
-> We have a pre-receive hook that checks for JIRA ID whenever someone pushes
-> code to Git server. I'm trying to avoid this check when someone is applying
-> a tag. Here's the link for the script: http://pastebin.com/VnMQp5ar
->
-> This is the link for output: http://pastebin.com/tBGmYaZF
->
-> Problem is that if i run the following command, the output that i get on
-> command line is 0
->
-> git describe --exact-match ac28ca721e67adc04078786164939989a5112d98 2>&1 |
-> grep -o fatal | wc -w
+Signed-off-by: Anatole Shaw <git-devel@omni.poc.net>
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
 
-I am not sure what you are trying to do in the first place.
+This patch was written by my colleague Anatole Shaw for Twitter's git;
+I just rebased it on mainstream git.  Anatole has given me permission
+to send this upstream.
 
-  : gitster x; git init garbage
-  Initialized empty Git repository in /var/tmp/x/garbage/.git/
-  : gitster x; cd garbage
-  : gitster garbage/master; git commit --allow-empty -m initial
-  [master (root-commit) b18cac2] initial
-  : gitster garbage/master; git tag v0.0 ;# lightweight
-  : gitster garbage/master; git commit --allow-empty -m second
-  [master d1de78e] second
-  : gitster garbage/master; git tag -a 'v0.1' v0.1
-  fatal: Failed to resolve 'v0.1' as a valid ref.
-  : gitster garbage/master; git tag -a -m 'v0.1' v0.1
-  : gitster garbage/master; git commit --allow-empty -m third
-  [master d1f1360] third
-  : gitster garbage/master; git describe --exact-match HEAD ;# third
-  fatal: no tag exactly matches 'd1f1360b46dfde8c6f341e48ce45d761ed37e357'
-  : gitster garbage/master; git describe --exact-match HEAD^ ;# second
-  v0.1
-  : gitster garbage/master; git describe --exact-match HEAD^^ ;# first
-  fatal: no tag exactly matches 'b18cac237055d9518f9f92bb4c0a4dac825dce17'
-  : gitster garbage/master; exit
+---
+ t/t1090-sparse-checkout-scope.sh | 52 ++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c                   |  2 +-
+ 2 files changed, 53 insertions(+), 1 deletion(-)
+ create mode 100755 t/t1090-sparse-checkout-scope.sh
 
-I am feeding three _commits_, not tags.  But one of them (i.e. the
-one that happens to have an annotated tag) yields the "exact match"
-tagname, as designed and expected.
-
-But is it really what you want to do to skip such a commit?  Why?
-
-I also see a questionable thing in the earlier part of your script:
-
-   while read old_sha1 new_sha1 refname ; do
-           echo "stdin: [$old_sha1] [$new_sha1] [$refname]"
-           if [ "$old_sha1" == "0000000000000000000000000000000000000000" ] ; then
-               commits=$new_sha1
-           else
-               commits=`git rev-list $old_sha1..$new_sha1`
-           fi
-
-           for commit in $commits
-           do
-		...
-
-When somebody pushes to an existing branch, you list all the new
-commits that came in (i.e. 'git rev-list' is bounded by $old_sha1 at
-the bottom).  But when somebody pushes to a new branch, you only
-include the tip to the list.
-
-And you check everything on that list.  Why?  If I push three-commit
-series to a new branch, wouldn't you want to validate all three of
-them, just like you validate my push of a three-commit enhancement
-to an existing branch?
-
-	while read old new name
-        do
-		case "$name" in refs/heads/tags/*) continue ;; esac
-		if test "$old" = 0000000000000000000000000000000000000000
-		then
-			git rev-list $old
-		else
-                	git rev-list $old..$new
-		fi
-	done |
-	while read commit
-        do
-        	Do a check on $commit
-	done
-
-or something instead?
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+new file mode 100755
+index 0000000..1f61eb3
+--- /dev/null
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++test_description='sparse checkout scope tests'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo "initial" >a &&
++	echo "initial" >b &&
++	echo "initial" >c &&
++	git add a b c &&
++	git commit -m "initial commit"
++'
++
++test_expect_success 'create feature branch' '
++	git checkout -b feature &&
++	echo "modified" >b &&
++	echo "modified" >c &&
++	git add b c &&
++	git commit -m "modification"
++'
++
++test_expect_success 'perform sparse checkout of master' '
++	git config --local --bool core.sparsecheckout true &&
++	echo "!/*" >.git/info/sparse-checkout &&
++	echo "/a" >>.git/info/sparse-checkout &&
++	echo "/c" >>.git/info/sparse-checkout &&
++	git checkout master &&
++	test_path_is_file a &&
++	test_path_is_missing b &&
++	test_path_is_file c
++'
++
++test_expect_success 'merge feature branch into sparse checkout of master' '
++	git merge feature &&
++	test_path_is_file a &&
++	test_path_is_missing b &&
++	test_path_is_file c &&
++	test "$(cat c)" = "modified"
++'
++
++test_expect_success 'return to full checkout of master' '
++	git checkout feature &&
++	echo "/*" >.git/info/sparse-checkout &&
++	git checkout master &&
++	test_path_is_file a &&
++	test_path_is_file b &&
++	test_path_is_file c &&
++	test "$(cat b)" = "modified"
++'
++
++test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 2927660..11a5300 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -223,7 +223,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+-		if (ce->ce_flags & CE_UPDATE) {
++		if (ce->ce_flags & CE_UPDATE && !(ce->ce_flags & CE_WT_REMOVE)) {
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+-- 
+2.0.4.315.gad8727a-twtrsrc
