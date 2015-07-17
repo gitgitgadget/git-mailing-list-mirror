@@ -1,101 +1,102 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 07/22] checkout: check_linked_checkout: simplify symref parsing
-Date: Fri, 17 Jul 2015 19:00:02 -0400
-Message-ID: <1437174017-81687-8-git-send-email-sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 14/22] worktree: add: suppress auto-vivication with
+ --detach and no <branch>
+Date: Fri, 17 Jul 2015 19:20:40 -0400
+Message-ID: <20150717232040.GA85140@flurp.local>
 References: <1437174017-81687-1-git-send-email-sunshine@sunshineco.com>
+ <1437174017-81687-15-git-send-email-sunshine@sunshineco.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 18 01:02:18 2015
+X-From: git-owner@vger.kernel.org Sat Jul 18 01:20:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGEe1-0002lq-TK
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 01:02:18 +0200
+	id 1ZGEw0-0001s2-KC
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 01:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753898AbbGQXCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2015 19:02:11 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:38727 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753794AbbGQXBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 19:01:19 -0400
-Received: by iggf3 with SMTP id f3so47294226igg.1
-        for <git@vger.kernel.org>; Fri, 17 Jul 2015 16:01:18 -0700 (PDT)
+	id S1752300AbbGQXUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 19:20:48 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:35572 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170AbbGQXUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 19:20:47 -0400
+Received: by igcqs7 with SMTP id qs7so47935009igc.0
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 16:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5aQmUVnnSIT85i7EBU1fWz1sP4XY3jG1ETvb/oUWxro=;
-        b=B2MBd/RDfMZ2dGQkhFUrUHh0M8hlbiOi0QV6GWjwIJFfhg7josGmyJGXlwgdui4iGQ
-         4t4uYQM9p+WQjoNlF7P71LBEXqZVmyOIaUzKfTz9YSHxsVYkeZq4lf4+z9Hulx1tZ+iJ
-         x1q+gJnJxuOBxC1yatQP3RuTqBpyRTxDTXCYTasDHJj/tM8tDre7m+Xn2V3hxmnSFqhA
-         sxXc8dTXMTHxYk1vMCicGCtxIWi8AHSaH0ouDIvDKqN9yWqifS9JTQdEx6ClfHjTQeYN
-         1xS/zw5j+1uIcSGBhi40kUg854rGafwHmk3s8Fx6AJqOJ1uKuFbr8hStb7EefDOnVfFe
-         E14g==
-X-Received: by 10.107.135.200 with SMTP id r69mr21784276ioi.54.1437174078738;
-        Fri, 17 Jul 2015 16:01:18 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id 140sm8414824ion.16.2015.07.17.16.01.18
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 17 Jul 2015 16:01:18 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.rc2.378.g0af52e8
-In-Reply-To: <1437174017-81687-1-git-send-email-sunshine@sunshineco.com>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qu32vFM/xu7Zrluxq5AQB4Y7JsI0ls+qretC7VfnKlU=;
+        b=Fs5J7+4YE2SL+ewCISyJH5nKPISoV9NW0c0FkCoG3g5KIw7u0hQFFqDD/PeRFHvIc+
+         mKnKhVBqRd8IsfxQS2ieLt01rV+jlHV6jpr4OTjkNz7NcMeAAkq5aPhJf43rnRAr1lYt
+         TACbQVX/smFH3yePDSJ6n8NEv8Cd0tlwiISCEI5Sqq7/+QHIWjcOStNHHRgJBQkJL2Tp
+         X37JMVmH1/quY8j9tyQnJ+yDvha+dIqJqzV6myzrtvLexbUgCekosfN545jp+i6FThib
+         HtK1O+MQmxPMgofIS1Tsv9/106SQhgBlDGY25R6KwpfjjjGTK31H5UkLhPH+SWmzPbbJ
+         olFw==
+X-Received: by 10.50.225.40 with SMTP id rh8mr952026igc.39.1437175246790;
+        Fri, 17 Jul 2015 16:20:46 -0700 (PDT)
+Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by smtp.gmail.com with ESMTPSA id o66sm8454449ioo.5.2015.07.17.16.20.45
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 17 Jul 2015 16:20:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1437174017-81687-15-git-send-email-sunshine@sunshineco.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274151>
 
-check_linked_checkout() only understands symref-style HEAD (i.e. "ref:
-refs/heads/master"), however, HEAD may also be a an actual symbolic link
-(on platforms which support it), thus it will need to check that style
-HEAD, as well (via readlink()). As a preparatory step, simplify parsing
-of symref-style HEAD so the actual branch check can be re-used easily
-for symbolic links (in an upcoming patch).
+On Fri, Jul 17, 2015 at 07:00:09PM -0400, Eric Sunshine wrote:
+> Fix oversight where branch auto-vivication incorrectly kicks in when
+> --detach is specified and <branch> omitted. Instead, treat:
+> 
+>     git worktree add --detach <path>
+> 
+> as shorthand for:
+> 
+>     git worktree add --detach <path> HEAD
+> 
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  builtin/worktree.c      |  2 +-
+>  t/t2025-worktree-add.sh | 14 ++++++++++++++
+>  2 files changed, 15 insertions(+), 1 deletion(-)
+
+I meant, but forgot, to include a documentation update with this patch.
+Here it is as a squash-in:
+
+---- 8< ----
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v3 23/22] fixup! worktree: add: suppress auto-vivication with --detach and no <branch>
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
+ Documentation/git-worktree.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-No changes since v2.
-
- builtin/checkout.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index de6619f..6f4e492 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -878,7 +878,6 @@ static void check_linked_checkout(const char *branch, const char *id)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
- 	struct strbuf gitdir = STRBUF_INIT;
--	const char *start, *end;
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index da71f50..834a61c 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -51,9 +51,9 @@ Create `<path>` and checkout `<branch>` into it. The new working directory
+ is linked to the current repository, sharing everything except working
+ directory specific files such as HEAD, index, etc.
+ +
+-If `<branch>` is omitted and neither `-b` nor `-B` is used, then, as a
+-convenience, a new branch based at HEAD is created automatically, as if
+-`-b $(basename <path>)` was specified.
++If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
++then, as a convenience, a new branch based at HEAD is created automatically,
++as if `-b $(basename <path>)` was specified.
  
- 	/*
- 	 * $GIT_COMMON_DIR/HEAD is practically outside
-@@ -890,15 +889,13 @@ static void check_linked_checkout(const char *branch, const char *id)
- 	else
- 		strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+ prune::
  
--	if (strbuf_read_file(&sb, path.buf, 0) < 0 ||
--	    !skip_prefix(sb.buf, "ref:", &start))
-+	if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
-+	    starts_with(sb.buf, "ref:")) {
-+		strbuf_remove(&sb, 0, strlen("ref:"));
-+		strbuf_trim(&sb);
-+	} else
- 		goto done;
--	while (isspace(*start))
--		start++;
--	end = start;
--	while (*end && !isspace(*end))
--		end++;
--	if (strncmp(start, branch, end - start) || branch[end - start] != '\0')
-+	if (strcmp(sb.buf, branch))
- 		goto done;
- 	if (id) {
- 		strbuf_reset(&path);
 -- 
 2.5.0.rc2.378.g0af52e8
