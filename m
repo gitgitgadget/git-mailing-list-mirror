@@ -1,109 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 06/20] checkout: check_linked_checkout: improve
- "already checked out" aesthetic
-Date: Thu, 16 Jul 2015 20:32:38 -0400
-Message-ID: <CAPig+cRtCon=jaqbjZyHTvJ3cydiyAz+5OC=3x30VfAJniYYMQ@mail.gmail.com>
-References: <1437034825-32054-1-git-send-email-sunshine@sunshineco.com>
-	<1437034825-32054-7-git-send-email-sunshine@sunshineco.com>
-	<xmqqy4ig3s3q.fsf@gitster.dls.corp.google.com>
+From: Michael Darling <darlingm@gmail.com>
+Subject: Re: [PATCH] Documentation: Alternate name for docbook2x-texi binary
+Date: Thu, 16 Jul 2015 20:43:36 -0400
+Message-ID: <CABRuA+iM4-td27tGS6Fh4YKBxChFqU2ezF+ewstsM_59MrUo7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 02:32:44 2015
+Content-Type: multipart/mixed; boundary=089e0141aafe6f1f1b051b077a29
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 17 02:43:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZFta0-0002xI-9Q
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 02:32:44 +0200
+	id 1ZFtkk-00069c-8Q
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 02:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756549AbbGQAcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2015 20:32:39 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:34346 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756539AbbGQAci (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2015 20:32:38 -0400
-Received: by ykax123 with SMTP id x123so78073339yka.1
-        for <git@vger.kernel.org>; Thu, 16 Jul 2015 17:32:38 -0700 (PDT)
+	id S1756201AbbGQAni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2015 20:43:38 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:34799 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755380AbbGQAnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2015 20:43:37 -0400
+Received: by wgkl9 with SMTP id l9so70581045wgk.1
+        for <git@vger.kernel.org>; Thu, 16 Jul 2015 17:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=eK5+keXHeOAfPaSjKYMLhxO32ymknNTI2mLS5lcwy6Q=;
-        b=JiOKv099zfNfn9wrjzs2D3OHPQP70ofl2wz/ks/eFl3dZStPsiFxLunZokZupDE6JI
-         d6xYIGHEMW13u3zlFbVVYc8DYTl02YwXA15bzR6NmlUixYJCd0dbSHfayG03oBCcTmAF
-         pOf/8708EG7N79Pt163Dntgblx3kuxp0DbDqITNh5dIQTBOMYW7Xly00fShWp+9v6TOm
-         wgRsPpsHRkaSsRYOrELFjOm3CyStHNPPmM8JBNg5xHYGAqNsP39sZYfmqwIN7WYpvNPH
-         GIpVmGGKbJqOOd7d3TvGweSnO+VSb/1/g2mOfis92H8JvJmED8EO8oPrkFp0Q7a+OOQG
-         Q5bQ==
-X-Received: by 10.170.138.134 with SMTP id f128mr12919042ykc.90.1437093158103;
- Thu, 16 Jul 2015 17:32:38 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Thu, 16 Jul 2015 17:32:38 -0700 (PDT)
-In-Reply-To: <xmqqy4ig3s3q.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: e3SgKZm9mLpxChE6xTJr9GxED5Q
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=FvpNfPcUsrDZt4Mo9HmLLjFDVuKK8K053vFdqMQKjIw=;
+        b=aNAfcVq1f+GZ5uzb4/qmU+N9vjXv9wLc2yEDm6X68p9TpROM5HYGf4ozaoesChrqFF
+         d48mOATdHPtYcfSLQXSReFOo8+d3KkCvDVXeVrDRPYqysqtgRUMmPKN2yALm6EQiKjSj
+         bk5lX7xpUjbRkf/sUGyAopLbL8qRb9K3fiu2BxtYlpaEBjYF6xBhHtRUP0huR5z8ESZe
+         q9ABbekR5iTW5juVl74++plwbYj6WGWZjgv22//rbyMAX0zis61JP2AAN0ozBPXu0WY7
+         uxEjaNyO7ekDvGKgLD4K0ZkXaWPkZHUQiJ862tQPfEVboxszHzEf1e5whEomQLn4WFGn
+         zVHQ==
+X-Received: by 10.194.178.99 with SMTP id cx3mr23444157wjc.33.1437093816365;
+ Thu, 16 Jul 2015 17:43:36 -0700 (PDT)
+Received: by 10.28.50.129 with HTTP; Thu, 16 Jul 2015 17:43:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274055>
 
-On Thu, Jul 16, 2015 at 1:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> How does this work with manually configured GIT_DIR environment, by
-> the way?  I think GIT_DIR=/collection/of/repos/foo.git would be OK,
-> as strbuf_strip_suffix() would hopefully leave it intact, but I am
-> more interested in the general working of linked checkout feature,
-> not just this error message.
+--089e0141aafe6f1f1b051b077a29
+Content-Type: text/plain; charset=UTF-8
 
-I may be misunderstanding your question, but my answer is that
-strbuf_strip_suffix() is not applied to $GIT_DIR, but rather to the
-content of file $GIT_COMMON_DIR/worktrees/<tag>/gitdir, which is the
-path to the .git file in the linked worktree. That is, given:
+Ping.  Don't have write access.
 
-    git worktree add ../foo HEAD
+Applied as an attachment, in case there were any formatting issues.
 
-then the content of 'gitdir' is the absolute path of "../foo/.git",
-and strbuf_strip_suffix() operates on that value.
-
-> In the new world order with GIT_DIR and GIT_COMMON_DIR, does
-> "$GIT_DIR" always have to be the same as "$GIT_WORK_TREE/.git"?  Do
-> we need some sanity check if that is the case?  Perhaps: if you have
-> $GIT_DIR set to $somewhere/.git/worktrees/$name, then
+On Wed, May 13, 2015 at 4:28 AM, Michael Darling <darlingm@gmail.com> wrote:
+> In Fedora 21, docbook2x-texi binary is named db2x_docbook2texi.
+> If binary docbook2-texi is not found, looks for db2x_docbook2texi.
+> Also gives an error if neither is found.
 >
->  - $GIT_COMMON_DIR must match $somewhere/.git,
+> Signed-off by: Michael Darling <darlingm@gmail.com>
+> ---
+>  Documentation/Makefile | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
 >
->  - $somewhere/.git/worktrees/$name/commondir must point at
->    $GIT_COMMON_DIR,
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 3e39e28..f5f9ad5 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -116,7 +116,15 @@ HTML_REPO = ../../git-htmldocs
 >
->  - $GIT_WORK_TREE/.git must match $GIT_DIR
->
-> or something like that?
+>  MAKEINFO = makeinfo
+>  INSTALL_INFO = install-info
+> -DOCBOOK2X_TEXI = docbook2x-texi
+> +
+> +DOCBOOK2X_TEXI = $(shell which docbook2x-texi)
+> +ifeq (, $(DOCBOOK2X_TEXI))
+> +DOCBOOK2X_TEXI = $(shell which db2x_docbook2texi)
+> +ifeq (, $(DOCBOOK2X_TEXI))
+> +$(error Did not find docbook2x-texi or db2x_docbook2texi, required)
+> +endif
+> +endif
+> +
+>  DBLATEX = dblatex
+>  ASCIIDOC_DBLATEX_DIR = /etc/asciidoc/dblatex
+>  ifndef PERL_PATH
+> --
+> 2.4.0.53.g8440f74
 
-Duy is probably better suited to answer this, as he would likely have
-taken these issues into consideration when implementing the feature.
-(I've been poking through documentation and code for quite a while
-trying to answer this email but don't yet have a sufficient grasp to
-do it justice. I'm not even sure where such a sanity check would be
-placed.)
+--089e0141aafe6f1f1b051b077a29
+Content-Type: application/octet-stream; name="git.doc.patch"
+Content-Disposition: attachment; filename="git.doc.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ic6wjphj0
 
->>       } else
->>               strbuf_addstr(&gitdir, get_git_common_dir());
->>       skip_prefix(branch, "refs/heads/", &branch);
->> +     strbuf_strip_suffix(&gitdir, "/.git");
->
-> Sick people have '/.git' and run "git add etc/passwd"; do we want to
-> consider such a use case?
-
-I originally implemented this as stripping only ".git" since it felt
-natural for the result to have a trailing slash, however, when I
-looked back at your report[1], I saw that you suggested stripping
-"/.git", so I changed it to strip the slash as well. Given the above
-"sick" use-case, we may indeed want to strip only ".git".
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/274001
-
->>       die(_("'%s' is already checked out at '%s'"), branch, gitdir.buf);
->>  done:
->>       strbuf_release(&path);
+LS0tCiBEb2N1bWVudGF0aW9uL01ha2VmaWxlIHwgMTAgKysrKysrKysrLQogMSBmaWxlIGNoYW5n
+ZWQsIDkgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50
+YXRpb24vTWFrZWZpbGUgYi9Eb2N1bWVudGF0aW9uL01ha2VmaWxlCmluZGV4IDNlMzllMjguLmY1
+ZjlhZDUgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vTWFrZWZpbGUKKysrIGIvRG9jdW1lbnRh
+dGlvbi9NYWtlZmlsZQpAQCAtMTE2LDcgKzExNiwxNSBAQCBIVE1MX1JFUE8gPSAuLi8uLi9naXQt
+aHRtbGRvY3MKCiBNQUtFSU5GTyA9IG1ha2VpbmZvCiBJTlNUQUxMX0lORk8gPSBpbnN0YWxsLWlu
+Zm8KLURPQ0JPT0syWF9URVhJID0gZG9jYm9vazJ4LXRleGkKKworRE9DQk9PSzJYX1RFWEkgPSAk
+KHNoZWxsIHdoaWNoIGRvY2Jvb2syeC10ZXhpKQoraWZlcSAoLCAkKERPQ0JPT0syWF9URVhJKSkK
+K0RPQ0JPT0syWF9URVhJID0gJChzaGVsbCB3aGljaCBkYjJ4X2RvY2Jvb2sydGV4aSkKK2lmZXEg
+KCwgJChET0NCT09LMlhfVEVYSSkpCiskKGVycm9yIERpZCBub3QgZmluZCBkb2Nib29rMngtdGV4
+aSBvciBkYjJ4X2RvY2Jvb2sydGV4aSwgcmVxdWlyZWQpCitlbmRpZgorZW5kaWYKKwogREJMQVRF
+WCA9IGRibGF0ZXgKIEFTQ0lJRE9DX0RCTEFURVhfRElSID0gL2V0Yy9hc2NpaWRvYy9kYmxhdGV4
+CiBpZm5kZWYgUEVSTF9QQVRICg==
+--089e0141aafe6f1f1b051b077a29--
