@@ -1,90 +1,76 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH] fetch: add configuration for making --all default
-Date: Fri, 17 Jul 2015 17:02:46 +0200 (CEST)
-Message-ID: <1674906250.515624.1437145366822.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1437139899-6210-1-git-send-email-oystwa@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A few "linked checkout" niggles
+Date: Fri, 17 Jul 2015 08:19:25 -0700
+Message-ID: <xmqqzj2u3j7m.fsf@gitster.dls.corp.google.com>
+References: <xmqqoajdui8w.fsf@gitster.dls.corp.google.com>
+	<55A8F4B1.9060304@drmicha.warpmail.net>
+	<CACsJy8BZEhMJPdw4K_kihA1kTPBVsAt=zW-cemzO7V+xfDih8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 16:58:54 2015
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 17:19:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZG76A-0001S4-RM
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 16:58:51 +0200
+	id 1ZG7QC-0002HC-BR
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jul 2015 17:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758370AbbGQO6p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jul 2015 10:58:45 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:50207 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756760AbbGQO6p convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2015 10:58:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id BACF32109;
-	Fri, 17 Jul 2015 16:58:42 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id F-CqcUWL4S-Y; Fri, 17 Jul 2015 16:58:42 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id AAA912108;
-	Fri, 17 Jul 2015 16:58:42 +0200 (CEST)
-In-Reply-To: <1437139899-6210-1-git-send-email-oystwa@gmail.com>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Win)/8.0.9_GA_6191)
-Thread-Topic: fetch: add configuration for making --all default
-Thread-Index: 4ikuVYcZLnHMNwHIm25Apac3tXTK9w==
+	id S1758541AbbGQPT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2015 11:19:28 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:36752 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757866AbbGQPT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2015 11:19:27 -0400
+Received: by pdjr16 with SMTP id r16so64082290pdj.3
+        for <git@vger.kernel.org>; Fri, 17 Jul 2015 08:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=bQG+TiKTZxLE1AO2GaIgUmspVNCU54uEVOKpHaRoaf0=;
+        b=uZg6r7xH3tyUBCF9PN3QqQqzoGo+P00Ufqsn5oT5XVxLjPjH2amYpJAVvpDotEn/Ng
+         Rwcdyc40S4aK+iIqkC0XY0V2ONhtqU2AbSIYbhkguPjR3VENnvOV5ALHZoPotaYaOBt2
+         aZtCHZ0YXhZ5P/WBlDyCw6kWq3oqF50G/3gWcQycXEaEPZQSezGtHjtSXYVyP5lwwTvz
+         +dW/vLLDTQ21b/OaHfvSoE3gIZQdHzPyjQ2F4ihPbeptE17gegh4dCCSq6jjR2ebNKYM
+         PAHfeBtxM6CiHDAKB+OfpifhN/0yfHd/tBSM3L2TM21uQn1YZU+Z+xOynkpovjm08zk5
+         3f8g==
+X-Received: by 10.68.114.131 with SMTP id jg3mr31088199pbb.54.1437146367443;
+        Fri, 17 Jul 2015 08:19:27 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:902a:e9ec:1aae:aea2])
+        by smtp.gmail.com with ESMTPSA id ti10sm11616140pab.20.2015.07.17.08.19.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 17 Jul 2015 08:19:26 -0700 (PDT)
+In-Reply-To: <CACsJy8BZEhMJPdw4K_kihA1kTPBVsAt=zW-cemzO7V+xfDih8Q@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 17 Jul 2015 19:49:57 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274075>
 
-Hi,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-=C3=98ystein Walle <oystwa@gmail.com> writes:
-> +fetch.all::
-> +        If true, fetch will automatically behave as if the `--all`
-> +        option was given on the command line uness a remote was give=
-n. The
-> +        default is false.
+> On Fri, Jul 17, 2015 at 7:27 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Two more observations:
+>>
+>> $ git worktree add /tmp/gitwt
+>> Enter /tmp/gitwt (identifier gitwt)
+>> Switched to a new branch 'gitwt'
+>>
+>> Now I'm in /tmp/gitwt at branch gitwt. Right? No. I'm in the original wd
+>> at the original branch.
+>>
+>> So either we cd to the new location or quelch these messages or add a
+>> message that we're actually back.
+>
+> s/Enter/Preparing/ ?
 
-s/uness/unless
-
-> +test_expect_success 'git fetch (fetch.all =3D true)' '
-> +        (git clone one test9 &&
-> +         cd test9 &&
-> +         git config fetch.all true &&
-> +         git remote add one ../one &&
-> +         git remote add two ../two &&
-> +         git remote add three ../three &&
-> +         git fetch &&
-> +         git branch -r > output &&
-
-No space after redirection ('>').
-It should be:
-         git branch -r >output &&
-
-> +test_expect_success 'git fetch one (fetch.all =3D true)' '
-> +        (cd test3 &&
-> +         git config fetch.all true &&
-> +         git fetch three &&
-> +         git branch -r > output &&
-
-Same here
-
-> +         test_cmp ../expect output &&
-> +         git fetch --no-all &&
-> +         git branch -r > output &&
-
-And here.
-
-> +         test_cmp ../expect output)
-> +'
-
-Thanks,
-R=C3=A9mi
+Hmm, do we even need that message?  I assumed it was a leftover
+debugging stuff ;-)
