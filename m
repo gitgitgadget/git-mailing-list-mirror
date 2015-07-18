@@ -1,81 +1,168 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 0/9] Port tag.c to use ref-filter APIs
-Date: Sun, 19 Jul 2015 00:42:20 +0530
-Message-ID: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr
+Subject: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+Date: Sun, 19 Jul 2015 00:42:21 +0530
+Message-ID: <1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
+References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 18 21:12:41 2015
+X-From: git-owner@vger.kernel.org Sat Jul 18 21:12:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGXXM-0001BA-4i
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 21:12:40 +0200
+	id 1ZGXXQ-0001DM-Sw
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 21:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752419AbbGRTMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2015 15:12:35 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:36246 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751725AbbGRTMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2015 15:12:35 -0400
-Received: by pdjr16 with SMTP id r16so80782900pdj.3
-        for <git@vger.kernel.org>; Sat, 18 Jul 2015 12:12:34 -0700 (PDT)
+	id S1752833AbbGRTMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2015 15:12:39 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:33746 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752090AbbGRTMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2015 15:12:38 -0400
+Received: by pdbnt7 with SMTP id nt7so8480290pdb.0
+        for <git@vger.kernel.org>; Sat, 18 Jul 2015 12:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=nOJ+NOicbfBozynim0EAaVWHm0CmYxGPuH9zsI7+6jY=;
-        b=FtqGtzknnOSMuVWd4HKO1AzGmEGl2gMPEPzoo8d71wC6cvGGyJd1Rhdy3POGaczz4k
-         vLweux06p+gftFi/T0GfKkXrAI2BBpbWwOBDLFwmdA1SMQIjKYWijQrkHCRr7ScC/5NQ
-         AWwa2NO1kfLmKpxYeSTsGJnt7uAReLrHJtueXB4NSwnfFlizJXPg4Z71yN+S/7VPkjSR
-         i+QzlFAsnYP9fThlFqZw7zzexJYi0jZvwIePNfEcNW5WGX/nc8ni7b0FPpUlIWEOmxcI
-         SSkV1jQd2xcx/ic3AAh1xrY750nIn7S4Dp62PeZdvEeds7lhdyQOJvTTeIROIEyLdVmE
-         FchA==
-X-Received: by 10.66.123.81 with SMTP id ly17mr19867819pab.31.1437246754543;
-        Sat, 18 Jul 2015 12:12:34 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0oEw65BEf4htq47lbpXnoGnR1ehPSDDLC14sKSnbAgM=;
+        b=cJyStFbjrMJMb9wj2YhrWAhmh3bFzFYcHCQMbtLVkgZQyXcoALuX+1dTevLaOIg1ft
+         4yFwQEUl0LQlg92N8D8GpmXnLsiWpAjQBWchXhttv0eU6VDVdFBXXa0I2Nlqm5W+6GIH
+         vRbMNeCX2q3IZYwbHRFNtpXtqawc/FuNAq33qfHyFaGOyKb5BurbDdNdprjZnHSXiCLR
+         FMyqmCTU/gJtOJk4UE8IOmbgpGsWotZ0gX0khfLbSA6aGc0jOIOZPaNxHbn98Lmys/xF
+         6bQH0MbqOAYH5O0dqEtsruAcMeZFXwiRdNEeHpK/3mB5FGV2jou1SY7DTq8imLYOTXGI
+         Vjzw==
+X-Received: by 10.70.128.101 with SMTP id nn5mr20854244pdb.56.1437246758330;
+        Sat, 18 Jul 2015 12:12:38 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id ra10sm15104498pab.19.2015.07.18.12.12.32
+        by smtp.gmail.com with ESMTPSA id ra10sm15104498pab.19.2015.07.18.12.12.36
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Jul 2015 12:12:33 -0700 (PDT)
+        Sat, 18 Jul 2015 12:12:37 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
+In-Reply-To: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274169>
 
-This is part of my GSoC project to unify git tag -l, git branch -l,
-git for-each-ref.
-This patch series is continued from: Git (next)
-https://github.com/git/git/commit/bf5418f49ff0cebc6e5ce04ad1417e1a47c81b61
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Version 2 can be found here:
-http://article.gmane.org/gmane.comp.version-control.git/273569
+Add a new atom "align" and support %(align:X) where X is a number.
+This will align the preceeding atom value to the left followed by
+spaces for a total length of X characters. If X is less than the item
+size, the entire atom value is printed.
 
-Changes in this version:
-* Grammatical errors were corrected.
-* Added missing documentation and tests for "%(version:refname)"
-* Made the alignment option an atom as per Duy's Suggestions
-  (http://article.gmane.org/gmane.comp.version-control.git/273569)
+Helped-by: Duy Nguyen <pclouds@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ ref-filter.c | 39 +++++++++++++++++++++++++++++++++++++--
+ ref-filter.h |  1 +
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-DiffStat:
-Documentation/git-for-each-ref.txt |   2 +
-Documentation/git-tag.txt          |  38 ++++++++---
-builtin/for-each-ref.c             |   3 +-
-builtin/tag.c                      | 371 +++++++++++++++++++----------------------------------------------------------------------------------------
-ref-filter.c                       | 148 ++++++++++++++++++++++++++++++++++++++-----
-ref-filter.h                       |  15 +++--
-t/t6302-for-each-ref-filter.sh     |  26 ++++++++
-t/t7004-tag.sh                     |  51 ++++++++++++---
-
-
-[PATCH v3 1/9] ref-filter: add option to align atoms to the left
-[PATCH v3 2/9] ref-filter: add option to filter only tags
-[PATCH v3 3/9] ref-filter: support printing N lines from tag
-[PATCH v3 4/9] ref-filter: add support to sort by version
-[PATCH v3 5/9] ref-filter: add option to match literal pattern
-[PATCH v3 6/9] tag.c: use 'ref-filter' data structures
-[PATCH v3 7/9] tag.c: use 'ref-filter' APIs
-[PATCH v3 8/9] tag.c: implement '--format' option
-[PATCH v3 9/9] tag.c: implement '--merged' and '--no-merged' options
+diff --git a/ref-filter.c b/ref-filter.c
+index 7561727..b81a08d 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -10,6 +10,8 @@
+ #include "quote.h"
+ #include "ref-filter.h"
+ #include "revision.h"
++#include "utf8.h"
++#include "git-compat-util.h"
+ 
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ 
+@@ -53,6 +55,7 @@ static struct {
+ 	{ "flag" },
+ 	{ "HEAD" },
+ 	{ "color" },
++	{ "align" },
+ };
+ 
+ /*
+@@ -620,7 +623,7 @@ static void populate_value(struct ref_array_item *ref)
+ 		const char *name = used_atom[i];
+ 		struct atom_value *v = &ref->value[i];
+ 		int deref = 0;
+-		const char *refname;
++		const char *refname = NULL;
+ 		const char *formatp;
+ 		struct branch *branch = NULL;
+ 
+@@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
+ 			else
+ 				v->s = " ";
+ 			continue;
++		} else if (starts_with(name, "align:")) {
++			const char *valp = NULL;
++
++			skip_prefix(name, "align:", &valp);
++			if (!valp[0])
++				die(_("No value given with 'align='"));
++			strtoul_ui(valp, 10, &ref->align_value);
++			if (ref->align_value < 1)
++				die(_("Value should be greater than zero"));
++			v->s = "";
++			continue;
+ 		} else
+ 			continue;
+ 
+@@ -1254,17 +1268,38 @@ static void emit(const char *cp, const char *ep)
+ 	}
+ }
+ 
++static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
++{
++	if (v->s[0] && ref->align_value) {
++		unsigned int len = 0;
++
++		len = utf8_strwidth(v->s);
++		if (ref->align_value > len) {
++			struct strbuf buf = STRBUF_INIT;
++			strbuf_addstr(&buf, v->s);
++			if (!v->s[0])
++				free((char *)v->s);
++			strbuf_addchars(&buf, ' ', ref->align_value - len);
++			v->s = strbuf_detach(&buf, NULL);
++		}
++		ref->align_value = 0;
++	}
++}
++
+ void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+ {
+ 	const char *cp, *sp, *ep;
+ 
+ 	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+ 		struct atom_value *atomv;
++		int parsed_atom;
+ 
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+ 			emit(cp, sp);
+-		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
++		parsed_atom = parse_ref_filter_atom(sp + 2, ep);
++		get_ref_atom_value(info, parsed_atom, &atomv);
++		assign_formating(info, parsed_atom, atomv);
+ 		print_value(atomv, quote_style);
+ 	}
+ 	if (*cp) {
+diff --git a/ref-filter.h b/ref-filter.h
+index 6bf27d8..12ffbc5 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -30,6 +30,7 @@ struct ref_sorting {
+ struct ref_array_item {
+ 	unsigned char objectname[20];
+ 	int flag;
++	unsigned int align_value;
+ 	const char *symref;
+ 	struct commit *commit;
+ 	struct atom_value *value;
+-- 
+2.4.6
