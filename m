@@ -1,104 +1,59 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] unpack-trees: don't update files with CE_WT_REMOVE set
-Date: Sat, 18 Jul 2015 15:37:19 +0700
-Message-ID: <20150718083719.GA19676@lanh>
-References: <xmqqk2ty1reo.fsf@gitster.dls.corp.google.com>
- <1437167967-5933-1-git-send-email-dturner@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 06/18] rerere: drop want_sp parameter from is_cmarker()
+Date: Sat, 18 Jul 2015 04:47:24 -0400
+Message-ID: <CAPig+cSwH_+htWqNphHsoP+SX8YCVS=PgN03m5z3ksSdeJE0kw@mail.gmail.com>
+References: <1435730699-9124-1-git-send-email-gitster@pobox.com>
+	<1437171880-21590-1-git-send-email-gitster@pobox.com>
+	<1437171880-21590-7-git-send-email-gitster@pobox.com>
+	<3AAC96959AB14E61B7711B914D963B7F@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Anatole Shaw <git-devel@omni.poc.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Jul 18 10:36:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sat Jul 18 10:47:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGNbi-0006Wj-7j
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 10:36:30 +0200
+	id 1ZGNmQ-0002mM-MV
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 10:47:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755712AbbGRIgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2015 04:36:25 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34945 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752324AbbGRIgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2015 04:36:23 -0400
-Received: by pabkd10 with SMTP id kd10so1010335pab.2
-        for <git@vger.kernel.org>; Sat, 18 Jul 2015 01:36:23 -0700 (PDT)
+	id S1752156AbbGRIr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2015 04:47:27 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:36690 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080AbbGRIrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2015 04:47:24 -0400
+Received: by ykay190 with SMTP id y190so106734747yka.3
+        for <git@vger.kernel.org>; Sat, 18 Jul 2015 01:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Q/w9V6AjgWnN4QSJKEccEsntK8VdFo44QQpdqjvLm4c=;
-        b=GxtQsPBxuA+/IirOfNR+7WNUN0VRLdxMqMLlA/8Egm+7hV72OUZfxw6/Dq+fEvM7WK
-         2BptUkDLXfIrjj6p381zLZTW3VHAM6GaKVU5FZ/f/+jOlD/H2rUg+HgB0DYG6LtWkdEr
-         LPTTOSZkfoFh/SFsc+d8dc0skfo3MAuElmE8710PsrWIpa2Qi3UnVly+bHfjgzzZUdiE
-         mN8r7HpQbYffkZ8qdZpLBWyudNiRW3Zxi04iIbXilfrT5TLjkUukjsmazaz4bdQMuPZB
-         /jLsOZqlrs2eJNuxBFs1xzvC8mm6ZWj/ctptyiWMFea9rJ1MEZXX1/POHvu79sGW0oj/
-         rZMQ==
-X-Received: by 10.66.159.1 with SMTP id wy1mr38055158pab.103.1437208583443;
-        Sat, 18 Jul 2015 01:36:23 -0700 (PDT)
-Received: from lanh ([115.73.55.71])
-        by smtp.gmail.com with ESMTPSA id u2sm13577037pbs.88.2015.07.18.01.36.20
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Jul 2015 01:36:22 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 18 Jul 2015 15:37:19 +0700
-Content-Disposition: inline
-In-Reply-To: <1437167967-5933-1-git-send-email-dturner@twopensource.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=pC3Y94QtRZzT/DuoDpPxzSPbBW75xSxxDOCfoOz0ni8=;
+        b=pwoqqyvrY3HafAyhhescIGtsYSckkb9pOzMAT2UU44aN1czMVlHAivCnqaboWYySz9
+         ewptcFxppjIqbSEtn1HgIcrqIN8iLJYQ+/A4ij2ZN/o2RE8PULPisK2zce+fvaGejuIN
+         1XoxzJ7vje/vXNltqzMeR7puJOSVraAaXP07hDuAVxV2K7eivUGP8hoRUaGPF1FjEvY/
+         Om8RpnJDqEmEBdsimRNvsOPWQiON0ZfNwdwwvSSq3cuIlQg0E2oApXG7l0FJVWWuVbaj
+         gTniWSe9P//rWvEdPYajk1tBzyNluBSSUYPqD/B9Hu33RVk/5nU2tKQRzE5tE2diHclJ
+         UdMg==
+X-Received: by 10.170.97.9 with SMTP id o9mr19225948yka.84.1437209244345; Sat,
+ 18 Jul 2015 01:47:24 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Sat, 18 Jul 2015 01:47:24 -0700 (PDT)
+In-Reply-To: <3AAC96959AB14E61B7711B914D963B7F@PhilipOakley>
+X-Google-Sender-Auth: T-WAXtrOTLaycGii2UhYfXZrcqQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274159>
 
-On Fri, Jul 17, 2015 at 05:19:27PM -0400, David Turner wrote:
-> Don't update files in the worktree from cache entries which are
-> flagged with CE_WT_REMOVE.
-> 
-> When a user does a sparse checkout, git removes files that are marked
-> with CE_WT_REMOVE (because they are out-of-scope for the sparse
-> checkout). If those files are also marked CE_UPDATE (for instance,
-> because they differ in the branch that is being checked out and the
-> outgoing branch), git would previously recreate them.  This patch
-> prevents them from being recreated.
-> 
-> These erroneously-created files would also interfere with merges,
-> causing pre-merge revisions of out-of-scope files to appear in the
-> worktree.
+On Sat, Jul 18, 2015 at 4:24 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Junio C Hamano" <gitster@pobox.com>
+>> As the nature of the conflict marker line determies if there should
+>
+> "should be a"?
+> i.e. s/a /be a /    below
 
-Thank you both for catching this. Just a small suggestion. Perhaps we
-should do this instead. apply_sparse_checkout() is the function where
-all "action" manipulation (add, delete, update files..) for sparse
-checkout occurs and it should not ask to delete and update both at the
-same time.
-
--- 8< --
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 2927660..d6cf849 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -224,6 +224,9 @@ static int check_updates(struct unpack_trees_options *o)
- 		struct cache_entry *ce = index->cache[i];
- 
- 		if (ce->ce_flags & CE_UPDATE) {
-+			if (ce->ce_flags & CE_WT_REMOVE)
-+				die("BUG: both update and delete flags are set on %s",
-+				    ce->name);
- 			display_progress(progress, ++cnt);
- 			ce->ce_flags &= ~CE_UPDATE;
- 			if (o->update && !o->dry_run) {
-@@ -293,6 +296,7 @@ static int apply_sparse_checkout(struct index_state *istate,
- 		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
- 			return -1;
- 		ce->ce_flags |= CE_WT_REMOVE;
-+		ce->ce_flags &= ~CE_UPDATE;
- 	}
- 	if (was_skip_worktree && !ce_skip_worktree(ce)) {
- 		if (verify_absent_sparse(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
--- 8< --
-
---
-Duy
+Also: s/determies/determines/
