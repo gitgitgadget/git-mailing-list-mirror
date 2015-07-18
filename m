@@ -1,126 +1,104 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v3 06/18] rerere: drop want_sp parameter from is_cmarker()
-Date: Sat, 18 Jul 2015 09:24:04 +0100
-Organization: OPDS
-Message-ID: <3AAC96959AB14E61B7711B914D963B7F@PhilipOakley>
-References: <1435730699-9124-1-git-send-email-gitster@pobox.com> <1437171880-21590-1-git-send-email-gitster@pobox.com> <1437171880-21590-7-git-send-email-gitster@pobox.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] unpack-trees: don't update files with CE_WT_REMOVE set
+Date: Sat, 18 Jul 2015 15:37:19 +0700
+Message-ID: <20150718083719.GA19676@lanh>
+References: <xmqqk2ty1reo.fsf@gitster.dls.corp.google.com>
+ <1437167967-5933-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 18 10:24:13 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Anatole Shaw <git-devel@omni.poc.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Jul 18 10:36:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGNPn-0001RC-NN
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 10:24:12 +0200
+	id 1ZGNbi-0006Wj-7j
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 10:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbbGRIYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2015 04:24:05 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:8141 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751080AbbGRIYC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2015 04:24:02 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BzEQDMC6pVPJkpBlxbgxNUaYc+tXcfCoVtBAEDAYEzTQEBAQEBAQcBAQEBQAE/QQODWgUBAQEBAgEIAQEdERYIAQEmBgIDBQIBAxUMJRQBBBgCBgcDFAYBBwsIAgECAwEMBIgFDAm/QI9Hi0yIJIEUBYxwh2IBgQqDZIk7jBmKZYEJcoIoPTEBgkoBAQE
-X-IPAS-Result: A2BzEQDMC6pVPJkpBlxbgxNUaYc+tXcfCoVtBAEDAYEzTQEBAQEBAQcBAQEBQAE/QQODWgUBAQEBAgEIAQEdERYIAQEmBgIDBQIBAxUMJRQBBBgCBgcDFAYBBwsIAgECAwEMBIgFDAm/QI9Hi0yIJIEUBYxwh2IBgQqDZIk7jBmKZYEJcoIoPTEBgkoBAQE
-X-IronPort-AV: E=Sophos;i="5.15,499,1432594800"; 
-   d="scan'208";a="614366874"
-Received: from host-92-6-41-153.as43234.net (HELO PhilipOakley) ([92.6.41.153])
-  by out1.ip05ir2.opaltelecom.net with ESMTP; 18 Jul 2015 09:23:59 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755712AbbGRIgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2015 04:36:25 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:34945 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752324AbbGRIgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2015 04:36:23 -0400
+Received: by pabkd10 with SMTP id kd10so1010335pab.2
+        for <git@vger.kernel.org>; Sat, 18 Jul 2015 01:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Q/w9V6AjgWnN4QSJKEccEsntK8VdFo44QQpdqjvLm4c=;
+        b=GxtQsPBxuA+/IirOfNR+7WNUN0VRLdxMqMLlA/8Egm+7hV72OUZfxw6/Dq+fEvM7WK
+         2BptUkDLXfIrjj6p381zLZTW3VHAM6GaKVU5FZ/f/+jOlD/H2rUg+HgB0DYG6LtWkdEr
+         LPTTOSZkfoFh/SFsc+d8dc0skfo3MAuElmE8710PsrWIpa2Qi3UnVly+bHfjgzzZUdiE
+         mN8r7HpQbYffkZ8qdZpLBWyudNiRW3Zxi04iIbXilfrT5TLjkUukjsmazaz4bdQMuPZB
+         /jLsOZqlrs2eJNuxBFs1xzvC8mm6ZWj/ctptyiWMFea9rJ1MEZXX1/POHvu79sGW0oj/
+         rZMQ==
+X-Received: by 10.66.159.1 with SMTP id wy1mr38055158pab.103.1437208583443;
+        Sat, 18 Jul 2015 01:36:23 -0700 (PDT)
+Received: from lanh ([115.73.55.71])
+        by smtp.gmail.com with ESMTPSA id u2sm13577037pbs.88.2015.07.18.01.36.20
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 18 Jul 2015 01:36:22 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 18 Jul 2015 15:37:19 +0700
+Content-Disposition: inline
+In-Reply-To: <1437167967-5933-1-git-send-email-dturner@twopensource.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274158>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> As the nature of the conflict marker line determies if there should
-
-"should be a"?
-i.e. s/a /be a /    below
-
-> a SP and label after it, the caller shouldn't have to pass the
-> parameter redundantly.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> rerere.c | 27 ++++++++++++++++++++++-----
-> 1 file changed, 22 insertions(+), 5 deletions(-)
->
-> diff --git a/rerere.c b/rerere.c
-> index 304df02..4c45f55 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -148,8 +148,25 @@ static int rerere_file_getline(struct strbuf *sb, 
-> struct rerere_io *io_)
->  return strbuf_getwholeline(sb, io->input, '\n');
-> }
->
-> -static int is_cmarker(char *buf, int marker_char, int marker_size, 
-> int want_sp)
-> +/*
-> + * Require the exact number of conflict marker letters, no more, no
-> + * less, followed by SP or any whitespace
-> + * (including LF).
-> + */
-> +static int is_cmarker(char *buf, int marker_char, int marker_size)
-> {
-> + int want_sp;
-> +
-> + /*
-> + * The beginning of our version and the end of their version
-> + * always are labeled like "<<<<< ours" or ">>>>> theirs",
-> + * hence we set want_sp for them.  Note that the version from
-> + * the common ancestor in diff3-style output is not always
-> + * labelled (e.g. "||||| common" is often seen but "|||||"
-> + * alone is also valid), so we do not set want_sp.
-> + */
-> + want_sp = (marker_char == '<') || (marker_char == '>');
-> +
->  while (marker_size--)
->  if (*buf++ != marker_char)
->  return 0;
-> @@ -172,19 +189,19 @@ static int handle_path(unsigned char *sha1, 
-> struct rerere_io *io, int marker_siz
->  git_SHA1_Init(&ctx);
->
->  while (!io->getline(&buf, io)) {
-> - if (is_cmarker(buf.buf, '<', marker_size, 1)) {
-> + if (is_cmarker(buf.buf, '<', marker_size)) {
->  if (hunk != RR_CONTEXT)
->  goto bad;
->  hunk = RR_SIDE_1;
-> - } else if (is_cmarker(buf.buf, '|', marker_size, 0)) {
-> + } else if (is_cmarker(buf.buf, '|', marker_size)) {
->  if (hunk != RR_SIDE_1)
->  goto bad;
->  hunk = RR_ORIGINAL;
-> - } else if (is_cmarker(buf.buf, '=', marker_size, 0)) {
-> + } else if (is_cmarker(buf.buf, '=', marker_size)) {
->  if (hunk != RR_SIDE_1 && hunk != RR_ORIGINAL)
->  goto bad;
->  hunk = RR_SIDE_2;
-> - } else if (is_cmarker(buf.buf, '>', marker_size, 1)) {
-> + } else if (is_cmarker(buf.buf, '>', marker_size)) {
->  if (hunk != RR_SIDE_2)
->  goto bad;
->  if (strbuf_cmp(&one, &two) > 0)
-> -- 
-> 2.5.0-rc2-340-g0cccc16
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Fri, Jul 17, 2015 at 05:19:27PM -0400, David Turner wrote:
+> Don't update files in the worktree from cache entries which are
+> flagged with CE_WT_REMOVE.
 > 
+> When a user does a sparse checkout, git removes files that are marked
+> with CE_WT_REMOVE (because they are out-of-scope for the sparse
+> checkout). If those files are also marked CE_UPDATE (for instance,
+> because they differ in the branch that is being checked out and the
+> outgoing branch), git would previously recreate them.  This patch
+> prevents them from being recreated.
+> 
+> These erroneously-created files would also interfere with merges,
+> causing pre-merge revisions of out-of-scope files to appear in the
+> worktree.
+
+Thank you both for catching this. Just a small suggestion. Perhaps we
+should do this instead. apply_sparse_checkout() is the function where
+all "action" manipulation (add, delete, update files..) for sparse
+checkout occurs and it should not ask to delete and update both at the
+same time.
+
+-- 8< --
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 2927660..d6cf849 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -224,6 +224,9 @@ static int check_updates(struct unpack_trees_options *o)
+ 		struct cache_entry *ce = index->cache[i];
+ 
+ 		if (ce->ce_flags & CE_UPDATE) {
++			if (ce->ce_flags & CE_WT_REMOVE)
++				die("BUG: both update and delete flags are set on %s",
++				    ce->name);
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+@@ -293,6 +296,7 @@ static int apply_sparse_checkout(struct index_state *istate,
+ 		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
+ 			return -1;
+ 		ce->ce_flags |= CE_WT_REMOVE;
++		ce->ce_flags &= ~CE_UPDATE;
+ 	}
+ 	if (was_skip_worktree && !ce_skip_worktree(ce)) {
+ 		if (verify_absent_sparse(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
+-- 8< --
+
+--
+Duy
