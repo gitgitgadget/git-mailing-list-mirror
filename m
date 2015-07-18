@@ -1,91 +1,126 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] Documentation/git: fix stale "MULTIPLE CHECKOUT MODE" reference
-Date: Sat, 18 Jul 2015 14:57:38 +0700
-Message-ID: <CACsJy8B5d250xdofWkj0+TXaye=h2fDoyEobA7ktBtw-0sJTwA@mail.gmail.com>
-References: <1437092222-11131-1-git-send-email-sunshine@sunshineco.com> <xmqqa8uu3edr.fsf@gitster.dls.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3 06/18] rerere: drop want_sp parameter from is_cmarker()
+Date: Sat, 18 Jul 2015 09:24:04 +0100
+Organization: OPDS
+Message-ID: <3AAC96959AB14E61B7711B914D963B7F@PhilipOakley>
+References: <1435730699-9124-1-git-send-email-gitster@pobox.com> <1437171880-21590-1-git-send-email-gitster@pobox.com> <1437171880-21590-7-git-send-email-gitster@pobox.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 18 09:58:23 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 18 10:24:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGN0m-0007nY-Ky
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 09:58:20 +0200
+	id 1ZGNPn-0001RC-NN
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jul 2015 10:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324AbbGRH6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2015 03:58:10 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:32869 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751046AbbGRH6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2015 03:58:09 -0400
-Received: by igbpg9 with SMTP id pg9so9883844igb.0
-        for <git@vger.kernel.org>; Sat, 18 Jul 2015 00:58:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xEElHayWHJ3Q8Vk0Ww6WmClo+fEq6gOEmAdjTxcRYOM=;
-        b=w8VVIAsL6ZhI0yxVgaAJPc/Xr+ACFX+276gKS66jzZmlVqB5fr5S/UbiLTkIgArQkd
-         KGQisjIxt1hKDp2WSYyIoeRyC/xxTXa4zmg0f3ozsFW5OtejAaP94eZuXdNe4kZpnoJ2
-         nwGopH9SpXYVToHz210yXgCv6KrCUrExCIORhbIw0kwC/1SJew7GaSxgUEXn91FFVmDk
-         5CFH8vBpKcCI7ZTWdcoy/KnjKTRuKGLb+E7NBZApj2o/f/II1xNRlQ8SHs9H5HKsSO6Q
-         W/6yKSkUTnT8ElQRqcV2lc68BIwAQGKQwM7c31/bqu2QuqyVfUdVc2aw1X0yacd1i5m7
-         yh9Q==
-X-Received: by 10.50.142.9 with SMTP id rs9mr1781695igb.17.1437206288148; Sat,
- 18 Jul 2015 00:58:08 -0700 (PDT)
-Received: by 10.107.16.15 with HTTP; Sat, 18 Jul 2015 00:57:38 -0700 (PDT)
-In-Reply-To: <xmqqa8uu3edr.fsf@gitster.dls.corp.google.com>
+	id S1752159AbbGRIYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2015 04:24:05 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:8141 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751080AbbGRIYC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2015 04:24:02 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2BzEQDMC6pVPJkpBlxbgxNUaYc+tXcfCoVtBAEDAYEzTQEBAQEBAQcBAQEBQAE/QQODWgUBAQEBAgEIAQEdERYIAQEmBgIDBQIBAxUMJRQBBBgCBgcDFAYBBwsIAgECAwEMBIgFDAm/QI9Hi0yIJIEUBYxwh2IBgQqDZIk7jBmKZYEJcoIoPTEBgkoBAQE
+X-IPAS-Result: A2BzEQDMC6pVPJkpBlxbgxNUaYc+tXcfCoVtBAEDAYEzTQEBAQEBAQcBAQEBQAE/QQODWgUBAQEBAgEIAQEdERYIAQEmBgIDBQIBAxUMJRQBBBgCBgcDFAYBBwsIAgECAwEMBIgFDAm/QI9Hi0yIJIEUBYxwh2IBgQqDZIk7jBmKZYEJcoIoPTEBgkoBAQE
+X-IronPort-AV: E=Sophos;i="5.15,499,1432594800"; 
+   d="scan'208";a="614366874"
+Received: from host-92-6-41-153.as43234.net (HELO PhilipOakley) ([92.6.41.153])
+  by out1.ip05ir2.opaltelecom.net with ESMTP; 18 Jul 2015 09:23:59 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274157>
 
-On Sat, Jul 18, 2015 at 12:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> The other one is more heavy.  Do we even want to have and expose
-> GIT_COMMON_DIR environment variable?
->
-> The primary reason why we added GIT_DIR, GIT_OBJECT_DIRECTORY
-> etc. in the early days of Git was because we didn't exactly know
-> what kind of layout and flexibility was needed from "various SCMs
-> that sit on top of Git core", and we wanted to make progress rapidly
-> without making decisions back then.  But it is not 2005 anymore.
->
-> Suppose a file "gitdir: /home/gitster/w/src/.git/worktrees/rerere"
-> (call that $GIT_DIR) is there, and there is $GIT_DIR/commondir. Is
-> there any valid reason why somebody may want to use only part of
-> that arrangement and have a $GIT_COMMON_DIR that points at a place
-> different from $GIT_DIR/commondir points at to override only a part
-> of the setting?
->
-> Or perhaps there is a plain vanilla $GIT_DIR that does not have
-> $GIT_DIR/commondir.  Is there any valid reason why somebody may want
-> to reuse only part of that directory as if it were a linked checkout
-> and then use $GIT_COMMON_DIR to redirect the access to the meat of
-> the repository elsewhere?
->
-> The safety that comes from the primary checkout and the secondary
-> checkouts all knowing everybody else is lost in such a use case,
-> that is the whole point of adding this new feature.  The fact that
-> $GIT_COMMON_DIR/worktrees/* and $GIT_DIR/commondir reference each
-> other is what gives us object-prune-safety and multi-checkout-safety.
->
-> Unless I am mistaken, I think a separate GIT_COMMON_DIR environment
-> variable that can be tweaked by end-user is nothing but a source of
-> future bugs and user confusion, without giving us any useful
-> flexibility.
+From: "Junio C Hamano" <gitster@pobox.com>
+> As the nature of the conflict marker line determies if there should
 
-The flexibility here is not about extending this feature per se but
-maybe trying out an entirely different setup. Yes a bunch of safety
-nets are thrown out of the window if you try it. I guess I still had
-the 2005 mindset when I designed this. If there is no strong objection
-to $GIT_COMMON_DIR, I suggest we keep it until we sort out the
-submodule problem. There are a few options on how to share git repos
-between submodules that this explicit separation _might_ help.
--- 
-Duy
+"should be a"?
+i.e. s/a /be a /    below
+
+> a SP and label after it, the caller shouldn't have to pass the
+> parameter redundantly.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> rerere.c | 27 ++++++++++++++++++++++-----
+> 1 file changed, 22 insertions(+), 5 deletions(-)
+>
+> diff --git a/rerere.c b/rerere.c
+> index 304df02..4c45f55 100644
+> --- a/rerere.c
+> +++ b/rerere.c
+> @@ -148,8 +148,25 @@ static int rerere_file_getline(struct strbuf *sb, 
+> struct rerere_io *io_)
+>  return strbuf_getwholeline(sb, io->input, '\n');
+> }
+>
+> -static int is_cmarker(char *buf, int marker_char, int marker_size, 
+> int want_sp)
+> +/*
+> + * Require the exact number of conflict marker letters, no more, no
+> + * less, followed by SP or any whitespace
+> + * (including LF).
+> + */
+> +static int is_cmarker(char *buf, int marker_char, int marker_size)
+> {
+> + int want_sp;
+> +
+> + /*
+> + * The beginning of our version and the end of their version
+> + * always are labeled like "<<<<< ours" or ">>>>> theirs",
+> + * hence we set want_sp for them.  Note that the version from
+> + * the common ancestor in diff3-style output is not always
+> + * labelled (e.g. "||||| common" is often seen but "|||||"
+> + * alone is also valid), so we do not set want_sp.
+> + */
+> + want_sp = (marker_char == '<') || (marker_char == '>');
+> +
+>  while (marker_size--)
+>  if (*buf++ != marker_char)
+>  return 0;
+> @@ -172,19 +189,19 @@ static int handle_path(unsigned char *sha1, 
+> struct rerere_io *io, int marker_siz
+>  git_SHA1_Init(&ctx);
+>
+>  while (!io->getline(&buf, io)) {
+> - if (is_cmarker(buf.buf, '<', marker_size, 1)) {
+> + if (is_cmarker(buf.buf, '<', marker_size)) {
+>  if (hunk != RR_CONTEXT)
+>  goto bad;
+>  hunk = RR_SIDE_1;
+> - } else if (is_cmarker(buf.buf, '|', marker_size, 0)) {
+> + } else if (is_cmarker(buf.buf, '|', marker_size)) {
+>  if (hunk != RR_SIDE_1)
+>  goto bad;
+>  hunk = RR_ORIGINAL;
+> - } else if (is_cmarker(buf.buf, '=', marker_size, 0)) {
+> + } else if (is_cmarker(buf.buf, '=', marker_size)) {
+>  if (hunk != RR_SIDE_1 && hunk != RR_ORIGINAL)
+>  goto bad;
+>  hunk = RR_SIDE_2;
+> - } else if (is_cmarker(buf.buf, '>', marker_size, 1)) {
+> + } else if (is_cmarker(buf.buf, '>', marker_size)) {
+>  if (hunk != RR_SIDE_2)
+>  goto bad;
+>  if (strbuf_cmp(&one, &two) > 0)
+> -- 
+> 2.5.0-rc2-340-g0cccc16
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
