@@ -1,60 +1,59 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 13/16] Vcproj.pm: list git.exe first to be
- startup project
-Date: Sun, 19 Jul 2015 21:08:13 +0100
-Message-ID: <1437336497-4072-14-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 14/16] vcbuild/readme: Improve layout and
+ reference msvc-build script
+Date: Sun, 19 Jul 2015 21:08:14 +0100
+Message-ID: <1437336497-4072-15-git-send-email-philipoakley@iee.org>
 References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Cc: Junio C Hamano <gitster@pobox.com>,
 	MsysGit List <msysgit@googlegroups.com>,
 	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
 	Philip Oakley <philipoakley@iee.org>
 To: Git List <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com Sun Jul 19 22:07:27 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBB4EGWCWQKGQE7CFDCOY@googlegroups.com Sun Jul 19 22:07:22 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBB4EGWCWQKGQE7CFDCOY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f185.google.com ([209.85.212.185])
+Received: from mail-wi0-f183.google.com ([209.85.212.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com>)
-	id 1ZGurl-0002MX-Cq
-	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:17 +0200
-Received: by wicmv11 with SMTP id mv11sf137877wic.1
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBB4EGWCWQKGQE7CFDCOY@googlegroups.com>)
+	id 1ZGurg-0002Ms-V5
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:13 +0200
+Received: by wilh8 with SMTP id h8sf28718771wil.0
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-spam-checked-in-group:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe;
-        bh=TK0n+Z1GIQ4T/ysu0klsLGG6MlPO3/hoWj3RP4Vudrw=;
-        b=KKX0HyB7XM425zGs9U6sy8c8/wrXW3gws/pDm8tbMf6fQptNwn7Q1tTGBdIJ4Nk+O1
-         5YrQo1K0n6GbO96Hev9dtb6pmTVEBapbljk9zem/j7q8u0MTModcgTUZnjBYInebGfRc
-         RMwKxSSrlR8KBeP4tiQ6VJSqw9jfgDaQ865/zHpIOnzL7TDd9MfIJttxg4BnpfTIN6mS
-         iFQ54g/WuYuzAhV/EBEVw7TMo97CFVdfXdr7Y/8X6/DY0/ehcx6fRu1bLmivEi+Y92KQ
-         8D+8/djFMB4nLLtd5KIC5LM7wDU//DLuwdjsVEbGNu5ZfaNg1C73Gp1/XxS8e9lxLZYz
-         P4YA==
-X-Received: by 10.180.206.84 with SMTP id lm20mr28107wic.13.1437336431988;
-        Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :content-type:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=YaM+bVHk0XQYr+PDqoycZ31S9zpcjBktwgmNs0sLce0=;
+        b=CLgdsvH3vsgQOESkliLooCme1SnpY6XUs0mJ0ejSan7mQ8EB3Csf8abYzf0zNVyDxw
+         5KpupO3sMVWL9dEkLBO8PDNKh/6B7+PZEEgSA41AZi0qneX0DLcFMZnt1N9Ft7E593D7
+         bmGf1O3U9UNgvB4tRQ5lI/LhGu0n0CaFSszx51ULQdJBC2P090Ab9W5etTqNY34yJ/XK
+         p2PfRmSIpuEWJSQA0l0IMRiteUFxz6D+pdj6IVnwlJokhMLXB33rR6PbYwu+Y3ClYA3p
+         Jnb3V8ltqSiBi3UXzsk+9i8aWGVioKJe4ziMGqZoCeAEaVj5sNBr38Eh0wqy99/suCfy
+         5Mag==
+X-Received: by 10.180.219.107 with SMTP id pn11mr28298wic.10.1437336432685;
+        Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.126.3 with SMTP id mu3ls679069wib.45.canary; Sun, 19 Jul
- 2015 13:07:11 -0700 (PDT)
-X-Received: by 10.180.106.10 with SMTP id gq10mr4474194wib.0.1437336431342;
-        Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
+Received: by 10.180.104.68 with SMTP id gc4ls678247wib.26.canary; Sun, 19 Jul
+ 2015 13:07:12 -0700 (PDT)
+X-Received: by 10.180.205.202 with SMTP id li10mr4457512wic.5.1437336432052;
+        Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
 Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.11
+        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.12
         for <msysgit@googlegroups.com>;
-        Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
+        Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AVEQCSAqxVPN4GFlxcgkFSVGmzHIpHhXEEAgKBGj0QAQEBAQEBAQYBAQEBQAE/hCQBAQQjDwEjIxAIHQImAgI5CgYOBhMbiBcJryOVPAEBAQcCIIEijzAHgmiBQwWHDo1EhG+CYIZbln6BCYEqHIFUPTGCSwEBAQ
-X-IPAS-Result: A2AVEQCSAqxVPN4GFlxcgkFSVGmzHIpHhXEEAgKBGj0QAQEBAQEBAQYBAQEBQAE/hCQBAQQjDwEjIxAIHQImAgI5CgYOBhMbiBcJryOVPAEBAQcCIIEijzAHgmiBQwWHDo1EhG+CYIZbln6BCYEqHIFUPTGCSwEBAQ
+X-IronPort-Anti-Spam-Result: A2AhDwCSAqxVPN4GFlxcgkFSVGm6Q4EiCYF1hXEEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKBg4GExuIFwnEXwErkFIHhCsFlFKEb4h1RpMdg2GBCYMaPTGCSwEBAQ
+X-IPAS-Result: A2AhDwCSAqxVPN4GFlxcgkFSVGm6Q4EiCYF1hXEEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKBg4GExuIFwnEXwErkFIHhCsFlFKEb4h1RpMdg2GBCYMaPTGCSwEBAQ
 X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
-   d="scan'208";a="39118943"
+   d="scan'208";a="39118944"
 Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:11 +0100
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:12 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -73,118 +72,90 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274292>
 
-Visual Studio takes the first listed application/library as the default
-startup project [1].
+Layout the 'either/or' with more white space to clarify
+which alternatives are matched up.
 
-Detect the 'git' project and place it the head of the apps list, rather
-than the tail.
-
-Export the apps list before libs list for both the projects and global
-structures of the .sln file.
-
-[1] http://stackoverflow.com/questions/1238553/
-vs2008-where-is-the-startup-project-setting-stored-for-a-solution
-    "In the solution file, there are a list of pseudo-XML "Project"
-    entries. It turns out that whatever is the first one ends up as
-    the Startup Project, unless it=E2=80=99s overridden in the suo file. Ar=
-gh.
-    I just rearranged the order in the file and it=E2=80=99s good."
-
-    "just moving the pseudo-xml isn't enough. You also have to move the
-    group of entries in the "GlobalSection(ProjectConfigurationPlatforms)
-    =3D postSolution" group that has the GUID of the project you moved to
-    the top. So there are two places to move lines."
+Reference the Msysgit build script which automates one sequence of options.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/Generators/Vcproj.pm | 33 ++++++++++++++++++---------=
-----
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ compat/vcbuild/README | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsyste=
-ms/Generators/Vcproj.pm
-index 1b01d58..cc2fa21 100644
---- a/contrib/buildsystems/Generators/Vcproj.pm
-+++ b/contrib/buildsystems/Generators/Vcproj.pm
-@@ -560,20 +560,18 @@ sub createGlueProject {
-     foreach (@apps) {
-         $_ =3D~ s/\//_/g;
-         $_ =3D~ s/\.exe//;
--        push(@tmp, $_);
-+        if ($_ eq "git" ) {
-+            unshift(@tmp, $_);
-+        } else {
-+            push(@tmp, $_);
-+        }
-     }
-     @apps =3D @tmp;
-=20
-     open F, ">git.sln" || die "Could not open git.sln for writing!\n";
-     binmode F, ":crlf";
-     print F "$SLN_HEAD";
--    foreach (@libs) {
--        my $libname =3D $_;
--        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
--        print F "$SLN_PRE";
--        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uu=
-id}\"";
--        print F "$SLN_POST";
--    }
+diff --git a/compat/vcbuild/README b/compat/vcbuild/README
+index df8a657..7548dc4 100644
+--- a/compat/vcbuild/README
++++ b/compat/vcbuild/README
+@@ -3,20 +3,24 @@ The Steps of Build Git with VS2008
+ 1. You need the build environment, which contains the Git dependencies
+    to be able to compile, link and run Git with MSVC.
+ 
+-   You can either use the binary repository:
++   You can either:
++      use the binary repository:
+ 
+        WWW: http://repo.or.cz/w/msvcgit.git
+        Git: git clone git://repo.or.cz/msvcgit.git
+        Zip: http://repo.or.cz/w/msvcgit.git?a=snapshot;h=master;sf=zip
+ 
+-   and call the setup_32bit_env.cmd batch script before compiling Git,
+-   (see repo/package README for details), or the source repository:
++      and call the setup_32bit_env.cmd batch script before compiling Git,
++     (see repo/package README for details),
 +
-     my $uuid_libgit =3D $build_structure{"LIBS_libgit_GUID"};
-     my $uuid_xdiff_lib =3D $build_structure{"LIBS_xdiff_lib_GUID"};
-     foreach (@apps) {
-@@ -587,6 +585,13 @@ sub createGlueProject {
-         print F "	EndProjectSection";
-         print F "$SLN_POST";
-     }
-+    foreach (@libs) {
-+        my $libname =3D $_;
-+        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
-+        print F "$SLN_PRE";
-+        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uu=
-id}\"";
-+        print F "$SLN_POST";
-+    }
-=20
-     print F << "EOM";
- Global
-@@ -598,17 +603,17 @@ EOM
-     print F << "EOM";
- 	GlobalSection(ProjectConfigurationPlatforms) =3D postSolution
- EOM
--    foreach (@libs) {
--        my $libname =3D $_;
--        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
-+    foreach (@apps) {
-+        my $appname =3D $_;
-+        my $uuid =3D $build_structure{"APPS_${appname}_GUID"};
-         print F "\t\t${uuid}.Debug|Win32.ActiveCfg =3D Debug|Win32\n";
-         print F "\t\t${uuid}.Debug|Win32.Build.0 =3D Debug|Win32\n";
-         print F "\t\t${uuid}.Release|Win32.ActiveCfg =3D Release|Win32\n";
-         print F "\t\t${uuid}.Release|Win32.Build.0 =3D Release|Win32\n";
-     }
--    foreach (@apps) {
--        my $appname =3D $_;
--        my $uuid =3D $build_structure{"APPS_${appname}_GUID"};
-+    foreach (@libs) {
-+        my $libname =3D $_;
-+        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
-         print F "\t\t${uuid}.Debug|Win32.ActiveCfg =3D Debug|Win32\n";
-         print F "\t\t${uuid}.Debug|Win32.Build.0 =3D Debug|Win32\n";
-         print F "\t\t${uuid}.Release|Win32.ActiveCfg =3D Release|Win32\n";
---=20
++   or:
++      use the source repository:
+ 
+        WWW: http://repo.or.cz/w/gitbuild.git
+        Git: git clone git://repo.or.cz/gitbuild.git
+        Zip: (None, as it's a project with submodules)
+ 
+-   and build the support libs as instructed in that repo/package.
++     and build the support libs as instructed in that repo/package.
+ 
+ 2. Ensure you have the msysgit environment in your path, so you have
+    GNU Make, bash and perl available.
+@@ -33,18 +37,25 @@ The Steps of Build Git with VS2008
+        make common-cmds.h
+    to generate the common-cmds.h file needed to compile git.
+ 
+-4. Then either build Git with the GNU Make Makefile in the Git projects
+-   root
++4. Then either
++
++     build Git with the GNU Make Makefile in the Git projects root
+        make MSVC=1
+-   or generate Visual Studio solution/projects (.sln/.vcproj) with the
++   or
++
++   generate Visual Studio solution/projects (.sln/.vcproj) with the
+    command
+        perl contrib/buildsystems/generate -g Vcproj
+    and open and build the solution with the IDE
+        devenv git.sln /useenv
+-   or build with the IDE build engine directly from the command line
++     or
++
++   build with the IDE build engine directly from the command line
+        devenv git.sln /useenv /build "Release|Win32"
+    The /useenv option is required, so Visual Studio picks up the
+    environment variables for the support libraries required to build
+    Git, which you set up in step 1.
+ 
+ Done!
++
++Or, use the Msysgit msvc-build script; available from that project.
+-- 
 2.4.2.windows.1.5.gd32afb6
 
---=20
---=20
+-- 
+-- 
 *** Please reply-to-all at all times ***
 *** (do not pretend to know who is subscribed and who is not) ***
 *** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
 You received this message because you are subscribed to the Google
 Groups "msysGit" group.
@@ -192,11 +163,9 @@ To post to this group, send email to msysgit@googlegroups.com
 To unsubscribe from this group, send email to
 msysgit+unsubscribe@googlegroups.com
 For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
 For more options, visit https://groups.google.com/d/optout.
