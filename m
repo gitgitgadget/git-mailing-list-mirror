@@ -1,7 +1,7 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v6 02/45] wrapper: implement xfopen()
-Date: Mon, 20 Jul 2015 00:09:54 +0800
-Message-ID: <1437322237-29863-3-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v6 03/45] builtin-am: implement skeletal builtin am
+Date: Mon, 20 Jul 2015 00:09:55 +0800
+Message-ID: <1437322237-29863-4-git-send-email-pyokagan@gmail.com>
 References: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
@@ -13,103 +13,148 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGrB4-0005wJ-5f
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:10:58 +0200
+	id 1ZGrB4-0005wJ-Nu
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:10:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbbGSQKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 12:10:52 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:36338 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753390AbbGSQKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 12:10:51 -0400
-Received: by pdjr16 with SMTP id r16so91391780pdj.3
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:10:51 -0700 (PDT)
+	id S1753610AbbGSQKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 12:10:55 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34041 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753390AbbGSQKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 12:10:54 -0400
+Received: by pacan13 with SMTP id an13so89899109pac.1
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i8rL/2VLCIB8Fp87N7xcjUVBHcxT51ooTtOX5NNw1ps=;
-        b=fTI8b6crpR4rafEC7Nze98chCmHBOvtIH1H/2e3SUl+74DpFcjtl2sUnZkBJ3R8cHY
-         gBnmp0bi7lilKwUe4t70xLw7gU8aKS/FozOuG6DtZkvkhFPtRnsLGU1Myj9HaJtDH7l8
-         PY5MSEsBieV4nQkn1D5vuHUuQu1W06xzhJn+JxrEyVbYkx14BiPswL06igdB19wqQd3d
-         7uTuMSxHzYJ59ilYeiplpx45Cszg3A5IsTA4jmhDUINtuvz2aQzkP+EKsZy8Vj838Q2i
-         ZxxyjunutB9jKDofzft5Lfl41uYKVjIgmdnpPQMSiFrSGeniQkVCVVY3BJ0oK1UizfwI
-         Butg==
-X-Received: by 10.68.238.168 with SMTP id vl8mr23585113pbc.3.1437322250973;
-        Sun, 19 Jul 2015 09:10:50 -0700 (PDT)
+        bh=ZeqDeQkt7oLy/JVUPsPd3xSjVEI8IzkMfFgvNr7sv20=;
+        b=CZ1QRu/HqY2pUEemM4anc2ErtM2Cx/N0ds42OTIZbnNEDhnfgrrlD2PwPw7gzRc44H
+         4moRgjcf1RDTxokElivykmOQEW6uj+0RI4rBOrINT6ExKigkcMpjDcZHRMWyOwGTm0qj
+         Qxkn6whdRC/SSXmVbAJhoMeuq78LihBK2BicvBzU6sFlJKv/L3FoPlvTKOucwDt9g4Rj
+         yDK2y1xIkEOODU6NCs7pBskXxm+g3DH/lzdhRqSKfodrVj3UR22/0tIne92RqvA7OrDz
+         lSMc2curxcmz0SIYA4DufG80106zY9dELzpKgsxporumjLW2pHnbE4UkscDiCDprggP5
+         9eqw==
+X-Received: by 10.66.97.39 with SMTP id dx7mr49773042pab.1.1437322253894;
+        Sun, 19 Jul 2015 09:10:53 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.10.48
+        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.10.51
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 09:10:50 -0700 (PDT)
+        Sun, 19 Jul 2015 09:10:52 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gb39b692
 In-Reply-To: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274227>
 
-A common usage pattern of fopen() is to check if it succeeded, and die()
-if it failed:
+For the purpose of rewriting git-am.sh into a C builtin, implement a
+skeletal builtin/am.c that redirects to $GIT_EXEC_PATH/git-am if the
+environment variable _GIT_USE_BUILTIN_AM is not defined. Since in the
+Makefile git-am.sh takes precedence over builtin/am.c,
+$GIT_EXEC_PATH/git-am will contain the shell script git-am.sh, and thus
+this allows us to fall back on the functional git-am.sh when running the
+test suite for tests that depend on a working git-am implementation.
 
-	FILE *fp = fopen(path, "w");
-	if (!fp)
-		die_errno(_("could not open '%s' for writing"), path);
+Since git-am.sh cannot handle any environment modifications by
+setup_git_directory(), "am" is declared with no setup flags in git.c. On
+the other hand, to re-implement git-am.sh in builtin/am.c, we need to
+run all the git dir and work tree setup logic that git.c typically does
+for us. As such, we work around this temporarily by copying the logic in
+git.c's run_builtin(), which is roughly:
 
-Implement a wrapper function xfopen() for the above, so that we can save
-a few lines of code and make the die() messages consistent.
+	prefix = setup_git_directory();
+	trace_repo_setup(prefix);
+	setup_work_tree();
 
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+This redirection should be removed when all the features of git-am.sh
+have been re-implemented in builtin/am.c.
+
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- git-compat-util.h |  1 +
- wrapper.c         | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+)
+ Makefile     |  1 +
+ builtin.h    |  1 +
+ builtin/am.c | 29 +++++++++++++++++++++++++++++
+ git.c        |  6 ++++++
+ 4 files changed, 37 insertions(+)
+ create mode 100644 builtin/am.c
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e168dfd..392da79 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -722,6 +722,7 @@ extern ssize_t xread(int fd, void *buf, size_t len);
- extern ssize_t xwrite(int fd, const void *buf, size_t len);
- extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
- extern int xdup(int fd);
-+extern FILE *xfopen(const char *path, const char *mode);
- extern FILE *xfdopen(int fd, const char *mode);
- extern int xmkstemp(char *template);
- extern int xmkstemp_mode(char *template, int mode);
-diff --git a/wrapper.c b/wrapper.c
-index 0a4502d..e451463 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -346,6 +346,27 @@ int xdup(int fd)
- 	return ret;
- }
+diff --git a/Makefile b/Makefile
+index c6c28bc..f88642a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -812,6 +812,7 @@ LIB_OBJS += xdiff-interface.o
+ LIB_OBJS += zlib.o
  
-+/**
-+ * xfopen() is the same as fopen(), but it die()s if the fopen() fails.
+ BUILTIN_OBJS += builtin/add.o
++BUILTIN_OBJS += builtin/am.o
+ BUILTIN_OBJS += builtin/annotate.o
+ BUILTIN_OBJS += builtin/apply.o
+ BUILTIN_OBJS += builtin/archive.o
+diff --git a/builtin.h b/builtin.h
+index 839483d..79aaf0a 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -30,6 +30,7 @@ extern int textconv_object(const char *path, unsigned mode, const unsigned char
+ extern int is_builtin(const char *s);
+ 
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
++extern int cmd_am(int argc, const char **argv, const char *prefix);
+ extern int cmd_annotate(int argc, const char **argv, const char *prefix);
+ extern int cmd_apply(int argc, const char **argv, const char *prefix);
+ extern int cmd_archive(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/am.c b/builtin/am.c
+new file mode 100644
+index 0000000..fd32caf
+--- /dev/null
++++ b/builtin/am.c
+@@ -0,0 +1,29 @@
++/*
++ * Builtin "git am"
++ *
++ * Based on git-am.sh by Junio C Hamano.
 + */
-+FILE *xfopen(const char *path, const char *mode)
++#include "cache.h"
++#include "builtin.h"
++#include "exec_cmd.h"
++
++int cmd_am(int argc, const char **argv, const char *prefix)
 +{
-+	for (;;) {
-+		FILE *fp = fopen(path, mode);
-+		if (fp)
-+			return fp;
-+		if (errno == EINTR)
-+			continue;
 +
-+		if (*mode && mode[1] == '+')
-+			die_errno(_("could not open '%s' for reading and writing"), path);
-+		else if (*mode == 'w' || *mode == 'a')
-+			die_errno(_("could not open '%s' for writing"), path);
-+		else
-+			die_errno(_("could not open '%s' for reading"), path);
++	/*
++	 * NEEDSWORK: Once all the features of git-am.sh have been
++	 * re-implemented in builtin/am.c, this preamble can be removed.
++	 */
++	if (!getenv("_GIT_USE_BUILTIN_AM")) {
++		const char *path = mkpath("%s/git-am", git_exec_path());
++
++		if (sane_execvp(path, (char **)argv) < 0)
++			die_errno("could not exec %s", path);
++	} else {
++		prefix = setup_git_directory();
++		trace_repo_setup(prefix);
++		setup_work_tree();
 +	}
-+}
 +
- FILE *xfdopen(int fd, const char *mode)
- {
- 	FILE *stream = fdopen(fd, mode);
++	return 0;
++}
+diff --git a/git.c b/git.c
+index 55c327c..38d9ad5 100644
+--- a/git.c
++++ b/git.c
+@@ -370,6 +370,12 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 
+ static struct cmd_struct commands[] = {
+ 	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
++	/*
++	 * NEEDSWORK: Once the redirection to git-am.sh in builtin/am.c has
++	 * been removed, this entry should be changed to
++	 * RUN_SETUP | NEED_WORK_TREE
++	 */
++	{ "am", cmd_am },
+ 	{ "annotate", cmd_annotate, RUN_SETUP },
+ 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
+ 	{ "archive", cmd_archive },
 -- 
 2.5.0.rc2.110.gb39b692
