@@ -1,8 +1,8 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 09/16] engine.pl: name the msvc buildsystem's
- makedry error file
-Date: Sun, 19 Jul 2015 21:08:09 +0100
-Message-ID: <1437336497-4072-10-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 08/16] engine.pl: ignore invalidcontinue.obj
+ which is known to MSVC
+Date: Sun, 19 Jul 2015 21:08:08 +0100
+Message-ID: <1437336497-4072-9-git-send-email-philipoakley@iee.org>
 References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,16 +11,16 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
 	Philip Oakley <philipoakley@iee.org>
 To: Git List <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBB3MGWCWQKGQE2SWNGUI@googlegroups.com Sun Jul 19 22:07:11 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBB3MGWCWQKGQE2SWNGUI@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBB3EGWCWQKGQETFQ6EPY@googlegroups.com Sun Jul 19 22:07:09 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBB3EGWCWQKGQETFQ6EPY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f57.google.com ([74.125.82.57])
+Received: from mail-wg0-f63.google.com ([74.125.82.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB3MGWCWQKGQE2SWNGUI@googlegroups.com>)
-	id 1ZGure-0002Kb-IJ
-	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:10 +0200
-Received: by wgjf7 with SMTP id f7sf441392wgj.0
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBB3EGWCWQKGQETFQ6EPY@googlegroups.com>)
+	id 1ZGurd-0002KJ-5A
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:09 +0200
+Received: by wgjf7 with SMTP id f7sf441375wgj.0
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
@@ -28,19 +28,19 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=ATs1w1c1tT+YrRfkkfupVK3gl2nVP/hfHeXZC/Ibi/A=;
-        b=CJQtQHpSixa8S/KWf8nK5DgrDBBDXxHcFmLEL2ItEl0V9LuMH/VLikVbnJawkYW5TB
-         HFeETGw/nVtB+HKXV6+rzuzTsdtppXcV/G46yinG2ebTMutTkMPhKFQUA0gBfJTqRm86
-         mE0use8gFrQKBRZC6VX/WaPtCqgfQDI6oFBoRaDOMyFkbucEFKqw8OXBR9uexB0lyGFp
-         EvDC6yJWMyItTAfb86xXcLGrFLGH0/5mYkw0yOZZbiv8JD5s5kPGp+J+uNptpomVnuBT
-         GOuOUzvp/4pp9SywLTWyYF1QSGoSHlyc/lyH6p/Kmp5G8OyhkkWBvLK59j480Y3mBiFm
-         JAog==
-X-Received: by 10.152.18.231 with SMTP id z7mr357118lad.23.1437336430279;
-        Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
+        bh=3amP+0BKJQKq4Ve78a2JWQdlKH8gWt8yGiGo6cK3VDg=;
+        b=nTRpUD6kLcRxM6kpQHEDKuhygyjXahxeOtAHJiTqRHFhsj51epPUeVB3NhLuwLQYT6
+         FGEmpXVjzSk+X9W+ew2YIIxjRAdemUyMV4915hz/bc55kZ3CKtglEppzdqNPO0YUS5FE
+         l7O+oxNq/A1Gb43rC3/Uv1SC3oZo/j6ggiPaLViV9Sf9+sCDXmIk0FmdBuasGYC9w45u
+         L3QhwrK8wIGzqy/AaWJ68VWiLvO7hEe7bWWwuOuVciQaYAS+L4lJBK9W7BpcscoyWvdM
+         wpVODKZldF71oY3U/ojr92OYejvCDP9HMDHKyw4MXgfLbapvFXlU7QVmqZIwBdfxmLiV
+         +TAw==
+X-Received: by 10.180.216.4 with SMTP id om4mr27882wic.3.1437336428884;
+        Sun, 19 Jul 2015 13:07:08 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.43.161 with SMTP id x1ls46170lal.45.gmail; Sun, 19 Jul
+Received: by 10.180.91.77 with SMTP id cc13ls673561wib.36.canary; Sun, 19 Jul
  2015 13:07:08 -0700 (PDT)
-X-Received: by 10.112.148.101 with SMTP id tr5mr13095064lbb.13.1437336428956;
+X-Received: by 10.180.105.226 with SMTP id gp2mr4463494wib.1.1437336428304;
         Sun, 19 Jul 2015 13:07:08 -0700 (PDT)
 Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
         by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.08
@@ -48,10 +48,10 @@ Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.2
         Sun, 19 Jul 2015 13:07:08 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2ChAwCSAqxVPN4GFlxcgkFSVGm7bn8FcYVxBAICgRo6EwEBAQEBAQEGAQEBAUABP4QkAQEEViMQCEk5ChQGE4gyCcRfAQEBAQYCII9tZQeEKwWMOIgahG+JO5Z+gQmDGj0xgQSBRwEBAQ
-X-IPAS-Result: A2ChAwCSAqxVPN4GFlxcgkFSVGm7bn8FcYVxBAICgRo6EwEBAQEBAQEGAQEBAUABP4QkAQEEViMQCEk5ChQGE4gyCcRfAQEBAQYCII9tZQeEKwWMOIgahG+JO5Z+gQmDGj0xgQSBRwEBAQ
+X-IronPort-Anti-Spam-Result: A2CVCwCSAqxVPN4GFlxcgkFSVGmGUbUUCYFthXkEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDLEaAErkFIHhCsFlFKEb4k7ln6BCYMaPTGCSwEBAQ
+X-IPAS-Result: A2CVCwCSAqxVPN4GFlxcgkFSVGmGUbUUCYFthXkEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDLEaAErkFIHhCsFlFKEb4k7ln6BCYMaPTGCSwEBAQ
 X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
-   d="scan'208";a="39118939"
+   d="scan'208";a="39118937"
 Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
   by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:09 +0100
 X-Mailer: git-send-email 2.3.1
@@ -72,45 +72,57 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274284>
 
-Save the stderr from the dry MSVC make to a well named file for
-later review. Use 'msvc-build-makedryerrors.txt' which should be
-obvious as to its source, and is not ignored by 'git status'.
+Commit 4b623d8 (MSVC: link in invalidcontinue.obj for better
+POSIX compatibility, 2014-03-29) is not processed correctly
+by the buildsystem. Ignore it.
+
+Also split the .o and .obj processing; 'make' does not produce .obj
+files. Only substitute filenames ending with .o when generating the
+source .c filename.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
-fixed false mode change:- Junio's report (last line of)
-http://marc.info/?l=git&m=143524504500824 (2015-06-25),
-
-The cause was probably an early 'commit --amend' during a
-rebase, and using the git gui to unstage the whole commit, then
-pick up and commit hunks one at a time. Unfortunately, on Msysgit/g4w
-core.filemode is false, so the execute bit was lost during the
-unstage, never noticed, and there's no simple way of adding it back.
-
-Discussion on correcting file mode on msysgit/git4Windows is at
-https://groups.google.com/forum/#!topic/msysgit/zwH-qj0xR48
----
- contrib/buildsystems/engine.pl | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ contrib/buildsystems/engine.pl | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 9db3d43..a6999b6 100755
+index 60c7a7d..9db3d43 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -73,7 +73,10 @@ Running GNU Make to figure out build structure...
- EOM
- 
- # Pipe a make --dry-run into a variable, if not already loaded from file
--@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>/dev/null` if !@makedry;
-+# Capture the make dry stderr to file for review (will be empty for a release build).
-+
-+my $ErrsFile = "msvc-build-makedryerrors.txt";
-+@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>$ErrsFile` if !@makedry;
- 
- # Parse the make output into usable info
- parseMakeOutput();
+@@ -289,7 +289,7 @@ sub handleLibLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+@@ -333,8 +333,12 @@ sub handleLinkLine
+         } elsif ($part =~ /\.(a|lib)$/) {
+             $part =~ s/\.a$/.lib/;
+             push(@libs, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
++        } elsif ($part eq 'invalidcontinue.obj') {
++            # ignore - known to MSVC
++        } elsif ($part =~ /\.o$/) {
+             push(@objfiles, $part);
++        } elsif ($part =~ /\.obj$/) {
++            # do nothing, 'make' should not be producing .obj, only .o files
+         } else {
+             die "Unhandled link option @ line $lineno: $part";
+         }
+@@ -343,7 +347,7 @@ sub handleLinkLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
 -- 
 2.4.2.windows.1.5.gd32afb6
 
