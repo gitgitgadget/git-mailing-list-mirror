@@ -1,208 +1,141 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Git tag: pre-receive hook issue
-Date: Sun, 19 Jul 2015 16:35:24 -0700
-Message-ID: <CA+P7+xqXxYtJiJ4xdYya25NgqrxncWP3rpVMLYBWTbnnA_oynQ@mail.gmail.com>
-References: <1437159533304-7635764.post@n2.nabble.com> <CA+P7+xoXgSHPVhMTm_GZbq+6Pps5yttK2rBZpMycTUFGfqOCvw@mail.gmail.com>
- <CAGDgvc2F7UMWTVrRFt5eK2xmbfz-kyWh6Vp-eQNEj7tixzRPYQ@mail.gmail.com>
- <CA+P7+xrbWt=n6hj4bTcdLRMPXa0K51gErNBD-omQy+g-So6TYw@mail.gmail.com>
- <CAGDgvc3O=q-k3ViiEds4iPMtDQTOSFMSJ4bUKRFyWzqwv7=J_Q@mail.gmail.com>
- <CA+P7+xpevvV=5QdfBdzcD=8=2ff+m-kzxX-w1wLME8oRyn8QBA@mail.gmail.com> <CAGDgvc1CwmQV75mo22v5LQH4q-kNMFtVq3Y9eSt9LL44JHr5Og@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+Date: Sun, 19 Jul 2015 19:49:36 -0400
+Message-ID: <CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
+References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
+	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Gaurav Chhabra <varuag.chhabra@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 01:35:57 2015
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 01:54:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGy7g-0005Bi-V8
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 01:35:57 +0200
+	id 1ZGyPq-0002yc-LO
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 01:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754101AbbGSXfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 19:35:45 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:36710 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753985AbbGSXfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 19:35:44 -0400
-Received: by igbij6 with SMTP id ij6so71187878igb.1
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 16:35:43 -0700 (PDT)
+	id S1754102AbbGSXth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 19:49:37 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:36088 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753985AbbGSXtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 19:49:36 -0400
+Received: by ykay190 with SMTP id y190so127745538yka.3
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 16:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ZQn2dRYH7DlkSK3DxndOailqEQ2YFWj+j9CaoKiq09k=;
-        b=ucUHmBflmiafIMB+ajwFmPNP53T3acDK86fOYfyi7a0Lf+NGBxVPOUrNHCaObwqzah
-         BeuEwfnWTdkBOgu/mEMkwjErkRG2D3iO8Llf8f+IwHQgBoKq5PjOznLKIQBT1PPfMBgA
-         5UZi8tmvDyaZUAvAvD5AECzYI5e12/lODgt5oSM32DqRaI21vdxWIormQJdG2yppvd2O
-         EAztcNSXTAwANk3/grhQpPm8KDJ45QmJZMFd55ntzqfHi7QsWBTC7OcH9scMLedDE2wU
-         X6yRQUnpqlVm4JDfQJ9OunLa6Xt1lFmm9Jah0xbCW21TUE7YxMdeVlZB6H0zMqCngqz1
-         rNbw==
-X-Received: by 10.107.14.65 with SMTP id 62mr30660543ioo.67.1437348943537;
- Sun, 19 Jul 2015 16:35:43 -0700 (PDT)
-Received: by 10.107.157.75 with HTTP; Sun, 19 Jul 2015 16:35:24 -0700 (PDT)
-In-Reply-To: <CAGDgvc1CwmQV75mo22v5LQH4q-kNMFtVq3Y9eSt9LL44JHr5Og@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Ooe4Z58Xgj+T0WMPN0fGV1HqVqoP8+KtW1O6Ku1d1PQ=;
+        b=OYl1TJhBcMAM6wPBDbCZz6580svKwj6l7vwcMIIUS5YDrv/cayHX/vkjtGqNan8BN4
+         35hk2W8DgUi2nS1hKkAyXeyuIwpz5AWDouAwTVzmunu1K4Krphq23LzxOH765ALSjuOl
+         h7XcAw3Geci9fGVDIlZdl++4UC/Eo4N/ncdcBDbHO6Eq8ryJXgyCYcU1mK9L+276QsCi
+         kDk5sXyAKcQqFNGWyKCYi5dVBry2a0F64hCpMd76uMuIEPl4bRfdlNu9QK1Kp9rn5wLz
+         xehR4sWF1T4xBaaxnbdmtp5fezmxLCZyiApI+dl++kW0/Q5ZsYo+Pv6mvXvo+e+vMA/A
+         tjBQ==
+X-Received: by 10.170.112.72 with SMTP id e69mr4252444ykb.69.1437349776113;
+ Sun, 19 Jul 2015 16:49:36 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 16:49:36 -0700 (PDT)
+In-Reply-To: <1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: MRhZdms8ODlOoopWLG-IsQe5wTg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274299>
 
-To check whether the ref being updated is a tag, you need to check the
-3rd parameter. pre-receive receives in the format
-
-<old-value> <new-value> <ref-name>
-
-so you need to check each line's 3rd value which is the ref-name being
-updated. If it's in refs/tags then it's a tag update. If it's not, you
-can check it as a branch update.
-
-Then you should check all new commits for each branch, as Julio mentioned above.
-
-Checking whether each commit has an associated tag is probably not
-what you meant.
-
-Regards,
-Jake
-
-On Sun, Jul 19, 2015 at 3:13 AM, Gaurav Chhabra
-<varuag.chhabra@gmail.com> wrote:
-> The only thing we wanted to check was whether a ref is a tag. :) Rest
-> other things are working fine (except for the "commits=$new_sha1"
-> thing which Junio already pointed out and corrected). I will correct
-> the pre-receive hook.
+On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Add a new atom "align" and support %(align:X) where X is a number.
+> This will align the preceeding atom value to the left followed by
+> spaces for a total length of X characters. If X is less than the item
+> size, the entire atom value is printed.
 >
-> The only mystery that remains is about the current nonsensical code
-> working fine in the past for few annotated tag pushes. It shouldn't
-> have worked just by providing:
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 7561727..b81a08d 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -53,6 +55,7 @@ static struct {
+>         { "flag" },
+>         { "HEAD" },
+>         { "color" },
+> +       { "align" },
+
+Not a new issue, but some compilers (Solaris?) complain about the
+trailing comma.
+
+>  };
 >
-> RW+ refs/tags=developer_name
+>  /*
+> @@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
+>                         else
+>                                 v->s = " ";
+>                         continue;
+> +               } else if (starts_with(name, "align:")) {
+> +                       const char *valp = NULL;
+> +
+> +                       skip_prefix(name, "align:", &valp);
+> +                       if (!valp[0])
+> +                               die(_("No value given with 'align='"));
+
+The parser expects "align:", but the error message talks about
+"align=". Also, current trend is to drop capitalization from the error
+message.
+
+> +                       strtoul_ui(valp, 10, &ref->align_value);
+> +                       if (ref->align_value < 1)
+> +                               die(_("Value should be greater than zero"));
+
+Drop capitalization. Also, the user seeing this message won't
+necessarily know to which value this refers. Better would be to
+provide context ("'align:' value should be..."), and even better would
+be to show the actual value at fault:
+
+    die(_("value should be greater than zero: align:%u\n",
+        ref_align_value);
+
+or something.
+
+> +                       v->s = "";
+> +                       continue;
+>                 } else
+>                         continue;
 >
-> Ref: http://gitolite.com/gitolite/g2/aac.html (Section: "deny" rules
-> for refs in a repo)
+> @@ -1254,17 +1268,38 @@ static void emit(const char *cp, const char *ep)
+>         }
+>  }
 >
->
-> On Sun, Jul 19, 2015 at 2:09 PM, Jacob Keller [via git]
-> <ml-node+s661346n7635875h48@n2.nabble.com> wrote:
->> On Sun, Jul 19, 2015 at 12:55 AM, Gaurav Chhabra
->> <[hidden email]> wrote:
->>> @Junio: So from your detailed explanation (and Jake's comment), i
->>> understand that since my ref wasn't updated on remote so querying the
->>> same using "git describe" resulted in failure, and hence, code was not
->>> entering the IF block. Correct?
->>>
->>
->> I assume so.
->>
->>> Also, while i was reading your replies, i was just thinking that the
->>> following question that i asked Jake doesn't really make sense because
->>> a commit object _is_ being passed (on local machine) to "git
->>> describe", which is what it expects so it should work for sure:
->>>
->>
->> It works yes. Git describe finds the nearest tag. --exact-match fails
->> unless it can find a tag at the commit specified.
->>
->>> "If i got the above right, then shouldn't Git throw an error even on
->>> my local machine when i'm running "git describe --exact-match
->>> ac28ca721e67a"?"
->>>
->>
->> only if ac28ca721e67a does not have an annotated tag associated to it
->>
->>
->>
->>> @Junio: You wrote: "The part that I find questionable is that by
->>> checking with "is this commit a tagged one?" and doing different
->>> things. What makes the initial and the third special to deserve
->>> checking (because they are not annotated with a tag) while skipping
->>> the validation for the second (merely because it has an annotated tag
->>> added to it)?"
->>>> Isn't the code that i shared doing just the opposite of what you've
->>>> written? It's checking for annotated tags only and skipping the lightweight
->>>> ones (although it shouldn't be doing all such things in the first place).
->>>> Was it a typo on your part?
->>>
->>>
->>
->> I'm not sure what the code you have is trying to do. See below.
->>
->>> @Jake: For the question you asked: "It would help a lot if we
->>> understood exactly what you are trying to accomplish."
->>>> I'm not sure how my colleague zeroed in on this "git describe" command
->>>> but i at least know what we observed (and 'seemed' to work).  We saw that if
->>>> we use git-describe and pass a commit object, it throws fatal error message.
->>>> On the other hand, if we pass a tag object, it doesn't throw any fatal
->>>> error. That's the reason he added that tag check portion.
->>>
->>
->> Hmmm....
->>
->>>
->>> @Junio/Jake: After going through all the responses that i've received
->>> so far on this forum, i'm thinking how this nonsense code worked for
->>> few cases in the past? When this check was put in place, devs were
->>> getting error while pushing annotated tags. Since we use Gitolite, we
->>> added the following to gitolite.conf and the tag push worked for them:
->>>
->>> RW+ refs/tags=developer_name
->>>
->>
->> Sounds like you needed to add RW permissions to the refs/tags namespace.
->>
->>> I'm wondering why.
->>>
->>
->> Ok, so normally, pre-receive hook is used to implement policy. Ie:
->> prevent acceptance of pushes that have "bad" content as defined by the
->> repository owner. For example, preventing push of tags that don't
->> match some format, or preventing pushes which contain bad stuff.
->>
->> I could provide some examples or suggestions if you would describe
->> what sort of policy you're trying to enforce..
->>
->> git describe will tell you if the commit you're passing it is
->> associated with an annotated tag. I do not understand who this
->> information can help you implement any policy, so understanding what
->> the policy you want is would be the most helpful.
->>
->> I can't really help more or understand exactly what you were doing
->> without understanding what policy you were/are trying to implement.
->>
->> The thing your code is doing today is something like:
->>
->> for each reference update, locate every commit
->>
->> for each commit in this reference update, check to see if it already
->> has an associated tag connected to it.
->>
->> If it doesn't have a tag, then "do some more checks" which are not
->> described here.
->>
->> This doesn't make sense to me at all. I think what you *meant* was this:
->>
->> for each reference update, if the reference being updated is a tag, skip it
->>
->> otherwise, for each commit in the reference update do some checks on it.
->>
->> That is *completely* different from the code you've written today.
->>
->> Regards,
->> Jake
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to [hidden email]
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>
->>
->> ________________________________
->> If you reply to this email, your message will be added to the discussion
->> below:
->> http://git.661346.n2.nabble.com/Git-tag-pre-receive-hook-issue-tp7635764p7635875.html
->> To unsubscribe from Git tag: pre-receive hook issue, click here.
->> NAML
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> +static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
+> +{
+> +       if (v->s[0] && ref->align_value) {
+
+Mental note: v->s[0] is not NUL ('\0').
+
+Also, in this code base, this is typically written *v->s rather than v->s[0].
+
+> +               unsigned int len = 0;
+> +               len = utf8_strwidth(v->s);
+
+You initialize 'len' to 0 but then immediately re-assign it.
+
+> +               if (ref->align_value > len) {
+> +                       struct strbuf buf = STRBUF_INIT;
+> +                       strbuf_addstr(&buf, v->s);
+> +                       if (!v->s[0])
+> +                               free((char *)v->s);
+
+We know from the "mental note" above that v->s[0] is not NUL ('\0'),
+so this 'if' statement can never be true, thus is dead code.
+
+> +                       strbuf_addchars(&buf, ' ', ref->align_value - len);
+> +                       v->s = strbuf_detach(&buf, NULL);
+> +               }
+> +               ref->align_value = 0;
+> +       }
+> +}
