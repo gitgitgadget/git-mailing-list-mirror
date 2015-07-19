@@ -1,136 +1,205 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v6 01/45] wrapper: implement xopen()
-Date: Mon, 20 Jul 2015 00:09:53 +0800
-Message-ID: <1437322237-29863-2-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v6 06/45] builtin-am: auto-detect mbox patches
+Date: Mon, 20 Jul 2015 00:09:58 +0800
+Message-ID: <1437322237-29863-7-git-send-email-pyokagan@gmail.com>
 References: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 19 18:10:58 2015
+X-From: git-owner@vger.kernel.org Sun Jul 19 18:11:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGrB3-0005wJ-Iu
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:10:57 +0200
+	id 1ZGrBF-00062B-Gb
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:11:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482AbbGSQKu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Jul 2015 12:10:50 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:35182 "EHLO
+	id S1753748AbbGSQLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 12:11:05 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:36468 "EHLO
 	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753390AbbGSQKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 12:10:48 -0400
-Received: by pabkd10 with SMTP id kd10so17155031pab.2
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:10:48 -0700 (PDT)
+	with ESMTP id S1753717AbbGSQLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 12:11:03 -0400
+Received: by pachj5 with SMTP id hj5so89276622pac.3
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:11:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=6zfbq9QyGot4S9xLYzul9fVFAB7ZlO2OkOdURiZqqAI=;
-        b=iShY3WQLyC/4pGcBuWjeLSu9AlDeDtETZAG2Pvkx70cuH6xXyGAYWSsTo6tR2phEMg
-         Sukpz578aI7qp9BFm91tsVSF1wYuTwbZh1xBujTw8E/RbvoiZL6RWgRKfbaGnYGgE0P9
-         Zyz0kNPV0CEUJVefSQNwytkBbjZC96Mh0AYGkDZR6I23bKA+rClWrLb2TT8DcSL5vNG6
-         WfJRApDk2sNiD9LvIBvF9C+UkoHs1jcWJB81SUPUbw6DSVIbwaPJC9tPCMlfyV1PAply
-         6mhGMjPzXl+BksfKWHRHUcuYlHWs+nXivX3QOq3W2wHe3cMwPE1ijKaegDTf+8u9i0jw
-         yHLw==
-X-Received: by 10.68.69.5 with SMTP id a5mr50216642pbu.56.1437322248298;
-        Sun, 19 Jul 2015 09:10:48 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HHqyqydwoOWJbP3XvowzXQX8v5OIbjx9x/34GbdwbeE=;
+        b=kI50e+ifEeWnEk+FldM0iPa28qcsfwrCe3+ZH4Em0psK81/0nSxGYuD3f98KA4xsxN
+         Xb8j4OyLlStwMHcspEFqj1u7ZTlInPSSvBo0KENnNJIvJ5AIYysFkt9UcqjZ1A93FSL6
+         4944XLYM1rcIozlSgnlcszTnp4j+V/QA+Njto4RrWlyJMvVrx3x/xF7g1eFNghARTDPa
+         dXq9yPzGKIz5d/EospMkM050U/BQy0pkA3dL7Nljt1yGF/L2xm/Bc3pf5eFaWRpdYkRQ
+         DOlJKFpwQv4Qu5zHW3RryF03VNIagja5JHk1ISnd/GbiTf4AP8lXqBOIrNGkSbJ9G816
+         /Szg==
+X-Received: by 10.66.55.66 with SMTP id q2mr49603662pap.94.1437322263480;
+        Sun, 19 Jul 2015 09:11:03 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.10.45
+        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.10.59
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 09:10:47 -0700 (PDT)
+        Sun, 19 Jul 2015 09:11:00 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gb39b692
 In-Reply-To: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274229>
 
-A common usage pattern of open() is to check if it was successful, and
-die() if it was not:
+Since 15ced75 (git-am foreign patch support: autodetect some patch
+formats, 2009-05-27), git-am.sh is able to autodetect mbox, stgit and
+mercurial patches through heuristics.
 
-	int fd =3D open(path, O_WRONLY | O_CREAT, 0777);
-	if (fd < 0)
-		die_errno(_("Could not open '%s' for writing."), path);
+Re-implement support for autodetecting mbox/maildir files in
+builtin/am.c.
 
-Implement a wrapper function xopen() that does the above so that we can
-save a few lines of code, and make the die() messages consistent.
+RFC 2822 requires that lines are terminated by "\r\n". To support this,
+implement strbuf_getline_crlf(), which will remove both '\n' and "\r\n"
+from the end of the line.
 
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- git-compat-util.h |  1 +
- wrapper.c         | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+ builtin/am.c | 109 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 109 insertions(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c6d391f..e168dfd 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -717,6 +717,7 @@ extern void *xrealloc(void *ptr, size_t size);
- extern void *xcalloc(size_t nmemb, size_t size);
- extern void *xmmap(void *start, size_t length, int prot, int flags, in=
-t fd, off_t offset);
- extern void *xmmap_gently(void *start, size_t length, int prot, int fl=
-ags, int fd, off_t offset);
-+extern int xopen(const char *path, int flags, ...);
- extern ssize_t xread(int fd, void *buf, size_t len);
- extern ssize_t xwrite(int fd, const void *buf, size_t len);
- extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
-diff --git a/wrapper.c b/wrapper.c
-index ff49807..0a4502d 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -189,6 +189,41 @@ void *xcalloc(size_t nmemb, size_t size)
- # endif
- #endif
-=20
+diff --git a/builtin/am.c b/builtin/am.c
+index 5f3c131..c12566a 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -10,6 +10,21 @@
+ #include "dir.h"
+ #include "run-command.h"
+ 
 +/**
-+ * xopen() is the same as open(), but it die()s if the open() fails.
++ * Like strbuf_getline(), but treats both '\n' and "\r\n" as line terminators.
 + */
-+int xopen(const char *path, int oflag, ...)
++static int strbuf_getline_crlf(struct strbuf *sb, FILE *fp)
 +{
-+	mode_t mode =3D 0;
-+	va_list ap;
-+
-+	/*
-+	 * va_arg() will have undefined behavior if the specified type is not
-+	 * compatible with the argument type. Since integers are promoted to
-+	 * ints, we fetch the next argument as an int, and then cast it to a
-+	 * mode_t to avoid undefined behavior.
-+	 */
-+	va_start(ap, oflag);
-+	if (oflag & O_CREAT)
-+		mode =3D va_arg(ap, int);
-+	va_end(ap);
-+
-+	for (;;) {
-+		int fd =3D open(path, oflag, mode);
-+		if (fd >=3D 0)
-+			return fd;
-+		if (errno =3D=3D EINTR)
-+			continue;
-+
-+		if ((oflag & O_RDWR) =3D=3D O_RDWR)
-+			die_errno(_("could not open '%s' for reading and writing"), path);
-+		else if ((oflag & O_WRONLY) =3D=3D O_WRONLY)
-+			die_errno(_("could not open '%s' for writing"), path);
-+		else
-+			die_errno(_("could not open '%s' for reading"), path);
++	if (strbuf_getwholeline(sb, fp, '\n'))
++		return EOF;
++	if (sb->buf[sb->len - 1] == '\n') {
++		strbuf_setlen(sb, sb->len - 1);
++		if (sb->len > 0 && sb->buf[sb->len - 1] == '\r')
++			strbuf_setlen(sb, sb->len - 1);
 +	}
++	return 0;
 +}
 +
- /*
-  * xread() is the same a read(), but it automatically restarts read()
-  * operations with a recoverable error (EAGAIN and EINTR). xread()
---=20
+ enum patch_format {
+ 	PATCH_FORMAT_UNKNOWN = 0,
+ 	PATCH_FORMAT_MBOX
+@@ -128,6 +143,92 @@ static void am_destroy(const struct am_state *state)
+ }
+ 
+ /**
++ * Determines if the file looks like a piece of RFC2822 mail by grabbing all
++ * non-indented lines and checking if they look like they begin with valid
++ * header field names.
++ *
++ * Returns 1 if the file looks like a piece of mail, 0 otherwise.
++ */
++static int is_mail(FILE *fp)
++{
++	const char *header_regex = "^[!-9;-~]+:";
++	struct strbuf sb = STRBUF_INIT;
++	regex_t regex;
++	int ret = 1;
++
++	if (fseek(fp, 0L, SEEK_SET))
++		die_errno(_("fseek failed"));
++
++	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
++		die("invalid pattern: %s", header_regex);
++
++	while (!strbuf_getline_crlf(&sb, fp)) {
++		if (!sb.len)
++			break; /* End of header */
++
++		/* Ignore indented folded lines */
++		if (*sb.buf == '\t' || *sb.buf == ' ')
++			continue;
++
++		/* It's a header if it matches header_regex */
++		if (regexec(&regex, sb.buf, 0, NULL, 0)) {
++			ret = 0;
++			goto done;
++		}
++	}
++
++done:
++	regfree(&regex);
++	strbuf_release(&sb);
++	return ret;
++}
++
++/**
++ * Attempts to detect the patch_format of the patches contained in `paths`,
++ * returning the PATCH_FORMAT_* enum value. Returns PATCH_FORMAT_UNKNOWN if
++ * detection fails.
++ */
++static int detect_patch_format(const char **paths)
++{
++	enum patch_format ret = PATCH_FORMAT_UNKNOWN;
++	struct strbuf l1 = STRBUF_INIT;
++	FILE *fp;
++
++	/*
++	 * We default to mbox format if input is from stdin and for directories
++	 */
++	if (!*paths || !strcmp(*paths, "-") || is_directory(*paths))
++		return PATCH_FORMAT_MBOX;
++
++	/*
++	 * Otherwise, check the first few lines of the first patch, starting
++	 * from the first non-blank line, to try to detect its format.
++	 */
++
++	fp = xfopen(*paths, "r");
++
++	while (!strbuf_getline_crlf(&l1, fp)) {
++		if (l1.len)
++			break;
++	}
++
++	if (starts_with(l1.buf, "From ") || starts_with(l1.buf, "From: ")) {
++		ret = PATCH_FORMAT_MBOX;
++		goto done;
++	}
++
++	if (l1.len && is_mail(fp)) {
++		ret = PATCH_FORMAT_MBOX;
++		goto done;
++	}
++
++done:
++	fclose(fp);
++	strbuf_release(&l1);
++	return ret;
++}
++
++/**
+  * Splits out individual email patches from `paths`, where each path is either
+  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
+  */
+@@ -185,6 +286,14 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
+ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 			const char **paths)
+ {
++	if (!patch_format)
++		patch_format = detect_patch_format(paths);
++
++	if (!patch_format) {
++		fprintf_ln(stderr, _("Patch format detection failed."));
++		exit(128);
++	}
++
+ 	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
+ 		die_errno(_("failed to create directory '%s'"), state->dir);
+ 
+-- 
 2.5.0.rc2.110.gb39b692
