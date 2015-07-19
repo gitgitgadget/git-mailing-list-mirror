@@ -1,56 +1,58 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 12/16] engine.pl: provide more debug print statements
-Date: Sun, 19 Jul 2015 21:08:12 +0100
-Message-ID: <1437336497-4072-13-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 13/16] Vcproj.pm: list git.exe first to be
+ startup project
+Date: Sun, 19 Jul 2015 21:08:13 +0100
+Message-ID: <1437336497-4072-14-git-send-email-philipoakley@iee.org>
 References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Cc: Junio C Hamano <gitster@pobox.com>,
 	MsysGit List <msysgit@googlegroups.com>,
 	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
 	Philip Oakley <philipoakley@iee.org>
 To: Git List <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com Sun Jul 19 22:07:21 2015
+X-From: msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com Sun Jul 19 22:07:27 2015
 Return-path: <msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f62.google.com ([74.125.82.62])
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com>)
-	id 1ZGurg-0002MY-DB
-	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:12 +0200
-Received: by wgik5 with SMTP id k5sf789262wgi.1
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
+	id 1ZGurl-0002MX-Cq
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:17 +0200
+Received: by wicmv11 with SMTP id mv11sf137877wic.1
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :content-type:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=TjHdo5EivpmVbNAnHN/L6I8fyHE/DaOEk87q3hQMs6g=;
-        b=JORmna5RdXauqFAX3q1CKIaoU494aqouEwhCR6Pfb/VjRhFBtBOaYtsOp7f5LDHNrl
-         skD6xXspn2kDp2CmsztFh+LsLjQ1qEMtQ6ucOy1Vc2mlliRuW0bGsJNbdPYz32q8J56V
-         MynAA1ZSnEviIHdwKwKWZgID/YHZLw4Z8gl7iGdoaSjDIKFRVnmy81jts4bx/VsGGL9g
-         HuewIBEnFz0HovRakryBw3lXEpC+J7JEXxp7AOsxTgMqDzKvYLlVx/gg0DIhjOuWvg6D
-         K8dYOxM4vKw/y6T0ztjj/bU8ggqz4OsDJmX5+LdJGP5refeM6Pi+3BkxxaNZFDnAIdPk
-         wYLw==
-X-Received: by 10.153.4.129 with SMTP id ce1mr368669lad.0.1437336432020;
-        Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-spam-checked-in-group:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe;
+        bh=TK0n+Z1GIQ4T/ysu0klsLGG6MlPO3/hoWj3RP4Vudrw=;
+        b=KKX0HyB7XM425zGs9U6sy8c8/wrXW3gws/pDm8tbMf6fQptNwn7Q1tTGBdIJ4Nk+O1
+         5YrQo1K0n6GbO96Hev9dtb6pmTVEBapbljk9zem/j7q8u0MTModcgTUZnjBYInebGfRc
+         RMwKxSSrlR8KBeP4tiQ6VJSqw9jfgDaQ865/zHpIOnzL7TDd9MfIJttxg4BnpfTIN6mS
+         iFQ54g/WuYuzAhV/EBEVw7TMo97CFVdfXdr7Y/8X6/DY0/ehcx6fRu1bLmivEi+Y92KQ
+         8D+8/djFMB4nLLtd5KIC5LM7wDU//DLuwdjsVEbGNu5ZfaNg1C73Gp1/XxS8e9lxLZYz
+         P4YA==
+X-Received: by 10.180.206.84 with SMTP id lm20mr28107wic.13.1437336431988;
+        Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.120.3 with SMTP id ky3ls709359lab.70.gmail; Sun, 19 Jul
- 2015 13:07:10 -0700 (PDT)
-X-Received: by 10.112.215.67 with SMTP id og3mr13469657lbc.8.1437336430748;
-        Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
+Received: by 10.180.126.3 with SMTP id mu3ls679069wib.45.canary; Sun, 19 Jul
+ 2015 13:07:11 -0700 (PDT)
+X-Received: by 10.180.106.10 with SMTP id gq10mr4474194wib.0.1437336431342;
+        Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
 Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.10
+        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.11
         for <msysgit@googlegroups.com>;
-        Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
+        Sun, 19 Jul 2015 13:07:11 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AkCwCSAqxVPN4GFlxcgkFSVGm7ZQmBdYJDgy4EAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTFYgdCbMAkV8BAQEHIpBSB4QrBZRShG+FC4N/MZZ+gQmDGj0xgksBAQE
-X-IPAS-Result: A2AkCwCSAqxVPN4GFlxcgkFSVGm7ZQmBdYJDgy4EAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTFYgdCbMAkV8BAQEHIpBSB4QrBZRShG+FC4N/MZZ+gQmDGj0xgksBAQE
+X-IronPort-Anti-Spam-Result: A2AVEQCSAqxVPN4GFlxcgkFSVGmzHIpHhXEEAgKBGj0QAQEBAQEBAQYBAQEBQAE/hCQBAQQjDwEjIxAIHQImAgI5CgYOBhMbiBcJryOVPAEBAQcCIIEijzAHgmiBQwWHDo1EhG+CYIZbln6BCYEqHIFUPTGCSwEBAQ
+X-IPAS-Result: A2AVEQCSAqxVPN4GFlxcgkFSVGmzHIpHhXEEAgKBGj0QAQEBAQEBAQYBAQEBQAE/hCQBAQQjDwEjIxAIHQImAgI5CgYOBhMbiBcJryOVPAEBAQcCIIEijzAHgmiBQwWHDo1EhG+CYIZbln6BCYEqHIFUPTGCSwEBAQ
 X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
-   d="scan'208";a="39118942"
+   d="scan'208";a="39118943"
 Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
   by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:11 +0100
 X-Mailer: git-send-email 2.3.1
@@ -71,90 +73,118 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274291>
 
-Assist developers transitioning between the two cultures
-by including appropriate, but commented out, debug statements.
+Visual Studio takes the first listed application/library as the default
+startup project [1].
 
-The exception is when an unhandled compiler option is detected,
-where printing of the full line will supplement the line number and
-option part. Otherwise the OP has no immediate mechanism for
-inspecting the relevant part of the makedry output.
+Detect the 'git' project and place it the head of the apps list, rather
+than the tail.
 
-The commented out code is "deactivated code", not dead code, as per
-DO178B safety critical software development guideline [1].
+Export the apps list before libs list for both the projects and global
+structures of the .sln file.
 
-These debug print statements act as a guide for a poor man's --verbose
-option. The test suite doesn't cover the contrib/buildsystems (or
-Msysgit's msvc-build) contributions so fails to notice breakages there-in.
+[1] http://stackoverflow.com/questions/1238553/
+vs2008-where-is-the-startup-project-setting-stored-for-a-solution
+    "In the solution file, there are a list of pseudo-XML "Project"
+    entries. It turns out that whatever is the first one ends up as
+    the Startup Project, unless it=E2=80=99s overridden in the suo file. Ar=
+gh.
+    I just rearranged the order in the file and it=E2=80=99s good."
 
-It is doubly hard to get developers to ride both horses so, contrary to
-normal convention, retain selected debug statements as a safety net for
-those willing to try.
-
-[1] Dead code : Dead code is source code (and it is a part of binary code)
-that is not executed in the final system and it will be not having
-traceability to any requirements (one can say unintentional code).
-
-Deactivated code: code which is commented out or removed via #ifdef's
-(it is not a part of final binary code) and it will be having
-traceability to its low level requirements (its a intentional code and
-it can be activated in some configurations through hardware traps for
-debugging or other purposes.
+    "just moving the pseudo-xml isn't enough. You also have to move the
+    group of entries in the "GlobalSection(ProjectConfigurationPlatforms)
+    =3D postSolution" group that has the GUID of the project you moved to
+    the top. So there are two places to move lines."
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
-My response to Sebastian Schuberth's comment on dead code
-http://marc.info/?l=git&m=143630748919942&w=2 (2015-07-07)
----
- contrib/buildsystems/engine.pl | 4 ++++
- 1 file changed, 4 insertions(+)
+ contrib/buildsystems/Generators/Vcproj.pm | 33 ++++++++++++++++++---------=
+----
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 4a843f3..3238d16 100755
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -41,6 +41,7 @@ EOM
- # Parse command-line options
- while (@ARGV) {
-     my $arg = shift @ARGV;
-+	#print "Arg: $arg \n";
-     if ("$arg" eq "-h" || "$arg" eq "--help" || "$arg" eq "-?") {
- 	showUsage();
- 	exit(0);
-@@ -129,6 +130,7 @@ sub parseMakeOutput
-     print "Parsing GNU Make output to figure out build structure...\n";
-     my $line = 0;
-     while (my $text = shift @makedry) {
-+		#print "Make: $text\n"; # show the makedry line
-         my $ate_next;
-         do {
-             $ate_next = 0;
-@@ -263,6 +265,7 @@ sub handleCompileLine
-         } elsif ($part =~ /\.(c|cc|cpp)$/) {
-             $sourcefile = $part;
-         } else {
-+            print "full line: $line\n";
-             die "Unhandled compiler option @ line $lineno: $part";
-         }
+diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsyste=
+ms/Generators/Vcproj.pm
+index 1b01d58..cc2fa21 100644
+--- a/contrib/buildsystems/Generators/Vcproj.pm
++++ b/contrib/buildsystems/Generators/Vcproj.pm
+@@ -560,20 +560,18 @@ sub createGlueProject {
+     foreach (@apps) {
+         $_ =3D~ s/\//_/g;
+         $_ =3D~ s/\.exe//;
+-        push(@tmp, $_);
++        if ($_ eq "git" ) {
++            unshift(@tmp, $_);
++        } else {
++            push(@tmp, $_);
++        }
      }
-@@ -288,6 +291,7 @@ sub handleLibLine
-             $libout = $part;
-             $libout =~ s/\.a$//;
-         } else {
-+            print "full line: $line\n";
-             die "Unhandled lib option @ line $lineno: $part";
-         }
+     @apps =3D @tmp;
+=20
+     open F, ">git.sln" || die "Could not open git.sln for writing!\n";
+     binmode F, ":crlf";
+     print F "$SLN_HEAD";
+-    foreach (@libs) {
+-        my $libname =3D $_;
+-        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
+-        print F "$SLN_PRE";
+-        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uu=
+id}\"";
+-        print F "$SLN_POST";
+-    }
++
+     my $uuid_libgit =3D $build_structure{"LIBS_libgit_GUID"};
+     my $uuid_xdiff_lib =3D $build_structure{"LIBS_xdiff_lib_GUID"};
+     foreach (@apps) {
+@@ -587,6 +585,13 @@ sub createGlueProject {
+         print F "	EndProjectSection";
+         print F "$SLN_POST";
      }
--- 
++    foreach (@libs) {
++        my $libname =3D $_;
++        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
++        print F "$SLN_PRE";
++        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uu=
+id}\"";
++        print F "$SLN_POST";
++    }
+=20
+     print F << "EOM";
+ Global
+@@ -598,17 +603,17 @@ EOM
+     print F << "EOM";
+ 	GlobalSection(ProjectConfigurationPlatforms) =3D postSolution
+ EOM
+-    foreach (@libs) {
+-        my $libname =3D $_;
+-        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
++    foreach (@apps) {
++        my $appname =3D $_;
++        my $uuid =3D $build_structure{"APPS_${appname}_GUID"};
+         print F "\t\t${uuid}.Debug|Win32.ActiveCfg =3D Debug|Win32\n";
+         print F "\t\t${uuid}.Debug|Win32.Build.0 =3D Debug|Win32\n";
+         print F "\t\t${uuid}.Release|Win32.ActiveCfg =3D Release|Win32\n";
+         print F "\t\t${uuid}.Release|Win32.Build.0 =3D Release|Win32\n";
+     }
+-    foreach (@apps) {
+-        my $appname =3D $_;
+-        my $uuid =3D $build_structure{"APPS_${appname}_GUID"};
++    foreach (@libs) {
++        my $libname =3D $_;
++        my $uuid =3D $build_structure{"LIBS_${libname}_GUID"};
+         print F "\t\t${uuid}.Debug|Win32.ActiveCfg =3D Debug|Win32\n";
+         print F "\t\t${uuid}.Debug|Win32.Build.0 =3D Debug|Win32\n";
+         print F "\t\t${uuid}.Release|Win32.ActiveCfg =3D Release|Win32\n";
+--=20
 2.4.2.windows.1.5.gd32afb6
 
--- 
--- 
+--=20
+--=20
 *** Please reply-to-all at all times ***
 *** (do not pretend to know who is subscribed and who is not) ***
 *** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
 
 You received this message because you are subscribed to the Google
 Groups "msysGit" group.
@@ -162,9 +192,11 @@ To post to this group, send email to msysgit@googlegroups.com
 To unsubscribe from this group, send email to
 msysgit+unsubscribe@googlegroups.com
 For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+---=20
+You received this message because you are subscribed to the Google Groups "=
+Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
 For more options, visit https://groups.google.com/d/optout.
