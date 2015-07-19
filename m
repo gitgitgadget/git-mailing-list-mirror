@@ -1,134 +1,172 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v6 10/45] builtin-am: refuse to apply patches if index is dirty
-Date: Mon, 20 Jul 2015 00:10:02 +0800
-Message-ID: <1437322237-29863-11-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v6 12/45] builtin-am: don't parse mail when resuming
+Date: Mon, 20 Jul 2015 00:10:04 +0800
+Message-ID: <1437322237-29863-13-git-send-email-pyokagan@gmail.com>
 References: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 19 18:11:21 2015
+X-From: git-owner@vger.kernel.org Sun Jul 19 18:11:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGrBR-000691-D9
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:11:21 +0200
+	id 1ZGrBY-0006Bt-8P
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753824AbbGSQLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 12:11:17 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36549 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791AbbGSQLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 12:11:14 -0400
-Received: by pachj5 with SMTP id hj5so89278420pac.3
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:11:13 -0700 (PDT)
+	id S1753873AbbGSQLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 12:11:23 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:34974 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753770AbbGSQLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 12:11:19 -0400
+Received: by pdrg1 with SMTP id g1so89724569pdr.2
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gc9+nyjwdsisoKVCbpNGVG4fs5zVdhPL/gbHv6cg1wU=;
-        b=rPIPnQ7xqYtIHD9SN96dnOAP08fGi1H6MPCLe/WiCZqkLJy7JuYInixeRYoGKoh+OB
-         YBtvlkmb0awq3oCkKBpr5Lo6YypHu02uweV00VOSMy4f9PoRpomgMNaf0khXGQ7mLsa9
-         DDXIxQTq5NIWoFPeFqbVa0jDSEassQXn9hopq7PxaS3bC0v03yrgLBkSl18xGHu9jj2f
-         9ZXcKokx+Xk7fKYMsoLF0oMKgdBKxy6GMdhh7/neGuoU9Z/WS1bpa2iRuVFe11x+jrCT
-         1XOG4p5mnwCUEp+mMER2GuZ6QNVlLQe1znj87CpoF2GnJhqUb4vmzcJ2TR2Q/d/dRnIJ
-         SypQ==
-X-Received: by 10.68.224.35 with SMTP id qz3mr49403945pbc.165.1437322273656;
-        Sun, 19 Jul 2015 09:11:13 -0700 (PDT)
+        bh=tmmVRaiiuTTLPLwBwlBjLW7v/zvBgahmGUhxut+MqP4=;
+        b=i6x+5WmUVETes96VMiyD/oyUqYCT1XJzknA8X1ULvjEuGV8XA9R0kQGtYb5P80TW+K
+         +33lh8SQC8qrBVhqSTnUq3R0Vwq4p0Ve/KIUsGYwu0EcXIv29sFhCzAwQkasBb8yVa2w
+         f4sYo6KDc4QhWSsEWSSXVON2hlDAncNc0gw80iYexBIwrUiKYGKeEBJdVjNwnLNn3Jac
+         N6ZOx+noP9JRQPjpu5Wo+EWP1xhTfPCzQx1RBYPPR9WZelY4LrGwLPXzBWXvsnqZjP9t
+         pfNpS0gu3tr+SlLX/HE4gBALznqIX2hyUJUzgCDgBOPu8S0povBQWCKyl2Z6g08ofA09
+         Ufng==
+X-Received: by 10.66.144.40 with SMTP id sj8mr49005346pab.55.1437322278958;
+        Sun, 19 Jul 2015 09:11:18 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.11.11
+        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.11.16
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 09:11:12 -0700 (PDT)
+        Sun, 19 Jul 2015 09:11:17 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gb39b692
 In-Reply-To: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274236>
 
-Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
-will refuse to apply patches if the index is dirty. Re-implement this
-behavior in builtin/am.c.
+Since 271440e (git-am: make it easier after fixing up an unapplicable
+patch., 2005-10-25), when "git am" is run again after being paused, the
+current mail message will not be re-parsed, but instead the contents of
+the state directory's patch, msg and author-script files will be used
+as-is instead.
+
+Re-implement this in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+
+Notes:
+    v6
+    
+    New patch. A test for this in t4150 would be something like this:
+    
+    test_expect_success 'do not parse mail when resuming' '
+    	rm -fr .git/rebase-apply &&
+    	git reset --hard &&
+    	git checkout lorem2^^ &&
+    	test_must_fail git am lorem-move.patch &&
+    	test_path_is_dir .git/rebase-apply &&
+    	test_cmp_rev lorem2^^ HEAD &&
+    	echo resolved >file &&
+    	git diff >.git/rebase-apply/patch &&
+    	git reset --hard &&
+    	git am <&6 &&
+    	test_path_is_missing .git/rebase-apply &&
+    	test resolved = "$(cat file)"
+    '
+    
+    However, it relies on stdin being a TTY so I can't add it to the
+    more-am-tests patch series :-/
+
+ builtin/am.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index a2811b6..537ad62 100644
+index fd26721..ec579a6 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -14,6 +14,8 @@
- #include "cache-tree.h"
- #include "refs.h"
- #include "commit.h"
-+#include "diff.h"
-+#include "diffcore.h"
+@@ -776,8 +776,12 @@ static void validate_resume_state(const struct am_state *state)
  
  /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -565,6 +567,43 @@ static void refresh_and_write_cache(void)
+  * Applies all queued mail.
++ *
++ * If `resume` is true, we are "resuming". The "msg" and authorship fields, as
++ * well as the state directory's "patch" file is used as-is for applying the
++ * patch and committing it.
+  */
+-static void am_run(struct am_state *state)
++static void am_run(struct am_state *state, int resume)
+ {
+ 	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -795,11 +799,16 @@ static void am_run(struct am_state *state)
+ 		if (!file_exists(mail))
+ 			goto next;
+ 
+-		if (parse_mail(state, mail))
+-			goto next; /* mail should be skipped */
++		if (resume) {
++			validate_resume_state(state);
++			resume = 0;
++		} else {
++			if (parse_mail(state, mail))
++				goto next; /* mail should be skipped */
+ 
+-		write_author_script(state);
+-		write_commit_msg(state);
++			write_author_script(state);
++			write_commit_msg(state);
++		}
+ 
+ 		printf_ln(_("Applying: %.*s"), linelen(state->msg), state->msg);
+ 
+@@ -855,7 +864,7 @@ static void am_resolve(struct am_state *state)
+ 	do_commit(state);
+ 
+ 	am_next(state);
+-	am_run(state);
++	am_run(state, 0);
  }
  
  /**
-+ * Returns 1 if the index differs from HEAD, 0 otherwise. When on an unborn
-+ * branch, returns 1 if there are entries in the index, 0 otherwise. If an
-+ * strbuf is provided, the space-separated list of files that differ will be
-+ * appended to it.
-+ */
-+static int index_has_changes(struct strbuf *sb)
-+{
-+	unsigned char head[GIT_SHA1_RAWSZ];
-+	int i;
+@@ -875,6 +884,7 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
+ 
+ enum resume_mode {
+ 	RESUME_FALSE = 0,
++	RESUME_APPLY,
+ 	RESUME_RESOLVED
+ };
+ 
+@@ -927,9 +937,12 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	if (read_index_preload(&the_index, NULL) < 0)
+ 		die(_("failed to read the index"));
+ 
+-	if (am_in_progress(&state))
++	if (am_in_progress(&state)) {
++		if (resume == RESUME_FALSE)
++			resume = RESUME_APPLY;
 +
-+	if (!get_sha1_tree("HEAD", head)) {
-+		struct diff_options opt;
-+
-+		diff_setup(&opt);
-+		DIFF_OPT_SET(&opt, EXIT_WITH_STATUS);
-+		if (!sb)
-+			DIFF_OPT_SET(&opt, QUICK);
-+		do_diff_cache(head, &opt);
-+		diffcore_std(&opt);
-+		for (i = 0; sb && i < diff_queued_diff.nr; i++) {
-+			if (i)
-+				strbuf_addch(sb, ' ');
-+			strbuf_addstr(sb, diff_queued_diff.queue[i]->two->path);
-+		}
-+		diff_flush(&opt);
-+		return DIFF_OPT_TST(&opt, HAS_CHANGES) != 0;
+ 		am_load(&state);
+-	else {
 +	} else {
-+		for (i = 0; sb && i < active_nr; i++) {
-+			if (i)
-+				strbuf_addch(sb, ' ');
-+			strbuf_addstr(sb, active_cache[i]->name);
-+		}
-+		return !!active_nr;
-+	}
-+}
-+
-+/**
-  * Parses `mail` using git-mailinfo, extracting its patch and authorship info.
-  * state->msg will be set to the patch message. state->author_name,
-  * state->author_email and state->author_date will be set to the patch author's
-@@ -726,9 +765,15 @@ static void do_commit(const struct am_state *state)
- static void am_run(struct am_state *state)
- {
- 	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
-+	struct strbuf sb = STRBUF_INIT;
+ 		struct argv_array paths = ARGV_ARRAY_INIT;
+ 		int i;
  
- 	refresh_and_write_cache();
+@@ -950,7 +963,10 @@ int cmd_am(int argc, const char **argv, const char *prefix)
  
-+	if (index_has_changes(&sb))
-+		die(_("Dirty index: cannot apply patches (dirty: %s)"), sb.buf);
-+
-+	strbuf_release(&sb);
-+
- 	while (state->cur <= state->last) {
- 		const char *mail = am_path(state, msgnum(state));
- 
+ 	switch (resume) {
+ 	case RESUME_FALSE:
+-		am_run(&state);
++		am_run(&state, 0);
++		break;
++	case RESUME_APPLY:
++		am_run(&state, 1);
+ 		break;
+ 	case RESUME_RESOLVED:
+ 		am_resolve(&state);
 -- 
 2.5.0.rc2.110.gb39b692
