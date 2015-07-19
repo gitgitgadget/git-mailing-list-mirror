@@ -1,7 +1,7 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 05/16] engine.pl: fix error message (lib->link)
-Date: Sun, 19 Jul 2015 21:08:05 +0100
-Message-ID: <1437336497-4072-6-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 02/16] .gitignore: improve MSVC ignore patterns
+Date: Sun, 19 Jul 2015 21:08:02 +0100
+Message-ID: <1437336497-4072-3-git-send-email-philipoakley@iee.org>
 References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,16 +10,16 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
 	Philip Oakley <philipoakley@iee.org>
 To: Git List <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBB2EGWCWQKGQENBQ3CMA@googlegroups.com Sun Jul 19 22:07:06 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBB2EGWCWQKGQENBQ3CMA@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBZMGWCWQKGQE6YO5OFY@googlegroups.com Sun Jul 19 22:07:02 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBZMGWCWQKGQE6YO5OFY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f63.google.com ([74.125.82.63])
+Received: from mail-la0-f59.google.com ([209.85.215.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB2EGWCWQKGQENBQ3CMA@googlegroups.com>)
-	id 1ZGurY-0002Hv-Lh
-	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:04 +0200
-Received: by wgik5 with SMTP id k5sf789068wgi.1
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:04 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBZMGWCWQKGQE6YO5OFY@googlegroups.com>)
+	id 1ZGurW-0002HA-3F
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:02 +0200
+Received: by lagw2 with SMTP id w2sf52350493lag.0
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
@@ -27,32 +27,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=yz5NhZZ+Ln6ceqOrW7xJ46WfcNbYFrx1ruaK2rD0sbg=;
-        b=c5r05kKFp8422UngbzuYecUeD7mwDQWfThUpVuC8dYuuGXzeZdxFec0XHegyfpXrn0
-         Oe4XZx3t6zIPrHsml5O7TcTyOIr3rjklbA6p5HKGx4v//J7ESFsxt5Q8PsZefvops8re
-         a+cIr5ZP2lXciNNCdP3qyhXQ56rwwc3n1vEveI9Nfzn46AyPiC7t6sGnZ43zifCsZmXV
-         lyg1bbSS7rCQQihtYXbqXPfFi5UjQU9f/qnvkAlY3EhKQxoRogLg2SliXovQGPpKkHXU
-         4kIqBZXXEiXXpw+7kFPE/aSm+ADr/LsliKBqgpJU0h3rz+rPQRFuQIr5iejbjTyQD98j
-         JuOg==
-X-Received: by 10.180.216.4 with SMTP id om4mr27881wic.3.1437336424277;
-        Sun, 19 Jul 2015 13:07:04 -0700 (PDT)
+        bh=/KEsw/FQwtzs6MqUdvh72IRYSP9TWSUDBhohskkTQEE=;
+        b=TOgdtlh2wGQIY4lntkFYQibipsk4UU6DG9DXCOEiVTBiGaVqzVFKjwCy0gSVAIEVuJ
+         Dal4RCFnbrtx2e9NbSzCGIZaVcvCmuoApZ707WvBg4k3yzryeMy4w4EVSSEkFCh9Aukd
+         rOCgjsmutnLRkNUajAPf20R+oP+ydlLMMgMC+Q6L1r35oLW8JTkp4NC4N/s6K5XfxIRj
+         lWUDyUTAAwpCSVTiQ8gbqSMfJhQZY9ocb+ENiNHjxhU/6wLSutbd9os7t9caQ47O7piF
+         teZoV04qqXrxB5L52rx3RFfsBK8mOJ+GcGlXqD0YrQa/pM2ebYJOY524ki6Fer4tdkN0
+         Gd6g==
+X-Received: by 10.180.86.165 with SMTP id q5mr27932wiz.0.1437336421825;
+        Sun, 19 Jul 2015 13:07:01 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.181.23.195 with SMTP id ic3ls685704wid.49.canary; Sun, 19 Jul
- 2015 13:07:03 -0700 (PDT)
-X-Received: by 10.194.2.169 with SMTP id 9mr13203800wjv.2.1437336423669;
-        Sun, 19 Jul 2015 13:07:03 -0700 (PDT)
+Received: by 10.180.24.103 with SMTP id t7ls695278wif.51.canary; Sun, 19 Jul
+ 2015 13:07:01 -0700 (PDT)
+X-Received: by 10.194.173.3 with SMTP id bg3mr1440223wjc.5.1437336421226;
+        Sun, 19 Jul 2015 13:07:01 -0700 (PDT)
 Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.03
+        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.01
         for <msysgit@googlegroups.com>;
-        Sun, 19 Jul 2015 13:07:03 -0700 (PDT)
+        Sun, 19 Jul 2015 13:07:01 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CWCwCSAqxVPN4GFlxcgkFSVGmGUbUUCYFthXkEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQQnLyMQCEk5ChQGE4gyxGgBK40JAYJjZQeEKwWUUoRviTuWfoEJgTeBYz0xgQSBRwEBAQ
-X-IPAS-Result: A2CWCwCSAqxVPN4GFlxcgkFSVGmGUbUUCYFthXkEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQQnLyMQCEk5ChQGE4gyxGgBK40JAYJjZQeEKwWUUoRviTuWfoEJgTeBYz0xgQSBRwEBAQ
+X-IronPort-Anti-Spam-Result: A2AEEQCSAqxVPN4GFlxcgkFSVGm7boF1hXEEAgKBGjoTAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDIJxF8BAQgikFIHhCsFhWCOcoRviTuWfoEJgxo9MYJLAQEB
+X-IPAS-Result: A2AEEQCSAqxVPN4GFlxcgkFSVGm7boF1hXEEAgKBGjoTAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDIJxF8BAQgikFIHhCsFhWCOcoRviTuWfoEJgxo9MYJLAQEB
 X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
-   d="scan'208";a="39118929"
+   d="scan'208";a="39118925"
 Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:04 +0100
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:01 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -71,26 +71,34 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274280>
+
+Add the Microsoft .manifest pattern, and correct the generic 'Debug'
+and 'Release' directory patterns which were mechanically adjusted way
+back in c591d5f (gitignore: root most patterns at the top-level directory,
+2009-10-26) to allow multi-level projects within the Git suite.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/engine.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Junio's correction http://marc.info/?l=git&m=143524522500906&w=2
+(2015-06-25)
+---
+ .gitignore | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 23da787..c8a5258 100755
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -329,7 +329,7 @@ sub handleLinkLine
-         } elsif ($part =~ /\.(o|obj)$/) {
-             push(@objfiles, $part);
-         } else {
--            die "Unhandled lib option @ line $lineno: $part";
-+            die "Unhandled link option @ line $lineno: $part";
-         }
-     }
- #    print "AppOut: '$appout'\nLFlags: @lflags\nLibs  : @libs\nOfiles: @objfiles\n";
+diff --git a/.gitignore b/.gitignore
+index a685ec1..91e75ee 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -247,5 +247,6 @@
+ *.user
+ *.idb
+ *.pdb
+-/Debug/
+-/Release/
++*.manifest
++Debug/
++Release/
 -- 
 2.4.2.windows.1.5.gd32afb6
 
