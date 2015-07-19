@@ -1,188 +1,151 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v6 33/45] builtin-am: invoke post-rewrite hook
-Date: Mon, 20 Jul 2015 00:10:25 +0800
-Message-ID: <1437322237-29863-34-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v6 19/45] cache-tree: introduce write_index_as_tree()
+Date: Mon, 20 Jul 2015 00:10:11 +0800
+Message-ID: <1437322237-29863-20-git-send-email-pyokagan@gmail.com>
 References: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 19 18:13:13 2015
+X-From: git-owner@vger.kernel.org Sun Jul 19 18:13:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGrDE-00071f-JW
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:13:12 +0200
+	id 1ZGrDQ-000789-SN
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932203AbbGSQNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 12:13:07 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:34648 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932098AbbGSQMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 12:12:10 -0400
-Received: by pdbbh15 with SMTP id bh15so44245818pdb.1
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:12:10 -0700 (PDT)
+	id S932210AbbGSQNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 12:13:19 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:36708 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753938AbbGSQLg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 12:11:36 -0400
+Received: by pachj5 with SMTP id hj5so89281928pac.3
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NvrPuYFhXZ7Tl7xWG/Js+N8pG9DD/YdVVuK6OV3Riq8=;
-        b=SSX1v2Zd6xIBEV9MprimHFx3ZvP+VWixjhUs9Pm6Xq5WGo4jNBsNdseVMkIe51rQ5r
-         o/9K/WRfrkdVsoZC3gBbHLJ/97dIjjFZ2MiBVQ3VUGR1fA6YoloGjiAYvwqLGNiQXiKm
-         v9DreRWKzarZHiH4rvLxlXnZxeA0njNIe9WodPRDat7PuJzMJEdvtGvINs/zHe7I3GDL
-         ZbDqeR3jiQygpUHPXztJ1TfuF6FLLbgW/vOKzx3orJ8u3D5As70Atmx1Vjek0dWwEUm9
-         Yy7ybNgUjrRaQp1SMmQzmm+tF960kL3nIKzZMMHFAPWQ3J6uEftXxN1kdcSLQNDVgzhI
-         mwVw==
-X-Received: by 10.70.38.170 with SMTP id h10mr12169410pdk.34.1437322330341;
-        Sun, 19 Jul 2015 09:12:10 -0700 (PDT)
+        bh=RaAlGHLA1iUZvq4xNROXLGbvJY5iLq3PsFo5zd3jRVM=;
+        b=dDJSamhdGukNH0qol84k4y6kcFADWj4OI6I2TaJNBBAtvMgCQrS5j1YvVbQwFxsHVf
+         fdsw750rEZdRUGXIMYmiUVkWjCT7frw3TwQWpST4ZmD7ui/+ZaoLdMyI4OOatyBpjhz+
+         PqYbewU+RAXaioy08bFdYumYuBrq/CK4YIQ6IS2DJ0TRz0+8XPKr6dozFqwxWfM9lqma
+         Z22H2saFWW/SIRVX4SKQ6A22R+paPBNOahqiv0gAX6ueWnJLJTiS0Tj6QtxGNtt5G0GW
+         OEK1vYa6zRTYrQzhJkpRVryD5pkQMgtT9L7obFN1Uj8nIY5R7rHWIG2epl+wbSZMQlny
+         IXgQ==
+X-Received: by 10.66.165.67 with SMTP id yw3mr49619105pab.95.1437322296301;
+        Sun, 19 Jul 2015 09:11:36 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.12.08
+        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.11.34
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 09:12:09 -0700 (PDT)
+        Sun, 19 Jul 2015 09:11:35 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gb39b692
 In-Reply-To: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274268>
 
-Since 96e1948 (rebase: invoke post-rewrite hook, 2010-03-12), git-am.sh
-will invoke the post-rewrite hook after it successfully finishes
-applying all the queued patches.
-
-To do this, when parsing a mail to extract its patch and metadata, in
---rebasing mode git-am.sh will also store the original commit ID in the
-$state_dir/original-commit file. Once it applies and commits the patch,
-the original commit ID, and the new commit ID, will be appended to the
-$state_dir/rewritten file.
-
-Once all of the queued mail have been processed, git-am.sh will then
-invoke the post-rewrite hook with the contents of the
-$state_dir/rewritten file.
-
-Re-implement this in builtin/am.c.
+A caller may wish to write a temporary index as a tree. However,
+write_cache_as_tree() assumes that the index was read from, and will
+write to, the default index file path. Introduce write_index_as_tree()
+which removes this limitation by allowing the caller to specify its own
+index_state and index file path.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ cache-tree.c | 29 +++++++++++++++++------------
+ cache-tree.h |  1 +
+ 2 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 3612bb3..e99e1ec 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -95,6 +95,9 @@ struct am_state {
- 	char *msg;
- 	size_t msg_len;
- 
-+	/* when --rebasing, records the original commit the patch came from */
-+	unsigned char orig_commit[GIT_SHA1_RAWSZ];
-+
- 	/* number of digits in patch filename */
- 	int prec;
- 
-@@ -394,6 +397,11 @@ static void am_load(struct am_state *state)
- 
- 	read_commit_msg(state);
- 
-+	if (read_state_file(&sb, state, "original-commit", 1) < 0)
-+		hashclr(state->orig_commit);
-+	else if (get_sha1_hex(sb.buf, state->orig_commit) < 0)
-+		die(_("could not parse %s"), am_path(state, "original-commit"));
-+
- 	read_state_file(&sb, state, "threeway", 1);
- 	state->threeway = !strcmp(sb.buf, "t");
- 
-@@ -449,6 +457,30 @@ static void am_destroy(const struct am_state *state)
+diff --git a/cache-tree.c b/cache-tree.c
+index 32772b9..feace8b 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -592,7 +592,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
+ 	return it;
  }
  
- /**
-+ * Runs post-rewrite hook. Returns it exit code.
-+ */
-+static int run_post_rewrite_hook(const struct am_state *state)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	const char *hook = find_hook("post-rewrite");
-+	int ret;
-+
-+	if (!hook)
-+		return 0;
-+
-+	argv_array_push(&cp.args, hook);
-+	argv_array_push(&cp.args, "rebase");
-+
-+	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
-+	cp.stdout_to_stderr = 1;
-+
-+	ret = run_command(&cp);
-+
-+	close(cp.in);
-+	return ret;
-+}
-+
-+/**
-  * Determines if the file looks like a piece of RFC2822 mail by grabbing all
-  * non-indented lines and checking if they look like they begin with valid
-  * header field names.
-@@ -722,6 +754,9 @@ static void am_next(struct am_state *state)
- 	unlink(am_path(state, "author-script"));
- 	unlink(am_path(state, "final-commit"));
+-int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
++int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+ {
+ 	int entries, was_valid, newfd;
+ 	struct lock_file *lock_file;
+@@ -603,23 +603,23 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ 	 */
+ 	lock_file = xcalloc(1, sizeof(struct lock_file));
  
-+	hashclr(state->orig_commit);
-+	unlink(am_path(state, "original-commit"));
-+
- 	if (!get_sha1("HEAD", head))
- 		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(head));
+-	newfd = hold_locked_index(lock_file, 1);
++	newfd = hold_lock_file_for_update(lock_file, index_path, LOCK_DIE_ON_ERROR);
+ 
+-	entries = read_cache();
++	entries = read_index_from(index_state, index_path);
+ 	if (entries < 0)
+ 		return WRITE_TREE_UNREADABLE_INDEX;
+ 	if (flags & WRITE_TREE_IGNORE_CACHE_TREE)
+-		cache_tree_free(&(active_cache_tree));
++		cache_tree_free(&index_state->cache_tree);
+ 
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
++	if (!index_state->cache_tree)
++		index_state->cache_tree = cache_tree();
+ 
+-	was_valid = cache_tree_fully_valid(active_cache_tree);
++	was_valid = cache_tree_fully_valid(index_state->cache_tree);
+ 	if (!was_valid) {
+-		if (cache_tree_update(&the_index, flags) < 0)
++		if (cache_tree_update(index_state, flags) < 0)
+ 			return WRITE_TREE_UNMERGED_INDEX;
+ 		if (0 <= newfd) {
+-			if (!write_locked_index(&the_index, lock_file, COMMIT_LOCK))
++			if (!write_locked_index(index_state, lock_file, COMMIT_LOCK))
+ 				newfd = -1;
+ 		}
+ 		/* Not being able to write is fine -- we are only interested
+@@ -631,14 +631,14 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ 	}
+ 
+ 	if (prefix) {
+-		struct cache_tree *subtree =
+-			cache_tree_find(active_cache_tree, prefix);
++		struct cache_tree *subtree;
++		subtree = cache_tree_find(index_state->cache_tree, prefix);
+ 		if (!subtree)
+ 			return WRITE_TREE_PREFIX_ERROR;
+ 		hashcpy(sha1, subtree->sha1);
+ 	}
  	else
-@@ -1040,6 +1075,8 @@ static void write_commit_patch(const struct am_state *state, struct commit *comm
-  * directly. This is used in --rebasing mode to bypass git-mailinfo's munging
-  * of patches.
-  *
-+ * state->orig_commit will be set to the original commit ID.
-+ *
-  * Will always return 0 as the patch should never be skipped.
-  */
- static int parse_mail_rebase(struct am_state *state, const char *mail)
-@@ -1056,6 +1093,10 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+-		hashcpy(sha1, active_cache_tree->sha1);
++		hashcpy(sha1, index_state->cache_tree->sha1);
  
- 	write_commit_patch(state, commit);
- 
-+	hashcpy(state->orig_commit, commit_sha1);
-+	write_file(am_path(state, "original-commit"), 1, "%s",
-+			sha1_to_hex(commit_sha1));
-+
+ 	if (0 <= newfd)
+ 		rollback_lock_file(lock_file);
+@@ -646,6 +646,11 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
  	return 0;
  }
  
-@@ -1247,6 +1288,15 @@ static void do_commit(const struct am_state *state)
- 
- 	update_ref(sb.buf, "HEAD", commit, ptr, 0, UPDATE_REFS_DIE_ON_ERR);
- 
-+	if (state->rebasing) {
-+		FILE *fp = xfopen(am_path(state, "rewritten"), "a");
++int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
++{
++	return write_index_as_tree(sha1, &the_index, get_index_file(), flags, prefix);
++}
 +
-+		assert(!is_null_sha1(state->orig_commit));
-+		fprintf(fp, "%s ", sha1_to_hex(state->orig_commit));
-+		fprintf(fp, "%s\n", sha1_to_hex(commit));
-+		fclose(fp);
-+	}
-+
- 	strbuf_release(&sb);
- }
+ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
+ {
+ 	struct tree_desc desc;
+diff --git a/cache-tree.h b/cache-tree.h
+index aa7b3e4..41c5746 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -46,6 +46,7 @@ int update_main_cache_tree(int);
+ #define WRITE_TREE_UNMERGED_INDEX (-2)
+ #define WRITE_TREE_PREFIX_ERROR (-3)
  
-@@ -1355,6 +1405,11 @@ next:
- 		am_next(state);
- 	}
++int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
+ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix);
+ void prime_cache_tree(struct index_state *, struct tree *);
  
-+	if (!is_empty_file(am_path(state, "rewritten"))) {
-+		assert(state->rebasing);
-+		run_post_rewrite_hook(state);
-+	}
-+
- 	/*
- 	 * In rebasing mode, it's up to the caller to take care of
- 	 * housekeeping.
 -- 
 2.5.0.rc2.110.gb39b692
