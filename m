@@ -1,106 +1,165 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v6 35/45] builtin-am: invoke applypatch-msg hook
-Date: Mon, 20 Jul 2015 00:10:27 +0800
-Message-ID: <1437322237-29863-36-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v6 38/45] builtin-am: rerere support
+Date: Mon, 20 Jul 2015 00:10:30 +0800
+Message-ID: <1437322237-29863-39-git-send-email-pyokagan@gmail.com>
 References: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 19 18:12:26 2015
+X-From: git-owner@vger.kernel.org Sun Jul 19 18:12:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGrCT-0006cj-MH
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:12:26 +0200
+	id 1ZGrCj-0006ms-JN
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:12:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132AbbGSQMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 12:12:18 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34642 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932125AbbGSQMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 12:12:15 -0400
-Received: by pacan13 with SMTP id an13so89912395pac.1
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:12:14 -0700 (PDT)
+	id S932159AbbGSQMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 12:12:32 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:35442 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932125AbbGSQM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 12:12:26 -0400
+Received: by pdrg1 with SMTP id g1so89735209pdr.2
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=euIe5ohbHbaJU3b0jCsOSfSxclyWAcf55CTeBBvg/aU=;
-        b=mkJhGUqdSG2FiBHkGuQqyovmTG87YGoEPq1zgDPA0oglU9YYcMECu+WxrJpZsxfdPt
-         ENJsxn3c7+FLDIUfzxALS0EC1NoGPQZoARz0bU6giBsLYB0pQ7YHhwYmJlf+czpxciFZ
-         +VoP99GKBWYqiPoxjFnVaG63LlI+mj0jGEmYQ9lzX6RibKz25o4cQnAC0b3eOYd993/E
-         y0Hvc7tx68tUv3/lRK1I4fv6OK28os8QPY6HexqbPl9lvl4+bmFispS0Z+hV4PzXZwyb
-         DRHkLW71KFSHkk8n+zQu6tUV9Mkqp9nNqCb6NjiEu07ndxXVHPKeceq4Nahl6KHimta8
-         oHVA==
-X-Received: by 10.68.240.40 with SMTP id vx8mr50165608pbc.14.1437322334598;
-        Sun, 19 Jul 2015 09:12:14 -0700 (PDT)
+        bh=wPlTqotVWD5SOwxg832fZoE2dsurdqyLpcBOPqyZpdg=;
+        b=RBpPuRTV7rpQ4skM8UEaaw/u5Ec6fvTK5uvRD6Bqkh9pld1ITrh9sNZHz8qmkWspk3
+         +K/tz5gsWU7INrLV58Bq7zr3VW4nqxqQqJjvtwH2fUHoZV74qdTvxZ+gGCmNoSHtkfyn
+         g2laNDY4S3iHEVgsAfKQIJo22hOYOJ0Dug7Ymqao0o9TESKBz7nlqi9fjNPq6vC3XRxp
+         yJipJasKqkE+OY5uXCL/oj27ojDlEOLmJGdcYB6rYaxDO9tyHfULbwvS9r2IpGF9VFua
+         3u3tjR+NKPcXxcJMoZmZ/ptzQaV0OYjeP58ue1Q+i5+NJxG1vxfJ/gEJklxcjyIrFBjK
+         SYzw==
+X-Received: by 10.66.116.81 with SMTP id ju17mr49759043pab.35.1437322345808;
+        Sun, 19 Jul 2015 09:12:25 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.12.12
+        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.12.19
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 09:12:13 -0700 (PDT)
+        Sun, 19 Jul 2015 09:12:20 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gb39b692
 In-Reply-To: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274257>
 
-Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07),
-git-am.sh will invoke the applypatch-msg hooks just after extracting the
-patch message. If the applypatch-msg hook exits with a non-zero status,
-git-am.sh abort before even applying the patch to the index.
+git-am.sh will call git-rerere at the following events:
 
-Re-implement this in builtin/am.c.
+* "git rerere" when a three-way merge fails to record the conflicted
+  automerge results. Since 8389b52 (git-rerere: reuse recorded resolve.,
+  2006-01-28)
+
+  * Since cb6020b (Teach --[no-]rerere-autoupdate option to merge,
+    revert and friends, 2009-12-04), git-am.sh supports the
+    --[no-]rerere-autoupdate option as well, and would pass it to
+    git-rerere.
+
+* "git rerere" when --resolved, to record the hand resolution. Since
+  f131dd4 (rerere: record (or avoid misrecording) resolved, skipped or
+  aborted rebase/am, 2006-12-08)
+
+* "git rerere clear" when --skip-ing. Since f131dd4 (rerere: record (or
+  avoid misrecording) resolved, skipped or aborted rebase/am,
+  2006-12-08)
+
+* "git rerere clear" when --abort-ing. Since 3e5057a (git am --abort,
+  2008-07-16)
+
+Re-implement the above in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ builtin/am.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 64b467f..764e955 100644
+index 638b6d3..89613e0 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -458,6 +458,27 @@ static void am_destroy(const struct am_state *state)
+@@ -24,6 +24,7 @@
+ #include "revision.h"
+ #include "log-tree.h"
+ #include "notes-utils.h"
++#include "rerere.h"
+ 
+ /**
+  * Returns 1 if the file is empty or does not exist, 0 otherwise.
+@@ -114,6 +115,7 @@ struct am_state {
+ 	const char *resolvemsg;
+ 	int committer_date_is_author_date;
+ 	int ignore_date;
++	int allow_rerere_autoupdate;
+ 	const char *sign_commit;
+ 	int rebasing;
+ };
+@@ -1314,6 +1316,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 		o.verbosity = 0;
+ 
+ 	if (merge_recursive_generic(&o, our_tree, his_tree, 1, bases, &result)) {
++		rerere(state->allow_rerere_autoupdate);
+ 		free(his_tree_name);
+ 		return error(_("Failed to merge in the changes."));
+ 	}
+@@ -1533,6 +1536,8 @@ static void am_resolve(struct am_state *state)
+ 		die_user_resolve(state);
+ 	}
+ 
++	rerere(0);
++
+ 	do_commit(state);
+ 
+ 	am_next(state);
+@@ -1633,12 +1638,29 @@ static int clean_index(const unsigned char *head, const unsigned char *remote)
  }
  
  /**
-+ * Runs applypatch-msg hook. Returns its exit code.
++ * Resets rerere's merge resolution metadata.
 + */
-+static int run_applypatch_msg_hook(struct am_state *state)
++static void am_rerere_clear(void)
 +{
-+	int ret;
++	struct string_list merge_rr = STRING_LIST_INIT_DUP;
++	int fd = setup_rerere(&merge_rr, 0);
 +
-+	assert(state->msg);
-+	ret = run_hook_le(NULL, "applypatch-msg", am_path(state, "final-commit"), NULL);
++	if (fd < 0)
++		return;
 +
-+	if (!ret) {
-+		free(state->msg);
-+		state->msg = NULL;
-+		if (read_commit_msg(state) < 0)
-+			die(_("'%s' was deleted by the applypatch-msg hook"),
-+				am_path(state, "final-commit"));
-+	}
-+
-+	return ret;
++	rerere_clear(&merge_rr);
++	string_list_clear(&merge_rr, 1);
 +}
 +
 +/**
-  * Runs post-rewrite hook. Returns it exit code.
+  * Resume the current am session by skipping the current patch.
   */
- static int run_post_rewrite_hook(const struct am_state *state)
-@@ -1422,6 +1443,9 @@ static void am_run(struct am_state *state, int resume)
- 			write_commit_msg(state);
- 		}
+ static void am_skip(struct am_state *state)
+ {
+ 	unsigned char head[GIT_SHA1_RAWSZ];
  
-+		if (run_applypatch_msg_hook(state))
-+			exit(1);
++	am_rerere_clear();
 +
- 		say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
+ 	if (get_sha1("HEAD", head))
+ 		hashcpy(head, EMPTY_TREE_SHA1_BIN);
  
- 		apply_status = run_apply(state, NULL);
+@@ -1696,6 +1718,8 @@ static void am_abort(struct am_state *state)
+ 		return;
+ 	}
+ 
++	am_rerere_clear();
++
+ 	curr_branch = resolve_refdup("HEAD", 0, curr_head, NULL);
+ 	has_curr_head = !is_null_sha1(curr_head);
+ 	if (!has_curr_head)
+@@ -1824,6 +1848,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 			N_("lie about committer date")),
+ 		OPT_BOOL(0, "ignore-date", &state.ignore_date,
+ 			N_("use current timestamp for author date")),
++		OPT_RERERE_AUTOUPDATE(&state.allow_rerere_autoupdate),
+ 		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
+ 		  N_("GPG-sign commits"),
+ 		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
 -- 
 2.5.0.rc2.110.gb39b692
