@@ -1,7 +1,8 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 04/16] (msvc-build) Vcproj.pm: remove duplicate GUID
-Date: Sun, 19 Jul 2015 21:08:04 +0100
-Message-ID: <1437336497-4072-5-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 10/16] engine.pl: delete the captured stderr file
+ if empty
+Date: Sun, 19 Jul 2015 21:08:10 +0100
+Message-ID: <1437336497-4072-11-git-send-email-philipoakley@iee.org>
 References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,16 +11,16 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
 	Philip Oakley <philipoakley@iee.org>
 To: Git List <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBZ4GWCWQKGQEH75LSHY@googlegroups.com Sun Jul 19 22:07:07 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBBZ4GWCWQKGQEH75LSHY@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBB3UGWCWQKGQECNGFQFA@googlegroups.com Sun Jul 19 22:07:11 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBB3UGWCWQKGQECNGFQFA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f64.google.com ([74.125.82.64])
+Received: from mail-wg0-f59.google.com ([74.125.82.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBZ4GWCWQKGQEH75LSHY@googlegroups.com>)
-	id 1ZGurX-0002Ht-Mr
-	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:03 +0200
-Received: by wgjf7 with SMTP id f7sf441249wgj.0
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:03 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBB3UGWCWQKGQECNGFQFA@googlegroups.com>)
+	id 1ZGure-0002Kc-Vx
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:11 +0200
+Received: by wgik5 with SMTP id k5sf789170wgi.1
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
@@ -27,32 +28,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=R2o9Ruj9SW97hiYAyWWjtpcvyfO+0/S5DxgxfmqYqDY=;
-        b=U14RWT7YaI302zdu7N47GS/kzaV5jMdqdClt7Qz/yQlDWqro+QdzVsFNIQZgJU5Njf
-         8Mfym11A1ZvI1h2XQ17Y1qASnYVusaJaDIMktf/Uv8WIcYb2MMRNSGWx6OKvKVC2jz/7
-         IsamoK+zJ7imNPVT7BuIGOMtEGOCAq+nKutyIEs+qExmctoRkfT2bmac2dYTuxS5jFLl
-         jHmPgycu/LismUdx1G1eq5tdYjI7l0IpsGJKPlGzgRtydtAd20ZfdnAqnHPaaElI+Lwt
-         QEuDg87qdlKu9rzK26VkNJljwtv/ODzOH4euSBP+uAE8LpXsWywClgBE6v3i7vSIXKuA
-         3Ofg==
-X-Received: by 10.180.90.235 with SMTP id bz11mr28470wib.6.1437336423398;
-        Sun, 19 Jul 2015 13:07:03 -0700 (PDT)
+        bh=S7w/H0DROaJh7spIzOrlkNYj1VtvCi95JMfhqg1zE4M=;
+        b=MbnxmFfeBD3UzDLRAK27T16TIssjEKuBfU6mtie0jP3FrEaDBei6IMJjFN5XlGBX6w
+         rCByR+OuH0f2o/SqncX9eUVWVxIWSlBeuWyo1BEbPXG2jDx/52qUMmSLbJHtMgmtSHVE
+         smmgvCt1HCExMc4Zx1Qn8vGtl6ARpOebbhySkxqwPjenasrXocHzvdIswy7U0gt+rhW9
+         yhQ9qkfS9Z8wJkd2RgN1F58IJ6hb0uU4jH/BfVjT3fKkVeLiw56OiS3n4nCRgIGl16FN
+         kRdhCysc+0NROp0wDhnbxHrfrcfGPqj8zP/mH+rjOw7qJg697kTSCDnZLPlFO/oPKCa+
+         i/eA==
+X-Received: by 10.152.36.40 with SMTP id n8mr356619laj.20.1437336430689;
+        Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.12.145 with SMTP id y17ls677068wib.39.canary; Sun, 19 Jul
- 2015 13:07:02 -0700 (PDT)
-X-Received: by 10.194.188.104 with SMTP id fz8mr3199764wjc.1.1437336422713;
-        Sun, 19 Jul 2015 13:07:02 -0700 (PDT)
+Received: by 10.152.45.39 with SMTP id j7ls712296lam.21.gmail; Sun, 19 Jul
+ 2015 13:07:09 -0700 (PDT)
+X-Received: by 10.152.43.131 with SMTP id w3mr10246219lal.0.1437336429485;
+        Sun, 19 Jul 2015 13:07:09 -0700 (PDT)
 Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.02
+        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.09
         for <msysgit@googlegroups.com>;
-        Sun, 19 Jul 2015 13:07:02 -0700 (PDT)
+        Sun, 19 Jul 2015 13:07:09 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AFEQCSAqxVPN4GFlxcgkFSVGm7boF1hXEEAgKBGjsSAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKBg4GE4gyCcRfAQEIIo9tZQeEKwWUUoRviTuWfoEJgSocgVQ9MYEEgUcBAQE
-X-IPAS-Result: A2AFEQCSAqxVPN4GFlxcgkFSVGm7boF1hXEEAgKBGjsSAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKBg4GE4gyCcRfAQEIIo9tZQeEKwWUUoRviTuWfoEJgSocgVQ9MYEEgUcBAQE
+X-IronPort-Anti-Spam-Result: A2CVCwCSAqxVPN4GFlxcgkFSVGmGUbUUCYFthXkEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDLEaAErkFIHhCsFlFKEb4k7ln6BCYMaPTGCSwEBAQ
+X-IPAS-Result: A2CVCwCSAqxVPN4GFlxcgkFSVGmGUbUUCYFthXkEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDLEaAErkFIHhCsFlFKEb4k7ln6BCYMaPTGCSwEBAQ
 X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
-   d="scan'208";a="39118928"
+   d="scan'208";a="39118940"
 Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:03 +0100
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:10 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -71,34 +72,35 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274286>
 
-Delete the duplicated GUID from the generation code for the Visual Studio
-.sln project file.
+Keep the build clean of extraneous files if it is indeed clean.
+Otherwise leave the msvc-build-makedryerrors.txt file both as
+a flag for any CI system or for manual debugging.
 
-The duplicate GUID tended to be allocated to test-svn-fe, which was then
-ignored by Visual Studio / MSVC, and its omission from the build never
-noticed.
+Note that the file will contain the new values of the GIT_VERSION
+and GITGUI_VERSION if they were generated by the make file. They
+are omitted if the release is tagged and indentically defined in
+their respective GIT_VERSION_GEN file DEF_VER variables.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
-Eric Sunshine correction http://marc.info/?l=git&m=143546075320855&w=2
----
- contrib/buildsystems/Generators/Vcproj.pm | 1 -
- 1 file changed, 1 deletion(-)
+ contrib/buildsystems/engine.pl | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
-index cfa74ad..1b01d58 100644
---- a/contrib/buildsystems/Generators/Vcproj.pm
-+++ b/contrib/buildsystems/Generators/Vcproj.pm
-@@ -52,7 +52,6 @@ my @GUIDS = (
-     "{00785268-A9CC-4E40-AC29-BAC0019159CE}",
-     "{4C06F56A-DCDB-46A6-B67C-02339935CF12}",
-     "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
--    "{3A62D3FD-519E-4EC9-8171-D2C1BFEA022F}",
-     "{9392EB58-D7BA-410B-B1F0-B2FAA6BC89A7}",
-     "{2ACAB2D5-E0CE-4027-BCA0-D78B2D7A6C66}",
-     "{86E216C3-43CE-481A-BCB2-BE5E62850635}",
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index a6999b6..020776e 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -77,6 +77,8 @@ EOM
+ 
+ my $ErrsFile = "msvc-build-makedryerrors.txt";
+ @makedry = `cd $git_dir && make -n MSVC=1 V=1 2>$ErrsFile` if !@makedry;
++# test for an empty Errors file and remove it
++for ($ErrsFile) {unlink $_ if (-f $_) && (!-s $_);}
+ 
+ # Parse the make output into usable info
+ parseMakeOutput();
 -- 
 2.4.2.windows.1.5.gd32afb6
 
