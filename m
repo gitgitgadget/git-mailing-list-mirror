@@ -1,124 +1,136 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 9/9] tag.c: implement '--merged' and '--no-merged' options
-Date: Sun, 19 Jul 2015 21:20:07 +0200
-Message-ID: <CAP8UFD0EXgt7ijdv2cY-HGuqcwjz=Z3-8KV7Xqk=-EBRp-QrGQ@mail.gmail.com>
-References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437256837-13378-1-git-send-email-Karthik.188@gmail.com>
-	<1437256837-13378-3-git-send-email-Karthik.188@gmail.com>
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v2 01/16] perl/Makefile: treat a missing PM.stamp as
+ if empty
+Date: Sun, 19 Jul 2015 21:08:01 +0100
+Message-ID: <1437336497-4072-2-git-send-email-philipoakley@iee.org>
+References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 21:20:21 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Junio C Hamano <gitster@pobox.com>,
+	MsysGit List <msysgit@googlegroups.com>,
+	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
+	Philip Oakley <philipoakley@iee.org>
+To: Git List <git@vger.kernel.org>
+X-From: msysgit+bncBDSOTWHYX4PBBZMGWCWQKGQE6YO5OFY@googlegroups.com Sun Jul 19 22:07:02 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBZMGWCWQKGQE6YO5OFY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f63.google.com ([209.85.215.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGu8K-0000W3-Du
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 21:20:20 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932914AbbGSTUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 15:20:12 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:35355 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932906AbbGSTUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 15:20:09 -0400
-Received: by wibxm9 with SMTP id xm9so75928357wib.0
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 12:20:07 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBZMGWCWQKGQE6YO5OFY@googlegroups.com>)
+	id 1ZGurW-0002H9-31
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:02 +0200
+Received: by laef2 with SMTP id f2sf52635592lae.1
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=I1frbbAZgyK+b5HiQWQk7RuX+i7QetJDCdUD4AC4/us=;
-        b=LDTNaHw9tVN+R4K5pbrWrTpbQ2UvC02lcHhRhJDJ7AMvpmlzxg2hxqCIudKSE/GgAO
-         L9IaUqo32zD9R3eEboMxodHiM15jdaknUef0VqbCepb+DkVQFG14JqFNkwlH0JUso0cg
-         0PpBGbocZKcLeDmXrmww2O5dlYiEP4M/yGnpp8G0vYXM5lh3aTAtF2Fp4NQlMo5Ci7Ix
-         Xzuynr5EHDjtV98bry5H3tWTTEnqSmjVCBARK4NFGTViV2SNVqkytDNvwCgF7yC8EFm7
-         yyuhD86pyEObnJ7f9iGkcfSDV+6+G/Z2SQX8CvqUlEw/ulsZeORBwWlL1ME80hvQpPoC
-         wWOQ==
-X-Received: by 10.194.48.8 with SMTP id h8mr50938506wjn.82.1437333607689; Sun,
- 19 Jul 2015 12:20:07 -0700 (PDT)
-Received: by 10.194.221.229 with HTTP; Sun, 19 Jul 2015 12:20:07 -0700 (PDT)
-In-Reply-To: <1437256837-13378-3-git-send-email-Karthik.188@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274275>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :content-type:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=tEaShValo+f2yBY2O/Cw8iQbOMW624vUwV3+bNbwYj8=;
+        b=F9fDYSbgRzk9RhSLXNnEYcM0WZijY6T0M7vqaP/QlGo38+Dk+IKSDWQVdTt7fb0XLL
+         InJKZdj3y1dIs0PVmv0AF86XdG+D0kgigp4YRgrObJ2ar6DJO0aKtI/Qm+KYOgyzWdIS
+         wSNeqRHnsU2dj3KicZSLQXvAgc0f583nWj5Xcpf9U+YbzA14G3H8CQn2hQU+bQ5jULlE
+         5IJCgQsV73pXKmoi8XEioHbmr8IYw6AJ5DcXvQkPjpU87DQXaltORE4Jb0uDWsh5i9zW
+         t2jLF3nd24+7QZP/CCjFxr5rO84pbHXIoKS2H69XVWmcDmtR22TaygS3gIRPtBVPrjrb
+         +Eag==
+X-Received: by 10.152.179.195 with SMTP id di3mr372570lac.4.1437336421795;
+        Sun, 19 Jul 2015 13:07:01 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.234.108 with SMTP id ud12ls700655lac.43.gmail; Sun, 19 Jul
+ 2015 13:07:00 -0700 (PDT)
+X-Received: by 10.152.237.36 with SMTP id uz4mr13181551lac.1.1437336420583;
+        Sun, 19 Jul 2015 13:07:00 -0700 (PDT)
+Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
+        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.00
+        for <msysgit@googlegroups.com>;
+        Sun, 19 Jul 2015 13:07:00 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2AjKgCSAqxVPN4GFlxcgkFSVGmBRbogCYF1hXEEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDIJxF8BAQEHIo9vEQFRB4QrBZRShG+JO5Z+gQmDGj0xgQQJFzVyAQEB
+X-IPAS-Result: A2AjKgCSAqxVPN4GFlxcgkFSVGmBRbogCYF1hXEEAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTiDIJxF8BAQEHIo9vEQFRB4QrBZRShG+JO5Z+gQmDGj0xgQQJFzVyAQEB
+X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
+   d="scan'208";a="39118924"
+Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:01 +0100
+X-Mailer: git-send-email 2.3.1
+In-Reply-To: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274276>
 
-On Sun, Jul 19, 2015 at 12:00 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
->
-> Using 'ref-filter' APIs implement the '--merged' and '--no-merged'
-> options into 'tag.c'. The '--merged' option lets the user to only
-> list tags merged into the named commit. The '--no-merged' option
-> lets the user to only list tags not merged into the named commit.
-> If no object is provided it assumes HEAD as the object.
->
-> Add documentation and tests for the same.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Documentation/git-tag.txt | 10 +++++++++-
->  builtin/tag.c             |  6 +++++-
->  t/t7004-tag.sh            | 27 +++++++++++++++++++++++++++
->  3 files changed, 41 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 16e396c..74ed157 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -14,7 +14,7 @@ SYNOPSIS
->  'git tag' -d <tagname>...
->  'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
->         [--column[=<options>] | --no-column] [--sort=<key>] [--format=<format>]
-> -       [<pattern>...]
-> +       [(--merged | --no-merged) [<commit>]] [<pattern>...]
+'make clean', or a 'git clean -dfx' will delete the PM stamp file,
+so it cannot be a direct target in such clean conditions, resulting
+in an error.
 
-Maybe [--[no-]merged [<commit>]] instead of [(--merged | --no-merged)
-[<commit>]].
+Normally the PM.stamp is recreated by the git/Makefile, except when
+a dry-run is requested, for example, as used in the msysgit msvc-build
+script which implements the compat/vcbuild/README using
+contrib/buildsystems. The script msvc-build is introduced later in this
+series.
 
->  'git tag' -v <tagname>...
->
->  DESCRIPTION
-> @@ -169,6 +169,14 @@ This option is only applicable when listing tags without annotation lines.
->         `%09` to `\t` (TAB) and `%0a` to `\n` (LF).
->         The fields are same as those in `git for-each-ref`.
->
-> +--merged [<commit>]::
-> +       Only list tags whose tips are reachable from the
-> +       specified commit (HEAD if not specified).
-> +
-> +--no-merged [<commit>]::
-> +       Only list tags whose tips are not reachable from the
-> +       specified commit (HEAD if not specified).
+Protect the PM.stamp target when the PM.stamp file does not exist,
+allowing a Git 'Makefile -n' to succeed on a clean repo.
 
-Here also you could write something like:
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+This is development of the original "[PATCH 4/17] Makefile: a dry-run
+can error out if no perl. Document the issue" 2015-06-25,
+(http://marc.info/?l=git&m=143519054716960&w=2), which simply documented
+the issue and then used NO_PERL to avoid the problem. See follow on
+email thread for some discussion.
+---
+ perl/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-+--[no-]merged [<commit>]::
-+       Only list tags whose tips are reachable, or not reachable
-+       if --no-merged is used, from the specified commit
-+       (HEAD if not specified).
+diff --git a/perl/Makefile b/perl/Makefile
+index 15d96fc..5b86aac 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -22,7 +22,9 @@ clean:
+ 	$(RM) $(makfile).old
+ 	$(RM) PM.stamp
+ 
++ifneq (,$(wildcard PM.stamp))
+ $(makfile): PM.stamp
++endif
+ 
+ ifdef NO_PERL_MAKEMAKER
+ instdir_SQ = $(subst ','\'',$(prefix)/lib)
+-- 
+2.4.2.windows.1.5.gd32afb6
 
->
->  CONFIGURATION
->  -------------
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index cae113b..0fa1d31 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -23,7 +23,7 @@ static const char * const git_tag_usage[] = {
->         N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
->         N_("git tag -d <tagname>..."),
->         N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
-> -               "\n\t\t[<pattern>...]"),
-> +               "\n\t\t[--merged [<commit>]] [--no-merged [<commit>]] [<pattern>...]"),
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-[--[no-]merged [<commit>]] here too.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Thanks,
-Christian.
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
