@@ -1,162 +1,94 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v6 27/45] builtin-am: support --keep-cr, am.keepcr
-Date: Mon, 20 Jul 2015 00:10:19 +0800
-Message-ID: <1437322237-29863-28-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v6 30/45] builtin-am: implement --ignore-date
+Date: Mon, 20 Jul 2015 00:10:22 +0800
+Message-ID: <1437322237-29863-31-git-send-email-pyokagan@gmail.com>
 References: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 19 18:12:03 2015
+X-From: git-owner@vger.kernel.org Sun Jul 19 18:12:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGrC5-0006RT-LY
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:12:02 +0200
+	id 1ZGrCG-0006Yf-L7
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 18:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028AbbGSQL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 12:11:59 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35657 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754007AbbGSQL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 12:11:56 -0400
-Received: by pabkd10 with SMTP id kd10so17165479pab.2
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:11:55 -0700 (PDT)
+	id S932096AbbGSQMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 12:12:06 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:35865 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932077AbbGSQMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 12:12:03 -0400
+Received: by pachj5 with SMTP id hj5so89285942pac.3
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 09:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=K91WL+yW+Hy1/MPoWdqyEZpjemYFcousuiokHiG8F9I=;
-        b=Gl9pgwj4slA9FJPjnzTci2Y/ybjksyuGg2HbfWifMTuHVdycr24fxZUGVBt8wsyAgb
-         7vNP5asrnV02WQfPIdkXTPxyIuhpOZmfY/NVpblgoyoP0SEB1/bjkFCV7JI1AlSSZQ0d
-         M3fsl6GfCu/MbN+NzTSoy8XWb8C/zg2SseyXrzLDtcnyxBaMwvcd6C58RhU6QBTznVtw
-         /NhkU1xnEThDkz88rmAwxhqOu72caRO0MSvA3ELFex8eMBlW/QhvOp/smwVWZSL56Q+a
-         ZsLVrowl+ZRpOuqLsJrPjX3Fh6r5gNegNb+3ZbYpj9XoKd/x/X/Ne9gF1SKmy4XeDkBw
-         8ZDQ==
-X-Received: by 10.70.44.41 with SMTP id b9mr49374663pdm.73.1437322315741;
-        Sun, 19 Jul 2015 09:11:55 -0700 (PDT)
+        bh=f7RQUTGbJ6WLjrPphJ14WY6z7CQnNOjHlyOFyDuaMCI=;
+        b=eBTiRDqbsKR0YVjEfOq/Lt7FRMoomiX0XpFm6UZokej3btSVhWZ06zcJba7GrrWoEH
+         wv2sKwzV2TYEC+8p1YFoDlYD1guiaET65Kz9Z3H9GqeX8d9W8nJRgvLtXEztIB3ffVq1
+         3OpB/RUF3GAx6ax7Rkc5gQaLMR5+wVrGODJntFEzjwz6Xm/1jmCY8N0pQbXtHpZORrMj
+         2xSyiFlwaQIGfCheAQnJsMd40sCRTZW3rjhvjd0/kZufrLsluOGTnHaqUKz1KZcDHr9h
+         xMbzJwIqDJWnhMuDcMuj98kV0uLoGfthF0fLDX9rPxY8RdtzFLAZAY7X/8l/jK//5BiQ
+         KUtQ==
+X-Received: by 10.68.200.100 with SMTP id jr4mr48792761pbc.168.1437322322809;
+        Sun, 19 Jul 2015 09:12:02 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.11.53
+        by smtp.gmail.com with ESMTPSA id cq5sm17317869pad.11.2015.07.19.09.12.00
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 09:11:54 -0700 (PDT)
+        Sun, 19 Jul 2015 09:12:01 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gb39b692
 In-Reply-To: <1437322237-29863-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274251>
 
-Since ad2c928 (git-am: Add command line parameter `--keep-cr` passing it
-to git-mailsplit, 2010-02-27), git-am.sh supported the --keep-cr option
-and would pass it to git-mailsplit.
+Since a79ec62 (git-am: Add --ignore-date option, 2009-01-24), git-am.sh
+supported the --ignore-date option, and would use the current timestamp
+instead of the one provided in the patch if the option was set.
 
-Since e80d4cb (git-am: Add am.keepcr and --no-keep-cr to override it,
-2010-02-27), git-am.sh supported the am.keepcr config setting, which
-controls whether --keep-cr is on by default.
-
-Re-implement the above in builtin/am.c.
+Re-implement this option in builtin/am.c.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ builtin/am.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index e41a104..80f091e 100644
+index 9ff0736..7f068e2 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -504,7 +504,7 @@ done:
-  * Splits out individual email patches from `paths`, where each path is either
-  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
-  */
--static int split_mail_mbox(struct am_state *state, const char **paths)
-+static int split_mail_mbox(struct am_state *state, const char **paths, int keep_cr)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf last = STRBUF_INIT;
-@@ -514,6 +514,8 @@ static int split_mail_mbox(struct am_state *state, const char **paths)
- 	argv_array_pushf(&cp.args, "-d%d", state->prec);
- 	argv_array_pushf(&cp.args, "-o%s", state->dir);
- 	argv_array_push(&cp.args, "-b");
-+	if (keep_cr)
-+		argv_array_push(&cp.args, "--keep-cr");
- 	argv_array_push(&cp.args, "--");
- 	argv_array_pushv(&cp.args, paths);
+@@ -108,6 +108,7 @@ struct am_state {
+ 	int scissors; /* enum scissors_type */
+ 	struct argv_array git_apply_opts;
+ 	const char *resolvemsg;
++	int ignore_date;
+ 	int rebasing;
+ };
  
-@@ -538,14 +540,22 @@ static int split_mail_mbox(struct am_state *state, const char **paths)
-  * state->cur will be set to the index of the first mail, and state->last will
-  * be set to the index of the last mail.
-  *
-+ * Set keep_cr to 0 to convert all lines ending with \r\n to end with \n, 1
-+ * to disable this behavior, -1 to use the default configured setting.
-+ *
-  * Returns 0 on success, -1 on failure.
-  */
- static int split_mail(struct am_state *state, enum patch_format patch_format,
--			const char **paths)
-+			const char **paths, int keep_cr)
- {
-+	if (keep_cr < 0) {
-+		keep_cr = 0;
-+		git_config_get_bool("am.keepcr", &keep_cr);
-+	}
-+
- 	switch (patch_format) {
- 	case PATCH_FORMAT_MBOX:
--		return split_mail_mbox(state, paths);
-+		return split_mail_mbox(state, paths, keep_cr);
- 	default:
- 		die("BUG: invalid patch_format");
+@@ -1219,7 +1220,8 @@ static void do_commit(const struct am_state *state)
  	}
-@@ -556,7 +566,7 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
-  * Setup a new am session for applying patches
-  */
- static void am_setup(struct am_state *state, enum patch_format patch_format,
--			const char **paths)
-+			const char **paths, int keep_cr)
- {
- 	unsigned char curr_head[GIT_SHA1_RAWSZ];
- 	const char *str;
-@@ -572,7 +582,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
- 		die_errno(_("failed to create directory '%s'"), state->dir);
  
--	if (split_mail(state, patch_format, paths) < 0) {
-+	if (split_mail(state, patch_format, paths, keep_cr) < 0) {
- 		am_destroy(state);
- 		die(_("Failed to split patches."));
- 	}
-@@ -1512,6 +1522,7 @@ enum resume_mode {
- int cmd_am(int argc, const char **argv, const char *prefix)
- {
- 	struct am_state state;
-+	int keep_cr = -1;
- 	int patch_format = PATCH_FORMAT_UNKNOWN;
- 	enum resume_mode resume = RESUME_FALSE;
+ 	author = fmt_ident(state->author_name, state->author_email,
+-			state->author_date, IDENT_STRICT);
++			state->ignore_date ? NULL : state->author_date,
++			IDENT_STRICT);
  
-@@ -1535,6 +1546,12 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 			N_("pass -b flag to git-mailinfo"), KEEP_NON_PATCH),
- 		OPT_BOOL('m', "message-id", &state.message_id,
- 			N_("pass -m flag to git-mailinfo")),
-+		{ OPTION_SET_INT, 0, "keep-cr", &keep_cr, NULL,
-+		  N_("pass --keep-cr flag to git-mailsplit for mbox format"),
-+		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1},
-+		{ OPTION_SET_INT, 0, "no-keep-cr", &keep_cr, NULL,
-+		  N_("do not pass --keep-cr flag to git-mailsplit independent of am.keepcr"),
-+		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
- 		OPT_CALLBACK(0, "patch-format", &patch_format, N_("format"),
- 			N_("format the patch(es) are in"),
- 			parse_opt_patchformat),
-@@ -1632,7 +1649,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 				argv_array_push(&paths, mkpath("%s/%s", prefix, argv[i]));
- 		}
- 
--		am_setup(&state, patch_format, paths.argv);
-+		am_setup(&state, patch_format, paths.argv, keep_cr);
- 
- 		argv_array_clear(&paths);
- 	}
+ 	if (commit_tree(state->msg, state->msg_len, tree, parents, commit,
+ 				author, NULL))
+@@ -1662,6 +1664,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE(0, "abort", &resume,
+ 			N_("restore the original branch and abort the patching operation."),
+ 			RESUME_ABORT),
++		OPT_BOOL(0, "ignore-date", &state.ignore_date,
++			N_("use current timestamp for author date")),
+ 		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
+ 			N_("(internal use for git-rebase)")),
+ 		OPT_END()
 -- 
 2.5.0.rc2.110.gb39b692
