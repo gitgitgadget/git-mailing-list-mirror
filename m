@@ -1,8 +1,7 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v3 02/12] t4150: am fails if index is dirty
-Date: Sun, 19 Jul 2015 23:49:08 +0800
-Message-ID: <1437320958-11192-3-git-send-email-pyokagan@gmail.com>
-References: <1437320958-11192-1-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v3 00/12] Improve git-am test coverage
+Date: Sun, 19 Jul 2015 23:49:06 +0800
+Message-ID: <1437320958-11192-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>
@@ -13,76 +12,98 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGqqS-0005a9-H6
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 17:49:40 +0200
+	id 1ZGqqP-0005a9-UP
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 17:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596AbbGSPtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 11:49:35 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34954 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753326AbbGSPtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 11:49:33 -0400
-Received: by pabkd10 with SMTP id kd10so16949561pab.2
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 08:49:33 -0700 (PDT)
+	id S1753589AbbGSPt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 11:49:28 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34910 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753406AbbGSPt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 11:49:27 -0400
+Received: by pabkd10 with SMTP id kd10so16948646pab.2
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 08:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TB5Dv+rjnrN2gqnK4qbG5K2J5hrvNrm6MCCw7EPB+mU=;
-        b=VQj8ni6womUpwbhyDuIcrSBnX3mq0tn3rx0BH5oN6F/UATPOvGiqvqhxpJaTR3VkHg
-         l6bmnBdF/AR9N7xeioJTZeW1VIgOOV9TqU5dMazSji8/MbIfzA28j62SbY0CCZAhUUkX
-         r8oGOysRMsXbeLJfA1OV7QE23CwNNh8UL/lIPiDN1qwHzNNtFzd62picvaZj3dshW1sr
-         SSS1C085Hx2cgaOYznEm6uWMwiE/mmYr8TzAKY1e+0P6S3Wkj0gGeJ0lOCyflPBHH1Pc
-         bB3MYZVSdDSRovIVSjh2XkQz8Jj3ZdvH1gH1A8fXcXu234jHPj891+XCdVtWsnNPupFS
-         gpaw==
-X-Received: by 10.68.221.70 with SMTP id qc6mr49231054pbc.76.1437320973295;
-        Sun, 19 Jul 2015 08:49:33 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=JCTnRnA3YjIZfTZcQ8gczMO07QWsXawQoSPLLfZ5L7Q=;
+        b=snVtRipxdnprrE2KBs7SZfk/UEBY5LrzI1Wa31+dN9WAW9RVLR9Kxu9ujpVF9RE+5K
+         KjIGBQxV67b9rb7j1EkmNIvjYIEU1HBREhsvar+/Vcv6uJxVJKMRU7A+L7LDALUK3gTi
+         jVQkgRMojrQgrABfAfxjibsWip4I2Iv7KoYvgfz88+UCZrTGyU6WbuaY93Jn+5X4eUty
+         n7qtUVhttq2m1OgGoF1r2kHvgNINj4v5XQqYMY5+4Bd1SJ19sfyKUN3ZS1emD2Tddqqw
+         ql3OXBbTEAO4QCius29Jea7DVbOzbp+448fvUqiB2xkHTI561zpFgbtkTKYMr1RpfPn1
+         P36A==
+X-Received: by 10.68.98.227 with SMTP id el3mr49365364pbb.32.1437320966721;
+        Sun, 19 Jul 2015 08:49:26 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id j9sm17216516pdl.65.2015.07.19.08.49.30
+        by smtp.gmail.com with ESMTPSA id j9sm17216516pdl.65.2015.07.19.08.49.23
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jul 2015 08:49:32 -0700 (PDT)
+        Sun, 19 Jul 2015 08:49:25 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.rc2.110.gf2a5fc6
-In-Reply-To: <1437320958-11192-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274213>
 
-Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), git-am
-will ensure that the index is clean before applying the patch. This is
-to prevent changes unrelated to the patch from being committed.
+This is a very minor re-roll of [v2] that adds in the missing !MINGW prereq in
+t3901.  Thanks Johannes Schindelin and Johannes Sixt for the reviews last
+round. Interdiff below.
 
-Add a test for this check.
+Previous versions:
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
-Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
- t/t4150-am.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+[v1] http://thread.gmane.org/gmane.comp.version-control.git/273254
+[v2] http://thread.gmane.org/gmane.comp.version-control.git/273507
 
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 264f53f..a85e06a 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -154,6 +154,18 @@ test_expect_success 'am applies patch correctly' '
- 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+Increase test coverage of git-am.sh to help prevent regressions that could
+arise from the rewrite of git-am.sh to C. This patch series, along with
+pt/am-foreign, improved test coverage as measured by kcov from 56.5%[1] to
+67.3%[2].
+
+No tests for git-am's interactive mode, though, as test_terminal does not seem
+to attach a pseudo-tty to stdin(?), thus making git-am's "test -t 0" check
+fail.
+
+This is part of my GSoC project to rewrite git-am.sh to a C builtin[3].
+
+[1] http://pyokagan.github.io/git/20150430132408-a75942b//kcov-merged/git-am.eb79278e.html
+[2] http://pyokagan.github.io/git/20150702173751-2fdae08//kcov-merged/git-am.eb79278e.html
+[3] https://gist.github.com/pyokagan/1b7b0d1f4dab6ba3cef1
+
+
+Paul Tan (12):
+  t4150: am.messageid really adds the message id
+  t4150: am fails if index is dirty
+  t4151: am --abort will keep dirty index intact
+  t4150: am refuses patches when paused
+  t4150: am --resolved fails if index has no changes
+  t4150: am --resolved fails if index has unmerged entries
+  t4150: am with applypatch-msg hook
+  t4150: am with pre-applypatch hook
+  t4150: am with post-applypatch hook
+  t4150: tests for am --[no-]scissors
+  t3418: non-interactive rebase --continue with rerere enabled
+  t3901: test git-am encoding conversion
+
+ t/t3418-rebase-continue.sh |  19 ++++
+ t/t3901-i18n-patch.sh      |  62 +++++++++++++
+ t/t4150-am.sh              | 217 +++++++++++++++++++++++++++++++++++++++++++++
+ t/t4151-am-abort.sh        |  15 ++++
+ 4 files changed, 313 insertions(+)
+
+diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
+index b49bdb7..509084e 100755
+--- a/t/t3901-i18n-patch.sh
++++ b/t/t3901-i18n-patch.sh
+@@ -262,7 +262,7 @@ test_expect_success 'am (U/U)' '
+ 	check_encoding 2
  '
  
-+test_expect_success 'am fails if index is dirty' '
-+	test_when_finished "rm -f dirtyfile" &&
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard &&
-+	git checkout first &&
-+	echo dirtyfile >dirtyfile &&
-+	git add dirtyfile &&
-+	test_must_fail git am patch1 &&
-+	test_path_is_dir .git/rebase-apply &&
-+	test_cmp_rev first HEAD
-+'
-+
- test_expect_success 'am applies patch e-mail not in a mbox' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
+-test_expect_success 'am (L/L)' '
++test_expect_success !MINGW 'am (L/L)' '
+ 	# Apply ISO-8859-1 patches with ISO-8859-1 commitencoding
+ 	git config i18n.commitencoding ISO8859-1 &&
+ 	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
+
 -- 
 2.5.0.rc2.110.gf2a5fc6
