@@ -1,8 +1,7 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 15/16] msvc-build: add complete Microsoft Visual
- C compilation script
-Date: Sun, 19 Jul 2015 21:08:16 +0100
-Message-ID: <1437336497-4072-17-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 12/16] engine.pl: provide more debug print statements
+Date: Sun, 19 Jul 2015 21:08:12 +0100
+Message-ID: <1437336497-4072-13-git-send-email-philipoakley@iee.org>
 References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,16 +10,16 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Yue Lin Ho <b8732003@student.nsysu.edu.tw>,
 	Philip Oakley <philipoakley@iee.org>
 To: Git List <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBB4MGWCWQKGQEJHE3ZRQ@googlegroups.com Sun Jul 19 22:07:18 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBB4MGWCWQKGQEJHE3ZRQ@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com Sun Jul 19 22:07:21 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f60.google.com ([74.125.82.60])
+Received: from mail-wg0-f62.google.com ([74.125.82.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB4MGWCWQKGQEJHE3ZRQ@googlegroups.com>)
-	id 1ZGuri-0002NB-7i
-	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:14 +0200
-Received: by wgik5 with SMTP id k5sf789388wgi.1
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:13 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBB34GWCWQKGQEP4PFRLA@googlegroups.com>)
+	id 1ZGurg-0002MY-DB
+	for gcvm-msysgit@m.gmane.org; Sun, 19 Jul 2015 22:07:12 +0200
+Received: by wgik5 with SMTP id k5sf789262wgi.1
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
@@ -28,32 +27,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=+t39LCV3RaxGe1juUk7V0bluJpkHQJ+UgKxHV0GQ+v4=;
-        b=R/Ivbo5CaKoH3EXVRKLDGdjL6EWM6t51bcwz/5gK58WyInXWa5Kf53WkKVx44HboTD
-         zmK+yTCIu0PDPUHed9I0/Qd3JWJy23gLj727YOGkwm7jlZyvII1qNI3R/FZ9KEl3nCeK
-         pbfLG5dHDpwGhm0h6TS/W/MG9ORbPlPFulKO2hHQnHroZRPhDXFIGixKQ9OpsNEImYLa
-         Dr2r68a0t21z4F2PdJSE9UKCPLfU564yHiQ3uIOWzF06Pgx8R1u4/+Rz72PqOF8WwolC
-         11XTiETRBVUymtjtP363s1vq2NyCKBo9/s55aipmgWXiZqcF+Tx/J2RgotaupQMr8yCb
-         MDiQ==
-X-Received: by 10.180.90.235 with SMTP id bz11mr28474wib.6.1437336433962;
-        Sun, 19 Jul 2015 13:07:13 -0700 (PDT)
+        bh=TjHdo5EivpmVbNAnHN/L6I8fyHE/DaOEk87q3hQMs6g=;
+        b=JORmna5RdXauqFAX3q1CKIaoU494aqouEwhCR6Pfb/VjRhFBtBOaYtsOp7f5LDHNrl
+         skD6xXspn2kDp2CmsztFh+LsLjQ1qEMtQ6ucOy1Vc2mlliRuW0bGsJNbdPYz32q8J56V
+         MynAA1ZSnEviIHdwKwKWZgID/YHZLw4Z8gl7iGdoaSjDIKFRVnmy81jts4bx/VsGGL9g
+         HuewIBEnFz0HovRakryBw3lXEpC+J7JEXxp7AOsxTgMqDzKvYLlVx/gg0DIhjOuWvg6D
+         K8dYOxM4vKw/y6T0ztjj/bU8ggqz4OsDJmX5+LdJGP5refeM6Pi+3BkxxaNZFDnAIdPk
+         wYLw==
+X-Received: by 10.153.4.129 with SMTP id ce1mr368669lad.0.1437336432020;
+        Sun, 19 Jul 2015 13:07:12 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.84.42 with SMTP id v10ls681560wiy.36.gmail; Sun, 19 Jul
- 2015 13:07:13 -0700 (PDT)
-X-Received: by 10.180.35.162 with SMTP id i2mr4472702wij.6.1437336433351;
-        Sun, 19 Jul 2015 13:07:13 -0700 (PDT)
+Received: by 10.152.120.3 with SMTP id ky3ls709359lab.70.gmail; Sun, 19 Jul
+ 2015 13:07:10 -0700 (PDT)
+X-Received: by 10.112.215.67 with SMTP id og3mr13469657lbc.8.1437336430748;
+        Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
 Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.13
+        by gmr-mx.google.com with ESMTP id gt9si270946wib.2.2015.07.19.13.07.10
         for <msysgit@googlegroups.com>;
-        Sun, 19 Jul 2015 13:07:13 -0700 (PDT)
+        Sun, 19 Jul 2015 13:07:10 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AVDACSAqxVPN4GFlxcgkFSIzFpu2UJgU4dCoUtRAQCAoEaORQBAQEBAQEBBgEBAQFAAT+EJAEBBFYjEAhJOQoGAQ0GExSIHgnEXwEBAQcCII9mbAeCLQxBgTEFhWCGWIgahG+JO5Z+gQmDGj0xgksBAQE
-X-IPAS-Result: A2AVDACSAqxVPN4GFlxcgkFSIzFpu2UJgU4dCoUtRAQCAoEaORQBAQEBAQEBBgEBAQFAAT+EJAEBBFYjEAhJOQoGAQ0GExSIHgnEXwEBAQcCII9mbAeCLQxBgTEFhWCGWIgahG+JO5Z+gQmDGj0xgksBAQE
+X-IronPort-Anti-Spam-Result: A2AkCwCSAqxVPN4GFlxcgkFSVGm7ZQmBdYJDgy4EAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTFYgdCbMAkV8BAQEHIpBSB4QrBZRShG+FC4N/MZZ+gQmDGj0xgksBAQE
+X-IPAS-Result: A2AkCwCSAqxVPN4GFlxcgkFSVGm7ZQmBdYJDgy4EAgKBGjkUAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKFAYTFYgdCbMAkV8BAQEHIpBSB4QrBZRShG+FC4N/MZZ+gQmDGj0xgksBAQE
 X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
-   d="scan'208";a="39118947"
+   d="scan'208";a="39118942"
 Received: from host-92-22-6-222.as13285.net (HELO localhost) ([92.22.6.222])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:13 +0100
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 19 Jul 2015 21:07:11 +0100
 X-Mailer: git-send-email 2.3.1
 In-Reply-To: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -72,139 +71,81 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274290>
 
-Implement the README to facilitate cross community development.
-Include comments for those Windows folks not yet fully familiar
-with bash commands.
+Assist developers transitioning between the two cultures
+by including appropriate, but commented out, debug statements.
 
-This is identical to the msysgit script, except for the 'cd toplevel'
-step, and comments for the edification of converts from Windows.
+The exception is when an unhandled compiler option is detected,
+where printing of the full line will supplement the line number and
+option part. Otherwise the OP has no immediate mechanism for
+inspecting the relevant part of the makedry output.
 
-Original author: Johannes Schindelin (2011-11-01 3142da4 : Add a script
-to make the MSVC build more convenient) on Msysgit
-https://github.com/msysgit/msysgit/commit/3142da4038 and subsequent
-development.
+The commented out code is "deactivated code", not dead code, as per
+DO178B safety critical software development guideline [1].
 
-The --gui clean now also removes the VS2010 .sdf file, and the
-vcs-svn_lib & xdiff_lib directories.
+These debug print statements act as a guide for a poor man's --verbose
+option. The test suite doesn't cover the contrib/buildsystems (or
+Msysgit's msvc-build) contributions so fails to notice breakages there-in.
 
-The script is made executable in line with $msysgit/cb9836b8a
-(Mark scripts and binaries in /bin/ as executable, 2012-06-26)
+It is doubly hard to get developers to ride both horses so, contrary to
+normal convention, retain selected debug statements as a safety net for
+those willing to try.
+
+[1] Dead code : Dead code is source code (and it is a part of binary code)
+that is not executed in the final system and it will be not having
+traceability to any requirements (one can say unintentional code).
+
+Deactivated code: code which is commented out or removed via #ifdef's
+(it is not a part of final binary code) and it will be having
+traceability to its low level requirements (its a intentional code and
+it can be activated in some configurations through hardware traps for
+debugging or other purposes.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
-
-TODO:
-resolve any further cleaning of newer VS2010... build products.
+My response to Sebastian Schuberth's comment on dead code
+http://marc.info/?l=git&m=143630748919942&w=2 (2015-07-07)
 ---
- compat/vcbuild/README             |  2 +
- compat/vcbuild/scripts/msvc-build | 86 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 88 insertions(+)
- create mode 100755 compat/vcbuild/scripts/msvc-build
+ contrib/buildsystems/engine.pl | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-index ad8633e..faaea69 100644
---- a/compat/vcbuild/README
-+++ b/compat/vcbuild/README
-@@ -57,3 +57,5 @@ The Steps of Build Git with VS2008
-    Git, which you set up in step 1.
- 
- Done!
-+
-+Or, use the msvc-build script; available from /compat/vcbuild/scripts/.
-diff --git a/compat/vcbuild/scripts/msvc-build b/compat/vcbuild/scripts/msvc-build
-new file mode 100755
-index 0000000..d67203b
---- /dev/null
-+++ b/compat/vcbuild/scripts/msvc-build
-@@ -0,0 +1,86 @@
-+#!/bin/sh
-+
-+# This msvc-build command should be executed from the msysgit directory level
-+# This is so that the 'cd/git' step works and the subequent operations have the right msysgit super directory.
-+set -e # Exit immediately if a command exits with a nonzero exit status.
-+
-+gui=
-+clean=
-+while test $# -gt 0
-+do
-+	case "$1" in
-+	--gui|--dev|--devenv|--vs|--visual-studio)
-+		gui=t
-+		;;
-+	clean)
-+		clean=t
-+		;;
-+	*)
-+		echo "Usage: $0 [--vs] [clean]" >&2
-+		exit 1
-+		;;
-+	esac
-+	shift
-+done
-+
-+cd $(git rev-parse --show-toplevel)
-+
-+case "$clean" in
-+t)
-+	case "$gui" in
-+	t)
-+		rm -rf git.sln git.sdf libgit vcs-svn_lib xdiff_lib
-+		# remove any other new VS2010... stuff as well: rm -rf  ?
-+		;;
-+	'')
-+		make clean
-+		;;
-+	esac
-+	exit
-+	;;
-+esac
-+
-+to_ignore="$(git ls-files --other --exclude-standard msvcgit msvc-build.cmd)"
-+test -z "$to_ignore" || {
-+	mkdir -p .git/info &&
-+	echo "$to_ignore" |
-+	sed 's/^/\//' >> .git/info/exclude
-+} || exit
-+
-+test -d msvcgit || git clone git://repo.or.cz/msvcgit.git
-+
-+vsvars=
-+# assume cl.exe will populate its relevant environment variables
-+# if cl.exe does not exist, populate vsvars with the most recent Visual Studio path
-+type cl.exe 2> /dev/null ||
-+vsvars="$(ls -t \
-+	"$PROGRAMFILES/Microsoft Visual Studio"*/Common7/Tools/vsvars32.bat |
-+	head -n 1)"
-+
-+
-+config_mak=
-+# if a config.mak file (dot, not underscore) exists, back it up,
-+# remember the backup file name in config_mak.
-+test -f config.mak &&
-+config_mak=config.mak.bup.$$ &&
-+mv config.mak $config_mak
-+
-+cat > config.mak << EOF
-+CFLAGS += -Imsvcgit/32bits/include
-+LDFLAGS += -Lmsvcgit/32bits/lib
-+EOF
-+
-+echo "call \"$vsvars\"" > msvc-build.cmd
-+if test -z "$gui"
-+then
-+	echo 'make MSVC=1' >> msvc-build.cmd
-+else
-+	echo 'perl contrib/buildsystems/generate -g Vcproj' >> msvc-build.cmd
-+	echo 'start git.sln' >> msvc-build.cmd
-+fi
-+
-+cmd /c msvc-build.cmd
-+
-+# if we made a backup file (name in config_mak), then restore it.
-+test -z "$config_mak" ||
-+mv $config_mak config.mak
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 4a843f3..3238d16 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -41,6 +41,7 @@ EOM
+ # Parse command-line options
+ while (@ARGV) {
+     my $arg = shift @ARGV;
++	#print "Arg: $arg \n";
+     if ("$arg" eq "-h" || "$arg" eq "--help" || "$arg" eq "-?") {
+ 	showUsage();
+ 	exit(0);
+@@ -129,6 +130,7 @@ sub parseMakeOutput
+     print "Parsing GNU Make output to figure out build structure...\n";
+     my $line = 0;
+     while (my $text = shift @makedry) {
++		#print "Make: $text\n"; # show the makedry line
+         my $ate_next;
+         do {
+             $ate_next = 0;
+@@ -263,6 +265,7 @@ sub handleCompileLine
+         } elsif ($part =~ /\.(c|cc|cpp)$/) {
+             $sourcefile = $part;
+         } else {
++            print "full line: $line\n";
+             die "Unhandled compiler option @ line $lineno: $part";
+         }
+     }
+@@ -288,6 +291,7 @@ sub handleLibLine
+             $libout = $part;
+             $libout =~ s/\.a$//;
+         } else {
++            print "full line: $line\n";
+             die "Unhandled lib option @ line $lineno: $part";
+         }
+     }
 -- 
 2.4.2.windows.1.5.gd32afb6
 
