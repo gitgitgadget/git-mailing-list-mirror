@@ -1,89 +1,73 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] Modify tr expressions so that xpg4/tr handles it on Solaris
-Date: Sun, 19 Jul 2015 17:49:33 -0400
-Message-ID: <CAPig+cSpTgcBA5YbfQWY+x+wc7rBQjugcan+MwLuZVcHaOH9kQ@mail.gmail.com>
-References: <1437328836-19156-1-git-send-email-bdwalton@gmail.com>
-	<1437328836-19156-2-git-send-email-bdwalton@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: How to use --cc-cmd in git-send-email?
+Date: Sun, 19 Jul 2015 23:02:39 +0100
+Organization: OPDS
+Message-ID: <CA64425B296E41328D6A1F29E227A24D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 23:49:46 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 00:02:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGwSu-0006EC-8W
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jul 2015 23:49:44 +0200
+	id 1ZGwes-0002Pz-MX
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 00:02:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbbGSVtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 17:49:35 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:33513 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753579AbbGSVte (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 17:49:34 -0400
-Received: by ykfw194 with SMTP id w194so46536299ykf.0
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 14:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Q0wFtbVSqQWpxBUrW5Btd51I2AwppJe+uqy7YCStotA=;
-        b=ZEQE5vYRAZ9rhNEQzhZa7xQSM0hYKfxHl4DlOENmgjJtRKm+ui6qVhdi6DgzgjmipZ
-         0+UbZeS3FWJV1KaD1YoRd4hsAD26YGdjSfKvgpjBLBvxQnoI6rRRl0ZEOL5eGIaL2BVO
-         UzPYPpIorEdYI/8iLK+39sd5npFRN3VVgAAh7YLu5acPY3hWYeADJcdltsE75O9GNbCD
-         9Mfk4YtaRNipQmflxbp2Q/Ub1s9Fd/mP4xKt5AW+d8glucPnvamCIRN75K+jYpLgxgwq
-         byfBJGV5X2gqsQ0YCvbiJrSoZ/rM/HXeFwfGOP7yUcTavc0ZMSI+9ygACkTx78Xre3ky
-         95cw==
-X-Received: by 10.170.220.214 with SMTP id m205mr25352671ykf.13.1437342573702;
- Sun, 19 Jul 2015 14:49:33 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 14:49:33 -0700 (PDT)
-In-Reply-To: <1437328836-19156-2-git-send-email-bdwalton@gmail.com>
-X-Google-Sender-Auth: 0FcMpKKuNcT6Wb9aoVzKpvV1TEM
+	id S1754079AbbGSWCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 18:02:01 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:53326 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754068AbbGSWCA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jul 2015 18:02:00 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2C3VgBvHaxVPN4GFlxcgxIBAYEHhwZtthaFfAQEgSBNAQEBAQEBBwEBAQFAASQbhB4UAQEuHgEBLAIIAgEkOQEEGgYHAxobAgECAwGIIZ52h1OOY48Tj28RAYNvgRQFjHCHYgGBCqQdgW8BAQgBAQEBAYIlPYE+gT4BAQE
+X-IPAS-Result: A2C3VgBvHaxVPN4GFlxcgxIBAYEHhwZtthaFfAQEgSBNAQEBAQEBBwEBAQFAASQbhB4UAQEuHgEBLAIIAgEkOQEEGgYHAxobAgECAwGIIZ52h1OOY48Tj28RAYNvgRQFjHCHYgGBCqQdgW8BAQgBAQEBAYIlPYE+gT4BAQE
+X-IronPort-AV: E=Sophos;i="5.15,504,1432594800"; 
+   d="scan'208";a="614446415"
+Received: from host-92-22-6-222.as13285.net (HELO PhilipOakley) ([92.22.6.222])
+  by out1.ip05ir2.opaltelecom.net with ESMTP; 19 Jul 2015 23:01:58 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274297>
 
-On Sun, Jul 19, 2015 at 2:00 PM, Ben Walton <bdwalton@gmail.com> wrote:
-> It seems that xpg4/tr mishandles some strings involving [ not followed
-> by a character class:
-> % echo '[::1]' | /usr/xpg4/bin/tr -d '[]'
-> [::1
->
-> % echo '[::1]' | /usr/xpg4/bin/tr -d '['
-> usr/xpg4/bin/tr: Bad string.
->
-> This was breaking two tests. To fix the issue, use the octal
-> representations of [ and ] instead. Reference the octal expression as
-> a newly exported variable so that it's shared across tests and more
-> easily understood when reading it.
->
-> Signed-off-by: Ben Walton <bdwalton@gmail.com>
-> ---
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 39da9c2..6b5b6cd 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -173,7 +173,10 @@ LF='
->  # when case-folding filenames
->  u200c=$(printf '\342\200\214')
->
-> -export _x05 _x40 _z40 LF u200c
-> +# [ and ], for use by tr commands.
-> +squarebrackets="\133\135"
+I've been using git-send-email with repeated individual --cc="email 
+address" parameters on the command line.
 
-While it's true that the reader may be able to consult the commit
-message to learn more about "squarebrackets" and "tr", this might be
-one of those cases where either a more explanatory in-code comment is
-warranted or the comment should be dropped altogether, since the the
-current comment is not illuminating. I'd vote for expanding the
-comment a bit to mention "some versions of Solaris 'tr'" and a short
-description of the misbehavior.
+I tried putting all the addresses, one per line, into a file 'cc-cmd', 
+so I could use if for the --cc-cmd option.
 
-Also, Hannes wondered how Solaris 'tr' would react to '[][]'. Were you
-able to test that or the alternative '[[]]'?
+I then tried to use --cc-cmd='cat cc-cmd' to do the send-email (as 
+a --dry-run). This produced, as part of the output, a list of the output 
+of the cc-cmd, which showed not only the file contents, but this was 
+then followed by the full patch, as if it was part of the list of email 
+addresses.
+
+Finally, at the end of the inclusion of the patch, I got
+
+(cc-cmd) Adding cc: -- from: 'cat cc-cmd'
+(cc-cmd) Adding cc: 2.4.2.windows.1.5.gd32afb6 from: 'cat cc-cmd'
+(cc-cmd) Adding cc:  from: 'cat cc-cmd'
+error: unable to extract a valid address from:
+What to do with this address? ([q]uit|[d]rop|[e]dit):
+
+Could this have been caused by an extra (blank) line at the end of the 
+cc-cmd file?
+
+Also, does anyone have an example of a working --cc-cmd option?
+
+(this is on g4w: git version 2.3.1)
+
+Philip 
