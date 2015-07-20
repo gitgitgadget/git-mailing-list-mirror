@@ -1,119 +1,98 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
-Date: Mon, 20 Jul 2015 23:53:11 +0530
-Message-ID: <CAOLa=ZTJ3syFEMjdwumZEP+XXzVK9qWz2S=7QsK_N1ev-WULtw@mail.gmail.com>
-References: <CAOLa=ZT7szz=cwzEmVDPKucRbh2o_8mBhUY22=R8qCU34QPwGg@mail.gmail.com>
- <1437412947-17555-1-git-send-email-Karthik.188@gmail.com> <CAPig+cQ1uAHxMRuiBja2ap-nVCU2dUMLcN40Xb=HnT_kN_MW_A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 20:23:47 2015
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH 1/3] doc: convert send-email option headings to nouns
+Date: Mon, 20 Jul 2015 19:26:27 +0100
+Message-ID: <1437416790-5792-2-git-send-email-philipoakley@iee.org>
+References: <1437416790-5792-1-git-send-email-philipoakley@iee.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 20:26:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHFj8-0005KV-8M
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 20:23:46 +0200
+	id 1ZHFls-0006rG-3u
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 20:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244AbbGTSXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 14:23:42 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:35118 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754032AbbGTSXl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 14:23:41 -0400
-Received: by obbop1 with SMTP id op1so106911193obb.2
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 11:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wYzNePRcWztzIJ31uFld8XZ9vXJOvTIvNUKKVx/rUao=;
-        b=ULpIJWa2P6HFcB+lPIDqtXh4mSUtOCRWfclEGwweaIZh3fE7IZ0hgnLcDGUXFl1Q7e
-         8++IDoYRyhGfBjz95nQPUmnnssOBfDR4OjKT1e4DkbCYNNq2n0YKn1VNoOnGToK84Jgh
-         HPpLyB7Y0Br34i864E5p9EcXWg2DbCdBFpVBZe5nkd2jBr+H03Dv1ZPLPkCksCTSJ7Cs
-         RedTbRb8qDEUw//WolxPSFZPjT35wuDRB51YopWCO7pB8NYQPSjj6nWovW0eVueK4mrN
-         ue3CJmijq/kzYTLxaPF2CQKSfGj9zwBMEILyJSm4x2id+A+tVTTsPAdQVhqgvz8y/7oG
-         FEGg==
-X-Received: by 10.60.62.105 with SMTP id x9mr27018587oer.1.1437416621218; Mon,
- 20 Jul 2015 11:23:41 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 20 Jul 2015 11:23:11 -0700 (PDT)
-In-Reply-To: <CAPig+cQ1uAHxMRuiBja2ap-nVCU2dUMLcN40Xb=HnT_kN_MW_A@mail.gmail.com>
+	id S1755043AbbGTS0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 14:26:30 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:33942 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753300AbbGTS02 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2015 14:26:28 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CzCQBiPK1VPHMBFlxcgkFSgT2GUIFZuz0EAgKBLk0BAQEBAQEHAQEBAUABP4QkAQEERw8jEAgaLzkKAwkIBhOIMrdtkG8BAQgij28RAVEHBoQlBZRSpSiBCYMaPTGBBgcXB4EgAQEB
+X-IPAS-Result: A2CzCQBiPK1VPHMBFlxcgkFSgT2GUIFZuz0EAgKBLk0BAQEBAQEHAQEBAUABP4QkAQEERw8jEAgaLzkKAwkIBhOIMrdtkG8BAQgij28RAVEHBoQlBZRSpSiBCYMaPTGBBgcXB4EgAQEB
+X-IronPort-AV: E=Sophos;i="5.15,509,1432594800"; 
+   d="scan'208";a="614509312"
+Received: from host-92-22-1-115.as13285.net (HELO localhost) ([92.22.1.115])
+  by out1.ip05ir2.opaltelecom.net with ESMTP; 20 Jul 2015 19:26:27 +0100
+X-Mailer: git-send-email 2.3.1
+In-Reply-To: <1437416790-5792-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274341>
 
-On Mon, Jul 20, 2015 at 11:31 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Jul 20, 2015 at 1:22 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Add a new atom "align" and support %(align:X) where X is a number.
->> This will align the preceeding atom value to the left followed by
->> spaces for a total length of X characters. If X is less than the item
->> size, the entire atom value is printed.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> index 7561727..93f59aa 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
->>                         else
->>                                 v->s = " ";
->>                         continue;
->> +               } else if (starts_with(name, "align:")) {
->> +                       const char *valp = NULL;
->> +
->> +                       skip_prefix(name, "align:", &valp);
->> +                       if (!valp[0])
->> +                               die(_("no value given with 'align:'"));
->> +                       strtoul_ui(valp, 10, &ref->align_value);
->> +                       if (ref->align_value < 1)
->> +                               die(_("value should be greater than zero: align:%u"), ref->align_value);
->> +                       v->s = "";
->
-> Mental note: v->s points at literal zero-length string ("").
->
->> +                       continue;
->>                 } else
->>                         continue;
->>
->> @@ -1254,17 +1268,40 @@ static void emit(const char *cp, const char *ep)
->>         }
->>  }
->>
->> +static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
->> +{
->> +       if (ref->align_value && !starts_with(used_atom[parsed_atom], "align")) {
->> +               unsigned int len = 0;
->> +
->> +               if (*v->s)
->> +                       len = utf8_strwidth(v->s);
->> +               if (ref->align_value > len) {
->> +                       struct strbuf buf = STRBUF_INIT;
->> +                       if (*v->s)
->> +                               strbuf_addstr(&buf, v->s);
->> +                       if (*v->s && v->s[0] == '\0')
->> +                               free((char *)v->s);
->
-> Is the "v->s[0] == '\0'" checking for the same literal zero-length
-> string assigned above? If so, attempting to free() that string doesn't
-> make sense, since it's not heap-allocated. Maybe you meant != '\0'?
->
-> Overall, this code is getting rather complex and difficult to follow
-> (especially with all the 'v->s' checks thrown in). Junio's proposed
-> 'pseudo_atom' and 'ref_formatting_state' would go a long way toward
-> simplifying it.
->
+... for ease of reference within the text.
 
-You're right, thats what I meant.
-Having a look at Junio's proposed idea.
+Except the 'Sending options' for which there wasn't an
+obvious noun phrase.
 
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ Documentation/git-send-email.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 7ae467b..bc357b8 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -41,8 +41,8 @@ and the "Subject:" of the message as the second line.
+ OPTIONS
+ -------
+ 
+-Composing
+-~~~~~~~~~
++Composition options
++~~~~~~~~~~~~~~~~~~~
+ 
+ --annotate::
+ 	Review and edit each patch you're about to send. Default is the value
+@@ -147,8 +147,8 @@ Note that no attempts whatsoever are made to validate the encoding.
+ 	the header is added, but it can be turned off by setting the
+ 	`sendemail.xmailer` configuration variable to `false`.
+ 
+-Sending
+-~~~~~~~
++Sending options
++~~~~~~~~~~~~~~~
+ 
+ --envelope-sender=<address>::
+ 	Specify the envelope sender used to send the emails.
+@@ -234,8 +234,8 @@ must be used for each option.
+ 	commands and replies will be printed. Useful to debug TLS
+ 	connection and authentication problems.
+ 
+-Automating
+-~~~~~~~~~~
++Automation options
++~~~~~~~~~~~~~~~~~~
+ 
+ --to-cmd=<command>::
+ 	Specify a command to execute once per patch file which
+@@ -326,8 +326,8 @@ Failure to do so may not produce the expected result in the
+ recipient's MUA.
+ 
+ 
+-Administering
+-~~~~~~~~~~~~~
++Administration options
++~~~~~~~~~~~~~~~~~~~~~~
+ 
+ --confirm=<mode>::
+ 	Confirm just before sending:
 -- 
-Regards,
-Karthik Nayak
+2.4.2.windows.1.5.gd32afb6
