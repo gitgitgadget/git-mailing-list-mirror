@@ -1,110 +1,83 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2] unpack-trees: don't update files with CE_WT_REMOVE
- set
-Date: Mon, 20 Jul 2015 13:40:48 -0400
-Organization: Twitter
-Message-ID: <1437414048.30911.10.camel@twopensource.com>
-References: <xmqqk2ty1reo.fsf@gitster.dls.corp.google.com>
-	 <1437167967-5933-1-git-send-email-dturner@twopensource.com>
-	 <20150718083719.GA19676@lanh>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+Date: Mon, 20 Jul 2015 13:47:44 -0400
+Message-ID: <CAPig+cT-_Ha=zF1E832cjN-Yhqgs1W73+A2+O9MxgeJ+VJNzbQ@mail.gmail.com>
+References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
+	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
+	<xmqq8uaazu3v.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Anatole Shaw <git-devel@omni.poc.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 19:40:56 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 19:47:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHF3e-0006ln-1Z
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 19:40:54 +0200
+	id 1ZHFAL-0002IF-Vc
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 19:47:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755993AbbGTRkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 13:40:49 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:33783 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755329AbbGTRks (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 13:40:48 -0400
-Received: by qged69 with SMTP id d69so46706618qge.0
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 10:40:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=8DKxr5/qdN5+AzmJJMmKDqnw4P63TeQdiKOiV/ryjFQ=;
-        b=BL3pphNp5VUvePVMN7b5aVkenBFDPLGyUArGyrhSu8spiPEa1vq2JA0tqhuoi0Afuf
-         W/q9VfXB0KPBtxO4TDTuxb6q9HsuO6+sVzTxN1IvF2L6cPCSoA7LZtFArEM87JKK3ASa
-         uxdD3HJT3A+PizbKfi4w6dGHkJ55RgsyskyFeCYIGjHHiaaLuEzHPgzJEERWJuKPIKvi
-         7bb8ae2KVwTi1YzihEsZs2SMY0ed4UAw2iFJzrBkZfTp6WB5mlSTh2mLQ3V8GbCeIaqO
-         h7JPXloG496cspbanNIe/r6hKsLOqTh5eQJO3VLDjwB7p7FJAQnlDDqvreaZAp34FwZU
-         znZA==
-X-Gm-Message-State: ALoCoQmKLUWvvT67zAwJ0KOHE9QZKTigDXIA/5romnDQALkfDzxYXJ4sNEij3xLHQWs3Hu6+cjuz
-X-Received: by 10.140.233.22 with SMTP id e22mr41458310qhc.67.1437414047661;
-        Mon, 20 Jul 2015 10:40:47 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 89sm11307468qkw.13.2015.07.20.10.40.45
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jul 2015 10:40:46 -0700 (PDT)
-In-Reply-To: <20150718083719.GA19676@lanh>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1756725AbbGTRrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 13:47:46 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:36061 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756616AbbGTRrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 13:47:45 -0400
+Received: by ykay190 with SMTP id y190so144663187yka.3
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 10:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SdLT/E4AwALOSMZKJYiluIXWwCe0PpW+sSU3BlVv/u0=;
+        b=U1EwKw/eGlzlY4CKIq1mvR8n0fSl07jjLRsrxYA5c5u69YCN5iiPi4ogdHpdYBo0G8
+         xI6pmjiLSXxQj0K00POibYEb8HheP9BSkI2hqQwS4bgDbrBSyjl7elDcwhLC4KUQf86H
+         NsKpieoKxwx6teKgeZ6mY+H1jbC5CJKdFrGlKpPD1CWoNvj0ctV0d5f3UlDzguUBJIyZ
+         YSl43lHDHxOsD9xpJVjVB7NsGhtoJEtU6aciLc4Kecr6n/ZZFVM6TbbuUR6V5btHTRtk
+         AB4sDuT4rlJiKYrMlkNe/eONgBXSHvyIcRXjX1eESMkKbfILrLVGAhgrZbHan/G+2tG/
+         TIAA==
+X-Received: by 10.129.50.140 with SMTP id y134mr29409299ywy.39.1437414464733;
+ Mon, 20 Jul 2015 10:47:44 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Mon, 20 Jul 2015 10:47:44 -0700 (PDT)
+In-Reply-To: <xmqq8uaazu3v.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 62Hes4uonxJUtO1ZkVX43VxaPZA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274335>
 
-Anatole tells me that this works for us.  Thanks.
+On Mon, Jul 20, 2015 at 12:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>> Add a new atom "align" and support %(align:X) where X is a number.
+>>> This will align the preceeding atom value to the left followed by
+>>> spaces for a total length of X characters. If X is less than the item
+>>> size, the entire atom value is printed.
+>>>
+>>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>>> ---
+>>> diff --git a/ref-filter.c b/ref-filter.c
+>>> index 7561727..b81a08d 100644
+>>> --- a/ref-filter.c
+>>> +++ b/ref-filter.c
+>>> @@ -53,6 +55,7 @@ static struct {
+>>>         { "flag" },
+>>>         { "HEAD" },
+>>>         { "color" },
+>>> +       { "align" },
+>>
+>> Not a new issue, but some compilers (Solaris?) complain about the
+>> trailing comma.
+>
+> Hmm, are you sure?  I thought we avoid trailing comma for enum
+> definitions, but not a list of values like this.
 
-On Sat, 2015-07-18 at 15:37 +0700, Duy Nguyen wrote:
-> On Fri, Jul 17, 2015 at 05:19:27PM -0400, David Turner wrote:
-> > Don't update files in the worktree from cache entries which are
-> > flagged with CE_WT_REMOVE.
-> > 
-> > When a user does a sparse checkout, git removes files that are marked
-> > with CE_WT_REMOVE (because they are out-of-scope for the sparse
-> > checkout). If those files are also marked CE_UPDATE (for instance,
-> > because they differ in the branch that is being checked out and the
-> > outgoing branch), git would previously recreate them.  This patch
-> > prevents them from being recreated.
-> > 
-> > These erroneously-created files would also interfere with merges,
-> > causing pre-merge revisions of out-of-scope files to appear in the
-> > worktree.
-> 
-> Thank you both for catching this. Just a small suggestion. Perhaps we
-> should do this instead. apply_sparse_checkout() is the function where
-> all "action" manipulation (add, delete, update files..) for sparse
-> checkout occurs and it should not ask to delete and update both at the
-> same time.
-> 
-> -- 8< --
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 2927660..d6cf849 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -224,6 +224,9 @@ static int check_updates(struct unpack_trees_options *o)
->  		struct cache_entry *ce = index->cache[i];
->  
->  		if (ce->ce_flags & CE_UPDATE) {
-> +			if (ce->ce_flags & CE_WT_REMOVE)
-> +				die("BUG: both update and delete flags are set on %s",
-> +				    ce->name);
->  			display_progress(progress, ++cnt);
->  			ce->ce_flags &= ~CE_UPDATE;
->  			if (o->update && !o->dry_run) {
-> @@ -293,6 +296,7 @@ static int apply_sparse_checkout(struct index_state *istate,
->  		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
->  			return -1;
->  		ce->ce_flags |= CE_WT_REMOVE;
-> +		ce->ce_flags &= ~CE_UPDATE;
->  	}
->  	if (was_skip_worktree && !ce_skip_worktree(ce)) {
->  		if (verify_absent_sparse(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
-> -- 8< --
-> 
-> --
-> Duy
+It's been years since I encountered such a compiler, so it's possible
+that my brain is conflating different cases of trailing commas...
