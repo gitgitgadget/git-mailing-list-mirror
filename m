@@ -1,79 +1,84 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 10b/16] engine.pl: delete the captured stderr file if empty
-Date: Mon, 20 Jul 2015 23:54:06 +0100
-Message-ID: <1437432846-5796-3-git-send-email-philipoakley@iee.org>
-References: <1437432846-5796-1-git-send-email-philipoakley@iee.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 21 00:53:34 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] doc: give examples for send-email cc-cmd operation
+Date: Mon, 20 Jul 2015 15:59:13 -0700
+Message-ID: <xmqq615exwou.fsf@gitster.dls.corp.google.com>
+References: <1437416790-5792-1-git-send-email-philipoakley@iee.org>
+	<1437416790-5792-5-git-send-email-philipoakley@iee.org>
+	<xmqqoaj6y50b.fsf@gitster.dls.corp.google.com>
+	<996C8C8A69844E44890D09811C57DAC8@PhilipOakley>
+	<xmqqa8uqxxpn.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: "Git List" <git@vger.kernel.org>,
+	"Eric Sunshine" <sunshine@sunshineco.com>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Jul 21 00:59:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHJwC-00086Q-R9
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 00:53:33 +0200
+	id 1ZHK1s-0002nt-Nd
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 00:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757330AbbGTWxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 18:53:23 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:62450 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757319AbbGTWxS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2015 18:53:18 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DJCAA7e61VPHMBFlxcgkFSVGmIKbVChXsEAgKBLz0QAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKBgENBhOIMgnJMAErkFIHhCsFlFKEb4k7ln6BCYMaPTEBgkoBAQE
-X-IPAS-Result: A2DJCAA7e61VPHMBFlxcgkFSVGmIKbVChXsEAgKBLz0QAQEBAQEBAQYBAQEBQAE/hCQBAQRWIxAISTkKBgENBhOIMgnJMAErkFIHhCsFlFKEb4k7ln6BCYMaPTEBgkoBAQE
-X-IronPort-AV: E=Sophos;i="5.15,510,1432594800"; 
-   d="scan'208";a="39174027"
-Received: from host-92-22-1-115.as13285.net (HELO localhost) ([92.22.1.115])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 20 Jul 2015 23:53:18 +0100
-X-Mailer: git-send-email 2.3.1
-In-Reply-To: <1437432846-5796-1-git-send-email-philipoakley@iee.org>
+	id S1752913AbbGTW7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 18:59:16 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:35236 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633AbbGTW7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 18:59:15 -0400
+Received: by pdrg1 with SMTP id g1so108319968pdr.2
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 15:59:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=eUDmbYO8EUevQ3Rd9GGO3Tv4/TFWJiTpNgN221csngc=;
+        b=RwhlGpp3YWvA4GOVkfi4BYg0ZWmdu7Mw078pFBslzqjf1R5jcY5gLgeOW4sV/rQro1
+         +foIsFO+/q8yiu/lyVZLZ/nywtA23ziFsQMUuWPsJ2nxccvPZ8/rwP2iiaMmij7woeNe
+         XpkEHgIuYYrb5onTilZyN8is5X588yJXZdFSHej2zOtw7UL8vIQYOFT5jPH0WPXNmDns
+         oXdXw83rSZDxKJEYHHBiUg+kDR1yGV8mYZ74wKZT8DjqudosJx3LaloO78sYf+SkWw6c
+         UMdMCSFW2wBCRxg37fhSoBkd9/AG3XjZP7My4CVATnA4VwIUuhQw5wswQ9jimaaZKh6k
+         tGhQ==
+X-Received: by 10.70.37.144 with SMTP id y16mr65102696pdj.86.1437433154963;
+        Mon, 20 Jul 2015 15:59:14 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d4dc:19bb:f338:713b])
+        by smtp.gmail.com with ESMTPSA id c5sm23667901pds.87.2015.07.20.15.59.14
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 20 Jul 2015 15:59:14 -0700 (PDT)
+In-Reply-To: <xmqqa8uqxxpn.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 20 Jul 2015 15:37:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274360>
 
-Keep the build clean of extraneous files if it is indeed clean.
-Otherwise leave the msvc-build-makedryerrors.txt file both as
-a flag for any CI system or for manual debugging.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Alternatively, with improved syntactic sugar[1]:
-	unlink $ErrsFile if -f -z $ErrsFile;
-could be used but requires Perl 5.10 or later, which is not
-available on Msysgit, but is available on the newer Git-for-Windows
-SDK on Msys2 [2].
+>> I was trying to use, essentially, 'cat list.txt' as the command,...
 
-Note that the file will contain the new values of the GIT_VERSION
-and GITGUI_VERSION if they were generated by the make file. They
-are omitted if the release is tagged and identically defined in
-their respective GIT_VERSION_GEN file DEF_VER variables.
+One thing that needs to be made clear is that I do not think we want
+to encourage `cat list.txt #` abuse in the first place.  It is an
+unacceptable hack for us to encourage in the longer term.  It may
+happen to work with the current implementation, but it does so
+merely by depending on the implementation too much.
 
-[1]: http://perldoc.perl.org/functions/-X.html
-[2]: http://git-for-windows.github.io/
+If it is so common to want to spray all your patches to exactly the
+same list of recipients that is unconditionally determined, having
+multiple sendemail.cc configuration variables, which are cumulative,
+is already one way to do so, and you do not have to type such a long
+option "--cc-cmd='cat $filename'" every time.
 
-Helped-by:  Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
-Eric's help gmane.comp.version-control.msysgit/21745
----
- contrib/buildsystems/engine.pl | 2 ++
- 1 file changed, 2 insertions(+)
+And if you do not want configuration for some reason, and having a
+list of addresses in a flat file is so common, we could have a new
+option "--cc-list=$filename" to support that use case.  I however
+doubt anything that starts with "First you make a list of addresses
+in a flat file, and then do this" is a good solution.
 
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index a6999b6..154575d 100755
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -77,6 +77,8 @@ EOM
- 
- my $ErrsFile = "msvc-build-makedryerrors.txt";
- @makedry = `cd $git_dir && make -n MSVC=1 V=1 2>$ErrsFile` if !@makedry;
-+# test for an empty Errors file and remove it
-+unlink $ErrsFile if -f $ErrsFile && -z _;
- 
- # Parse the make output into usable info
- parseMakeOutput();
--- 
-2.3.1
+I would think that it would probably be the best way to address "I
+often want to cc these recipients, but not always" is to keep a list
+of aliases, each entry of which expands to the recipients, and say
+"--cc=group" from the command line to have it expanded to the set of
+recipients.
