@@ -1,10 +1,10 @@
 From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2 08/16] engine.pl: ignore invalidcontinue.obj
- which is known to MSVC
-Date: Mon, 20 Jul 2015 07:13:14 +0100
+Subject: Re: [PATCH v2 10/16] engine.pl: delete the captured stderr
+ file if empty
+Date: Mon, 20 Jul 2015 07:16:24 +0100
 Organization: OPDS
-Message-ID: <53A9335E62C64D578188F002443E6247@PhilipOakley>
-References: <1437336497-4072-1-git-send-email-philipoakley@iee.org><1437336497-4072-9-git-send-email-philipoakley@iee.org> <CAPig+cRYPVg-YOvUvH=7QViDRChG1Lvwt84-3z8ERjBMVdrvnw@mail.gmail.com>
+Message-ID: <FDE2D068444A4350B0C2F25275CBC41D@PhilipOakley>
+References: <1437336497-4072-1-git-send-email-philipoakley@iee.org><1437336497-4072-11-git-send-email-philipoakley@iee.org> <CAPig+cSDGUNZfc3cV=P2WUDUR+MBBjoHFxTBFaizf0NH-LmFTw@mail.gmail.com>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
@@ -13,16 +13,16 @@ Cc: "Git List" <git@vger.kernel.org>,
 	"MsysGit List" <msysgit@googlegroups.com>,
 	"Yue Lin Ho" <b8732003@student.nsysu.edu.tw>
 To: "Eric Sunshine" <sunshine@sunshineco.com>
-X-From: msysgit+bncBDSOTWHYX4PBB3FCWKWQKGQEKODC7NY@googlegroups.com Mon Jul 20 08:13:02 2015
-Return-path: <msysgit+bncBDSOTWHYX4PBB3FCWKWQKGQEKODC7NY@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBIVEWKWQKGQE2VG5CGA@googlegroups.com Mon Jul 20 08:16:04 2015
+Return-path: <msysgit+bncBDSOTWHYX4PBBIVEWKWQKGQE2VG5CGA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f63.google.com ([209.85.215.63])
+Received: from mail-la0-f62.google.com ([209.85.215.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB3FCWKWQKGQEKODC7NY@googlegroups.com>)
-	id 1ZH4Jy-0006gN-1w
-	for gcvm-msysgit@m.gmane.org; Mon, 20 Jul 2015 08:13:02 +0200
-Received: by laef2 with SMTP id f2sf53609936lae.1
-        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 23:13:01 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBIVEWKWQKGQE2VG5CGA@googlegroups.com>)
+	id 1ZH4Mt-0007qT-TM
+	for gcvm-msysgit@m.gmane.org; Mon, 20 Jul 2015 08:16:03 +0200
+Received: by lagw2 with SMTP id w2sf53329072lag.0
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 23:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:reply-to:from:to:cc:references:subject:date:organization
@@ -30,32 +30,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :x-spam-checked-in-group:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=O2hdbxD4DCxqo7DWVE3DWF1f/SwWZktzTesQ2QzHzD0=;
-        b=XA9in6HuxAJiKdtEYffBF5StC309VViwMMRn7Dqrw0y/WPShl17Y0yEriCgXTk3REr
-         vA//Ej/34aSzdWGQgYvdUdilerfzyw9SYvbr9wsNVwIXBFdy9yXx+qFV5njkO/ecpqdm
-         iWGImUCzQfO9UXN1NhEdrv7ATRqkhOX7dOnc4OCxc7Zi2TTPiOxUdouB/7jc9/bmXKbJ
-         PbToKdqgHMxIHkKgFcFrhtJVXumsWKjWpCqmhA/DUcjTaQCc8iCDPFvvFb2byO7KAjZh
-         lXZVcTQs/uPs4mglQUL3im8nfGAs7XH/zQkIU9fTG8B4rA9s6nxLKwUWKh7HGAhZRNLs
-         uc+Q==
-X-Received: by 10.152.18.231 with SMTP id z7mr361723lad.23.1437372781653;
-        Sun, 19 Jul 2015 23:13:01 -0700 (PDT)
+        bh=BLRRb7lbHHKD8QX5bhA2Q9Pv/S3bcvN1VdjQ1yHoQJg=;
+        b=q+ylOcEB2jDpxHJOg41Qx+hJTRhHhrfJ/XnBY2wkpQNx6hvM4VQrKa2O4yrLL7UpKa
+         ZN3LPq7BixQGZcZO0RWCQrMP2LkcOR5sUAVKZGVU8ZWaz00VE+C3O/OZrWohGfJK3X19
+         4AxONN8tmvA4huUHtVLHa7EYeVKQ12HslAMNk2R4gD2UPwoekmACOqbCzuhx8ZwoZ3Yv
+         wyD9T7agEHLx7IKrtduFFuMziNJ/PZD7JVYYeE0Qg/iUwEUZHHPvqvKEp/6TifcWMMxC
+         kAmeIurPXiFXpM+CzrQMdKqsabRiq4Rt5rmJ5etz/hKSwI2+gxGp+fpGb6blPoiciJSt
+         sJ0w==
+X-Received: by 10.152.5.100 with SMTP id r4mr377276lar.13.1437372963575;
+        Sun, 19 Jul 2015 23:16:03 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.29.7 with SMTP id f7ls681977lah.48.gmail; Sun, 19 Jul 2015
- 23:13:00 -0700 (PDT)
-X-Received: by 10.152.120.69 with SMTP id la5mr14136493lab.7.1437372780139;
-        Sun, 19 Jul 2015 23:13:00 -0700 (PDT)
+Received: by 10.152.206.76 with SMTP id lm12ls119802lac.109.gmail; Sun, 19 Jul
+ 2015 23:16:02 -0700 (PDT)
+X-Received: by 10.152.37.101 with SMTP id x5mr14144496laj.5.1437372962332;
+        Sun, 19 Jul 2015 23:16:02 -0700 (PDT)
 Received: from out1.ip04ir2.opaltelecom.net (out1.ip04ir2.opaltelecom.net. [62.24.128.240])
-        by gmr-mx.google.com with ESMTP id fj7si315592wib.3.2015.07.19.23.12.59
+        by gmr-mx.google.com with ESMTP id v8si324198wiw.1.2015.07.19.23.16.02
         for <msysgit@googlegroups.com>;
-        Sun, 19 Jul 2015 23:13:00 -0700 (PDT)
+        Sun, 19 Jul 2015 23:16:02 -0700 (PDT)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.240 as permitted sender) client-ip=62.24.128.240;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2ARDAA6kaxVPHMBFlxcFoJ9VGmDI4QbtiiFbQQEAoEhTQEBAQEBAQcBAQEBQSQbhB4FAQEBAQIBCAEBGRUeAQEhBQYCAwUCAQMVAQICAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBUMCa5yhleOdyCBIooqhQaCby+BFAWUUgGBCoNkiHVGjmWEOINhgQmBKhwVgT89MQEBgkkBAQE
-X-IPAS-Result: A2ARDAA6kaxVPHMBFlxcFoJ9VGmDI4QbtiiFbQQEAoEhTQEBAQEBAQcBAQEBQSQbhB4FAQEBAQIBCAEBGRUeAQEhBQYCAwUCAQMVAQICAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBUMCa5yhleOdyCBIooqhQaCby+BFAWUUgGBCoNkiHVGjmWEOINhgQmBKhwVgT89MQEBgkkBAQE
+X-IronPort-Anti-Spam-Result: A2DLFQA6kaxVPHMBFlxcgxNUaYMje4IzbbYghXUEBAKBIU0BAQEBAQEHAQEBAUEkG4QeBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBBoGBwMUBhMIAgECAwGIFQyue4ZXjxeBIokogQKFBoJvL4EUBZRSAYEKg2SJO5Z+gQmBW4E/PTGCSwEBAQ
+X-IPAS-Result: A2DLFQA6kaxVPHMBFlxcgxNUaYMje4IzbbYghXUEBAKBIU0BAQEBAQEHAQEBAUEkG4QeBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBBoGBwMUBhMIAgECAwGIFQyue4ZXjxeBIokogQKFBoJvL4EUBZRSAYEKg2SJO5Z+gQmBW4E/PTGCSwEBAQ
 X-IronPort-AV: E=Sophos;i="5.15,507,1432594800"; 
-   d="scan'208";a="547847696"
+   d="scan'208";a="547851411"
 Received: from host-92-22-1-115.as13285.net (HELO PhilipOakley) ([92.22.1.115])
-  by out1.ip04ir2.opaltelecom.net with ESMTP; 20 Jul 2015 07:12:52 +0100
+  by out1.ip04ir2.opaltelecom.net with ESMTP; 20 Jul 2015 07:16:01 +0100
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
@@ -76,88 +76,55 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274315>
 
-From: "Eric Sunshine" <sunshine@sunshineco.com> Sent: Monday, July 20, 
-2015 2:54 AM
+From: "Eric Sunshine" <sunshine@sunshineco.com>
 > On Sun, Jul 19, 2015 at 4:08 PM, Philip Oakley <philipoakley@iee.org> 
 > wrote:
->> Commit 4b623d8 (MSVC: link in invalidcontinue.obj for better
->> POSIX compatibility, 2014-03-29) is not processed correctly
->> by the buildsystem. Ignore it.
->
-> What does "not processed correctly" mean? For a person reading the
-> commit message, but lacking your experience with this, "not processed
-> correctly" seems akin to "it doesn't work"[1].
-True, it didn't work...
-
->              Can the commit message
-> provide a bit more detail?
-
-In fact it is `parsing` (not just `processing`) the output of a 
-'make --dry-run', and essentially the old parser did not handle .obj 
-files correctly. The deliberate introduction of this .obj file had to be 
-handled, and given it's deliberate inclusion I wanted some deliberate 
-handling code.
-
-A subsequent patch then fixes the generic .obj issue.
-
-I'll update the commit message. Thanks for noticing the slack writing.
-
->
-> [1]: http://www.chiark.greenend.org.uk/~sgtatham/bugs.html
-
-A timely reminder of this article...
->
->> Also split the .o and .obj processing; 'make' does not produce .obj
->> files. Only substitute filenames ending with .o when generating the
->> source .c filename.
+>> Keep the build clean of extraneous files if it is indeed clean.
+>> Otherwise leave the msvc-build-makedryerrors.txt file both as
+>> a flag for any CI system or for manual debugging.
+>>
+>> Note that the file will contain the new values of the GIT_VERSION
+>> and GITGUI_VERSION if they were generated by the make file. They
+>> are omitted if the release is tagged and indentically defined in
+>> their respective GIT_VERSION_GEN file DEF_VER variables.
 >>
 >> Signed-off-by: Philip Oakley <philipoakley@iee.org>
 >> ---
->>  contrib/buildsystems/engine.pl | 10 +++++++---
->>  1 file changed, 7 insertions(+), 3 deletions(-)
->>
 >> diff --git a/contrib/buildsystems/engine.pl 
 >> b/contrib/buildsystems/engine.pl
->> index 60c7a7d..9db3d43 100755
+>> index a6999b6..020776e 100755
 >> --- a/contrib/buildsystems/engine.pl
 >> +++ b/contrib/buildsystems/engine.pl
->> @@ -289,7 +289,7 @@ sub handleLibLine
->>  #    exit(1);
->>      foreach (@objfiles) {
->>          my $sourcefile = $_;
->> -        $sourcefile =~ s/\.o/.c/;
->> +        $sourcefile =~ s/\.o$/.c/;
->>          push(@sources, $sourcefile);
->>          push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
->>          push(@defines, 
->> @{$compile_options{"${sourcefile}_DEFINES"}});
->> @@ -333,8 +333,12 @@ sub handleLinkLine
->>          } elsif ($part =~ /\.(a|lib)$/) {
->>              $part =~ s/\.a$/.lib/;
->>              push(@libs, $part);
->> -        } elsif ($part =~ /\.(o|obj)$/) {
->> +        } elsif ($part eq 'invalidcontinue.obj') {
->> +            # ignore - known to MSVC
->> +        } elsif ($part =~ /\.o$/) {
->>              push(@objfiles, $part);
->> +        } elsif ($part =~ /\.obj$/) {
->> +            # do nothing, 'make' should not be producing .obj, only 
->> .o files
->>          } else {
->>              die "Unhandled link option @ line $lineno: $part";
->>          }
->> @@ -343,7 +347,7 @@ sub handleLinkLine
->>  #    exit(1);
->>      foreach (@objfiles) {
->>          my $sourcefile = $_;
->> -        $sourcefile =~ s/\.o/.c/;
->> +        $sourcefile =~ s/\.o$/.c/;
->>          push(@sources, $sourcefile);
->>          push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
->>          push(@defines, 
->> @{$compile_options{"${sourcefile}_DEFINES"}});
+>> @@ -77,6 +77,8 @@ EOM
+>>
+>>  my $ErrsFile = "msvc-build-makedryerrors.txt";
+>>  @makedry = `cd $git_dir && make -n MSVC=1 V=1 2>$ErrsFile` if 
+>> !@makedry;
+>> +# test for an empty Errors file and remove it
+>> +for ($ErrsFile) {unlink $_ if (-f $_) && (!-s $_);}
+>
+> Why the 'for' loop?
+>
+> Also, if you're using the 'for' loop for the $_ side-effect, then why
+> not the simpler:
+
+It was cargo cult programming, with some Google searching to select 
+between invocations. Most examples were looping through lists in 
+scripts, hence the down select.
+
+>
+>    for ($ErrsFile) { unlink if -f && !-s; }
+
+A lot better. Will fix.
+
+>
+> ?
+>
+>>
+>>  # Parse the make output into usable info
+>>  parseMakeOutput();
 >> --
 >> 2.4.2.windows.1.5.gd32afb6
 >
