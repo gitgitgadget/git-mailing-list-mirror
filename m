@@ -1,73 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Fix sed usage in tests to work around broken xpg4/sed on Solaris
-Date: Mon, 20 Jul 2015 09:07:04 -0700
-Message-ID: <xmqqd1zmzuc7.fsf@gitster.dls.corp.google.com>
-References: <1437232892-27978-1-git-send-email-bdwalton@gmail.com>
-	<55AB49C1.8010105@kdbg.org>
-	<fadc4ff7e755913a4c6076165556b56c@www.dscho.org>
-	<55AB6290.2090003@kdbg.org>
+Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+Date: Mon, 20 Jul 2015 09:12:04 -0700
+Message-ID: <xmqq8uaazu3v.fsf@gitster.dls.corp.google.com>
+References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
+	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ben Walton <bdwalton@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Jul 20 18:07:16 2015
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 18:12:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHDb0-0008IZ-JY
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 18:07:14 +0200
+	id 1ZHDfy-0002X9-8c
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 18:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142AbbGTQHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 12:07:08 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:35847 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753674AbbGTQHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 12:07:06 -0400
-Received: by pdjr16 with SMTP id r16so105649815pdj.3
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 09:07:06 -0700 (PDT)
+	id S1755343AbbGTQMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 12:12:13 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:32787 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbbGTQMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 12:12:07 -0400
+Received: by pdbnt7 with SMTP id nt7so32923964pdb.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 09:12:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=99wA5HagXCn0U6uP+ad6stqddhnGi3gWb8kAGHxC/is=;
-        b=CtMj8el2e6kyMgDLz8N1m+V5JnGVWltJ1PAaFflwLdOgsve4AC2Jb3xi7H4IGYia+T
-         SvIVwwpWaP+neZAuHFLPJ0zwMH3+68WhgDT9JbtCZX6POxF8Es3+UAPq25dp/SQcpFag
-         a2S9HvK+o5Gmc9ho4M5nysm0sEC6YytYOqM+VS+VA4UIPNCjVfH9lbPPun0UtNRJ5IVw
-         jonQVmyAZ+wkIVCNiUxtRO8p6tf7DIoRBVtAo5WJd3NsdcC57SbrHkyrBH7SfbC/UCUI
-         wsbjuTqJYTDJKYfzimvM0ZxN7EcF8q/cC0Qs7OPDC2ry+jDdhJIIflWPVZRIK03iW+6o
-         hp3g==
-X-Received: by 10.70.37.77 with SMTP id w13mr62042895pdj.49.1437408426251;
-        Mon, 20 Jul 2015 09:07:06 -0700 (PDT)
+        bh=ZT25OWKA4X+SN3xLU9ryMUkGnBl6He7D8w0y1UmI5yE=;
+        b=cajf4Rb0Rx5eftlv1ytuZlwKUWtCShG7xniiOsUTXxQKLYR4y6N2AAtSiOw+gvnqpU
+         oLalKn9jVy9Fisxmx96NWT0aHVdenCYBXPSFeqs++nl9eWAjXLWEX0S6+p+Fv42ejvwk
+         c9fLFXrDnZY0Ri+w0e6Hmd1EBHM21LIC8mZmxitk2eMNdJmBZDyobnx9u4uEscIezR/n
+         lnRLs/66vLmmm2zbHXdV8MbrZ1Ze2Kt7WEJGIeAeSz1uKh/+JxNRQ7+B0TV0DJ7dPOFh
+         9V3SMgQHe5ZbzV5YoSh3q52o6xKGSdt3qalaHtkfYBEuAX3YKXoUDOvn7vWg1MB7OvzH
+         4ozA==
+X-Received: by 10.66.102.103 with SMTP id fn7mr62315781pab.85.1437408727168;
+        Mon, 20 Jul 2015 09:12:07 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:d4dc:19bb:f338:713b])
-        by smtp.gmail.com with ESMTPSA id j4sm22578829pdg.64.2015.07.20.09.07.04
+        by smtp.gmail.com with ESMTPSA id o8sm22587742pdp.70.2015.07.20.09.12.05
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 20 Jul 2015 09:07:05 -0700 (PDT)
-In-Reply-To: <55AB6290.2090003@kdbg.org> (Johannes Sixt's message of "Sun, 19
-	Jul 2015 10:40:48 +0200")
+        Mon, 20 Jul 2015 09:12:05 -0700 (PDT)
+In-Reply-To: <CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 19 Jul 2015 19:49:36 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274328>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> I really wonder why the previous ">file+ && mv -f file+ file" dance
->> needs to be replaced?
+> On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add a new atom "align" and support %(align:X) where X is a number.
+>> This will align the preceeding atom value to the left followed by
+>> spaces for a total length of X characters. If X is less than the item
+>> size, the entire atom value is printed.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 7561727..b81a08d 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -53,6 +55,7 @@ static struct {
+>>         { "flag" },
+>>         { "HEAD" },
+>>         { "color" },
+>> +       { "align" },
 >
-> The sed must be replaced because some versions on Solaris choke on the
-> incomplete last line in the file.
+> Not a new issue, but some compilers (Solaris?) complain about the
+> trailing comma.
 
-Switching from sed to perl is not being questioned.
-
-I think Dscho is asking about the use of "-i", when the original
-idiom ">target+ && mv -f target+ target" worked perfectly fine.
-
-I.e.
-
-	perl -p -e '...' file >file+ &&
-        mv file+ file
+Hmm, are you sure?  I thought we avoid trailing comma for enum
+definitions, but not a list of values like this.
