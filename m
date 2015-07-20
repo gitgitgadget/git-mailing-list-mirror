@@ -1,141 +1,107 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
-Date: Sun, 19 Jul 2015 19:49:36 -0400
-Message-ID: <CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/9] ref-filter: support printing N lines from tag annotation
+Date: Sun, 19 Jul 2015 20:02:54 -0400
+Message-ID: <CAPig+cSXuJ7ohR=afzRbmfLtEuzhGYYTznc2J_qxwgBKwyYu9Q@mail.gmail.com>
 References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
+	<1437246749-14423-4-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 01:54:43 2015
+X-From: git-owner@vger.kernel.org Mon Jul 20 02:03:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZGyPq-0002yc-LO
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 01:54:43 +0200
+	id 1ZGyXr-0005nU-Fz
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 02:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102AbbGSXth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 19:49:37 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:36088 "EHLO
+	id S1754617AbbGTACz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2015 20:02:55 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:32911 "EHLO
 	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753985AbbGSXtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 19:49:36 -0400
-Received: by ykay190 with SMTP id y190so127745538yka.3
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 16:49:36 -0700 (PDT)
+	with ESMTP id S1754585AbbGTACz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2015 20:02:55 -0400
+Received: by ykfw194 with SMTP id w194so47769546ykf.0
+        for <git@vger.kernel.org>; Sun, 19 Jul 2015 17:02:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=Ooe4Z58Xgj+T0WMPN0fGV1HqVqoP8+KtW1O6Ku1d1PQ=;
-        b=OYl1TJhBcMAM6wPBDbCZz6580svKwj6l7vwcMIIUS5YDrv/cayHX/vkjtGqNan8BN4
-         35hk2W8DgUi2nS1hKkAyXeyuIwpz5AWDouAwTVzmunu1K4Krphq23LzxOH765ALSjuOl
-         h7XcAw3Geci9fGVDIlZdl++4UC/Eo4N/ncdcBDbHO6Eq8ryJXgyCYcU1mK9L+276QsCi
-         kDk5sXyAKcQqFNGWyKCYi5dVBry2a0F64hCpMd76uMuIEPl4bRfdlNu9QK1Kp9rn5wLz
-         xehR4sWF1T4xBaaxnbdmtp5fezmxLCZyiApI+dl++kW0/Q5ZsYo+Pv6mvXvo+e+vMA/A
-         tjBQ==
-X-Received: by 10.170.112.72 with SMTP id e69mr4252444ykb.69.1437349776113;
- Sun, 19 Jul 2015 16:49:36 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 16:49:36 -0700 (PDT)
-In-Reply-To: <1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: MRhZdms8ODlOoopWLG-IsQe5wTg
+        bh=xOoaPuPEddX0lNfcA0AToS4C4ZMG6PlMvQG7LkzJKpU=;
+        b=KuqqYgmgRg2XXYQqVhNVwxGHSgEL7w9M+ltcFTAo/yujXO6+fi12IdzXgTfJIzihb5
+         1ZgPbbhKok0uKgPtbqkEbwVVg5jYfhFQrxc2LZCD8TsGLmHtIt1XTLunYwccIfELVgTz
+         orgFiKK9wmXF2PDqSmcctq/lccE6LxtriDIH1ZcUPIE44cS0i/9aR1/5zSAcMFsHIYab
+         Xm2M0mbz5TmtO6xVxCYNeDYuE95HZhnvvO2KC42YWJ0Yzc964gzOSe5MyzJstl7YSpiB
+         fu3iFYZymWyXushn3RxpurtbXj5tjngYD17f21OS44OMxo+GFO2l1uI+SCgu8RpFuDd4
+         QUBg==
+X-Received: by 10.129.91.87 with SMTP id p84mr26345052ywb.95.1437350574507;
+ Sun, 19 Jul 2015 17:02:54 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 17:02:54 -0700 (PDT)
+In-Reply-To: <1437246749-14423-4-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: M-2Qy9E1qL0loe4p64h0wK0vQBM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274300>
 
 On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add a new atom "align" and support %(align:X) where X is a number.
-> This will align the preceeding atom value to the left followed by
-> spaces for a total length of X characters. If X is less than the item
-> size, the entire atom value is printed.
+> In 'tag.c' we can print N lines from the annotation of the tag using
+> the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
+> modify 'ref-filter' to support printing of N lines from the annotation
+> of tags.
 >
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 7561727..b81a08d 100644
+> index 771c48d..82731ac 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -53,6 +55,7 @@ static struct {
->         { "flag" },
->         { "HEAD" },
->         { "color" },
-> +       { "align" },
-
-Not a new issue, but some compilers (Solaris?) complain about the
-trailing comma.
-
->  };
->
->  /*
-> @@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
->                         else
->                                 v->s = " ";
->                         continue;
-> +               } else if (starts_with(name, "align:")) {
-> +                       const char *valp = NULL;
-> +
-> +                       skip_prefix(name, "align:", &valp);
-> +                       if (!valp[0])
-> +                               die(_("No value given with 'align='"));
-
-The parser expects "align:", but the error message talks about
-"align=". Also, current trend is to drop capitalization from the error
-message.
-
-> +                       strtoul_ui(valp, 10, &ref->align_value);
-> +                       if (ref->align_value < 1)
-> +                               die(_("Value should be greater than zero"));
-
-Drop capitalization. Also, the user seeing this message won't
-necessarily know to which value this refers. Better would be to
-provide context ("'align:' value should be..."), and even better would
-be to show the actual value at fault:
-
-    die(_("value should be greater than zero: align:%u\n",
-        ref_align_value);
-
-or something.
-
-> +                       v->s = "";
-> +                       continue;
->                 } else
->                         continue;
->
-> @@ -1254,17 +1268,38 @@ static void emit(const char *cp, const char *ep)
+> @@ -1288,7 +1288,48 @@ static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct
 >         }
 >  }
 >
-> +static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
-> +{
-> +       if (v->s[0] && ref->align_value) {
+> -void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+> +/* Print 'lines' no of lines of a given oid */
 
-Mental note: v->s[0] is not NUL ('\0').
+This is difficult to read and understand. I presume you meant "no." as
+shorthand for "number" but dropped the period. Even with the period,
+it's still hard to read. Perhaps rewrite it as:
 
-Also, in this code base, this is typically written *v->s rather than v->s[0].
+    If 'lines' is greater than 0, print that may lines of...
 
-> +               unsigned int len = 0;
-> +               len = utf8_strwidth(v->s);
+or something.
 
-You initialize 'len' to 0 but then immediately re-assign it.
+> diff --git a/ref-filter.h b/ref-filter.h
+> index c18781b..7dfdea0 100644
+> --- a/ref-filter.h
+> +++ b/ref-filter.h
+> @@ -87,8 +88,11 @@ int parse_ref_filter_atom(const char *atom, const char *ep);
+>  int verify_ref_format(const char *format);
+>  /*  Sort the given ref_array as per the ref_sorting provided */
+>  void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
+> -/*  Print the ref using the given format and quote_style */
+> -void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style);
+> +/*
+> + * Print the ref using the given format and quote_style. If lines > 0,
+> + * prints the "lines" no of lines of the objected pointed to.
+> + */
 
-> +               if (ref->align_value > len) {
-> +                       struct strbuf buf = STRBUF_INIT;
-> +                       strbuf_addstr(&buf, v->s);
-> +                       if (!v->s[0])
-> +                               free((char *)v->s);
+Same problem. This literal "no" is quite confusing. Perhaps rewrite as above:
 
-We know from the "mental note" above that v->s[0] is not NUL ('\0'),
-so this 'if' statement can never be true, thus is dead code.
+    If lines > 0, print that many lines of...
 
-> +                       strbuf_addchars(&buf, ' ', ref->align_value - len);
-> +                       v->s = strbuf_detach(&buf, NULL);
-> +               }
-> +               ref->align_value = 0;
-> +       }
-> +}
+> +void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style, unsigned int lines);
+
+ref-filter.h seems to be setting a precedent for overlong lines.
+Wrapping this manually could improve readability.
+
+>  /*  Callback function for parsing the sort option */
+>  int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
+>  /*  Default sort option based on refname */
+> --
+> 2.4.6
