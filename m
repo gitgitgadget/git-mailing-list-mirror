@@ -1,65 +1,105 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 2/3] doc: send-email; expand oon the meaning of 'auto-cc'
-Date: Mon, 20 Jul 2015 19:55:50 +0100
-Organization: OPDS
-Message-ID: <B9C93EEED9F74E15B696C41494B6DBF9@PhilipOakley>
-References: <1437416790-5792-1-git-send-email-philipoakley@iee.org> <1437416790-5792-4-git-send-email-philipoakley@iee.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] doc: give examples for send-email cc-cmd operation
+Date: Mon, 20 Jul 2015 15:14:41 -0400
+Message-ID: <CAPig+cQ2nTt60iw0Td_MTP7xftt2+OQAx63pOZ4XzH0qeOhDsA@mail.gmail.com>
+References: <1437416790-5792-1-git-send-email-philipoakley@iee.org>
+	<1437416790-5792-5-git-send-email-philipoakley@iee.org>
+	<CAPig+cQ_G=Ar0uxbxDaO6oEZwkRi7FM4qEQexDohDGxN10OJUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Eric Sunshine" <sunshine@sunshineco.com>
-To: "Philip Oakley" <philipoakley@iee.org>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 20 20:55:49 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 21:14:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHGE8-00065z-Ni
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 20:55:49 +0200
+	id 1ZHGWU-0007q0-O0
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 21:14:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633AbbGTSzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 14:55:44 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:47364 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753967AbbGTSzo (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2015 14:55:44 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DoCQCQQ61VPHMBFlxcgxOBLw6GUG28JQQEAgKBLk0BAQEBAQEHAQEBAUABJBuEHgUBAQEBAwgBAS4eAQEhCwEBAwUCAQMRBAEBCiUUAQQaBgcDDAgGARIIAgECAwGIIbk2jzgBAQgBAQEBHotMhCMRAVENgxGBFAEEjHCHYgGBCqNRTIEJgxo9MYENgT4BAQE
-X-IPAS-Result: A2DoCQCQQ61VPHMBFlxcgxOBLw6GUG28JQQEAgKBLk0BAQEBAQEHAQEBAUABJBuEHgUBAQEBAwgBAS4eAQEhCwEBAwUCAQMRBAEBCiUUAQQaBgcDDAgGARIIAgECAwGIIbk2jzgBAQgBAQEBHotMhCMRAVENgxGBFAEEjHCHYgGBCqNRTIEJgxo9MYENgT4BAQE
-X-IronPort-AV: E=Sophos;i="5.15,509,1432594800"; 
-   d="scan'208";a="685585108"
-Received: from host-92-22-1-115.as13285.net (HELO PhilipOakley) ([92.22.1.115])
-  by out1.ip06ir2.opaltelecom.net with ESMTP; 20 Jul 2015 19:55:42 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752913AbbGTTOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 15:14:42 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:33701 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752782AbbGTTOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 15:14:41 -0400
+Received: by ykfw194 with SMTP id w194so66602568ykf.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 12:14:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=b6YFKztlSE3ajZWRfd/z4vRuhEaqO07SPHbx+aiSvVs=;
+        b=UPt7roXwO2yLXWUvNqYorGIPGYqkyd4n6ZQ/envCHF/9nHvDQ+3fIIFaCpRgxR4Mwo
+         BTgCSuGfCMUdHNqWclYV2QFcHW6txYrS8Lv0+npQMyKKiBHJvXxO0pz/pIgSIS2Opf1q
+         vbY30zPoAU5zfxn+nWpnycMd2aVb0b4RXqnZDXwejp+aE84rFEe06kBUy+ZR7INbIzBd
+         v7XfKlxWuoIIMou1wPIk5vd4eWqFae4fwr0Z1QyxDGuBOv4kim36e18hGlv/DrQk9MGU
+         XMfW8Dmg3p0Ytg5mwh5JGksh3meTQijX6Os5AZCBTUQ9td1gU/r6pfisGH2PV+4POsly
+         02yQ==
+X-Received: by 10.13.202.204 with SMTP id m195mr29493706ywd.48.1437419681117;
+ Mon, 20 Jul 2015 12:14:41 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Mon, 20 Jul 2015 12:14:41 -0700 (PDT)
+In-Reply-To: <CAPig+cQ_G=Ar0uxbxDaO6oEZwkRi7FM4qEQexDohDGxN10OJUA@mail.gmail.com>
+X-Google-Sender-Auth: KB2k3A25bvZR-SPEHC-1jALgOxk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274349>
 
-This one, with "oon" in the subject, is incorrect.
+On Mon, Jul 20, 2015 at 2:50 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Jul 20, 2015 at 2:26 PM, Philip Oakley <philipoakley@iee.org> wrote:
+>> Explain how the cc-cmd (and to-cmd) is invoked, along with two
+>> simple examples (and a how-not-to example) to help in getting started.
+>>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>> ---
+>> +Simply, using `cat cc-cmd` as the --cc-cmd (with cc-cmd as the text file
+>> +of email addresses), does not work as expected as the invocation becomes:
+>> +
+>> +       $cat cc-cmd $patchfilename
+>> +
+>> +and since 'cat' copies the concatenation of its input files to its output,
+>> +this adds the patch file to the address list resulting in an error
+>> +"unable to extract a valid address from:".
+>> +
+>> +The quick-and-dirty work-around is to use '#' to effectively comment out
+>> +the patch file name:
+>> +
+>> +    --cc-cmd='cat cc-cmd #'
+>> +
+>> +which works, but is very, very ugly.
+>
+> This entire above text about "cat $addressfile" seems awfully
+> inappropriate for a manual page, especially the bit about the terrible
+> "cat $file #" hack.
 
-I made the same mistake yesterday, thinking that a fresh format-patch 
-had/would over-write the previous patches, but I'd forgot, again, that 
-the filename uses the subject line, so send-email picked up both 
-versions .. doh.
+If you really want to give an example of how to use --cc-cmd
+(--to-cmd) with a plain text file holding email addresses, maybe
+something like this instead:
 
-Sorry for the noise.
------ Original Message ----- 
-> From: "Philip Oakley" <philipoakley@iee.org>
-> To: "Git List" <git@vger.kernel.org>
-> Cc: "Junio C Hamano" <gitster@pobox.com>; "Eric Sunshine" 
-> <sunshine@sunshineco.com>
-> Sent: Monday, July 20, 2015 7:26 PM
-> Subject: [PATCH 2/3] doc: send-email; expand oon the meaning of 
-> 'auto-cc'
+Create an EXAMPLES section.
+
+Make the bare-bones, static address list script the first example:
+
+    #!/bin/sh
+    echo <<\EOF
+    person1@example.com
+    person2@example.com
+    EOF
+
+Then add an example showing how to take the fixed address list from a
+plain text file. Have the user create the following script (let's call
+it "anticat") which cat's all of its input arguments except the final
+one, which is the patch itself:
+
+    #!/bin/sh
+    while test $# -gt 1
+    do
+        cat $1
+        shift
+    done
+
+And, to use: --to-cccmd='anticat myaddresses.txt'
