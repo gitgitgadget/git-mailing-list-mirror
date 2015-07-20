@@ -1,211 +1,152 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 4/9] ref-filter: add support to sort by version
-Date: Sun, 19 Jul 2015 21:39:31 -0400
-Message-ID: <CAPig+cRkwy_Dq3oYgHdNH6naaUDHZ_6DPopec1EG3aNwz56rzA@mail.gmail.com>
-References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437246749-14423-5-git-send-email-Karthik.188@gmail.com>
+Subject: Re: [PATCH v2 08/16] engine.pl: ignore invalidcontinue.obj
+ which is known to MSVC
+Date: Sun, 19 Jul 2015 21:54:45 -0400
+Message-ID: <CAPig+cRYPVg-YOvUvH=7QViDRChG1Lvwt84-3z8ERjBMVdrvnw@mail.gmail.com>
+References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
+	<1437336497-4072-9-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 03:47:03 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	MsysGit List <msysgit@googlegroups.com>, Yue Lin Ho <b8732003@student.nsysu.edu.tw>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: msysgit+bncBD2JJCMYYEGBBZNJWGWQKGQE6CADBWQ@googlegroups.com Mon Jul 20 03:54:48 2015
+Return-path: <msysgit+bncBD2JJCMYYEGBBZNJWGWQKGQE6CADBWQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-oi0-f64.google.com ([209.85.218.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZH0AZ-0005ud-0X
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 03:47:03 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947AbbGTBjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2015 21:39:32 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:35782 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753723AbbGTBjc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2015 21:39:32 -0400
-Received: by ykdu72 with SMTP id u72so128896098ykd.2
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 18:39:31 -0700 (PDT)
+	(envelope-from <msysgit+bncBD2JJCMYYEGBBZNJWGWQKGQE6CADBWQ@googlegroups.com>)
+	id 1ZH0I3-0008RS-Iq
+	for gcvm-msysgit@m.gmane.org; Mon, 20 Jul 2015 03:54:47 +0200
+Received: by oihq81 with SMTP id q81sf54435321oih.1
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 18:54:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=googlegroups.com; s=20120806;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=piFmX/lCbRkDz1rQZBnQGvQArxRRATDwbZ+wazjk1X4=;
-        b=v/MPmUdqPzewWd76xTHYy0Wsibkemej9B5HJSzVK2ydlt/xYKqVJaerIOxUY6aOwyK
-         BY0ECqJBQlJUlRi+X7uqmc5A/7wSjPEPVT0hbtSqfNsQIWsczqIL3H6QUonkfgSIpbHX
-         ZQR39nHGKOXZTtPqQwAVGxFmBotpyWkdfDRMLXjIJqD5mSBGl3WnUP7BULDMi6kOI0vj
-         Bdi7qids0FTOanNPtKrPg9/cBtCCTBwSWii+G19UGUTmNA2Hw3Ic13btnEJFfPF2hgN2
-         6aVKP3D3JZiHe3/hx4jdgkysinDr3Zx1Z45GSMqMme8haieXvGEHePY/Vaew+kQdq6LU
-         Arvg==
-X-Received: by 10.13.202.204 with SMTP id m195mr25779269ywd.48.1437356371562;
- Sun, 19 Jul 2015 18:39:31 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 18:39:31 -0700 (PDT)
-In-Reply-To: <1437246749-14423-5-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: PDkAG8izo1JO95ABoLVyvDyEKrc
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274303>
+         :from:to:cc:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe;
+        bh=VDtLbYu74qtSng07JMDpMmPKFG/M3Mt9DMVLnmML6X4=;
+        b=VuA0gewkk+ToThdlfDTVmP2Lh8B87gwF+aBLQYAsYuIshPUOTKWh5gnkzabKiDy/F0
+         WZhjPJ83DBCAiZSzhW/Mdolh9PbYf+f3XozmscbdGCVR7TkS5kVFNEzlv30YDmJ31M83
+         +YVASeED7IN4bxesX+DO9llusetZRnFSd/EuJL3oQztzXMcOvP5qAlj1hLNNVQn+zs75
+         RDL4enRx1wvtzMybQmvbN83qIygv8ONqEBgpYE3FErfYup1Z20rBIXqjSXfe4TT6psIF
+         0ZSbLTfFuyHypmWx52Lo/Xef+Ubc3++SZGMtcotP2EwlVXlpvUO3SQpMZWKlFAaaglk4
+         hHPA==
+X-Received: by 10.50.25.199 with SMTP id e7mr119527igg.16.1437357286167;
+        Sun, 19 Jul 2015 18:54:46 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.142.2 with SMTP id rs2ls1071328igb.26.canary; Sun, 19 Jul
+ 2015 18:54:45 -0700 (PDT)
+X-Received: by 10.66.184.132 with SMTP id eu4mr19746447pac.15.1437357285572;
+        Sun, 19 Jul 2015 18:54:45 -0700 (PDT)
+Received: from mail-yk0-x22c.google.com (mail-yk0-x22c.google.com. [2607:f8b0:4002:c07::22c])
+        by gmr-mx.google.com with ESMTPS id s127si1728668ywc.6.2015.07.19.18.54.45
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Jul 2015 18:54:45 -0700 (PDT)
+Received-SPF: pass (google.com: domain of ericsunshine@gmail.com designates 2607:f8b0:4002:c07::22c as permitted sender) client-ip=2607:f8b0:4002:c07::22c;
+Received: by mail-yk0-x22c.google.com with SMTP id u72so129043460ykd.2
+        for <msysgit@googlegroups.com>; Sun, 19 Jul 2015 18:54:45 -0700 (PDT)
+X-Received: by 10.13.207.1 with SMTP id r1mr26234934ywd.166.1437357285460;
+ Sun, 19 Jul 2015 18:54:45 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 18:54:45 -0700 (PDT)
+In-Reply-To: <1437336497-4072-9-git-send-email-philipoakley@iee.org>
+X-Original-Sender: sunshine@sunshineco.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of ericsunshine@gmail.com designates 2607:f8b0:4002:c07::22c
+ as permitted sender) smtp.mail=ericsunshine@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274304>
 
-On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add support to sort by version using the "v:refname" and
-> "version:refname" option. This is achieved by using the
-> 'version_cmp()' function as the comparing function for qsort.
+On Sun, Jul 19, 2015 at 4:08 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> Commit 4b623d8 (MSVC: link in invalidcontinue.obj for better
+> POSIX compatibility, 2014-03-29) is not processed correctly
+> by the buildsystem. Ignore it.
 
-To agree with the actual code: s/version_cmp/versioncmp/
+What does "not processed correctly" mean? For a person reading the
+commit message, but lacking your experience with this, "not processed
+correctly" seems akin to "it doesn't work"[1]. Can the commit message
+provide a bit more detail?
 
-> This option is included to support sorting by versions in `git tag -l`
-> which will eventaully be ported to use ref-filter APIs.
+[1]: http://www.chiark.greenend.org.uk/~sgtatham/bugs.html
+
+> Also split the .o and .obj processing; 'make' does not produce .obj
+> files. Only substitute filenames ending with .o when generating the
+> source .c filename.
 >
-> Add documentation and tests for the same.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
 > ---
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index e49d578..cc91275 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -144,6 +144,8 @@ blank line.  Finally, the optional GPG signature is `contents:signature`.
->  For sorting purposes, fields with numeric values sort in numeric
->  order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
->  All other fields are used to sort in their byte-value order.
-> +There is also an option to sort by versions, this is done using the
-> +field names ('version:refname' or 'v:refname').
-
-Assuming I'm a reader without prior knowledge, the first question
-which pops into my mind is "what's the difference between
-'version:refname' and 'v:refname'?" Is one just shorthand for the
-other, or is there some subtle difference in behavior, or what? The
-documentation should explain this better.
-
-Also, why are there parentheses around 'version:refname' or
-'v:refname'? And, you should use backticks rather than apostrophes, as
-is done with the other field names.
-
->  In any case, a field name that refers to a field inapplicable to
->  the object referred by the ref does not cause an error.  It
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 82731ac..85c561e 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1169,18 +1170,22 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+>  contrib/buildsystems/engine.pl | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
 >
->         get_ref_atom_value(a, s->atom, &va);
->         get_ref_atom_value(b, s->atom, &vb);
-> -       switch (cmp_type) {
-> -       case FIELD_STR:
-> -               cmp = strcmp(va->s, vb->s);
-> -               break;
-> -       default:
-> -               if (va->ul < vb->ul)
-> -                       cmp = -1;
-> -               else if (va->ul == vb->ul)
-> -                       cmp = 0;
-> -               else
-> -                       cmp = 1;
-> -               break;
-> +       if (s->version)
-> +               cmp = versioncmp(va->s, vb->s);
-> +       else {
-> +               switch (cmp_type) {
-> +               case FIELD_STR:
-> +                       cmp = strcmp(va->s, vb->s);
-> +                       break;
-> +               default:
-> +                       if (va->ul < vb->ul)
-> +                               cmp = -1;
-> +                       else if (va->ul == vb->ul)
-> +                               cmp = 0;
-> +                       else
-> +                               cmp = 1;
-> +                       break;
-> +               }
-
-The logic might be slightly easier to follow, and give a much less
-noisy diff if you rewrite it like this instead:
-
-    if (s->version)
-        cmp = versioncmp(va->s, vb->s);
-    else if (cmp_type == FIELD_STR)
-        cmp = strcmp(va->s, vb->s);
-    else {
-        if (va->ul < vb->ul)
-            cmp = -1;
-        else if (va->ul == vb->ul)
-            cmp = 0;
-        else
-            cmp = 1;
-    }
-
-Or, if you don't mind a noisy diff, you can outdent the other branches, as well:
-
-    if (s->version)
-       cmp = versioncmp(va->s, vb->s);
-    else if (cmp_type == FIELD_STR)
-       cmp = strcmp(va->s, vb->s);
-    else if (va->ul < vb->ul)
-       cmp = -1;
-    else if (va->ul == vb->ul)
-       cmp = 0;
-    else
-       cmp = 1;
-
-(I rather prefer the latter, despite the noisy diff.)
-
->         }
->         return (s->reverse) ? -cmp : cmp;
->  }
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 7dfdea0..6f1646b 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -25,7 +25,7 @@ struct atom_value {
->  struct ref_sorting {
->         struct ref_sorting *next;
->         int atom; /* index into used_atom array (internal) */
-> -       unsigned reverse : 1;
-> +       unsigned reverse : 1, version : 1;
-
-This is difficult to read. Style elsewhere (if I'm not mistaken) is to
-place the declaration on a line by itself.
-
->  };
->
->  struct ref_array_item {
-> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-> index 505a360..c31fd2f 100755
-> --- a/t/t6302-for-each-ref-filter.sh
-> +++ b/t/t6302-for-each-ref-filter.sh
-> @@ -81,4 +81,30 @@ test_expect_success 'filtering with --contains' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'version sort' '
-> +       git tag -l --sort=version:refname | grep "foo" >actual &&
-> +       cat >expect <<-\EOF &&
-> +       foo1.3
-> +       foo1.6
-> +       foo1.10
-> +       EOF
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'reverse version sort' '
-> +       git tag -l --sort=-version:refname | grep "foo" >actual &&
-
-Maybe use 'v:refname' in one of these tests in order to exercise that
-alias as well?
-
-> +       cat >expect <<-\EOF &&
-> +       foo1.10
-> +       foo1.6
-> +       foo1.3
-> +       EOF
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
+> diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+> index 60c7a7d..9db3d43 100755
+> --- a/contrib/buildsystems/engine.pl
+> +++ b/contrib/buildsystems/engine.pl
+> @@ -289,7 +289,7 @@ sub handleLibLine
+>  #    exit(1);
+>      foreach (@objfiles) {
+>          my $sourcefile = $_;
+> -        $sourcefile =~ s/\.o/.c/;
+> +        $sourcefile =~ s/\.o$/.c/;
+>          push(@sources, $sourcefile);
+>          push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+>          push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+> @@ -333,8 +333,12 @@ sub handleLinkLine
+>          } elsif ($part =~ /\.(a|lib)$/) {
+>              $part =~ s/\.a$/.lib/;
+>              push(@libs, $part);
+> -        } elsif ($part =~ /\.(o|obj)$/) {
+> +        } elsif ($part eq 'invalidcontinue.obj') {
+> +            # ignore - known to MSVC
+> +        } elsif ($part =~ /\.o$/) {
+>              push(@objfiles, $part);
+> +        } elsif ($part =~ /\.obj$/) {
+> +            # do nothing, 'make' should not be producing .obj, only .o files
+>          } else {
+>              die "Unhandled link option @ line $lineno: $part";
+>          }
+> @@ -343,7 +347,7 @@ sub handleLinkLine
+>  #    exit(1);
+>      foreach (@objfiles) {
+>          my $sourcefile = $_;
+> -        $sourcefile =~ s/\.o/.c/;
+> +        $sourcefile =~ s/\.o$/.c/;
+>          push(@sources, $sourcefile);
+>          push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+>          push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
 > --
-> 2.4.6
+> 2.4.2.windows.1.5.gd32afb6
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
