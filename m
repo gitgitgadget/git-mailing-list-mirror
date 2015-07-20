@@ -1,90 +1,165 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: How to use --cc-cmd in git-send-email?
-Date: Mon, 20 Jul 2015 15:20:15 +0100
-Organization: OPDS
-Message-ID: <28D6CFA8D1964D34B1E7F28325AF94A8@PhilipOakley>
-References: <CA64425B296E41328D6A1F29E227A24D@PhilipOakley><CAPig+cTQspD+0StY5tneqwekS3xCjdxcidoDA7Ztf26g-tMucg@mail.gmail.com><8684534127894F239338493A7D15F46D@PhilipOakley> <CAPig+cTsJQ+dK5M0S8LERkPWiipzxLYdbCK6-ghen1OkAX=NBg@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+Date: Mon, 20 Jul 2015 20:36:44 +0530
+Message-ID: <CAOLa=ZRp0WXKj7au_eDk=80ivsgsNWEyO9JBy_rwzOXmnQwS_A@mail.gmail.com>
+References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
+ <1437246749-14423-2-git-send-email-Karthik.188@gmail.com> <CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 16:19:28 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 17:07:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHBuh-0002XZ-El
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 16:19:27 +0200
+	id 1ZHCf7-00039Z-5L
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 17:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754994AbbGTOTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 10:19:23 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:44891 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753047AbbGTOTX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2015 10:19:23 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BnCQAjA61VPHMBFlxcgxOBPYMjgy5tvBkEBAKBKU0BAQEBAQEHAQEBAUABP4QeBQEBAQEDCAEBGRUeAQEhCwIDBQIBAxUDAgIFIQICFAEEGgYHAxQGEwgCAQIDAYghsUqGV48rgSKKKoQjEQFRgm8vgRQFlFIBgQqMWZNjg2GBbwyCKD0xgQ2BPgEBAQ
-X-IPAS-Result: A2BnCQAjA61VPHMBFlxcgxOBPYMjgy5tvBkEBAKBKU0BAQEBAQEHAQEBAUABP4QeBQEBAQEDCAEBGRUeAQEhCwIDBQIBAxUDAgIFIQICFAEEGgYHAxQGEwgCAQIDAYghsUqGV48rgSKKKoQjEQFRgm8vgRQFlFIBgQqMWZNjg2GBbwyCKD0xgQ2BPgEBAQ
-X-IronPort-AV: E=Sophos;i="5.15,508,1432594800"; 
-   d="scan'208";a="794428613"
-Received: from host-92-22-1-115.as13285.net (HELO PhilipOakley) ([92.22.1.115])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 20 Jul 2015 15:19:19 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932486AbbGTPHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 11:07:18 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:33865 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932279AbbGTPHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 11:07:17 -0400
+Received: by obre1 with SMTP id e1so103442817obr.1
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 08:07:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kUCv7u8oznQE1G6jn3ZHahqU1p3le3Xs3zEy5d2c99U=;
+        b=GJfo6JmHgPSJ/Bt8BdapiY/Eq5gW6xO0CXD9UBs+bRYSxxigASTOI+Pt5o5vyme2T1
+         VumkHeuQS7IdgRUlzHX0A7YiOEm2u5U0arybYbttAmKR9MBZGlUeyEa/51T3TCVziINS
+         9IPWwePyfWsJLbbQu8zj6x3Cu0PYAjDQ/phS5/zEoxNmPNFehvsnkD63H/9iIVoBSDaD
+         dTL/77cmG/4kT58uSk55utSOV+sHix7cCUyceLUtP+pQ8US0S0ly797N9XDU0TZjBMvp
+         AVJLsdd8OOEzEBp6ggqVYv8g1TOnNPIjMgZj2EHPLU9OTEDlz/ezDIi8denfFW0H3tnJ
+         1ehQ==
+X-Received: by 10.182.204.38 with SMTP id kv6mr26565505obc.70.1437404834266;
+ Mon, 20 Jul 2015 08:07:14 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Mon, 20 Jul 2015 08:06:44 -0700 (PDT)
+In-Reply-To: <CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274323>
 
-From: "Eric Sunshine" <sunshine@sunshineco.com>
-> On Mon, Jul 20, 2015 at 2:01 AM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->> From: "Eric Sunshine" <sunshine@sunshineco.com>
->>> git-send-email invokes the cc-cmd like this:
->>>
->>>    $cc-cmd $patchfilename
->>>
->>> so, when you used 'cat cc-cmd' as the value of --cc-cmd, your 
->>> invocation
->>> became:
->>>
->>>    cat cc-cmd $patchfilename
->>>
->>> and since 'cat' copies the concatenation of its input files to its
->>> output, that explains why you first saw the names from your 'cc-cmd'
->>> file followed by the content of the patch file.
+On Mon, Jul 20, 2015 at 5:19 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add a new atom "align" and support %(align:X) where X is a number.
+>> This will align the preceeding atom value to the left followed by
+>> spaces for a total length of X characters. If X is less than the item
+>> size, the entire atom value is printed.
 >>
->> Many thanks, that seems to explain everything!
->>
->> I may try and do a small doc patch for the git-send-email.txt man 
->> page (I
->> have a few doc fixes backing up waiting to be done ;-)
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 7561727..b81a08d 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -53,6 +55,7 @@ static struct {
+>>         { "flag" },
+>>         { "HEAD" },
+>>         { "color" },
+>> +       { "align" },
 >
-> That would be welcome. I don't think it's mentioned at all in
-> git-send-email.txt that the --to-cmd/--cc-cmd commands are handed the
-> patch pathname as an argument, so that's certainly something worth
-> documenting.
-> --
+> Not a new issue, but some compilers (Solaris?) complain about the
+> trailing comma.
+>
 
-The other issue I noted was wondering what "auto-cc" is?
+Ok will check.
 
-It's only mentioned the once in:
-    --suppress-cc=<category>
+>>  };
+>>
+>>  /*
+>> @@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
+>>                         else
+>>                                 v->s = " ";
+>>                         continue;
+>> +               } else if (starts_with(name, "align:")) {
+>> +                       const char *valp = NULL;
+>> +
+>> +                       skip_prefix(name, "align:", &valp);
+>> +                       if (!valp[0])
+>> +                               die(_("No value given with 'align='"));
+>
+> The parser expects "align:", but the error message talks about
+> "align=". Also, current trend is to drop capitalization from the error
+> message.
+>
 
-Specify an additional category of recipients to suppress the auto-cc of:
+Thanks will change.
 
-Is it a sort of double negative? Certainly I had no idea what an auto-cc 
-was ;-)
+>> +                       strtoul_ui(valp, 10, &ref->align_value);
+>> +                       if (ref->align_value < 1)
+>> +                               die(_("Value should be greater than zero"));
+>
+> Drop capitalization. Also, the user seeing this message won't
+> necessarily know to which value this refers. Better would be to
+> provide context ("'align:' value should be..."), and even better would
+> be to show the actual value at fault:
+>
+>     die(_("value should be greater than zero: align:%u\n",
+>         ref_align_value);
+>
+> or something.
 
+Makes sense, thanks :)
 
+>
+>> +                       v->s = "";
+>> +                       continue;
+>>                 } else
+>>                         continue;
+>>
+>> @@ -1254,17 +1268,38 @@ static void emit(const char *cp, const char *ep)
+>>         }
+>>  }
+>>
+>> +static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
+>> +{
+>> +       if (v->s[0] && ref->align_value) {
+>
+> Mental note: v->s[0] is not NUL ('\0').
+>
+> Also, in this code base, this is typically written *v->s rather than v->s[0].
+>
 
-Philip
+My bad, got confused with that :)
+
+>> +               unsigned int len = 0;
+>> +               len = utf8_strwidth(v->s);
+>
+> You initialize 'len' to 0 but then immediately re-assign it.
+
+Will change.
+
+>
+>> +               if (ref->align_value > len) {
+>> +                       struct strbuf buf = STRBUF_INIT;
+>> +                       strbuf_addstr(&buf, v->s);
+>> +                       if (!v->s[0])
+>> +                               free((char *)v->s);
+>
+> We know from the "mental note" above that v->s[0] is not NUL ('\0'),
+> so this 'if' statement can never be true, thus is dead code.
+
+Yes, my bad. Will change.
+
+>
+>> +                       strbuf_addchars(&buf, ' ', ref->align_value - len);
+>> +                       v->s = strbuf_detach(&buf, NULL);
+>> +               }
+>> +               ref->align_value = 0;
+>> +       }
+>> +}
+
+Thanks.
+
+-- 
+Regards,
+Karthik Nayak
