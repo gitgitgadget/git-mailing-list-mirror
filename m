@@ -1,168 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
-Date: Mon, 20 Jul 2015 10:29:52 -0700
-Message-ID: <xmqqsi8iybxr.fsf@gitster.dls.corp.google.com>
-References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
-	<xmqq1tg2zsxr.fsf@gitster.dls.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v2] unpack-trees: don't update files with CE_WT_REMOVE
+ set
+Date: Mon, 20 Jul 2015 13:40:48 -0400
+Organization: Twitter
+Message-ID: <1437414048.30911.10.camel@twopensource.com>
+References: <xmqqk2ty1reo.fsf@gitster.dls.corp.google.com>
+	 <1437167967-5933-1-git-send-email-dturner@twopensource.com>
+	 <20150718083719.GA19676@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 19:30:00 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Anatole Shaw <git-devel@omni.poc.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 19:40:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHEt5-0000u5-Kw
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 19:30:00 +0200
+	id 1ZHF3e-0006ln-1Z
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 19:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756411AbbGTR3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 13:29:55 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35546 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754701AbbGTR3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 13:29:55 -0400
-Received: by pabkd10 with SMTP id kd10so32345131pab.2
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 10:29:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=FypawjooJNbdob4QDepbwno+YQzNcyiK4S8DsEe9ceM=;
-        b=TgTMIfTIgpsZUfhMhbIi9GP2gb5BgBlXcgskNxAba1wI3KSFiQrne/c5W5nzSewOfd
-         tjr/1utPjbtByB0alrO/T5+5LHaHb8fDwY8+ZriW1cIbKd+KCTds7Pbds30mQoUFXrZv
-         ZK6+/wRNcMxbwe2nz+Z4d3dXVX+M6Gd9dJtvBOsHA/38ej4Tu7bwRN14mbkoUn0BGuTg
-         WEP9qo9nYWCy1nuZ3ZcPdj25F882fvkWZwZMeOlJcIyISJRwr4WjHYimiGuRBfYmQW/d
-         p1fqEku+j2YGej/2FzQ8Y2KV1M57xs/HkVG7JzBK3QvUnvxnI7XKIbj4Hd+u99QVC91Z
-         zw9A==
-X-Received: by 10.66.163.201 with SMTP id yk9mr61657893pab.63.1437413394447;
-        Mon, 20 Jul 2015 10:29:54 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:d4dc:19bb:f338:713b])
-        by smtp.gmail.com with ESMTPSA id k5sm22927170pdn.10.2015.07.20.10.29.52
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 20 Jul 2015 10:29:53 -0700 (PDT)
-In-Reply-To: <xmqq1tg2zsxr.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 20 Jul 2015 09:37:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755993AbbGTRkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 13:40:49 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33783 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755329AbbGTRks (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 13:40:48 -0400
+Received: by qged69 with SMTP id d69so46706618qge.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 10:40:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=8DKxr5/qdN5+AzmJJMmKDqnw4P63TeQdiKOiV/ryjFQ=;
+        b=BL3pphNp5VUvePVMN7b5aVkenBFDPLGyUArGyrhSu8spiPEa1vq2JA0tqhuoi0Afuf
+         W/q9VfXB0KPBtxO4TDTuxb6q9HsuO6+sVzTxN1IvF2L6cPCSoA7LZtFArEM87JKK3ASa
+         uxdD3HJT3A+PizbKfi4w6dGHkJ55RgsyskyFeCYIGjHHiaaLuEzHPgzJEERWJuKPIKvi
+         7bb8ae2KVwTi1YzihEsZs2SMY0ed4UAw2iFJzrBkZfTp6WB5mlSTh2mLQ3V8GbCeIaqO
+         h7JPXloG496cspbanNIe/r6hKsLOqTh5eQJO3VLDjwB7p7FJAQnlDDqvreaZAp34FwZU
+         znZA==
+X-Gm-Message-State: ALoCoQmKLUWvvT67zAwJ0KOHE9QZKTigDXIA/5romnDQALkfDzxYXJ4sNEij3xLHQWs3Hu6+cjuz
+X-Received: by 10.140.233.22 with SMTP id e22mr41458310qhc.67.1437414047661;
+        Mon, 20 Jul 2015 10:40:47 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 89sm11307468qkw.13.2015.07.20.10.40.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Jul 2015 10:40:46 -0700 (PDT)
+In-Reply-To: <20150718083719.GA19676@lanh>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274334>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Anatole tells me that this works for us.  Thanks.
 
-> Your caller is iterating over the elements in a format string,
-> e.g. 'A %(align:20)%(foo) B %(bar) C', and its caller is iterating
-> over a list of refs, e.g. 'maint', 'master' branches.  With that
-> format string, as long as %(foo) does not expand to something that
-> exceeds 20 display places or so, I'd expect literal 'B' for all refs
-> to align, but I do not think this code gives me that; what happens
-> if '%(foo)' happens to be an empty string for 'maint' but is a
-> string, say 'x', for 'master'?
-
-Having looked at the caller once again, I have to say that the
-interface to this function is poorly designed.  'info' might have
-been a convenient place to keep the "formatting state" during this
-loop (e.g. "was the previous atom tell us to format this atom in a
-special way and if so how?"), but that state does not belong to the
-'info' thing we are getting from our caller.  It is something we'd
-want to clear before we come into the for() loop, and mutate and
-utilize while in the loop.  For example, if the caller ever wants
-to show the same ref twice by calling this function with the same
-ref twice, and if the format string ended with %(align:N), you do
-not want that leftover state to right-pad the first atom in the
-second invocation.
-
-Imagine that in the future you might want to affect how things are
-formatted based on how much we have already output for the ref so
-far (e.g. limiting the total line length).  Where would you implement
-such a feature and hook it in this loop?
-
-I'd imagine that a sensible way to organize and structure the
-codeflow to support this "align" and related enhancement we may want
-to have in the future cleanly would be to teach "print_value" about
-the "formatting state" and share it with this loop.  Roughly...
-
->  void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
->  {
->  	const char *cp, *sp, *ep;
+On Sat, 2015-07-18 at 15:37 +0700, Duy Nguyen wrote:
+> On Fri, Jul 17, 2015 at 05:19:27PM -0400, David Turner wrote:
+> > Don't update files in the worktree from cache entries which are
+> > flagged with CE_WT_REMOVE.
+> > 
+> > When a user does a sparse checkout, git removes files that are marked
+> > with CE_WT_REMOVE (because they are out-of-scope for the sparse
+> > checkout). If those files are also marked CE_UPDATE (for instance,
+> > because they differ in the branch that is being checked out and the
+> > outgoing branch), git would previously recreate them.  This patch
+> > prevents them from being recreated.
+> > 
+> > These erroneously-created files would also interfere with merges,
+> > causing pre-merge revisions of out-of-scope files to appear in the
+> > worktree.
+> 
+> Thank you both for catching this. Just a small suggestion. Perhaps we
+> should do this instead. apply_sparse_checkout() is the function where
+> all "action" manipulation (add, delete, update files..) for sparse
+> checkout occurs and it should not ask to delete and update both at the
+> same time.
+> 
+> -- 8< --
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 2927660..d6cf849 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -224,6 +224,9 @@ static int check_updates(struct unpack_trees_options *o)
+>  		struct cache_entry *ce = index->cache[i];
 >  
-
-Insert something like this here:
-
-	struct ref_formatting_state state;
-
-	memset(&state, 0, sizeof(state));
-        state.quote_style = quote_style;
-
->  	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
->  		struct atom_value *atomv;
-> +		int parsed_atom;
->  
->  		ep = strchr(sp, ')');
->  		if (cp < sp)
->  			emit(cp, sp);
-> -		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
-> +		parsed_atom = parse_ref_filter_atom(sp + 2, ep);
-> +		get_ref_atom_value(info, parsed_atom, &atomv);
-> +		assign_formating(info, parsed_atom, atomv);
->  		print_value(atomv, quote_style);
-
-and replace all of the above with something like this (a separate
-variable parsed_atom may not be necessary):
-
-		get_ref_atom_value(&state, info,
-				parse_ref_filter_atom(sp + 2, ep), &atomv);
-		print_value(&state, atomv);
-
-Things like %(align:20) are not really atoms in the sense that they
-are not used as placeholders for attributes that refs being printed
-have, but they are there solely in order to affect the "formating
-state".  Introduce a new field "struct atom_value.pseudo_atom" to
-tell print_value() that fact from get_ref_atom_value(), e.g.
-
-	static void print_value(struct ref_formatting_state *state,
-        			struct atom_value *v)
-	{
-		struct strbuf value = STRBUF_INIT;
-		struct strbuf formatted = STRBUF_INIT;
-
-        	if (v->pseudo_atom)
-                	return;
-		if (state->pad_to_right) {
-                	strbuf_addf(&value, "%.*s", state->pad_to_right, v->s);
-			state->pad_to_right = 0;
-		}
-		switch (state->quote_style) {                
-		case QUOTE_SHELL:
-                	sq_quote_buf(&formatted, value.buf);
-                        break;
-                        ...
-		}
-                fputs(formatted.buf, stdout);
-                strbuf_release(&value);
-                strbuf_release(&formatted);
-	}
-
-or something like that.  As this print_value() knows everything that
-happens to a single output line during that loop and is allowed to
-keep track of what it sees in 'state', this would give a natural and
-codeflow to add 'limit the total line length' and things like that
-if desired.
-
-We may want to further clean up to update %(color) thing to clarify
-that it is a pseudo atom.  I suspect %(align:20)%(color:blue) would
-do a wrong thing with the current code, and it would be a reasonable
-thing to allow both of these interchangeably:
-
-  %(align:20)%(color:blue)%(refname:short)%(color:reset)
-  %(color:blue)%(align:20)%(refname:short)%(color:reset)
-
-and implementation of that would become more obvious once you have a
-more explicit "formatting state" that is known to and shared among
-get_value(), the for() loop that walks the format string, and
-print_value().
+>  		if (ce->ce_flags & CE_UPDATE) {
+> +			if (ce->ce_flags & CE_WT_REMOVE)
+> +				die("BUG: both update and delete flags are set on %s",
+> +				    ce->name);
+>  			display_progress(progress, ++cnt);
+>  			ce->ce_flags &= ~CE_UPDATE;
+>  			if (o->update && !o->dry_run) {
+> @@ -293,6 +296,7 @@ static int apply_sparse_checkout(struct index_state *istate,
+>  		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
+>  			return -1;
+>  		ce->ce_flags |= CE_WT_REMOVE;
+> +		ce->ce_flags &= ~CE_UPDATE;
+>  	}
+>  	if (was_skip_worktree && !ce_skip_worktree(ce)) {
+>  		if (verify_absent_sparse(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
+> -- 8< --
+> 
+> --
+> Duy
