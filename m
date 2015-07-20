@@ -1,203 +1,112 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 4/9] ref-filter: add support to sort by version
-Date: Mon, 20 Jul 2015 22:04:57 +0530
-Message-ID: <CAOLa=ZR8d37s4rHuDuASzb_YEs-UBRN0AiY2scEJQe+jFdGxEA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+Date: Mon, 20 Jul 2015 09:37:20 -0700
+Message-ID: <xmqq1tg2zsxr.fsf@gitster.dls.corp.google.com>
 References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
- <1437246749-14423-5-git-send-email-Karthik.188@gmail.com> <CAPig+cRkwy_Dq3oYgHdNH6naaUDHZ_6DPopec1EG3aNwz56rzA@mail.gmail.com>
+	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 18:35:35 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 18:37:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHE2R-00061f-7k
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 18:35:35 +0200
+	id 1ZHE4J-000756-58
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 18:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756409AbbGTQf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 12:35:28 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:35251 "EHLO
-	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756112AbbGTQf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 12:35:27 -0400
-Received: by oihq81 with SMTP id q81so112396873oih.2
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 09:35:26 -0700 (PDT)
+	id S1756673AbbGTQhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 12:37:25 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:34098 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756663AbbGTQhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 12:37:22 -0400
+Received: by pdbbh15 with SMTP id bh15so58579449pdb.1
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 09:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JuTBXqliWf3S9vE42X0Sqd8VcctDL6H/QnYeCguvEGo=;
-        b=dopBkdltyma9Fl0L/fV3eFdAP59XgIu9tUsUUI4QBisXqmTbsNdczS1TkFCHYDnLI/
-         6fNKQUpseXkeXz63DTFmMUihB7izFUCva2OKwbPwmmnozoHQN8wyBBQ0rytXZ1PVQU2z
-         /ofo2Tn4Rwi1L1M+F1GVh3WgNbvluZdwQ3pzdWpVTGoDZ2Grfi8sMjYE56yLZaN6zAA8
-         ovRoTDEkYqSJbyCCSQaBiK6GMLjyKU6HPpym/tcXlwg7uxMrCW7ieEbe6vOD2o3GHhly
-         j52rSP/08sqJzB0Guw7CHASGvv+iFkwMhIfZDBR4gpkShlpDgHt2+q+FpL0eUXd9eeH3
-         14hw==
-X-Received: by 10.202.92.6 with SMTP id q6mr25780398oib.11.1437410126612; Mon,
- 20 Jul 2015 09:35:26 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 20 Jul 2015 09:34:57 -0700 (PDT)
-In-Reply-To: <CAPig+cRkwy_Dq3oYgHdNH6naaUDHZ_6DPopec1EG3aNwz56rzA@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=TpUrwDhexqWa/SHngB6+Jdwc6zEbo1K7ypHiZmBMyVU=;
+        b=rO/XRtPPcamLKoznm4PUljzgnjYV1F9ZsYU+BG0HE1GNtsSGdVkbETbcOOgI6/w35w
+         c6Oumj2nCpluMPRRztfPE1KYhLceZMmoECUfTI/CAxAGr5Gp2Qs7eoEy5FdJ1xZZcRtQ
+         Hm/VN/UsxSoDl/37F+7jaTl9yCHXMdJWLwwQCt4FElAlDzo8/2kKPPaQLvJu2XgxP05B
+         Yf4QsNBihfDmcM5uSnmKkR7229jSnYuLPGqgPTdBcZaW61AiBnJ/W1w4u1BTsYuZ4xDT
+         TmHEkYE1GcAAgZXgBU7XiKe+wVD3Amn1xrSHAoi3Hs8Xzo/fadUV6UiTqtcAcIoxrCN9
+         n/Xg==
+X-Received: by 10.66.65.142 with SMTP id x14mr62017313pas.135.1437410242259;
+        Mon, 20 Jul 2015 09:37:22 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d4dc:19bb:f338:713b])
+        by smtp.gmail.com with ESMTPSA id of5sm13162116pdb.52.2015.07.20.09.37.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 20 Jul 2015 09:37:21 -0700 (PDT)
+In-Reply-To: <1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
+	(Karthik Nayak's message of "Sun, 19 Jul 2015 00:42:21 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274330>
 
-On Mon, Jul 20, 2015 at 7:09 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> To agree with the actual code: s/version_cmp/versioncmp/
->
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Yeah! will change.
+> @@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
+>  			else
+>  				v->s = " ";
+>  			continue;
+> +		} else if (starts_with(name, "align:")) {
+> +			const char *valp = NULL;
+> +
+> +			skip_prefix(name, "align:", &valp);
+> +			if (!valp[0])
+> +				die(_("No value given with 'align='"));
+> +			strtoul_ui(valp, 10, &ref->align_value);
+> +			if (ref->align_value < 1)
+> +				die(_("Value should be greater than zero"));
+> +			v->s = "";
+> +			continue;
+>  		} else
+>  			continue;
+>  
+> @@ -1254,17 +1268,38 @@ static void emit(const char *cp, const char *ep)
+>  	}
+>  }
+>  
+> +static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
+> +{
+> +	if (v->s[0] && ref->align_value) {
+> +		unsigned int len = 0;
+> +
+> +		len = utf8_strwidth(v->s);
+> +		if (ref->align_value > len) {
+> +			struct strbuf buf = STRBUF_INIT;
+> +			strbuf_addstr(&buf, v->s);
+> +			if (!v->s[0])
+> +				free((char *)v->s);
+> +			strbuf_addchars(&buf, ' ', ref->align_value - len);
+> +			v->s = strbuf_detach(&buf, NULL);
+> +		}
+> +		ref->align_value = 0;
+> +	}
+> +}
 
->
-> Assuming I'm a reader without prior knowledge, the first question
-> which pops into my mind is "what's the difference between
-> 'version:refname' and 'v:refname'?" Is one just shorthand for the
-> other, or is there some subtle difference in behavior, or what? The
-> documentation should explain this better.
->
+What is your plan for this function?  Is it envisioned that this
+will gain more variations of formatting options over time?
+Otherwise it seems misnamed (it is not "assign formatting" but
+merely "pad to the right").
 
-Will include more explanation.
+I also doubt that the logic is sane.  More specifically, what does
+that "if (v->s[0])" buy you?
 
-> Also, why are there parentheses around 'version:refname' or
-> 'v:refname'? And, you should use backticks rather than apostrophes, as
-> is done with the other field names.
->
-
-Wanted to show that they are the same command. Seems confusing now that
-you mentioned, will change it.
-
->>  In any case, a field name that refers to a field inapplicable to
->>  the object referred by the ref does not cause an error.  It
->> diff --git a/ref-filter.c b/ref-filter.c
->> index 82731ac..85c561e 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -1169,18 +1170,22 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
->>
->>         get_ref_atom_value(a, s->atom, &va);
->>         get_ref_atom_value(b, s->atom, &vb);
->> -       switch (cmp_type) {
->> -       case FIELD_STR:
->> -               cmp = strcmp(va->s, vb->s);
->> -               break;
->> -       default:
->> -               if (va->ul < vb->ul)
->> -                       cmp = -1;
->> -               else if (va->ul == vb->ul)
->> -                       cmp = 0;
->> -               else
->> -                       cmp = 1;
->> -               break;
->> +       if (s->version)
->> +               cmp = versioncmp(va->s, vb->s);
->> +       else {
->> +               switch (cmp_type) {
->> +               case FIELD_STR:
->> +                       cmp = strcmp(va->s, vb->s);
->> +                       break;
->> +               default:
->> +                       if (va->ul < vb->ul)
->> +                               cmp = -1;
->> +                       else if (va->ul == vb->ul)
->> +                               cmp = 0;
->> +                       else
->> +                               cmp = 1;
->> +                       break;
->> +               }
->
-> The logic might be slightly easier to follow, and give a much less
-> noisy diff if you rewrite it like this instead:
->
->     if (s->version)
->         cmp = versioncmp(va->s, vb->s);
->     else if (cmp_type == FIELD_STR)
->         cmp = strcmp(va->s, vb->s);
->     else {
->         if (va->ul < vb->ul)
->             cmp = -1;
->         else if (va->ul == vb->ul)
->             cmp = 0;
->         else
->             cmp = 1;
->     }
->
-> Or, if you don't mind a noisy diff, you can outdent the other branches, as well:
->
->     if (s->version)
->        cmp = versioncmp(va->s, vb->s);
->     else if (cmp_type == FIELD_STR)
->        cmp = strcmp(va->s, vb->s);
->     else if (va->ul < vb->ul)
->        cmp = -1;
->     else if (va->ul == vb->ul)
->        cmp = 0;
->     else
->        cmp = 1;
->
-> (I rather prefer the latter, despite the noisy diff.)
->
-
-Err! just didn't want to existing code. Your latter code usage seems
-easier and simpler to follow. Will use that thanks :D
-
->>         }
->>         return (s->reverse) ? -cmp : cmp;
->>  }
->> diff --git a/ref-filter.h b/ref-filter.h
->> index 7dfdea0..6f1646b 100644
->> --- a/ref-filter.h
->> +++ b/ref-filter.h
->> @@ -25,7 +25,7 @@ struct atom_value {
->>  struct ref_sorting {
->>         struct ref_sorting *next;
->>         int atom; /* index into used_atom array (internal) */
->> -       unsigned reverse : 1;
->> +       unsigned reverse : 1, version : 1;
->
-> This is difficult to read. Style elsewhere (if I'm not mistaken) is to
-> place the declaration on a line by itself.
->
-
-Yes just checked, thats the style. Thank you.
-
->>  };
->>
->>  struct ref_array_item {
->> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
->> index 505a360..c31fd2f 100755
->> --- a/t/t6302-for-each-ref-filter.sh
->> +++ b/t/t6302-for-each-ref-filter.sh
->> @@ -81,4 +81,30 @@ test_expect_success 'filtering with --contains' '
->>         test_cmp expect actual
->>  '
->>
->> +test_expect_success 'version sort' '
->> +       git tag -l --sort=version:refname | grep "foo" >actual &&
->> +       cat >expect <<-\EOF &&
->> +       foo1.3
->> +       foo1.6
->> +       foo1.10
->> +       EOF
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'reverse version sort' '
->> +       git tag -l --sort=-version:refname | grep "foo" >actual &&
->
-> Maybe use 'v:refname' in one of these tests in order to exercise that
-> alias as well?
->
-
-The idea was to only include a minimal test as t7004 has tests for the same,
-but I guess a minimal test for 'v:refname' is also required.
-
--- 
-Regards,
-Karthik Nayak
+Your caller is iterating over the elements in a format string,
+e.g. 'A %(align:20)%(foo) B %(bar) C', and its caller is iterating
+over a list of refs, e.g. 'maint', 'master' branches.  With that
+format string, as long as %(foo) does not expand to something that
+exceeds 20 display places or so, I'd expect literal 'B' for all refs
+to align, but I do not think this code gives me that; what happens
+if '%(foo)' happens to be an empty string for 'maint' but is a
+string, say 'x', for 'master'?
