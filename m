@@ -1,83 +1,118 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
-Date: Mon, 20 Jul 2015 13:47:44 -0400
-Message-ID: <CAPig+cT-_Ha=zF1E832cjN-Yhqgs1W73+A2+O9MxgeJ+VJNzbQ@mail.gmail.com>
-References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437246749-14423-2-git-send-email-Karthik.188@gmail.com>
-	<CAPig+cRXsmi=UxRr-3rnt919d86jD6uMuTqdDxCComYLXk1TYw@mail.gmail.com>
-	<xmqq8uaazu3v.fsf@gitster.dls.corp.google.com>
+Date: Mon, 20 Jul 2015 14:01:15 -0400
+Message-ID: <CAPig+cQ1uAHxMRuiBja2ap-nVCU2dUMLcN40Xb=HnT_kN_MW_A@mail.gmail.com>
+References: <CAOLa=ZT7szz=cwzEmVDPKucRbh2o_8mBhUY22=R8qCU34QPwGg@mail.gmail.com>
+	<1437412947-17555-1-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>,
+Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 19:47:51 2015
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 20:01:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHFAL-0002IF-Vc
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 19:47:50 +0200
+	id 1ZHFNR-0001cS-3x
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 20:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756725AbbGTRrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 13:47:46 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:36061 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756616AbbGTRrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 13:47:45 -0400
-Received: by ykay190 with SMTP id y190so144663187yka.3
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 10:47:44 -0700 (PDT)
+	id S1756858AbbGTSBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 14:01:16 -0400
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:35961 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755901AbbGTSBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 14:01:15 -0400
+Received: by ykay190 with SMTP id y190so144969167yka.3
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 11:01:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=SdLT/E4AwALOSMZKJYiluIXWwCe0PpW+sSU3BlVv/u0=;
-        b=U1EwKw/eGlzlY4CKIq1mvR8n0fSl07jjLRsrxYA5c5u69YCN5iiPi4ogdHpdYBo0G8
-         xI6pmjiLSXxQj0K00POibYEb8HheP9BSkI2hqQwS4bgDbrBSyjl7elDcwhLC4KUQf86H
-         NsKpieoKxwx6teKgeZ6mY+H1jbC5CJKdFrGlKpPD1CWoNvj0ctV0d5f3UlDzguUBJIyZ
-         YSl43lHDHxOsD9xpJVjVB7NsGhtoJEtU6aciLc4Kecr6n/ZZFVM6TbbuUR6V5btHTRtk
-         AB4sDuT4rlJiKYrMlkNe/eONgBXSHvyIcRXjX1eESMkKbfILrLVGAhgrZbHan/G+2tG/
-         TIAA==
-X-Received: by 10.129.50.140 with SMTP id y134mr29409299ywy.39.1437414464733;
- Mon, 20 Jul 2015 10:47:44 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Mon, 20 Jul 2015 10:47:44 -0700 (PDT)
-In-Reply-To: <xmqq8uaazu3v.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: 62Hes4uonxJUtO1ZkVX43VxaPZA
+        bh=wlQm+6VrH9BYPvkMuNIwWB267Y6EiVeuMK8cCNt9FhM=;
+        b=zdjPmq9gyvuyYqclvn1yiqo1t3tLzYIkMys16am3UTNHEDEkMq6oUHuLp+MLPAFY0+
+         PuzoZ/+ePRKHkHy0i3AjeJwMQn+AbFgkrF6p/4zSKkoykRtCrnUWOdcWiDiHjZbQXKqX
+         GI2zhNBQ5tzUNVmoRdzma4Iq1j0S0fx0hx3UX47k+GUXsLFIckkcbOTMj/NXx4ZM9blm
+         zaCuBa8+AFRlazfIYphT0aZRz1NYGjByTpq0ufeJoM82mCr9JYL4kxzpOlKbEnM214tU
+         tESDAkRiWy9VQ3NLI3pHQcpoIaE4w4f22EmP9klQUTtheodNTADtxSEuZdsjXbtE+uHa
+         zilw==
+X-Received: by 10.170.138.134 with SMTP id f128mr29693013ykc.90.1437415275253;
+ Mon, 20 Jul 2015 11:01:15 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Mon, 20 Jul 2015 11:01:15 -0700 (PDT)
+In-Reply-To: <1437412947-17555-1-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: lfUeq_akfxc5L4Jzn9gm6Fq8chs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274336>
 
-On Mon, Jul 20, 2015 at 12:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Jul 20, 2015 at 1:22 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Add a new atom "align" and support %(align:X) where X is a number.
+> This will align the preceeding atom value to the left followed by
+> spaces for a total length of X characters. If X is less than the item
+> size, the entire atom value is printed.
 >
->> On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> Add a new atom "align" and support %(align:X) where X is a number.
->>> This will align the preceeding atom value to the left followed by
->>> spaces for a total length of X characters. If X is less than the item
->>> size, the entire atom value is printed.
->>>
->>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->>> ---
->>> diff --git a/ref-filter.c b/ref-filter.c
->>> index 7561727..b81a08d 100644
->>> --- a/ref-filter.c
->>> +++ b/ref-filter.c
->>> @@ -53,6 +55,7 @@ static struct {
->>>         { "flag" },
->>>         { "HEAD" },
->>>         { "color" },
->>> +       { "align" },
->>
->> Not a new issue, but some compilers (Solaris?) complain about the
->> trailing comma.
->
-> Hmm, are you sure?  I thought we avoid trailing comma for enum
-> definitions, but not a list of values like this.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 7561727..93f59aa 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -687,6 +690,17 @@ static void populate_value(struct ref_array_item *ref)
+>                         else
+>                                 v->s = " ";
+>                         continue;
+> +               } else if (starts_with(name, "align:")) {
+> +                       const char *valp = NULL;
+> +
+> +                       skip_prefix(name, "align:", &valp);
+> +                       if (!valp[0])
+> +                               die(_("no value given with 'align:'"));
+> +                       strtoul_ui(valp, 10, &ref->align_value);
+> +                       if (ref->align_value < 1)
+> +                               die(_("value should be greater than zero: align:%u"), ref->align_value);
+> +                       v->s = "";
 
-It's been years since I encountered such a compiler, so it's possible
-that my brain is conflating different cases of trailing commas...
+Mental note: v->s points at literal zero-length string ("").
+
+> +                       continue;
+>                 } else
+>                         continue;
+>
+> @@ -1254,17 +1268,40 @@ static void emit(const char *cp, const char *ep)
+>         }
+>  }
+>
+> +static void assign_formating(struct ref_array_item *ref, int parsed_atom, struct atom_value *v)
+> +{
+> +       if (ref->align_value && !starts_with(used_atom[parsed_atom], "align")) {
+> +               unsigned int len = 0;
+> +
+> +               if (*v->s)
+> +                       len = utf8_strwidth(v->s);
+> +               if (ref->align_value > len) {
+> +                       struct strbuf buf = STRBUF_INIT;
+> +                       if (*v->s)
+> +                               strbuf_addstr(&buf, v->s);
+> +                       if (*v->s && v->s[0] == '\0')
+> +                               free((char *)v->s);
+
+Is the "v->s[0] == '\0'" checking for the same literal zero-length
+string assigned above? If so, attempting to free() that string doesn't
+make sense, since it's not heap-allocated. Maybe you meant != '\0'?
+
+Overall, this code is getting rather complex and difficult to follow
+(especially with all the 'v->s' checks thrown in). Junio's proposed
+'pseudo_atom' and 'ref_formatting_state' would go a long way toward
+simplifying it.
+
+> +                       strbuf_addchars(&buf, ' ', ref->align_value - len);
+> +                       v->s = strbuf_detach(&buf, NULL);
+> +               }
+> +               ref->align_value = 0;
+> +       }
+> +}
