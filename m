@@ -1,103 +1,147 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 5/9] ref-filter: add option to match literal pattern
-Date: Mon, 20 Jul 2015 02:24:54 -0400
-Message-ID: <CAPig+cSTQgaL-nYfOCWdTaCEpM_23E5TZOPQpnWXEZ8YCcvbZg@mail.gmail.com>
-References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437246749-14423-6-git-send-email-Karthik.188@gmail.com>
+Subject: Re: [PATCH v2 10/16] engine.pl: delete the captured stderr
+ file if empty
+Date: Mon, 20 Jul 2015 02:40:54 -0400
+Message-ID: <CAPig+cRZgjnxrYRVYCLuzomE=qQtF9N_SE6t5kLcXbdiheNeTg@mail.gmail.com>
+References: <1437336497-4072-1-git-send-email-philipoakley@iee.org>
+	<1437336497-4072-11-git-send-email-philipoakley@iee.org>
+	<CAPig+cSDGUNZfc3cV=P2WUDUR+MBBjoHFxTBFaizf0NH-LmFTw@mail.gmail.com>
+	<FDE2D068444A4350B0C2F25275CBC41D@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 08:24:59 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	MsysGit List <msysgit@googlegroups.com>, Yue Lin Ho <b8732003@student.nsysu.edu.tw>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: msysgit+bncBD2JJCMYYEGBB55PWKWQKGQEQGSSAAA@googlegroups.com Mon Jul 20 08:40:58 2015
+Return-path: <msysgit+bncBD2JJCMYYEGBB55PWKWQKGQEQGSSAAA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qg0-f61.google.com ([209.85.192.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZH4VX-0002mO-3a
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jul 2015 08:24:59 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755071AbbGTGYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 02:24:55 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:34284 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366AbbGTGYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 02:24:54 -0400
-Received: by ykax123 with SMTP id x123so132220058yka.1
-        for <git@vger.kernel.org>; Sun, 19 Jul 2015 23:24:54 -0700 (PDT)
+	(envelope-from <msysgit+bncBD2JJCMYYEGBB55PWKWQKGQEQGSSAAA@googlegroups.com>)
+	id 1ZH4ky-0000Ma-9A
+	for gcvm-msysgit@m.gmane.org; Mon, 20 Jul 2015 08:40:56 +0200
+Received: by qgdf45 with SMTP id f45sf30738213qgd.1
+        for <gcvm-msysgit@m.gmane.org>; Sun, 19 Jul 2015 23:40:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=googlegroups.com; s=20120806;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=oGCo+XYEyARrGRj0AFBKVh6TnegKHpWYzgoCKOxJCow=;
-        b=MvrmAA5a3h4RiIeIrDJXaOAaGoFahJlujKfH/dGXG2bG1wBk8FuS6p/cfywg0RcyL9
-         q0hlJHdxmlZ2yOF8DtTmbrvEKcDHNkgO86Cgozcs9qejRAAlzVOjbJriSTqURxYgHd3w
-         p3/DY1cfNEpB1UwCzh9pwBQXPttHwUZqDmhKq1BNR+agF6DpoYmXrgFCMe5JTu4+Q2xv
-         e1RXGoU0GlwUFwbtER+A40t7CCJ0ExjYsdjOeI23pGQjhp2expQVanFav+iGXok2L2wH
-         oQM1D0j/IXF6Zy3yL9FpAO9/g1ZHxKOmHAC4GzwvXhsBnqR2u9cSb6oOJLH4DLDC+WPv
-         Q1fw==
-X-Received: by 10.170.63.196 with SMTP id f187mr26917746ykf.82.1437373494060;
- Sun, 19 Jul 2015 23:24:54 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 23:24:54 -0700 (PDT)
-In-Reply-To: <1437246749-14423-6-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: mioVbK_kitMXFKlU_iSJ-7NGowA
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274316>
+         :from:to:cc:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe;
+        bh=MqLgGF+F2bmkyqLUl2cS+/AYmwDt9E0hsvMTOIM8wms=;
+        b=vabWM2Gbxx+/AXX/ZjJK1bCdB9Uo6AsdWmTqmD/MfB5Ooqgr3XB4o9XCeYMXGkQ5Jm
+         cVUy8gohJTvf3mrLdkyokBN32vnQmBZTn0T3uKi9nrgqAYpZFGoSkEd5MwI2UaIT9U8t
+         HOs01M1Z8nJkr2BwKoWJKuOFCfAuBCCYnnNXeqLTKu5NQ0bZfAMaDX72b2kE8L71gqLt
+         RQNIO5jX6mDH1DF3iG0MV2v6bjhU5qCx2ZP3koMRloG/nynjkiaqDBailWthE9xKr1oz
+         +7pQkmwokaKpCp8F1hBM58ag5WT1pWv/eQ+qOwArwl5y9FeeZlaSJc9zwisg5GHCmkcr
+         FOPw==
+X-Received: by 10.50.107.105 with SMTP id hb9mr130106igb.3.1437374455524;
+        Sun, 19 Jul 2015 23:40:55 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.107.155.9 with SMTP id d9ls2083723ioe.49.gmail; Sun, 19 Jul
+ 2015 23:40:54 -0700 (PDT)
+X-Received: by 10.107.7.220 with SMTP id g89mr22620128ioi.2.1437374454914;
+        Sun, 19 Jul 2015 23:40:54 -0700 (PDT)
+Received: from mail-yk0-x231.google.com (mail-yk0-x231.google.com. [2607:f8b0:4002:c07::231])
+        by gmr-mx.google.com with ESMTPS id s127si1780404ywc.6.2015.07.19.23.40.54
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Jul 2015 23:40:54 -0700 (PDT)
+Received-SPF: pass (google.com: domain of ericsunshine@gmail.com designates 2607:f8b0:4002:c07::231 as permitted sender) client-ip=2607:f8b0:4002:c07::231;
+Received: by mail-yk0-x231.google.com with SMTP id x123so132404736yka.1
+        for <msysgit@googlegroups.com>; Sun, 19 Jul 2015 23:40:54 -0700 (PDT)
+X-Received: by 10.129.91.87 with SMTP id p84mr27512958ywb.95.1437374454772;
+ Sun, 19 Jul 2015 23:40:54 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+Received: by 10.37.12.129 with HTTP; Sun, 19 Jul 2015 23:40:54 -0700 (PDT)
+In-Reply-To: <FDE2D068444A4350B0C2F25275CBC41D@PhilipOakley>
+X-Original-Sender: sunshine@sunshineco.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of ericsunshine@gmail.com designates 2607:f8b0:4002:c07::231
+ as permitted sender) smtp.mail=ericsunshine@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274317>
 
-On Sat, Jul 18, 2015 at 3:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Since 'ref-filter' only has an option to match path names add an
-> option for plain fnmatch pattern-matching.
+On Mon, Jul 20, 2015 at 2:16 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Eric Sunshine" <sunshine@sunshineco.com>
+>> On Sun, Jul 19, 2015 at 4:08 PM, Philip Oakley <philipoakley@iee.org>
+>> wrote:
+>>> Keep the build clean of extraneous files if it is indeed clean.
+>>> Otherwise leave the msvc-build-makedryerrors.txt file both as
+>>> a flag for any CI system or for manual debugging.
+>>>
+>>> Note that the file will contain the new values of the GIT_VERSION
+>>> and GITGUI_VERSION if they were generated by the make file. They
+>>> are omitted if the release is tagged and indentically defined in
+>>> their respective GIT_VERSION_GEN file DEF_VER variables.
+>>>
+>>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>>> ---
+>>> +# test for an empty Errors file and remove it
+>>> +for ($ErrsFile) {unlink $_ if (-f $_) && (!-s $_);}
+>>
+>> Why the 'for' loop?
+>>
+>> Also, if you're using the 'for' loop for the $_ side-effect, then why
+>> not the simpler:
 >
-> This is to support the pattern matching options which are used in `git
-> tag -l` and `git branch -l` where we can match patterns like `git tag
-> -l foo*` which would match all tags which has a "foo*" pattern.
+> It was cargo cult programming, with some Google searching to select between
+> invocations. Most examples were looping through lists in scripts, hence the
+> down select.
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 85c561e..7ff3ded 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -966,6 +980,15 @@ static int match_name_as_path(const char **pattern, const char *refname)
->         return 0;
->  }
+>>    for ($ErrsFile) { unlink if -f && !-s; }
 >
-> +static int filter_pattern_match(struct ref_filter *filter, const char *refname)
-> +{
-> +       if (!*filter->name_patterns)
-> +               return 1;
-> +       if (filter->match_as_path)
-> +               return match_name_as_path(filter->name_patterns, refname);
-> +       return match_pattern(filter->name_patterns, refname);
-> +}
-> +
->  /*
->   * Given a ref (sha1, refname), check if the ref belongs to the array
->   * of sha1s. If the given ref is a tag, check if the given tag points
-> @@ -1034,7 +1057,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
->                 return 0;
->         }
->
-> -       if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
-> +       if (!filter_pattern_match(filter, refname))
->                 return 0;
+> A lot better. Will fix.
 
-I find it much more difficult to grok the new logic due to
-'*filter->name_patterns' having moved into the called function and its
-negation inside the function returning 1 which is then negated (again)
-upon return here. This sort of twisty logic places a higher cognitive
-load on the reader. Retaining the original logic makes the code far
-simpler to understand:
+Although that works, I'm not sure that it's really all that desirable
+due to the unnecessary and potentially confusing 'for' loop. I'd
+probably just write it as:
 
-    if (*filter->name_patterns &&
-        !filter_pattern_match(filter, refname))
-        return 0;
+    unlink $ErrsFile if -f $ErrsFile && !-s _;
 
-although it's a bit less nicely encapsulated, so I dunno...
+The lone '_' is magical[1] in that it re-uses the stat() information
+from the -f rather than stat'ing $ErrsFile again. I'd also probably
+replace !-s ("not non-zero size") with -z ("zero size"):
 
->         if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
+    unlink $ErrsFile if -f $ErrsFile && -z _;
+
+And, if you're using Perl 5.10 or later, you could use a little
+syntactic sugar[1] and stack the file test operators up against one
+another:
+
+    unlink $ErrsFile if -f -z $ErrsFile;
+
+which is the equivalent of the above with the sugar removed.
+
+[1]: http://perldoc.perl.org/functions/-X.html
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
