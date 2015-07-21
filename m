@@ -1,119 +1,182 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.5.0 round 2
-Date: Tue, 21 Jul 2015 07:40:33 +0800
-Message-ID: <CANYiYbHOg+Xyive7PacvSDR9fzMWQY-S03fF=m69Y15A-jiYTw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] introduce "format" date-mode
+Date: Mon, 20 Jul 2015 20:41:08 -0400
+Message-ID: <CAPig+cT_3pFH6XKBO1F2rbNyiGz5NgLMMiA_T+NWBroW5Sj7cg@mail.gmail.com>
+References: <20150625165341.GA21949@peff.net>
+	<20150625165545.GC23503@peff.net>
+	<20150629222247.GA31607@flurp.local>
+	<20150630132653.GA25742@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 01:40:42 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 21 02:41:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHKfp-0008Nm-OD
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 01:40:42 +0200
+	id 1ZHLcS-0006Fl-2V
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 02:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756510AbbGTXkg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2015 19:40:36 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:36188 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756057AbbGTXkf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2015 19:40:35 -0400
-Received: by wgbcc4 with SMTP id cc4so49238452wgb.3
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 16:40:34 -0700 (PDT)
+	id S1757235AbbGUAlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 20:41:10 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:33205 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754373AbbGUAlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 20:41:09 -0400
+Received: by ykfw194 with SMTP id w194so72620657ykf.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2015 17:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8q2qYWRFJdWayF299Q025RyE64WLgleyNv/jHjsfoqQ=;
-        b=s+GDK+1q5eH0PRxWXra1ZDuyxa0NzbBIZJVZap0BEk0932HY38RKyWp4HBf05St0Y3
-         gG0vUQ+UOEEQN/7HAMEzkBU3tWI1QJ5UhEBhlgH+ZqdXj/JGwVq8ImP7rkWIyINrelio
-         SutC7cIJso6o9M3BhEU2CeXhwe6jJ+mCKehMxOyHTXdjD/q66TrQX4kcolzRZmAC+Dok
-         oJ3qfKuBoXZ0q9mfdpbzk3ThtREaE9ti8LUTt0l5T7glhWTwSOisegfS5Zxa9nQoIO9V
-         5jbYj94HA/P6Bk4G5iHGh/95Vb2vcW6ASA7feimfpaQSYo0EyQekmgK4D8/ITVH9X3nW
-         nCqA==
-X-Received: by 10.194.179.167 with SMTP id dh7mr63548887wjc.15.1437435634002;
- Mon, 20 Jul 2015 16:40:34 -0700 (PDT)
-Received: by 10.194.76.230 with HTTP; Mon, 20 Jul 2015 16:40:33 -0700 (PDT)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=EevBuJc+HjDq10/Km4sik4gsK1SDCHBv7RC4Mx7ZZAE=;
+        b=UckTBeKQZjLdH/I+mdXOi0mszOnFilYVBfrq+yU2HtkPaLhsa61kYz3rkwS+3SpQSD
+         jAXPSkxQ6vbxur12mgxjs/2J9+YPW7QI9Rq6sznqr9uIXG3f3tAib94JeAEBw2TyPadZ
+         +UxBjrkgKZ0uJe07lObEnr68+O+ETADhjuGjJC2eTI9hrKsXTMgxIL53aaLY0fU3rtbm
+         xLlsdZAm0qCiKGpZGToU/oi5fM6qnRx8GflbJDNfzxxoYCtfjKNYEjTBQMvohpZEhJfi
+         ryP5DQus+e6EsMga7qly4NBIpuvMPGB7F9WFKTmFJTW5dDxNjSP/DGPgAk1CBIL5B9si
+         U7qg==
+X-Received: by 10.170.97.9 with SMTP id o9mr30943739yka.84.1437439268229; Mon,
+ 20 Jul 2015 17:41:08 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Mon, 20 Jul 2015 17:41:08 -0700 (PDT)
+In-Reply-To: <20150630132653.GA25742@peff.net>
+X-Google-Sender-Auth: IezC9kFvgrDMbGAfAvZZsTdwBNQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274364>
 
-Hi Junio,
+On Tue, Jun 30, 2015 at 9:26 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 29, 2015 at 06:22:47PM -0400, Eric Sunshine wrote:
+>> Clients of strbuf rightly expect the buffer to grow as needed in
+>> order to complete the requested operation. It is, therefore, both
+>> weird and expectation-breaking for strbuf_addftime() to lack this
+>> behavior. Worse, it doesn't even signal when the format has failed
+>> due to insufficient buffer space.
+>>
+>> How about taking this approach (or something similar), instead, which
+>> grows the strbuf as needed?
+>
+> Here's a patch, on top of jk/date-mode-format (I think it would also be
+> fine to just squash into the tip commit; the explanation in the commit
+> message is sufficiently mirrored in the code comment).
 
-The following changes since commit 961abca02c532626df631c851688ec433095=
-d93d:
+While cleaning up old local branches, I noticed that, although the
+jk/date-mode-format topic[1] made it into 'next' (and will be merged
+to 'master' according to "What's cooking"[2]), the below follow-on
+patch[3] which improves strbuf_addftime() never got picked up. Was
+this omission intentional? Based upon the discussion[4], I was under
+the impression that the patch was considered reasonably acceptable
+(and did not worsen problems with bogus format strings -- which are
+bogus anyway).
 
-  Merge tag 'l10n-2.5.0-rnd1' of git://github.com/git-l10n/git-po
-(2015-07-13 15:37:24 -0700)
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/272658/focus=272695
+[2]: http://news.gmane.org/gmane.comp.version-control.git
+[3]: http://article.gmane.org/gmane.comp.version-control.git/273061
+[4]: http://thread.gmane.org/gmane.comp.version-control.git/272658/focus=273026
 
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po tags/l10n-2.5.0-rnd2
-
-for you to fetch changes up to cdab3cacf643b290e423335e8e04b62fbd24b08c=
-:
-
-  l10n: ca.po: update translation (2015-07-20 11:54:40 -0600)
-
-----------------------------------------------------------------
-l10n-2.5.0-rnd2
-
-----------------------------------------------------------------
-Alex Henrie (1):
-      l10n: ca.po: update translation
-
-Alexander Shopov (1):
-      l10n: Updated Bulgarian translation of git (2359t,0f,0u)
-
-Dimitriy Ryazantcev (1):
-      l10n: ru.po: update Russian translation
-
-Jean-Noel Avila (1):
-      l10n: fr v2.5.0 round 2 (2359t)
-
-Jiang Xin (5):
-      l10n: git.pot: v2.5.0 round 2 (9 new, 5 removed)
-      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-r=
-u
-      Merge branch 'fr_v2.5.0-round2' of git://github.com/jnavila/git
-      l10n: zh_CN: for git v2.5.0 l10n round 2
-      Merge branch 'master' of https://github.com/ralfth/git-po-de
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation (2359t0f0u)
-
-Ralf Thielow (1):
-      l10n: de.po: translate 9 new messages
-
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
-      l10n: Updated Vietnamese translation (2359t)
-
- po/bg.po    |  398 +++++-----
- po/ca.po    |  391 ++++-----
- po/de.po    |  440 ++++++-----
- po/fr.po    |  451 ++++++-----
- po/git.pot  |  381 ++++-----
- po/ru.po    | 2531 +++++++++++++++++++++++++++++++++------------------=
---------
- po/sv.po    |  402 +++++-----
- po/vi.po    |  465 ++++++-----
- po/zh_CN.po |  400 +++++-----
- 9 files changed, 3179 insertions(+), 2680 deletions(-)
-
---
-Jiang Xin
+> -- >8 --
+> Subject: [PATCH] strbuf: make strbuf_addftime more robust
+>
+> The return value of strftime is poorly designed; when it
+> returns 0, the caller cannot tell if the buffer was not
+> large enough, or if the output was actually 0 bytes. In the
+> original implementation of strbuf_addftime, we simply punted
+> and guessed that our 128-byte hint would be large enough.
+>
+> We can do better, though, if we're willing to treat strftime
+> like less of a black box. We can munge the incoming format
+> to make sure that it never produces 0-length output, and
+> then "fix" the resulting output.  That lets us reliably grow
+> the buffer based on strftime's return value.
+>
+> Clever-idea-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  strbuf.c                | 38 +++++++++++++++++++++-----------------
+>  t/t6300-for-each-ref.sh | 10 ++++++++++
+>  2 files changed, 31 insertions(+), 17 deletions(-)
+>
+> diff --git a/strbuf.c b/strbuf.c
+> index a7ba028..e5e7370 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -712,29 +712,33 @@ char *xstrfmt(const char *fmt, ...)
+>
+>  void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm)
+>  {
+> +       size_t hint = 128;
+>         size_t len;
+>
+> -       /*
+> -        * strftime reports "0" if it could not fit the result in the buffer.
+> -        * Unfortunately, it also reports "0" if the requested time string
+> -        * takes 0 bytes. So if we were to probe and grow, we have to choose
+> -        * some arbitrary cap beyond which we guess that the format probably
+> -        * just results in a 0-length output. Since we have to choose some
+> -        * reasonable cap anyway, and since it is not that big, we may
+> -        * as well just grow to their in the first place.
+> -        */
+> -       strbuf_grow(sb, 128);
+> +       if (!*fmt)
+> +               return;
+> +
+> +       strbuf_grow(sb, hint);
+>         len = strftime(sb->buf + sb->len, sb->alloc - sb->len, fmt, tm);
+>
+>         if (!len) {
+>                 /*
+> -                * Either we failed, or the format actually produces a 0-length
+> -                * output. There's not much we can do, so we leave it blank.
+> -                * However, the output array is left in an undefined state, so
+> -                * we must re-assert our NUL terminator.
+> +                * strftime reports "0" if it could not fit the result in the buffer.
+> +                * Unfortunately, it also reports "0" if the requested time string
+> +                * takes 0 bytes. So our strategy is to munge the format so that the
+> +                * output contains at least one character, and then drop the extra
+> +                * character before returning.
+>                  */
+> -               sb->buf[sb->len] = '\0';
+> -       } else {
+> -               sb->len += len;
+> +               struct strbuf munged_fmt = STRBUF_INIT;
+> +               strbuf_addf(&munged_fmt, "%s ", fmt);
+> +               while (!len) {
+> +                       hint *= 2;
+> +                       strbuf_grow(sb, hint);
+> +                       len = strftime(sb->buf + sb->len, sb->alloc - sb->len,
+> +                                      munged_fmt.buf, tm);
+> +               }
+> +               strbuf_release(&munged_fmt);
+> +               len--; /* drop munged space */
+>         }
+> +       strbuf_setlen(sb, sb->len + len);
+>  }
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index c7f368c..7c9bec7 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -235,6 +235,16 @@ test_expect_success 'Check format of strftime date fields' '
+>         test_cmp expected actual
+>  '
+>
+> +test_expect_success 'exercise strftime with odd fields' '
+> +       echo >expected &&
+> +       git for-each-ref --format="%(authordate:format:)" refs/heads >actual &&
+> +       test_cmp expected actual &&
+> +       long="long format -- $_z40$_z40$_z40$_z40$_z40$_z40$_z40" &&
+> +       echo $long >expected &&
+> +       git for-each-ref --format="%(authordate:format:$long)" refs/heads >actual &&
+> +       test_cmp expected actual
+> +'
+> +
+>  cat >expected <<\EOF
+>  refs/heads/master
+>  refs/remotes/origin/master
+> --
+> 2.5.0.rc0.336.g8460790
+>
