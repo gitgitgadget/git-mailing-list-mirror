@@ -1,92 +1,71 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: What's cooking in git.git (Jul 2015, #05; Mon, 20)
-Date: Tue, 21 Jul 2015 12:36:50 -0400
-Organization: Twitter
-Message-ID: <1437496610.30911.15.camel@twopensource.com>
-References: <xmqqwpxuwh8d.fsf@gitster.dls.corp.google.com>
-	 <1437439832.30911.12.camel@twopensource.com>
-	 <xmqqsi8iw0pz.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 6/7] update-ref and tag: add --create-reflog arg
+Date: Tue, 21 Jul 2015 09:42:13 -0700
+Message-ID: <xmqqio9dwjh6.fsf@gitster.dls.corp.google.com>
+References: <1437493504-3699-1-git-send-email-dturner@twopensource.com>
+	<1437493504-3699-7-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 18:36:57 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 18:42:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHaXH-0005uE-TG
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 18:36:56 +0200
+	id 1ZHacc-0000Y0-Pm
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 18:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932277AbbGUQgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 12:36:50 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:33782 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755421AbbGUQgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 12:36:50 -0400
-Received: by qkdl129 with SMTP id l129so136541884qkd.0
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 09:36:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=FG+mhH6ccFjigYh7GMnvPoRk44bub6qwcHyye8O0ibk=;
-        b=kISwBWtcmBzBUsMn3NOtrdh3YO7q/MkPJjSAFNKiWnW/g3lfFadaAQSn/IddwTbr4/
-         rXKAR4jJ1rJGGfcaxHrlS081+7tqqirvuiXyXI1B+HChpOS0WqTm3sD+N91v3SfO1GSB
-         LfHjoeZx3+8GzbBvNyDDZA40+V/HTh21L3tRcnhDFyHlLgQSXuXJX++8ItLCnzoiGhz3
-         jqSDTEWZhtcOSn3OxEWHHWm6TFGw4fKq47d3AoTkQQgg/9un7Epnox3+uGVQOFl5tfI5
-         oOsy0vUj/8SItm8l3m6CONsE7IMJaPpncB4zlfr4sKm5mbW7pgS9AGNkIjb1lcWX1JxD
-         qQsw==
-X-Gm-Message-State: ALoCoQnRISxF44K7bRk6YmUPZBYK880fdij4h5wnpF+fk9zCtasMhGly06uwOOXpnwnulJLaTwQ/
-X-Received: by 10.140.93.200 with SMTP id d66mr17577855qge.62.1437496609372;
-        Tue, 21 Jul 2015 09:36:49 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g92sm13009611qgf.20.2015.07.21.09.36.48
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Jul 2015 09:36:48 -0700 (PDT)
-In-Reply-To: <xmqqsi8iw0pz.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S933058AbbGUQmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 12:42:16 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:35919 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755655AbbGUQmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2015 12:42:15 -0400
+Received: by pdjr16 with SMTP id r16so125567927pdj.3
+        for <git@vger.kernel.org>; Tue, 21 Jul 2015 09:42:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=8EEhMw7bSAmDmi87KvZ1hYJEsc8noPriabi6eBSayTo=;
+        b=rUwqOegfro2VgDGsjcXg3qo/d8m1hnycSNBiZbgAPWi25jVpH5e6Rzjr6LzlKfRVDD
+         SHIrPnnM2Ez4HkCGaKlG6xA+FsdHW0Z/NXOQDyobXI2d7+jzL34+woLpleur/6HEFBN9
+         gLAMFlUTNHgf3I8SOIT70GKSShdM5cJ9Hwx5T4ZUqUnFIZjgTMB1psyHajzTVbhy/8GZ
+         xqX3Wq1OFDhU1mmQcVe266o8GkBuGq+FKMhhL0ZiC6dLNBgSD4FpgmwvRYMLvHhiLF6p
+         d2PMyf3J/ATCQXfA9qo0+0J5N+V3hPpjU5eCxEEW9578KjVFYD6K5JEuUuG/dZv242WR
+         cjCQ==
+X-Received: by 10.67.5.2 with SMTP id ci2mr73719704pad.97.1437496935478;
+        Tue, 21 Jul 2015 09:42:15 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:3977:fdee:723a:a723])
+        by smtp.gmail.com with ESMTPSA id zj15sm28521229pab.1.2015.07.21.09.42.14
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 21 Jul 2015 09:42:14 -0700 (PDT)
+In-Reply-To: <1437493504-3699-7-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Tue, 21 Jul 2015 11:45:03 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274389>
 
-On Mon, 2015-07-20 at 22:15 -0700, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> >> * dt/refs-backend-preamble (2015-07-13) 7 commits
-> >>  - git-stash: use update-ref --create-reflog instead of creating files
-> >>  - update-ref and tag: add --create-reflog arg
-> >>  - refs: add REF_FORCE_CREATE_REFLOG flag
-> >>  - git-reflog: add exists command
-> >>  - refs: new public ref function: safe_create_reflog
-> >>  - refs: Break out check for reflog autocreation
-> >>  - refs.c: add err arguments to reflog functions
-> >> ...
-> >>  Still under discussion.
-> >> 
-> >>  Will hold.
-> >
-> > What's left to discuss on this one? I think the latest version addresses
-> > all concerns, but I'm happy to do another reroll or discuss further if
-> > necessary.
-> 
-> I think I found the series more or less ready when I saw v7, but
-> there was a good discussion between Michael Haggerty and you on that
-> round after I thought so, and then you posted the reroll (v8) which
-> is what is queued above.  As I was not closely following the earlier
-> exchange, I wanted to hear from Michael if everything is now good
-> with v8, which hasn't happened as far as I recall.
+David Turner <dturner@twopensource.com> writes:
 
-Thanks.  I've incorporated Michael Haggerty's suggestions into v9.
+> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+> index 6763cf1..d9646ef 100644
+> --- a/builtin/update-ref.c
+> +++ b/builtin/update-ref.c
+> @@ -14,6 +14,7 @@ static const char * const git_update_ref_usage[] = {
+>  
+>  static char line_termination = '\n';
+>  static int update_flags;
+> +int create_reflog_flag;
 
-> Also in $gmane/273828 [*1*] you hinted (but without showing a firm
-> commitment) that there might be a reroll coming, which was another
-> reason why I wasn't in a hurry to merge v8 iteration down to 'next'.
+No need to reroll only for this, but I'll s/^int/static &/; while
+queuing.
 
-The current version does not use the term "pseudoref" (it is used in the
-refs backend series, and added to the glossary in those patches).
+I may have more comments later; this was found in the first pass.
+
+Thanks.
