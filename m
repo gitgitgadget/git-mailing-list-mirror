@@ -1,99 +1,95 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2b 00/16, 2 updates] Make the msvc-build scripts work again
-Date: Tue, 21 Jul 2015 17:46:00 +0100
-Organization: OPDS
-Message-ID: <73004CECB3514744A5916831B4501689@PhilipOakley>
-References: <1437432846-5796-1-git-send-email-philipoakley@iee.org> <xmqq1tg2xwbd.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2015, #05; Mon, 20)
+Date: Tue, 21 Jul 2015 20:56:46 +0200
+Message-ID: <55AE95EE.1080500@gmail.com>
+References: <xmqqwpxuwh8d.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Eric Sunshine" <sunshine@sunshineco.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 20:45:11 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 21 20:57:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHcXO-0005XT-Ou
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 20:45:11 +0200
+	id 1ZHcj8-0003WN-7p
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 20:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933412AbbGUSpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 14:45:03 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:7024 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933274AbbGUSpB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 14:45:01 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BICQDPka5VPMS/BlxcgxOBPYZQbbxKBAQCgUBNAQEBAQEBBwEBAQFBJBuEHgUBAQEBAgEIAQEuHgEBDxILAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYgVDLwtkAmLTIUGgx6BFAWMcIdjAYENpCqBCWaCND0xgksBAQE
-X-IPAS-Result: A2BICQDPka5VPMS/BlxcgxOBPYZQbbxKBAQCgUBNAQEBAQEBBwEBAQFBJBuEHgUBAQEBAgEIAQEuHgEBDxILAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYgVDLwtkAmLTIUGgx6BFAWMcIdjAYENpCqBCWaCND0xgksBAQE
-X-IronPort-AV: E=Sophos;i="5.15,517,1432594800"; 
-   d="scan'208";a="685649084"
-Received: from host-92-6-191-196.as43234.net (HELO PhilipOakley) ([92.6.191.196])
-  by out1.ip06ir2.opaltelecom.net with ESMTP; 21 Jul 2015 19:44:58 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S933742AbbGUS5O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jul 2015 14:57:14 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:35618 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933262AbbGUS5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2015 14:57:13 -0400
+Received: by wibxm9 with SMTP id xm9so131574413wib.0
+        for <git@vger.kernel.org>; Tue, 21 Jul 2015 11:57:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=r0LX7X6tOTm8jwGMaqgOiT8Rzc1hQnePqbijcv7DJk4=;
+        b=OoSApZvb49oYVcJRqaWoBzTEi2SX4RYrnFpQBxZzFZHVRuekGkHjs2ptSaVqF3S/wJ
+         g0fkQhDCVFt/kSw8lJjdpS+W+SV8Bg1jtiwBQMFVpVJKpDyJZD/c+WwlIg/XTvzGhKip
+         +sBqoII6eUIZJRTTkNTkDuIb6DPdme4SZrpF2EkYEH3ul9bWmsltQVVLOsu+/PwVBN/O
+         vEX6fprFLbAKoIxYoffUzK3aoo52Z9g5WgxMCAgu8A9p3ZpHoUHtrHP+Pd0gbSiKZmLC
+         NNdaJG3Pz9VDBZ8XqB1Duw4NvPZGbrLMlF0pQtgZL4Py24tGG3Np+l8NqZqjJqZv/IgM
+         eo+w==
+X-Received: by 10.194.57.232 with SMTP id l8mr22038150wjq.48.1437505032222;
+        Tue, 21 Jul 2015 11:57:12 -0700 (PDT)
+Received: from [192.168.1.53] (eln240.neoplus.adsl.tpnet.pl. [83.21.207.240])
+        by smtp.googlemail.com with ESMTPSA id hn2sm38335400wjc.45.2015.07.21.11.57.10
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Jul 2015 11:57:11 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <xmqqwpxuwh8d.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274395>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> This updates two patches in the series based on Eric Sunshine's
->> comments.
->>
->> Patch 8b updates the commit message to make clear what was going
->> wrong.
->>
->> Patch 10b improves the perl code.
->
-> Is v2b like saying v3 or something else?  Does 8b replaces 8 or
-> updates it (i.e. comes between 8 and 9)?
+On 2015-07-21, Junio C Hamano wrote:
 
+> --------------------------------------------------
+> [Stalled]
+>=20
+> * sg/config-name-only (2015-05-28) 3 commits
+>  - completion: use new 'git config' options to reliably list variable=
+ names
+>  - SQUASH
+>  - config: add options to list only variable names
+>=20
+>  "git config --list" output was hard to parse when values consist of
+>  multiple lines.  Introduce a way to show only the keys.
 
-Sorry for the confusion. Yes these are quick replacements, rather than
-re-rolling the whole series immediately.
+Errr... isn't it what we have -z / --null for?
 
->
->> Junio: would a full re-roll be appropriate at a suitable point?
->
-> Probably, but I'd like to see people try it out and give positive
-> feedback first.  This part of the tree I can give no input or pre-
-> pushout testing at all.
+>  Adding a single --name-only option may be a better way to go than
+>  adding two new options.
 
-It has been tried out on the Msysgit list, and also against the github
-Pull Request, with responses noted there.
+But that is a good idea anyway.
 
-I'll do another branch / rebase and PR onto the G4W SDK as well,
-for an extra chance at getting more replies. Ideally, if part of this
-mainstream Git, it would get picked up automatically by them
-(rather than being local 'fixes' endlessly carried forward).
+> * tf/gitweb-project-listing (2015-03-19) 5 commits
+>  - gitweb: make category headings into links when they are directorie=
+s
+>  - gitweb: optionally set project category from its pathname
+>  - gitweb: add a link under the search box to clear a project filter
+>  - gitweb: if the PATH_INFO is incomplete, use it as a project_filter
+>  - gitweb: fix typo in man page
+>=20
+>  Update gitweb to make it more pleasant to deal with a hierarchical
+>  forest of repositories.
+>=20
+>  Any comments from those who use or have their own code in Gitweb?
 
->
-> Who are the people involved in this part of the system in the past?
-> Does "shortlog -n --no-merges contrib/buildsystems compat/vcbuild"
-> tell us anything?
->
+Sent a reply to wrong (old) thread, sorry.
 
-There has been no activity here on the 'create a visual studio project'
-aspects in the last few years. Any changes listed in the logs relate to
-ensuring that the MSVC compiler will run as part of a regular Makefile
-run (IIUC). The last significant commit was 74cf9bd (engine.pl: Fix a
-recent breakage of the buildsystem generator, 2010-01-22) Ramsay Jones,
-so that's five and a half years. Mind you, it's taken me a while to find 
-all
-the bit rots.
-
->
->> Philip Oakley (2):
->
+tl;dr - first can be applied unconditionally, others have slight
+issues. Cgit implements something like this, though with limit
+(only first directory path), and different UI - it looks useful
+on https://git.kernel.org/cgit/
+=20
+--=20
+Jakub Nar=C4=99bski
