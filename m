@@ -1,7 +1,7 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v9 4/7] git-reflog: add exists command
-Date: Tue, 21 Jul 2015 11:45:01 -0400
-Message-ID: <1437493504-3699-5-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v9 6/7] update-ref and tag: add --create-reflog arg
+Date: Tue, 21 Jul 2015 11:45:03 -0400
+Message-ID: <1437493504-3699-7-git-send-email-dturner@twopensource.com>
 References: <1437493504-3699-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
@@ -11,151 +11,295 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHZjc-000447-Pd
+	id 1ZHZjd-000447-Ck
 	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 17:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933139AbbGUPpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S933168AbbGUPpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 11:45:32 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:34576 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933136AbbGUPpS (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 21 Jul 2015 11:45:18 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:34468 "EHLO
-	mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754146AbbGUPpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 11:45:16 -0400
-Received: by qkfc129 with SMTP id c129so92652140qkf.1
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 08:45:15 -0700 (PDT)
+Received: by qgeu79 with SMTP id u79so33929520qge.1
+        for <git@vger.kernel.org>; Tue, 21 Jul 2015 08:45:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=V5amPFF0E/Ap5IhK1iT5Fft6cVGrb1G1fzgE14dgSX0=;
-        b=c7EIe4jqN3OMbcpwau3KQ5TmbwcPwMtlc75G+ROIlDfzr8+1ALDpkYWA+WxM+AjaAt
-         OMkD9VwwcHTBrFKnTyxfRPopYatqYeX6uiuwXA6KBECmDFfmaU0+BUZKovh3Co41wuQy
-         Va3pydmw351o5iSRhcf+AX7yrGuVVNPK0xYnaHzjOlhdSdt1xIhO9lVkrTr6MQ5Qza3f
-         7wBFVntNIiWVSjm2EUO8TJJO6SQX0LcBKAqOcByEHLjvYcpY8EZviQNV1Qg1Jv/gmFBJ
-         XIpoDkBlDvZ855f6iOAUvF6rxQUbsaRTdmYA7PE2YcSQ+hsJjPJty6SvuzSNEX2mIXcp
-         I6Xw==
-X-Gm-Message-State: ALoCoQkB8KYdT/orbNJnbu0VCQIDB6ZSclMg46nz/EDLbBDw27UkO9t9nRtNTiSEs6BfPSUrZtcP
-X-Received: by 10.140.28.97 with SMTP id 88mr28224437qgy.69.1437493515307;
-        Tue, 21 Jul 2015 08:45:15 -0700 (PDT)
+        bh=U7SIawFbeiJ1atfeT58Wuw4+llGjn2cbp757dUyU3hE=;
+        b=EU7KBuPdEnbeP4IlNw6464Lsp7E/XBOJvO5afEIjHVK2TTJigAmc11XgzkdOl9nSFJ
+         QislL1l86imvYM5GuxtCu+ke6OoQWcEioQHbMLJVqPyLLMwHjiTUWytP7NvyHA8K+8MG
+         xzM7LYJrkOD1VbQWGtl6uQZ+Co7A8cPvBHjN5rAvbj6hvynjuSVdKPJCvXbmEM64UA7s
+         0wf6Vu5ZgtgCpIZcKDYmdXpeo11Y80Y8n/mCXqmUt2huD8+ArzQWf4f4T7vTx9nuWLSR
+         f2GVgkguveWb6QLPSQNfN7Mk9GftkO2adE7Ez62UmcmL0gbvyEMl/6bXFBbl8rGWEX46
+         VMtw==
+X-Gm-Message-State: ALoCoQkO5kOR5qMXVl7qBqm0XSPylONmQ910V9kiqLj9NitKdUm2N2uJxgcKSleoweAwXNNEErn7
+X-Received: by 10.140.93.78 with SMTP id c72mr55571117qge.105.1437493517343;
+        Tue, 21 Jul 2015 08:45:17 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g33sm12941288qgg.4.2015.07.21.08.45.14
+        by smtp.gmail.com with ESMTPSA id g33sm12941288qgg.4.2015.07.21.08.45.16
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 21 Jul 2015 08:45:14 -0700 (PDT)
+        Tue, 21 Jul 2015 08:45:16 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.586.g889ef79-twtrsrc
 In-Reply-To: <1437493504-3699-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274384>
 
-Theis are necessary because alternate ref backends might store reflogs
-somewhere other than .git/logs.  Code that now directly manipulates
-.git/logs should instead go through git-reflog.
+Allow the creation of a ref (e.g. stash) with a reflog already in
+place. For most refs (e.g. those under refs/heads), this happens
+automatically, but for others, we need this option.
+
+Currently, git does this by pre-creating the reflog, but alternate ref
+backends might store reflogs somewhere other than .git/logs.  Code
+that now directly manipulates .git/logs should instead use git
+plumbing commands.
+
+I also added --create-reflog to git tag, just for completeness.
+
+In a moment, we will use this argument to make git stash work with
+alternate ref backends.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-reflog.txt |  4 ++++
- builtin/reflog.c             | 33 ++++++++++++++++++++++++++++++++-
- t/t1411-reflog-show.sh       |  5 +++++
- 3 files changed, 41 insertions(+), 1 deletion(-)
+ Documentation/git-tag.txt        |  5 ++++-
+ Documentation/git-update-ref.txt |  5 ++++-
+ builtin/tag.c                    |  5 ++++-
+ builtin/update-ref.c             | 14 +++++++++++---
+ t/t1400-update-ref.sh            | 38 ++++++++++++++++++++++++++++++++++++++
+ t/t7004-tag.sh                   | 14 +++++++++++++-
+ 6 files changed, 74 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-index 5e7908e..44c736f 100644
---- a/Documentation/git-reflog.txt
-+++ b/Documentation/git-reflog.txt
-@@ -23,6 +23,7 @@ depending on the subcommand:
- 	[--dry-run] [--verbose] [--all | <refs>...]
- 'git reflog delete' [--rewrite] [--updateref]
- 	[--dry-run] [--verbose] ref@\{specifier\}...
-+'git reflog exists' <ref>
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 034d10d..2312980 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+-	[--column[=<options>] | --no-column] [<pattern>...]
++	[--column[=<options>] | --no-column] [--create-reflog] [<pattern>...]
+ 	[<pattern>...]
+ 'git tag' -v <tagname>...
  
- Reference logs, or "reflogs", record when the tips of branches and
- other references were updated in the local repository. Reflogs are
-@@ -52,6 +53,9 @@ argument must be an _exact_ entry (e.g. "`git reflog delete
- master@{2}`"). This subcommand is also typically not used directly by
- end users.
+@@ -143,6 +143,9 @@ This option is only applicable when listing tags without annotation lines.
+ 	all, 'whitespace' removes just leading/trailing whitespace lines and
+ 	'strip' removes both whitespace and commentary.
  
-+The "exists" subcommand checks whether a ref has a reflog.  It exits
-+with zero status if the reflog exists, and non-zero status if it does
-+not.
++--create-reflog::
++	Create a reflog for the tag.
++
+ <tagname>::
+ 	The name of the tag to create, delete, or describe.
+ 	The new tag name must pass all checks defined by
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+index c8f5ae5..969bfab 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
+ SYNOPSIS
+ --------
+ [verse]
+-'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>] | --stdin [-z])
++'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] [--create-reflog] <ref> <newvalue> [<oldvalue>] | --stdin [-z])
  
- OPTIONS
- -------
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index c2eb8ff..7ed0e85 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -13,6 +13,8 @@ static const char reflog_expire_usage[] =
- "git reflog expire [--expire=<time>] [--expire-unreachable=<time>] [--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] [--verbose] [--all] <refs>...";
- static const char reflog_delete_usage[] =
- "git reflog delete [--rewrite] [--updateref] [--dry-run | -n] [--verbose] <refs>...";
-+static const char reflog_exists_usage[] =
-+"git reflog exists <ref>";
+ DESCRIPTION
+ -----------
+@@ -67,6 +67,9 @@ performs all modifications together.  Specify commands of the form:
+ 	verify SP <ref> [SP <oldvalue>] LF
+ 	option SP <opt> LF
  
- static unsigned long default_reflog_expire;
- static unsigned long default_reflog_expire_unreachable;
-@@ -699,12 +701,38 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 	return status;
- }
++With `--create-reflog`, update-ref will create a reflog for each ref
++even if one would not ordinarily be created.
++
+ Quote fields containing whitespace as if they were strings in C source
+ code; i.e., surrounded by double-quotes and with backslash escapes.
+ Use 40 "0" characters or the empty string to specify a zero value.  To
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 5f6cdc5..cccca99 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -579,6 +579,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct create_tag_options opt;
+ 	char *cleanup_arg = NULL;
+ 	int annotate = 0, force = 0, lines = -1;
++	int create_reflog = 0;
+ 	int cmdmode = 0;
+ 	const char *msgfile = NULL, *keyid = NULL;
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+@@ -605,6 +606,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING('u', "local-user", &keyid, N_("key-id"),
+ 					N_("use another key to sign the tag")),
+ 		OPT__FORCE(&force, N_("replace the tag if exists")),
++		OPT_BOOL(0, "create-reflog", &create_reflog, N_("create_reflog")),
  
-+static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
-+{
-+	int i, start = 0;
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (!strcmp(arg, "--")) {
-+			i++;
-+			break;
-+		}
-+		else if (arg[0] == '-')
-+			usage(reflog_exists_usage);
-+		else
-+			break;
-+	}
-+
-+	start = i;
-+
-+	if (argc - start != 1)
-+		usage(reflog_exists_usage);
-+
-+	if (check_refname_format(argv[start], REFNAME_ALLOW_ONELEVEL))
-+		die("invalid ref format: %s", argv[start]);
-+	return !reflog_exists(argv[start]);
-+}
-+
+ 		OPT_GROUP(N_("Tag listing options")),
+ 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
+@@ -733,7 +735,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, ref.buf, object, prev,
+-				   0, NULL, &err) ||
++				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
++				   NULL, &err) ||
+ 	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+ 	ref_transaction_free(transaction);
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 6763cf1..d9646ef 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -14,6 +14,7 @@ static const char * const git_update_ref_usage[] = {
+ 
+ static char line_termination = '\n';
+ static int update_flags;
++int create_reflog_flag;
+ static const char *msg;
+ 
  /*
-  * main "reflog"
-  */
+@@ -200,7 +201,8 @@ static const char *parse_cmd_update(struct ref_transaction *transaction,
  
- static const char reflog_usage[] =
--"git reflog [ show | expire | delete ]";
-+"git reflog [ show | expire | delete | exists ]";
+ 	if (ref_transaction_update(transaction, refname,
+ 				   new_sha1, have_old ? old_sha1 : NULL,
+-				   update_flags, msg, &err))
++				   update_flags | create_reflog_flag,
++				   msg, &err))
+ 		die("%s", err.buf);
  
- int cmd_reflog(int argc, const char **argv, const char *prefix)
- {
-@@ -724,5 +752,8 @@ int cmd_reflog(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[1], "delete"))
- 		return cmd_reflog_delete(argc - 1, argv + 1, prefix);
+ 	update_flags = 0;
+@@ -231,7 +233,8 @@ static const char *parse_cmd_create(struct ref_transaction *transaction,
+ 		die("create %s: extra input: %s", refname, next);
  
-+	if (!strcmp(argv[1], "exists"))
-+		return cmd_reflog_exists(argc - 1, argv + 1, prefix);
+ 	if (ref_transaction_create(transaction, refname, new_sha1,
+-				   update_flags, msg, &err))
++				   update_flags | create_reflog_flag,
++				   msg, &err))
+ 		die("%s", err.buf);
+ 
+ 	update_flags = 0;
+@@ -354,6 +357,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 	unsigned char sha1[20], oldsha1[20];
+ 	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
+ 	unsigned int flags = 0;
++	int create_reflog = 0;
+ 	struct option options[] = {
+ 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+ 		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
+@@ -361,6 +365,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 					N_("update <refname> not the one it points to")),
+ 		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
+ 		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
++		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create_reflog")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -370,6 +375,8 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 	if (msg && !*msg)
+ 		die("Refusing to perform update with empty message.");
+ 
++	create_reflog_flag = create_reflog ? REF_FORCE_CREATE_REFLOG : 0;
 +
- 	return cmd_log_reflog(argc, argv, prefix);
+ 	if (read_stdin) {
+ 		struct strbuf err = STRBUF_INIT;
+ 		struct ref_transaction *transaction;
+@@ -431,5 +438,6 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 				  flags);
+ 	else
+ 		return update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
+-				  flags, UPDATE_REFS_DIE_ON_ERR);
++				  flags | create_reflog_flag,
++				  UPDATE_REFS_DIE_ON_ERR);
  }
-diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
-index 6f47c0d..3eb4f10 100755
---- a/t/t1411-reflog-show.sh
-+++ b/t/t1411-reflog-show.sh
-@@ -166,4 +166,9 @@ test_expect_success 'git log -g -p shows diffs vs. parents' '
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index d787bf5..9d21c19 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -23,6 +23,7 @@ test_expect_success setup '
+ m=refs/heads/master
+ n_dir=refs/heads/gu
+ n=$n_dir/fixes
++outside=foo
+ 
+ test_expect_success \
+ 	"create $m" \
+@@ -74,6 +75,24 @@ test_expect_success "delete $m (by HEAD)" '
+ '
+ rm -f .git/$m
+ 
++test_expect_success 'update-ref does not create reflogs by default' '
++	test_when_finished "git update-ref -d $outside" &&
++	git update-ref $outside $A &&
++	git rev-parse $A >expect &&
++	git rev-parse $outside >actual &&
++	test_cmp expect actual &&
++	test_must_fail git reflog exists $outside
++'
++
++test_expect_success 'update-ref creates reflogs with --create-reflog' '
++	test_when_finished "git update-ref -d $outside" &&
++	git update-ref --create-reflog $outside $A &&
++	git rev-parse $A >expect &&
++	git rev-parse $outside >actual &&
++	test_cmp expect actual &&
++	git reflog exists $outside
++'
++
+ test_expect_success \
+ 	"create $m (by HEAD)" \
+ 	"git update-ref HEAD $A &&
+@@ -472,6 +491,25 @@ test_expect_success 'stdin create ref works' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'reflog exists works' '
-+	git reflog exists refs/heads/master &&
-+	! git reflog exists refs/heads/nonexistent
++test_expect_success 'stdin does not create reflogs by default' '
++	test_when_finished "git update-ref -d $outside" &&
++	echo "create $outside $m" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $outside >actual &&
++	test_cmp expect actual &&
++	test_must_fail git reflog exists $outside
 +'
 +
- test_done
++test_expect_success 'stdin creates reflogs with --create-reflog' '
++	echo "create $outside $m" >stdin &&
++	git update-ref --create-reflog --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $outside >actual &&
++	test_cmp expect actual &&
++	git reflog exists $outside
++'
++
+ test_expect_success 'stdin succeeds with quoted argument' '
+ 	git update-ref -d $a &&
+ 	echo "create $a \"$m\"" >stdin &&
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index d1ff5c9..d31788c 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -51,7 +51,19 @@ test_expect_success 'creating a tag using default HEAD should succeed' '
+ 	echo foo >foo &&
+ 	git add foo &&
+ 	git commit -m Foo &&
+-	git tag mytag
++	git tag mytag &&
++	test_must_fail git reflog exists refs/tags/mytag
++'
++
++test_expect_success 'creating a tag with --create-reflog should create reflog' '
++	test_when_finished "git tag -d tag_with_reflog" &&
++	git tag --create-reflog tag_with_reflog &&
++	git reflog exists refs/tags/tag_with_reflog
++'
++
++test_expect_success '--create-reflog does not create reflog on failure' '
++	test_must_fail git tag --create-reflog mytag &&
++	test_must_fail git reflog exists refs/tags/mytag
+ '
+ 
+ test_expect_success 'listing all tags if one exists should succeed' '
 -- 
 2.4.2.586.g889ef79-twtrsrc
