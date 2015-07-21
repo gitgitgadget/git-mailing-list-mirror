@@ -1,89 +1,104 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2b 00/16, 2 updates] Make the msvc-build scripts work again
-Date: Tue, 21 Jul 2015 21:39:03 +0100
-Organization: OPDS
-Message-ID: <B947AFE2559B41DDA2078497EB068EAF@PhilipOakley>
-References: <1437432846-5796-1-git-send-email-philipoakley@iee.org><xmqq1tg2xwbd.fsf@gitster.dls.corp.google.com><73004CECB3514744A5916831B4501689@PhilipOakley><xmqqvbdduxd5.fsf@gitster.dls.corp.google.com> <xmqq1tg1uvjk.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v9 0/7] refs backend preamble
+Date: Tue, 21 Jul 2015 16:43:24 -0400
+Organization: Twitter
+Message-ID: <1437511404.30911.21.camel@twopensource.com>
+References: <1437493504-3699-1-git-send-email-dturner@twopensource.com>
+	 <55AEA998.60501@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Eric Sunshine" <sunshine@sunshineco.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 22:38:45 2015
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 22:43:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHeJI-0002UI-M8
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 22:38:45 +0200
+	id 1ZHeNs-0005NT-VB
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 22:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753838AbbGUUik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 16:38:40 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:23392 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752110AbbGUUij (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 16:38:39 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BOCQAyra5VPMS/BlxcgxOBPYZQbbxOBAQCgUA9EAEBAQEBAQEGAQEBAUABJBuEHgYBAQQIAQEuHgEBDxILAgMFAgEDFQwlFAEEGgYHAwYBDQYTCAIBAgMBiCG8bJAHi0yEIxEBUYMegRQFjHCHYwGBDYxfjzKIGYEJZoI0PTGBDYE+AQEB
-X-IPAS-Result: A2BOCQAyra5VPMS/BlxcgxOBPYZQbbxOBAQCgUA9EAEBAQEBAQEGAQEBAUABJBuEHgYBAQQIAQEuHgEBDxILAgMFAgEDFQwlFAEEGgYHAwYBDQYTCAIBAgMBiCG8bJAHi0yEIxEBUYMegRQFjHCHYwGBDYxfjzKIGYEJZoI0PTGBDYE+AQEB
-X-IronPort-AV: E=Sophos;i="5.15,518,1432594800"; 
-   d="scan'208";a="39231135"
-Received: from host-92-6-191-196.as43234.net (HELO PhilipOakley) ([92.6.191.196])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 21 Jul 2015 21:38:37 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753971AbbGUUnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 16:43:25 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:34444 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752110AbbGUUnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2015 16:43:24 -0400
+Received: by qkfc129 with SMTP id c129so98419228qkf.1
+        for <git@vger.kernel.org>; Tue, 21 Jul 2015 13:43:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=QJFlN2eSCv9rUvWegS/4+0cHJv0C9eMLrfAK2IP0gGo=;
+        b=WWE40JYFisnmtNzzaC/Hb4QqKiVSHMQ2CfyY6bdf4awVJNpyTm7TNhpWALxAPuZMMd
+         153dA7wyDTw7Bww45xOmNZX5Z/fhv8Ux2Vc0jGJR91MXItnwHTywBCUmGO8nxMKiFfZ+
+         3F5Meau+H/kxT9CfTm+NkhrvG1eLJ+79LF0uqrJRuTdX6OVAo/QX067vXO5bEY78Yofl
+         WswuN6o0l5olF6X2CV+dT2P/VLg/fwEhQ4zjACfQNtYELFcB1pqKBoOG3vmisBpPNtM4
+         uLXWFUGp0ub5m8TZnhk+ULK+uv5mNNOeGLgssXZTom0mCrJQuLml3yvGfr2EsUYAS3jM
+         pOPw==
+X-Gm-Message-State: ALoCoQkO9XfsZijsef0d06iR/YnGiUwucnDOHGHINiXsMOo/NOU2hGzW25YMX9PVQkPsuzLJ03A5
+X-Received: by 10.140.42.98 with SMTP id b89mr57855349qga.78.1437511403484;
+        Tue, 21 Jul 2015 13:43:23 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f31sm9080120qgf.19.2015.07.21.13.43.21
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Jul 2015 13:43:22 -0700 (PDT)
+In-Reply-To: <55AEA998.60501@alum.mit.edu>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274415>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> "Philip Oakley" <philipoakley@iee.org> writes:
->>
->>> ... Ideally, if part of this
->>> mainstream Git, it would get picked up automatically by them
->>> (rather than being local 'fixes' endlessly carried forward).
->>
->> Actually, that is not "ideal", but what I want to avoid.
->>
->> As I do not do Windows, it simply is wrong for me to apply changes
->> that are very likely to affect Windows folks without seeing their
->> support first,...
->
-> Just to clarify this part.  I do not do RedHat, Solaris or OSX,
-> either.  Also MSVC may not be what GfW folks primarily target.
->
-> But the thing is that (1) Windows is so much different, and (2) GfW
-> folks are much more qualified to judge platform-specific issues on
-> Windows than I am.
->
-> Even though I may still need to have a say in the overall structure
-> of the changes to the upstream tree coming from them (e.g. "Don't
-> sprinkle #ifdef all over the generic code; instead add a wrapper or
-> two in compat/ to keep the generic code generic" is something I may
-> tell them when rejecting a change forwarded to me), I trust them a
-> lot more than I trust myself when it comes to what the changes do in
-> the platform-specific part and how they do it.
->
-> Thanks.
-> --
-Thanks for the extra clarification. I'll ask if they can confirm this 
-update on GfW.
+On Tue, 2015-07-21 at 13:20 -0700, Michael Haggerty wrote:
+> On 07/21/2015 08:44 AM, David Turner wrote:
+> > This reroll addresses Michael Haggerty's comments:
+> > 
+> > - Error messages are now in the form error: reason
+> > - We no longer unnecessarily set errno in write_ref_to_lockfile
+> > - Corrected a spelling error in the new docs and another in the tests
+> > - Corrected some copypasta in a test.
+> 
+> Isn't it sobering that, every time one looks at source code, one finds
+> things that could be improved? (Not just yours but all source code!)
 
-I've also asked Ramsay what his current situation is re- you previous 
-email and the msvc-build.
+Indeed.
 
-regards
+> Happily it seems like the items are getting ever more trivial, and
+> either with or without the last round of suggestions I think the code is
+> correct and is a nice step forward.
+> 
+> Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+> 
+> Off topic: I wonder whether sooner or later we will need a
+> 
+>     git reflog remove <ref>
+> 
+> to delete an existing reference's reflog entirely without deleting the
+> reference and without assuming a filesystem backend. (Note that this is
+> different than `git reflog expire`, which leaves the empty reflog file
+> around and thus doesn't undo a --create-reflog.) But perhaps there is no
+> call for that operation. In a pinch a user could delete the reference
+> and recreate it to get rid of its reflog.
 
-Philip 
+Some of the tests do delete reflogs (manually), and the refs backend
+code has a test driver that performs that operation (along with some
+others).  I could move git reflog remove out of that driver and into git
+reflog, but I'm reluctant to do it just for the tests.  If there's a
+non-test reason for it, I'll be happy to.
+
+I've pushed a new version of this series to
+https://github.com/dturner-tw/git/ on the pluggable-refs-preamble
+branch.  The new version addresses Michael's comments from this around,
+and makes a variable static as you suggested (and said you would squash
+in).
+
+Junio, now that Michael has marked this as reviewed, do you want to pull
+from github, or do you want me to send a re-roll to the mailing list?
+
+Thanks.
