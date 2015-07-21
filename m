@@ -1,78 +1,78 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: What's cooking in git.git (Jul 2015, #05; Mon, 20)
-Date: Mon, 20 Jul 2015 20:50:32 -0400
-Organization: Twitter
-Message-ID: <1437439832.30911.12.camel@twopensource.com>
-References: <xmqqwpxuwh8d.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] introduce "format" date-mode
+Date: Mon, 20 Jul 2015 18:19:31 -0700
+Message-ID: <20150721011931.GB28255@peff.net>
+References: <20150625165341.GA21949@peff.net>
+ <20150625165545.GC23503@peff.net>
+ <20150629222247.GA31607@flurp.local>
+ <20150630132653.GA25742@peff.net>
+ <CAPig+cT_3pFH6XKBO1F2rbNyiGz5NgLMMiA_T+NWBroW5Sj7cg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 02:50:37 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 03:19:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHLlU-0002rJ-9f
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 02:50:36 +0200
+	id 1ZHMDc-0000il-EX
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 03:19:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757482AbbGUAuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2015 20:50:32 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:34522 "EHLO
-	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755995AbbGUAub (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2015 20:50:31 -0400
-Received: by qkfc129 with SMTP id c129so80827533qkf.1
-        for <git@vger.kernel.org>; Mon, 20 Jul 2015 17:50:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=HgkmX7VPfc/PPtUmcSbvd/5/Nl559uaDVWT4+3ZhCj4=;
-        b=CMDOSyNp+oTeWbpMXM/lkHBjMU9hEP0OyP78Oe/e7CAcbIyqNB+1yaOiVSJHKNbh39
-         BpAK7WPbHQvvXo59j9CYvp2rkpUgVXh8DVi68OvpEFOgMBL1LB6EH+dJOKgQSM6VK0yt
-         XtA63NByM2G3jTJwsZAh/YbZpFDqNeUxuOCSNiR3Ngs/uNBI7VcoS3Gme7kuoIvQZo+3
-         8VosczAjRtuIUpF8HvJJMqg2OtD7ds7bBYix6gLp6pmuxkWLmWLSDuRH91P4LuWOsRp5
-         ztUdUxtndKvFnxE+IuSDxGnkL435eZ9xr+U7DAO6Gas7ZVMJ3S1pNtY7hWs4BF96OWQq
-         Cung==
-X-Gm-Message-State: ALoCoQmNqVVOsr8MT9fli+ylDyPuMMm/bgk9d+SNTR9e9j1/WLxUJAuR8l/8vbJx0Z8Ms89tSfA3
-X-Received: by 10.140.17.139 with SMTP id 11mr49768861qgd.65.1437439831072;
-        Mon, 20 Jul 2015 17:50:31 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 84sm11823862qha.47.2015.07.20.17.50.29
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jul 2015 17:50:30 -0700 (PDT)
-In-Reply-To: <xmqqwpxuwh8d.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1757424AbbGUBTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2015 21:19:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33153 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757218AbbGUBTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2015 21:19:36 -0400
+Received: (qmail 9996 invoked by uid 102); 21 Jul 2015 01:19:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jul 2015 20:19:35 -0500
+Received: (qmail 22990 invoked by uid 107); 21 Jul 2015 01:19:38 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jul 2015 21:19:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jul 2015 18:19:32 -0700
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT_3pFH6XKBO1F2rbNyiGz5NgLMMiA_T+NWBroW5Sj7cg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274366>
 
+On Mon, Jul 20, 2015 at 08:41:08PM -0400, Eric Sunshine wrote:
 
-> * dt/refs-backend-preamble (2015-07-13) 7 commits
->  - git-stash: use update-ref --create-reflog instead of creating files
->  - update-ref and tag: add --create-reflog arg
->  - refs: add REF_FORCE_CREATE_REFLOG flag
->  - git-reflog: add exists command
->  - refs: new public ref function: safe_create_reflog
->  - refs: Break out check for reflog autocreation
->  - refs.c: add err arguments to reflog functions
+> > Here's a patch, on top of jk/date-mode-format (I think it would also be
+> > fine to just squash into the tip commit; the explanation in the commit
+> > message is sufficiently mirrored in the code comment).
 > 
->  In preparation for allowing different "backends" to store the refs
->  in a way different from the traditional "one ref per file in $GIT_DIR
->  or in a $GIT_DIR/packed-refs file" filesystem storage, reduce
->  direct filesystem access to ref-like things like CHERRY_PICK_HEAD
->  from scripts and programs.
-> 
->  Still under discussion.
-> 
->  Will hold.
+> While cleaning up old local branches, I noticed that, although the
+> jk/date-mode-format topic[1] made it into 'next' (and will be merged
+> to 'master' according to "What's cooking"[2]), the below follow-on
+> patch[3] which improves strbuf_addftime() never got picked up. Was
+> this omission intentional? Based upon the discussion[4], I was under
+> the impression that the patch was considered reasonably acceptable
+> (and did not worsen problems with bogus format strings -- which are
+> bogus anyway).
 
-What's left to discuss on this one? I think the latest version addresses
-all concerns, but I'm happy to do another reroll or discuss further if
-necessary.
+Thanks for noticing. I do think the patch you quoted (to loop and grow
+the strbuf) is a good change. The original code would easily bite
+somebody with a really large date format, whereas this should work
+sanely everywhere, short of malformed inputs. And even then, I'd expect
+reasonable behavior on most systems. The obvious thing to worry about is
+a system where feeding a malformed "% " causes strftime to return 0, no
+matter what, and we reallocated and loop forever. But:
+
+  1. I don't even know if such a system exists.
+
+  2. We probably would blow up on malloc() eventually, so it wouldn't
+     even be a "real" infinite loop.
+
+So I think the worst case is probably that we get a report later on from
+somebody on an arcane system that says "I fed crap to --date=format, and
+my git died with an out-of-memory error", and then we figure out exactly
+_how_ their system is weird and deal with it then.
+
+-Peff
