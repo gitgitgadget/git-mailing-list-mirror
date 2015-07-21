@@ -1,120 +1,116 @@
-From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: Re: Question: .idx without .pack causes performance issues?
-Date: Tue, 21 Jul 2015 14:49:59 -0500
-Message-ID: <CAEtYS8RUNyhnHWHYRiPr99_p_1x-sHX0cwRRpeVgLL_T4vTG+A@mail.gmail.com>
-References: <CAEtYS8QWCg5_DtrJw-e+c50vcG0OpciR6LWon-3GgyngGn+0pQ@mail.gmail.com>
-	<xmqq4mkxwd77.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v9 1/7] refs.c: add err arguments to reflog functions
+Date: Tue, 21 Jul 2015 12:50:02 -0700
+Message-ID: <55AEA26A.6050800@alum.mit.edu>
+References: <1437493504-3699-1-git-send-email-dturner@twopensource.com> <1437493504-3699-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 21:50:08 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 21 21:50:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHdYG-0006Z5-7j
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 21:50:08 +0200
+	id 1ZHdYY-0006lk-7Q
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 21:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbbGUTuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 15:50:01 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:37993 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751743AbbGUTuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 15:50:00 -0400
-Received: by iggf3 with SMTP id f3so116415809igg.1
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 12:49:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rC1iRUR3IN1BAZS8SiBypa5+c1Hq2Z3AMGZTaBLH0/0=;
-        b=wHfjZl8yMWXwzTccrDNGE539KJnbJVR4rHw/0npg1xUE6mkkSphKqWVx3hJriJp+PV
-         KX37oId5/O0z4WurZJWL1U4JrFEe9/K0vh7FJ/7moKdKy5yCXHFWXfiHl9sGeVE1iTlP
-         K8M29nJjdiN9JSBM0pWJ4A7l5Sk8ldXGUanT/LUHBHUwAzHE5yzEkadr+Frw5gZKEcoS
-         S5L2EgU25t0PMe94uWR0ay6lpB/97ze2KH/mZi3SMgPeibop5kQYIPXoFxfGEPYiiZlm
-         ag3mY4gELv4jI2vIs1qTi4Pv26r8alv3I/Fa8WDLc88JwRCenT3IZoSvw+PAJrPW7rma
-         9NEA==
-X-Received: by 10.107.9.137 with SMTP id 9mr54198690ioj.50.1437508199702; Tue,
- 21 Jul 2015 12:49:59 -0700 (PDT)
-Received: by 10.50.12.166 with HTTP; Tue, 21 Jul 2015 12:49:59 -0700 (PDT)
-In-Reply-To: <xmqq4mkxwd77.fsf@gitster.dls.corp.google.com>
+	id S1753138AbbGUTuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 15:50:21 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:57132 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752510AbbGUTuU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 15:50:20 -0400
+X-AuditID: 1207440d-f79136d00000402c-81-55aea26c43e0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id D2.92.16428.C62AEA55; Tue, 21 Jul 2015 15:50:04 -0400 (EDT)
+Received: from [172.20.208.234] ([66.251.117.141])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t6LJo2CS027122
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 21 Jul 2015 15:50:03 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <1437493504-3699-2-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1M1ZtC7U4MoLDYv5m04wWnRd6Way
+	+DehxoHZY8GmUo8Fz++ze3zeJBfAHMVtk5RYUhacmZ6nb5fAnXF5imZBi1DF00+r2RsYF/B1
+	MXJySAiYSMzesJ0NwhaTuHBvPZDNxSEkcJlR4t6/p6wQziYmiaXL17KAVPEKaEuc6rvLCmKz
+	CKhKzP27AaybTUBXYlFPM1MXIweHqECQxOuXuRDlghInZz4BaxURcJC4vOsoM4jNLKApsWnD
+	C7AxwgKeEo03vrJD7GpmlFj9pxVsJqeAh8Sq9ZtYIRr0JHZc/wVly0s0b53NPIFRYBaSHbOQ
+	lM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6RXm5miV5qSukmRkjg8u5g/L9O5hCj
+	AAejEg9vRcvaUCHWxLLiytxDjJIcTEqivPEL14UK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuE9
+	EQmU401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8BaCDBUsSk1PrUjL
+	zClBSDNxcIIM55ISKU7NS0ktSiwtyYgHRWp8MTBWQVI8QHtLQNp5iwsSc4GiEK2nGBWlxHl3
+	gCQEQBIZpXlwY2Hp6BWjONCXwrwHQKp4gKkMrvsV0GAmoMG3Zq0BGVySiJCSamAs4yh+E/Bv
+	WXIgL5e21bITe2y/OV6b8txm4ezNOTEeOTwpHbbWjXFNf+wvJM02dWtnMyl8f1vO9m74xAyD
+	wP0xWmlBASzzPree/LyTi+9z0/PHp375aO2cz/nl/jn1fXmTLsRlzIjPfRd41b/q 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274407>
 
-On Tue, Jul 21, 2015 at 1:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I wouldn't be surprised if such a configuration to have leftover
-> ".idx" files that lack ".pack" affected performance, but I think you
-> really have to work on getting into such a situation (unless your
-> operating system is very cooperative and tries hard to corrupt your
-> repository, that is ;-), so I wouldn't be surprised if you were the
-> first one to report this.
+There's one last error formatting niggle below.
 
-I'm inclined to believe Windows isn't helping this situation: seems
-like something it might do, especially because of how it behaves if
-one process has a file open. Since I haven't caught a case where these
-files show up, maybe adding some tweaks to look for it occurring (such
-as on our Jenkins workers, if it's happening there now) would give us
-a better indication of the "why" question.  It could even be that it
-has occurred long ago, and the performance issue is just now observed:
-our environment has run 1.7.4, 1.8.3, and now 1.9.5 -- so even an
-unknown bug in a previous version could impact us now.
+On 07/21/2015 08:44 AM, David Turner wrote:
+> Add an err argument to log_ref_setup that can explain the reason
+> for a failure. This then eliminates the need to manage errno through
+> this function since we can just add strerror(errno) to the err string
+> when meaningful. No callers relied on errno from this function for
+> anything else than the error message.
+> 
+> Also add err arguments to private functions write_ref_to_lockfile,
+> log_ref_write_1, commit_ref_update. This again eliminates the need to
+> manage errno in these functions.
+> 
+> Some error messages are slightly reordered.
+> 
+> Update of a patch by Ronnie Sahlberg.
+> 
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  builtin/checkout.c |   8 ++--
+>  refs.c             | 129 ++++++++++++++++++++++++++++++-----------------------
+>  refs.h             |   4 +-
+>  3 files changed, 81 insertions(+), 60 deletions(-)
+> 
+> [...]
+> diff --git a/refs.c b/refs.c
+> index fb568d7..f090720 100644
+> --- a/refs.c
+> +++ b/refs.c
+> [...]
+> @@ -3288,12 +3288,17 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
+>   * necessary, using the specified lockmsg (which can be NULL).
+>   */
+>  static int commit_ref_update(struct ref_lock *lock,
+> -			     const unsigned char *sha1, const char *logmsg)
+> +			     const unsigned char *sha1, const char *logmsg,
+> +			     struct strbuf *err)
+>  {
+>  	clear_loose_ref_cache(&ref_cache);
+> -	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg) < 0 ||
+> +	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0 ||
+>  	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+> -	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg) < 0)) {
+> +	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, err) < 0)) {
+> +		char *old_msg = strbuf_detach(err, NULL);
+> +		strbuf_addf(err, "Cannot update the ref '%s': '%s'",
+> +			    lock->ref_name, old_msg);
 
->
-> We open the ".idx" file and try to keep as many of them in-core,
-> without opening corresponding ".pack" until the data is needed.
->
-> When we need an object, we learn from an ".idx" file that a
-> particular pack ought to have a copy of it, and then attempt to open
-> the corresponding ".pack" file.  If this fails, we do protect
-> ourselves from strange repositories with only ".idx" files by not
-> using that ".idx" and try to see if the sought-after object exists
-> elsewhere (and if there isn't we say "no such object", which is also
-> a correct thing to do).
->
-> I however do not think that we mark the in-core structure that
-> corresponds to an open ".idx" file in any way when such a failure
-> happens.  If we really cared enough, we could do so, saying "we know
-> there is .idx file, but do not bother looking at it again, as we
-> know the corresponding .pack is missing", and that would speed things
-> up a bit, essentially bringing us back to a sane situation without
-> any ".idx" without corresponding ".pack".
+The above error message has unnecessary quotes around old_msg.
 
-I think this is where the performance hit occurs on Windows: file stat
-operations in general are pretty slow, and I know msysgit did some
-things to emulate as much of the POSIX API as possible -- which isn't
-always easy on Windows.  But, some of the developers that know
-compat/win32/ better would know more (I recall the dirent stuff being
-pretty complicated, but open/fopen seem rather straightforward).  And
-yes -- retrying the operation each time and failing only compounds the
-issue.
+> +		free(old_msg);
+>  		unlock_ref(lock);
+>  		return -1;
+>  	}
+> [...]
 
->
-> I do not think it is worth the effort, though.  It would be more
-> fruitful to find out how you end up with ".idx exists but not
-> corresponding .pack" and if that is some systemic failure, see if
-> there is a way to prevent that from happening in the first place.
+Michael
 
-Agreed.  It feels like a workaround for a case where you're already in
-a bad state...
-
->
-> Also, I think it may not be a bad idea to teach "gc" to remove stale
-> ".idx" files that do not have corresponding ".pack" as garbage.
-
-I agree.  This seems like a more correct solution -- if gc understands
-to clean up these bad .idx files, it would then be a non-issue when
-searching the packs.  The solution you posted to check if an
-associated packfile exists -- while perhaps not belonging there --
-could still be useful to delete orphanend .idx files.
-
-I think you're correct, though -- if you did propose the solution to
-sha1_file.c, it would be necessary to prevent scanning that .idx
-again, or else any potential gains would be lost continually
-stat()'ing the file.  Now, msysgit does have core.fscache to try
-caching the stat()/lstat() results to lessen the impact, but this
-isn't on by default, I believe.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
