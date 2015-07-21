@@ -1,102 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Question: .idx without .pack causes performance issues?
-Date: Tue, 21 Jul 2015 11:57:48 -0700
-Message-ID: <xmqq4mkxwd77.fsf@gitster.dls.corp.google.com>
+Date: Tue, 21 Jul 2015 12:15:01 -0700
+Message-ID: <xmqqzj2puxu2.fsf@gitster.dls.corp.google.com>
 References: <CAEtYS8QWCg5_DtrJw-e+c50vcG0OpciR6LWon-3GgyngGn+0pQ@mail.gmail.com>
+	<xmqq4mkxwd77.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Git List <git@vger.kernel.org>
 To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 20:58:01 2015
+X-From: git-owner@vger.kernel.org Tue Jul 21 21:15:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHcjo-0003sg-Mx
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 20:58:01 +0200
+	id 1ZHd0V-0004VW-N9
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 21:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933558AbbGUS5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 14:57:51 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:34254 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933262AbbGUS5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 14:57:51 -0400
-Received: by pdbbh15 with SMTP id bh15so79348304pdb.1
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 11:57:50 -0700 (PDT)
+	id S933884AbbGUTPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 15:15:08 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34340 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933708AbbGUTPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2015 15:15:04 -0400
+Received: by pacan13 with SMTP id an13so126147682pac.1
+        for <git@vger.kernel.org>; Tue, 21 Jul 2015 12:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=daA82jJtnj5yvmbzttoWWo2ZmRf/AJDCobeDrU6ms4A=;
-        b=QE2+du6h5xehs14ephHal+NRBSRbjfAIhMO2uUZCcRqP9eFqo9xPbRjUrogDDzMqcC
-         HcL6EzAjTv0A3ALcXYkEOMNoO7DmTa4I983+f62nNXJ5e3rvS/IoX8gWrfap1OZBvvN7
-         OiTQv94aWhJmQJUeC9bJNh2MDA7Wh9oBLzxL/bsQwUYAv7JXcZJq3jaQAA6hJ4axyPRq
-         pfQNWu5o1U/gByJAaLPt3KFyMU+vy8I9y5Ft1IadqFcVQQNzDX/NVcH5uRxxbLo8wLF0
-         37DxtLlmQEU9HUIOTE52MXKQehUEiwJlnNP9NkaOkkFFEsrPqc53zrnFl3evuDspSBHD
-         uCsw==
-X-Received: by 10.70.45.134 with SMTP id n6mr42727061pdm.124.1437505070518;
-        Tue, 21 Jul 2015 11:57:50 -0700 (PDT)
+        bh=pK5KIru5XcC/rQnnsYD13Gv3Ti2wIZop88IsqCu7Sis=;
+        b=KsM91452CtULIqa6qnogItnRlSzHOtAOPECN1AG0XAjR2ltKrKOmVkTEiLJ4HDbxnx
+         XvBAdRay5LnNoSDiaPYqP7kZxleaQle4q3KPbvXUhz/OeRCrasIOu0fIYWrOEL6LCHrB
+         +xtDYQyQ1thFxKzGcOUfjDbvy07Uju6DcEGVkYqbsnhb9lTNAZQnuB0/0sHJoON9I5Ka
+         c/aHc/PnyGfuPJ2bT910RYf7aAtRAMBlTaRJkcxiC+n6hoyJw03d2xrsKlNSuHVwn7AC
+         r3CUvWsMp59+qgAl81GAoiNcoG71xUAK06Se1K69JsDHI2gEh3YFAcPaDXaCD6fJDnr4
+         0LdA==
+X-Received: by 10.66.116.81 with SMTP id ju17mr76055897pab.35.1437506103832;
+        Tue, 21 Jul 2015 12:15:03 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:3977:fdee:723a:a723])
-        by smtp.gmail.com with ESMTPSA id np15sm12930375pdb.1.2015.07.21.11.57.49
+        by smtp.gmail.com with ESMTPSA id ht9sm28937539pdb.0.2015.07.21.12.15.02
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 21 Jul 2015 11:57:49 -0700 (PDT)
-In-Reply-To: <CAEtYS8QWCg5_DtrJw-e+c50vcG0OpciR6LWon-3GgyngGn+0pQ@mail.gmail.com>
-	(Doug Kelly's message of "Tue, 21 Jul 2015 13:41:58 -0500")
+        Tue, 21 Jul 2015 12:15:03 -0700 (PDT)
+In-Reply-To: <xmqq4mkxwd77.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 21 Jul 2015 11:57:48 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274397>
 
-Doug Kelly <dougk.ff7@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I just wanted to relay an issue we've seen before at my day job (and
-> it just recently cropped up again).  When moving users from Git for
-> Windows 1.8.3 to 1.9.5, we found a few users started having operations
-> take an excruciatingly long amount of time.  At some point, we traced
-> the issue to a number of .pack files had been deleted (possibly
-> garbage collected?) -- but their associated .idx files were still
-> present.  Upon removing the "orphaned" idx files, we found performance
-> returned to normal.  Otherwise, git fsck reported no issues with the
-> repositories.
+> I however do not think that we mark the in-core structure that
+> corresponds to an open ".idx" file in any way when such a failure
+> happens.  If we really cared enough, we could do so, saying "we know
+> there is .idx file, but do not bother looking at it again, as we
+> know the corresponding .pack is missing", and that would speed things
+> up a bit, essentially bringing us back to a sane situation without
+> any ".idx" without corresponding ".pack".
 >
-> Other users have noted that using git gc would sometimes correct the
-> issue for them, but not always.
->
-> Anyway, has anyone else experienced this performance degradation?
+> I do not think it is worth the effort, though.  It would be more
+> fruitful to find out how you end up with ".idx exists but not
+> corresponding .pack" and if that is some systemic failure, see if
+> there is a way to prevent that from happening in the first place.
 
-I wouldn't be surprised if such a configuration to have leftover
-".idx" files that lack ".pack" affected performance, but I think you
-really have to work on getting into such a situation (unless your
-operating system is very cooperative and tries hard to corrupt your
-repository, that is ;-), so I wouldn't be surprised if you were the
-first one to report this.
+While I still think that it is more important to prevent such a
+situation from occurring in the first place, ignoring .idx that lack
+corresponding .pack should be fairly simple, perhaps like this.
 
-We open the ".idx" file and try to keep as many of them in-core,
-without opening corresponding ".pack" until the data is needed. 
+Note that if we wanted to do this for real, I think such an ".idx"
+file should also be added to the "garbage" list in the loop in which
+the second hunk of the following patch appears.
 
-When we need an object, we learn from an ".idx" file that a
-particular pack ought to have a copy of it, and then attempt to open
-the corresponding ".pack" file.  If this fails, we do protect
-ourselves from strange repositories with only ".idx" files by not
-using that ".idx" and try to see if the sought-after object exists
-elsewhere (and if there isn't we say "no such object", which is also
-a correct thing to do).
+ sha1_file.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-I however do not think that we mark the in-core structure that
-corresponds to an open ".idx" file in any way when such a failure
-happens.  If we really cared enough, we could do so, saying "we know
-there is .idx file, but do not bother looking at it again, as we
-know the corresponding .pack is missing", and that would speed things
-up a bit, essentially bringing us back to a sane situation without
-any ".idx" without corresponding ".pack".
-
-I do not think it is worth the effort, though.  It would be more
-fruitful to find out how you end up with ".idx exists but not
-corresponding .pack" and if that is some systemic failure, see if
-there is a way to prevent that from happening in the first place.
-
-Also, I think it may not be a bad idea to teach "gc" to remove stale
-".idx" files that do not have corresponding ".pack" as garbage.
+diff --git a/sha1_file.c b/sha1_file.c
+index 1cee438..b69298e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1240,6 +1240,19 @@ static void report_pack_garbage(struct string_list *list)
+ 	report_helper(list, seen_bits, first, list->nr);
+ }
+ 
++static int packfile_exists(const char *base, size_t base_len)
++{
++	struct strbuf path = STRBUF_INIT;
++	int status;
++
++	strbuf_add(&path, base, base_len);
++	strbuf_addstr(&path, ".pack");
++	status = file_exists(path.buf);
++
++	strbuf_release(&path);
++	return status;
++}
++
+ static void prepare_packed_git_one(char *objdir, int local)
+ {
+ 	struct strbuf path = STRBUF_INIT;
+@@ -1281,6 +1294,7 @@ static void prepare_packed_git_one(char *objdir, int local)
+ 					break;
+ 			}
+ 			if (p == NULL &&
++			    packfile_exists(path.buf, base_len) &&
+ 			    /*
+ 			     * See if it really is a valid .idx file with
+ 			     * corresponding .pack file that we can map.
