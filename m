@@ -1,64 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question: .idx without .pack causes performance issues?
-Date: Tue, 21 Jul 2015 13:48:15 -0700
-Message-ID: <xmqqtwsxtey8.fsf@gitster.dls.corp.google.com>
-References: <CAEtYS8QWCg5_DtrJw-e+c50vcG0OpciR6LWon-3GgyngGn+0pQ@mail.gmail.com>
-	<xmqq4mkxwd77.fsf@gitster.dls.corp.google.com>
-	<xmqqzj2puxu2.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v9 0/7] refs backend preamble
+Date: Tue, 21 Jul 2015 13:49:33 -0700
+Message-ID: <xmqqpp3ltew2.fsf@gitster.dls.corp.google.com>
+References: <1437493504-3699-1-git-send-email-dturner@twopensource.com>
+	<55AEA998.60501@alum.mit.edu>
+	<1437511404.30911.21.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 22:48:27 2015
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 22:49:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHeSg-0008KC-4S
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 22:48:26 +0200
+	id 1ZHeTs-0000bl-Tg
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 22:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932246AbbGUUsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 16:48:20 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33979 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110AbbGUUsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 16:48:18 -0400
-Received: by pacan13 with SMTP id an13so127208767pac.1
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 13:48:17 -0700 (PDT)
+	id S1755362AbbGUUth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 16:49:37 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:33636 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752110AbbGUUtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2015 16:49:36 -0400
+Received: by pdbnt7 with SMTP id nt7so55385227pdb.0
+        for <git@vger.kernel.org>; Tue, 21 Jul 2015 13:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=umviZN4ed1ftafgGQmBfmd6Gqs/8BICo5hc4dpdMOEY=;
-        b=R1QOfB17iAeTVaaY/GjQCJ8uCAYGK/lpdWKVMFcsXVQOBdygt9bcA/LsrahuVxhZ5V
-         GVe2dpasVdtEmlmbkc8kNTtaZl757xOEjvLh7S3U8EndMTg3B0MbPUALUdRK2oWPT+pD
-         6QoN2SIimU3T0mI9zlVrSTZZRBurp74R/5BrpcwQ6by2siWt+36/5mDerCJ8KWtX1hjx
-         rV+0YWxRYDGJ/37gtQEvO/hCHdKew8XFIDZVpzhqXi8cKQTrDS6R2aPR6sDeZoCVTtI0
-         y8qfHo3Y3lelaj6aDaA+D3MkDhe2U8NQVIEXY8NNyGIJSjKOETBd99bRkFe6bOC5G9hM
-         0o8w==
-X-Received: by 10.70.136.196 with SMTP id qc4mr77576134pdb.150.1437511697441;
-        Tue, 21 Jul 2015 13:48:17 -0700 (PDT)
+        bh=rD0QTlJFBqq+XgcrB/GCDSnJPEZH/ticEf6m6ojYOfk=;
+        b=0XX9mC98Bl63yycc6TdFBkk2cPfc2Mhzk2vqLv3Fjm7WhKIyE9DKPARdfAoFQKpcf5
+         HlbHNxQ6poekCU+ovY7UA2n8iWFhve2JvnIi9XbhX7HACPy6bt9BBQu8X4TzOFEx+4Oy
+         NmgaFMPP5TEs8w6dh3hZfTdOfjZpwagiTvogiNB3fUbOWm+vXIVALIQIGBGExTryvoXT
+         QFi3s4f45SI2EB7DefEU1CDx8m8tV6F0ZMkMlAeS+si2Ce86XjHu39ACASppWrzmBA56
+         X8xsPZSWc1PhdzTzPR2cvjwNuZM3x8b3F1m23RzXTKvv3RvvjzWIHJRUvtR1EVTzykDY
+         I44Q==
+X-Received: by 10.70.98.132 with SMTP id ei4mr61665670pdb.48.1437511776157;
+        Tue, 21 Jul 2015 13:49:36 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:3977:fdee:723a:a723])
-        by smtp.gmail.com with ESMTPSA id j4sm29109641pdo.62.2015.07.21.13.48.15
+        by smtp.gmail.com with ESMTPSA id w3sm29122846pdl.45.2015.07.21.13.49.34
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 21 Jul 2015 13:48:16 -0700 (PDT)
-In-Reply-To: <xmqqzj2puxu2.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 21 Jul 2015 12:15:01 -0700")
+        Tue, 21 Jul 2015 13:49:35 -0700 (PDT)
+In-Reply-To: <1437511404.30911.21.camel@twopensource.com> (David Turner's
+	message of "Tue, 21 Jul 2015 16:43:24 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274417>
 
-Junio C Hamano <gitster@pobox.com> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> While I still think that it is more important to prevent such a
-> situation from occurring in the first place, ignoring .idx that lack
-> corresponding .pack should be fairly simple, perhaps like this.
-> ...
+> Junio, now that Michael has marked this as reviewed, do you want to pull
+> from github, or do you want me to send a re-roll to the mailing list?
 
-Sorry for the noise, but this patch is worthless.  We already have
-an equivalent test in add_packed_git() that is called from this same
-place.
+Let's see the final round; that would give me a chance to properly
+sign-off your patch, and also give others a chance to eyeball them
+for one last time.
+
+Thanks.
