@@ -1,107 +1,72 @@
-From: =?UTF-8?q?Zoe=CC=88=20Blade?= <zoe@bytenoise.co.uk>
-Subject: [PATCH] userdiff: add support for Fountain documents
-Date: Tue, 21 Jul 2015 14:22:46 +0100
-Message-ID: <1437484966-664-1-git-send-email-zoe@bytenoise.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: =?iso-8859-1?Q?Zo=EB_Blade?= <zoe@bytenoise.co.uk>
+Subject: Re: [PATCH] userdiff: add support for Fountain documents
+Date: Tue, 21 Jul 2015 14:23:04 +0100
+Message-ID: <F67D2953-FCA5-43F8-A370-13C77B14553B@bytenoise.co.uk>
+References: <1437309082-19060-1-git-send-email-zoe@bytenoise.co.uk> <xmqqegk2y1dm.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Zoe=CC=88=20Blade?= <zoe@bytenoise.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 21 15:23:01 2015
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 15:23:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHXVc-00080V-EM
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 15:23:00 +0200
+	id 1ZHXVs-0008Az-U3
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 15:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754426AbbGUNWv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jul 2015 09:22:51 -0400
-Received: from 702218-web2.barracudas.co.uk ([134.213.40.106]:54170 "EHLO
-	702218-web2.barracudas.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754186AbbGUNWu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 09:22:50 -0400
-Received: by 702218-web2.barracudas.co.uk (Postfix, from userid 502)
-	id 98AA3380720; Tue, 21 Jul 2015 14:22:48 +0100 (BST)
-X-Mailer: git-send-email 1.7.1
+	id S1754471AbbGUNXL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jul 2015 09:23:11 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:55791 "EHLO
+	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752045AbbGUNXK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 09:23:10 -0400
+Received: from [192.168.0.26] ([82.69.105.163]) by mrelayeu.kundenserver.de
+ (mreue003) with ESMTPSA (Nemesis) id 0MT3vW-1ZOeGC3xdW-00S8ie; Tue, 21 Jul
+ 2015 15:23:07 +0200
+In-Reply-To: <xmqqegk2y1dm.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
+X-Provags-ID: V03:K0:UwGEbmzyD6ENe+z+NuRViw3JvZ5XVz5mXF8RGaDPkd0zwnF4Slf
+ ziKClWOfrh6+YsRIqbozAH1bKE0/zHD19rGe7U2vDV4SRt8EvJKvKu/7DAyLW5kkCZBibkl
+ Ags5/7TAICBr7xF6rA9wTTJjkSWNtSKa+tuqc4ZjB8pnagoTqfjJAF28a9HaqLeWZLfavoV
+ 8G7xug0Pafvxpv8af+AXg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9ePAjXviAXg=:MNk9nZADBLS31DLADWY5vB
+ XEZoO0PThka5TxywxgtzipcdRsdDjBYT0tUyAb3+UFecW8zZmFjQSf8z408mp++RiksLAHut6
+ Yu/Xm+3AtBg6pNtgFWOPIC5ZRJQ1iQyob9Z12cuf0SIBV8NdgJuGiIO++iSHpz1OjT1zvx7CH
+ QfVPWGc6/cj/IDYKaepw5PHMCxfSYBhI36h2yHoC8vgAXIvHcBEYPFijlMms/ptFA+LuEKLPS
+ SHRKz4Vf7e3X/DP01vTz9qHspy6yd8W8oh+g2P6BGO287m2fMRLs5AdAgz+hN77eZxkbT1AsV
+ qIA70BVyItxb6OiP6psTZpa2furEaIFpwbqyPw/B2tRaa1DtzRRTZ2FHp8F2xJQihsoItCM2Y
+ yfK2zKj54rq+u/HwyIju3c0v7hwTo+plsnsKjwCRiao0hiMRjs1TgMEWpfi0z6yiXbfVRlZ5b
+ VqTXFnhSIxDFyTk63rzOr54cg47vmRnYHJwr1LKDPLk9iwmmfvBSWn4JltI+QFqUa1MuBkyXf
+ 0F7n5ebXCRbkoyUSnD+aZAclsLM6TjmHK/U37QSO3q0kZCI4boORIUaehwGuxt6O+iDydheNp
+ vUfy4HaePovr0hyQHgtUqeEP1ghMQQmvnbX+8qD5bnZQMAY8ekwRor4AVJ+SuEUZkVruLTlsv
+ RhBCri8Dkj9u7E6Pt4KivciriSURTWEEGWOXT8v7zjM4Nbg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274376>
 
-Add support for Fountain, a plain text screenplay format.  Git
-facilitates not just programming specifically, but creative writing
-in general, so it makes sense to also support other plain text
-documents besides source code.
+On 20 Jul 2015, at 22:17, Junio C Hamano <gitster@pobox.com> wrote:
 
-In the structure of a screenplay specifically, scenes are roughly
-analogous to functions, in the sense that it makes your job easier
-if you can see which ones were changed in a given range of patches.
+>> +PATTERNS("fountain", "^((\\.|(([Ii][Nn][Tt]|[Ee][Ss][Tt]|[Ee][Xx][T=
+t])?\\.?|[Ii]([Nn][Tt])?\\.?/[Ee]([Xx][Tt])?\\.?) ).+)$",
+>> +	 "[^ \t-]+"),
+>=20
+> Wouldn't IPATTERN() be a better choice here?
 
-More information about the Fountain format can be found on its
-official website, at http://fountain.io .
+Good point, thank you!  Much better:
 
-Signed-off-by: Zoe=CC=88 Blade <zoe@bytenoise.co.uk>
----
- Documentation/gitattributes.txt | 2 ++
- t/t4018-diff-funcname.sh        | 1 +
- t/t4018/fountain-scene          | 4 ++++
- userdiff.c                      | 2 ++
- 4 files changed, 9 insertions(+)
- create mode 100644 t/t4018/fountain-scene
+IPATTERN("fountain", "^((\\.|((int|est|ext)?\\.?|i(nt)?\\.?/e(xt)?\\.?)=
+ ).+)$", "[^ \t-]+"),
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-index 81fe586..e3b1de8 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -527,6 +527,8 @@ patterns are available:
-=20
- - `fortran` suitable for source code in the Fortran language.
-=20
-+- `fountain` suitable for Fountain documents.
-+
- - `html` suitable for HTML/XHTML documents.
-=20
- - `java` suitable for source code in the Java language.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 1dbaa38..67373dc 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -31,6 +31,7 @@ diffpatterns=3D"
- 	cpp
- 	csharp
- 	fortran
-+	fountain
- 	html
- 	java
- 	matlab
-diff --git a/t/t4018/fountain-scene b/t/t4018/fountain-scene
-new file mode 100644
-index 0000000..6b3257d
---- /dev/null
-+++ b/t/t4018/fountain-scene
-@@ -0,0 +1,4 @@
-+EXT. STREET RIGHT OUTSIDE - DAY
-+
-+CHARACTER
-+You didn't say the magic phrase, "ChangeMe".
-diff --git a/userdiff.c b/userdiff.c
-index 2ccbee5..eec939a 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -35,6 +35,8 @@ IPATTERN("fortran",
- 	  * they would have been matched above as a variable anyway. */
- 	 "|[-+]?[0-9.]+([AaIiDdEeFfLlTtXx][Ss]?[-+]?[0-9.]*)?(_[a-zA-Z0-9][a-=
-zA-Z0-9_]*)?"
- 	 "|//|\\*\\*|::|[/<>=3D]=3D"),
-+IPATTERN("fountain", "^((\\.|((int|est|ext)?\\.?|i(nt)?\\.?/e(xt)?\\.?=
-) ).+)$",
-+	 "[^ \t-]+"),
- PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
- 	 "[^<>=3D \t]+"),
- PATTERNS("java",
---=20
-1.9.5 (Apple Git-50.3)
+It looks like some of the others might benefit from being case insensit=
+ive too, but I'm not sure, and at any rate it would warrant a separate =
+patch.
+
+I'll send another revision next... :)
+
+Thanks,
+Zo=EB.
