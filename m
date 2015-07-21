@@ -1,75 +1,99 @@
-From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: Question: .idx without .pack causes performance issues?
-Date: Tue, 21 Jul 2015 13:41:58 -0500
-Message-ID: <CAEtYS8QWCg5_DtrJw-e+c50vcG0OpciR6LWon-3GgyngGn+0pQ@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v2b 00/16, 2 updates] Make the msvc-build scripts work again
+Date: Tue, 21 Jul 2015 17:46:00 +0100
+Organization: OPDS
+Message-ID: <73004CECB3514744A5916831B4501689@PhilipOakley>
+References: <1437432846-5796-1-git-send-email-philipoakley@iee.org> <xmqq1tg2xwbd.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 21 20:42:10 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>,
+	"Eric Sunshine" <sunshine@sunshineco.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 20:45:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHcUQ-00041W-Fs
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 20:42:06 +0200
+	id 1ZHcXO-0005XT-Ou
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 20:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933454AbbGUSmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 14:42:00 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:36597 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933274AbbGUSl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 14:41:59 -0400
-Received: by iehx8 with SMTP id x8so69579733ieh.3
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 11:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=UdjhqScIdZCsvoEQUQWiZidH7drN6Bx3+FkVFzccBhI=;
-        b=EYC5yX/rR1dzqRslghbUCFa6oZlBjbKRvPrcbOHJ/6wCyGzXRg01jQHglDMspy7iGO
-         wpI+U2YqFM1Zzl5Y/UbICvh7xD4vIQQXywGErlo4AvYp71wc8fcbT090rMEGtde1/UF7
-         JCM2iKFfaxckOrR0vDRC8NcQoVG8UcS5CP2P5OdYKWdM5R6NZRxZPLMFMQbwBGTMiJGC
-         vl1ifmYL++IsdcDQf6ckPbu959Xz9mjOyCHjMimv1BKTKV0FRO9ijrt7Z+W96teGXSCh
-         2lMPOBNRjb7r/++PhP64XufgCgb64UjSLGFCfHh/Q+KQkH+OjU+w/t3JowuXRFPqvIJC
-         oEhA==
-X-Received: by 10.50.132.70 with SMTP id os6mr26555864igb.27.1437504118978;
- Tue, 21 Jul 2015 11:41:58 -0700 (PDT)
-Received: by 10.50.12.166 with HTTP; Tue, 21 Jul 2015 11:41:58 -0700 (PDT)
+	id S933412AbbGUSpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 14:45:03 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:7024 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933274AbbGUSpB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 14:45:01 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2BICQDPka5VPMS/BlxcgxOBPYZQbbxKBAQCgUBNAQEBAQEBBwEBAQFBJBuEHgUBAQEBAgEIAQEuHgEBDxILAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYgVDLwtkAmLTIUGgx6BFAWMcIdjAYENpCqBCWaCND0xgksBAQE
+X-IPAS-Result: A2BICQDPka5VPMS/BlxcgxOBPYZQbbxKBAQCgUBNAQEBAQEBBwEBAQFBJBuEHgUBAQEBAgEIAQEuHgEBDxILAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYgVDLwtkAmLTIUGgx6BFAWMcIdjAYENpCqBCWaCND0xgksBAQE
+X-IronPort-AV: E=Sophos;i="5.15,517,1432594800"; 
+   d="scan'208";a="685649084"
+Received: from host-92-6-191-196.as43234.net (HELO PhilipOakley) ([92.6.191.196])
+  by out1.ip06ir2.opaltelecom.net with ESMTP; 21 Jul 2015 19:44:58 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274394>
 
-Hi all,
+From: "Junio C Hamano" <gitster@pobox.com>
+> Philip Oakley <philipoakley@iee.org> writes:
+>
+>> This updates two patches in the series based on Eric Sunshine's
+>> comments.
+>>
+>> Patch 8b updates the commit message to make clear what was going
+>> wrong.
+>>
+>> Patch 10b improves the perl code.
+>
+> Is v2b like saying v3 or something else?  Does 8b replaces 8 or
+> updates it (i.e. comes between 8 and 9)?
 
-I just wanted to relay an issue we've seen before at my day job (and
-it just recently cropped up again).  When moving users from Git for
-Windows 1.8.3 to 1.9.5, we found a few users started having operations
-take an excruciatingly long amount of time.  At some point, we traced
-the issue to a number of .pack files had been deleted (possibly
-garbage collected?) -- but their associated .idx files were still
-present.  Upon removing the "orphaned" idx files, we found performance
-returned to normal.  Otherwise, git fsck reported no issues with the
-repositories.
 
-Other users have noted that using git gc would sometimes correct the
-issue for them, but not always.
+Sorry for the confusion. Yes these are quick replacements, rather than
+re-rolling the whole series immediately.
 
-Anyway, has anyone else experienced this performance degradation? I
-have some feeling that it's an issue that may be exclusive to Windows
-(or at least, only slow enough to matter on Windows), but I have no
-proof, and I've never heard of an issue like this outside work. (One
-idea that came to mind was even the .idx files were locked, and thus
-not deleted.)  Something tells me deleting the orphaned .idx files
-isn't the "nicest" solution, either.
+>
+>> Junio: would a full re-roll be appropriate at a suitable point?
+>
+> Probably, but I'd like to see people try it out and give positive
+> feedback first.  This part of the tree I can give no input or pre-
+> pushout testing at all.
 
-Thanks!
+It has been tried out on the Msysgit list, and also against the github
+Pull Request, with responses noted there.
 
---Doug
+I'll do another branch / rebase and PR onto the G4W SDK as well,
+for an extra chance at getting more replies. Ideally, if part of this
+mainstream Git, it would get picked up automatically by them
+(rather than being local 'fixes' endlessly carried forward).
 
-P.S. In addition to running the Git for Windows/msysgit builds, we
-have a handful of users running Git Extensions as well, and also have
-been seeing an increase in use of Visual Studio 2013 -- which of
-course has libgit2 integrated. So, I think the chance that any one of
-these might be using the repo or holding files open is very high.
+>
+> Who are the people involved in this part of the system in the past?
+> Does "shortlog -n --no-merges contrib/buildsystems compat/vcbuild"
+> tell us anything?
+>
+
+There has been no activity here on the 'create a visual studio project'
+aspects in the last few years. Any changes listed in the logs relate to
+ensuring that the MSVC compiler will run as part of a regular Makefile
+run (IIUC). The last significant commit was 74cf9bd (engine.pl: Fix a
+recent breakage of the buildsystem generator, 2010-01-22) Ramsay Jones,
+so that's five and a half years. Mind you, it's taken me a while to find 
+all
+the bit rots.
+
+>
+>> Philip Oakley (2):
+>
