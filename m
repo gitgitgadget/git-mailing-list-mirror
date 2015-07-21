@@ -1,92 +1,115 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v8 4/7] git-reflog: add exists command
-Date: Tue, 21 Jul 2015 06:27:33 -0700
-Message-ID: <55AE48C5.8000007@alum.mit.edu>
-References: <1436482260-28088-1-git-send-email-dturner@twopensource.com> <1436482260-28088-5-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v8 6/7] update-ref and tag: add --create-reflog arg
+Date: Tue, 21 Jul 2015 06:46:04 -0700
+Message-ID: <55AE4D1C.1010308@alum.mit.edu>
+References: <1436482260-28088-1-git-send-email-dturner@twopensource.com> <1436482260-28088-7-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
 To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
 	j6t@kdbg.org
-X-From: git-owner@vger.kernel.org Tue Jul 21 15:28:31 2015
+X-From: git-owner@vger.kernel.org Tue Jul 21 15:46:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHXau-0002hb-1b
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 15:28:28 +0200
+	id 1ZHXsO-0004xl-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jul 2015 15:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbbGUN1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 09:27:50 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:54711 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754491AbbGUN1q (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 09:27:46 -0400
-X-AuditID: 12074412-f79a76d000007c8b-15-55ae48c8c3fd
+	id S932661AbbGUNqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2015 09:46:22 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:46058 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932607AbbGUNqU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2015 09:46:20 -0400
+X-AuditID: 1207440e-f79516d0000012b3-a2-55ae4d2aa2f7
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 94.5D.31883.8C84EA55; Tue, 21 Jul 2015 09:27:36 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 88.32.04787.A2D4EA55; Tue, 21 Jul 2015 09:46:18 -0400 (EDT)
 Received: from [172.20.208.234] ([66.251.117.141])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t6LDRXIS006276
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t6LDkF9H007246
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 21 Jul 2015 09:27:34 -0400
+	Tue, 21 Jul 2015 09:46:17 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <1436482260-28088-5-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpmleLIzCtJLcpLzFFi42IRYndR1D3hsS7U4MpSNov5m04wWnRd6Way
-	eDL3LrMDs8fDV13sHgue32f3+LxJLoA5itsmKbGkLDgzPU/fLoE7Y9/JVcwFjTwVE1YsYmtg
-	vMLZxcjJISFgIvHlxCQmCFtM4sK99WwgtpDAZUaJeb2aXYxcQPYmJolFn5YCFXFw8ApoS7w+
-	ww9SwyKgKnHo7w5mEJtNQFdiUU8zWImoQJDE65e5IGFeAUGJkzOfsIDYIgJ+Etu65jCC2MIC
-	VhIbJ/9ihhjfyiixfdofNpBeTgFPiaWPCkFqmAX0JHZc/8UKYctLbH87h3kCI/8sJGNnISmb
-	haRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdM73czBK91JTSTYyQABXawbj+pNwhRgEO
-	RiUe3oqWtaFCrIllxZW5hxglOZiURHn1jdaFCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh/WIP
-	lONNSaysSi3Kh0lJc7AoifP+XKzuJySQnliSmp2aWpBaBJOV4eBQkuDNcwdqFCxKTU+tSMvM
-	KUFIM3FwggznkhIpTs1LSS1KLC3JiAdFY3wxMB5BUjxAextB2nmLCxJzgaIQracYFaXEeWtA
-	EgIgiYzSPLixsLTzilEc6Eth3skgVTzAlAXX/QpoMBPQ4Fuz1oAMLklESEk1MMYbmZeIlF5/
-	YqA71aNSpnXVM5env/8/TrLufCvj/dSz3aW6ZL/6jxUHKhOU7t+4Ela21VYqz8f0u59erkv1
-	hOZtd8/PWih9vVVmtkB3Tjz7tVbDziULwj4uW3LK1SPcVjDOdcWcZa0Wnj7N/R9v 
+In-Reply-To: <1436482260-28088-7-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1NXyXRdqsP+3pMX8TScYLbqudDNZ
+	PJl7l9mB2ePhqy52jwXP77N7fN4kF8AcxW2TlFhSFpyZnqdvl8Cdsff3B/aCGwIV2y/NYWlg
+	bOLtYuTkkBAwkXiy+gkzhC0mceHeerYuRi4OIYHLjBLrPr9nhHA2MUl83rabEaSKV0Bb4v2x
+	92A2i4CqxJR/e9hAbDYBXYlFPc1MXYwcHKICQRKvX+ZClAtKnJz5hAXEFhHwk9jWNQesVVjA
+	XWLm2fksEPNbGSW6l/4HS3AKeEpMXNbBBGIzC+hJ7Lj+ixXClpfY/nYO8wRG/llI5s5CUjYL
+	SdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrGermZJXqpKaWbGCFhyreDsX29zCFGAQ5G
+	JR7eC21rQ4VYE8uKK3MPMUpyMCmJ8uobrQsV4kvKT6nMSCzOiC8qzUktPsQowcGsJML7xR4o
+	x5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4DX0AWoULEpNT61Iy8wp
+	QUgzcXCCDOeSEilOzUtJLUosLcmIB8VkfDEwKkFSPEB7wdp5iwsSc4GiEK2nGBWlxHm1QBIC
+	IImM0jy4sbDk84pRHOhLYd4GkCoeYOKC634FNJgJaPCtWWtABpckIqSkGhg3PQ2V9ssJDFAQ
+	/Hbhwp+NPrqMAV3ZTsWPzli166x+Kfx1UXCCtmSmzi+Fsmsy31bnSrI0Fxc1u7JbLsxdlv0u
+	79Xbq8liWTNZXGy0/wTbKVW1nM1UZb3Is/KQ6Ae2bc473mVK/J2+xVPV/dn0+7d2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274378>
 
 On 07/09/2015 03:50 PM, David Turner wrote:
-> Theis are necessary because alternate ref backends might store reflogs
-> somewhere other than .git/logs.  Code that now directly manipulates
-> .git/logs should instead go through git-reflog.
+> Allow the creation of a ref (e.g. stash) with a reflog already in
+> place. For most refs (e.g. those under refs/heads), this happens
+> automatically, but for others, we need this option.
+> 
+> Currently, git does this by pre-creating the reflog, but alternate ref
+> backends might store reflogs somewhere other than .git/logs.  Code
+> that now directly manipulates .git/logs should instead use git
+> plumbing commands.
+> 
+> I also added --create-reflog to git tag, just for completeness.
+> 
+> In a moment, we will use this argument to make git stash work with
+> alternate ref backends.
 > 
 > Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
->  Documentation/git-reflog.txt |  4 ++++
->  builtin/reflog.c             | 33 ++++++++++++++++++++++++++++++++-
->  t/t1411-reflog-show.sh       |  5 +++++
->  3 files changed, 41 insertions(+), 1 deletion(-)
+>  Documentation/git-tag.txt        |  5 ++++-
+>  Documentation/git-update-ref.txt |  5 ++++-
+>  builtin/tag.c                    |  5 ++++-
+>  builtin/update-ref.c             | 14 +++++++++++---
+>  t/t1400-update-ref.sh            | 38 ++++++++++++++++++++++++++++++++++++++
+>  t/t7004-tag.sh                   | 14 +++++++++++++-
+>  6 files changed, 74 insertions(+), 7 deletions(-)
 > 
-> diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-> index 5e7908e..4b08fc7 100644
-> --- a/Documentation/git-reflog.txt
-> +++ b/Documentation/git-reflog.txt
-> @@ -23,6 +23,7 @@ depending on the subcommand:
->  	[--dry-run] [--verbose] [--all | <refs>...]
->  'git reflog delete' [--rewrite] [--updateref]
->  	[--dry-run] [--verbose] ref@\{specifier\}...
-> +'git reflog exists' <ref>
->  
->  Reference logs, or "reflogs", record when the tips of branches and
->  other references were updated in the local repository. Reflogs are
-> @@ -52,6 +53,9 @@ argument must be an _exact_ entry (e.g. "`git reflog delete
->  master@{2}`"). This subcommand is also typically not used directly by
->  end users.
->  
-> +The "exists" subcommand checks whether a ref has a reflog.  It exists
+> [...]
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index d1ff5c9..75423ab 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -51,7 +51,19 @@ test_expect_success 'creating a tag using default HEAD should succeed' '
+>  	echo foo >foo &&
+>  	git add foo &&
+>  	git commit -m Foo &&
+> -	git tag mytag
+> +	git tag mytag &&
+> +	test_must_fail git reflog exists refs/tags/mytag
+> +'
+> +
+> +test_expect_success 'creating a tag with --create-reflog should create reflog' '
+> +	test_when_finished "git tag -d tag_with_reflog" &&
+> +	git tag --create-reflog tag_with_reflog &&
+> +	git reflog exists refs/tags/tag_with_reflog
+> +'
+> +
+> +test_expect_success '--create-reflog does not creates reflog on failure' '
 
-The second "exists" should be "exits".
+s/creates/create/
 
-> +with zero status if the reflog exists, and non-zero status if it does
-> +not.
->  
+> +	test_must_fail git tag --create-reflog mytag &&
+> +	test_must_fail git reflog exists refs/tags/tag_with_reflog
+
+Shouldn't this be
+
+	test_must_fail git reflog exists refs/tags/mytag
+
+?
+
 > [...]
 
 Michael
