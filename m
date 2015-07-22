@@ -1,113 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] refs: loosen restrictions on wildcard '*' refspecs
-Date: Wed, 22 Jul 2015 12:36:31 -0700
-Message-ID: <xmqq380grnls.fsf@gitster.dls.corp.google.com>
-References: <1437589929-14546-1-git-send-email-jacob.e.keller@intel.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 8/9] tag.c: implement '--format' option
+Date: Wed, 22 Jul 2015 21:38:34 +0200
+Message-ID: <vpq7fpsnft1.fsf@anie.imag.fr>
+References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
+	<1437256837-13378-1-git-send-email-Karthik.188@gmail.com>
+	<1437256837-13378-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.iabervon.org>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:36:41 2015
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 21:38:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzok-0000kn-QC
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:36:39 +0200
+	id 1ZHzqn-0001to-P0
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632AbbGVTge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 15:36:34 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36649 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779AbbGVTgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:36:33 -0400
-Received: by pachj5 with SMTP id hj5so143358074pac.3
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Om4hCDAmDYxHjEM+I1P2/x43o34yvuDx4oa/Ec0nSik=;
-        b=sDYQKECKpVZwmXZZBCQfvFQ9cZ0bXDoTwfW0oo5ufNTo1Hag9K1RB6uY3Y0VRIYhKT
-         VVZTNhMGtUJsgOA1YzI8VrKwBZUdIh37d4Zn5htiivJMpltgXTdxp++vej7eJeGofMin
-         x9wa9jrujEyWrqNfeXorwQjWunVNS4Y1h+ykoIRgMshQJSfrWNeLYTcBcrqyhB3rbVaA
-         GQLzc2OKz9ewWHH91Z9gCpXV/aOyH+yRt4cIczvMJxQzMfFoJ5WcbRP5RdsCfjdCZk0C
-         tv29OtKEljc57GBs1qwoAst4T4WSWQgf6BOobzISltewsyoxR1F1vYU2VmAPFqHRyROP
-         f80Q==
-X-Received: by 10.66.66.68 with SMTP id d4mr5117615pat.43.1437593793412;
-        Wed, 22 Jul 2015 12:36:33 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
-        by smtp.gmail.com with ESMTPSA id bd5sm4751501pdb.41.2015.07.22.12.36.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 22 Jul 2015 12:36:32 -0700 (PDT)
-In-Reply-To: <1437589929-14546-1-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Wed, 22 Jul 2015 11:32:09 -0700")
+	id S1752570AbbGVTil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 15:38:41 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50833 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751154AbbGVTil (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 15:38:41 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6MJcWwP020565
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 22 Jul 2015 21:38:32 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6MJcY7j029974;
+	Wed, 22 Jul 2015 21:38:34 +0200
+In-Reply-To: <1437256837-13378-2-git-send-email-Karthik.188@gmail.com>
+	(Karthik Nayak's message of "Sun, 19 Jul 2015 03:30:36 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 22 Jul 2015 21:38:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6MJcWwP020565
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438198713.38818@aYmTnYO7tTU0FxRxtqx2EQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274461>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> diff --git a/refs.c b/refs.c
-> index ce8cd8d45001..a65f16fedaa0 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -20,11 +20,12 @@ struct ref_lock {
->   * 2: ., look for a preceding . to reject .. in refs
->   * 3: {, look for a preceding @ to reject @{ in refs
->   * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
-> + * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
+> --- a/Documentation/git-tag.txt
+> +++ b/Documentation/git-tag.txt
+> @@ -13,7 +13,8 @@ SYNOPSIS
+>  	<tagname> [<commit> | <object>]
+>  'git tag' -d <tagname>...
+>  'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+> -	[--column[=<options>] | --no-column] [--sort=<key>] [<pattern>...]
+> +	[--column[=<options>] | --no-column] [--sort=<key>] [--format=<format>]
+> +	[<pattern>...]
+>  'git tag' -v <tagname>...
+>  
+>  DESCRIPTION
+> @@ -155,6 +156,19 @@ This option is only applicable when listing tags without annotation lines.
+>  	The object that the new tag will refer to, usually a commit.
+>  	Defaults to HEAD.
+>  
+> +<format>::
+> +	A string that interpolates `%(fieldname)` from the
+> +	object pointed at by a ref being shown.  If `fieldname`
+> +	is prefixed with an asterisk (`*`) and the ref points
+> +	at a tag object, the value for the field in the object
+> +	tag refers is used.  When unspecified, defaults to
+> +	`%(objectname) SPC %(objecttype) TAB %(refname)`.
 
-The fact that this patch does not have to change the description for
-'4:' is an indication that the original description for '4:' was
-incomplete.  Otherwise the original would have listed "*" among
-others like "~", "^", and this patch would have updated it.
+I think this last sentence is taken from for-each-ref where it is true,
+but for 'git tag', the default is just %(refname:short), as written
+here:
 
-This mixes a fix/cleanup with an enhancement.
+> -	else
+> +	else if (!format)
+>  		format = "%(refname:short)";
 
->   */
->  static unsigned char refname_disposition[256] = {
->  	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
->  	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-> -	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
-> +	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
->  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
->  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-> @@ -71,11 +72,13 @@ static unsigned char refname_disposition[256] = {
->   * - any path component of it begins with ".", or
->   * - it has double dots "..", or
->   * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
-> - * - it ends with a "/".
-> - * - it ends with ".lock"
-> - * - it contains a "\" (backslash)
-> + * - it ends with a "/", or
-> + * - it ends with ".lock", or
-> + * - it contains a "\" (backslash), or
-> + * - it contains a "@{" portion, or
-> + * - it contains a '*' unless REFNAME_REFSPEC_PATTERN is set
->   */
+right?
 
-This also mixes a fix/cleanup with an enhancement.  The original
-should have had these ", or" but it didn't.
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1507,4 +1507,20 @@ EOF"
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success '--format cannot be used with -n' '
+> +	test_must_fail git tag -l -n4 --format="%(refname)"
+> +'
+> +
+> +test_expect_success '--format should list tags as per format given' '
+> +	cat >expect <<-\EOF &&
+> +	foo1.10
+> +	foo1.3
+> +	foo1.6
+> +	foo1.6-rc1
+> +	foo1.6-rc2
+> +	EOF
+> +	git tag -l --format="%(refname)" "foo*" >actual &&
+> +	test_cmp expect actual
+> +'
 
-Can you split this patch into two, i.e.
+This tests the pattern argument, but the the test still passes if I
+remove the --format option, so it does not test what it claims.
 
- * [1/2] is to only clean-up the places these two hunks apply,
-   without changing the behaviour at all.
+Also, why does "git tag"'s %(refname) behave like "git for-each-ref"'s
+%(refname:short)? I find it very confusing as I think --format's
+argument should be interpreted the same way for all ref-listing
+commands. Actually I didn't find a way to have "git tag" display the
+full refname other than with --format "refs/tags/%(refname)".
 
-   Please make sure that updated description for "4:" covers
-   everything that is "a bad character".  We noticed the lack of '*'
-   only because of your patch, but I do not know (and did not check)
-   if that was the only thing that was missing.
-
- * [2/2] is what you really wanted to do with this patch,
-   i.e. updating the entry for '*' in the disposition table and all
-   changes outside the above two hunks.
-
-Thanks.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
