@@ -1,69 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] pull: allow dirty tree when rebase.autostash enabled
-Date: Wed, 22 Jul 2015 12:42:17 -0700
-Message-ID: <xmqqvbdcq8rq.fsf@gitster.dls.corp.google.com>
-References: <1434538880-15608-1-git-send-email-me@ikke.info>
-	<1436046158-19426-1-git-send-email-me@ikke.info>
-	<xmqqd205yq98.fsf@gitster.dls.corp.google.com>
-	<20150707035956.GA6105@yoshi.chippynet.com>
-	<20150722190724.GA11291@ikke.info>
+From: =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Subject: Re: Git tag: pre-receive hook issue
+Date: Wed, 22 Jul 2015 21:46:44 +0200
+Message-ID: <55AFF324.2000609@gmail.com>
+References: <1437159533304-7635764.post@n2.nabble.com>
+ <CA+P7+xoXgSHPVhMTm_GZbq+6Pps5yttK2rBZpMycTUFGfqOCvw@mail.gmail.com>
+ <CAGDgvc2F7UMWTVrRFt5eK2xmbfz-kyWh6Vp-eQNEj7tixzRPYQ@mail.gmail.com>
+ <CA+P7+xrbWt=n6hj4bTcdLRMPXa0K51gErNBD-omQy+g-So6TYw@mail.gmail.com>
+ <CAGDgvc3O=q-k3ViiEds4iPMtDQTOSFMSJ4bUKRFyWzqwv7=J_Q@mail.gmail.com>
+ <CA+P7+xpevvV=5QdfBdzcD=8=2ff+m-kzxX-w1wLME8oRyn8QBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:42:26 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>,
+	Gaurav Chhabra <varuag.chhabra@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 21:47:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzuL-0003h8-Ad
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:42:25 +0200
+	id 1ZHzz6-00068A-S7
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882AbbGVTmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 15:42:21 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36331 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172AbbGVTmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:42:20 -0400
-Received: by pachj5 with SMTP id hj5so143427514pac.3
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:42:20 -0700 (PDT)
+	id S1752218AbbGVTrQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2015 15:47:16 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:36206 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751865AbbGVTrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 15:47:14 -0400
+Received: by wicgb10 with SMTP id gb10so113054616wic.1
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=DVtin5vlx3NpFUWJ89kbiyGkr8JyN89t3gSF+Xx+Lxg=;
-        b=zpshPIBKbhG7Zs655Fu+8yCqAMAX3J/T24cgrxpQJ80HTdjTf3MRKwvJrk1i5AaUAz
-         zOiWskBHFtrbW3U6xZZy6M1RHXOBmQTTRPkiId2xgLxeFGidA6JNeYktIZ933oDzUTuT
-         cruR6jJnT9Wj5x1xoAmI7X4RtjWxItyLQPlLBMooujYhZWpibsySScXFOh5xgWI2puji
-         j/4NJ1rEZwYcxWKB//5ZcEMFUHpvacstLRF4GsyhJEj43WbSyG+MEd/YAa2ePE0TjN42
-         qh8SJb7/m3W+FJLGv3qdPzhf7hBrCYOkbXTJdgql8pi8YlZ75bVRzuVBfKCYM4l42Eg+
-         M8wQ==
-X-Received: by 10.70.90.230 with SMTP id bz6mr9261729pdb.120.1437594139957;
-        Wed, 22 Jul 2015 12:42:19 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
-        by smtp.gmail.com with ESMTPSA id cq5sm4821490pad.11.2015.07.22.12.42.18
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 22 Jul 2015 12:42:18 -0700 (PDT)
-In-Reply-To: <20150722190724.GA11291@ikke.info> (Kevin Daudt's message of
-	"Wed, 22 Jul 2015 21:07:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=wN4l2WyvjSRuf1mUOMOKc7MAw5yWyGgp5SpFB3lXOqw=;
+        b=jRXTLuSt45ydmq8hOTmbumDxI5c1DlxaUdk1oDOPPuVwnlZ6JZGIC+KctjtaTgRLq/
+         UdtqrkKN5tXF1ULP7TZtNX4OeygL/aJ43VY2UNJ96C+8pDcarsKkph47tls8QQXhqEQr
+         lXcphUTworP9H8W1RI1dGhXtmxsedyvYpVj4UNjoXyvyLewRBcfjYYZvvTsA7/MW7VWP
+         sWe6rZFPdHAbsZZv+osJaFqSbpmHc2/e1cJI23EO0PDn8Myr/GgXXHrnlDTKN+Kiy9Ah
+         YVRWn5dvHFbFvyuZx1S0jH4taKKwHgoR1xAo1PVQeRwlAM+tg2M+aPm8NT8pfmXmc39g
+         a4xw==
+X-Received: by 10.194.9.102 with SMTP id y6mr8084482wja.91.1437594433603;
+        Wed, 22 Jul 2015 12:47:13 -0700 (PDT)
+Received: from [192.168.1.53] (afu155.neoplus.adsl.tpnet.pl. [83.25.150.155])
+        by smtp.googlemail.com with ESMTPSA id b13sm4871868wic.15.2015.07.22.12.47.10
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Jul 2015 12:47:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <CA+P7+xpevvV=5QdfBdzcD=8=2ff+m-kzxX-w1wLME8oRyn8QBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274464>
 
-Kevin Daudt <me@ikke.info> writes:
+On 2015-07-19, Jacob Keller wrote:
 
-> On Tue, Jul 07, 2015 at 11:59:56AM +0800, Paul Tan wrote:
->
-> Any news about this? Is it still waiting for something?
+> git describe will tell you if the commit you're passing it is
+> associated with an annotated tag. I do not understand who this
+> information can help you implement any policy, so understanding what
+> the policy you want is would be the most helpful.
 
-Paul's patch was buried in the noise and I didn't notice it.
+One policy I can think of that may have use of checking if commit
+is tagged is requiring some extra restrictions on the commit that
+is being tagged, for example that the only file that it can touch
+is version.h / VERSION-FILE, and no code changes at all.
 
-I'd prefer to see a new feature like this, that did not exist in the
-original, be done on top of the "rewrite pull in C" topic, which
-will need a bit more time to mature and be merged to 'master'.
-
-Thanks.
+--=20
+Jakub Nar=C4=99bski
