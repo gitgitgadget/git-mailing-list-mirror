@@ -1,172 +1,113 @@
-From: =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2015, #01; Wed, 1)
-Date: Wed, 22 Jul 2015 21:32:48 +0200
-Message-ID: <55AFEFE0.9000606@gmail.com>
-References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com>
- <55AE8ACF.6090508@gmail.com>
- <alpine.LSU.2.00.1507220957350.16350@hermes-1.csi.cam.ac.uk>
- <55AF7B9C.4000108@gmail.com>
- <alpine.LSU.2.00.1507221351420.12758@hermes-1.csi.cam.ac.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] refs: loosen restrictions on wildcard '*' refspecs
+Date: Wed, 22 Jul 2015 12:36:31 -0700
+Message-ID: <xmqq380grnls.fsf@gitster.dls.corp.google.com>
+References: <1437589929-14546-1-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:33:22 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.iabervon.org>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 21:36:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzla-0007XE-0v
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:33:22 +0200
+	id 1ZHzok-0000kn-QC
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752491AbbGVTdR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2015 15:33:17 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:36052 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751697AbbGVTdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:33:17 -0400
-Received: by wicgb10 with SMTP id gb10so112566094wic.1
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:33:15 -0700 (PDT)
+	id S1751632AbbGVTge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 15:36:34 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:36649 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779AbbGVTgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 15:36:33 -0400
+Received: by pachj5 with SMTP id hj5so143358074pac.3
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:36:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=1irSTJm+IdIJHvNLcyb1+cmW/fn+gjv4Z1r9n+GJg5o=;
-        b=tEssF5mDC8myJ4EaMYrSScwgZuBe/WymtpP6o0VgmTjbYy8kWZMzr7JqsCbC+ezHxA
-         kWfZREn1okw6uZ1/VVLUQ302JJ+G3G/EcJ4mx1LdjhYluJ4AYj6qhtf1cWoCDjAvACRd
-         +UCHn5gKS4CBYHH/8OS6wexR4fMFoGhuhFIR4rL/uS6jj/qhtHS0iaXZywFZaNAhMpC8
-         X+ViY4kkU+ezqlnFkapwJXDGWKP8PO2JWRY1AkWjhx3BQphs6pHPLjOAg+lCNA0M5K7z
-         vZvTqUm6J/y9yK8hMfALgeUfnskkUwCvjHsIgDh6WVcHjMi/5Wwk/QuHr+nSJ8oAmapF
-         d+YQ==
-X-Received: by 10.180.206.41 with SMTP id ll9mr34771694wic.88.1437593595719;
-        Wed, 22 Jul 2015 12:33:15 -0700 (PDT)
-Received: from [192.168.1.53] (afu155.neoplus.adsl.tpnet.pl. [83.25.150.155])
-        by smtp.googlemail.com with ESMTPSA id ha4sm23494057wib.0.2015.07.22.12.33.14
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Jul 2015 12:33:14 -0700 (PDT)
-Newsgroups: gmane.comp.version-control.git
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-In-Reply-To: <alpine.LSU.2.00.1507221351420.12758@hermes-1.csi.cam.ac.uk>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Om4hCDAmDYxHjEM+I1P2/x43o34yvuDx4oa/Ec0nSik=;
+        b=sDYQKECKpVZwmXZZBCQfvFQ9cZ0bXDoTwfW0oo5ufNTo1Hag9K1RB6uY3Y0VRIYhKT
+         VVZTNhMGtUJsgOA1YzI8VrKwBZUdIh37d4Zn5htiivJMpltgXTdxp++vej7eJeGofMin
+         x9wa9jrujEyWrqNfeXorwQjWunVNS4Y1h+ykoIRgMshQJSfrWNeLYTcBcrqyhB3rbVaA
+         GQLzc2OKz9ewWHH91Z9gCpXV/aOyH+yRt4cIczvMJxQzMfFoJ5WcbRP5RdsCfjdCZk0C
+         tv29OtKEljc57GBs1qwoAst4T4WSWQgf6BOobzISltewsyoxR1F1vYU2VmAPFqHRyROP
+         f80Q==
+X-Received: by 10.66.66.68 with SMTP id d4mr5117615pat.43.1437593793412;
+        Wed, 22 Jul 2015 12:36:33 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
+        by smtp.gmail.com with ESMTPSA id bd5sm4751501pdb.41.2015.07.22.12.36.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 22 Jul 2015 12:36:32 -0700 (PDT)
+In-Reply-To: <1437589929-14546-1-git-send-email-jacob.e.keller@intel.com>
+	(Jacob Keller's message of "Wed, 22 Jul 2015 11:32:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274460>
 
-W dniu 2015-07-22 o 15:19, Tony Finch pisze:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
->>
->> A question about implementation: why emptying $path_info in
->> evaluate_path_info()?
->=20
-> That was for consistency with other parts of the subroutine which (mo=
-stly)
-> remove items from the global $path_info variable when they are added =
-to
-> %input_params. But since $path_info isn't used after it has been pars=
-ed, I
-> suppose it is redundant.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-If it is for consistency, better leave it in my opinion.
+> diff --git a/refs.c b/refs.c
+> index ce8cd8d45001..a65f16fedaa0 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -20,11 +20,12 @@ struct ref_lock {
+>   * 2: ., look for a preceding . to reject .. in refs
+>   * 3: {, look for a preceding @ to reject @{ in refs
+>   * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
+> + * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
 
->>>> - I think that people would want to be able to configure how
->>>>   many levels of directory hierarchy gets turned into categories.
->>>>   Perhaps only top level should be turned into category? Deep
->>>>   hierarchies means deep categories (usually with very few
->>>>   repositories) with current implementation.
->>>
->>> Good question. I was assuming flat-ish directory hierarchies, but t=
-hat's
->>> clearly not very true, e.g. https://git.kernel.org/cgit/
->>>
->>> I think it would be right to make this a %feature since categories =
-already
->>> nearly fit the %feature per-project override style.
->>
->> On the other hand $projects_list_group_categories is a global gitweb
->> configuration variable, and $projects_list_directory_is_category was
->> patterned after it.
->=20
-> Yes... Which do you prefer? :-)
+The fact that this patch does not have to change the description for
+'4:' is an indication that the original description for '4:' was
+incomplete.  Otherwise the original would have listed "*" among
+others like "~", "^", and this patch would have updated it.
 
-Hmmm... does it makes sense to have per-repository override?  If yes,
-then we need to use %features. If not... I am not sure, %features is
-newer than global (or rather package) variables for gitweb configuratio=
-n,
-which must be left for legacy config support (and few are needed before
-%features are parsed).
+This mixes a fix/cleanup with an enhancement.
 
->> A few thoughts about implementation:
->=20
-> Helpful, thanks!
->=20
->> - can we turn category header into link even if the category didn't
->>   came from $projects_list_directory_is_category?
->=20
-> That would mean changing the project filter to match categories as we=
-ll as
-> paths. I don't know if this is the right thing to do; perhaps it is,
-> because the current behaviour of my category headings is a bit surpri=
-sing.
->=20
-> At the moment, clicking on the "git" category heading on the page lin=
-ked
-> below takes you to a page that does not list all the repos that were =
-under
-> the category heading on the main page.
->=20
-> https://git.csx.cam.ac.uk/x/ucs/
+>   */
+>  static unsigned char refname_disposition[256] = {
+>  	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+>  	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+> -	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
+> +	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
+>  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
+>  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
+> @@ -71,11 +72,13 @@ static unsigned char refname_disposition[256] = {
+>   * - any path component of it begins with ".", or
+>   * - it has double dots "..", or
+>   * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
+> - * - it ends with a "/".
+> - * - it ends with ".lock"
+> - * - it contains a "\" (backslash)
+> + * - it ends with a "/", or
+> + * - it ends with ".lock", or
+> + * - it contains a "\" (backslash), or
+> + * - it contains a "@{" portion, or
+> + * - it contains a '*' unless REFNAME_REFSPEC_PATTERN is set
+>   */
 
-I thought gitweb had a way to list all projects belonging to given cate=
-gory,
-but I see that it doesn't.  So you need to find out if 'category' came =
-from
-category or from pathname, to decide whether to link it using 'projects=
-_list'
-action and 'project_filter' parameter (or their PATH_INFO version), or =
-not.
+This also mixes a fix/cleanup with an enhancement.  The original
+should have had these ", or" but it didn't.
 
-This can be done either by checking that category name is directory (th=
-ough
-we could have false positives here), or when adding categories denote w=
-here
-it came from (e.g. with additional field).  I think the second is bette=
-r,
-if we are to hyperlink category-from-pathname headings.
+Can you split this patch into two, i.e.
 
-There is interesting corner case: what if some projects use category, a=
-nd
-some have the same category from pathname?  Clicking on category if=20
-hyper-linked would show only a subset of projects inside category. (I t=
-hink
-this is the oddity you noticed.)
+ * [1/2] is to only clean-up the places these two hunks apply,
+   without changing the behaviour at all.
 
->> - even if $projects_list_directory_is_category is true, the category
->>   could came from 'category' file, or otherwise manually set categor=
-y,
->>   though I wonder how we can easily detect this...
->=20
-> Yes - I use this to list my personal/experimental repos alongside
-> the production repos.
->=20
-> I'm not sure why gitweb would need to detect this or what it would do=
- in
-> response. At the moment it "just works", apart from the oddity with
-> categories vs project filters i described above.
+   Please make sure that updated description for "4:" covers
+   everything that is "a bad character".  We noticed the lack of '*'
+   only because of your patch, but I do not know (and did not check)
+   if that was the only thing that was missing.
 
-What if there is synthetic category that has no representative in the
-path hierarchy?  Then "project_filter" link would lead to strange empty
-list of projects...
+ * [2/2] is what you really wanted to do with this patch,
+   i.e. updating the entry for '*' in the disposition table and all
+   changes outside the above two hunks.
 
-=46or example http://git.zx2c4.com/ (cgit) uses "Mirrors" category...
-
-We could either abuse "project_filter" for categories, or add a new
-query parameter "project_category" or "cat" in short. In either case
-it would not have PATH_INFO URL unless category came from directory.
-
-=46ood for thought
---=20
-Jakub Nar=C4=99bski
+Thanks.
