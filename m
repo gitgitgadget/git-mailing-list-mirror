@@ -1,64 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 9/9] tag.c: implement '--merged' and '--no-merged' options
-Date: Wed, 22 Jul 2015 21:40:48 +0200
-Message-ID: <vpqy4i8m14v.fsf@anie.imag.fr>
-References: <1437246749-14423-1-git-send-email-Karthik.188@gmail.com>
-	<1437256837-13378-1-git-send-email-Karthik.188@gmail.com>
-	<1437256837-13378-3-git-send-email-Karthik.188@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] pull: allow dirty tree when rebase.autostash enabled
+Date: Wed, 22 Jul 2015 12:42:17 -0700
+Message-ID: <xmqqvbdcq8rq.fsf@gitster.dls.corp.google.com>
+References: <1434538880-15608-1-git-send-email-me@ikke.info>
+	<1436046158-19426-1-git-send-email-me@ikke.info>
+	<xmqqd205yq98.fsf@gitster.dls.corp.google.com>
+	<20150707035956.GA6105@yoshi.chippynet.com>
+	<20150722190724.GA11291@ikke.info>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:41:01 2015
+Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org
+To: Kevin Daudt <me@ikke.info>
+X-From: git-owner@vger.kernel.org Wed Jul 22 21:42:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzsy-00031n-Bc
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:41:00 +0200
+	id 1ZHzuL-0003h8-Ad
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681AbbGVTk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 15:40:56 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41919 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751154AbbGVTkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:40:55 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6MJek3E019300
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 22 Jul 2015 21:40:46 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6MJemtt029986;
-	Wed, 22 Jul 2015 21:40:48 +0200
-In-Reply-To: <1437256837-13378-3-git-send-email-Karthik.188@gmail.com>
-	(Karthik Nayak's message of "Sun, 19 Jul 2015 03:30:37 +0530")
+	id S1751882AbbGVTmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 15:42:21 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:36331 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751172AbbGVTmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 15:42:20 -0400
+Received: by pachj5 with SMTP id hj5so143427514pac.3
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:42:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=DVtin5vlx3NpFUWJ89kbiyGkr8JyN89t3gSF+Xx+Lxg=;
+        b=zpshPIBKbhG7Zs655Fu+8yCqAMAX3J/T24cgrxpQJ80HTdjTf3MRKwvJrk1i5AaUAz
+         zOiWskBHFtrbW3U6xZZy6M1RHXOBmQTTRPkiId2xgLxeFGidA6JNeYktIZ933oDzUTuT
+         cruR6jJnT9Wj5x1xoAmI7X4RtjWxItyLQPlLBMooujYhZWpibsySScXFOh5xgWI2puji
+         j/4NJ1rEZwYcxWKB//5ZcEMFUHpvacstLRF4GsyhJEj43WbSyG+MEd/YAa2ePE0TjN42
+         qh8SJb7/m3W+FJLGv3qdPzhf7hBrCYOkbXTJdgql8pi8YlZ75bVRzuVBfKCYM4l42Eg+
+         M8wQ==
+X-Received: by 10.70.90.230 with SMTP id bz6mr9261729pdb.120.1437594139957;
+        Wed, 22 Jul 2015 12:42:19 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
+        by smtp.gmail.com with ESMTPSA id cq5sm4821490pad.11.2015.07.22.12.42.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 22 Jul 2015 12:42:18 -0700 (PDT)
+In-Reply-To: <20150722190724.GA11291@ikke.info> (Kevin Daudt's message of
+	"Wed, 22 Jul 2015 21:07:24 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 22 Jul 2015 21:40:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t6MJek3E019300
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1438198850.56964@+iXkWNQ6g5pGzvwcHoXQWg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274463>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Kevin Daudt <me@ikke.info> writes:
 
-> +--merged [<commit>]::
-> +	Only list tags whose tips are reachable from the
-> +	specified commit (HEAD if not specified).
-> +
-> +--no-merged [<commit>]::
-> +	Only list tags whose tips are not reachable from the
-> +	specified commit (HEAD if not specified).
+> On Tue, Jul 07, 2015 at 11:59:56AM +0800, Paul Tan wrote:
+>
+> Any news about this? Is it still waiting for something?
 
-You may want to spell it `HEAD` (with backticks).
+Paul's patch was buried in the noise and I didn't notice it.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I'd prefer to see a new feature like this, that did not exist in the
+original, be done on top of the "rewrite pull in C" topic, which
+will need a bit more time to mature and be merged to 'master'.
+
+Thanks.
