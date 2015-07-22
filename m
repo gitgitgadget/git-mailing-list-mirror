@@ -1,89 +1,65 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] receive-pack: crash when checking with non-exist HEAD
-Date: Wed, 22 Jul 2015 09:49:40 +0800
-Message-ID: <CANYiYbE3Vy_gtFMKTMw1wHLDhU758nXaJnKaNy6WMNRz0fjUnw@mail.gmail.com>
+From: Samuel Williams <space.ship.traveller@gmail.com>
+Subject: Re: Shallow Push?
+Date: Wed, 22 Jul 2015 19:27:59 +1200
+Message-ID: <CAHkN8V8hcdBD1oBYEpf74rsY2mpzxE08v+czue9ORzDB8ZGn=w@mail.gmail.com>
+References: <CAHkN8V-pK3ngfShmTrAaR5gixhRKbWwDoM21QBVw6hp8AngTkw@mail.gmail.com>
+	<xmqqmw2iardi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 03:49:53 2015
+X-From: git-owner@vger.kernel.org Wed Jul 22 09:28:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHjAO-0000S7-GY
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 03:49:52 +0200
+	id 1ZHoRi-0002JA-RU
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 09:28:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075AbbGVBtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2015 21:49:42 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:37942 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbbGVBtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2015 21:49:41 -0400
-Received: by wibxm9 with SMTP id xm9so79836462wib.1
-        for <git@vger.kernel.org>; Tue, 21 Jul 2015 18:49:40 -0700 (PDT)
+	id S932696AbbGVH2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 03:28:01 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:36472 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932097AbbGVH2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 03:28:00 -0400
+Received: by lagw2 with SMTP id w2so132503010lag.3
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 00:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=l57bZXw+65jh1LfsgP/hHb+Yyj16IzwepYc0OuMDM9g=;
-        b=j1BSjSvzlCYugFcjSxqd8fGC3eYcvu0cTnTo14r8n+OboGSEAkAN57wy+TpnEfqUzR
-         E7qVDhKrGxCYxv+kki47HjjKIagxAqLUfunHVGWFP8lVi8ZE+M6XfaLCatEhxNO5Oiy1
-         jGAgWu8DEdf2M9UbsPXz54gqJ8e+gRDyBwyGJehjuyDR2cTYFJBtF7wZHHLKIi2pCZ2N
-         eDyFI7+trHEpqZwNunyvqUdPi1UW3+rKsB2iUA4anYFw8g/92N5VqQjSI1U7jaO4c+J1
-         fEk9YqZYlwo1aMHDSCvwfoExvlwLhAwaIovofH18uhtrUl1kpLgHppkqkodrNmV0xUvq
-         nTFw==
-X-Received: by 10.180.75.243 with SMTP id f19mr24684266wiw.52.1437529780249;
- Tue, 21 Jul 2015 18:49:40 -0700 (PDT)
-Received: by 10.194.76.230 with HTTP; Tue, 21 Jul 2015 18:49:40 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mbDmXvdLP3cqoGtQu7NNAThwtFlBbz1mPODhktBxyvM=;
+        b=knoq4GzzCpm07DDoMndN0g92XwYq4+lekwW3NmKiYHuPQZhNQI5dZChDzGsnyHWznC
+         JZNbCrjpsai7srT6eExci71MchdbGJyrMV3+H4rX3BM83DbJRoC7x/0D1oZ6J32OyZE0
+         zRUL4iPNRoF8CvSh5doIASRF9AuhdVIl2vehaWMWegoFXhraA3Sf8a8jRwLzdys33kIz
+         dJi4/21D/QARyFmX6pHgRwhpgG2TOGXe7XzfZHIJP6Dbexwz7EC8av2TDwIILEmelXcR
+         bXNU/OkqlGuifc7o3l1j+40Xk89iLOxWlRhZh6tURNmbi94EL3xFeRQRVwJgUJzTg257
+         sL1Q==
+X-Received: by 10.112.50.66 with SMTP id a2mr1016660lbo.68.1437550079294; Wed,
+ 22 Jul 2015 00:27:59 -0700 (PDT)
+Received: by 10.112.137.231 with HTTP; Wed, 22 Jul 2015 00:27:59 -0700 (PDT)
+In-Reply-To: <xmqqmw2iardi.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274437>
 
-If HEAD of a repository points to a conflict reference, such as:
+> What is the receiving repository expected to have?  Does it have
+everything that is required to checkout the back-then latest HEAD
+the last time a push was made into it, and you are pushing an
+update?
 
-* There exist a reference named 'refs/heads/jx/feature1', but HEAD
-  points to 'refs/heads/jx', or
+Yes, something like that
 
-* There exist a reference named 'refs/heads/feature', but HEAD points
-  to 'refs/heads/feature/bad'.
-
-When we push to delete a reference for this repo, such as:
-
-        git push /path/to/bad-head-repo.git :some/good/reference
-
-The git-receive-pack process will crash.
-
-This is because if HEAD points to a conflict reference, the function
-`resolve_refdup("HEAD", ...)` does not return a valid reference name,
-but a null buffer.  Later matching the delete reference against the null
-buffer will cause git-receive-pack crash.
-
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
-I'm not sure this email is well-formed for git-am. Because gmail changed
-it's auth policy, I can not use git send-email command line to send mail.
-You may know, in our China, we can not visit google/gmail directly, I
-must access the outside world use VPN!
-
- builtin/receive-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 94d0571..04cb5a1 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -911,7 +911,7 @@ static const char *update(struct command *cmd,
-struct shallow_info *si)
-      return "deletion prohibited";
-    }
-
--   if (!strcmp(namespaced_name, head_name)) {
-+   if (head_name && !strcmp(namespaced_name, head_name)) {
-      switch (deny_delete_current) {
-      case DENY_IGNORE:
-        break;
--- 
-2.5.0.rc2.34.gfbdeabf.dirty
+On 9 April 2015 at 15:54, Junio C Hamano <gitster@pobox.com> wrote:
+> Samuel Williams <space.ship.traveller@gmail.com> writes:
+>
+>> Is it possible to only push what is required to checkout the latest HEAD?
+>
+> What is the receiving repository expected to have?  Does it have
+> everything that is required to checkout the back-then latest HEAD
+> the last time a push was made into it, and you are pushing an
+> update?
+>
