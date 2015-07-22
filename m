@@ -1,98 +1,114 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH v2] diff-tree: do not show the sha1 of the given head with
- --quiet
-Date: Wed, 22 Jul 2015 11:56:09 +0000
-Message-ID: <0000014eb59ef0ad-3d1a00df-9c6b-4414-8f64-6fb959c996a9-000000@eu-west-1.amazonses.com>
-References: <692dbd9ee45e10a17587970eaa2a1c4e@www.dscho.org>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: What's cooking in git.git (Jul 2015, #01; Wed, 1)
+Date: Wed, 22 Jul 2015 14:19:40 +0100
+Message-ID: <alpine.LSU.2.00.1507221351420.12758@hermes-1.csi.cam.ac.uk>
+References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com> <55AE8ACF.6090508@gmail.com> <alpine.LSU.2.00.1507220957350.16350@hermes-1.csi.cam.ac.uk> <55AF7B9C.4000108@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 22 14:04:15 2015
+Content-Type: MULTIPART/MIXED; BOUNDARY="1870869256-415390768-1437571180=:12758"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 15:21:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHskt-0004zb-QL
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 14:04:12 +0200
+	id 1ZHtx9-00013R-6M
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 15:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964954AbbGVMEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 08:04:06 -0400
-Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:57759
-	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934126AbbGVMEG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2015 08:04:06 -0400
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jul 2015 08:04:05 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1437566169;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=S53S+wxyGfLHtdXEXlowIiGS1s6gUe5gk870/TedUNw=;
-	b=khoEhvD2a94AsttS1L+J9Va6k82PwEEvf4tn4jIDUPL/A4VTibb8IjQARm1jmW0J
-	x1nb5RTu92xFwfmNTYJor0x+RLk2Pjuhqh+IfzAyHA81vPa8jzo1MINBK15Bm3vDJA5
-	90CNEn1ogUQ6m0zFKvlhz7yuh82TKyqpdXQsO8Ao=
-In-Reply-To: <692dbd9ee45e10a17587970eaa2a1c4e@www.dscho.org>
-X-SES-Outgoing: 2015.07.22-54.240.6.243
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1756313AbbGVNUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 09:20:51 -0400
+Received: from ppsw-50.csi.cam.ac.uk ([131.111.8.150]:58599 "EHLO
+	ppsw-50.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964927AbbGVNTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 09:19:42 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:48338)
+	by ppsw-50.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.158]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1ZHtvw-0004wz-qv (Exim 4.82_3-c0e5623)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 22 Jul 2015 14:19:40 +0100
+Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1ZHtvw-0005A9-BZ (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 22 Jul 2015 14:19:40 +0100
+X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
+In-Reply-To: <55AF7B9C.4000108@gmail.com>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274444>
 
-"--quiet" is documented to "Disable all output of the program". Yet
-calling diff-tree with a single commit like
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-$ git diff-tree --quiet c925fe2
+--1870869256-415390768-1437571180=:12758
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-was logging
+Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+>
+> A question about implementation: why emptying $path_info in
+> evaluate_path_info()?
 
-c925fe23684455735c3bb1903803643a24a58d8f
+That was for consistency with other parts of the subroutine which (mostly)
+remove items from the global $path_info variable when they are added to
+%input_params. But since $path_info isn't used after it has been parsed, I
+suppose it is redundant.
 
-to the console despite "--quiet" being given. This is inconsistent with
-both the docs and the behavior if more than a single commit is passed to
-diff-tree. Moreover, the output of that single line seems to be documented
-nowhere except in a comment for a test. Fix this inconsistency by making
-diff-tree really output nothing if "--quiet" is given and fix the test
-accordingly.
+> >> - I think that people would want to be able to configure how
+> >>   many levels of directory hierarchy gets turned into categories.
+> >>   Perhaps only top level should be turned into category? Deep
+> >>   hierarchies means deep categories (usually with very few
+> >>   repositories) with current implementation.
+> >
+> > Good question. I was assuming flat-ish directory hierarchies, but that'=
+s
+> > clearly not very true, e.g. https://git.kernel.org/cgit/
+> >
+> > I think it would be right to make this a %feature since categories alre=
+ady
+> > nearly fit the %feature per-project override style.
+>
+> On the other hand $projects_list_group_categories is a global gitweb
+> configuration variable, and $projects_list_directory_is_category was
+> patterned after it.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- log-tree.c            | 3 ++-
- t/t4035-diff-quiet.sh | 3 +--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Yes... Which do you prefer? :-)
 
-diff --git a/log-tree.c b/log-tree.c
-index 01beb11..3c98234 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -741,7 +741,8 @@ int log_tree_diff_flush(struct rev_info *opt)
- 	}
- 
- 	if (opt->loginfo && !opt->no_commit_id) {
--		show_log(opt);
-+		if (!DIFF_OPT_TST(&opt->diffopt, QUICK))
-+			show_log(opt);
- 		if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
- 		    opt->verbose_header &&
- 		    opt->commit_format != CMIT_FMT_ONELINE &&
-diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
-index 461f4bb..9a8225f 100755
---- a/t/t4035-diff-quiet.sh
-+++ b/t/t4035-diff-quiet.sh
-@@ -40,11 +40,10 @@ test_expect_success 'git diff-tree HEAD^ HEAD -- b' '
- 	test_expect_code 1 git diff-tree --quiet HEAD^ HEAD -- b >cnt &&
- 	test_line_count = 0 cnt
- '
--# this diff outputs one line: sha1 of the given head
- test_expect_success 'echo HEAD | git diff-tree --stdin' '
- 	echo $(git rev-parse HEAD) |
- 	test_expect_code 1 git diff-tree --quiet --stdin >cnt &&
--	test_line_count = 1 cnt
-+	test_line_count = 0 cnt
- '
- test_expect_success 'git diff-tree HEAD HEAD' '
- 	test_expect_code 0 git diff-tree --quiet HEAD HEAD >cnt &&
+> A few thoughts about implementation:
 
----
-https://github.com/git/git/pull/163
+Helpful, thanks!
+
+> - can we turn category header into link even if the category didn't
+>   came from $projects_list_directory_is_category?
+
+That would mean changing the project filter to match categories as well as
+paths. I don't know if this is the right thing to do; perhaps it is,
+because the current behaviour of my category headings is a bit surprising.
+
+At the moment, clicking on the "git" category heading on the page linked
+below takes you to a page that does not list all the repos that were under
+the category heading on the main page.
+
+https://git.csx.cam.ac.uk/x/ucs/
+
+> - even if $projects_list_directory_is_category is true, the category
+>   could came from 'category' file, or otherwise manually set category,
+>   though I wonder how we can easily detect this...
+
+Yes - I use this to list my personal/experimental repos alongside
+the production repos.
+
+I'm not sure why gitweb would need to detect this or what it would do in
+response. At the moment it "just works", apart from the oddity with
+categories vs project filters i described above.
+
+Tony.
+--=20
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+Viking, North Utsire: Westerly 4 or 5, occasionally 6 at first, backing
+southerly 3 or 4. Moderate becoming slight. Occasional rain in north. Good,
+occasionally moderate.
+--1870869256-415390768-1437571180=:12758--
