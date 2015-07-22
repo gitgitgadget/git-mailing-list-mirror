@@ -1,73 +1,126 @@
-From: =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Subject: Re: Git tag: pre-receive hook issue
-Date: Wed, 22 Jul 2015 21:46:44 +0200
-Message-ID: <55AFF324.2000609@gmail.com>
-References: <1437159533304-7635764.post@n2.nabble.com>
- <CA+P7+xoXgSHPVhMTm_GZbq+6Pps5yttK2rBZpMycTUFGfqOCvw@mail.gmail.com>
- <CAGDgvc2F7UMWTVrRFt5eK2xmbfz-kyWh6Vp-eQNEj7tixzRPYQ@mail.gmail.com>
- <CA+P7+xrbWt=n6hj4bTcdLRMPXa0K51gErNBD-omQy+g-So6TYw@mail.gmail.com>
- <CAGDgvc3O=q-k3ViiEds4iPMtDQTOSFMSJ4bUKRFyWzqwv7=J_Q@mail.gmail.com>
- <CA+P7+xpevvV=5QdfBdzcD=8=2ff+m-kzxX-w1wLME8oRyn8QBA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] receive-pack: crash when checking with non-exist HEAD
+Date: Wed, 22 Jul 2015 13:30:00 -0700
+Message-ID: <xmqqr3o0q6k7.fsf@gitster.dls.corp.google.com>
+References: <CANYiYbE3Vy_gtFMKTMw1wHLDhU758nXaJnKaNy6WMNRz0fjUnw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>,
-	Gaurav Chhabra <varuag.chhabra@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:47:21 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 22:30:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzz6-00068A-S7
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:47:21 +0200
+	id 1ZI0ea-0002Vz-4B
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 22:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbbGVTrQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2015 15:47:16 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:36206 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865AbbGVTrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:47:14 -0400
-Received: by wicgb10 with SMTP id gb10so113054616wic.1
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:47:13 -0700 (PDT)
+	id S1751697AbbGVUaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 16:30:05 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:33972 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750864AbbGVUaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 16:30:04 -0400
+Received: by pdbbh15 with SMTP id bh15so98360700pdb.1
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 13:30:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=wN4l2WyvjSRuf1mUOMOKc7MAw5yWyGgp5SpFB3lXOqw=;
-        b=jRXTLuSt45ydmq8hOTmbumDxI5c1DlxaUdk1oDOPPuVwnlZ6JZGIC+KctjtaTgRLq/
-         UdtqrkKN5tXF1ULP7TZtNX4OeygL/aJ43VY2UNJ96C+8pDcarsKkph47tls8QQXhqEQr
-         lXcphUTworP9H8W1RI1dGhXtmxsedyvYpVj4UNjoXyvyLewRBcfjYYZvvTsA7/MW7VWP
-         sWe6rZFPdHAbsZZv+osJaFqSbpmHc2/e1cJI23EO0PDn8Myr/GgXXHrnlDTKN+Kiy9Ah
-         YVRWn5dvHFbFvyuZx1S0jH4taKKwHgoR1xAo1PVQeRwlAM+tg2M+aPm8NT8pfmXmc39g
-         a4xw==
-X-Received: by 10.194.9.102 with SMTP id y6mr8084482wja.91.1437594433603;
-        Wed, 22 Jul 2015 12:47:13 -0700 (PDT)
-Received: from [192.168.1.53] (afu155.neoplus.adsl.tpnet.pl. [83.25.150.155])
-        by smtp.googlemail.com with ESMTPSA id b13sm4871868wic.15.2015.07.22.12.47.10
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jul 2015 12:47:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-In-Reply-To: <CA+P7+xpevvV=5QdfBdzcD=8=2ff+m-kzxX-w1wLME8oRyn8QBA@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=h7tf/CArhW7518263FUZoA/kzSEI7Kn2Dp45ltXJhUY=;
+        b=0xYhlX8o+Rh5vFPNLFUDkEglgklJDLW2uGBGokqfF9F7XoyW/qc+YCLBA8vlQPH0KZ
+         ItQYNEHsW1ECHtGwiYNgaTU7hzi6/EtH1+7nVb07coV8bkvMyqPtfNFl81UH3DY3sTYv
+         QC8dtzrKDpmcNjAtRH68SmkbIavZ0smyZSUblZMtqkHDUCCYuh0Mz/SJfeVhe0DkdCNF
+         WWfROuyZAxeR6A8X4f8o84X3WuKQGhoxXYOdPDhu63D1znsXffwWZJoX1dd4WgSB3vnW
+         UVQ4Il1urjtu8zEypKqaG4tBtK2W3Ls095dBI3x7Oj18N/7kcJJ5aBsMyG98n+4cNtXT
+         rwGA==
+X-Received: by 10.70.44.199 with SMTP id g7mr9641412pdm.152.1437597003321;
+        Wed, 22 Jul 2015 13:30:03 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
+        by smtp.gmail.com with ESMTPSA id s1sm4866929pda.54.2015.07.22.13.30.01
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 22 Jul 2015 13:30:01 -0700 (PDT)
+In-Reply-To: <CANYiYbE3Vy_gtFMKTMw1wHLDhU758nXaJnKaNy6WMNRz0fjUnw@mail.gmail.com>
+	(Jiang Xin's message of "Wed, 22 Jul 2015 09:49:40 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274465>
 
-On 2015-07-19, Jacob Keller wrote:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> git describe will tell you if the commit you're passing it is
-> associated with an annotated tag. I do not understand who this
-> information can help you implement any policy, so understanding what
-> the policy you want is would be the most helpful.
+> If HEAD of a repository points to a conflict reference, such as:
+>
+> * There exist a reference named 'refs/heads/jx/feature1', but HEAD
+>   points to 'refs/heads/jx', or
+>
+> * There exist a reference named 'refs/heads/feature', but HEAD points
+>   to 'refs/heads/feature/bad'.
+>
+> When we push to delete a reference for this repo, such as:
+>
+>         git push /path/to/bad-head-repo.git :some/good/reference
+>
+> The git-receive-pack process will crash.
 
-One policy I can think of that may have use of checking if commit
-is tagged is requiring some extra restrictions on the commit that
-is being tagged, for example that the only file that it can touch
-is version.h / VERSION-FILE, and no code changes at all.
+I see a similar "if head_name is NULL, don't bother." check in
+is_ref_checked_out() so in that sense this is a correct fix to the
+immediate problem.  That check came from 986e8239 (receive-pack:
+detect push to current branch of non-bare repo, 2008-11-08).
 
---=20
-Jakub Nar=C4=99bski
+This is a tangent, but if HEAD points at an unborn branch that
+cannot be created, wouldn't all other things break?  
+
+For example, in order to "git commit" from such a state to create
+the root commit on that branch, existing unrelated branches whose
+names collide with the branch must be removed, which would mean one
+of two things, either (1) you end up losing many unrelated work, or
+(2) the command refuses to work, not letting you to record the
+commit.  Neither is satisfactory, but we seem to choose (2), which
+is at least the safer of the two:
+
+    $ git checkout master
+    $ git checkout --orphan master/1
+    $ git commit -m foo
+    fatal: cannot lock ref 'HEAD': 'refs/heads/master' exists;
+    cannot create 'refs/heads/master/1'
+
+We may want to avoid putting us in such a situation in the first
+place.  Giving "checkout --orphan" an extra check might be a simple
+small thing we can do, i.e.
+
+    $ git checkout master
+    $ git checkout --orphan master/1
+    fatal: 'master' branch exists, cannot create 'master/1'
+
+But I suspect it would not protect us from different avenues that
+can cause this kind of thing; e.g. to prevent this:
+
+    $ git branch -D next
+    $ git checkout --orphan next/1
+    $ git fetch origin master:refs/heads/next
+
+creation of a ref "refs/heads/next" here must notice HEAD points
+at "refs/heads/next/1" (that does not yet exist) and do something
+intelligent about it.
+
+>  builtin/receive-pack.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 94d0571..04cb5a1 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -911,7 +911,7 @@ static const char *update(struct command *cmd,
+> struct shallow_info *si)
+>       return "deletion prohibited";
+>     }
+>
+> -   if (!strcmp(namespaced_name, head_name)) {
+> +   if (head_name && !strcmp(namespaced_name, head_name)) {
+>       switch (deny_delete_current) {
+>       case DENY_IGNORE:
+>         break;
