@@ -1,66 +1,88 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: What's cooking in git.git (Jul 2015, #01; Wed, 1)
-Date: Wed, 22 Jul 2015 22:14:14 +0100
-Message-ID: <alpine.LSU.2.00.1507222211300.24176@hermes-1.csi.cam.ac.uk>
-References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com> <55AE8ACF.6090508@gmail.com> <alpine.LSU.2.00.1507220957350.16350@hermes-1.csi.cam.ac.uk> <55AF7B9C.4000108@gmail.com> <alpine.LSU.2.00.1507221351420.12758@hermes-1.csi.cam.ac.uk>
- <55AFEFE0.9000606@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] refs: loosen restriction on wildcard "*" refspecs
+Date: Wed, 22 Jul 2015 15:04:16 -0700
+Message-ID: <xmqqio9brgrj.fsf@gitster.dls.corp.google.com>
+References: <1437599133-13012-1-git-send-email-jacob.e.keller@intel.com>
+	<1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1870869256-2044751640-1437599654=:24176"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 23:14:23 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.iabervon.org>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 00:04:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZI1LK-0000qk-7Y
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 23:14:22 +0200
+	id 1ZI27m-0001mf-81
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 00:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299AbbGVVOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 17:14:18 -0400
-Received: from ppsw-40.csi.cam.ac.uk ([131.111.8.140]:58594 "EHLO
-	ppsw-40.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751882AbbGVVOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 17:14:18 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:44378)
-	by ppsw-40.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1ZI1LC-0005xV-kO (Exim 4.82_3-c0e5623)
-	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 22 Jul 2015 22:14:14 +0100
-Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1ZI1LC-0007Ow-Am (Exim 4.72)
-	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 22 Jul 2015 22:14:14 +0100
-X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
-In-Reply-To: <55AFEFE0.9000606@gmail.com>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753582AbbGVWEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 18:04:21 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:36836 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753279AbbGVWES (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 18:04:18 -0400
+Received: by pdjr16 with SMTP id r16so147710719pdj.3
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 15:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=3B8eTnKeTRjx+ndNrllKE0bBRhwSGnxc46gySYBAK10=;
+        b=PkTChhelWbFniM87exPHYZHbeiUS5aJD4R+q4EfohdQCu5X2mfHfvpMVg4eVHVWqTm
+         fKiBeojxnNazdQyl9XRid5axZb2r+H+EjYSJvFxqivwZlCMeosBo42POrTkO+781PrEs
+         ghUH3V+CnGiL6iohl9V3Ue6B5FeZIXXsFQ+P74htqd2nb9WaY3TeSBj7P9MWWkZ3mfF+
+         zc7ZGGX2LCRpSaKkOob27SlbRRLqsHcg/fyV7k46g3AQXvP5c2V88cVILFoR+GoIdd14
+         Wb1ZVEcKqk5S/NQA6y+b4wbdk0pqh/rdQDSf+h43dNRjgT1M5AAjtWrv+ea16l9nJpXL
+         0iwg==
+X-Received: by 10.67.8.71 with SMTP id di7mr10830741pad.46.1437602658358;
+        Wed, 22 Jul 2015 15:04:18 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
+        by smtp.gmail.com with ESMTPSA id i10sm5049784pdr.78.2015.07.22.15.04.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 22 Jul 2015 15:04:17 -0700 (PDT)
+In-Reply-To: <1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
+	(Jacob Keller's message of "Wed, 22 Jul 2015 14:05:33 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274472>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
---1870869256-2044751640-1437599654=:24176
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> Food for thought
+> Modify logic of check_refname_component and add a new disposition
+> regarding "*". Allow refspecs that contain a single "*" if
+> REFNAME_REFSPEC_PATTERN is set. Change the function to pass the flags as
+> a pointer, and clear REFNAME_REFSPEC_PATTERN after the first "*" so that
+> only a single "*" is accepted.
+>
+> This loosens restrictions on refspecs by allowing patterns that have
+> a "*" within a component instead of only as the whole component. Also
+> remove the code that hangled refspec patterns in check_refname_format
+> since it is now handled via the check_refname_component logic.
+>
+> Now refs such as `for/bar*:foo/bar*` and even `foo/bar*:foo/baz*` will
+> be accepted. This allows users more control over what is fetched where.
+> Since users must modify the default by hand to make use of this
+> functionality it is not considered a large risk. Any refspec which
+> functioned before shall continue functioning with the new logic.
 
-Yes, very helpful, thanks. I got mobbed by other things today so I won't
-be able to get back to this until next week.
 
-Tony (off for a few days holiday).
---=20
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-Lundy, Fastnet, Irish Sea, Shannon: West or southwest, veering north later =
-in
-Shannon and Fastnet, 4 or 5. Slight or moderate, occasionally rough at firs=
-t
-in north Shannon. Rain or showers. Good, occasionally poor.
---1870869256-2044751640-1437599654=:24176--
+Thanks.  Now I can read the changes to the code in these two commits
+and see that they both make sense ;-)
+
+The above description seem to use "ref" and "refspec" rather
+liberally, so I'll rewrite some parts of it to clarify while
+queuing.
+
+By the way, have you run test suite before sending this (or any
+previous round of this) patch?  This seems to break t5511-refspec.sh
+for me.
+
+ 
