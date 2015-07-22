@@ -1,65 +1,96 @@
-From: Samuel Williams <space.ship.traveller@gmail.com>
-Subject: Re: Shallow Push?
-Date: Wed, 22 Jul 2015 19:27:59 +1200
-Message-ID: <CAHkN8V8hcdBD1oBYEpf74rsY2mpzxE08v+czue9ORzDB8ZGn=w@mail.gmail.com>
-References: <CAHkN8V-pK3ngfShmTrAaR5gixhRKbWwDoM21QBVw6hp8AngTkw@mail.gmail.com>
-	<xmqqmw2iardi.fsf@gitster.dls.corp.google.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] diff-tree: do not show the sha1 of the given head with
+ --quiet
+Date: Wed, 22 Jul 2015 09:29:42 +0000
+Message-ID: <0000014eb518dc87-a69705c4-31e7-4983-99a8-f780a743aeac-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 09:28:07 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 22 11:44:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHoRi-0002JA-RU
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 09:28:07 +0200
+	id 1ZHqZE-0004hd-Gu
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 11:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932696AbbGVH2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 03:28:01 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:36472 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932097AbbGVH2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 03:28:00 -0400
-Received: by lagw2 with SMTP id w2so132503010lag.3
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 00:27:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mbDmXvdLP3cqoGtQu7NNAThwtFlBbz1mPODhktBxyvM=;
-        b=knoq4GzzCpm07DDoMndN0g92XwYq4+lekwW3NmKiYHuPQZhNQI5dZChDzGsnyHWznC
-         JZNbCrjpsai7srT6eExci71MchdbGJyrMV3+H4rX3BM83DbJRoC7x/0D1oZ6J32OyZE0
-         zRUL4iPNRoF8CvSh5doIASRF9AuhdVIl2vehaWMWegoFXhraA3Sf8a8jRwLzdys33kIz
-         dJi4/21D/QARyFmX6pHgRwhpgG2TOGXe7XzfZHIJP6Dbexwz7EC8av2TDwIILEmelXcR
-         bXNU/OkqlGuifc7o3l1j+40Xk89iLOxWlRhZh6tURNmbi94EL3xFeRQRVwJgUJzTg257
-         sL1Q==
-X-Received: by 10.112.50.66 with SMTP id a2mr1016660lbo.68.1437550079294; Wed,
- 22 Jul 2015 00:27:59 -0700 (PDT)
-Received: by 10.112.137.231 with HTTP; Wed, 22 Jul 2015 00:27:59 -0700 (PDT)
-In-Reply-To: <xmqqmw2iardi.fsf@gitster.dls.corp.google.com>
+	id S932900AbbGVJn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 05:43:56 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:43008
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932172AbbGVJnz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2015 05:43:55 -0400
+X-Greylist: delayed 851 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jul 2015 05:43:55 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1437557382;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=kDoSBaMDgnD5cehq5lU0zKqNzeurseLlorFlWCjKHWE=;
+	b=GBOGsjzfMYNuqly3xzLiBtOG66+QNRXyzuwkcJpwOiAmyq9lYDJy4UUnZCnmq/4k
+	4n3Ydy5U2d/2Pzs/shoTcuGVV2w6EIY+j+JTXwXSRmXhZtL3BfZHGOKIOm8plAwPR99
+	FeFe82ljT0gCEZvSg3Ud3PzXSTHRQPFfkryGu/yk=
+X-SES-Outgoing: 2015.07.22-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274438>
 
-> What is the receiving repository expected to have?  Does it have
-everything that is required to checkout the back-then latest HEAD
-the last time a push was made into it, and you are pushing an
-update?
+"--quite" is documented to "Disable all output of the program". Yet
+calling diff-tree with a single commit like
 
-Yes, something like that
+$ git diff-tree --quiet c925fe2
 
-On 9 April 2015 at 15:54, Junio C Hamano <gitster@pobox.com> wrote:
-> Samuel Williams <space.ship.traveller@gmail.com> writes:
->
->> Is it possible to only push what is required to checkout the latest HEAD?
->
-> What is the receiving repository expected to have?  Does it have
-> everything that is required to checkout the back-then latest HEAD
-> the last time a push was made into it, and you are pushing an
-> update?
->
+was logging
+
+c925fe23684455735c3bb1903803643a24a58d8f
+
+to the console despite "--quite" being given. This is inconsistent with
+both the docs and the behavior if more than a single commit is passed to
+diff-tree. Moreover, the output of that single line seems to be documented
+nowhere except in a comment for a test. Fix this inconsistency by making
+diff-tree really output nothing if "--quiet" is given and fix the test
+accordingly.
+
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ log-tree.c            | 3 ++-
+ t/t4035-diff-quiet.sh | 3 +--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 01beb11..3c98234 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -741,7 +741,8 @@ int log_tree_diff_flush(struct rev_info *opt)
+ 	}
+ 
+ 	if (opt->loginfo && !opt->no_commit_id) {
+-		show_log(opt);
++		if (!DIFF_OPT_TST(&opt->diffopt, QUICK))
++			show_log(opt);
+ 		if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
+ 		    opt->verbose_header &&
+ 		    opt->commit_format != CMIT_FMT_ONELINE &&
+diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+index 461f4bb..9a8225f 100755
+--- a/t/t4035-diff-quiet.sh
++++ b/t/t4035-diff-quiet.sh
+@@ -40,11 +40,10 @@ test_expect_success 'git diff-tree HEAD^ HEAD -- b' '
+ 	test_expect_code 1 git diff-tree --quiet HEAD^ HEAD -- b >cnt &&
+ 	test_line_count = 0 cnt
+ '
+-# this diff outputs one line: sha1 of the given head
+ test_expect_success 'echo HEAD | git diff-tree --stdin' '
+ 	echo $(git rev-parse HEAD) |
+ 	test_expect_code 1 git diff-tree --quiet --stdin >cnt &&
+-	test_line_count = 1 cnt
++	test_line_count = 0 cnt
+ '
+ test_expect_success 'git diff-tree HEAD HEAD' '
+ 	test_expect_code 0 git diff-tree --quiet HEAD HEAD >cnt &&
+
+---
+https://github.com/git/git/pull/163
