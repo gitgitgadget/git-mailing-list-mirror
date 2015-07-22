@@ -1,88 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] refs: loosen restriction on wildcard "*" refspecs
-Date: Wed, 22 Jul 2015 15:04:16 -0700
-Message-ID: <xmqqio9brgrj.fsf@gitster.dls.corp.google.com>
-References: <1437599133-13012-1-git-send-email-jacob.e.keller@intel.com>
-	<1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v2b 00/16, 2 updates] Make the msvc-build scripts work
+ again
+Date: Wed, 22 Jul 2015 23:57:35 +0100
+Message-ID: <55B01FDF.7030004@ramsay1.demon.co.uk>
+References: <1437432846-5796-1-git-send-email-philipoakley@iee.org>	<xmqq1tg2xwbd.fsf@gitster.dls.corp.google.com>	<73004CECB3514744A5916831B4501689@PhilipOakley> <xmqqvbdduxd5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.iabervon.org>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 00:04:26 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Jul 23 01:03:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZI27m-0001mf-81
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 00:04:26 +0200
+	id 1ZI32c-0005wq-Nz
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 01:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753582AbbGVWEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 18:04:21 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:36836 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753279AbbGVWES (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 18:04:18 -0400
-Received: by pdjr16 with SMTP id r16so147710719pdj.3
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 15:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=3B8eTnKeTRjx+ndNrllKE0bBRhwSGnxc46gySYBAK10=;
-        b=PkTChhelWbFniM87exPHYZHbeiUS5aJD4R+q4EfohdQCu5X2mfHfvpMVg4eVHVWqTm
-         fKiBeojxnNazdQyl9XRid5axZb2r+H+EjYSJvFxqivwZlCMeosBo42POrTkO+781PrEs
-         ghUH3V+CnGiL6iohl9V3Ue6B5FeZIXXsFQ+P74htqd2nb9WaY3TeSBj7P9MWWkZ3mfF+
-         zc7ZGGX2LCRpSaKkOob27SlbRRLqsHcg/fyV7k46g3AQXvP5c2V88cVILFoR+GoIdd14
-         Wb1ZVEcKqk5S/NQA6y+b4wbdk0pqh/rdQDSf+h43dNRjgT1M5AAjtWrv+ea16l9nJpXL
-         0iwg==
-X-Received: by 10.67.8.71 with SMTP id di7mr10830741pad.46.1437602658358;
-        Wed, 22 Jul 2015 15:04:18 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
-        by smtp.gmail.com with ESMTPSA id i10sm5049784pdr.78.2015.07.22.15.04.17
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 22 Jul 2015 15:04:17 -0700 (PDT)
-In-Reply-To: <1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Wed, 22 Jul 2015 14:05:33 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752611AbbGVXDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2015 19:03:05 -0400
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:37286 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752556AbbGVXDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 19:03:04 -0400
+X-Greylist: delayed 324 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jul 2015 19:03:03 EDT
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 120776F8F34;
+	Wed, 22 Jul 2015 23:56:27 +0100 (BST)
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id C50F56F8E95;
+	Wed, 22 Jul 2015 23:56:26 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
+	Wed, 22 Jul 2015 23:56:26 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
+In-Reply-To: <xmqqvbdduxd5.fsf@gitster.dls.corp.google.com>
+X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274473>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On 21/07/15 20:25, Junio C Hamano wrote:
+> "Philip Oakley" <philipoakley@iee.org> writes:
+> 
+>> ... Ideally, if part of this
+>> mainstream Git, it would get picked up automatically by them
+>> (rather than being local 'fixes' endlessly carried forward).
+> 
+> Actually, that is not "ideal", but what I want to avoid.
+> 
+> As I do not do Windows, it simply is wrong for me to apply changes
+> that are very likely to affect Windows folks without seeing their
+> support first, which they may end up having to revert on their end
+> and endlessly carry that revert forward.  That is why I very much
+> prefer to see changes get there first and then forwarded in my
+> direction once they are happy with them.
+> 
+>> There has been no activity here on the 'create a visual studio project'
+>> aspects in the last few years. Any changes listed in the logs relate to
+>> ensuring that the MSVC compiler will run as part of a regular Makefile
+>> run (IIUC). The last significant commit was 74cf9bd (engine.pl: Fix a
+>> recent breakage of the buildsystem generator, 2010-01-22) Ramsay Jones,
+>> so that's five and a half years.
+> 
+> I think Ramsay is still around on the list; I do not know if he
+> still does Windows, though.
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> Modify logic of check_refname_component and add a new disposition
-> regarding "*". Allow refspecs that contain a single "*" if
-> REFNAME_REFSPEC_PATTERN is set. Change the function to pass the flags as
-> a pointer, and clear REFNAME_REFSPEC_PATTERN after the first "*" so that
-> only a single "*" is accepted.
->
-> This loosens restrictions on refspecs by allowing patterns that have
-> a "*" within a component instead of only as the whole component. Also
-> remove the code that hangled refspec patterns in check_refname_format
-> since it is now handled via the check_refname_component logic.
->
-> Now refs such as `for/bar*:foo/bar*` and even `foo/bar*:foo/baz*` will
-> be accepted. This allows users more control over what is fetched where.
-> Since users must modify the default by hand to make use of this
-> functionality it is not considered a large risk. Any refspec which
-> functioned before shall continue functioning with the new logic.
+[Sorry for not noticing this sooner, but I'm currently moving home
+(among other things) and, as a result, I have not been able to
+devote much time to the list ... (or anything else ;-) ]
 
+I don't do much with MinGW or MSVC these days (I do still try to
+keep cygwin running - it's currently not in good shape). My MSVC
+installation is somewhat old (2008 I believe) and confined to my
+old 32-bit laptop (which doesn't get booted up too often now).
 
-Thanks.  Now I can read the changes to the code in these two commits
-and see that they both make sense ;-)
+I had a quick squint at the patches and, at first glance, they
+looked quite reasonable to me, but I have not tested them. I can't
+promise to test them anytime soon (and my MSVC may be too old for
+these patches?). Sorry! :(
 
-The above description seem to use "ref" and "refspec" rather
-liberally, so I'll rewrite some parts of it to clarify while
-queuing.
+[If I find some time soon, I will give them a try and let you know.]
 
-By the way, have you run test suite before sending this (or any
-previous round of this) patch?  This seems to break t5511-refspec.sh
-for me.
-
- 
+ATB,
+Ramsay Jones
