@@ -1,87 +1,172 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Feature Request: Passing a number as an option to git tags for displaying latest tags
-Date: Wed, 22 Jul 2015 12:20:46 -0700
-Message-ID: <xmqq7fpsroc1.fsf@gitster.dls.corp.google.com>
-References: <CALpYpjE1WE=fO0q=rGPHedZwP8JovJ0CxELBd_EhAmncRS6ZYA@mail.gmail.com>
-	<xmqqbnf4rohs.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2015, #01; Wed, 1)
+Date: Wed, 22 Jul 2015 21:32:48 +0200
+Message-ID: <55AFEFE0.9000606@gmail.com>
+References: <xmqqzj3f5wtr.fsf@gitster.dls.corp.google.com>
+ <55AE8ACF.6090508@gmail.com>
+ <alpine.LSU.2.00.1507220957350.16350@hermes-1.csi.cam.ac.uk>
+ <55AF7B9C.4000108@gmail.com>
+ <alpine.LSU.2.00.1507221351420.12758@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-To: Halil =?utf-8?B?w5Z6dMO8cms=?= <halilozturk55@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:20:54 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Wed Jul 22 21:33:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzZV-0001Ex-0f
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:20:53 +0200
+	id 1ZHzla-0007XE-0v
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575AbbGVTUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 15:20:49 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:36741 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751333AbbGVTUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:20:48 -0400
-Received: by pdjr16 with SMTP id r16so145826762pdj.3
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:20:48 -0700 (PDT)
+	id S1752491AbbGVTdR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2015 15:33:17 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:36052 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751697AbbGVTdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 15:33:17 -0400
+Received: by wicgb10 with SMTP id gb10so112566094wic.1
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=wQfyP0ZQXwfKuPklAMgqKIJ3Zi10IT+E/DDspu7lUUk=;
-        b=UxSrzRNxfIYvBDitYd9eswqeyh6rf6hwunQ6t3kW/XYYzoZiTjIOfG5AC2doIPsACF
-         qjVjJpUuxzCQU3HoJK9GC5W6t95QsLZCnzPRus134WiyPL3xPyaQ4cd5GWi35zNZDr7J
-         9wBCLlaHqpHwfYIx8xQDbSf9zRb9xX+tHEb08yDpBJ7Gsh9U0rb2xJA6gHUDyMGBjWXQ
-         Uq1oCwfFqIrsChZ/47Zn2pu+TsDAdQw4FGJlnAGmWD0BIJkke+GA+Ut2JpfU2sKLQljl
-         M59Ihv6XFYvX53OmrAG8ZmmTF6Lbkv+K9Rsge2pDkLKtyVAD3F8NT4s74fUqy+s4TR6a
-         8vXQ==
-X-Received: by 10.66.140.98 with SMTP id rf2mr9383578pab.138.1437592847951;
-        Wed, 22 Jul 2015 12:20:47 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
-        by smtp.gmail.com with ESMTPSA id yd8sm4738594pab.46.2015.07.22.12.20.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 22 Jul 2015 12:20:47 -0700 (PDT)
-In-Reply-To: <xmqqbnf4rohs.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 22 Jul 2015 12:17:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=1irSTJm+IdIJHvNLcyb1+cmW/fn+gjv4Z1r9n+GJg5o=;
+        b=tEssF5mDC8myJ4EaMYrSScwgZuBe/WymtpP6o0VgmTjbYy8kWZMzr7JqsCbC+ezHxA
+         kWfZREn1okw6uZ1/VVLUQ302JJ+G3G/EcJ4mx1LdjhYluJ4AYj6qhtf1cWoCDjAvACRd
+         +UCHn5gKS4CBYHH/8OS6wexR4fMFoGhuhFIR4rL/uS6jj/qhtHS0iaXZywFZaNAhMpC8
+         X+ViY4kkU+ezqlnFkapwJXDGWKP8PO2JWRY1AkWjhx3BQphs6pHPLjOAg+lCNA0M5K7z
+         vZvTqUm6J/y9yK8hMfALgeUfnskkUwCvjHsIgDh6WVcHjMi/5Wwk/QuHr+nSJ8oAmapF
+         d+YQ==
+X-Received: by 10.180.206.41 with SMTP id ll9mr34771694wic.88.1437593595719;
+        Wed, 22 Jul 2015 12:33:15 -0700 (PDT)
+Received: from [192.168.1.53] (afu155.neoplus.adsl.tpnet.pl. [83.25.150.155])
+        by smtp.googlemail.com with ESMTPSA id ha4sm23494057wib.0.2015.07.22.12.33.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 22 Jul 2015 12:33:14 -0700 (PDT)
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <alpine.LSU.2.00.1507221351420.12758@hermes-1.csi.cam.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274459>
 
-Junio C Hamano <gitster@pobox.com> writes:
+W dniu 2015-07-22 o 15:19, Tony Finch pisze:
+> Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+>>
+>> A question about implementation: why emptying $path_info in
+>> evaluate_path_info()?
+>=20
+> That was for consistency with other parts of the subroutine which (mo=
+stly)
+> remove items from the global $path_info variable when they are added =
+to
+> %input_params. But since $path_info isn't used after it has been pars=
+ed, I
+> suppose it is redundant.
 
-> The former, sort by "time", is interesting, but you need to define
-> what to do with various corner cases.  For example, some people may
-> have one or more of the following desires:
->
->  * My project did not use tags for a long time, and started using it
->    recently starting from v1.1.0.  The first release only said
->    "Frotz version 1.0.0" in its commit log message.  I retroactively
->    did "git tag -s -m 'Frotz 1.1.0' v1.1.0" on that commit.
+If it is for consistency, better leave it in my opinion.
 
-Obviously, I meant "git tag -s -m 'Frotz 1.0.0' v1.0.0" here.
+>>>> - I think that people would want to be able to configure how
+>>>>   many levels of directory hierarchy gets turned into categories.
+>>>>   Perhaps only top level should be turned into category? Deep
+>>>>   hierarchies means deep categories (usually with very few
+>>>>   repositories) with current implementation.
+>>>
+>>> Good question. I was assuming flat-ish directory hierarchies, but t=
+hat's
+>>> clearly not very true, e.g. https://git.kernel.org/cgit/
+>>>
+>>> I think it would be right to make this a %feature since categories =
+already
+>>> nearly fit the %feature per-project override style.
+>>
+>> On the other hand $projects_list_group_categories is a global gitweb
+>> configuration variable, and $projects_list_directory_is_category was
+>> patterned after it.
+>=20
+> Yes... Which do you prefer? :-)
 
->    In such a case, it is likely that I would want the sorting done
->    based on the committer date on the underlying commit, not the
->    tag's tagger date.
->
->  * When a bug is found, it is customary in my project to add a
->    "break-<something>" tag to the commit that introduces the bug
->    (and "fix-<something>" tag to the commit that fixes it).
->
->    When I want to find recently discovered breakages, I want the
->    tags whose names match "break-*" sorted by tagger dates, not the
->    underlying commit's committer dates.
+Hmmm... does it makes sense to have per-repository override?  If yes,
+then we need to use %features. If not... I am not sure, %features is
+newer than global (or rather package) variables for gitweb configuratio=
+n,
+which must be left for legacy config support (and few are needed before
+%features are parsed).
 
-Another use case may be one in which older tags are interesting.  In
-other words, you need to be able to sort in reverse, too.
+>> A few thoughts about implementation:
+>=20
+> Helpful, thanks!
+>=20
+>> - can we turn category header into link even if the category didn't
+>>   came from $projects_list_directory_is_category?
+>=20
+> That would mean changing the project filter to match categories as we=
+ll as
+> paths. I don't know if this is the right thing to do; perhaps it is,
+> because the current behaviour of my category headings is a bit surpri=
+sing.
+>=20
+> At the moment, clicking on the "git" category heading on the page lin=
+ked
+> below takes you to a page that does not list all the repos that were =
+under
+> the category heading on the main page.
+>=20
+> https://git.csx.cam.ac.uk/x/ucs/
 
-> The necessary ordering machinery to do the above already exists in
-> "for-each-ref".  There is a GSoC project that works to unify various
-> features spread across "for-each-ref", "branch -l" and "tag -l" and
-> make them available to all of the three.
+I thought gitweb had a way to list all projects belonging to given cate=
+gory,
+but I see that it doesn't.  So you need to find out if 'category' came =
+from
+category or from pathname, to decide whether to link it using 'projects=
+_list'
+action and 'project_filter' parameter (or their PATH_INFO version), or =
+not.
 
-And the above is still true even with reverse-order use case.
+This can be done either by checking that category name is directory (th=
+ough
+we could have false positives here), or when adding categories denote w=
+here
+it came from (e.g. with additional field).  I think the second is bette=
+r,
+if we are to hyperlink category-from-pathname headings.
+
+There is interesting corner case: what if some projects use category, a=
+nd
+some have the same category from pathname?  Clicking on category if=20
+hyper-linked would show only a subset of projects inside category. (I t=
+hink
+this is the oddity you noticed.)
+
+>> - even if $projects_list_directory_is_category is true, the category
+>>   could came from 'category' file, or otherwise manually set categor=
+y,
+>>   though I wonder how we can easily detect this...
+>=20
+> Yes - I use this to list my personal/experimental repos alongside
+> the production repos.
+>=20
+> I'm not sure why gitweb would need to detect this or what it would do=
+ in
+> response. At the moment it "just works", apart from the oddity with
+> categories vs project filters i described above.
+
+What if there is synthetic category that has no representative in the
+path hierarchy?  Then "project_filter" link would lead to strange empty
+list of projects...
+
+=46or example http://git.zx2c4.com/ (cgit) uses "Mirrors" category...
+
+We could either abuse "project_filter" for categories, or add a new
+query parameter "project_category" or "cat" in short. In either case
+it would not have PATH_INFO URL unless category came from directory.
+
+=46ood for thought
+--=20
+Jakub Nar=C4=99bski
