@@ -1,130 +1,97 @@
-From: Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH v5] pull: allow dirty tree when rebase.autostash enabled
-Date: Wed, 22 Jul 2015 21:07:24 +0200
-Message-ID: <20150722190724.GA11291@ikke.info>
-References: <1434538880-15608-1-git-send-email-me@ikke.info>
- <1436046158-19426-1-git-send-email-me@ikke.info>
- <xmqqd205yq98.fsf@gitster.dls.corp.google.com>
- <20150707035956.GA6105@yoshi.chippynet.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Feature Request: Passing a number as an option to git tags for displaying latest tags
+Date: Wed, 22 Jul 2015 12:17:19 -0700
+Message-ID: <xmqqbnf4rohs.fsf@gitster.dls.corp.google.com>
+References: <CALpYpjE1WE=fO0q=rGPHedZwP8JovJ0CxELBd_EhAmncRS6ZYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: gitster@ikke.info
-X-From: git-owner@vger.kernel.org Wed Jul 22 21:07:32 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+To: Halil =?utf-8?B?w5Z6dMO8cms=?= <halilozturk55@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 21:17:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZHzMY-0003IA-U3
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:07:31 +0200
+	id 1ZHzWB-00080L-Ic
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jul 2015 21:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751697AbbGVTH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2015 15:07:26 -0400
-Received: from ikke.info ([178.21.113.177]:51841 "EHLO vps892.directvps.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751285AbbGVTH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2015 15:07:26 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1001)
-	id 8F37D4400AE; Wed, 22 Jul 2015 21:07:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20150707035956.GA6105@yoshi.chippynet.com>
-User-Agent: Mutt/1.5.23+89 (0255b37be491) (2014-03-12)
+	id S1751285AbbGVTRW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2015 15:17:22 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:34436 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779AbbGVTRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2015 15:17:22 -0400
+Received: by pdbbh15 with SMTP id bh15so97521452pdb.1
+        for <git@vger.kernel.org>; Wed, 22 Jul 2015 12:17:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=tKcHrdKTvjGWPDRcgNwPEJgjlFhClaBztC7YSPgzrSc=;
+        b=RcZeh3cxPELPf88tOBDScYdVTUo4DVaorffMDe2oow6dTpwLhdoz2QtSerjWe1YzYH
+         R+woEyVFGxJ8Ri6Uh98h6ZcNqX+mml2z8IGzZc3JOXhk6MEkyljoJ49lARlseXt1JSdt
+         Y2oehPtWkx4fY1GDEcGjHsKbIt0H2Sq3l9IlYUEZ5PWPKVY1+WWL1RonR2uSgrR3jC7H
+         df+FTTs/TRYPAskVVRc7ITrU18FyvgVrccevO2crowkyaugP+yiZmiqbZ7K3qEh26qvJ
+         ItH2K+xiImifiaK9FLEtfYBVFJpHfngCJ4igjziKMsVSiQG5e/U1dSmRh8bGSJywsq/H
+         kChQ==
+X-Received: by 10.70.123.72 with SMTP id ly8mr9194026pdb.134.1437592641503;
+        Wed, 22 Jul 2015 12:17:21 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2d07:10eb:6a1b:8773])
+        by smtp.gmail.com with ESMTPSA id ky17sm4743143pab.31.2015.07.22.12.17.20
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 22 Jul 2015 12:17:20 -0700 (PDT)
+In-Reply-To: <CALpYpjE1WE=fO0q=rGPHedZwP8JovJ0CxELBd_EhAmncRS6ZYA@mail.gmail.com>
+	("Halil =?utf-8?B?w5Z6dMO8cmsiJ3M=?= message of "Wed, 22 Jul 2015 13:17:45
+ -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274456>
 
-On Tue, Jul 07, 2015 at 11:59:56AM +0800, Paul Tan wrote:
-> On Mon, Jul 06, 2015 at 01:39:47PM -0700, Junio C Hamano wrote:
-> > Kevin Daudt <me@ikke.info> writes:
-> > 
-> > > rebase learned to stash changes when it encounters a dirty work tree, but
-> > > git pull --rebase does not.
-> > >
-> > > Only verify if the working tree is dirty when rebase.autostash is not
-> > > enabled.
-> > >
-> > > Signed-off-by: Kevin Daudt <me@ikke.info>
-> > > Helped-by: Paul Tan <pyokagan@gmail.com>
-> > > ---
-> > 
-> > I applied it, tried to run today's integration cycle, and then ended
-> > up ejecting it from my tree for now, as this seemed to break 5520
-> > when merged to 'pu' X-<.
-> > 
-> > Well, that is partly expected, as Paul's builtin/pull.c does not
-> > know about it (yet).
-> 
-> Yeah, sorry about that.
-> 
-> Here's a modified patch for the C code.
-> 
-> Regards,
-> Paul
-> 
-> --- >8 ---
-> From: Kevin Daudt <me@ikke.info>
-> Date: Sat, 4 Jul 2015 23:42:38 +0200
-> 
-> rebase learned to stash changes when it encounters a dirty work tree,
-> but git pull --rebase does not.
-> 
-> Only verify if the working tree is dirty when rebase.autostash is not
-> enabled.
-> 
-> Signed-off-by: Kevin Daudt <me@ikke.info>
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
->  builtin/pull.c  |  6 +++++-
->  t/t5520-pull.sh | 11 +++++++++++
->  2 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 722a83c..b7bc1ff 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -823,10 +823,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->  		hashclr(orig_head);
->  
->  	if (opt_rebase) {
-> +		int autostash = 0;
-> +
->  		if (is_null_sha1(orig_head) && !is_cache_unborn())
->  			die(_("Updating an unborn branch with changes added to the index."));
->  
-> -		die_on_unclean_work_tree(prefix);
-> +		git_config_get_bool("rebase.autostash", &autostash);
-> +		if (!autostash)
-> +			die_on_unclean_work_tree(prefix);
->  
->  		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
->  			hashclr(rebase_fork_point);
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index f4a7193..a0013ee 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -245,6 +245,17 @@ test_expect_success '--rebase fails with multiple branches' '
->  	test modified = "$(git show HEAD:file)"
->  '
->  
-> +test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
-> +	test_config rebase.autostash true &&
-> +	git reset --hard before-rebase &&
-> +	echo dirty >new_file &&
-> +	git add new_file &&
-> +	git pull --rebase . copy &&
-> +	test_cmp_rev HEAD^ copy &&
-> +	test "$(cat new_file)" = dirty &&
-> +	test "$(cat file)" = "modified again"
-> +'
-> +
->  test_expect_success 'pull.rebase' '
->  	git reset --hard before-rebase &&
->  	test_config pull.rebase true &&
-> -- 
-> 2.5.0.rc1.21.gbd65f2d.dirty
-> 
+Halil =C3=96zt=C3=BCrk <halilozturk55@gmail.com> writes:
 
-Any news about this? Is it still waiting for something?
+> Passing a number as an option to "git tags" command should display la=
+test tags.
+>
+> e.g. "git tags -5" will display last 5 tags only.
+
+I think this conflates two unrelated things.
+
+ - Ordering tags not by refnames (i.e. default) but by "time".
+
+ - Limiting the output by count.
+
+The latter is what "| head -n 5" and/or "| tail -n 5" are for, so it
+would be at most "nice to have"; I am indifferent in the sense that
+I won't work on it, but I'd take a look if somebody sent a patch
+that was cleanly done.
+
+The former, sort by "time", is interesting, but you need to define
+what to do with various corner cases.  For example, some people may
+be have one or more of the following desires:
+
+ * My project did not use tags for a long time, and started using it
+   recently starting from v1.1.0.  The first release only said
+   "Frotz version 1.0.0" in its commit log message.  I retroactively
+   did "git tag -s -m 'Frotz 1.1.0' v1.1.0" on that commit.
+
+   In such a case, it is likely that I would want the sorting done
+   based on the committer date on the underlying commit, not the
+   tag's tagger date.
+
+ * When a bug is found, it is customary in my project to add a
+   "break-<something>" tag to the commit that introduces the bug
+   (and "fix-<something>" tag to the commit that fixes it).
+
+   When I want to find recently discovered breakages, I want the
+   tags whose names match "break-*" sorted by tagger dates, not the
+   underlying commit's committer dates.
+
+The necessary ordering machinery to do the above already exists in
+"for-each-ref".  There is a GSoC project that works to unify various
+features spread across "for-each-ref", "branch -l" and "tag -l" and
+make them available to all of the three.
