@@ -1,105 +1,76 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [RFC/PATCH] contrib: teach completion about git-worktree options and arguments
-Date: Thu, 23 Jul 2015 16:49:10 -0400
-Message-ID: <1437684550-21884-1-git-send-email-sunshine@sunshineco.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 23 22:49:55 2015
+Subject: Re: [PATCH 2/2] refs: loosen restriction on wildcard "*" refspecs
+Date: Thu, 23 Jul 2015 18:00:55 -0400
+Message-ID: <CAPig+cRS0NcNcw-0wG4mThN_PW0RoN3b09Yu2GzCr=UFPLYd6A@mail.gmail.com>
+References: <1437599133-13012-1-git-send-email-jacob.e.keller@intel.com>
+	<1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 24 00:01:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZINRC-0001CP-Gj
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 22:49:54 +0200
+	id 1ZIOY0-0007em-Rb
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 00:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030187AbbGWUto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 16:49:44 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:33025 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030180AbbGWUtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 16:49:42 -0400
-Received: by ietj16 with SMTP id j16so3665862iet.0
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 13:49:41 -0700 (PDT)
+	id S1754037AbbGWWA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 18:00:56 -0400
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:36282 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753990AbbGWWA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 18:00:56 -0400
+Received: by ykay190 with SMTP id y190so5135134yka.3
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 15:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id;
-        bh=NJ7wjqsi82oKYrzD8RvYOGhZsvglUP1sfsTOswVmgAE=;
-        b=sHdLklglUiaBU1ez3lyPWBdVsL7tFC5a/z6p3g7jbcHCaSEuLikDX7OhaDB15RuUP6
-         0FrGfcXc2uq0QiHYisv0MoAwcK6NUSqrQz7l1c335119dIvP1mjgx005Kk++ITmCKTm4
-         5CyxvEh9T1PjE9u3V7cEiIaEHviSnAEOs9ErpXTmlYDT4j0bmh5344Nc91zegP4ZqNiV
-         seOWEBoF1A9eNMJlciU2PirhKqCbZrhIdKkQ4R2+rDONjW5jURC2f/kv9cdAJp2O+DUO
-         6eCOvkPu4R8QrRdJ+mXWxCbJNtasz/Wio8LVDmMovHEKbUvb+tSVDzP7Ov745sz1o6ly
-         y9KQ==
-X-Received: by 10.50.136.194 with SMTP id qc2mr365499igb.6.1437684581433;
-        Thu, 23 Jul 2015 13:49:41 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id 196sm3696810ioe.23.2015.07.23.13.49.40
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Jul 2015 13:49:40 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.rc3.407.g68aafd0
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=TLN0rnCCPfO+LL5yAs7RHpWNGTac91jmcs2j6ejB9NY=;
+        b=Ra6vtepyZUVa7pMRGV8kN34YJJ1z+09okkw9hW7A/UgOIsEBnWdhhSjiwkSdTRJBhb
+         y7AkIulPyYS3bzKIlsKzPVMrhY5OmgOgCyVtwh9XwGtnreTGuLqIFLERWVwNq457xU/j
+         VTOYDUD34E3wcEv/qvoYHNu1ZXVlGE5s+yRyADUxq583iHRXlDMvNWnywPOwNL0YSLvN
+         7MicVsK2j0SCYrnk1LNyHvhE198IZOXvUyYjxRlK+oqweF3be1p9R3VpF6JnxaVimBAV
+         i4lo5EvvIjWfv7zr8zZXThLsj8HGuRG7gx0885a2QcZLJBocstnpzBjYH2Pq2NbNPhfk
+         WA5w==
+X-Received: by 10.129.76.140 with SMTP id z134mr11672759ywa.17.1437688855540;
+ Thu, 23 Jul 2015 15:00:55 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Thu, 23 Jul 2015 15:00:55 -0700 (PDT)
+In-Reply-To: <1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
+X-Google-Sender-Auth: 104_wy4kAE5DfVxVMdnA3uXhu9I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274527>
 
-Complete subcommands 'add' and 'prune', as well as their respective
-options --force, --detach, --dry-run, --verbose, and --expire. Also
-complete 'refname' in "git worktree add [-b <newbranch>] <path>
-<refname>".
+On Wed, Jul 22, 2015 at 5:05 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Modify logic of check_refname_component and add a new disposition
+> regarding "*". Allow refspecs that contain a single "*" if
+> REFNAME_REFSPEC_PATTERN is set. Change the function to pass the flags as
+> a pointer, and clear REFNAME_REFSPEC_PATTERN after the first "*" so that
+> only a single "*" is accepted.
+>
+> This loosens restrictions on refspecs by allowing patterns that have
+> a "*" within a component instead of only as the whole component. Also
+> remove the code that hangled refspec patterns in check_refname_format
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+s/hangled/handled/
 
-This is RFC since this is my first foray into the Git completion script,
-and there are likely better and more idiomatic ways to accomplish this.
-
- contrib/completion/git-completion.bash | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c97c648..07c34ef 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2564,6 +2564,38 @@ _git_whatchanged ()
- 	_git_log
- }
- 
-+_git_worktree ()
-+{
-+	local subcommands='add prune'
-+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	local c=2 n=0 refpos=2
-+	if [ -z "$subcommand" ]; then
-+		__gitcomp "$subcommands"
-+	else
-+		case "$subcommand,$cur" in
-+		add,--*)
-+			__gitcomp "--force --detach"
-+			;;
-+		add,*)
-+			while [ $c -lt $cword ]; do
-+				case "${words[c]}" in
-+				--*) ;;
-+				-[bB]) ((refpos++)) ;;
-+				*) ((n++)) ;;
-+				esac
-+				((c++))
-+			done
-+			if [ $n -eq $refpos ]; then
-+				__gitcomp_nl "$(__git_refs)"
-+			fi
-+			;;
-+		prune,--*)
-+			__gitcomp "--dry-run --verbose --expire"
-+			;;
-+		esac
-+	fi
-+}
-+
- __git_main ()
- {
- 	local i c=1 command __git_dir
--- 
-2.5.0.rc3.407.g68aafd0
+> since it is now handled via the check_refname_component logic.
+>
+> Now refs such as `for/bar*:foo/bar*` and even `foo/bar*:foo/baz*` will
+> be accepted. This allows users more control over what is fetched where.
+> Since users must modify the default by hand to make use of this
+> functionality it is not considered a large risk. Any refspec which
+> functioned before shall continue functioning with the new logic.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
