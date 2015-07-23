@@ -1,95 +1,123 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff-tree: do not show the sha1 of the given head with --quiet
-Date: Thu, 23 Jul 2015 10:06:28 -0700
-Message-ID: <xmqq615aregb.fsf@gitster.dls.corp.google.com>
-References: <0000014eb518dc87-a69705c4-31e7-4983-99a8-f780a743aeac-000000@eu-west-1.amazonses.com>
-	<xmqqmvyoq6gh.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuM5TG6m7Rwd-EZTUXnaDNYomidthmCamCevNECTQCTnmA@mail.gmail.com>
-	<xmqqegjyrfrq.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 2/2] refs: loosen restriction on wildcard "*" refspecs
+Date: Thu, 23 Jul 2015 10:13:45 -0700
+Message-ID: <xmqq1tfyre46.fsf@gitster.dls.corp.google.com>
+References: <1437599133-13012-1-git-send-email-jacob.e.keller@intel.com>
+	<1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
+	<xmqqio9brgrj.fsf@gitster.dls.corp.google.com>
+	<CA+P7+xo4xYVsoitBk7SJhQtHU9_dXFiOpWefUr_8M96GqX8W1w@mail.gmail.com>
+	<xmqqa8umrfge.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 19:06:39 2015
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.iabervon.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 19:13:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIJx9-0006vk-1p
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 19:06:39 +0200
+	id 1ZIK4A-0002D0-5q
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 19:13:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246AbbGWRGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 13:06:36 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:34581 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754231AbbGWRGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 13:06:32 -0400
-Received: by pdbbh15 with SMTP id bh15so114428149pdb.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 10:06:31 -0700 (PDT)
+	id S1753864AbbGWRNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 13:13:49 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:36769 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753448AbbGWRNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 13:13:48 -0400
+Received: by pachj5 with SMTP id hj5so160652987pac.3
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 10:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=n7jqaSA6gYrkIbWRINBZXG3mRtuOjadcGmWk7nOtJpc=;
-        b=ArMGuZ/81vIBjED8DFgb6YuG6Qstx7+7tKRmSk3xgW/atbSk+zA2h3tesfZtb81mTt
-         22EQl5uQS7Y629n8o/eq0q/i4eh8bpxwGvvUkemCmDXpIWMc6snQ9ZGVtAQ18JLxfh0c
-         CncA+1tT8fVeOqex4RNLc6B6dwBDiYlbwNcfwSHiiPBp+a4Yx1DjH9J/JeVNAgb0HFRL
-         /QD0XdX8mU+p8SUFsB3QEqJCcrKLzQ+wQcYlT6xgai32xSpHQq8KtlSaoDL9pkuidMW3
-         mLAXH1HQ4Uu6+oPtGRNUlGwOZwZaKzhdUtyByenY3EaUtS3pdkrHqPjJmRQ8OymB3hv0
-         KLzw==
-X-Received: by 10.70.43.72 with SMTP id u8mr20396364pdl.33.1437671190983;
-        Thu, 23 Jul 2015 10:06:30 -0700 (PDT)
+        bh=eUHp3sabqqDoA7z6d21AqNQMkoEbBwqVI5m/pWe9AsI=;
+        b=OkZwDjWBZ/B8w4XZJ3EAo78xrPmS1BoHwGOoOoS6MiCLLcvp/90nelpXu2Afxl5b6z
+         lG7414LmmPONsy9f3V0YVqCCOtVmfcDOmKC2uBazAG/SdPN1ZH/ptExVy0DnGfDJEoNe
+         HRyoEkC/ZjoRokbRqSAm4Eq5hFHf/fBirGa37P7/MO6GZ2+nz5RLBUC5Y5pMdHPdiD6d
+         Xj2KQJzeOQQ+SLcp+10s5C2IjE0WNJjqO+eDkUOjRyK1znfWV2Zcj6SN6+DKIfl8aOWK
+         vgl5h3Ca7RsTtQGUhXKd4Yo9DgMEpX5umMxjkOUEloAfCHm7HtpOU7owpWENmxKR4qPA
+         n/Ag==
+X-Received: by 10.66.138.40 with SMTP id qn8mr20614790pab.19.1437671628135;
+        Thu, 23 Jul 2015 10:13:48 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:156f:a37c:e915:d6df])
-        by smtp.gmail.com with ESMTPSA id dd3sm10031114pad.45.2015.07.23.10.06.29
+        by smtp.gmail.com with ESMTPSA id ex1sm6523966pdb.57.2015.07.23.10.13.46
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 23 Jul 2015 10:06:30 -0700 (PDT)
-In-Reply-To: <xmqqegjyrfrq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 23 Jul 2015 09:38:01 -0700")
+        Thu, 23 Jul 2015 10:13:47 -0700 (PDT)
+In-Reply-To: <xmqqa8umrfge.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 23 Jul 2015 09:44:49 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274507>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Sebastian Schuberth <sschuberth@gmail.com> writes:
+> Will squash the changes; no need to resend (unless people discover
+> other issues; let's hope that I wouldn't be the one to do so ;-).
 >
->> Well, from a user's perspective it does not matter which part of the
->> internal implementation of diff-tree is responsible for printing that
->> single line,...
+> Thanks.
 >
-> That is not "internal implementation", but "logically separate
-> parts".  View it more like "'git show -s' does squelch the diff part
-> but does not squelch the log output".  After all, a single commit form
-> of 'diff-tree' is a degenerate use case of feeding a single commit
-> to 'diff-tree --stdin' from its standard input, which is a rough
-> plumbing-level equivalent of 'show'.
->
-> Documenting the behaviour correctly is the best thing you could do
-> at this point, as this is one of the oldest part of the system that
-> existing scripts would rely on.
+>> diff --git i/t/t5511-refspec.sh w/t/t5511-refspec.sh
+>> index de6db86ccff0..7bfca7962d41 100755
+>> --- i/t/t5511-refspec.sh
+>> +++ w/t/t5511-refspec.sh
+>> @@ -71,11 +71,11 @@ test_refspec fetch ':refs/remotes/frotz/HEAD-to-me'
 
-Having said that.
+That was whitespace damaged, so I had to hand-tweak the file in
+place.  While at it, I noticed that we do not check a case where
+multiple asterisks appear in a single component (which is rejected
+for a reason different from having multiple components with an
+asterisk in them), which also deserves its own test.
 
-Existing scripts by definition would not be using a new option you
-will invent that used not to be a valid one.  So that would be one
-way that you can shorten your script without breaking other people.
+I'll squash in the following instead.
 
-If we were living in an ideal world equipped with a time machine, I
-would redesign "git diff-tree $commit" so that it does not show the
-commit object name in its output at all, with or without "--quiet".
+There is a slightly related tangent I noticed while doing so.
 
-In "git rev-list ... | git diff-tree --stdin" output, the commit
-object name is absolutely necessary, with or without --quiet, as it
-serves as the sign that the output switched to talk about a
-different commit.  But the case that feeds a single commit to the
-command, used as a poor-man's "git show $commit", does not need
-one---the caller knows exactly which commit the output is about.  It
-is an unfortunate historical accident that a single commit usage is
-defined to be a degenerate case of feeding a sequence of commits to
-the command and the length of the sequence happens to be one.
+I wonder if there is an obvious and unambiguous interpretation of
+what this command line wants to do:
 
-But we do not live in an ideal world.
+    $ git fetch origin refs/heads/*g*/for-linus:refs/remotes/i-*/mine
+
+We _might_ want to allow one (and only one) component with more than
+one asterisk on the LHS of a refspec, while requiring only one
+asterisk on the RHS to allow "this '*g*' is just like '*' but
+excluding things that do not have 'g' in it".
+
+Or it may not be worth the additional complexity.
+
+
+ t/t5511-refspec.sh | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
+index de6db86..f541f30 100755
+--- a/t/t5511-refspec.sh
++++ b/t/t5511-refspec.sh
+@@ -71,15 +71,18 @@ test_refspec fetch ':refs/remotes/frotz/HEAD-to-me'
+ test_refspec push ':refs/remotes/frotz/delete me'		invalid
+ test_refspec fetch ':refs/remotes/frotz/HEAD to me'		invalid
+ 
+-test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*-blah' invalid
+-test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*-blah' invalid
++test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*-blah'
++test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*-blah'
+ 
+-test_refspec fetch 'refs/heads*/for-linus:refs/remotes/mine/*' invalid
+-test_refspec push 'refs/heads*/for-linus:refs/remotes/mine/*' invalid
++test_refspec fetch 'refs/heads*/for-linus:refs/remotes/mine/*'
++test_refspec push 'refs/heads*/for-linus:refs/remotes/mine/*'
+ 
+ test_refspec fetch 'refs/heads/*/*/for-linus:refs/remotes/mine/*' invalid
+ test_refspec push 'refs/heads/*/*/for-linus:refs/remotes/mine/*' invalid
+ 
++test_refspec fetch 'refs/heads/*g*/for-linus:refs/remotes/mine/*' invalid
++test_refspec push 'refs/heads/*g*/for-linus:refs/remotes/mine/*' invalid
++
+ test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*'
+ test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*'
+ 
