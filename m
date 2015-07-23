@@ -1,86 +1,120 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Git doesn't detect change, if file modification time is restored
- to original one
-Date: Thu, 23 Jul 2015 17:16:13 +0200
-Message-ID: <55B1053D.7030006@gmail.com>
-References: <CABEDGg8zixeab-CsviAU-fNE1Jmi0ZWbN6=e6Q+-XK3eFv6djA@mail.gmail.com>	<55B09E95.4000700@gmail.com>	<CABEDGg_R49K61wiV9SsTnLS9SztHDjEQhOHjwzYn2JJwrrb-KA@mail.gmail.com> <20150723175342.77f635820fb9f1b69a73d39a@domain007.com>
+From: Jan Vales <jan@jvales.net>
+Subject: unexplained behavior/issue with git archive?
+Date: Thu, 23 Jul 2015 17:23:49 +0200
+Message-ID: <55B10705.6090303@jvales.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Konstantin Khomoutov <kostix+git@007spb.ru>,
-	=?UTF-8?B?S29ucsOhZCBMxZE=?= =?UTF-8?B?cmluY3pp?= 
-	<klorinczi@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 17:16:26 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="MwpGunBtCnxMgF9nqvUstl8klQ8Xi7jlH"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 23 17:38:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIIES-0000bu-48
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 17:16:24 +0200
+	id 1ZIIZS-0003JL-IB
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 17:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255AbbGWPQU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jul 2015 11:16:20 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:36363 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751558AbbGWPQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 11:16:18 -0400
-Received: by wicgb10 with SMTP id gb10so147765850wic.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 08:16:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=WTroUVQGe3Vc/zd/nEufKumBcN/RHFdfxjeSpQbe9X8=;
-        b=gkBpYRUx9JdfDyvWuoTtMZbsq2x1kgK2cjZ/D0s8FZSR8cC1TbikTx2L31FJiYlm6x
-         8WP3z/gzkYecwLFOsYaG6L/uyoZjkLGMeHeNsMP1ZwcQJtTToahs87iNdiqVUqwxnov1
-         DFu7dWbrn0mljm9qy6A3Ysl6O70sED3geQji5RAWeYGqAkbDS8wVbJLu7NV+FVWIoJKg
-         e7zx6EZg/HVT33KIT6GTfl11wjjky17pQYs2Z1eSx8lMOm/IxgTdA36fV15yp+1UK2Cg
-         BZeuqLQ+VFbfKA56t9zpWjzh2vHxazZ0WGXLn2eXaJgYWCZiYS0AwucUXAaMvbOfkawt
-         kBbw==
-X-Received: by 10.194.187.51 with SMTP id fp19mr16074211wjc.67.1437664577461;
-        Thu, 23 Jul 2015 08:16:17 -0700 (PDT)
-Received: from [10.1.116.51] (ns.dcon.de. [77.244.111.149])
-        by smtp.googlemail.com with ESMTPSA id nb9sm9035051wic.10.2015.07.23.08.16.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Jul 2015 08:16:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20150723175342.77f635820fb9f1b69a73d39a@domain007.com>
+	id S1753701AbbGWPh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 11:37:58 -0400
+Received: from mail.somenet.org ([213.143.98.34]:56954 "EHLO mail.somenet.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752923AbbGWPhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 11:37:54 -0400
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Jul 2015 11:37:54 EDT
+Received: from [128.130.254.137] (e254-137.eduroam.tuwien.ac.at [128.130.254.137])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.somenet.org (Postfix) with ESMTPSA id E75C41006A1C2
+	for <git@vger.kernel.org>; Thu, 23 Jul 2015 17:23:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jvales.net;
+	s=default; t=1437665032; r=y;
+	bh=0Cywwqsw8pOBmxFq63mMLZ2xpt3iHcwgdYU/sJlxr6M=; h=To:From;
+	b=uUO0a+ubQmVna67EYZuvgyolJMUAnMfaCvIRH8AE0+ZEooD9Kt0YZeB8LnfB5IaA0
+	 vQW0swMR8vnoWZjMV/0xF+GAptAxRnPLL1ycH7pC+iHbOaSvf9dEsmQ+frmxl6VSBp
+	 jpgSdLaanHVjt2sB/O7rHBI7iVgJJxRcAqzZld10=
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274501>
 
-Am 23.07.2015 um 16:53 schrieb Konstantin Khomoutov:
-> On Thu, 23 Jul 2015 11:14:11 +0200
-> Konr=C3=A1d L=C5=91rinczi <klorinczi@gmail.com> wrote:
->=20
-> [...]
->> I accept these solutions as workarounds, but the real solution would
->> be: Dev suggestions:
->> 1) Add a --force-reread option to git status, so user can force
->> reread tree. git status --force-reread
->>
->> 2) Add status.force-reread (true or false) option to .git/config so
->> user can set this variable permanently for a repo.
->> status.force-reread =3D false (should be default)
->>
->> Could be possible to implement 1) and 2) features to next git releas=
-e?
->=20
-> Could you explain what's your real use case with preserving mtimes
-> while changing the files?  I mean, implementing "mtime-stability"
-> in your tools appears to be a good excersize in programming but what
-> real-world problem does it solve?
->=20
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--MwpGunBtCnxMgF9nqvUstl8klQ8Xi7jlH
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I'd like to add that this is not a git-specific problem: resetting mtim=
-e
-on purpose will fool lots of programs, including backup software, file
-synchronization tools (rsync, xcopy /D), build systems (make), and web
-servers / proxies (If-Modified-Since requests).
+hi,
+i seem to trigger behavior i do not understand with git archive.
 
-So you would typically reset mtime if you *want* programs to ignore the
-changes.
+I have this little 3 liner (vmdiff.sh):
+#!/bin/bash
+git diff --name-status "$2" "$3" > "$1.files"
+git diff --name-only "$2" "$3" |xargs -d'\n' git archive -o "$1" "$3" --
+
+
+For testing purpose, lets assume this call:
+# ./vmdiff.sh latest.zip HEAD^1 HEAD
+
+# cat latest.zip.files | wc -l
+149021
+
+# cat latest.zip.files | egrep "^D" | wc -l
+159
+
+# mkdir empty; cd empty; unzip latest.zip ; find * | wc -l
+1090
+
+My goal is to basically diff (parts of) filesystems against each other
+and create an archive with all changed files + a file list to know what
+files were deleted. (I currently do not care about the files
+permissions+ownership, and it doesnt really matter in the current
+problem. Also dont ask, why one would store a root-filesystem in git :)
+
+What I do not understand: why does the zip file only contains 1090
+files+dirs if the wc -l shows like 150k files and only like 159 were
+deleted?
+There should be like 149k files in that archive.
+
+Also only the few files are all from "var" and none from etc or srv
+where definitely files changed in too! (and show up in latest.zip.files)
+
+Is there a limit of files git archive can process?
+
+lg
+Jan Vales
+--
+I only read plaintext emails.
+
+Someone @ irc://irc.fsinf.at:6667/tuwien
+webIRC: https://frost.fsinf.at/iris/
+
+
+--MwpGunBtCnxMgF9nqvUstl8klQ8Xi7jlH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJVsQcIAAoJEERD22thjA7qIXcP/0csvtbxJa/6/ONfmcu0rfy4
+2tCsjILi+yqF/F6AulTLe+fA4bjuS7WqA0c2Vz7L1JRBS9hjSto9c15kp2jX7Epo
+WA47UlmsqctySNEtpkbYLGZtDb4Qm9msLB/fYdGNuOHUmDDrs/Rr3SlCDkyNPFCh
+AOx2Tc8CFyOtV+MfR/STwyhL6/SYO1aGvYFXheEfmWV8onHIcXyRkVrs7ClmsASk
+9wpxrUXfxRkWI++yIw8QzzaPQVBmola7sO2a26Pys65VPlU3GI71Ouoxm5kr/wNu
+ioWCMlMJmjQpxXVzaxONS9JWNbh/DTr/2WVNW04ngTU0UWCLRTx+bOcrhZmeGyp7
+gnilp9pHxJ2tH5V5IuB8iSDLpxnMCQmrsMFzqiLBu5426Yx2tnthVGD2Nv80qbY6
+eAK3DnA0B9hOSTEQl8VJTQmizQs/L8mzrJmzeqO6K3roWdm0vj4Leahj4U2KQ4E/
+H8dksaKe417293IgDzp9StzOnpudSAH8n8NAc7+lxhTuXHkzir+og4nTf3hOTcew
+KfiewaAIh2rM5FGLmOMhlY+MgU8ZmDeu6QnFBuclm/Zids52R7HYw+/HZSndI/sU
+XQEH17cfbFSc1vqGqe9x6wTjKwx4ukosCLFRf7ItznCiqAl+tZuK/Zb6TLILe54A
+C54jZ9arv0ssq8n0iMLx
+=G7L7
+-----END PGP SIGNATURE-----
+
+--MwpGunBtCnxMgF9nqvUstl8klQ8Xi7jlH--
