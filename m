@@ -1,77 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff-tree: do not show the sha1 of the given head with
- --quiet
-Date: Thu, 23 Jul 2015 11:08:46 -0700
-Message-ID: <20150723180846.GB18686@peff.net>
-References: <0000014eb518dc87-a69705c4-31e7-4983-99a8-f780a743aeac-000000@eu-west-1.amazonses.com>
- <xmqqmvyoq6gh.fsf@gitster.dls.corp.google.com>
- <CAHGBnuM5TG6m7Rwd-EZTUXnaDNYomidthmCamCevNECTQCTnmA@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Feature Request: Passing a number as an option to git tags for
+ displaying latest tags
+Date: Thu, 23 Jul 2015 11:12:54 -0700
+Message-ID: <CA+P7+xpy86GMmdtcag4kaxDrB4TrdeQYraabNS0pASdBG+P+OQ@mail.gmail.com>
+References: <CALpYpjE1WE=fO0q=rGPHedZwP8JovJ0CxELBd_EhAmncRS6ZYA@mail.gmail.com>
+ <xmqqbnf4rohs.fsf@gitster.dls.corp.google.com> <xmqq7fpsroc1.fsf@gitster.dls.corp.google.com>
+ <55B0B667.6000103@drmicha.warpmail.net> <CA+P7+xpasr7gOYiSsdAyCgh6+D8nYQf9vuEhRna8k7HWMu1Rcg@mail.gmail.com>
+ <xmqqd1zipxc3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 20:08:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?B?SGFsaWwgw5Z6dMO8cms=?= <halilozturk55@gmail.com>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 20:13:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIKvO-0006Mv-QT
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 20:08:55 +0200
+	id 1ZIKzh-0000La-F2
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 20:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753128AbbGWSIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 14:08:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34194 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752899AbbGWSIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 14:08:50 -0400
-Received: (qmail 25046 invoked by uid 102); 23 Jul 2015 18:08:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jul 2015 13:08:49 -0500
-Received: (qmail 13867 invoked by uid 107); 23 Jul 2015 18:08:54 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jul 2015 14:08:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jul 2015 11:08:46 -0700
-Content-Disposition: inline
-In-Reply-To: <CAHGBnuM5TG6m7Rwd-EZTUXnaDNYomidthmCamCevNECTQCTnmA@mail.gmail.com>
+	id S1754039AbbGWSNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 14:13:17 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:33537 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754027AbbGWSNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 14:13:14 -0400
+Received: by oige126 with SMTP id e126so97050oig.0
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 11:13:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=OxQwLCvaIoipNT6N7/OamejIK8xnvUA/6cW+NJeBQ9g=;
+        b=HvvYkEqJBMMyousecXwo42bg0MXvDpSLYSU2fPcZcuAhimD6sBzv59wN47iW358GxH
+         wA3d4vfp0Md+JH+/uPdvCs98X0RTZdvYFQovT13FO7slsItV/xqpyef5861Em1Kjg6pf
+         nCxG0sOaKeReMRh5gkC8uWnijzwirF34qz21Loe139LW9FgMJkTT97/YrNrpuhwEu6Ky
+         dTJBQ3ziT4glHGqLD+4m9Jz25nYqNM36OqNJ+kT5Kz/sgCU2ZKpznxpo79w/d4al1eBo
+         BcECnH2pJjFamlO74ZZNnEE7JnKMQxdPCfK9LiS5PxgCCK4Jr6oI/5NjHYK/bMIZew/6
+         fezg==
+X-Received: by 10.60.78.104 with SMTP id a8mr10291808oex.58.1437675194275;
+ Thu, 23 Jul 2015 11:13:14 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Thu, 23 Jul 2015 11:12:54 -0700 (PDT)
+In-Reply-To: <xmqqd1zipxc3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274518>
 
-On Thu, Jul 23, 2015 at 09:06:01AM +0200, Sebastian Schuberth wrote:
+On Thu, Jul 23, 2015 at 11:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> Yep, that's pretty much how a build system I've had to use does it.
+>> Sadly, this is quite slow, and I'm not sure if doing it built into the
+>> tag via for-each-ref would be faster?
+>
+> Is the description in "git for-each-ref --help" somehow unreadable?
+>
+>        An example directly producing formatted text. Show the most
+>        recent 3 tagged commits:
+>
+>            #!/bin/sh
+>
+>            git for-each-ref --count=3 --sort='-*authordate' \
+>            --format='From: %(*authorname) %(*authoremail)
+>            Subject: %(*subject)
+>            Date: %(*authordate)
+>            Ref: %(*refname)
+>
+>            %(*body)
+>            ' 'refs/tags'
+>
+> If you only need the name of the ref, you can use a lot simpler
+> format string, e.g.
+>
+>     git for-each-ref --count=3 --sort='-*authordate' \
+>       --format='%(refname:short)' refs/tags
+>
+>     git for-each-ref --count=3 --sort='-taggerdate' \
+>       --format='%(refname:short)' refs/tags
+>
 
-> My use-case (also see [1]) is that I wanted to checked whether some
-> given commits change nothing but whitespace. So I did
-> 
-> if git diff-tree --quiet --ignore-space-change $commit; then
->     echo "$commit only changes whitespace."
-> fi
-> 
-> just to see those SHA1s being printed to the console.
-> 
-> I probably could instead do
-> 
-> if git diff-tree --exit-code --ignore-space-change $commit > /dev/null
-> 2>&1; then
->     echo "$commit only changes whitespace."
-> fi
-> 
-> but that defeats the purpose of having "--quiet" in the first place.
+That's significantly better than what this system does, but sadly the
+team that owns it doesn't exactly understand git. Pretty sure they
+tend to just use whatever scriptlet they got working, which happens to
+be based on log...  I've tried to help them, but generally hasn't been
+a successful relationship there.
 
-I have not been following the thread closely, but I do not recall seeing
-anyone mention that the reason for the sha1-output is handing
-only a single commit-ish to diff-tree is what puts it into its log-like
-mode. Actually asking for a two-endpoint tree diff:
-
-  git diff-tree --quiet --ignore-space-change $commit^ $commit
-
-will do what you want.
-
-I know that does not necessarily help the greater issue of "what
-diff-tree is doing is confusing", but perhaps that sheds some light at
-least on why it is doing what it is doing. :)
-
--Peff
+Regards,
+Jake
