@@ -1,98 +1,108 @@
-From: =?UTF-8?B?S29ucsOhZCBMxZFyaW5jemk=?= <klorinczi@gmail.com>
-Subject: Re: Git doesn't detect change, if file modification time is restored
- to original one
-Date: Thu, 23 Jul 2015 11:14:11 +0200
-Message-ID: <CABEDGg_R49K61wiV9SsTnLS9SztHDjEQhOHjwzYn2JJwrrb-KA@mail.gmail.com>
-References: <CABEDGg8zixeab-CsviAU-fNE1Jmi0ZWbN6=e6Q+-XK3eFv6djA@mail.gmail.com>
- <55B09E95.4000700@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Feature Request: Passing a number as an option to git tags for
+ displaying latest tags
+Date: Thu, 23 Jul 2015 11:39:51 +0200
+Message-ID: <55B0B667.6000103@drmicha.warpmail.net>
+References: <CALpYpjE1WE=fO0q=rGPHedZwP8JovJ0CxELBd_EhAmncRS6ZYA@mail.gmail.com>
+ <xmqqbnf4rohs.fsf@gitster.dls.corp.google.com>
+ <xmqq7fpsroc1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 11:15:00 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?SGFsaWwgw5Z6dMO8cms=?= <halilozturk55@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 11:40:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZICag-0000Wk-8h
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 11:14:58 +0200
+	id 1ZICyx-0004iy-Ez
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 11:40:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752321AbbGWJOy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jul 2015 05:14:54 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:36493 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751025AbbGWJOv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jul 2015 05:14:51 -0400
-Received: by wicgb10 with SMTP id gb10so133643060wic.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 02:14:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=47njMYl2y3bj6HDTk+Xsp+637VTQ7Z6h9Aeh5+ufb0A=;
-        b=eaCHLI08HivRccZbZFODNZ6a2FpQNP5xSHRUHcipBzT6se/Oi+U+1uv6csHvDUtnIl
-         YXfDWGkisu4uomtdwO7fYurJYPVDBH8Hg3bnQWWxKRv1J0UG35u9Mcw/+g7ie8kdlusI
-         aOuDoe75uSc00QOeF2/mw4CUKaKnIzwsXR262HtQrgCi/p2LqMTrrJkCGuoHtITMUWJl
-         ajN5xh/j9GEn8XJlryBuwAZ+x9O2u0Ksxtd4FFOpb9R686teJZYdtbS0LpL7VLByOcHR
-         5TflLP6t0hU2vPCFVLwzGRjHmjIxPWkANgBmW0oMGOB6+gia0OrNTXl65qi4qFmM9BCq
-         6HWw==
-X-Received: by 10.180.91.76 with SMTP id cc12mr51758996wib.67.1437642890841;
- Thu, 23 Jul 2015 02:14:50 -0700 (PDT)
-Received: by 10.28.21.4 with HTTP; Thu, 23 Jul 2015 02:14:11 -0700 (PDT)
-In-Reply-To: <55B09E95.4000700@gmail.com>
+	id S1753113AbbGWJkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 05:40:00 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33514 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752668AbbGWJjz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jul 2015 05:39:55 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8A8C120BEF
+	for <git@vger.kernel.org>; Thu, 23 Jul 2015 05:39:53 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Thu, 23 Jul 2015 05:39:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=z3DkRAD4udPns3DPx+JTVSAwaRg=; b=AsytO2
+	WIy8g6KoulqUQTjQ78Q+R66/UrjQxCJflddq+oVpcfI06uziaoFUxU1P+DA1WGKE
+	MGruH87OJlgsNkt9Assx0HC0EBw0tBjq65LIrSxmiyj6oVd9kucRRN7XlFyNgiTV
+	NQ57Hmjr+IPvKlEGjESM6YkoNvDcXo/ddj41M=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=z3DkRAD4udPns3D
+	Px+JTVSAwaRg=; b=i2NozJztUVfpcyqmJc4Cndu1O6QhM6c2e9YH095qFW8xxJV
+	ChT/CyVrMtywq4KllcsxoARb+DMNtRCy4ita8lTC55CYfD3QQqSDxceJuan7fjbc
+	qvFAvO1TS+Qgj9j33ui65w7wQgDCeNlLseQMne12G5e1/reIg4Lf3RDSK9nY=
+X-Sasl-enc: X2+WOTG4NShHxiQ4Sgvu/yUJTAsBWSAJ7rLkgXCaIMpy 1437644393
+Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id AF6606801AC;
+	Thu, 23 Jul 2015 05:39:52 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <xmqq7fpsroc1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274490>
 
-Based on [1] I found some solutions which makes the changed files
-appear again as changed:
-a) touch -m --date=3D01/01/1980 .git/index
-So it is a touch, but only a single one, instead of touching all the
-files in the work dir.
+Junio C Hamano venit, vidit, dixit 22.07.2015 21:20:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> The former, sort by "time", is interesting, but you need to define
+>> what to do with various corner cases.  For example, some people may
+>> have one or more of the following desires:
+>>
+>>  * My project did not use tags for a long time, and started using it
+>>    recently starting from v1.1.0.  The first release only said
+>>    "Frotz version 1.0.0" in its commit log message.  I retroactively
+>>    did "git tag -s -m 'Frotz 1.1.0' v1.1.0" on that commit.
+> 
+> Obviously, I meant "git tag -s -m 'Frotz 1.0.0' v1.0.0" here.
+> 
+>>    In such a case, it is likely that I would want the sorting done
+>>    based on the committer date on the underlying commit, not the
+>>    tag's tagger date.
+>>
+>>  * When a bug is found, it is customary in my project to add a
+>>    "break-<something>" tag to the commit that introduces the bug
+>>    (and "fix-<something>" tag to the commit that fixes it).
+>>
+>>    When I want to find recently discovered breakages, I want the
+>>    tags whose names match "break-*" sorted by tagger dates, not the
+>>    underlying commit's committer dates.
+> 
+> Another use case may be one in which older tags are interesting.  In
+> other words, you need to be able to sort in reverse, too.
+> 
+>> The necessary ordering machinery to do the above already exists in
+>> "for-each-ref".  There is a GSoC project that works to unify various
+>> features spread across "for-each-ref", "branch -l" and "tag -l" and
+>> make them available to all of the three.
+> 
+> And the above is still true even with reverse-order use case.
+> 
 
-b) git read-tree HEAD
-Also working well.
+While not quite being intended for that purpose,
 
+git log --oneline --decorate --simplify-by-decoration [-n] --tags
 
-I accept these solutions as workarounds, but the real solution would be=
-:
-Dev suggestions:
-1) Add a --force-reread option to git status, so user can force reread =
-tree.
-git status --force-reread
+(or with a custom format instead of "--oneline --decorate") may come
+close to what you want.[*]
 
-2) Add status.force-reread (true or false) option to .git/config so
-user can set this variable permanently for a repo.
-status.force-reread =3D false (should be default)
+Michael
 
-
-Could be possible to implement 1) and 2) features to next git release?
-
-
-Thanks,
-Konrad Lorinczi
-
-
-[1] https://github.com/msysgit/git/issues/312
-
-2015-07-23 9:58 GMT+02:00 Sebastian Schuberth <sschuberth@gmail.com>:
-> On 7/23/2015 9:29, Konr=C3=A1d L=C5=91rinczi wrote:
->
->> Interesting, that git status doesn't show replaced changes, if the
->> mtime is same as original.
->
-> See the somewhat related FAQ entry at [1] and also the lengthy discus=
-sion at [2] about a similar issue. That said, deleting the .git/index f=
-ile should make these files appear as modified.
->
-> [1] https://git.wiki.kernel.org/index.php/Git_FAQ#Why_isn.27t_Git_pre=
-serving_modification_time_on_files.3F
-> [2] https://github.com/msysgit/git/issues/312
->
-> Regards,
-> Sebastian
->
+[*] As Linus once described it (iirc): oooh, evil. I like it.
