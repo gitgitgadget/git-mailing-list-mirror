@@ -1,77 +1,62 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [PATCH] diff-tree: do not show the sha1 of the given head with --quiet
-Date: Thu, 23 Jul 2015 22:13:39 +0200
-Message-ID: <CAHGBnuMdpGHm7wGSA9qCAqns=nd5F5-vg9g4AW9Z6k-4NYk3jw@mail.gmail.com>
+Date: Thu, 23 Jul 2015 22:19:07 +0200
+Message-ID: <CAHGBnuM6sgegeq0AXTcS7QNX4_X3GYNf--srq0HH0K_owG3JQg@mail.gmail.com>
 References: <0000014eb518dc87-a69705c4-31e7-4983-99a8-f780a743aeac-000000@eu-west-1.amazonses.com>
 	<xmqqmvyoq6gh.fsf@gitster.dls.corp.google.com>
 	<CAHGBnuM5TG6m7Rwd-EZTUXnaDNYomidthmCamCevNECTQCTnmA@mail.gmail.com>
-	<xmqqegjyrfrq.fsf@gitster.dls.corp.google.com>
-	<xmqq615aregb.fsf@gitster.dls.corp.google.com>
+	<20150723180846.GB18686@peff.net>
+	<xmqq4mkupss7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 22:13:45 2015
+X-From: git-owner@vger.kernel.org Thu Jul 23 22:19:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIMsD-0004NP-3p
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 22:13:45 +0200
+	id 1ZIMxV-0007KO-FW
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 22:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753949AbbGWUNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 16:13:41 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37874 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753758AbbGWUNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 16:13:40 -0400
-Received: by igbpg9 with SMTP id pg9so54684igb.0
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 13:13:39 -0700 (PDT)
+	id S1753789AbbGWUTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 16:19:08 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:34484 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753632AbbGWUTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 16:19:07 -0400
+Received: by igvi1 with SMTP id i1so19640142igv.1
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 13:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=IQojEbQmNiEVMt3wzHQ73ulFSQiQlQwbhtahtdmq1fg=;
-        b=ZaT3XQXlMrFlWQakvqQeKqaEzYBPvTZDPayvLNFE97VUdTCiTax+XY4VL88SA253s4
-         lvD3B8dV/FxKlwtxM9RT6IYr+3JqVWHdhddvTZCnVedgZWoiaNKl62010bEFoqbsrDDJ
-         6U2YTCM/k/6ilPRohYfNwmEV9GGUhNop205X1uogHUaXSkeffy2P9/s11NuUS0asun+K
-         AltoGEtI/cAgF5TiwIlQSkiE/iE5sbgfOE47b0dOxVbxWX0NFL7Ht0Rky/o9pUxGSYFM
-         Gni8ucOzbzHPNy1xW12ygaqNi1lpTRICCJd1VRMUymHv2rUYJOaGowVnPDs7wdffJRyt
-         CInA==
-X-Received: by 10.107.46.96 with SMTP id i93mr15896855ioo.102.1437682419577;
- Thu, 23 Jul 2015 13:13:39 -0700 (PDT)
-Received: by 10.107.29.149 with HTTP; Thu, 23 Jul 2015 13:13:39 -0700 (PDT)
-In-Reply-To: <xmqq615aregb.fsf@gitster.dls.corp.google.com>
+        bh=d9VPsif+yHJtlkGqn7TQkzMkDtPgC+1xDkavOia8n/w=;
+        b=lx09P2owpSaMyMa6ACL46yKo7aFEJe81iSwHYKK32wNnoVycas/TsYN8Q+TwfX12kT
+         IfkAP7MW/ttyuk5J/VjbUPKQqJVRFs5FxZvAhP1B4xucsSR4OFr84KLyxfP09Yzz0F56
+         8YUVznamqXMQ0UGn6f2xxO918OowsIEgjNwXhoeiXfheMppbfHVBr1W/7MZuC2njBEqL
+         pjEktOUgq52YFS4jxF0Qa2JEXTowI7staupDTvfeAwTHXVYx5yiFc1/cxWb7ir7nfwqW
+         IMYM0xnp5KnfiNsLp2wFDve1TXLQBIBRlbBT9ukDlHIoHuxKiFxHCfTikchtW6T01t1N
+         2HrA==
+X-Received: by 10.107.46.96 with SMTP id i93mr15934979ioo.102.1437682747096;
+ Thu, 23 Jul 2015 13:19:07 -0700 (PDT)
+Received: by 10.107.29.149 with HTTP; Thu, 23 Jul 2015 13:19:07 -0700 (PDT)
+In-Reply-To: <xmqq4mkupss7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274524>
 
-On Thu, Jul 23, 2015 at 7:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jul 23, 2015 at 9:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Existing scripts by definition would not be using a new option you
-> will invent that used not to be a valid one.  So that would be one
-> way that you can shorten your script without breaking other people.
+> I haven't dug into why that happens, but possible ways to fix that
+> are to make "--quiet" output all (making it consistent with "-s") or
+> no (making the command totally silent) output at all ;-).
 
-True. If it was only for shortening my script, I still could do ">
-/dev/null 2>&1" which is just as short (or long) as a newly introduced
-"--really-quiet" option. But I'm also concerned about consistency and
-making options do what they sound they would do.
-
-> In "git rev-list ... | git diff-tree --stdin" output, the commit
-> object name is absolutely necessary, with or without --quiet, as it
-
-Why is printing the object name also necessary with "--quiet"? I'd
-argue that any script that uses diff-tree that way uses --stdin
-without --quiet, just like you do in your example, so suppressing the
-object name if "--quiet" is given probably would not break as many
-scripts as you think.
-
-> But we do not live in an ideal world.
-
-True, but we should never stop striving after making it one :-)
+Exactly, and I chose the latter to add some value to --quiet instead
+of making it an alias for -s.
 
 -- 
 Sebastian Schuberth
