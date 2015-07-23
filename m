@@ -1,102 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] receive-pack: crash when checking with non-exist HEAD
-Date: Thu, 23 Jul 2015 10:49:39 -0700
-Message-ID: <xmqqk2tqpxvw.fsf@gitster.dls.corp.google.com>
-References: <CANYiYbE3Vy_gtFMKTMw1wHLDhU758nXaJnKaNy6WMNRz0fjUnw@mail.gmail.com>
-	<xmqqr3o0q6k7.fsf@gitster.dls.corp.google.com>
-	<20150723055817.GA26794@peff.net>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 2/2] refs: loosen restriction on wildcard "*" refspecs
+Date: Thu, 23 Jul 2015 09:51:53 -0700
+Message-ID: <CA+P7+xq8gSMYRD2SMNqDz8WL+A8y1jBPTBMQG_ckP-CeXk8X2A@mail.gmail.com>
+References: <1437599133-13012-1-git-send-email-jacob.e.keller@intel.com>
+ <1437599133-13012-3-git-send-email-jacob.e.keller@intel.com>
+ <xmqqio9brgrj.fsf@gitster.dls.corp.google.com> <CA+P7+xo4xYVsoitBk7SJhQtHU9_dXFiOpWefUr_8M96GqX8W1w@mail.gmail.com>
+ <xmqqa8umrfge.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 23 19:49:49 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 19:59:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIKcu-0004h5-Dx
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 19:49:48 +0200
+	id 1ZIKmP-0001U9-4O
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 19:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571AbbGWRto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 13:49:44 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34410 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752915AbbGWRtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 13:49:43 -0400
-Received: by pacan13 with SMTP id an13so162933119pac.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 10:49:43 -0700 (PDT)
+	id S1753267AbbGWR7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 13:59:33 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:35868 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752923AbbGWR7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 13:59:31 -0400
+Received: by iehx8 with SMTP id x8so1757232ieh.3
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 10:59:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Y02+Jibdzdxk7O7xPTU1rP850hYD28eHTEoQkY+SX4E=;
-        b=txzY+RWazhsJ4LuPMvuNJ4NPwY0FM5hKMjvnx7rAwzhNwc+vG+wbOQepLVMqARsGTd
-         oM3MnuqI2CgPeJLlaSU/6TOj3l5ppt/XXXbZXoui3bA3FWYm16LAM7SjbnkoAiPErngt
-         fSvSobg8AuRA4nVapmowujVjlqljpCOwRzXA9jG8CN/TIx+qS+oPhtF7UuQmeO8bYQDK
-         XSAoMDydpomb6wHomybxiJw48CYLCFd2UOFN4wHIPyWhDG5anDiYeyUYa4vE0KLDU/Ov
-         FH2FL0VlqcHHmeiTt5cpMJLLWe3kDDp2Bp/CZFwJN6mO47GaOEhmV87Wl/cmVWoK5Egg
-         5wvA==
-X-Received: by 10.66.139.234 with SMTP id rb10mr21035344pab.118.1437673783152;
-        Thu, 23 Jul 2015 10:49:43 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:156f:a37c:e915:d6df])
-        by smtp.gmail.com with ESMTPSA id bu10sm10188774pac.36.2015.07.23.10.49.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 23 Jul 2015 10:49:40 -0700 (PDT)
-In-Reply-To: <20150723055817.GA26794@peff.net> (Jeff King's message of "Wed,
-	22 Jul 2015 22:58:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HLIQRNe5yTOsikQngwH2vfHuyG8Q+jSfclIAtvSPPOM=;
+        b=lrYhx9U3rQzZajYyxipYkaQwPnW2eJHqJjlQ6GT7uKS5k3cEoI/usNkG+s+xJt8CQC
+         nNRQQ4Ue6TNKuLhvve949qrYZY4TB11Ed4xhUHr8X2OxhYTrsuJ+jMjAzLZ3Cz8MvHEm
+         hzcIGe01aDGfUpmhK9SVk2QuCcqa0zTTJZK38s5AV0apMg+dCpYrpnWdTKs8kS2FW55Q
+         7wmSdwkRi681ZnCdtC9sJ8eY2pQ3iOaUD1sRE1MnurhX8iM17IHhlAkKjO9JZfWKChH0
+         ycUQwQ+pytSmcONJ3PiN4UGBhdC0bFNSdSXm2hxCsGdueiX57/Xug2RQrXMuztBliJH3
+         rdYQ==
+X-Received: by 10.107.136.160 with SMTP id s32mr15416564ioi.174.1437670333027;
+ Thu, 23 Jul 2015 09:52:13 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Thu, 23 Jul 2015 09:51:53 -0700 (PDT)
+In-Reply-To: <xmqqa8umrfge.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274515>
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Jul 22, 2015 at 01:30:00PM -0700, Junio C Hamano wrote:
+On Thu, Jul 23, 2015 at 9:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
 >
->> For example, in order to "git commit" from such a state to create
->> the root commit on that branch, existing unrelated branches whose
->> names collide with the branch must be removed, which would mean one
->> of two things, either (1) you end up losing many unrelated work, or
->> (2) the command refuses to work, not letting you to record the
->> commit.  Neither is satisfactory, but we seem to choose (2), which
->> is at least the safer of the two:
->> 
->>     $ git checkout master
->>     $ git checkout --orphan master/1
->>     $ git commit -m foo
->>     fatal: cannot lock ref 'HEAD': 'refs/heads/master' exists;
->>     cannot create 'refs/heads/master/1'
+>>> By the way, have you run test suite before sending this (or any
+>>> previous round of this) patch?  This seems to break t5511-refspec.sh
+>>> for me.
+>>
+>> Looks like another location I forgot to update. I can send a re-spin
+>> if you need with the following diff. Basically looks like the tests
+>> just didn't get updated to count the new behavior is valid.
 >
-> Yeah, that seems sensible. I think the "way out" for the user here would
-> presumably be:
+> Yeah, basically looks like an untested patch was sent and nobody
+> noticed during earlier rounds, even the patch was rerolled a few
+> times, before I finally took it to 'pu' to take a look.  A typical
+> slow summer moment---people rightfully find it is more important to
+> have fun themselves than to help polishing others' patches ;-).
 >
->   git symbolic-ref HEAD refs/heads/something-else
+
+I think what happened, is that I ran some tests when the patch was
+"configurable" and I had modified the one set of tests to try with the
+option enabled, but it didn't fail in the t5511-refspec.sh since this
+series of tests didn't enable the new option. Then, I never re-tested
+again (OOPS!) when I removed the optional portion.
+
+> Will squash the changes; no need to resend (unless people discover
+> other issues; let's hope that I wouldn't be the one to do so ;-).
 >
-> though of course they could also rename the other ref.
+> Thanks.
+>
 
-I would have expected you to say
+Thank you! :)
 
-    git checkout --orphan something-else
+Regards,
+Jake
 
-which should work and would be more intuitive ;-)
-
-> Right. You'd have to teach the is_refname_available() check to always
-> check what HEAD points to, and consider it as "taken", even if the ref
-> itself doesn't exist. But what about other symbolic refs? The
-> "refs/remotes/origin/HEAD" symref may point to
-> "refs/remotes/origin/master" even though "refs/remotes/origin/master/1"
-> exists. I doubt that will cause real problems in practice, but it points
-> out that special cases like "the value of HEAD is magic and reserved"
-> will later end up being insufficient as the code is extended.
-
-Yes, we do not have a handy cache of all symrefs, and it is dubious
-if this issue is grave enough to warrant adding one.
-
-> I think I'd be willing to simply punt on the whole thing as being too
-> rare to come up in practice.
-
-I tend to agree.
+>> diff --git i/t/t5511-refspec.sh w/t/t5511-refspec.sh
+>> index de6db86ccff0..7bfca7962d41 100755
+>> --- i/t/t5511-refspec.sh
+>> +++ w/t/t5511-refspec.sh
+>> @@ -71,11 +71,11 @@ test_refspec fetch ':refs/remotes/frotz/HEAD-to-me'
+>>  test_refspec push ':refs/remotes/frotz/delete me'              invalid
+>>  test_refspec fetch ':refs/remotes/frotz/HEAD to me'            invalid
+>>
+>> -test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*-blah' invalid
+>> -test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*-blah' invalid
+>> +test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*-blah'
+>> +test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*-blah'
+>>
+>> -test_refspec fetch 'refs/heads*/for-linus:refs/remotes/mine/*' invalid
+>> -test_refspec push 'refs/heads*/for-linus:refs/remotes/mine/*' invalid
+>> +test_refspec fetch 'refs/heads*/for-linus:refs/remotes/mine/*'
+>> +test_refspec push 'refs/heads*/for-linus:refs/remotes/mine/*'
+>>
+>>  test_refspec fetch 'refs/heads/*/*/for-linus:refs/remotes/mine/*' invalid
+>>  test_refspec push 'refs/heads/*/*/for-linus:refs/remotes/mine/*' invalid
+>>
+>>
+>>
+>>
+>> Regards,
+>> Jake
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
