@@ -1,82 +1,97 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Config variables and scripting // was Re: [RFC/PATCH] log: add
+From: Jeff King <peff@peff.net>
+Subject: Re: Config variables and scripting // was Re: [RFC/PATCH] log: add
  log.firstparent option
-Date: Wed, 22 Jul 2015 21:40:10 -0700
-Message-ID: <20150723044007.GA3651@gmail.com>
+Date: Wed, 22 Jul 2015 22:14:45 -0700
+Message-ID: <20150723051445.GA24029@peff.net>
 References: <20150723012343.GA21000@peff.net>
+ <20150723044007.GA3651@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Josh Bleecher Snyder <josharian@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 23 06:40:20 2015
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 07:14:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZI8Iu-0001OJ-19
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 06:40:20 +0200
+	id 1ZI8qL-00011n-O4
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jul 2015 07:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbbGWEkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 00:40:15 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:34238 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702AbbGWEkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 00:40:14 -0400
-Received: by pdbbh15 with SMTP id bh15so104668933pdb.1
-        for <git@vger.kernel.org>; Wed, 22 Jul 2015 21:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=3J1sxNQTE6/CRuGNlArT8uHuHQQ7LoflUw8UEtdEvZw=;
-        b=aYXwkCXC3PGThovmXXh8xWVeS3oEaFDI3vVs+vzkkXAktCUEKeWlR7oQAzsAyorGBe
-         STX2HCRgpV65K+DVcz1TJy5pLrGWzZHLZo0JJmu6vD39D6bISNmt6Id0CbKRa74CgwRI
-         oxzm0G7CoggY/6q8c2X1UloR6sE+MSz5PNLD+TkvxSG+TArrpQ3x/76ta9CTz94MoYLX
-         SSr9OnKUKVNBg+v0sT9xl8g+/RohpzS6pfKCUQTKIjEa8JvTDkxHD1m/91T2oekVqP6w
-         DVbygwInSvpA4c2TFLlmW21Y95AdlH3kBnZdwcxHzFfkRtUMGv5RvxQeQJbCBf+tW9DG
-         bLfg==
-X-Received: by 10.66.255.67 with SMTP id ao3mr13992148pad.60.1437626413385;
-        Wed, 22 Jul 2015 21:40:13 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by smtp.gmail.com with ESMTPSA id fl3sm6123384pdb.30.2015.07.22.21.40.11
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jul 2015 21:40:12 -0700 (PDT)
+	id S1751126AbbGWFOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 01:14:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33922 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750871AbbGWFOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 01:14:49 -0400
+Received: (qmail 30108 invoked by uid 102); 23 Jul 2015 05:14:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jul 2015 00:14:49 -0500
+Received: (qmail 9074 invoked by uid 107); 23 Jul 2015 05:14:52 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jul 2015 01:14:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Jul 2015 22:14:45 -0700
 Content-Disposition: inline
-In-Reply-To: <20150723012343.GA21000@peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <20150723044007.GA3651@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274477>
 
-On Wed, Jul 22, 2015 at 06:23:44PM -0700, Jeff King wrote:
-> This patch adds an option to turn on --first-parent all the
-> time, along with the corresponding --no-first-parent to
-> disable it.
+On Wed, Jul 22, 2015 at 09:40:10PM -0700, David Aguilar wrote:
 
-[Putting on my scripter hat]
+> On Wed, Jul 22, 2015 at 06:23:44PM -0700, Jeff King wrote:
+> > This patch adds an option to turn on --first-parent all the
+> > time, along with the corresponding --no-first-parent to
+> > disable it.
+> 
+> [Putting on my scripter hat]
+> 
+> I sometimes think, "it would be really helpful if we had a way
+> to tell Git that it should ignore config variables".
+> 
+> This is especially helpful for script writers.   It's pretty
+> easy to break existing scripts by introducing new config knobs.
 
-I sometimes think, "it would be really helpful if we had a way
-to tell Git that it should ignore config variables".
+I think the purpose of --no-first-parent here is slightly orthogonal. It
+is meant to help the user during the odd time that they need to
+countermand their config.
 
-This is especially helpful for script writers.   It's pretty
-easy to break existing scripts by introducing new config knobs.
+Script writers should not care here, because they should not be parsing
+the output of the porcelain "log" command in the first place. It already
+has many gotchas (e.g., log.date, log.abbrevCommit).
 
-For example, "user.name" and "user.email" can be whitelisted by
-the calling script and and everything else would just use the
-stock defaults.
+I am sympathetic, though. There are some things that git-log can do that
+rev-list cannot, so people end up using it in scripts. I think you can
+avoid it with a "rev-list | diff-tree" pipeline, though I'm not 100%
+sure if that covers all cases. But I would much rather see a solution
+along the lines of making the plumbing cover more cases, rather than
+trying to make the porcelain behave in a script.
 
-That way, script writers don't have to do version checks to
-figuring out when and when not to include flags like
---no-first-parent, etc.
+> That way, script writers don't have to do version checks to
+> figuring out when and when not to include flags like
+> --no-first-parent, etc.
 
-Would something like,
+One trick you can do is:
 
-	GIT_CONFIG_WHITELIST="user.email user.name" \
-	git ...
+  git -c log.firstparent=false log ...
 
-be a sensible interface to such a feature?
--- 
-David
+Older versions of git will ignore the unknown config option, and newer
+ones will override anything the user has in their config file.
+
+> Would something like,
+> 
+> 	GIT_CONFIG_WHITELIST="user.email user.name" \
+> 	git ...
+> 
+> be a sensible interface to such a feature?
+
+I dunno.  That's at least easy to implement. But the existing suggested
+interface is really "run the plumbing", and then it automatically has a
+sensible set of config options for each command, so that scripts don't
+have to make their own whitelist (e.g., diff-tree still loads userdiff
+config, but not anything that would change the output drastically, like
+diff.mnemonicprefix).
+
+-Peff
