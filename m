@@ -1,85 +1,126 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 0/10] port tag.c to use ref-filter APIs
-Date: Sat, 25 Jul 2015 00:34:35 +0530
-Message-ID: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v4 02/10] ref-filter: make the 'color' use ref_formatting_state
+Date: Sat, 25 Jul 2015 00:34:37 +0530
+Message-ID: <1437764685-8633-3-git-send-email-Karthik.188@gmail.com>
+References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 21:04:51 2015
+X-From: git-owner@vger.kernel.org Fri Jul 24 21:05:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIiH3-0002tQ-Ao
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 21:04:49 +0200
+	id 1ZIiHi-0003TL-Py
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 21:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382AbbGXTEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 15:04:44 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36737 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752909AbbGXTEo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 15:04:44 -0400
-Received: by pachj5 with SMTP id hj5so18474450pac.3
-        for <git@vger.kernel.org>; Fri, 24 Jul 2015 12:04:43 -0700 (PDT)
+	id S1754840AbbGXTFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 15:05:23 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:35297 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753314AbbGXTFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 15:05:19 -0400
+Received: by pabkd10 with SMTP id kd10so18512724pab.2
+        for <git@vger.kernel.org>; Fri, 24 Jul 2015 12:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=DO8q9BDw8eAFI0u1mPkp0P4B/ZQm/aFPOo5o5wfuMCQ=;
-        b=xOy6F7+vlRQPdRlKn5+993hI44k1HRocgrYG3eHV/WD1dyHyyiDUnZNx99KSWaVYmZ
-         4hYXd4HGSlPDw01hZmNPkAkB64anpULQjmYB0Sf5W107HEr3yQD/EEiDN81gRiKv/2Hx
-         jFBggy/klMRWE31WwrYhn7SsyWXRdoqwbXCURkd9zoWW+h8QkFrHBmv4JIQ7+iaSug4e
-         7oe5l0eESZCCvi5/Av36sewiqcFtmU5Qjl1Pfz4niilQfBY7O9fnf5bIyGUFBJnoNx6U
-         /DV20Pjij0Fc7VQxjzNwKVA+1wagteBGmOkFY+GN2eFrjVW5c4Hy8DpOuAlxAJrxADm9
-         4TSA==
-X-Received: by 10.66.148.6 with SMTP id to6mr30907724pab.132.1437764683446;
-        Fri, 24 Jul 2015 12:04:43 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=H4twcYyvu3UFtuDRSzxzKt+rd91/jDssSu+kGb8Mc0Y=;
+        b=XPf9iPYMrt8LF1X8wR0cN8CoUerbWJA2p/oZI0rJqpEgNY1x+WiRfran8K2H+F2isJ
+         JWimetixxX3TB0JbDli5k69YdjTdhTPdkoQoyKfHTVFRp6ScwZRn+6WSf7HsjJg9Sk9b
+         RDlnOWmRTWd2JI8lBJ4kM7wms9yS+ZUJ4qsSQPC3KT9zw6aNsGN/FY7OGFdq6Layj/HE
+         j0pBr1oK30Hw9BrurMXthLdzqPNWPAjwBrZB2BAyMS+YIr24VCUO0eP1cwWStLxrxG1q
+         lrpaW3eRGWJEKJpqZwTCUtA5wPWoZTY25/+Y1rLZuIeZHTfpZn2mAl4dkR+fp0BiSUwJ
+         XtNw==
+X-Received: by 10.66.235.199 with SMTP id uo7mr34047377pac.112.1437764719025;
+        Fri, 24 Jul 2015 12:05:19 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id ns14sm15922915pdb.17.2015.07.24.12.04.41
+        by smtp.gmail.com with ESMTPSA id ns14sm15922915pdb.17.2015.07.24.12.05.16
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Jul 2015 12:04:42 -0700 (PDT)
+        Fri, 24 Jul 2015 12:05:18 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
+In-Reply-To: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274580>
 
-This is part of my GSoC project to unify git tag -l, git branch -l,
-git for-each-ref.  This patch series is continued from: Git (next)
-https://github.com/git/git/commit/bf5418f49ff0cebc6e5ce04ad1417e1a47c81b61
+Make color which was considered as an atom, to use
+ref_formatting_state and act as a pseudo atom. This allows
+interchangeability between 'align' and 'color'.
 
-Version 3 can be found here
-http://thread.gmane.org/gmane.comp.version-control.git/274168
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ ref-filter.c | 16 ++++++++++++----
+ ref-filter.h |  1 +
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-Changes from v3:
-
-[01/10]: Changed the whole implementation as per Junio's Suggestion.
-Also fixed parts where the code was wrong, as per Matthieu's and
-Eric's suggestion.
-
-[04/10]: Small changes in comments and line wrapping.
-
-[05/10]: Include more tests, better comments and refactored code.
-
-[06/10]: Improvement in comments.
-
-[09/10]: Change the tests to not fallback to default values.
-Introduce "for_each_tag_ref_fullpath()" which iterates through tags
-without stripping the same.
-
-[10/10]: Improvements in comments.
-
-Set of commits:
-
-[PATCH v4 01/10] ref-filter: add option to align atoms to the left
-[PATCH v4 02/10] ref-filter: make the 'color' use
-[PATCH v4 03/10] ref-filter: add option to filter only tags
-[PATCH v4 04/10] ref-filter: support printing N lines from tag
-[PATCH v4 05/10] ref-filter: add support to sort by version
-[PATCH v4 06/10] ref-filter: add option to match literal pattern
-[PATCH v4 07/10] tag.c: use 'ref-filter' data structures
-[PATCH v4 08/10] tag.c: use 'ref-filter' APIs
-[PATCH v4 09/10] tag.c: implement '--format' option
-[PATCH v4 10/10] tag.c: implement '--merged' and '--no-merged'
+diff --git a/ref-filter.c b/ref-filter.c
+index 3c90ffc..fd13a23 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -663,7 +663,8 @@ static void populate_value(struct ref_formatting_state *state,
+ 
+ 			if (color_parse(name + 6, color) < 0)
+ 				die(_("unable to parse format"));
+-			v->s = xstrdup(color);
++			state->color = xstrdup(color);
++			v->pseudo_atom = 1;
+ 			continue;
+ 		} else if (!strcmp(name, "flag")) {
+ 			char buf[256], *cp = buf;
+@@ -1217,6 +1218,11 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+ static void ref_formatting(struct ref_formatting_state *state, struct atom_value *v,
+ 			   struct strbuf *value)
+ {
++	if (state->color) {
++		strbuf_addstr(value, state->color);
++		free((void *)state->color);
++		state->color = NULL;
++	}
+ 	if (state->pad_to_right) {
+ 		if (!is_utf8(v->s))
+ 			strbuf_addf(value, "%-*s", state->pad_to_right, v->s);
+@@ -1224,8 +1230,9 @@ static void ref_formatting(struct ref_formatting_state *state, struct atom_value
+ 			int len = strlen(v->s) - utf8_strwidth(v->s);
+ 			strbuf_addf(value, "%-*s", state->pad_to_right + len, v->s);
+ 		}
+-	} else
+-		strbuf_addf(value, "%s", v->s);
++		return;
++	}
++	strbuf_addf(value, "%s", v->s);
+ }
+ 
+ static void print_value(struct ref_formatting_state *state, struct atom_value *v)
+@@ -1326,7 +1333,8 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 
+ 		if (color_parse("reset", color) < 0)
+ 			die("BUG: couldn't parse 'reset' as a color");
+-		resetv.s = color;
++		resetv.s = "";
++		state.color = xstrdup(color);
+ 		print_value(&state, &resetv);
+ 	}
+ 	putchar('\n');
+diff --git a/ref-filter.h b/ref-filter.h
+index ea2d0e6..bacbb23 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -31,6 +31,7 @@ struct ref_sorting {
+ struct ref_formatting_state {
+ 	unsigned int pad_to_right; /*pad atoms to the right*/
+ 	int quote_style;
++	const char *color;
+ };
+ 
+ struct ref_array_item {
+-- 
+2.4.6
