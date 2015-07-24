@@ -1,80 +1,99 @@
-From: Mike Kasprzak <mike@sykhronics.com>
-Subject: Can we get a git clone flag to override the "required empty
- directory" behaviour?
-Date: Fri, 24 Jul 2015 14:04:27 -0400
-Message-ID: <CACjsLYAPqCujmR0wQM-CD=qrPJz1zrC11Pe=C07DUBdEsG2r7A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git am" and then "git am -3" regression?
+Date: Fri, 24 Jul 2015 11:09:21 -0700
+Message-ID: <20150724180921.GA17730@peff.net>
+References: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 20:04:53 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 24 20:09:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIhL2-0003x5-0p
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 20:04:52 +0200
+	id 1ZIhPX-0007iK-VN
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 20:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754750AbbGXSEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 14:04:48 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:34918 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753339AbbGXSEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 14:04:47 -0400
-Received: by pabkd10 with SMTP id kd10so17838033pab.2
-        for <git@vger.kernel.org>; Fri, 24 Jul 2015 11:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=wZYnSjSgQnkErl42e9IMROdshpkmzcAuaw6+3744jgw=;
-        b=fYhMKLhKloHPL9nJvr4IMep2Q74apwj2btsWNzq2rgAK1igJtadQstllIX3IIKyvmN
-         Mce91oMJXbdxLyjqfwkkxn4qgKDlb+iDNFbkV1hXYI+P94ATPxiMQ7/jT4Naj4Cx7Dcc
-         7c98r8Se+yNoZaArGobU71WJ6glLVZKDgBaZL9kPGAZpnZIlrQmuAxRPN7sFRY+NaSvo
-         w7axu08BwQMqA4MYVxJPYU3MnXqdHkCyAe6J+rVSMhuQRbSSYb3zyKA9Fnu/9WP0uzT5
-         V6IwsuFwnZ969yOMyU9jg20xMr+h7MyOWpbeNpNIow2WgyxWQroUXdKuAy4EA5PJupO8
-         H1KA==
-X-Received: by 10.70.119.41 with SMTP id kr9mr34074653pdb.0.1437761086631;
- Fri, 24 Jul 2015 11:04:46 -0700 (PDT)
-Received: by 10.67.1.33 with HTTP; Fri, 24 Jul 2015 11:04:27 -0700 (PDT)
-X-Google-Sender-Auth: lleVoqSyuupkEKniDhQ5ZNadqBw
+	id S1753796AbbGXSJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 14:09:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34613 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753512AbbGXSJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 14:09:25 -0400
+Received: (qmail 9382 invoked by uid 102); 24 Jul 2015 18:09:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jul 2015 13:09:25 -0500
+Received: (qmail 22094 invoked by uid 107); 24 Jul 2015 18:09:29 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jul 2015 14:09:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jul 2015 11:09:21 -0700
+Content-Disposition: inline
+In-Reply-To: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274577>
 
-Hi,
+On Fri, Jul 24, 2015 at 10:48:18AM -0700, Junio C Hamano wrote:
 
-I run a project with 2 repositories. One is a vagrant based toolchain
-(a VM that runs a LAMP server), and the other is the source code.
-Because I want my users to keep and make their changes to a clone of
-the source repository, we can't use submodules. They make their
-changes, test locally, and push them at me when they're done.
+> Hmm, there seems to be some glitches around running "am -3"
+> after a failed "am" between 'maint' and 'master'.
+> 
+> When I try the following sequence, the 'am' from 'maint' succeeds,
+> but 'am' in 'master' fails:
+> 
+>  * Save Eric's "minor documetation improvements" $gmane/274537
+>    to a file.  
+> 
+>  * "git checkout e177995" (that's "next^0") and then apply them with
+>    "git am" (no -3 necessary).
+> 
+>  * "git checkout 272be14" (that's "es/worktree-add-cleanup^0") and
+>    then apply them with "git am" (without -3).
+> 
+>    This is expected to stop at 2/6, as the context has changed
+>    between 272be14 and the tip of 'next'.
+> 
+>  * "git am -3".  This should restart and resolve cleanly.
 
-The source code goes in a 'www' subdirectory, but for an improved user
-experience, I include a pre-configured version of the config file in
-that 'www' directory. That way, after they check out the code and
-start their local server, it just works. Easy.
+Thanks for diagnosing. This bit me the other day, but I hadn't had time
+to look at it yet (and I "am" a lot less than you do, I imagine).
 
-What I would like to do is git clone inside that directory. Alas, git
-will not let you clone in any directory containing a file.
+> Reverting d96a275b91bae1800cd43be0651e886e7e042a17 seems to fix it,
+> so that is what I'll do for 2.5 final.
 
-Today we use `the workaround`, which involves doing a git init, adding
-a remote origin, fetching, and finally checking it out.
+Yeah, I think this hunk is to blame (though I just read the code and did not
+test):
 
-http://stackoverflow.com/a/18999726
+@@ -658,6 +665,8 @@ fi
+ if test "$(cat "$dotest/threeway")" = t
+ then
+        threeway=t
++else
++       threeway=f
+ fi
 
-This is `fine`, but it's not a good user experience. All we really
-want is a clone, and there just happens to be a configuration file
-pre-installed in the same directory.
+It comes after the command-line option parsing, so it overrides our option (I
+think that running "git am -3" followed by "git am --no-3way" would have the
+same problem). It cannot just check whether $threeway is unset, though, as it
+may have come from the config. We'd need a separate variable, the way the code
+is ordered now.
 
-Can we please get a flag (say -f or --force) for git clone that
-overrides the default behavior of not allowing you to clone in to a
-non-empty directory. If there already was a .git directory in that
-directory, sure that's a no-go scenario. An with a name like --force,
-it should be aggressive, overwriting anything it sees. Again, git can
-already do this, it's just a lot more long winded that it should be.
+Ideally the code would just be ordered as:
 
-Thanks,
+  - load config from git-config
 
-Mike Kasprzak
+  - override that with defaults inherited from a previous run
+
+  - override that with command-line parsing
+
+but I don't know if there are other ordering gotchas that would break.
+It does look like that is how Paul's builtin/am.c does it, which makes
+me think it might not be broken. It's also possibly I've horribly
+misdiagnosed the bug. ;)
+
+-Peff
