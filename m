@@ -1,125 +1,134 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 7/9] am/rebase: update pseudorefs by writing files
-Date: Fri, 24 Jul 2015 00:45:27 -0400
-Message-ID: <1437713129-19373-8-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 5/9] tests: use --create-reflog option to git update-ref
+Date: Fri, 24 Jul 2015 00:45:25 -0400
+Message-ID: <1437713129-19373-6-git-send-email-dturner@twopensource.com>
 References: <1437713129-19373-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Jul 24 06:46:20 2015
+X-From: git-owner@vger.kernel.org Fri Jul 24 06:46:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIUsG-00043b-0E
+	id 1ZIUsG-00043b-JB
 	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 06:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752401AbbGXEqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 00:46:13 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:36226 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445AbbGXEp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 00:45:57 -0400
-Received: by qkdv3 with SMTP id v3so8126034qkd.3
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 21:45:56 -0700 (PDT)
+	id S1752470AbbGXEqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 00:46:15 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33005 "EHLO
+	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbbGXEpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 00:45:55 -0400
+Received: by qkdl129 with SMTP id l129so8261206qkd.0
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 21:45:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=25NJs+AfduR8yxAp7TbUdL/rxvMm8keVemLGJDu/gws=;
-        b=I9D5MbUN3e/3DqGNzKjo4d5YBvemdvSziaiYS9r/oXGXlYRcQELNAiYgbdTNGShPKm
-         f8ouZ/W/flsUOiQlKu5hVhZWGxOK2xHIW1SdcsA5cHCz17360W+sQC8Kc5OiDEUM0/Jn
-         0hH7shgrpCpUsj9mcPFD1pVEjMgnE7cWqOIjnkVWJxrrcjObqGM9Iy+AjtoQDSAMiuSr
-         fenaxQjccPUEOOLCMxa0/xhnk0BZuDGhlElKl/CxZEhKYS/KNOieM46NEJGOY1ZsU62P
-         2R/k+bHaBq3mU2A1YjKnl5r1NFl/JlHbJXLk0W4+X+2m+pWD1Sv6a2Z/mTl5mJ8/tQzH
-         jhSQ==
-X-Gm-Message-State: ALoCoQng/CewEfwBoV8jI5OdFvctR99fBtdu9BlfxBR9d2XYIGGtNGnaitayxS8sEviN9bIl+3ke
-X-Received: by 10.140.201.79 with SMTP id w76mr15228116qha.65.1437713156508;
-        Thu, 23 Jul 2015 21:45:56 -0700 (PDT)
+        bh=nVzOu5dbxSE3E+avB1+USu61RfEtVXADljSVRHLpsn8=;
+        b=l3MzYvveGgYvf70kPZH5cRa7ZOaOmzRs86ToiihengGpgjUhNoJc2WHgzW+t3WZUVz
+         KW4IgjwKWSjlCeVLjA/JlZlampuMCQiKomq5D1BAlLtT9z7CfwZH33xhRX9KixcCqWa5
+         YaTBsa40lxoT6L1Onq41QJVkwcPF9KAf5rgE3/TXh/mK+hmzrzORU57FQ5I6qaBs0M79
+         RAfmDHT54W5ClXuROiO4l/8Nd1ZoaE4/iM9DMtIEGdzD+LCc702vUtxEYyMUDV2gUfuG
+         NrTfeele4GHJClIG18Aupqikrgk27DtwL0SY3AmN90tHSoEBg0EkfZyDnZyZ/jgXsKV6
+         AFSw==
+X-Gm-Message-State: ALoCoQltBA9k7gI+uZYVrd8M+8QA6/hb+FfVvNkxqsknHxMRwhP/zWaz63gs0yLDnv370K2dEHUU
+X-Received: by 10.140.239.9 with SMTP id k9mr18551558qhc.38.1437713154144;
+        Thu, 23 Jul 2015 21:45:54 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id p74sm3541579qkp.11.2015.07.23.21.45.55
+        by smtp.gmail.com with ESMTPSA id p74sm3541579qkp.11.2015.07.23.21.45.53
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Jul 2015 21:45:55 -0700 (PDT)
+        Thu, 23 Jul 2015 21:45:53 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1437713129-19373-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274553>
 
-git update-ref can no longer be used to update pseudorefs, so in
-git-am and git-rebase, we just directly edit the files.
+Instead of manually precreating reflogs by writing files, use
+update-ref --create-reflog to create the reflogs at the same time
+we first create the ref.
+
+In one case, we need an entirely empty reflog, so we do a no-op
+update-ref with --create-reflog and then expire the reflog.
+
+This makes it slighly easier to test alternate ref backends.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- builtin/am.c               | 6 +++---
- contrib/examples/git-am.sh | 4 ++--
- git-rebase--interactive.sh | 2 +-
- git-rebase.sh              | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ t/t1400-update-ref.sh       | 5 ++---
+ t/t1411-reflog-show.sh      | 3 ++-
+ t/t1503-rev-parse-verify.sh | 9 +++------
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 3f0fc75..ff3eeee 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1049,12 +1049,12 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	if (!get_sha1("HEAD", curr_head)) {
- 		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
- 		if (!state->rebasing)
--			update_ref("am", "ORIG_HEAD", curr_head, NULL, 0,
--					UPDATE_REFS_DIE_ON_ERR);
-+			write_pseudoref("ORIG_HEAD", curr_head, NULL);
- 	} else {
- 		write_file(am_path(state, "abort-safety"), 1, "%s", "");
- 		if (!state->rebasing)
--			delete_ref("ORIG_HEAD", NULL, 0);
-+			if (unlink(git_path("ORIG_HEAD")) && errno != ENOENT)
-+				die("failed to unlink ORIG_HEAD");
- 	}
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 9d21c19..0038f28 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -174,12 +174,11 @@ test_expect_success "(not) changed .git/$m" "
+ '
+ rm -f .git/$m
  
- 	/*
-diff --git a/contrib/examples/git-am.sh b/contrib/examples/git-am.sh
-index a3d0c84..a01a06e 100755
---- a/contrib/examples/git-am.sh
-+++ b/contrib/examples/git-am.sh
-@@ -614,9 +614,9 @@ Use \"git am --abort\" to remove it.")"
- 		: >"$dotest/applying"
- 		if test -n "$HAS_HEAD"
- 		then
--			git update-ref ORIG_HEAD HEAD
-+			git rev-parse HEAD >"$GIT_DIR/ORIG_HEAD"
- 		else
--			git update-ref -d ORIG_HEAD >/dev/null 2>&1
-+			rm -f "$GIT_DIR/ORIG_HEAD"
- 		fi
- 	fi
- fi
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f01637b..ae116a6 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -948,7 +948,7 @@ warn_lines () {
- checkout_onto () {
- 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
- 	output git checkout $onto || die_abort "could not detach HEAD"
--	git update-ref ORIG_HEAD $orig_head
-+	echo $orig_head >"$GIT_DIR/ORIG_HEAD"
- }
+-: a repository with working tree always has reflog these days...
+-: >.git/logs/refs/heads/master
++rm .git/logs/refs/heads/master
+ test_expect_success \
+ 	"create $m (logged by touch)" \
+ 	'GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-	 git update-ref HEAD '"$A"' -m "Initial Creation" &&
++	 git update-ref --create-reflog HEAD '"$A"' -m "Initial Creation" &&
+ 	 test '"$A"' = $(cat .git/'"$m"')'
+ test_expect_success \
+ 	"update $m (logged by touch)" \
+diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+index 3eb4f10..ee069ac 100755
+--- a/t/t1411-reflog-show.sh
++++ b/t/t1411-reflog-show.sh
+@@ -138,7 +138,8 @@ test_expect_success '--date magic does not override explicit @{0} syntax' '
+ : >expect
+ test_expect_success 'empty reflog file' '
+ 	git branch empty &&
+-	: >.git/logs/refs/heads/empty &&
++	git update-ref --create-reflog refs/heads/empty empty &&
++	git reflog expire --expire=all refs/heads/empty &&
  
- get_missing_commit_check_level () {
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 1757404..23e2e64 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -611,7 +611,7 @@ say "$(gettext "First, rewinding head to replay your work on top of it...")"
+ 	git log -g empty >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
+index 823fe1d..ab27d0d 100755
+--- a/t/t1503-rev-parse-verify.sh
++++ b/t/t1503-rev-parse-verify.sh
+@@ -85,8 +85,7 @@ test_expect_success 'fails silently when using -q' '
  
- GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name" \
- 	git checkout -q "$onto^0" || die "could not detach HEAD"
--git update-ref ORIG_HEAD $orig_head
-+echo $orig_head >"$GIT_DIR/ORIG_HEAD"
+ test_expect_success 'fails silently when using -q with deleted reflogs' '
+ 	ref=$(git rev-parse HEAD) &&
+-	: >.git/logs/refs/test &&
+-	git update-ref -m "message for refs/test" refs/test "$ref" &&
++	git update-ref --create-reflog -m "message for refs/test" refs/test "$ref" &&
+ 	git reflog delete --updateref --rewrite refs/test@{0} &&
+ 	test_must_fail git rev-parse -q --verify refs/test@{0} >error 2>&1 &&
+ 	test_must_be_empty error
+@@ -94,16 +93,14 @@ test_expect_success 'fails silently when using -q with deleted reflogs' '
  
- # If the $onto is a proper descendant of the tip of the branch, then
- # we just fast-forwarded.
+ test_expect_success 'fails silently when using -q with not enough reflogs' '
+ 	ref=$(git rev-parse HEAD) &&
+-	: >.git/logs/refs/test2 &&
+-	git update-ref -m "message for refs/test2" refs/test2 "$ref" &&
++	git update-ref --create-reflog -m "message for refs/test2" refs/test2 "$ref" &&
+ 	test_must_fail git rev-parse -q --verify refs/test2@{999} >error 2>&1 &&
+ 	test_must_be_empty error
+ '
+ 
+ test_expect_success 'succeeds silently with -q and reflogs that do not go far back enough in time' '
+ 	ref=$(git rev-parse HEAD) &&
+-	: >.git/logs/refs/test3 &&
+-	git update-ref -m "message for refs/test3" refs/test3 "$ref" &&
++	git update-ref --create-reflog -m "message for refs/test3" refs/test3 "$ref" &&
+ 	git rev-parse -q --verify refs/test3@{1.year.ago} >actual 2>error &&
+ 	test_must_be_empty error &&
+ 	echo "$ref" >expect &&
 -- 
 2.0.4.315.gad8727a-twtrsrc
