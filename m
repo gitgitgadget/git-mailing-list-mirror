@@ -1,233 +1,141 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 5/6] Documentation/git-tools: fix item text formatting
-Date: Fri, 24 Jul 2015 00:00:56 -0400
-Message-ID: <1437710457-38592-6-git-send-email-sunshine@sunshineco.com>
-References: <1437710457-38592-1-git-send-email-sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 06:01:50 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH 1/9] refs:  Introduce pseudoref and per-worktree ref concepts
+Date: Fri, 24 Jul 2015 00:45:21 -0400
+Message-ID: <1437713129-19373-2-git-send-email-dturner@twopensource.com>
+References: <1437713129-19373-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Fri Jul 24 06:45:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIUB9-0004MA-EN
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 06:01:47 +0200
+	id 1ZIUru-0003mj-8t
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 06:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751185AbbGXEBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 00:01:44 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:38813 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053AbbGXEBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 00:01:38 -0400
-Received: by iggf3 with SMTP id f3so7264404igg.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 21:01:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=T2WIYRLzLoPsiJmrk84r/QF1XxArcNdAzuLVcGOaJR8=;
-        b=YWMqqglce8CP8Me0GHPArCD/AVibmocwHr64EgbfyUigdIRT4OKYbcbEG9aL9fwQFJ
-         VUXa24Afb/4eguIpzvizXE2LrCQY/5MDhO1p1AVdGnHzJUibASP0XQXgDrdr/cawm9UL
-         EnMGJEAv5F5eUBUw3i+zRwZH1pVUuC/fRMFjNC/rNg0u5kzNftWJtB630cCEWo2yuhzc
-         AvIuIdSiyGALOuaWXxf0524Gtlby+wJ0wF2sTAX8bhdSaMAZavBkXayygfTHEY5c3E0n
-         TNH5Oi6EJqA+Gk0gEs376vcTZqRjL1rzitm+dnZLilVjxuo7X8DCQCupfGnAzIWI9W7+
-         KxrA==
-X-Received: by 10.50.72.6 with SMTP id z6mr1049536igu.65.1437710497760;
-        Thu, 23 Jul 2015 21:01:37 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id j2sm4370288ioo.43.2015.07.23.21.01.36
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Jul 2015 21:01:37 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.rc3.407.g68aafd0
-In-Reply-To: <1437710457-38592-1-git-send-email-sunshine@sunshineco.com>
+	id S1751162AbbGXEpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 00:45:52 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:32973 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751118AbbGXEpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 00:45:50 -0400
+Received: by qkdl129 with SMTP id l129so8260478qkd.0
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 21:45:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=9ml4g78qBY5ctiTpztztmfylu/gaeYICmAkx3Rm0iHg=;
+        b=FqoG0vlMm37vrRLgh49Ttl9yOeeR0RPMa+AthFh4LwhRLXV+5VbKVU+yLHauCwsyJ7
+         HnN5A5oNnVJEGvtgHnbt8pKwZHxeNvh7MQTBvhmyQ+5nUUNKHkR6C190Xl8dMEqWcIs8
+         xMzL14rVbw+sfHnj1A1r1k3f2ZdmDgGsfIRXyH3xeEMIqXrTBMzL/30O+1wr9CK7xSbQ
+         hL6dDHg8b7Ek5Ox9n/rQK06ekq3UkcnMBtlIzPYGZT2A4g06UY1lQ48tO1ni0EVI78zu
+         P7m4iDlcJ71BWvvC1V+yh6d7ZNtwdZS9rua92FvFL5ip3I/XHDkbKGp4GVrr+2thpzQv
+         BsTg==
+X-Gm-Message-State: ALoCoQmDSZXoGxWh9LrczgHy39b6HEmWk8IkUt7eue62Nq2vmLSw/D1923VCO83cA//4MnYLKQ6S
+X-Received: by 10.140.216.20 with SMTP id m20mr18453967qhb.37.1437713149263;
+        Thu, 23 Jul 2015 21:45:49 -0700 (PDT)
+Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id p74sm3541579qkp.11.2015.07.23.21.45.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 23 Jul 2015 21:45:48 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
+In-Reply-To: <1437713129-19373-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274544>
 
-Descriptive text for each tool item is incorrectly formatted using a
-fixed width font. Fix formatting to use a variable width font by
-unindenting the item text.
+Add glossary entries for both concepts.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Pseudorefs and per-worktree refs do not yet have special handling,
+because the files refs backend already handles them correctly.  Later,
+we will make the LMDB backend call out to the files backend to handle
+per-worktree refs.
+
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-tools.txt | 134 ++++++++++++++++++++++----------------------
- 1 file changed, 67 insertions(+), 67 deletions(-)
+ Documentation/glossary-content.txt | 17 +++++++++++++++++
+ refs.c                             | 23 +++++++++++++++++++++++
+ refs.h                             |  2 ++
+ 3 files changed, 42 insertions(+)
 
-diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
-index 129b8c0..ab4aab9 100644
---- a/Documentation/git-tools.txt
-+++ b/Documentation/git-tools.txt
-@@ -16,100 +16,100 @@ http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
- Alternative/Augmentative Porcelains
- -----------------------------------
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index ab18f4b..d04819e 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -411,6 +411,23 @@ exclude;;
+ 	core Git. Porcelains expose more of a <<def_SCM,SCM>>
+ 	interface than the <<def_plumbing,plumbing>>.
  
--   - *Cogito* (http://www.kernel.org/pub/software/scm/cogito/)
-+- *Cogito* (http://www.kernel.org/pub/software/scm/cogito/)
-++
-+Cogito is a version control system layered on top of the Git tree history
-+storage system. It aims at seamless user interface and ease of use,
-+providing generally smoother user experience than the "raw" Core Git
-+itself and indeed many other version control systems.
-++
-+Cogito is no longer maintained as most of its functionality
-+is now in core Git.
- 
--   Cogito is a version control system layered on top of the Git tree history
--   storage system. It aims at seamless user interface and ease of use,
--   providing generally smoother user experience than the "raw" Core Git
--   itself and indeed many other version control systems.
- 
--   Cogito is no longer maintained as most of its functionality
--   is now in core Git.
-+- *pg* (http://www.spearce.org/category/projects/scm/pg/)
-++
-+pg is a shell script wrapper around Git to help the user manage a set of
-+patches to files. pg is somewhat like quilt or StGit, but it does have a
-+slightly different feature set.
- 
- 
--   - *pg* (http://www.spearce.org/category/projects/scm/pg/)
--
--   pg is a shell script wrapper around Git to help the user manage a set of
--   patches to files. pg is somewhat like quilt or StGit, but it does have a
--   slightly different feature set.
--
--
--   - *StGit* (http://www.procode.org/stgit/)
--
--   Stacked Git provides a quilt-like patch management functionality in the
--   Git environment. You can easily manage your patches in the scope of Git
--   until they get merged upstream.
-+- *StGit* (http://www.procode.org/stgit/)
-++
-+Stacked Git provides a quilt-like patch management functionality in the
-+Git environment. You can easily manage your patches in the scope of Git
-+until they get merged upstream.
- 
- 
- History Viewers
- ---------------
- 
--   - *gitk* (shipped with git-core)
--
--   gitk is a simple Tk GUI for browsing history of Git repositories easily.
--
--
--   - *gitview*  (contrib/)
--
--   gitview is a GTK based repository browser for Git
-+- *gitk* (shipped with git-core)
-++
-+gitk is a simple Tk GUI for browsing history of Git repositories easily.
- 
- 
--   - *gitweb* (shipped with git-core)
-+- *gitview*  (contrib/)
-++
-+gitview is a GTK based repository browser for Git
- 
--   Gitweb provides full-fledged web interface for Git repositories.
- 
-+- *gitweb* (shipped with git-core)
-++
-+Gitweb provides full-fledged web interface for Git repositories.
- 
--   - *qgit* (http://digilander.libero.it/mcostalba/)
- 
--   QGit is a git/StGit GUI viewer built on Qt/C++. QGit could be used
--   to browse history and directory tree, view annotated files, commit
--   changes cherry picking single files or applying patches.
--   Currently it is the fastest and most feature rich among the Git
--   viewers and commit tools.
-+- *qgit* (http://digilander.libero.it/mcostalba/)
-++
-+QGit is a git/StGit GUI viewer built on Qt/C++. QGit could be used
-+to browse history and directory tree, view annotated files, commit
-+changes cherry picking single files or applying patches.
-+Currently it is the fastest and most feature rich among the Git
-+viewers and commit tools.
- 
--   - *tig* (http://jonas.nitro.dk/tig/)
--
--   tig by Jonas Fonseca is a simple Git repository browser
--   written using ncurses. Basically, it just acts as a front-end
--   for git-log and git-show/git-diff. Additionally, you can also
--   use it as a pager for Git commands.
-+- *tig* (http://jonas.nitro.dk/tig/)
-++
-+tig by Jonas Fonseca is a simple Git repository browser
-+written using ncurses. Basically, it just acts as a front-end
-+for git-log and git-show/git-diff. Additionally, you can also
-+use it as a pager for Git commands.
- 
- 
- Foreign SCM interface
- ---------------------
- 
--   - *git-svn* (shipped with git-core)
--
--   git-svn is a simple conduit for changesets between a single Subversion
--   branch and Git.
--
--
--   - *quilt2git / git2quilt* (http://home-tj.org/wiki/index.php/Misc)
-+- *git-svn* (shipped with git-core)
-++
-+git-svn is a simple conduit for changesets between a single Subversion
-+branch and Git.
- 
--   These utilities convert patch series in a quilt repository and commit
--   series in Git back and forth.
- 
-+- *quilt2git / git2quilt* (http://home-tj.org/wiki/index.php/Misc)
-++
-+These utilities convert patch series in a quilt repository and commit
-+series in Git back and forth.
- 
--   - *hg-to-git* (contrib/)
- 
--   hg-to-git converts a Mercurial repository into a Git one, and
--   preserves the full branch history in the process. hg-to-git can
--   also be used in an incremental way to keep the Git repository
--   in sync with the master Mercurial repository.
-+- *hg-to-git* (contrib/)
-++
-+hg-to-git converts a Mercurial repository into a Git one, and
-+preserves the full branch history in the process. hg-to-git can
-+also be used in an incremental way to keep the Git repository
-+in sync with the master Mercurial repository.
- 
- 
- Others
- ------
- 
--   - *(h)gct* (http://www.cyd.liu.se/users/~freku045/gct/)
--
--   Commit Tool or (h)gct is a GUI enabled commit tool for Git and
--   Mercurial (hg). It allows the user to view diffs, select which files
--   to committed (or ignored / reverted) write commit messages and
--   perform the commit itself.
--
--   - *git.el* (contrib/)
--
--   This is an Emacs interface for Git. The user interface is modelled on
--   pcl-cvs. It has been developed on Emacs 21 and will probably need some
--   tweaking to work on XEmacs.
-+- *(h)gct* (http://www.cyd.liu.se/users/~freku045/gct/)
-++
-+Commit Tool or (h)gct is a GUI enabled commit tool for Git and
-+Mercurial (hg). It allows the user to view diffs, select which files
-+to committed (or ignored / reverted) write commit messages and
-+perform the commit itself.
++[[def_per_worktree_ref]]per-worktree ref::
++	Refs that are per-<<def_worktree,worktree>>, rather than
++	global.  This is presently only <<def_HEAD,HEAD>>, but might
++	later include other unsuual refs.
 +
-+- *git.el* (contrib/)
-++
-+This is an Emacs interface for Git. The user interface is modelled on
-+pcl-cvs. It has been developed on Emacs 21 and will probably need some
-+tweaking to work on XEmacs.
++[[def_pseudoref]]pseudoref::
++	Files under `$GIT_DIR` whose names are all-caps, and that
++	contain a line consisting of a <<def_sha1,SHA-1>> followed by
++	a newline, and optionally some additional data.  `MERGE_HEAD`
++	and `CHERRY_PICK_HEAD` are examples.  Unlike
++	<<def_per_worktree_ref,per-worktree refs>>, these files cannot
++	be symbolic refs, and never not have reflogs.  They also
++	cannot be updated through the normal ref update machinery.
++	Instead, they are updated by directly writing to the files.
++	However, they can be read as if they were refs, so `git
++	rev-parse MERGE_HEAD` will work.
++
+ [[def_pull]]pull::
+ 	Pulling a <<def_branch,branch>> means to <<def_fetch,fetch>> it and
+ 	<<def_merge,merge>> it.  See also linkgit:git-pull[1].
+diff --git a/refs.c b/refs.c
+index 0b96ece..d31ca42 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3857,6 +3857,29 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 	free(transaction);
+ }
+ 
++int is_per_worktree_ref(const char *refname)
++{
++	return !strcmp(refname, "HEAD");
++}
++
++static int is_pseudoref(const char *refname)
++{
++	const char *c;
++
++	if (strchr(refname, '/'))
++		return 0;
++
++	if (is_per_worktree_ref(refname))
++		return 0;
++
++	for (c = refname; *c; ++c) {
++		if (!isupper(*c) && *c != '-' && *c != '_')
++			return 0;
++	}
++
++	return 1;
++}
++
+ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 				     const char *refname)
+ {
+diff --git a/refs.h b/refs.h
+index e4e46c3..bd5526e 100644
+--- a/refs.h
++++ b/refs.h
+@@ -445,6 +445,8 @@ extern int parse_hide_refs_config(const char *var, const char *value, const char
+ 
+ extern int ref_is_hidden(const char *);
+ 
++int is_per_worktree_ref(const char *refname);
++
+ enum expire_reflog_flags {
+ 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
+ 	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
 -- 
-2.5.0.rc3.407.g68aafd0
+2.0.4.315.gad8727a-twtrsrc
