@@ -1,84 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] log: add log.firstparent option
-Date: Thu, 23 Jul 2015 15:46:33 -0700
-Message-ID: <xmqqpp3io5km.fsf@gitster.dls.corp.google.com>
-References: <20150723012343.GA21000@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/5] mh: worktree-related doc fixes
+Date: Thu, 23 Jul 2015 20:10:26 -0400
+Message-ID: <CAPig+cRLZiLSrMDiPp9ZJ1RKELSEKqVc0K2h4CvnvXNk5t7aBw@mail.gmail.com>
+References: <1437370162-8031-1-git-send-email-sunshine@sunshineco.com>
+	<55AD146D.3080509@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Josh Bleecher Snyder <josharian@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 24 00:46:41 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jul 24 02:10:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIPGC-00066t-2c
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 00:46:40 +0200
+	id 1ZIQZM-0005dQ-1L
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 02:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753758AbbGWWqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2015 18:46:36 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:36514 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753642AbbGWWqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2015 18:46:35 -0400
-Received: by pachj5 with SMTP id hj5so3159217pac.3
-        for <git@vger.kernel.org>; Thu, 23 Jul 2015 15:46:34 -0700 (PDT)
+	id S1751336AbbGXAK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2015 20:10:28 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:36415 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750965AbbGXAK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2015 20:10:26 -0400
+Received: by ykay190 with SMTP id y190so7248000yka.3
+        for <git@vger.kernel.org>; Thu, 23 Jul 2015 17:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=qY6g9/L4Mq4U1K4z0R3Mk0Z9292jqEu+BGN05ir7/Ik=;
-        b=slHqIlYJYoCkZjNsmr1VkYviuLmCVVARHo/d0Ip/0vJBPF16pB5Nu3KxGPXeVx7FHF
-         neonCC2rk5aBUu9hDBG4tDsKrwQB7UvEqyMEnhth0gFRG7WOzTitmeIrVxr9I9f0xbmU
-         DepMUG41j0NYvQEo5UmN/oEq/qG3xmtXcAyS8LbpTRGovT3i4QQnZdIXiUcXjzp1C6jf
-         5QTsq6srR84Xpz3IUuE3ZiRBFVbq2WNZHef0hkVf6l6cKkpPCoh0H6XbtRZKWQkmmWhT
-         1PI51YfRZY9qUtGmoNnX5YeM8Kt41Gv6RCcdkDjbCD01CNdWxaDAvfNR5QrTHDxBJuw8
-         fQwA==
-X-Received: by 10.66.249.101 with SMTP id yt5mr23409834pac.116.1437691594764;
-        Thu, 23 Jul 2015 15:46:34 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:156f:a37c:e915:d6df])
-        by smtp.gmail.com with ESMTPSA id r6sm10821443pdn.24.2015.07.23.15.46.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 23 Jul 2015 15:46:33 -0700 (PDT)
-In-Reply-To: <20150723012343.GA21000@peff.net> (Jeff King's message of "Wed,
-	22 Jul 2015 18:23:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=yCip7wAQhCCSrWbFkpjsE6JlXA8DvajR3Si1nX0Yxbo=;
+        b=gzwK3vMHNfJL/+zREPR3Cw/fmGyBLqHWghA/U8qx4d/+1RONgvXvAOJhJJv3PZLAn+
+         VIBVTCzi9GV09i5W+y7LblCLk+yfiG2xKDlFODgjOmmKqjGkECkhR2hCr4kvApJLLm+1
+         9/vA39+SA2ftS9RVGTpDEiZhhS+VXjRI+htXtSfMhpuAGIVzPUoaI4NvpWzbQ4gX4aVQ
+         ZfauMpWOFbS7k560y/Th5nH3rzIZGm1Q9otL+KvkcQ7tBRBPT7Pe6UxeOQfRSd2sxO2Z
+         0MxYQma9bxPbckngJfuSbfGtf7R6IWM7YtXWcycri5eFglVxTZIh4dBKO4desawuGv1+
+         Nx7g==
+X-Received: by 10.129.76.140 with SMTP id z134mr12200738ywa.17.1437696626379;
+ Thu, 23 Jul 2015 17:10:26 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Thu, 23 Jul 2015 17:10:26 -0700 (PDT)
+In-Reply-To: <55AD146D.3080509@alum.mit.edu>
+X-Google-Sender-Auth: 9jO5NxEAgjiWratTEFt8HK7jLvM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274532>
 
-Jeff King <peff@peff.net> writes:
-
-> But other projects prefer to keep the messy history intact.
-> For one thing, it makes collaboration on a topic easier, as
-> developers can simply pull from each other during the messy
-> development. And two, that history may later be useful when
-> tracking down a bug, because it gives more insight into the
-> actual thought process of the developer.
+On Mon, Jul 20, 2015 at 11:31 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 07/19/2015 10:29 PM, Eric Sunshine wrote:
+>> This re-roll of Michael Haggerty's worktree-related documentation
+>> tweaks[1] takes my review comments into account and adds one new patch.
 >
-> But in this latter case you want _two_ views of history. You
-> may want to see the "simple" version in which a series of
-> fully-formed topics hit the branch (and you would like to
-> see the diff of their final form). Or you may want to see
-> the messy details, because you are digging into a bug
-> related to the topic.
+> Thanks for separating the wheat from the chaff. I'm still traveling,
+> which I'll claim as an excuse for my poor responsiveness.
+>
+> All of your changes look good.
+>
+> I was wondering one thing: is there a value like "never" or "false" to
+> which "gc.worktreepruneexpire" can be set to turn off pruning entirely?
+> If so, it might be nice to mention it in the config manpage. Similarly
+> for the other expiration grace time settings.
+> But it's definitely not a blocker.
 
-While I can see the reasoning behind the above [*1*], I am not sure
-if the output with "--first-parent" would always be a good match for
-the "simple" version.  Wouldn't the people who keep these messy
-histories also those who merge project trunk into a random topic and
-push the result back as the updated project trunk?  Admittedly, that
-merely is saying that "--first-parent" is not a solution to such a
-project, and does not say much about the usefulness of the new
-configuration, so I'd queue it as-is.
-
-[Footnote]
-
-*1* I do not necessarily agree, though.  The history being messy is
-    a sign that "the actual thought process of the developer" was
-    not clearly expressed in the work, and it is not likely that you
-    have more insight by looking at it---you will see more mess, for
-    certain, though.
+I browsed the code for the various "expire" settings, and it appears
+that they all accept and respect "now" and "never", as well, so I'll
+put together a patch as suggested.
