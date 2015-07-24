@@ -1,109 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 01/18] rerere: fix an off-by-one non-bug
-Date: Fri, 24 Jul 2015 12:46:14 -0700
-Message-ID: <xmqq7fppmj95.fsf@gitster.dls.corp.google.com>
-References: <1435730699-9124-1-git-send-email-gitster@pobox.com>
-	<1437171880-21590-1-git-send-email-gitster@pobox.com>
-	<1437171880-21590-2-git-send-email-gitster@pobox.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 1/9] refs:  Introduce pseudoref and per-worktree ref concepts
+Date: Fri, 24 Jul 2015 20:52:49 +0100
+Organization: OPDS
+Message-ID: <344748CA1CA54D55A9F245FE2DBD23DC@PhilipOakley>
+References: <1437713129-19373-1-git-send-email-dturner@twopensource.com> <1437713129-19373-2-git-send-email-dturner@twopensource.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 21:46:22 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "David Turner" <dturner@twopensource.com>
+To: "David Turner" <dturner@twopensource.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jul 24 21:53:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIivF-0003BG-Nv
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 21:46:22 +0200
+	id 1ZIj1b-0000Fr-0O
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 21:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203AbbGXTqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 15:46:17 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:33864 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbbGXTqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 15:46:16 -0400
-Received: by pdbbh15 with SMTP id bh15so18023519pdb.1
-        for <git@vger.kernel.org>; Fri, 24 Jul 2015 12:46:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=OToM6ILFxqB18tM+wLoPXliO7DE78xokDfwp4hEfBgk=;
-        b=KQ+/FbQSYLPLcchyo9N/mCQRpKL3hKDKR8miersAWF3wVcXli+KWFR5CF7MSWNSSIU
-         GnZKp+CSWuZEl/dv9Nt6cIUIwxZAdRi57pF4cccVzSafKsQlI4AlYH5a6qIJgfobbDpP
-         Jw4SsznceiRbyyk+s1qqgJiIwByYbAj6dqDg9kFDZA1KfNzaBYhKmxJluCZ1j2z5zwjQ
-         sn/tNlhjsrsokfg0SHOehDjMMkvbHaxjc0M2Iz7h82/JFYVD3kKQ47/i6GBvw6oHdKj3
-         npO8+CmWI9ciGEx1908EuMNr0i3f6ko0+ikfFnhGDHFdCAe7tQjzHINwOMZXQ5A5LZKa
-         JQQw==
-X-Received: by 10.66.186.195 with SMTP id fm3mr34285669pac.91.1437767176223;
-        Fri, 24 Jul 2015 12:46:16 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:bdad:9e5d:aa9:33a9])
-        by smtp.gmail.com with ESMTPSA id o8sm15995580pdp.70.2015.07.24.12.46.14
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 24 Jul 2015 12:46:15 -0700 (PDT)
-In-Reply-To: <1437171880-21590-2-git-send-email-gitster@pobox.com> (Junio
-	C. Hamano's message of "Fri, 17 Jul 2015 15:24:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752723AbbGXTwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 15:52:51 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:9941 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752134AbbGXTwu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2015 15:52:50 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2B/FgBQlrJVPNwOFlxWBg4LgnyBPYZRbbt/BAQCgUtNAQEBAQEBBwEBAQFBJBuEHgYBAQQIAQEuHgEBIQsCAwUCAQMOBwwlFAEEGgYHAxQGARIIAgECAwGIIb98j1+LTYREQ4MfgRQFjHmHagGBDoxyhy+IFIgcgQqCWz89MYJLAQEB
+X-IPAS-Result: A2B/FgBQlrJVPNwOFlxWBg4LgnyBPYZRbbt/BAQCgUtNAQEBAQEBBwEBAQFBJBuEHgYBAQQIAQEuHgEBIQsCAwUCAQMOBwwlFAEEGgYHAxQGARIIAgECAwGIIb98j1+LTYREQ4MfgRQFjHmHagGBDoxyhy+IFIgcgQqCWz89MYJLAQEB
+X-IronPort-AV: E=Sophos;i="5.15,540,1432594800"; 
+   d="scan'208";a="164596594"
+Received: from host-92-22-14-220.as13285.net (HELO PhilipOakley) ([92.22.14.220])
+  by out1.ip07ir2.opaltelecom.net with ESMTP; 24 Jul 2015 20:52:48 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274594>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> When ac49f5ca (rerere "remaining", 2011-02-16) split out a new
-> helper function check_one_conflict() out of find_conflict()
-> function, so that the latter will use the returned value from the
-> new helper to update the loop control variable that is an index into
-> active_cache[], the new variable incremented the index by one too
-> many when it found a path with only stage #1 entry at the very end
-> of active_cache[].
+From: "David Turner" <dturner@twopensource.com>
+> Add glossary entries for both concepts.
 >
-> This "strange" return value does not have any effect on the loop
-> control of two callers of this function, as they all notice that
-> active_nr+2 is larger than active_nr just like active_nr+1 is, but
-> nevertheless it puzzles the readers when they are trying to figure
-> out what the function is trying to do.
+> Pseudorefs and per-worktree refs do not yet have special handling,
+> because the files refs backend already handles them correctly.  Later,
+> we will make the LMDB backend call out to the files backend to handle
+> per-worktree refs.
 >
-> In fact, there is no need to do an early return.  The code that
-> follows after skipping the stage #1 entry is fully prepared to
-> handle a case where the entry is at the very end of active_cache[].
->
-> Help future readers from unnecessary confusion by dropping an early
-> return.  We skip the stage #1 entry, and if there are stage #2 and
-> stage #3 entries for the same path, we diagnose the path as
-> THREE_STAGED (otherwise we say PUNTED), and then we skip all entries
-> for the same path.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
->  rerere.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+> Documentation/glossary-content.txt | 17 +++++++++++++++++
+> refs.c                             | 23 +++++++++++++++++++++++
+> refs.h                             |  2 ++
+> 3 files changed, 42 insertions(+)
 >
-> diff --git a/rerere.c b/rerere.c
-> index 31644de..e307711 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -369,10 +369,8 @@ static int check_one_conflict(int i, int *type)
->  	}
->  
->  	*type = PUNTED;
-> -	if (ce_stage(e) == 1) {
-> -		if (active_nr <= ++i)
-> -			return i + 1;
-> -	}
-> +	if (ce_stage(e) == 1)
-> +		i++;
+> diff --git a/Documentation/glossary-content.txt 
+> b/Documentation/glossary-content.txt
+> index ab18f4b..d04819e 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -411,6 +411,23 @@ exclude;;
+>  core Git. Porcelains expose more of a <<def_SCM,SCM>>
+>  interface than the <<def_plumbing,plumbing>>.
+>
+> +[[def_per_worktree_ref]]per-worktree ref::
+> + Refs that are per-<<def_worktree,worktree>>, rather than
+> + global.  This is presently only <<def_HEAD,HEAD>>, but might
+> + later include other unsuual refs.
+s/unsuual/unusual/
 
-As a conflicted index can have multiple stage #1 entries when
-dealing with a criss-cross merge, this should probably be
+> +
+> +[[def_pseudoref]]pseudoref::
+> + Files under `$GIT_DIR` whose names are all-caps, and that
 
-	while (ce_stage(e) == 1)
-        	i++;
+s/and that/excluding 'HEAD', which is special./ ?
 
-instead.
+> + contain a line consisting of a <<def_sha1,SHA-1>> followed by
 
->  	/* Only handle regular files with both stages #2 and #3 */
->  	if (i + 1 < active_nr) {
+s/contain/Pseudorefs typically contain/ perhaps?
+
+> + a newline, and optionally some additional data.  `MERGE_HEAD`
+> + and `CHERRY_PICK_HEAD` are examples.  Unlike
+> + <<def_per_worktree_ref,per-worktree refs>>, these files cannot
+> + be symbolic refs, and never not have reflogs.  They also
+> + cannot be updated through the normal ref update machinery.
+> + Instead, they are updated by directly writing to the files.
+> + However, they can be read as if they were refs, so `git
+> + rev-parse MERGE_HEAD` will work.
+> +
+> [[def_pull]]pull::
+>  Pulling a <<def_branch,branch>> means to <<def_fetch,fetch>> it and
+>  <<def_merge,merge>> it.  See also linkgit:git-pull[1].
+[...]
+
+The key points I'd picked out were:
+
+*    ALL_CAPS names
+
+*    acts like a ref <<>>, but separate from refs
+
+*    HEAD is special and not a pseudoref (i.e. see <<HEAD>>).
+
+*    CHERRY_PICK_HEAD and REVERT_HEAD are examples.
+
+*    three way split: refs/; pseudorefs; HEAD.
+
+*    one-level ALL_CAPS names are per worktree
+
+*    is a file in $GIT_DIR/ that always contains at least a SHA1.
+
+--
+Philip 
