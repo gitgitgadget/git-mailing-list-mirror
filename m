@@ -1,70 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] Documentation/git-tools: drop references to defunct tools
-Date: Fri, 24 Jul 2015 11:03:54 -0700
-Message-ID: <xmqqmvylmnzp.fsf@gitster.dls.corp.google.com>
-References: <1437710457-38592-1-git-send-email-sunshine@sunshineco.com>
-	<1437710457-38592-7-git-send-email-sunshine@sunshineco.com>
+From: Mike Kasprzak <mike@sykhronics.com>
+Subject: Can we get a git clone flag to override the "required empty
+ directory" behaviour?
+Date: Fri, 24 Jul 2015 14:04:27 -0400
+Message-ID: <CACjsLYAPqCujmR0wQM-CD=qrPJz1zrC11Pe=C07DUBdEsG2r7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jul 24 20:04:04 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 24 20:04:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIhKF-0003KK-MD
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 20:04:04 +0200
+	id 1ZIhL2-0003x5-0p
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 20:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754704AbbGXSD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 14:03:59 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:36154 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753339AbbGXSD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 14:03:58 -0400
-Received: by pdjr16 with SMTP id r16so17139351pdj.3
-        for <git@vger.kernel.org>; Fri, 24 Jul 2015 11:03:57 -0700 (PDT)
+	id S1754750AbbGXSEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 14:04:48 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:34918 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753339AbbGXSEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 14:04:47 -0400
+Received: by pabkd10 with SMTP id kd10so17838033pab.2
+        for <git@vger.kernel.org>; Fri, 24 Jul 2015 11:04:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=M9mrHUv1K6+t2nXRgLuXWtUq6qTyJSC5G3fm+ue+xgc=;
-        b=t133EjcfEJgIxlLP2/eVdcGgmqKAvTqXOMS6zw+n8NHH47Ixe1jTaKL8a+nd6kdF2s
-         +HIq6o0vAuExBxuahcLJsu4BzbY+3jM9QvE3AdUce8kF34i6ZhcJGCNGCSiPaSiFCBVR
-         LBCh6n4ODX4w482VLztC22aj9RjON6N3G1OXWm1wm+K5odSON47+dDfExawczPz8Zgcc
-         KfTOmLqHJYEqyeCDUX4Pu83K3Rpt9ekAjVMy3yaX8Fmjel6wJgKDTSXNe7gdMDQyxDpl
-         3grPUmrwYwGQ6eqNvLE8YS2S3ed0dfZd0TAtw7Zy6f9k568j1VU4VrVR0IoYsTZc2TVv
-         oCcA==
-X-Received: by 10.66.147.227 with SMTP id tn3mr33814122pab.130.1437761037307;
-        Fri, 24 Jul 2015 11:03:57 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:bdad:9e5d:aa9:33a9])
-        by smtp.gmail.com with ESMTPSA id h12sm15725940pdk.77.2015.07.24.11.03.55
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 24 Jul 2015 11:03:56 -0700 (PDT)
-In-Reply-To: <1437710457-38592-7-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Fri, 24 Jul 2015 00:00:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=wZYnSjSgQnkErl42e9IMROdshpkmzcAuaw6+3744jgw=;
+        b=fYhMKLhKloHPL9nJvr4IMep2Q74apwj2btsWNzq2rgAK1igJtadQstllIX3IIKyvmN
+         Mce91oMJXbdxLyjqfwkkxn4qgKDlb+iDNFbkV1hXYI+P94ATPxiMQ7/jT4Naj4Cx7Dcc
+         7c98r8Se+yNoZaArGobU71WJ6glLVZKDgBaZL9kPGAZpnZIlrQmuAxRPN7sFRY+NaSvo
+         w7axu08BwQMqA4MYVxJPYU3MnXqdHkCyAe6J+rVSMhuQRbSSYb3zyKA9Fnu/9WP0uzT5
+         V6IwsuFwnZ969yOMyU9jg20xMr+h7MyOWpbeNpNIow2WgyxWQroUXdKuAy4EA5PJupO8
+         H1KA==
+X-Received: by 10.70.119.41 with SMTP id kr9mr34074653pdb.0.1437761086631;
+ Fri, 24 Jul 2015 11:04:46 -0700 (PDT)
+Received: by 10.67.1.33 with HTTP; Fri, 24 Jul 2015 11:04:27 -0700 (PDT)
+X-Google-Sender-Auth: lleVoqSyuupkEKniDhQ5ZNadqBw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274576>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi,
 
-> Cogito -- unmaintained since late 2006[1]
-> pg -- URL dead; web searches reveal no information
-> quilt2git -- URL dead; web searches reveal no information
-> (h)gct -- URL dead; no repository activity since 2007[2]
->
-> [1]: http://git.or.cz/cogito/
-> [2]: http://repo.or.cz/w/hgct.git
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->
-> Perhaps it would be better to drop all items, and retain only the link
-> to the Git wiki?
+I run a project with 2 repositories. One is a vagrant based toolchain
+(a VM that runs a LAMP server), and the other is the source code.
+Because I want my users to keep and make their changes to a clone of
+the source repository, we can't use submodules. They make their
+changes, test locally, and push them at me when they're done.
 
-Hmmm, that's a very tempting thought.
+The source code goes in a 'www' subdirectory, but for an improved user
+experience, I include a pre-configured version of the config file in
+that 'www' directory. That way, after they check out the code and
+start their local server, it just works. Easy.
+
+What I would like to do is git clone inside that directory. Alas, git
+will not let you clone in any directory containing a file.
+
+Today we use `the workaround`, which involves doing a git init, adding
+a remote origin, fetching, and finally checking it out.
+
+http://stackoverflow.com/a/18999726
+
+This is `fine`, but it's not a good user experience. All we really
+want is a clone, and there just happens to be a configuration file
+pre-installed in the same directory.
+
+Can we please get a flag (say -f or --force) for git clone that
+overrides the default behavior of not allowing you to clone in to a
+non-empty directory. If there already was a .git directory in that
+directory, sure that's a no-go scenario. An with a name like --force,
+it should be aggressive, overwriting anything it sees. Again, git can
+already do this, it's just a lot more long winded that it should be.
+
+Thanks,
+
+Mike Kasprzak
