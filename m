@@ -1,44 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 05/10] ref-filter: add support to sort by version
-Date: Sat, 25 Jul 2015 00:34:40 +0530
-Message-ID: <1437764685-8633-6-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v4 06/10] ref-filter: add option to match literal pattern
+Date: Sat, 25 Jul 2015 00:34:41 +0530
+Message-ID: <1437764685-8633-7-git-send-email-Karthik.188@gmail.com>
 References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 21:05:47 2015
+X-From: git-owner@vger.kernel.org Fri Jul 24 21:05:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIiHv-0003eN-MP
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 21:05:44 +0200
+	id 1ZIiHx-0003eN-Fd
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jul 2015 21:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754758AbbGXTFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 15:05:32 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:32887 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932065AbbGXTF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 15:05:28 -0400
-Received: by pdbnt7 with SMTP id nt7so17609886pdb.0
-        for <git@vger.kernel.org>; Fri, 24 Jul 2015 12:05:28 -0700 (PDT)
+	id S1754882AbbGXTFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 15:05:41 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33810 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754757AbbGXTFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 15:05:31 -0400
+Received: by pacan13 with SMTP id an13so18830522pac.1
+        for <git@vger.kernel.org>; Fri, 24 Jul 2015 12:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ksOwIWWRhwzpDnlX0Ke8KbBYXZ7kklzuGcMVlXpjCto=;
-        b=XVXSZdYE0IpWDd+EpsHqXUndd4ZogIDkx9NaA+H5MwkmmmHiuRXDuNp+D0NTuC6KoJ
-         XPuBKdJCfEXJcb+tqCmJiqeMX63VjXrQBtpc8aS8PaOJ916s/Z5vjv14hQuvOArBv7We
-         kyu4tdsvkx3G+OJZs9eujYCFPAlOtl6+/PZpJYDu+6c9TVjTFHPL9LWPoe4N8vt4qmng
-         a0qgaEt1ObhLDv5Mgpw9lR/rmKx53Nyv83WT8+lX63hEW/fbwjHp3+YSY+ezmjTw6zvZ
-         2thUeUjLUaw+n/BeED142rta0WYPrraTePwu7qUEo1tFyfBLz1rpZiSKf2sU1BcIdaQs
-         paHA==
-X-Received: by 10.70.42.105 with SMTP id n9mr34587191pdl.78.1437764728048;
-        Fri, 24 Jul 2015 12:05:28 -0700 (PDT)
+        bh=U7ZF7kmjJrXTvzlpZAPFQMu7G8PycjHzCWgFse6dhq0=;
+        b=P0BZxox/VmPGpwMBQjVqgt0Q2N8YiObdosWK+T7ZIo6Yj12SvVrwmQ3cY+251jVG5o
+         bPMzhjQJ/5M6m0Ac2Yi3uL/noK6ZAu37gG3rvPq0ngY3kVtI6pa2w6WlT8j+yWH1Loau
+         5BnRnInjTn9MuaPuxJT03FKshZybN+RGAi7LGCd+Z0c6VvQF2dWt3feI7D1F/G09JQtL
+         YCcc8uaBXG8kXlbja2+jw5EuQwClDImxMXtSVZCSsKBQVeak9UWKd46BsuTyZPtaa08i
+         BS1RDLHM6rNQYzgoWK4/Tonw/eHPEnaVRkO5uJp+ixaJq57WVmURPdxOXeHmAsErZdj2
+         qm3Q==
+X-Received: by 10.66.119.174 with SMTP id kv14mr22740885pab.115.1437764730821;
+        Fri, 24 Jul 2015 12:05:30 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id ns14sm15922915pdb.17.2015.07.24.12.05.25
+        by smtp.gmail.com with ESMTPSA id ns14sm15922915pdb.17.2015.07.24.12.05.28
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Jul 2015 12:05:27 -0700 (PDT)
+        Fri, 24 Jul 2015 12:05:29 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
 In-Reply-To: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
@@ -46,153 +46,113 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274583>
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Add support to sort by version using the "v:refname" and
-"version:refname" option. This is achieved by using the 'versioncmp()'
-function as the comparing function for qsort.
+Since 'ref-filter' only has an option to match path names add an
+option for plain fnmatch pattern-matching.
 
-This option is included to support sorting by versions in `git tag -l`
-which will eventaully be ported to use ref-filter APIs.
-
-Add documentation and tests for the same.
+This is to support the pattern matching options which are used in `git
+tag -l` and `git branch -l` where we can match patterns like `git tag
+-l foo*` which would match all tags which has a "foo*" pattern.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  3 +++
- ref-filter.c                       | 26 ++++++++++++++------------
- ref-filter.h                       |  3 ++-
- t/t6302-for-each-ref-filter.sh     | 36 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 55 insertions(+), 13 deletions(-)
+ builtin/for-each-ref.c |  1 +
+ ref-filter.c           | 37 ++++++++++++++++++++++++++++++++++++-
+ ref-filter.h           |  3 ++-
+ 3 files changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index e49d578..224dc8c 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -145,6 +145,9 @@ For sorting purposes, fields with numeric values sort in numeric
- order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
- All other fields are used to sort in their byte-value order.
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index e4a4f8a..3ad6a64 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -68,6 +68,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
  
-+There is also an option to sort by versions, this can be done by using
-+the fieldname `version:refname` or in short `v:refname`.
-+
- In any case, a field name that refers to a field inapplicable to
- the object referred by the ref does not cause an error.  It
- returns an empty string instead.
+ 	filter.name_patterns = argv;
++	filter.match_as_path = 1;
+ 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+ 	ref_array_sort(sorting, &array);
+ 
 diff --git a/ref-filter.c b/ref-filter.c
-index 08ecce5..8f2148f 100644
+index 8f2148f..0a64b84 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -12,6 +12,7 @@
- #include "revision.h"
- #include "utf8.h"
- #include "git-compat-util.h"
-+#include "version.h"
+@@ -951,6 +951,31 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
  
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-@@ -1180,19 +1181,17 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 
- 	get_ref_atom_value(&state, a, s->atom, &va);
- 	get_ref_atom_value(&state, b, s->atom, &vb);
--	switch (cmp_type) {
--	case FIELD_STR:
-+	if (s->version)
-+		cmp = versioncmp(va->s, vb->s);
-+	else if (cmp_type == FIELD_STR)
- 		cmp = strcmp(va->s, vb->s);
--		break;
--	default:
--		if (va->ul < vb->ul)
--			cmp = -1;
--		else if (va->ul == vb->ul)
--			cmp = 0;
--		else
--			cmp = 1;
--		break;
--	}
-+	else if (va->ul < vb->ul)
-+		cmp = -1;
-+	else if (va->ul == vb->ul)
-+		cmp = 0;
-+	else
-+		cmp = 1;
+ /*
+  * Return 1 if the refname matches one of the patterns, otherwise 0.
++ * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
++ * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
++ * matches "refs/heads/mas*", too).
++ */
++static int match_pattern(const char **patterns, const char *refname)
++{
++	for (; *patterns; patterns++) {
++		/*
++		 * When no '--format' option is given we need to skip the prefix
++		 * for matching refs of tags and branches.
++		 */
++		if (!starts_with(*patterns, "refs/tags/"))
++			skip_prefix(refname, "refs/tags/", &refname);
++		if (!starts_with(*patterns, "refs/heads/"))
++			skip_prefix(refname, "refs/heads/", &refname);
++		if (!starts_with(*patterns, "refs/remotes/"))
++			skip_prefix(refname, "refs/remotes/", &refname);
++		if (!wildmatch(*patterns, refname, 0, NULL))
++			return 1;
++	}
++	return 0;
++}
 +
- 	return (s->reverse) ? -cmp : cmp;
++/*
++ * Return 1 if the refname matches one of the patterns, otherwise 0.
+  * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+  * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
+  * matches "refs/heads/m*",too).
+@@ -974,6 +999,16 @@ static int match_name_as_path(const char **pattern, const char *refname)
+ 	return 0;
  }
  
-@@ -1420,6 +1419,9 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
- 		s->reverse = 1;
- 		arg++;
++/* Return 1 if the refname matches one of the patterns, otherwise 0. */
++static int filter_pattern_match(struct ref_filter *filter, const char *refname)
++{
++	if (!*filter->name_patterns)
++		return 1; /* No pattern always matches */
++	if (filter->match_as_path)
++		return match_name_as_path(filter->name_patterns, refname);
++	return match_pattern(filter->name_patterns, refname);
++}
++
+ /*
+  * Given a ref (sha1, refname), check if the ref belongs to the array
+  * of sha1s. If the given ref is a tag, check if the given tag points
+@@ -1042,7 +1077,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 		return 0;
  	}
-+	if (skip_prefix(arg, "version:", &arg) ||
-+	    skip_prefix(arg, "v:", &arg))
-+		s->version = 1;
- 	len = strlen(arg);
- 	s->atom = parse_ref_filter_atom(arg, arg+len);
- 	return 0;
+ 
+-	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
++	if (!filter_pattern_match(filter, refname))
+ 		return 0;
+ 
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
 diff --git a/ref-filter.h b/ref-filter.h
-index 1e2ee65..a12fe0c 100644
+index a12fe0c..f1933e0 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -26,7 +26,8 @@ struct atom_value {
- struct ref_sorting {
- 	struct ref_sorting *next;
- 	int atom; /* index into used_atom array (internal) */
--	unsigned reverse : 1;
-+	unsigned reverse : 1,
-+		version : 1;
+@@ -62,7 +62,8 @@ struct ref_filter {
+ 	} merge;
+ 	struct commit *merge_commit;
+ 
+-	unsigned int with_commit_tag_algo : 1;
++	unsigned int with_commit_tag_algo : 1,
++		match_as_path : 1;
+ 	unsigned int lines;
  };
  
- struct ref_formatting_state {
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 505a360..5017032 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -81,4 +81,40 @@ test_expect_success 'filtering with --contains' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup for version sort' '
-+	test_commit foo1.3 &&
-+	test_commit foo1.6 &&
-+	test_commit foo1.10
-+'
-+
-+test_expect_success 'version sort' '
-+	git tag -l --sort=version:refname | grep "foo" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.3
-+	foo1.6
-+	foo1.10
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'version sort (shortened)' '
-+	git tag -l --sort=v:refname | grep "foo" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.3
-+	foo1.6
-+	foo1.10
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'reverse version sort' '
-+	git tag -l --sort=-version:refname | grep "foo" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.10
-+	foo1.6
-+	foo1.3
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
 -- 
 2.4.6
