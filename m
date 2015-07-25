@@ -1,141 +1,135 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] log: add log.firstparent option
-Date: Fri, 24 Jul 2015 19:05:27 -0700
-Message-ID: <20150725020526.GA8948@peff.net>
-References: <20150723012343.GA21000@peff.net>
- <xmqqpp3io5km.fsf@gitster.dls.corp.google.com>
- <20150724072325.GC2111@peff.net>
- <xmqq8ua5oapm.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 01/10] ref-filter: add option to align atoms to the left
+Date: Sat, 25 Jul 2015 09:44:19 +0530
+Message-ID: <CAOLa=ZRBwErMLhcg=STymECrfGG3WQpfFvPXzDCcjBTQb9JmCA@mail.gmail.com>
+References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
+ <1437764685-8633-2-git-send-email-Karthik.188@gmail.com> <xmqqwpxpjk6p.fsf@gitster.dls.corp.google.com>
+ <xmqqpp3hjh3r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Josh Bleecher Snyder <josharian@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 04:05:36 2015
+X-From: git-owner@vger.kernel.org Sat Jul 25 06:15:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIoqF-0002Y9-SH
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 04:05:36 +0200
+	id 1ZIqs6-00077e-Bf
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 06:15:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbbGYCFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 22:05:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34777 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753030AbbGYCFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 22:05:30 -0400
-Received: (qmail 17120 invoked by uid 102); 25 Jul 2015 02:05:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jul 2015 21:05:30 -0500
-Received: (qmail 24507 invoked by uid 107); 25 Jul 2015 02:05:35 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jul 2015 22:05:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jul 2015 19:05:27 -0700
-Content-Disposition: inline
-In-Reply-To: <xmqq8ua5oapm.fsf@gitster.dls.corp.google.com>
+	id S1751845AbbGYEOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2015 00:14:49 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:34387 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751631AbbGYEOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2015 00:14:49 -0400
+Received: by obre1 with SMTP id e1so27733933obr.1
+        for <git@vger.kernel.org>; Fri, 24 Jul 2015 21:14:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HWBhlxEz/wfyGqccaOe5j/9zms78MLs8DoUSiudxsao=;
+        b=IU6EvBV+ZDO/oFGi9VvrCmMYTicGYEBS130FEpOtSgCUMh5wwU1/gHPzegIIX/LUaG
+         XWhboInubwLHqwjQZlhEJXGhnjgAR3hBKuEQvAMGmODfX94GtFt/LLCE866HgG0nz3HM
+         WT/wHFZStLLSBz5c3xNtgaSmOzClQWaRMZ2gbYdOjcVW9w8p9oQeotlyxVMZLyBjR8nf
+         bBB8dIk7rznEC9ztktPJGBP0GMPdtwIW8Sql2DlnMR2XuR/Xji/mZL8k4ikSFlkJycLl
+         6bNJjvZEhaKm0kxRYtM0NsrLLANi98vwKIOApjaDh69x7sNE0TLTmTqBnXmpAXWtmhO1
+         c1Og==
+X-Received: by 10.60.42.230 with SMTP id r6mr19005405oel.9.1437797688314; Fri,
+ 24 Jul 2015 21:14:48 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Fri, 24 Jul 2015 21:14:19 -0700 (PDT)
+In-Reply-To: <xmqqpp3hjh3r.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274610>
 
-On Fri, Jul 24, 2015 at 08:07:49AM -0700, Junio C Hamano wrote:
+On Sat, Jul 25, 2015 at 4:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> -    if (!ref->value) {
+>>> -            populate_value(ref);
+>>> +    /*
+>>> +     * If the atom is a pseudo_atom then we re-populate the value
+>>> +     * into the ref_formatting_state stucture.
+>>> +     */
+>>> +    if (!ref->value || ref->value[atom].pseudo_atom) {
+>>> +            populate_value(state, ref);
+>>>              fill_missing_values(ref->value);
+>>
+> I am not sure why you need to do this.  populate_value() and
+> fill_missing_values() are fairly heavy-weight operations that are
+> expected to grab everything necessary from scratch, and that is why
+> we ensure that we do not call them more than once for each "ref"
+> with by guarding the calls with "if (!ref->value)".
+>
+> This change is breaking that basic arrangement, and worse yet, it
+> forces us re-read everything about that ref, leaking old ref->value.
+>
+> Why could this be a good idea?
+>
 
-> > I am not entirely convinced this won't bite somebody who gets a sha1
-> > from some other source, and then wants to run:
-> >
-> >   git log $some_other_sha1
-> >
-> > who might be quite confused to start a first-parent traversal from
-> > somewhere other than the tip of "master" or the tip of a topic branch.
-> 
-> Yeah, you actually convinced me reasonably well that it would
-> happen.  I'd never use it myself.  If people want to shoot
-> themselves in the foot, be my guest ;-)
-> 
-> Perhaps we should drop this, and give a shorter synonym to the
-> option?
+This was required as populate_value() would fill the 'state'  but the 'state'
+being a static variable would be lost before printing and hence we would
+not have the correct values of the 'state' when printing.
 
-I'm still on the fence to have the config kick in only for HEAD.
-Something like (on top of my other patch, and the tests would still need
-adjusted):
+> I think populate_value() should not take state; that is the root
+> cause of this mistake.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e9c3763..f2b6a21 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1802,9 +1802,11 @@ log.mailmap::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
- 
--log.firstparent::
--	If true, linkgit:git-log[1] will default to `--first-parent`;
--	can be overridden by supplying `--no-first-parent`.
-+log.defaultImpliesFirstParent::
-+	If true, linkgit:git-log[1] will default to `--first-parent`
-+	when showing the default ref (i.e., if you run only `git
-+	log` to show `HEAD`, but not `git log $sha1`). Can be overridden
-+	by supplying `--no-first-parent`.
- 
- mailinfo.scissors::
- 	If true, makes linkgit:git-mailinfo[1] (and therefore
-diff --git a/builtin/log.c b/builtin/log.c
-index 3e9b034..2bdb3fc 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -31,7 +31,7 @@ static const char *default_date_mode = NULL;
- 
- static int default_abbrev_commit;
- static int default_show_root = 1;
--static int default_first_parent;
-+static int default_implies_first_parent;
- static int decoration_style;
- static int decoration_given;
- static int use_mailmap_config;
-@@ -110,7 +110,6 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- 	rev->abbrev_commit = default_abbrev_commit;
- 	rev->show_root_diff = default_show_root;
- 	rev->subject_prefix = fmt_patch_subject_prefix;
--	rev->first_parent_only = default_first_parent;
- 	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
- 
- 	if (default_date_mode)
-@@ -398,8 +397,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		use_mailmap_config = git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "log.firstparent")) {
--		default_first_parent = git_config_bool(var, value);
-+	if (!strcmp(var, "log.defaultimpliesfirstparent")) {
-+		default_implies_first_parent = git_config_bool(var, value);
- 		return 0;
- 	}
- 
-@@ -504,6 +503,8 @@ static int show_tree_object(const unsigned char *sha1,
- 
- static void show_rev_tweak_rev(struct rev_info *rev, struct setup_revision_opt *opt)
- {
-+	if (default_implies_first_parent && !rev->pending.nr)
-+		rev->first_parent_only = 1;
- 	if (rev->ignore_merges) {
- 		/* There was no "-m" on the command line */
- 		rev->ignore_merges = 0;
+Yes! agreed. atomv should be a better candidate to hold the formatting values.
 
+>
+> The flow should be:
+>
+>     - verify_format() looks at the format string and enumerates all
+>       atoms that will ever be used in the output by calling
+>       parse_atom() and letting it to fill used_atom[];
+>
+>     - when ref->value is not yet populated, populate_value() is
+>       called, just once.  This uses the enumeration in used_atom[]
+>       and stores computed value to refs->value[atom];
+>
+>     - show_ref() repeatedly calls find_next() to find the next
+>       reference to %(...), emits everything before it, and then
+>       uses the atom value (i.e. ref->value[atom]).
+>
+> I would expect that the atom value for pseudos like color and align
+> to be parsed and stored in ref->value in populate_value() when it is
+> called for the first time for each ref _just once_.
+>
+> "color:blue" may choose to store "blue" as v->s, and "align:4" may
+> choose to do "v->ul = 4".
+>
+> And the code that uses these values should look more like:
+>
+>         for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+>                 struct atom_value *atomv;
+>
+>                 ep = strchr(sp, ')');
+>                 if (cp < sp)
+>                         emit(cp, sp);
+>                 get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+>                 if (atomv->is_pseudo)
+>                         apply_pseudo_state(&state, atomv);
+>                 else
+>                         print_value(&state, atomv);
+>         }
+>
+> where apply_pseudo_state() would switch on what kind of pseudo the
+> atom is and update the state accordingly, i.e. the "state" munging
+> code you added to populate_value() in this patch.
 
-It feels somewhat magical, but at least the config option name makes it
-painfully clear exactly when it would kick in. I dunno. I am happy
-enough for myself to just run "--first-parent" when that is what I want
-to see. Giving it a shorter name would not help much, I think. It is not
-the number of characters, but the fact that most people do not _know_
-that --first-parent exists in the first place, or that it would be
-useful in this case. I hoped with a config option it might become
-something projects could recommend to their users[1] if the project has a
-matching workflow. But maybe we could also rely on those same projects
-to educate their users.
+This makes more sense, and avoids the repetitive call to populate_value().
+Will implement this.
+Thanks
 
--Peff
-
-[1] And if not an official recommendation from a project, this is the
-    sort of "tips and tricks" information that may spread informally. But in
-    theory so could knowledge of --first-parent.
+-- 
+Regards,
+Karthik Nayak
