@@ -1,84 +1,130 @@
-From: "Olga Nikolova" <olga.nikolova@outlook.com>
-Subject: You can upload now your invited paper
-Date: Sat, 25 Jul 2015 19:30:40 +0300
-Message-ID: <20150725163040.B2F1F3336433@genf174.server4you.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 05/10] ref-filter: add support to sort by version
+Date: Sat, 25 Jul 2015 15:40:52 -0700
+Message-ID: <xmqqd1zfkgi3.fsf@gitster.dls.corp.google.com>
+References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
+	<1437764685-8633-6-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 25 23:47:49 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 26 00:41:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJ7IJ-0002Xp-CU
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 23:47:47 +0200
+	id 1ZJ87p-0005Kh-Cb
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 00:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964885AbbGYVrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2015 17:47:43 -0400
-Received: from genf174.server4you.net ([217.172.184.70]:59421 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964878AbbGYVrm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Jul 2015 17:47:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 84D0A34A5A3A
-	for <git@vger.kernel.org>; Sat, 25 Jul 2015 23:31:53 +0200 (CEST)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id ViO-rNSxBTmu for <git@vger.kernel.org>;
-	Sat, 25 Jul 2015 23:31:53 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 5E3873399366
-	for <git@vger.kernel.org>; Sat, 25 Jul 2015 20:27:41 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id wPe4o7a23Oe1 for <git@vger.kernel.org>;
-	Sat, 25 Jul 2015 20:27:41 +0200 (CEST)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id B2F1F3336433
-	for <git@vger.kernel.org>; Sat, 25 Jul 2015 18:30:39 +0200 (CEST)
+	id S1755048AbbGYWk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2015 18:40:56 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33741 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754938AbbGYWk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2015 18:40:56 -0400
+Received: by padck2 with SMTP id ck2so31429768pad.0
+        for <git@vger.kernel.org>; Sat, 25 Jul 2015 15:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=qmC6zeKubYdVcUweStQt6Lf+KWBk3y9gd4JTRjV9bUM=;
+        b=iqBm4Pwvw622t2pk17fGTU5oyyEm1vxrXksNo2rip4RGspGWhJtPrWpEPyFpsORLPx
+         oJrwQtLaI3ccwdWnep7RB8+RjxsJSM2ZsCPVIEUF4REi8D5YphX/pnhvETbX7eJlmxs+
+         Wchyn1xIcoohUWK+dV+QHJI3ScJfgVJeBgna9iTERID/s5kC6reAJMCHU83W25WPjGCl
+         nVwkDMYLL4Z5JjIuJpuANAMNf36uDoG1cgm8km6qnHZYURewiXvbeb18i33v3C1vHg53
+         DES+4t2PcSgahkkQmCV+LsHwdxLR6GBdJrV599gcOYBE+FJG0d5rU6b5sODMq3QvLLQk
+         S67A==
+X-Received: by 10.66.119.136 with SMTP id ku8mr47778538pab.26.1437864055514;
+        Sat, 25 Jul 2015 15:40:55 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:f068:7766:ecc2:8f58])
+        by smtp.gmail.com with ESMTPSA id j4sm21597259pdg.64.2015.07.25.15.40.53
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 25 Jul 2015 15:40:54 -0700 (PDT)
+In-Reply-To: <1437764685-8633-6-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Sat, 25 Jul 2015 00:34:40 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274621>
 
-Dear Professor
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-You can upload now your invited paper for our conference in Malta, August 17-19: www. wseas. org until July 27, 2015
-OR
-for our conference in Seoul, South Korea, September 5-7, 2015
-until August 20, 2015. URL  www. wseas. org
+> @@ -1180,19 +1181,17 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+>  
+>  	get_ref_atom_value(&state, a, s->atom, &va);
+>  	get_ref_atom_value(&state, b, s->atom, &vb);
+> -	switch (cmp_type) {
+> -	case FIELD_STR:
+> +	if (s->version)
+> +		cmp = versioncmp(va->s, vb->s);
+> +	else if (cmp_type == FIELD_STR)
+>  		cmp = strcmp(va->s, vb->s);
+> -		break;
+> -	default:
+> -		if (va->ul < vb->ul)
+> -			cmp = -1;
+> -		else if (va->ul == vb->ul)
+> -			cmp = 0;
+> -		else
+> -			cmp = 1;
+> -		break;
+> -	}
+> +	else if (va->ul < vb->ul)
+> +		cmp = -1;
+> +	else if (va->ul == vb->ul)
+> +		cmp = 0;
+> +	else
+> +		cmp = 1;
+> +
 
-Invited Speakers will have also publication in one of our 44 ISI/SCOPUS Journals, double time of presentation
-and they will receive also Certificate from our Secretariat with their name as Invited Speaker.
+So there are generally three kinds of comparison possible:
 
-Proceedings are published in Books and CD-ROM and will be indexed in all major indexes (SCOPUS, ISI, EBSCO, British Library, Zentrablatt, ACM, AMS, Scholargoogle, IEE(IET), etc...)
+    - if it is to be compared as versions, do versioncmp
+    - if it is to be compared as strings, do strcmp
+    - if it is to be compared as numbers, do <=> but because
+      we are writing in C, not in Perl, do so as if/else/else
 
-See interviews (Video) of our recent invited speakers in the third column of our web site (under: Bulletin Board)
-As you remember we had invited you as Invited Speaker in these conferences with publication of 
-the extended version of your paper in our ISI/SCI Journals (with Impact Factor from Thomson Reuters).
+Having understood that, the above is not really easy to read and
+extend.  We should structure the above more like this:
 
-The Papers of our Guest Speakers will be published in our Books, Proceedings and E-Library as well as their extended version in one of our 44 collaborating ISI Journals. The last one is an important feature of our conferences and for this reason our conferences are more and more popular (see photos in our web site).
+	if (s->version)
+        	... versioncmp
+	else if (... FIELD_STR)
+        	... strcmp
+	else {
+		if (a < b)
+                	...
+		else if (a == b)
+                	...
+		else
+                	...
+        }
 
-All the papers from our previous conferences (since March 2014) have been indexed in ISI (Thomson Reuters) and SCOPUS (through the conference proceedings
-and/or the Journals that publish the extended versions after the conferences)
-as well as in many other major indexes via conference proceedings and/or our 44 ISI (Thomson Reuters) journals and more than 20 SCOPUS indexed journals
+so that it would be obvious how this code need to be updated
+when we need to add yet another kind of comparison.
 
-Do not send your invited papers by email. Just upload them via www. wseas. org selecting the most appropriate conference
-with the indication (in the Field "notes") INVITED-by-OLGA-NIKOLOVA
-The invited papers are a small percent and are noted in the conference program as Invited papers with 30 minutes' presentation instead of 20 minutes' presentation of the regular papers.
-You could also organize a special session with a minimum of 6 papers.
-Special Session organizers participate free in the conference provided that their session will have at least 5 fully registered papers. In this case, they are also honored as Editors in the Books and Proceedings and as Plenary Speakers.
+Without looking at the callers, s->version looks like a misdesign
+that should be updated to use the same cmp_type mechanism?  That
+would lead to even more obvious construct that is easy to enhance,
+i.e.
 
-Contact me for more details: publications@wseas.org 
+	switch (cmp_type) {
+        case CMP_VERSION:
+        	...
+	case CMP_STRING:
+        	...
+	case CMP_NUMBER:
+        	...
+        }
+        
+I dunno.
 
-Many Thanks,
+Other than that (and the structure of that "format-state" stuff we
+discussed separately), the series was a pleasant read.
 
-Olga Nikolova
-WSEAS Editorial Office
---------------------------------------
-If you do not want to participate any longer in our academic activities, send an EMPTY email to me
-with SUBJECT:  << REMOVE git@vger.kernel.org >>
+Thanks.
