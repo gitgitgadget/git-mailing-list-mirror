@@ -1,122 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 01/10] ref-filter: add option to align atoms to the left
-Date: Fri, 24 Jul 2015 16:00:56 -0700
-Message-ID: <xmqqpp3hjh3r.fsf@gitster.dls.corp.google.com>
-References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
-	<1437764685-8633-2-git-send-email-Karthik.188@gmail.com>
-	<xmqqwpxpjk6p.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] log: add log.firstparent option
+Date: Fri, 24 Jul 2015 18:36:36 -0700
+Message-ID: <20150725013634.GA7269@peff.net>
+References: <20150723012343.GA21000@peff.net>
+ <CAGZ79kbY8hAom+voAOourkDy34nwaACQEM-n=f25Qbg0+ha_8g@mail.gmail.com>
+ <20150724074028.GE2111@peff.net>
+ <xmqq4mkto9lg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 01:06:22 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Josh Bleecher Snyder <josharian@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 25 03:36:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZIm2n-00053J-4T
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 01:06:21 +0200
+	id 1ZIoOR-0001HX-US
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 03:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745AbbGXXBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2015 19:01:00 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:34159 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbbGXXA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2015 19:00:59 -0400
-Received: by pdbbh15 with SMTP id bh15so19892728pdb.1
-        for <git@vger.kernel.org>; Fri, 24 Jul 2015 16:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=zC8cn7AEng5BCvhqbewe8zDfD/nyYH8KkJ814lErlr8=;
-        b=lovT1+/pTDLxZ9Nxm+fNmzwTsviGsu5ZJ3skRHP1xyhA8ibyfffMg7lcW/EHQaFM3l
-         hxX4LF141y+HwijpRXueCTLgQwrrl5DS+ffOPRt9qbYfQzjah7PEmsnpbLKM0yzhuyrV
-         1JN7K1gbFuO4M7n0DVWVDbnMIPf0QYQU5OIq1GjoFfOjZ+rzIQwCgQJ7hNI5NsTR4E1e
-         MXVPHHfiIaAEGFAqWtCijIm9AKf9Nh45IROwlKwlSZ/yR32GSl/vNNcCs1Bi1OjPgQKE
-         /mnjwggumaBDqwORspSN5tllW9YRcMQCN9mqzdT+L9IP58bV5Jms8KWzGfpE5u3mamJa
-         NbTg==
-X-Received: by 10.70.31.130 with SMTP id a2mr36514723pdi.61.1437778858861;
-        Fri, 24 Jul 2015 16:00:58 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:bdad:9e5d:aa9:33a9])
-        by smtp.gmail.com with ESMTPSA id qo6sm16546179pab.23.2015.07.24.16.00.57
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 24 Jul 2015 16:00:57 -0700 (PDT)
-In-Reply-To: <xmqqwpxpjk6p.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 24 Jul 2015 14:54:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753288AbbGYBgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2015 21:36:41 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34756 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753083AbbGYBgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2015 21:36:40 -0400
+Received: (qmail 13361 invoked by uid 102); 25 Jul 2015 01:36:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jul 2015 20:36:40 -0500
+Received: (qmail 24303 invoked by uid 107); 25 Jul 2015 01:36:45 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jul 2015 21:36:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jul 2015 18:36:36 -0700
+Content-Disposition: inline
+In-Reply-To: <xmqq4mkto9lg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274607>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jul 24, 2015 at 08:31:55AM -0700, Junio C Hamano wrote:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> -	if (!ref->value) {
->> -		populate_value(ref);
->> +	/*
->> +	 * If the atom is a pseudo_atom then we re-populate the value
->> +	 * into the ref_formatting_state stucture.
->> +	 */
->> +	if (!ref->value || ref->value[atom].pseudo_atom) {
->> +		populate_value(state, ref);
->>  		fill_missing_values(ref->value);
->
-> I am not sure why you need to do this.  populate_value() and
-> fill_missing_values() are fairly heavy-weight operations that are
-> expected to grab everything necessary from scratch, and that is why
-> we ensure that we do not call them more than once for each "ref"
-> with by guarding the calls with "if (!ref->value)".
->
-> This change is breaking that basic arrangement, and worse yet, it
-> forces us re-read everything about that ref, leaking old ref->value.
->
-> Why could this be a good idea?
+> Jeff King <peff@peff.net> writes:
+> 
+> > Whoops. Usually I "format-patch -s" and then add any notes while
+> > sending. But the wifi at OSCON was so abysmal that instead I wrote the
+> > notes directly into the commit message to send the whole thing later.
+> > And of course format-patch is not smart enough to know that I meant
+> > everything after the "---" as notes. :)
+> 
+> I think in the cycle we merged Couder's trailer stuff we updated the
+> helper functions to locate where the S-o-b should go in an existing
+> message and consolidated (or, at least "talked about consolidating")
+> them into a single helper.  I do not think we wrote any special case
+> for "a line with three-dashes and nothing else on it" when we did
+> so, but that function would be the logical place to do so.
 
-I think populate_value() should not take state; that is the root
-cause of this mistake.
+Yeah, it nicely has the concept of "ignore this footer". But we would
+want it only to kick in when doing emails (where the "---" is
+syntactically significant), I would think. So something like the patch
+below (no commit message because I'm in an airport right now; I'll add
+tests and repost in the next day or two).
 
-The flow should be:
-
-    - verify_format() looks at the format string and enumerates all
-      atoms that will ever be used in the output by calling
-      parse_atom() and letting it to fill used_atom[];
-
-    - when ref->value is not yet populated, populate_value() is
-      called, just once.  This uses the enumeration in used_atom[]
-      and stores computed value to refs->value[atom];
-
-    - show_ref() repeatedly calls find_next() to find the next
-      reference to %(...), emits everything before it, and then
-      uses the atom value (i.e. ref->value[atom]).
-
-I would expect that the atom value for pseudos like color and align
-to be parsed and stored in ref->value in populate_value() when it is
-called for the first time for each ref _just once_.
-
-"color:blue" may choose to store "blue" as v->s, and "align:4" may
-choose to do "v->ul = 4".
-
-And the code that uses these values should look more like:
-
-	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
-		struct atom_value *atomv;
-
-		ep = strchr(sp, ')');
-		if (cp < sp)
-			emit(cp, sp);
-		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
-		if (atomv->is_pseudo)
-                	apply_pseudo_state(&state, atomv);
-		else
-			print_value(&state, atomv);
-	}
-
-where apply_pseudo_state() would switch on what kind of pseudo the
-atom is and update the state accordingly, i.e. the "state" munging
-code you added to populate_value() in this patch.
+diff --git a/log-tree.c b/log-tree.c
+index 7b1b57a..8a9c35b 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -688,8 +688,16 @@ void show_log(struct rev_info *opt)
+ 		ctx.from_ident = &opt->from_ident;
+ 	pretty_print_commit(&ctx, commit, &msgbuf);
+ 
+-	if (opt->add_signoff)
+-		append_signoff(&msgbuf, 0, APPEND_SIGNOFF_DEDUP);
++	if (opt->add_signoff) {
++		int ignore = 0;
++		if (ctx.fmt == CMIT_FMT_EMAIL) {
++			const char *dashes = strstr(msgbuf.buf, "---\n");
++			if (dashes &&
++			    (dashes == msgbuf.buf || dashes[-1] == '\n'))
++				ignore = msgbuf.len - (dashes - msgbuf.buf);
++		}
++		append_signoff(&msgbuf, ignore, APPEND_SIGNOFF_DEDUP);
++	}
+ 
+ 	if ((ctx.fmt != CMIT_FMT_USERFORMAT) &&
+ 	    ctx.notes_message && *ctx.notes_message) {
