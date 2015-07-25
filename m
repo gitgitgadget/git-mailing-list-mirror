@@ -1,101 +1,84 @@
-From: "Adam Liter" <adam.liter@gmail.com>
-Subject: Question about git filter-branch with signed commits
-Date: Sat, 25 Jul 2015 15:17:28 -0500
-Message-ID: <5085A037-0E20-4FA4-B553-E54345F4FAA5@gmail.com>
+From: "Olga Nikolova" <olga.nikolova@outlook.com>
+Subject: You can upload now your invited paper
+Date: Sat, 25 Jul 2015 19:30:40 +0300
+Message-ID: <20150725163040.B2F1F3336433@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 25 22:19:37 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 25 23:47:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJ5uw-0006wz-UW
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 22:19:35 +0200
+	id 1ZJ7IJ-0002Xp-CU
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Jul 2015 23:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964864AbbGYURb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2015 16:17:31 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:33867 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964824AbbGYURb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2015 16:17:31 -0400
-Received: by iecrl10 with SMTP id rl10so36513348iec.1
-        for <git@vger.kernel.org>; Sat, 25 Jul 2015 13:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:mime-version:content-type;
-        bh=nXw8PbYa26hya+cf9pLbzvHaYDZ5crOINHB9PRTZ47c=;
-        b=TqiAMXxV6E1THnKGgsjGYkUV9ygv0Z+II7cvXAhpQaKxa7NuZpRWuuUyzfgryxV2tb
-         X3m5AtxDe4P8lA4eNdf30FFJYyvBOEeK+aH9g/HflL5bvkNugichJhz0ynAEvS/4Xk/y
-         crHtPRZX1ehbg8LUboVvj0HsmeRrPsDZwXIoK6b4N/1mQnnoiXWfw8iEimOK+R/xVZLr
-         AKcO4/jJkJDMDwjHjxajUgNvosfT4QB2i3ikSKCvGM3KQTCAMKRb5uAYMsyYS9zNHtlO
-         hRRhMv8L08P0kysUskTq7P2XNKamHz1jNoRGl3IV/m/zAu1v/7UaCzflBAb/7OeSoAo0
-         85uw==
-X-Received: by 10.50.36.8 with SMTP id m8mr6704542igj.16.1437855450531;
-        Sat, 25 Jul 2015 13:17:30 -0700 (PDT)
-Received: from [128.135.230.146] (wireless-230-146.uchicago.edu. [128.135.230.146])
-        by smtp.gmail.com with ESMTPSA id c20sm7972210ioc.40.2015.07.25.13.17.28
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 25 Jul 2015 13:17:29 -0700 (PDT)
-X-Mailer: MailMate (1.9.1r5084)
+	id S964885AbbGYVrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2015 17:47:43 -0400
+Received: from genf174.server4you.net ([217.172.184.70]:59421 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964878AbbGYVrm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Jul 2015 17:47:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 84D0A34A5A3A
+	for <git@vger.kernel.org>; Sat, 25 Jul 2015 23:31:53 +0200 (CEST)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id ViO-rNSxBTmu for <git@vger.kernel.org>;
+	Sat, 25 Jul 2015 23:31:53 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 5E3873399366
+	for <git@vger.kernel.org>; Sat, 25 Jul 2015 20:27:41 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id wPe4o7a23Oe1 for <git@vger.kernel.org>;
+	Sat, 25 Jul 2015 20:27:41 +0200 (CEST)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id B2F1F3336433
+	for <git@vger.kernel.org>; Sat, 25 Jul 2015 18:30:39 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274618>
 
-Hello,
+Dear Professor
 
-I'm trying to clean up the commit history of a git repository by 
-removing certain files. The repository contains signed commits, and when 
-I try to use git filter-branch, the PGP signature is converted to the 
-first line of the commit message.
+You can upload now your invited paper for our conference in Malta, August 17-19: www. wseas. org until July 27, 2015
+OR
+for our conference in Seoul, South Korea, September 5-7, 2015
+until August 20, 2015. URL  www. wseas. org
 
-Is this the expected behavior? If so, is there something that I can do 
-to prevent this from happening?
+Invited Speakers will have also publication in one of our 44 ISI/SCOPUS Journals, double time of presentation
+and they will receive also Certificate from our Secretariat with their name as Invited Speaker.
 
-I'm using git v. 2.4.6. I tried reducing the behavior to a simple case. 
-I asked about this on Stack Overflow 
-(http://stackoverflow.com/q/31552774/2571049), but the question hasn't 
-really gotten any uptake, so I thought I would try asking here too.
+Proceedings are published in Books and CD-ROM and will be indexed in all major indexes (SCOPUS, ISI, EBSCO, British Library, Zentrablatt, ACM, AMS, Scholargoogle, IEE(IET), etc...)
 
-In trying to reproduce the behavior in a minimal way, I did the 
-following:
+See interviews (Video) of our recent invited speakers in the third column of our web site (under: Bulletin Board)
+As you remember we had invited you as Invited Speaker in these conferences with publication of 
+the extended version of your paper in our ISI/SCI Journals (with Impact Factor from Thomson Reuters).
 
-mkdir pgp-git-test
-cd pgp-git-test
-git init
-touch a.txt
-git add a.txt
-git commit -m "Add a.txt" -S
-touch b.txt
-git add b.txt
-git commit -m "Add b.txt" -S
-git filter-branch --index-filter 'git rm --cached --ignore-unmatch 
-a.txt' --prune-empty HEAD
-git log --oneline --decorate
-b4efdf0 (HEAD -> master)  iQIcBAABCgAGBQJVrvqHAAoJ [...] -----END PGP 
-SIGNATURE-----
-9f82e63  iQIcBAABCgAGBQJVrvp7AAoJ [...]  -----END PGP SIGNATURE-----
+The Papers of our Guest Speakers will be published in our Books, Proceedings and E-Library as well as their extended version in one of our 44 collaborating ISI Journals. The last one is an important feature of our conferences and for this reason our conferences are more and more popular (see photos in our web site).
 
-As can be seen after running git log --oneline --decorate, the PGP 
-signature has become the first line of the commit. The rest of the 
-commit message is still there, but it's on a line below the PGP 
-signature.
+All the papers from our previous conferences (since March 2014) have been indexed in ISI (Thomson Reuters) and SCOPUS (through the conference proceedings
+and/or the Journals that publish the extended versions after the conferences)
+as well as in many other major indexes via conference proceedings and/or our 44 ISI (Thomson Reuters) journals and more than 20 SCOPUS indexed journals
 
-How can I prevent this from happening when using git filter-branch?
+Do not send your invited papers by email. Just upload them via www. wseas. org selecting the most appropriate conference
+with the indication (in the Field "notes") INVITED-by-OLGA-NIKOLOVA
+The invited papers are a small percent and are noted in the conference program as Invited papers with 30 minutes' presentation instead of 20 minutes' presentation of the regular papers.
+You could also organize a special session with a minimum of 6 papers.
+Special Session organizers participate free in the conference provided that their session will have at least 5 fully registered papers. In this case, they are also honored as Editors in the Books and Proceedings and as Plenary Speakers.
 
-Also, one thing that I was a bit surprised about when trying to create 
-this minimal example is that the first commit is still there. Does 
-anyone know why the commit history still contains the first commit, 
-since the first commit only involved the file a.txt and since I passed 
---prune-empty to git filter-branch? Shouldn't this commit have been 
-eliminated from the log?
+Contact me for more details: publications@wseas.org 
 
-Thanks in advance for the help! I'm relatively new to git, so apologies 
-for bugging you all if this is a trivial error on my part. Thanks!
+Many Thanks,
 
-Best,
-Adam Liter
+Olga Nikolova
+WSEAS Editorial Office
+--------------------------------------
+If you do not want to participate any longer in our academic activities, send an EMPTY email to me
+with SUBJECT:  << REMOVE git@vger.kernel.org >>
