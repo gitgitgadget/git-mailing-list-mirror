@@ -1,99 +1,149 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 04/10] ref-filter: support printing N lines from tag annotation
-Date: Sun, 26 Jul 2015 00:46:34 -0400
-Message-ID: <CAPig+cS92cJ=OmaG2_HWNXNq9-D5V4f032WqeU0SVh_XCtxpXA@mail.gmail.com>
-References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
-	<1437764685-8633-5-git-send-email-Karthik.188@gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: "git am" and then "git am -3" regression?
+Date: Sun, 26 Jul 2015 13:03:59 +0800
+Message-ID: <CACRoPnR=DSETucY78Xo0RNxHKkqDnTCYFvHsSzWAG7X7z3_DKQ@mail.gmail.com>
+References: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
+	<20150724180921.GA17730@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 06:46:55 2015
+Cc: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 26 07:04:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJDpt-0007ZD-GK
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 06:46:53 +0200
+	id 1ZJE6l-00084J-7r
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 07:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbbGZEqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2015 00:46:36 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:35898 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750960AbbGZEqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2015 00:46:35 -0400
-Received: by ykay190 with SMTP id y190so47153604yka.3
-        for <git@vger.kernel.org>; Sat, 25 Jul 2015 21:46:35 -0700 (PDT)
+	id S932124AbbGZFED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2015 01:04:03 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:36596 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750960AbbGZFEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2015 01:04:01 -0400
+Received: by wicgb10 with SMTP id gb10so71616487wic.1
+        for <git@vger.kernel.org>; Sat, 25 Jul 2015 22:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uKHYqbq37LcRaqg0IF4WN+ezao1jXMExhwYQjojUC34=;
-        b=keyEWA+goPN4+l7cz1/5YBzO6+jbZ3vx+EmVX0/vcgXx5B1acVUKAujT9L6Qws5Vm1
-         ZVG4L+8PJPWzdZRcfcmNlml+aZkuH3dTFSnlNBbx8+uv5YHRLDPwhILJbncPDrluOOnV
-         qeltoEk+JlR9Ki5ObFdJ8lpJjhaqx9J2ihoVQFGpuUR8Yp/fE1fDBkgR3eTkIp1eBSLH
-         QJumBwo3009KnXt5QHVJs5fXy6fvLOWyskZCfo00MdDLSPY/2AItFgJyHJyzbpZwHC4E
-         2ZmhAAVHdUvL375KmKNPkYrWAYmllChZRxoEi/zV9IY1Zv8h9cWRxznhUDIikHiNc6Fz
-         5QUA==
-X-Received: by 10.13.192.132 with SMTP id b126mr23300933ywd.163.1437885994895;
- Sat, 25 Jul 2015 21:46:34 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sat, 25 Jul 2015 21:46:34 -0700 (PDT)
-In-Reply-To: <1437764685-8633-5-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: QFdVc1qZvtooVP1MGerOWvggrYE
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5Gl/l9AsKclwuYZyRY/PrWfFSkIPwsp8vSBJHaQLXp8=;
+        b=tdTna3TckoF+3gXnpJranJGImuuQdUC2+DwBud3bsqsJ4xVq1KhcENZfCqSyEMl22l
+         MKjB9Mr08lW//vP+zsQmc99PwEWd9fntOxOlI0Tg8YdAUhNL0qaCTUmdimVTQZY8sBgq
+         pBQG5OKDcTCzqey8HZ4toLXW/p2CgnEsyeVnvQ9qM0VZAYL5aC5yxfdScgGipecbVYlV
+         2AZpWshOQLiVM8FYRUVmb6tAGvC+vkiLVQ51yier2IbikfwSLiRBsBXAzg/jM2eTBY3f
+         m6d8TMxKQpi44zNkqU6ikRy9382ZHPfJLHlvEfhnl6Fu0l1/bambKSR0K2zymd1zzCzs
+         eUpg==
+X-Received: by 10.194.77.97 with SMTP id r1mr40257012wjw.98.1437887039864;
+ Sat, 25 Jul 2015 22:03:59 -0700 (PDT)
+Received: by 10.194.85.82 with HTTP; Sat, 25 Jul 2015 22:03:59 -0700 (PDT)
+In-Reply-To: <20150724180921.GA17730@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274631>
 
-On Fri, Jul 24, 2015 at 3:04 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
+On Sat, Jul 25, 2015 at 2:09 AM, Jeff King <peff@peff.net> wrote:
+> Yeah, I think this hunk is to blame (though I just read the code and did not
+> test):
 >
-> In 'tag.c' we can print N lines from the annotation of the tag using
-> the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
-> modify 'ref-filter' to support printing of N lines from the annotation
-> of tags.
+> @@ -658,6 +665,8 @@ fi
+>  if test "$(cat "$dotest/threeway")" = t
+>  then
+>         threeway=t
+> +else
+> +       threeway=f
+>  fi
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  builtin/for-each-ref.c                             |   2 +-
->  builtin/tag.c                                      |   4 +
->  ref-filter.c                                       |  51 ++++++++-
->  ref-filter.h                                       |   9 +-
->  ...ter-add-option-to-align-atoms-to-the-left.patch | 124 +++++++++++++++++++++
->  5 files changed, 186 insertions(+), 4 deletions(-)
->  create mode 100644 v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch
+> It comes after the command-line option parsing, so it overrides our option (I
+> think that running "git am -3" followed by "git am --no-3way" would have the
+> same problem). It cannot just check whether $threeway is unset, though, as it
+> may have come from the config.
 
-Somehow you managed to "git add" and "git commit" your v3 patch 1 file
-inside this v4 patch 4/10.
+Thanks for the detailed analysis, I completely agree. Note that the
+code that handles the --message-id option somewhat handles the case
+where $messageid is unset:
 
-> diff --git a/v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch b/v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch
-> new file mode 100644
-> index 0000000..350acae
-> --- /dev/null
-> +++ b/v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch
-> @@ -0,0 +1,124 @@
-> +From 3a07ca1f56f74ca54b7f3c30e3dfd9fe2fed1cc3 Mon Sep 17 00:00:00 2001
-> +From: Karthik Nayak <karthik.188@gmail.com>
-> +Date: Wed, 10 Jun 2015 17:19:55 +0530
-> +Subject: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
-> +
-> +Add a new atom "align" and support %(align:X) where X is a number.
-> +This will align the preceeding atom value to the left followed by
-> +spaces for a total length of X characters. If X is less than the item
-> +size, the entire atom value is printed.
-> +
-> +Helped-by: Duy Nguyen <pclouds@gmail.com>
-> +Mentored-by: Christian Couder <christian.couder@gmail.com>
-> +Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> +Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> +---
-> + ref-filter.c | 41 +++++++++++++++++++++++++++++++++++++++--
-> + ref-filter.h |  1 +
-> + 2 files changed, 40 insertions(+), 2 deletions(-)
+case "$(cat "$dotest/messageid")" in
+t)
+    messageid=-m ;;
+f)
+    messageid= ;;
+esac
+
+However, it still does not handle "git am --no-message-id" followed by
+"git am --message-id", or "git -c am.messageid=true am" followed by
+"git am --no-message-id". I think the same thing occurs for
+--scissors/--no-scissors, as well as the git-apply options as well.
+
+The real problem is that the state directory loading code comes after
+the config loading and option parsing code, and thus overrides any
+variables set.
+
+> We'd need a separate variable, the way the code
+> is ordered now.
+
+If we are just fixing --3way, adding one extra variable won't be that
+bad. However, I think that if we are using this approach to fix all of
+the options, then it would introduce too much code complexity.
+
+> Ideally the code would just be ordered as:
+>
+>   - load config from git-config
+>
+>   - override that with defaults inherited from a previous run
+>
+>   - override that with command-line parsing
+
+So I'm more in favor of this solution. It's feels much more natural to
+me, rather than attempting to workaround the existing code structure.
+
+> but I don't know if there are other ordering gotchas that would break.
+
+For the C code, there won't be any problem, but yeah, fixing it in
+git-am.sh might need a bit more effort.
+
+> It does look like that is how Paul's builtin/am.c does it, which makes
+> me think it might not be broken. It's also possibly I've horribly
+> misdiagnosed the bug. ;)
+
+Nah, it follows the same structure as git-am.sh and so will exhibit
+the same behavior. It currently does something like this:
+
+1. am_state_init() (config settings are loaded)
+2. parse_options()
+3. if (am_in_progress()) am_load(); else am_setup();
+
+So it would be quite trivial to change the control flow such that it is:
+
+1. am_state_init()
+2. if (am_in_progress()) am_load()
+3. parse_options();
+4 if (!am_in_progress()) am_setup()
+
+The next question is, should any options set on the command-line
+affect subsequent invocations? If yes, then the control flow will be
+like:
+
+1. am_state_init();
+2. if (am_in_progress()) am_load();
+3. parse_options();
+4. if (am_in_progress()) am_save_opts(); else am_setup();
+
+where am_save_opts() will write the updated variables back to the
+state directory. What do you think?
+
+Since the builtin-am series is in 'next' already, and the fix in C is
+straightforward, to save time and effort I'm wondering if we could
+just do "am.threeWay patch -> builtin-am series -> bugfix patch in C".
+My university term is starting soon so I may not have so much time,
+but I'll see what I can do :-/
+
+Junio, how do you want to proceed?
+
+Thanks,
+Paul
