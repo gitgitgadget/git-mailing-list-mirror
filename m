@@ -1,235 +1,116 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: FeatureRequest: Build improvements for Windows
-Date: Sun, 26 Jul 2015 17:52:46 +0100
-Organization: OPDS
-Message-ID: <FFF0EDB9DBC94A589A0E403CF053232D@PhilipOakley>
-References: <BAY169-W8210AC5C69796A61AD2236A78F0@phx.gbl>,<BAY169-W30CD27F2F7606F4DF52944A78F0@phx.gbl>,<CA+P7+xpcXAck4HVFGLa4c9JquBTHaD-yZuuO4s0sAfJ50c+NxA@mail.gmail.com>,<BAY169-W84A0734CACD22511DE9B5BA78F0@phx.gbl> <BAY169-W75E45600196FA9E4B9A20CA78F0@phx.gbl>,<02471E10AEC7447DA1B50E7F44555786@PhilipOakley> <BAY169-W133FCD817F235BF1799BF8FA78F0@phx.gbl>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 06/10] ref-filter: add option to match literal pattern
+Date: Sun, 26 Jul 2015 23:51:34 +0530
+Message-ID: <CAOLa=ZQQ1F=DibGW=McxORH9CMkOZ8n5fnMOi0_D++Du-zWStw@mail.gmail.com>
+References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
+ <1437764685-8633-7-git-send-email-Karthik.188@gmail.com> <CAPig+cTAYAxg4aWpaPrHe6Hfz3wCEiypoXZxS_Lir4yNOFzSNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Jacob Keller" <jacob.keller@gmail.com>,
-	"Git List" <git@vger.kernel.org>
-To: "Dangling Pointer" <danglingpointer@outlook.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 18:52:45 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Jul 26 20:22:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJPAI-0006Vq-5F
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 18:52:42 +0200
+	id 1ZJQYv-0008Kv-OD
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 20:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755268AbbGZQwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2015 12:52:38 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:6516 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755199AbbGZQwh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jul 2015 12:52:37 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BnDwDQD7VVPNMPFlxbGYJ8VGmHPrZMhS1ABAEDAQGBLD0QAQEBAQEBAQYBAQEBQAEkG4QeBQEBAQECAQgBAS4eAQEWBgUFBgIDBQIBAxUDCSUUAQQIEgYHAwYBDQYTCAIBAgMBAwUFh3sDCgwJwECJOA0LhSQBAQgCAR+LToJOJ4ISgx+BFAWHFoVnh2wBgQ6DaYVfgy9Gj3CDSYNigjQcgVQ9MQGBBiWBIAEBAQ
-X-IPAS-Result: A2BnDwDQD7VVPNMPFlxbGYJ8VGmHPrZMhS1ABAEDAQGBLD0QAQEBAQEBAQYBAQEBQAEkG4QeBQEBAQECAQgBAS4eAQEWBgUFBgIDBQIBAxUDCSUUAQQIEgYHAwYBDQYTCAIBAgMBAwUFh3sDCgwJwECJOA0LhSQBAQgCAR+LToJOJ4ISgx+BFAWHFoVnh2wBgQ6DaYVfgy9Gj3CDSYNigjQcgVQ9MQGBBiWBIAEBAQ
-X-IronPort-AV: E=Sophos;i="5.15,547,1432594800"; 
-   d="scan'208";a="39477893"
-Received: from host-92-22-15-211.as13285.net (HELO PhilipOakley) ([92.22.15.211])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 26 Jul 2015 17:52:26 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755241AbbGZSWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2015 14:22:06 -0400
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:33058 "EHLO
+	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755203AbbGZSWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2015 14:22:04 -0400
+Received: by oige126 with SMTP id e126so41755843oig.0
+        for <git@vger.kernel.org>; Sun, 26 Jul 2015 11:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=M5dKP3SXfJF35qyGCyxkku8+APEWYLnoB8N63e5uxf4=;
+        b=YoUZX4FnAIZUaPu0jUZyI59tRmkV3pqqbtoyM9b6gJXmxQHqaV+XK877n9h4dkzMBY
+         YcaudkdFjoTBDexBqs4larw95Wvd5BAFtRRvdylhkTNMhXjltgk4DB/0fG75qoJltT6W
+         RtLvxQLyJ1aJNhW2lDMvQ3Pj0h7IuX6wRXUzy0i+V7WdMUQkfWSqE6bP7h6yM6kdLGTQ
+         1ofRZNYNSw1DhLeHrPGGNGbKrl9AlqxLWwJq7ypbIRJB7EaHSNgBtG0GQVcOVhZZ4vJ1
+         SzEpBLtLViKADpHu52EXwbvT9sTxZLUkB/8O42ddF2HZylgSUHEcBI05QH89iyXkeXdc
+         Hy0A==
+X-Received: by 10.202.200.151 with SMTP id y145mr23022473oif.111.1437934923786;
+ Sun, 26 Jul 2015 11:22:03 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Sun, 26 Jul 2015 11:21:34 -0700 (PDT)
+In-Reply-To: <CAPig+cTAYAxg4aWpaPrHe6Hfz3wCEiypoXZxS_Lir4yNOFzSNA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274645>
 
-Hi,
-From: "Dangling Pointer" <danglingpointer@outlook.com>
->I searched in code and found instances of #ifdef _MSC_VER in
->https://github.com/git/git (original repository, not the fork).
+On Sun, Jul 26, 2015 at 10:45 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Jul 24, 2015 at 3:04 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Since 'ref-filter' only has an option to match path names add an
+>> option for plain fnmatch pattern-matching.
+>>
+>> This is to support the pattern matching options which are used in `git
+>> tag -l` and `git branch -l` where we can match patterns like `git tag
+>> -l foo*` which would match all tags which has a "foo*" pattern.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 8f2148f..0a64b84 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -951,6 +951,31 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
+>>
+>>  /*
+>>   * Return 1 if the refname matches one of the patterns, otherwise 0.
+>> + * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
+>> + * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
+>> + * matches "refs/heads/mas*", too).
+>> + */
+>> +static int match_pattern(const char **patterns, const char *refname)
+>> +{
+>> +       for (; *patterns; patterns++) {
+>> +               /*
+>> +                * When no '--format' option is given we need to skip the prefix
+>> +                * for matching refs of tags and branches.
+>> +                */
+>> +               if (!starts_with(*patterns, "refs/tags/"))
+>> +                       skip_prefix(refname, "refs/tags/", &refname);
+>> +               if (!starts_with(*patterns, "refs/heads/"))
+>> +                       skip_prefix(refname, "refs/heads/", &refname);
+>> +               if (!starts_with(*patterns, "refs/remotes/"))
+>> +                       skip_prefix(refname, "refs/remotes/", &refname);
 >
-> I am coming from github, where I have found many native lib
-> repositories have two build files, build.sh and build.cmd with
-
-Git is a *nix code base so rather than using build.*, it obviously uses 
-a Makefile. The makefile can be slightly convoluted because it seeks to 
-have maximum backward compatibility.
-
-> some windows-specific code turds like #ifdef _MSC_VER etc. which
-> nobody appreciate because CL.exe up until last VS release
+> Note the inefficiency here: You're performing an "expensive"
+> starts_with() on each pattern for each refname even though the
+> patterns will never change. You could instead compute starts_with()
+> for each pattern just once, in a preprocessing step, and remember each
+> result as a boolean, and then use the computed booleans here in place
+> of starts_with(). For a few refnames, this may not make a difference,
+> but for a project with a huge number, it could. Whether such an
+> optimization is worth the complexity (at this time or ever) is
+> something that can be answered by taking measurements.
 >
-> wasn't C99 complaint. This has changed with VS2015.
-https://github.com/git/git/blob/master/Documentation/CodingGuidelines#L174
-The C89 compatibility came up recently (2015-04-30). It's still a live 
-issue.
+> Also, the repetition in the code is not all that pretty. You could
+> instead place "refs/tags/", "refs/heads/", and "refs/remotes/" in a
+> table and then loop over them rather than repeating the code for each
+> one, though whether that would be an improvement is likely a judgment
+> call (so not something I'd insist upon).
 >
->
-> If git/git does not share this philosophy of having a build file for
-> both nix and win, then I wonder why do we even have MS compiler
 
-The git/git philosophy is maximum backward compatibility, with Gnu/Linux 
-as
-a given.
+I just put the "starts_with()" code so as to ensure that its only used when
+we don't say "refs/heads/", "refs/remotes/" or "refs/tags/" in the pattern.
+But looking at the tag.c and branch.c implementations this should always be
+done. Hence I think Ill move it outside the loop and make it mandatory as this
+pattern matching is only used by tag and branch and as they by default
+remove the
+path of the ref. I think it'd make sense to remove it here also.
 
-> directives in git codebase in first place? That was the main source of
-> confusion.
->
-> If the repo owner is willing to drop the old compiler support for
-> Windows, since many windows users do not build from source
-Surely it's a case of building on the shoulders of former giants. Many
-are still using VS200* out in the real world (my work uses V2008 and 
-VS2006 commonly because of the need to support older embedded equipment)
-
-> and tend to download the compiled binaries anyway.  If they want, they
-> can always use MinGW and VS2015 to build.
-
-The G4W projects do provide binaries as well as source code, and support
-older compilers... It's the choice here.
->
->
-> The idea is to keep the codebase clean from outdated _MSC_VER
-> conditions. In this age,
-> free CI service (like AppVeyor) will build your code with latest
-> compiler (MinGW GCC and MSVCR 2015) in a matter of minutes
-> and then make the release artifacts available for download. I really
-> don't see any point in still using 8 years old compiler on a 15
-> years old OS
- That's only a third of my coding life ;-). It's nice to use the latest
-and greatest, but sometimes "if it ain't broke, don't fix it" applies to
-choosing what to spend one's free hours on.
-
-> when we can just throw a .yml (appveyor config) file in the repo root
-> and let the cloud handle the build business and
-> verify the build by running tests. (well we are still using mailing
-> lists, aren't we ;-)
->
->
-> Besides, I had no idea about this fork: https://github.com/msysgit/git
-> but it seems to be falling behind significantly from the
->
-> upstream master (git/git).
-
-If you look at the home page of the
-https://github.com/git-for-windows/git/wiki/ I provided, you'll be able
-to see why/how the team decided to leave that fork behind (though it did
-get a major security fix applied). Folks on the *nix side can be using
-v1.7.x and still have it all work, so there is no shame in using the
-msysgit1.9.5.
-
-The main point being that Git seeks to maintain backward compatibility
-and is careful about how code is introduced.
-
-It can be frustrating when one's latest and greatest idea is not as
-readily picked up as hoped, but a moment (or two's) reflection will help
-understand the broader issues that may pertain. That said useful new
-fetures (with justification, code, documentation, and review ;-) are
-welcome.
-
-Do have a look at the
-https://github.com/git-for-windows/git/wiki/How-to-participate
-
->
-> ----------------------------------------
->> From: philipoakley@iee.org
->> (In-line posting preferred; top-posting deprecated ;-)
->> (retain all cc's)
->>
->>> Hmm, it is already happening, isn't it? There is already a support
->>> of
->>> MSVCR in git's code base. I am referring to replacing that current
->>> support of 'older' MSVCR in favor of the latest one, so to make the
->>> git's code base comparatively coherent and organized (as some/many
->>> instances of #ifdef _MSC_VER and #if define (_MSC_VER) && _MSC_VER <
->>> xxx etc. will be gone, for instance we don't need fallback for
->>> sprint
->>> or snprintf since C99 std support for those is provisioned).
->>>
->>
->> It's not clear if you (DP) are asking about using being able to use
->> the
->> Visual Studio IDE and gui to help visualise and develop the code, or
->> to
->> simply use the underlying MS compiler when making (using the
->> Makefile)
->> the Git code base.
->>
->> One can compile the codebase using the MS compiler (given a suitable
->> environment, and setting the right Makefile flags), but that may not
->> be
->> what you were thinking of.
->>
->> The Windows team recently decided that the older Msysgit approach
->> should
->> be retired (can't find the link just now) and a new approach based on
->> Msys2 started (http://git-for-windows.github.io/ and
->> https://github.com/git-for-windows/git/wiki/FAQ). This is nearing
->> completion.
->>
->> Meanwhile I have been working on fixing the msvc-build script, which
->> can
->> produce a git.sln and associated files (targeted originally at
->> VS2008),
->> and is now at the 'Validate this with the Windows guys' stage
->> (http://marc.info/?l=git&m=143750907804881&w=2 et.seq.).
->>
->> My code, for the new G4W SDK, has been rebased from the msygit
->> version,
->> and is now at https://github.com/git-for-windows/git/pull/256
->>
->> Does that help for creating an IDE compilable version?
->>
->> Also, many thanks for yournote about the new VS Community edition
->> (I'm
->> still mainly working on an XP notebook for ease of carry).
->>
->> As an open community of independently minded folks it can tae a time
->> to
->> gel around a reasonably common approach, especially as Git will
->> always
->> be primarily focussed on Linux (it **is** the Linux (Linus's) VCS!).
->>
->>>
->>>>> From: jacob.keller@gmail.com
->>>>> On Sat, Jul 25, 2015 at 11:23 PM, Dangling Pointer
->>>>> <danglingpointer@outlook.com> wrote:
->>>>>> Hello,
->>>>>>
->>>>>> In my understanding, the ratio between the mere consumers of git
->>>>>> on
->>>>>> Windows vs. people who compile git for Windows is 100,000 : 1. If
->>>>>> there is a breaking change in the workflow of the latter set, who
->>>>>> use Visual Studio to build git from source, I assume that is
->>>>>> doable
->>>>>> given a good reason, hence this post.
->>>>>>
->>>>>> With VS 2015, C99 support is "finally" added with some C11
->>>>>> features
->>>>>> as well. See this blog:
->>>>>> http://blogs.msdn.com/b/vcblog/archive/2015/06/19/c-11-14-17-features-in-vs-2015-rtm.aspx.
->>>>>> One of the edition of new VS is Community edition, which is like
->>>>>> professional edition but is free (also much superior than Express
->>>>>> edition) and meant for open source projects. VS2015 also has the
->>>>>> ability to target compiler for Wind-XP.
->>>>>>
->>>>>
->>>>> I think the big issue is whether it has support for the various
->>>>> unix
->>>>> interfaces and unix shell commands we use. MinGW/MSYS comes with
->>>>> support for the unix interface, which I don't believe is that
->>>>> actually
->>>>> supported via MSYS and I don't know if VS2015 is supported? I
->>>>> don't
->>>>> think it's due to the C99 but due to need of posix interface which
->>>>> is
->>>>> not normally (fully) provided by Windows.
->>
->> Git's code retains a C89 compatibility (IIUC).
->>
->>>>>
->>>>> Regards,
->>>>> Jake --
->> --
->> Philip
+-- 
+Regards,
+Karthik Nayak
