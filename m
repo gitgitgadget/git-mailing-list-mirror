@@ -1,109 +1,108 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 06/10] ref-filter: add option to match literal pattern
-Date: Sun, 26 Jul 2015 01:15:35 -0400
-Message-ID: <CAPig+cTAYAxg4aWpaPrHe6Hfz3wCEiypoXZxS_Lir4yNOFzSNA@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 04/10] ref-filter: support printing N lines from tag annotation
+Date: Sun, 26 Jul 2015 10:45:09 +0530
+Message-ID: <CAOLa=ZRGNPBA6bOOG+KQafW02bjcTEJdU4BJ7hVzNDL7n9Hf7Q@mail.gmail.com>
 References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
-	<1437764685-8633-7-git-send-email-Karthik.188@gmail.com>
+ <1437764685-8633-5-git-send-email-Karthik.188@gmail.com> <CAPig+cS92cJ=OmaG2_HWNXNq9-D5V4f032WqeU0SVh_XCtxpXA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 07:15:48 2015
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Jul 26 07:15:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJEHq-0002lc-P9
+	id 1ZJEHr-0002lc-Fq
 	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 07:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932128AbbGZFPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2015 01:15:37 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:36073 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041AbbGZFPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2015 01:15:36 -0400
-Received: by ykay190 with SMTP id y190so47365997yka.3
-        for <git@vger.kernel.org>; Sat, 25 Jul 2015 22:15:35 -0700 (PDT)
+	id S932149AbbGZFPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2015 01:15:41 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:34998 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932130AbbGZFPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2015 01:15:39 -0400
+Received: by oihq81 with SMTP id q81so37485520oih.2
+        for <git@vger.kernel.org>; Sat, 25 Jul 2015 22:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=E/cV/m/no/bhp2idqmDy1ir1BBF0eWeecET+6X7LFUo=;
-        b=vIKJtVjK04+prmv3vuYhAhYLPaRr9LEky5FdjIGPB5cXvigK3K1ClIEfg7oe6Yqn+T
-         xTS78+gLBb9meFnos2NbIE7y2p632TD8qpa5geU03lTes2GONd1bkhfIdrYrvZe4516I
-         BJgd6G09XRvrfC3J1jcX13LA2Lo7InyggI0XeATjz0FN+9fqRIxjeu0+SvDjBXOUg8z0
-         4WMYOYV0ozL8TBRzG8AyhEfIil7U0E/uURG8/DMM7MqAcWgJ6iEu01MGRc3TyYvOk1qn
-         WbwYs8qol2Y8D6ELRdx+7pESvAq7S/tl97KaTy/Z3yMwFZw1L/oUytiJq10/oaI2DwGe
-         1qqA==
-X-Received: by 10.13.207.1 with SMTP id r1mr23668588ywd.166.1437887735809;
- Sat, 25 Jul 2015 22:15:35 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sat, 25 Jul 2015 22:15:35 -0700 (PDT)
-In-Reply-To: <1437764685-8633-7-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: LQ4B1GYAxliFJM0173lKdluMBnA
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=C71nGMeiFcPEYLxlV0krnXB1Y2HqDmHsL2At73hrUKs=;
+        b=LWhpiiD8lw7XQ1y/3P5Ljq/A2BVtslRItKTupx8HNGz8rA2bEhVfPnbKMHE0eGjzbW
+         TyvUvMN84Wg+8e8LzAW+bi29UylsUxnuJticxEboKX4iLFAYnGrf5gKa4EIqirB/AYU7
+         LG3Ylz7O9lpPCSiY67Bz8PZOe77JEbnrNfDKLxi4QE2/Abj1+oUdKgIeN4E1DnK5Bbm/
+         WjjDNdBMPwjL6diDNKaU1y1K8P1pPMEJ1WPI0LhXHiMDdjhbm3G1Vsdm7hiZ3kyuPhZP
+         cU121VYG4jF966AnZDrKbrMJuBBCIk+yEysED4DaQQqjeaFvV4TTKZzBNnT4LG7Aec8J
+         pPHw==
+X-Received: by 10.202.73.198 with SMTP id w189mr21189099oia.102.1437887738521;
+ Sat, 25 Jul 2015 22:15:38 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Sat, 25 Jul 2015 22:15:09 -0700 (PDT)
+In-Reply-To: <CAPig+cS92cJ=OmaG2_HWNXNq9-D5V4f032WqeU0SVh_XCtxpXA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274634>
 
-On Fri, Jul 24, 2015 at 3:04 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Since 'ref-filter' only has an option to match path names add an
-> option for plain fnmatch pattern-matching.
+On Sun, Jul 26, 2015 at 10:16 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Jul 24, 2015 at 3:04 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> In 'tag.c' we can print N lines from the annotation of the tag using
+>> the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
+>> modify 'ref-filter' to support printing of N lines from the annotation
+>> of tags.
+>>
+>> Mentored-by: Christian Couder <christian.couder@gmail.com>
+>> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  builtin/for-each-ref.c                             |   2 +-
+>>  builtin/tag.c                                      |   4 +
+>>  ref-filter.c                                       |  51 ++++++++-
+>>  ref-filter.h                                       |   9 +-
+>>  ...ter-add-option-to-align-atoms-to-the-left.patch | 124 +++++++++++++++++++++
+>>  5 files changed, 186 insertions(+), 4 deletions(-)
+>>  create mode 100644 v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch
 >
-> This is to support the pattern matching options which are used in `git
-> tag -l` and `git branch -l` where we can match patterns like `git tag
-> -l foo*` which would match all tags which has a "foo*" pattern.
+> Somehow you managed to "git add" and "git commit" your v3 patch 1 file
+> inside this v4 patch 4/10.
+
+Ya! removed it, thanks.
+
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 8f2148f..0a64b84 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -951,6 +951,31 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
->
->  /*
->   * Return 1 if the refname matches one of the patterns, otherwise 0.
-> + * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
-> + * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
-> + * matches "refs/heads/mas*", too).
-> + */
-> +static int match_pattern(const char **patterns, const char *refname)
-> +{
-> +       for (; *patterns; patterns++) {
-> +               /*
-> +                * When no '--format' option is given we need to skip the prefix
-> +                * for matching refs of tags and branches.
-> +                */
-> +               if (!starts_with(*patterns, "refs/tags/"))
-> +                       skip_prefix(refname, "refs/tags/", &refname);
-> +               if (!starts_with(*patterns, "refs/heads/"))
-> +                       skip_prefix(refname, "refs/heads/", &refname);
-> +               if (!starts_with(*patterns, "refs/remotes/"))
-> +                       skip_prefix(refname, "refs/remotes/", &refname);
+>> diff --git a/v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch b/v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch
+>> new file mode 100644
+>> index 0000000..350acae
+>> --- /dev/null
+>> +++ b/v3-0001-ref-filter-add-option-to-align-atoms-to-the-left.patch
+>> @@ -0,0 +1,124 @@
+>> +From 3a07ca1f56f74ca54b7f3c30e3dfd9fe2fed1cc3 Mon Sep 17 00:00:00 2001
+>> +From: Karthik Nayak <karthik.188@gmail.com>
+>> +Date: Wed, 10 Jun 2015 17:19:55 +0530
+>> +Subject: [PATCH v3 1/9] ref-filter: add option to align atoms to the left
+>> +
+>> +Add a new atom "align" and support %(align:X) where X is a number.
+>> +This will align the preceeding atom value to the left followed by
+>> +spaces for a total length of X characters. If X is less than the item
+>> +size, the entire atom value is printed.
+>> +
+>> +Helped-by: Duy Nguyen <pclouds@gmail.com>
+>> +Mentored-by: Christian Couder <christian.couder@gmail.com>
+>> +Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+>> +Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> +---
+>> + ref-filter.c | 41 +++++++++++++++++++++++++++++++++++++++--
+>> + ref-filter.h |  1 +
+>> + 2 files changed, 40 insertions(+), 2 deletions(-)
 
-Note the inefficiency here: You're performing an "expensive"
-starts_with() on each pattern for each refname even though the
-patterns will never change. You could instead compute starts_with()
-for each pattern just once, in a preprocessing step, and remember each
-result as a boolean, and then use the computed booleans here in place
-of starts_with(). For a few refnames, this may not make a difference,
-but for a project with a huge number, it could. Whether such an
-optimization is worth the complexity (at this time or ever) is
-something that can be answered by taking measurements.
 
-Also, the repetition in the code is not all that pretty. You could
-instead place "refs/tags/", "refs/heads/", and "refs/remotes/" in a
-table and then loop over them rather than repeating the code for each
-one, though whether that would be an improvement is likely a judgment
-call (so not something I'd insist upon).
 
-> +               if (!wildmatch(*patterns, refname, 0, NULL))
-> +                       return 1;
-> +       }
-> +       return 0;
-> +}
+-- 
+Regards,
+Karthik Nayak
