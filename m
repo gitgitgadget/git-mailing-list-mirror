@@ -1,113 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git am" and then "git am -3" regression?
-Date: Sun, 26 Jul 2015 01:21:00 -0400
-Message-ID: <20150726052100.GA31790@peff.net>
-References: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
- <20150724180921.GA17730@peff.net>
- <CACRoPnR=DSETucY78Xo0RNxHKkqDnTCYFvHsSzWAG7X7z3_DKQ@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 02/10] ref-filter: make the 'color' use ref_formatting_state
+Date: Sun, 26 Jul 2015 11:10:10 +0530
+Message-ID: <CAOLa=ZRz9LL5heW2FOhZje+=5W_Ybtm+Rcsm-RH=eKXoh5yw2Q@mail.gmail.com>
+References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
+ <1437764685-8633-3-git-send-email-Karthik.188@gmail.com> <CAPig+cQEKrjePskjSacrf3SbLZR7_ADxTLwcV7vBPcjUxBLiEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 07:21:10 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Jul 26 07:40:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJEN3-0008CG-ET
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 07:21:09 +0200
+	id 1ZJEg9-0002SV-DV
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jul 2015 07:40:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932152AbbGZFVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2015 01:21:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34969 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932130AbbGZFVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2015 01:21:03 -0400
-Received: (qmail 24389 invoked by uid 102); 26 Jul 2015 05:21:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Jul 2015 00:21:03 -0500
-Received: (qmail 31261 invoked by uid 107); 26 Jul 2015 05:21:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Jul 2015 01:21:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Jul 2015 01:21:00 -0400
-Content-Disposition: inline
-In-Reply-To: <CACRoPnR=DSETucY78Xo0RNxHKkqDnTCYFvHsSzWAG7X7z3_DKQ@mail.gmail.com>
+	id S932194AbbGZFkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2015 01:40:41 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:35368 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932141AbbGZFkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2015 01:40:40 -0400
+Received: by obbop1 with SMTP id op1so39665505obb.2
+        for <git@vger.kernel.org>; Sat, 25 Jul 2015 22:40:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YxxCXE6JQx6N9ckc+Q/UHU5sZDNjkACGv1f7slqQ2TA=;
+        b=y20+9j2dZVE1cRJcDi/M8PI9g0zhwXhWNMo8xJyH8ov8fFD5lSrFYPtff02nw/0+Mm
+         toYbVMtiCWFpOsJV9Pnvhwo3SMzw/jIaQM3quqlON12qpFohhQ7Y1KEkmraMAbN6iN+0
+         xlaxOFAcis5Xo2ejxUwS9zJpmqlnx60tPwGXoB3tt7Hd2rMUpFbu6CAucOnpXm3iKnMs
+         /KCyPSoOL1WPXZcoEjyeyOieB2ODdnreE9/05Ha6gwL+Rc8l7IRqbqXfJmcs94lLER9D
+         ZA+J9DRTmngYPicL87gHMXcRpxKb7Fa8X7Jxg2bBMC7Nz/oarFaMur5BsM2geTAzsuD8
+         YOfg==
+X-Received: by 10.182.204.38 with SMTP id kv6mr22056162obc.70.1437889239716;
+ Sat, 25 Jul 2015 22:40:39 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Sat, 25 Jul 2015 22:40:10 -0700 (PDT)
+In-Reply-To: <CAPig+cQEKrjePskjSacrf3SbLZR7_ADxTLwcV7vBPcjUxBLiEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274636>
 
-On Sun, Jul 26, 2015 at 01:03:59PM +0800, Paul Tan wrote:
+On Sun, Jul 26, 2015 at 9:42 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> Should 'color' should be declared 'char *' rather than 'const char *'?
+> It's always assigned via xstrdup(), and if declared 'char *', you
+> wouldn't have to cast away the 'const' when freeing it.
+>
 
-> > Ideally the code would just be ordered as:
-> >
-> >   - load config from git-config
-> >
-> >   - override that with defaults inherited from a previous run
-> >
-> >   - override that with command-line parsing
-> 
-> So I'm more in favor of this solution. It's feels much more natural to
-> me, rather than attempting to workaround the existing code structure.
+yes, will change.
 
-Yeah, I really prefer it, too. I just didn't know if there would be
-other confusing fallouts from changing the ordering. But since you have
-been deep in this code recently, I trust your judgement. :)
+>
+> While reviewing patch 1/10, it required more effort and was
+> distracting to have to separate out (mentally) changes which were
+> specific to the new %(align:X) pseudo-atom and those which introduced
+> the "formatting state". As such, it probably would be a good idea to
+> aim for the three distinct patches suggested by Junio rather than
+> aiming, up front, to merge the first two. After all, they are
+> conceptually distinct changes, and keeping them separate is friendlier
+> to reviewers. In the end, you may find that patch 1 is so trivial that
+> it can be merged with patch 2 without making review more difficult,
+> however, keeping them distinct during development helps you avoid
+> conflating unrelated changes.
+>
 
-> > It does look like that is how Paul's builtin/am.c does it, which makes
-> > me think it might not be broken. It's also possibly I've horribly
-> > misdiagnosed the bug. ;)
-> 
-> Nah, it follows the same structure as git-am.sh and so will exhibit
-> the same behavior. It currently does something like this:
-> 
-> 1. am_state_init() (config settings are loaded)
-> 2. parse_options()
-> 3. if (am_in_progress()) am_load(); else am_setup();
+Yes! I'm doing that like Junio suggested. Thanks for bringing it up :)
 
-Ah, right. I took the am_state_init() to be the part where we loaded the
-existing options, and didn't notice the later am_load().
-
-> The next question is, should any options set on the command-line
-> affect subsequent invocations? If yes, then the control flow will be
-> like:
-> 
-> 1. am_state_init();
-> 2. if (am_in_progress()) am_load();
-> 3. parse_options();
-> 4. if (am_in_progress()) am_save_opts(); else am_setup();
-> 
-> where am_save_opts() will write the updated variables back to the
-> state directory. What do you think?
-
-I don't think we need to go that direction.  The usual thought process
-(mine, anyway) is:
-
-  1. I want to apply a series, and I want to use option A.
-
-  2. Oops, one of the patches didn't apply. Let's retry it with option B
-     (usually "-3").
-
-  3. OK, that worked. Now let's try the rest of the patches.
-
-I wouldn't expect in step 3 to have options from step 2 persist. That
-was just about wiggling that _one_ patch. Whereas options from step 1
-are about the whole series.
-
-> Since the builtin-am series is in 'next' already, and the fix in C is
-> straightforward, to save time and effort I'm wondering if we could
-> just do "am.threeWay patch -> builtin-am series -> bugfix patch in C".
-> My university term is starting soon so I may not have so much time,
-> but I'll see what I can do :-/
-
-Yeah, having to worry about two implementations of "git am" is a real
-pain. If we are close on merging the builtin version, it makes sense to
-me to hold off on the am.threeway feature until that is merged. Trying
-to fix the ordering of the script that is going away isn't a good use of
-anybody's time.
-
--Peff
+-- 
+Regards,
+Karthik Nayak
