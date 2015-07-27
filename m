@@ -1,199 +1,104 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 3/5] pseudorefs: create and use pseudoref update and delete functions
-Date: Mon, 27 Jul 2015 16:08:38 -0400
-Message-ID: <1438027720-23074-4-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 5/5] sequencer: replace write_cherry_pick_head with update_ref
+Date: Mon, 27 Jul 2015 16:08:40 -0400
+Message-ID: <1438027720-23074-6-git-send-email-dturner@twopensource.com>
 References: <1438027720-23074-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu, sunshine@sunshineco.com,
 	philipoakley@iee.org
-X-From: git-owner@vger.kernel.org Mon Jul 27 22:08:59 2015
+X-From: git-owner@vger.kernel.org Mon Jul 27 22:09:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJohl-00043a-V7
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 22:08:58 +0200
+	id 1ZJoht-00047X-Ql
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 22:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754736AbbG0UIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 16:08:53 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:33783 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754680AbbG0UIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 16:08:50 -0400
-Received: by qged69 with SMTP id d69so60328378qge.0
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 13:08:49 -0700 (PDT)
+	id S1754742AbbG0UI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2015 16:08:57 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:32780 "EHLO
+	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754729AbbG0UIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2015 16:08:52 -0400
+Received: by qkdl129 with SMTP id l129so43755659qkd.0
+        for <git@vger.kernel.org>; Mon, 27 Jul 2015 13:08:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ikaCM8lCawb4Wb23r8Iq54goapdQGnGNPskKTuXtHp4=;
-        b=IU8nh00k+fNLNO8WySP8ibNGxs7rwH6YbdXCingOJ4wU4GLkIkwlBTbRnLxh3g8/PU
-         eBbxDsEWLEcxIcHesVdYOugDtZTORJDQwSezhZvVJfiR0oC/W637Ep5cLSDHWazlnX3o
-         dTH4HJnRxRfEWG/rkLXTokECqetA32ynGPiGz95xv7ZgD4qgMt9oiHHWztMusielpu7w
-         XcBpmjufTFFdnwGr1gbWIGPrQADLx+c5LfSG++npiJt3XRa7krp1CJHkdDDiy9769mZ/
-         ud3+rGdlAHDCIeT2mXn5JTps8AlzSg25Fs5qgZ4bhQFhd0R9/BgS0MAluajqk1OuTXMP
-         jyKA==
-X-Gm-Message-State: ALoCoQk5jfOXKitrdq7ymw801uCOZsgqRbchR8Xstph6XLsqhG+iIC0sxf0YjNVGkr8r1Khz1/KK
-X-Received: by 10.140.85.208 with SMTP id n74mr43004337qgd.67.1438027729539;
-        Mon, 27 Jul 2015 13:08:49 -0700 (PDT)
+        bh=kpeB4PvvU++ziEQgbk6bNELkh94vU9kZSIzUikp9EDM=;
+        b=QS+08GirOofOqIS8u7Curl3mE5w6HsahTIoNTOlglMbi7HZDbQypsC4iCrFZmWn/Jd
+         HNiXkO9nw0rte7sdsOXYt1MqjyTODar1aicaAl364FWZgE9OUY9YOCu1iolJhf015e99
+         xOHHxN7BYzvgAgNl56YVkby0GIjy6EG6xYUofaDaYL0WfTFb7MgARHahgj5hqKyOlpDQ
+         J3TFVufkzwsuYAuwiCm3HL9JBlQjpu52yjaoiUlLUOEGVxMtD710mC/RZzRfi0dKeaiU
+         jnQ5cJ8htpZ4GrhH4GbBIpv53s7xk/OXi+NZKlv3RGk+2GCGW9hKhoWIEt7a276naTOF
+         /dew==
+X-Gm-Message-State: ALoCoQleeth8iGbUoF/mq8y82C59NXZ4O3EPq/g1vPSYXOLi5hhAIym8JZz2tAHCc3VL7u1JpJz+
+X-Received: by 10.55.43.84 with SMTP id r81mr44130387qkh.8.1438027732102;
+        Mon, 27 Jul 2015 13:08:52 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 34sm9893690qkz.38.2015.07.27.13.08.47
+        by smtp.gmail.com with ESMTPSA id 34sm9893690qkz.38.2015.07.27.13.08.50
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jul 2015 13:08:48 -0700 (PDT)
+        Mon, 27 Jul 2015 13:08:51 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1438027720-23074-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274704>
 
-Pseudorefs should not be updated through the ref transaction
-API, because alternate ref backends still need to store pseudorefs
-in GIT_DIR (instead of wherever they store refs).  Instead,
-change update_ref and delete_ref to call pseudoref-specific
-functions.
+Now update_ref (via write_pseudoref) does almost exactly what
+write_cherry_pick_head did, so we can remove write_cherry_pick_head
+and just use update_ref.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 92 insertions(+), 8 deletions(-)
+ sequencer.c | 23 ++++-------------------
+ 1 file changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 0d10b7b..119ac9c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2871,12 +2871,87 @@ static int is_pseudoref(const char *refname)
- 	return 1;
+diff --git a/sequencer.c b/sequencer.c
+index c4f4b7d..554a704 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -158,23 +158,6 @@ static void free_message(struct commit *commit, struct commit_message *msg)
+ 	unuse_commit_buffer(commit, msg->message);
  }
  
-+static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
-+			   const unsigned char *old_sha1, struct strbuf *err)
-+{
-+	const char *filename;
-+	int fd;
-+	static struct lock_file lock;
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = -1;
-+
-+	strbuf_addf(&buf, "%s\n", sha1_to_hex(sha1));
-+
-+	filename = git_path("%s", pseudoref);
-+	fd = hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
-+	if (fd < 0) {
-+		strbuf_addf(err, "Could not open '%s' for writing: %s",
-+			    filename, strerror(errno));
-+		return -1;
-+	}
-+
-+	if (old_sha1) {
-+		unsigned char actual_old_sha1[20];
-+		read_ref(pseudoref, actual_old_sha1);
-+		if (hashcmp(actual_old_sha1, old_sha1)) {
-+			strbuf_addf(err, "Unexpected sha1 when writing %s", pseudoref);
-+			rollback_lock_file(&lock);
-+			goto done;
-+		}
-+	}
-+
-+	if (write_in_full(fd, buf.buf, buf.len) != buf.len) {
-+		strbuf_addf(err, "Could not write to '%s'", filename);
-+		rollback_lock_file(&lock);
-+		goto done;
-+	}
-+
-+	commit_lock_file(&lock);
-+	ret = 0;
-+done:
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
-+static int delete_pseudoref(const char *pseudoref, const unsigned char *old_sha1)
-+{
-+	static struct lock_file lock;
-+	const char *filename;
-+
-+	filename = git_path("%s", pseudoref);
-+
-+	if (old_sha1 && !is_null_sha1(old_sha1)) {
-+		int fd;
-+		unsigned char actual_old_sha1[20];
-+
-+		fd = hold_lock_file_for_update(&lock, filename,
-+					       LOCK_DIE_ON_ERROR);
-+		if (fd < 0)
-+			die_errno(_("Could not open '%s' for writing"), filename);
-+		read_ref(pseudoref, actual_old_sha1);
-+		if (hashcmp(actual_old_sha1, old_sha1)) {
-+			warning("Unexpected sha1 when deleting %s", pseudoref);
-+			return -1;
-+		}
-+
-+		unlink(filename);
-+		rollback_lock_file(&lock);
-+	} else {
-+		unlink(filename);
-+	}
-+
-+	return 0;
-+}
-+
- int delete_ref(const char *refname, const unsigned char *old_sha1,
- 	       unsigned int flags)
+-static void write_cherry_pick_head(struct commit *commit, const char *pseudoref)
+-{
+-	const char *filename;
+-	int fd;
+-	struct strbuf buf = STRBUF_INIT;
+-
+-	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
+-
+-	filename = git_path("%s", pseudoref);
+-	fd = open(filename, O_WRONLY | O_CREAT, 0666);
+-	if (fd < 0)
+-		die_errno(_("Could not open '%s' for writing"), filename);
+-	if (write_in_full(fd, buf.buf, buf.len) != buf.len || close(fd))
+-		die_errno(_("Could not write to '%s'"), filename);
+-	strbuf_release(&buf);
+-}
+-
+ static void print_advice(int show_hint, struct replay_opts *opts)
  {
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
+ 	char *msg = getenv("GIT_CHERRY_PICK_HELP");
+@@ -607,9 +590,11 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	 * write it at all.
+ 	 */
+ 	if (opts->action == REPLAY_PICK && !opts->no_commit && (res == 0 || res == 1))
+-		write_cherry_pick_head(commit, "CHERRY_PICK_HEAD");
++		update_ref(NULL, "CHERRY_PICK_HEAD", commit->object.sha1, NULL,
++			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
+ 	if (opts->action == REPLAY_REVERT && ((opts->no_commit && res == 0) || res == 1))
+-		write_cherry_pick_head(commit, "REVERT_HEAD");
++		update_ref(NULL, "REVERT_HEAD", commit->object.sha1, NULL,
++			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
  
-+	if (is_pseudoref(refname))
-+		return delete_pseudoref(refname, old_sha1);
-+
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_sha1,
-@@ -3970,17 +4045,25 @@ int update_ref(const char *msg, const char *refname,
- 	       const unsigned char *new_sha1, const unsigned char *old_sha1,
- 	       unsigned int flags, enum action_on_err onerr)
- {
--	struct ref_transaction *t;
-+	struct ref_transaction *t = NULL;
- 	struct strbuf err = STRBUF_INIT;
-+	int ret = 0;
- 
--	t = ref_transaction_begin(&err);
--	if (!t ||
--	    ref_transaction_update(t, refname, new_sha1, old_sha1,
--				   flags, msg, &err) ||
--	    ref_transaction_commit(t, &err)) {
-+	if (is_pseudoref(refname) && 0) {
-+		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
-+	} else {
-+		t = ref_transaction_begin(&err);
-+		if (!t ||
-+		    ref_transaction_update(t, refname, new_sha1, old_sha1,
-+					   flags, msg, &err) ||
-+		    ref_transaction_commit(t, &err)) {
-+			ret = 1;
-+			ref_transaction_free(t);
-+		}
-+	}
-+	if (ret) {
- 		const char *str = "update_ref failed for ref '%s': %s";
- 
--		ref_transaction_free(t);
- 		switch (onerr) {
- 		case UPDATE_REFS_MSG_ON_ERR:
- 			error(str, refname, err.buf);
-@@ -3995,7 +4078,8 @@ int update_ref(const char *msg, const char *refname,
- 		return 1;
- 	}
- 	strbuf_release(&err);
--	ref_transaction_free(t);
-+	if (t)
-+		ref_transaction_free(t);
- 	return 0;
- }
- 
+ 	if (res) {
+ 		error(opts->action == REPLAY_REVERT
 -- 
 2.0.4.315.gad8727a-twtrsrc
