@@ -1,106 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] graph.c: visual difference on subsequent series
-Date: Mon, 27 Jul 2015 13:17:40 -0700
-Message-ID: <xmqqegjticd7.fsf@gitster.dls.corp.google.com>
-References: <1415626412-573-1-git-send-email-anarcat@koumbit.org>
-	<87twspe6ix.fsf@marcos.anarc.at>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git branch command is incompatible with bash
+Date: Mon, 27 Jul 2015 23:11:04 +0200
+Message-ID: <55B69E68.90306@kdbg.org>
+References: <20150727121253.GC17338@2vizcon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@koumbit.org>
-X-From: git-owner@vger.kernel.org Mon Jul 27 22:17:52 2015
+To: Anatol Rudolph <a.rudolph@2vizcon.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 23:11:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJoqL-0003PP-Jx
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 22:17:49 +0200
+	id 1ZJpg1-0007Ry-Ol
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 23:11:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391AbbG0URp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jul 2015 16:17:45 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:36742 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbbG0URo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 16:17:44 -0400
-Received: by pdjr16 with SMTP id r16so58366179pdj.3
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 13:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=2fvloNDq7U3fPzhPIw43f9LVc1JRNHSa2BcQXMEgWOc=;
-        b=CXjGRq6bmeEfpU8aO6/53BCsJ4TW0KVm/Hz+UBS2/eJCkqMRmtrq2gfoVZDKqcwTtD
-         tpL94DQ3jHre8jVXwPV04R++DZE30UEpLleun7nsauLKJEVrlZyIs1YnD1ge7VwhBgEq
-         Q6P+GRuFOgjmz8nniFM7Lhw6SBIB2dkWn1TaBDVtdaK4KsbmSaA8GYdFRrpDjO9ZO7rF
-         YOFe4W37jl7op/gEM1pNp05b2TVo2Cmar6fX/GirMlXJg7l3+iaTWfgZwGzU73LWaTC9
-         4Wv8qOMuj3rgu+ZGPT+DYIL5yuN3l4BiQcKmyIz31ntLs1gW+ihAORoneo9Gx5fPc3iQ
-         GUqA==
-X-Received: by 10.70.103.8 with SMTP id fs8mr72245540pdb.97.1438028264254;
-        Mon, 27 Jul 2015 13:17:44 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2496:725d:b368:d039])
-        by smtp.gmail.com with ESMTPSA id yd8sm20842701pab.46.2015.07.27.13.17.42
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 27 Jul 2015 13:17:42 -0700 (PDT)
-In-Reply-To: <87twspe6ix.fsf@marcos.anarc.at> ("Antoine =?utf-8?Q?Beaupr?=
- =?utf-8?Q?=C3=A9=22's?= message of
-	"Mon, 27 Jul 2015 15:37:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754221AbbG0VLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2015 17:11:09 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:55826 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751587AbbG0VLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2015 17:11:08 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mgDMF0vzmz5tl9;
+	Mon, 27 Jul 2015 23:11:04 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 99F155189;
+	Mon, 27 Jul 2015 23:11:04 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <20150727121253.GC17338@2vizcon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274709>
 
-Antoine Beaupr=C3=A9 <anarcat@koumbit.org> writes:
+Am 27.07.2015 um 14:12 schrieb Anatol Rudolph:
+> When using the git branch command, git uses a '*' to denote the current
+> branch. Therefore, in bash this:
+>
+> 	$ branchName=$(git branch -q)
+> 	$ echo $branchName
+>
+> produces a directory listing, because the '*' is interpreded by the
+> shell.
 
-> Any reason why this patch wasn't included / reviewed?
-> ...
->> This patch is similar than the one provided by Milton Soares Filho i=
-n
->> 1382734287.31768.1.git.send.email.milton.soares.filho@gmail.com but =
-was
->> implemented independently and uses the 'o' character instead of 'x'.
+Of course. You would write the last line as
 
-The reason why Milton's patch was not taken after discussion [*1*]
-was not because its implementation was poor, but its design was not
-good.  By overriding '*' '<' or '>' with x, it made it impossible to
-distinguish a root on the left side branch and a root on the right
-side branch.
+   echo "$branchName"
 
-Is the design of your independent implementation the same except
-that 'o' is used instead of 'x'?  Independent implementation does
-not make the same design magically better, if that is the case ;-)
+These are shell fundamentals.
 
-If the design is different, please explain how your patch solves the
-issue with Milton's design in your log message.
+> While an (unwieldly) workaround exists:
+>
+> 	$ branchName=$(git symbolic-ref -q HEAD)
+> 	$ branchName=${branch##refs/heads/}
 
-=46or example, you could use the column arrangement to solve it, e.g.
+If you want to do that in a script, this is not a work-around, but it is 
+how you should do it. But you may want to use option --short to save the 
+second line.
 
-History sequence A: a1 -- a2 -- a3 (root-commit)
-History sequence B: b1 -- b2 -- b3 (root-commit)
+> it would still be nice, if there were a --current flag, that returned
+> only the current branch name, omitting the star:
+>
+> 	$ branchName=$(git branch --current -q)
+> 	$ echo $branchName
+> 	master
 
-    $ git log --graph --oneline A B
-    * a1
-    * a2
-    * a3
-      * b1
-      * b2
-      * b3
+Try
 
-    $ git log --graph --oneline --left-right A...B
-    < a1
-    < a2
-    < a3
-      > b1
-      > b2
-      > b3
+   branchName=$(git rev-parse --abbrev-ref HEAD)
 
-I am not saying that the above would be the only way to do so; there
-may be other ways to solve the issue.
-
-[Reference]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/236708/focus=
-=3D236843
+-- Hannes
