@@ -1,72 +1,250 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 03/11] ref-filter: add option to pad atoms to the right
-Date: Mon, 27 Jul 2015 11:56:24 -0700
-Message-ID: <xmqqmvyhig4n.fsf@gitster.dls.corp.google.com>
-References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
-	<1437982035-6658-1-git-send-email-Karthik.188@gmail.com>
-	<1437982035-6658-3-git-send-email-Karthik.188@gmail.com>
-	<vpq3809aho9.fsf@anie.imag.fr>
-	<xmqqr3ntioyh.fsf@gitster.dls.corp.google.com>
-	<vpqk2tl4mvx.fsf@anie.imag.fr>
+From: Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@koumbit.org>
+Subject: Re: [PATCH] graph.c: visual difference on subsequent series
+Date: Mon, 27 Jul 2015 15:37:26 -0400
+Message-ID: <87twspe6ix.fsf@marcos.anarc.at>
+References: <1415626412-573-1-git-send-email-anarcat@koumbit.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 27 20:56:46 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 27 21:47:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJnZt-0007po-3i
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 20:56:45 +0200
+	id 1ZJoMm-0001l8-QY
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 21:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316AbbG0S4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 14:56:35 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:34746 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752992AbbG0S4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 14:56:32 -0400
-Received: by pdbbh15 with SMTP id bh15so56421116pdb.1
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 11:56:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=PnVx/ncPh04dExLtxbyyyeeeZUpOkyOtrgUKsj7GkIg=;
-        b=BI018j/5QgAZ4gq1Hk9sopTD57R8TbwkJ+/Pi7Ingiw7zp4pYvCuq1yQsx6YdD0ejF
-         cpORNPv3bxLsx23fMsg00ILucyDDtDynln3+xJ7BL0J6krt08/ZQ8B+EskG+we2dhmTV
-         peHAx2IQqgsGAUvHHp+wpSRpKNI5kUB9yXMXWUT+qQ3GtUd/gLEwzeKvrDnOUQXX5One
-         OSHmuYiH80K2HBi7qPCsGbceJea+lJivIEhUyHru5n6mJlrvF1MmYuZdUNlKBh9kE2J5
-         CxN3yGN3fdnPjAGHczzBpee1pLlwl1Fcai6uV1L/qU6YfMqyNv8QEt1Z+MKStWwXOLNg
-         JUrg==
-X-Received: by 10.70.41.176 with SMTP id g16mr61510779pdl.25.1438023392256;
-        Mon, 27 Jul 2015 11:56:32 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2496:725d:b368:d039])
-        by smtp.gmail.com with ESMTPSA id nh3sm16989989pdb.72.2015.07.27.11.56.24
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 27 Jul 2015 11:56:25 -0700 (PDT)
-In-Reply-To: <vpqk2tl4mvx.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	27 Jul 2015 17:54:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751673AbbG0TrL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jul 2015 15:47:11 -0400
+Received: from mail.orangeseeds.org ([72.0.72.144]:58644 "EHLO marcos.anarc.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751342AbbG0TrK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jul 2015 15:47:10 -0400
+X-Greylist: delayed 580 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Jul 2015 15:47:09 EDT
+Received: by marcos.anarc.at (Postfix, from userid 1000)
+	id 65A5A1A007B; Mon, 27 Jul 2015 15:37:26 -0400 (EDT)
+In-Reply-To: <1415626412-573-1-git-send-email-anarcat@koumbit.org>
+User-Agent: Notmuch/0.18.2 (http://notmuchmail.org) Emacs/24.4.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274700>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Any reason why this patch wasn't included / reviewed?
 
-> Yes, but on the other hand we already have:
+Thanks,
+
+A.
+
+On 2014-11-10 08:33:32, Antoine Beaupr=C3=A9 wrote:
+> For projects with separate history lines and, thus, multiple root-com=
+mits, the
+> linear arrangement of `git log --graph --oneline` does not allow the =
+user to
+> spot where the sequence ends, giving the impression that it's a conti=
+guous
+> history. E.g.
 >
->   git log --format='%<|(50)A very long irrevlevancy|%an|'
+> History sequence A: a1 -- a2 -- a3 (root-commit)
+> History sequence B: b1 -- b2 -- b3 (root-commit)
 >
-> that pads/truncate %an. So, consistancy would dictate that Karthik's
-> version is the right one.
+>     git log --graph --oneline
+>     * a1
+>     * a2
+>     * a3
+>     * b1
+>     * b2
+>     * b3
+>
+> In a GUI tool, the root-commit of each series would stand out on the =
+graph.
+>
+> This modification changes the commit char to a different symbol ('o')=
+, so users
+> of the command-line graph tool can easily identify root-commits and m=
+ake sense
+> of where each series is limited to.
+>
+>     git log --graph --oneline
+>     * a1
+>     * a2
+>     o a3
+>     * b1
+>     * b2
+>     o b3
+>
+> The 'o' character was chosen because it is the same character used in=
+ rev-list
+> to mark root commits.
+>
+> This patch is similar than the one provided by Milton Soares Filho in
+> 1382734287.31768.1.git.send.email.milton.soares.filho@gmail.com but w=
+as
+> implemented independently and uses the 'o' character instead of 'x'.
+>
+> Other solutions were discarded for those reasons:
+>
+>  * line delimiters: we want to keep one commit per line
+>  * tree indentation: it makes little sense with commit trees without
+>    common history, and is more complicated to implement
+>
+> Signed-off-by: Antoine Beaupr=C3=A9 <anarcat@koumbit.org>
+> ---
+>  revision.c                                 |  8 ++++++--
+>  t/t4202-log.sh                             | 10 +++++-----
+>  t/t6016-rev-list-graph-simplify-history.sh | 14 +++++++-------
+>  3 files changed, 18 insertions(+), 14 deletions(-)
+>
+> diff --git a/revision.c b/revision.c
+> index 75dda92..5f21e24 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -3246,8 +3246,12 @@ char *get_revision_mark(const struct rev_info =
+*revs, const struct commit *commit
+>  			return "<";
+>  		else
+>  			return ">";
+> -	} else if (revs->graph)
+> -		return "*";
+> +	} else if (revs->graph) {
+> +		if (commit->parents)
+> +			return "*";
+> +		else
+> +			return "o";
+> +	}
+>  	else if (revs->cherry_mark)
+>  		return "+";
+>  	return "";
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 99ab7ca..d11876e 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -244,7 +244,7 @@ cat > expect <<EOF
+>  * fourth
+>  * third
+>  * second
+> -* initial
+> +o initial
+>  EOF
+> =20
+>  test_expect_success 'simple log --graph' '
+> @@ -272,7 +272,7 @@ cat > expect <<\EOF
+>  |/
+>  * third
+>  * second
+> -* initial
+> +o initial
+>  EOF
+> =20
+>  test_expect_success 'log --graph with merge' '
+> @@ -338,7 +338,7 @@ cat > expect <<\EOF
+>  |
+>  |     second
+>  |
+> -* commit tags/side-1~3
+> +o commit tags/side-1~3
+>    Author: A U Thor <author@example.com>
+> =20
+>        initial
+> @@ -410,7 +410,7 @@ cat > expect <<\EOF
+>  * | third
+>  |/
+>  * second
+> -* initial
+> +o initial
+>  EOF
+> =20
+>  test_expect_success 'log --graph with merge' '
+> @@ -799,7 +799,7 @@ cat >expect <<\EOF
+>  | -one
+>  | +ichi
+>  |
+> -* commit COMMIT_OBJECT_NAME
+> +o commit COMMIT_OBJECT_NAME
+>    Author: A U Thor <author@example.com>
+> =20
+>        initial
+> diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev=
+-list-graph-simplify-history.sh
+> index f7181d1..74b6fc3 100755
+> --- a/t/t6016-rev-list-graph-simplify-history.sh
+> +++ b/t/t6016-rev-list-graph-simplify-history.sh
+> @@ -81,7 +81,7 @@ test_expect_success '--graph --all' '
+>  	echo "|/|   " >> expected &&
+>  	echo "* | $A2" >> expected &&
+>  	echo "|/  " >> expected &&
+> -	echo "* $A1" >> expected &&
+> +	echo "o $A1" >> expected &&
+>  	git rev-list --graph --all > actual &&
+>  	test_cmp expected actual
+>  	'
+> @@ -111,7 +111,7 @@ test_expect_success '--graph --simplify-by-decora=
+tion' '
+>  	echo "|/|   " >> expected &&
+>  	echo "* | $A2" >> expected &&
+>  	echo "|/  " >> expected &&
+> -	echo "* $A1" >> expected &&
+> +	echo "o $A1" >> expected &&
+>  	git rev-list --graph --all --simplify-by-decoration > actual &&
+>  	test_cmp expected actual
+>  	'
+> @@ -139,7 +139,7 @@ test_expect_success '--graph --simplify-by-decora=
+tion prune branch B' '
+>  	echo "* | $A3" >> expected &&
+>  	echo "|/  " >> expected &&
+>  	echo "* $A2" >> expected &&
+> -	echo "* $A1" >> expected &&
+> +	echo "o $A1" >> expected &&
+>  	git rev-list --graph --simplify-by-decoration --all > actual &&
+>  	test_cmp expected actual
+>  	'
+> @@ -156,7 +156,7 @@ test_expect_success '--graph --full-history -- ba=
+r.txt' '
+>  	echo "| |/  " >> expected &&
+>  	echo "* | $A3" >> expected &&
+>  	echo "|/  " >> expected &&
+> -	echo "* $A2" >> expected &&
+> +	echo "o $A2" >> expected &&
+>  	git rev-list --graph --full-history --all -- bar.txt > actual &&
+>  	test_cmp expected actual
+>  	'
+> @@ -170,7 +170,7 @@ test_expect_success '--graph --full-history --sim=
+plify-merges -- bar.txt' '
+>  	echo "* | $A5" >> expected &&
+>  	echo "* | $A3" >> expected &&
+>  	echo "|/  " >> expected &&
+> -	echo "* $A2" >> expected &&
+> +	echo "o $A2" >> expected &&
+>  	git rev-list --graph --full-history --simplify-merges --all \
+>  		-- bar.txt > actual &&
+>  	test_cmp expected actual
+> @@ -183,7 +183,7 @@ test_expect_success '--graph -- bar.txt' '
+>  	echo "* $A3" >> expected &&
+>  	echo "| * $C4" >> expected &&
+>  	echo "|/  " >> expected &&
+> -	echo "* $A2" >> expected &&
+> +	echo "o $A2" >> expected &&
+>  	git rev-list --graph --all -- bar.txt > actual &&
+>  	test_cmp expected actual
+>  	'
+> @@ -201,7 +201,7 @@ test_expect_success '--graph --sparse -- bar.txt'=
+ '
+>  	echo "| * $C1" >> expected &&
+>  	echo "|/  " >> expected &&
+>  	echo "* $A2" >> expected &&
+> -	echo "* $A1" >> expected &&
+> +	echo "o $A1" >> expected &&
+>  	git rev-list --graph --sparse --all -- bar.txt > actual &&
+>  	test_cmp expected actual
+>  	'
+> --=20
+> 2.1.1
+>
 
-Interesting.  Although that %<(50) looks simply a bug to me which we
-may want to fix.
-
-I wonder if there is a good reason why the above should not be
-spelled as --format="A very long irrelevancy%<(50)%an".
+--=20
+Pour marcher au pas d'une musique militaire, il n'y a pas besoin de
+cerveau, une moelle =C3=A9pini=C3=A8re suffit.
+                        - Albert Enstein
