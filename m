@@ -1,64 +1,82 @@
-From: Karthik Nayak <karthik.188@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH v5 03/11] ref-filter: add option to pad atoms to the right
-Date: Tue, 28 Jul 2015 00:13:57 +0530
-Message-ID: <CAOLa=ZR05e-sx51ne==2+t+rS6mGxXAX44Vd2vHCvBYMM16K3A@mail.gmail.com>
+Date: Mon, 27 Jul 2015 20:47:32 +0200
+Message-ID: <vpqwpxl30aj.fsf@anie.imag.fr>
 References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
- <1437982035-6658-1-git-send-email-Karthik.188@gmail.com> <1437982035-6658-3-git-send-email-Karthik.188@gmail.com>
- <vpq3809aho9.fsf@anie.imag.fr>
+	<1437982035-6658-1-git-send-email-Karthik.188@gmail.com>
+	<1437982035-6658-3-git-send-email-Karthik.188@gmail.com>
+	<vpq3809aho9.fsf@anie.imag.fr>
+	<xmqqr3ntioyh.fsf@gitster.dls.corp.google.com>
+	<vpqk2tl4mvx.fsf@anie.imag.fr>
+	<CAOLa=ZRVMnqxb-E29f_53igzJDTWNU0yjVACSq1CK8TCbaM-9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 27 20:44:36 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 20:47:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJnO3-0005lq-T6
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 20:44:32 +0200
+	id 1ZJnRI-0000ID-D2
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 20:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708AbbG0So1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 14:44:27 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:34646 "EHLO
-	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923AbbG0So1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 14:44:27 -0400
-Received: by oigd21 with SMTP id d21so56602988oig.1
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 11:44:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=biapEqdFa0pgIM1OY1MTJ2rQOgtKBd1UfMoaJcMmlWM=;
-        b=XDVrFeSK0u6TGQcRtmPHqoEjzSZEyrnbMguzPvdX1PWxxDUPaCnQBuZzitdGq4jrss
-         SjXWur2VFGg47JaBd95LwlwrJEqpg7VwaGx6kUIpg3mgXZCXD2SjgblkfAf1IhgZkmqs
-         1XWA9TP1csVnzoUHC/oYoAoAxo98vBmZP1IDRqPq6LzTPZrx2b6Fg9Gp1rK4rBqkS03V
-         ib9Y84lmegucQsSMkDIqvNIs8rKHhv34bSaz0RO630UYBPW1hts1G0UyZ1gTtfwJcAdB
-         ZzmN1HRUyvufm1QajqLC9+dYl7v3lrNE257pdBsRjg4PMYx9R78ys17F8pPKi5Vl14GI
-         by/A==
-X-Received: by 10.202.200.151 with SMTP id y145mr28264914oif.111.1438022666734;
- Mon, 27 Jul 2015 11:44:26 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 27 Jul 2015 11:43:57 -0700 (PDT)
-In-Reply-To: <vpq3809aho9.fsf@anie.imag.fr>
+	id S1752790AbbG0Srs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2015 14:47:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59152 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752718AbbG0Srr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2015 14:47:47 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6RIlUFT013130
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 27 Jul 2015 20:47:30 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6RIlWtK017763;
+	Mon, 27 Jul 2015 20:47:32 +0200
+In-Reply-To: <CAOLa=ZRVMnqxb-E29f_53igzJDTWNU0yjVACSq1CK8TCbaM-9w@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 28 Jul 2015 00:12:24 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 27 Jul 2015 20:47:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6RIlUFT013130
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438627654.91467@VyAuAbbTkO3M4cXDjz1wXQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274697>
 
-On Mon, Jul 27, 2015 at 6:20 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> u
-> also need to check that it is taken into account for the right atom and
-> only this one. I'd suggest
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> On Mon, Jul 27, 2015 at 9:24 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Yes, but on the other hand we already have:
+>>
+>>   git log --format='%<|(50)A very long irrevlevancy|%an|'
+>>
+>> that pads/truncate %an. So, consistancy would dictate that Karthik's
+>> version is the right one.
 >
-> --format '%(refname)%(padright:25)|%(refname)|%(refname)|'
+> Sorry but I didn't understand what you're trying to say here, Matthieu.
 
-I guess this is more accurate, Thanks.
+The "git log" equivalent of %(padright:N) is %<|(N), and it behaves the
+same way as your current implementation of %(padright) (except for the
+missing reset in your v5).
+
+So, if we want to be consistant with "git log", we should keep the
+"apply to next atom, even if it's far away in the format string"
+semantics.
+
+Note that consistancy is not the only criterion for choice, so I'm not
+saying we should absolutely do this, just that there's an argument in
+favor of it.
 
 -- 
-Regards,
-Karthik Nayak
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
