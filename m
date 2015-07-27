@@ -1,77 +1,166 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git branch command is incompatible with bash
-Date: Mon, 27 Jul 2015 23:11:04 +0200
-Message-ID: <55B69E68.90306@kdbg.org>
-References: <20150727121253.GC17338@2vizcon.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v2.4.7
+Date: Mon, 27 Jul 2015 13:45:52 -0700
+Message-ID: <xmqqzj2hgusg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Anatol Rudolph <a.rudolph@2vizcon.com>
-X-From: git-owner@vger.kernel.org Mon Jul 27 23:11:15 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Jul 27 23:22:53 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJpg1-0007Ry-Ol
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 23:11:14 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1ZJprI-0000cT-0i
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 27 Jul 2015 23:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221AbbG0VLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 17:11:09 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:55826 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751587AbbG0VLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 17:11:08 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mgDMF0vzmz5tl9;
-	Mon, 27 Jul 2015 23:11:04 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 99F155189;
-	Mon, 27 Jul 2015 23:11:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-In-Reply-To: <20150727121253.GC17338@2vizcon.com>
-Sender: git-owner@vger.kernel.org
+	id S1754802AbbG0VWn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 27 Jul 2015 17:22:43 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:34635 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754132AbbG0VWl (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 27 Jul 2015 17:22:41 -0400
+Received: by pacan13 with SMTP id an13so58494617pac.1;
+        Mon, 27 Jul 2015 14:22:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=s452kK2ZG3wYXGgN2slJrE7VDbHoMddl6Xk7llrSaWc=;
+        b=E/k/mPWJPlEyZBBwQNSB0b1/Y5TyW05TaHY+nILEVLo3ZHMXo3+3tNpJ7NoGroWoJB
+         PpnEQC9twI9A7d1nnqR3nFz9OiN/BE3n/BJ+AYnS3OB0UP1Tc3HwB+h1aYrXuN91w/vv
+         Wie9tRMd5Z6OcR5wXR9LotND6IVRBNpzb6KGoTuWW9qMVQ++4SnO3orKDraZ5QEPtoQ2
+         FN8GGvGEtYqPoZZKrph7ItE+0q8jbQRica/pEdwTupJAq5Lx3gbKM4tvRyNDanBsiksF
+         gM8/A/JGYsCOh3R/kD1lkdKnl+rv2HffL9wRNsyPKLr0Q8mLSF4/M9+u6765WqfW/4yr
+         du9g==
+X-Received: by 10.66.184.197 with SMTP id ew5mr73264669pac.54.1438032160749;
+        Mon, 27 Jul 2015 14:22:40 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:2496:725d:b368:d039])
+        by smtp.gmail.com with ESMTPSA id xo14sm31356467pac.24.2015.07.27.14.22.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 27 Jul 2015 14:22:39 -0700 (PDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274709>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274710>
 
-Am 27.07.2015 um 14:12 schrieb Anatol Rudolph:
-> When using the git branch command, git uses a '*' to denote the current
-> branch. Therefore, in bash this:
->
-> 	$ branchName=$(git branch -q)
-> 	$ echo $branchName
->
-> produces a directory listing, because the '*' is interpreded by the
-> shell.
+The latest maintenance release Git v2.4.7 is now available at
+the usual places.
 
-Of course. You would write the last line as
+The tarballs are found at:
 
-   echo "$branchName"
+    https://www.kernel.org/pub/software/scm/git/
 
-These are shell fundamentals.
+The following public repositories all have a copy of the 'v2.4.7'
+tag and the 'maint' branch that the tag points at:
 
-> While an (unwieldly) workaround exists:
->
-> 	$ branchName=$(git symbolic-ref -q HEAD)
-> 	$ branchName=${branch##refs/heads/}
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
-If you want to do that in a script, this is not a work-around, but it is 
-how you should do it. But you may want to use option --short to save the 
-second line.
+----------------------------------------------------------------
 
-> it would still be nice, if there were a --current flag, that returned
-> only the current branch name, omitting the star:
->
-> 	$ branchName=$(git branch --current -q)
-> 	$ echo $branchName
-> 	master
+Git v2.4.7 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Try
+=46ixes since v2.4.6
+------------------
 
-   branchName=$(git rev-parse --abbrev-ref HEAD)
+ * A minor regression to "git fsck" in v2.2 era was fixed; it
+   complained about a body-less tag object when it lacked a
+   separator empty line after its header to separate it with a
+   non-existent body.
 
--- Hannes
+ * We used to ask libCURL to use the most secure authentication method
+   available when talking to an HTTP proxy only when we were told to
+   talk to one via configuration variables.  We now ask libCURL to
+   always use the most secure authentication method, because the user
+   can tell libCURL to use an HTTP proxy via an environment variable
+   without using configuration variables.
+
+ * When you say "!<ENTER>" while running say "git log", you'd confuse
+   yourself in the resulting shell, that may look as if you took
+   control back to the original shell you spawned "git log" from but
+   that isn't what is happening.  To that new shell, we leaked
+   GIT_PAGER_IN_USE environment variable that was meant as a local
+   communication between the original "Git" and subprocesses that was
+   spawned by it after we launched the pager, which caused many
+   "interesting" things to happen, e.g. "git diff | cat" still paints
+   its output in color by default.
+
+   Stop leaking that environment variable to the pager's half of the
+   fork; we only need it on "Git" side when we spawn the pager.
+
+ * Avoid possible ssize_t to int truncation.
+
+ * "git config" failed to update the configuration file when the
+   underlying filesystem is incapable of renaming a file that is still
+   open.
+
+ * A minor bugfix when pack bitmap is used with "rev-list --count".
+
+ * An ancient test framework enhancement to allow color was not
+   entirely correct; this makes it work even when tput needs to read
+   from the ~/.terminfo under the user's real HOME directory.
+
+ * Fix a small bug in our use of umask() return value.
+
+ * "git rebase" did not exit with failure when format-patch it invoked
+   failed for whatever reason.
+
+ * Disable "have we lost a race with competing repack?" check while
+   receiving a huge object transfer that runs index-pack.
+
+Also contains typofixes, documentation updates and trivial code
+clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.4.6 are as follows:
+
+Clemens Buchacher (1):
+      rebase: return non-zero error code if format-patch fails
+
+Enrique Tobis (1):
+      http: always use any proxy auth method available
+
+Jeff King (4):
+      index-pack: avoid excessive re-reading of pack directory
+      docs: clarify that --encoding can produce invalid sequences
+      rev-list: disable --use-bitmap-index when pruning commits
+      check_and_freshen_file: fix reversed success-check
+
+Junio C Hamano (3):
+      fsck: it is OK for a tag and a commit to lack the body
+      pager: do not leak "GIT_PAGER_IN_USE" to the pager
+      Git 2.4.7
+
+Karsten Blees (1):
+      config.c: fix writing config files on Windows network shares
+
+Lawrence Siebert (1):
+      rev-list: add --count to usage guide
+
+Matthieu Moy (2):
+      Documentation/branch: document -d --force and -m --force
+      Documentation/branch: document -M and -D in terms of --force
+
+Michael Haggerty (1):
+      strbuf: strbuf_read_file() should return ssize_t
+
+Richard Hansen (2):
+      Revert "test-lib.sh: do tests for color support after changing HO=
+ME"
+      test-lib.sh: fix color support when tput needs ~/.terminfo
+
+Torsten B=C3=B6gershausen (1):
+      git-checkout.txt: document "git checkout <pathspec>" better
