@@ -1,121 +1,126 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] clone: fix repo name when cloning a server's root
-Date: Mon, 27 Jul 2015 14:59:23 +0200
-Message-ID: <20150727125923.GA800@pks-xps>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
- <CACsJy8C0xzTvxMo7=pLFJyu8Yaqm_nz1qVXMFFo9ubQE-dYYSw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 02/11] ref-filter: make `color` use `ref_formatting_state`
+Date: Mon, 27 Jul 2015 15:06:14 +0200
+Message-ID: <vpqlhe192d5.fsf@anie.imag.fr>
+References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
+	<1437982035-6658-1-git-send-email-Karthik.188@gmail.com>
+	<1437982035-6658-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 27 14:59:34 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 15:06:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJi0D-0006bD-3g
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 14:59:33 +0200
+	id 1ZJi71-0004UE-BT
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 15:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526AbbG0M73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 08:59:29 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:55285 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752235AbbG0M70 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jul 2015 08:59:26 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7877520816
-	for <git@vger.kernel.org>; Mon, 27 Jul 2015 08:59:25 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Mon, 27 Jul 2015 08:59:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=/fYvVRSm/JIfJ25NDZGST89Gyso=; b=rcH3e
-	eJFpjzazjtk9qqsnmuCiRXEM5GCm70wfu645KUgwYYfC6+iw21RPSFlegQFmH/Xq
-	Ck4DpepChn+l4wFy1Q/8Hkfvo2z2tYGIFSuy68ZqJResytAVJSeqUJGMUPS+wjVZ
-	0bSB2bw0oIW+9cdf6/G27zbbPAU/eu8LrtOdwM=
-X-Sasl-enc: KBxbKcH9zNLSqJFLNDnsOJY1Zu+OUVN+4/v2GqD4rnKP 1438001965
-Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 14059C00021;
-	Mon, 27 Jul 2015 08:59:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8C0xzTvxMo7=pLFJyu8Yaqm_nz1qVXMFFo9ubQE-dYYSw@mail.gmail.com>
+	id S1753142AbbG0NG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2015 09:06:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52906 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823AbbG0NGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2015 09:06:25 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6RD6Djg011120
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 27 Jul 2015 15:06:13 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6RD6Ev2012067;
+	Mon, 27 Jul 2015 15:06:14 +0200
+In-Reply-To: <1437982035-6658-2-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Mon, 27 Jul 2015 12:57:06 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 27 Jul 2015 15:06:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6RD6Djg011120
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438607174.53326@dcb9041vSn8x+0DUA8bTfg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274678>
 
+Karthik Nayak <karthik.188@gmail.com> writes:
 
---/9DWx/yDrRhgMJTb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1195,6 +1197,11 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+>  static void ref_formatting(struct ref_formatting_state *state,
+>  			   struct atom_value *v, struct strbuf *value)
+>  {
+> +	if (state->color) {
+> +		strbuf_addstr(value, state->color);
+> +		free(state->color);
+> +		state->color = NULL;
+> +	}
+>  	strbuf_addf(value, "%s", v->s);
+>  }
+>  
+> @@ -1266,6 +1273,13 @@ static void emit(const char *cp, const char *ep)
+>  	}
+>  }
+>  
+> +static void apply_pseudo_state(struct ref_formatting_state *state,
+> +			       struct atom_value *v)
+> +{
+> +	if (v->color)
+> +		state->color = (char *)v->s;
+> +}
+> +
+>  void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+>  {
+>  	const char *cp, *sp, *ep;
 
-On Mon, Jul 27, 2015 at 07:51:30PM +0700, Duy Nguyen wrote:
-> On Mon, Jul 27, 2015 at 6:48 PM, Patrick Steinhardt <ps@pks.im> wrote:
-> > When cloning a repository from a server's root, that is the URL's
-> > path component is a '/' only, we fail to generate a sensible
-> > repository name when the URL contains authentication data. This
-> > is especially bad when cloning URLs like
-> > 'ssh://user:passwd@example.com/', which results in a repository
-> > 'passwd@example.com' being created.
-> >
-> > Improve the behavior by also regarding '@'-signs as a separator
-> > when scanning the URL. In the mentioned case this would instead
-> > result in a directory 'example.com' being created.
->=20
-> My initial reaction was, if you put password on the command line, you
-> deserve it. However, as we improve this heuristics, perhaps it's
-> better to export parse_connect_url() from connect.c and use it here?
-> We would have more robust parsing. You can create a repo named
-> example.com given the url ssh://user:pass@example.com:123/. Maybe it's
-> overkill?
+It's not clear enough in the code and history that these these two
+functions are symmetrical.
 
-Sure, specifying passwords on command line should not be done
-easily. Still those heuristics fail for everything that does
-not include an additional [:/] when the URL's path is empty. So I
-guess using parse_connect_url() would be the most sane solution
-for this, as it will also fix the case when you specify a port,
-which would currently use the port as directory name. I'll whip
-up a new version that uses parse_connect_url().
+You can find better names. 'apply_pseudo_state' seems wrong it two ways:
+it does not _apply_ the state, but it stores it. And it's a "pseudo-atom
+related state", but not a "pseudo-state".
 
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> > I was not able to come by with a useful test as that would
-> > require being able to clone a root directory. I couldn't find
-> > anything in the current tests that looks like what I want to do.
-> > Does anybody have an idea on how to achieve this?
->=20
-> There's t/t1509/prepare-chroot.sh that will prepare a chroot for this
-> purpose. You'll need linux, busybox and chroot permission.
+How about
 
-Thanks for the hint.
+ref_formatting -> apply_formatting_state
+apply_pseudo_state -> store_formatting_state
 
-Patrick
+?
 
---/9DWx/yDrRhgMJTb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Actually, I would even call these functions right from
+show_ref_array_item, so that the result look like this:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+		if (atomv->pseudo_atom)
+			store_formatting_state(&state, atomv);
+		else {
+			apply_formatting_state(&state, atomv);
+			reset_formatting_state(&state);
+			print_value(&state, atomv);
+		}
 
-iQIcBAEBCAAGBQJVtisrAAoJEBF8Z7aeq/EskNkQAImAPDQNE6Yq5qP+Tetu/XUI
-3ujTBdvi9uwekfcAUL+q5J9F9duQM/KL22weDFV3i2KxXULEcb0igTh/yBeSxjJ6
-DKjbR6cXkr4MxlW9DhHDh9wnuJu+DJikfQbOZSlaPQp0xD+NfbLpQYwZUMXubSFn
-yk43ytHsOUg/gxmPYInL8OyD2CFZf7vxFFZuP1zj5h7zG0AGHXfOBGsg6RKlWCsl
-FKsk2kXm2JrNPtD0SGqdjg4Vxl+563BDBvHfUxiLix2sHwr279HnOmEYsG+h4Xtk
-iTyoWuxK2rIifnlPes7e2jf5+jiMv0RZb/wsukVqlWn9nFNjanUP1rXxeRBZ533v
-QqByfoZSx0VPYZ4PanG7ihlsbjgavQZTZSpufLx6RzJh3FHxcS9Hj1OPHEQim8dx
-i1R8Rze7xWy9/KYfOkqQG9eb63u5hzmktJQ1tJXJAG1LrFr/Ot0yt4Tnudo2+0+P
-0fhPDu/dhyMaonTFZHEuisqabls2GXcTf4/JWD3uqgI0nciLXvqc8hm8hWJZBXt5
-ta1K2Q8Y/ByCLmeTMSrOaNhhNmBvRDPUdaT36wUDsZMUwK2/Xopmr+2uD6UIWz/U
-GdG2ruLX2fvZMyuk6ud+MopOfm7+aaR3DxSSCDZXT7xO03W/WkNjqTAHxLEK9dSq
-tC1ayAifsCR1os6zlQ8h
-=F0Zq
------END PGP SIGNATURE-----
+In the history, if you are to introduce a dumb version of ref_formatting
+in PATCH 1, I think you should also introduce a dumb (actually, totally
+empty) version of apply_pseudo_state. Then, further patches would just
+add a few lines in each function, and ...
 
---/9DWx/yDrRhgMJTb--
+> @@ -1281,7 +1295,10 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+>  		if (cp < sp)
+>  			emit(cp, sp);
+>  		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+> -		print_value(&state, atomv);
+> +		if (atomv->pseudo_atom)
+> +			apply_pseudo_state(&state, atomv);
+> +		else
+> +			print_value(&state, atomv);
+>  	}
+
+... this hunk would belong to PATCH 1.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
