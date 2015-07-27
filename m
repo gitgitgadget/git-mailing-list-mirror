@@ -1,90 +1,168 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 05/10] ref-filter: add support to sort by version
-Date: Mon, 27 Jul 2015 08:24:22 -0700
-Message-ID: <xmqqvbd5ipy1.fsf@gitster.dls.corp.google.com>
-References: <1437764685-8633-1-git-send-email-Karthik.188@gmail.com>
-	<1437764685-8633-6-git-send-email-Karthik.188@gmail.com>
-	<xmqqd1zfkgi3.fsf@gitster.dls.corp.google.com>
-	<CAOLa=ZQ89Vz82ro_V8mTgYKZ0UUgbsbAW6zgSgyiZ1gpwjTOHA@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v5 01/11] ref-filter: introduce 'ref_formatting_state'
+Date: Mon, 27 Jul 2015 20:58:30 +0530
+Message-ID: <CAOLa=ZRRw9RCRTL1UaeDMoc683P370eCPD1VcVhMKhju_jfnNg@mail.gmail.com>
+References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
+ <1437982035-6658-1-git-send-email-Karthik.188@gmail.com> <vpqmvyhai1k.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 27 17:24:31 2015
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jul 27 17:29:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJkGT-00081A-EW
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 17:24:29 +0200
+	id 1ZJkKw-0003gh-5o
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 17:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752737AbbG0PYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 11:24:25 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:36636 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752554AbbG0PYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 11:24:24 -0400
-Received: by pdjr16 with SMTP id r16so54669053pdj.3
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 08:24:24 -0700 (PDT)
+	id S1753925AbbG0P3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2015 11:29:01 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:33388 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752691AbbG0P3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2015 11:29:00 -0400
+Received: by obdeg2 with SMTP id eg2so62195297obd.0
+        for <git@vger.kernel.org>; Mon, 27 Jul 2015 08:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=4VHMeVSpeVVut68RXvOWNG7BXaEXBF0WpKnoYjlEBgE=;
-        b=KsOmbRSH6YGMCNIM0TaLkGuxJHxxrwGQC8BU8UYOEp3RgpjDHVAmmGjhVzmEPykqQm
-         Ym6mvcndl3lPG4lLkr9cRhOxryY437nIJ/06goryRxO8gVL1Jm6QlhDo1doH+ssoFchR
-         7N7rX9X9NAsvfD/rAzu7y8qrYyl8DN6gltrpa9sgFfaM6f53HdQqygBNtD/MtLkpHloM
-         997dr0LpXvjxkCuZz7wnUuWqYYtb079wconkfJg27C7asm49cAwmcnjzqubh0Ra6/G3g
-         dwxUtDypQ9jtXVH9NC8BK6OBH3Xj/1XdG5suQ/DzfE08ww20ePUYZriUuh9UZGef9cOH
-         IR0g==
-X-Received: by 10.70.102.209 with SMTP id fq17mr70351123pdb.77.1438010664193;
-        Mon, 27 Jul 2015 08:24:24 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:2496:725d:b368:d039])
-        by smtp.gmail.com with ESMTPSA id hl6sm30093697pdb.28.2015.07.27.08.24.22
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 27 Jul 2015 08:24:23 -0700 (PDT)
-In-Reply-To: <CAOLa=ZQ89Vz82ro_V8mTgYKZ0UUgbsbAW6zgSgyiZ1gpwjTOHA@mail.gmail.com>
-	(Karthik Nayak's message of "Sun, 26 Jul 2015 10:37:57 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GTo6Mu9UDVooo68MSYKRuyZgszaPi16AlYETx1z54CI=;
+        b=g1uTStti3n1ezV+f7k/Ez+CPILobcmKJBWteoSoq7rzbKUhcSGulnUSIeYQGtak5xu
+         qWy9X+6rdcjXbjRezHUhj+LOPMrHOldpYUqgWqckzjvw1C7C0lx7gweP5vNOiNURPA7+
+         2dqfB1xUoYxxPsWCYnux0PKpbw83YHZSrkRXDjyF5y6St6ns3ZoVDnjsh6ynzbcMNJ9F
+         fnPwthXVvA2nPByi/nCcCnHpsc7k2ViZD5ZYDtpLbxg6JvAZaudbbg1ogaBoW75GM9lD
+         72XXfI8QP8GLItkbir75FoTVCuVQsykaQO4A8yB1UbkD46Y5/aRVY/GNEr0SJFEqUF00
+         YJVg==
+X-Received: by 10.182.60.130 with SMTP id h2mr16470522obr.42.1438010939640;
+ Mon, 27 Jul 2015 08:28:59 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Mon, 27 Jul 2015 08:28:30 -0700 (PDT)
+In-Reply-To: <vpqmvyhai1k.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274683>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Mon, Jul 27, 2015 at 6:12 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> +static void ref_formatting(struct ref_formatting_state *state,
+>> +                        struct atom_value *v, struct strbuf *value)
+>>  {
+>> -     struct strbuf sb = STRBUF_INIT;
+>> -     switch (quote_style) {
+>> +     strbuf_addf(value, "%s", v->s);
+>> +}
+>
+> You're taking 'state' as argument, but you're not using it in the
+> function for now. Perhaps add a temporary comment like:
+>
+> static void ref_formatting(...)
+> {
+>         /* Formatting according to 'state' will be applied here */
+>         strbuf_addf(...)
+> }
+>
+> Or perhaps it's OK like this.
 
-> On Sun, Jul 26, 2015 at 4:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> Without looking at the callers, s->version looks like a misdesign
->> that should be updated to use the same cmp_type mechanism?  That
->> would lead to even more obvious construct that is easy to enhance,
->> i.e.
->>
->>         switch (cmp_type) {
->>         case CMP_VERSION:
->>                 ...
->>         case CMP_STRING:
->>                 ...
->>         case CMP_NUMBER:
->>                 ...
->>         }
->>
->> I dunno.
->>
->> Other than that (and the structure of that "format-state" stuff we
->> discussed separately), the series was a pleasant read.
->>
->> Thanks.
->
-> That was the previous design, but Duy asked me to do this so
-> that we could support all atoms. And I agree with him on this.
->
-> http://article.gmane.org/gmane.comp.version-control.git/273888
+I thought it'd be OK since it doesn't have any adverse effect, but I added
+the comment you suggested nonetheless.
 
-I am not objecting, but $gmane/273888 does not immediately read, at
-least to me, as suggesting using a mechanism different from cmp_type
-but a dedicated field s->version.  Puzzled...
+>
+>> -static void print_value(struct atom_value *v, int quote_style)
+>> +static void print_value(struct ref_formatting_state *state, struct atom_value *v)
+>
+> Changing the position of the v parameter makes the patch a bit harder to
+> read. I would have written in this order:
+>
+> static void print_value(struct atom_value *v, struct ref_formatting_state *state)
+>
+> So the patch reads as "encapsulate quote_style in a struct" more
+> straightforwardly.
+>
+
+I need to be more careful about things like this, thanks.
+
+>> @@ -1257,6 +1269,10 @@ static void emit(const char *cp, const char *ep)
+>>  void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+>>  {
+>>       const char *cp, *sp, *ep;
+>> +     struct ref_formatting_state state;
+>
+> I still found it a bit hard to read, and I would have appreciated a
+> comment here, like
+>
+>         /*
+>          * Some (pseudo) atom have no immediate side effect, but only
+>          * affect the next atom. Store the relevant information from
+>          * these atoms in the 'state' variable for use when displaying
+>          * the next atom.
+>          */
+>
+
+This seems good, will add this.
+
+> With this in mind, it becomes more obvious that you also need to reset
+> the state after using it, which you forgot to do. See:
+>
+> $ ./git for-each-ref --format '%(padright:30)|%(refname)|%(refname)|' refs/tags/v2.4.\*
+> |refs/tags/v2.4.0              |refs/tags/v2.4.0              |
+> |refs/tags/v2.4.0-rc0          |refs/tags/v2.4.0-rc0          |
+> |refs/tags/v2.4.0-rc1          |refs/tags/v2.4.0-rc1          |
+> |refs/tags/v2.4.0-rc2          |refs/tags/v2.4.0-rc2          |
+> |refs/tags/v2.4.0-rc3          |refs/tags/v2.4.0-rc3          |
+> |refs/tags/v2.4.1              |refs/tags/v2.4.1              |
+> |refs/tags/v2.4.2              |refs/tags/v2.4.2              |
+> |refs/tags/v2.4.3              |refs/tags/v2.4.3              |
+> |refs/tags/v2.4.4              |refs/tags/v2.4.4              |
+> |refs/tags/v2.4.5              |refs/tags/v2.4.5              |
+> |refs/tags/v2.4.6              |refs/tags/v2.4.6              |
+>
+> I think only the first column should have padding, not the second. You
+> can fix this with a patch like this:
+>
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1431,6 +1431,14 @@ static void apply_pseudo_state(struct ref_formatting_state *state,
+>                 state->ifexists = v->s;
+>  }
+>
+> +static void reset_formatting_state(struct ref_formatting_state *state)
+> +{
+> +       int quote_style = state->quote_style;
+> +       memset(state, 0, sizeof(*state));
+> +       state->quote_style = quote_style;
+> +}
+> +
+> +
+>  /*
+>   * If 'lines' is greater than 0, print that many lines from the given
+>   * object_id 'oid'.
+> @@ -1492,8 +1500,11 @@ void show_ref_array_item(struct ref_array_item *info, const char *format,
+>                 get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+>                 if (atomv->pseudo_atom)
+>                         apply_pseudo_state(&state, atomv);
+> -               else
+> +               else {
+>                         print_value(&state, atomv);
+> +                       reset_formatting_state(&state);
+> +               }
+> +
+>         }
+>         if (*cp) {
+>                 sp = cp + strlen(cp);
+>
+
+If you saw the last patch series, i had them reset individually, I
+missed that by mistake.
+But what you're doing seems good, will integrate this. thanks :D
+
+-- 
+Regards,
+Karthik Nayak
