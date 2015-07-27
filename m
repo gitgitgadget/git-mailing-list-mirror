@@ -1,101 +1,94 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 02/11] ref-filter: make `color` use `ref_formatting_state`
-Date: Mon, 27 Jul 2015 21:32:21 +0530
-Message-ID: <CAOLa=ZS2xEegWfoObXub8KMrvjw_7K-Wd9x8E7kKAZtdt8M+=Q@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 07/11] ref-filter: add option to match literal pattern
+Date: Mon, 27 Jul 2015 18:06:18 +0200
+Message-ID: <vpqd1zd4mbp.fsf@anie.imag.fr>
 References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
- <1437982035-6658-1-git-send-email-Karthik.188@gmail.com> <1437982035-6658-2-git-send-email-Karthik.188@gmail.com>
- <vpqa8uhaht3.fsf@anie.imag.fr>
+	<1437982035-6658-1-git-send-email-Karthik.188@gmail.com>
+	<1437982035-6658-7-git-send-email-Karthik.188@gmail.com>
+	<vpqtwsp92wf.fsf@anie.imag.fr>
+	<CAOLa=ZSXD-pjgYCOt+ZcYS4uHS0p2uBYX8Rw80xpL+9pNUvm+w@mail.gmail.com>
+	<CAOLa=ZT58Fai++91AUH2VcerH5OLkbC3thoGtqVYC70R8gSkaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 27 18:02:58 2015
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 18:06:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJkrh-0000w0-5z
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 18:02:57 +0200
+	id 1ZJkv7-0004HA-Q1
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jul 2015 18:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754886AbbG0QCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2015 12:02:52 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:33044 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754482AbbG0QCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2015 12:02:51 -0400
-Received: by obdeg2 with SMTP id eg2so62994026obd.0
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 09:02:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=eOUQRg6ucD9GaFpy3GaVdGiNCoc2nV7ufRu1F1mCNXA=;
-        b=sGl1MbxE0ZNaHU7OPpVAWFWHtpO8oe97er0VtHeUlLXRBZckixj9pnZfE6lO+vWtIj
-         T39i+2v1kt4X/hX408dbIRoOVPU6YBvZanefRpjFAR921xhD2WVvi4CWutcbGeGf7Oqs
-         mPVA61emmTKsjsdJAzZ/pSHnNFEDVYjoFhM1CjSofR/yXLSX7/7wwte/vYldlgt7JhUA
-         WxetKZUvxtf8wagdZggRL+7HFS5e+xeO66RuW9EaXmhapy+Kl7RcsMlVQMp3UcanzHgs
-         8JSy8F3L6uJb/9H7yuUCoPl1X75gplJDEqqEDeCcPAvV/CMRhUwLFIEh0gUEo4OjXoOt
-         i12Q==
-X-Received: by 10.60.62.105 with SMTP id x9mr28281087oer.1.1438012970866; Mon,
- 27 Jul 2015 09:02:50 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 27 Jul 2015 09:02:21 -0700 (PDT)
-In-Reply-To: <vpqa8uhaht3.fsf@anie.imag.fr>
+	id S1753888AbbG0QG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2015 12:06:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56671 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752347AbbG0QGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2015 12:06:25 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6RG6GN7012273
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 27 Jul 2015 18:06:16 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6RG6I48015828;
+	Mon, 27 Jul 2015 18:06:18 +0200
+In-Reply-To: <CAOLa=ZT58Fai++91AUH2VcerH5OLkbC3thoGtqVYC70R8gSkaA@mail.gmail.com>
+	(Karthik Nayak's message of "Mon, 27 Jul 2015 21:29:37 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 27 Jul 2015 18:06:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6RG6GN7012273
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438617978.66029@5ahikazqwyf14DWIHcAVyA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274689>
 
-On Mon, Jul 27, 2015 at 6:17 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Make the `color` atom a pseudo atom and ensure that it uses
->> `ref_formatting_state`.
->
-> Actually, I think this is an incorrect change.
->
-> Previously, %(color:...) was taking effect immediately, and after this
-> patch, it takes effect starting from the next atom.
->
-> Try this:
->
-> git for-each-ref --format '%(color:red)red %(color:reset)normal'
->
-> Before your patch, I get 'red' as red, and 'normal' as normal. After
-> your patch, I get no color at all, since %(color:...) just stores
-> information that is never used because I have no real atom.
->
->> --- a/ref-filter.h
->> +++ b/ref-filter.h
->> @@ -19,11 +19,13 @@
->>  struct atom_value {
->>       const char *s;
->>       unsigned long ul; /* used for sorting when not FIELD_STR */
->> -     unsigned int pseudo_atom : 1; /*  atoms which aren't placeholders for ref attributes */
->> +     unsigned int pseudo_atom : 1, /*  atoms which aren't placeholders for ref attributes */
->> +             color : 1;
->>  };
->
-> As a consequence of the remark above, I think the name and comment of
-> the field are misleading. There are 3 kinds of atoms:
->
-> * Placeholders for ref attributes
->
-> * Atoms that take action immediately, but that are not ref attributes
->   like %(color)
->
-> * Atoms that only act as modifiers for the next atom. Perhaps they could
->   be called "prefix atoms" or "modifier atoms".
->
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Thats right, Junio and I missed out the second part and overlapped it
-over with the
-third part. Thanks for seeing it through.
+> On Mon, Jul 27, 2015 at 9:27 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Mon, Jul 27, 2015 at 6:24 PM, Matthieu Moy
+>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>>
+>>>> --- a/ref-filter.c
+>>>> +++ b/ref-filter.c
+>>>> @@ -946,6 +946,32 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
+>>>
+>>>> +/*
+>>>> + * Return 1 if the refname matches one of the patterns, otherwise 0.
+>>>>   * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+>>>>   * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
+>>>>   * matches "refs/heads/m*",too).
+>>>
+>>> Nit: you used to s/,too/, too/ in the comment in a previous version.
+>>>
+>>
+>> That's carried over from a previous patch, ill change it.
+>>
+>>> I think I already suggested saying explicitly "... matches a pattern
+>>> "refs/heads/" but not "refs/heads/m")", but I won't insist on that. Just
+>>> a reminder in case you missed it.
+>>>
+>>
+>> Sorry, I missed that out. Thanks for reminding.
+>>
+>
+> If I remember right, I didn't change that cause It didn't pertain to
+> this commit. I forgot to mention it in your previous mail.
+
+The "but not "refs/heads/m"" part makes sense in this patch to document
+explicitly the difference with the other function. But again, it's just
+a suggestion, you chose whether to apply it or not.
 
 -- 
-Regards,
-Karthik Nayak
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
