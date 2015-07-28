@@ -1,80 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] Documentation/config: mention "now" and "never" for 'expire' settings
-Date: Tue, 28 Jul 2015 11:36:57 -0700
-Message-ID: <xmqqzj2gdt86.fsf@gitster.dls.corp.google.com>
-References: <1437710457-38592-1-git-send-email-sunshine@sunshineco.com>
-	<1437710457-38592-3-git-send-email-sunshine@sunshineco.com>
-	<55B58C3B.7040200@alum.mit.edu>
-	<CAPig+cTbTi5Uj_BFWBQ+rDc0=PhY1pu9Emr9TwTwPzGCeE5J2A@mail.gmail.com>
+Subject: Re: Log messages beginning # and git rebase -i
+Date: Tue, 28 Jul 2015 11:44:15 -0700
+Message-ID: <xmqqtwsodsw0.fsf@gitster.dls.corp.google.com>
+References: <loom.20150727T133256-715@post.gmane.org>
+	<CAPig+cRT6=YCHz+phfE+84y27ey-6ScjPxP2cHiVqumJmR6mOw@mail.gmail.com>
+	<loom.20150728T115023-269@post.gmane.org>
+	<vpqsi88qp6q.fsf@anie.imag.fr>
+	<xmqqr3nsfdmw.fsf@gitster.dls.corp.google.com>
+	<vpq3808p40o.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>, Paul Tan <pyokagan@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 20:37:08 2015
+Cc: Ed Avis <eda@waniasset.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 28 20:44:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK9kR-0005IK-38
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 20:37:07 +0200
+	id 1ZK9rS-000224-Sj
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 20:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107AbbG1ShA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 14:37:00 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:34299 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046AbbG1Sg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 14:36:59 -0400
-Received: by pdbbh15 with SMTP id bh15so74919118pdb.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 11:36:59 -0700 (PDT)
+	id S1752103AbbG1SoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 14:44:18 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:35635 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355AbbG1SoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 14:44:17 -0400
+Received: by pdrg1 with SMTP id g1so75035012pdr.2
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 11:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=KBnbjJFRQjJEzwDzVW34/FHgsFlVeMy8FHeG+TLwCUk=;
-        b=h5+cKQU8y5b5dibROPt54vnaWPoE+3wCxUhnEZF5dL1yxYT3zZeucR0bxjz78Wz/np
-         o1KbmN5ZcJBFtPeFC1tOksduwqjkA/64XLkaNOjAgnMkz6BmlNAXkyveCib+q9UUHUP7
-         fNcXwoABiHiDlwX23pht+aCGEuduE6jY5vbtqHmPx7Tw1jKozFdmNT+Ic3iA24l6Ka5r
-         NiVsZ/p9HmapAJ0LLT78BRhhAX0hya4sntCzK4zmYDNvwF/5ZsHlLg7FpWwje8m792LB
-         TUU34zYeII0gAjyyG3BXUwD4QY3A0Xpoc36ANc0cGCPRD6vwtSUX9GZxTHh3Dac1WypF
-         TSZQ==
-X-Received: by 10.70.118.5 with SMTP id ki5mr84743422pdb.6.1438108619219;
-        Tue, 28 Jul 2015 11:36:59 -0700 (PDT)
+        bh=tTzWwQvC3CnMl6lANmF8tCm1oWYKAJ0WBGp2vWYa19Y=;
+        b=uMewX5g+Lzq69eMAeoVIgEpXRZKqNsqClgqQ5kEDJUfnpN++amKT7zWC7c1fWbt6S5
+         jKJiMdLzHYCG+yeU5MdopQqp4tEW/Ud7DfPCdfPf8CxyieOCXNM+8EfsRMuE/meguYMx
+         bvARsRxbM6dhlfT3YLZcu0EiPvJ8J8xbbpy/xSkAUF7Y8xpQGBuwZiBboZMdQCsD5q2x
+         Eo2EhjHYaTa0MqnHXQKv2HHYLLhZMd+F5hS2nO+2RW8HJhePthVTk9omO2panfGgWs1w
+         rIWllWHNKEsacWLkZzyaXnyziHirmF6lCQ60fcPFJgJk8DAdvTUtlpmo/XFwlBK8/zAt
+         78xA==
+X-Received: by 10.70.23.98 with SMTP id l2mr84081111pdf.74.1438109057074;
+        Tue, 28 Jul 2015 11:44:17 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id ph4sm36449739pdb.43.2015.07.28.11.36.58
+        by smtp.gmail.com with ESMTPSA id oj15sm36509295pdb.20.2015.07.28.11.44.15
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 11:36:58 -0700 (PDT)
-In-Reply-To: <CAPig+cTbTi5Uj_BFWBQ+rDc0=PhY1pu9Emr9TwTwPzGCeE5J2A@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 28 Jul 2015 13:33:53 -0400")
+        Tue, 28 Jul 2015 11:44:16 -0700 (PDT)
+In-Reply-To: <vpq3808p40o.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	28 Jul 2015 19:48:23 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274812>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> I was just getting ready to re-roll this series[1] to address
-> Michael's comments[2] and noticed that the add-on patch 7/6 which I
-> sent later[3] seems to have been botched when Junio applied it to
-> 'pu'. It's currently at 36598db (Documentation/git-tools: drop
-> references to defunct tools, 2015-07-24) in
-> es/doc-clean-outdated-tools and it appears that the --scissors option
-> didn't cut off the leading cruft from the email conversation, thus the
-> commit has the wrong "subject" plus a bunch of email conversation gunk
-> in the commit message which doesn't belong. I understand that Junio
-> uses a relatively bleeding-edge version of Git for his day-to-day work
-> and was wondering if this is possible fallout from the git-am rewrite
-> in C?
+> A simple escaping scheme like the above can solve both points:
+>
+> 1) If I want to talk about #include in my commit message, I can spell it
+>    \#include and Git would remove the \. The same way, if I want to tell
+>    my shell about a " inside a string, I can write "double-quote:\"."
+>    and get a litteral double-quote.
+>
+> 2) A command that pops an editor could add the escaping where needed,
+>    pop the editor, and then unescape. A command like "pick" in "rebase
+>    -i" could escape the message, and feed it to "git commit" which would
+>    unescape it.
+> ...
+> backslash-escaping special characters seems very natural to me,...
 
-It is more likely that I was just lazy, knowing that the patch [3]
-would not hit "next" and I'll have a more relaxed time to amend it
-after the release was done, and let "am -s" without "-c" take it.
+OK.  So the proposal on the table is that a backslash at the
+beginning of a line is stripped.
 
-I just tried to re-apply the patch with "am -sc" on
-es/doc-clean-outdated-tools^ and the built-in one takes it just
-fine, so we should be OK.
+Stripping part should look like this.  To make it work for things
+like "git commit --amend", you would need to prefix any line that
+comes from the payload that begins with the core.commentchar or a
+backslash with a backslash.
 
-Thanks.
+diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+index 1259ed7..39ecb92 100644
+--- a/builtin/stripspace.c
++++ b/builtin/stripspace.c
+@@ -52,6 +52,11 @@ void stripspace(struct strbuf *sb, int skip_comments)
+ 		}
+ 		newlen = cleanup(sb->buf + i, len);
+ 
++		if (newlen && sb->buf[i] == '\\') {
++			i++;
++			newlen--;
++		}
++
+ 		/* Not just an empty line? */
+ 		if (newlen) {
+ 			if (empties > 0 && j > 0)
