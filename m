@@ -1,70 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cache-tree: populate cache-tree on successful merge
-Date: Tue, 28 Jul 2015 13:04:39 -0700
-Message-ID: <xmqq1tfsdp60.fsf@gitster.dls.corp.google.com>
-References: <1438111840-6403-1-git-send-email-dturner@twopensource.com>
-	<xmqqa8ugdpu7.fsf@gitster.dls.corp.google.com>
-	<1438113266.18134.26.camel@twopensource.com>
-	<xmqq6154dpkt.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Brian Degenhardt <bmd@bmdhacks.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 22:04:49 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 1/6] Documentation/config: mention "now" and "never" for 'expire' settings
+Date: Tue, 28 Jul 2015 16:06:10 -0400
+Message-ID: <1438113975-4915-2-git-send-email-sunshine@sunshineco.com>
+References: <1438113975-4915-1-git-send-email-sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 28 22:06:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKB7I-0008QI-OJ
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:04:49 +0200
+	id 1ZKB9G-0001VV-Q6
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbbG1UEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 16:04:45 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:36607 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753085AbbG1UEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 16:04:42 -0400
-Received: by pdjr16 with SMTP id r16so77285948pdj.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:04:41 -0700 (PDT)
+	id S1752507AbbG1UGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 16:06:46 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:35095 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbbG1UGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 16:06:45 -0400
+Received: by igr7 with SMTP id 7so132338208igr.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=bFTztQRud1zLs7H8fbRKqAA8xlq0hqIApy6ctiD6zJc=;
-        b=QkHW4Kl/djgJ50/R/eiGs+ctvF3I/2fBlCdFEt4lihRF19mkUrtlBTHms/nQpUo1+1
-         KQQ8qL/plKwg+BnuHNeW3KLqdHlcuBwwfR/xT2JlfDkcFPH1uYoI/KUQ2HF2Z41LW+hG
-         V0PKR/pybLbMLEf/MNs1ze7zr0E2aT/UmjhQD7ZVEEppD8rJpSlqRb8u7tp5zzOVLiC9
-         Otch160uMGeOGSdFIn59pO6QhsfcjDQ0Ow1y4O85RVVWCJ8aht4uDNhd+RkDfXQyIwAY
-         QhSbjD2Q8hMa+yIhg42kknHPNbp/5LPD45rsEJhvUcvACjqjUhdpz9bO9sDipwOgqAiN
-         x7UA==
-X-Received: by 10.70.30.193 with SMTP id u1mr83510453pdh.59.1438113881562;
-        Tue, 28 Jul 2015 13:04:41 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id cj7sm36717416pdb.33.2015.07.28.13.04.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 13:04:40 -0700 (PDT)
-In-Reply-To: <xmqq6154dpkt.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 28 Jul 2015 12:55:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dctCdcnqCbh96qqTbjHQRC9E/z9RvhIb17dMVqq+6Do=;
+        b=LhHXwsC46LzFHb2FclI5eIyKsWZ1LSJ77XcCwYS8Bg0stAC5h8iufUpIM2i9cL/tBm
+         X78Zi6mJalPK9qPLZUj+i8hk81UQN3r2+sA0kj609+l4A+5XWDB/Ynw8Kp0TeO+29Mtz
+         N45cS3X8tIQP1CGgdU85krJg/k0xSHc9x33sFh7qjuEaP7s3GgaljHEC3Cd8xCN+YfnL
+         p00mycVdddJ+0neT7bOqg5/6SGfMmJ91yhFCbgMRf76i4XTZiU4HGPkQMOOTPOhE6Vlv
+         qj/0NYOxMU+5d73lf+IwSSUIr7wX4oIzef6MeULXKGRPunEByXDXOBbPvrqxoufhkNC8
+         7oeQ==
+X-Received: by 10.50.102.68 with SMTP id fm4mr10403943igb.25.1438114004649;
+        Tue, 28 Jul 2015 13:06:44 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by smtp.gmail.com with ESMTPSA id r16sm15195896ioe.19.2015.07.28.13.06.43
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 28 Jul 2015 13:06:43 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.rc3.490.g8c70279
+In-Reply-To: <1438113975-4915-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274828>
 
-Junio C Hamano <gitster@pobox.com> writes:
+In addition to approxidate-style values ("2.months.ago", "yesterday"),
+consumers of 'gc.*expire*' configuration variables also accept and
+respect 'now' ("do it immediately") and 'never' ("suppress entirely").
 
-> David Turner <dturner@twopensource.com> writes:
->
->> The work done to produce the cache-tree is work that the commit would
->> otherwise have to do.  So we're spending extra time in one place to
->> eliminate that work in a different place.
->
-> Good point.  Thanks.
+Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-Hmm, I forgot about another codepath.  What about operations that
-are purely done to pouplate the index, without necessarily creating
-a tree out of the index?
+Changes since v1:
+* grammatical corrections
+* use "now"/"never" consistently; avoid "all"/"false"
 
-The most worrisome is "git checkout $branch" (two-tree merge).
+ Documentation/config.txt | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 583d24f..e09ee02 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1226,20 +1226,24 @@ gc.packrefs::
+ gc.pruneexpire::
+ 	When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'.
+ 	Override the grace period with this config variable.  The value
+-	"now" may be used to disable this  grace period and always prune
+-	unreachable objects immediately.
++	"now" may be used to disable this grace period and always prune
++	unreachable objects immediately, or "never" may be used to
++	suppress pruning.
+ 
+ gc.worktreePruneExpire::
+ 	When 'git gc' is run, it calls
+ 	'git worktree prune --expire 3.months.ago'.
+ 	This config variable can be used to set a different grace
+ 	period. The value "now" may be used to disable the grace
+-	period and prune $GIT_DIR/worktrees immediately.
++	period and prune $GIT_DIR/worktrees immediately, or "never"
++	may be used to suppress pruning.
+ 
+ gc.reflogexpire::
+ gc.<pattern>.reflogexpire::
+ 	'git reflog expire' removes reflog entries older than
+-	this time; defaults to 90 days.  With "<pattern>" (e.g.
++	this time; defaults to 90 days. The value "now" expires all
++	entries immediately, and "never" suppresses expiration
++	altogether. With "<pattern>" (e.g.
+ 	"refs/stash") in the middle the setting applies only to
+ 	the refs that match the <pattern>.
+ 
+@@ -1247,7 +1251,9 @@ gc.reflogexpireunreachable::
+ gc.<ref>.reflogexpireunreachable::
+ 	'git reflog expire' removes reflog entries older than
+ 	this time and are not reachable from the current tip;
+-	defaults to 30 days.  With "<pattern>" (e.g. "refs/stash")
++	defaults to 30 days. The value "now" expires all entries
++	immediately, and "never" suppresses expiration altogether.
++	With "<pattern>" (e.g. "refs/stash")
+ 	in the middle, the setting applies only to the refs that
+ 	match the <pattern>.
+ 
+-- 
+2.5.0.rc3.490.g8c70279
