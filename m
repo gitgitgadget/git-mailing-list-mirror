@@ -1,75 +1,79 @@
-From: Ed Avis <eda@waniasset.com>
-Subject: Re: Log messages beginning # and git rebase -i
-Date: Tue, 28 Jul 2015 16:40:10 +0000 (UTC)
-Message-ID: <loom.20150728T183310-319@post.gmane.org>
-References: <loom.20150727T133256-715@post.gmane.org> <CAPig+cRT6=YCHz+phfE+84y27ey-6ScjPxP2cHiVqumJmR6mOw@mail.gmail.com> <loom.20150728T115023-269@post.gmane.org> <vpqsi88qp6q.fsf@anie.imag.fr> <xmqqr3nsfdmw.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [RFC/PATCH 03/11] ref-filter: add option to filter only branches
+Date: Tue, 28 Jul 2015 22:12:45 +0530
+Message-ID: <CAOLa=ZTkSDqgTYH1fmcGssSPbkbr8RN3zGMrbZPx9pWQCfs+9A@mail.gmail.com>
+References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
+ <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-3-git-send-email-Karthik.188@gmail.com>
+ <vpqio94wgf9.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 28 18:40:27 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 28 18:43:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK7vV-00057m-I9
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 18:40:25 +0200
+	id 1ZK7yK-0007Lx-7H
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 18:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752325AbbG1QkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 12:40:21 -0400
-Received: from plane.gmane.org ([80.91.229.3]:42087 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752040AbbG1QkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 12:40:21 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZK7vM-00051i-3S
-	for git@vger.kernel.org; Tue, 28 Jul 2015 18:40:16 +0200
-Received: from 80.169.169.174 ([80.169.169.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 18:40:16 +0200
-Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 18:40:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:39.0) Gecko/20100101 Firefox/39.0 Cyberfox/39.0)
+	id S1751756AbbG1QnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 12:43:16 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:34715 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750783AbbG1QnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 12:43:15 -0400
+Received: by obre1 with SMTP id e1so88750277obr.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 09:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kwGe6kECTO+gtgX0OoF/fjuFg7CfFKPPbKTUmhKQF20=;
+        b=tj6W+Nh8bKXtjodknvbKLILhp8sTjjP9AdCyk5EgbvoghanNYXU3LW6VqWt53AFHAi
+         WHiGw2ssp22E1mxpSC5/5OssRCFPNxV/eD2yzbaUNmOTW2nBIwJc2boAQSU6W9yHDnG2
+         84jYMIsMRCsSIhXcmK9/ghJ58cmKDFvBymM66/Ve9FcNoxCT7UJOnydFdeOv8BwGANpe
+         iaP1+bazREOPmAZabSWhFrslFVGlCKMds1S8R7ZAP/W02SeExYnW8gbJfFvf1VUr2sr5
+         dPvtSCOADTnqsDlFruLT+4OlFUDaG/QsNjK7LwXcBu+qtZj41SpMULs3Ue49bEqDhWIs
+         G6jA==
+X-Received: by 10.182.153.161 with SMTP id vh1mr34622613obb.34.1438101794742;
+ Tue, 28 Jul 2015 09:43:14 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 09:42:45 -0700 (PDT)
+In-Reply-To: <vpqio94wgf9.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274788>
 
-I was considering this case:
+On Tue, Jul 28, 2015 at 7:08 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> +static int filter_branch_kind(struct ref_filter *filter, const char *refname)
+>> +{
+>> +     int kind, i;
+>> +
+>> +     static struct {
+>> +             int kind;
+>> +             const char *prefix;
+>> +     } ref_kind[] = {
+>> +             { REF_LOCAL_BRANCH, "refs/heads/" },
+>> +             { REF_REMOTE_BRANCH, "refs/remotes/" },
+>> +     };
+>
+> Nit: I would swap the order of fields, to make it a bit clearer that
+> this is a kind of dictionary key -> value (I think it's more common to
+> write it in this order than value <- key).
+>
 
-- git commit -a '-m# characters are now handled OK'
-- hack, hack
-- git commit -a '-mWhoops, fixed last commit'
-- run git-rebase -i
-- squash the second commit into the first
-- when prompted for the log message for the combined change,
-  delete the "Whoops, fixed last commit" line but leave the first line
+This was borrowed from branch.c, but ok will change it!
+Thanks
 
-That will accidentally lose the first log message, assuming commentChar=#.
-git-rebase -i should be a bit friendlier and not bring up an editing window
-where the log message ends up being one of the comments.
-
-I suggested it could munge the message with an extra space character, but I
-agree that is a bit unpleasant.  Perhaps better would be
-
-   % git-rebase -i
-   error: commit abcde has log message beginning with '#', which is the
-          current setting of commentChar.  This means that the interactive
-          editing of the log message will not work.  Please set commentChar
-          to some other value (such as 'auto') in your git configuration
-          to be able to rebase interactively.
-
-The current behaviour is a bit of a trap for the unwary, and anyway it leaves
-no way to specify keeping the existing log message (which begins #).
 
 -- 
-Ed Avis <eda@waniasset.com>
+Regards,
+Karthik Nayak
