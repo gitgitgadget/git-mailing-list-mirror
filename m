@@ -1,45 +1,45 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 06/10] ref-filter: add option to match literal pattern
-Date: Tue, 28 Jul 2015 12:03:27 +0530
-Message-ID: <1438065211-3777-6-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v6 07/10] tag.c: use 'ref-filter' data structures
+Date: Tue, 28 Jul 2015 12:03:28 +0530
+Message-ID: <1438065211-3777-7-git-send-email-Karthik.188@gmail.com>
 References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
  <1438065211-3777-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 28 08:33:54 2015
+X-From: git-owner@vger.kernel.org Tue Jul 28 08:33:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJySV-0005mN-Tw
+	id 1ZJySW-0005mN-HN
 	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 08:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754865AbbG1Gdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754876AbbG1Gdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 02:33:49 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:33590 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754823AbbG1Gdr (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 28 Jul 2015 02:33:47 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36651 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754638AbbG1Gdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 02:33:44 -0400
-Received: by pachj5 with SMTP id hj5so64535804pac.3
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 23:33:44 -0700 (PDT)
+Received: by pdbnt7 with SMTP id nt7so65231360pdb.0
+        for <git@vger.kernel.org>; Mon, 27 Jul 2015 23:33:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vKmSxv93XEhd00mjhY6ltrCb3YNehJX1DJ9keuaBV1Q=;
-        b=Dfi/RafIL5EaBRnAVG5xnFd0IhIY6QoxDD9f0cfvtaFwRckV9xK9pC4upyC4nFjXU3
-         xAhPtltHb2ioLYFTfma8mNqeAiezfdUer0fJ8UMcrqYhi7q66QcDUrCY61V+SQx/n4hk
-         BjCrCAN1pqNoImb9fIo9CYlSJCPKOBNq4vGeNHM0mzKgT7RGsdI+bvE+FggSboMm0xnN
-         7dLLj39VHENzoyPizYu1UeCE7EZKmNeCGG2ZiocMvydGzF+XNympdBT5Nm68PYHKLwOk
-         hYEMuojL4vaxu/Xh6RrSTvsHLS88U7bn91M6djgTDzYoqVpZYWHgJGiHVXnLTcyQ8lSf
-         afBg==
-X-Received: by 10.66.146.100 with SMTP id tb4mr77847274pab.70.1438065224462;
-        Mon, 27 Jul 2015 23:33:44 -0700 (PDT)
+        bh=h79sOREx2BV++RDP5Wis/QAmcgNkgtAijiYLVkCEU08=;
+        b=t3415NW3T7u44IiRtzB/jF7H81HzZF/MGJOzu6IRCJVlQVmSn6U6Ula2Duz5HPPOSh
+         kDNVrwEyAgW59WoVqLOZNVdmnl1yxSehnE1o2CPaJAlKVQe+8PvgQuVex5q8ghk7MICy
+         ZWquZJYFITeTaxTkBzd4MPVQoIg5Xfuc37X8KrHMiJQUs7Q6FzpO2zgmBlt92/5nR7EY
+         W09tSSl5iB91VfmLlqjSz9gfBhvTPstsx4bZcWs7NNypP6czBOBkBPE7SxOC/SGIjxJ8
+         NPhV7gFtvIeldigcB8G+Kze/1ar4AKMY6ej/HamAZvLZxo8ABY6MybIJHsUP9nnS+UO8
+         Ikxw==
+X-Received: by 10.70.91.12 with SMTP id ca12mr77517176pdb.135.1438065226867;
+        Mon, 27 Jul 2015 23:33:46 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id p9sm32976792pds.92.2015.07.27.23.33.41
+        by smtp.gmail.com with ESMTPSA id p9sm32976792pds.92.2015.07.27.23.33.44
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jul 2015 23:33:43 -0700 (PDT)
+        Mon, 27 Jul 2015 23:33:46 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
 In-Reply-To: <1438065211-3777-1-git-send-email-Karthik.188@gmail.com>
@@ -47,119 +47,259 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274733>
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Since 'ref-filter' only has an option to match path names add an
-option for plain fnmatch pattern-matching.
+Make 'tag.c' use 'ref-filter' data structures and make changes to
+support the new data structures. This is a part of the process
+of porting 'tag.c' to use 'ref-filter' APIs.
 
-This is to support the pattern matching options which are used in `git
-tag -l` and `git branch -l` where we can match patterns like `git tag
--l foo*` which would match all tags which has a "foo*" pattern.
+This is a temporary step before porting 'tag.c' to use 'ref-filter'
+completely. As this is a temporary step, most of the code
+introduced here will be removed when 'tag.c' is ported over to use
+'ref-filter' APIs
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/for-each-ref.c |  1 +
- ref-filter.c           | 42 +++++++++++++++++++++++++++++++++++++++---
- ref-filter.h           |  3 ++-
- 3 files changed, 42 insertions(+), 4 deletions(-)
+ builtin/tag.c | 106 +++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 57 insertions(+), 49 deletions(-)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index e4a4f8a..3ad6a64 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -68,6 +68,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 0fc7557..e96bae2 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -17,6 +17,7 @@
+ #include "gpg-interface.h"
+ #include "sha1-array.h"
+ #include "column.h"
++#include "ref-filter.h"
  
- 	filter.name_patterns = argv;
-+	filter.match_as_path = 1;
- 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
- 	ref_array_sort(sorting, &array);
+ static const char * const git_tag_usage[] = {
+ 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
+@@ -34,15 +35,6 @@ static const char * const git_tag_usage[] = {
  
-diff --git a/ref-filter.c b/ref-filter.c
-index 2dbb2b6..0a34924 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -944,9 +944,35 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
+ static int tag_sort;
  
- /*
-  * Return 1 if the refname matches one of the patterns, otherwise 0.
-+ * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
-+ * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
-+ * matches "refs/heads/mas*", too).
-+ */
-+static int match_pattern(const char **patterns, const char *refname)
-+{
-+	/*
-+	 * When no '--format' option is given we need to skip the prefix
-+	 * for matching refs of tags and branches.
-+	 */
-+	if (skip_prefix(refname, "refs/tags/", &refname))
-+		;
-+	else if (skip_prefix(refname, "refs/heads/", &refname))
-+		;
-+	else if (skip_prefix(refname, "refs/remotes/", &refname))
-+		;
-+
-+	for (; *patterns; patterns++) {
-+		if (!wildmatch(*patterns, refname, 0, NULL))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Return 1 if the refname matches one of the patterns, otherwise 0.
-  * A pattern can be path prefix (e.g. a refname "refs/heads/master"
-- * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
-- * matches "refs/heads/m*",too).
-+ * matches a pattern "refs/heads/" but not "refs/heads/m") or a
-+ * wildcard (e.g. the same ref matches "refs/heads/m*", too).
+-struct tag_filter {
+-	const char **patterns;
+-	int lines;
+-	int sort;
+-	struct string_list tags;
+-	struct commit_list *with_commit;
+-};
+-
+-static struct sha1_array points_at;
+ static unsigned int colopts;
+ 
+ static int match_pattern(const char **patterns, const char *ref)
+@@ -61,19 +53,20 @@ static int match_pattern(const char **patterns, const char *ref)
+  * removed as we port tag.c to use the ref-filter APIs.
   */
- static int match_name_as_path(const char **pattern, const char *refname)
+ static const unsigned char *match_points_at(const char *refname,
+-					    const unsigned char *sha1)
++					    const unsigned char *sha1,
++					    struct sha1_array *points_at)
  {
-@@ -967,6 +993,16 @@ static int match_name_as_path(const char **pattern, const char *refname)
- 	return 0;
+ 	const unsigned char *tagged_sha1 = NULL;
+ 	struct object *obj;
+ 
+-	if (sha1_array_lookup(&points_at, sha1) >= 0)
++	if (sha1_array_lookup(points_at, sha1) >= 0)
+ 		return sha1;
+ 	obj = parse_object(sha1);
+ 	if (!obj)
+ 		die(_("malformed object at '%s'"), refname);
+ 	if (obj->type == OBJ_TAG)
+ 		tagged_sha1 = ((struct tag *)obj)->tagged->sha1;
+-	if (tagged_sha1 && sha1_array_lookup(&points_at, tagged_sha1) >= 0)
++	if (tagged_sha1 && sha1_array_lookup(points_at, tagged_sha1) >= 0)
+ 		return tagged_sha1;
+ 	return NULL;
+ }
+@@ -228,12 +221,24 @@ free_return:
+ 	free(buf);
  }
  
-+/* Return 1 if the refname matches one of the patterns, otherwise 0. */
-+static int filter_pattern_match(struct ref_filter *filter, const char *refname)
++static void ref_array_append(struct ref_array *array, const char *refname)
 +{
-+	if (!*filter->name_patterns)
-+		return 1; /* No pattern always matches */
-+	if (filter->match_as_path)
-+		return match_name_as_path(filter->name_patterns, refname);
-+	return match_pattern(filter->name_patterns, refname);
++	size_t len = strlen(refname);
++	struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item) + len + 1);
++	memcpy(ref->refname, refname, len);
++	ref->refname[len] = '\0';
++	REALLOC_ARRAY(array->items, array->nr + 1);
++	array->items[array->nr++] = ref;
 +}
 +
- /*
-  * Given a ref (sha1, refname), check if the ref belongs to the array
-  * of sha1s. If the given ref is a tag, check if the given tag points
-@@ -1035,7 +1071,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 		return 0;
+ static int show_reference(const char *refname, const struct object_id *oid,
+ 			  int flag, void *cb_data)
+ {
+-	struct tag_filter *filter = cb_data;
++	struct ref_filter_cbdata *data = cb_data;
++	struct ref_array *array = data->array;
++	struct ref_filter *filter = data->filter;
+ 
+-	if (match_pattern(filter->patterns, refname)) {
++	if (match_pattern(filter->name_patterns, refname)) {
+ 		if (filter->with_commit) {
+ 			struct commit *commit;
+ 
+@@ -244,12 +249,12 @@ static int show_reference(const char *refname, const struct object_id *oid,
+ 				return 0;
+ 		}
+ 
+-		if (points_at.nr && !match_points_at(refname, oid->hash))
++		if (filter->points_at.nr && !match_points_at(refname, oid->hash, &filter->points_at))
+ 			return 0;
+ 
+ 		if (!filter->lines) {
+-			if (filter->sort)
+-				string_list_append(&filter->tags, refname);
++			if (tag_sort)
++				ref_array_append(array, refname);
+ 			else
+ 				printf("%s\n", refname);
+ 			return 0;
+@@ -264,36 +269,36 @@ static int show_reference(const char *refname, const struct object_id *oid,
+ 
+ static int sort_by_version(const void *a_, const void *b_)
+ {
+-	const struct string_list_item *a = a_;
+-	const struct string_list_item *b = b_;
+-	return versioncmp(a->string, b->string);
++	const struct ref_array_item *a = *((struct ref_array_item **)a_);
++	const struct ref_array_item *b = *((struct ref_array_item **)b_);
++	return versioncmp(a->refname, b->refname);
+ }
+ 
+-static int list_tags(const char **patterns, int lines,
+-		     struct commit_list *with_commit, int sort)
++static int list_tags(struct ref_filter *filter, int sort)
+ {
+-	struct tag_filter filter;
++	struct ref_array array;
++	struct ref_filter_cbdata data;
++
++	memset(&array, 0, sizeof(array));
++	data.array = &array;
++	data.filter = filter;
+ 
+-	filter.patterns = patterns;
+-	filter.lines = lines;
+-	filter.sort = sort;
+-	filter.with_commit = with_commit;
+-	memset(&filter.tags, 0, sizeof(filter.tags));
+-	filter.tags.strdup_strings = 1;
++	if (filter->lines == -1)
++		filter->lines = 0;
+ 
+-	for_each_tag_ref(show_reference, (void *)&filter);
++	for_each_tag_ref(show_reference, &data);
+ 	if (sort) {
+ 		int i;
+ 		if ((sort & SORT_MASK) == VERCMP_SORT)
+-			qsort(filter.tags.items, filter.tags.nr,
+-			      sizeof(struct string_list_item), sort_by_version);
++			qsort(array.items, array.nr,
++			      sizeof(struct ref_array_item *), sort_by_version);
+ 		if (sort & REVERSE_SORT)
+-			for (i = filter.tags.nr - 1; i >= 0; i--)
+-				printf("%s\n", filter.tags.items[i].string);
++			for (i = array.nr - 1; i >= 0; i--)
++				printf("%s\n", array.items[i]->refname);
+ 		else
+-			for (i = 0; i < filter.tags.nr; i++)
+-				printf("%s\n", filter.tags.items[i].string);
+-		string_list_clear(&filter.tags, 0);
++			for (i = 0; i < array.nr; i++)
++				printf("%s\n", array.items[i]->refname);
++		ref_array_clear(&array);
  	}
+ 	return 0;
+ }
+@@ -574,17 +579,17 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref, *tag;
+ 	struct create_tag_options opt;
+ 	char *cleanup_arg = NULL;
+-	int annotate = 0, force = 0, lines = -1;
+ 	int create_reflog = 0;
++	int annotate = 0, force = 0;
+ 	int cmdmode = 0;
+ 	const char *msgfile = NULL, *keyid = NULL;
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+-	struct commit_list *with_commit = NULL;
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
++	struct ref_filter filter;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+-		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
++		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+ 				N_("print <n> lines of each tag message"),
+ 				PARSE_OPT_OPTARG, NULL, 1 },
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete tags"), 'd'),
+@@ -606,14 +611,14 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
  
--	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
-+	if (!filter_pattern_match(filter, refname))
- 		return 0;
+ 		OPT_GROUP(N_("Tag listing options")),
+ 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
+-		OPT_CONTAINS(&with_commit, N_("print only tags that contain the commit")),
+-		OPT_WITH(&with_commit, N_("print only tags that contain the commit")),
++		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
++		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
+ 		{
+ 			OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
+ 			PARSE_OPT_NONEG, parse_opt_sort
+ 		},
+ 		{
+-			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
++			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
+ 			N_("print only tags of the object"), 0, parse_opt_object_name
+ 		},
+ 		OPT_END()
+@@ -622,6 +627,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	git_config(git_tag_config, NULL);
  
- 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
-diff --git a/ref-filter.h b/ref-filter.h
-index 05a3cab..fcf469e 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -62,7 +62,8 @@ struct ref_filter {
- 	} merge;
- 	struct commit *merge_commit;
+ 	memset(&opt, 0, sizeof(opt));
++	memset(&filter, 0, sizeof(filter));
++	filter.lines = -1;
  
--	unsigned int with_commit_tag_algo : 1;
-+	unsigned int with_commit_tag_algo : 1,
-+		match_as_path : 1;
- 	unsigned int lines;
- };
+ 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
  
+@@ -638,7 +645,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_tag_usage, options);
+ 
+ 	finalize_colopts(&colopts, -1);
+-	if (cmdmode == 'l' && lines != -1) {
++	if (cmdmode == 'l' && filter.lines != -1) {
+ 		if (explicitly_enable_column(colopts))
+ 			die(_("--column and -n are incompatible"));
+ 		colopts = 0;
+@@ -651,18 +658,19 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			copts.padding = 2;
+ 			run_column_filter(colopts, &copts);
+ 		}
+-		if (lines != -1 && tag_sort)
++		if (filter.lines != -1 && tag_sort)
+ 			die(_("--sort and -n are incompatible"));
+-		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
++		filter.name_patterns = argv;
++		ret = list_tags(&filter, tag_sort);
+ 		if (column_active(colopts))
+ 			stop_column_filter();
+ 		return ret;
+ 	}
+-	if (lines != -1)
++	if (filter.lines != -1)
+ 		die(_("-n option is only allowed with -l."));
+-	if (with_commit)
++	if (filter.with_commit)
+ 		die(_("--contains option is only allowed with -l."));
+-	if (points_at.nr)
++	if (filter.points_at.nr)
+ 		die(_("--points-at option is only allowed with -l."));
+ 	if (cmdmode == 'd')
+ 		return for_each_tag_name(argv, delete_tag);
 -- 
 2.4.6
