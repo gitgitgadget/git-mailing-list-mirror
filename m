@@ -1,46 +1,46 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [RFC/PATCH 04/11] ref-filter: add 'ifexists' atom
-Date: Tue, 28 Jul 2015 12:26:29 +0530
-Message-ID: <1438066594-5620-4-git-send-email-Karthik.188@gmail.com>
+Subject: [RFC/PATCH 07/11] branch: move 'current' check down to the presentation layer
+Date: Tue, 28 Jul 2015 12:26:32 +0530
+Message-ID: <1438066594-5620-7-git-send-email-Karthik.188@gmail.com>
 References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
  <1438066594-5620-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 28 08:56:51 2015
+X-From: git-owner@vger.kernel.org Tue Jul 28 08:57:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJyoh-0006E5-G0
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 08:56:47 +0200
+	id 1ZJyot-0006Hv-47
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 08:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524AbbG1G4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 02:56:42 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36698 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752572AbbG1G4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 02:56:40 -0400
-Received: by pachj5 with SMTP id hj5so64861411pac.3
-        for <git@vger.kernel.org>; Mon, 27 Jul 2015 23:56:39 -0700 (PDT)
+	id S1754069AbbG1G4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 02:56:49 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:36572 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753285AbbG1G4r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 02:56:47 -0400
+Received: by pdjr16 with SMTP id r16so66786074pdj.3
+        for <git@vger.kernel.org>; Mon, 27 Jul 2015 23:56:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wMm6WAfrFJU1sVn+PdNiqOfFKlx/9XvaL3ItRpvFCpE=;
-        b=ZcF3/DE9Lvz73iNUzii/aqjt0YWW+8e3jYw+e0ml0qjdGL6C0cmNSPq3wCZa/GPxkk
-         jM/tR6fisoFjixj9Y1eBjv553XT8cZylTU/NExeg/NdV0VyYjzS5toiC2lEiPp+oA+O8
-         dQ9D/GBUWLsY4/Bwaw0nbH7IdIwv5gOzP5u3pswe5UbKPNSp69hSwt3u3560pasx0uAg
-         gdginbG6shxupxj7A7U64xbBQnyRE+tQv9Tr+XTvG/3249RrZ0/tgTnuQqnrSri8sqWc
-         RVkGTvJoLVv4wH+6OAXB9nOTaby2ZT3EFK2siRpyPV1o6F6M9cKn13aB7GCcAgMCFSL1
-         AEeg==
-X-Received: by 10.66.66.130 with SMTP id f2mr80025642pat.120.1438066599741;
-        Mon, 27 Jul 2015 23:56:39 -0700 (PDT)
+        bh=52EknChemj5tyiE/i1S0PNl25vhHnff6iPMOMBAsB/A=;
+        b=oU/+2VAix6IAXJZG/vEMN5qK4N6jJVKJJBdO+9F4XIDt1gdTFVFjYflT5w4mr94PeU
+         VEMHwOQhFV8YHjspiufGNSnpBHad7dqfWST6T+a3xguBy/w7Tq9P3GqTEHvvpNQAla4g
+         xnP5au6iXewJAuuc9bWKMwcj8OzJCs1+lQ65XtK8VLSNi6HEqNdfoZcyoqV+42qwre8I
+         UGB2bb3Zz9z87qE46a4RgnbUSMEGcdwnab70TKFQcbYHNjuyfUlPoRIgvvKxAo3aZXvU
+         UwMUQn17xzeiHkdzAJyl6Gkj/RNouWZRVE9yzi7tfC137IWCsLs10udj35cngH8LxUAQ
+         TuAw==
+X-Received: by 10.70.23.98 with SMTP id l2mr77925244pdf.74.1438066607180;
+        Mon, 27 Jul 2015 23:56:47 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id q7sm33147846pdj.31.2015.07.27.23.56.37
+        by smtp.gmail.com with ESMTPSA id q7sm33147846pdj.31.2015.07.27.23.56.44
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jul 2015 23:56:39 -0700 (PDT)
+        Mon, 27 Jul 2015 23:56:46 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
 In-Reply-To: <1438066594-5620-1-git-send-email-Karthik.188@gmail.com>
@@ -48,165 +48,94 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274743>
 
-The 'ifexists' atom allows us to print a required format if the
-preceeding atom has a value. If the preceeding atom has no value then
-the format given is not printed. e.g. to print "[<refname>]" we can
-now use the format "%(ifexists:[%s])%(refname)".
+We check if given ref is the current branch in print_ref_list().  Move
+this check to print_ref_item() where it is checked right before
+printing.
 
-Add documentation and test for the same.
-
+Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  8 ++++++++
- ref-filter.c                       | 37 ++++++++++++++++++++++++++++++++++---
- ref-filter.h                       |  5 +++--
- t/t6302-for-each-ref-filter.sh     | 21 +++++++++++++++++++++
- 4 files changed, 66 insertions(+), 5 deletions(-)
+ builtin/branch.c | 29 ++++++++++++-----------------
+ 1 file changed, 12 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 9dc02aa..4424020 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -138,6 +138,14 @@ colornext::
- 	`<:colorname>`.  Not compatible with `padright` and resets any
- 	previous `color`, if set.
- 
-+ifexists::
-+	Print required string only if the next atom specified in the
-+	'--format' option exists.
-+	e.g. --format="%(ifexists:[%s])%(symref)" prints the symref
-+	like "[<symref>]" only if the ref has a symref.  This was
-+	incorporated to simulate the output of 'git branch -vv', where
-+	we need to display the upstream branch in square brackets.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/ref-filter.c b/ref-filter.c
-index 3f40144..ff5a16b 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -58,6 +58,7 @@ static struct {
- 	{ "color" },
- 	{ "padright" },
- 	{ "colornext" },
-+	{ "ifexists" },
- };
- 
- /*
-@@ -722,6 +723,13 @@ static void populate_value(struct ref_array_item *ref)
- 			v->modifier_atom = 1;
- 			v->color_next = 1;
- 			continue;
-+		} else if (starts_with(name, "ifexists:")) {
-+			skip_prefix(name, "ifexists:", &v->s);
-+			if (!*v->s)
-+				die(_("no string given with 'ifexists:'"));
-+			v->modifier_atom = 1;
-+			v->ifexists = 1;
-+			continue;
- 		} else
- 			continue;
- 
-@@ -1315,11 +1323,32 @@ static void apply_formatting_state(struct ref_formatting_state *state,
- {
- 	if (state->color_next && state->pad_to_right)
- 		die(_("cannot use `colornext` and `padright` together"));
--	if (state->color_next) {
-+	if (state->pad_to_right && state->ifexists)
-+		die(_("cannot use 'align' and 'ifexists' together"));
-+	if (state->color_next && !state->ifexists) {
- 		strbuf_addf(value, "%s%s%s", state->color_next, v->s, GIT_COLOR_RESET);
- 		return;
--	}
--	else if (state->pad_to_right) {
-+	} else if (state->ifexists) {
-+		const char *sp = state->ifexists;
-+
-+		while (*sp) {
-+			if (*sp != '%') {
-+				strbuf_addch(value, *sp++);
-+				continue;
-+			} else if (sp[1] == '%') {
-+				strbuf_addch(value, *sp++);
-+				continue;
-+			} else if (sp[1] == 's') {
-+				if (state->color_next)
-+					strbuf_addf(value, "%s%s%s", state->color_next, v->s, GIT_COLOR_RESET);
-+				else
-+					strbuf_addstr(value, v->s);
-+				sp += 2;
-+			}
-+		}
-+
-+		return;
-+	} else if (state->pad_to_right) {
- 		if (!is_utf8(v->s))
- 			strbuf_addf(value, "%-*s", state->pad_to_right, v->s);
- 		else {
-@@ -1413,6 +1442,8 @@ static void store_formatting_state(struct ref_formatting_state *state,
- 		state->color_next = atomv->s;
- 	if (atomv->pad_to_right)
- 		state->pad_to_right = atomv->ul;
-+	if (atomv->ifexists)
-+		state->ifexists = atomv->s;
+diff --git a/builtin/branch.c b/builtin/branch.c
+index f3d83d0..ba9cbad 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -534,9 +534,9 @@ static char *get_head_description(void)
  }
  
- static void reset_formatting_state(struct ref_formatting_state *state)
-diff --git a/ref-filter.h b/ref-filter.h
-index a021b04..7d1871d 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -28,13 +28,14 @@ struct atom_value {
- 	unsigned long ul; /* used for sorting when not FIELD_STR */
- 	unsigned int modifier_atom : 1, /*  atoms which act as modifiers for the next atom */
- 		pad_to_right : 1,
--		color_next : 1;
-+		color_next : 1,
-+		ifexists : 1;
- };
+ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+-			   int abbrev, int current, const char *remote_prefix)
++			   int abbrev, int detached, const char *remote_prefix)
+ {
+-	char c;
++	char c = ' ';
+ 	int color;
+ 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
+ 	const char *prefix = "";
+@@ -547,7 +547,11 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
  
- struct ref_formatting_state {
- 	int quote_style;
- 	unsigned int pad_to_right;
--	const char *color_next;
-+	const char *color_next, *ifexists;
- };
+ 	switch (item->kind) {
+ 	case REF_LOCAL_BRANCH:
+-		color = BRANCH_COLOR_LOCAL;
++		if (!detached && !strcmp(item->name, head)) {
++			color = BRANCH_COLOR_CURRENT;
++			c = '*';
++		} else
++			color = BRANCH_COLOR_LOCAL;
+ 		break;
+ 	case REF_REMOTE_BRANCH:
+ 		color = BRANCH_COLOR_REMOTE;
+@@ -556,18 +560,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 	case REF_DETACHED_HEAD:
+ 		color = BRANCH_COLOR_CURRENT;
+ 		desc = get_head_description();
++		c = '*';
+ 		break;
+ 	default:
+ 		color = BRANCH_COLOR_PLAIN;
+ 		break;
+ 	}
  
- struct ref_sorting {
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 6aad069..29ed97b 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -149,4 +149,25 @@ test_expect_success 'check `colornext` format option' '
- 	test_cmp expect actual
- '
+-	c = ' ';
+-	if (current) {
+-		c = '*';
+-		color = BRANCH_COLOR_CURRENT;
+-	}
+-
+ 	strbuf_addf(&name, "%s%s", prefix, desc);
+ 	if (verbose) {
+ 		int utf8_compensation = strlen(name.buf) - utf8_strwidth(name.buf);
+@@ -677,21 +676,17 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	index = ref_list.index;
  
-+test_expect_success 'check `ifexists` format option' '
-+	cat >expect <<-\EOF &&
-+	[foo1.10]
-+	[foo1.3]
-+	[foo1.6]
-+	EOF
-+	git for-each-ref --format="%(ifexists:[%s])%(refname:short)" | grep "foo" >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<EOF &&
-+[$(get_color green)foo1.10$(get_color reset)]||foo1.10
-+[$(get_color green)foo1.3$(get_color reset)]||foo1.3
-+[$(get_color green)foo1.6$(get_color reset)]||foo1.6
-+EOF
-+
-+test_expect_success 'check `ifexists` with `colornext` format option' '
-+	git for-each-ref --format="%(ifexists:[%s])%(colornext:green)%(refname:short)||%(refname:short)" | grep "foo" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	/* Print detached heads before sorting and printing the rest */
+-	if (detached && (ref_list.list[index - 1].kind == REF_DETACHED_HEAD) &&
+-	    !strcmp(ref_list.list[index - 1].name, head)) {
++	if (detached) {
+ 		print_ref_item(&ref_list.list[index - 1], maxwidth, verbose, abbrev,
+-			       1, remote_prefix);
++			       detached, remote_prefix);
+ 		index -= 1;
+ 	}
+ 
+ 	qsort(ref_list.list, index, sizeof(struct ref_item), ref_cmp);
+ 
+-	for (i = 0; i < index; i++) {
+-		int current = !detached && (ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
+-			!strcmp(ref_list.list[i].name, head);
++	for (i = 0; i < index; i++)
+ 		print_ref_item(&ref_list.list[i], maxwidth, verbose,
+-			       abbrev, current, remote_prefix);
+-	}
++			       abbrev, detached, remote_prefix);
+ 
+ 	free_ref_list(&ref_list);
+ 
 -- 
 2.4.6
