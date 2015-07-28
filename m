@@ -1,73 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v6 01/10] ref-filter: introduce 'ref_formatting_state'
-Date: Tue, 28 Jul 2015 09:26:17 +0200
-Message-ID: <vpqwpxk215y.fsf@anie.imag.fr>
-References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
-	<1438065211-3777-1-git-send-email-Karthik.188@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git branch command is incompatible with bash
+Date: Tue, 28 Jul 2015 09:28:09 +0200
+Message-ID: <55B72F09.3030000@kdbg.org>
+References: <20150727121253.GC17338@2vizcon.com> <55B69E68.90306@kdbg.org>
+ <xmqqh9opgtjz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 09:26:28 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Anatol Rudolph <a.rudolph@2vizcon.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 09:28:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZJzHP-0000aY-Ew
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 09:26:27 +0200
+	id 1ZJzJH-0001mm-5d
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 09:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbbG1H0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 03:26:23 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39424 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751544AbbG1H0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 03:26:22 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6S7QGJ3021778
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 28 Jul 2015 09:26:16 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6S7QHPM024990;
-	Tue, 28 Jul 2015 09:26:17 +0200
-In-Reply-To: <1438065211-3777-1-git-send-email-Karthik.188@gmail.com> (Karthik
-	Nayak's message of "Tue, 28 Jul 2015 12:03:22 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 28 Jul 2015 09:26:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t6S7QGJ3021778
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1438673177.41399@tymK1iFJ2bMFhbS5HLrn4w
+	id S1752035AbbG1H2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 03:28:14 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:6626 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751176AbbG1H2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 03:28:13 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3mgV3H0LLVz5tlb;
+	Tue, 28 Jul 2015 09:28:10 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id BDD7952CB;
+	Tue, 28 Jul 2015 09:28:09 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <xmqqh9opgtjz.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274751>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Am 27.07.2015 um 23:49 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> Try
+>>
+>>    branchName=$(git rev-parse --abbrev-ref HEAD)
+>
+> Hmm, interesting.
+>
+>      $ git checkout --orphan notyet
+>      $ git rev-parse --abbrev-ref HEAD
+>      $ git symbolic-ref --short HEAD
+>
 
-> -static void print_value(struct atom_value *v, int quote_style)
-> +static void apply_formatting_state(struct ref_formatting_state *state,
-> +				   struct atom_value *v, struct strbuf *value)
->  {
-> -	struct strbuf sb = STRBUF_INIT;
-> -	switch (quote_style) {
-> +	/*  Eventually we'll formatt based on the ref_formatting_state */
+Please don't scare newcomers with these corner cases ;-)
 
-s/formatt/format/
+I see this:
 
-Also, we usually use a single space after /*.
+$ git rev-parse --abbrev-ref HEAD
+HEAD
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the 
+working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+$ git symbolic-ref --short HEAD
+notyet
 
-(Neither is very important since it disapears in the next commit)
+Are you trying to say that the result of 'rev-parse --abbrev-ref HEAD' 
+is suboptimal and that of 'symbolic-ref --short HEAD' is OK?
 
-> +	/*
-> +	 * Some (pesudo) atoms have no immediate side effect, but only
-
-s/pesudo/pseudo/. But if you are to rename these atoms to "modifier
-atoms", you should get rid of this "pseudo" here.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- Hannes
