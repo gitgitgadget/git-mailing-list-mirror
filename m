@@ -1,127 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH 10/11] branch.c: use 'ref-filter' APIs
-Date: Tue, 28 Jul 2015 16:17:56 +0200
-Message-ID: <vpqh9oov017.fsf@anie.imag.fr>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
-	<1438067468-6835-1-git-send-email-Karthik.188@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Fwd: Bug#793884: git: allows nonsensical command 'git checkout -b HEAD'
+Date: Tue, 28 Jul 2015 21:33:14 +0700
+Message-ID: <CACsJy8Atx7h8LHQ26rTx2jPUxL-+MSLva8njdoUs5+Aq-Eoj4Q@mail.gmail.com>
+References: <20150728141858.22342.16605.reportbug@zam581.zam.kfa-juelich.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 16:18:20 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 28 16:33:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK5hz-0003vt-Ki
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 16:18:19 +0200
+	id 1ZK5x1-00058h-CT
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 16:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbbG1OSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 10:18:13 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33539 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932312AbbG1OSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 10:18:11 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6SEHt7V020037
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 28 Jul 2015 16:17:55 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6SEHuNb000650;
-	Tue, 28 Jul 2015 16:17:56 +0200
-In-Reply-To: <1438067468-6835-1-git-send-email-Karthik.188@gmail.com> (Karthik
-	Nayak's message of "Tue, 28 Jul 2015 12:41:07 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 28 Jul 2015 16:17:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t6SEHt7V020037
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1438697880.00072@T4LC1wSbALxcVc4owhFTzQ
+	id S932379AbbG1Odp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 10:33:45 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:35824 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755700AbbG1Odo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 10:33:44 -0400
+Received: by igr7 with SMTP id 7so119014179igr.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 07:33:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=/QbTfMrUeaB51V3Y09ZOpSB5p3uBA8e5MT21l1AW5Yw=;
+        b=CLCvTe2rflVfxnfnXUFEqazrdz1cB/dp9zW6zeh4TEd+v583/ZKRs0d8vGk9nZylqa
+         NBdm7JoqICc8wNXX+3rHwSCr/GjDJzRmjQ2pU8j4uzeqEIc/Bl3aMVGjzseYkiAmRVE+
+         TKhMSd9Y6rO1rQOpshH/XaBEd9idUvUwxdnzGjViVb69glgD4nvtNXcp8r7y5qNcZnjP
+         cPV+iZftjhExS7wWbxaJ0r0OTt9RH/KRhDlJ+UVy8R/Diu/y/sSzNf2sixB2CFHGNnwb
+         FPwUSIzuhhwwxx3bl9TyAkg9n2a5EMF3al1BFXqVHQh5hMRheqatp/rKnHt4vDf/+Est
+         nyaA==
+X-Received: by 10.50.62.148 with SMTP id y20mr7345312igr.17.1438094023499;
+ Tue, 28 Jul 2015 07:33:43 -0700 (PDT)
+Received: by 10.107.191.193 with HTTP; Tue, 28 Jul 2015 07:33:14 -0700 (PDT)
+In-Reply-To: <20150728141858.22342.16605.reportbug@zam581.zam.kfa-juelich.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274774>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+This seems like a good thing to fix (i.e. make sure XX is not
+ambiguous before creating it with "git checkout -b XX")
 
-> @@ -458,7 +345,7 @@ static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
->  	}
->  
->  	if (item->kind == REF_LOCAL_BRANCH)
-> -		fill_tracking_info(&stat, item->refname, filter->verbose > 1);
-> +		fill_tracking_info(&stat, refname, filter->verbose > 1);
 
-Why can't you continue using item->refname?
+---------- Forwarded message ----------
+From: Andreas Beckmann <anbe@debian.org>
+Date: Tue, Jul 28, 2015 at 9:18 PM
+Subject: Bug#793884: git: allows nonsensical command 'git checkout -b HEAD'
+To: Debian Bug Tracking System <submit@bugs.debian.org>
 
-(It's a real question)
 
-> @@ -635,14 +495,21 @@ static void print_ref_list(struct ref_filter *filter)
->  	/* Print detached heads before sorting and printing the rest */
->  	if (filter->detached) {
->  		print_ref_item(array.items[index - 1], maxwidth, filter, remote_prefix);
-> -		index -= 1;
-> +		array.nr--;
->  	}
->  
-> -	qsort(array.items, index, sizeof(struct ref_array_item *), ref_cmp);
-> +	if (!sorting) {
-> +		def_sorting.next = NULL;
-> +		def_sorting.atom = parse_ref_filter_atom(sort_type,
-> +							 sort_type + strlen(sort_type));
-> +		sorting = &def_sorting;
-> +	}
-> +	ref_array_sort(sorting, &array);
+Package: git
+Version: 1:2.1.4-2.1
+Severity: normal
+Tags: upstream
 
-Does this belong to print_ref_list()? Is it not possible to extract it
-to get a code closer to the simple:
+$ git branch HEAD
+fatal: it does not make sense to create 'HEAD' manually
+# OK, special casing prevents this
+$ git checkout -b HEAD
+Switched to a new branch 'HEAD'
+# but not this :-P
+$ git checkout master
+Switched to branch 'master'
+$ git checkout HEAD
+warning: refname 'HEAD' is ambiguous.
+Switched to branch 'HEAD'
+# oops ;-)
+$ git checkout master
+Switched to branch 'master'
+$ git branch -d HEAD
+Deleted branch HEAD (was 6e54945).
+# OK, we can easily cleanup this mess again
 
-	filter_refs(...);
-	ref_array_sort(...);
-	print_ref_list(...);
+The same works in 1:2.4.6-1 in sid.
 
-?
+If there is some special casing for HEAD in git branch, the same
+should probably be done for git checkout -b, too.
 
-> -	for (i = 0; i < index; i++)
-> +	for (i = 0; i < array.nr; i++)
->  		print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
 
-Now that we have show_ref_array_item, it may make sense to rename
-print_ref_item to something that make the difference between these
-functions more explicit. Well, ideally, you'd get rid of it an actually
-use show_ref_array_item, but if you are to keep it, maybe
-print_ref_item_default_branch_format (or something shorter)?
+Andreas
 
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -49,7 +49,6 @@ struct ref_sorting {
->  struct ref_array_item {
->  	unsigned char objectname[20];
->  	int flag, kind;
-> -	int ignore : 1;
 
-You should explain why you needed it and why you don't need it anymore
-(I guess, because it was used to implement --merge and you now get it
-from ref-filter).
-
-> --- a/t/t1430-bad-ref-name.sh
-> +++ b/t/t1430-bad-ref-name.sh
-> @@ -38,7 +38,7 @@ test_expect_success 'fast-import: fail on invalid branch name "bad[branch]name"'
->  	test_must_fail git fast-import <input
->  '
->  
-> -test_expect_success 'git branch shows badly named ref' '
-> +test_expect_failure 'git branch does not show badly named ref' '
-
-I'm not sure what's the convention, but I think the test description
-should give the expected behavior even with test_expect_failure.
-
-And please help the reviewers by saying what's the status wrt this test
-(any plan on how to fix it?).
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
