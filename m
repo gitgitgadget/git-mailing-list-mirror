@@ -1,118 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cache-tree: populate cache-tree on successful merge
-Date: Tue, 28 Jul 2015 14:38:18 -0700
-Message-ID: <xmqqbnewc69h.fsf@gitster.dls.corp.google.com>
-References: <1438111840-6403-1-git-send-email-dturner@twopensource.com>
-	<xmqqsi88c8m9.fsf@gitster.dls.corp.google.com>
-	<1438118327.18134.42.camel@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 03/11] ref-filter: add option to pad atoms to the right
+Date: Tue, 28 Jul 2015 17:41:34 -0400
+Message-ID: <CAPig+cQ4PmKc0J1_X2vxn+yJ=pVd5AjM3j7j15T8ojrTPsEY_Q@mail.gmail.com>
+References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
+	<1437982035-6658-1-git-send-email-Karthik.188@gmail.com>
+	<1437982035-6658-3-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Brian Degenhardt <bmd@bmdhacks.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 23:38:27 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 23:41:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKCZt-0007cN-HD
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 23:38:25 +0200
+	id 1ZKCd2-0001XX-Sk
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 23:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbbG1ViV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 17:38:21 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35823 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbbG1ViU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 17:38:20 -0400
-Received: by pabkd10 with SMTP id kd10so75928711pab.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 14:38:20 -0700 (PDT)
+	id S1751187AbbG1Vlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 17:41:37 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:34298 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751158AbbG1Vlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 17:41:35 -0400
+Received: by ykax123 with SMTP id x123so107768676yka.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 14:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=rZXxHD3skixCj85hmzWhADjxA5jQP9oSI5X1Gwh1uX0=;
-        b=KTQXUzRSoR6/WNtwsQTwRPv7LfDRH6ZzVpN77IW4d50oWKtjDHYo1jbuun46DW3tBf
-         0F53rxM8Wt7mFIcGmg1ZieKuesJtfr6HnDBQlFpTcVMLQmd4ktN9eCD5Vry3ltpA68IV
-         80jaaXvWQoQ9TvU1no0JoPhaU+RGLrtHwK2sRtqfn10dYnH1r4HYrSBr8OcEhs33DtXt
-         HftHzd1LzMZTxoH5SMqyIHLKyZQvrlhkBQGBN6otHGz6p5zUv37Hj/ekPUq8Ru5c83Pl
-         J3KwJZ8hhaKXYHrkZaKFbMgALc8M9S3tMs5rbNwuSX52ysop9JBtVd3+dhoaHXkSJhsT
-         99cw==
-X-Received: by 10.66.119.174 with SMTP id kv14mr73951689pab.115.1438119500170;
-        Tue, 28 Jul 2015 14:38:20 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id 2sm36875489pdp.68.2015.07.28.14.38.18
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 14:38:18 -0700 (PDT)
-In-Reply-To: <1438118327.18134.42.camel@twopensource.com> (David Turner's
-	message of "Tue, 28 Jul 2015 17:18:47 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/pgcwvTSQVnLqXx+Cls7VeDZaikmzkS8EG0sviPchyc=;
+        b=mdjCm52zm+yyIRqM/2XnnDDCxedlvSHHaeel5EZ0eThFDVQQn8Ca6KUGxlewrsbVg5
+         79dMNvL76iRYql4vzt5koxn6Mzf1yHf1Do6MQT54BYv/JGc+sA4cFLf+xR46lI2xGe1n
+         1b1wZIb7IKhDHyl6aHPyfr14uiXfVxexYW1pdFLEDuzDSA/oM1ev/xeF0nZyl+K+Eu3P
+         o7LIP2+O8vYlxA4LHQkhuWO0IQd7thVEGKKruiRZd96TXY+QrZKIvVtjHw1Rg7eSHvgh
+         vANEXKWyNesdXU904IlajE2dZEBPS8NbH79WN6bgn3XC4Za1AW3oduCAGZK92ezu7YER
+         l2Iw==
+X-Received: by 10.129.91.87 with SMTP id p84mr41265393ywb.95.1438119694319;
+ Tue, 28 Jul 2015 14:41:34 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Tue, 28 Jul 2015 14:41:34 -0700 (PDT)
+In-Reply-To: <1437982035-6658-3-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: 5pEaI56uuXsC1w6gAmVy9gdcalo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274854>
 
-David Turner <dturner@twopensource.com> writes:
-
-> On Tue, 2015-07-28 at 13:47 -0700, Junio C Hamano wrote:
->> David Turner <dturner@twopensource.com> writes:
->> 
->> > When we unpack trees into an existing index, we discard the old index
->> > and replace it with the new, merged index.  Ensure that this index has
->> > its cache-tree populated.  This will make subsequent git status and
->> > commit commands faster.
->> >
->> > Signed-off-by: David Turner <dturner@twopensource.com>
->> > Signed-off-by: Brian Degenhardt <bmd@bmdhacks.com>
->> > ---
->> >
->> > This patch is by my colleague, Brian Degenhardt (as part of his work
->> > on git at Twitter).  I'm sending it with his and Twitter's approval.
->> 
->> I'd need to tweak the From:/Author: line then, and flip the order of
->> the sign-off, as Brian wrote and signed off then David relayed (as
->> attached).
+On Mon, Jul 27, 2015 at 3:27 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Add a new atom "padright" and support %(padright:X) where X is a
+> number.  This will align the succeeding atom value to the left
+> followed by spaces for a total length of X characters. If X is less
+> than the item size, the entire atom value is printed.
 >
-> Where do I put an Author: line? In the commit message above the
-> signoffs?  As an email header?  I didn't see an option to git send-email
-> that would do this.  I don't want to use the From: header because I want
-> to be the point-of-contact for these patches.
-
-The message you are responding to would have been a good example of
-forcing the author, subject and author-date to be different from the
-e-mail headers.  That is, if you did "git am -s -c" on my message
-you responded to, you would have seen a new commit authored by
-Brian; and anybody responding to the message would have sent that
-e-mail to me (and git@vger.kernel.org).
-
-I think that is the arrangement you are looking for.
-
-Delete everything before and including the "-- >8 --" line from my
-message you responded to and then the person who applies does not
-have to say "-c" but just with "git am -s" the same thing would have
-happened.  E-mail coming from (and reply going to) you, but resulting
-commit would be authored by Brian.
-
-"git send-email", if you are sending somebody else's commit, should
-automatically add the in-body header "From: Brian ..." as the first
-line of the body, with a blank line and the body of the commit log.
-
->> By the way, I wonder if we can lose/revert aecf567c (cache-tree:
->> create/update cache-tree on checkout, 2014-07-05), now the
->> underlying unpack_trees() does the necessary cache_tree_update()
->> when a branch is checked out.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index e49d578..45dd7f8 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -127,6 +127,12 @@ color::
+>         Change output color.  Followed by `:<colorname>`, where names
+>         are described in `color.branch.*`.
 >
-> Well, the tests still pass, so I guess so. That is, we still need the
-> WRITE_TREE_REPAIR bit, but not the update check.
->
-> Will re-roll once I hear back on the author line.
+> +padright::
+> +       Pad succeeding atom to the right. Followed by `:<value>`,
+> +       where `value` states the total length of atom including the
+> +       padding. If the `value` is greater than the atom length, then
+> +       no padding is performed.
 
-Let's not do the "drop cache-tree generation from checkout" in the
-same patch.  It can be done as a separate patch but I do not think
-it is a very high priority.
+Isn't this backward? Don't you mean
 
-With that understanding, what I have received from you (with a minor
-tweak shown in the message you are responding to) is already fine, I
-think.
+    ... If the atom length is greater than `value`, then
+    no padding is performed.
 
-Thanks.
+?
