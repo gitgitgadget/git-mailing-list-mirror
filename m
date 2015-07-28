@@ -1,81 +1,108 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 09/11] branch.c: use 'ref-filter' data structures
-Date: Wed, 29 Jul 2015 02:01:05 +0530
-Message-ID: <CAOLa=ZTcMJ00WGoKwzrexmZGyaVG==vRHEZ7di+y0E2YKCO1ag@mail.gmail.com>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-9-git-send-email-Karthik.188@gmail.com>
- <CAP8UFD1Bx_o2gWP0R4EbsHO0d3LRRJ2rpHDKQhRVQpTrD6pjBw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/6] Documentation/config: mention "now" and "never" for
+ 'expire' settings
+Date: Tue, 28 Jul 2015 16:33:06 -0400
+Message-ID: <CAPig+cQPj3wA8EfdNTskCUc__QXLwR07Ck4QrYvc9wnZqOxtug@mail.gmail.com>
+References: <1437710457-38592-1-git-send-email-sunshine@sunshineco.com>
+	<1437710457-38592-3-git-send-email-sunshine@sunshineco.com>
+	<55B58C3B.7040200@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 22:31:41 2015
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 28 22:33:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKBXH-0002DH-V6
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:31:40 +0200
+	id 1ZKBYm-0003Hv-Pb
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753153AbbG1Ubg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 16:31:36 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:32917 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924AbbG1Ubf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 16:31:35 -0400
-Received: by obdeg2 with SMTP id eg2so93538405obd.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:31:35 -0700 (PDT)
+	id S1752399AbbG1UdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 16:33:08 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:36645 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbbG1UdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 16:33:07 -0400
+Received: by ykay190 with SMTP id y190so105892589yka.3
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=3Y8QWnd1mPR8CzT6vx5bovuJkTPkR1Y1lzdUSb8TCtc=;
-        b=VKXsQHJDVgB9pBD8wtVfTZXRYGCkvY4X5Z9T1FU3l2SYg83ITwrlq/sIbM3JmLMhGu
-         zLgCZa++XkwGw52VeRmw9Mlzj2Ub0YLcMARX41OwJQ3ZK6498qqNZ40wVdwNBiY+Lptj
-         HgBz1bu8wRA7rjzg5RVVxa8CQQ2S6r+2Gp1LCysfmX7JdQ3SvC1ZkEfv5e9tV5AKJcZR
-         gCZm2yxwViotBMzBNGD2iAleDmT0eUQuzewqmEpWUsfdSctCuFl7cYT772w2gN4UaLpO
-         i9eSQY8VKPTLesggyFLBibHDjYsjA/RkIC/OhYDVoAVTrxcn8LpJGTrkFw3sYwdu1+jJ
-         nfaw==
-X-Received: by 10.60.62.105 with SMTP id x9mr35717280oer.1.1438115494932; Tue,
- 28 Jul 2015 13:31:34 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 13:31:05 -0700 (PDT)
-In-Reply-To: <CAP8UFD1Bx_o2gWP0R4EbsHO0d3LRRJ2rpHDKQhRVQpTrD6pjBw@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=nL5rH28y/cpl3p4bWtG63h+0RPEVmn3ovr/M1cFHNek=;
+        b=TOd7JBufbOMvKs1GXspeIU2buQAAGDwbO4PShbxMfdD5EtPgUS5NzsuHdsQX6Sx7ZF
+         8PWhZodEr4UwjmFQTAi1f63tk0iRqSxEvh0di1ZXO/qUDU5DWjZtMtP7R/IBbippOZGm
+         WLKGwoA0sHcokAZA/9d3hSze82Ci5HT3urzQFwhCpouTOM7CSXLX2nU1RI3j99f7legV
+         JTuMjVlI949Km36zxtgrg/IEaygKE54OrIVye0LIS1X8/Zwo1nVLyma0ERJtGHK/7LVs
+         zW8wEfK0JGAKFYNljAGC1+9dZgRV8N96AChjeQTo+SXUmOUQuvdtr4civqiOvscgyOen
+         lojQ==
+X-Received: by 10.129.76.140 with SMTP id z134mr41057213ywa.17.1438115586688;
+ Tue, 28 Jul 2015 13:33:06 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Tue, 28 Jul 2015 13:33:06 -0700 (PDT)
+In-Reply-To: <55B58C3B.7040200@alum.mit.edu>
+X-Google-Sender-Auth: dOJG-WNKkyjlVDIW4gd6lUgDFFo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274840>
 
-On Tue, Jul 28, 2015 at 1:52 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Tue, Jul 28, 2015 at 8:56 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> diff --git a/ref-filter.h b/ref-filter.h
->> index 7d1871d..3458595 100644
->> --- a/ref-filter.h
->> +++ b/ref-filter.h
->> @@ -5,6 +5,7 @@
->>  #include "refs.h"
->>  #include "commit.h"
->>  #include "parse-options.h"
->> +#include "revision.h"
+On Sun, Jul 26, 2015 at 9:41 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 07/23/2015 09:00 PM, Eric Sunshine wrote:
+>> In addition to approxidate-style values ("2.months.ago", "yesterday"),
+>> consumers of 'gc.*expire*' configuration variables also accept and
+>> respect 'now'/'all' ("do it immediately") and 'never'/'false' ("suppress
+>> entirely").
 >>
->>  /* Quoting styles */
->>  #define QUOTE_NONE 0
->> @@ -48,6 +49,7 @@ struct ref_sorting {
->>  struct ref_array_item {
->>         unsigned char objectname[20];
->>         int flag, kind;
->> +       int ignore : 1;
+>> Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+>> ---
+>>  gc.pruneExpire::
+>>       When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'.
+>>       Override the grace period with this config variable.  The value
+>> -     "now" may be used to disable this  grace period and always prune
+>> -     unreachable objects immediately.
+>> +     "now" may be used to disable this grace period and always prune
+>> +     unreachable objects immediately; or "never" to suppress pruning.
 >
-> Maybe you could add a comment to say that this will be removed in the
-> next patch.
+> A semicolon should be used without a conjunction, and the parts of a
+> sentence joined by a semicolon should be independent clauses. So this
+> should probably be
 >
+>                                                      [...] The value
+>     "now" may be used to disable this grace period and always prune
+>     unreachable objects immediately, or "never" may be used to
+>     suppress pruning.
 
-Yes, Will do. Thanks :)
+I was absent from school that day...
 
--- 
-Regards,
-Karthik Nayak
+>> @@ -1328,7 +1330,8 @@ gc.reflogExpireUnreachable::
+>>  gc.<ref>.reflogExpireUnreachable::
+>>       'git reflog expire' removes reflog entries older than
+>>       this time and are not reachable from the current tip;
+>> -     defaults to 30 days.  With "<pattern>" (e.g. "refs/stash")
+>> +     defaults to 30 days. The value "all" expires all entries; and
+>> +     "false" disables expiration. With "<pattern>" (e.g. "refs/stash")
+>>       in the middle, the setting applies only to the refs that
+>>       match the <pattern>.
+>
+> Also, I wonder why you suggest "now"/"never" for the first two settings,
+> but "all"/"false" for the second two. Wouldn't it be less confusing to
+> be consistent?
+
+It was intentional due to the way I worded the sentence. It sounded
+slightly strange to my ear to say:
+
+    The value "now" expires all entries; and "never"
+    disables expiration.
+
+whereas:
+
+    The value "all" expires all entries; ...
+
+sounded nice. But, upon reflection, with a slight re-wording[1], "all"
+and "never" work, as well.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/274828
