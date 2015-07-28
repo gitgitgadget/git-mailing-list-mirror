@@ -1,67 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cache-tree: populate cache-tree on successful merge
-Date: Tue, 28 Jul 2015 13:58:58 -0700
-Message-ID: <xmqqoaiwc831.fsf@gitster.dls.corp.google.com>
-References: <1438111840-6403-1-git-send-email-dturner@twopensource.com>
-	<xmqqa8ugdpu7.fsf@gitster.dls.corp.google.com>
-	<1438113266.18134.26.camel@twopensource.com>
-	<xmqq6154dpkt.fsf@gitster.dls.corp.google.com>
-	<xmqq1tfsdp60.fsf@gitster.dls.corp.google.com>
-	<1438115304.18134.33.camel@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Brian Degenhardt <bmd@bmdhacks.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 22:59:09 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 2/4] get_remote_group(): rename local variable "space" to "wordlen"
+Date: Tue, 28 Jul 2015 23:08:19 +0200
+Message-ID: <3cb456d351a8af61a3ba894ba47aa5d7f32ed246.1438117334.git.mhagger@alum.mit.edu>
+References: <cover.1438117334.git.mhagger@alum.mit.edu>
+Cc: =?UTF-8?q?Bj=C3=B6rn=20Gustavsson?= <bgustavsson@gmail.com>,
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 23:08:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKBxq-0004c5-4R
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:59:06 +0200
+	id 1ZKC71-0002ui-So
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 23:08:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbbG1U7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 16:59:01 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:32921 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206AbbG1U7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 16:59:00 -0400
-Received: by pdbnt7 with SMTP id nt7so76475563pdb.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=UJGKfDeiAPogcsE9uXGmrDkcdOCb0aVtuaTSdO/W6Ag=;
-        b=a+o8/rNCAU77qKR7Od8MwrXZT+F1ZTfvcTj373RTODKz62bnpn2qqp/5twG9FFvhKd
-         AeolZoSaBFGQKboJcHcPs4uQb4BdMexN8JGxdG4tdlIRoGTYeNye4Y+IEkNfPp7NqMTa
-         LZafKP5dUpl71Wq7+9AN5Ma0aoZmF3G9Xc+JkCS3xXH1Gjqdc3QFEvSRENiuC4dW5XQR
-         P4jZHuddvxpWnvOHJD2x3KIP1JZmguLTOdaQX4qeeO2rtHWlWKqr6zALxKFHyyvjN9qk
-         TXYLWun3Gl11DoE+BmOJUOS+KgcwHumEHSxULnIN6oIb0yglelXBc60vVR89rG0YhGiH
-         CX3g==
-X-Received: by 10.70.6.161 with SMTP id c1mr84407636pda.76.1438117139922;
-        Tue, 28 Jul 2015 13:58:59 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id jw13sm34621271pad.48.2015.07.28.13.58.58
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 13:58:58 -0700 (PDT)
-In-Reply-To: <1438115304.18134.33.camel@twopensource.com> (David Turner's
-	message of "Tue, 28 Jul 2015 16:28:24 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753269AbbG1VIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 17:08:32 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:57219 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752603AbbG1VIb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2015 17:08:31 -0400
+X-AuditID: 1207440d-f79136d00000402c-1e-55b7ef4ef0e1
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id D7.51.16428.E4FE7B55; Tue, 28 Jul 2015 17:08:30 -0400 (EDT)
+Received: from michael.fritz.box (p4FC97CAD.dip0.t-ipconnect.de [79.201.124.173])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t6SL8PUC021490
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 28 Jul 2015 17:08:29 -0400
+X-Mailer: git-send-email 2.4.6
+In-Reply-To: <cover.1438117334.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqOv3fnuowdJmKYv5xxYzW3Rd6Way
+	aOi9wmxxe8V8ZgcWj7/vPzB57Jx1l93j4iVlj8+b5AJYorhtkhJLyoIz0/P07RK4M5q/XmQv
+	WMde8fb2TLYGxpusXYycHBICJhJ9r/oZIWwxiQv31rN1MXJxCAlcZpS4P3shM0hCSOAkk8Tc
+	BhkQm01AV2JRTzMTiC0ioCYxse0QC0gDs0Abo8SFNbvAGoQFgiWObH3FBmKzCKhKvJy5lwXE
+	5hWIkti5dScLxDY5iWtnt4JdwSlgIXH5ewtQnANombnEt71eExh5FzAyrGKUS8wpzdXNTczM
+	KU5N1i1OTszLSy3SNdLLzSzRS00p3cQICR/eHYz/18kcYhTgYFTi4X2xYVuoEGtiWXFl7iFG
+	SQ4mJVHeGfe2hwrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4W14CJTjTUmsrEotyodJSXOwKInz
+	qi1R9xMSSE8sSc1OTS1ILYLJynBwKEnw8r4DahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0kt
+	SiwtyYgHRUZ8MTA2QFI8QHu1Qdp5iwsSc4GiEK2nGHU5Fvy4vZZJiCUvPy9VSpz33VugIgGQ
+	oozSPLgVsGTxilEc6GNh3jSQUTzARAM36RXQEiagJZ49W0CWlCQipKQaGBMrJdj82K3fz5u/
+	ZfHBmzzT3CosGvpmCLtLr/2zbM9Wlmm3bDzjT2XOXepybckFy7/fP8yfcNH+mOrXWV51Kluj
+	H6Uv3vD5/ipDtv6rEfm1f7dt/c4txTDv0l3W3l3Oto5TpyvbH9C5aiTZd1dguoPt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274845>
 
-David Turner <dturner@twopensource.com> writes:
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ builtin/fetch.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-> Git checkout $branch already populates the cache-tree; this is due to
-> patches I added last year:
->
-> commit aecf567cbfb6ab46e82f7f5df36fb6a2dd5bee69
-
-Heh, our mails crossed ;-)
-
-Thanks.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 98f9048..d0d267b 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -978,13 +978,13 @@ static int get_remote_group(const char *key, const char *value, void *priv)
+ 	if (starts_with(key, "remotes.") &&
+ 			!strcmp(key + 8, g->name)) {
+ 		/* split list by white space */
+-		int space = strcspn(value, " \t\n");
++		size_t wordlen = strcspn(value, " \t\n");
+ 		while (*value) {
+-			if (space >= 1)
++			if (wordlen >= 1)
+ 				string_list_append(g->list,
+-						   xstrndup(value, space));
+-			value += space + (value[space] != '\0');
+-			space = strcspn(value, " \t\n");
++						   xstrndup(value, wordlen));
++			value += wordlen + (value[wordlen] != '\0');
++			wordlen = strcspn(value, " \t\n");
+ 		}
+ 	}
+ 
+-- 
+2.4.6
