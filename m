@@ -1,250 +1,160 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 05/11] branch: fix width computation
-Date: Tue, 28 Jul 2015 23:46:59 +0530
-Message-ID: <CAOLa=ZTsr3rFanRFwDW7YUE=VmcTgpaOHEKX2cJpfKOhW1FZGA@mail.gmail.com>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-5-git-send-email-Karthik.188@gmail.com>
- <vpq6154zk9o.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] rebase: use update_ref
+Date: Tue, 28 Jul 2015 11:18:17 -0700
+Message-ID: <xmqq4mkof8nq.fsf@gitster.dls.corp.google.com>
+References: <1438027720-23074-1-git-send-email-dturner@twopensource.com>
+	<1438027720-23074-5-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 28 20:17:37 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, sunshine@sunshineco.com,
+	philipoakley@iee.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 20:18:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK9RX-0008AO-DE
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 20:17:35 +0200
+	id 1ZK9SV-0000QJ-Go
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 20:18:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406AbbG1SRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 14:17:30 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:35149 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752778AbbG1SR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 14:17:29 -0400
-Received: by obbop1 with SMTP id op1so90595862obb.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 11:17:28 -0700 (PDT)
+	id S1753453AbbG1SSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 14:18:21 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33247 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752295AbbG1SST (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 14:18:19 -0400
+Received: by padck2 with SMTP id ck2so73619481pad.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 11:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5vb4eHtTsPh+fxvl4IP4Dp9IrWMsgUyuVSBBCh+jWLo=;
-        b=LRuaZ5SiILnsiZTI2YUIp4bFXzIBNuI/ejFbiOQ5Gg0eAgcAWjOWwTvzDA4t4Fj+JY
-         ed+TdU3mG+Uvr7Rln+51GlEi7/Z4OG21QIgzRyCkt0mEwKgI3T1lsIXBSyoEuZoedgU9
-         Txyq7xMFI31pHaw/KqcKCO7e/Du6PstrIxYuF+Z/KMwFOoouuDTBAPpEIefNY0fo25Lh
-         GPHVcjsubx2qwbstjIObl4WWdyg81gL9a5tzn5mGmNc1dteBHGr6wvlhUOWfFtnon3eb
-         xiy94G3i7+M6d032queLg58NezkzxBv/ACl+6C76zEdUjM0aJxlhehZkhcP13LzzJRDr
-         8e0g==
-X-Received: by 10.60.58.136 with SMTP id r8mr35476584oeq.30.1438107448353;
- Tue, 28 Jul 2015 11:17:28 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 11:16:59 -0700 (PDT)
-In-Reply-To: <vpq6154zk9o.fsf@anie.imag.fr>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Ik4Ycn2UmPt/uZCIQVv3b5llagC2IWXSo6bCYSX/T4w=;
+        b=VSHwJSfGrXqJf+XLxs/ZjamlIxwfxP9sMQ5g7d2nSpKE5OL/Qo7j8Oty8oO7kbJnTH
+         5VlKQYbpsbqhiKLTRM/ic54TLQGsQuzyo8/x0eWOAuNFt1VVW9RfJW6cpxUunDyDNgqv
+         Xi2iCZ1nfuQts5YfePg8gy9kq2P/kI6ALi0BMyxHm4qQzVk7RyrBxwAGprIqgGqvoEeF
+         BsK24CHs7CC3rVdlqH1SJdyGde7/b7RbISzc1uJRCAgE6DHapIr6H8xE5UBLCyBUTNsr
+         IK6dA2juwu3fzEHiyCQIWKSIF142Pa76i73k5+N68Hv1NbohtKLsLRPjW5u0WwsBiJuR
+         IntQ==
+X-Received: by 10.66.185.199 with SMTP id fe7mr84809817pac.48.1438107499106;
+        Tue, 28 Jul 2015 11:18:19 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
+        by smtp.gmail.com with ESMTPSA id to5sm36619020pac.33.2015.07.28.11.18.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Jul 2015 11:18:18 -0700 (PDT)
+In-Reply-To: <1438027720-23074-5-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Mon, 27 Jul 2015 16:08:39 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274810>
 
-On Tue, Jul 28, 2015 at 3:17 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+David Turner <dturner@twopensource.com> writes:
+
+> Instead of manually writing a pseudoref (in one case) and shelling out
+> to git update-ref (in another), use the update_ref function.  This
+> is much simpler.
 >
->> From: Karthik Nayak <karthik.188@gmail.com>
->
-> Why did send-email add this From: header? Strange, it has the same
-> content as your actual From: field.
->
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  bisect.c | 37 ++++++++-----------------------------
+>  1 file changed, 8 insertions(+), 29 deletions(-)
 
-Not sure why, everything else came out fine. Idk what happened here.
-
->> Remove unnecessary variables from ref_list and ref_item
->> which were used for width computation. Make other changes
->> accordingly. This patch is a precursor for porting branch.c
->> to use ref-filter APIs.
->
-> You can explain better why this is needed. I guess something like "we're
-> making struct ref_item similar to ref-filter's ref_array_item", but the
-> reader shouldn't have to guess.
->
-
-Will explain like you suggested.
-
-> You should adujst the subject like BTW, I don't think you are "fixing"
-> anything.
->
-
-I guess refactor would be a better word here.
-
-> On a side note: on the "tag" series, see how explaining better and
-> splitting patches led not only to a better history, but also to better
-> final code, and to finding a actual bugs (the %(color) thing and the
-> absence of reset on the state variable) even after sereval rounds of
-> review? I'm being picky and demanding, but don't see that as a complain
-> from me, just hints on getting even better ;-).
->
-
-Haha, I look forward to reviews, they show things I usually miss out on,
-and help me get better. so keep them coming, I'll keep improving :)
-Thanks
-
->> @@ -386,15 +386,8 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
->>       newitem->name = xstrdup(refname);
->>       newitem->kind = kind;
->>       newitem->commit = commit;
->> -     newitem->width = utf8_strwidth(refname);
->>       newitem->dest = resolve_symref(orig_refname, prefix);
->>       newitem->ignore = 0;
->> -     /* adjust for "remotes/" */
->> -     if (newitem->kind == REF_REMOTE_BRANCH &&
->> -         ref_list->kinds != REF_REMOTE_BRANCH)
->> -             newitem->width += 8;
->> -     if (newitem->width > ref_list->maxwidth)
->> -             ref_list->maxwidth = newitem->width;
->>
->>       return 0;
->>  }
->
-> OK, in the old code, the width computation is done when inserting the
-> ref into the array. In the new code, you build the array and then do the
-> width computation. You can explain this better in the commit message I
-> think (instead of "Make other changes accordingly" which doesn't bring
-> much).
-
-Okay I guess will do, just didn't want to explain the whole thing in the commit
-message.
+Mistitled?  I can do s/rebase/bisect/ at my end if that is all
+needed.
 
 >
->> @@ -505,11 +498,12 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
->>  }
->>
->>  static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->> -                        int abbrev, int current, char *prefix)
->> +                        int abbrev, int current, const char *remote_prefix)
->>  {
->>       char c;
->>       int color;
->>       struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
->> +     const char *prefix = "";
->>
->>       if (item->ignore)
->>               return;
->> @@ -520,6 +514,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->>               break;
->>       case REF_REMOTE_BRANCH:
->>               color = BRANCH_COLOR_REMOTE;
->> +             prefix = remote_prefix;
->>               break;
->
-> Why do you need these two hunks? I did not investigate in details, but
-> it seems you're calling print_ref_item either with prefix="" or with
-> prefix=remote_prefix so it would seem that keeping "prefix" as argument
-> would work. I guess I missed something.
-
-This is needed as whenever we do "git branch", show_detached() calls
-print_ref_item()
-with remote_prefix="". But print_ref_list() calls print_ref_item()
-with remote_prefix="remotes"
-(only when `git branch -a` is called remote_prefix=""). But only
-remote branches should be
-given the remotes prefix.
-
->
->> -static int calc_maxwidth(struct ref_list *refs)
->> +static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
->>  {
->> -     int i, w = 0;
->> +     int i, max = 0;
->>       for (i = 0; i < refs->index; i++) {
->> +             struct ref_item *it = &refs->list[i];
->> +             int w = utf8_strwidth(it->name);
->> +
->>               if (refs->list[i].ignore)
->>                       continue;
->> -             if (refs->list[i].width > w)
->> -                     w = refs->list[i].width;
->> +             if (it->kind == REF_REMOTE_BRANCH)
->> +                     w += remote_bonus;
->> +             if (w > max)
->> +                     max = w;
->>       }
->> -     return w;
->> +     return max;
->>  }
->
-> The old code was using 'w' for the max and no variable for the value at
-> the current iteration. You're using 'max' for the max and 'w' at the
-> current iteration. Using the same name 'w' for different things in the
-> pre- and post-image of the patch distracts the reader.
->
-> It may make sense to s/w/max/ in a separate preparatory patch. Or maybe
-> it's overkill.
->
-
-Since the change was minimal and easily understandable I think it's ok.
-But if you still feel otherwise, I'll be happy to introduce a preparatory patch.
-
->> @@ -600,21 +600,18 @@ static char *get_head_description(void)
->>       return strbuf_detach(&desc, NULL);
->>  }
->>
->> -static void show_detached(struct ref_list *ref_list)
->> +static void show_detached(struct ref_list *ref_list, int maxwidth)
->>  {
->>       struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
->>
->>       if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
->>               struct ref_item item;
->>               item.name = get_head_description();
->> -             item.width = utf8_strwidth(item.name);
->>               item.kind = REF_LOCAL_BRANCH;
->>               item.dest = NULL;
->>               item.commit = head_commit;
->>               item.ignore = 0;
->> -             if (item.width > ref_list->maxwidth)
->> -                     ref_list->maxwidth = item.width;
->> -             print_ref_item(&item, ref_list->maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
->> +             print_ref_item(&item, maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
->>               free(item.name);
->>       }
->>  }
-> ...
->> +     int maxwidth = 0;
-> ...
->> +     if (verbose)
->> +             maxwidth = calc_maxwidth(&ref_list, strlen(remote_prefix));
->>
->>       qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
->>
->>       detached = (detached && (kinds & REF_LOCAL_BRANCH));
->>       if (detached && match_patterns(pattern, "HEAD"))
->> -             show_detached(&ref_list);
->> +             show_detached(&ref_list, maxwidth);
->
-> This hunks could ideally go in a preparatory patch that would just move
-> the place where maxwidth is computed. This preparatory patch would just
-> say
->
->         maxwidth = ref_list->maxwidth;
->
-> and then you would do the actual change to
->
->         if (verbose)
->                 maxwidth = calc_maxwidth(...)
->
-> without the distracting changes in the function's argument list.
->
-> I won't insist on that, again it may be overkill. But reading the patch,
-> I found it both rather trivial and hard to read, so there's room for
-> improvement.
->
-
-I find it too small to make a preparatory patch again, but if you really feel
-so, like I said, I'll change :)
-
--- 
-Regards,
-Karthik Nayak
+> diff --git a/bisect.c b/bisect.c
+> index 857cf59..33ac88d 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -19,7 +19,6 @@ static struct object_id *current_bad_oid;
+>  
+>  static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+>  static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
+> -static const char *argv_update_ref[] = {"update-ref", "--no-deref", "BISECT_HEAD", NULL, NULL};
+>  
+>  static const char *term_bad;
+>  static const char *term_good;
+> @@ -675,34 +674,16 @@ static int is_expected_rev(const struct object_id *oid)
+>  	return res;
+>  }
+>  
+> -static void mark_expected_rev(char *bisect_rev_hex)
+> -{
+> -	int len = strlen(bisect_rev_hex);
+> -	const char *filename = git_path("BISECT_EXPECTED_REV");
+> -	int fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+> -
+> -	if (fd < 0)
+> -		die_errno("could not create file '%s'", filename);
+> -
+> -	bisect_rev_hex[len] = '\n';
+> -	write_or_die(fd, bisect_rev_hex, len + 1);
+> -	bisect_rev_hex[len] = '\0';
+> -
+> -	if (close(fd) < 0)
+> -		die("closing file %s: %s", filename, strerror(errno));
+> -}
+> -
+> -static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
+> +static int bisect_checkout(const unsigned char *bisect_rev, int no_checkout)
+>  {
+> +	char bisect_rev_hex[GIT_SHA1_HEXSZ + 1];
+>  
+> -	mark_expected_rev(bisect_rev_hex);
+> +	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
+> +	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+>  
+>  	argv_checkout[2] = bisect_rev_hex;
+>  	if (no_checkout) {
+> -		argv_update_ref[3] = bisect_rev_hex;
+> -		if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
+> -			die("update-ref --no-deref HEAD failed on %s",
+> -			    bisect_rev_hex);
+> +		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+>  	} else {
+>  		int res;
+>  		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+> @@ -804,7 +785,7 @@ static void check_merge_bases(int no_checkout)
+>  			handle_skipped_merge_base(mb);
+>  		} else {
+>  			printf("Bisecting: a merge base must be tested\n");
+> -			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
+> +			exit(bisect_checkout(mb, no_checkout));
+>  		}
+>  	}
+>  
+> @@ -948,7 +929,6 @@ int bisect_next_all(const char *prefix, int no_checkout)
+>  	struct commit_list *tried;
+>  	int reaches = 0, all = 0, nr, steps;
+>  	const unsigned char *bisect_rev;
+> -	char bisect_rev_hex[GIT_SHA1_HEXSZ + 1];
+>  
+>  	read_bisect_terms(&term_bad, &term_good);
+>  	if (read_bisect_refs())
+> @@ -986,11 +966,10 @@ int bisect_next_all(const char *prefix, int no_checkout)
+>  	}
+>  
+>  	bisect_rev = revs.commits->item->object.sha1;
+> -	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
+>  
+>  	if (!hashcmp(bisect_rev, current_bad_oid->hash)) {
+>  		exit_if_skipped_commits(tried, current_bad_oid);
+> -		printf("%s is the first %s commit\n", bisect_rev_hex,
+> +		printf("%s is the first %s commit\n", sha1_to_hex(bisect_rev),
+>  			term_bad);
+>  		show_diff_tree(prefix, revs.commits->item);
+>  		/* This means the bisection process succeeded. */
+> @@ -1003,7 +982,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+>  	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
+>  	       steps, (steps == 1 ? "" : "s"));
+>  
+> -	return bisect_checkout(bisect_rev_hex, no_checkout);
+> +	return bisect_checkout(bisect_rev, no_checkout);
+>  }
+>  
+>  static inline int log2i(int n)
