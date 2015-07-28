@@ -1,108 +1,54 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/6] notes: replace pseudorefs with real refs
-Date: Tue, 28 Jul 2015 12:00:59 -0700
-Message-ID: <xmqqpp3cds44.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v3 0/6] pseudorefs
+Date: Tue, 28 Jul 2015 12:01:44 -0700
+Message-ID: <xmqqlhe0ds2v.fsf@gitster.dls.corp.google.com>
 References: <1438107144-24293-1-git-send-email-dturner@twopensource.com>
-	<1438107144-24293-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, sunshine@sunshineco.com,
 	philipoakley@iee.org
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 21:01:09 2015
+X-From: git-owner@vger.kernel.org Tue Jul 28 21:02:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKA7g-00058i-7v
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 21:01:08 +0200
+	id 1ZKA8U-0005ku-JT
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 21:01:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424AbbG1TBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 15:01:03 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:33164 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752311AbbG1TBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 15:01:01 -0400
-Received: by pdbnt7 with SMTP id nt7so75105879pdb.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 12:01:01 -0700 (PDT)
+	id S1752758AbbG1TBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 15:01:47 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:33601 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752460AbbG1TBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 15:01:46 -0400
+Received: by pdbnt7 with SMTP id nt7so75116325pdb.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 12:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=eLbFg+UD/hhm+zus83cUxKRCby+IhZ/Ur97L2WC9XcI=;
-        b=uaPyfMUPi1b1VwlzrH9boybxhlsA2fzu2WGQMrx6c1z1mspqS3GnTz3UbyUPnFAz3B
-         yK4vGpCmD3Uhxy0U9KmlbR26QyVDwTEHvhQdSkmat0IGRfQQovZNVu1rygRHI3iVsfz2
-         uQ+4NQXFWtqJBBBKyfKDYWNRk4yxnkdIHjmAxhVJil3UMN/u7ERj12pntKgCjd+BXXMK
-         z8iznD9EnaXEqjSha/SutDoi1IuqDihiWx7DQ5WFmltcj5KoxJwYhVPP6GG0lKPo1ojq
-         YB/0yPaZ+DIzfS04S1oB/JElliGFAAqHjSoHiIZ2+Zz6mXqeg4bOsDWcMwrHhpqNfIi/
-         b8PQ==
-X-Received: by 10.70.34.207 with SMTP id b15mr83882553pdj.151.1438110060903;
-        Tue, 28 Jul 2015 12:01:00 -0700 (PDT)
+        bh=ZVvHgw5oyL1tC3SYjWhUQroIO8pMCjczrKHm/x/oOCc=;
+        b=vjw4GmMQDkn9qZZurG+3N902xgBxXAB0dhfBTZ0lAbTP9j6xYgFWBjyh/miMSlWKSg
+         B8OrvCICH3wDxQMAR/oE7RZIE7C58wFRDEKRC7Fo/PJGqdkmUr2AfSIavKzeMgn1Evsq
+         ARsjGJtxvDvMgX4es9XbESQLwbOWa2XkbGSx6f3TF2+XZlQfHqYGf+oX6HTOELOwd18P
+         iuRfaRcfHkG2/3qqp4sxeAHhZMhsZVLGDa4mK+5LwDxsuaiM9gMUAOJSUqVZh5r74UAz
+         n9fzM56SjqLaG9MIcVB4BD7d79AmaPGu1gLbn3hr6gm6382Q9bFZoTUrMME3DAGy48AU
+         SZAQ==
+X-Received: by 10.70.130.107 with SMTP id od11mr84459272pdb.145.1438110105871;
+        Tue, 28 Jul 2015 12:01:45 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id qb10sm2478580pab.39.2015.07.28.12.00.59
+        by smtp.gmail.com with ESMTPSA id ht9sm36572199pdb.0.2015.07.28.12.01.44
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 12:00:59 -0700 (PDT)
-In-Reply-To: <1438107144-24293-3-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Tue, 28 Jul 2015 14:12:20 -0400")
+        Tue, 28 Jul 2015 12:01:45 -0700 (PDT)
+In-Reply-To: <1438107144-24293-1-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Tue, 28 Jul 2015 14:12:18 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274815>
 
-David Turner <dturner@twopensource.com> writes:
-
-> All-caps files like NOTES_MERGE_REF are pseudorefs, and thus are
-> per-worktree.  We don't want multiple notes merges happening at once
-> (in different worktrees), so we want to make these refs true refs.
->
-> So, we lowercase NOTES_MERGE_REF and friends.  That way, backends
-> that distinguish between pseudorefs and real refs can correctly
-> handle notes merges.
->
-> This will also enable us to prevent pseudorefs from being updated by
-> the ref update machinery e.g. git update-ref.
->
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
-
-This seems to do a bit more than what it claims to do.  As this kind
-of changes are very error-prone to review, I did a bulk replace of
-the three all-caps NOTES_*THING* and compared the result with what
-this patch gives to spot this:
-
->  	# Fail to finalize merge
->  	test_must_fail git notes merge --commit >output 2>&1 &&
-> -	# .git/NOTES_MERGE_* must remain
-> -	test -f .git/NOTES_MERGE_PARTIAL &&
-> -	test -f .git/NOTES_MERGE_REF &&
-> -	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha1 &&
-> -	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha2 &&
-> -	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
-> -	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
-> +	# .git/notes_merge_* must remain
-> +	git rev-parse --verify notes_merge_partial &&
-> +	git rev-parse --verify notes_merge_ref &&
-> +	test -f .git/notes_merge_worktree/$commit_sha1 &&
-> +	test -f .git/notes_merge_worktree/$commit_sha2 &&
-> +	test -f .git/notes_merge_worktree/$commit_sha3 &&
-> +	test -f .git/notes_merge_worktree/$commit_sha4 &&
-
-The two "rev-parse --verify" looks semi-sensible [*1*];
-notes_merge_partial is all lowercase and it refers to
-$GIT_DIR/notes_merge_partial, because they are shared across working
-tree. 
-
-But then why are $GIT_DIR/notes_merge_worktree/* still checked with
-"test -f"?  If they are not refs or ref-like things, why should they
-be downcased?  If they are, why not "rev-parse --verify"?
-
-[Footnote]
-
-*1* I say "semi-" sensible, because it looks ugly.  All ref-like
-    things immediately below $GIT_DIR/ are all-caps by convention.
-    Perhaps it is a better idea to move it under refs/; "everything
-    under refs/ is shared across working trees" is probably a much
-    better rule than "all caps but HEAD is special".
+On top of what work is this series expected to be applied?
