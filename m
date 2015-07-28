@@ -1,261 +1,118 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH] notes: handle multiple worktrees
-Date: Tue, 28 Jul 2015 17:23:44 -0400
-Message-ID: <1438118624-26107-1-git-send-email-dturner@twopensource.com>
-References: <xmqqegjsdq3n.fsf@gitster.dls.corp.google.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 28 23:24:20 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cache-tree: populate cache-tree on successful merge
+Date: Tue, 28 Jul 2015 14:38:18 -0700
+Message-ID: <xmqqbnewc69h.fsf@gitster.dls.corp.google.com>
+References: <1438111840-6403-1-git-send-email-dturner@twopensource.com>
+	<xmqqsi88c8m9.fsf@gitster.dls.corp.google.com>
+	<1438118327.18134.42.camel@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Brian Degenhardt <bmd@bmdhacks.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 23:38:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKCME-0005z8-Ez
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 23:24:18 +0200
+	id 1ZKCZt-0007cN-HD
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 23:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbbG1VYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 17:24:12 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:35843 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206AbbG1VYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 17:24:09 -0400
-Received: by qgeh16 with SMTP id h16so1559340qge.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 14:24:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=waO9Ks3+oq/n/PXo59GO+J2UY69lbFDNbxjEEJPfpMc=;
-        b=RsVshKiSWlB6JWJDo+s8D8VygUBTLxEapNiH3QKFrKpowi9ls4hjzgCWt8nnVb28WZ
-         Pc9rxDqpg6m/Ep20e5a0XOQw8RmfW6kxP58iNUIh4l5DCQU4OZqXVUB4AKT/yjzMoteS
-         TZnfuApImikrtzcLe14TIgbWToN5iDNKtUBXzAYHdKGxKWX1J1CH50JLeWqylIGQ438L
-         sHvwsW+2yrTzGxvIUXNPmgiZ87yrNHbHHQAeqZRIFmjOpP6N7w9qsbtWfo5F6iowrlIX
-         Uap26O7kSnWqnqmA0EGLxHvi9w7SoZE9gQUztnGw0o/i1DOmbzkJ3Z4NEJ4PbpiHssaq
-         QRkw==
-X-Gm-Message-State: ALoCoQmqpTdG6SPePygZnCKHChv2SLUXyjruKpont2DyS5/j3HPdX4X9yU1VohFbqabChdZp5rxj
-X-Received: by 10.140.28.97 with SMTP id 88mr52327668qgy.69.1438118648545;
-        Tue, 28 Jul 2015 14:24:08 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id w68sm12058981qge.18.2015.07.28.14.24.07
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 28 Jul 2015 14:24:07 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
-In-Reply-To: <xmqqegjsdq3n.fsf@gitster.dls.corp.google.com>
+	id S1750905AbbG1ViV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 17:38:21 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:35823 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750744AbbG1ViU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 17:38:20 -0400
+Received: by pabkd10 with SMTP id kd10so75928711pab.2
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 14:38:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=rZXxHD3skixCj85hmzWhADjxA5jQP9oSI5X1Gwh1uX0=;
+        b=KTQXUzRSoR6/WNtwsQTwRPv7LfDRH6ZzVpN77IW4d50oWKtjDHYo1jbuun46DW3tBf
+         0F53rxM8Wt7mFIcGmg1ZieKuesJtfr6HnDBQlFpTcVMLQmd4ktN9eCD5Vry3ltpA68IV
+         80jaaXvWQoQ9TvU1no0JoPhaU+RGLrtHwK2sRtqfn10dYnH1r4HYrSBr8OcEhs33DtXt
+         HftHzd1LzMZTxoH5SMqyIHLKyZQvrlhkBQGBN6otHGz6p5zUv37Hj/ekPUq8Ru5c83Pl
+         J3KwJZ8hhaKXYHrkZaKFbMgALc8M9S3tMs5rbNwuSX52ysop9JBtVd3+dhoaHXkSJhsT
+         99cw==
+X-Received: by 10.66.119.174 with SMTP id kv14mr73951689pab.115.1438119500170;
+        Tue, 28 Jul 2015 14:38:20 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
+        by smtp.gmail.com with ESMTPSA id 2sm36875489pdp.68.2015.07.28.14.38.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Jul 2015 14:38:18 -0700 (PDT)
+In-Reply-To: <1438118327.18134.42.camel@twopensource.com> (David Turner's
+	message of "Tue, 28 Jul 2015 17:18:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274853>
 
-Prevent merges to the same notes branch from different worktrees.
-Before creating NOTES_MERGE_REF, check NOTES_MERGE_REF using the same
-code we use to check that two HEADs in different worktrees don't point
-to the same branch.  Modify that code, die_if_checked_out, to take a
-"head" ref to examine; previously, it just looked at HEAD.
+David Turner <dturner@twopensource.com> writes:
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- branch.c                         | 15 +++++----
- branch.h                         |  2 +-
- builtin/checkout.c               |  2 +-
- builtin/notes.c                  |  2 ++
- builtin/worktree.c               |  2 +-
- t/t3320-notes-merge-worktrees.sh | 71 ++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 84 insertions(+), 10 deletions(-)
- create mode 100755 t/t3320-notes-merge-worktrees.sh
+> On Tue, 2015-07-28 at 13:47 -0700, Junio C Hamano wrote:
+>> David Turner <dturner@twopensource.com> writes:
+>> 
+>> > When we unpack trees into an existing index, we discard the old index
+>> > and replace it with the new, merged index.  Ensure that this index has
+>> > its cache-tree populated.  This will make subsequent git status and
+>> > commit commands faster.
+>> >
+>> > Signed-off-by: David Turner <dturner@twopensource.com>
+>> > Signed-off-by: Brian Degenhardt <bmd@bmdhacks.com>
+>> > ---
+>> >
+>> > This patch is by my colleague, Brian Degenhardt (as part of his work
+>> > on git at Twitter).  I'm sending it with his and Twitter's approval.
+>> 
+>> I'd need to tweak the From:/Author: line then, and flip the order of
+>> the sign-off, as Brian wrote and signed off then David relayed (as
+>> attached).
+>
+> Where do I put an Author: line? In the commit message above the
+> signoffs?  As an email header?  I didn't see an option to git send-email
+> that would do this.  I don't want to use the From: header because I want
+> to be the point-of-contact for these patches.
 
-diff --git a/branch.c b/branch.c
-index c85be07..60eadc6 100644
---- a/branch.c
-+++ b/branch.c
-@@ -311,21 +311,22 @@ void remove_branch_state(void)
- 	unlink(git_path("SQUASH_MSG"));
- }
- 
--static void check_linked_checkout(const char *branch, const char *id)
-+static void check_linked_checkout(const char *head, const char *branch,
-+				  const char *id)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
- 	struct strbuf gitdir = STRBUF_INIT;
- 
- 	/*
--	 * $GIT_COMMON_DIR/HEAD is practically outside
-+	 * $GIT_COMMON_DIR/$head is practically outside
- 	 * $GIT_DIR so resolve_ref_unsafe() won't work (it
- 	 * uses git_path). Parse the ref ourselves.
- 	 */
- 	if (id)
--		strbuf_addf(&path, "%s/worktrees/%s/HEAD", get_git_common_dir(), id);
-+		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, head);
- 	else
--		strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
-+		strbuf_addf(&path, "%s/%s", get_git_common_dir(), head);
- 
- 	if (!strbuf_readlink(&sb, path.buf, 0)) {
- 		if (!starts_with(sb.buf, "refs/") ||
-@@ -356,13 +357,13 @@ done:
- 	strbuf_release(&gitdir);
- }
- 
--void die_if_checked_out(const char *branch)
-+void die_if_checked_out(const char *head, const char *branch)
- {
- 	struct strbuf path = STRBUF_INIT;
- 	DIR *dir;
- 	struct dirent *d;
- 
--	check_linked_checkout(branch, NULL);
-+	check_linked_checkout(head, branch, NULL);
- 
- 	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
- 	dir = opendir(path.buf);
-@@ -373,7 +374,7 @@ void die_if_checked_out(const char *branch)
- 	while ((d = readdir(dir)) != NULL) {
- 		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
- 			continue;
--		check_linked_checkout(branch, d->d_name);
-+		check_linked_checkout(head, branch, d->d_name);
- 	}
- 	closedir(dir);
- }
-diff --git a/branch.h b/branch.h
-index 58aa45f..3577fe5 100644
---- a/branch.h
-+++ b/branch.h
-@@ -57,6 +57,6 @@ extern int read_branch_desc(struct strbuf *, const char *branch_name);
-  * worktree and die (with a message describing its checkout location) if
-  * it is.
-  */
--extern void die_if_checked_out(const char *branch);
-+extern void die_if_checked_out(const char *head, const char *branch);
- 
- #endif
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e1403be..a5e9f2d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1107,7 +1107,7 @@ static int checkout_branch(struct checkout_opts *opts,
- 		char *head_ref = resolve_refdup("HEAD", 0, sha1, &flag);
- 		if (head_ref &&
- 		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
--			die_if_checked_out(new->path);
-+			die_if_checked_out("HEAD", new->path);
- 		free(head_ref);
- 	}
- 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 63f95fc..8794ba1 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -19,6 +19,7 @@
- #include "string-list.h"
- #include "notes-merge.h"
- #include "notes-utils.h"
-+#include "branch.h"
- 
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-@@ -829,6 +830,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
- 			   0, UPDATE_REFS_DIE_ON_ERR);
- 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
-+		die_if_checked_out("NOTES_MERGE_REF", default_notes_ref());
- 		if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
- 			die("Failed to store link to current notes ref (%s)",
- 			    default_notes_ref());
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 430b51e..bfdb90f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -203,7 +203,7 @@ static int add_worktree(const char *path, const char *refname,
- 	else if (!opts->detach && !strbuf_check_branch_ref(&symref, refname) &&
- 		 ref_exists(symref.buf)) { /* it's a branch */
- 		if (!opts->force)
--			die_if_checked_out(symref.buf);
-+			die_if_checked_out("HEAD", symref.buf);
- 	} else { /* must be a commit */
- 		commit = lookup_commit_reference_by_name(refname);
- 		if (!commit)
-diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
-new file mode 100755
-index 0000000..b102c23
---- /dev/null
-+++ b/t/t3320-notes-merge-worktrees.sh
-@@ -0,0 +1,71 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2015 Twitter, Inc
-+#
-+
-+test_description='Test merging of notes trees in multiple worktrees'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup commit' '
-+	test_commit tantrum
-+'
-+
-+commit_tantrum=$(git rev-parse tantrum^{commit})
-+
-+test_expect_success 'setup notes ref (x)' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes add -m "x notes on tantrum" tantrum
-+'
-+
-+test_expect_success 'setup local branch (y)' '
-+	git update-ref refs/notes/y refs/notes/x &&
-+	git config core.notesRef refs/notes/y &&
-+	git notes remove tantrum
-+'
-+
-+test_expect_success 'setup remote branch (z)' '
-+	git update-ref refs/notes/z refs/notes/x &&
-+	git config core.notesRef refs/notes/z &&
-+	git notes add -f -m "conflicting notes on tantrum" tantrum
-+'
-+
-+test_expect_success 'modify notes ref ourselves (x)' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes add -f -m "more conflicting notes on tantrum" tantrum
-+'
-+
-+test_expect_success 'create some new worktrees' '
-+	git worktree add -b newbranch worktree master &&
-+	git worktree add -b newbranch2 worktree2 master
-+'
-+
-+test_expect_success 'merge z into y fails and sets NOTES_MERGE_REF' '
-+	git config core.notesRef refs/notes/y &&
-+	test_must_fail git notes merge z &&
-+	echo "ref: refs/notes/y" > expect &&
-+	test_cmp .git/NOTES_MERGE_REF expect
-+'
-+
-+test_expect_success 'merge z into y while mid-merge in another workdir fails' '
-+	(
-+		cd worktree &&
-+		git config core.notesRef refs/notes/y &&
-+		test_must_fail git notes merge z 2>err &&
-+		grep "is already checked out" err
-+	) &&
-+	test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
-+'
-+
-+test_expect_success 'merge z into x while mid-merge on y succeeds' '
-+	(
-+		cd worktree2 &&
-+		git config core.notesRef refs/notes/x &&
-+		test_must_fail git notes merge z 2>&1 >out &&
-+		grep -v "is already checked out" out
-+	) &&
-+	echo "ref: refs/notes/x" > expect &&
-+	test_cmp .git/worktrees/worktree2/NOTES_MERGE_REF expect
-+'
-+
-+test_done
--- 
-2.0.4.315.gad8727a-twtrsrc
+The message you are responding to would have been a good example of
+forcing the author, subject and author-date to be different from the
+e-mail headers.  That is, if you did "git am -s -c" on my message
+you responded to, you would have seen a new commit authored by
+Brian; and anybody responding to the message would have sent that
+e-mail to me (and git@vger.kernel.org).
+
+I think that is the arrangement you are looking for.
+
+Delete everything before and including the "-- >8 --" line from my
+message you responded to and then the person who applies does not
+have to say "-c" but just with "git am -s" the same thing would have
+happened.  E-mail coming from (and reply going to) you, but resulting
+commit would be authored by Brian.
+
+"git send-email", if you are sending somebody else's commit, should
+automatically add the in-body header "From: Brian ..." as the first
+line of the body, with a blank line and the body of the commit log.
+
+>> By the way, I wonder if we can lose/revert aecf567c (cache-tree:
+>> create/update cache-tree on checkout, 2014-07-05), now the
+>> underlying unpack_trees() does the necessary cache_tree_update()
+>> when a branch is checked out.
+>
+> Well, the tests still pass, so I guess so. That is, we still need the
+> WRITE_TREE_REPAIR bit, but not the update check.
+>
+> Will re-roll once I hear back on the author line.
+
+Let's not do the "drop cache-tree generation from checkout" in the
+same patch.  It can be done as a separate patch but I do not think
+it is a very high priority.
+
+With that understanding, what I have received from you (with a minor
+tweak shown in the message you are responding to) is already fine, I
+think.
+
+Thanks.
