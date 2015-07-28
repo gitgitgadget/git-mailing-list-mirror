@@ -1,76 +1,89 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 01/11] ref-filter: add "%(objectname:size=X)" option
-Date: Tue, 28 Jul 2015 21:25:14 +0530
-Message-ID: <CAOLa=ZS4jeDXy35B=cLin-3e-owfV1g04Z6=kE1Ovjuh-H1qhA@mail.gmail.com>
+Subject: Re: [RFC/PATCH 02/11] ref-filter: add 'colornext' atom
+Date: Tue, 28 Jul 2015 21:33:11 +0530
+Message-ID: <CAOLa=ZSDQLWF=ZsSeJ0rCtqTxh23bKSSSRfj9mGYaVJiMYbj8w@mail.gmail.com>
 References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <xmqqzj2gffth.fsf@gitster.dls.corp.google.com>
+ <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-2-git-send-email-Karthik.188@gmail.com>
+ <vpqd1zc1xik.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 17:55:51 2015
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 28 18:03:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK7EK-0007mI-Ut
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 17:55:49 +0200
+	id 1ZK7M6-0004UC-QU
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 18:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752531AbbG1Pzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 11:55:45 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:33727 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865AbbG1Pzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 11:55:44 -0400
-Received: by obdeg2 with SMTP id eg2so87616577obd.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 08:55:43 -0700 (PDT)
+	id S1752560AbbG1QDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 12:03:43 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:33057 "EHLO
+	mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372AbbG1QDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 12:03:41 -0400
+Received: by oige126 with SMTP id e126so71842761oig.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 09:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=2QRD72deNvdZi072bmIgL0gdHDpNRvKGXssCR/xPgvs=;
-        b=RFwBhat0mtw5tI/1iZDrDK9ymUSLBvZKWeCkg2xq5+xchGRZBrxEfGLlsgbasneVw9
-         lLKDgVTumK9lw4S0adFbQKaAjiZvL4cFQNmnoXhSZExd6gyoVku/z3DyBpIJodBJcWu9
-         abDuCqVAQPlhTnrk+3TNcbd3Qa11/Km9LIJpuUV0F8Tnsh+VAYlKVNOwBoVjESenI6A9
-         Q6HKAnYhTtgHKn6ZnbtCjVPtWH7gZhOUoG3DMBRfhOnFkVct/Ygl6RZVlyTOxlUZhSYn
-         yuz2v3ABIMb6Yj1rQIioEIlL7OpCYoAguJtjYFzB5ejmbiRrIuRTyWkn/EQRhiQV/nXi
-         cjvg==
-X-Received: by 10.60.177.195 with SMTP id cs3mr34810035oec.37.1438098943914;
- Tue, 28 Jul 2015 08:55:43 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 08:55:14 -0700 (PDT)
-In-Reply-To: <xmqqzj2gffth.fsf@gitster.dls.corp.google.com>
+        bh=fFA6WIVLYyvHdAEdp1xZGsCyDMgMOazOx5E3zIkaY/8=;
+        b=wgVbOX3KjD8g4r1G236v24UJo5hvyszBvpkFTZuau1xxOcniHLe+f01e2dC68LviVP
+         r4yHugDlv+vDah0eQKKmM+5oBi+RhgbRptqKt9HbaOEIPmyo8kf94olwILMAkGkq5eHu
+         x87m66tXCokQtz7sASPluBT4fSCHLOklb+apDurwjAbG+hMFe38IUmx3QHOrYG42gtDy
+         UZ+ysJeYXUEccpvoqq+LeADDf61H7+cBovz1YKiaswo1OD3d59Cpf55Np72toQPIU+jw
+         HxzAtO8p8e+ZUsJsqoAfXXPMF4c7r84Ia8fb7ckxqnn5hDoagyqeJinrB9h1nm4/B0pi
+         9kqg==
+X-Received: by 10.202.186.132 with SMTP id k126mr33863512oif.60.1438099420647;
+ Tue, 28 Jul 2015 09:03:40 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 09:03:11 -0700 (PDT)
+In-Reply-To: <vpqd1zc1xik.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274781>
 
-On Tue, Jul 28, 2015 at 9:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Jul 28, 2015 at 2:15 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> From: Karthik Nayak <karthik.188@gmail.com>
+>> --- a/t/t6302-for-each-ref-filter.sh
+>> +++ b/t/t6302-for-each-ref-filter.sh
+>> @@ -133,4 +133,20 @@ test_expect_success 'reverse version sort' '
+>>       test_cmp expect actual
+>>  '
 >>
->> Add support for %(objectname:size=X) where X is a number.
->> This will print the first X characters of an objectname.
->> The minimum value for X is 5. Hence any value lesser than
->> 5 will default to 5 characters.
+>> +get_color ()
+>> +{
+>> +     git config --get-color no.such.slot "$1"
+>> +}
+>> +
+>> +cat >expect <<EOF &&
+>> +$(get_color green)foo1.10$(get_color reset)||
+>> +$(get_color green)foo1.3$(get_color reset)||
+>> +$(get_color green)foo1.6$(get_color reset)||
+>> +EOF
+>> +
+>> +test_expect_success 'check `colornext` format option' '
+>> +     git for-each-ref --format="%(colornext:green)%(refname:short)||" | grep "foo" >actual &&
+>> +     test_cmp expect actual
+>> +'
 >
-> Is the reason why you do not call this "abbrev" because you are
-> allowing it to truncate to a non-unique prefix?
+> This is not a very good test: you're not checking that colornext applies
+> to the next and only this one. Similarly to what I suggested for
+> padright, I'd suggest
 >
-> If so, wouldn't it make more sense to treat this kind of string
-> function in a way very similar to your earlier "padright"?  I.e.
-> "%(maxwidth:5)%(objectname)" or something?
+>   --format="%(refname:short)%(colornext:green)|%(refname:short)|%(refname:short)|"
 >
-> If not, and if this is really an abbrev, then it makes sense to make
-> it specific to the objectname, e.g. "%(objectname:abbrev=7)".
 
-It is finding unique abbrev, I just named size as it was smaller. But
-abbrev seems better, will rename, thanks :)
-
+That was the purpose of the "||" but that doesn't check the color of next atom,
+Thanks for the example will use that :)
 
 -- 
 Regards,
