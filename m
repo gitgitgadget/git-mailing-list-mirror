@@ -1,72 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 01/11] ref-filter: add "%(objectname:size=X)" option
-Date: Tue, 28 Jul 2015 08:43:38 -0700
-Message-ID: <xmqqzj2gffth.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [RFC/PATCH] Port branch.c to use ref-filter APIs
+Date: Tue, 28 Jul 2015 21:18:06 +0530
+Message-ID: <CAOLa=ZTDsYDbyvCfC0Ad1uZ+5wPeFusCoa0JuzOcYS2qB8Wbjg@mail.gmail.com>
 References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
-	<1438066594-5620-1-git-send-email-Karthik.188@gmail.com>
+ <vpqoaiwwgl2.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 17:43:50 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 28 17:48:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK72h-00005D-Mo
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 17:43:48 +0200
+	id 1ZK77Q-000381-IF
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 17:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752461AbbG1Pnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 11:43:43 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36681 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752407AbbG1Pnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 11:43:41 -0400
-Received: by pachj5 with SMTP id hj5so71651269pac.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 08:43:41 -0700 (PDT)
+	id S1752654AbbG1Psi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 11:48:38 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:33654 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643AbbG1Psg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 11:48:36 -0400
+Received: by obdeg2 with SMTP id eg2so87456465obd.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 08:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=5lH9xYgZd0npo1anizjJQBdBtwib19vTPDq3cik84wI=;
-        b=qIq7DZLA3g2S7Pj3fbI85h+mA17yVrglNukYhyZiWSrNXcOnWqa5ydTBMsE7hPx0+i
-         4I1pcXdE+Zx8/ZDx4yQTd+fVHMsmfw35ZbBnguZ56/TVZ1AHW/rn5nBLml0y+nOz/5Rp
-         y1EtpyjmPu37OUd29ncHQdo2zC971LqiIl590MyCtaLc36spRMwK5CEsye6dd6b7bcnO
-         trwR/Zh0BZEl3rJEpEDLmQEcg2l49sf/MIgJ31pCv2lVxjv0BrLDGDeu1XGt3ZeOz5IE
-         mT5kZILbuaWVYj9O+WcdxogexLc0gPRvFqgSVjmVptyOGIum5mI9OIs04n8BqoLrJxTY
-         JM3A==
-X-Received: by 10.66.65.205 with SMTP id z13mr82217544pas.65.1438098220982;
-        Tue, 28 Jul 2015 08:43:40 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id qo6sm36106411pab.23.2015.07.28.08.43.39
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 08:43:39 -0700 (PDT)
-In-Reply-To: <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> (Karthik
-	Nayak's message of "Tue, 28 Jul 2015 12:26:26 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PfeJqf2g660/64Rv4TonRX9XjVjsd3QuEKwzeaCSqQ8=;
+        b=GCAaf66r0xOVoDPC+9zoca4D3frAq/W+0ON/0i+aBZRi/k+uTWEJc/vITun11iSyGP
+         BPgVNxnKqTJo6RQB/ENI0jIgpkBcB0RxVFKzqHxnkxPGFxgIB1D5Qwzgo05sOb0+6zDE
+         tOwd+KdVMHSXZTMCZ/1VKFL470kqcRwK+WAryC4xQuBdybhINWADrTAAMeX+aaQy+AML
+         qVK4+r3TkeQidrnRN1QR0gLI4noS8zLfe6/zc1zA0MJ1ZYFS0B3OihzR7faQdmXWixVs
+         itbMLkxWA5Jp/lb943Xzh0ZtyLqiSB/mMe4JAaHK+mP/FoSF2x8kwJpakT//MRwXnRVz
+         /Nww==
+X-Received: by 10.60.42.230 with SMTP id r6mr36730709oel.9.1438098515313; Tue,
+ 28 Jul 2015 08:48:35 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 08:48:06 -0700 (PDT)
+In-Reply-To: <vpqoaiwwgl2.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274778>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
-> From: Karthik Nayak <karthik.188@gmail.com>
+On Tue, Jul 28, 2015 at 7:05 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> Add support for %(objectname:size=X) where X is a number.
-> This will print the first X characters of an objectname.
-> The minimum value for X is 5. Hence any value lesser than
-> 5 will default to 5 characters.
+>> This version also doesn't use the printing options provided by
+>> branch.c.
+>
+> Do you mean "provided by ref-filter.{c,h}"?
+>
 
-Is the reason why you do not call this "abbrev" because you are
-allowing it to truncate to a non-unique prefix?
+Yes! my bad.
 
-If so, wouldn't it make more sense to treat this kind of string
-function in a way very similar to your earlier "padright"?  I.e.
-"%(maxwidth:5)%(objectname)" or something?
+>> I wanted to discuss how exactly to go about that, because in branch.c,
+>> we might need to change the --format based on attributes such as
+>> abbrev, verbose and so on. But ref-filter expects us to verify the
+>> format before filtering.
+>
+> I took time to understand the problem, but here's my understanding:
+>
+> ref-filter expects the code to look like
+>
+>         format = ...;
+>         verify_ref_format(format);
+>         filter_refs(...);
+>         for (...)
+>                 show_ref_array_item(..., format, ...);
+>
+> and in the case of "git branch -v", you need to align the sha1s based on
+> the longest branch name, i.e. use %(padright:N+1) where N is the longest
+> branch name. And you can get N only after calling filter_refs, while you
+> need it for verify_ref_format().
+>
+> Is my understanding correct?
 
-If not, and if this is really an abbrev, then it makes sense to make
-it specific to the objectname, e.g. "%(objectname:abbrev=7)".
+Absolutely correct :)
+
+>
+> If so, what prevents swapping the order of verify_ref_format and
+> filter_refs? I understand that verify_ref_format() builds used_atom and
+> other data-structures, hence it has to be called before
+> show_ref_array_item() and before sorting, but I don't think you need it
+> before filter_refs (I may have missed something though).
+>
+
+Nope! This is exactly what I'm trying :D
+
+> So, the code could look like:
+>
+> filter_refs(...)
+> if (--format is given)
+>         format = the argument of --format
+> else
+>         format = STRBUF_INIT;
+>         strbuf_add(&format, "%(some_directive_to_display '*' if needed)");
+>         if (verbose)
+>                 strbuf_addf(&format, "%(padright:%d)", max_width);
+>         ...
+> verify_ref_format(format);
+> ref_array_sort(...);
+> for (...)
+>         show_ref_array_item(...);
+>
+> (BTW, a trivial helper function to display the whole ref_array could
+> help. It would avoid having each caller write the 'for' loop)
+>
+
+This I gotta try! Have been just keeping the flow the same and trying to mess
+around with how formatting works instead.
+
+> Ideally, you could also have a modifier atom %(alignleft) that would
+> not need an argument and that would go through the ref_array to find the
+> maxwidth, and do the alignment. That would give even more flexibility to
+> the end users of "for-each-ref --format".
+
+This could work for refname, as each ref_array_item holds the refname,
+But other atoms are only filled in after a call to verify_ref_format().
+What we could do would be after filling in all atom values, have a loop
+through all items with their atom values and maybe implement this.
+But I don't see this as priority for now, so will mark it off for later.
+Thanks
+
+-- 
+Regards,
+Karthik Nayak
