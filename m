@@ -1,71 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git branch command is incompatible with bash
-Date: Tue, 28 Jul 2015 08:23:40 -0700
-Message-ID: <xmqq4mkogvb7.fsf@gitster.dls.corp.google.com>
-References: <20150727121253.GC17338@2vizcon.com> <55B69E68.90306@kdbg.org>
-	<xmqqh9opgtjz.fsf@gitster.dls.corp.google.com>
-	<55B72F09.3030000@kdbg.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Log messages beginning # and git rebase -i
+Date: Tue, 28 Jul 2015 17:25:49 +0200
+Message-ID: <vpqsi88qp6q.fsf@anie.imag.fr>
+References: <loom.20150727T133256-715@post.gmane.org>
+	<CAPig+cRT6=YCHz+phfE+84y27ey-6ScjPxP2cHiVqumJmR6mOw@mail.gmail.com>
+	<loom.20150728T115023-269@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Anatol Rudolph <a.rudolph@2vizcon.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jul 28 17:23:54 2015
+Cc: git@vger.kernel.org
+To: Ed Avis <eda@waniasset.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 17:26:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK6jN-0004BC-67
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 17:23:49 +0200
+	id 1ZK6lT-0005ef-Pe
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 17:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbbG1PXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 11:23:44 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33419 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785AbbG1PXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 11:23:43 -0400
-Received: by padck2 with SMTP id ck2so71491533pad.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 08:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=pUovIfTpp4fA0joK+INrLPnMcrTYD8S+pCb6VWga9Wk=;
-        b=V4fn01Cgnm0LbYML1kmDlf/wXIsTwvIxtC1pe4KrZBb9EVFWzGALjtAGrGLcfQn6fi
-         Szf7h8tI+RVN9b99AQaeEuEa5MCL9PUnKi1doUCfBA2dOV7/Xc79xU0KiJ29dw77Xo2o
-         uo0bP8jS5Ac9FbuZsztQZUV6o2Z8FGtAFUvIUdkVjypBNIFNrH2FWChfRFw615POvI3N
-         RFBpor0elDeo14KMhJ0LEdkq5feQZf6JuCANbxkU7OISnkOyd+R5NVHT7SOUc653U8IU
-         uE+qo+/QdiPijdYqShOYArq/UUBPTcptmNra0ZgLt2l48l5gp70SoIK4a/+8kSOYPSlT
-         k1yQ==
-X-Received: by 10.66.222.41 with SMTP id qj9mr83195066pac.139.1438097022578;
-        Tue, 28 Jul 2015 08:23:42 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id nx9sm35838455pdb.12.2015.07.28.08.23.41
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 08:23:41 -0700 (PDT)
-In-Reply-To: <55B72F09.3030000@kdbg.org> (Johannes Sixt's message of "Tue, 28
-	Jul 2015 09:28:09 +0200")
+	id S1752032AbbG1PZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 11:25:55 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49328 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751124AbbG1PZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 11:25:54 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6SFPl6j027537
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 28 Jul 2015 17:25:48 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6SFPnr1001832;
+	Tue, 28 Jul 2015 17:25:50 +0200
+In-Reply-To: <loom.20150728T115023-269@post.gmane.org> (Ed Avis's message of
+	"Tue, 28 Jul 2015 09:51:40 +0000 (UTC)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 28 Jul 2015 17:25:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6SFPl6j027537
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438701950.44687@sWyv8uMUMAxg1wV07ci9Vw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274776>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Ed Avis <eda@waniasset.com> writes:
 
-> Are you trying to say that the result of 'rev-parse --abbrev-ref HEAD'
-> is suboptimal and that of 'symbolic-ref --short HEAD' is OK?
+> Eric Sunshine <sunshine <at> sunshineco.com> writes:
+>
+>>>the editing for the
+>>>combined log message treats lines beginning with # as comments.  This means
+>>>that if you are not careful the commit message can get lost on rebasing.
+>>>
+>>>I suggest that git rebase should add an extra space at the start
+>
+>>'git rebase --interactive' respects the core.commentChar configuration
+>>variable, which you can set to some value other than '#'.
+>
+> I was thinking of the default configuration.  But you are right, this applies
+> to whatever the comment character is - so if commentChar is set to * for
+> example, then log lines beginning with * should get an extra space prepended
+> in git rebase --interactive so that they don't get lost.
 
-My "Interesting" was primarily about that I wasn't aware of the
-"--abbrev-ref" option.
+Actually, is there any reason why we do not allow a simple escaping like
 
-Yes, I am sure some time ago I accepted a patch to add it, but I
-simply do not see the point, especially because the "--short" option
-to symbolic-ref feels much more superiour.  "What branch am I on?"
-is about symbolic refs, rev-parse is about revisions.
+\# this is a line starting with #
+\\ this is a line starting with \
+# this is a comment
 
-I can see that "symbolic-ref --short" is much newer than the other
-one, so addition of "--abbrev-ref" to "rev-parse" may have been a
-mistake made while being desperate (i.e. not having a way to do so
-with plumbing, we wanted "some" way to do so and chose poorly).
+?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
