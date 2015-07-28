@@ -1,175 +1,166 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] am: let command-line options override saved options
-Date: Tue, 28 Jul 2015 10:09:59 -0700
-Message-ID: <xmqqegjsfbtk.fsf@gitster.dls.corp.google.com>
-References: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
-	<20150724180921.GA17730@peff.net>
-	<CACRoPnR=DSETucY78Xo0RNxHKkqDnTCYFvHsSzWAG7X7z3_DKQ@mail.gmail.com>
-	<xmqq8ua1k7fc.fsf@gitster.dls.corp.google.com>
-	<20150728164311.GA1948@yoshi.chippynet.com>
+Subject: [ANNOUNCE] Git v2.4.7
+Date: Tue, 28 Jul 2015 10:11:25 -0700
+Message-ID: <xmqqd1zcfbr6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 19:10:11 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Tue Jul 28 19:11:43 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZK8OH-0001av-Tq
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 19:10:10 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1ZK8Pj-0002ek-BC
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 28 Jul 2015 19:11:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151AbbG1RKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 13:10:03 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36219 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752507AbbG1RKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 13:10:01 -0400
-Received: by pachj5 with SMTP id hj5so72712261pac.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 10:10:01 -0700 (PDT)
+	id S1753153AbbG1RL3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 28 Jul 2015 13:11:29 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35929 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750712AbbG1RL2 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 28 Jul 2015 13:11:28 -0400
+Received: by pachj5 with SMTP id hj5so72729555pac.3;
+        Tue, 28 Jul 2015 10:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=z2WOQIKXnpdZ/jz7lbvjJv/kt05i0zPPLtjaZIr+8Ts=;
-        b=HbRHh90x3mABCWgYc/z3RJwApkX2LUjv5MQLbv/C0kJifEYikzMNgX196l9dxNjn8g
-         vDVz1s68F1qtf5In/Wa1Ffr8K/Bxo8ZweY/zAiXCuTLAkxW0Todf5vMkdd0P2Qx6FBx+
-         fG7qB090Urwm0qYOri6wVjitDl534bDM85dZBcZICKqu3emtSQ9whj9C6QDzjDm5FkuE
-         QnhyqPaS/4G2nY9eZOLyDPInax5Q2aBfkwM1N9//xUTg/kFY9xtSQB5ZB4A+z2UyUscC
-         R3CpX3kteEiUo1FeCQwE811BP2+UvQW6+Kdkuiuf8MJB03M8ifdAH7VJETd48S2cQw2V
-         hB+w==
-X-Received: by 10.66.245.142 with SMTP id xo14mr81362180pac.151.1438103401202;
-        Tue, 28 Jul 2015 10:10:01 -0700 (PDT)
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=s452kK2ZG3wYXGgN2slJrE7VDbHoMddl6Xk7llrSaWc=;
+        b=vfX/aTsJv1dHsSjLGed+ogHOyyH1yhEQM6d8V6zt4CtrHpXV92c8y4eVqn8815tYLZ
+         TIVNkv4eG2uqxEU/E/EuYDRnBzRPRd47l1soqa+0KTtcoqHAmSUZ9w/jId0MhvjayJqx
+         33OFOK5nW0FDyo6KmB+wlZ5dQLddc5XUYZTDleMU/NRb7kObw2rgWuoPb8/PeihIR50V
+         2MTfPMnyUOdpLfrDt6QB7ELpXR8mX7e4wHthOYNd9vQEZRjXMZWhSuqmgc6uO+ZuMdeD
+         D1UnXI7phJmHdi1/PggbahD99opxQfGtNqXAo8FxZRGGd985Uu1QojKCBE0ssibjx15c
+         ICOA==
+X-Received: by 10.66.146.100 with SMTP id tb4mr83415526pab.70.1438103487628;
+        Tue, 28 Jul 2015 10:11:27 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id rh11sm36211913pdb.22.2015.07.28.10.09.59
+        by smtp.gmail.com with ESMTPSA id cz1sm36209457pdb.44.2015.07.28.10.11.26
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 10:09:59 -0700 (PDT)
-In-Reply-To: <20150728164311.GA1948@yoshi.chippynet.com> (Paul Tan's message
-	of "Wed, 29 Jul 2015 00:43:11 +0800")
+        Tue, 28 Jul 2015 10:11:26 -0700 (PDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274792>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274793>
 
-Paul Tan <pyokagan@gmail.com> writes:
+The latest maintenance release Git v2.4.7 is now available at
+the usual places.
 
-> diff --git a/t/t4153-am-resume-override-opts.sh b/t/t4153-am-resume-override-opts.sh
-> new file mode 100755
-> index 0000000..c49457c
-> --- /dev/null
-> +++ b/t/t4153-am-resume-override-opts.sh
-> @@ -0,0 +1,144 @@
-> +#!/bin/sh
-> +
-> +test_description='git-am command-line options override saved options'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +	test_commit initial file &&
-> +	test_commit first file &&
-> +
-> +	git checkout -b side initial &&
-> +	test_commit side-first file &&
-> +	test_commit side-second file &&
-> +
-> +	{
-> +		echo "Message-Id: <side-first@example.com>" &&
-> +		git format-patch --stdout -1 side-first | sed -e "1d"
-> +	} >side-first.patch &&
+The tarballs are found at:
 
-Hmm, puzzled...  Ah, you want to make sure Message-Id comes at the
-very beginning, and you are going to use a single e-mail per mailbox
-so it is easier to strip the Beginning of Message marker than to
-insert Message-Id after it.  I can understand what is going on.
+    https://www.kernel.org/pub/software/scm/git/
 
-> +	{
-> +		sed -ne "1,/^\$/p" side-first.patch &&
+The following public repositories all have a copy of the 'v2.4.7'
+tag and the 'maint' branch that the tag points at:
 
-sed -e "/^\$/q" would work just as well here
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
-> +		echo "-- >8 --" &&
-> +		sed -e "1,/^\$/d" side-first.patch
-> +	} >side-first.scissors &&
+----------------------------------------------------------------
 
-So *.scissors version has -- >8 -- inserted at the beginning of the
-body.
+Git v2.4.7 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-> +	{
-> +		echo "Message-Id: <side-second@example.com>" &&
-> +		git format-patch --stdout -1 side-second | sed -e "1d"
-> +	} >side-second.patch &&
-> +	{
-> +		sed -ne "1,/^\$/p" side-second.patch &&
-> +		echo "-- >8 --" &&
-> +		sed -e "1,/^\$/d" side-second.patch
-> +	} >side-second.scissors
-> +'
+=46ixes since v2.4.6
+------------------
 
-A helper function that takes the branch name may be a good idea,
-not just to consolidate the implementation but as a place to
-document how these pairs of files are constructed and why.
+ * A minor regression to "git fsck" in v2.2 era was fixed; it
+   complained about a body-less tag object when it lacked a
+   separator empty line after its header to separate it with a
+   non-existent body.
 
-> +test_expect_success '--3way, --no-3way' '
-> +	rm -fr .git/rebase-apply &&
-> +	git reset --hard &&
-> +	git checkout first &&
-> +	test_must_fail git am --3way side-first.patch side-second.patch &&
-> +	test -n "$(git ls-files -u)" &&
-> +	echo will-conflict >file &&
-> +	git add file &&
-> +	test_must_fail git am --no-3way --continue &&
-> +	test -z "$(git ls-files -u)"
-> +'
-> +
-> +test_expect_success '--no-quiet, --quiet' '
-> +	rm -fr .git/rebase-apply &&
-> +	git reset --hard &&
-> +	git checkout first &&
-> +	test_must_fail git am --no-quiet side-first.patch side-second.patch &&
-> +	test_must_be_empty out &&
+ * We used to ask libCURL to use the most secure authentication method
+   available when talking to an HTTP proxy only when we were told to
+   talk to one via configuration variables.  We now ask libCURL to
+   always use the most secure authentication method, because the user
+   can tell libCURL to use an HTTP proxy via an environment variable
+   without using configuration variables.
 
-Where did this 'out' come from?
+ * When you say "!<ENTER>" while running say "git log", you'd confuse
+   yourself in the resulting shell, that may look as if you took
+   control back to the original shell you spawned "git log" from but
+   that isn't what is happening.  To that new shell, we leaked
+   GIT_PAGER_IN_USE environment variable that was meant as a local
+   communication between the original "Git" and subprocesses that was
+   spawned by it after we launched the pager, which caused many
+   "interesting" things to happen, e.g. "git diff | cat" still paints
+   its output in color by default.
 
-> +	echo side-first >file &&
-> +	git add file &&
-> +	git am --quiet --continue >out &&
-> +	test_must_be_empty out
+   Stop leaking that environment variable to the pager's half of the
+   fork; we only need it on "Git" side when we spawn the pager.
 
-I can see this one, though I am not sure if it is sensible to see
-what the command says under --quiet option, especially if you are
-making sure it does not fail, which you already have checked for its
-exit status.
+ * Avoid possible ssize_t to int truncation.
 
-> +'
-> +
-> +test_expect_success '--signoff, --no-signoff' '
-> +	rm -fr .git/rebase-apply &&
-> +	git reset --hard &&
-> +	git checkout first &&
-> +	test_must_fail git am --signoff side-first.patch side-second.patch &&
-> +	echo side-first >file &&
-> +	git add file &&
-> +	git am --no-signoff --continue &&
-> +
-> +	# applied side-first will be signed off
-> +	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expected &&
-> +	git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
-> +	test_cmp expected actual &&
-> +
-> +	# applied side-second will not be signed off
-> +	test $(git cat-file commit HEAD | grep -c "Signed-off-by:") -eq 0
-> +'
+ * "git config" failed to update the configuration file when the
+   underlying filesystem is incapable of renaming a file that is still
+   open.
 
-Hmm, the command was run with --signoff at the start, first gets
-applied with "am --no-signoff --resolved" so I would expect it does
-not get signed off, but the second one will apply cleanly on top, so
-shouldn't it get signed off?  Or perhaps somehow I misread Peff's
-idea to make these override one-shot in $gmane/274635?
+ * A minor bugfix when pack bitmap is used with "rev-list --count".
+
+ * An ancient test framework enhancement to allow color was not
+   entirely correct; this makes it work even when tput needs to read
+   from the ~/.terminfo under the user's real HOME directory.
+
+ * Fix a small bug in our use of umask() return value.
+
+ * "git rebase" did not exit with failure when format-patch it invoked
+   failed for whatever reason.
+
+ * Disable "have we lost a race with competing repack?" check while
+   receiving a huge object transfer that runs index-pack.
+
+Also contains typofixes, documentation updates and trivial code
+clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.4.6 are as follows:
+
+Clemens Buchacher (1):
+      rebase: return non-zero error code if format-patch fails
+
+Enrique Tobis (1):
+      http: always use any proxy auth method available
+
+Jeff King (4):
+      index-pack: avoid excessive re-reading of pack directory
+      docs: clarify that --encoding can produce invalid sequences
+      rev-list: disable --use-bitmap-index when pruning commits
+      check_and_freshen_file: fix reversed success-check
+
+Junio C Hamano (3):
+      fsck: it is OK for a tag and a commit to lack the body
+      pager: do not leak "GIT_PAGER_IN_USE" to the pager
+      Git 2.4.7
+
+Karsten Blees (1):
+      config.c: fix writing config files on Windows network shares
+
+Lawrence Siebert (1):
+      rev-list: add --count to usage guide
+
+Matthieu Moy (2):
+      Documentation/branch: document -d --force and -m --force
+      Documentation/branch: document -M and -D in terms of --force
+
+Michael Haggerty (1):
+      strbuf: strbuf_read_file() should return ssize_t
+
+Richard Hansen (2):
+      Revert "test-lib.sh: do tests for color support after changing HO=
+ME"
+      test-lib.sh: fix color support when tput needs ~/.terminfo
+
+Torsten B=C3=B6gershausen (1):
+      git-checkout.txt: document "git checkout <pathspec>" better
