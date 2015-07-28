@@ -1,104 +1,64 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 07/11] ref-filter: add option to match literal pattern
-Date: Tue, 28 Jul 2015 17:49:30 -0400
-Message-ID: <CAPig+cSiCR3OdYf=4BnaiS8PuSKxd7OPPxOUQYyZpBjkQ15LQQ@mail.gmail.com>
-References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
-	<1437982035-6658-1-git-send-email-Karthik.188@gmail.com>
-	<1437982035-6658-7-git-send-email-Karthik.188@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] notes: handle multiple worktrees
+Date: Tue, 28 Jul 2015 15:00:21 -0700
+Message-ID: <xmqqy4i0aqoa.fsf@gitster.dls.corp.google.com>
+References: <xmqqegjsdq3n.fsf@gitster.dls.corp.google.com>
+	<1438118624-26107-1-git-send-email-dturner@twopensource.com>
+	<1438119752.18134.43.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 23:49:37 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 00:00:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKCki-00072V-I5
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 23:49:36 +0200
+	id 1ZKCvE-0006XW-Kt
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 00:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbbG1Vtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 17:49:33 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:36609 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170AbbG1Vtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 17:49:31 -0400
-Received: by ioeg141 with SMTP id g141so1890997ioe.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 14:49:31 -0700 (PDT)
+	id S1751007AbbG1WAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 18:00:24 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:36177 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750867AbbG1WAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 18:00:24 -0400
+Received: by pachj5 with SMTP id hj5so75994050pac.3
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 15:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=WJm972WUKarJpQstnuCF+RlrU1OjFT8qafQqDLQELnY=;
-        b=cfBTVJ+DKu13mskoYA3D6N+sAmc1tVNy5IH7ob6uNSU+/jM8noqH7cvM83mMLOu7oP
-         AfFdcpjxbAqciUu2bodrCznVzZLef6T5AUbE5i4LIR6/sXZybqdkbllc7Ux8qY2fOr6s
-         rqPSpSD5kvNMSnKiLrKeshVmwthCafsP+pmwY86hzP1lmt7MWeYm3H+z1Y4gKTeQBVLz
-         pFoqC7JJNjuY1R9Vc89Pvn2Xw+uf+VEMm38U8xSJ4byHWO2UN6/mY2ymF7+sToH1T7s5
-         hzvrrDvLmULysawIgK96apbVw2DDb8Hg163uBvtjpwOkpT133A1jzHx7G+tRbJBqDcq5
-         FHCg==
-X-Received: by 10.107.16.223 with SMTP id 92mr62923312ioq.14.1438120170931;
- Tue, 28 Jul 2015 14:49:30 -0700 (PDT)
-Received: by 10.79.107.137 with HTTP; Tue, 28 Jul 2015 14:49:30 -0700 (PDT)
-In-Reply-To: <1437982035-6658-7-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: ksa3MBNArx0Zmiy_B5QSwc6f_6s
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Od1//4Caq69cmuMvjTtoJ83x+MbPgrA1jyTwy346GqU=;
+        b=SnRLlcY1u6CiK2rzOKZv4nUm5I782uGWnsmY76tDDA8yTnYOxBs3O2ylov+I+v7aNN
+         5+bh2RZIq56ZxhVhRvK35xkbOhucqanP+mNenk0vzNP8nEu8n9ZXJNKhTf068J0iy4Tp
+         xtGzL17FJpBbK9Fhp5OgLMSnsMjI4cFd/EbELcNk9PPMxmjZ+MwnhzPKx0PBljlDgSf1
+         jHPrXAdcW2Km4yaCL62lXOw36TNPwKi7Plgkj5q7pAEX5m9m6qglMJ1OybqcWAwF0ao3
+         +IksrhTDTd/DhRnM6PcbfvlB2RsgqSq5lLuslFkoM2zlcro40j7HOWkmpvxLPzTJbaQk
+         +soQ==
+X-Received: by 10.66.248.9 with SMTP id yi9mr84644645pac.149.1438120823461;
+        Tue, 28 Jul 2015 15:00:23 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
+        by smtp.gmail.com with ESMTPSA id y2sm26883680pdi.80.2015.07.28.15.00.22
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Jul 2015 15:00:22 -0700 (PDT)
+In-Reply-To: <1438119752.18134.43.camel@twopensource.com> (David Turner's
+	message of "Tue, 28 Jul 2015 17:42:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274858>
 
-On Mon, Jul 27, 2015 at 3:27 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
->
-> Since 'ref-filter' only has an option to match path names add an
-> option for plain fnmatch pattern-matching.
->
-> This is to support the pattern matching options which are used in `git
-> tag -l` and `git branch -l` where we can match patterns like `git tag
-> -l foo*` which would match all tags which has a "foo*" pattern.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 26eb26c..597b189 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -946,6 +946,32 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
->
->  /*
->   * Return 1 if the refname matches one of the patterns, otherwise 0.
-> + * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
-> + * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
-> + * matches "refs/heads/mas*", too).
-> + */
-> +static int match_pattern(const char **patterns, const char *refname)
-> +{
-> +       /*
-> +        * When no '--format' option is given we need to skip the prefix
-> +        * for matching refs of tags and branches.
-> +        */
-> +       if (skip_prefix(refname, "refs/tags/", &refname))
-> +               ;
-> +       else if (skip_prefix(refname, "refs/heads/", &refname))
-> +               ;
-> +       else if (skip_prefix(refname, "refs/remotes/", &refname))
-> +               ;
+David Turner <dturner@twopensource.com> writes:
 
-Or, more concisely:
+> Sorry, this one is on top of next.
 
-    skip_prefix(refname, "refs/tags/", &refname) ||
-    skip_prefix(refname, "refs/heads/", &refname) ||
-    skip_prefix(refname, "refs/remotes/", &refname);
+Thanks, but I'd appreciate if you can be more specific next time.
 
-since || short-circuits. No need for the 'if' or cascading 'else if's.
-
-> +       for (; *patterns; patterns++) {
-> +               if (!wildmatch(*patterns, refname, 0, NULL))
-> +                       return 1;
-> +       }
-> +       return 0;
-> +}
+A topic that truly depends on everything in 'next' cannot graduate
+before all the others do, but in this particular case, I think this
+change only needs to depend on Eric's es/worktree-add-cleanup and no
+other topic, so it is more manageable ;-)
