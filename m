@@ -1,184 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] refs: support negative transfer.hideRefs
-Date: Tue, 28 Jul 2015 15:59:34 -0400
-Message-ID: <20150728195934.GB13795@peff.net>
-References: <20150728195747.GA13596@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cache-tree: populate cache-tree on successful merge
+Date: Tue, 28 Jul 2015 13:04:39 -0700
+Message-ID: <xmqq1tfsdp60.fsf@gitster.dls.corp.google.com>
+References: <1438111840-6403-1-git-send-email-dturner@twopensource.com>
+	<xmqqa8ugdpu7.fsf@gitster.dls.corp.google.com>
+	<1438113266.18134.26.camel@twopensource.com>
+	<xmqq6154dpkt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 28 21:59:46 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Brian Degenhardt <bmd@bmdhacks.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 22:04:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKB2P-0004fc-TL
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 21:59:46 +0200
+	id 1ZKB7I-0008QI-OJ
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:04:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbbG1T7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 15:59:37 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35982 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751942AbbG1T7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 15:59:36 -0400
-Received: (qmail 32417 invoked by uid 102); 28 Jul 2015 19:59:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Jul 2015 14:59:36 -0500
-Received: (qmail 20382 invoked by uid 107); 28 Jul 2015 19:59:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Jul 2015 15:59:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Jul 2015 15:59:34 -0400
-Content-Disposition: inline
-In-Reply-To: <20150728195747.GA13596@peff.net>
+	id S1753369AbbG1UEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 16:04:45 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:36607 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753085AbbG1UEm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 16:04:42 -0400
+Received: by pdjr16 with SMTP id r16so77285948pdj.3
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:04:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=bFTztQRud1zLs7H8fbRKqAA8xlq0hqIApy6ctiD6zJc=;
+        b=QkHW4Kl/djgJ50/R/eiGs+ctvF3I/2fBlCdFEt4lihRF19mkUrtlBTHms/nQpUo1+1
+         KQQ8qL/plKwg+BnuHNeW3KLqdHlcuBwwfR/xT2JlfDkcFPH1uYoI/KUQ2HF2Z41LW+hG
+         V0PKR/pybLbMLEf/MNs1ze7zr0E2aT/UmjhQD7ZVEEppD8rJpSlqRb8u7tp5zzOVLiC9
+         Otch160uMGeOGSdFIn59pO6QhsfcjDQ0Ow1y4O85RVVWCJ8aht4uDNhd+RkDfXQyIwAY
+         QhSbjD2Q8hMa+yIhg42kknHPNbp/5LPD45rsEJhvUcvACjqjUhdpz9bO9sDipwOgqAiN
+         x7UA==
+X-Received: by 10.70.30.193 with SMTP id u1mr83510453pdh.59.1438113881562;
+        Tue, 28 Jul 2015 13:04:41 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
+        by smtp.gmail.com with ESMTPSA id cj7sm36717416pdb.33.2015.07.28.13.04.40
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Jul 2015 13:04:40 -0700 (PDT)
+In-Reply-To: <xmqq6154dpkt.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 28 Jul 2015 12:55:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274827>
 
-If you hide a hierarchy of refs using the transfer.hideRefs
-config, there is no way to later override that config to
-"unhide" it. This patch implements a "negative" hide which
-causes matches to immediately be marked as unhidden, even if
-another match would hide it. We take care to apply the
-matches in reverse-order from how they are fed to us by the
-config machinery, as that lets our usual "last one wins"
-config precedence work (and entries in .git/config, for
-example, will override /etc/gitconfig).
+Junio C Hamano <gitster@pobox.com> writes:
 
-There are two alternatives that were considered and
-rejected:
+> David Turner <dturner@twopensource.com> writes:
+>
+>> The work done to produce the cache-tree is work that the commit would
+>> otherwise have to do.  So we're spending extra time in one place to
+>> eliminate that work in a different place.
+>
+> Good point.  Thanks.
 
-  1. A generic config mechanism for removing an item from a
-     list. E.g.: (e.g., "[transfer] hideRefs -= refs/foo").
+Hmm, I forgot about another codepath.  What about operations that
+are purely done to pouplate the index, without necessarily creating
+a tree out of the index?
 
-     This is nice because it could apply to other
-     multi-valued config, as well. But it is not nearly as
-     flexible. There is no way to say:
-
-       [transfer]
-       hideRefs = refs/secret
-       hideRefs = refs/secret/not-so-secret
-
-     Having explicit negative specifications means we can
-     override previous entries, even if they are not the
-     same literal string.
-
-  2. Adding another variable to override some parts of
-     hideRefs (e.g., "exposeRefs").
-
-     This solves the problem from alternative (1), but it
-     cannot easily obey the normal config precedence,
-     because it would use two separate lists. For example:
-
-       [transfer]
-       hideRefs = refs/secret
-       exposeRefs = refs/secret/not-so-secret
-       hideRefs = refs/secret/not-so-secret/no-really-its-secret
-
-     With two lists, we have to apply the "expose" rules
-     first, and only then apply the "hide" rules. But that
-     does not match what the above config intends.
-
-     Of course we could internally parse that to a single
-     list, respecting the ordering, which saves us having to
-     invent the new "!" syntax. But using a single name
-     communicates to the user that the ordering _is_
-     important. And "!" is well-known for negation, and
-     should not appear at the beginning of a ref (it is
-     actually valid in a ref-name, but all entries here
-     should be fully-qualified, starting with "refs/").
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config.txt |  5 +++++
- refs.c                   | 18 +++++++++++++-----
- t/t5512-ls-remote.sh     | 15 +++++++++++++++
- 3 files changed, 33 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 448eb9d..a7fbd0a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2540,6 +2540,11 @@ transfer.hideRefs::
- 	excluded, and is hidden when responding to `git push` or `git
- 	fetch`.  See `receive.hideRefs` and `uploadpack.hideRefs` for
- 	program-specific versions of this config.
-++
-+You may also include a `!` in front of the ref name to negate the entry,
-+explicitly exposing it, even if an earlier entry marked it as hidden.
-+If you have multiple hideRefs values, later entries override earlier ones
-+(and entries in more-specific config files override less-specific ones).
- 
- transfer.unpackLimit::
- 	When `fetch.unpackLimit` or `receive.unpackLimit` are
-diff --git a/refs.c b/refs.c
-index 7ac05cf..68f2cb0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4159,17 +4159,25 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
- 
- int ref_is_hidden(const char *refname)
- {
--	struct string_list_item *item;
-+	int i;
- 
- 	if (!hide_refs)
- 		return 0;
--	for_each_string_list_item(item, hide_refs) {
-+	for (i = hide_refs->nr - 1; i >= 0; i--) {
-+		const char *match = hide_refs->items[i].string;
-+		int neg = 0;
- 		int len;
--		if (!starts_with(refname, item->string))
-+
-+		if (*match == '!') {
-+			neg = 1;
-+			match++;
-+		}
-+
-+		if (!starts_with(refname, match))
- 			continue;
--		len = strlen(item->string);
-+		len = strlen(match);
- 		if (!refname[len] || refname[len] == '/')
--			return 1;
-+			return !neg;
- 	}
- 	return 0;
- }
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 3bd9759..728a1dc 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -128,6 +128,11 @@ test_expect_success 'Report match with --exit-code' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'set up some extra tags for ref hiding' '
-+	git tag magic/one &&
-+	git tag magic/two
-+'
-+
- for configsection in transfer uploadpack
- do
- 	test_expect_success "Hide some refs with $configsection.hiderefs" '
-@@ -138,6 +143,16 @@ do
- 		sed -e "/	refs\/tags\//d" >expect &&
- 		test_cmp expect actual
- 	'
-+
-+	test_expect_success "Override hiding of $configsection.hiderefs" '
-+		test_when_finished "test_unconfig $configsection.hiderefs" &&
-+		git config --add $configsection.hiderefs refs/tags &&
-+		git config --add $configsection.hiderefs "!refs/tags/magic" &&
-+		git config --add $configsection.hiderefs refs/tags/magic/one &&
-+		git ls-remote . >actual &&
-+		verbose grep refs/tags/magic/two actual
-+	'
-+
- done
- 
- test_done
--- 
-2.5.0.rc3.557.g17a1555
+The most worrisome is "git checkout $branch" (two-tree merge).
