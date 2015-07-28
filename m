@@ -1,142 +1,99 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 07/11] branch: move 'current' check down to the
- presentation layer
-Date: Wed, 29 Jul 2015 01:42:10 +0530
-Message-ID: <CAOLa=ZTy+KX4K_inpDoMy+thzFdF2RF93yMEHJUExzT4OvjPww@mail.gmail.com>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-7-git-send-email-Karthik.188@gmail.com>
- <vpqbnewxwcx.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] refs: support negative transfer.hideRefs
+Date: Tue, 28 Jul 2015 13:14:47 -0700
+Message-ID: <xmqqwpxkca4o.fsf@gitster.dls.corp.google.com>
+References: <20150728195747.GA13596@peff.net>
+	<20150728195934.GB13795@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 28 22:12:47 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 28 22:14:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKBEz-0005aZ-Oj
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:12:46 +0200
+	id 1ZKBH3-00078t-BC
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jul 2015 22:14:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbbG1UMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 16:12:41 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36588 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300AbbG1UMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 16:12:40 -0400
-Received: by obnw1 with SMTP id w1so92842291obn.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:12:40 -0700 (PDT)
+	id S1752777AbbG1UOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 16:14:49 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:36654 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752096AbbG1UOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 16:14:48 -0400
+Received: by pdjr16 with SMTP id r16so77408218pdj.3
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 13:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WLNefNcsayf/wS4Bo1YmPLFlqLOEdaIlfFVv1KbP2Vo=;
-        b=0HHUiGa5N0gj4ysL3yQFAmUi2jTofiJu0nLqMQA0FZivuKY/FJVTmvgIivjTW+b4WI
-         dTdmB9Co5+cs+Ak1AKf4PBWHlh3pvHp8l0ywYN/z8ZjYyAO3vCfxObnEL0rmxdfclTED
-         bufXr+Vxz9KCyapeLp0S+MUF+gT2XYP3slcrP23Ww/NdVFdZjjsKjxfVDarKdhQsTrQi
-         T67Os3eGc9+tBSMJEdq0vKX61I2Uq/GnW9Wy2w1Hvi4Q323yhHHrzmEw2WLh+KhvBpO7
-         j/bOi8G6h3pXwavE9f4TkqT2VyP/e1xIm8+KGgxuFBmWwdKe33CQH6ZZbLxTc+RRAfuN
-         5pMg==
-X-Received: by 10.60.41.138 with SMTP id f10mr35769720oel.84.1438114360265;
- Tue, 28 Jul 2015 13:12:40 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Tue, 28 Jul 2015 13:12:10 -0700 (PDT)
-In-Reply-To: <vpqbnewxwcx.fsf@anie.imag.fr>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=30PFtZ4zvWz703B3FhnTRue5iZxr8Xgai/8IPvr2zjI=;
+        b=Wc6v3r1shHGSNqv7QtV4PbKnWP+1/UnWm4qRT/JKMscLYviB7cSD4CTytZM3uy9o60
+         cbI3/3tQjSn02Kli5XMOAMLlvCbC1k7vVzmtiU9TSOvkbupJaKmpflIn7qcSakDLLXpT
+         fFvi64gBXWJbX/+d9tN9yXUreytMRbjDesYmz0nLdXU8VI/qPAT/axIfJcuO1u8SYNmn
+         dYVFD3VcB5y2n/5NKqcc0tMb+zO+QBDOFnWjkTUin6ONlnp0JFiFrS0Rwzf3nyuMnX0i
+         qM3Evq1YhGr79q48O0vxZYmZDR0BTNkk9C3vrdG3c7PDlHut7e215WOp2TPOX5vmMW60
+         2Igg==
+X-Received: by 10.70.134.163 with SMTP id pl3mr83360739pdb.142.1438114488363;
+        Tue, 28 Jul 2015 13:14:48 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
+        by smtp.gmail.com with ESMTPSA id cz1sm36705403pdb.44.2015.07.28.13.14.47
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Jul 2015 13:14:47 -0700 (PDT)
+In-Reply-To: <20150728195934.GB13795@peff.net> (Jeff King's message of "Tue,
+	28 Jul 2015 15:59:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274836>
 
-On Tue, Jul 28, 2015 at 6:39 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> We check if given ref is the current branch in print_ref_list().  Move
->> this check to print_ref_item() where it is checked right before
->> printing.
->
-> This means that the '*' and the different color are coded in C, hence
-> it's not possible to mimick this using "git for-each-ref --format ...".
->
-> I do not consider this as blocking, but I think the ultimate goal should
-> be to allow this, so that all the goodies of "git branch" can be made
-> available to other ref-listing commands.
->
+Jeff King <peff@peff.net> writes:
 
-Not sure what you mean here.
-
->> --- a/builtin/branch.c
->> +++ b/builtin/branch.c
->> @@ -534,9 +534,9 @@ static char *get_head_description(void)
->>  }
->>
->>  static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->> -                        int abbrev, int current, const char *remote_prefix)
->> +                        int abbrev, int detached, const char *remote_prefix)
->>  {
->> -     char c;
->> +     char c = ' ';
->>       int color;
->>       struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
->>       const char *prefix = "";
->> @@ -547,7 +547,11 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->>
->>       switch (item->kind) {
->>       case REF_LOCAL_BRANCH:
->> -             color = BRANCH_COLOR_LOCAL;
->> +             if (!detached && !strcmp(item->name, head)) {
->> +                     color = BRANCH_COLOR_CURRENT;
->> +                     c = '*';
->> +             } else
->> +                     color = BRANCH_COLOR_LOCAL;
->>               break;
->>       case REF_REMOTE_BRANCH:
->>               color = BRANCH_COLOR_REMOTE;
->> @@ -556,18 +560,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->>       case REF_DETACHED_HEAD:
->>               color = BRANCH_COLOR_CURRENT;
->>               desc = get_head_description();
->> +             c = '*';
->>               break;
->>       default:
->>               color = BRANCH_COLOR_PLAIN;
->>               break;
->>       }
->>
->> -     c = ' ';
->> -     if (current) {
->> -             c = '*';
->> -             color = BRANCH_COLOR_CURRENT;
->> -     }
+> If you hide a hierarchy of refs using the transfer.hideRefs
+> config, there is no way to later override that config to
+> "unhide" it. This patch implements a "negative" hide which
+> causes matches to immediately be marked as unhidden, even if
+> another match would hide it. We take care to apply the
+> matches in reverse-order from how they are fed to us by the
+> config machinery, as that lets our usual "last one wins"
+> config precedence work (and entries in .git/config, for
+> example, will override /etc/gitconfig).
 >
-> I actually prefered the old way: current is a Boolean that says
-> semantically "this is the current branch", and the Boolean is turned
-> into presentation directives in a separate piece of code.
->
-> I'd write
->
-> char c;
-> int current = 0;
->
+> There are two alternatives that were considered and
+> rejected:
 > ...
->
-> if (...)
->         current = 1;
-> ...
-> case REF_DETACHED_HEAD:
->         current = 1;
-> ...
->
-> and keep the last hunk.
->
-> (IOW, turn current from a parameter into a local variable)
->
+>   1. A generic config mechanism for removing an item from a
+>      ...
+>   2. Adding another variable to override some parts of
+>      ...
+>      Of course we could internally parse that to a single
+>      list, respecting the ordering, which saves us having to
+>      invent the new "!" syntax. But using a single name
+>      communicates to the user that the ordering _is_
+>      important. And "!" is well-known for negation, and
+>      should not appear at the beginning of a ref (it is
+>      actually valid in a ref-name, but all entries here
+>      should be fully-qualified, starting with "refs/").
 
-Thanks will do this.
+I notice that the only time you said that you chose '!' prefix as
+the way to express this new "negative" is as a side note to the
+rejected second variant ;-).  The first paragraph would have been a
+good place to say that, because the first thing I wondered after
+reading three lines (including the subject) into the log was "ok, it
+makes sense and I know what alternatives were considered and
+discarded for what reasons without reading the rest, now did he use
+prefix '-', prefix '~', prefix '^', or prefix '!' for the new
+syntax, or did he use something else?"
 
--- 
-Regards,
-Karthik Nayak
+It would have been very nice if you chose an invalid ref character
+as the negative prefix, and unfortunately '!', which would also have
+been my first choice for this prefix, is not an invalid character,
+which is a bit sad.
+
+Both patches make sense.  Will queue.
+
+Thanks.
