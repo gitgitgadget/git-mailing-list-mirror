@@ -1,82 +1,86 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] ref-filter: fix indentation
-Date: Wed, 29 Jul 2015 21:41:11 +0530
-Message-ID: <CAOLa=ZQf+_BkvjFC4Fv=X8_3A=KAs7e4JB2CZC3n5U6yffSLpg@mail.gmail.com>
-References: <1438185150-31730-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH v5 03/11] ref-filter: add option to pad atoms to the right
+Date: Wed, 29 Jul 2015 21:46:40 +0530
+Message-ID: <CAOLa=ZSLkfO7enWEouGyRuRNb+f47vYnR-QM1+50yBdqqtFHFw@mail.gmail.com>
+References: <CAOLa=ZTtAepdO5U8zo62VBn_z4-LcKoguPxVGaAnNZULEwzrQQ@mail.gmail.com>
+ <1437982035-6658-1-git-send-email-Karthik.188@gmail.com> <1437982035-6658-3-git-send-email-Karthik.188@gmail.com>
+ <CAPig+cQ4PmKc0J1_X2vxn+yJ=pVd5AjM3j7j15T8ojrTPsEY_Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 29 18:11:46 2015
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 18:17:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKTxK-0000Yn-6t
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 18:11:46 +0200
+	id 1ZKU2j-00053F-AY
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 18:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753852AbbG2QLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 12:11:42 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:35875 "EHLO
-	mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670AbbG2QLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 12:11:41 -0400
-Received: by oibn4 with SMTP id n4so7618555oib.3
-        for <git@vger.kernel.org>; Wed, 29 Jul 2015 09:11:41 -0700 (PDT)
+	id S1753291AbbG2QRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 12:17:14 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:34111 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752789AbbG2QRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 12:17:11 -0400
+Received: by obre1 with SMTP id e1so10913375obr.1
+        for <git@vger.kernel.org>; Wed, 29 Jul 2015 09:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=ZyhE7UYLhvqMbidnkVsHHZmbP4DNvbGndu+3p31Fuj4=;
-        b=k/k3AciMUeBBS0u8ygtfaMcgKNMGAddBwQna6OXdvNOPrriGw/1r2r05lXt21MZYS6
-         kW1LJbB8MJIk8Qo7ySHhB+Pc7kq6/xtOHRSwYquvVJ0D0J8p41nb5n+W7dOEs0K/y6SG
-         PWGLFz6fzdc5AKMi/fjorPYg5Zj/M4saDhD3PbT/AHODWsyyeSrNZFVj0m2ZDZ0/rJ8K
-         MRUZmC0pzKVJuDLWQ+zx7fH1UCNmBNdiItRGbMR5pTgFX634FxissXlzCN6KiSNLaUuR
-         7QxvvXHVHztBE/OtT6ksPUe2KSFngnrbocGH2nj64LxwyihrG6Uxjyx6kxjZu4K4SO8B
-         vwoQ==
-X-Received: by 10.202.92.6 with SMTP id q6mr39076972oib.11.1438186301107; Wed,
- 29 Jul 2015 09:11:41 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Wed, 29 Jul 2015 09:11:11 -0700 (PDT)
-In-Reply-To: <1438185150-31730-1-git-send-email-Matthieu.Moy@imag.fr>
+        bh=mp4wx0vbi/sM38ypmGViMSyhinLXF17V3Kb2nzCBIQI=;
+        b=RFlN4ea5FivHHqHQoXXTW1lahlWTNgPG7BvSeSjUmf7djQHBhXEhEqyoPpmgSVpRh1
+         UFGtDxnDl3d2MbZriWrlcI4SVKvyeI77I29vinrO7Lufa78J2msXGC4d36Mq4GaHQl/w
+         G8cpDseVaJ/3nn3ZUsBGAQGv80bashktlnDNjfepnK7L41O+n0dFnntHkHngZs3Tb6rG
+         eRjaxnEUo5vglyw7Alons8Ec3GxXss9AAPdS37O1or7wxHdBNsOYWYckhkErSdN8tUTa
+         QqnQWf1nhjtraH1/pqZAuGQr6wBmuwqFQSJDTXxGepcKXvIW/muHjtcQzNvNQMCo06KT
+         vP6g==
+X-Received: by 10.60.177.195 with SMTP id cs3mr40753351oec.37.1438186630224;
+ Wed, 29 Jul 2015 09:17:10 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Wed, 29 Jul 2015 09:16:40 -0700 (PDT)
+In-Reply-To: <CAPig+cQ4PmKc0J1_X2vxn+yJ=pVd5AjM3j7j15T8ojrTPsEY_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274917>
 
-On Wed, Jul 29, 2015 at 9:22 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> This is meant to be applied on top of kn/for-each-ref.
+On Wed, Jul 29, 2015 at 3:11 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Jul 27, 2015 at 3:27 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add a new atom "padright" and support %(padright:X) where X is a
+>> number.  This will align the succeeding atom value to the left
+>> followed by spaces for a total length of X characters. If X is less
+>> than the item size, the entire atom value is printed.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+>> index e49d578..45dd7f8 100644
+>> --- a/Documentation/git-for-each-ref.txt
+>> +++ b/Documentation/git-for-each-ref.txt
+>> @@ -127,6 +127,12 @@ color::
+>>         Change output color.  Followed by `:<colorname>`, where names
+>>         are described in `color.branch.*`.
+>>
+>> +padright::
+>> +       Pad succeeding atom to the right. Followed by `:<value>`,
+>> +       where `value` states the total length of atom including the
+>> +       padding. If the `value` is greater than the atom length, then
+>> +       no padding is performed.
 >
->  ref-filter.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Isn't this backward? Don't you mean
 >
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 43502a4..3fbbbeb 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -868,8 +868,8 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
->         struct ref_array_item *ref;
+>     ... If the atom length is greater than `value`, then
+>     no padding is performed.
 >
->         if (flag & REF_BAD_NAME) {
-> -                 warning("ignoring ref with broken name %s", refname);
-> -                 return 0;
-> +               warning("ignoring ref with broken name %s", refname);
-> +               return 0;
->         }
->
->         if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
-> --
-> 2.5.0.rc0.7.ge1edd74.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> ?
 
-Thanks for this :)
+Yes, silly mistake.
 
 -- 
 Regards,
