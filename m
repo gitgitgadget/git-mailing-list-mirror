@@ -1,111 +1,88 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 09/11] branch.c: use 'ref-filter' data structures
-Date: Thu, 30 Jul 2015 01:08:37 +0530
-Message-ID: <CAOLa=ZQRWK2c45H7RuFaJSiYuuOBXT5PK__nhWPmA333yGTWyw@mail.gmail.com>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-9-git-send-email-Karthik.188@gmail.com>
- <CAP8UFD3L4QEYQMCda7AbByXGZcvgy5r9y0LMBqEysb6AZ+ydOQ@mail.gmail.com>
- <vpqa8ugwfyf.fsf@anie.imag.fr> <CAOLa=ZTXSutXd4HCrXoVoLT0kQzppiC7gUJpnk8DYYCo7M5XNw@mail.gmail.com>
- <vpq7fpjmg35.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 01/10] ref-filter: introduce 'ref_formatting_state'
+Date: Wed, 29 Jul 2015 12:50:23 -0700
+Message-ID: <xmqqh9om920w.fsf@gitster.dls.corp.google.com>
+References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
+	<1438065211-3777-1-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cS+w8ECma--ncJDoN1fEgrFZMvBC8GBgU6+tLYm_oGkaw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 29 21:39:15 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	"christian.couder\@gmail.com" <christian.couder@gmail.com>,
+	"Matthieu.Moy\@grenoble-inp.fr" <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 21:50:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKXC5-0006RI-7w
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 21:39:13 +0200
+	id 1ZKXN2-0006pU-7x
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 21:50:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753884AbbG2TjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 15:39:08 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:36639 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753102AbbG2TjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 15:39:07 -0400
-Received: by oibn4 with SMTP id n4so10767500oib.3
-        for <git@vger.kernel.org>; Wed, 29 Jul 2015 12:39:06 -0700 (PDT)
+	id S1752941AbbG2Tu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 15:50:27 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:35074 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752590AbbG2Tu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 15:50:27 -0400
+Received: by pdrg1 with SMTP id g1so11022111pdr.2
+        for <git@vger.kernel.org>; Wed, 29 Jul 2015 12:50:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=C7wrAdx8i9dV2m7tK2seJTQI95gHorhFNLK6BlwVxvc=;
-        b=0C38m3eJs6t7d8Qqlb3guApC1m0TNW11fdsUU7Y5aFQ5sNh54TVqyv1zHyPRCBcg2q
-         Silkk+ji0mvZAXM33VotdU+sIt8PcFB1i8Ir74wyBRRHovzRuOEslLUcxguLjsfOSgdM
-         MkiGP/epLdCyG2WyuRd+TyHtRcjUmA3aFa6MwxSs3yxK83J4ojLeBf8Q9miaTLqOUVSW
-         oZqYrHrZFbfi4N5AHGG5XS+yRO4aE26BL3wVt6Xly7unMEAkITKEktCxZr5Cs3UjR5hg
-         ET5L7pJJayQeDQC759/55xsze06Q4jS1awv01IPnzyG6FQXifmri6PVq7QPVZB2HpEr1
-         sJKw==
-X-Received: by 10.202.186.132 with SMTP id k126mr40617505oif.60.1438198746500;
- Wed, 29 Jul 2015 12:39:06 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Wed, 29 Jul 2015 12:38:37 -0700 (PDT)
-In-Reply-To: <vpq7fpjmg35.fsf@anie.imag.fr>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=MitpwwzEQXl3yCHfZmm05L7s9aFa96/NosO6lLyx5lU=;
+        b=Dx1w3QhnJU1PTpjbn00b/fBsV+41EqITrcY6wUR7BpZ0PcQgIaqRtWXmhzDJMpDAOf
+         iNQloS8h9M7mfOF128uHNznGqVuZbzMhd0ll0y8MDZxDn7JIYAEInRiOwL3jmAa1Q6KD
+         srQ6YaszleuipVrjqCgkhjDeDCEoZslKSw76myXtxQaSXK+g6oAtnj9S6WOvUvCmCDQP
+         ziiaaaR/WG9pu4hVU/6W6bX2jPAWZ7gnJy3LR+pXEhW7UQbIZ0cBTWsZXzYQmIbwtMK1
+         fBmx5BnGwlNWCoqYPZ4YfEWniiZwN3twcWYmaQamyNkRHxjwJ3J/VePEW6WWiQUx3GvS
+         fTcg==
+X-Received: by 10.70.34.171 with SMTP id a11mr96276204pdj.18.1438199426672;
+        Wed, 29 Jul 2015 12:50:26 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4c0b:2701:e242:17dc])
+        by smtp.gmail.com with ESMTPSA id s7sm37108496pdn.85.2015.07.29.12.50.25
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 29 Jul 2015 12:50:25 -0700 (PDT)
+In-Reply-To: <CAPig+cS+w8ECma--ncJDoN1fEgrFZMvBC8GBgU6+tLYm_oGkaw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 29 Jul 2015 15:19:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274946>
 
-On Wed, Jul 29, 2015 at 3:38 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On Tue, Jul 28, 2015 at 7:18 PM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>> Christian Couder <christian.couder@gmail.com> writes:
->>>
->>>> On Tue, Jul 28, 2015 at 8:56 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>>>
->>>>> +static void ref_array_append(struct ref_array *array, const char *refname)
->>>>> +{
->>>>> +       size_t len = strlen(refname);
->>>>> +       struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item) + len + 1);
->>>>> +       memcpy(ref->refname, refname, len);
->>>>> +       ref->refname[len] = '\0';
->>>
->>> This looks very much like new_ref_array_item, except that the later also
->>> takes an objectname parameter. I find it suspicious that you leave the
->>> objectname field uninitialized.
->>>
->>
->> Well the objectname is not required here, the idea is to retain the way branch.c
->> works.
->>
->>> Why is this code not calling new_ref_array_item?
->>>
->>
->> Because no objectname is there.
->
-> You do have the object_id in the scope of the call-site, so why not use
-> it?
->
-> (Well, in any case, do as you think is best, it's temporary throw-away
-> code, we shouldn't loose too much time polishing it)
->
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Also the fact the new_ref_array_item() is static and not shared. Wouldn't make
-sense to make it an API only for a single commit, when the code itself
-is temporary.
-
->>> The function disapears in the next commit, but I also think that this
->>> function deserves to exist in ref-filter.{c,h} and remain after the end
->>> of the series.
->>>
->>
->> Why though? I don't see the need when new_ref_array_item() is present.
+>> @@ -1254,9 +1273,26 @@ static void emit(const char *cp, const char *ep)
+>> +static void reset_formatting_state(struct ref_formatting_state *state)
+>> +{
+>> +       int quote_style = state->quote_style;
+>> +       memset(state, 0, sizeof(*state));
+>> +       state->quote_style = quote_style;
 >
-> OK, if the function is specificly for "append an item but leave the
-> objectname uninitialized", it's too specific to be useful somewhere
-> else. But then, make it more explicit in the name of the function and/or
-> in a comment.
+> I wonder if this sledge-hammer approach of saving one or two values
+> before clearing the entire 'ref_formatting_state' and then restoring
+> the saved values will scale well. Would it be better for this to just
+> individually reset the fields which need resetting and not touch those
+> that don't?
 >
+> Also, the fact that quote_style has to be handled specially may be an
+> indication that it doesn't belong in this structure grouped with the
+> other modifiers or that you need better classification within the
+> structure.
 
-Will add a comment :)
+Actually, I think it is wrong to have this function in the first
+place.  It is a sign that the caller is doing too little before
+calling this function.
 
--- 
-Regards,
-Karthik Nayak
+If the act of printing an atom uses the formatting state that says
+"next one needs X", then it is responsible to clear that "next one
+needs X" part of the state, as it is the one who consumed that
+state.  E.g. if it used to say "next one needs to be padded to the
+right" before entering print_value(), then the function did that
+"padded output", then the "next one needs to be padded to the
+right" should be cleared inside print_value().
