@@ -1,61 +1,98 @@
-From: =?iso-8859-1?Q?Zo=EB_Blade?= <zoe@bytenoise.co.uk>
-Subject: Re: [PATCH] userdiff: add support for Fountain documents
-Date: Wed, 29 Jul 2015 12:19:06 +0100
-Message-ID: <0B100A08-4387-4BDE-A3E5-049303343C8D@bytenoise.co.uk>
-References: <1437484966-664-1-git-send-email-zoe@bytenoise.co.uk> <xmqqk2ttuwyy.fsf@gitster.dls.corp.google.com> <FCF96FC6-2DCB-42F2-9B75-A97F84ED2D94@bytenoise.co.uk>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 13:19:26 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Log messages beginning # and git rebase -i
+Date: Wed, 29 Jul 2015 14:17:02 +0200
+Message-ID: <vpq8u9zjgzl.fsf@anie.imag.fr>
+References: <loom.20150727T133256-715@post.gmane.org>
+	<CAPig+cRT6=YCHz+phfE+84y27ey-6ScjPxP2cHiVqumJmR6mOw@mail.gmail.com>
+	<loom.20150728T115023-269@post.gmane.org>
+	<vpqsi88qp6q.fsf@anie.imag.fr>
+	<xmqqr3nsfdmw.fsf@gitster.dls.corp.google.com>
+	<vpq3808p40o.fsf@anie.imag.fr>
+	<CACsJy8ABsHBA1TubB+6fypT0LGQF_O+CmHPqL+C7nMVjjWy38w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Ed Avis <eda@waniasset.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 14:17:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKPOP-00029J-Dp
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 13:19:25 +0200
+	id 1ZKQIM-0002Oe-Ae
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 14:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbbG2LTR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2015 07:19:17 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:51350 "EHLO
-	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751136AbbG2LTP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2015 07:19:15 -0400
-Received: from [192.168.0.26] ([82.69.105.163]) by mrelayeu.kundenserver.de
- (mreue005) with ESMTPSA (Nemesis) id 0LwE4w-1YowSp0VEU-017zaP; Wed, 29 Jul
- 2015 13:19:09 +0200
-In-Reply-To: <FCF96FC6-2DCB-42F2-9B75-A97F84ED2D94@bytenoise.co.uk>
-X-Mailer: Apple Mail (2.1878.6)
-X-Provags-ID: V03:K0:p4jdVw0GQZedjN3hZf2AMpGaUxle+DaUt94VtncjpVy1BuYRTA8
- n760p8hGmEWmyC40+9akA0srcgRveu2T+zDHtZpETEda9ihAiBaqqVUMx9xai9AC3U5Wi8L
- x8FGb1LmUIBS8D+Hsle/zg4DQvhT1FhcRAadINYMwg7yd6/2o3JmXsgJBsMSwYhtK0fD8gD
- TLmzpTOVBSdUxlBW2lYzw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:k00NCxmcmPQ=:wJSq8quAba15wsD3faB5sh
- N/1G6NqUM07pTPZi5BU056TRO3y554FHFRaXKiOSXglA2ZuWWzouwCYIBytYSYOGqO63GYWx8
- uUfx3ynN+e9k+3a+aI8vN0Ghi7+JjSV5A8YdkDWrCPdFaO2GJKMXi0bFQHaX8e62kkwPDAzPF
- FHcyplU+0rZQzSuj1BumZr82RI8T8h1gARuGrgr7vu3xeAA6mutVAj35HPYsft7473WzaMsdT
- ZVjePJvFSdg3ScirozJF1JUPgJqPWu4YbFydceXiHQAtHwM9/v2NtXAAhfebCgjf6ApLoMH3O
- MVVfuxuCHzhDtjIzNuhAK2KMXektNmQmz6LSCcvCSmsM/lTkBvjhRBSyzBvbK3rOvPzhFSMhS
- yjvTgyS6jX/p7iMjEPHxrX7AqTETq7/kpVz7qtjiCjsdhGSQvlCvFJad4dsGATQPCiM+cVlg1
- ut5KAkZnGJBdZpdKEXO7yqI8ealKo1WOjYueoPmE+HEfpuIbG0mjfFYCY4118k/f0aJcDVwMn
- R/o0vcKzBUdruciGd3WwRnktvMwpXpFLOvSYPDvv7NY4s88BfJD+Y8ESu1iPMOzn9IBoF7Yrq
- ORQqfcbAiXolhC2BY4fUUjxcHK0Rrl3mr39jtCPAC4WYcBh0BnFS/7v3lyjAu//tsswcBRzJX
- 7xmuw5w4Y6ZiZaa9Vhx6BZ94qqGBDfVN1lEDWxg4E71GV9A==
+	id S1753043AbbG2MRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 08:17:09 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38051 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752948AbbG2MRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 08:17:08 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TCH00l028614
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 29 Jul 2015 14:17:01 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TCH2TP017128;
+	Wed, 29 Jul 2015 14:17:02 +0200
+In-Reply-To: <CACsJy8ABsHBA1TubB+6fypT0LGQF_O+CmHPqL+C7nMVjjWy38w@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 29 Jul 2015 17:47:19 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 29 Jul 2015 14:17:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6TCH00l028614
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438777021.69279@hH26vXSH65mP5HgaMFcm/A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274893>
 
-Hi again!
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Where's this at?  Your last regex looks perfect to me:
+> On Wed, Jul 29, 2015 at 12:48 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>> If the user wants whatever she types in the resulting commit
+>>> literally, there is the "--cleanup=<choice>" option, no?
+>>
+>> $ GIT_EDITOR=touch git commit --cleanup=verbatim
+>> [detached HEAD 1b136a7] # Please enter the commit message for your changes. Lines starting # with '#' will be kept; you may remove them yourself if you want
+>> to. # An empty message aborts the commit. # HEAD detached from 5e70007 # Changes to be committed: #     modified:   foo.txt # # Changes not staged for commit
+>> : #     modified:   foo.txt # # Untracked files: #      last-synchro.txt #
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> You really don't want that in day-to-day use.
+>
+> How about --cleanup=scissors?
 
-^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$
+I can read this in two different ways:
 
-Do you need anything else from me?
+1) Keeping git as-is and suggest users to use --cleanup=scissors
 
-Thanks,
-Zo=EB.
+   This has the same problem as --cleanup=verbatim: it doesn't work as-is
+   since Git doesn't insert the scissors. You can hack around it by
+   adding them by yourself when you need it, but it's really not
+   convenient. You have to anticipate that you're going to require a #
+   and call commit with --cleanup=scissors, add the scissors. And repeat
+   it if you need to "commit --amend".
+
+2) Modify Git to add scissors by default, and use --cleanup=scissors by
+   default.
+ 
+   This is actually more or less what SVN does: it inserts a line
+   "--This line, and those below, will be ignored--", and the equivalent
+   of what Git adds as comments in the template is inserted below this
+   line.
+
+I don't think option 1) is good. The fact that we have the --cleanup=
+option shouldn't serve as an excuse to do nothing. I'd be fine with
+option 2), but I find it much more intrusive than to allow a simple
+backslash-escaping as I suggest.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
