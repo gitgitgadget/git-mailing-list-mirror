@@ -1,90 +1,89 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH 06/11] branch: roll show_detached HEAD into regular ref_list
-Date: Wed, 29 Jul 2015 11:56:07 +0200
-Message-ID: <vpqwpxjmgnc.fsf@anie.imag.fr>
+Subject: Re: [RFC/PATCH 07/11] branch: move 'current' check down to the presentation layer
+Date: Wed, 29 Jul 2015 12:01:27 +0200
+Message-ID: <vpqk2tjmgeg.fsf@anie.imag.fr>
 References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
 	<1438066594-5620-1-git-send-email-Karthik.188@gmail.com>
-	<1438066594-5620-6-git-send-email-Karthik.188@gmail.com>
-	<vpqlhe0xwpv.fsf@anie.imag.fr>
-	<CAOLa=ZR4DSzdnR8+3eiVTCX92aeFu2o6=iDm7QpdOewizSuxng@mail.gmail.com>
+	<1438066594-5620-7-git-send-email-Karthik.188@gmail.com>
+	<vpqbnewxwcx.fsf@anie.imag.fr>
+	<CAOLa=ZTy+KX4K_inpDoMy+thzFdF2RF93yMEHJUExzT4OvjPww@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 11:56:29 2015
+X-From: git-owner@vger.kernel.org Wed Jul 29 12:01:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKO68-0001td-15
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 11:56:28 +0200
+	id 1ZKOBB-0005dX-Ft
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 12:01:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750898AbbG2J4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 05:56:23 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35109 "EHLO rominette.imag.fr"
+	id S1751328AbbG2KBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 06:01:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:49375 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750756AbbG2J4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 05:56:22 -0400
+	id S1750756AbbG2KBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 06:01:36 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6T9u6sG000886
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6TA1Ql3017719
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 29 Jul 2015 11:56:06 +0200
+	Wed, 29 Jul 2015 12:01:26 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6T9u7qO014897;
-	Wed, 29 Jul 2015 11:56:07 +0200
-In-Reply-To: <CAOLa=ZR4DSzdnR8+3eiVTCX92aeFu2o6=iDm7QpdOewizSuxng@mail.gmail.com>
-	(Karthik Nayak's message of "Wed, 29 Jul 2015 00:49:51 +0530")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TA1RYJ015039;
+	Wed, 29 Jul 2015 12:01:27 +0200
+In-Reply-To: <CAOLa=ZTy+KX4K_inpDoMy+thzFdF2RF93yMEHJUExzT4OvjPww@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 29 Jul 2015 01:42:10 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 29 Jul 2015 11:56:06 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 29 Jul 2015 12:01:26 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t6T9u6sG000886
+X-MailScanner-ID: t6TA1Ql3017719
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1438768569.07984@+Y2ZpSfpMzzhouTMjBb5Yw
+MailScanner-NULL-Check: 1438768890.45157@UKrs9F+qUhTasPQe2AC4Eg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274886>
 
 Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On Tue, Jul 28, 2015 at 6:31 PM, Matthieu Moy
+> On Tue, Jul 28, 2015 at 6:39 PM, Matthieu Moy
 > <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Karthik Nayak <karthik.188@gmail.com> writes:
 >>
->>> -static void show_detached(struct ref_list *ref_list, int maxwidth)
->>> -{
->>> -     struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
->>> -
->>> -     if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
+>>> We check if given ref is the current branch in print_ref_list().  Move
+>>> this check to print_ref_item() where it is checked right before
+>>> printing.
 >>
->> I'm not sure what this if was doing, and why you can get rid of it. My
->> understanding is that with_commit comes from --contains, and in the
->> previous code the filtering was done at display time (detached HEAD was
->> not shown if it was not contained in commits specified with --contains).
+>> This means that the '*' and the different color are coded in C, hence
+>> it's not possible to mimick this using "git for-each-ref --format ...".
 >>
->> Eventually, you'll use ref-filter to do this filtering so you won't need
->> this check at display time.
->>
->> But am I correct that for a few commits, you ignore --contains on
->> detached HEAD?
+>> I do not consider this as blocking, but I think the ultimate goal should
+>> be to allow this, so that all the goodies of "git branch" can be made
+>> available to other ref-listing commands.
 >>
 >
-> No we don't ignore --contains on detached HEAD.
->
-> Since detached HEAD now gets its data from append_ref(). The function
-> also checks for the --contains option.
+> Not sure what you mean here.
 
-Ah, OK. Previously, detached HEAD and branches were completely
-different, each having its own if (is_descendant_of(...)), and you're
-now using only one in append_ref() before removing it completely in
-favor of ref-filter.
+What you already know, but probably badly explained ;-).
 
-That would deserve an explanation for other reviewers I think.
+Eventually, the output of "git branch" should correspond to a format
+string (so git branch would be almost an alias for "git for-each-ref
+refs/heads/ --format '...'"). Internally, this would mean using
+show_ref_array_item instead of print_ref_item. This is what you managed
+to do for "git tag".
+
+You already identified one difficulty with sha1 alignment in "git branch
+-v". I'm pointing out another which is that displaying the "*" in front
+of the current branch is currently not possible with a format string.
+You would need an atom like %(displayAStarIfTheBranchIsTheCurrentOne)
+(for which you'd need to find a short-and-sweet name ;-) ).
 
 -- 
 Matthieu Moy
