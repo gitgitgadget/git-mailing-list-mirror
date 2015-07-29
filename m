@@ -1,161 +1,122 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 11/11] branch: add '--points-at' option
-Date: Wed, 29 Jul 2015 21:14:29 +0530
-Message-ID: <CAOLa=ZTf6QVm-eXYNAk3Tof8DUeP2eZEAcVEGzkDysYwSkE1VA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH 10/11] branch.c: use 'ref-filter' APIs
+Date: Wed, 29 Jul 2015 17:46:12 +0200
+Message-ID: <vpqegjrge63.fsf@anie.imag.fr>
 References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438067468-6835-2-git-send-email-Karthik.188@gmail.com> <CA+P7+xp6FKDw26Qudi+kHi+CQ-rB1BFwOQdk65VyyAwTRW=vGg@mail.gmail.com>
+	<1438067468-6835-1-git-send-email-Karthik.188@gmail.com>
+	<vpqh9oov017.fsf@anie.imag.fr>
+	<CAOLa=ZT28aFqi3WzTvemA4Yc0i28bavV7+SF2qH5S43Bp5LghQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 17:45:16 2015
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 17:46:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKTXe-0004Oe-0l
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 17:45:14 +0200
+	id 1ZKTYq-0005K4-QO
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 17:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbbG2PpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 11:45:04 -0400
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:36515 "EHLO
-	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbbG2Po7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 11:44:59 -0400
-Received: by oibn4 with SMTP id n4so7162943oib.3
-        for <git@vger.kernel.org>; Wed, 29 Jul 2015 08:44:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gsOXZoUBLQs1myPjRrAwagmAkKq3e0RREre9F9RgG94=;
-        b=CLvbdTrp1+Bvf9dPrZ4k0Bul2Ffi9h4HaSADpjuzJVME+pBZLpQIowT3fLL3xjZX7k
-         r28MiG+uLO1s/HNynclgFN6NbxY+OXHCHoQ2iDO/zWwsRsQBvO2Jlf+RLJR+4ZuBmlME
-         iBVLVOud0KEzEq46daUuTPGjFWMwZ7v59XU943BGGlEqywz6sPfDAdYe41zIfQdTUNGC
-         Tn59u4jBu2mpG7F6sXw3vOzzAiuGr1zU5UFJ08tvzUYJny/ISxU8ayLvM2SNgxG1OxTX
-         MG+zhiMZ5i6PEWLXYCGP9jKNf0Tql/GwYn7O378P4B0QJVgfvV7837JPxZjgUUrJPnj8
-         COPg==
-X-Received: by 10.202.200.151 with SMTP id y145mr39031354oif.111.1438184698511;
- Wed, 29 Jul 2015 08:44:58 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Wed, 29 Jul 2015 08:44:29 -0700 (PDT)
-In-Reply-To: <CA+P7+xp6FKDw26Qudi+kHi+CQ-rB1BFwOQdk65VyyAwTRW=vGg@mail.gmail.com>
+	id S1751445AbbG2PqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 11:46:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56040 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750803AbbG2PqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 11:46:19 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6TFkBLa006778
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 29 Jul 2015 17:46:11 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TFkCHG020784;
+	Wed, 29 Jul 2015 17:46:12 +0200
+In-Reply-To: <CAOLa=ZT28aFqi3WzTvemA4Yc0i28bavV7+SF2qH5S43Bp5LghQ@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 29 Jul 2015 21:02:45 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 29 Jul 2015 17:46:11 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6TFkBLa006778
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438789572.76479@d7aU1NGQrnpf0wQ34fs8Iw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274899>
 
-On Tue, Jul 28, 2015 at 1:16 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Tue, Jul 28, 2015 at 12:11 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Add the '--points-at' option provided by 'ref-filter'. The option lets
->> the user to list only branches which points at the given object.
->>
->> Add documentation and tests for the same.
->>
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  Documentation/git-branch.txt | 6 +++++-
->>  builtin/branch.c             | 7 ++++++-
->>  t/t3203-branch-output.sh     | 9 +++++++++
->>  3 files changed, 20 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
->> index 897cd81..efa23a5 100644
->> --- a/Documentation/git-branch.txt
->> +++ b/Documentation/git-branch.txt
->> @@ -11,7 +11,8 @@ SYNOPSIS
->>  'git branch' [--color[=<when>] | --no-color] [-r | -a]
->>         [--list] [-v [--abbrev=<length> | --no-abbrev]]
->>         [--column[=<options>] | --no-column]
->> -       [(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>] [<pattern>...]
->> +       [(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
->> +       [--points-at <object>] [<pattern>...]
->>  'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
->>  'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
->>  'git branch' --unset-upstream [<branchname>]
->> @@ -237,6 +238,9 @@ start-point is either a local or remote-tracking branch.
->>         for-each-ref`. Sort order defaults to sorting based on branch
->>         type.
->>
->> +--points-at <object>::
->> +       Only list tags of the given object.
->> +
->
-> s/tags/branches/ ?? Since this is for the branch version, I think this
-> is just a copy-paste oversight.
->
->>  Examples
->>  --------
->>
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> index 75d8bfd..d25f43b 100644
->> --- a/builtin/branch.c
->> +++ b/builtin/branch.c
->> @@ -26,6 +26,7 @@ static const char * const builtin_branch_usage[] = {
->>         N_("git branch [<options>] [-l] [-f] <branch-name> [<start-point>]"),
->>         N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
->>         N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
->> +       N_("git branch [<options>] [-r | -a] [--points-at]"),
->>         NULL
->>  };
->>
->> @@ -647,6 +648,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->>                 OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
->>                 OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
->>                              N_("field name to sort on"), &parse_opt_ref_sorting),
->> +               {
->> +                       OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
->> +                       N_("print only tags of the object"), 0, parse_opt_object_name
->> +               },
->
-> Same as above. s/tags/branches/
->
->>                 OPT_END(),
->>         };
->>
->> @@ -675,7 +680,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->>         if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
->>                 list = 1;
->>
->> -       if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE)
->> +       if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr)
->>                 list = 1;
->>
->>         if (!!delete + !!rename + !!new_upstream +
->> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
->> index 38c68bd..1deb7cb 100755
->> --- a/t/t3203-branch-output.sh
->> +++ b/t/t3203-branch-output.sh
->> @@ -154,4 +154,13 @@ EOF
->>         test_i18ncmp expect actual
->>  '
->>
->> +test_expect_success 'git branch --points-at option' '
->> +       cat >expect <<EOF &&
->> +  master
->> +  branch-one
->> +EOF
->> +       git branch --points-at=branch-one >actual &&
->> +       test_cmp expect actual
->> +'
->> +
->>  test_done
->> --
->> 2.4.6
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Copy paste, errors, thanks for pointing out.
+> On Tue, Jul 28, 2015 at 7:47 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>
+>>> -     qsort(array.items, index, sizeof(struct ref_array_item *), ref_cmp);
+>>> +     if (!sorting) {
+>>> +             def_sorting.next = NULL;
+>>> +             def_sorting.atom = parse_ref_filter_atom(sort_type,
+>>> +                                                      sort_type + strlen(sort_type));
+>>> +             sorting = &def_sorting;
+>>> +     }
+>>> +     ref_array_sort(sorting, &array);
+>>
+>> Does this belong to print_ref_list()? Is it not possible to extract it
+>> to get a code closer to the simple:
+>>
+>>         filter_refs(...);
+>>         ref_array_sort(...);
+>>         print_ref_list(...);
+>>
+>> ?
+>>
+>
+> We have a ref_defaulting_sorting but that defaults to sorting by 'refname'
+> but what we want in branch.c is to sort by 'type' rather. Hence we
+> need to have this small segment of code. About its placement, IDK if
+> print_ref_list() is the right place. But didn't find a better place.
+
+Hmm, actually I think I misread the code: print_ref_list() does follow
+the pattern filter_refs -> sort -> print.
+
+Perhaps the function name is misleading, and you could make it clearer
+that it computes the list and displays it. I don't know.
+
+>>> --- a/t/t1430-bad-ref-name.sh
+>>> +++ b/t/t1430-bad-ref-name.sh
+>>> @@ -38,7 +38,7 @@ test_expect_success 'fast-import: fail on invalid branch name "bad[branch]name"'
+>>>       test_must_fail git fast-import <input
+>>>  '
+>>>
+>>> -test_expect_success 'git branch shows badly named ref' '
+>>> +test_expect_failure 'git branch does not show badly named ref' '
+>>
+>> I'm not sure what's the convention, but I think the test description
+>> should give the expected behavior even with test_expect_failure.
+>>
+>> And please help the reviewers by saying what's the status wrt this test
+>> (any plan on how to fix it?).
+>>
+>
+> Well okay will rename the test description.
+> Since we use filter_refs() there's no real fix for this, ref_filter_handler()
+> skips over such refs.
+
+Either there's a good rationale for ignoring these refs, and you should
+change the test keeping it "test_expect_success" (i.e. "the test
+observed corresponds to the expected behavior"), or you should
+eventually modify filter_refs() to allow not dropping them.
+
+This
+
+-test_expect_success '...'
++test_expect_failure '...'
+
+explicitly says "I have a known regression in this patch".
 
 -- 
-Regards,
-Karthik Nayak
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
