@@ -1,81 +1,87 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] parse-options: align curly braces for all options
-Date: Wed, 29 Jul 2015 13:18:37 -0700
-Message-ID: <1438201117-11543-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 29 22:18:47 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/10] port tag.c to use ref-filter APIs
+Date: Wed, 29 Jul 2015 13:29:34 -0700
+Message-ID: <xmqqbneu907l.fsf@gitster.dls.corp.google.com>
+References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
+	<CAPig+cQv4BWFwgx7mDHh=gNpxbEeR7auw4os-tOpf3cGah=zpw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <christian.couder@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 22:29:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKXoM-0003m5-Ez
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 22:18:46 +0200
+	id 1ZKXyw-0003vP-Lx
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 22:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbbG2USm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 16:18:42 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:33149 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803AbbG2USl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 16:18:41 -0400
-Received: by pdbnt7 with SMTP id nt7so11415493pdb.0
-        for <git@vger.kernel.org>; Wed, 29 Jul 2015 13:18:40 -0700 (PDT)
+	id S1753213AbbG2U3i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2015 16:29:38 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:34529 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752025AbbG2U3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 16:29:38 -0400
+Received: by pacan13 with SMTP id an13so11180705pac.1
+        for <git@vger.kernel.org>; Wed, 29 Jul 2015 13:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=G95RsXd32Rfkphbv6RxQA35N8EzYzov2Mkh1eDWyWUo=;
-        b=JBHoYInW3Gpt98z66bL3otvR5iaLU+m40Lj3LPPHc+FnXKm0J2TmjLNCsmhA2j6Wwv
-         4Nhy4npFX5jtgSbczSdkSI7I/5rapOzhqsS8VvxEDrJ2IdaGBjUm7/rUxZIYMVyr5pEZ
-         99AwRsoDgfDX+eZXM3+c1/qDJFM0arPqOXuQdN6DU2s4HYHN0oZKYU79fNhtN9m6weCJ
-         ymY8yUtocf9A6S/huGqlhzdgK0+ir1G0mbr0QJbLp1TuOI5MRh0l57C/jsqfMbesb6B9
-         fNe8La7ndow5IQ0voqta5vjNtlxZq/hoWMqa0MqsuqNkNRvayq/3qC65Ralkp66thmbr
-         MygA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=G95RsXd32Rfkphbv6RxQA35N8EzYzov2Mkh1eDWyWUo=;
-        b=AT2uTsl4YnfcvxtF9vygvXKuBucPoC0JXU8nhCgK1+sn3ekMO96pNq/eArojz7LPV8
-         c1Ipa/G2RW1BytW7i70wiif8inIDNEnyH49IPUZE66q2w1Rm2c0zpgd4/olPt5r9dujk
-         S4hwMbuTrdia/QN3BhBs00V3mgyV8znoaB5mzxqtu4pVJnaSrHie+oHSfmvf2GflNon0
-         MdfByDdeXtxeEWCpOuGUxhTKdTHTQQP7FjpxUC2nsf+Q9UpuJUN9/f79YLYNprue2DCn
-         i8EGF83Z/xoYQdpYd+uwJg5N9BhA7ZHbR43f7I2kiYZ2g2/BBwm9Z5QdY3vM7o4DvJ/P
-         h/uQ==
-X-Gm-Message-State: ALoCoQkEH3uEhf8IHeAhEG97q34UpTiMQjxPJztmEmB/RKhZEiAPTR1UYaaiDXsdl/J6wWlK1cBw
-X-Received: by 10.70.129.102 with SMTP id nv6mr98368569pdb.55.1438201120715;
-        Wed, 29 Jul 2015 13:18:40 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:d0b2:591c:7542:4aff])
-        by smtp.gmail.com with ESMTPSA id oe13sm59442pdb.20.2015.07.29.13.18.39
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=IOO3UJuATE0i6Rl0hCWldRhqbplf0N55mu2fagslqP4=;
+        b=iaBuvo8HfqjxYzUgWNwx7r3qqE1C364USfgpMBN/aI0ZD77xLMR+mrJTtc/L655t0g
+         fph6SmPfnLYXqgcvs23E5EULbfc/JK4XdpqDpQvvqzaJRC97Uors6ZHiQRJtJMOAQOIT
+         DFzeEvd7PDfnGwz1xLN/KgpCYjtNihwN25uTUawS3YAObmtn0aPfM/8Lv+t9qBGeoU7+
+         8qLbeTGCiiJCCqNn4f1qTtwMIDWFEpf1DA58cFM0u6C4dV5yq8lKrfGrdhJX6l0tAcin
+         iuZz3EA/H++TDQAO7DE15tw3y1FYbGid2svveSRS7LnrSJZ3bJ7+4Aj6EkyRrQUK85F3
+         dUOw==
+X-Received: by 10.66.253.40 with SMTP id zx8mr96386629pac.56.1438201777677;
+        Wed, 29 Jul 2015 13:29:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4c0b:2701:e242:17dc])
+        by smtp.gmail.com with ESMTPSA id de2sm42331715pdb.15.2015.07.29.13.29.34
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 29 Jul 2015 13:18:39 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.rc1.391.g15b60ce
+        Wed, 29 Jul 2015 13:29:35 -0700 (PDT)
+In-Reply-To: <CAPig+cQv4BWFwgx7mDHh=gNpxbEeR7auw4os-tOpf3cGah=zpw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 29 Jul 2015 15:27:21 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274950>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-The non alignment of white space harmed my feelings for aesthetics more
-than it should have.
+>> Side Note: --format=3D"%(padright:X)" applies to the next available =
+atom
+>> and not to the next span. I find this more accurate as I don't see w=
+hy
+>> we'd want to pad something of known length. But its up for discussio=
+n
+>
+> This isn't supported by the current %(padright:) syntax, but an
+> example would be if someone wants to pad a string composed of atoms
+> and literal strings. For instance, the user might want to right-pad
+> the composed string "%(refattribute1) glorked %(refattribute2)=E2=80=9D=
+=2E
 
- parse-options.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It is an excellent example that shows why "something of known
+length" argument needs to be rethought.
 
-diff --git a/parse-options.h b/parse-options.h
-index c71e9da..08d7818 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -126,7 +126,7 @@ struct option {
- #define OPT_BOOL(s, l, v, h)        OPT_SET_INT(s, l, v, h, 1)
- #define OPT_HIDDEN_BOOL(s, l, v, h) { OPTION_SET_INT, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
--#define OPT_CMDMODE(s, l, v, h, i) { OPTION_CMDMODE, (s), (l), (v), NULL, \
-+#define OPT_CMDMODE(s, l, v, h, i)  { OPTION_CMDMODE, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (i) }
- #define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), N_("n"), (h) }
- #define OPT_STRING(s, l, v, a, h)   { OPTION_STRING,  (s), (l), (v), (a), (h) }
--- 
-2.5.0.rc1.391.g15b60ce
+"Currently we do not need it to reimplement the canned 'tag -l'
+format" is an OK and sensible justification to stick to the current
+implementation of %(padright:N), but we'd need to think if we would
+want to keep this limited and strange form that applies to a single
+atom that comes next (ignoring any literal spans) as a private
+implementation detail between ref-filter and "git tag".  Opening it
+up to end-users would not mean we cannot add a correctly operating
+variant of "pad this string to the right" later, but it does mean we
+have to maintain %(padright) in this limited form forever.
+
+My knee-jerk reaction is that we probably should not want to expose
+this to the end users, and to discourage its use, perhaps name it
+somewhat strangely (e.g. "%(x-padright:N)" or something).
