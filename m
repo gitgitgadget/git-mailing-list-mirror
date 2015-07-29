@@ -1,166 +1,87 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v3 2/6] notes: replace pseudorefs with real refs
-Date: Wed, 29 Jul 2015 01:43:28 +0200
-Message-ID: <CALKQrgfxc83-yjrCWZqC+pyPhbQDgYbrpCDSaBk78YypO=BXOg@mail.gmail.com>
-References: <1438107144-24293-1-git-send-email-dturner@twopensource.com>
-	<1438107144-24293-3-git-send-email-dturner@twopensource.com>
-	<xmqqpp3cds44.fsf@gitster.dls.corp.google.com>
-	<xmqqegjsdq3n.fsf@gitster.dls.corp.google.com>
-	<CALKQrgdLC_sLkM3jyH6pnDoY+RTHr9wJR_VH6iirBWmvyHYcVA@mail.gmail.com>
-	<xmqqpp3bc2u6.fsf@gitster.dls.corp.google.com>
+From: Scott Schmit <i.grok@comcast.net>
+Subject: Re: git branch command is incompatible with bash
+Date: Tue, 28 Jul 2015 20:23:33 -0400
+Message-ID: <20150729002333.GB23501@odin.ulthar.us>
+References: <20150727121253.GC17338@2vizcon.com>
+ <55B69E68.90306@kdbg.org>
+ <xmqqh9opgtjz.fsf@gitster.dls.corp.google.com>
+ <55B72F09.3030000@kdbg.org>
+ <xmqq4mkogvb7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Philip Oakley <philipoakley@iee.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Anatol Rudolph <a.rudolph@2vizcon.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 01:43:47 2015
+X-From: git-owner@vger.kernel.org Wed Jul 29 02:23:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKEXC-0006T4-BB
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 01:43:46 +0200
+	id 1ZKF9u-00018h-CF
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 02:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbbG1Xnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 19:43:37 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:56600 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750739AbbG1Xng (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 19:43:36 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZKEX0-000OWD-HW
-	for git@vger.kernel.org; Wed, 29 Jul 2015 01:43:34 +0200
-Received: by ykdu72 with SMTP id u72so109616519ykd.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 16:43:28 -0700 (PDT)
-X-Received: by 10.170.172.212 with SMTP id o203mr41001921ykd.22.1438127008613;
- Tue, 28 Jul 2015 16:43:28 -0700 (PDT)
-Received: by 10.37.208.71 with HTTP; Tue, 28 Jul 2015 16:43:28 -0700 (PDT)
-In-Reply-To: <xmqqpp3bc2u6.fsf@gitster.dls.corp.google.com>
+	id S1751916AbbG2AXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 20:23:41 -0400
+Received: from resqmta-po-11v.sys.comcast.net ([96.114.154.170]:45105 "EHLO
+	resqmta-po-11v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751895AbbG2AXk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2015 20:23:40 -0400
+Received: from resomta-po-09v.sys.comcast.net ([96.114.154.233])
+	by resqmta-po-11v.sys.comcast.net with comcast
+	id y0Pg1q00352QWKC010PgNr; Wed, 29 Jul 2015 00:23:40 +0000
+Received: from odin.ULTHAR.us ([IPv6:2001:470:8c86:0:225:64ff:fe8b:c2f2])
+	by resomta-po-09v.sys.comcast.net with comcast
+	id y0Pb1q0092Ekl48010PeiC; Wed, 29 Jul 2015 00:23:39 +0000
+Received: from odin.ulthar.us (localhost [127.0.0.1])
+	by odin.ULTHAR.us (8.15.1/8.14.5) with ESMTP id t6T0NY80003990;
+	Tue, 28 Jul 2015 20:23:34 -0400
+Received: (from draco@localhost)
+	by odin.ulthar.us (8.15.1/8.15.1/Submit) id t6T0NXEN003987;
+	Tue, 28 Jul 2015 20:23:33 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4mkogvb7.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1438129420;
+	bh=r63EHZGNoXGa5KYJJ97lLfXGDVKAU5pQMj009MlSubI=;
+	h=Received:Received:Received:Received:Date:From:To:Subject:
+	 Message-ID:MIME-Version:Content-Type;
+	b=E9fPvazBqIkHNYQJ56klHn5OgNUQndjTCiwclXGiIJ3EXIT4mbGNaOFuoKcOqfB1G
+	 hn1Mh6OagS0UGRJ1FDlDCVZnwev084J5mv+z9ljeUB0m+hm4sAgi9I7Q6H4dLNZoT+
+	 o/rd8CaPSFhlpT2O897I8YdVKuU7dBy7UCpUcUVuOJYzFpGqGnAOR0DGc8TEg32Rsd
+	 teSwsbG8ibvb+4jPEQr+PnhtsnhoyMK6zWRr/wiYErDN1WFRp42qZZMC438t9+0LHP
+	 NaIIhO3FVLgpX+MHr7q7b06I1d88FUFyWGFiH00zpxiYCcIFo4pnggt8HKPs88Oa9L
+	 N9T2z9BCzpybw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274867>
 
-On Wed, Jul 29, 2015 at 12:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> However, in any case, notes merges are always per _repo_ and never per
->> _worktree_, so this is all unrelated to the current patch/discussion
->> AFAICS.
->
-> Thanks for chiming in, but I actually think you are confused.
->
-> "git merge" is always per _repo_ in the sense that the result of a
-> merge of a topic to the 'master' is recorded in the 'master' which
-> is per-repo.  In the multi-worktree world order, that does not
-> change.  What changes is that you could have different worktrees
-> that check out different branches.  Worktree A may have 'master'
-> checked out and do the merge there to update the tip of 'master'.
-> But while worktree A is doing that, worktree B may have 'next'
-> checked out and do an unrelated merge there.  Once worktree A leaves
-> 'master' by checking out another branch, worktree B is free to check
-> out 'master' and do further merges there.  Merging into 'master' is
-> per _repo_, but the act of merging is per worktree.
+On Tue, Jul 28, 2015 at 08:23:40AM -0700, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> > Are you trying to say that the result of 'rev-parse --abbrev-ref HEAD'
+> > is suboptimal and that of 'symbolic-ref --short HEAD' is OK?
+> 
+> My "Interesting" was primarily about that I wasn't aware of the
+> "--abbrev-ref" option.
+> 
+> Yes, I am sure some time ago I accepted a patch to add it, but I
+> simply do not see the point, especially because the "--short" option
+> to symbolic-ref feels much more superiour.  "What branch am I on?"
+> is about symbolic refs, rev-parse is about revisions.
 
-Agreed thus far.
+Sometimes my question is "what branch am I on?" -- in which case
+symbolic-ref is adequate.
 
-> I think merges of refs/notes/commits and refs/notes/someotherthing
-> works exactly the same way.  In worktree A, you may decide to merge
-> a notes tree refs/notes/commits with somebody else's.
+Other times, my question is "where am I/what did I check out?" which is
+usually a branch, sometimes a tag, and sometimes a commit hash.  We
+don't have a one-stop-shop command to answer that question in all cases,
+which is unfortunate.
 
-Here is where we start to differ. I would say that starting a notes
-merge is completely unrelated to your worktree. Consider this:
-
-When you start a "regular" (non-notes) merge in worktree A, that merge
-will "occupy" worktree A for the purpose of completing the merge, e.g.
-conflicting files will be checked out inside worktree A, and it is
-obvious that you cannot do other/unrelated things in worktree A until
-you have resolved the conflicts and completed the merge. As such, a
-regular merge is inextricably bound to a specific worktree.
-
-This is not the case for notes merges. If I start a notes merge from
-worktree A, there is no "occupation" of that worktree. Before the
-notes merge is resolved, I can do whatever I want in worktree A
-(including checking out a different branch, performing a rebase,
-whatever...). Instead, the notes merge creates its own worktree (that
-is "occupied" until the notes merge is completed), which is completely
-unrelated to worktree A.
-
->  It may
-> conflict and you may need to "lock" refs/notes/commits from being
-> touched by other worktrees while resolving that, but that does not
-> mean other worktrees cannot do a merge of refs/notes/someotherthing
-> at all.
-
-In principle, I agree that an ongoing notes-merge into
-refs/notes/someotherthing should be able to coexist with an ongoing
-notes-merge into refs/notes/commits. However, it does not make sense
-to bind those notes-merges to a specific worktree.
-
-Let's say I have two worktrees, A and B, and from worktree A, I have
-started a notes-merge into refs/notes/commits. Now:
-
- - From worktree B I should NOT be able to start another notes-merge
-into refs/notes/commits.
-
- - From worktree B I SHOULD be able to start another notes-merge into
-refs/notes/someotherthing
-
-But this doesn't really have anything to do with worktree B. I can
-just as easily say:
-
- - From worktree A I should NOT be able to start another notes-merge
-into refs/notes/commits.
-
- - From worktree A I SHOULD be able to start another notes-merge into
-refs/notes/someotherthing
-
-My conclusion is therefore that binding a notes merge to a specific
-worktree does not make any sense. Preventing simultaneous notes merges
-into the same notes ref is something that must be solved per _repo_
-(and not per worktree), and since the worktree plays no part in the
-resolution/completion of the notes merge, it makes more sense to place
-all the notes-merge-related refs/files inside the _repo_, and not
-inside the worktree.
-
-Now, we do not yet support simultaneous notes merges at all, but my
-follow-on point is that the addition of such support is wholly
-independent of the multi-worktree support. For now, it would make more
-sense to only allow a single notes-merge across all worktrees. I.e.
-when starting a notes-merge from ANY worktree, it should simply fail
-if there is an existing unresolved notes merge (no matter which
-worktree started that unresolved notes merge).
-
->  The temporary area you use for merging notes, i.e. the
-> working tree as far as notes merge is concerned, is private to
-> worktree A and does not need to be seen by other worktrees.
-
-Disagree. The private area used to resolve notes merges should be per
-_repo_, not per worktree. That is IMHO the only sane way to (in the
-future) prevent simultaneous notes merges going into the same notes
-ref.
-
-> So while you are working on merging and resolving, that intermediate
-> state is *NOT* per _repo_ at all.  It is at most per worktree (Yes
-> you could extend and have one notes_merge_ref per each refs/notes/*
-> ref to make it even finer grained to allow more than one notes merge
-> going on inside a single worktree, but I do not think it is worth
-> it).
-
-As stated above, my position is that while you are resolving a notes
-merge, the worktree from which you started that notes merge is
-completely irrelevant. In fact, you can easily do a notes merge in a
-_bare_ repo...
-
-...Johan
+git status answers, but that's not plumbing.  git-prompt manages to do a
+fairly good job, but the logic is by no means straightforward.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Scott Schmit
