@@ -1,84 +1,69 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 4/6] connect: move error check to caller of parse_connect_url
-Date: Wed, 29 Jul 2015 17:51:14 +0200
-Message-ID: <1438185076-28870-5-git-send-email-ps@pks.im>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
- <1438185076-28870-1-git-send-email-ps@pks.im>
-Cc: peff@peff.net, pclouds@gmail.com, gitster@pobox.com,
-	Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 29 17:51:43 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] ref-filter: fix indentation
+Date: Wed, 29 Jul 2015 17:52:30 +0200
+Message-ID: <1438185150-31730-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jul 29 17:52:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKTdr-000115-DF
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 17:51:39 +0200
+	id 1ZKTey-0001xO-FM
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 17:52:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672AbbG2Pvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 11:51:36 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60064 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752461AbbG2Pv0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2015 11:51:26 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5A7B420E20
-	for <git@vger.kernel.org>; Wed, 29 Jul 2015 11:51:26 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 29 Jul 2015 11:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+m9K
-	D9mZ31YTeznEXpoVqPcJOZk=; b=LtlrG9UnZfUAoKlRn4wu+SlJTyR3sYKvyZNf
-	Z4vU8bBt6ky/E7RIJMsvUvYJTCbh1Wo7oDTUIcPVPWupY+ssOTG/0ZycDfckynh+
-	3k8eDVjMIFSGJSoKARYRT7ML29A/TzzRnIJyL6oAbw8zw0gJ7ZfoIEDSWy1x//sd
-	4Qr1ANs=
-X-Sasl-enc: ZCCFjdrliACgFpSBjwTjbyUGcYsNxt9b9WL+SktM0yn4 1438185085
-Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E1733C00012;
-	Wed, 29 Jul 2015 11:51:25 -0400 (EDT)
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1438185076-28870-1-git-send-email-ps@pks.im>
+	id S1751937AbbG2Pwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 11:52:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56160 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751341AbbG2Pwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 11:52:44 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6TFqa6M009181
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 29 Jul 2015 17:52:36 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TFqcug020926;
+	Wed, 29 Jul 2015 17:52:38 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZKTeo-0008Hz-94; Wed, 29 Jul 2015 17:52:38 +0200
+X-Mailer: git-send-email 2.5.0.rc0.7.ge1edd74.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 29 Jul 2015 17:52:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6TFqa6M009181
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1438789958.76754@y+V3y3tYGrHpzGwSUO3NRw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274907>
 
-parse_connect_url() checks if the path component of the URL is
-empty and if so causes the program to die. As the function is to
-be used at other call sites which do not require this check, move
-up the error checking to the existing caller.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- connect.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This is meant to be applied on top of kn/for-each-ref.
 
-diff --git a/connect.c b/connect.c
-index bdbcee4..e8b813d 100644
---- a/connect.c
-+++ b/connect.c
-@@ -613,9 +613,6 @@ enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 	else
- 		path = strchr(end, separator);
+ ref-filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 43502a4..3fbbbeb 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -868,8 +868,8 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	struct ref_array_item *ref;
  
--	if (!path || !*path)
--		die("No path specified. See 'man git-pull' for valid url syntax");
--
- 	/*
- 	 * null-terminate hostname and point path to ~ for URL's like this:
- 	 *    ssh://host.xz/~user/repo
-@@ -665,6 +662,9 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	signal(SIGCHLD, SIG_DFL);
+ 	if (flag & REF_BAD_NAME) {
+-		  warning("ignoring ref with broken name %s", refname);
+-		  return 0;
++		warning("ignoring ref with broken name %s", refname);
++		return 0;
+ 	}
  
- 	protocol = parse_connect_url(url, &hostandport, &path);
-+	if (!path || !*path)
-+		die("No path specified. See 'man git-pull' for valid url syntax");
-+
- 	if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
- 		printf("Diag: url=%s\n", url ? url : "NULL");
- 		printf("Diag: protocol=%s\n", prot_name(protocol));
+ 	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
 -- 
-2.5.0
+2.5.0.rc0.7.ge1edd74.dirty
