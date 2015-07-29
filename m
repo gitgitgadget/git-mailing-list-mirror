@@ -1,170 +1,112 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 5/6] clone: fix hostname parsing when guessing dir
-Date: Wed, 29 Jul 2015 17:51:15 +0200
-Message-ID: <1438185076-28870-6-git-send-email-ps@pks.im>
+Subject: [PATCH v2 3/6] connect: expose parse_connect_url()
+Date: Wed, 29 Jul 2015 17:51:13 +0200
+Message-ID: <1438185076-28870-4-git-send-email-ps@pks.im>
 References: <1437997708-10732-1-git-send-email-ps@pks.im>
  <1438185076-28870-1-git-send-email-ps@pks.im>
 Cc: peff@peff.net, pclouds@gmail.com, gitster@pobox.com,
 	Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 29 17:51:34 2015
+X-From: git-owner@vger.kernel.org Wed Jul 29 17:51:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKTdl-0000rQ-5y
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 17:51:33 +0200
+	id 1ZKTdk-0000rQ-Ij
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 17:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406AbbG2Pv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 11:51:29 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:51146 "EHLO
+	id S1753224AbbG2Pv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 11:51:27 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33733 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753107AbbG2Pv2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2015 11:51:28 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id CF25B20EA8
-	for <git@vger.kernel.org>; Wed, 29 Jul 2015 11:51:27 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1752986AbbG2PvZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2015 11:51:25 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id D182220DA9
+	for <git@vger.kernel.org>; Wed, 29 Jul 2015 11:51:24 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Wed, 29 Jul 2015 11:51:27 -0400
+  by compute2.internal (MEProxy); Wed, 29 Jul 2015 11:51:24 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=OnFv
-	vsAYFHNUpD7Ri79LNVtkBdI=; b=ffBuRb9ZJmKdLWVxa0vN/s5bJBsu2Wg0hx7R
-	Nr2ZOgQq9aNG5axzBy63KqUmQsESXdkCiBuNJjMpriwpjSGK9t3pg31iFe7r1fxS
-	F4hDAsjq0C2v5eB7tFu/OeutreXqVbkkBjj4vLXjG1eO57wOcusnCZ2qRenyZTku
-	7/ldu88=
-X-Sasl-enc: ltUV1jq2m+v0IWsh6b0uQJ81IQqHLaEBs4FYm+YlBHYn 1438185087
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ZYLf
+	+V3JM4fEo3PIXeIMgiRT/iY=; b=YE54Stm6UHqkoINi7CrS/kIEq7P+PHaupiwP
+	pXa6UE0M8LVszx6zMV5MH8YaPjpMReh7IrrfTMHU4kxzeZilxw8i1GlxufIj1YlH
+	/yThdO5Vm5OVxkizmAdPhY6eNvINSl9wINohS2DgdYuNi4MbtpGegq/hTO2TqwMv
+	7vIhYA0=
+X-Sasl-enc: g46pBwXln0+UwiGfS9KziSB6Xcjg26xmP1yrFUYUag8r 1438185084
 Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 66F366800BE;
-	Wed, 29 Jul 2015 11:51:27 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4512868011F;
+	Wed, 29 Jul 2015 11:51:24 -0400 (EDT)
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <1438185076-28870-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274902>
 
-We fail to guess a sensible directory name for a newly cloned
-repository when the path component of the URL is empty. E.g.
-cloning a repository 'ssh://user:password@example.com/' we create
-a directory 'password@example.com' for the clone.
-
-Fix this by using parse_connect_url to split host and path
-components and explicitly checking whether we need to fall back
-to the hostname for guessing a directory name.
+Expose parse_connect_url which is to be used later in this patch
+series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c | 73 +++++++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 53 insertions(+), 20 deletions(-)
+ connect.c | 13 +------------
+ connect.h | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a72ff7e..4547729 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include "builtin.h"
-+#include "connect.h"
- #include "lockfile.h"
- #include "parse-options.h"
- #include "fetch-pack.h"
-@@ -147,34 +148,62 @@ static char *get_repo_path(const char *repo, int *is_bundle)
- static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- {
- 	const char *end = repo + strlen(repo), *start;
-+	char *host, *path;
- 	size_t len;
- 	char *dir;
- 
-+	parse_connect_url(repo, &host, &path);
- 	/*
--	 * Strip trailing spaces, slashes and /.git
-+	 * If the path component of the URL is empty (e.g. it is
-+	 * empty or only contains a '/') we fall back to the host
-+	 * name.
- 	 */
--	while (repo < end && (is_dir_sep(end[-1]) || isspace(end[-1])))
--		end--;
--	if (end - repo > 5 && is_dir_sep(end[-5]) &&
--	    !strncmp(end - 4, ".git", 4)) {
--		end -= 5;
--		while (repo < end && is_dir_sep(end[-1]))
-+	if (!path || !*path || !strcmp(path, "/")) {
-+		if (*host == '\0')
-+			die("No directory name could be guessed.\n"
-+				"Please specify a directory on the command line");
-+		/*
-+		 * Strip authentication information if it exists.
-+		 */
-+		start = strchr(host, '@');
-+		if (start)
-+			start++;
-+		else
-+			start = host;
-+		/*
-+		 * Strip port if it exitsts.
-+		 */
-+		end = strchr(start, ':');
-+		if (!end)
-+			end = start + strlen(start);
-+		len = end - start;
-+	} else {
-+		/*
-+		 * Strip trailing spaces, slashes and /.git
-+		 */
-+		while (repo < end && (is_dir_sep(end[-1]) || isspace(end[-1])))
- 			end--;
--	}
-+		if (end - repo > 5 && is_dir_sep(end[-5]) &&
-+			!strncmp(end - 4, ".git", 4)) {
-+			end -= 5;
-+			while (repo < end && is_dir_sep(end[-1]))
-+				end--;
-+		}
- 
--	/*
--	 * Find last component, but be prepared that repo could have
--	 * the form  "remote.example.com:foo.git", i.e. no slash
--	 * in the directory part.
--	 */
--	start = end;
--	while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
--		start--;
-+		/*
-+		 * Find last component, but be prepared that repo could have
-+		 * the form  "remote.example.com:foo.git", i.e. no slash
-+		 * in the directory part.
-+		 */
-+		start = end;
-+		while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
-+			start--;
- 
--	/*
--	 * Strip .{bundle,git}.
--	 */
--	strip_suffix(start, is_bundle ? ".bundle" : ".git" , &len);
-+		/*
-+		 * Strip .{bundle,git}.
-+		 */
-+		strip_suffix(start, is_bundle ? ".bundle" : ".git" , &len);
-+	}
- 
- 	if (is_bare)
- 		dir = xstrfmt("%.*s.git", (int)len, start);
-@@ -203,6 +232,10 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- 		if (out > dir && prev_space)
- 			out[-1] = '\0';
- 	}
-+
-+	free(host);
-+	free(path);
-+
- 	return dir;
+diff --git a/connect.c b/connect.c
+index c0144d8..bdbcee4 100644
+--- a/connect.c
++++ b/connect.c
+@@ -228,13 +228,6 @@ int server_supports(const char *feature)
+ 	return !!server_feature_value(feature, NULL);
  }
  
+-enum protocol {
+-	PROTO_LOCAL = 1,
+-	PROTO_FILE,
+-	PROTO_SSH,
+-	PROTO_GIT
+-};
+-
+ int url_is_local_not_ssh(const char *url)
+ {
+ 	const char *colon = strchr(url, ':');
+@@ -580,11 +573,7 @@ static char *get_port(char *host)
+ 	return NULL;
+ }
+ 
+-/*
+- * Extract protocol and relevant parts from the specified connection URL.
+- * The caller must free() the returned strings.
+- */
+-static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
++enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 				       char **ret_path)
+ {
+ 	char *url;
+diff --git a/connect.h b/connect.h
+index c41a685..245890f 100644
+--- a/connect.h
++++ b/connect.h
+@@ -11,4 +11,17 @@ extern int parse_feature_request(const char *features, const char *feature);
+ extern const char *server_feature_value(const char *feature, int *len_ret);
+ extern int url_is_local_not_ssh(const char *url);
+ 
++enum protocol {
++	PROTO_LOCAL = 1,
++	PROTO_FILE,
++	PROTO_SSH,
++	PROTO_GIT
++};
++
++/*
++ * Extract protocol and relevant parts from the specified connection URL.
++ * The caller must free() the returned strings.
++ */
++extern enum protocol parse_connect_url(const char *url_orig, char **ret_host, char **ret_path);
++
+ #endif
 -- 
 2.5.0
