@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johan Herland <johan@herland.net>
 Subject: Re: [PATCH v3 2/6] notes: replace pseudorefs with real refs
-Date: Tue, 28 Jul 2015 19:25:54 -0700
-Message-ID: <xmqq8u9zbsy5.fsf@gitster.dls.corp.google.com>
+Date: Wed, 29 Jul 2015 04:34:14 +0200
+Message-ID: <CALKQrge31G7-Ng8kZmy8=MgB+WQ3-bKimxCxOHOOwUMDuvRBzA@mail.gmail.com>
 References: <1438107144-24293-1-git-send-email-dturner@twopensource.com>
 	<1438107144-24293-3-git-send-email-dturner@twopensource.com>
 	<xmqqpp3cds44.fsf@gitster.dls.corp.google.com>
@@ -10,110 +10,144 @@ References: <1438107144-24293-1-git-send-email-dturner@twopensource.com>
 	<xmqqpp3bc2u6.fsf@gitster.dls.corp.google.com>
 	<CALKQrgfxc83-yjrCWZqC+pyPhbQDgYbrpCDSaBk78YypO=BXOg@mail.gmail.com>
 	<xmqqlhdzby5o.fsf@gitster.dls.corp.google.com>
-	<55B824BD.8000003@alum.mit.edu>
-	<CALKQrgeevWUE6tdPLWRKzRQLj5v5_9NyFqJCBraRArrZB-QNyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	David Turner <dturner@twopensource.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: David Turner <dturner@twopensource.com>,
 	Git mailing list <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Philip Oakley <philipoakley@iee.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jul 29 04:26:02 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 04:34:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKH4D-00036K-EA
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 04:26:01 +0200
+	id 1ZKHCO-0000yw-0j
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 04:34:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294AbbG2CZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2015 22:25:57 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:36203 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751527AbbG2CZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2015 22:25:56 -0400
-Received: by pdjr16 with SMTP id r16so81913955pdj.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2015 19:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=M4z1Mg1om+22yhAQVvNJ3cOW10eCyoJ3UaIgG64bxco=;
-        b=1IVoggVscPwwN1Rg6COHoDUpJJggfofUz0YYWLd8fys6Rp+WXjfPya836SElgK+1gj
-         BdtEyF1dTtlirMF+JMK+BjOkH4GOAKuS41VcUYNJSV1m/aISIijxnFAKlRhzXfq1t9mS
-         xUTd4vdeSw5ovsw0MMyEIgLUbXVyLHazSU6phMHR48fU3+I0760QeAsWsiJmmNVq3ueg
-         TPlaF+HjFJeVLlZRjJ8e6nnw5FQhGXlxAJ5aLejlZ8w9LbYAGo8ZO04IdttXrQ9fQ/Xr
-         BoSTXQZpG3vJfx89/bMi+LIdJVrx1v5eYmlVIDdq/3/6KralbZlSVmJd1EGwUx3v1wDD
-         57Zg==
-X-Received: by 10.70.109.199 with SMTP id hu7mr88774377pdb.71.1438136756123;
-        Tue, 28 Jul 2015 19:25:56 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e592:68fd:3f1d:35f9])
-        by smtp.gmail.com with ESMTPSA id cz1sm37505067pdb.44.2015.07.28.19.25.54
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Jul 2015 19:25:54 -0700 (PDT)
-In-Reply-To: <CALKQrgeevWUE6tdPLWRKzRQLj5v5_9NyFqJCBraRArrZB-QNyw@mail.gmail.com>
-	(Johan Herland's message of "Wed, 29 Jul 2015 03:24:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752364AbbG2CeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2015 22:34:23 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:49808 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752041AbbG2CeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2015 22:34:23 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZKHCG-0002o0-RI
+	for git@vger.kernel.org; Wed, 29 Jul 2015 04:34:20 +0200
+Received: by ykax123 with SMTP id x123so112411872yka.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2015 19:34:14 -0700 (PDT)
+X-Received: by 10.13.206.133 with SMTP id q127mr41094442ywd.10.1438137254957;
+ Tue, 28 Jul 2015 19:34:14 -0700 (PDT)
+Received: by 10.37.208.71 with HTTP; Tue, 28 Jul 2015 19:34:14 -0700 (PDT)
+In-Reply-To: <xmqqlhdzby5o.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274876>
 
-Johan Herland <johan@herland.net> writes:
-
-> Yes, almost. There are some complications with the concept of
-> "checking out" a notes tree:
+On Wed, Jul 29, 2015 at 2:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
 >
->  - The notes tree fanout must be flattened (so that when merging two
-> note trees with different fanout, conflicting notes (e.g. deadbeef...
-> and de/adbeef....) are turned into a file-level conflict in the notes
-> merge worktree (i.e. contents with conflict markers in
-> .git/NOTES_MERGE_WORKTREE/deadbeef...).
-
-True.  I however think Michael was envisioning further into the
-future, where the tree-level merges would take care of that detail
-and populate the index to express conflicts using "canonicalised"
-paths, removing these fan-out slashes, before externalising the
-conflicted paths that need user's attention on the filesystem.
-
->  - Notes trees may be very large (e.g. one note per commit for the
-> entire project history), so we want to avoid checking out as many
-> notes as possible. Currently we only checkout the notes that actually
-> do conflict, and keep the rest referenced from NOTES_MERGE_PARTIAL.
-
-This is a valid point, but nobody forces us to do a full checkout to
-perform a merge.  From day one, our merge machinery is prepared to
-merge in an empty working tree, only checking out paths that need to
-be modified by the merge.
-
->> * This would allow multiple notes merges to take place at the same time
->> provided they target different merge references.
->>
->> * This would prevent multiple notes merges to the same notes reference
->> at the same time by the same mechanism that prevents the same branch
->> from being checked out in two linked worktrees at the same time.
->>
->> It's just a thought; I have no idea whether it is practical...
+>> Here is where we start to differ. I would say that starting a notes
+>> merge is completely unrelated to your worktree. Consider this:
+>> ...
+>> This is not the case for notes merges. If I start a notes merge from
+>> worktree A, there is no "occupation" of that worktree. Before the
+>> notes merge is resolved, I can do whatever I want in worktree A
+>> (including checking out a different branch, performing a rebase,
+>> whatever...). Instead, the notes merge creates its own worktree (that
+>> is "occupied" until the notes merge is completed), which is completely
+>> unrelated to worktree A.
 >
-> I'm not sure whether it's worth trying to reuse the same linked
-> worktree mechanism for notes trees, when (a) the concept of "checking
-> out" a notes tree is so different, as explained above, and (b)
-> currently the only use case for a notes worktree is during a notes
-> merge.
+> That does not mean the notes merge that you started when you were
+> sitting in worktree A has to be shared with worktree B, by say doing
+> "vi .git/NOTES_MERGE_WORKTREE/$commit && git notes merge --commit".
+>
+> Also the above does not explain why it is sensible for you to forbid
+> worktree B from doing an unrelated notes merge of a different ref
+> under refs/notes/* while your worktree A is doing a notes merge.
 
-I have a very similar feeling except that I'd replace "linked
-worktree mechanism" with "checkout mechanism".  If we were to
-introduce such a new checkout mechanism that flattens a fan-out
-paths, with "sparse checkout"-like behaviour, the current "checkout
-mechanism" would not be reused, but the resulting system would
-benefit from "linked worktree mechanism" just as much as the normal
-multiple worktree layout benefits from it.  You'd want to make sure
-only one such worktree has the checkout of one refs/notes/* ref,
-everything in refs/* is shared across the repository and its
-worktrees, and certain things like MERGE_HEAD and the index inside
-$GIT_DIR/ are not shared, which are what the linked worktree
-mechanism gives us.
+I do not argue that it is sensible to forbid concurrent unrelated
+notes merges. I argue that using linked worktrees is a poor solution
+for concurrent unrelated notes merges.
+
+A better solution does not concern itself with worktrees at all, and
+does not need to add nonsensical conditions like:
+
+    die_if_checked_out("NOTES_MERGE_REF", default_notes_ref());
+
+A better solution does not need to add complexity to the branch or
+linked worktree code to deal with notes merges. Instead, it simply
+organizes the notes merge worktrees in such a manner that the correct
+semantics naturally emerge.
+
+Again, let's compare the two approaches (against the current situation):
+
+Current situation:
+ - A single $GIT_COMMON_DIR/NOTES_MERGE_*
+ - Concurrent (unrelated or not) notes merges are simply not supported
+
+Proposal A (please correct me where I have misunderstood what's proposed):
+ - Each worktree has its own $GIT_DIR/NOTES_MERGE_*
+ - Concurrent unrelated notes merges are supported, provided that you
+create an additional linked worktree to "host" each concurrent notes
+merge.
+ - Logic must be added to ensure unrelated-ness, i.e. make sure that
+the NOTES_MERGE_REF in worktree X is different from all other
+worktrees' NOTES_MERGE_REF.
+
+Proposal B:
+ - The repo has a $GIT_COMMON_DIR/notes-merge/$ref/* hierarchy for
+organizing concurrent notes merges
+ - Concurrent unrelated notes merges are supported, independently of
+whether you have zero, one, or several worktrees.
+ - The notes merge code must be adjusted to work with the above
+hierarchy, and must naturally fail if the user attempts to start a new
+notes merge that would clobber an in-progress notes merge (only notes
+merges to the same notes ref will clobber).
+
+I obviously feel proposal B is superior to A, so I wonder what I have
+missed about A that makes it preferable.
+
+>> In principle, I agree that an ongoing notes-merge into
+>> refs/notes/someotherthing should be able to coexist with an ongoing
+>> notes-merge into refs/notes/commits. However, it does not make sense
+>> to bind those notes-merges to a specific worktree.
+>
+> The thing is, the choice is between per worktree or per repository.
+> Taking the latter would mean you can only be doing one notes merge
+> at a time, even though you prepared multiple worktrees so that you
+> can work on different things at a time.  It is true that there is
+> nothing inherent that ties a note merge to a worktree (a worktree is
+> tied to a branch that is checed out, and there is no tie between a
+> branch and a notes tree), but "not inherantly tied to" does not
+> automatically mean "has to be one per repository".  You'd ideally
+> want to allow N workspaces for N refs/notes/* refs.
+>
+> But people work in worktrees, and that is their unit of working
+> space.  From that point of view, unless you are proposing a
+> completely different design where the primary worktree can be used
+> only for manipulating notes (hence, you can have worktrees for
+> resolving refs/notes/A and refs/notes/B, in addition to the other
+> worktrees you use to advance branches), treating NOTES_MERGE_REF as
+> a per-worktree entity just like HEAD and the index is, would be the
+> most sensible comporise.
+
+I believe it is a bad compromise. It complicates the code, and it
+provides a concurrent notes merges that is unnecessarily tied to (and
+dependent on) worktrees. For example, if I wanted to perform N
+concurrent notes merges in a project that happens to have a huge
+worktree, I would now have to create N copies of the huge worktree...
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
