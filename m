@@ -1,78 +1,109 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [RFC/PATCH 01/11] ref-filter: add "%(objectname:size=X)" option
-Date: Wed, 29 Jul 2015 21:32:19 +0530
-Message-ID: <CAOLa=ZSj-7Gr-QPC8bNJU9+FDkxmw-bhQhzUs91PSFJJQnZNtQ@mail.gmail.com>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
- <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <xmqqvbd4fe5w.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Log messages beginning # and git rebase -i
+Date: Wed, 29 Jul 2015 18:03:47 +0200
+Message-ID: <vpqmvyfeysc.fsf@anie.imag.fr>
+References: <loom.20150727T133256-715@post.gmane.org>
+	<CAPig+cRT6=YCHz+phfE+84y27ey-6ScjPxP2cHiVqumJmR6mOw@mail.gmail.com>
+	<loom.20150728T115023-269@post.gmane.org>
+	<vpqsi88qp6q.fsf@anie.imag.fr>
+	<xmqqr3nsfdmw.fsf@gitster.dls.corp.google.com>
+	<vpq3808p40o.fsf@anie.imag.fr>
+	<CACsJy8ABsHBA1TubB+6fypT0LGQF_O+CmHPqL+C7nMVjjWy38w@mail.gmail.com>
+	<vpq8u9zjgzl.fsf@anie.imag.fr>
+	<xmqqvbd39cxj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>, Ed Avis <eda@waniasset.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 18:02:57 2015
+X-From: git-owner@vger.kernel.org Wed Jul 29 18:03:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKTok-0001hb-4c
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 18:02:54 +0200
+	id 1ZKTpl-0002Zh-5k
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 18:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605AbbG2QCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 12:02:50 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:34290 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbbG2QCt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 12:02:49 -0400
-Received: by obre1 with SMTP id e1so10569269obr.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2015 09:02:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4W3S7H+6V1lhCL6J6vS147KXgyrP+lVI1Pttr8vzKmU=;
-        b=T47Ev+dknC52ffS6RiNQ9HPrjTl04sBGOiupdITHUaUYiqhw72ttGTyDYans1AMume
-         73Vy76l0+egEiPcFnzJ6MeRuJkup/66xx+AohS2PxScHAOI6fWilSMddTk9j7PvWnwwv
-         ZQ2dwvskew3P53hkBw9H9NcKTXK0AV/Ka5kNeqVIu9vI89M6vZAFSzj0kIyw3nt1SEM+
-         RGJwYTcZPBQgQ4tqcALUA7sHxnWBhNRKMFmfQw447jqfsF0eK1+n+MSqHjENq+54sPgd
-         XBxHfM+2A1hzkeHxE147AtKymfZIXF9q/mcSdB1n2TYvWoK2T2z1wztvZe5wySrePOjy
-         J8/Q==
-X-Received: by 10.60.177.195 with SMTP id cs3mr40611839oec.37.1438185769104;
- Wed, 29 Jul 2015 09:02:49 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Wed, 29 Jul 2015 09:02:19 -0700 (PDT)
-In-Reply-To: <xmqqvbd4fe5w.fsf@gitster.dls.corp.google.com>
+	id S1753388AbbG2QDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 12:03:53 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42490 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752013AbbG2QDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 12:03:52 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TG3jvf013075
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 29 Jul 2015 18:03:45 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6TG3lK0021183;
+	Wed, 29 Jul 2015 18:03:47 +0200
+In-Reply-To: <xmqqvbd39cxj.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 29 Jul 2015 08:54:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 29 Jul 2015 18:03:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t6TG3jvf013075
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1438790625.78887@vIu0K5ddUPQXNlWZeBJ4kg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274913>
 
-On Tue, Jul 28, 2015 at 9:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
->> From: Karthik Nayak <karthik.188@gmail.com>
+>> Duy Nguyen <pclouds@gmail.com> writes:
 >>
->> Add support for %(objectname:size=X) where X is a number.
->> This will print the first X characters of an objectname.
->> The minimum value for X is 5. Hence any value lesser than
->> 5 will default to 5 characters.
+>>> On Wed, Jul 29, 2015 at 12:48 AM, Matthieu Moy
+>>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>>>> If the user wants whatever she types in the resulting commit
+>>>>> literally, there is the "--cleanup=<choice>" option, no?
+>>>>
+>>>> $ GIT_EDITOR=touch git commit --cleanup=verbatim
+>>>> [detached HEAD 1b136a7] # Please enter the commit message for your
+>>>> changes. Lines starting # with '#' will be kept; you may remove
+>>>> them yourself if you want
+>>>> to. # An empty message aborts the commit. # HEAD detached from
+>>>> 5e70007 # Changes to be committed: # modified: foo.txt # # Changes
+>>>> not staged for commit
+>>>> : #     modified:   foo.txt # # Untracked files: #      last-synchro.txt #
+>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> You really don't want that in day-to-day use.
 >
-> Where does this hardcoded 5 come from?
+> I do not quite follow this example.
 >
-> I'd agree that we would want some minimum for sanity (not safety),
-> but I do not think we want random callers of find-unique-abbrev
-> arbitrarily imposing their own minimum, making different codepaths
-> behave inconsistently without a good reason.
->
-> It seems that the minimum we use for sanity at the core level is
-> MINIMUM_ABBREV.  Is there a reason why that value is inappropriate
-> for this codepath?
->
+> The user said "I'll be responsible for cleaning up" by giving the
+> option.  It is up to the user to use an editor that is something a
+> bit more intelligent than "touch" to remove the instructional
+> comments meant for humans after reading them.
 
-I don't quite remember, This is definitely wrong. Thanks
-Will use MINIMUM_ABBREV.
+Yes, --cleanup=verbatim does what it says it does. Now, my claim is that
+it does not answer the use-case "I want an easy way to talk about # in a
+commit message". First, you have to specify --cleanup=verbatim _before_
+typing the message, hence before knowing that you may need a #.
+
+Then, as you say, it is up to the user to remove things that Git has
+added. Why would we ask the user to do this when we have a way to have
+the tool do it?
+
+>> 2) Modify Git to add scissors by default, and use --cleanup=scissors by
+>>    default.
+>
+> I just did "$ git commit --amend --cleanup=scissors" (with and
+> without --amend) and it seems to do exactly that ;-).
+
+Ah, I did my test in the same repo I messed-up with --cleanup=verbatim.
+It's better than I thought then. So a viable alternative to the
+backslas-escaping would be to change commit.cleanup to scissors by
+default.
 
 -- 
-Regards,
-Karthik Nayak
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
