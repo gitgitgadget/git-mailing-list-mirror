@@ -1,128 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/6] clone: fix hostname parsing when guessing dir
-Date: Wed, 29 Jul 2015 10:42:21 -0700
-Message-ID: <xmqq7fpiamiq.fsf@gitster.dls.corp.google.com>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
-	<1438185076-28870-1-git-send-email-ps@pks.im>
-	<1438185076-28870-6-git-send-email-ps@pks.im>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [RFC/PATCH 04/11] ref-filter: add 'ifexists' atom
+Date: Wed, 29 Jul 2015 23:18:16 +0530
+Message-ID: <CAOLa=ZTUJHnXWJyr0wp0CZgR9S1pBxCEsGRiDPsJdUyzTZaZUw@mail.gmail.com>
+References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
+ <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-4-git-send-email-Karthik.188@gmail.com>
+ <xmqq8ua0f9lk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com
-To: Patrick Steinhardt <ps@pks.im>
-X-From: git-owner@vger.kernel.org Wed Jul 29 19:42:29 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 19:48:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKVN6-0006da-HI
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 19:42:28 +0200
+	id 1ZKVTG-0003IX-Le
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jul 2015 19:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752423AbbG2RmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2015 13:42:24 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:34075 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751905AbbG2RmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2015 13:42:23 -0400
-Received: by pdbbh15 with SMTP id bh15so9405386pdb.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2015 10:42:22 -0700 (PDT)
+	id S1752820AbbG2Rsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2015 13:48:46 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:33187 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751873AbbG2Rsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2015 13:48:46 -0400
+Received: by obdeg2 with SMTP id eg2so12919847obd.0
+        for <git@vger.kernel.org>; Wed, 29 Jul 2015 10:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=iiHGzcFBmUIOBioOm0dM82gl1Dy1gbG3tPzWv1ZAdLw=;
-        b=VVuKDOhCcHULrQWaigH6pFL5luGXyiPQiUWbe20Or70rs+3ZOZ0kHT72MxC8DLuhR0
-         J/SXvwx3NA+TqsH+cD4SRFhcgy6RvLOCph+Oyp01tKTMalLjpYJHMPm1NmVPrt87Jwzb
-         9rv5Fx2Itq/CQaf/nSu0VB27oFn4p8xIyJov7CEYEaxomBSN2FviaiLB9uzFg/rQJh95
-         bPSvmb75Xm9vbuk1TGhxPWR577nV4tkHKJGSj4bju/7BvfKo80fCa4DJyBH/dNV5aaAx
-         qE3Y+KcXa5AIVHTr2zuS7nQGKVMsW1XBcFRai/r7PKSZj8cZRwZ2wHxiEX+jvvruz3uF
-         /PtQ==
-X-Received: by 10.70.43.72 with SMTP id u8mr95332895pdl.33.1438191742851;
-        Wed, 29 Jul 2015 10:42:22 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4c0b:2701:e242:17dc])
-        by smtp.gmail.com with ESMTPSA id pu4sm41862936pdb.86.2015.07.29.10.42.21
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 29 Jul 2015 10:42:21 -0700 (PDT)
-In-Reply-To: <1438185076-28870-6-git-send-email-ps@pks.im> (Patrick
-	Steinhardt's message of "Wed, 29 Jul 2015 17:51:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bd/DhT7+v0wF0pwFlvobA7ctYzVG9SQRrv3jJmiP0qI=;
+        b=JH52cS1xl27RooMaO5vH6AgSVOkAraKAL8cayRPQJudQbU65JgWe2DF/Yahfmebcj9
+         O+HNLPzmL/BeRz0Ac9wVzhwKx7tdu5P0cDl4POyybxiOzmUc7QMNM3pdOwd3iJUAN0xv
+         lEz+20tbwiua3EcLVdppCqUrwRZLR5AJQBCxb3x7eF8FHfbGRdLfnubfQrsqzgM5mEha
+         BQ11EjulUvG0rgPcFP6zaO9j0Hn+kKLNgJGcMwy97KpwytSW1V0ayjFS1bDQB6mDZmwt
+         oqQ4ubPVR5/+VsKuuRA3EsLeau5liV+vzzEJLQTOtrIHJeO+N7ZTlmsYo1ArnN1vTpoE
+         Nc2w==
+X-Received: by 10.60.42.230 with SMTP id r6mr43740432oel.9.1438192125666; Wed,
+ 29 Jul 2015 10:48:45 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Wed, 29 Jul 2015 10:48:16 -0700 (PDT)
+In-Reply-To: <xmqq8ua0f9lk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274924>
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> We fail to guess a sensible directory name for a newly cloned
-> repository when the path component of the URL is empty. E.g.
-> cloning a repository 'ssh://user:password@example.com/' we create
-> a directory 'password@example.com' for the clone.
+On Tue, Jul 28, 2015 at 11:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> Fix this by ...
+>> The 'ifexists' atom allows us to print a required format if the
+>> preceeding atom has a value. If the preceeding atom has no value then
+>> the format given is not printed. e.g. to print "[<refname>]" we can
+>> now use the format "%(ifexists:[%s])%(refname)".
+>
+> A handful of "huh?" on the design.
+>
+>  - The atom says "if *exists*" and explanation says "has a value".
+>    How are they related?  Does an atom whose value is an empty
+>    string has a value?  Or is "ifexists" meant to be used only to
+>    ignore meaningless atom, e.g. %(*objectname) applied to a ref that
+>    refers to an object that is not an annotated tag?
 
-It is clear that you do not want to have that password in the
-resulting directory name from the problem description, but you
-started saying "Fix this" without saying what the desired outcome
-is.  "We want to use only the hostname, e.g. 'example.com', in such
-a case instead." or something, perhaps, at the end of the first
-paragraph?  "Fix this by doing such and such" becomes understandable
-only after we know what end result you want to achieve by "doing
-such and such".
+It's meant to ignore meaningless atom. atom's whose values are empty
+strings are ignored.
 
-> ... using parse_connect_url to split host and path
-> components and explicitly checking whether we need to fall back
-> to the hostname for guessing a directory name.
+>
+>  - That %s looks ugly.  Are there cases where a user may want to say
+>    %(ifexists:[%i]) or something other than 's' after that per-cent?
+>
 
-I cannot help wonder why this much change (including patches 3 and
-4) is needed.  Isn't it just the matter of making this part of the
-existing code be aware of '@' in addition to ':'?
+Couldn't think of a better replacer, any suggestions would be welcome :)
 
-> -	/*
-> -	 * Find last component, but be prepared that repo could have
-> -	 * the form  "remote.example.com:foo.git", i.e. no slash
-> -	 * in the directory part.
-> -	 */
-> -	start = end;
-> -	while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
-> -		start--;
+>    . Is it allowed to have more than one %s there?
+>    . Is it allowed to have no %s there?
+>
 
-Regardless of the issue you are trying to address, we may want to
-limit that "be prepared for and careful with ':'" logic in the
-existing code to the case where the "last component" does not have
-any other component before it.  That is:
+1. yes its allowed to have multiple %s
+2. yes no %s is also allowed.
 
-	http://example.com/foo:bar.git/
+>  - The syntax makes the reader wonder if [] is part of the
+>    construct, or just an example of any arbitrary string, i.e. is
+>    "%(ifexists:the %s can be part of arbitrary string)" valid?
+>
 
-would be stripped to
+Its given as example, is that misleading?
 
-	http://example.com/foo:bar
+>  - If an arbitrary string is allowed, is there any quoting mechanism
+>    to allow ")" to be part of that arbitrary string?
 
-and then we scan backwards for ':' or '/' and declare that "bar" is
-the name of the repository, but we would probably want "foo:bar"
-instead (or we may not, as some filesystems do not want to have a
-colon in its path components).
+Nope. Haven't done anything for that. I'll look into that :)
 
+>
+>  - What, if anything, is allowed to come between %(ifexists...) and
+>    the next atom like %(refname)?  For example, are these valid
+>    constructs?
+>
+>     . %(ifexists...)%(padright:20)%(refname)
 
- builtin/clone.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Doesn't work with padright, maybe we could eventually support that.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a72ff7e..3d6328a 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -165,10 +165,12 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- 	/*
- 	 * Find last component, but be prepared that repo could have
- 	 * the form  "remote.example.com:foo.git", i.e. no slash
--	 * in the directory part.
-+	 * in the directory part, or "http://user@example.com/" with
-+	 * the whole site serving a single repository.
- 	 */
- 	start = end;
--	while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
-+	while (repo < start &&
-+	       !(is_dir_sep(start[-1]) || start[-1] == ':' || start[-1] == '@'))
- 		start--;
- 
- 	/*
+>     . %(ifexists...) %(refname) [%(subject)]
+>
+
+Not sure what this is.
+
+>  - This syntax does not seem to allow switching on an attribute to
+>    show or not to show another, e.g. "if %(*objectname) makes sense,
+>    then show '%(padright:20)%(refname:short) %(*subject)' for it".
+
+Yes this doesn't do that, I can say this is a pretty basic version, we could
+probably work on and implement more things?
+This is currently to support 'git branch -vv' where we have the upstream
+in square brackets.
+
+-- 
+Regards,
+Karthik Nayak
