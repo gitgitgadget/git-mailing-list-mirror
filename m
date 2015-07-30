@@ -1,121 +1,143 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] bisect: add read_bisect_terms() to the public interface
-Date: Thu, 30 Jul 2015 15:33:09 +0100
-Message-ID: <55BA35A5.2020605@ramsay1.demon.co.uk>
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Re: [PATCH] git-am: flag suspiciously old or futuristic commits
+Date: Thu, 30 Jul 2015 11:07:37 -0400
+Message-ID: <55BA3DB9.7020700@windriver.com>
+References: <1438207297-11686-1-git-send-email-paul.gortmaker@windriver.com> <CAGZ79kY7i95cXE3o=1kr40uFYhwijNkOoOJs6wa7msqvW8xvzg@mail.gmail.com> <CA+P7+xqcWKVnyL-+chiBLJn2TBJwPuy4WG2H1yS_hCN2cx=KNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	antoine.delaite@ensimag.grenoble-inp.fr,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 16:40:32 2015
+Cc: Paul Tan <pyokagan@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 17:10:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKp0Y-0007VF-TP
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 16:40:31 +0200
+	id 1ZKpTE-0005TB-Ly
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 17:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753374AbbG3OkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2015 10:40:23 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:39694 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753367AbbG3OkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2015 10:40:20 -0400
-X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jul 2015 10:40:20 EDT
-Received: from smtp.demon.co.uk (unknown [127.0.0.1])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 23866400E9D
-	for <git@vger.kernel.org>; Thu, 30 Jul 2015 15:33:18 +0100 (BST)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 69E3F128162;
-	Thu, 30 Jul 2015 15:33:15 +0100 (BST)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 128AE128153;
-	Thu, 30 Jul 2015 15:33:15 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Thu, 30 Jul 2015 15:33:14 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
-X-MDF-HostID: 22
+	id S1750906AbbG3PKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2015 11:10:00 -0400
+Received: from mail.windriver.com ([147.11.1.11]:52111 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750734AbbG3PJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2015 11:09:59 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca.corp.ad.wrs.com [147.11.189.40])
+	by mail.windriver.com (8.15.1/8.15.1) with ESMTPS id t6UF7c3t019994
+	(version=TLSv1 cipher=AES128-SHA bits=128 verify=FAIL);
+	Thu, 30 Jul 2015 08:07:38 -0700 (PDT)
+Received: from [128.224.56.57] (128.224.56.57) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.40) with Microsoft SMTP Server id 14.3.235.1; Thu, 30 Jul 2015
+ 08:07:19 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <CA+P7+xqcWKVnyL-+chiBLJn2TBJwPuy4WG2H1yS_hCN2cx=KNw@mail.gmail.com>
+X-Originating-IP: [128.224.56.57]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274989>
 
+On 2015-07-30 12:35 AM, Jacob Keller wrote:
+> On Wed, Jul 29, 2015 at 3:20 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Wed, Jul 29, 2015 at 3:01 PM, Paul Gortmaker
+>> <paul.gortmaker@windriver.com> wrote:
+>>> The linux kernel repository has some commits in it with dates from
+>>> the year 1970 and also 2030 (and possibly others).  We probably shouldi
+>>> warn people when the dates look suspect.
+>>>
+>>> For commits in the future,  note that a committer in Australia
+>>> could commit on New Years Day, and send it to a maintainer in North
+>>> America and that would trip the notification on the maintainer's
+>>> New Years Eve.  But that is unlikely, and the note is still
+>>> correct; that the commit is from a future year.
+>>>
+>>> For commits in the past, I chose a somewhat arbitrary 30 year
+>>> limit, which will allow stuff from post 1985; the thought being
+>>> that someone might want to import an old repo into git from some
+>>> other SCM.  We could alternatively set it to 5, which would then
+>>> catch computers with a dead CMOS battery, at the risk of pestering
+>>> the hypothetical museum curator of old bits.
+>>>
+>>> Sample output:
+>>>
+>>> paul@builder:~/git/linux-head$ grep Date: *patch
+>>> future.patch:Date: Sat, 18 Jul 2037 21:22:19 -0400
+>>> past.patch:Date: Sat, 18 Jul 1977 21:22:19 -0400
+>>>
+>>> paul@builder:~/git/linux-head$ git am future.patch
+>>> note: commit is from future year 2037.
+>>> Applying: arch/sh: make heartbeat driver explicitly non-modular
+>>> paul@builder:~/git/linux-head$ git reset --hard HEAD~ > /dev/null
+>>> paul@builder:~/git/linux-head$ git am past.patch
+>>> note: commit is from implausibly old year 1977.
+>>> Applying: arch/sh: make heartbeat driver explicitly non-modular
+>>> paul@builder:~/git/linux-head$
+>>>
+>>> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+>>> ---
+>>>  git-am.sh | 15 +++++++++++++++
+>>>  1 file changed, 15 insertions(+)
+>>>
+>>> diff --git a/git-am.sh b/git-am.sh
+>>
+>> [+cc paul tan, who rewrote am in c as a GSoC project.]
+>>
+>>> index 3af351ffaaf3..ff6deb8047a4 100755
+>>> --- a/git-am.sh
+>>> +++ b/git-am.sh
+>>> @@ -766,6 +766,21 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
+>>>                 stop_here $this
+>>>         fi
+>>>
+>>> +       if test -n "$GIT_AUTHOR_DATE"
+>>> +       then
+>>> +               THIS_YEAR=`date +%Y`
+>>> +               TOO_OLD=$(expr $THIS_YEAR - 30)
+>>> +               TOO_NEW=$(expr $THIS_YEAR + 1)
+>>> +               GIT_AUTHOR_YEAR=`date -d "$GIT_AUTHOR_DATE" +%Y`
+>>
+>> Would it make sense to not operate on year but on unix time, so the problem
+>> you mentioned in the commit message goes away?
+>>
+>> Another thought:
+>> Having this check in am seems a bit arbitrary to me (or rather
+>> workflow adapted ;) as
+>> we could also check in commit or pull (not sure if I actually mean the
+>> fetch or merge thereof)
+>>
+> 
+> I think this makes most sense in am, as it is most likely to show up,
+> in my mind, due to a format-patch mistake. If we do it during pull,
+> would we just warn? how would we reject commits? that doesn't really
+> fit..
 
-Commit 833bd64f ("bisect: simplify the addition of new bisect terms",
-29-06-2015) added a public function, read_bisect_terms(), to 'bisect.c'
-which was then called by code in 'revision.c', having directly referenced
-the symbol with an explicit external declaration. This causes sparse to
-complain ('symbol not declared. Should it be static?').
+So, it turns out this breaks t3400-rebase test since I was not aware
+of the git internal date format (which that test suite uses).
 
-In order to suppress the warning, move the external declaration to the
-"bisect.h" header file and '#include' the header in 'revision.c'.
+And on top of that, in talking with a *BSD user, it seems the "-d"
+flag isn't universal.  Over in that camp it means set DST offset. :(
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+So while I think the idea is sound, and worthwhile, scripting it will
+become a lot more cumbersome and klunky.  If git-am becomes C, then
+it would be easier to handle there, I think....
 
-Hi Junio,
+Paul.
+--
 
-You recently mentioned that you may squash a fix to the 'ref-filter'
-series in next whilst re-winding next. How about squashing this patch
-into 'ad/bisect-cleanup' at the same time?
-
-As you know, I have been 'up to my eyeballs' lately, so this patch is
-(almost) a 'five minute quick fix' to the sparse warning. (You know that
-I prefer to catch these while they are still in pu, but I missed this
-one ... sorry!) So, if this patch is not appropriate (since I have not
-followed any of the discussion which lead to this commit), please ignore!
-
-BTW, a large part of 'bisect.h', namely the declartions of BISECT_SHOW_ALL,
-REV_LIST_QUIET and rev_list_info are only referenced by 'builtin/rev-list.c'.
-Noticed in passing ...
-
-ATB,
-Ramsay Jones
-
- bisect.h   | 2 ++
- revision.c | 3 +--
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/bisect.h b/bisect.h
-index 2a6c831..acd12ef 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -26,4 +26,6 @@ extern int bisect_next_all(const char *prefix, int no_checkout);
- 
- extern int estimate_bisect_steps(int all);
- 
-+extern void read_bisect_terms(const char **bad, const char **good);
-+
- #endif
-diff --git a/revision.c b/revision.c
-index b6b2cf7..5350139 100644
---- a/revision.c
-+++ b/revision.c
-@@ -18,6 +18,7 @@
- #include "commit-slab.h"
- #include "dir.h"
- #include "cache-tree.h"
-+#include "bisect.h"
- 
- volatile show_early_output_fn_t show_early_output;
- 
-@@ -2079,8 +2080,6 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 	ctx->argc -= n;
- }
- 
--extern void read_bisect_terms(const char **bad, const char **good);
--
- static int for_each_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data, const char *term) {
- 	struct strbuf bisect_refs = STRBUF_INIT;
- 	int status;
--- 
-2.5.0
+> 
+> We can't do it during commit, as obviously the broken machine will
+> likely not be able to notice it at all.. We could check remotes during
+> push but that doesn't solve this either..
+> 
+> Maybe just emitting a warning during a fetch or am (since am doesn't
+> use pull) would make the most sense?
+> 
+> I don't think we can reject things when doing a fetch though, but we could warn.
+> 
+> Regards,
+> Jake
+> 
