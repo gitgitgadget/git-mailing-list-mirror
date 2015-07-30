@@ -1,134 +1,170 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v10 3/3] commit: add a commit.verbose config variable
-Date: Sun, 27 Mar 2016 04:17:31 -0400
-Message-ID: <CAPig+cStkyOE4MwmFpq9V8h5M=6j=FWbDTkyMGXZsf8sBH=9pg@mail.gmail.com>
-References: <01020153b478cf07-758c7f14-33a1-4a67-9bc9-4688de3d6742-000000@eu-west-1.amazonses.com>
-	<01020153b478cfab-5309f834-7617-4a7f-a3e9-93f0dcf4a6be-000000@eu-west-1.amazonses.com>
-	<CAPig+cTBxH7BAs2M+PBwTHfVJvH0ADL1OSEKdHQY59L-WiYosA@mail.gmail.com>
-	<CAFZEwPPNMtopk9a3nVaCuujWoyeA5+39vEj3Mct1YckCXLh1-A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-NNTP-Posting-Date: Sun, 27 Mar 2016 08:17:47 +0000 (UTC)
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v7 11/11] tag.c: implement '--merged' and '--no-merged' options
+Date: Thu, 30 Jul 2015 21:05:52 +0530
+Message-ID: <1438270552-10333-11-git-send-email-Karthik.188@gmail.com>
+References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
+ <1438270552-10333-1-git-send-email-Karthik.188@gmail.com>
+NNTP-Posting-Date: Thu, 30 Jul 2015 15:36:43 +0000 (UTC)
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=QzboQYuLDbwXMH4zAA+EiK8gKtD55CSIwDZiESkcDHs=;
-        b=BhEPsioLoK01PIEoASJCwnXsaim+rhwwhBbxGFftJoXemWDgohiuIPOv0R5xQ+Mcob
-         5gL2fvOVK1dPuM3jyF+Irlx1rjd5HCGPc+fMLsxgfF9jPz1fZ033WLhe3502SF0EwubZ
-         g6Dpp4eyEJEap9gVB/zzNJrUb85Su+Jt5hQlvLt1JOUUYwkGYkhN3hUoEP7StK9drbUF
-         8DUoRUrNfJE9X10i8filAt50J6uZgF/kZ2ZpqyVH+GE3HqPyswelAWA2n+k7dQAu1sUD
-         BeQl7nlRvwl7esq8OEn2I11lX5WNpJI2NcUAdNZx/z0FuZw5Gj358vf0d+icbkVVGsue
-         xK1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=QzboQYuLDbwXMH4zAA+EiK8gKtD55CSIwDZiESkcDHs=;
-        b=mPzfV/t/avIrdNMqALdCHlVj1GWnvnt09Rq6Mm+JMMK36ubLtuB6JzP1PtEqjlF4zA
-         BKklOLJNiyEMe+P+jXjsNy+tdO+2PpDPAPI/93Y3qyAFhNJ+RtvcQ7cl/vyAlvHAIRGp
-         yWGVaubX5Cb1gQFAAOS/DRPfTXTtclybJnW514weg1No+BTahuADnZLfrXs5y3M8vQx8
-         Jtj2gM/1Sew+Ax+EWjeoakwc28b3MmfVOqX+7xN+ZeSHf0wJCIoWL0niCSQBRICIgRi8
-         ox5J/duJ1KlfULhT7QFrxuOmLzHrzTbzQx1xHFGIM5Myh5LvyXqVqhyMgEizTqgm8Ps1
-         d/mA==
-X-Gm-Message-State: AD7BkJI/iCAO4oJm4KNEAPsiasvZRitR6cL+O3CH9Lw/LF5jsqMb0lj4LXNK9i/7L0dCzodn8ijQHBNXB7/YTA==
-X-Received: by 10.176.2.143 with SMTP id 15mr11548763uah.113.1459066651787;
- Sun, 27 Mar 2016 01:17:31 -0700 (PDT)
-In-Reply-To: <CAFZEwPPNMtopk9a3nVaCuujWoyeA5+39vEj3Mct1YckCXLh1-A@mail.gmail.com>
-X-Google-Sender-Auth: dQ6RTtZCJhagXEorPi1q7mjhhbI
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=h7Y9AFmeyRW3FHMBtdGZE73QuVbjf+5oYBOEv/4wvro=;
+        b=M4DbkTvSkuGz02phkjODpTTY6IOMzilgXoeDlMx/ASK7xftAod0f5S3ZXzqg2hy01Q
+         3OIDYEtEg7Hes0h16M0XPvt+lA7OBzNN6Oozjaq6RCTF0mR9oQ8qsE5lNr/DStrXEXpX
+         m5LOsTlmBFlLGKUjsOA3WDA8zyOCclgvf7sZHmiQPpBWEizknSEqwwmb7u/3MvIrD0HN
+         sG3rlVipMleEcBls9IdLhLIHIYjUpvDmfrdYa2vzLD0Pz3JW/m19KFcbznoBJsdKgj+f
+         2F3FsN0SY+WpEFudOhM2EOQPvNM6R5GIGTMLT1gxhyAR4GV9DEdsB0UiIZyoJbGUFJvA
+         PhNw==
+X-Received: by 10.66.121.163 with SMTP id ll3mr110233572pab.100.1438270577957;
+        Thu, 30 Jul 2015 08:36:17 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.4.6
+In-Reply-To: <1438270552-10333-1-git-send-email-Karthik.188@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275000>
 Received: from vger.kernel.org ([209.132.180.67]) by plane.gmane.org with
  esmtp (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id
- 1ak5tG-0005pY-F9 for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 10:17:42
+ 1ZKpsd-0001Gl-RA for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 17:36:24
  +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753365AbcC0IRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Mar 2016
- 04:17:35 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:36005 "EHLO
- mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752245AbcC0IRc (ORCPT <rfc822;git@vger.kernel.org>); Sun, 27 Mar
- 2016 04:17:32 -0400
-Received: by mail-vk0-f66.google.com with SMTP id z68so11831010vkg.3 for
- <git@vger.kernel.org>; Sun, 27 Mar 2016 01:17:32 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Sun, 27 Mar 2016 01:17:31 -0700 (PDT)
+ S1751527AbbG3PgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jul 2015
+ 11:36:21 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35414 "EHLO
+ mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1752134AbbG3PgS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Jul
+ 2015 11:36:18 -0400
+Received: by pabkd10 with SMTP id kd10so25237182pab.2 for
+ <git@vger.kernel.org>; Thu, 30 Jul 2015 08:36:18 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23]) by smtp.gmail.com with
+ ESMTPSA id oq10sm2790985pdb.75.2015.07.30.08.36.15 (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-SHA bits=128/128); Thu, 30 Jul 2015 08:36:17 -0700
+ (PDT)
 Sender: git-owner@vger.kernel.org
 
-On Sun, Mar 27, 2016 at 3:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> On Sun, Mar 27, 2016 at 9:04 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sat, Mar 26, 2016 at 3:48 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>> +test_expect_success 'commit.verbose true and --verbose omitted' '
->>> +       echo content >file2 &&
->>> +       echo content >>file &&
->>> +       git add file2 &&
->>> +       git -c commit.verbose=true commit -F message &&
->>> +       test_line_count = 1 out
->>> +'
->>
->> Why is this test so utterly different than it was in v9 (even though
->> the title is the same), and why is it so different from other tests
->> below?
->
-> This is because the "editor" in v9 checked for "# Changes"... While
-> this "editor" checks for 'diff --git'. And submodules don't give a
-> proper diff to verify (I tried this out and noticed this behavior by
-> tweaking some parts). In fact submodules don't give diff at all. But
-> they do give "# Changes"... So its important to setup up a little
-> before getting started. If this seems unnecessary, then should I move
-> all the tests which were introduced here above the submodule test?
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Let's ignore submodules when discussing this since they don't need to
-factor into the issue. What you are actually saying (and what took me
-a while to understand due to the "submodules" misdirection) is that
-you need to do some additional setup to test the "-v -v" cases. In
-particular, you need to introduce some change to the worktree which is
-not in the index.
+Using 'ref-filter' APIs implement the '--merged' and '--no-merged'
+options into 'tag.c'. The '--merged' option lets the user to only
+list tags merged into the named commit. The '--no-merged' option
+lets the user to only list tags not merged into the named commit.
+If no object is provided it assumes HEAD as the object.
 
-The typical way to satisfy this requirement (which doesn't require
-relocating tests) is to add a "setup" test before the tests which
-depend upon that additional setup, rather than adding that setup to
-the first test which needs it. Just about the simplest setup test
-which satisfies your needs is the following (inserted just before the
-first of the new tests):
+Add documentation and tests for the same.
 
-    test_expect_success 'setup -v -v' '
-        echo dirty >file
-    '
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ Documentation/git-tag.txt |  7 ++++++-
+ builtin/tag.c             |  6 +++++-
+ t/t7004-tag.sh            | 27 +++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 2 deletions(-)
 
-And, then you can restore the "commit.verbose true and --verbose
-omitted" test to its simple form:
-
-    test_expect_success 'commit.verbose true and --verbose omitted' '
-        git -c commit.verbose=true commit --amend &&
-        test_line_count = 1 out
-    '
-
-
-By the way, now that commit.verbose is no longer a mere boolean,
-you're going to need some additional tests beyond the
-commit.verbose={true,false} ones you've already added. In particular,
-you should be testing commit.verbose with several numeric values to
-verify that it works as expected. For instance:
-
-    commit.verbose=-2
-    commit.verbose=-1
-    commit.verbose=0
-    commit.verbose=1
-    commit.verbose=2
-    commit.verbose=3
-
-The -2 case is interesting; I'm pretty sure the current implementation
-of this patch will misbehave since the only negative value it's
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 75703c5..c2785d9 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+ 	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
+-	[--format=<format>] [<pattern>...]
++	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
+ 'git tag' -v <tagname>...
+ 
+ DESCRIPTION
+@@ -171,6 +171,11 @@ This option is only applicable when listing tags without annotation lines.
+ 	`%0a` to `\n` (LF).  The fields are same as those in `git
+ 	for-each-ref`.
+ 
++--[no-]merged [<commit>]::
++	Only list tags whose tips are reachable, or not reachable
++	if '--no-merged' is used, from the specified commit ('HEAD'
++	if not specified).
++
+ 
+ CONFIGURATION
+ -------------
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 7de49c4..fc01117 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -23,7 +23,7 @@ static const char * const git_tag_usage[] = {
+ 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
+ 	N_("git tag -d <tagname>..."),
+ 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
+-		"\n\t\t[<pattern>...]"),
++		"\n\t\t[--[no-]merged [<commit>]] [<pattern>...]"),
+ 	N_("git tag -v <tagname>..."),
+ 	NULL
+ };
+@@ -353,6 +353,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
+ 		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
+ 		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
++		OPT_MERGED(&filter, N_("print only tags that are merged")),
++		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
+ 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
+ 			     N_("field name to sort on"), &parse_opt_ref_sorting),
+ 		{
+@@ -413,6 +415,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		die(_("--contains option is only allowed with -l."));
+ 	if (filter.points_at.nr)
+ 		die(_("--points-at option is only allowed with -l."));
++	if (filter.merge_commit)
++		die(_("--merged and --no-merged option are only allowed with -l"));
+ 	if (cmdmode == 'd')
+ 		return for_each_tag_name(argv, delete_tag);
+ 	if (cmdmode == 'v')
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 1809011..5b73539 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1535,4 +1535,31 @@ test_expect_success '--format should list tags as per format given' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup --merged test tags' '
++	git tag mergetest-1 HEAD~2 &&
++	git tag mergetest-2 HEAD~1 &&
++	git tag mergetest-3 HEAD
++'
++
++test_expect_success '--merged cannot be used in non-list mode' '
++	test_must_fail git tag --merged=mergetest-2 foo
++'
++
++test_expect_success '--merged shows merged tags' '
++	cat >expect <<-\EOF &&
++	mergetest-1
++	mergetest-2
++	EOF
++	git tag -l --merged=mergetest-2 mergetest-* >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--no-merged show unmerged tags' '
++	cat >expect <<-\EOF &&
++	mergetest-3
++	EOF
++	git tag -l --no-merged=mergetest-2 mergetest-* >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.4.6
