@@ -1,83 +1,83 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v6 0/10] port tag.c to use ref-filter APIs
-Date: Thu, 30 Jul 2015 11:44:52 +0200
-Message-ID: <vpqzj2e9dyj.fsf@anie.imag.fr>
-References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
-	<CAPig+cQv4BWFwgx7mDHh=gNpxbEeR7auw4os-tOpf3cGah=zpw@mail.gmail.com>
-	<xmqqbneu907l.fsf@gitster.dls.corp.google.com>
+Subject: Re: What's cooking in git.git (Jul 2015, #07; Mon, 27)
+Date: Thu, 30 Jul 2015 11:58:05 +0200
+Message-ID: <vpqoaiu9dci.fsf@anie.imag.fr>
+References: <xmqqpp3dgurr.fsf@gitster.dls.corp.google.com>
+	<20150730002925.GF809807@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 11:45:10 2015
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Thu Jul 30 11:58:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKkOg-0007Ux-TO
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 11:45:07 +0200
+	id 1ZKkbd-00085P-Gy
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 11:58:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755309AbbG3JpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2015 05:45:01 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:40733 "EHLO shiva.imag.fr"
+	id S1755357AbbG3J6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2015 05:58:25 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41025 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750890AbbG3Jo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2015 05:44:59 -0400
+	id S1755217AbbG3J6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2015 05:58:24 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6U9ip3k023491
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6U9w5Id027038
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 30 Jul 2015 11:44:51 +0200
+	Thu, 30 Jul 2015 11:58:07 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6U9iqOK032138;
-	Thu, 30 Jul 2015 11:44:52 +0200
-In-Reply-To: <xmqqbneu907l.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 29 Jul 2015 13:29:34 -0700")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6U9w5W6032559;
+	Thu, 30 Jul 2015 11:58:05 +0200
+In-Reply-To: <20150730002925.GF809807@vauxhall.crustytoothpaste.net> (brian m.
+	carlson's message of "Thu, 30 Jul 2015 00:29:25 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 30 Jul 2015 11:44:51 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 30 Jul 2015 11:58:07 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t6U9ip3k023491
+X-MailScanner-ID: t6U9w5Id027038
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1438854293.42515@NkHjb6+Tx8yUDYpDHSLnKA
+MailScanner-NULL-Check: 1438855088.15831@NxDXI/zxTCvNxfvkYUefbQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274978>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> "Currently we do not need it to reimplement the canned 'tag -l'
-> format" is an OK and sensible justification to stick to the current
-> implementation of %(padright:N), but we'd need to think if we would
-> want to keep this limited and strange form that applies to a single
-> atom that comes next (ignoring any literal spans) as a private
-> implementation detail between ref-filter and "git tag".  Opening it
-> up to end-users would not mean we cannot add a correctly operating
-> variant of "pad this string to the right" later, but it does mean we
-> have to maintain %(padright) in this limited form forever.
+> On Mon, Jul 27, 2015 at 02:23:04PM -0700, Junio C Hamano wrote:
+>> * bc/object-id (2015-06-17) 10 commits
+>>  . remote.c: use struct object_id in many functions
+>>  . object-id: use struct object_id in struct object
+>>  . remote.c: use struct object_id in ref_newer()
+>>  . transport-helper.c: use struct object_id in push_refs_with_export()
+>>  . connect.c: use struct object_id in get_remote_heads()
+>>  . remote-curl: use struct object_id in parse_fetch()
+>>  . fetch-pack: use struct object_id in add_sought_entry_mem()
+>>  . object_id: convert struct ref to use object_id.
+>>  . sha1_file: introduce has_object_file() helper
+>>  . refs: convert some internal functions to use object_id
+>> 
+>>  More transition from "unsigned char[40]" to "struct object_id".
+>> 
+>>  While GSoC and other topics are actively moving existing code
+>>  around, this cannot go in; ejected from 'pu'.
 >
-> My knee-jerk reaction is that we probably should not want to expose
-> this to the end users, and to discourage its use, perhaps name it
-> somewhat strangely (e.g. "%(x-padright:N)" or something).
+> Is there anything I can do to make this series less painful (e.g. a
+> reroll or such)?
 
-I disagree. The current %(padright) fits 99.9% needs. It's handy for the
-user if he wants a column-display with --format. It's consistant with
-the "git log" %<() atoms.
+For the GSoC part, "Suggested 'pencils down' date" is August 17th. The
+"Firm 'pencils down date'" is on 21th, so things should stabilize.
 
-Sure, if the user wants really advanced formatting, it's not sufficient.
-But first I believe this is a case of YAGNI, "right-pad an arbitrary
-string" is a funny coding exercice, but not very useful in real-life.
-And then, if one really has a use-case for advanced formatting, I think
-a much better approach is to dump an easy-to-parse language
-(XML/JSON/CSV/...) and pipe it to a formatter written in a real
-programming language. It will always be more powerful than having to
-chose in a limited set of %(atoms).
+On the "unify ref-listing commands" side, the big code movement is in
+kn/for-each-ref which should hit master soon, but there are other less
+intrusive series active.
+
+(That doesn't really answer your question, but may be relevant
+information)
 
 -- 
 Matthieu Moy
