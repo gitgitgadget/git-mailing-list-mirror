@@ -1,128 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH 10/11] branch.c: use 'ref-filter' APIs
-Date: Thu, 30 Jul 2015 09:29:00 +0200
-Message-ID: <vpqbneucddv.fsf@anie.imag.fr>
-References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
-	<1438067468-6835-1-git-send-email-Karthik.188@gmail.com>
-	<vpqh9oov017.fsf@anie.imag.fr>
-	<CAOLa=ZR6Cu_AgB4sOBX3Tf_M0w8XN57ej8d_fZo+h7pwFDZs+A@mail.gmail.com>
-	<vpq3807gdp0.fsf@anie.imag.fr>
-	<CAOLa=ZTHRLTbmB7iadc3z7=-pshjR0QS8R_StZb7xOyu_gJ=Sw@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 01/10] ref-filter: introduce 'ref_formatting_state'
+Date: Thu, 30 Jul 2015 14:48:21 +0530
+Message-ID: <CAOLa=ZRyunhpXwW=YnmYS=yWdcyr0Fid2ZzO+1qq+PzSCrHVLA@mail.gmail.com>
+References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
+ <1438065211-3777-1-git-send-email-Karthik.188@gmail.com> <CAPig+cS+w8ECma--ncJDoN1fEgrFZMvBC8GBgU6+tLYm_oGkaw@mail.gmail.com>
+ <xmqqfv4691ui.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 09:29:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"christian.couder@gmail.com" <christian.couder@gmail.com>,
+	"Matthieu.Moy@grenoble-inp.fr" <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 11:19:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKiHI-0006XL-Be
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 09:29:20 +0200
+	id 1ZKjzN-0000Ak-1u
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 11:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753513AbbG3H3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2015 03:29:11 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37951 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750770AbbG3H3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2015 03:29:10 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t6U7T0Ql012174
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 30 Jul 2015 09:29:00 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t6U7T0Bp029272;
-	Thu, 30 Jul 2015 09:29:00 +0200
-In-Reply-To: <CAOLa=ZTHRLTbmB7iadc3z7=-pshjR0QS8R_StZb7xOyu_gJ=Sw@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 30 Jul 2015 12:07:58 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 30 Jul 2015 09:29:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t6U7T0Ql012174
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1438846144.99479@kfCIptSAKGfyjZWJDKNkog
+	id S1754837AbbG3JSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2015 05:18:52 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:35178 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754606AbbG3JSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2015 05:18:51 -0400
+Received: by obbop1 with SMTP id op1so26572239obb.2
+        for <git@vger.kernel.org>; Thu, 30 Jul 2015 02:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XzkJ5y2odi4M4edVz1FOKGY3m8DUWTMdwrYE+Mcd6o4=;
+        b=ToZEOqMlMxFffWIdw2jyGjLkuLU7X4hvkzQHlYg/mAmD98uIiXh9+OH1iccgMhJNVA
+         OYUrkFhD1vF/sXLXIFkbBEGaViodrAy/4q2/V+f2lkQZN05uAlc6Mc0X6ClRv5e0sko6
+         qqskidOleWI6MQ08kcNkq/KpGkt8u28zrbmhGD+is73hUMkopi5bKFipdwJQKQxt8nIo
+         hx0iJ2Tgu+jb2wlDiRPcOqqnr/mPsH6XU1SeFH8WtV9qXRnKuAyI4Z3G9YITC1JesqeV
+         eUMNgOiQK0x9nFQfnlYOYI7h4Y44bcCXOqHxeZc7mVzYT2sQYUisM1m3IRQQNNLNtv7d
+         EjZQ==
+X-Received: by 10.60.41.138 with SMTP id f10mr44189345oel.84.1438247930841;
+ Thu, 30 Jul 2015 02:18:50 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Thu, 30 Jul 2015 02:18:21 -0700 (PDT)
+In-Reply-To: <xmqqfv4691ui.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274975>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
-> On Wed, Jul 29, 2015 at 9:26 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> On Tue, Jul 28, 2015 at 7:47 PM, Matthieu Moy
->>> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>>>
->>>> I'm not sure what's the convention, but I think the test description
->>>> should give the expected behavior even with test_expect_failure.
->>>>
->>>> And please help the reviewers by saying what's the status wrt this test
->>>> (any plan on how to fix it?).
->>>>
->>>
->>> On the other hand I wonder if the test is even needed as, we don't
->>> really need it
->>> Cause we remove that ability of branch.c by using filter_refs().
->>
->> Please read d0f810f (refs.c: allow listing and deleting badly named
->> refs, 2014-09-03). I think the reasoning makes sense, and we should keep
->> this ability.
->>
+On Thu, Jul 30, 2015 at 1:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Actually, I think it is wrong to have this function in the first
+> place.  It is a sign that the caller is doing too little before
+> calling this function.
 >
-> This makes sense, I didn't have a thorough look at this but it breaks
-> a little in
-> ref-filter.c while getting object attributes. So is it okay to mark
-> this as TODO?
+> If the act of printing an atom uses the formatting state that says
+> "next one needs X", then it is responsible to clear that "next one
+> needs X" part of the state, as it is the one who consumed that
+> state.  E.g. if it used to say "next one needs to be padded to the
+> right" before entering print_value(), then the function did that
+> "padded output", then the "next one needs to be padded to the
+> right" should be cleared inside print_value().
+>
 
-Solving this doesn't seem much harder than
+Hmm, something like what we did in version 5  I guess.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 6c0189f..a4df287 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1117,7 +1117,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 	struct commit *commit = NULL;
- 	unsigned int kind;
- 
--	if (flag & REF_BAD_NAME) {
-+	if (!filter->show_bad_name_refs && (flag & REF_BAD_NAME)) {
- 		  warning("ignoring ref with broken name %s", refname);
- 		  return 0;
- 	}
-diff --git a/ref-filter.h b/ref-filter.h
-index 98ebd3b..b9d2bbc 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -79,7 +79,7 @@ struct ref_filter {
- 		match_as_path : 1;
- 	unsigned int lines, branch_kind;
- 	int abbrev, verbose;
--	int detached : 1;
-+	int detached : 1, show_bad_name_refs : 1;
- };
- 
- struct ref_filter_cbdata {
+> And with that arrangement, together with calling emit() with
+> formatting state, %(color:blue) can be handled as a normal part of
+> the formatting state mechanism.  The pseudo/modifier atom should
+> update the state to "Start printing in blue", and either emit() or
+> print_value(), whichever is called first, would notice that state,
+> does what was requested, and flip that bit down (because we are
+> already printing in "blue" so the next output function does not have
+> to do the "blue" thing again).
 
-and setting filter->show_bad_name_refs when needed (untested). Did I
-miss something?
-
-IIRC, historicaly Git allowed some weirdly named refs which made some
-commands ambiguous (e.g. a branch named after an option like '-d').
-We're forbidding their creation so people shouldn't have any, but we
-it's important to continue showing them in case some people have old
-bad-named branches lying around.
-
-I'd rather have the code strictly better after your contribution than
-before.
+This makes sense, will work on this thanks :)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Karthik Nayak
