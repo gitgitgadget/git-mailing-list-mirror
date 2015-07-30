@@ -1,89 +1,221 @@
-From: Joey Hess <id@joeyh.name>
-Subject: git pull --upload-pack reversion in git 2.5.0
-Date: Thu, 30 Jul 2015 11:45:23 -0400
-Message-ID: <20150730154523.GA17002@kitenet.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v7 01/11] ref-filter: introduce 'ref_formatting_state'
+Date: Thu, 30 Jul 2015 21:18:42 +0530
+Message-ID: <1438271332-10615-1-git-send-email-Karthik.188@gmail.com>
+References: <CAOLa=ZQG4Oz4aSGLNQxcRB4vNo3DQn_V96H-aCD=krSSoA9JGQ@mail.gmail.com>
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 30 17:45:40 2015
+X-From: git-owner@vger.kernel.org Thu Jul 30 17:48:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKq1Z-0000Up-QD
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 17:45:38 +0200
+	id 1ZKq4l-0003Ai-PN
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 17:48:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbbG3Ppd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2015 11:45:33 -0400
-Received: from kitenet.net ([66.228.36.95]:54492 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752214AbbG3Ppa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2015 11:45:30 -0400
-X-Question: 42
-Authentication-Results: kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=J4dzyl7h;
-	dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1438271123; bh=qCGD8vuKHUDwPjISaxpaXVribBAjbX5CO7VPIU9YfW0=;
-	h=Date:From:To:Subject:From;
-	b=J4dzyl7hGqZx5LB8OmiXz815wAQTFVgdpve+hjxbU5BDE0LjSmFDoajaI3nO2fSA3
-	 4MBxKJ36I1jnfFrdp2edacjOTHKFCAUoVOglo7fDVjCnCiYo+g32rUWCaWr+ZzxzDo
-	 c1ID9TSPvA1Q8q72rxqjvA3ZTO8azaJ74zuIlfSM=
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Status: No, score=-94.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,
-	RDNS_NONE,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no autolearn_force=no
-	version=3.4.1
-X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
+	id S1751467AbbG3Psw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2015 11:48:52 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:33250 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750977AbbG3Psv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2015 11:48:51 -0400
+Received: by pacom8 with SMTP id om8so2132295pac.0
+        for <git@vger.kernel.org>; Thu, 30 Jul 2015 08:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bpzMFwhojAOXdsnhsCThmvhqnN4I/K60XAGcjDCx1nw=;
+        b=UER/4x2lMsO/ZdS9GvdKsweAetzfpE6z2akti/uggSG141fcXKKfr/UjgVJgnUOq8S
+         rSzhHzhyg9EBH73lLciOYqvcgsh0jTzwLiikD6+PlbCw32Qkwp8XOLlkCmfB2N5mdsi3
+         0mQOHxYKlYyOAe2mWH54NTXDdn3x5V4KgPxXyyjUppj6L0Lg1HortVt3a2diIqx67Qgu
+         Ea0/MPoOU2Ro5kvEc4+1q2qNovBSkB2sPyLkEFT33DgiwDjOYi/2IU/T2MtXoPLD/xty
+         SPkndMOFs4Ym4YKYbrx2kmuoIIk1/8TFNIqfsTd/gTRdymAvP5D20lfKf3pwb06exj0U
+         OIiQ==
+X-Received: by 10.66.164.106 with SMTP id yp10mr108187181pab.121.1438271330775;
+        Thu, 30 Jul 2015 08:48:50 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23])
+        by smtp.gmail.com with ESMTPSA id cz1sm2875338pdb.44.2015.07.30.08.48.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 30 Jul 2015 08:48:49 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.4.6
+In-Reply-To: <CAOLa=ZQG4Oz4aSGLNQxcRB4vNo3DQn_V96H-aCD=krSSoA9JGQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275002>
 
+Introduce 'ref_formatting_state' structure to hold values of modifier
+atoms which help only in formatting. This will eventually be used by
+atoms like `padright` which will be introduced in a later patch.
 
---jRHKVT23PllUwdXP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ ref-filter.c | 70 ++++++++++++++++++++++++++++++++++++++++++++----------------
+ ref-filter.h |  5 +++++
+ 2 files changed, 57 insertions(+), 18 deletions(-)
 
-In git 2.1.4, I can run: git pull --upload-pack 'echo --foo'
-
-This also seems to work in 2.4.6, but in 2.5.0, the option parser
-does something weird, apparently looking inside the quoted parameter
-and parsing parameters in there:
-
-error: unknown option `foo'
-usage: git fetch [<options>] [<repository> [<refspec>...]]
-
-Needless to say, this broke my use of --upload-pack.
-
---=20
-see shy jo
-
---jRHKVT23PllUwdXP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIVAwUBVbpGk8kQ2SIlEuPHAQIHuQ/+KdwFaYlubidjwHyloLHbyLh95lnekOC9
-ZR5O62wwhndRwAjCUmfczzFl8NJJ73G3o8aLT2FrhLpaiESRR9xZyKUFQoqZ6MYH
-KPd13ZOi/x4Xv05D7szANiJ0QDljUBtLnXF/bED8grCEVw04FPtfr9Fl9X1WVnne
-sNSvg+lEH6L9VF0UxVZ18LNxJMR8UmFzuJIGB797EXFEviEtyionHJLiTyA6oWyO
-N6F3o8BjT2okI+ZdCSM2tdV7pAQD04jwvB/ji04jEbfywZBjxZi5c2wpzFF+7thG
-ZnI42ij1uX/giSahL9wBiEPk/0sTQbCdrc5ZnaagXb2GHk36ng0lzkfhu3IVWd20
-XxZkYp4O9QKvdG+DNJ++v65b6E8P/G9C9BAui2BUyEhRcqTbwyG3IC5JR0DiVCjd
-4HZqsPg9lm4XlHrb+txOrjYYA8B6QQGVB9GXezebu/Eea8xI8Cf/3OwJKHJYD4z3
-eLWHc15apbSIH48hlxvAVhR+UbglWgG1DcI/ywVgB0yEcrxrfkIIxVL1O0fYxz7X
-Qq2kbZt7QfjZj0r+nnb7+CKc57eSP0jZo3l0CCWhA6FTDuT9oiKqQjgBO3xt52ho
-rzQjyf33yn3RsPLazPlwYNi4X90tSJYq33QQXMXHbhgxnXzY8zAGTxIXPjUTO1Hb
-7k8CKpAql4E=
-=xAHq
------END PGP SIGNATURE-----
-
---jRHKVT23PllUwdXP--
+diff --git a/ref-filter.c b/ref-filter.c
+index 7561727..d6510a6 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -10,6 +10,8 @@
+ #include "quote.h"
+ #include "ref-filter.h"
+ #include "revision.h"
++#include "utf8.h"
++#include "git-compat-util.h"
+ 
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ 
+@@ -1190,30 +1192,41 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+ 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
+ }
+ 
+-static void print_value(struct atom_value *v, int quote_style)
++static void apply_formatting_state(struct ref_formatting_state *state,
++				   const char *buf, struct strbuf *value)
+ {
+-	struct strbuf sb = STRBUF_INIT;
+-	switch (quote_style) {
++	/* Eventually we'll format based on the ref_formatting_state */
++	strbuf_addstr(value, buf);
++}
++
++static void print_value(struct atom_value *v, struct ref_formatting_state *state)
++{
++	struct strbuf value = STRBUF_INIT;
++	struct strbuf formatted = STRBUF_INIT;
++
++	apply_formatting_state(state, v->s, &value);
++
++	switch (state->quote_style) {
+ 	case QUOTE_NONE:
+-		fputs(v->s, stdout);
++		fputs(value.buf, stdout);
+ 		break;
+ 	case QUOTE_SHELL:
+-		sq_quote_buf(&sb, v->s);
++		sq_quote_buf(&formatted, value.buf);
+ 		break;
+ 	case QUOTE_PERL:
+-		perl_quote_buf(&sb, v->s);
++		perl_quote_buf(&formatted, value.buf);
+ 		break;
+ 	case QUOTE_PYTHON:
+-		python_quote_buf(&sb, v->s);
++		python_quote_buf(&formatted, value.buf);
+ 		break;
+ 	case QUOTE_TCL:
+-		tcl_quote_buf(&sb, v->s);
++		tcl_quote_buf(&formatted, value.buf);
+ 		break;
+ 	}
+-	if (quote_style != QUOTE_NONE) {
+-		fputs(sb.buf, stdout);
+-		strbuf_release(&sb);
+-	}
++	if (state->quote_style != QUOTE_NONE)
++		fputs(formatted.buf, stdout);
++	strbuf_release(&value);
++	strbuf_release(&formatted);
+ }
+ 
+ static int hex1(char ch)
+@@ -1234,8 +1247,12 @@ static int hex2(const char *cp)
+ 		return -1;
+ }
+ 
+-static void emit(const char *cp, const char *ep)
++static void emit(const char *cp, const char *ep,
++		 struct ref_formatting_state *state)
+ {
++	struct strbuf value = STRBUF_INIT;
++	struct strbuf format = STRBUF_INIT;
++
+ 	while (*cp && (!ep || cp < ep)) {
+ 		if (*cp == '%') {
+ 			if (cp[1] == '%')
+@@ -1249,27 +1266,44 @@ static void emit(const char *cp, const char *ep)
+ 				}
+ 			}
+ 		}
+-		putchar(*cp);
++		strbuf_addch(&value, *cp);
+ 		cp++;
+ 	}
++	apply_formatting_state(state, value.buf, &format);
++	fputs(format.buf, stdout);
++	strbuf_release(&format);
++	strbuf_release(&value);
++}
++
++static void store_formatting_state(struct ref_formatting_state *state,
++				   struct atom_value *atomv)
++{
++	/*  Here the 'ref_formatting_state' variable will be filled */
+ }
+ 
+ void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+ {
+ 	const char *cp, *sp, *ep;
++	struct ref_formatting_state state;
++
++	memset(&state, 0, sizeof(state));
++	state.quote_style = quote_style;
+ 
+ 	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+ 		struct atom_value *atomv;
+ 
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+-			emit(cp, sp);
++			emit(cp, sp, &state);
+ 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+-		print_value(atomv, quote_style);
++		if (atomv->modifier_atom)
++			store_formatting_state(&state, atomv);
++		else
++			print_value(atomv, &state);
+ 	}
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
+-		emit(cp, sp);
++		emit(cp, sp, &state);
+ 	}
+ 	if (need_color_reset_at_eol) {
+ 		struct atom_value resetv;
+@@ -1278,7 +1312,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 		if (color_parse("reset", color) < 0)
+ 			die("BUG: couldn't parse 'reset' as a color");
+ 		resetv.s = color;
+-		print_value(&resetv, quote_style);
++		print_value(&resetv, &state);
+ 	}
+ 	putchar('\n');
+ }
+diff --git a/ref-filter.h b/ref-filter.h
+index 6bf27d8..12e6a6b 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -19,6 +19,11 @@
+ struct atom_value {
+ 	const char *s;
+ 	unsigned long ul; /* used for sorting when not FIELD_STR */
++	unsigned int modifier_atom : 1; /*  atoms which act as modifiers for the next atom */
++};
++
++struct ref_formatting_state {
++	int quote_style;
+ };
+ 
+ struct ref_sorting {
+-- 
+2.4.6
