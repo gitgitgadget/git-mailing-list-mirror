@@ -1,90 +1,94 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 0/10] port tag.c to use ref-filter APIs
-Date: Thu, 30 Jul 2015 15:43:02 +0530
-Message-ID: <CAOLa=ZSBbURBhV5yq2NcVJNaCBA+1fFORN9a65OJgzObAPdCeQ@mail.gmail.com>
+Subject: Re: [PATCH v6 02/10] ref-filter: add option to pad atoms to the right
+Date: Thu, 30 Jul 2015 15:48:17 +0530
+Message-ID: <CAOLa=ZR2z1JJnNZr1qr-Bk6JL0p9ghnEAkCKvrvrkQaBOBsyHg@mail.gmail.com>
 References: <CAOLa=ZR6_2NBB4v0Ynq391=8Jk2RZON6R0YG=HKUNwKx249b7Q@mail.gmail.com>
- <CAPig+cQv4BWFwgx7mDHh=gNpxbEeR7auw4os-tOpf3cGah=zpw@mail.gmail.com>
- <xmqqbneu907l.fsf@gitster.dls.corp.google.com> <vpqzj2e9dyj.fsf@anie.imag.fr>
+ <1438065211-3777-1-git-send-email-Karthik.188@gmail.com> <1438065211-3777-2-git-send-email-Karthik.188@gmail.com>
+ <CAPig+cS4zVT2=kuV3yc860vp4fKrqzvM_phyNngSUho9zTzStA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 30 12:13:41 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"christian.couder@gmail.com" <christian.couder@gmail.com>,
+	"Matthieu.Moy@grenoble-inp.fr" <Matthieu.Moy@grenoble-inp.fr>,
+	"gitster@pobox.com" <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 12:18:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKkqJ-0001RL-LQ
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 12:13:40 +0200
+	id 1ZKkvN-0004tt-Fi
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 12:18:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755265AbbG3KNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2015 06:13:36 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:34122 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755098AbbG3KNc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2015 06:13:32 -0400
-Received: by obre1 with SMTP id e1so27388123obr.1
-        for <git@vger.kernel.org>; Thu, 30 Jul 2015 03:13:32 -0700 (PDT)
+	id S1754606AbbG3KSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2015 06:18:48 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:33635 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754571AbbG3KSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2015 06:18:47 -0400
+Received: by obdeg2 with SMTP id eg2so27457330obd.0
+        for <git@vger.kernel.org>; Thu, 30 Jul 2015 03:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=GK4no26qSp59nMOX7R3eMSLaPgkjcj89YcdMV7tyEb4=;
-        b=Vb8iHBX+Hj45QxBLSy9ptmJSHpeVDRaV9QIhnkmdICLcAVOSZ3gsg9SWTl0CiGqPUS
-         nRVW1lOygJzNqql9BJj2qze2wv5zb/sKVM0TBK3Hc5wcjuKZhlhS+G8f3qvA+hZ3pDt1
-         d3zvpQ8bePOLZf2IdmFneeH/1HF7dBTAxcXM6EVJ8Pp2tzFZ75ROaqGxhHC+KvPq7Uik
-         DPLJpiXA3k+GR0QeLvFuy8CfzRWjomU4zbXCPaEx1YFyUzbBrPshxIGyw4LNzocWBDBs
-         uXAlik7Bu33loxso+G+E+rRRFwepAxI4Pf9oqhL5WSQlK+XXbX7iluzqdEU1IMbVoEXO
-         ts1w==
-X-Received: by 10.182.204.38 with SMTP id kv6mr45112128obc.70.1438251212287;
- Thu, 30 Jul 2015 03:13:32 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Thu, 30 Jul 2015 03:13:02 -0700 (PDT)
-In-Reply-To: <vpqzj2e9dyj.fsf@anie.imag.fr>
+        bh=xss3WbV025rBNs6Gy9lKLHXsXN5P7gLzY4Wn8bUpSpM=;
+        b=nTxZRSV9EZEsoAP4WNyEDrHBK16vpd9gszndczfvVJ5Vg31U9DeB+js7CZyzkyI+6U
+         ffz9TYlCP9w7k4v5nbL+uGfqdmvRuoN/eFoOBiE86cK7iXQYROXOcLc1Fj5455lQvJ2q
+         +RKOeWGEY+CxNk9tg3lM9yMcEzcohjibMc1QM1PPuuIlX04lfgs9y8keqjGdEGmW2q0b
+         BHPPhCTzAkLnhNCddLr/Ej0gM/mqn7IhNFuV6h3T0nl7ls7P2qihKZJIPn6x9u6K+Pl3
+         L8pwc6rgngcsffqXBGeSaBy79rEhxcM0jJYiqPrr3G8AGYMy+FWbIffNT0AAkGzHxVpm
+         tx4Q==
+X-Received: by 10.182.153.161 with SMTP id vh1mr44209584obb.34.1438251526595;
+ Thu, 30 Jul 2015 03:18:46 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Thu, 30 Jul 2015 03:18:17 -0700 (PDT)
+In-Reply-To: <CAPig+cS4zVT2=kuV3yc860vp4fKrqzvM_phyNngSUho9zTzStA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274980>
 
-On Thu, Jul 30, 2015 at 3:14 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> "Currently we do not need it to reimplement the canned 'tag -l'
->> format" is an OK and sensible justification to stick to the current
->> implementation of %(padright:N), but we'd need to think if we would
->> want to keep this limited and strange form that applies to a single
->> atom that comes next (ignoring any literal spans) as a private
->> implementation detail between ref-filter and "git tag".  Opening it
->> up to end-users would not mean we cannot add a correctly operating
->> variant of "pad this string to the right" later, but it does mean we
->> have to maintain %(padright) in this limited form forever.
+On Thu, Jul 30, 2015 at 12:59 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tuesday, July 28, 2015, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add a new atom "padright" and support %(padright:X) where X is a
+>> number.  This will align the succeeding atom value to the left
+>> followed by spaces for a total length of X characters. If X is less
+>> than the item size, the entire atom value is printed.
 >>
->> My knee-jerk reaction is that we probably should not want to expose
->> this to the end users, and to discourage its use, perhaps name it
->> somewhat strangely (e.g. "%(x-padright:N)" or something).
+>> Add tests and documentation for the same.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+>> index 505a360..19ac480 100755
+>> --- a/t/t6302-for-each-ref-filter.sh
+>> +++ b/t/t6302-for-each-ref-filter.sh
+>> @@ -81,4 +81,20 @@ test_expect_success 'filtering with --contains' '
+>>         test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success 'padding to the right using `padright`' '
+>> +       cat >expect <<-\EOF &&
+>> +       refs/heads/master|refs/heads/master        |refs/heads/master|
+>> +       refs/heads/side|refs/heads/side          |refs/heads/side|
+>> +       refs/odd/spot|refs/odd/spot            |refs/odd/spot|
+>> +       refs/tags/double-tag|refs/tags/double-tag     |refs/tags/double-tag|
+>> +       refs/tags/four|refs/tags/four           |refs/tags/four|
+>> +       refs/tags/one|refs/tags/one            |refs/tags/one|
+>> +       refs/tags/signed-tag|refs/tags/signed-tag     |refs/tags/signed-tag|
+>> +       refs/tags/three|refs/tags/three          |refs/tags/three|
+>> +       refs/tags/two|refs/tags/two            |refs/tags/two|
+>> +       EOF
+>> +       git for-each-ref --format="%(refname)%(padright:25)|%(refname)|%(refname)|" >actual &&
 >
-> I disagree. The current %(padright) fits 99.9% needs. It's handy for the
-> user if he wants a column-display with --format. It's consistant with
-> the "git log" %<() atoms.
->
-> Sure, if the user wants really advanced formatting, it's not sufficient.
-> But first I believe this is a case of YAGNI, "right-pad an arbitrary
-> string" is a funny coding exercice, but not very useful in real-life.
-> And then, if one really has a use-case for advanced formatting, I think
-> a much better approach is to dump an easy-to-parse language
-> (XML/JSON/CSV/...) and pipe it to a formatter written in a real
-> programming language. It will always be more powerful than having to
-> chose in a limited set of %(atoms).
+> This fails to test the important case when the atom length is greater
+> than the padright value (in which case no padding should be done, and
+> the atom text should extend beyond the 'padright' column).
 >
 
-Exactly! what I was thinking, I mean this is quite useful feature in itself,
-Agreed there are numerous end cases which are not satisfied, but those
-are quite minimal and rarely used.
+Will add a test for the same, thanks :)
 
 -- 
 Regards,
