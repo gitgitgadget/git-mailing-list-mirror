@@ -1,104 +1,121 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Confused about sparse vs untracked-cache
-Date: Thu, 30 Jul 2015 21:09:03 +0700
-Message-ID: <CACsJy8C_PUq4htCSF=qUJ0HNWf-E4RGXJ2FuzbRhSRhLN2vrRg@mail.gmail.com>
-References: <1438223527.18134.53.camel@twopensource.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] bisect: add read_bisect_terms() to the public interface
+Date: Thu, 30 Jul 2015 15:33:09 +0100
+Message-ID: <55BA35A5.2020605@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 16:09:45 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	antoine.delaite@ensimag.grenoble-inp.fr,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 16:40:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZKoWm-0000sw-3F
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 16:09:44 +0200
+	id 1ZKp0Y-0007VF-TP
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jul 2015 16:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753659AbbG3OJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2015 10:09:34 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:33886 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753376AbbG3OJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2015 10:09:33 -0400
-Received: by ioea135 with SMTP id a135so54722977ioe.1
-        for <git@vger.kernel.org>; Thu, 30 Jul 2015 07:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=OsdjBKLyGJeK/F0iBjUTnkRXu+W7OMSFCGeflNkPutU=;
-        b=eYIHZC/IeUSH/RuX6n+8pxWS5sqCJbQHEJeixAdmv3A9gHkoU5E+yrGvuSyxw7W933
-         Dr9yJ/Hg73+hZV4N6Goc+1kvfGTUfMm0dkKhffstta52J3t8LJHouKOVP5rWAL+aAuCe
-         UZK6UKz1TsNuDpuAXUDB0YK4FfNXSD5Uv7YWL26H+PbT5d4W+YnYxyRnA1nMFFftThQO
-         8iEo6LVh2ejyKf2tGL9BFIni6lp1wo2K2tqnOglNcwco3VHzYOva9OwAhGHt0CWtESEC
-         rD5md+QPHn6eyq9fj+pWausmcSVZBNXspU6HbqAqB4zhSA96Ga9vHDJrKme/id1vEDRJ
-         nRSg==
-X-Received: by 10.107.19.206 with SMTP id 75mr10534315iot.191.1438265372651;
- Thu, 30 Jul 2015 07:09:32 -0700 (PDT)
-Received: by 10.107.191.193 with HTTP; Thu, 30 Jul 2015 07:09:03 -0700 (PDT)
-In-Reply-To: <1438223527.18134.53.camel@twopensource.com>
+	id S1753374AbbG3OkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2015 10:40:23 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:39694 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753367AbbG3OkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2015 10:40:20 -0400
+X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jul 2015 10:40:20 EDT
+Received: from smtp.demon.co.uk (unknown [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 23866400E9D
+	for <git@vger.kernel.org>; Thu, 30 Jul 2015 15:33:18 +0100 (BST)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 69E3F128162;
+	Thu, 30 Jul 2015 15:33:15 +0100 (BST)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 128AE128153;
+	Thu, 30 Jul 2015 15:33:15 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
+	Thu, 30 Jul 2015 15:33:14 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/274988>
 
-On Thu, Jul 30, 2015 at 9:32 AM, David Turner <dturner@twopensource.com> wrote:
-> I'm looking at dir.c, and there's a bit I'm confused about:
->
-> prep_exclude() says:
->                      /*
->                       * .. and .gitignore does not exist before
->                       * (i.e. null exclude_sha1 and skip_worktree is
->                       * not set). Then we can skip loading .gitignore,
->                       * which would result in ENOENT anyway.
->                       * skip_worktree is taken care in read_directory()
->                       */
->                      !is_null_sha1(untracked->exclude_sha1))) {
->
-> That "skip_worktree is taken care in read_directory()" appears to be
-> referring to this bit of validate_untracked_cache():
->         /*
->          * An optimization in prep_exclude() does not play well with
->          * CE_SKIP_WORKTREE. It's a rare case anyway, if a single
->          * entry has that bit set, disable the whole untracked cache.
->          */
->         for (i = 0; i < active_nr; i++)
->                 if (ce_skip_worktree(active_cache[i]))
->                         return NULL;
-> ------------
-> I'm confused about why skip_worktree needs to be unset.  When I comment
-> out the second snippet, all the tests still pass.  What was the reason
-> behind that condition?  Is it really necessary?
 
-This code is added in 27b099a (untracked cache: don't open
-non-existent .gitignore - 2015-03-08) so it's about non-existent
-.gitignore files. We have two cases: .gitignore does not exist, which
-we want to avoid opening it, and .gitignore does not exist, but it's
-in the index and is skip-worktree'd. We would want to call
-add_excludes() anyway in the second case.
+Commit 833bd64f ("bisect: simplify the addition of new bisect terms",
+29-06-2015) added a public function, read_bisect_terms(), to 'bisect.c'
+which was then called by code in 'revision.c', having directly referenced
+the symbol with an explicit external declaration. This causes sparse to
+complain ('symbol not declared. Should it be static?').
 
-I think I followed that train of thought when I wrote this and to
-avoid trouble, I just left skip-worktree case of out. But that
-ce_skip_worktree() check in read_directory() is probably too strong.
-All we need is disable the cache only when there's an .gitignore file
-being skip-worktree'd. If we do that and make sure all .gitignore
-files are not skip-worktree'd, the two can work toghether.
+In order to suppress the warning, move the external declaration to the
+"bisect.h" header file and '#include' the header in 'revision.c'.
 
-Back to the problem. The question is, is
-is_null_sha1(untracked->exclude_sha1) enough to satisfy both cases? If
-so, we don't have to disable the cache in the presence of
-skip-worktree. I haven't stared at this code again long enough to be
-confident, but I think we may be alright. exclude_sha1 should reflect
-the true, effective .gitignore content, wherever it's from. So in
-skip-worktree case, is_null_sha1(exclude_sha1) should only be true
-when the entry does not exist in both worktree and index. There will
-be an unnecessary open() in this case before the index version is
-used, but that's probably ok.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-No I don't think the tests cover skip-worktree + untracked cache
-combination, so yeah it would pass.
+Hi Junio,
+
+You recently mentioned that you may squash a fix to the 'ref-filter'
+series in next whilst re-winding next. How about squashing this patch
+into 'ad/bisect-cleanup' at the same time?
+
+As you know, I have been 'up to my eyeballs' lately, so this patch is
+(almost) a 'five minute quick fix' to the sparse warning. (You know that
+I prefer to catch these while they are still in pu, but I missed this
+one ... sorry!) So, if this patch is not appropriate (since I have not
+followed any of the discussion which lead to this commit), please ignore!
+
+BTW, a large part of 'bisect.h', namely the declartions of BISECT_SHOW_ALL,
+REV_LIST_QUIET and rev_list_info are only referenced by 'builtin/rev-list.c'.
+Noticed in passing ...
+
+ATB,
+Ramsay Jones
+
+ bisect.h   | 2 ++
+ revision.c | 3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/bisect.h b/bisect.h
+index 2a6c831..acd12ef 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -26,4 +26,6 @@ extern int bisect_next_all(const char *prefix, int no_checkout);
+ 
+ extern int estimate_bisect_steps(int all);
+ 
++extern void read_bisect_terms(const char **bad, const char **good);
++
+ #endif
+diff --git a/revision.c b/revision.c
+index b6b2cf7..5350139 100644
+--- a/revision.c
++++ b/revision.c
+@@ -18,6 +18,7 @@
+ #include "commit-slab.h"
+ #include "dir.h"
+ #include "cache-tree.h"
++#include "bisect.h"
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
+@@ -2079,8 +2080,6 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 	ctx->argc -= n;
+ }
+ 
+-extern void read_bisect_terms(const char **bad, const char **good);
+-
+ static int for_each_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data, const char *term) {
+ 	struct strbuf bisect_refs = STRBUF_INIT;
+ 	int status;
 -- 
-Duy
+2.5.0
