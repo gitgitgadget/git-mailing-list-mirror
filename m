@@ -1,120 +1,122 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: New Defects reported by Coverity Scan for git
-Date: Fri, 31 Jul 2015 09:11:55 -0700
-Message-ID: <CAGZ79kZMzy7x7HufeM1dotmhKn5HEw_Yoo5p8bYOfUKLbjxSww@mail.gmail.com>
-References: <55bb53d17f78c_2d71521318537c@scan.mail>
-	<CACsJy8AfYHOCBdSNyBZP0CdYJGkXbipn0t7E_C8j7c25LET4Qg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add: remove dead code
+Date: Fri, 31 Jul 2015 09:41:37 -0700
+Message-ID: <xmqqr3no5lfi.fsf@gitster.dls.corp.google.com>
+References: <1438301956-1658-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 18:12:02 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 18:41:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLCuf-0005EJ-Er
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 18:12:01 +0200
+	id 1ZLDNS-00032p-Eb
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 18:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbbGaQL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 12:11:57 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:34449 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbbGaQL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 12:11:56 -0400
-Received: by ykax123 with SMTP id x123so63065876yka.1
-        for <git@vger.kernel.org>; Fri, 31 Jul 2015 09:11:55 -0700 (PDT)
+	id S1752708AbbGaQlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 12:41:42 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:34422 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbbGaQll (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 12:41:41 -0400
+Received: by pacan13 with SMTP id an13so44293991pac.1
+        for <git@vger.kernel.org>; Fri, 31 Jul 2015 09:41:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+5iksf8Zqb0HLyztoA/jE7Q7tIwrt67tI414BHgMybc=;
-        b=b/JWli1RpkNsaDXORT1rQM87A3AXdZqXrE3wumnvd+nMnMlEY3VCiLajjnN8hhqYTS
-         HmToRTF8VMYrQCXFHZat+1Zgjzumk98vT88HQ53hO+qCjXO/gDFw2tabPpK2iKXHn1OY
-         lB5SywyN4O9s+/dQchYN5jCiT8dKCk39QxR2JJ1z3z8erJi+H214+qXwuNw5QMxZSrw1
-         MS+M+UJOtFDjnGfJprkR+qs1bD7MIczb9MnxIPztvfdwiYvou09qtnj89e6K6KPgQuXL
-         rP13HB5pP6PU2Zpnv8plc4rtGUUPWWJTmg4zDVg/2d37wHu8Jg1aJ2/SqwvcXI4Bisgb
-         iW9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=+5iksf8Zqb0HLyztoA/jE7Q7tIwrt67tI414BHgMybc=;
-        b=WdF+iSc60/eGXx8G8iN7ePf/OAJuA1wMnu1YL+tQHQyPvQIFi9yVHb37AY4LiKkHqi
-         Jm5ZIVAyaSDmY9+a2wI1LcAnphaweWzoYS/2gViRjDi93BafyO0Dvb+Ox0vbLz9+nBbI
-         BoKo8ijo9DMEVVo6VYwJQd+gRoQXD34bmZNxylhJKLA7jqA+NehuPKvAFtugTghwHkrx
-         8kVJ8eBkKP5iN+WL2oPaaCae0qedOtfCMrjeYl3AuwcqZ/zK/X7HsA+I+elsx1KkB1kY
-         jWJtUIIem4BNMpk+tk0NNHb0XN6zZp1I87iHFmoyKwu0XBa+fFyFNK/Dh+0Kxe3+kBra
-         CoWw==
-X-Gm-Message-State: ALoCoQn76mnF6pV8Lu/eZAiEeZqWHdW/XdNDcFhlj3ku5pIKoPVOOzRRFodQzwrp1kcxMbtU+wx6
-X-Received: by 10.170.73.67 with SMTP id p64mr4156544ykp.101.1438359115522;
- Fri, 31 Jul 2015 09:11:55 -0700 (PDT)
-Received: by 10.37.21.129 with HTTP; Fri, 31 Jul 2015 09:11:55 -0700 (PDT)
-In-Reply-To: <CACsJy8AfYHOCBdSNyBZP0CdYJGkXbipn0t7E_C8j7c25LET4Qg@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=bOpxj+zJSoxdq2hfvZ1RLc51NmaBBFs6TJCOtQD+aoc=;
+        b=tMVOn/3J8Eu/WIkTYxlnWR3PZ1+u8HH4pAfPjuRAEnDxdqZSLvMVp1TVHdT89GHRBt
+         qLG/lKeqpK4a9qPyjA1EsaST+SYFD3OAVK/nyqDhSTdyeuDPVu2etxqFuL0ZYC5PSq8p
+         tLXsbLK/eJuNWtJe4+6BGpPZE5vmlVD1vti7UH6VsZs0Eueu2qBC0aFMb9qPz5pdU5Wv
+         NQy5NW6UhZNRBKJ/LQO7jGQ4WiNLNTKOJpiYKWVwPXtCN4JkOSA4BhoY1Q9UesRS+6iG
+         sLOhYVpbvOPDWz2FvnNEKxbtYV2A3qFd66E5xlFzI52ASnWjms9dzYivyXj8uW1Nf1P3
+         Hoiw==
+X-Received: by 10.66.231.69 with SMTP id te5mr8750966pac.98.1438360901017;
+        Fri, 31 Jul 2015 09:41:41 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1b0:46e8:ba02:35e3])
+        by smtp.gmail.com with ESMTPSA id fj6sm8626243pdb.21.2015.07.31.09.41.38
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 31 Jul 2015 09:41:38 -0700 (PDT)
+In-Reply-To: <1438301956-1658-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Thu, 30 Jul 2015 17:19:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275053>
 
-On Fri, Jul 31, 2015 at 4:24 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> Jeff, I suppose you are the admin of git on scan.coverity, or knows
-> him/her, perhaps we can add a model for xmalloc to suppress these
-> "null pointer deferences" reports? We are sure xmalloc() never returns
-> NULL. Qemu did it [1] and it looks simple.. I think something like
-> this would do
->
-> void *xmalloc(size_t size)
-> {
->    void *mem = malloc(size);
->    if (!mem) __coverity_panic__();
->    return mem;
-> }
->
-> [1] http://git.qemu.org/?p=qemu.git;a=blob;f=scripts/coverity-model.c;h=4c99a85cfc292caa9edd9d041e2683ee53490a8d;hb=e40cdb0e6efb795e4d19368987d53e3e4ae19cf7#l104
->
+Stefan Beller <sbeller@google.com> writes:
 
-Taking just that excerpt doesn't work. Upload fails with
-"modeling_file.c", line 12: error #20:
-          identifier "malloc" is undefined
-  void *mem = malloc(size);
-
-I'll look into your reference[1] a bit more and try to follow it as a guidance.
-
-
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 >
-> ---------- Forwarded message ----------
-> From:  <scan-admin@coverity.com>
-> Date: Fri, Jul 31, 2015 at 5:54 PM
-> Subject: New Defects reported by Coverity Scan for git
-> To: pclouds@gmail.com
->
-> _______________________________________________________________________________________________________
-> *** CID 1313836:  Null pointer dereferences  (FORWARD_NULL)
-> /rerere.c: 150 in find_rerere_dir()
-> 144                     return NULL; /* BUG */
-> 145             pos = sha1_pos(sha1, rerere_dir, rerere_dir_nr,
-> rerere_dir_sha1);
-> 146             if (pos < 0) {
-> 147                     rr_dir = xmalloc(sizeof(*rr_dir));
-> 148                     hashcpy(rr_dir->sha1, sha1);
-> 149                     rr_dir->status_nr = rr_dir->status_alloc = 0;
->>>>     CID 1313836:  Null pointer dereferences  (FORWARD_NULL)
->>>>     Assigning: "rr_dir->status" = "NULL".
-> 150                     rr_dir->status = NULL;
-> 151                     pos = -1 - pos;
-> 152
-> 153                     /* Make sure the array is big enough ... */
-> 154                     ALLOC_GROW(rerere_dir, rerere_dir_nr + 1,
-> rerere_dir_alloc);
-> 155                     /* ... and add it in. */
->
-> ** CID 1313835:  Null pointer dereferences  (FORWARD_NULL)
-> /builtin/fetch.c: 795 in prune_refs()
-> --
-> Duy
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> So I was trying to understand how to implement "git add .gitmodules" as 
+> I intend to rewrite git submodules in C.
+
+A request and a suggestion.
+
+ - Please keep Jens and Heiko in the loop and pick their brains ;-)
+
+ - It may not be the best use of your time to attempt rewriting the
+   whole of "git submodule" in C in a single pass (which is the
+   impression I am getting from seeing you say "git add
+   .gitmodules").
+
+   The largest pain point a rewrite in C would solve is that "git
+   submodule init" and "update" have to go sequencially even though
+
+   (1) there is no inherent reason for cloning and fetching of
+       different submodules to happen in some order;
+
+   (2) there is no inherent reason for a failure to clone or fetch
+       of one submodule to abort the entire session without cloning
+       or fetching other submodules; and
+
+   (3) the operation in each submodule takes human-scale time and
+       the users would benefit greatly by parallel operations.
+
+   One approach that may be beneficial would be to introduce "git
+   submodule--helper" written in C to have selected primitives used
+   in "git submodule" script to speed them up.  Perhaps the first
+   subcommand would be "
+
+    $ git submodule--helper foreach-parallel --cmd=$cmd $args...
+
+   where it takes the arguments currently fed to module_list as
+   $args... and runs $cmd in parallel.  The initial implementation
+   of "git submodule update" then would replace the expensive and
+   sequencial
+
+       module_list "$@" | {
+           ...
+           while read mode sha1 stage sm_path
+           do
+           	...
+	   done
+       }
+
+   loop with a call to the foreach-parallel subcommand.
+
+   The end-user scripts that currently use "git submodule foreach"
+   may or may not depend on the sequencial nature of the current
+   implementation, so adding "git submodule foreach-parallel" may be
+   a good way to expose this as a new "do it in parallel" feature.
+
+   Once you have a solid infrastructure to implement the helper
+   subcommand "foreach-parallel" (I'd expect the interface inside C
+   into that function would be to give it a worker function with the
+   data for the function to consume, and the above --cmd=$cmd form
+   would use a worker function that essentially does run_command();
+   the spawn(2)ing and wait(2)ing would be done on the more generic
+   API side), you can rewrite the $cmd part in C little by little,
+   and eventually you would get a full C implemention while keeping
+   everything working and retaining debuggability during the course
+   of development.
+
+Thanks.
