@@ -1,374 +1,87 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH 2/2] notes: add notes.merge option to select default strategy
-Date: Fri, 31 Jul 2015 12:21:36 -0700
-Message-ID: <1438370496-26433-3-git-send-email-jacob.e.keller@intel.com>
-References: <1438370496-26433-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 21:21:54 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/2] worktrees: add die_if_shared_symref
+Date: Fri, 31 Jul 2015 15:35:18 -0400
+Message-ID: <CAPig+cTX0Wav2QSFi734uLVpjdmwFKzcesgkpmVKCPomMB_HyA@mail.gmail.com>
+References: <1438369297-4838-1-git-send-email-dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 21:35:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLFsN-000200-Oh
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 21:21:52 +0200
+	id 1ZLG5U-0005Av-8V
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 21:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbbGaTVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 15:21:41 -0400
-Received: from mga02.intel.com ([134.134.136.20]:32814 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751245AbbGaTVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 15:21:40 -0400
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga101.jf.intel.com with ESMTP; 31 Jul 2015 12:21:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.15,586,1432623600"; 
-   d="scan'208";a="533864123"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.85])
-  by FMSMGA003.fm.intel.com with ESMTP; 31 Jul 2015 12:21:38 -0700
-X-Mailer: git-send-email 2.5.0.482.gfcd5645
-In-Reply-To: <1438370496-26433-1-git-send-email-jacob.e.keller@intel.com>
+	id S1751458AbbGaTfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 15:35:20 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:35378 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbbGaTfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 15:35:19 -0400
+Received: by ykdu72 with SMTP id u72so67304242ykd.2
+        for <git@vger.kernel.org>; Fri, 31 Jul 2015 12:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WyPdCQTJgcTLnaFiPKHRTjmSAiS4qlrB+C5cfLM62zY=;
+        b=vd4KeTSdh9MwCjwJj1afJFHTrfG1egDUXNR1CjIinv2KRQVJhL7PtJzPgR7k9EfqON
+         Xsm+TQPZDVKwDQBLkPeTeFDklW6JOQ0BXO3kfpmDe88vJWLyhxyrx/vNROuyLlMGrIhr
+         KhTSfHgUL3t3eEXqf4xj7AEpgz/xV5ohp6zbuMIayXHzspW7i8BXy3Xly2OBLq0lX6Yj
+         QKndKN7SV1FdFjM1NwUK3hYtCbvPDrE4nlRVzcZt1OydpoUMsSZNbs1+0sQAHsAniYUt
+         wTuQSDqsLGsfW1YNoYm3AScNwtYOXW2To5PChZ7eg3XWtMLnhPGXlv+rZ5rYGXnvowD0
+         /Wdg==
+X-Received: by 10.170.63.196 with SMTP id f187mr5554246ykf.82.1438371318766;
+ Fri, 31 Jul 2015 12:35:18 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Fri, 31 Jul 2015 12:35:18 -0700 (PDT)
+In-Reply-To: <1438369297-4838-1-git-send-email-dturner@twopensource.com>
+X-Google-Sender-Auth: MLQNGFhkOLpBdqmDM1GxcpQ_jDw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275072>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Fri, Jul 31, 2015 at 3:01 PM, David Turner <dturner@twopensource.com> wrote:
+> Add a new function, die_if_shared_symref, which works like
+> die_if_checked_out, but for all references.  Refactor
+> die_if_checked_out to work in terms of die_if_shared_symref.
+>
+> Soon, we will use die_if_shared_symref to protect notes merges in
+> worktrees.
 
-Teach git-notes about a new configuration option "notes.merge" for
-selecting the default notes merge strategy. Document the option in
-config.txt and git-notes.txt
+I wonder if the diagnostic:
 
-Add tests for the configuration option. Ensure that command line
---strategy option overrides the configured value. Ensure that -s can't
-be passed with --commit or --abort. Ensure that --abort and --commit
-can't be used together.
+    'blorp' is already checked out at '/path/name/'
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/config.txt              |  7 ++++
- Documentation/git-notes.txt           | 30 +++++++++-----
- builtin/notes.c                       | 75 +++++++++++++++++++++++++----------
- notes-merge.h                         | 16 ++++----
- t/t3309-notes-merge-auto-resolve.sh   | 29 ++++++++++++++
- t/t3310-notes-merge-manual-resolve.sh | 12 ++++++
- 6 files changed, 129 insertions(+), 40 deletions(-)
+emitted by check_linked_checkout() needs to be adjusted for this
+change. It still makes sense for die_if_checked_out(), but sounds odd
+for die_if_shared_symref().
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3c1e4df09beb..85c15126e4ce 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1937,6 +1937,13 @@ mergetool.writeToTemp::
- mergetool.prompt::
- 	Prompt before each invocation of the merge resolution program.
- 
-+notes.merge::
-+	Which merge strategy to choose by default when resolving notes
-+	conflicts. Must be one of `manual`, `ours`, `theirs`, `union`,
-+	or `cat_sort_uniq`. Defaults to `manual`. See "NOTES MERGE
-+	STRATEGIES" section of linkgit:git-notes[1] for more information
-+	on each strategy.
-+
- notes.displayRef::
- 	The (fully qualified) refname from which to show notes when
- 	showing commit messages.  The value of this variable can be set
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 674682b34b83..d8944f5aec60 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -101,13 +101,13 @@ merge::
- 	any) into the current notes ref (called "local").
- +
- If conflicts arise and a strategy for automatically resolving
--conflicting notes (see the -s/--strategy option) is not given,
--the "manual" resolver is used. This resolver checks out the
--conflicting notes in a special worktree (`.git/NOTES_MERGE_WORKTREE`),
--and instructs the user to manually resolve the conflicts there.
--When done, the user can either finalize the merge with
--'git notes merge --commit', or abort the merge with
--'git notes merge --abort'.
-+conflicting notes (see the -s/--strategy option or notes.merge
-+config option) is not given, the "manual" resolver is used.
-+This resolver checks out the conflicting notes in a special
-+worktree (`.git/NOTES_MERGE_WORKTREE`), and instructs the user
-+to manually resolve the conflicts there. When done, the user
-+can either finalize the merge with 'git notes merge --commit',
-+or abort the merge with 'git notes merge --abort'.
- 
- remove::
- 	Remove the notes for given objects (defaults to HEAD). When
-@@ -181,10 +181,10 @@ OPTIONS
- -s <strategy>::
- --strategy=<strategy>::
- 	When merging notes, resolve notes conflicts using the given
--	strategy. The following strategies are recognized: "manual"
--	(default), "ours", "theirs", "union" and "cat_sort_uniq".
--	See the "NOTES MERGE STRATEGIES" section below for more
--	information on each notes merge strategy.
-+	strategy. Overrides "notes.merge". The following strategies are
-+	recognized: `manual`, `ours`, `theirs`, `union` and
-+	`cat_sort_uniq`. See the `NOTES MERGE STRATEGIES` section below
-+	for more information on each notes merge strategy.
- 
- --commit::
- 	Finalize an in-progress 'git notes merge'. Use this option
-@@ -310,6 +310,14 @@ core.notesRef::
- 	This setting can be overridden through the environment and
- 	command line.
- 
-+notes.merge::
-+	Which merge strategy to choose by default when resolving notes
-+	conflicts. Must be one of `manual`, `ours`, `theirs`, `union`,
-+	or `cat_sort_uniq`. Defaults to `manual`. See "NOTES MERGE
-+	STRATEGIES" section above for more information on each strategy.
-++
-+This setting can be overridden by passing the `--strategy` option.
-+
- notes.displayRef::
- 	Which ref (or refs, if a glob or specified more than once), in
- 	addition to the default set by `core.notesRef` or
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 88fdafb32bc0..7123311b563e 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -93,6 +93,9 @@ static const char * const git_notes_get_ref_usage[] = {
- static const char note_template[] =
- 	"\nWrite/edit the notes for the following object:\n";
- 
-+static int override_strategy = 0;
-+static enum notes_merge_strategy strategy;
-+
- struct note_data {
- 	int given;
- 	int use_editor;
-@@ -741,6 +744,36 @@ static int merge_commit(struct notes_merge_options *o)
- 	return ret;
- }
- 
-+static int parse_notes_strategy(const char *var, const char *arg,
-+				enum notes_merge_strategy *strategy)
-+{
-+	if (!strcmp(arg, "manual"))
-+		*strategy = NOTES_MERGE_RESOLVE_MANUAL;
-+	else if (!strcmp(arg, "ours"))
-+		*strategy = NOTES_MERGE_RESOLVE_OURS;
-+	else if (!strcmp(arg, "theirs"))
-+		*strategy = NOTES_MERGE_RESOLVE_THEIRS;
-+	else if (!strcmp(arg, "union"))
-+		*strategy = NOTES_MERGE_RESOLVE_UNION;
-+	else if (!strcmp(arg, "cat_sort_uniq"))
-+		*strategy = NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ;
-+	else {
-+		return error("Unknown notes merge strategy: %s", arg);
-+	}
-+
-+	return 0;
-+}
-+
-+static int parse_opt_strategy(const struct option *opt, const char *arg, int unset)
-+{
-+	enum notes_merge_strategy *strategy = opt->value;
-+
-+	/* let merge() know we overrode the configured strategy */
-+	override_strategy = 1;
-+
-+	return parse_notes_strategy(NULL, arg, strategy);
-+}
-+
- static int merge(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
-@@ -749,14 +782,16 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	struct notes_merge_options o;
- 	int do_merge = 0, do_commit = 0, do_abort = 0;
- 	int verbosity = 0, result;
--	const char *strategy = NULL;
- 	struct option options[] = {
- 		OPT_GROUP(N_("General options")),
- 		OPT__VERBOSITY(&verbosity),
- 		OPT_GROUP(N_("Merge options")),
--		OPT_STRING('s', "strategy", &strategy, N_("strategy"),
--			   N_("resolve notes conflicts using the given strategy "
--			      "(manual/ours/theirs/union/cat_sort_uniq)")),
-+		{
-+			OPTION_CALLBACK, 's', "strategy", &strategy, N_("strategy"),
-+			N_("resolve notes conflicts using the given strategy "
-+			   "(manual/ours/theirs/union/cat_sort_uniq)"),
-+			PARSE_OPT_NONEG, parse_opt_strategy
-+		},
- 		OPT_GROUP(N_("Committing unmerged notes")),
- 		{ OPTION_SET_INT, 0, "commit", &do_commit, NULL,
- 			N_("finalize notes merge by committing unmerged notes"),
-@@ -771,7 +806,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_notes_merge_usage, 0);
- 
--	if (strategy || do_commit + do_abort == 0)
-+	if (override_strategy || do_commit + do_abort == 0)
- 		do_merge = 1;
- 	if (do_merge + do_commit + do_abort != 1) {
- 		error("cannot mix --commit, --abort or -s/--strategy");
-@@ -799,22 +834,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	expand_notes_ref(&remote_ref);
- 	o.remote_ref = remote_ref.buf;
- 
--	if (strategy) {
--		if (!strcmp(strategy, "manual"))
--			o.strategy = NOTES_MERGE_RESOLVE_MANUAL;
--		else if (!strcmp(strategy, "ours"))
--			o.strategy = NOTES_MERGE_RESOLVE_OURS;
--		else if (!strcmp(strategy, "theirs"))
--			o.strategy = NOTES_MERGE_RESOLVE_THEIRS;
--		else if (!strcmp(strategy, "union"))
--			o.strategy = NOTES_MERGE_RESOLVE_UNION;
--		else if (!strcmp(strategy, "cat_sort_uniq"))
--			o.strategy = NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ;
--		else {
--			error("Unknown -s/--strategy: %s", strategy);
--			usage_with_options(git_notes_merge_usage, options);
--		}
--	}
-+	o.strategy = strategy;
- 
- 	t = init_notes_check("merge", NOTES_INIT_WRITABLE);
- 
-@@ -950,6 +970,17 @@ static int get_ref(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int git_notes_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "notes.merge")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		return parse_notes_strategy(var, value, &strategy);
-+	}
-+
-+	return git_default_config(var, value, cb);
-+}
-+
- int cmd_notes(int argc, const char **argv, const char *prefix)
- {
- 	int result;
-@@ -960,7 +991,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(git_default_config, NULL);
-+	git_config(git_notes_config, NULL);
- 	argc = parse_options(argc, argv, prefix, options, git_notes_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
-diff --git a/notes-merge.h b/notes-merge.h
-index 1d01f6aacf54..bda8c0c8d348 100644
---- a/notes-merge.h
-+++ b/notes-merge.h
-@@ -8,18 +8,20 @@ enum notes_merge_verbosity {
- 	NOTES_MERGE_VERBOSITY_MAX = 5
- };
- 
-+enum notes_merge_strategy {
-+	NOTES_MERGE_RESOLVE_MANUAL = 0,
-+	NOTES_MERGE_RESOLVE_OURS,
-+	NOTES_MERGE_RESOLVE_THEIRS,
-+	NOTES_MERGE_RESOLVE_UNION,
-+	NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ
-+};
-+
- struct notes_merge_options {
- 	const char *local_ref;
- 	const char *remote_ref;
- 	struct strbuf commit_msg;
- 	int verbosity;
--	enum {
--		NOTES_MERGE_RESOLVE_MANUAL = 0,
--		NOTES_MERGE_RESOLVE_OURS,
--		NOTES_MERGE_RESOLVE_THEIRS,
--		NOTES_MERGE_RESOLVE_UNION,
--		NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ
--	} strategy;
-+	enum notes_merge_strategy strategy;
- 	unsigned has_worktree:1;
- };
- 
-diff --git a/t/t3309-notes-merge-auto-resolve.sh b/t/t3309-notes-merge-auto-resolve.sh
-index 461fd84755d7..a773b01b73db 100755
---- a/t/t3309-notes-merge-auto-resolve.sh
-+++ b/t/t3309-notes-merge-auto-resolve.sh
-@@ -298,6 +298,13 @@ test_expect_success 'merge z into y with invalid strategy => Fail/No changes' '
- 	verify_notes y y
- '
- 
-+test_expect_success 'merge z into y with invalid configuration option => Fail/No changes' '
-+	git config core.notesRef refs/notes/y &&
-+	test_must_fail git -c notes.merge="foo" notes merge z &&
-+	# Verify no changes (y)
-+	verify_notes y y
-+'
-+
- cat <<EOF | sort >expect_notes_ours
- 68b8630d25516028bed862719855b3d6768d7833 $commit_sha15
- 5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-@@ -365,6 +372,17 @@ test_expect_success 'reset to pre-merge state (y)' '
- 	verify_notes y y
- '
- 
-+test_expect_success 'merge z into y with "ours" configuration option => Non-conflicting 3-way merge' '
-+	git -c notes.merge="ours" notes merge z &&
-+	verify_notes y ours
-+'
-+
-+test_expect_success 'reset to pre-merge state (y)' '
-+	git update-ref refs/notes/y refs/notes/y^1 &&
-+	# Verify pre-merge state
-+	verify_notes y y
-+'
-+
- cat <<EOF | sort >expect_notes_theirs
- 9b4b2c61f0615412da3c10f98ff85b57c04ec765 $commit_sha15
- 5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-@@ -432,6 +450,17 @@ test_expect_success 'reset to pre-merge state (y)' '
- 	verify_notes y y
- '
- 
-+test_expect_success 'merge z into y with "theirs" strategy overriding configuration option "ours" => Non-conflicting 3-way merge' '
-+	git -c notes.merge="ours" notes merge --strategy=theirs z &&
-+	verify_notes y theirs
-+'
-+
-+test_expect_success 'reset to pre-merge state (y)' '
-+	git update-ref refs/notes/y refs/notes/y^1 &&
-+	# Verify pre-merge state
-+	verify_notes y y
-+'
-+
- cat <<EOF | sort >expect_notes_union
- 7c4e546efd0fe939f876beb262ece02797880b54 $commit_sha15
- 5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index 195bb97f859d..d5572121da69 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -314,6 +314,18 @@ y and z notes on 1st commit
- 
- EOF
- 
-+test_expect_success 'do not allow mixing --commit and --abort' '
-+	test_must_fail git notes merge --commit --abort
-+'
-+
-+test_expect_success 'do not allow mixing --commit and --strategy' '
-+	test_must_fail git notes merge --commit --strategy theirs
-+'
-+
-+test_expect_success 'do not allow mixing --abort and --strategy' '
-+	test_must_fail git notes merge --abort --strategy theirs
-+'
-+
- test_expect_success 'finalize conflicting merge (z => m)' '
- 	# Resolve conflicts and finalize merge
- 	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha1 <<EOF &&
--- 
-2.5.0.482.gfcd5645
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+> diff --git a/branch.h b/branch.h
+> index 58aa45f..b2fca30 100644
+> --- a/branch.h
+> +++ b/branch.h
+> @@ -59,4 +59,11 @@ extern int read_branch_desc(struct strbuf *, const char *branch_name);
+>   */
+>  extern void die_if_checked_out(const char *branch);
+>
+> +/*
+> + * Check if a symref points to a branch in the main worktree or any linked
+> + * worktree and die (with a message describing its checkout location) if
+> + * it is.
+
+Ditto here. This is still talking about "branch" and "checkout",
+whereas it's actually checking if a symref in some worktree already
+references the given referent.
+
+> + */
+> +extern void die_if_shared_symref(const char *symref, const char *branch);
+
+s/branch/referent/ or something?
