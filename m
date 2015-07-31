@@ -1,69 +1,155 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 0/4] Fix handling of remotes with single-character names
-Date: Fri, 31 Jul 2015 17:01:58 +0200
-Message-ID: <55BB8DE6.9030401@alum.mit.edu>
-References: <cover.1438117334.git.mhagger@alum.mit.edu> <xmqq4mkl70st.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: let command-line options override saved options
+Date: Fri, 31 Jul 2015 09:04:08 -0700
+Message-ID: <xmqqvbd05n5z.fsf@gitster.dls.corp.google.com>
+References: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
+	<20150724180921.GA17730@peff.net>
+	<CACRoPnR=DSETucY78Xo0RNxHKkqDnTCYFvHsSzWAG7X7z3_DKQ@mail.gmail.com>
+	<xmqq8ua1k7fc.fsf@gitster.dls.corp.google.com>
+	<20150728164311.GA1948@yoshi.chippynet.com>
+	<xmqqegjsfbtk.fsf@gitster.dls.corp.google.com>
+	<CACRoPnR1df+uEnpFArJtwEBCh+HiQYDYGOyZ7KQEGtrdiaX3GQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: =?windows-1252?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 17:02:32 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 18:04:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLBpJ-0005EZ-5S
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 17:02:25 +0200
+	id 1ZLCnD-0007OK-Fs
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 18:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752827AbbGaPCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 11:02:18 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:63882 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751369AbbGaPCO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2015 11:02:14 -0400
-X-AuditID: 1207440f-f79df6d000007c0f-e6-55bb8de88088
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id D7.4C.31759.8ED8BB55; Fri, 31 Jul 2015 11:02:00 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97D52.dip0.t-ipconnect.de [79.201.125.82])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t6VF1wYD021968
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 31 Jul 2015 11:02:00 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <xmqq4mkl70st.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqPuid3eowedZVhbzjy1mtui60s1k
-	0dB7hdmB2WPnrLvsHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ2x7Ntq9oLHTBVPfzxka2Cc
-	wtTFyMkhIWAicaXhKwuELSZx4d56ti5GLg4hgcuMEjsOvWCCcM4zSfxs2soMUsUroC1xY88T
-	oA4ODhYBVYmT65RBwmwCuhKLepqZQMKiAkESr1/mQlQLSpyc+QRsvoiAmsTEtkNgNrNAvETv
-	9gawicICPhKLTtxiBbGFBNIkdrxeyAZicwpYSzx8MB2qXk9ix/VfrBC2vETz1tnMExgFZiFZ
-	MQtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zro5WaW6KWmlG5ihAQu/w7GrvUy
-	hxgFOBiVeHgFFu8KFWJNLCuuzD3EKMnBpCTKu6Bhd6gQX1J+SmVGYnFGfFFpTmrxIUYJDmYl
-	Ed72DqAcb0piZVVqUT5MSpqDRUmcV32Jup+QQHpiSWp2ampBahFMVoaDQ0mC92w3UKNgUWp6
-	akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KE7ji4GRCpLiAdor3AOyt7ggMRcoCtF6ilGX
-	Y8GP22uZhFjy8vNSpcR5/4LsEAApyijNg1sBS1OvGMWBPhbmLQEZxQNMcXCTXgEtYQJa0te+
-	A2RJSSJCSqqB0c6oPfTezk1u9VM/eJ9TuNroHqD+5Xjlr4Z1nkZRbGuWOU9eFeFrsG5DWwHP
-	KpkpDc0fnZuaiwNrepI5Xr+ynz9vowLPwue2G66y9GpUKLX31l3f+usAQ71TUYar 
+	id S1752438AbbGaQEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 12:04:15 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:35626 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751015AbbGaQEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 12:04:14 -0400
+Received: by pdrg1 with SMTP id g1so44890967pdr.2
+        for <git@vger.kernel.org>; Fri, 31 Jul 2015 09:04:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=u+Eb/CwcDq765oQGLN2sYsj3lYETrjX0/7GCCjndUPA=;
+        b=OEHozov+HKo/FGiWMpSRcSW+CbpL49F8amOW2mv/7BoqCDKp6SmDv51keE6sU0Gf5+
+         bgUnhPGXwejXd5ysZuO4djOXO5j095BijvvdnS2NcqW/pmYgOvfYW7QAV7H+V4FySMvE
+         OzN8ozOjijzTW6LmoRCBw4OObdxbIHqLc+XFP1e4DR+xKRBMiHc47XZq2SC6ufChEjyr
+         Uv3pwqU5mnntLfvIVGb04Gxg7HdjArDqg1PeG2/mC9fdUbfTco0OKSP4kEhI5y+OABId
+         YD9265mukFRozhVOzG+fvAQBJhWap/WoewqKXoaLDRv9SdyQlWm8ujeMH1t4mVa7RBtK
+         DZZg==
+X-Received: by 10.70.48.166 with SMTP id m6mr8520824pdn.13.1438358653712;
+        Fri, 31 Jul 2015 09:04:13 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1b0:46e8:ba02:35e3])
+        by smtp.gmail.com with ESMTPSA id r9sm8512444pdp.5.2015.07.31.09.04.08
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 31 Jul 2015 09:04:09 -0700 (PDT)
+In-Reply-To: <CACRoPnR1df+uEnpFArJtwEBCh+HiQYDYGOyZ7KQEGtrdiaX3GQ@mail.gmail.com>
+	(Paul Tan's message of "Fri, 31 Jul 2015 18:58:48 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275051>
 
-On 07/31/2015 12:12 AM, Junio C Hamano wrote:
-> Thanks, queued.
-> 
-> By the way, do you plan to revisit two rather large-ish stalled
-> topics of yours queued on 'pu' any time soon?
+Paul Tan <pyokagan@gmail.com> writes:
 
-I hope to revive the "tempfile" and "numparse" topics earlyish in this
-release cycle if at all possible.
+> I think I will introduce a format_patch() function that takes a single
+> commit-ish so that we can use tag names to name the patches:
+>
+> # Given a single commit $commit, formats the following patches with
+> # git-format-patch:
+> #
+> # 1. $commit.eml: an email patch with a Message-Id header.
+> # 2. $commit.scissors: like $commit.eml but contains a scissors line at the
+> #    start of the commit message body.
+> format_patch () {
+>     {
+>         echo "Message-Id: <$1@example.com>" &&
+>         git format-patch --stdout -1 "$1" | sed -e '1d'
+>     } >"$1".eml &&
 
-Michael
+I only said I can "understand" what is going on, though.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+It feels a bit unnatural for a test to feed a message that lack the
+"From " header line.  Perhaps
+
+	git format-patch --add-header="Message-Id: ..." --stdout -1
+
+or something?
+
+> Ah, I was just following the structure of the code, but stepping back
+> to think about it, I think there are 2 bugs:
+>
+> 1. The signoff is appended during the email-parsing stage. As such,
+> when we are resuming, --no-signoff will have no effect, because the
+> signoff has already been appended at that stage.
+>
+> A solution for this is tricky though, as there are functions of git-am
+> that probably depend on the present behavior of the appended signoff
+> being present in the commit message:
+>
+> * The applypatch-msg hook
+>
+> * The --interactive prompt, where the user can edit the commit message
+> (to remove or edit the signoff maybe?)
+>
+> These functions are called before we attempt to apply the patch, so we
+> should probably call append_signoff before then. However, this still
+> means that --no-signoff will have no effect should the patch
+> application fail and we resume, as the signoff would still have
+> already been appended...
+
+Ah, I see.  Let's not worry about this; we cannot change the
+expectation existing hook scripts depends on.
+
+> 2. Re-reading Peff's message, I see that he expects the command-line
+> options to affect just the current patch, which makes sense. This
+> patch would need to be extended to call am_load() after we finish
+> processing the current patch when resuming.
+
+Yeah, so the idea is:
+
+ - upon the very first invocation, we parse the command line options
+   and write the states out;
+
+ - subsequent invocation, we read from the states and then override
+   with the command line options, but we do not write the states out
+   to update, so that subsequent invocations will keep reading from
+   the very first one.
+
+That sounds sensible.
+
+> The tests will also need to be modified as well.
+>
+>>> +test_expect_success '--3way, --no-3way' '
+>>> +     rm -fr .git/rebase-apply &&
+>>> +     git reset --hard &&
+>>> +     git checkout first &&
+>>> +     test_must_fail git am --3way side-first.patch side-second.patch &&
+>>> +     test -n "$(git ls-files -u)" &&
+>>> +     echo will-conflict >file &&
+>>> +     git add file &&
+>>> +     test_must_fail git am --no-3way --continue &&
+>>> +     test -z "$(git ls-files -u)"
+>>> +'
+>>> +
+>
+> ... Although if I implement the above change, I can't implement the
+> test for --3way, as I think the only way to check if --3way/--no-3way
+> successfully overrides the saved options for the current patch only is
+> to run "git am --3way", but that does not work in the test runner as
+> it expects stdin to be a TTY :-/ So I may have to remove this test.
+> This shouldn't be a problem though, as all the tests in this test
+> suite all test the same mechanism.
+
+Sorry, you lost me.  Where does the TTY come into the picture only
+for --3way (but not for other things like --quiet)?
