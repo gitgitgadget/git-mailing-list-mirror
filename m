@@ -1,100 +1,121 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 1/5] refs: introduce pseudoref and per-worktree ref concepts
-Date: Fri, 31 Jul 2015 02:06:17 -0400
-Message-ID: <1438322781-21181-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 2/5] refs: add ref_type function
+Date: Fri, 31 Jul 2015 02:06:18 -0400
+Message-ID: <1438322781-21181-2-git-send-email-dturner@twopensource.com>
+References: <1438322781-21181-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 08:06:35 2015
+X-From: git-owner@vger.kernel.org Fri Jul 31 08:06:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZL3Sk-00029o-DX
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 08:06:34 +0200
+	id 1ZL3Sl-00029o-01
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 08:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbbGaGGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751658AbbGaGGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 02:06:31 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33705 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751256AbbGaGGa (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 31 Jul 2015 02:06:30 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:35453 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256AbbGaGG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 02:06:29 -0400
-Received: by qgii95 with SMTP id i95so39535058qgi.2
-        for <git@vger.kernel.org>; Thu, 30 Jul 2015 23:06:28 -0700 (PDT)
+Received: by qged69 with SMTP id d69so39577199qge.0
+        for <git@vger.kernel.org>; Thu, 30 Jul 2015 23:06:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=I2LzJ64tjzwI5cWzlKNHYB0Tfo5I49uT5x70MhAwbM4=;
-        b=U5udT3csB7ZT96Ag09W8FT1YqV+nxS0rOj14RICgdkct/SMdwgyNlgbwbXvnukRAEa
-         3v/d4MCCZRr9ZS+Mr2MbekATvyJTUaCOGSkjnjdIb2jSHms5+L+TwnUPT/zptyLoAHu0
-         a334APsbQPojQVcOKYWSGdYNslLZsQ2fBtj3SSG6esnFthcuVz8Ar1oEDLTqGCZUlhXC
-         Vx/qLO93i3BDZ6BAzcM7rBhlxjyfPWzRjm7dkAdHSgoY8+nFLXOKkxGBidaIc1uHpngi
-         Laf7FRnTwijvO0EFGzpeySFSFG8HIt8jgZdKV0U4agOQO8nfHTAkGfYaZafjqoMg7/lu
-         9NFA==
-X-Gm-Message-State: ALoCoQm0yqegGjNd8EAeUIjG/gYUxdKdSsEpOt9Fmysmwlk/xEmSG1E6OFgz2VWb+t5MV43+mVdQ
-X-Received: by 10.140.22.73 with SMTP id 67mr1599219qgm.42.1438322788804;
-        Thu, 30 Jul 2015 23:06:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KCq3dVyz1camglJSDvGada4GbaXX9n++xAFZxxGGVo0=;
+        b=W9bpkbEd6iRsHeJaWkNgja99G9tSmLKl0gXDqkwUsqRIM7NibX2tHiXMiNiWlG6yQM
+         G+WT2/YmFHjPa6jhwVhRo5WqsTmGUfmIcYUKieDIRQoOJItZoKOaJspvNL/xlQjRpoQ/
+         GYCARsEf2dWrbOPcmxN/udFPCEckPSmVyNugyadohXdO1XFODz7lGIQI0G+mfy2ScbfJ
+         srBPr39Ea+SdIyLWjpvQTICaQkLYa1qGppnlQh6lrIuSpB5rPcqNV8GYgBYGDl1gzcXA
+         oVrqSUc+2Zx3h3kpMVpc8vFejxyOHzWwoYiG87gElHK+QVWsDdWyFS8ns/gAFU86bmeX
+         FwYA==
+X-Gm-Message-State: ALoCoQm7lpQLIIgeqEsWGgqNbwhiOB0irVQYYmXtlqM+vxUWCbfN0nTsnhqeszJVff3zgunc7c0w
+X-Received: by 10.140.108.6 with SMTP id i6mr1511690qgf.73.1438322790108;
+        Thu, 30 Jul 2015 23:06:30 -0700 (PDT)
 Received: from ubuntu.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id c35sm1737073qgc.47.2015.07.30.23.06.27
+        by smtp.gmail.com with ESMTPSA id c35sm1737073qgc.47.2015.07.30.23.06.28
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 30 Jul 2015 23:06:27 -0700 (PDT)
+        Thu, 30 Jul 2015 23:06:29 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
+In-Reply-To: <1438322781-21181-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275037>
 
-Add glossary entries for both concepts.
+Add a function ref_type, which categorizes refs as per-worktree,
+pseudoref, or normal ref.
 
-Pseudorefs and per-worktree refs do not yet have special handling,
-because the files refs backend already handles them correctly.  Later,
-we will make the LMDB backend call out to the files backend to handle
-per-worktree refs.
+Later, we will use this in refs.c to treat pseudorefs specially.
+Alternate ref backends may use it to treat both pseudorefs and
+per-worktree refs differently.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
+ refs.c | 26 ++++++++++++++++++++++++++
+ refs.h |  8 ++++++++
+ 2 files changed, 34 insertions(+)
 
-This version squashes in Junio's glossary and capitalization
-corrections, and corrects the spelling of pseudoref (thanks to Johan
-Herland).
-
----
-
- Documentation/glossary-content.txt | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
-
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index ab18f4b..8c6478b 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -411,6 +411,27 @@ exclude;;
- 	core Git. Porcelains expose more of a <<def_SCM,SCM>>
- 	interface than the <<def_plumbing,plumbing>>.
+diff --git a/refs.c b/refs.c
+index 0b96ece..0f87884 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2848,6 +2848,32 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ 	return 0;
+ }
  
-+[[def_per_worktree_ref]]per-worktree ref::
-+	Refs that are per-<<def_working_tree,worktree>>, rather than
-+	global.  This is presently only <<def_HEAD,HEAD>>, but might
-+	later include other unusual refs.
++static int is_per_worktree_ref(const char *refname)
++{
++	return !strcmp(refname, "HEAD");
++}
 +
-+[[def_pseudoref]]pseudoref::
-+	Pseudorefs are a class of files under `$GIT_DIR` which behave
-+	like refs for the purposes of rev-parse, but which are treated
-+	specially by git.  Pseudorefs both have names that are all-caps,
-+	and always start with a line consisting of a
-+	<<def_SHA1,SHA-1>> followed by whitespace.  So, HEAD is not a
-+	pseudoref, because it is sometimes a symbolic ref.  They might
-+	optionally contain some additional data.  `MERGE_HEAD` and
-+	`CHERRY_PICK_HEAD` are examples.  Unlike
-+	<<def_per_worktree_ref,per-worktree refs>>, these files cannot
-+	be symbolic refs, and never have reflogs.  They also cannot be
-+	updated through the normal ref update machinery.  Instead,
-+	they are updated by directly writing to the files.  However,
-+	they can be read as if they were refs, so `git rev-parse
-+	MERGE_HEAD` will work.
++static int is_pseudoref_syntax(const char *refname)
++{
++	const char *c;
 +
- [[def_pull]]pull::
- 	Pulling a <<def_branch,branch>> means to <<def_fetch,fetch>> it and
- 	<<def_merge,merge>> it.  See also linkgit:git-pull[1].
++	for (c = refname; *c; c++) {
++		if (!isupper(*c) && *c != '-' && *c != '_')
++			return 0;
++	}
++
++	return 1;
++}
++
++enum ref_type ref_type(const char *refname)
++{
++	if (is_per_worktree_ref(refname))
++		return REF_TYPE_PER_WORKTREE;
++	if (is_pseudoref_syntax(refname))
++		return REF_TYPE_PSEUDOREF;
++       return REF_TYPE_NORMAL;
++}
++
+ int delete_ref(const char *refname, const unsigned char *old_sha1,
+ 	       unsigned int flags)
+ {
+diff --git a/refs.h b/refs.h
+index e4e46c3..dca4fb5 100644
+--- a/refs.h
++++ b/refs.h
+@@ -445,6 +445,14 @@ extern int parse_hide_refs_config(const char *var, const char *value, const char
+ 
+ extern int ref_is_hidden(const char *);
+ 
++enum ref_type {
++	REF_TYPE_PER_WORKTREE,
++	REF_TYPE_PSEUDOREF,
++	REF_TYPE_NORMAL,
++};
++
++enum ref_type ref_type(const char *refname);
++
+ enum expire_reflog_flags {
+ 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
+ 	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
 -- 
 2.0.4.315.gad8727a-twtrsrc
