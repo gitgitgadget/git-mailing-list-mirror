@@ -1,77 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git pull --upload-pack reversion in git 2.5.0
-Date: Fri, 31 Jul 2015 10:54:16 -0700
-Message-ID: <xmqqk2tg5i2f.fsf@gitster.dls.corp.google.com>
-References: <20150730154523.GA17002@kitenet.net>
-	<vpqvbd1k1ke.fsf@anie.imag.fr> <20150730183144.GA6360@kitenet.net>
-	<CAPc5daXPY7RQSM6oyFYJ2LjYjaT9dDG-+3=nbHONirGh50pdBA@mail.gmail.com>
+Subject: Re: [PATCH] add ls-remote --get-push-url option
+Date: Fri, 31 Jul 2015 11:40:12 -0700
+Message-ID: <xmqqfv445fxv.fsf@gitster.dls.corp.google.com>
+References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Mailing List <git@vger.kernel.org>,
-	Paul Tan <pyokagan@gmail.com>
-To: Joey Hess <id@joeyh.name>
-X-From: git-owner@vger.kernel.org Fri Jul 31 19:54:30 2015
+Cc: git@vger.kernel.org
+To: Ben Boeckel <mathstuf@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 20:40:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLEVk-0004zS-3M
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 19:54:24 +0200
+	id 1ZLFEE-0001DX-Jw
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 20:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753535AbbGaRyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 13:54:19 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:35251 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753222AbbGaRyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 13:54:18 -0400
-Received: by pdrg1 with SMTP id g1so46249155pdr.2
-        for <git@vger.kernel.org>; Fri, 31 Jul 2015 10:54:17 -0700 (PDT)
+	id S1751486AbbGaSkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 14:40:16 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:34284 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751115AbbGaSkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 14:40:14 -0400
+Received: by pdbbh15 with SMTP id bh15so46556300pdb.1
+        for <git@vger.kernel.org>; Fri, 31 Jul 2015 11:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=x0Fo+Zp/15MgT6C8XzQN8XYGAtZUyfY9dYr8O6yG9AM=;
-        b=0tsuTrWRnhWhiQ4Xq9ruR0wnhDnIdQeu7aFIRXvQqW4JochUuWSKFO0Ub4dXf8nU3V
-         t/kVrniofJTZZLWAeIKQlp2vvUTTzzd39RbGdCWX2+j+4ycKyfQIubSgsKZI3oxfMvY2
-         aMDfD67lEIS5voVBoW/1IwWbGQa8dM9bmkDut21H6/894Gom9zyKJWFFMu8GFPboL5eU
-         YADwtH3MbwK/J8LGn0oEH3epWq8OfTFijqO8cgapdsObNAqoCQM1T/5Ysomw8Tzk4NSu
-         YLdQboF1FPYnWGbz+5NXB2XkftVusljS0IfTXTQtXZ+LyxCtiPlUAWR+o+rzfGIlb6BB
-         wJKA==
-X-Received: by 10.70.119.41 with SMTP id kr9mr9622377pdb.0.1438365257774;
-        Fri, 31 Jul 2015 10:54:17 -0700 (PDT)
+        bh=XmsSlzLNLZiog3VSYRkPtLz4dEXvPa9CJ8PZM1u+OEY=;
+        b=EkSx5DaVpvimRILzmtA2D0WNb+0hCnCYR8IWT4VoW2fqj3Ca3es3O953yd8pepjlYs
+         PZoXmfgL/X6TUjZ16B2KgZD4u79FWOTkfW5pCQzIlv7fbgIEU1+nBBDRR28ZJGIpSx5E
+         D0QFqHVL4nE1DtNrbgjRHAsDOvejrhWP6QCwsOwW0Sfe90Pu3x/Kawm9Bs9ygzGlu1e+
+         74u52enlC93rZnclUv0nE5aPOp5PtoSouwd43Vq+bgqUgLuoWPjj2hwJTBYPprwIhRdB
+         kLzL9tHblM70G+P+/HyE+lzC8U+J3g4aJ5O4vqDepAW3bLfTCsgLGuCTVpVexXNxpGVJ
+         zvmg==
+X-Received: by 10.70.55.1 with SMTP id n1mr9635483pdp.21.1438368014255;
+        Fri, 31 Jul 2015 11:40:14 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:1b0:46e8:ba02:35e3])
-        by smtp.gmail.com with ESMTPSA id pc9sm8899131pdb.6.2015.07.31.10.54.16
+        by smtp.gmail.com with ESMTPSA id c8sm8966043pdj.59.2015.07.31.11.40.13
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 31 Jul 2015 10:54:16 -0700 (PDT)
-In-Reply-To: <CAPc5daXPY7RQSM6oyFYJ2LjYjaT9dDG-+3=nbHONirGh50pdBA@mail.gmail.com>
-	(Junio C. Hamano's message of "Thu, 30 Jul 2015 11:41:31 -0700")
+        Fri, 31 Jul 2015 11:40:13 -0700 (PDT)
+In-Reply-To: <1438364321-14646-1-git-send-email-mathstuf@gmail.com> (Ben
+	Boeckel's message of "Fri, 31 Jul 2015 13:38:40 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275061>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ben Boeckel <mathstuf@gmail.com> writes:
 
-> On Thu, Jul 30, 2015 at 11:31 AM, Joey Hess <id@joeyh.name> wrote:
->> I think this comes down to a lack of quoting where git-pull runs
->> git-fetch. Before eb2a8d9ed3fca2ba2f617b704992d483605f3bb6,
->> "$@" was passed through to git-fetch, but now there is a $upload_pack
->> which is passed without being quoted.
+> Not sure if it would be better to make a new variable or to reuse the existing
+> one. I'm reusing it currently because it makes it easier to ensure they
+> are mutually exclusive.
 >
-> Yes, it is not just the matter of using "$upload_pack", though ;-)
+> Please keep me CC'd to the list; I'm not subscribed.
 >
-> ${upload_pack+"$upload_pack"} or something.
+> Thanks,
+>
+> --Ben
+>
+> Ben Boeckel (1):
+>   ls-remote: add --get-push-url option
+>
+>  Documentation/git-ls-remote.txt |  7 ++++++-
+>  builtin/ls-remote.c             | 15 +++++++++++++--
+>  2 files changed, 19 insertions(+), 3 deletions(-)
 
-Thanks for a bug report.
+Probably get-url makes (some) sense because ls-remote is a "fetch
+that does not actually fetch anything".  But "get-push-url" to
+ls-remote makes _no_ sense whatsoever.  ls-remote and fetch do not
+have to know or care about push-url; they do not even have to know
+there exists a thing called "git push" ;-)
 
-The next time, I'd appreciate if these regressions are caught before
-it hits the tagged release, during the pre-release -rc period at the
-latest, but preferrably earlier.  I'm greedy and expect far more
-from those who are known to be competent heavy Git users than from
-"I update every few releases" casual folks ;-)
-
-Thanks, anyway.
+Wouldn't "git push -v -n" or something suit your needs already?
