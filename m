@@ -1,158 +1,230 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: New Defects reported by Coverity Scan for git
-Date: Fri, 31 Jul 2015 09:58:58 -0700
-Message-ID: <CAGZ79kYKykLBD9VddmuV7BXJGF5YncJbn8pvs-wdEy-=1ucpuA@mail.gmail.com>
-References: <55bb53d17f78c_2d71521318537c@scan.mail>
-	<CACsJy8AfYHOCBdSNyBZP0CdYJGkXbipn0t7E_C8j7c25LET4Qg@mail.gmail.com>
-	<CAGZ79kZMzy7x7HufeM1dotmhKn5HEw_Yoo5p8bYOfUKLbjxSww@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 18:59:05 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH] untracked-cache: support sparse checkout
+Date: Fri, 31 Jul 2015 13:35:01 -0400
+Message-ID: <1438364101-6597-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jul 31 19:36:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLDeC-0000C5-4O
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 18:59:04 +0200
+	id 1ZLEEA-0006Q4-EE
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 19:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753241AbbGaQ7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 12:59:00 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:35389 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752828AbbGaQ66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 12:58:58 -0400
-Received: by ykdu72 with SMTP id u72so63980452ykd.2
-        for <git@vger.kernel.org>; Fri, 31 Jul 2015 09:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oT4XPSXQpbQBzQEuVfkUbXXwmHHWldsa9hywALBeXIw=;
-        b=Ay8lWloXd49we/QglHRBE2l6nUJ3WMox2D4Ajb/3qUjSf6Yv/Z3e8z5aTkTGIEh9dU
-         j89NYk4HuRYsdvVYsF9o6okbU+TaN7k6PlpWj7yCTvCc/g/tJIpUCbmp8lW4Xmj/eSVB
-         o6MX9HYZPhpD9hsv4j14DglOFQl5cVKf+fJfllbojpHkqIRSBC2KrLvxOv7hCvXCxGrG
-         wU74TKLjrndyRxAkeHco5Pc9Z4noTzuOehSG/ACEBFRPByg/rSPzRyi0UL1dHUFxMRYO
-         tPy969zubuq320Cctl4VG/1Cdju29vPrY3cL0gUgrH7H+DRgQhlAmh1zeWVldxOOfkB4
-         eVIg==
+	id S1753124AbbGaRgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 13:36:09 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:35121 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128AbbGaRgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 13:36:08 -0400
+Received: by qgii95 with SMTP id i95so50527850qgi.2
+        for <git@vger.kernel.org>; Fri, 31 Jul 2015 10:36:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=oT4XPSXQpbQBzQEuVfkUbXXwmHHWldsa9hywALBeXIw=;
-        b=TpZePKXJJRmoi+h/YSAqLF294+exLqjI4asYvLi6yY4pfLd0+/KaPYaOn+ZoVKfH04
-         aMoPJME3+4qptHGE+DARV1SCk3hGSsT6ugidO1kG0spRvDHf+DKX8WCXusVOGWwgu1w9
-         UFrPZWQe+Z1a2jg7TRHOPYAHtjiOdb4SC+46yeu9FzuVIlDw1xhxNwLKsTOIKz/6YvDw
-         Z8GwDsDcYcHYFw6j16MxCjRt7JzUD9YUbzoAJz758fR4vroZH6cWpqNTLDg+FUh0j5JJ
-         Olxm3XYN9ck42aGCsAyFCey/M4LyGzjMKd0y0bfWS1p74r0CGimqHzr/AEb2slJMQoyI
-         ZLTA==
-X-Gm-Message-State: ALoCoQnTSToNHQ9YFdGuGgmnqH/HMwY4xk1plirRl/3GXYcXJ0vM2eAZB+VIbAud64MxEhTJwCiu
-X-Received: by 10.129.124.139 with SMTP id x133mr4634259ywc.88.1438361938097;
- Fri, 31 Jul 2015 09:58:58 -0700 (PDT)
-Received: by 10.37.21.129 with HTTP; Fri, 31 Jul 2015 09:58:58 -0700 (PDT)
-In-Reply-To: <CAGZ79kZMzy7x7HufeM1dotmhKn5HEw_Yoo5p8bYOfUKLbjxSww@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jNFihkvk6Z92aTZYwBSDuv2gMeqOce1GQAs8jXMTwQc=;
+        b=hSMb7vzdz+EhTeUmluB3bY09Wfb2Cx+ESnXubjMRRUNGpezbI4CVWpTavnKoZuUil4
+         fEh+JfEz2Dd8W5ukIEUosMnXgsba+YCWXaSYAcs9g5xIMhd+uon2X9SYVyj6kucwAZVI
+         Q3IBNDOcagIlFixLkLR7E3Q641CNyHLQmTw25ity0gLNkMy+h9JRmJb4gddTBfDN3JxP
+         BlCiz1ITN9k8UHcCsFp/toobbl8vL9whI0BUuOT7pgC9lI9q3F38+TUjxMNNH/a3o0SP
+         vIuYCB+bnYlVmGiBT+TqMU1VwUgp1gUYyk9mg/Z1Da+6a+Jz8vPdvpZ2NX2sZ33fBoL3
+         JW6A==
+X-Gm-Message-State: ALoCoQmsFTya4KtMWO0y4nME3yfgpRLQ80NgrOaFGl2h9QioveH93di1ECUWOV5fMK9qkkmyAQWx
+X-Received: by 10.140.27.143 with SMTP id 15mr6112989qgx.64.1438364167066;
+        Fri, 31 Jul 2015 10:36:07 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id 67sm2531042qhy.25.2015.07.31.10.36.05
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 31 Jul 2015 10:36:06 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275055>
 
-On Fri, Jul 31, 2015 at 9:11 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Jul 31, 2015 at 4:24 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> Jeff, I suppose you are the admin of git on scan.coverity, or knows
->> him/her, perhaps we can add a model for xmalloc to suppress these
->> "null pointer deferences" reports? We are sure xmalloc() never returns
->> NULL. Qemu did it [1] and it looks simple.. I think something like
->> this would do
->>
->> void *xmalloc(size_t size)
->> {
->>    void *mem = malloc(size);
->>    if (!mem) __coverity_panic__();
->>    return mem;
->> }
->>
->> [1] http://git.qemu.org/?p=qemu.git;a=blob;f=scripts/coverity-model.c;h=4c99a85cfc292caa9edd9d041e2683ee53490a8d;hb=e40cdb0e6efb795e4d19368987d53e3e4ae19cf7#l104
->>
->
-> Taking just that excerpt doesn't work. Upload fails with
-> "modeling_file.c", line 12: error #20:
->           identifier "malloc" is undefined
->   void *mem = malloc(size);
->
-> I'll look into your reference[1] a bit more and try to follow it as a guidance.
+Remove a check that would disable the untracked cache for sparse
+checkouts.  Add tests that ensure that the untracked cache works with
+sparse checkouts -- specifically considering the case that a file
+foo/bar is checked out, but foo/.gitignore is not.
 
-So I put in these lines into the modeling file:
-void *malloc(size_t);
-void *calloc(size_t, size_t);
-void *realloc(void *, size_t);
-void free(void *);
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ dir.c                             |  17 +-----
+ t/t7063-status-untracked-cache.sh | 119 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 122 insertions(+), 14 deletions(-)
 
-
-void *xrealloc(void *ptr, size_t size)
-{
-  void *ret = realloc(ptr, size);
-  if (!ret) __coverity_panic__();
-  return ret;
-}
-
-void *xmalloc(size_t size)
-{
-  void *mem = malloc(size);
-  if (!mem) __coverity_panic__();
-  return mem;
-}
-
-void xcalloc(size_t num, size_t size)
-{
-  void *ret = calloc(num, size);
-  if (!ret)  __coverity_panic__();
-  return ret;
-}
-
-and there seem to be 42 new defects and 20 fixed defects by the modeling of
-memory allocations. We'd need to check if coverity understood the modeling
-as we intended it. Looking at the first few issues, they seem to be
-correctly finding
-leaks.
-
-
->
->
->>
->> ---------- Forwarded message ----------
->> From:  <scan-admin@coverity.com>
->> Date: Fri, Jul 31, 2015 at 5:54 PM
->> Subject: New Defects reported by Coverity Scan for git
->> To: pclouds@gmail.com
->>
->> _______________________________________________________________________________________________________
->> *** CID 1313836:  Null pointer dereferences  (FORWARD_NULL)
->> /rerere.c: 150 in find_rerere_dir()
->> 144                     return NULL; /* BUG */
->> 145             pos = sha1_pos(sha1, rerere_dir, rerere_dir_nr,
->> rerere_dir_sha1);
->> 146             if (pos < 0) {
->> 147                     rr_dir = xmalloc(sizeof(*rr_dir));
->> 148                     hashcpy(rr_dir->sha1, sha1);
->> 149                     rr_dir->status_nr = rr_dir->status_alloc = 0;
->>>>>     CID 1313836:  Null pointer dereferences  (FORWARD_NULL)
->>>>>     Assigning: "rr_dir->status" = "NULL".
->> 150                     rr_dir->status = NULL;
->> 151                     pos = -1 - pos;
->> 152
->> 153                     /* Make sure the array is big enough ... */
->> 154                     ALLOC_GROW(rerere_dir, rerere_dir_nr + 1,
->> rerere_dir_alloc);
->> 155                     /* ... and add it in. */
->>
->> ** CID 1313835:  Null pointer dereferences  (FORWARD_NULL)
->> /builtin/fetch.c: 795 in prune_refs()
->> --
->> Duy
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/dir.c b/dir.c
+index 8209f8b..e7b89fe 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1078,10 +1078,9 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 		    (!untracked || !untracked->valid ||
+ 		     /*
+ 		      * .. and .gitignore does not exist before
+-		      * (i.e. null exclude_sha1 and skip_worktree is
+-		      * not set). Then we can skip loading .gitignore,
+-		      * which would result in ENOENT anyway.
+-		      * skip_worktree is taken care in read_directory()
++		      * (i.e. null exclude_sha1). Then we can skip
++		      * loading .gitignore, which would result in
++		      * ENOENT anyway.
+ 		      */
+ 		     !is_null_sha1(untracked->exclude_sha1))) {
+ 			/*
+@@ -1880,7 +1879,6 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 						      const struct pathspec *pathspec)
+ {
+ 	struct untracked_cache_dir *root;
+-	int i;
+ 
+ 	if (!dir->untracked || getenv("GIT_DISABLE_UNTRACKED_CACHE"))
+ 		return NULL;
+@@ -1932,15 +1930,6 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 	if (dir->exclude_list_group[EXC_CMDL].nr)
+ 		return NULL;
+ 
+-	/*
+-	 * An optimization in prep_exclude() does not play well with
+-	 * CE_SKIP_WORKTREE. It's a rare case anyway, if a single
+-	 * entry has that bit set, disable the whole untracked cache.
+-	 */
+-	for (i = 0; i < active_nr; i++)
+-		if (ce_skip_worktree(active_cache[i]))
+-			return NULL;
+-
+ 	if (!ident_in_untracked(dir->untracked)) {
+ 		warning(_("Untracked cache is disabled on this system."));
+ 		return NULL;
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index bd4806c..ff23f4e 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -354,4 +354,123 @@ EOF
+ 	test_cmp ../expect ../actual
+ '
+ 
++test_expect_success 'set up for sparse checkout testing' '
++	echo two >done/.gitignore &&
++	echo three >>done/.gitignore &&
++	echo two >done/two &&
++	git add -f done/two done/.gitignore &&
++	git commit -m "first commit"
++'
++
++test_expect_success 'status after commit' '
++	: >../trace &&
++	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	git status --porcelain >../actual &&
++	cat >../status.expect <<EOF &&
++?? .gitignore
++?? dtwo/
++EOF
++	test_cmp ../status.expect ../actual &&
++	cat >../trace.expect <<EOF &&
++node creation: 0
++gitignore invalidation: 0
++directory invalidation: 0
++opendir: 1
++EOF
++	test_cmp ../trace.expect ../trace
++'
++
++test_expect_success 'untracked cache correct after commit' '
++	test-dump-untracked-cache >../actual &&
++	cat >../expect <<EOF &&
++info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
++core.excludesfile 0000000000000000000000000000000000000000
++exclude_per_dir .gitignore
++flags 00000006
++/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++.gitignore
++dtwo/
++/done/ 0000000000000000000000000000000000000000 recurse valid
++/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++two
++EOF
++	test_cmp ../expect ../actual
++'
++
++test_expect_success 'set up sparse checkout' '
++	echo "done/[a-z]*" >.git/info/sparse-checkout &&
++	test_config core.sparsecheckout true &&
++	git checkout master &&
++	git update-index --untracked-cache &&
++	git status --porcelain >/dev/null && # prime the cache
++	test_path_is_missing done/.gitignore &&
++	test_path_is_file done/one
++'
++
++test_expect_success 'create files, some of which are gitignored' '
++	echo three >done/three && # three is gitignored
++	echo four >done/four && # four is gitignored at a higher level
++	echo five >done/five # five is not gitignored
++'
++
++test_expect_success 'test sparse status with untracked cache' '
++	: >../trace &&
++	avoid_racy &&
++	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	git status --porcelain >../status.actual &&
++	cat >../status.expect <<EOF &&
++?? .gitignore
++?? done/five
++?? dtwo/
++EOF
++	test_cmp ../status.expect ../status.actual &&
++	cat >../trace.expect <<EOF &&
++node creation: 0
++gitignore invalidation: 1
++directory invalidation: 2
++opendir: 2
++EOF
++	test_cmp ../trace.expect ../trace
++'
++
++test_expect_success 'untracked cache correct after status' '
++	test-dump-untracked-cache >../actual &&
++	cat >../expect <<EOF &&
++info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
++core.excludesfile 0000000000000000000000000000000000000000
++exclude_per_dir .gitignore
++flags 00000006
++/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++.gitignore
++dtwo/
++/done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
++five
++/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++two
++EOF
++	test_cmp ../expect ../actual
++'
++
++test_expect_success 'test sparse status again with untracked cache' '
++	avoid_racy &&
++	: >../trace &&
++	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	git status --porcelain >../status.actual &&
++	cat >../status.expect <<EOF &&
++?? .gitignore
++?? done/five
++?? dtwo/
++EOF
++	test_cmp ../status.expect ../status.actual &&
++	cat >../trace.expect <<EOF &&
++node creation: 0
++gitignore invalidation: 0
++directory invalidation: 0
++opendir: 0
++EOF
++	test_cmp ../trace.expect ../trace
++'
++
+ test_done
+-- 
+2.0.4.315.gad8727a-twtrsrc
