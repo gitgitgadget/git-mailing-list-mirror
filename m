@@ -1,90 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add ls-remote --get-push-url option
-Date: Fri, 31 Jul 2015 12:16:46 -0700
-Message-ID: <xmqqzj2c3zoh.fsf@gitster.dls.corp.google.com>
-References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
-	<xmqqfv445fxv.fsf@gitster.dls.corp.google.com>
-	<20150731185619.GA24622@megas.kitware.com>
-	<xmqq4mkk5ex5.fsf@gitster.dls.corp.google.com>
-	<20150731190415.GA23674@megas.kitware.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Ben Boeckel <mathstuf@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 21:17:04 2015
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH 1/2] notes: document cat_sort_uniq rewriteMode
+Date: Fri, 31 Jul 2015 12:21:35 -0700
+Message-ID: <1438370496-26433-2-git-send-email-jacob.e.keller@intel.com>
+References: <1438370496-26433-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 31 21:21:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLFni-0006GF-PI
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 21:17:03 +0200
+	id 1ZLFsI-0001u6-4A
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 21:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbbGaTQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 15:16:49 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:32893 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751038AbbGaTQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 15:16:48 -0400
-Received: by pdbnt7 with SMTP id nt7so47114776pdb.0
-        for <git@vger.kernel.org>; Fri, 31 Jul 2015 12:16:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=w187rfVVM4TCQcBb5aV45pZVNneCtdHAwdx2sB6ZLB0=;
-        b=N2GPZvE3aCf+BYMsYXUvo+rg3kPh1IqdKrx99I4amLNA+L0fsaYP5L48YguzwixlDo
-         VTXiYzzvCreLRmYgpYNT0aaNTAj04V98O9jB3z27it+08R5on851JYPTwbQKktEIO8vG
-         0W0C3sa3PHpbbzVkroE+c/yUimHywypBfxPQ0y+1pA+CeMQuW0wRixbJugwe3vNvky2S
-         w52+bilCkOmvFlS8qaOn+BNc+H06tcV0C/0/RBBOv/BtbYXmMTRXobgFcphZn/fxy1CW
-         c5QyyGb+UDkEbBMF/HEGkvelZcY37dCEXPvbnBFE3hjIzbnruUTcxcbIZBcV5MDDY3Ym
-         DG5g==
-X-Received: by 10.70.38.231 with SMTP id j7mr10436805pdk.146.1438370207883;
-        Fri, 31 Jul 2015 12:16:47 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:1b0:46e8:ba02:35e3])
-        by smtp.gmail.com with ESMTPSA id ra10sm9101639pab.19.2015.07.31.12.16.47
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 31 Jul 2015 12:16:47 -0700 (PDT)
-In-Reply-To: <20150731190415.GA23674@megas.kitware.com> (Ben Boeckel's message
-	of "Fri, 31 Jul 2015 15:04:15 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751337AbbGaTVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 15:21:42 -0400
+Received: from mga02.intel.com ([134.134.136.20]:32814 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751038AbbGaTVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 15:21:39 -0400
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP; 31 Jul 2015 12:21:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.15,586,1432623600"; 
+   d="scan'208";a="533864122"
+Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.85])
+  by FMSMGA003.fm.intel.com with ESMTP; 31 Jul 2015 12:21:38 -0700
+X-Mailer: git-send-email 2.5.0.482.gfcd5645
+In-Reply-To: <1438370496-26433-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275069>
 
-Ben Boeckel <mathstuf@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> On Fri, Jul 31, 2015 at 12:02:14 -0700, Junio C Hamano wrote:
->> Ben Boeckel <mathstuf@gmail.com> writes:
->> 
->> > With some sed, yes, but then so would `git remote show` just as useful
->> > too (and in that case, "why does --get-url exist either?" comes to
->> > mind).
->> 
->> Either carelessness let it slip in, or it came before 'git remote show'.
->
-> Would adding `git remote show --url $remote` and `git remote show
-> --push-url $remote` be acceptable?
+Teach documentation about the cat_sort_uniq rewriteMode that got added
+at the same time as the equivalent merge strategy.
 
-It is not just acceptable; I think "git remote" is a much better
-place to have something like that.
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/config.txt    | 4 ++--
+ Documentation/git-notes.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-Or even "git remote get url [$there]", "git remote get push-url [$there]".
-
-Or to mirror the existing "ls-remote --get-url [$there]", which directly asks
-"where does this request go if I run it without '--get-url' option?":
-
-    $ git push --get-url [$there [$refspec...]]
-    $ git push --get-refspec [$there [$refspec...]]
-
-might be a better option.  The logic in "push" takes the current
-branch and configurations like branch.*.remote and push.default into
-account, so it is likely that you will get the exact information
-without too much code.
-
-I am not opposed to having a scriptable interface to obtain these
-pieces of information.  I was only objecting to teach ls-remote
-anything about push, which ls-remote does not have anything to do
-with.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6562c6ab09b9..3c1e4df09beb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1965,8 +1965,8 @@ notes.rewriteMode::
+ 	When copying notes during a rewrite (see the
+ 	"notes.rewrite.<command>" option), determines what to do if
+ 	the target commit already has a note.  Must be one of
+-	`overwrite`, `concatenate`, or `ignore`.  Defaults to
+-	`concatenate`.
++	`overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
++	Defaults to `concatenate`.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 851518d531b5..674682b34b83 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -331,7 +331,8 @@ environment variable.
+ notes.rewriteMode::
+ 	When copying notes during a rewrite, what to do if the target
+ 	commit already has a note.  Must be one of `overwrite`,
+-	`concatenate`, and `ignore`.  Defaults to `concatenate`.
++	`concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
++	`concatenate`.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+-- 
+2.5.0.482.gfcd5645
