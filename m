@@ -1,117 +1,156 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 6/6] clone: add tests for cloning with empty path
-Date: Fri, 31 Jul 2015 10:45:37 +0200
-Message-ID: <20150731084537.GA698@pks-xps>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
- <1438185076-28870-1-git-send-email-ps@pks.im>
- <1438185076-28870-7-git-send-email-ps@pks.im>
- <CAPig+cQ5wR8xp8erAHBzEMEs62ddULrrML53GNVuuie3kd9EvA@mail.gmail.com>
- <xmqqzj2d5ejn.fsf@gitster.dls.corp.google.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] completion: Add '--edit-todo' to rebase
+Date: Fri, 31 Jul 2015 12:16:46 +0200
+Message-ID: <20150731121646.Horde.Mk6NzRZAsrRNDCE_y2uEdQ1@webmail.informatik.kit.edu>
+References: <1436786876.6619.0.camel@virtuell-zuhause.de>
+ <20150713131107.GC1451@serenity.lan>
+ <1064256694.3063.1438019649384.JavaMail.open-xchange@app07.ox.hosteurope.de>
+ <20150730132403.Horde.qnEThoM2W0qI-S5EDFXGDg3@webmail.informatik.kit.edu>
+ <20150730112940.GL14935@serenity.lan>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ew6BAiZeqk4r7MaW"
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 10:45:51 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jul 31 12:17:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZL5wt-0001fM-8I
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 10:45:51 +0200
+	id 1ZL7NL-0004jN-23
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jul 2015 12:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbbGaIpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 04:45:43 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45549 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752696AbbGaIpk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2015 04:45:40 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id D983C207E8
-	for <git@vger.kernel.org>; Fri, 31 Jul 2015 04:45:39 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Fri, 31 Jul 2015 04:45:39 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=tJwhu+v+CBSp3btbSoE4MH+r2Po=; b=gq0Kd
-	FBGhuOJJPsbR/JClHYLA2UOr538YAoKqBuu/6kZf2Xpe5KugTXo+Iyw21j2urSUN
-	lJB3pmMguvNA2J3XkKr24oHIsjT6sv2CreV6ZU61nY1JPS4p/CyCnW//ebgsmpW1
-	3UzD9gDagwf9QjaD9bQNUSTtINZqF14L835RZw=
-X-Sasl-enc: ZEj3BIqf+3KLc0CQ+HQJ6YYJ9uDRbN0irqAm8rx7OAmb 1438332339
-Received: from localhost (p4fc5c30b.dip0.t-ipconnect.de [79.197.195.11])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 477B7C0001C;
-	Fri, 31 Jul 2015 04:45:39 -0400 (EDT)
+	id S1752554AbbGaKRL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2015 06:17:11 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:41903 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751373AbbGaKRG convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 06:17:06 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1ZL7N9-0005XO-9O; Fri, 31 Jul 2015 12:17:03 +0200
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1ZL7Ms-0006Ly-8K; Fri, 31 Jul 2015 12:16:46 +0200
+Received: from x4db1a982.dyn.telefonica.de (x4db1a982.dyn.telefonica.de
+ [77.177.169.130]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Fri, 31 Jul 2015 12:16:46 +0200
+In-Reply-To: <20150730112940.GL14935@serenity.lan>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
 Content-Disposition: inline
-In-Reply-To: <xmqqzj2d5ejn.fsf@gitster.dls.corp.google.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1438337823.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275042>
 
 
---ew6BAiZeqk4r7MaW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Quoting John Keeping <john@keeping.me.uk>:
 
-On Thu, Jul 30, 2015 at 05:58:04PM -0700, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->=20
-> > On Wed, Jul 29, 2015 at 11:51 AM, Patrick Steinhardt <ps@pks.im> wrote:
-> >> Test behavior of `git clone` when working with an empty path
-> >> component. This may be the case when cloning a file system's root
-> >> directory or from a remote server's root.
-> >>
-> >> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> >> ---
-> >> diff --git a/t/t1509-root-worktree.sh b/t/t1509-root-worktree.sh
-> >> index 553a3f6..acfa133 100755
-> >> --- a/t/t1509-root-worktree.sh
-> >> +++ b/t/t1509-root-worktree.sh
-> >> @@ -237,6 +237,45 @@ test_foobar_foobar
->=20
-> All true, but a more interesting question is why add more to this
-> test, which is known to be skipped by everybody?  The issue being
-> corrected is that any "<scheme>://<user>@<pass>:<site>/" that says
-> "the whole site serves a single repository" is problematic.
->=20
-> Surely, file:// and ssh:// may be examples of schemes that require
-> the filesystem root to be usable as the trash directory to test,
-> requiring a dedicated VM (causing most people to skip t1509), but
-> wouldn't "http://<user>@<pass>:<site>/" be easier to arrange to make
-> the whole site serve a single repository?
+> On Thu, Jul 30, 2015 at 01:24:03PM +0200, SZEDER G=C3=A1bor wrote:
+>>
+>> Quoting Thomas Braun <thomas.braun@virtuell-zuhause.de>:
+>>
+>>> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+>>> ---
+>>>> John Keeping <john@keeping.me.uk> hat am 13. Juli 2015 um 15:11
+>> geschrieben:
+>>>> git-rebase.sh contains:
+>>>>
+>>>> 	if test "$action" =3D "edit-todo" && test "$type" !=3D "interacti=
+ve"
+>>>> 	then
+>>>> 		die "$(gettext "The --edit-todo action can only be used during
+>> interactive
+>>>> rebase.")"
+>>>> 	fi
+>>>>
+>>>> I wonder if it's worth doing a similar check here, which presumabl=
+y
+>>>> means testing if "$dir"/interactive exists.
+>>>
+>>> Good point. Thanks for the hint.
+>>
+>> Perhaps the subject line could say "completion: offer '--edit-todo'
+>> during interactive rebase" to be a bit more specific.
+>>
+>>> contrib/completion/git-completion.bash | 6 +++++-
+>>> 1 file changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/contrib/completion/git-completion.bash
+>>> b/contrib/completion/git-completion.bash
+>>> index c97c648..b03050e 100644
+>>> --- a/contrib/completion/git-completion.bash
+>>> +++ b/contrib/completion/git-completion.bash
+>>> @@ -1668,7 +1668,11 @@ _git_rebase ()
+>>> {
+>>> 	local dir=3D"$(__gitdir)"
+>>> 	if [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
+>>> -		__gitcomp "--continue --skip --abort"
+>>> +		if [ -d "$dir"/interactive ]; then
+>>
+>> This doesn't work for me, I think it looks for the right file at the
+>> wrong place.  During an interactive rebase I have no
+>> '.git/interactive' file but a '.git/rebase-merge/interactive', so I
+>> never get '--edit-todo'.
 
-Sure it would be. But unfortunately I haven't been able to get
-t/lib-httpd working at my end, so that's why I then chose to
-implement the tests with t1509. I agree though that the other
-solution would be preferable, but I currently am not able to
-provide those.
+Just noticed another issue here: it looks for a directory, though it =20
+should look for a file.
 
---ew6BAiZeqk4r7MaW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+>> After some playing around and a cursory look at the source it seems =
+to
+>> me that I have '.git/rebase-apply' during a "regular" rebase and
+>> '.git/rebase-merge' during an interactive rebase, and git-rebase.sh
+>> checks the presence of the 'interactive' file only in
+>> '.git/rebase-merge'.  It's not clear to me yet whether it's possible
+>> to have a '.git/rebase-merge' without the file 'interactive' in it.
+>> If it is possible, then I'd like to know with which commands and und=
+er
+>> what circumstances.  If it isn't, then we wouldn't have to look for
+>> the file at all, because checking the presence of the directory woul=
+d
+>> be enough.
+>
+> "git rebase --merge" will use ".git/rebase-merge" without creating th=
+e
+> "interactive" flag.
 
-iQIcBAEBCAAGBQJVuzWxAAoJEBF8Z7aeq/EsVfkP/0fq26NOX6yKekjVqoaVxwQB
-0Wh566G/zvs4iPhMnrheNT0oAmDAPIpIb4STxzxCNNxnxNhEeacdaNOx3RS//GZv
-wQOPaAuZgSVsGcMoKa/vizWffoIqAZMVEdW9LYY89upHAwSWKv9XKJwYc5yUF4Hm
-BGeTa7txZehhbW7TS9TKSKbfGSvXNv7YoZ7FuTv+n4dUtmqcNdvv7qcYc0HV6Wmk
-uzfksoOHVrH08234zuAqGmkoaK7zOtULtXdIzZwjG6UQxNn4MhTQLPyQZPWX09QM
-YLg4VaFTck74aCHR68P7aW4ADKVsHb///JHm8mwSy7BGHo7UMVRQlnZZePQuk+pF
-PgE6oFIDOZjGb2uHJj0BpOkeQhiMNrIRh2Yd3S0NmIed4732mSfK7Kx0sDiBFg+Q
-StWVQhZbOiAw38wV2hQXsCflH4cBYKuwreki08wLbhZ2hsricsSnAlKR8qgUdxHO
-WbNf+toreFaxKtuRoCBG64JzhMcluEtJsJ33aH41EZqAwJejh8KUxRQssco/oDcS
-khDtZyGB2nA9+Nntm1/6HsV6YGZsNxbb4KS+t02JF4ghb1+K6gWZpsGISiLt7B5P
-DqSvsZmR80aMFEvSP3zGE+TbDGAqmKTCn2HfkaJh5EFQWkRVG3RVL94WpNdw91Mz
-e5FHo+ywcC6J8orFFdlt
-=sn1/
------END PGP SIGNATURE-----
+Oh, right, thanks.  I should have remembered, I wrote the test of the
+prompt script for that case...
+(On a related note: is it possible to have a '.git/rebase-apply'
+directory, but neither 'rebasing' or 'applying' files within?  The
+prompt script has a long if-elif chain with such a branch, and I
+remember wondering how I could trigger it for testing.)
 
---ew6BAiZeqk4r7MaW--
+Anyway, so this could be something like (modulo likely whitespace damag=
+e):
+
+diff --git a/contrib/completion/git-completion.bash
+b/contrib/completion/git-completion.bash
+index 07c34ef913..fac01d6985 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1667,7 +1667,10 @@ _git_push ()
+   _git_rebase ()
+   {
+   	local dir=3D"$(__gitdir)"
+-	if [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
++	if [ -f "$dir"/rebase-merge/interactive ]; then
++		__gitcomp "--continue --skip --abort --edit-todo"
++		return
++	elif [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
+   		__gitcomp "--continue --skip --abort"
+   		return
+   	fi
+
+
+Best,
+G=C3=A1bor
