@@ -1,193 +1,102 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v4 2/2] notes: handle multiple worktrees
-Date: Sat, 1 Aug 2015 15:51:18 +0200
-Message-ID: <CALKQrgcrpQ2j2J-65RJhN7owwmSzhqyGinGjUbicFbY=m82tNA@mail.gmail.com>
-References: <1438380669-11012-1-git-send-email-dturner@twopensource.com>
-	<1438380669-11012-2-git-send-email-dturner@twopensource.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v1] send-email: provide whitelist of SMTP AUTH mechanisms
+Date: Sat, 1 Aug 2015 16:49:59 +0000
+Message-ID: <20150801164959.GC488564@vauxhall.crustytoothpaste.net>
+References: <1438385617-29159-1-git-send-email-viktorin@rehivetech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 15:51:43 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="O3RTKUHj+75w1tg5"
+Cc: git@vger.kernel.org
+To: Jan Viktorin <viktorin@rehivetech.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 18:50:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLXCR-0005kH-BV
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 15:51:43 +0200
+	id 1ZLZzA-0005xo-Aj
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 18:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248AbbHANv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2015 09:51:27 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:52729 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbbHANv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2015 09:51:26 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZLXC8-0000RK-4a
-	for git@vger.kernel.org; Sat, 01 Aug 2015 15:51:24 +0200
-Received: by ykax123 with SMTP id x123so79758549yka.1
-        for <git@vger.kernel.org>; Sat, 01 Aug 2015 06:51:18 -0700 (PDT)
-X-Received: by 10.170.171.70 with SMTP id n67mr347332ykd.22.1438437078113;
- Sat, 01 Aug 2015 06:51:18 -0700 (PDT)
-Received: by 10.37.208.71 with HTTP; Sat, 1 Aug 2015 06:51:18 -0700 (PDT)
-In-Reply-To: <1438380669-11012-2-git-send-email-dturner@twopensource.com>
+	id S1751384AbbHAQuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2015 12:50:05 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:35422 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751337AbbHAQuE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2015 12:50:04 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:55b3:7931:f059:434f])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8A7A128295;
+	Sat,  1 Aug 2015 16:50:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1438447802;
+	bh=/ATdUH2pkmJXXDnwmG8NbUi49IplyiB8xgJuPsHaZ4o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=klAsoOZUfInO7fStKGyl3LBdCoEFIvpprclVFAt7DXO4iQMlokY7Imp0USk5aznVw
+	 VDiAbTh7xqTOuJ9OfOjcweyDz2Vh2u7hqZ7/bCVjjUml99b2nPtchUqCKf4biACqaU
+	 vYxXVGNmSOlsyM2ZOsloAX7tNzd6c0Bnh8fU/P1Q68GDbrA/js1UwiL5oA/Fvlg6pz
+	 /7mf2bMzO3d6NXqVXWwfHle68uE9B/Ge3vfJgI+js0nkknUpScMoDOy9j/lES7X3pH
+	 xl6LBrpyxo2mKc674qwAIKbQYq19i1i3xlxLPrd2JYt8UNGXqcOx6EQEeu2iah1AcO
+	 N6JGJd0jkJtsbwVuqjmvG5LWw3RJtC9pMLirwDhx+Ku3fkRLFePeN+UFrfmETollm1
+	 htHzzcq5s6hteY8CLkd45otZLiyS/QLNBnNUqiwkEcxlrFtbnRa+77J1ILrwN18U36
+	 OHCEUbZfhbmkEV1iCnsJ16qUqA/Ynui5fY1XW3qDsMq+BxEabyx
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jan Viktorin <viktorin@rehivetech.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1438385617-29159-1-git-send-email-viktorin@rehivetech.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.0.0-2-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275121>
-
-On Sat, Aug 1, 2015 at 12:11 AM, David Turner <dturner@twopensource.com> wrote:
-> Before creating NOTES_MERGE_REF, check NOTES_MERGE_REF using
-> find_shared_symref and die if we find one.  This prevents simultaneous
-> merges to the same notes branch from different worktrees.
->
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  builtin/notes.c                  |  5 +++
->  t/t3320-notes-merge-worktrees.sh | 72 ++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 77 insertions(+)
->  create mode 100755 t/t3320-notes-merge-worktrees.sh
->
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index 63f95fc..e4dda79 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -19,6 +19,7 @@
->  #include "string-list.h"
->  #include "notes-merge.h"
->  #include "notes-utils.h"
-> +#include "branch.h"
->
->  static const char * const git_notes_usage[] = {
->         N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-> @@ -825,10 +826,14 @@ static int merge(int argc, const char **argv, const char *prefix)
->                 update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
->                            0, UPDATE_REFS_DIE_ON_ERR);
->         else { /* Merge has unresolved conflicts */
-> +               char *existing;
->                 /* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
->                 update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
->                            0, UPDATE_REFS_DIE_ON_ERR);
->                 /* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
-> +               existing = find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
-
-Please confirm my assumption here: existing originally comes from a
-strbuf_detach(), so it's the caller's (i.e. our) responsibility to
-free() it, but we don't care, as we just die()d anyway. Correct?
-
-> +               if (existing)
-> +                       die(_("A notes merge on %s is already in-progress for %s"), default_notes_ref(), existing);
-
-Not sure about your prepositions here. Would this maybe read better?:
-
-  A notes merge into %s is already in-progress at %s
-
->                 if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
->                         die("Failed to store link to current notes ref (%s)",
->                             default_notes_ref());
-> diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
-> new file mode 100755
-> index 0000000..997621f
-> --- /dev/null
-> +++ b/t/t3320-notes-merge-worktrees.sh
-> @@ -0,0 +1,72 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2015 Twitter, Inc
-> +#
-> +
-> +test_description='Test merging of notes trees in multiple worktrees'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup commit' '
-> +       test_commit tantrum
-> +'
-> +
-> +commit_tantrum=$(git rev-parse tantrum^{commit})
-> +
-> +test_expect_success 'setup notes ref (x)' '
-> +       git config core.notesRef refs/notes/x &&
-> +       git notes add -m "x notes on tantrum" tantrum
-> +'
-> +
-> +test_expect_success 'setup local branch (y)' '
-> +       git update-ref refs/notes/y refs/notes/x &&
-> +       git config core.notesRef refs/notes/y &&
-> +       git notes remove tantrum
-> +'
-> +
-> +test_expect_success 'setup remote branch (z)' '
-> +       git update-ref refs/notes/z refs/notes/x &&
-> +       git config core.notesRef refs/notes/z &&
-> +       git notes add -f -m "conflicting notes on tantrum" tantrum
-> +'
-> +
-> +test_expect_success 'modify notes ref ourselves (x)' '
-> +       git config core.notesRef refs/notes/x &&
-> +       git notes add -f -m "more conflicting notes on tantrum" tantrum
-> +'
-> +
-> +test_expect_success 'create some new worktrees' '
-> +       git worktree add -b newbranch worktree master &&
-> +       git worktree add -b newbranch2 worktree2 master
-> +'
-> +
-> +test_expect_success 'merge z into y fails and sets NOTES_MERGE_REF' '
-> +       git config core.notesRef refs/notes/y &&
-> +       test_must_fail git notes merge z &&
-> +       echo "ref: refs/notes/y" > expect &&
-> +       test_cmp .git/NOTES_MERGE_REF expect
-> +'
-> +
-> +test_expect_success 'merge z into y while mid-merge in another workdir fails' '
-> +       (
-> +               cd worktree &&
-> +               git config core.notesRef refs/notes/y &&
-> +               test_must_fail git notes merge z 2>err &&
-> +               grep "A notes merge on refs/notes/y is already in-progress for" err
-> +       ) &&
-> +       test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
-> +'
-> +
-> +test_expect_success 'merge z into x while mid-merge on y succeeds' '
-> +       (
-> +               cd worktree2 &&
-> +               git config core.notesRef refs/notes/x &&
-> +               test_must_fail git notes merge z 2>&1 >out &&
-> +               grep "Automatic notes merge failed" out
-
-Missing &&?
-
-> +               grep -v "A notes merge on refs/notes/x is already in-progress for" out
-> +       ) &&
-> +       echo "ref: refs/notes/x" > expect &&
-> +       test_cmp .git/worktrees/worktree2/NOTES_MERGE_REF expect
-> +'
-> +
-> +test_done
-
-Otherwise, this looks good to me.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275123>
 
 
-...Johan
+--O3RTKUHj+75w1tg5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> --
-> 2.0.4.315.gad8727a-twtrsrc
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Sat, Aug 01, 2015 at 01:33:37AM +0200, Jan Viktorin wrote:
+> +	# Do not allow arbitrary strings.
+> +	my ($filtered_auth) =3D "";
+> +	foreach ("PLAIN", "LOGIN", "CRAM-MD5", "DIGEST-MD5") {
 
+On my system, GSSAPI is also available, and it does indeed work, as I'm
+not prompted for a password.  (I have only PLAIN and GSSAPI available
+server-side, and AUTH is required.)
 
+It may be better to simply force the text to upper case, as that would
+allow us not to have to change Git if Authen::SASL::Perl implements new
+mechanisms.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--O3RTKUHj+75w1tg5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.6 (GNU/Linux)
+
+iQIcBAEBCgAGBQJVvPi2AAoJEL9TXYEfUvaLuHMP/3ML+MIVUesePiFIx8nTeYaL
+lPiu2GS/fEis7NNwD0lhw1jLnMkM9afUVgVu+Sk5c/+/sANaW5wJADvedOs0gitO
+WETxOIJRy30TZgTXPlc5XZpi1QVMaR/bt83Ht4P8frfqgze3BRYLqERzPmh73vC8
+iCS3CNVrEhgbr+T9DWfOEkKzQFREsbDJHFNa77K0N4mpVd3oIQk4rhyRoSayreXz
+IgUyOGno8WaS7QY+f6Ov2gGmrKW2cNJOrPradCjVLBJzRv9Djy7xtSF7s0wR9H6o
+j+uvpLLtjyN7fWEh/D96e9SGZ7gljfM8kLR31LJzQph6/utz21y4g81043JVV50v
+UVOOQqIpCqGrXo4XgdEqejJM+k6xeS9az6sFQ1A4isLuSoePNAaEMmLzQgfgNVYO
+Za40fUT594KdE/yQ9iTqH7tEDf0iZl1OPpoFAP3WJg4P6KvOlEobEKsWBlhGf1WO
+X3ytZqOh5B4W7yigiAEXDXCPkM8+k0uaBSlSeKc5h3wdzxao6ihI0MkNb2SXNMM0
+YIfvaxMl9rIJjwb2EtASHqQuI9bKQtVXo4M70ZRIrj9QLnLRgeeQfxIiTptcCPSn
+cdD6a5MPTH8DpXrYccP7liDC6EESlAEh8oB/zXUvULrbqWx9hoWWeKAYgU9ODmcN
+oDXw034qBl9lWDmcfx73
+=Zntw
+-----END PGP SIGNATURE-----
+
+--O3RTKUHj+75w1tg5--
