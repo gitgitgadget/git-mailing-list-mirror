@@ -1,104 +1,185 @@
 From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v2 0/2] notes: add notes.merge strategy option
-Date: Sat, 1 Aug 2015 15:30:11 +0200
-Message-ID: <CALKQrgeoUOLeiJi6EVF8-hz9D74iNA4pxzC8WYiX2_mN=CH8XA@mail.gmail.com>
-References: <1438384341-2688-1-git-send-email-jacob.e.keller@intel.com>
+Subject: Re: [PATCH v4 2/2] notes: handle multiple worktrees
+Date: Sat, 1 Aug 2015 15:51:18 +0200
+Message-ID: <CALKQrgcrpQ2j2J-65RJhN7owwmSzhqyGinGjUbicFbY=m82tNA@mail.gmail.com>
+References: <1438380669-11012-1-git-send-email-dturner@twopensource.com>
+	<1438380669-11012-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git mailing list <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 15:30:31 2015
+	Eric Sunshine <sunshine@sunshineco.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 15:51:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLWru-0005rF-3d
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 15:30:30 +0200
+	id 1ZLXCR-0005kH-BV
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 15:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbbHANaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2015 09:30:22 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:56358 "EHLO
+	id S1751248AbbHANv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2015 09:51:27 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:52729 "EHLO
 	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbbHANaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2015 09:30:22 -0400
+	with ESMTP id S1751004AbbHANv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2015 09:51:26 -0400
 Received: from mail-yk0-f176.google.com ([209.85.160.176])
 	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
 	(Exim 4.72 (FreeBSD))
 	(envelope-from <johan@herland.net>)
-	id 1ZLWrh-00004P-Nv
-	for git@vger.kernel.org; Sat, 01 Aug 2015 15:30:17 +0200
-Received: by ykek23 with SMTP id k23so6542657yke.0
-        for <git@vger.kernel.org>; Sat, 01 Aug 2015 06:30:11 -0700 (PDT)
-X-Received: by 10.170.53.79 with SMTP id 76mr9695398ykv.68.1438435811854; Sat,
- 01 Aug 2015 06:30:11 -0700 (PDT)
-Received: by 10.37.208.71 with HTTP; Sat, 1 Aug 2015 06:30:11 -0700 (PDT)
-In-Reply-To: <1438384341-2688-1-git-send-email-jacob.e.keller@intel.com>
+	id 1ZLXC8-0000RK-4a
+	for git@vger.kernel.org; Sat, 01 Aug 2015 15:51:24 +0200
+Received: by ykax123 with SMTP id x123so79758549yka.1
+        for <git@vger.kernel.org>; Sat, 01 Aug 2015 06:51:18 -0700 (PDT)
+X-Received: by 10.170.171.70 with SMTP id n67mr347332ykd.22.1438437078113;
+ Sat, 01 Aug 2015 06:51:18 -0700 (PDT)
+Received: by 10.37.208.71 with HTTP; Sat, 1 Aug 2015 06:51:18 -0700 (PDT)
+In-Reply-To: <1438380669-11012-2-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275121>
 
-On Sat, Aug 1, 2015 at 1:12 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> From: Jacob Keller <jacob.keller@gmail.com>
+On Sat, Aug 1, 2015 at 12:11 AM, David Turner <dturner@twopensource.com> wrote:
+> Before creating NOTES_MERGE_REF, check NOTES_MERGE_REF using
+> find_shared_symref and die if we find one.  This prevents simultaneous
+> merges to the same notes branch from different worktrees.
 >
-> This series adds a default merge strategy option for git-notes, so that
-> the user does not have to type "-s" every time. It is overridden by the
-> -s option.
-
-I like this addition. A natural extension (i.e. future work, you
-needn't worry about it for now) would be to allow this configuration
-to be per notes ref. Different notes refs are used to hold different
-kinds of data, and where cat_sort_uniq may be a good strategy for one
-particular notes ref, it may be a poor default for other notes refs.
-So we should consider adding notes.<notesref>.merge options to allow
-more fine-grained control of which notes merge strategies apply to
-which notes refs.
-
-> I also added some tests to ensure that the "--abort" "--commit" and "-s"
-> options must be independent.
-
-Good. These could easily be split out into a separate commit, though,
-as they are independent of the notes.merge addition.
-
-> In addition, I found a small documentation
-> bug which is corrected in the first patch of the series.
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  builtin/notes.c                  |  5 +++
+>  t/t3320-notes-merge-worktrees.sh | 72 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 77 insertions(+)
+>  create mode 100755 t/t3320-notes-merge-worktrees.sh
 >
-> I Cc'd a couple more people in this version of the patch in order to
-> hopefully get some more review.
-
-Thanks, appreciated (although AFAICS the cover letter was not CCed to me).
-
-> This is based on pu incase there were
-> any other conflicts, but I can easily rebase if necessary.
-
-Junio has the final word here, but I believe the preferred workflow is
-to base your patch series on master or next, as those do not jump
-around quite as much as pu does.
-
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index 63f95fc..e4dda79 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -19,6 +19,7 @@
+>  #include "string-list.h"
+>  #include "notes-merge.h"
+>  #include "notes-utils.h"
+> +#include "branch.h"
 >
-> Jacob Keller (2):
->   notes: document cat_sort_uniq rewriteMode
->   notes: add notes.merge option to select default strategy
+>  static const char * const git_notes_usage[] = {
+>         N_("git notes [--ref <notes-ref>] [list [<object>]]"),
+> @@ -825,10 +826,14 @@ static int merge(int argc, const char **argv, const char *prefix)
+>                 update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
+>                            0, UPDATE_REFS_DIE_ON_ERR);
+>         else { /* Merge has unresolved conflicts */
+> +               char *existing;
+>                 /* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
+>                 update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
+>                            0, UPDATE_REFS_DIE_ON_ERR);
+>                 /* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
+> +               existing = find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
 
-Both patches Acked-by: Johan Herland <johan@herland.net>
+Please confirm my assumption here: existing originally comes from a
+strbuf_detach(), so it's the caller's (i.e. our) responsibility to
+free() it, but we don't care, as we just die()d anyway. Correct?
+
+> +               if (existing)
+> +                       die(_("A notes merge on %s is already in-progress for %s"), default_notes_ref(), existing);
+
+Not sure about your prepositions here. Would this maybe read better?:
+
+  A notes merge into %s is already in-progress at %s
+
+>                 if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
+>                         die("Failed to store link to current notes ref (%s)",
+>                             default_notes_ref());
+> diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
+> new file mode 100755
+> index 0000000..997621f
+> --- /dev/null
+> +++ b/t/t3320-notes-merge-worktrees.sh
+> @@ -0,0 +1,72 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2015 Twitter, Inc
+> +#
+> +
+> +test_description='Test merging of notes trees in multiple worktrees'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup commit' '
+> +       test_commit tantrum
+> +'
+> +
+> +commit_tantrum=$(git rev-parse tantrum^{commit})
+> +
+> +test_expect_success 'setup notes ref (x)' '
+> +       git config core.notesRef refs/notes/x &&
+> +       git notes add -m "x notes on tantrum" tantrum
+> +'
+> +
+> +test_expect_success 'setup local branch (y)' '
+> +       git update-ref refs/notes/y refs/notes/x &&
+> +       git config core.notesRef refs/notes/y &&
+> +       git notes remove tantrum
+> +'
+> +
+> +test_expect_success 'setup remote branch (z)' '
+> +       git update-ref refs/notes/z refs/notes/x &&
+> +       git config core.notesRef refs/notes/z &&
+> +       git notes add -f -m "conflicting notes on tantrum" tantrum
+> +'
+> +
+> +test_expect_success 'modify notes ref ourselves (x)' '
+> +       git config core.notesRef refs/notes/x &&
+> +       git notes add -f -m "more conflicting notes on tantrum" tantrum
+> +'
+> +
+> +test_expect_success 'create some new worktrees' '
+> +       git worktree add -b newbranch worktree master &&
+> +       git worktree add -b newbranch2 worktree2 master
+> +'
+> +
+> +test_expect_success 'merge z into y fails and sets NOTES_MERGE_REF' '
+> +       git config core.notesRef refs/notes/y &&
+> +       test_must_fail git notes merge z &&
+> +       echo "ref: refs/notes/y" > expect &&
+> +       test_cmp .git/NOTES_MERGE_REF expect
+> +'
+> +
+> +test_expect_success 'merge z into y while mid-merge in another workdir fails' '
+> +       (
+> +               cd worktree &&
+> +               git config core.notesRef refs/notes/y &&
+> +               test_must_fail git notes merge z 2>err &&
+> +               grep "A notes merge on refs/notes/y is already in-progress for" err
+> +       ) &&
+> +       test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
+> +'
+> +
+> +test_expect_success 'merge z into x while mid-merge on y succeeds' '
+> +       (
+> +               cd worktree2 &&
+> +               git config core.notesRef refs/notes/x &&
+> +               test_must_fail git notes merge z 2>&1 >out &&
+> +               grep "Automatic notes merge failed" out
+
+Missing &&?
+
+> +               grep -v "A notes merge on refs/notes/x is already in-progress for" out
+> +       ) &&
+> +       echo "ref: refs/notes/x" > expect &&
+> +       test_cmp .git/worktrees/worktree2/NOTES_MERGE_REF expect
+> +'
+> +
+> +test_done
+
+Otherwise, this looks good to me.
 
 
 ...Johan
 
->
->  Documentation/config.txt              | 11 +++++--
->  Documentation/git-notes.txt           | 33 +++++++++++++--------
->  builtin/notes.c                       | 55 +++++++++++++++++++++++++----------
->  notes-merge.h                         | 16 +++++-----
->  t/t3309-notes-merge-auto-resolve.sh   | 29 ++++++++++++++++++
->  t/t3310-notes-merge-manual-resolve.sh | 12 ++++++++
->  6 files changed, 119 insertions(+), 37 deletions(-)
->
 > --
-> 2.5.0.482.gfcd5645
+> 2.0.4.315.gad8727a-twtrsrc
 >
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
