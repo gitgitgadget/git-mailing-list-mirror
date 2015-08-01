@@ -1,102 +1,235 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v1] send-email: provide whitelist of SMTP AUTH mechanisms
-Date: Sat, 1 Aug 2015 16:49:59 +0000
-Message-ID: <20150801164959.GC488564@vauxhall.crustytoothpaste.net>
+From: Jan Viktorin <viktorin@rehivetech.com>
+Subject: Re: [PATCH v1] send-email: provide whitelist of SMTP AUTH
+ mechanisms
+Date: Sat, 1 Aug 2015 20:19:50 +0200
+Organization: RehiveTech, spol. s r.o.
+Message-ID: <20150801201950.5d8c1951@jvn>
 References: <1438385617-29159-1-git-send-email-viktorin@rehivetech.com>
+	<CAPig+cT842GAFFM-wfjSU1ZiOevDCOPNDWxux6-vqtdr=3F4qw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="O3RTKUHj+75w1tg5"
-Cc: git@vger.kernel.org
-To: Jan Viktorin <viktorin@rehivetech.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 18:50:14 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 20:20:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLZzA-0005xo-Aj
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 18:50:12 +0200
+	id 1ZLbOb-0004H7-Ma
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 20:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751384AbbHAQuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2015 12:50:05 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:35422 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751337AbbHAQuE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2015 12:50:04 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:55b3:7931:f059:434f])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8A7A128295;
-	Sat,  1 Aug 2015 16:50:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1438447802;
-	bh=/ATdUH2pkmJXXDnwmG8NbUi49IplyiB8xgJuPsHaZ4o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=klAsoOZUfInO7fStKGyl3LBdCoEFIvpprclVFAt7DXO4iQMlokY7Imp0USk5aznVw
-	 VDiAbTh7xqTOuJ9OfOjcweyDz2Vh2u7hqZ7/bCVjjUml99b2nPtchUqCKf4biACqaU
-	 vYxXVGNmSOlsyM2ZOsloAX7tNzd6c0Bnh8fU/P1Q68GDbrA/js1UwiL5oA/Fvlg6pz
-	 /7mf2bMzO3d6NXqVXWwfHle68uE9B/Ge3vfJgI+js0nkknUpScMoDOy9j/lES7X3pH
-	 xl6LBrpyxo2mKc674qwAIKbQYq19i1i3xlxLPrd2JYt8UNGXqcOx6EQEeu2iah1AcO
-	 N6JGJd0jkJtsbwVuqjmvG5LWw3RJtC9pMLirwDhx+Ku3fkRLFePeN+UFrfmETollm1
-	 htHzzcq5s6hteY8CLkd45otZLiyS/QLNBnNUqiwkEcxlrFtbnRa+77J1ILrwN18U36
-	 OHCEUbZfhbmkEV1iCnsJ16qUqA/Ynui5fY1XW3qDsMq+BxEabyx
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jan Viktorin <viktorin@rehivetech.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1438385617-29159-1-git-send-email-viktorin@rehivetech.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.0.0-2-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1751341AbbHASUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2015 14:20:06 -0400
+Received: from w-smtp-out-7.wedos.net ([46.28.106.5]:41515 "EHLO
+	we2-f167.wedos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751247AbbHASUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2015 14:20:04 -0400
+Received: from ([109.81.211.51])
+        by we2-f167.wedos.net (WEDOS Mail Server mail2) with ASMTP id OEV00101;
+        Sat, 01 Aug 2015 20:20:01 +0200
+In-Reply-To: <CAPig+cT842GAFFM-wfjSU1ZiOevDCOPNDWxux6-vqtdr=3F4qw@mail.gmail.com>
+X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275124>
+
+Hello Eric,
+
+thanks for comments. I've described the orignal problem before I tried
+to fix it:
+
+ https://groups.google.com/forum/#!topic/git-users/PxtiVxAapUU
+
+So, *this patch* was necessary to apply for me to send *this patch* to
+the mailing list.
+
+Later, I've tried git-send-email (without this patch) on two different
+PCs with the same distro, same architecture, same git, same perl, same
+perl libraries. The result was that on the first, it auto-selected
+DIGEST-MD5 (didn't work) and on the second one, it selected PLAIN
+(worked). I don't understand it.
+
+More below...
+
+On Sat, 1 Aug 2015 05:33:28 -0400
+Eric Sunshine <sunshine@sunshineco.com> wrote:
+
+> On Fri, Jul 31, 2015 at 7:33 PM, Jan Viktorin
+> <viktorin@rehivetech.com> wrote:
+> > When sending an e-mail, the client and server must
+> > agree on an authentication mechanism. Some servers
+> > (due to misconfiguration or a bug) denies valid
+> 
+> s/denies/deny/
+> 
+> > credentials for certain mechanisms. In this patch,
+> > a new option --smtp-auth and configuration entry
+> > smtpauth are introduced.
+> >
+> > If smtp_auth is defined, it works as a whitelist
+> > of allowed mechanisms for authentication. There
+> > are four mechanisms supported: PLAIN, LOGIN,
+> > CRAM-MD5, DIGEST-MD5. However, their availability
+> > depends on the installed SASL library.
+> >
+> > Signed-off-by: Jan Viktorin <viktorin@rehivetech.com>
+> > ---
+> >  git-send-email.perl | 31 ++++++++++++++++++++++++++++++-
+> >  1 file changed, 30 insertions(+), 1 deletion(-)
+> 
+> At the very least, you will also want to update the documentation
+> (Documentation/git-send-email.txt) and, if possible, add new tests
+> (t/t9001-send-email.sh).
+
+I will update the documentation when it is clear, how the smtp-auth
+works.
+
+I have no idea, how to test the feature. I can see something like
+fake.sendmail in the file. How does it work? I can image a test whether
+user inserts valid values. What more?
+
+> 
+> More below.
+> 
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index ae9f869..b00ed9d 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1129,6 +1134,16 @@ sub smtp_auth_maybe {
+> >                 return 1;
+> >         }
+> >
+> > +       # Do not allow arbitrary strings.
+> 
+> Can you explain why this restriction is needed. What are the
+> consequences of not limiting the input to this "approved" list?
+
+This is more a check of an arbitrary user input then a check
+of an "approved list". It should be also used to inform user
+about invalid methods (however, I didn't implemented it yet).
+
+> 
+> > +       my ($filtered_auth) = "";
+> 
+> Style: unnecessary parentheses
+> 
+> > +       foreach ("PLAIN", "LOGIN", "CRAM-MD5", "DIGEST-MD5") {
+> 
+> This might read more nicely and be easier to maintain if written as:
+> 
+>     foreach (qw/PLAIN LOGIN CRAM-MD5 DIGEST-MD5/) {
+> 
+> > +               if($smtp_auth && $smtp_auth =~ /\b\Q$_\E\b/i) {
+> 
+> Style: space after 'if'
+> 
+> Also, why not lift the 'if ($smtp_auth)' check outside the loop since
+> its value never changes and there's no need to iterate over the list
+> if $smtp_auth is empty.
+
+Sure. I just wanted to avoid another indentation level. I think, there
+is no need for optimization at this place. I can rework it, no
+problem...
+
+> 
+> > +                       $filtered_auth .= $_ . " ";
+> 
+> Style question: Would this be more naturally expressed with
+> 'filtered_auth' as an array onto which items are pushed, rather than
+> as a string? At the point of use, the string can be recreated via
+> join().
+> 
+> Not a big deal; just wondering.
+
+I am not a Perl programmer. Yesterday, I've discovered for the first
+time that Perl uses a dot for concatenation... I have no idea what
+happens when passing an array to Authen::SASL->new(). Moreover, the
+Perl arrays syntax rules scare me a bit ;).
+
+> 
+> > +               }
+> > +       }
+> > +
+> > +       die "Invalid SMTP AUTH." if length $smtp_auth && !length
+> > $filtered_auth;
+> 
+> Style: drop capitalization: "invalid..."
+> Style: drop period at end
+
+Agree.
+
+> Style: add "\n" at end in order to suppress printing of the
+>     perl line number and input line number which aren't
+>     very meaningful for a user error
+
+Another hidden Perl suprise, I guess...
+
+> 
+> (Existing style in the script is not very consistent, but new code
+> probably should adhere the above suggestions.)
+
+(Agree.)
+
+> 
+> Also, don't you want to warn the user about tokens that don't match
+> one of the accepted (PLAIN, LOGIN, CRAM-MD5, DIGEST-MD5), rather than
+> dropping them silently?
+
+Yes, this would be great (as I've already mentioned). It's a question
+whether to include the check for the mechanisms or whether to leave
+the $smtp_auth variable as it is... Maybe just validate by a regex?
+
+The naming rules are defiend here:
+
+ https://tools.ietf.org/html/rfc4422#page-8
+
+So, this looks to me as a better way.
+
+Note that, the current implementation does not force the user to use
+only the listed mechanisms. If the $smtp_auth is empty, the original
+behaviour is preserved...
+
+> 
+> >         # Workaround AUTH PLAIN/LOGIN interaction defect
+> >         # with Authen::SASL::Cyrus
+> >         eval {
+> > @@ -1148,6 +1163,20 @@ sub smtp_auth_maybe {
+> >                 'password' => $smtp_authpass
+> >         }, sub {
+> >                 my $cred = shift;
+> > +
+> > +               if($filtered_auth) {
+> 
+> Style: space after 'if'
+> 
+> > +                       my $sasl = 
+> > +                               mechanism => $filtered_auth,
+> > +                               callback => {
+> > +                                       user => $cred->{'username'},
+> > +                                       pass => $cred->{'password'},
+> > +                                       authname =>
+> > $cred->{'username'},
+> > +                               }
+> > +                       );
+> > +
+> > +                       return !!$smtp->auth($sasl);
+> > +               }
+> > +
+> >                 return !!$smtp->auth($cred->{'username'},
+> > $cred->{'password'}); });
+> >
+> > --
+> > 2.5.0
 
 
---O3RTKUHj+75w1tg5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 01, 2015 at 01:33:37AM +0200, Jan Viktorin wrote:
-> +	# Do not allow arbitrary strings.
-> +	my ($filtered_auth) =3D "";
-> +	foreach ("PLAIN", "LOGIN", "CRAM-MD5", "DIGEST-MD5") {
-
-On my system, GSSAPI is also available, and it does indeed work, as I'm
-not prompted for a password.  (I have only PLAIN and GSSAPI available
-server-side, and AUTH is required.)
-
-It may be better to simply force the text to upper case, as that would
-allow us not to have to change Git if Authen::SASL::Perl implements new
-mechanisms.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---O3RTKUHj+75w1tg5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.6 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVvPi2AAoJEL9TXYEfUvaLuHMP/3ML+MIVUesePiFIx8nTeYaL
-lPiu2GS/fEis7NNwD0lhw1jLnMkM9afUVgVu+Sk5c/+/sANaW5wJADvedOs0gitO
-WETxOIJRy30TZgTXPlc5XZpi1QVMaR/bt83Ht4P8frfqgze3BRYLqERzPmh73vC8
-iCS3CNVrEhgbr+T9DWfOEkKzQFREsbDJHFNa77K0N4mpVd3oIQk4rhyRoSayreXz
-IgUyOGno8WaS7QY+f6Ov2gGmrKW2cNJOrPradCjVLBJzRv9Djy7xtSF7s0wR9H6o
-j+uvpLLtjyN7fWEh/D96e9SGZ7gljfM8kLR31LJzQph6/utz21y4g81043JVV50v
-UVOOQqIpCqGrXo4XgdEqejJM+k6xeS9az6sFQ1A4isLuSoePNAaEMmLzQgfgNVYO
-Za40fUT594KdE/yQ9iTqH7tEDf0iZl1OPpoFAP3WJg4P6KvOlEobEKsWBlhGf1WO
-X3ytZqOh5B4W7yigiAEXDXCPkM8+k0uaBSlSeKc5h3wdzxao6ihI0MkNb2SXNMM0
-YIfvaxMl9rIJjwb2EtASHqQuI9bKQtVXo4M70ZRIrj9QLnLRgeeQfxIiTptcCPSn
-cdD6a5MPTH8DpXrYccP7liDC6EESlAEh8oB/zXUvULrbqWx9hoWWeKAYgU9ODmcN
-oDXw034qBl9lWDmcfx73
-=Zntw
------END PGP SIGNATURE-----
-
---O3RTKUHj+75w1tg5--
+-- 
+  Jan Viktorin                E-mail: Viktorin@RehiveTech.com
+  System Architect            Web:    www.RehiveTech.com
+  RehiveTech                  Phone: +420 606 201 868
+  Brno, Czech Republic
