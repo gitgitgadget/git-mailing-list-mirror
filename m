@@ -1,122 +1,103 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH/RFC 0/2] bisect per-worktree
-Date: Sat, 01 Aug 2015 08:51:08 +0200
-Message-ID: <55BC6C5C.1070707@alum.mit.edu>
-References: <1438387012-29229-1-git-send-email-dturner@twopensource.com> <55BC4438.8060709@alum.mit.edu> <CAPc5daVnfit8pkjc2HCSn0erW-q++We8gx8tPsb_ptd5H+CpJg@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC/PATCH 04/11] ref-filter: add 'ifexists' atom
+Date: Sat, 1 Aug 2015 00:05:09 -0700
+Message-ID: <CA+P7+xoCoFrgT_vspcSqrAfg6kvCGRR9k_1stpf1YiyQUWJeKg@mail.gmail.com>
+References: <CAOLa=ZT3_DMJWFN62cbF19uxYBFsE69dGaFR=af1HPKsQ42otg@mail.gmail.com>
+ <1438066594-5620-1-git-send-email-Karthik.188@gmail.com> <1438066594-5620-4-git-send-email-Karthik.188@gmail.com>
+ <xmqq8ua0f9lk.fsf@gitster.dls.corp.google.com> <CAOLa=ZTUJHnXWJyr0wp0CZgR9S1pBxCEsGRiDPsJdUyzTZaZUw@mail.gmail.com>
+ <xmqqy4hy973q.fsf@gitster.dls.corp.google.com> <xmqqtwsm94j1.fsf@gitster.dls.corp.google.com>
+ <vpqh9omek39.fsf@anie.imag.fr> <CAOLa=ZTC9xJu9WCnF9VVf9wRLSK4=R3576UJ6CqAC7GEGDbCOQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 08:51:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 09:05:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLQdZ-0007H8-JX
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 08:51:18 +0200
+	id 1ZLQrb-0006vh-50
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 09:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbbHAGvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2015 02:51:13 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:55594 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750856AbbHAGvM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2015 02:51:12 -0400
-X-AuditID: 12074414-f794f6d000007852-93-55bc6c5fbd58
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id D7.60.30802.F5C6CB55; Sat,  1 Aug 2015 02:51:11 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB00E7.dip0.t-ipconnect.de [93.219.0.231])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t716p8sU008309
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 1 Aug 2015 02:51:10 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <CAPc5daVnfit8pkjc2HCSn0erW-q++We8gx8tPsb_ptd5H+CpJg@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqBufsyfUYNF/fYtNzycyW8zfdILR
-	outKN5NFQ+8VZovuKW8ZHVg9ds66y+5x8ZKyx/IHr9g9Fjy/z+7xeZNcAGsUt01SYklZcGZ6
-	nr5dAnfGgQ+FBXslKvZeO8LSwPhfuIuRk0NCwETi59NHzBC2mMSFe+vZQGwhgcuMEkceBncx
-	cgHZZ5kklq66wg6S4BXQlni38R9YEYuAqkTrp41gcTYBXYlFPc1MXYwcHKICQRKvX+ZClAtK
-	nJz5hAXEFhFQk5jYdgjMZhY4wijRe4AVpFxYwEBiwVUmiLVrGSXa7vGB2JwCgRIvTm1kgyhX
-	l/gz7xIzhC0v0bx1NvMERoFZSDbMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
-	Fnq5mSV6qSmlmxghwS2yg/HISblDjAIcjEo8vD9Y9oQKsSaWFVfmHmKU5GBSEuUViQIK8SXl
-	p1RmJBZnxBeV5qQWH2KU4GBWEuFNMQfK8aYkVlalFuXDpKQ5WJTEeb8tVvcTEkhPLEnNTk0t
-	SC2CycpwcChJ8AYnADUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2I0vhgYpSAp
-	HqC93CDtvMUFiblAUYjWU4yKUuK8X7KAEgIgiYzSPLixsJT1ilEc6Eth3gKQdh5guoPrfgU0
-	mAlocF/7DpDBJYkIKakGRnF5QZc1dkV//GNbuYJnysqI7c9yf13ulW2zM/nmqs27VNdc/JEf
-	fnySkYhb7ZNl1dwOgqq7P7IHS0/dIruu/6L193Yeh+4jN+fYyQUt+Ox4jiMpl3XB 
+	id S1751010AbbHAHFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2015 03:05:30 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34935 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbbHAHF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2015 03:05:29 -0400
+Received: by iodd187 with SMTP id d187so104767741iod.2
+        for <git@vger.kernel.org>; Sat, 01 Aug 2015 00:05:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0phB9lD66laCTkTLChWRF27TI8LqBMvyqF5bwNvbdws=;
+        b=t2f1w9RffbjgAGUC0r5qL5oAjOqoQ/LIEhBFXgXd84UjoZq9dWWWH8WAcByFyDlm5z
+         i0PNJ235THSE5cmcDS1EktLynpGbRK49jXGCWTrGX8NfKK2E1MErGc+T1GWKGIBVnlYs
+         YVhVSgl9B9Sqx2xxnHMPM1N59pajIE3ODanJeE92HGxn4qOFWX6ky1/hnOj06853qS2A
+         t3jIkoBf30m5+O/U9WGrZH9eFsPL8+QRzt3MTj70zDMc/r0wnbj5M85hxztRd2CNL8O0
+         DMBIigXqaaLeqAKFDlOTckXgGpbQObTXpgjXxDQ/hJSmA9vuc2tcBAfKfHGy+WSQmJ6/
+         0u8w==
+X-Received: by 10.107.153.206 with SMTP id b197mr12324435ioe.71.1438412729267;
+ Sat, 01 Aug 2015 00:05:29 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Sat, 1 Aug 2015 00:05:09 -0700 (PDT)
+In-Reply-To: <CAOLa=ZTC9xJu9WCnF9VVf9wRLSK4=R3576UJ6CqAC7GEGDbCOQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275113>
 
-On 08/01/2015 07:12 AM, Junio C Hamano wrote:
-> On Fri, Jul 31, 2015 at 8:59 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+On Fri, Jul 31, 2015 at 11:46 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Thu, Jul 30, 2015 at 2:51 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
 >>
->> It seems to me that adding a new top-level "worktree-refs" directory is
->> pretty traumatic. Lots of people and tools will have made the assumption
->> that all "normal" references live under "refs/".
->> ...
->> It's all a bit frightening, frankly.
-> 
-> I actually feel the prospect of pluggable ref backend more frightening,
-> frankly ;-). These bisect refs are just like FETCH_HEAD and MERGE_HEAD,
-> not about the primary purpose of the "repository" to grow the history of refs
-> (branches), but about ephemeral pointers into the history used to help keep
-> track of what is being done in the worktree upstairs. There is no need for
-> these to be visible across worktrees. If we use the real refs that are grobal
-> in the repository (as opposed to per-worktree ones), we would hit the backend
-> databas with transactions to update these ephemeral things, which somehow
-> makes me feel stupid.
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>>> Couldn't think of a better replacer, any suggestions would be welcome :)
+>>>>
+>>>> See below.
+>>>> ...
+>>>> One way to do all of the above is ...
+>>>
+>>> Note that is just "one way", not the only or not necessarily the
+>>> best.  It certainly is not the easiest, I think.
+>>>
+>>>     %(if:atom)...%(endif)
+>>>
+>>> might be easier to implement.
+>>
+>> And I find it easier to read or write too. Nested parenthesis in a
+>> format string make them really tricky. That removes the need for
+>> escaping since the content of the if/endif is a format string like the
+>> others, it can use the same escaping rules (IIRC, %% to escape a %).
+>>
+>
+> THat's a really good point. Will work on this :)
+>
+> --
+> Regards,
+> Karthik Nayak
+> --
 
-Hmm, ok, so you are thinking of a remote database with high latency. I
-was thinking more of something like LMDB, with latency comparable to
-filesystem storage.
 
-These worktree-specific references might be ephemeral, but they also
-imply reachability, which means that they need to be visible at least
-during object pruning. Moreover, if the references don't live in the
-same database with the rest of the references, then we have to deal with
-races due to updating references in different places without atomicity.
+Not sure how much work it would take to extent other atoms to this
+behavior, such as %(padright) and %(align) and such, that way they
+could operate on literals and so forth.
 
-The refs+object store is the most important thing for maintaining the
-integrity of a repo and avoiding races. To me it seems easier to do so
-if there is a single refs+objects store than if we have some references
-over here on the file system, some over there in a LMDB, etc. So my gut
-feeling is for the primary reference storage to be in a single reference
-namespace that (at least in principle) can be stored in a single ACID
-database.
+Maybe not worth it as part of this GSoC project, as it may be too
+complicated, but maybe something to mark as a "TODO" for future or
+something?
 
-For each worktree, we could then create a different view of the
-references by splicing parts of the full reference namespace together.
-This could even be based on config settings so that we don't have to
-hardcode information like "refs/bisect/* is worktree-specific" deep in
-the references module. Suppose we could write
+The only issue being that it might mean we have to keep the old
+implementation too for backwards compatibility .. Maybe it's easier to
+implement that I think, or maybe it's far more challenging than I
+think....
 
-[worktree.refs]
-	map = refs/worktrees/*:
-	map = refs/bisect/*:refs/worktrees/[worktree]/refs/bisect/*
-
-which would mean (a) hide the references under refs/worktrees", and (b)
-make it look as if the references under
-refs/worktrees/[worktree]/refs/bisect actually appear under refs/bisect
-(where "[worktree]" is replaced with the current worktree's name). By
-making these settings configurable, we allow other projects to define
-their own worktree-specific reference namespaces too.
-
-The corresponding main repo might hide "refs/worktrees/*" but leave its
-refs/bisect namespace exposed in the usual place.
-
-"git prune" would see the whole namespace as it really is so that it can
-compute reachability correctly.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Regards,
+Jake
