@@ -1,168 +1,135 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH] am: let command-line options override saved options
-Date: Sat, 1 Aug 2015 08:59:22 +0800
-Message-ID: <CACRoPnQHGtA3BQxLuY4douhBt3=_b5U2ny4uDGfmR=5+La68YQ@mail.gmail.com>
-References: <xmqqr3nxmopp.fsf@gitster.dls.corp.google.com>
-	<20150724180921.GA17730@peff.net>
-	<CACRoPnR=DSETucY78Xo0RNxHKkqDnTCYFvHsSzWAG7X7z3_DKQ@mail.gmail.com>
-	<xmqq8ua1k7fc.fsf@gitster.dls.corp.google.com>
-	<20150728164311.GA1948@yoshi.chippynet.com>
-	<xmqqegjsfbtk.fsf@gitster.dls.corp.google.com>
-	<CACRoPnR1df+uEnpFArJtwEBCh+HiQYDYGOyZ7KQEGtrdiaX3GQ@mail.gmail.com>
-	<xmqqvbd05n5z.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 1/2] submodule: implement `module_list` as a builtin helper
+Date: Fri, 31 Jul 2015 18:01:50 -0700
+Message-ID: <xmqqmvybakjl.fsf@gitster.dls.corp.google.com>
+References: <1438384147-3275-1-git-send-email-sbeller@google.com>
+	<1438384147-3275-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 02:59:42 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 03:01:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLL9I-0002Dl-V4
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 02:59:41 +0200
+	id 1ZLLBV-0003dS-Ip
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Aug 2015 03:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbbHAA7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2015 20:59:25 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:34515 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752509AbbHAA7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2015 20:59:24 -0400
-Received: by lbqc9 with SMTP id c9so29564688lbq.1
-        for <git@vger.kernel.org>; Fri, 31 Jul 2015 17:59:22 -0700 (PDT)
+	id S1752616AbbHABBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2015 21:01:53 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:36602 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671AbbHABBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2015 21:01:52 -0400
+Received: by pachj5 with SMTP id hj5so48649121pac.3
+        for <git@vger.kernel.org>; Fri, 31 Jul 2015 18:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2ugOjh4Uc9pgy3by2zNvIVkWuvexegkHUCOjvh/TH6U=;
-        b=EOfrWX5LHbb1V8aMd3LoSw4jr6FPyLeQc2ob5g7EZrrhrKlud/PRRytrEXPfw1NgbI
-         c3t6h1jxmdwKnijUuiy2GEi9h9Q8BnnndfHkNhasjFSJQlPKjdcs5FW9Zhy5ENoIOTiY
-         uZyJVM9RRXuQd1YBH9HaR9a5RJ9xnTYu78XLA1E16cFBCsTBPWaHt9oVQOYCpvCLlTZn
-         cZ+kng49K3Y4zWQ0UMYg8pM20LOPBjgxzBh4vw2FSdXp6UFNU6XVjPnMsVpgqFqsR7SH
-         3Xn3GDb+bW+mE4fw7RI7utvGXlg8IY8WlKDTP9S1gSFZDG576kkqeXUNA4h4JIrHjobF
-         U2fw==
-X-Received: by 10.152.4.163 with SMTP id l3mr6256644lal.35.1438390762376; Fri,
- 31 Jul 2015 17:59:22 -0700 (PDT)
-Received: by 10.112.62.196 with HTTP; Fri, 31 Jul 2015 17:59:22 -0700 (PDT)
-In-Reply-To: <xmqqvbd05n5z.fsf@gitster.dls.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=2iMVSmBVfhndq8dUZqh8wT+4g7ZDXdBWyC/ko2eE0Bc=;
+        b=ylX998YnCU1v8XlPNK4JrITKesSRkykzHOs6WARyBim+Bfoz/y/57afIQi7VyXv2Ad
+         ULBAe73UysBP96vueNgoDt55pq0QPQmd4wLh4xjI0z1GKAjOi5ndzQjZYOaan+xW069B
+         RX+Hs0esYUVphLdoSfbF1RBQL7tFkcpJFKPkz5omahVcrhedmnE6rhkgVB4B39TPeRW0
+         XLui/EABViVpwRxyvgexQanyvYez1/7nKcFdCoccHCeOdhKC2lHGiFm3F+qZdLT16YIi
+         8nrfyNp9HmpAXRaHU/0rD7M/IYkYir9wpN3ggh81g1jaPhOX8X1wcVRKZEIzQ3GERQkc
+         adNg==
+X-Received: by 10.66.184.197 with SMTP id ew5mr13241342pac.54.1438390912211;
+        Fri, 31 Jul 2015 18:01:52 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1b0:46e8:ba02:35e3])
+        by smtp.gmail.com with ESMTPSA id bo10sm9686006pdb.83.2015.07.31.18.01.51
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 31 Jul 2015 18:01:51 -0700 (PDT)
+In-Reply-To: <1438384147-3275-2-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 31 Jul 2015 16:09:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275102>
 
-On Sat, Aug 1, 2015 at 12:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Tan <pyokagan@gmail.com> writes:
->
->> I think I will introduce a format_patch() function that takes a single
->> commit-ish so that we can use tag names to name the patches:
->>
->> # Given a single commit $commit, formats the following patches with
->> # git-format-patch:
->> #
->> # 1. $commit.eml: an email patch with a Message-Id header.
->> # 2. $commit.scissors: like $commit.eml but contains a scissors line at the
->> #    start of the commit message body.
->> format_patch () {
->>     {
->>         echo "Message-Id: <$1@example.com>" &&
->>         git format-patch --stdout -1 "$1" | sed -e '1d'
->>     } >"$1".eml &&
->
-> I only said I can "understand" what is going on, though.
->
-> It feels a bit unnatural for a test to feed a message that lack the
-> "From " header line.  Perhaps
->
->         git format-patch --add-header="Message-Id: ..." --stdout -1
->
-> or something?
+Stefan Beller <sbeller@google.com> writes:
 
-Ah, okay. I wasn't aware of the --add-header option, but this is
-definitely better.
+> +static const char * const git_submodule_helper_usage[] = {
+> +	N_("git submodule--helper --module_list [<path>...]"),
 
->> These functions are called before we attempt to apply the patch, so we
->> should probably call append_signoff before then. However, this still
->> means that --no-signoff will have no effect should the patch
->> application fail and we resume, as the signoff would still have
->> already been appended...
->
-> Ah, I see.  Let's not worry about this; we cannot change the
-> expectation existing hook scripts depends on.
+Yuck.  Please do not force --multi_word_opt upon us, which is simply
+too ugly to live around here.  --module-list is perhaps OK, but
+because submodule--helper would not have an default action, I'd
+prefer to make these just "command words", i.e.
 
-Okay, although this means that with the below change, --[no-]signoff
-will be the oddball option that does not work when resuming.
+    $ git submodule--helper module_list
 
->> 2. Re-reading Peff's message, I see that he expects the command-line
->> options to affect just the current patch, which makes sense. This
->> patch would need to be extended to call am_load() after we finish
->> processing the current patch when resuming.
->
-> Yeah, so the idea is:
->
->  - upon the very first invocation, we parse the command line options
->    and write the states out;
->
->  - subsequent invocation, we read from the states and then override
->    with the command line options, but we do not write the states out
->    to update, so that subsequent invocations will keep reading from
->    the very first one.
+> +int module_list(int argc, const char **argv, const char *prefix)
+> +{
+> +	int i;
+> +	static struct pathspec pathspec;
+> +	const struct cache_entry **ce_entries = NULL;
+> +	int alloc = 0, used = 0;
+> +	char *ps_matched = NULL;
+> +	char *max_prefix;
+> +	int max_prefix_len;
+> +	struct string_list already_printed = STRING_LIST_INIT_NODUP;
+> +
+> +	parse_pathspec(&pathspec, 0,
+> +		       PATHSPEC_PREFER_FULL,
+> +		       prefix, argv);
+> +
+> +	/* Find common prefix for all pathspec's */
+> +	max_prefix = common_prefix(&pathspec);
+> +	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+> +
+> +	if (pathspec.nr)
+> +		ps_matched = xcalloc(1, pathspec.nr);
 
-... and we also load back the saved options after processing the patch
-that we resume from, so the command-line options only affect the
-conflicting patch, which fits in with Peff's idea on "wiggling that
-_one_ patch".
+Up to this point it interprets its input, and ...
 
->>>> +test_expect_success '--3way, --no-3way' '
->>>> +     rm -fr .git/rebase-apply &&
->>>> +     git reset --hard &&
->>>> +     git checkout first &&
->>>> +     test_must_fail git am --3way side-first.patch side-second.patch &&
->>>> +     test -n "$(git ls-files -u)" &&
->>>> +     echo will-conflict >file &&
->>>> +     git add file &&
->>>> +     test_must_fail git am --no-3way --continue &&
->>>> +     test -z "$(git ls-files -u)"
->>>> +'
->>>> +
->>
->> ... Although if I implement the above change, I can't implement the
->> test for --3way, as I think the only way to check if --3way/--no-3way
->> successfully overrides the saved options for the current patch only is
->> to run "git am --3way", but that does not work in the test runner as
->> it expects stdin to be a TTY :-/ So I may have to remove this test.
->> This shouldn't be a problem though, as all the tests in this test
->> suite all test the same mechanism.
->
-> Sorry, you lost me.  Where does the TTY come into the picture only
-> for --3way (but not for other things like --quiet)?
+> +	if (read_cache() < 0)
+> +		die("index file corrupt");
+> +
+> +	for (i = 0; i < active_nr; i++) {
+> +		const struct cache_entry *ce = active_cache[i];
+> +
+> +		if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+> +				    max_prefix_len, ps_matched,
+> +				    S_ISGITLINK(ce->ce_mode) | S_ISDIR(ce->ce_mode)))
+> +			continue;
+> +
+> +		if (S_ISGITLINK(ce->ce_mode)) {
+> +			ALLOC_GROW(ce_entries, used + 1, alloc);
+> +			ce_entries[used++] = ce;
+> +		}
+> +	}
+> +
+> +	if (ps_matched && report_path_error(ps_matched, &pathspec, prefix)) {
+> +		printf("#unmatched\n");
+> +		return 1;
+> +	}
 
-Ah, sorry, I should have provided more context. This is due to the
-following block of code:
+... does the computation, with diagnosis.
 
-        /*
-         * Catch user error to feed us patches when there is a session
-         * in progress:
-         *
-         * 1. mbox path(s) are provided on the command-line.
-         * 2. stdin is not a tty: the user is trying to feed us a patch
-         *    from standard input. This is somewhat unreliable -- stdin
-         *    could be /dev/null for example and the caller did not
-         *    intend to feed us a patch but wanted to continue
-         *    unattended.
-         */
-        if (argc || (resume == RESUME_FALSE && !isatty(0)))
-            die(_("previous rebase directory %s still exists but mbox given."),
-                state.dir);
+And then it does the I/O with formatting.
 
-And it will activate when git-am is run without
---continue/--abort/--skip (e.g. "git am --3way") because the test
-framework sets stdin to /dev/null.
+> +
+> +	for (i = 0; i < used; i++) {
+> +		const struct cache_entry *ce = ce_entries[i];
+...
+> +	return 0;
+> +}
 
-Thanks,
-Paul
+When you have the implementation of "foreach-parallel" to move the
+most expensive part of "submodule update" of a tree with 500
+submodules, you would want to receive more or less the same "args"
+as this thing takes and pass the ce_entries[] list to the "spawn and
+run the user script in them in parallel" engine.
+
+So I think it makes more sense to split this function into two (or
+three).  One that reads from (argc, argv) and allocates and fills
+ce_entries[] can become a helper that you can reuse later.  
+
+'int module_list()' (shouldn't it be static?), can make a call to
+that helper at the begining of it, and the remainder of the function
+would do the textual I/O.
