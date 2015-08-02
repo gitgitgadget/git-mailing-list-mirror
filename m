@@ -1,148 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] send-email: provide whitelist of SMTP AUTH mechanisms
-Date: Sun, 2 Aug 2015 14:57:19 -0400
-Message-ID: <CAPig+cQwFxVtO1C_RAumGP6_et21ggORB4jhpcUtBYNznNH1qA@mail.gmail.com>
-References: <1438533769-17460-1-git-send-email-viktorin@rehivetech.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH/RFC 0/9] Pseudorefs
+Date: Mon, 03 Aug 2015 00:48:05 +0200
+Message-ID: <55BE9E25.6050902@alum.mit.edu>
+References: <1437713129-19373-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jan Viktorin <viktorin@rehivetech.com>
-X-From: git-owner@vger.kernel.org Sun Aug 02 20:57:27 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 03 00:48:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLyRp-0007Zh-Gr
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Aug 2015 20:57:25 +0200
+	id 1ZM23K-0004wi-EJ
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 00:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbbHBS5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Aug 2015 14:57:21 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:33694 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972AbbHBS5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Aug 2015 14:57:20 -0400
-Received: by ykoo205 with SMTP id o205so5204424yko.0
-        for <git@vger.kernel.org>; Sun, 02 Aug 2015 11:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=6i0G/cglXFAsu8fgJNtp6/58oWMQskE/6+XG/YP5f+o=;
-        b=Vgld0VU/C4x7Q7U6WU2+GAZzvwbKiPReadYZYmaH+WEvGC0G6ls1djrxDCAcQHkCO9
-         21lPr02DV3HgiHA0bozpodZkamKkhFNeaQ2SmaZnUDU6ubHvjwwlnc0uqMXxkFwcryXE
-         KX+6b4aunBiJz/4O9XIaVDEFOTHw5R+0/IQVv7uPzEDaWKcCt6ethzdXj6LI/TloQMti
-         QClsKvDLcCS4C0/OUpxUeKOnesW+WgThGmPmiduI76oa99KLUv2fxtooTpq+mRwLzur0
-         ZXC9d6Lz+Z9p89lJ5L/8Ig1McW3YyOImG/o6OzWFzqwfduJm7qrmOB5urX7bPXzYB188
-         M4Uw==
-X-Received: by 10.170.63.196 with SMTP id f187mr16073060ykf.82.1438541839638;
- Sun, 02 Aug 2015 11:57:19 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 2 Aug 2015 11:57:19 -0700 (PDT)
-In-Reply-To: <1438533769-17460-1-git-send-email-viktorin@rehivetech.com>
-X-Google-Sender-Auth: texku6HIBu3RpnhbHOLfljRm4oQ
+	id S1752105AbbHBWsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Aug 2015 18:48:17 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:42929 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752083AbbHBWsQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Aug 2015 18:48:16 -0400
+X-AuditID: 12074411-f797e6d000007df3-d3-55be9e27d0f0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 36.D8.32243.72E9EB55; Sun,  2 Aug 2015 18:48:07 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB03A9.dip0.t-ipconnect.de [93.219.3.169])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t72Mm5C0021006
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 2 Aug 2015 18:48:06 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <1437713129-19373-1-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNIsWRmVeSWpSXmKPExsUixO6iqKs+b1+owckuMYv5m04wWnRd6WZy
+	YPJY8Pw+u8fnTXIBTFHcNkmJJWXBmel5+nYJ3Bkzjz1mKXgjWDHvzELmBsabfF2MnBwSAiYS
+	ey68ZoewxSQu3FvP1sXIxSEkcJlR4tz86UwQzlkmibmHfjCDVPEKaEu0T33ACGKzCKhKvFh6
+	kA3EZhPQlVjU0wzUwMEhKhAk8fplLkS5oMTJmU9YQGwRAQeJy7uOgo0RFlCX2PrnHBOILSTg
+	IfH4dyPYEZwCnhIvf60Es5kF9CR2XP/FCmHLSzRvnc08gZF/FpKxs5CUzUJStoCReRWjXGJO
+	aa5ubmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZGSEAK7mCccVLuEKMAB6MSD6+A295QIdbE
+	suLK3EOMkhxMSqK886v3hQrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b2YDpTjTUmsrEotyodJ
+	SXOwKInz8i1R9xMSSE8sSc1OTS1ILYLJynBwKEnwnp8D1ChYlJqeWpGWmVOCkGbi4AQZziUl
+	Upyal5JalFhakhEPisj4YmBMgqR4gPa+B2nnLS5IzAWKQrSeYlSUEucVnguUEABJZJTmwY2F
+	pZlXjOJAXwrz+oNU8QBTFFz3K6DBTECDL2fsARlckoiQkmpgVBJ9GvMnqIjF8Mq0jPa+9IMx
+	HeWHb6x5LSS5dfFdhvdHphUVPv/AHeKgr1GW/1fQtL331IU0R87TR9ZqcD7ceSIqZO7p+HID
+	+e1Twlc1tCc6hr3Y2HG55pcdm/3MHZO8ZKrjrDhfmj0PPeHauWKP4yyVSU4cfFOr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275151>
 
-On Sun, Aug 2, 2015 at 12:42 PM, Jan Viktorin <viktorin@rehivetech.com> wrote:
-> When sending an e-mail, the client and server must
-> agree on an authentication mechanism. Some servers
-> (due to misconfiguration or a bug) deny valid
-> credentials for certain mechanisms. In this patch,
-> a new option --smtp-auth and configuration entry
-> smtpauth are introduced. If smtp_auth is defined,
-> it works as a whitelist of allowed mechanisms for
-> authentication selected from the ones supported by
-> the installed SASL perl library.
+On 07/24/2015 06:45 AM, David Turner wrote:
+> This series is another chunk of the pluggable refs backend work.  The
+> major reason it is listed as "PATCH/RFC" is beacuse it breaks
+> t9300-fast-import.sh, because fast-import wants to create a ref called
+> TEMP_TAG, which would now be a pseudoref.  The commit that introduces
+> this test says that cvs2svn creates a tag called TAG_FIXUP "as a branch
+> name for temporary work needed to cleanup the tree prior to creating
+> an annotated tag object."
+> 
+> It appears that cvs2svn still does this.  So I'm not quite sure what to
+> do about this particular case.
+> 
+> As we discussed earlier, the motivation for this series is that refs
+> backends other than the files-based backend need to treat per-worktree
+> refs (HEAD) and pseudorefs (FETCH_HEAD) differently from other refs;
+> other refs are per-repo rather than per-worktree.
 
-Nit: This would read a bit more nicely if wrapped to 70-72 columns.
+Sorry, I missed this email while on vacation.
 
-> Signed-off-by: Jan Viktorin <viktorin@rehivetech.com>
-> ---
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 7ae467b..c237c80 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -171,6 +171,14 @@ Sending
-> +--smtp-auth=<mechs>::
-> +       Specify allowed SMTP-AUTH mechanisms. This setting forces using only
-> +       the listed mechanisms. Separate allowed mechanisms by a whitespace.
+cvs2git needs to create a temporary reference for cobbling together
+tagged commits. Originally I was going to use the name `TAG_FIXUP`, as
+suggested by git-fast-import(1) [1]. But that functionality turned out
+to be buggy in `git fast-import` at the time. So I reported the bug but
+changed cvs2git to use `refs/heads/TAG.FIXUP` [2]. The bug in `git
+fast-import` was fixed, including the test case that you found, but I
+never changed cvs2git back to using the originally-planned name. The
+fact that the test case uses a name different than `TAG_FIXUP` probably
+means that Shawn thought that any references named similarly should be
+allowed.
 
-Perhaps:
+Summary: support for a reference named `TAG_FIXUP` is not needed by
+cvs2git. However, its use is a documented recommendation of `git
+fast-import`, so it is quite possible that other importers are using
+this name.
 
-    Whitespace-separated list of allowed SMTP-AUTH mechanisms.
+I expect that such importers would slightly prefer that this reference
+be worktree-specific, but I doubt that anybody really cares that much.
+It seems unlikely that people will run `git fast-import` in multiple
+worktrees simultaneously.
 
-> +       Example: PLAIN LOGIN GSSAPI. If at least one of the specified mechanisms
-> +       matchs those advertised by the SMTP server and it is supported by the SASL
+Michael
 
-s/matchs/matches/
+[1] http://git-scm.com/docs/git-fast-import#_use_tag_fixup_branches
+[2]
+https://github.com/mhagger/cvs2svn/blob/master/cvs2svn_lib/git_output_option.py#L502-L509
 
-> +       library we use, it is used for authentication. If neither of 'sendemail.smtpAuth'
-> +       or '--smtp-auth' is specified, all mechanisms supported on client can be used.
-
-s/neither of/neither/
-s/or/nor/
-
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index ae9f869..ebc1e90 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -75,6 +75,9 @@ git send-email [options] <file | directory | rev-list options >
->                                       Pass an empty string to disable certificate
->                                       verification.
->      --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
-> +    --smtp-auth             <str>  * Space separated list of allowed AUTH methods.
-
-s/Space separated/Space-separated/
-
-> +                                     This setting forces to use one of the listed methods.
-> +                                     Supported: PLAIN LOGIN CRAM-MD5 DIGEST-MD5.
-
-Since you're no longer checking explicitly for these mechanisms, you
-probably want to drop the "Supported:" line.
-
->      --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
->
->    Automating:
-> @@ -1136,6 +1141,10 @@ sub smtp_auth_maybe {
->                 Authen::SASL->import(qw(Perl));
->         };
->
-> +       if($smtp_auth !~ /^(\b[A-Z0-9-_]{1,20}\s*)*$/) {
-> +               die "invalid smtp auth: '${smtp_auth}'";
-> +       }
-
-Style: space after 'if'
-
->         # TODO: Authentication may fail not because credentials were
->         # invalid but due to other reasons, in which we should not
->         # reject credentials.
-> @@ -1148,6 +1157,20 @@ sub smtp_auth_maybe {
->                 'password' => $smtp_authpass
->         }, sub {
->                 my $cred = shift;
-> +
-> +               if($smtp_auth) {
-
-Style: space after 'if'
-
-> +                       my $sasl = Authen::SASL->new(
-> +                               mechanism => $smtp_auth,
-> +                               callback => {
-> +                                       user => $cred->{'username'},
-> +                                       pass => $cred->{'password'},
-> +                                       authname => $cred->{'username'},
-> +                               }
-> +                       );
-> +
-> +                       return !!$smtp->auth($sasl);
-> +               }
-> +
->                 return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
->         });
->
-> --
-> 2.5.0
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
