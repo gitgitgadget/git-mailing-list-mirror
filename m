@@ -1,145 +1,165 @@
 From: Jan Viktorin <viktorin@rehivetech.com>
-Subject: [PATCH v2] send-email: provide whitelist of SMTP AUTH mechanisms
-Date: Sun,  2 Aug 2015 18:42:49 +0200
-Message-ID: <1438533769-17460-1-git-send-email-viktorin@rehivetech.com>
-Cc: sandals@crustytoothpaste.net, sunshine@sunshineco.com,
-	Jan Viktorin <viktorin@rehivetech.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 02 18:43:25 2015
+Subject: Re: [PATCH v1] send-email: provide whitelist of SMTP AUTH
+ mechanisms
+Date: Sun, 2 Aug 2015 18:43:53 +0200
+Organization: RehiveTech, spol. s r.o.
+Message-ID: <20150802184353.2a5da936@jvn>
+References: <1438385617-29159-1-git-send-email-viktorin@rehivetech.com>
+	<CAPig+cT842GAFFM-wfjSU1ZiOevDCOPNDWxux6-vqtdr=3F4qw@mail.gmail.com>
+	<20150801201950.5d8c1951@jvn>
+	<CAPig+cQwgYYYYsszaRdJDwFLLB0PmiDQ_WTa+Nzzoq0U1zuMiA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 02 18:44:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLwM7-0001SM-Qe
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Aug 2015 18:43:24 +0200
+	id 1ZLwMv-0001jU-9B
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Aug 2015 18:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbbHBQnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Aug 2015 12:43:19 -0400
-Received: from w-smtp-out-7.wedos.net ([46.28.106.5]:47003 "EHLO
+	id S1752045AbbHBQoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Aug 2015 12:44:06 -0400
+Received: from w-smtp-out-7.wedos.net ([46.28.106.5]:39768 "EHLO
 	we2-f167.wedos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751478AbbHBQnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Aug 2015 12:43:18 -0400
+	with ESMTP id S1751602AbbHBQoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Aug 2015 12:44:04 -0400
 Received: from ([109.81.211.51])
-        by we2-f167.wedos.net (WEDOS Mail Server mail2) with ASMTP (SSL) id PCT00012;
-        Sun, 02 Aug 2015 18:43:12 +0200
-X-Mailer: git-send-email 2.5.0
+        by we2-f167.wedos.net (WEDOS Mail Server mail2) with ASMTP id PCU00002;
+        Sun, 02 Aug 2015 18:44:02 +0200
+In-Reply-To: <CAPig+cQwgYYYYsszaRdJDwFLLB0PmiDQ_WTa+Nzzoq0U1zuMiA@mail.gmail.com>
+X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275144>
 
-When sending an e-mail, the client and server must
-agree on an authentication mechanism. Some servers
-(due to misconfiguration or a bug) deny valid
-credentials for certain mechanisms. In this patch,
-a new option --smtp-auth and configuration entry
-smtpauth are introduced. If smtp_auth is defined,
-it works as a whitelist of allowed mechanisms for
-authentication selected from the ones supported by
-the installed SASL perl library.
+Authen::SASL gives:
 
-Signed-off-by: Jan Viktorin <viktorin@rehivetech.com>
----
-Changes v1 -> v2:
-  - check user input by regex
-  - added documentation
-  - still missing a test
+No SASL mechanism found
+ at /usr/share/perl5/vendor_perl/Authen/SASL.pm line 77.
+ at /usr/share/perl5/core_perl/Net/SMTP.pm line 207.
 
- Documentation/git-send-email.txt |  8 ++++++++
- git-send-email.perl              | 25 ++++++++++++++++++++++++-
- 2 files changed, 32 insertions(+), 1 deletion(-)
+The SASL library does not check validity of mechanisms'
+names (or I did not find it). It just tries to load one
+that matches both the ours and the server side ones.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 7ae467b..c237c80 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -171,6 +171,14 @@ Sending
- 	to determine your FQDN automatically.  Default is the value of
- 	'sendemail.smtpDomain'.
- 
-+--smtp-auth=<mechs>::
-+	Specify allowed SMTP-AUTH mechanisms. This setting forces using only
-+	the listed mechanisms. Separate allowed mechanisms by a whitespace.
-+	Example: PLAIN LOGIN GSSAPI. If at least one of the specified mechanisms
-+	matchs those advertised by the SMTP server and it is supported by the SASL
-+	library we use, it is used for authentication. If neither of 'sendemail.smtpAuth'
-+	or '--smtp-auth' is specified, all mechanisms supported on client can be used.
-+
- --smtp-pass[=<password>]::
- 	Password for SMTP-AUTH. The argument is optional: If no
- 	argument is specified, then the empty string is used as
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ae9f869..ebc1e90 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -75,6 +75,9 @@ git send-email [options] <file | directory | rev-list options >
-                                      Pass an empty string to disable certificate
-                                      verification.
-     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
-+    --smtp-auth             <str>  * Space separated list of allowed AUTH methods.
-+                                     This setting forces to use one of the listed methods.
-+                                     Supported: PLAIN LOGIN CRAM-MD5 DIGEST-MD5.
-     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
- 
-   Automating:
-@@ -208,7 +211,7 @@ my ($cover_cc, $cover_to);
- my ($to_cmd, $cc_cmd);
- my ($smtp_server, $smtp_server_port, @smtp_server_options);
- my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
--my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
-+my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
- my ($validate, $confirm);
- my (@suppress_cc);
- my ($auto_8bit_encoding);
-@@ -239,6 +242,7 @@ my %config_settings = (
-     "smtppass" => \$smtp_authpass,
-     "smtpsslcertpath" => \$smtp_ssl_cert_path,
-     "smtpdomain" => \$smtp_domain,
-+    "smtpauth" => \$smtp_auth,
-     "to" => \@initial_to,
-     "tocmd" => \$to_cmd,
-     "cc" => \@initial_cc,
-@@ -310,6 +314,7 @@ my $rc = GetOptions("h" => \$help,
- 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
- 		    "smtp-debug:i" => \$debug_net_smtp,
- 		    "smtp-domain:s" => \$smtp_domain,
-+		    "smtp-auth=s" => \$smtp_auth,
- 		    "identity=s" => \$identity,
- 		    "annotate!" => \$annotate,
- 		    "no-annotate" => sub {$annotate = 0},
-@@ -1136,6 +1141,10 @@ sub smtp_auth_maybe {
- 		Authen::SASL->import(qw(Perl));
- 	};
- 
-+	if($smtp_auth !~ /^(\b[A-Z0-9-_]{1,20}\s*)*$/) {
-+		die "invalid smtp auth: '${smtp_auth}'";
-+	}
-+
- 	# TODO: Authentication may fail not because credentials were
- 	# invalid but due to other reasons, in which we should not
- 	# reject credentials.
-@@ -1148,6 +1157,20 @@ sub smtp_auth_maybe {
- 		'password' => $smtp_authpass
- 	}, sub {
- 		my $cred = shift;
-+
-+		if($smtp_auth) {
-+			my $sasl = Authen::SASL->new(
-+				mechanism => $smtp_auth,
-+				callback => {
-+					user => $cred->{'username'},
-+					pass => $cred->{'password'},
-+					authname => $cred->{'username'},
-+				}
-+			);
-+
-+			return !!$smtp->auth($sasl);
-+		}
-+
- 		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
- 	});
- 
+I can see one possible weakness of this, however I doubt
+whether there exists a successful attack vector. Imagine
+that somebody gives me a malicious .gitconfig with
+smtpauth = ~/ATTACK and redirects me to a fake mail
+server that advertises ~/ATTACK as a working mechanism.
+This might lead to an unwanted execution of ~/ATTACK.pm.
+Should we consider this to be a threat?
+
+Another thing that confuses me (I mentioned it in the
+previous e-mail). I forced to use CRAM-MD5, however, it
+dies with the above errors. The CRAM-MD5 is installed:
+
+/usr/share/perl5/vendor_perl/Authen/SASL/CRAM_MD5.pm
+/usr/share/perl5/vendor_perl/Authen/SASL/Perl/CRAM_MD5.pm
+
+The same for DIGEST-MD5. On different PC with the same
+set of libraries, OS, the CRAM-MD5 just works. Why? LOGIN
+and PLAIN are OK. Environment? (I doubt.)
+
+I would like to include the regex check based on RFC 4422
+as I've already mentioned. at least, it filters out the
+unwanted characters like '/', '.', etc.
+
+Regards
+Jan
+
+On Sun, 2 Aug 2015 05:41:29 -0400
+Eric Sunshine <sunshine@sunshineco.com> wrote:
+
+> On Sat, Aug 1, 2015 at 2:19 PM, Jan Viktorin
+> <viktorin@rehivetech.com> wrote:
+> > On Sat, 1 Aug 2015 05:33:28 -0400 Eric Sunshine
+> > <sunshine@sunshineco.com> wrote:
+> >> On Fri, Jul 31, 2015 at 7:33 PM, Jan Viktorin
+> >> <viktorin@rehivetech.com> wrote:
+> >> At the very least, you will also want to update the documentation
+> >> (Documentation/git-send-email.txt) and, if possible, add new tests
+> >> (t/t9001-send-email.sh).
+> >
+> > I will update the documentation when it is clear, how the smtp-auth
+> > works.
+> >
+> > I have no idea, how to test the feature. I can see something like
+> > fake.sendmail in the file. How does it work? I can image a test
+> > whether user inserts valid values. What more?
+> 
+> That's what I was thinking. You could test if the die() is triggered
+> or if it emits warnings for bad values (assuming you implement that
+> feature). As for testing the actual authentication, I'm not sure you
+> can (and don't see any such testing in the script).
+> 
+> >> > diff --git a/git-send-email.perl b/git-send-email.perl
+> >> > index ae9f869..b00ed9d 100755
+> >> > --- a/git-send-email.perl
+> >> > +++ b/git-send-email.perl
+> >> > @@ -1129,6 +1134,16 @@ sub smtp_auth_maybe {
+> >> >                 return 1;
+> >> >         }
+> >> >
+> >> > +       # Do not allow arbitrary strings.
+> >>
+> >> Can you explain why this restriction is needed. What are the
+> >> consequences of not limiting the input to this "approved" list?
+> >
+> > This is more a check of an arbitrary user input then a check
+> > of an "approved list". It should be also used to inform user
+> > about invalid methods (however, I didn't implemented it yet).
+> 
+> What I was really asking was whether this sort of checking really
+> belongs in git-send-email or if it is better left to Net::SMTP (and
+> Authen::SASL) to do so since they are in better positions to know what
+> is valid and what is not. If the Perl module(s) generate suitable
+> diagnostics for bad input, then it makes sense to leave the checking
+> to them. If not, then I can understand your motivation for
+> git-send-email doing the checking instead in order to emit
+> user-friendly diagnostics.
+> 
+> So, that's what I meant when I asked 'What are the consequences of not
+> limiting the input to this "approved" list?'.
+> 
+> The other reason I asked was that it increases maintenance costs for
+> us to maintain a list of "approved" mechanisms, since the list needs
+> to be updated when new ones are implemented (and, as brian pointed
+> out, some may already exist which are not in your list).
+>
+> (...)
+>
+> >> Also, don't you want to warn the user about tokens that don't match
+> >> one of the accepted (PLAIN, LOGIN, CRAM-MD5, DIGEST-MD5), rather
+> >> than dropping them silently?
+> >
+> > Yes, this would be great (as I've already mentioned). It's a
+> > question whether to include the check for the mechanisms or whether
+> > to leave the $smtp_auth variable as it is... Maybe just validate by
+> > a regex?
+> >
+> > The naming rules are defiend here:
+> >  https://tools.ietf.org/html/rfc4422#page-8
+> > So, this looks to me as a better way.
+> 
+> Maybe. This leads back to my original question of whether it's really
+> git-send-email's responsibility to do validation or if that can be
+> left to Net::SMTP/Authen::SASL. If the Perl module(s) emit suitable
+> diagnostics for bad input, then validation can be omitted from
+> git-send-email.
+
+
+
 -- 
-2.5.0
+  Jan Viktorin                E-mail: Viktorin@RehiveTech.com
+  System Architect            Web:    www.RehiveTech.com
+  RehiveTech                  Phone: +420 606 201 868
+  Brno, Czech Republic
