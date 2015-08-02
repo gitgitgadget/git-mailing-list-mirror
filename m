@@ -1,128 +1,145 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH 1/1] po/README: split out the different contribution types
-Date: Mon, 3 Aug 2015 00:05:46 +0800
-Message-ID: <CANYiYbFvackgJnqR4yahUPT2zE-kTAhQJnvzeUp-FsC-U24-dw@mail.gmail.com>
-References: <1438522955-6076-1-git-send-email-philipoakley@iee.org>
-	<1438522955-6076-2-git-send-email-philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sun Aug 02 18:05:53 2015
+From: Jan Viktorin <viktorin@rehivetech.com>
+Subject: [PATCH v2] send-email: provide whitelist of SMTP AUTH mechanisms
+Date: Sun,  2 Aug 2015 18:42:49 +0200
+Message-ID: <1438533769-17460-1-git-send-email-viktorin@rehivetech.com>
+Cc: sandals@crustytoothpaste.net, sunshine@sunshineco.com,
+	Jan Viktorin <viktorin@rehivetech.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 02 18:43:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZLvlo-00053Z-UF
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Aug 2015 18:05:53 +0200
+	id 1ZLwM7-0001SM-Qe
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Aug 2015 18:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbbHBQFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Aug 2015 12:05:49 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:34644 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448AbbHBQFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Aug 2015 12:05:48 -0400
-Received: by lbqc9 with SMTP id c9so41817393lbq.1
-        for <git@vger.kernel.org>; Sun, 02 Aug 2015 09:05:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9vI0LkS2InQUM4ji7lf9EUuV7zp/bHnGks0Cqmlm810=;
-        b=Vp6zGK7dn17pf4YTtPUn1BCA/1QsEnU0uQahhwy+IddC5DFjq9lqTR5FQnnqMZLpgh
-         sZ2eb5DbOZ2yOvVRS0aM3OJ3NRpT5WQkpkuTltmupHBM1f8rooDlwEIN5c5mVvsSDerC
-         iMZGmFywmT56eHSC5uATD1rL8BIuGaxe/xUvsuDLp+iv6omEx3ljp0zrSmgtYbpeeTBd
-         r5ikfoUfQqZtL9nBK0OMcCtJ5fzSiOaOgZBvthJefRHaxLbYoxT3/vntAYoRx5mYrerA
-         GXaNtD6dfcvgsJ6oHqGst/NoM6LHvOikzqPPqJhkMdG7qe83Y0OE22q+P83tuQnqq2TQ
-         kJcw==
-X-Received: by 10.112.185.100 with SMTP id fb4mr12895852lbc.79.1438531546464;
- Sun, 02 Aug 2015 09:05:46 -0700 (PDT)
-Received: by 10.152.132.7 with HTTP; Sun, 2 Aug 2015 09:05:46 -0700 (PDT)
-In-Reply-To: <1438522955-6076-2-git-send-email-philipoakley@iee.org>
+	id S1751691AbbHBQnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Aug 2015 12:43:19 -0400
+Received: from w-smtp-out-7.wedos.net ([46.28.106.5]:47003 "EHLO
+	we2-f167.wedos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751478AbbHBQnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Aug 2015 12:43:18 -0400
+Received: from ([109.81.211.51])
+        by we2-f167.wedos.net (WEDOS Mail Server mail2) with ASMTP (SSL) id PCT00012;
+        Sun, 02 Aug 2015 18:43:12 +0200
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275143>
 
-2015-08-02 21:42 GMT+08:00 Philip Oakley <philipoakley@iee.org>:
-> Separate out the three different contribution styles for existing, new,
-> and wider mis-translation contributions, with suitable headings for easy
-> reference.
->
-> In particular highlight the appropriate action should a Git
-> mis-translation be from a different distribution. i.e. initially report
-> to that usptream, but also consider if it could be coordinated here.
->
-> While here, add surrounding headings, and reference the lanaguage codes.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> ---
->  po/README | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
->
-> diff --git a/po/README b/po/README
-> index d8c9111..b54b3c6 100644
-> --- a/po/README
-> +++ b/po/README
-> @@ -10,19 +10,43 @@ coordinates our localization effort in the l10 coordinator repository:
->
->          https://github.com/git-l10n/git-po/
->
-> +The two character language translation codes are defined by ISO_639-1, as
-> +stated in the gettext(1) full manual, appendix A.1, Usual Language Codes.
-> +
-> +
-> +Contributing to an existing translation
-> +---------------------------------------
->  As a contributor for a language XX, you should first check TEAMS file in
->  this directory to see whether a dedicated repository for your language XX
->  exists. Fork the dedicated repository and start to work if it exists.
->
-> +
-> +Creating a new language translation
-> +-----------------------------------
->  If you are the first contributor for the language XX, please fork this
->  repository, prepare and/or update the translated message file po/XX.po
->  (described later), and ask the l10n coordinator to pull your work.
->
-> +
-> +Reporting mis-translations
-> +--------------------------
-> +First, confirm that your language translation is managed by this group.
-> +Initially any translation mistake should be reported to the appropriate
-> +upstream team. If not managed by this group, and the translation has a
-> +suitable licence, consider suggesting that the translation could be
-> +included here (see 'new language translation' above).
-> +
-First, find the right place to report.  If there is a YourLanguage.po here,
-and you can find the bug in it, then here is the right place for you to
-report.  But if not, maybe your Git distribution (such as from Ubuntu)
-may have its own l10n workflow, and not work well with our git
-upstream. For this case, you should report bug to them...
+When sending an e-mail, the client and server must
+agree on an authentication mechanism. Some servers
+(due to misconfiguration or a bug) deny valid
+credentials for certain mechanisms. In this patch,
+a new option --smtp-auth and configuration entry
+smtpauth are introduced. If smtp_auth is defined,
+it works as a whitelist of allowed mechanisms for
+authentication selected from the ones supported by
+the installed SASL perl library.
 
-(I'm not a native English speaker, so correct me)
+Signed-off-by: Jan Viktorin <viktorin@rehivetech.com>
+---
+Changes v1 -> v2:
+  - check user input by regex
+  - added documentation
+  - still missing a test
 
-> +
-> +Forming a Team
-> +--------------
->  If there are multiple contributors for the same language, please first
->  coordinate among yourselves and nominate the team leader for your
->  language, so that the l10n coordinator only needs to interact with one
->  person per language.
->
-> +
-> +Translation Process Flow
-> +------------------------
->  The overall data-flow looks like this:
->
->      +-------------------+            +------------------+
-> --
-> 2.3.1
->
+ Documentation/git-send-email.txt |  8 ++++++++
+ git-send-email.perl              | 25 ++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 7ae467b..c237c80 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -171,6 +171,14 @@ Sending
+ 	to determine your FQDN automatically.  Default is the value of
+ 	'sendemail.smtpDomain'.
+ 
++--smtp-auth=<mechs>::
++	Specify allowed SMTP-AUTH mechanisms. This setting forces using only
++	the listed mechanisms. Separate allowed mechanisms by a whitespace.
++	Example: PLAIN LOGIN GSSAPI. If at least one of the specified mechanisms
++	matchs those advertised by the SMTP server and it is supported by the SASL
++	library we use, it is used for authentication. If neither of 'sendemail.smtpAuth'
++	or '--smtp-auth' is specified, all mechanisms supported on client can be used.
++
+ --smtp-pass[=<password>]::
+ 	Password for SMTP-AUTH. The argument is optional: If no
+ 	argument is specified, then the empty string is used as
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ae9f869..ebc1e90 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -75,6 +75,9 @@ git send-email [options] <file | directory | rev-list options >
+                                      Pass an empty string to disable certificate
+                                      verification.
+     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
++    --smtp-auth             <str>  * Space separated list of allowed AUTH methods.
++                                     This setting forces to use one of the listed methods.
++                                     Supported: PLAIN LOGIN CRAM-MD5 DIGEST-MD5.
+     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+ 
+   Automating:
+@@ -208,7 +211,7 @@ my ($cover_cc, $cover_to);
+ my ($to_cmd, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, @smtp_server_options);
+ my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
+-my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
++my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
+ my ($validate, $confirm);
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
+@@ -239,6 +242,7 @@ my %config_settings = (
+     "smtppass" => \$smtp_authpass,
+     "smtpsslcertpath" => \$smtp_ssl_cert_path,
+     "smtpdomain" => \$smtp_domain,
++    "smtpauth" => \$smtp_auth,
+     "to" => \@initial_to,
+     "tocmd" => \$to_cmd,
+     "cc" => \@initial_cc,
+@@ -310,6 +314,7 @@ my $rc = GetOptions("h" => \$help,
+ 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
+ 		    "smtp-debug:i" => \$debug_net_smtp,
+ 		    "smtp-domain:s" => \$smtp_domain,
++		    "smtp-auth=s" => \$smtp_auth,
+ 		    "identity=s" => \$identity,
+ 		    "annotate!" => \$annotate,
+ 		    "no-annotate" => sub {$annotate = 0},
+@@ -1136,6 +1141,10 @@ sub smtp_auth_maybe {
+ 		Authen::SASL->import(qw(Perl));
+ 	};
+ 
++	if($smtp_auth !~ /^(\b[A-Z0-9-_]{1,20}\s*)*$/) {
++		die "invalid smtp auth: '${smtp_auth}'";
++	}
++
+ 	# TODO: Authentication may fail not because credentials were
+ 	# invalid but due to other reasons, in which we should not
+ 	# reject credentials.
+@@ -1148,6 +1157,20 @@ sub smtp_auth_maybe {
+ 		'password' => $smtp_authpass
+ 	}, sub {
+ 		my $cred = shift;
++
++		if($smtp_auth) {
++			my $sasl = Authen::SASL->new(
++				mechanism => $smtp_auth,
++				callback => {
++					user => $cred->{'username'},
++					pass => $cred->{'password'},
++					authname => $cred->{'username'},
++				}
++			);
++
++			return !!$smtp->auth($sasl);
++		}
++
+ 		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
+ 	});
+ 
 -- 
-Jiang Xin
+2.5.0
