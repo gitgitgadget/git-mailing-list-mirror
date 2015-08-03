@@ -1,44 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 05/11] ref-filter: support printing N lines from tag annotation
-Date: Mon,  3 Aug 2015 22:24:15 +0530
-Message-ID: <1438620861-25219-5-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v8 07/11] ref-filter: add option to match literal pattern
+Date: Mon,  3 Aug 2015 22:24:17 +0530
+Message-ID: <1438620861-25219-7-git-send-email-Karthik.188@gmail.com>
 References: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 03 18:54:44 2015
+X-From: git-owner@vger.kernel.org Mon Aug 03 18:54:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMJ0c-0000PH-P1
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:54:43 +0200
+	id 1ZMJ0d-0000PH-VX
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572AbbHCQye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 12:54:34 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:33692 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754570AbbHCQyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 12:54:33 -0400
-Received: by padck2 with SMTP id ck2so94066256pad.0
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:32 -0700 (PDT)
+	id S1754577AbbHCQyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 12:54:39 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:35673 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753466AbbHCQyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 12:54:38 -0400
+Received: by pasy3 with SMTP id y3so18561346pas.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4Y0erZJxXv1U3E/wSfyh1kmRrHS+KYPuEZma9h9yJZo=;
-        b=kYShT3UwOQ5PoL4ObkU+mAXoBHwWFkg9TpdX8V/8EdXEji8v4VqixSJ5HdT3K+cd1U
-         sGPCS6bS6gpfTkCLQa+eUbWP2xeQ0dT/5pgCYvVuYzjix2PYbCl+tVc+SIsnrqmeY7pt
-         aIkE07himZnEWAHk1MoaWlyvTh5kHwb2ZAar8+CQeDSuzyewsptt6Rqz35DjulmLbujB
-         pGgUdREv9sl3vBsrhL/rtzc+TvnSvU4f7SjUkJAY+5XBY+xKYv872+3uRlBtKn5N4hnY
-         XH9QVMzmh6Lu93TWviaZ9L4A0cd2wKXVGVRKtFcY07xjBbf6drv2Q/W1O0A2c9sLogDo
-         91HA==
-X-Received: by 10.68.224.71 with SMTP id ra7mr25747540pbc.69.1438620872643;
-        Mon, 03 Aug 2015 09:54:32 -0700 (PDT)
+        bh=96sRBsEEfM3Kaj8pK2vnO+5vCWgl7LlXv9BaXJmTWh8=;
+        b=nHuPkn5yaRNacSURpZkPhjcEDfXpKvmW0aLBdf49m1je0D0Eba7QAryqlb9Ru+wvB0
+         h1pXhBJl2mgkfTvblah1Q1Rsz7WL8TrU8YZlxKnEVqy2b2LUQxGEwM6AQLu0XEQMKndK
+         Yw0beJSgeZyT5ct4HPRUoBqLqcluBF4rWtBpixx0nb1r9NvGo7hzQbQkwWNQ2IIDpYwc
+         Dk/BLKtkG76NvbA0dTZZCgT4RarVUmfPLyh3u+EMG3UBnqa2RhQTWGrQ9kSVhRN8aFWg
+         9hTF4vAUoBufUXABboJNv8KZCpl8KyXAfnFE65Ozj8DPM5H83AdLurlapEJp2pUHW6HW
+         uoIQ==
+X-Received: by 10.66.146.226 with SMTP id tf2mr38486419pab.4.1438620878197;
+        Mon, 03 Aug 2015 09:54:38 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.30
+        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.35
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 03 Aug 2015 09:54:32 -0700 (PDT)
+        Mon, 03 Aug 2015 09:54:37 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
 In-Reply-To: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
@@ -46,152 +46,116 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275180>
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-In 'tag.c' we can print N lines from the annotation of the tag using
-the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
-modify 'ref-filter' to support printing of N lines from the annotation
-of tags.
+Since 'ref-filter' only has an option to match path names add an
+option for plain fnmatch pattern-matching.
+
+This is to support the pattern matching options which are used in `git
+tag -l` and `git branch -l` where we can match patterns like `git tag
+-l foo*` which would match all tags which has a "foo*" pattern.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/for-each-ref.c |  2 +-
- builtin/tag.c          |  4 ++++
- ref-filter.c           | 54 ++++++++++++++++++++++++++++++++++++++++++++++++--
- ref-filter.h           |  9 +++++++--
- 4 files changed, 64 insertions(+), 5 deletions(-)
+ builtin/for-each-ref.c |  1 +
+ ref-filter.c           | 39 ++++++++++++++++++++++++++++++++++++---
+ ref-filter.h           |  3 ++-
+ 3 files changed, 39 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 40f343b..e4a4f8a 100644
+index e4a4f8a..3ad6a64 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -74,7 +74,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	if (!maxcount || array.nr < maxcount)
- 		maxcount = array.nr;
- 	for (i = 0; i < maxcount; i++)
--		show_ref_array_item(array.items[i], format, quote_style);
-+		show_ref_array_item(array.items[i], format, quote_style, 0);
- 	ref_array_clear(&array);
- 	return 0;
- }
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 471d6b1..0fc7557 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -185,6 +185,10 @@ static enum contains_result contains(struct commit *candidate,
- 	return contains_test(candidate, want);
- }
+@@ -68,6 +68,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
  
-+/*
-+ * Currently duplicated in ref-filter, will eventually be removed as
-+ * we port tag.c to use ref-filter APIs.
-+ */
- static void show_tag_lines(const struct object_id *oid, int lines)
- {
- 	int i;
+ 	filter.name_patterns = argv;
++	filter.match_as_path = 1;
+ 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+ 	ref_array_sort(sorting, &array);
+ 
 diff --git a/ref-filter.c b/ref-filter.c
-index 01c9097..9f3806a 100644
+index 1bc6d4b..afeab37 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1318,7 +1318,51 @@ static void apply_formatting_state(struct ref_formatting_state *state, struct st
+@@ -950,9 +950,32 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
  
- }
- 
--void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
-+/*
-+ * If 'lines' is greater than 0, print that many lines from the given
-+ * object_id 'oid'.
+ /*
+  * Return 1 if the refname matches one of the patterns, otherwise 0.
++ * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
++ * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
++ * matches "refs/heads/mas*", too).
 + */
-+static void show_tag_lines(const struct object_id *oid, int lines)
++static int match_pattern(const char **patterns, const char *refname)
 +{
-+	int i;
-+	unsigned long size;
-+	enum object_type type;
-+	char *buf, *sp, *eol;
-+	size_t len;
++	/*
++	 * When no '--format' option is given we need to skip the prefix
++	 * for matching refs of tags and branches.
++	 */
++	(void)(skip_prefix(refname, "refs/tags/", &refname) ||
++	       skip_prefix(refname, "refs/heads/", &refname) ||
++	       skip_prefix(refname, "refs/remotes/", &refname));
 +
-+	buf = read_sha1_file(oid->hash, &type, &size);
-+	if (!buf)
-+		die_errno("unable to read object %s", oid_to_hex(oid));
-+	if (type != OBJ_COMMIT && type != OBJ_TAG)
-+		goto free_return;
-+	if (!size)
-+		die("an empty %s object %s?",
-+		    typename(type), oid_to_hex(oid));
-+
-+	/* skip header */
-+	sp = strstr(buf, "\n\n");
-+	if (!sp)
-+		goto free_return;
-+
-+	/* only take up to "lines" lines, and strip the signature from a tag */
-+	if (type == OBJ_TAG)
-+		size = parse_signature(buf, size);
-+	for (i = 0, sp += 2; i < lines && sp < buf + size; i++) {
-+		if (i)
-+			printf("\n    ");
-+		eol = memchr(sp, '\n', size - (sp - buf));
-+		len = eol ? eol - sp : size - (sp - buf);
-+		fwrite(sp, len, 1, stdout);
-+		if (!eol)
-+			break;
-+		sp = eol + 1;
++	for (; *patterns; patterns++) {
++		if (!wildmatch(*patterns, refname, 0, NULL))
++			return 1;
 +	}
-+free_return:
-+	free(buf);
++	return 0;
 +}
 +
-+void show_ref_array_item(struct ref_array_item *info, const char *format,
-+			 int quote_style, unsigned int lines)
++/*
++ * Return 1 if the refname matches one of the patterns, otherwise 0.
+  * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+- * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
+- * matches "refs/heads/m*",too).
++ * matches a pattern "refs/heads/" but not "refs/heads/m") or a
++ * wildcard (e.g. the same ref matches "refs/heads/m*", too).
+  */
+ static int match_name_as_path(const char **pattern, const char *refname)
  {
- 	const char *cp, *sp, *ep;
- 	struct strbuf value = STRBUF_INIT;
-@@ -1363,8 +1407,14 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 
- 	for (i = 0; i < final_buf.len; i++)
- 		printf("%c", final_buf.buf[i]);
--	putchar('\n');
- 	strbuf_release(&final_buf);
-+
-+	if (lines > 0) {
-+		struct object_id oid;
-+		hashcpy(oid.hash, info->objectname);
-+		show_tag_lines(&oid, lines);
-+	}
-+	putchar('\n');
+@@ -973,6 +996,16 @@ static int match_name_as_path(const char **pattern, const char *refname)
+ 	return 0;
  }
  
- /*  If no sorting option is given, use refname to sort as default */
++/* Return 1 if the refname matches one of the patterns, otherwise 0. */
++static int filter_pattern_match(struct ref_filter *filter, const char *refname)
++{
++	if (!*filter->name_patterns)
++		return 1; /* No pattern always matches */
++	if (filter->match_as_path)
++		return match_name_as_path(filter->name_patterns, refname);
++	return match_pattern(filter->name_patterns, refname);
++}
++
+ /*
+  * Given a ref (sha1, refname), check if the ref belongs to the array
+  * of sha1s. If the given ref is a tag, check if the given tag points
+@@ -1041,7 +1074,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 		return 0;
+ 	}
+ 
+-	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
++	if (!filter_pattern_match(filter, refname))
+ 		return 0;
+ 
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
 diff --git a/ref-filter.h b/ref-filter.h
-index 8d4e348..16cffab 100644
+index c41432f..b3b9cd8 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -71,6 +71,7 @@ struct ref_filter {
+@@ -71,7 +71,8 @@ struct ref_filter {
+ 	} merge;
  	struct commit *merge_commit;
  
- 	unsigned int with_commit_tag_algo : 1;
-+	unsigned int lines;
+-	unsigned int with_commit_tag_algo : 1;
++	unsigned int with_commit_tag_algo : 1,
++		match_as_path : 1;
+ 	unsigned int lines;
  };
  
- struct ref_filter_cbdata {
-@@ -102,8 +103,12 @@ int parse_ref_filter_atom(const char *atom, const char *ep);
- int verify_ref_format(const char *format);
- /*  Sort the given ref_array as per the ref_sorting provided */
- void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
--/*  Print the ref using the given format and quote_style */
--void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style);
-+/*
-+ * Print the ref using the given format and quote_style. If 'lines' > 0,
-+ * print that many lines of the the given ref.
-+ */
-+void show_ref_array_item(struct ref_array_item *info, const char *format,
-+			 int quote_style, unsigned int lines);
- /*  Callback function for parsing the sort option */
- int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
- /*  Default sort option based on refname */
 -- 
 2.4.6
