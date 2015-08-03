@@ -1,104 +1,135 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v8 0/11] Port tag.c over to use ref-filter APIs
-Date: Tue, 4 Aug 2015 02:52:31 +0530
-Message-ID: <CAOLa=ZSRLaRjyif_7auUWfX6DmtA_g2MonumDf-3cMZvvrRXGg@mail.gmail.com>
-References: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
- <xmqq8u9s86n3.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/2] submodule refactor: use git_path_submodule() in add_submodule_odb()
+Date: Mon, 03 Aug 2015 14:29:27 -0700
+Message-ID: <xmqqmvy86oy0.fsf@gitster.dls.corp.google.com>
+References: <1426713052-19171-1-git-send-email-max@max630.net>
+	<1438635836-7857-1-git-send-email-max@max630.net>
+	<1438635836-7857-2-git-send-email-max@max630.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 23:23:41 2015
+Content-Type: text/plain
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, Duy Nguyen <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Mon Aug 03 23:29:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMNCs-0002Tg-Gi
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:23:38 +0200
+	id 1ZMNIc-0004lA-5t
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932464AbbHCVXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 17:23:36 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:33578 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932498AbbHCVXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 17:23:02 -0400
-Received: by obdeg2 with SMTP id eg2so108888131obd.0
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:23:01 -0700 (PDT)
+	id S932385AbbHCV33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 17:29:29 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35610 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932144AbbHCV33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 17:29:29 -0400
+Received: by pasy3 with SMTP id y3so23146217pas.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8hri0owKTb3ICNWKZ+GVVNGpiZX/zLlSBKgSU5XUN2g=;
-        b=hRUrDt2RJFHvHazQEBXHKU9sLLUvrB3wS5ZsHt7KdxvmzxlBR+lR161oQEihXsap8X
-         hkg6+WoEy3wGBfPzqEAhQOT+zApDKOjBj6yhcL9U+nxNfUKnVS9Ks+9bvPTXN4V/CkuS
-         8bJVn+VlpHry65Xc7lveYUm6hhhw34aHS0fELcVuTyNajmuc+QkOc8MYRlKJIJIy2wC2
-         ZdxPIAfSE24QEiVXFquHiWRcBl8AoXDElVe+o8S+X28hVeWgaax3hlbfIwPdge6XoGbt
-         W26v7tlz28hqNBPlEjudQjUeug5XwlqrjEor2OEKekV+Afruc6Cc5t8SZHasHC05FDRU
-         tsmg==
-X-Received: by 10.182.60.130 with SMTP id h2mr130187obr.42.1438636980890; Mon,
- 03 Aug 2015 14:23:00 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Mon, 3 Aug 2015 14:22:31 -0700 (PDT)
-In-Reply-To: <xmqq8u9s86n3.fsf@gitster.dls.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=oS8F+B06VDs9LLOkr3MeVCYewO9CpVTH9EDFIkFF5dg=;
+        b=T3VFsolTTUjfoPcWxRyFFKBRJZRecfY9VNZ0jpUn5WJHCjx4TdJovJT1ztV+FPfgS1
+         oXOCjZSyTC6P/J8iOF1slpepo6PJElBSiEMJcJMXI86erywkLKS/7G+kj9ZWSREPWwlU
+         6NN2uvXj7mFgL7upxKOe5B80midhiEsRlMOxDGzPUDxoH/VfzQQg9oO4/4AAm849EtKw
+         aII5Nxiou6R8UR1L3BuTP5UwG5NCiODrKQqhf1TpI+uKEpVrv14itm//JRvBUEyO35L5
+         tcuS70SrlDHcX1MYfqOuRhy+69KzbEu/YU7YxZTOczZtYFIUE0QA9SA9Yq1Tmon4FETO
+         Qmaw==
+X-Received: by 10.68.254.69 with SMTP id ag5mr295838pbd.130.1438637368646;
+        Mon, 03 Aug 2015 14:29:28 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:38a2:7ad5:137e:6e11])
+        by smtp.gmail.com with ESMTPSA id k9sm18508113pdp.60.2015.08.03.14.29.27
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 03 Aug 2015 14:29:27 -0700 (PDT)
+In-Reply-To: <1438635836-7857-2-git-send-email-max@max630.net> (Max Kirillov's
+	message of "Tue, 4 Aug 2015 00:03:55 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275209>
 
-On Tue, Aug 4, 2015 at 1:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> This is part of my GSoC project to unify git tag -l, git branch -l,
->> git for-each-ref.  This patch series is continued from: Git (next)
->> https://github.com/git/git/commit/bf5418f49ff0cebc6e5ce04ad1417e1a47c81b61
->>
->> This series consists of porting tag.c over to using the ref-filter APIs
->>
->> Version 7 can be found here:
->> http://thread.gmane.org/gmane.comp.version-control.git/274990
->>
->> Changes:
->> * Make padright a general align atom.
->> * Make print_value() and emit() output to a strbuf rather than stdout directly.
->>
->> Interdiff:
->>
->> diff --git a/Documentation/git-for-each-ref.txt
->> b/Documentation/git-for-each-ref.txt
->> index bcf319a..e89b9b0 100644
->> --- a/Documentation/git-for-each-ref.txt
->> +++ b/Documentation/git-for-each-ref.txt
->> @@ -127,11 +127,12 @@ color::
->>      Change output color.  Followed by `:<colorname>`, where names
->>      are described in `color.branch.*`.
->>
->> -padright::
->> -    Pad succeeding atom or string to the right. Followed by
->> -    `:<value>`, where `value` states the total length of atom or
->> -    string including the padding. If the `value` is lesser than
->> -    the atom or string length, then no padding is performed.
->> +align::
->> +    Align succeeding atoms to the right, left or middle. Followed
->> +    by `:<type>,<paddinglength>`, where the `<type>` is either
->> +    left, right or middle and `<paddinglength>` is the total
->> +    length of the padding to be performed. If the atom length is
->> +    more than the padding length then no padding is performed.
->
-> It is very very dissapointing to allow the "next atom only"
-> implementation to squat on a good name "align:<type>,<width>",
-> especially when I thought that the list agreed
->
->   %(align:<type>,<width>) any string with or without %(atom) %(end)
->
-> would be the way to go.
+Max Kirillov <max@max630.net> writes:
 
->From what I read, I thought we wanted the next atom or string to be
-aligned, if we need to align everything within the %(end) atom. I could
-do that :)
+Here is a space to describe why this change is a good thing.  Is
+this a fix to change the behaviour, and if so how is the behaviour
+different with and without the patch?  Or is this just to drop the
+block of code from here and replace it with a call to an existing
+helper that does exactly the same thing?  I _suspect_ that it is the
+latter, but please do not force reviewers to guess.
 
--- 
-Regards,
-Karthik Nayak
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+>  submodule.c | 28 ++++++++++------------------
+>  1 file changed, 10 insertions(+), 18 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 15e90d1..f6afe0a 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -122,43 +122,35 @@ void stage_updated_gitmodules(void)
+>  
+>  static int add_submodule_odb(const char *path)
+>  {
+> -	struct strbuf objects_directory = STRBUF_INIT;
+>  	struct alternate_object_database *alt_odb;
+> +	const char* objects_directory;
+
+Style; asterisk sticks to the variable, not the type.  I think you
+need to fix this in multiple places (not just 1/2 but also in 2/2).
+
+Other than that I think it is a sensible "replace bulk of code with
+identical helper that already exists" rewrite.
+
+Thanks.
+
+>  	int ret = 0;
+> -	const char *git_dir;
+>  
+> -	strbuf_addf(&objects_directory, "%s/.git", path);
+> -	git_dir = read_gitfile(objects_directory.buf);
+> -	if (git_dir) {
+> -		strbuf_reset(&objects_directory);
+> -		strbuf_addstr(&objects_directory, git_dir);
+> -	}
+> -	strbuf_addstr(&objects_directory, "/objects/");
+> -	if (!is_directory(objects_directory.buf)) {
+> +	objects_directory = git_path_submodule(path, "objects/");
+> +	if (!is_directory(objects_directory)) {
+>  		ret = -1;
+>  		goto done;
+>  	}
+> +
+>  	/* avoid adding it twice */
+>  	for (alt_odb = alt_odb_list; alt_odb; alt_odb = alt_odb->next)
+> -		if (alt_odb->name - alt_odb->base == objects_directory.len &&
+> -				!strncmp(alt_odb->base, objects_directory.buf,
+> -					objects_directory.len))
+> +		if (alt_odb->name - alt_odb->base == strlen(objects_directory) &&
+> +				!strcmp(alt_odb->base, objects_directory))
+>  			goto done;
+>  
+> -	alt_odb = xmalloc(objects_directory.len + 42 + sizeof(*alt_odb));
+> +	alt_odb = xmalloc(strlen(objects_directory) + 42 + sizeof(*alt_odb));
+>  	alt_odb->next = alt_odb_list;
+> -	strcpy(alt_odb->base, objects_directory.buf);
+> -	alt_odb->name = alt_odb->base + objects_directory.len;
+> +	strcpy(alt_odb->base, objects_directory);
+> +	alt_odb->name = alt_odb->base + strlen(objects_directory);
+>  	alt_odb->name[2] = '/';
+>  	alt_odb->name[40] = '\0';
+>  	alt_odb->name[41] = '\0';
+>  	alt_odb_list = alt_odb;
+>  
+>  	/* add possible alternates from the submodule */
+> -	read_info_alternates(objects_directory.buf, 0);
+> +	read_info_alternates(objects_directory, 0);
+>  	prepare_alt_odb();
+>  done:
+> -	strbuf_release(&objects_directory);
+>  	return ret;
+>  }
