@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 02/11] ref-filter: introduce ref_formatting_state
-Date: Mon,  3 Aug 2015 22:24:12 +0530
-Message-ID: <1438620861-25219-2-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v8 04/11] ref-filter: add option to filter only tags
+Date: Mon,  3 Aug 2015 22:24:14 +0530
+Message-ID: <1438620861-25219-4-git-send-email-Karthik.188@gmail.com>
 References: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 03 18:54:30 2015
+X-From: git-owner@vger.kernel.org Mon Aug 03 18:54:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMJ0Q-0000KI-6G
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:54:30 +0200
+	id 1ZMJ0W-0000MS-1w
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbbHCQyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 12:54:25 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:33396 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754190AbbHCQyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 12:54:24 -0400
-Received: by pdbnt7 with SMTP id nt7so76053449pdb.0
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:24 -0700 (PDT)
+	id S1754569AbbHCQyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 12:54:32 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:36324 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754178AbbHCQya (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 12:54:30 -0400
+Received: by pacgq8 with SMTP id gq8so28901393pac.3
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jjSprRjMT9sifjDwBzr0udPGB9hm/frC/7e8XVPHVD8=;
-        b=sJMVJwFY2A3OWLVvAxZupEH32iBKQSiSOOFojRTrlf6N0qzKRRpV4iCXwnqJHtqnCe
-         bNfk7pbV7EI/1Gn8DnxVL6VNZZ5N0fZyDPlhJHG4AvnSvk5rwFb7+L0RuJdvIFjR614/
-         VcrbY+OzRkO5PycaX9x0y15ilqceM4QkJ1/z54hv45WXDpCRLhhGkBEKJBMcta2MnjPH
-         wJCOhb0LODo+ZysTGf/kNwl6VVeeAMJ2eqN1QFfUKLda52dpudCnMP3SMksvduQ/Q5f6
-         v44TXquWgrnBJhNch2GNMGXuT1dH2Z0EJV9SOkux48vQXYbKM4wQ8X9zCimcq3/jObUv
-         jquw==
-X-Received: by 10.70.20.196 with SMTP id p4mr37820682pde.58.1438620863830;
-        Mon, 03 Aug 2015 09:54:23 -0700 (PDT)
+        bh=cwV+QHhsAjjK1UstlyfCEMfYXpwlj08OoL/7yTnaw1U=;
+        b=ehbbi3evb3+rPv4rVJ28u8DU4pqhDT7GrWm2JJRshFy2HcMScfIo5ai9lhQKpUc1VU
+         hVXyq9GjdRfsNwfsy5XE1rwfbDLN23k9k3LEMtr7HJk062pW99Dyv6mcQPBVjNazHSCf
+         lbkGyaCATYMYpR7OiZUkIdCyw4xm9nLKRomx+gPkQIO0R2O2rJcLqZEG4Jet49q4jlTN
+         FLiIkMe8ek8ln7JT4UQPU69cyaFWnuzrFLgBchQhIFC987bZZ0Q0f/A4IwUEFLFMz8hp
+         HBemnICd3NSlKPeSwiyPmIFv4hKpoaPGBWchZs61J8TJoTkFRXgSTzctWJG0WHbGzy81
+         0xtg==
+X-Received: by 10.68.113.37 with SMTP id iv5mr25519901pbb.104.1438620869770;
+        Mon, 03 Aug 2015 09:54:29 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.20
+        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.27
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 03 Aug 2015 09:54:23 -0700 (PDT)
+        Mon, 03 Aug 2015 09:54:29 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
 In-Reply-To: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
@@ -47,122 +46,79 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275176>
 
-Introduce a ref_formatting_state which will eventually hold the values
-of modifier atoms. Implement this within ref-filter.
+From: Karthik Nayak <karthik.188@gmail.com>
+
+Add a functions called 'for_each_tag_ref_fullpath()' to refs.{c,h}
+which iterates through each tag ref without trimming the path.
+
+Add an option in 'filter_refs()' to use 'for_each_tag_ref_fullpath()'
+and filter refs. This type checking is done by adding a
+'FILTER_REFS_TAGS' in 'ref-filter.h'
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- ref-filter.c | 49 +++++++++++++++++++++++++++++++++++++------------
- ref-filter.h |  4 ++++
- 2 files changed, 41 insertions(+), 12 deletions(-)
+ ref-filter.c | 2 ++
+ ref-filter.h | 1 +
+ refs.c       | 5 +++++
+ refs.h       | 1 +
+ 4 files changed, 9 insertions(+)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index febdc45..c4c7064 100644
+index 46d8834..01c9097 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1190,9 +1190,10 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
- 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
- }
+@@ -1155,6 +1155,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ 		ret = for_each_rawref(ref_filter_handler, &ref_cbdata);
+ 	else if (type & FILTER_REFS_ALL)
+ 		ret = for_each_ref(ref_filter_handler, &ref_cbdata);
++	else if (type & FILTER_REFS_TAGS)
++		ret = for_each_tag_ref_fullpath(ref_filter_handler, &ref_cbdata);
+ 	else if (type)
+ 		die("filter_refs: invalid type");
  
--static void print_value(struct atom_value *v, int quote_style, struct strbuf *output)
-+static void print_value(struct atom_value *v, struct ref_formatting_state *state,
-+			struct strbuf *output)
- {
--	switch (quote_style) {
-+	switch (state->quote_style) {
- 	case QUOTE_NONE:
- 		strbuf_addstr(output, v->s);
- 		break;
-@@ -1249,24 +1250,47 @@ static void emit(const char *cp, const char *ep, struct strbuf *output)
- 	}
- }
- 
-+static void process_formatting_state(struct atom_value *atomv, struct ref_formatting_state *state)
-+{
-+	/* Based on the atomv values, the formatting state is set */
-+}
-+
-+static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *value,
-+				   struct strbuf *format)
-+{
-+	/* More formatting options to be evetually added */
-+	strbuf_addbuf(format, value);
-+	strbuf_release(value);
-+}
-+
- void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
- {
- 	const char *cp, *sp, *ep;
--	struct strbuf output = STRBUF_INIT;
-+	struct strbuf value = STRBUF_INIT;
-+	struct strbuf final_buf = STRBUF_INIT;
-+	struct ref_formatting_state state;
- 	int i;
- 
-+	memset(&state, 0, sizeof(state));
-+	state.quote_style = quote_style;
-+
- 	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
--		struct atom_value *atomv;
-+		struct atom_value *atomv = NULL;
- 
- 		ep = strchr(sp, ')');
--		if (cp < sp)
--			emit(cp, sp, &output);
-+		if (cp < sp) {
-+			emit(cp, sp, &value);
-+			apply_formatting_state(&state, &value, &final_buf);
-+		}
- 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
--		print_value(atomv, quote_style, &output);
-+		process_formatting_state(atomv, &state);
-+		print_value(atomv, &state, &value);
-+		apply_formatting_state(&state, &value, &final_buf);
- 	}
- 	if (*cp) {
- 		sp = cp + strlen(cp);
--		emit(cp, sp, &output);
-+		emit(cp, sp, &value);
-+		apply_formatting_state(&state, &value, &final_buf);
- 	}
- 	if (need_color_reset_at_eol) {
- 		struct atom_value resetv;
-@@ -1275,12 +1299,13 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 		if (color_parse("reset", color) < 0)
- 			die("BUG: couldn't parse 'reset' as a color");
- 		resetv.s = color;
--		print_value(&resetv, quote_style, &output);
-+		print_value(&resetv, &state, &value);
-+		apply_formatting_state(&state, &value, &final_buf);
- 	}
--	for (i = 0; i < output.len; i++)
--		printf("%c", output.buf[i]);
-+	for (i = 0; i < final_buf.len; i++)
-+		printf("%c", final_buf.buf[i]);
- 	putchar('\n');
--	strbuf_release(&output);
-+	strbuf_release(&final_buf);
- }
- 
- /*  If no sorting option is given, use refname to sort as default */
 diff --git a/ref-filter.h b/ref-filter.h
-index 6bf27d8..b64677f 100644
+index 01f8cb3..8d4e348 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -16,6 +16,10 @@
+@@ -15,6 +15,7 @@
+ 
  #define FILTER_REFS_INCLUDE_BROKEN 0x1
  #define FILTER_REFS_ALL 0x2
++#define FILTER_REFS_TAGS 0x4
  
-+struct ref_formatting_state {
-+	int quote_style;
-+};
+ #define ALIGN_LEFT 0x01
+ #define ALIGN_RIGHT 0x02
+diff --git a/refs.c b/refs.c
+index 0b96ece..23ce483 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2108,6 +2108,11 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ 	return for_each_ref_in("refs/tags/", fn, cb_data);
+ }
+ 
++int for_each_tag_ref_fullpath(each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(&ref_cache, "refs/tags/", fn, 0, 0, cb_data);
++}
 +
- struct atom_value {
- 	const char *s;
- 	unsigned long ul; /* used for sorting when not FIELD_STR */
+ int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+ 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
+diff --git a/refs.h b/refs.h
+index e4e46c3..9eee2de 100644
+--- a/refs.h
++++ b/refs.h
+@@ -174,6 +174,7 @@ extern int head_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+ extern int for_each_tag_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_tag_ref_fullpath(each_ref_fn fn, void *cb_data);
+ extern int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_remote_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_replace_ref(each_ref_fn fn, void *cb_data);
 -- 
 2.4.6
