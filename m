@@ -1,135 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/2] submodule refactor: use git_path_submodule() in add_submodule_odb()
-Date: Mon, 03 Aug 2015 14:29:27 -0700
-Message-ID: <xmqqmvy86oy0.fsf@gitster.dls.corp.google.com>
-References: <1426713052-19171-1-git-send-email-max@max630.net>
-	<1438635836-7857-1-git-send-email-max@max630.net>
-	<1438635836-7857-2-git-send-email-max@max630.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/PATCH 1/2] submodule: implement `module_list` as a builtin helper
+Date: Mon, 3 Aug 2015 14:30:42 -0700
+Message-ID: <CAGZ79kY=39j4H=62=VZRm4VOcqzgOAU6tDpJVsqdeqnPtB8hQQ@mail.gmail.com>
+References: <1438384147-3275-1-git-send-email-sbeller@google.com>
+	<1438384147-3275-2-git-send-email-sbeller@google.com>
+	<xmqqmvybakjl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Duy Nguyen <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Mon Aug 03 23:29:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 23:30:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMNIc-0004lA-5t
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:29:34 +0200
+	id 1ZMNJo-0005ET-6j
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385AbbHCV33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 17:29:29 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35610 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932144AbbHCV33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 17:29:29 -0400
-Received: by pasy3 with SMTP id y3so23146217pas.2
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:29:28 -0700 (PDT)
+	id S932500AbbHCVao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 17:30:44 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:36523 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932144AbbHCVan (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 17:30:43 -0400
+Received: by ykeo23 with SMTP id o23so25110807yke.3
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=oS8F+B06VDs9LLOkr3MeVCYewO9CpVTH9EDFIkFF5dg=;
-        b=T3VFsolTTUjfoPcWxRyFFKBRJZRecfY9VNZ0jpUn5WJHCjx4TdJovJT1ztV+FPfgS1
-         oXOCjZSyTC6P/J8iOF1slpepo6PJElBSiEMJcJMXI86erywkLKS/7G+kj9ZWSREPWwlU
-         6NN2uvXj7mFgL7upxKOe5B80midhiEsRlMOxDGzPUDxoH/VfzQQg9oO4/4AAm849EtKw
-         aII5Nxiou6R8UR1L3BuTP5UwG5NCiODrKQqhf1TpI+uKEpVrv14itm//JRvBUEyO35L5
-         tcuS70SrlDHcX1MYfqOuRhy+69KzbEu/YU7YxZTOczZtYFIUE0QA9SA9Yq1Tmon4FETO
-         Qmaw==
-X-Received: by 10.68.254.69 with SMTP id ag5mr295838pbd.130.1438637368646;
-        Mon, 03 Aug 2015 14:29:28 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:38a2:7ad5:137e:6e11])
-        by smtp.gmail.com with ESMTPSA id k9sm18508113pdp.60.2015.08.03.14.29.27
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 03 Aug 2015 14:29:27 -0700 (PDT)
-In-Reply-To: <1438635836-7857-2-git-send-email-max@max630.net> (Max Kirillov's
-	message of "Tue, 4 Aug 2015 00:03:55 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jCTeZQ8+8CReoaixL+w3n7biZ+mmV/93b8/f4UbRjfQ=;
+        b=RVO3acHFV2rN0AWBgH99Bh8tF+L0C34ouXkGxlJacx4hjg8F89EIfqEm72B9c9bvfw
+         TsOHQJw9/bdgx+uhPTDA79I4xG3NJb5B6LWlAqu96mvPGVZ/0vpdaxaYQ3RbHtZ4kVJA
+         5mBGiNPq+j63cdc7JwBUd0XOgJgHQYpcEvYWoc6L1RswZdkoTq/VShGhvZCwsnse593i
+         1nz+MMIFZ2zQWU/eqXRbJb3JPWJWU5fowbLg6xpxp04WDwR4A9KbPrycOs2sCzBP3TX+
+         l6/NX06pPCB+7tP51EmEiBvM3dLYzJulaWDiI2M7Pm3BSFeNr19EqT7P8NYg8gHOO4Jl
+         afYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=jCTeZQ8+8CReoaixL+w3n7biZ+mmV/93b8/f4UbRjfQ=;
+        b=Sef8r8ADV5ZEPsViMPxEAUQfoflURygdxiWpv9x2lRzT3i/b3LClVC0Ie1mhd7vcLg
+         5LjxGCjhYtu4eLDxrgROtu8sbcX1eDs4w08aD9nm97mtesbgKy4mfWYmIW1kiL5uOFYI
+         BI59iXCNXeztx1myZGtNaxxjAfwcAmYfEBF49+6TBdJaMErVpxRR9yV7O36kR3Tjp9G8
+         yLzp/ikCqf7m8V6AznFPHWAw6lmtviaFgV5GtzAJ1r7tJaQh4iU4SG1+306G3Nak/Lf0
+         EBZPN8Hhkd1bolUVSm14h0LpA1+4nQCKVVUZnrS2ORNgvJP8Gmf3mmSJYb/OH9jw7Aqf
+         aWvQ==
+X-Gm-Message-State: ALoCoQnI0eEbRPh9UkjDKN1fkWMfYBRPerwBHQL7l6UJCvHKhBgizkulUaWmEiwo1BtCFklOApox
+X-Received: by 10.129.101.135 with SMTP id z129mr130644ywb.81.1438637442765;
+ Mon, 03 Aug 2015 14:30:42 -0700 (PDT)
+Received: by 10.37.21.129 with HTTP; Mon, 3 Aug 2015 14:30:42 -0700 (PDT)
+In-Reply-To: <xmqqmvybakjl.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275210>
 
-Max Kirillov <max@max630.net> writes:
-
-Here is a space to describe why this change is a good thing.  Is
-this a fix to change the behaviour, and if so how is the behaviour
-different with and without the patch?  Or is this just to drop the
-block of code from here and replace it with a call to an existing
-helper that does exactly the same thing?  I _suspect_ that it is the
-latter, but please do not force reviewers to guess.
-
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
->  submodule.c | 28 ++++++++++------------------
->  1 file changed, 10 insertions(+), 18 deletions(-)
+On Fri, Jul 31, 2015 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> diff --git a/submodule.c b/submodule.c
-> index 15e90d1..f6afe0a 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -122,43 +122,35 @@ void stage_updated_gitmodules(void)
->  
->  static int add_submodule_odb(const char *path)
->  {
-> -	struct strbuf objects_directory = STRBUF_INIT;
->  	struct alternate_object_database *alt_odb;
-> +	const char* objects_directory;
+>> +static const char * const git_submodule_helper_usage[] = {
+>> +     N_("git submodule--helper --module_list [<path>...]"),
+>
+> Yuck.  Please do not force --multi_word_opt upon us, which is simply
+> too ugly to live around here.  --module-list is perhaps OK,
 
-Style; asterisk sticks to the variable, not the type.  I think you
-need to fix this in multiple places (not just 1/2 but also in 2/2).
+I agree there. The way you word it here, it sounds as if the mixture
+of dashes and underscores are a problem.
 
-Other than that I think it is a sensible "replace bulk of code with
-identical helper that already exists" rewrite.
+> but
+> because submodule--helper would not have an default action, I'd
+> prefer to make these just "command words", i.e.
+>
+>     $ git submodule--helper module_list
 
-Thanks.
+Why would you use an underscore in here as opposed to a dash?
+     $ git submodule--helper module-list
 
->  	int ret = 0;
-> -	const char *git_dir;
->  
-> -	strbuf_addf(&objects_directory, "%s/.git", path);
-> -	git_dir = read_gitfile(objects_directory.buf);
-> -	if (git_dir) {
-> -		strbuf_reset(&objects_directory);
-> -		strbuf_addstr(&objects_directory, git_dir);
-> -	}
-> -	strbuf_addstr(&objects_directory, "/objects/");
-> -	if (!is_directory(objects_directory.buf)) {
-> +	objects_directory = git_path_submodule(path, "objects/");
-> +	if (!is_directory(objects_directory)) {
->  		ret = -1;
->  		goto done;
->  	}
-> +
->  	/* avoid adding it twice */
->  	for (alt_odb = alt_odb_list; alt_odb; alt_odb = alt_odb->next)
-> -		if (alt_odb->name - alt_odb->base == objects_directory.len &&
-> -				!strncmp(alt_odb->base, objects_directory.buf,
-> -					objects_directory.len))
-> +		if (alt_odb->name - alt_odb->base == strlen(objects_directory) &&
-> +				!strcmp(alt_odb->base, objects_directory))
->  			goto done;
->  
-> -	alt_odb = xmalloc(objects_directory.len + 42 + sizeof(*alt_odb));
-> +	alt_odb = xmalloc(strlen(objects_directory) + 42 + sizeof(*alt_odb));
->  	alt_odb->next = alt_odb_list;
-> -	strcpy(alt_odb->base, objects_directory.buf);
-> -	alt_odb->name = alt_odb->base + objects_directory.len;
-> +	strcpy(alt_odb->base, objects_directory);
-> +	alt_odb->name = alt_odb->base + strlen(objects_directory);
->  	alt_odb->name[2] = '/';
->  	alt_odb->name[40] = '\0';
->  	alt_odb->name[41] = '\0';
->  	alt_odb_list = alt_odb;
->  
->  	/* add possible alternates from the submodule */
-> -	read_info_alternates(objects_directory.buf, 0);
-> +	read_info_alternates(objects_directory, 0);
->  	prepare_alt_odb();
->  done:
-> -	strbuf_release(&objects_directory);
->  	return ret;
->  }
+I went with --module-list for now as I see no reason real to make it
+a command word for now as it is not user facing but just a helper.
+I have a patch from my previous attempt to rewrite "git submodule"
+as a whole to accept both command words as well as double dashed
+selected modes.
+
+>
+>> +int module_list(int argc, const char **argv, const char *prefix)
+>> +{
+>> +     int i;
+>> +     static struct pathspec pathspec;
+>> +     const struct cache_entry **ce_entries = NULL;
+>> +     int alloc = 0, used = 0;
+>> +     char *ps_matched = NULL;
+>> +     char *max_prefix;
+>> +     int max_prefix_len;
+>> +     struct string_list already_printed = STRING_LIST_INIT_NODUP;
+>> +
+>> +     parse_pathspec(&pathspec, 0,
+>> +                    PATHSPEC_PREFER_FULL,
+>> +                    prefix, argv);
+>> +
+>> +     /* Find common prefix for all pathspec's */
+>> +     max_prefix = common_prefix(&pathspec);
+>> +     max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+>> +
+>> +     if (pathspec.nr)
+>> +             ps_matched = xcalloc(1, pathspec.nr);
+>
+> Up to this point it interprets its input, and ...
+>
+>> +     if (read_cache() < 0)
+>> +             die("index file corrupt");
+>> +
+>> +     for (i = 0; i < active_nr; i++) {
+>> +             const struct cache_entry *ce = active_cache[i];
+>> +
+>> +             if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+>> +                                 max_prefix_len, ps_matched,
+>> +                                 S_ISGITLINK(ce->ce_mode) | S_ISDIR(ce->ce_mode)))
+>> +                     continue;
+>> +
+>> +             if (S_ISGITLINK(ce->ce_mode)) {
+>> +                     ALLOC_GROW(ce_entries, used + 1, alloc);
+>> +                     ce_entries[used++] = ce;
+>> +             }
+>> +     }
+>> +
+>> +     if (ps_matched && report_path_error(ps_matched, &pathspec, prefix)) {
+>> +             printf("#unmatched\n");
+>> +             return 1;
+>> +     }
+>
+> ... does the computation, with diagnosis.
+>
+> And then it does the I/O with formatting.
+>
+>> +
+>> +     for (i = 0; i < used; i++) {
+>> +             const struct cache_entry *ce = ce_entries[i];
+> ...
+>> +     return 0;
+>> +}
+>
+> When you have the implementation of "foreach-parallel" to move the
+> most expensive part of "submodule update" of a tree with 500
+> submodules, you would want to receive more or less the same "args"
+> as this thing takes and pass the ce_entries[] list to the "spawn and
+> run the user script in them in parallel" engine.
+
+That's true, I thought about splitting it up later when I actually need it.
+[That seems easier to write, but not easier to review :( ]
+I did split up the function just now.
+
+>
+> So I think it makes more sense to split this function into two (or
+> three).  One that reads from (argc, argv) and allocates and fills
+> ce_entries[] can become a helper that you can reuse later.
+>
+> 'int module_list()' (shouldn't it be static?), can make a call to
+> that helper at the begining of it, and the remainder of the function
+> would do the textual I/O.
