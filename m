@@ -1,88 +1,114 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 00/10] object_id part 2
-Date: Mon, 03 Aug 2015 01:33:56 +0200
-Message-ID: <55BEA8E4.7040902@alum.mit.edu>
-References: <1434233803-422442-1-git-send-email-sandals@crustytoothpaste.net>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Draft of Git Rev News edition 6
+Date: Mon, 3 Aug 2015 10:10:51 +1000
+Message-ID: <CAH5451mJBPt37JAjrB3CxOxJyig_3VctitEXrHXUyQPCWQnNow@mail.gmail.com>
+References: <CAEcj5uXXe19APhNaV6Kfm_3SNpRmFHToooo07T0_r6McJOrsaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?B?eQ==?= 
-	<pclouds@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 03 01:34:22 2015
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Nicola Paolucci <nick@durdn.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 02:11:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZM2lp-0006o7-BG
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 01:34:21 +0200
+	id 1ZM3Ls-0006rZ-4b
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 02:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751953AbbHBXeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Aug 2015 19:34:01 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:42938 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751584AbbHBXeA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Aug 2015 19:34:00 -0400
-X-AuditID: 12074414-f794f6d000007852-13-55bea8e7cbed
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 58.C3.30802.7E8AEB55; Sun,  2 Aug 2015 19:33:59 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB03A9.dip0.t-ipconnect.de [93.219.3.169])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t72NXvU0023144
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 2 Aug 2015 19:33:57 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <1434233803-422442-1-git-send-email-sandals@crustytoothpaste.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBKsWRmVeSWpSXmKPExsUixO6iqPt8xb5Qg1V32S26rnQzWXRPecto
-	8aOlh9mibeYPJgcWj+U3/zJ57Jx1l93jWe8eRo/Pm+QCWKK4bZISS8qCM9Pz9O0SuDNePzjI
-	VrCFu2LbiiPMDYwTObsYOTkkBEwkNr25wQ5hi0lcuLeeDcQWErjMKLGrlauLkQvIPssksbVr
-	MiNIgldAW2L2pq9MIDaLgKrEm29/wWw2AV2JRT3NQDYHh6hAkMTrl7kQ5YISJ2c+YQGxRQS8
-	JOY/msEKYjMLVEv8u/YVbJewgJ7Egv9bGSH2+kpcXb0UzOYU8JPY9OwbO8hIZgF1ifXzhCBa
-	5SWat85mnsAoMAvJhlkIVbOQVC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuhl5tZopea
-	UrqJERLKIjsYj5yUO8QowMGoxMP7YcG+UCHWxLLiytxDjJIcTEqivPOrgUJ8SfkplRmJxRnx
-	RaU5qcWHGCU4mJVEeC+mA+V4UxIrq1KL8mFS0hwsSuK83xar+wkJpCeWpGanphakFsFkZTg4
-	lCR4Hy4HahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxWh8MTBKQVI8QHuzV4Ds
-	LS5IzAWKQrSeYlSUEud9BjJXACSRUZoHNxaWoF4xigN9Kcz7EqSKB5jc4LpfAQ1mAhp8OWMP
-	yOCSRISUVAMj9/HNNYnPHV1eP3JbcOrU0hk3Ji8KNp51d11x6hve7A9TVijM4V6r/Vjt1osW
-	b8MO0T3XtA5mM3qYp4fU7FO7YxCTbNfrNSezcwkjW6/88eoDFeF2B5tEjabeyV/p 
+	id S1752269AbbHCALb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Aug 2015 20:11:31 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:34628 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876AbbHCALb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Aug 2015 20:11:31 -0400
+Received: by igk11 with SMTP id 11so62144235igk.1
+        for <git@vger.kernel.org>; Sun, 02 Aug 2015 17:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=uYPz0HbPX+/Ti1521HpF3pqzDrAMLJbQ/PnXbYkTE4U=;
+        b=k6l8/UPGH3fE/TRP4+GMmXVwFeO+h9Ao85nrzov3Y3IuppksAeVpyunmPYxkNxMiim
+         7ViXOCQ9uytnlHbzQlHwcVdc1erEpZe6DoY73DweuF9njSen33fsNGpqiWvEKoMDNgr+
+         0TLZrBoEJBz323RO3U1RBreCIlmDJEKkNJ7IBjq4ZBV3UhGZUJFBf7ne/2kyFDFQR0n5
+         WVkKJoFFMaBjlAzUuFf6/7+jGnCFlHBSMqUPk0cXJNygNPsYqAeZYT9yCGxkj6ffNHdt
+         2P4qBiw/oGTrj6A1jdGIkRyoZWkbTu4G6a7aWZOJfDcyiXrZKJig70GiN5oz20X4gAvX
+         dOhA==
+X-Received: by 10.50.142.98 with SMTP id rv2mr17218135igb.41.1438560690483;
+ Sun, 02 Aug 2015 17:11:30 -0700 (PDT)
+Received: by 10.36.107.144 with HTTP; Sun, 2 Aug 2015 17:10:51 -0700 (PDT)
+In-Reply-To: <CAEcj5uXXe19APhNaV6Kfm_3SNpRmFHToooo07T0_r6McJOrsaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275154>
 
-On 06/14/2015 12:16 AM, brian m. carlson wrote:
-> This is another series of conversions to struct object_id.
-> 
-> This series converts more of the refs code and struct object to use
-> struct object_id.  It introduces an additional helper function,
-> has_object_file, which is the equivalent of has_sha1_file.  The name was
-> chosen to be slightly more logical than has_oid_file, although it can be
-> changed if desired.
-> 
-> The next-to-last patch in this series is the conversion of struct object
-> to use struct object_id.  This is a necessarily large patch because of
-> the large number of places this code is used.  That patch will most
-> likely be too large to make it through to the list, so this series is
-> available in the object-id-part2 branch from:
+Hi Thomas.
 
-FWIW I've skimmed patches 01-08 inclusive and nothing jumped out at me.
+On 3 August 2015 at 08:52, Thomas Ferris Nicolaisen <tfnico@gmail.com> wrote:
+>
+> Hi,
+>
+> A draft of Git Rev News edition 6 is available here:
+>
+> https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-6.md
+>
+> Everyone is welcome to contribute in any section, either by editing the
+> above page on GitHub and sending a pull request, or by commenting on
+> this GitHub issue:
+>
+> https://github.com/git/git.github.io/issues/89
+>
+> You can also reply to this email.
 
-Brian, what was your experience when writing these patches? Did they
-tend to work as soon as they compiled without errors (i.e., not super
-risky) or did you often have test suite failures that you had to go back
-and fix (i.e., risky)? If the latter, what kinds of code patterns tended
-to be problematic? Your answers might help reviewers decide how much
-diligence is needed when reviewing these patches and what kind of
-changes to inspect extra carefully. Because doing a thorough review of
-all of the patches would be quite a bit of work.
+I did a quick read through and it looks like another interesting
+edition, thank you! I couldn't see any obvious issues with it.
 
-Michael
+There is quite a lot of discussion in the support section, which I
+really like. The following sections pack a lot in, but I think could
+warrant a little more discussion themselves.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+For example, I think it would be good to add a brief discussion about
+the 2.5 release. This seems important/interesting enough to provide a
+bit more context in the edition itself. Perhaps something like the
+following?
+
+--8<--
+
+## Releases
+
+* Git 2.5 is out! The project maintainer, Junio C. Hamano, has [shared
+his thoughts on the release at his
+blog](http://git-blame.blogspot.de/2015/07/git-25.html). Git 2.5 is
+packed full of new features, and includes contributions from 21 new
+contributors. In his post, Junio describes how `git help` has changed:
+
+> One interesting change is to git help. We now list commands, grouped by the situation in which you would want to use them. This came from discussion on usability, inspired by one of the talks at GitMerge conference we had in spring.
+
+He goes on to talk about some of his favourite new features included
+in the release, such as a new short hand `branch@{push}` that "denotes
+the remote-tracking branch that tracks the branch at the remote the
+branch would be pushed to", and a new option `--ws-error-highlight`
+that can be used with `git diff` and friends to show whitespace
+breakages in deleted and context lines.
+
+Be sure to see the post for more on the new features, or checkout the
+[release notes in the
+source](https://github.com/git/git/blob/master/Documentation/RelNotes/2.5.0.txt)
+for all the nitty gritty details.
+
+--8<--
+
+I'll copy this over to a pull request so you have it there if you
+think it's useful.
+
+Again, thanks for the edition, love reading these each month!
+
+Regards,
+
+Andrew Ardill
