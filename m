@@ -1,130 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 02/11] ref-filter: introduce ref_formatting_state
-Date: Mon, 03 Aug 2015 13:42:33 -0700
-Message-ID: <xmqqzj286r46.fsf@gitster.dls.corp.google.com>
-References: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
-	<1438620861-25219-2-git-send-email-Karthik.188@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v5 2/5] refs: add ref_type function
+Date: Mon, 03 Aug 2015 16:44:49 -0400
+Organization: Twitter
+Message-ID: <1438634689.7348.35.camel@twopensource.com>
+References: <1438322781-21181-1-git-send-email-dturner@twopensource.com>
+	 <1438322781-21181-2-git-send-email-dturner@twopensource.com>
+	 <CACsJy8DK9k67yM_mJqbqgDxNKdGKpoLPOQQ4beqGgzUobzyFUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 22:42:46 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 22:45:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMMZJ-0003th-Sd
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 22:42:46 +0200
+	id 1ZMMbV-0004hx-04
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 22:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755471AbbHCUmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 16:42:36 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35129 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753741AbbHCUmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 16:42:35 -0400
-Received: by pasy3 with SMTP id y3so22410107pas.2
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 13:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=IX9MSB834OS7/0vl+cb2XlahkNtWIuU97dbyEGYhBUM=;
-        b=s2EnVPhszN/QUvHDAJ4iy4g0tglcDG9hLi5gKK2a1p7l6lKEIUk1HQhCeeaUQInaSR
-         vSRNiTYgK2dcS/4CKgSzEQy0mTr52TysnG/NI6i9ggylET0YjD2xP+PSojefmxts/KRW
-         o+ePKjVm41xA/aM/06pi2P/7PwOEDKPJZAyXng58RoCfHLIYGQPTGJsl02a3Sl3F+XHJ
-         oS8yar52HEpon+MKhC5he4C8ELY4BnNcrIHu1TshmlZetj0BGJPqKZHWeWkm9i5Fv6SF
-         MCQg+NXMu+E0u/2Z7T7fNpscp4Z4G4OgEl7+B1p9ANwnmyQg4qHKxk4Mjti6mzR1klzz
-         PdFw==
-X-Received: by 10.66.197.234 with SMTP id ix10mr38515538pac.152.1438634554997;
-        Mon, 03 Aug 2015 13:42:34 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:38a2:7ad5:137e:6e11])
-        by smtp.gmail.com with ESMTPSA id v4sm18426913pdg.79.2015.08.03.13.42.34
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 03 Aug 2015 13:42:34 -0700 (PDT)
-In-Reply-To: <1438620861-25219-2-git-send-email-Karthik.188@gmail.com>
-	(Karthik Nayak's message of "Mon, 3 Aug 2015 22:24:12 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755532AbbHCUoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 16:44:55 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:35405 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753741AbbHCUow (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 16:44:52 -0400
+Received: by qgii95 with SMTP id i95so97550838qgi.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 13:44:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=UcXKJ7SjDgXS5pbpU5BS6wpsmitQ/TCWPOVlxTuRV4k=;
+        b=jibdWM8Q8L+1kW7hRaJj+iQS3FRmFOcggefLW/sR4/jCj1U8+rlcP3IZdsM5olZ4b5
+         ofa0afS81qrw8NNjJt4e5nU8JETS+K3zS52U3mINrfhtEANoWexbtbHK9QwfgtBTG7RV
+         SMbX9+Nif6SUs3Cpo0QH4Wr/FsvvEp5Zxl4B9e800320OQyynx47l8GRxe0yUPa6U6X0
+         Ery0D2LTlfGrJHGWr24fSvpCU6NAkz/BoxewZrYT3j4dE4NMhct2LlCdDTXOlJaDoxql
+         hWHzwRrEnI+0VwL35y0A4nLc8utcefrDfkHhezKGqwZAC6medoZtq/bXuVv5Wgi3vKoY
+         Cv/A==
+X-Gm-Message-State: ALoCoQlg2YAKbT/ZHbGGb7UR+AZRkSo5pEiBbHCtJYbxuiI0U4UiMYYlF7G1q6ICubYYiDrj0yzi
+X-Received: by 10.140.96.80 with SMTP id j74mr27514378qge.43.1438634691348;
+        Mon, 03 Aug 2015 13:44:51 -0700 (PDT)
+Received: from ubuntu ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id w105sm7478687qgd.12.2015.08.03.13.44.49
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Aug 2015 13:44:50 -0700 (PDT)
+In-Reply-To: <CACsJy8DK9k67yM_mJqbqgDxNKdGKpoLPOQQ4beqGgzUobzyFUQ@mail.gmail.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275197>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Mon, 2015-08-03 at 20:55 +0700, Duy Nguyen wrote:
+> On Fri, Jul 31, 2015 at 1:06 PM, David Turner <dturner@twopensource.com> wrote:
+> > Add a function ref_type, which categorizes refs as per-worktree,
+> > pseudoref, or normal ref.
+> 
+> For per-worktree refs, you probably should follow common_list[] in
+> path.c because that's how file-based ref namespace is splitted between
+> per-repo and per-worktree, even though just as simple as "everything
+> outside refs/ is per-worktree" (with an exception of NOTES_MERGE_REF,
+> which should be on the list as well). At least the two should be
+> aligned so that the default file-based backend works the same way as
+> new backends.
 
-> Introduce a ref_formatting_state which will eventually hold the values
-> of modifier atoms. Implement this within ref-filter.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  ref-filter.c | 49 +++++++++++++++++++++++++++++++++++++------------
->  ref-filter.h |  4 ++++
->  2 files changed, 41 insertions(+), 12 deletions(-)
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index febdc45..c4c7064 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1190,9 +1190,10 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
->  	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
->  }
->  
-> -static void print_value(struct atom_value *v, int quote_style, struct strbuf *output)
-> +static void print_value(struct atom_value *v, struct ref_formatting_state *state,
-> +			struct strbuf *output)
->  {
+That would be cleaner, I think.  I'm maybe a little worried about
+performance if we do this, but I guess we could optimize later. 
 
-I expect that the state would eventually become a stack of states
-(i.e. the topmost one passed around, each having a pointer to the
-previous level) in order to implement that "divert" mechanism for
-(possibly nested) if ... end construct.
+Before I re-roll, I'll wait until we come to a conclusion on the 
+other per-worktree ref thread.
 
-With that in mind, I suspect that state->output should be "where the
-current level would output to", i.e. no need to pass state and
-output around separately.
+I think we discussed NOTES_MERGE_REF[1], and decided that it should work
+like HEAD.  Does that seem right to you?
 
-> +static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *value,
-> +				   struct strbuf *format)
-> +{
+> Going further, I think you need to pass the "worktree identifier" to
+> ref backend, at least in ref_transaction_begin_fn. Each backend is
+> free to store per-worktree refs however it wants. Of course if I ask
+> for refs/foo of worktree A, you should not return me refs/foo of
+> worktree B. ref_transaction_begin_fn can return a fault code if it
+> does not support multiple worktrees, which is fine.
 
-The name "format" feels quite misleading; the readers would expect
-that you would use it in "strbuf_addf(format, value)", but that is
-not what is going on here.
+If we did that, we would have to add it all over the place -- not just
+ref_transaction_begin, but also update_ref.  
 
-> @@ -1275,12 +1299,13 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
->  		if (color_parse("reset", color) < 0)
->  			die("BUG: couldn't parse 'reset' as a color");
->  		resetv.s = color;
-> -		print_value(&resetv, quote_style, &output);
-> +		print_value(&resetv, &state, &value);
-> +		apply_formatting_state(&state, &value, &final_buf);
->  	}
-> -	for (i = 0; i < output.len; i++)
-> -		printf("%c", output.buf[i]);
-> +	for (i = 0; i < final_buf.len; i++)
-> +		printf("%c", final_buf.buf[i]);
->  	putchar('\n');
-> -	strbuf_release(&output);
-> +	strbuf_release(&final_buf);
->  }
->  
->  /*  If no sorting option is given, use refname to sort as default */
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 6bf27d8..b64677f 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -16,6 +16,10 @@
->  #define FILTER_REFS_INCLUDE_BROKEN 0x1
->  #define FILTER_REFS_ALL 0x2
->  
-> +struct ref_formatting_state {
-> +	int quote_style;
-> +};
-> +
->  struct atom_value {
->  	const char *s;
->  	unsigned long ul; /* used for sorting when not FIELD_STR */
+I think it's better to encapsulate this knowledge inside the refs code.
+
+> > Later, we will use this in refs.c to treat pseudorefs specially.
+> > Alternate ref backends may use it to treat both pseudorefs and
+> > per-worktree refs differently.
+> 
+> I'm not so sure that this can't be hidden behind backends and they can
+> have total control on falling back to file-based, or store them in
+> some secondary storage. I haven't re-read your discussion with Junio
+> yet (only skimmed through long ago) so I may be missing some important
+> points.
+
+The worry is symbolic refs -- a symbolic ref might be a per-worktree ref
+pointing to a shared ref pointing to a per-worktree ref.  This is why
+it's simpler to let backends handle things.  If we had some rules about
+this, we could maybe hide this from the backend, but so far, this was
+the simplest thing to do (it works great!).
+
+
+[1] http://www.spinics.net/lists/git/msg256793.html
