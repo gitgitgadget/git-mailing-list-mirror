@@ -1,188 +1,114 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH v5 2/2] path: implement common_dir handling in git_path_submodule()
-Date: Tue,  4 Aug 2015 00:03:56 +0300
-Message-ID: <1438635836-7857-3-git-send-email-max@max630.net>
-References: <1426713052-19171-1-git-send-email-max@max630.net>
- <1438635836-7857-1-git-send-email-max@max630.net>
-Cc: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 23:12:04 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 0/2] bisect per-worktree
+Date: Mon, 03 Aug 2015 14:14:42 -0700
+Message-ID: <xmqqvbcw6pml.fsf@gitster.dls.corp.google.com>
+References: <1438387012-29229-1-git-send-email-dturner@twopensource.com>
+	<55BC4438.8060709@alum.mit.edu>
+	<CAPc5daVnfit8pkjc2HCSn0erW-q++We8gx8tPsb_ptd5H+CpJg@mail.gmail.com>
+	<55BC6C5C.1070707@alum.mit.edu>
+	<1438631396.7348.33.camel@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 23:15:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMN1e-0006Ro-9o
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:12:02 +0200
+	id 1ZMN4Z-0007bz-77
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755551AbbHCVLc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 17:11:32 -0400
-Received: from p3plsmtpa07-09.prod.phx3.secureserver.net ([173.201.192.238]:36753
-	"EHLO p3plsmtpa07-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755443AbbHCVL2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2015 17:11:28 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Aug 2015 17:11:27 EDT
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa07-09.prod.phx3.secureserver.net with 
-	id 0M4A1r00M5B68XE01M4KAq; Mon, 03 Aug 2015 14:04:20 -0700
-X-Mailer: git-send-email 2.3.4.2801.g3d0809b
-In-Reply-To: <1438635836-7857-1-git-send-email-max@max630.net>
+	id S932443AbbHCVO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 17:14:58 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:36168 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932420AbbHCVOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 17:14:44 -0400
+Received: by pacgq8 with SMTP id gq8so33278573pac.3
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=8j/94dHACoTb2rsBvrFEqPq8i9GzeIxyp25745cbIhM=;
+        b=pjcO5t77XroFqCmwSxrNC5xL+ZZmN/VutnlZB8GW+WObbKIZ94tR8ZCxQurh4fmRrL
+         y8vgBpmKO403Ot+VCcx1zUvR5S4+ncOxzD5wSJ/LmdOLFUmK2jbokPf+7d2LbxBRA4Lo
+         gkR6VSjpiT1EGtg1cb3e5MdX1EvPlzhw4A7HwU0BhAmdc21ibUkRBlNSs495dENm4hE3
+         neXxI1nc5P083J3E4Vxn+3jmpFnWslZi9cnFqs9PTNsLCHIxrPeyBNlv/yj9y1ru9+n3
+         ObsW9lIel+2eddlsVKFtQC9Y9vb3s4awFEX1mHsaS5Bzt+b8maDGVcZHVhk1seheG53N
+         ZFCA==
+X-Received: by 10.68.162.99 with SMTP id xz3mr117334pbb.73.1438636483783;
+        Mon, 03 Aug 2015 14:14:43 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:38a2:7ad5:137e:6e11])
+        by smtp.gmail.com with ESMTPSA id wv4sm18582197pac.2.2015.08.03.14.14.42
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 03 Aug 2015 14:14:42 -0700 (PDT)
+In-Reply-To: <1438631396.7348.33.camel@twopensource.com> (David Turner's
+	message of "Mon, 03 Aug 2015 15:49:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275204>
 
-This allows making submodules a linked workdirs.
+David Turner <dturner@twopensource.com> writes:
 
-Same as for .git, but ignores the GIT_COMMON_DIR environment variable,
-because it would mean common directory for the parent repository and
-does not make sense for submodule.
+> I think making this configurable is (a) overkill and (b) dangerous.
+> It's dangerous because the semantics of which refs are per-worktree is
+> important to the correct operation of git, and allowing users to mess
+> with it seems like a big mistake.  Instead, we should figure out a
+> simple scheme and define it globally.
+>
+> I think refs/worktree -> refs/worktrees/[worktree]/ would do fine as a
+> fixed scheme, if we go that route.
 
-Also add test for functionality which uses this call.
+OK.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
- cache.h                          |  1 +
- path.c                           | 24 ++++++++++++++++++++----
- setup.c                          | 17 ++++++++++++-----
- t/t7410-submodule-checkout-to.sh | 10 ++++++++++
- 4 files changed, 43 insertions(+), 9 deletions(-)
+> We would need two separate views of the refs hierarchy, though: one used
+> by prune (and pack-refs) that is non-mapped (that is, includes
+> per-worktree refs for each worktree), and one for general use that is
+> mapped.   Maybe this is just a flag to the ref traversal functions.
 
-diff --git a/cache.h b/cache.h
-index 4f55466..b87ec75 100644
---- a/cache.h
-+++ b/cache.h
-@@ -442,6 +442,7 @@ extern char *get_object_directory(void);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
-+extern int get_common_dir_noenv(struct strbuf *sb, const char *gitdir);
- extern int get_common_dir(struct strbuf *sb, const char *gitdir);
- extern const char *get_git_namespace(void);
- extern const char *strip_namespace(const char *namespaced_ref);
-diff --git a/path.c b/path.c
-index 10f4cbf..f292d02 100644
---- a/path.c
-+++ b/path.c
-@@ -98,7 +98,7 @@ static const char *common_list[] = {
- 	NULL
- };
- 
--static void update_common_dir(struct strbuf *buf, int git_dir_len)
-+static void update_common_dir(struct strbuf *buf, int git_dir_len, const char* common_dir)
- {
- 	char *base = buf->buf + git_dir_len;
- 	const char **p;
-@@ -115,12 +115,17 @@ static void update_common_dir(struct strbuf *buf, int git_dir_len)
- 			path++;
- 			is_dir = 1;
- 		}
-+
-+		if (!common_dir) {
-+			common_dir = get_git_common_dir();
-+		}
-+
- 		if (is_dir && dir_prefix(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
-+			replace_dir(buf, git_dir_len, common_dir);
- 			return;
- 		}
- 		if (!is_dir && !strcmp(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
-+			replace_dir(buf, git_dir_len, common_dir);
- 			return;
- 		}
- 	}
-@@ -160,7 +165,7 @@ static void adjust_git_path(struct strbuf *buf, int git_dir_len)
- 	else if (git_db_env && dir_prefix(base, "objects"))
- 		replace_dir(buf, git_dir_len + 7, get_object_directory());
- 	else if (git_common_dir_env)
--		update_common_dir(buf, git_dir_len);
-+		update_common_dir(buf, git_dir_len, NULL);
- }
- 
- static void do_git_path(struct strbuf *buf, const char *fmt, va_list args)
-@@ -228,6 +233,8 @@ const char *git_path_submodule(const char *path, const char *fmt, ...)
- {
- 	struct strbuf *buf = get_pathname();
- 	const char *git_dir;
-+	struct strbuf git_submodule_common_dir = STRBUF_INIT;
-+	struct strbuf git_submodule_dir = STRBUF_INIT;
- 	va_list args;
- 
- 	strbuf_addstr(buf, path);
-@@ -241,11 +248,20 @@ const char *git_path_submodule(const char *path, const char *fmt, ...)
- 		strbuf_addstr(buf, git_dir);
- 	}
- 	strbuf_addch(buf, '/');
-+	strbuf_addstr(&git_submodule_dir, buf->buf);
- 
- 	va_start(args, fmt);
- 	strbuf_vaddf(buf, fmt, args);
- 	va_end(args);
-+
-+	if (get_common_dir_noenv(&git_submodule_common_dir, git_submodule_dir.buf)) {
-+		update_common_dir(buf, git_submodule_dir.len, git_submodule_common_dir.buf);
-+	}
-+
- 	strbuf_cleanup_path(buf);
-+
-+	strbuf_release(&git_submodule_dir);
-+	strbuf_release(&git_submodule_common_dir);
- 	return buf->buf;
- }
- 
-diff --git a/setup.c b/setup.c
-index 82c0cc2..39ea06b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -229,14 +229,21 @@ void verify_non_filename(const char *prefix, const char *arg)
- 
- int get_common_dir(struct strbuf *sb, const char *gitdir)
- {
-+	const char *git_env_common_dir = getenv(GIT_COMMON_DIR_ENVIRONMENT);
-+	if (git_env_common_dir) {
-+		strbuf_addstr(sb, git_env_common_dir);
-+		return 1;
-+	} else {
-+		return get_common_dir_noenv(sb, gitdir);
-+	}
-+}
-+
-+int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
-+{
- 	struct strbuf data = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
--	const char *git_common_dir = getenv(GIT_COMMON_DIR_ENVIRONMENT);
- 	int ret = 0;
--	if (git_common_dir) {
--		strbuf_addstr(sb, git_common_dir);
--		return 1;
--	}
-+
- 	strbuf_addf(&path, "%s/commondir", gitdir);
- 	if (file_exists(path.buf)) {
- 		if (strbuf_read_file(&data, path.buf, 0) <= 0)
-diff --git a/t/t7410-submodule-checkout-to.sh b/t/t7410-submodule-checkout-to.sh
-index 3f609e8..1acef32 100755
---- a/t/t7410-submodule-checkout-to.sh
-+++ b/t/t7410-submodule-checkout-to.sh
-@@ -47,4 +47,14 @@ test_expect_success 'checkout main and initialize independed clones' \
- test_expect_success 'can see submodule diffs after independed cloning' \
-     '(cd fully_cloned_submodule/main && git diff --submodule master"^!" | grep "file1 updated")'
- 
-+test_expect_success 'checkout sub manually' \
-+    'mkdir linked_submodule &&
-+    (cd clone/main &&
-+	git worktree add "$base_path/linked_submodule/main" "$rev1_hash_main") &&
-+    (cd clone/main/sub &&
-+	git worktree add "$base_path/linked_submodule/main/sub" "$rev1_hash_sub")'
-+
-+test_expect_success 'can see submodule diffs after manual checkout of linked submodule' \
-+    '(cd linked_submodule/main && git diff --submodule master"^!" | grep "file1 updated")'
-+
- test_done
--- 
-2.3.4.2801.g3d0809b
+True.  Alternatively we could just view refs/worktree/* as if they
+are symbolic refs that point into refs/worktrees/$my_worktree/*, but
+that would imply making the latter always visible to all worktrees,
+which would hurt when people use it to interact with outside world
+(namely, refs in other people's private area should probably not be
+advertised).
+
+> As I understand it, we don't presently do many transactions that include
+> both pseudorefs or per-worktree refs and other refs.  And we definitely
+> don't want to move pseudorefs into the database since there's so much
+> code that assumes they're files.  Also, the vast majority of refs are
+> common, rather than per-worktree.  In fact, the only per-worktree refs
+> I've seen mentioned so far are the bisect refs and NOTES_MERGE_REF and
+> HEAD.  Of these, only HEAD is needed for pruning. Are there more that I
+> haven't thought of?
+
+I myself have come up with nothing other than the above.  Let's hear
+from others.
+
+> So I'm not sure the gain from moving per-worktree refs into the database
+> is that great.
+
+I am on the same wavelength as you are on this.
+
+> There are some downsides of moving per-worktree refs into the database:
+> ...
+
+All good points except #3, which I cannot judge if it is good or bad.
+
+> ...
+> Simply treating refs/worktree as per-worktree, while the rest of refs/
+> is not, would be a few dozen lines of code.  The full remapping approach
+> is likely to be a lot more.
+
+We may be over-engineering with Michael's and even with the more
+simpler refs/worktree/* -> refs/worktrees/$mine/* fixed mapping;
+I tend to agree with you.
