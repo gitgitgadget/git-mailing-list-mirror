@@ -1,128 +1,253 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 5/6] clone: fix hostname parsing when guessing dir
-Date: Mon, 3 Aug 2015 10:34:14 +0200
-Message-ID: <20150803083414.GA23997@pks-xps.Speedport_W_723V_1_37_000>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
- <1438185076-28870-1-git-send-email-ps@pks.im>
- <1438185076-28870-6-git-send-email-ps@pks.im>
- <xmqq7fpiamiq.fsf@gitster.dls.corp.google.com>
- <20150730121811.GA24635@pks-pc.localdomain>
- <xmqqk2th7gmq.fsf@gitster.dls.corp.google.com>
- <xmqqfv457fkc.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] untracked-cache: support sparse checkout
+Date: Mon, 3 Aug 2015 17:18:06 +0700
+Message-ID: <CACsJy8C6TiwQQKsaaMTZpAcgC=ma-yW5AR5i7vZnx6JBWSjRTA@mail.gmail.com>
+References: <1438364101-6597-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="PNTmBPCT7hxwcZjr"
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 10:34:27 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 12:18:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMBCS-0008A0-67
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 10:34:24 +0200
+	id 1ZMCpS-0005b5-SA
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 12:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbbHCIeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 04:34:20 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:40452 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751674AbbHCIeS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2015 04:34:18 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 536FF203DB
-	for <git@vger.kernel.org>; Mon,  3 Aug 2015 04:34:16 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 03 Aug 2015 04:34:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=86LBvgakc/0IrycDm3OE6hR5MuU=; b=nHW/N
-	002zPvSH5IYaZTmXYQmTVVL/Ofs9vkusbzUQrFjaMDDK8XZJLhlS0v3ixX3aVTaI
-	Mp2PGgmGpvqB+gT7KeC54Df5KvS6cyngEQNnzhsneKTCNAs4+5rCvUV4D3R6Z/Bf
-	BLsLrJVRCB3jgFzbamdF/RCz0N779RMz7c4K40=
-X-Sasl-enc: Pq8J9z5xbxUhn1X8GjOeyOegWCUjfbYTm9wo15ef4Nx9 1438590855
-Received: from localhost (p4fc5cc70.dip0.t-ipconnect.de [79.197.204.112])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D264C680200;
-	Mon,  3 Aug 2015 04:34:15 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqfv457fkc.fsf@gitster.dls.corp.google.com>
+	id S1752198AbbHCKSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 06:18:37 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:34055 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752137AbbHCKSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 06:18:36 -0400
+Received: by igk11 with SMTP id 11so68694212igk.1
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 03:18:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=G0iRyn+JWBtO+YDP0x7J0xIuE+sFH3syUR4JAuujZe8=;
+        b=vVQzXjZiTf/Od69Edpz8kMMtkIGlCzQQSTUfhQUhkc6QHJ3ssgVqnO1/yBbxahfr8l
+         qbSgpRe3hsa9pOsDxKS1m+YvtY2yHLfNB2jpcx0ShzDo/fza/GeRMo8t1ydJ4YbYLemK
+         r8FaY1V1QmWmXsnn2AvBhAg0+AYO3bIeIcl4qt7Rey2y9VygyyBUP1FJGXj2YD1SMC6g
+         VxHNLiOrZfhSENnLOX1yQ67m4ptZcWF8v0O0U7DDksoLBS/dSe09tbgjU1/8KoICiCls
+         pMJetCXe03/WjalISvkt5L1jQs7RxI18M2mxhN1s34QGo8eVDpZVcNFAWDzBa+cCWxuN
+         +c8A==
+X-Received: by 10.50.2.9 with SMTP id 9mr19778535igq.42.1438597115315; Mon, 03
+ Aug 2015 03:18:35 -0700 (PDT)
+Received: by 10.107.191.193 with HTTP; Mon, 3 Aug 2015 03:18:06 -0700 (PDT)
+In-Reply-To: <1438364101-6597-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275158>
+
+On Sat, Aug 1, 2015 at 12:35 AM, David Turner <dturner@twopensource.com> wrote:
+> Remove a check that would disable the untracked cache for sparse
+> checkouts.  Add tests that ensure that the untracked cache works with
+> sparse checkouts -- specifically considering the case that a file
+> foo/bar is checked out, but foo/.gitignore is not.
+
+I have looked some more at the code (sorry for being slow these days,
+$DAY_JOB can be exhausting). The reason 27b099a (untracked cache:
+don't open non-existent .gitignore - 2015-03-08) avoids skip-worktree
+is because when that patch is added, index changes do not affect
+untracked cache (yet). So when you delete the on-worktree .gitignore,
+untracked cache is invalidated and it falls back to the index version.
+exclude_sha1 would reflect the content in the index. If the in-index
+.gitignore is deleted, without feedback from the index, untracked
+cache remains unchanged (i.e. valid) and assumes that .gitignore is
+still there. Which is wrong. That's fixed in e931371 (untracked cache:
+invalidate at index addition or removal - 2015-03-08).
+
+With that out of the way,
+
+Acked-by: Duy Nguyen <pclouds@gmail.com>
+
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  dir.c                             |  17 +-----
+>  t/t7063-status-untracked-cache.sh | 119 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 122 insertions(+), 14 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 8209f8b..e7b89fe 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1078,10 +1078,9 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+>                     (!untracked || !untracked->valid ||
+>                      /*
+>                       * .. and .gitignore does not exist before
+> -                     * (i.e. null exclude_sha1 and skip_worktree is
+> -                     * not set). Then we can skip loading .gitignore,
+> -                     * which would result in ENOENT anyway.
+> -                     * skip_worktree is taken care in read_directory()
+> +                     * (i.e. null exclude_sha1). Then we can skip
+> +                     * loading .gitignore, which would result in
+> +                     * ENOENT anyway.
+>                       */
+>                      !is_null_sha1(untracked->exclude_sha1))) {
+>                         /*
+> @@ -1880,7 +1879,6 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>                                                       const struct pathspec *pathspec)
+>  {
+>         struct untracked_cache_dir *root;
+> -       int i;
+>
+>         if (!dir->untracked || getenv("GIT_DISABLE_UNTRACKED_CACHE"))
+>                 return NULL;
+> @@ -1932,15 +1930,6 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>         if (dir->exclude_list_group[EXC_CMDL].nr)
+>                 return NULL;
+>
+> -       /*
+> -        * An optimization in prep_exclude() does not play well with
+> -        * CE_SKIP_WORKTREE. It's a rare case anyway, if a single
+> -        * entry has that bit set, disable the whole untracked cache.
+> -        */
+> -       for (i = 0; i < active_nr; i++)
+> -               if (ce_skip_worktree(active_cache[i]))
+> -                       return NULL;
+> -
+>         if (!ident_in_untracked(dir->untracked)) {
+>                 warning(_("Untracked cache is disabled on this system."));
+>                 return NULL;
+> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+> index bd4806c..ff23f4e 100755
+> --- a/t/t7063-status-untracked-cache.sh
+> +++ b/t/t7063-status-untracked-cache.sh
+> @@ -354,4 +354,123 @@ EOF
+>         test_cmp ../expect ../actual
+>  '
+>
+> +test_expect_success 'set up for sparse checkout testing' '
+> +       echo two >done/.gitignore &&
+> +       echo three >>done/.gitignore &&
+> +       echo two >done/two &&
+> +       git add -f done/two done/.gitignore &&
+> +       git commit -m "first commit"
+> +'
+> +
+> +test_expect_success 'status after commit' '
+> +       : >../trace &&
+> +       GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
+> +       git status --porcelain >../actual &&
+> +       cat >../status.expect <<EOF &&
+> +?? .gitignore
+> +?? dtwo/
+> +EOF
+> +       test_cmp ../status.expect ../actual &&
+> +       cat >../trace.expect <<EOF &&
+> +node creation: 0
+> +gitignore invalidation: 0
+> +directory invalidation: 0
+> +opendir: 1
+> +EOF
+> +       test_cmp ../trace.expect ../trace
+> +'
+> +
+> +test_expect_success 'untracked cache correct after commit' '
+> +       test-dump-untracked-cache >../actual &&
+> +       cat >../expect <<EOF &&
+> +info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+> +core.excludesfile 0000000000000000000000000000000000000000
+> +exclude_per_dir .gitignore
+> +flags 00000006
+> +/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+> +.gitignore
+> +dtwo/
+> +/done/ 0000000000000000000000000000000000000000 recurse valid
+> +/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+> +/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+> +two
+> +EOF
+> +       test_cmp ../expect ../actual
+> +'
+> +
+> +test_expect_success 'set up sparse checkout' '
+> +       echo "done/[a-z]*" >.git/info/sparse-checkout &&
+> +       test_config core.sparsecheckout true &&
+> +       git checkout master &&
+> +       git update-index --untracked-cache &&
+> +       git status --porcelain >/dev/null && # prime the cache
+> +       test_path_is_missing done/.gitignore &&
+> +       test_path_is_file done/one
+> +'
+> +
+> +test_expect_success 'create files, some of which are gitignored' '
+> +       echo three >done/three && # three is gitignored
+> +       echo four >done/four && # four is gitignored at a higher level
+> +       echo five >done/five # five is not gitignored
+> +'
+> +
+> +test_expect_success 'test sparse status with untracked cache' '
+> +       : >../trace &&
+> +       avoid_racy &&
+> +       GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
+> +       git status --porcelain >../status.actual &&
+> +       cat >../status.expect <<EOF &&
+> +?? .gitignore
+> +?? done/five
+> +?? dtwo/
+> +EOF
+> +       test_cmp ../status.expect ../status.actual &&
+> +       cat >../trace.expect <<EOF &&
+> +node creation: 0
+> +gitignore invalidation: 1
+> +directory invalidation: 2
+> +opendir: 2
+> +EOF
+> +       test_cmp ../trace.expect ../trace
+> +'
+> +
+> +test_expect_success 'untracked cache correct after status' '
+> +       test-dump-untracked-cache >../actual &&
+> +       cat >../expect <<EOF &&
+> +info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+> +core.excludesfile 0000000000000000000000000000000000000000
+> +exclude_per_dir .gitignore
+> +flags 00000006
+> +/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+> +.gitignore
+> +dtwo/
+> +/done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
+> +five
+> +/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+> +/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+> +two
+> +EOF
+> +       test_cmp ../expect ../actual
+> +'
+> +
+> +test_expect_success 'test sparse status again with untracked cache' '
+> +       avoid_racy &&
+> +       : >../trace &&
+> +       GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
+> +       git status --porcelain >../status.actual &&
+> +       cat >../status.expect <<EOF &&
+> +?? .gitignore
+> +?? done/five
+> +?? dtwo/
+> +EOF
+> +       test_cmp ../status.expect ../status.actual &&
+> +       cat >../trace.expect <<EOF &&
+> +node creation: 0
+> +gitignore invalidation: 0
+> +directory invalidation: 0
+> +opendir: 0
+> +EOF
+> +       test_cmp ../trace.expect ../trace
+> +'
+> +
+>  test_done
+> --
+> 2.0.4.315.gad8727a-twtrsrc
+>
 
 
---PNTmBPCT7hxwcZjr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 30, 2015 at 09:53:07AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > Well, but there is the above "or we may not" ;-)
-> >
-> >> But actually you are right, currently I still have the old logic
-> >> in place that splits on colons in the path component.=20
-> >
-> > Yes.  The reason why I suggested the simple route was exactly
-> > because I noticed that you didn't seem to care about the above
-> > "$site/foo:bar.git/" =3D> "$site/foo:bar" =3D> "bar" transform.
-> >
-> > And I think people might depend on that behaviour.  "Fixing" that
-> > may even be seen as a regression.
-> >
-> > When was the last time you created a foo@bar.git repository?
->=20
-> Actually, this was an unrelated question and a wrong one to ask at
-> that.
->=20
-> Even though I personally haven't created foo:bar.git repository,
-> because it is no longer 2005, it is highly likely that somewhere
-> there is such a person who depends on the current behaviour of
-> turning that to "bar" on the cloned side.  Similarly, even if we the
-> people who read the Git mailing list collectively do not know
-> anybody who has foo@bar.git repository, it is highly likely that
-> somewhere there is such a person who depends on the current
-> behaviour of turning that to "foo@bar" on the cloned side.
->=20
-> So the ideal would be to keep turning $site/foo:bar.git to bar,
-> $site/foo@bar.git to foo@bar, and $scheme//u@p:$host/ to $host.
->=20
-> And it would be ideal if we do so without much code churn.  "The
-> whole site is dedicated to host a single repository at the root" is
-> a highly unlikely set-up and it feels wasteful to spend too much
-> effort on.
-
-One more question for backwards compatibility remains then.
-Currently when we clone something like 'http://example.com:2222/'
-we'd create a git repository '2222' as we'd split on the first
-occurrence of ':'. Should we remain backwards compatible here, as
-well, or change the behavior to use 'example.com' as repository
-name?
-
---PNTmBPCT7hxwcZjr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJVvyeEAAoJEBF8Z7aeq/EsTUYP/0vxwX2BHi1dJX2VjIfU1p/o
-e1W9358sXOkD08ktWPaFxe7Ff+DkXDNamHhyANoXXeLNoDQLlejRLIGDLjW94MaB
-G0ZpmQ7/RGgQoW+4UAXafkxZQOSdDuqbQXlXGYqVX8LKliFFzlDCCtXd8QYw7/Nh
-cqOAbrQajywAb2zrnP8YURoM5MwPR351oQsOV1YPk7hibPQaT2XwXSTpDhCkKfYO
-t+sDSQ4POarUszJw4ihqzkMiZ/53ub7FZ7WxoRaUhBA85zzIrXwR1KURnloT2i/x
-hkt0n/UXi17E/EP9oWg6dsQbkhdKl8ZkhlglMWAWtuu7IQOi/8S9JUmZKbn5MPP8
-7MHoOvwsqUMLRdcarr6RIKb1Umv9aehG9Rfiipy3zuItpIGc0wGUABYdE1OrsD0b
-Qr6WgGt+GOnY17zIUtEx0S20rLSFKMoaTfisR7xmUd8/D0n7Oc8APwxlJWnmSRGE
-1/yv9A+7p7yaZX8ToWdKF1teSlmijJtBdo/x1fwrSxniSlD50luokJ7p0ue6sFSl
-PxBZKhvvyU7nOsk2WGzkNZKmLw6dSlJkLdM9XZdjXWSM/ihxcV9HVWpaizDMhHZ6
-vyuAGUNzbaLo5YuUdw5O1wkSZejovoDP7XOTumUSzhgp90wKSp5bxdl/5o0jb95/
-1G8xMvhrfrhusH+Skzml
-=HpYv
------END PGP SIGNATURE-----
-
---PNTmBPCT7hxwcZjr--
+-- 
+Duy
