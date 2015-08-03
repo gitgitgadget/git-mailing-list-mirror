@@ -1,66 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/2] submodule: implement `module_list` as a builtin helper
-Date: Mon, 03 Aug 2015 14:38:11 -0700
-Message-ID: <xmqqfv406ojg.fsf@gitster.dls.corp.google.com>
-References: <1438384147-3275-1-git-send-email-sbeller@google.com>
-	<1438384147-3275-2-git-send-email-sbeller@google.com>
-	<xmqqmvybakjl.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kY=39j4H=62=VZRm4VOcqzgOAU6tDpJVsqdeqnPtB8hQQ@mail.gmail.com>
+From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+Subject: Re: Draft of Git Rev News edition 6
+Date: Mon, 3 Aug 2015 23:43:18 +0200
+Message-ID: <CAEcj5uU=iug=3C_XiGtWyVp=6Zi8qKHA6tjJ8am2-7j80BvHwA@mail.gmail.com>
+References: <CAEcj5uXXe19APhNaV6Kfm_3SNpRmFHToooo07T0_r6McJOrsaQ@mail.gmail.com>
+	<xmqqfv4087b8.fsf@gitster.dls.corp.google.com>
+	<CAEcj5uUmsV5xzONaahkEEp7R80_zunSAiwTE2UeSxdS6wo1xmg@mail.gmail.com>
+	<xmqqr3nk6pk9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 23:38:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Nicola Paolucci <nick@durdn.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 23:43:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMNR5-0008DS-O3
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:38:20 +0200
+	id 1ZMNW1-0001eu-3B
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 23:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591AbbHCViP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 17:38:15 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33912 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755290AbbHCViN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 17:38:13 -0400
-Received: by pawu10 with SMTP id u10so21529950paw.1
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:38:12 -0700 (PDT)
+	id S1755036AbbHCVnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 17:43:20 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:35374 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754875AbbHCVnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 17:43:19 -0400
+Received: by wibxm9 with SMTP id xm9so139764371wib.0
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 14:43:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=xr2C42bhwYMKgLW9oJREvYRfsgZYWP/p7wxC0+r5iAU=;
-        b=aMpvQ7Tt+LMgNVlY0el9USFfUEPhYxr60rERv4ZvyXZjAmCdnB1+lTSaSC0pX3r1of
-         YS6/NJxyA1C1c12ZJXBuMW0X5Fy81aIfxsfZ8va3AbtiYKnXk/qDQ7xF4ezSrZP3lE3J
-         15qBY67HLr6yHwrnA2vd12FnkdVnxyp+CMsjauATJzDaXbKrpp/qne3lTpZ4HfIjt3MO
-         0SoYOp3QC/6P64UMdG5GBqBbJR7dOI9E3nyfANBI7sPRW38Egtv3o8i/y0TuTTG5infa
-         1Ff1Y1UDg6Abiv8BLP3owOy5MUXOYoN3HBZPidHwODliq8i3panMDsCTebVocX0JrXf3
-         5o2A==
-X-Received: by 10.66.63.71 with SMTP id e7mr290243pas.57.1438637892685;
-        Mon, 03 Aug 2015 14:38:12 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:38a2:7ad5:137e:6e11])
-        by smtp.gmail.com with ESMTPSA id v10sm5231775pbs.19.2015.08.03.14.38.11
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 03 Aug 2015 14:38:12 -0700 (PDT)
-In-Reply-To: <CAGZ79kY=39j4H=62=VZRm4VOcqzgOAU6tDpJVsqdeqnPtB8hQQ@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 3 Aug 2015 14:30:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=BPaBgGeYvIqpYEFK+SvIuxtJYWEujjNezRAL11QX+CM=;
+        b=pAfqf6ONNXlouThpK8KWQhtJ+Ekf+/cGhL/SuWk/W1hA682D+dTrxDNKAz3Hpx/e2J
+         +KPFcdp1G+JaplwtIt+sbMm+ER99WX3cgxQqa1+CEhF//2uA/plpwOz9KFEeJlFGaL2/
+         Y+qE2uvI8vb8WK11mYNN2138h8DV9eW/73LA+gGpw/D3hP11xZq6AbmIKWP5o4DMQK9I
+         yIpHfqcWCNEbSVswHQS/MEka2joCIIJMswYM5Bx5dpY5xwx3r+9Jj7AT1uVq3rh4WZg2
+         XZc13mqWarD1K+QEJpYl5MrOZqawz2RThaTVIohmAMwrBBqYEUhCQf+OetOlNcDGr8lt
+         zZ2g==
+X-Received: by 10.194.90.171 with SMTP id bx11mr285553wjb.129.1438638198715;
+ Mon, 03 Aug 2015 14:43:18 -0700 (PDT)
+Received: by 10.27.47.137 with HTTP; Mon, 3 Aug 2015 14:43:18 -0700 (PDT)
+In-Reply-To: <xmqqr3nk6pk9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275212>
 
-Stefan Beller <sbeller@google.com> writes:
-
->>     $ git submodule--helper module_list
+On Mon, Aug 3, 2015 at 11:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I hope we can attract more contributors in the future, so the weight
+>> of this doesn't lie too much on his shoulders. Perhaps we should send
+>> out the draft earlier next time, and beckon for more contributions
+>> from the list.
 >
-> Why would you use an underscore in here as opposed to a dash?
+> Yeah, that is probably a good idea.  I was sort of surprised that
+> you announced to publish it in a few days.
 
-Simply because the diff would be easier to read; the callers used to
-call module_list shell function, now they call the subcommand with the
-same name of submodule--helper.
+There's no deep thoughts behind the scheduling. I just followed the
+pattern of how Christian has done it in the past. If anyone is
+preparing something concrete for this edition, let me know before
+Wednesday.
