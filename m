@@ -1,120 +1,112 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] remote: add get-url subcommand
-Date: Mon, 3 Aug 2015 19:38:15 -0400
-Message-ID: <CAPig+cQO_jXZmJG=EccwQ408TiAk7_BiQF1UKA31phXF7CXy6w@mail.gmail.com>
-References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
-	<1438635614-11174-1-git-send-email-mathstuf@gmail.com>
-	<1438635614-11174-2-git-send-email-mathstuf@gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/10] object_id part 2
+Date: Mon, 3 Aug 2015 23:45:36 +0000
+Message-ID: <20150803234536.GC581651@vauxhall.crustytoothpaste.net>
+References: <1434233803-422442-1-git-send-email-sandals@crustytoothpaste.net>
+ <55BEA8E4.7040902@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ben Boeckel <mathstuf@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 01:38:23 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="C+ts3FVlLX8+P6JN"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Aug 04 01:45:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMPJF-0006nL-Q7
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 01:38:22 +0200
+	id 1ZMPQR-0000WI-H5
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 01:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755658AbbHCXiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 19:38:17 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:36480 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754313AbbHCXiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 19:38:16 -0400
-Received: by ykeo23 with SMTP id o23so27299477yke.3
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 16:38:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ilbG20mlbXkpUO0pBK1VUjjqpos8/vtglatS8ROZwMc=;
-        b=VF6rr59EO1Bz1PzHeYTLmXP9HbitoMNr9RPUfFV7+3IkDgPLFKHBYKGstfNoov+MGE
-         B+hWsS6SNX/5ZjGkwH55ezhwb31HyejLCfZX8UySqEAgmwCWi7Pqc0AGCBpxmm7d0gvB
-         RLKvAguP8rFRwupnA6p1i0/YnBF9gzXx5vkem61XjEWXRGNjnEUYl+0GJApGEAePJPez
-         HA+415cpjS1gyVUeGilAaxKlLlYRWh6Fjv/Juqr33VsSnkyj1apQG9M1EUEtAfsh6nlC
-         GtAT/5W9nj4w0i1+xIZ0KMi/6SwQv6Mh98wa+3U3x52XWowc53X3/SRH6X6eCufOb+qE
-         OeIQ==
-X-Received: by 10.13.192.132 with SMTP id b126mr587855ywd.163.1438645095376;
- Mon, 03 Aug 2015 16:38:15 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Mon, 3 Aug 2015 16:38:15 -0700 (PDT)
-In-Reply-To: <1438635614-11174-2-git-send-email-mathstuf@gmail.com>
-X-Google-Sender-Auth: 6F9u5Xo9_tUjDnl0oF746xQNl4I
+	id S1755567AbbHCXpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 19:45:43 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:37674 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751538AbbHCXpm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2015 19:45:42 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CB42B2808D;
+	Mon,  3 Aug 2015 23:45:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1438645541;
+	bh=k15R6HdiK/dOauHpKolj22cgkNBD3YkdYX2Oe2wGg+o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jtaY4MtceGUzIrlPVMxQYPQbu9cE+a33MbHwHslU4BahPJnuZ7mMX3Hxb1DHQhH72
+	 FmZC2LFkT+rTKrVRcUUTxAV9wA8aLta2x+mjGyPe5MijbGt1y6bnwcCHwXg/Tf+aop
+	 +rlZ0Oq2A2uNFNzj6OuplZ3zkapmZJRo/m5SJNhxT7/f448mIkldM/Yj/Pt9fBIXFr
+	 BXgiGQMXJDEqZJr6uqVOFr67++q15BZMaOUha3/88Fr2WTz+miJdBggS93QL7NW93l
+	 hw0OreV7WQKf6DKeaMo5nacTJkgxFkdz5fqksPQVbIWbXCgDHVW5KTTp4fcwaaiAvl
+	 9b6C4TBrs9JfDs2QFdD8tW/XszaDsIv5UBH5xLt+w018SNxuSTh+P5O6RCDbCTH0/l
+	 qj1PT0Sh7SdGQz5R5T5XRWNHC9barTovMgAH4hpEs3+3IrSI8xbZW0RIKX6eN32ihe
+	 8VpnDztxA+KAj9m8TlzdIvuteaDS7CrosO7TGKG1BSGRJIHpjbX
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <55BEA8E4.7040902@alum.mit.edu>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.0.0-2-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275230>
 
-On Mon, Aug 3, 2015 at 5:00 PM, Ben Boeckel <mathstuf@gmail.com> wrote:
-> Expanding `insteadOf` is a part of ls-remote --url and there is no way
-> to expand `pushInsteadOf` as well. Add a get-url subcommand to be able
-> to query both as well as a way to get all configured urls.
->
-> Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
-> ---
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index f4a6ec9..9278a83 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -1497,6 +1503,53 @@ static int set_branches(int argc, const char **argv)
-> +static int get_url(int argc, const char **argv)
-> +{
-> +       int i, push_mode = 0, all_mode = 0;
-> +       const char *remotename = NULL;
-> +       struct remote *remote;
-> +       const char **url;
-> +       int url_nr;
-> +       struct option options[] = {
-> +               OPT_BOOL('\0', "push", &push_mode,
-> +                        N_("query push URLs")),
 
-A bit more explanatory:
+--C+ts3FVlLX8+P6JN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    "query push URLs rather than fetch URLs"
+On Mon, Aug 03, 2015 at 01:33:56AM +0200, Michael Haggerty wrote:
+> Brian, what was your experience when writing these patches? Did they
+> tend to work as soon as they compiled without errors (i.e., not super
+> risky) or did you often have test suite failures that you had to go back
+> and fix (i.e., risky)? If the latter, what kinds of code patterns tended
+> to be problematic? Your answers might help reviewers decide how much
+> diligence is needed when reviewing these patches and what kind of
+> changes to inspect extra carefully. Because doing a thorough review of
+> all of the patches would be quite a bit of work.
 
-> +               OPT_BOOL('\0', "all", &all_mode,
-> +                        N_("return all URLs")),
-> +               OPT_END()
-> +       };
-> +       argc = parse_options(argc, argv, NULL, options, builtin_remote_geturl_usage,
-> +                            PARSE_OPT_KEEP_ARGV0);
+In this particular branch, I think I may have had one bad patch.  (I'm
+trying to recall because I've been working on patches for part 3 in the
+mean time, and they all seem to group together.)  In general, over all
+my patches, the conversions I've had to fix the most have been the ones
+to use the GIT_SHA1_* constants, because it's very easy to get
+off-by-one errors in there or mess up the values such that things break.
+Extra effort on those, or additional suggestions on how to make them
+cleaner and less brittle, both now and in the future, would be welcome.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-What is the reason for PARSE_OPT_KEEP_ARGV0 in this case?
+--C+ts3FVlLX8+P6JN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-> +       if (argc < 1 || argc > 2)
-> +               usage_with_options(builtin_remote_geturl_usage, options);
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.6 (GNU/Linux)
 
-So,  'argc' must be 1 or 2, which in 'argv' terms is argv[0] and argv[1]).
+iQIcBAEBCgAGBQJVv/0gAAoJEL9TXYEfUvaL3mcQAIkmjgRH+d07DHu2d1D1gVk2
+QSdlkI/drIYwfDvbscJAKnZRFaZxV4cM2lROYaRSCDThzxZYES1hlpyuigVYDA1o
+LEMfd3lTW6HRIs3lP0G46rkgCILbiSD4lb4brRSU3CXTCU3M4rXkArUse86cbD2p
+JNqZLU6FwFRuao+cjKfTuspLswgkuQXnFXrWbZtpm5REVuxdYu2/X2eUHbZQmAXe
+pgtkIfbEbI6oUaXElXEfojNAdSPfSEMNpiVQ4wGg4PSaijJpq1zn3FX1nns0y9Fi
+Qzq9EhPBC30KuI2rzEbYidmjDOn+hqtmBfKYUpJfXbLHp695HkxJ0ZgilNlTdeXV
+hxq//pbNICTEJgbS0rXdojvaKSL+eYqZtUuUb87qiGh08Dgtj2B+jDgy4PCyuflp
+GK8wbTuSCtNBWEXa3bY2UjP2zu8aU/49BFAMVCRzxIAEamhipfaEkP8C0rw+SxYu
+28/T836uP5ievrjwvkdNjiLkc/Yga47133juoTDiYT8mpc4n4NBIw6Lnuta0uJ+d
+9N/8oV3oomrj178ks0KGFa9i6K1gznMjIyrg3GaRtivRLw6Lf3laLZh/nfF/VElj
+l6Shet+MBTsYK6+OtT7w6OyGDmeeQCVdZyTmsIaQxyHWerab8eZecHa69T2MDQa3
+ND+Xf9Ut4+DQGNYBoWjr
+=c2px
+-----END PGP SIGNATURE-----
 
-> +       remotename = argv[1];
-
-But here, argv[1] is accessed unconditionally, even though 'argc' may
-have been 1, thus out of bounds.
-
-> +       if (!remote_is_configured(remotename))
-> +               die(_("No such remote '%s'"), remotename);
-> +       remote = remote_get(remotename);
-> +
-> +       if (push_mode) {
-> +               url = remote->pushurl;
-> +               url_nr = remote->pushurl_nr;
-> +       } else {
-> +               url = remote->url;
-> +               url_nr = remote->url_nr;
-> +       }
-> +
-> +       if (!url_nr)
-> +               die(_("no URLs configured for remote '%s'"), remotename);
-> +
-> +       if (all_mode) {
-> +               for (i = 0; i < url_nr; i++)
-> +                       printf_ln("%s", url[i]);
-> +       } else {
-> +               printf_ln("%s", *url);
-> +       }
-> +
-> +       return 0;
-> +}
+--C+ts3FVlLX8+P6JN--
