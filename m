@@ -1,158 +1,151 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 1/1] po/README: split out the different contribution types
-Date: Mon, 3 Aug 2015 14:49:37 +0100
-Organization: OPDS
-Message-ID: <66FDED7A4D18442A8DF6A35A22B256CC@PhilipOakley>
-References: <1438522955-6076-1-git-send-email-philipoakley@iee.org><1438522955-6076-2-git-send-email-philipoakley@iee.org> <CANYiYbFvackgJnqR4yahUPT2zE-kTAhQJnvzeUp-FsC-U24-dw@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 2/5] refs: add ref_type function
+Date: Mon, 3 Aug 2015 20:55:59 +0700
+Message-ID: <CACsJy8DK9k67yM_mJqbqgDxNKdGKpoLPOQQ4beqGgzUobzyFUQ@mail.gmail.com>
+References: <1438322781-21181-1-git-send-email-dturner@twopensource.com> <1438322781-21181-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Jiang Xin" <worldhello.net@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jiang Xin" <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 15:48:40 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 15:56:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMG6Z-0003AK-1V
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 15:48:39 +0200
+	id 1ZMGEG-0006JR-IT
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 15:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbbHCNse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 09:48:34 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:41077 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751288AbbHCNsd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2015 09:48:33 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2A6CAC2cL9VPLQhBlxbGQEBAYJ+VGmDI4QbtxyFcwQEAoErTQEBAQEBAQcBAQEBQSQbhB4GAQEECAEBGRUeAQEhCwIDBQIBAw4HBQIFIQICFAEECBIGBwMUBhMIAgECAwGICAMWCbRMhliJTQ2FMQELHASBIootgk+COYJwL4EUBYcZjWABgQ6DbIVmgzKEIItAcoNLg2SEJD0xgkwBAQE
-X-IPAS-Result: A2A6CAC2cL9VPLQhBlxbGQEBAYJ+VGmDI4QbtxyFcwQEAoErTQEBAQEBAQcBAQEBQSQbhB4GAQEECAEBGRUeAQEhCwIDBQIBAw4HBQIFIQICFAEECBIGBwMUBhMIAgECAwGICAMWCbRMhliJTQ2FMQELHASBIootgk+COYJwL4EUBYcZjWABgQ6DbIVmgzKEIItAcoNLg2SEJD0xgkwBAQE
-X-IronPort-AV: E=Sophos;i="5.15,601,1432594800"; 
-   d="scan'208";a="795243132"
-Received: from host-92-6-33-180.as43234.net (HELO PhilipOakley) ([92.6.33.180])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 03 Aug 2015 14:48:30 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753532AbbHCN4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 09:56:30 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:35227 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbbHCN43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 09:56:29 -0400
+Received: by iodd187 with SMTP id d187so144808536iod.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 06:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GqZrryJpmRaHCiYDYd96PStSMXbKeJQrgTcHJc734iw=;
+        b=z8Qt1z3hB/3Pb3z8uRbkuDKVp6jZS8nw739hckRyZxLvw6GBujUUXleLQoTXCTAMy+
+         6lHqWMCay2mFwyFBU+DTN2GwRgXJl3om0iqS3S1peaNY6ZOGlfkuP7MVSdZ5afVEzoFd
+         hErHsKFhn2NK9VoyWI/z+TPqyIMI64brsNev6Z9PEVQpQT2g1xMX68/1R6AP40mRbK0Q
+         42Ttyyw5hdp7CnmJu6152Cl87HKgyTok6EWh85qmk9L0aQQRa47Q6glP2k+iBHRSl8Mq
+         RCHtv49HO6dkbYJci6MO5QIHGoWzg4xMOd5yw1DJj6yNHNUrO8t1N1rg2Ls0IwRnAGPx
+         0qWA==
+X-Received: by 10.107.15.210 with SMTP id 79mr19788091iop.192.1438610188956;
+ Mon, 03 Aug 2015 06:56:28 -0700 (PDT)
+Received: by 10.107.191.193 with HTTP; Mon, 3 Aug 2015 06:55:59 -0700 (PDT)
+In-Reply-To: <1438322781-21181-2-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275168>
 
-From: "Jiang Xin" <worldhello.net@gmail.com>
-> 2015-08-02 21:42 GMT+08:00 Philip Oakley <philipoakley@iee.org>:
->> Separate out the three different contribution styles for existing, 
->> new,
->> and wider mis-translation contributions, with suitable headings for 
->> easy
->> reference.
->>
->> In particular highlight the appropriate action should a Git
->> mis-translation be from a different distribution. i.e. initially 
->> report
->> to that usptream, but also consider if it could be coordinated here.
->>
->> While here, add surrounding headings, and reference the lanaguage 
->> codes.
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>  po/README | 24 ++++++++++++++++++++++++
->>  1 file changed, 24 insertions(+)
->>
->> diff --git a/po/README b/po/README
->> index d8c9111..b54b3c6 100644
->> --- a/po/README
->> +++ b/po/README
->> @@ -10,19 +10,43 @@ coordinates our localization effort in the l10 
->> coordinator repository:
->>
->>          https://github.com/git-l10n/git-po/
->>
->> +The two character language translation codes are defined by 
->> ISO_639-1, as
->> +stated in the gettext(1) full manual, appendix A.1, Usual Language 
->> Codes.
->> +
->> +
->> +Contributing to an existing translation
->> +---------------------------------------
->>  As a contributor for a language XX, you should first check TEAMS 
->> file in
->>  this directory to see whether a dedicated repository for your 
->> language XX
->>  exists. Fork the dedicated repository and start to work if it 
->> exists.
->>
->> +
->> +Creating a new language translation
->> +-----------------------------------
->>  If you are the first contributor for the language XX, please fork 
->> this
->>  repository, prepare and/or update the translated message file 
->> po/XX.po
->>  (described later), and ask the l10n coordinator to pull your work.
->>
->> +
->> +Reporting mis-translations
->> +--------------------------
->> +First, confirm that your language translation is managed by this 
->> group.
->> +Initially any translation mistake should be reported to the 
->> appropriate
->> +upstream team. If not managed by this group, and the translation has 
->> a
->> +suitable licence, consider suggesting that the translation could be
->> +included here (see 'new language translation' above).
->> +
-> First, find the right place to report.  If there is a YourLanguage.po 
-> here,
-> and you can find the bug in it, then here is the right place for you 
-> to
-> report.  But if not, maybe your Git distribution (such as from Ubuntu)
-> may have its own l10n workflow, and not work well with our git
-> upstream. For this case, you should report bug to them...
->
-> (I'm not a native English speaker, so correct me)
->
+On Fri, Jul 31, 2015 at 1:06 PM, David Turner <dturner@twopensource.com> wrote:
+> Add a function ref_type, which categorizes refs as per-worktree,
+> pseudoref, or normal ref.
 
-Thanks. I'll work up your comments and try sending a formal V2 patch
- to the list. I'll also include about other workflows for other 
-distributions.
+For per-worktree refs, you probably should follow common_list[] in
+path.c because that's how file-based ref namespace is splitted between
+per-repo and per-worktree, even though just as simple as "everything
+outside refs/ is per-worktree" (with an exception of NOTES_MERGE_REF,
+which should be on the list as well). At least the two should be
+aligned so that the default file-based backend works the same way as
+new backends.
 
-Would I be right that there were no issues with the splitting into the 
-separate headings?
+Going further, I think you need to pass the "worktree identifier" to
+ref backend, at least in ref_transaction_begin_fn. Each backend is
+free to store per-worktree refs however it wants. Of course if I ask
+for refs/foo of worktree A, you should not return me refs/foo of
+worktree B. ref_transaction_begin_fn can return a fault code if it
+does not support multiple worktrees, which is fine.
 
->> +
->> +Forming a Team
->> +--------------
->>  If there are multiple contributors for the same language, please 
->> first
->>  coordinate among yourselves and nominate the team leader for your
->>  language, so that the l10n coordinator only needs to interact with 
->> one
->>  person per language.
->>
->> +
->> +Translation Process Flow
->> +------------------------
->>  The overall data-flow looks like this:
->>
->>      +-------------------+            +------------------+
->> --
->> 2.3.1
->>
+> Later, we will use this in refs.c to treat pseudorefs specially.
+> Alternate ref backends may use it to treat both pseudorefs and
+> per-worktree refs differently.
+
+I'm not so sure that this can't be hidden behind backends and they can
+have total control on falling back to file-based, or store them in
+some secondary storage. I haven't re-read your discussion with Junio
+yet (only skimmed through long ago) so I may be missing some important
+points.
+
 >
-> -- 
-> Jiang Xin
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  refs.c | 26 ++++++++++++++++++++++++++
+>  refs.h |  8 ++++++++
+>  2 files changed, 34 insertions(+)
 >
---
-Philip 
+> diff --git a/refs.c b/refs.c
+> index 0b96ece..0f87884 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2848,6 +2848,32 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+>         return 0;
+>  }
+>
+> +static int is_per_worktree_ref(const char *refname)
+> +{
+> +       return !strcmp(refname, "HEAD");
+> +}
+> +
+> +static int is_pseudoref_syntax(const char *refname)
+> +{
+> +       const char *c;
+> +
+> +       for (c = refname; *c; c++) {
+> +               if (!isupper(*c) && *c != '-' && *c != '_')
+> +                       return 0;
+> +       }
+> +
+> +       return 1;
+> +}
+> +
+> +enum ref_type ref_type(const char *refname)
+> +{
+> +       if (is_per_worktree_ref(refname))
+> +               return REF_TYPE_PER_WORKTREE;
+> +       if (is_pseudoref_syntax(refname))
+> +               return REF_TYPE_PSEUDOREF;
+> +       return REF_TYPE_NORMAL;
+> +}
+> +
+>  int delete_ref(const char *refname, const unsigned char *old_sha1,
+>                unsigned int flags)
+>  {
+> diff --git a/refs.h b/refs.h
+> index e4e46c3..dca4fb5 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -445,6 +445,14 @@ extern int parse_hide_refs_config(const char *var, const char *value, const char
+>
+>  extern int ref_is_hidden(const char *);
+>
+> +enum ref_type {
+> +       REF_TYPE_PER_WORKTREE,
+> +       REF_TYPE_PSEUDOREF,
+> +       REF_TYPE_NORMAL,
+> +};
+> +
+> +enum ref_type ref_type(const char *refname);
+> +
+>  enum expire_reflog_flags {
+>         EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
+>         EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
+> --
+> 2.0.4.315.gad8727a-twtrsrc
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+-- 
+Duy
