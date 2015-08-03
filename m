@@ -1,44 +1,45 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 04/11] ref-filter: add option to filter only tags
-Date: Mon,  3 Aug 2015 22:24:14 +0530
-Message-ID: <1438620861-25219-4-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v8 03/11] ref-filter: implement an `align` atom
+Date: Mon,  3 Aug 2015 22:24:13 +0530
+Message-ID: <1438620861-25219-3-git-send-email-Karthik.188@gmail.com>
 References: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 03 18:54:37 2015
+X-From: git-owner@vger.kernel.org Mon Aug 03 18:54:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMJ0W-0000MS-1w
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:54:36 +0200
+	id 1ZMJ0V-0000MS-3c
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569AbbHCQyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 12:54:32 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:36324 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754178AbbHCQya (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 12:54:30 -0400
-Received: by pacgq8 with SMTP id gq8so28901393pac.3
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:30 -0700 (PDT)
+	id S1754567AbbHCQy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 12:54:28 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:35879 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754190AbbHCQy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 12:54:27 -0400
+Received: by pdco4 with SMTP id o4so10608405pdc.3
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cwV+QHhsAjjK1UstlyfCEMfYXpwlj08OoL/7yTnaw1U=;
-        b=ehbbi3evb3+rPv4rVJ28u8DU4pqhDT7GrWm2JJRshFy2HcMScfIo5ai9lhQKpUc1VU
-         hVXyq9GjdRfsNwfsy5XE1rwfbDLN23k9k3LEMtr7HJk062pW99Dyv6mcQPBVjNazHSCf
-         lbkGyaCATYMYpR7OiZUkIdCyw4xm9nLKRomx+gPkQIO0R2O2rJcLqZEG4Jet49q4jlTN
-         FLiIkMe8ek8ln7JT4UQPU69cyaFWnuzrFLgBchQhIFC987bZZ0Q0f/A4IwUEFLFMz8hp
-         HBemnICd3NSlKPeSwiyPmIFv4hKpoaPGBWchZs61J8TJoTkFRXgSTzctWJG0WHbGzy81
-         0xtg==
-X-Received: by 10.68.113.37 with SMTP id iv5mr25519901pbb.104.1438620869770;
-        Mon, 03 Aug 2015 09:54:29 -0700 (PDT)
+        bh=pFvYkRjjhna4DiVmZMS0aRQXfZSnu3hF+th/+8n+CJk=;
+        b=EH+qrERg4Cl7AYHakw+7pYlmkqD5Dj9iqKTxjcR/yI/rWg7zwiC+LO+BW3jk7+ap/0
+         Mxv+DiRvoNf/Z9c5ObfugDMshLkvpQtDsKSr9yWs4+rTyk+ikpsmoimSmmbFMk+BEmeS
+         mE4zicXeRSNs/NITjQBUO0j+AwV9ADIBAiQkp1u3c4Jqg9X4ZEs04cPgkkBegorTJe15
+         0o16wkwpoGE9qNXFA0lZl6gPQGZLwLYuiW5Hhh9OdpU643cF8I4Ff+yNysmi6kmrnox0
+         XG2ophoCh49ud8RQfgQ6y0EWoXtujRRB5k7YirUDzo8ZA02m3FfRcvoq4/Rsm1Mw+6Y0
+         6gfw==
+X-Received: by 10.70.36.38 with SMTP id n6mr37398863pdj.96.1438620866810;
+        Mon, 03 Aug 2015 09:54:26 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.27
+        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.24
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 03 Aug 2015 09:54:29 -0700 (PDT)
+        Mon, 03 Aug 2015 09:54:26 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.4.6
 In-Reply-To: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
@@ -46,79 +47,292 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275177>
 
-From: Karthik Nayak <karthik.188@gmail.com>
+Implement an `align` atom which will act as a modifier atom and align
+succeeding atoms to the right, left or middle. It is followed by
+`:<type>,<paddinglength>`, where the `<type>` is either left, right or
+middle and `<paddinglength>` is the total length of the padding to be
+performed. If the atom length is more than the padding length then no
+padding is performed. e.g. to pad a succeeding atom to the middle with
+a total padding size of 40 we can do a --format="%(align:middle,40).."
 
-Add a functions called 'for_each_tag_ref_fullpath()' to refs.{c,h}
-which iterates through each tag ref without trimming the path.
-
-Add an option in 'filter_refs()' to use 'for_each_tag_ref_fullpath()'
-and filter refs. This type checking is done by adding a
-'FILTER_REFS_TAGS' in 'ref-filter.h'
+Add documentation and tests for the same.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- ref-filter.c | 2 ++
- ref-filter.h | 1 +
- refs.c       | 5 +++++
- refs.h       | 1 +
- 4 files changed, 9 insertions(+)
+ Documentation/git-for-each-ref.txt |  7 ++++
+ ref-filter.c                       | 69 +++++++++++++++++++++++++++++---
+ ref-filter.h                       | 12 ++++++
+ t/t6302-for-each-ref-filter.sh     | 80 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 162 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index e49d578..bba6d83 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -127,6 +127,13 @@ color::
+ 	Change output color.  Followed by `:<colorname>`, where names
+ 	are described in `color.branch.*`.
+ 
++align::
++	Align succeeding atoms to the right, left or middle. Followed
++	by `:<type>,<paddinglength>`, where the `<type>` is either
++	left, right or middle and `<paddinglength>` is the total
++	length of the padding to be performed. If the atom length is
++	more than the padding length then no padding is performed.
++
+ In addition to the above, for commit and tag objects, the header
+ field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+ be used to specify the value in the header field.
 diff --git a/ref-filter.c b/ref-filter.c
-index 46d8834..01c9097 100644
+index c4c7064..46d8834 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1155,6 +1155,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
- 		ret = for_each_rawref(ref_filter_handler, &ref_cbdata);
- 	else if (type & FILTER_REFS_ALL)
- 		ret = for_each_ref(ref_filter_handler, &ref_cbdata);
-+	else if (type & FILTER_REFS_TAGS)
-+		ret = for_each_tag_ref_fullpath(ref_filter_handler, &ref_cbdata);
- 	else if (type)
- 		die("filter_refs: invalid type");
+@@ -10,6 +10,7 @@
+ #include "quote.h"
+ #include "ref-filter.h"
+ #include "revision.h"
++#include "utf8.h"
  
-diff --git a/ref-filter.h b/ref-filter.h
-index 01f8cb3..8d4e348 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -15,6 +15,7 @@
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
  
- #define FILTER_REFS_INCLUDE_BROKEN 0x1
- #define FILTER_REFS_ALL 0x2
-+#define FILTER_REFS_TAGS 0x4
+@@ -53,6 +54,7 @@ static struct {
+ 	{ "flag" },
+ 	{ "HEAD" },
+ 	{ "color" },
++	{ "align" },
+ };
  
- #define ALIGN_LEFT 0x01
- #define ALIGN_RIGHT 0x02
-diff --git a/refs.c b/refs.c
-index 0b96ece..23ce483 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2108,6 +2108,11 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
- 	return for_each_ref_in("refs/tags/", fn, cb_data);
+ /*
+@@ -620,7 +622,7 @@ static void populate_value(struct ref_array_item *ref)
+ 		const char *name = used_atom[i];
+ 		struct atom_value *v = &ref->value[i];
+ 		int deref = 0;
+-		const char *refname;
++		const char *refname = NULL;
+ 		const char *formatp;
+ 		struct branch *branch = NULL;
+ 
+@@ -687,6 +689,24 @@ static void populate_value(struct ref_array_item *ref)
+ 			else
+ 				v->s = " ";
+ 			continue;
++		} else if (starts_with(name, "align:")) {
++			const char *valp = NULL;
++			struct align *align = xmalloc(sizeof(struct align));
++
++			skip_prefix(name, "align:", &valp);
++
++			if (skip_prefix(valp, "left,", &valp))
++				align->align_type = ALIGN_LEFT;
++			else if (skip_prefix(valp, "right,", &valp))
++				align->align_type = ALIGN_RIGHT;
++			else if (skip_prefix(valp, "middle,", &valp))
++				align->align_type = ALIGN_MIDDLE;
++			else
++				die(_("align: improper format"));
++			if (strtoul_ui(valp, 10, &align->align_value))
++				die(_("align: positive value expected"));
++			v->align = align;
++			continue;
+ 		} else
+ 			continue;
+ 
+@@ -1252,15 +1272,48 @@ static void emit(const char *cp, const char *ep, struct strbuf *output)
+ 
+ static void process_formatting_state(struct atom_value *atomv, struct ref_formatting_state *state)
+ {
+-	/* Based on the atomv values, the formatting state is set */
++	if (atomv->align) {
++		state->align = atomv->align;
++		atomv->align = NULL;
++	}
  }
  
-+int for_each_tag_ref_fullpath(each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(&ref_cache, "refs/tags/", fn, 0, 0, cb_data);
-+}
-+
- int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *value,
+ 				   struct strbuf *format)
  {
- 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
-diff --git a/refs.h b/refs.h
-index e4e46c3..9eee2de 100644
---- a/refs.h
-+++ b/refs.h
-@@ -174,6 +174,7 @@ extern int head_ref(each_ref_fn fn, void *cb_data);
- extern int for_each_ref(each_ref_fn fn, void *cb_data);
- extern int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
- extern int for_each_tag_ref(each_ref_fn fn, void *cb_data);
-+extern int for_each_tag_ref_fullpath(each_ref_fn fn, void *cb_data);
- extern int for_each_branch_ref(each_ref_fn fn, void *cb_data);
- extern int for_each_remote_ref(each_ref_fn fn, void *cb_data);
- extern int for_each_replace_ref(each_ref_fn fn, void *cb_data);
+-	/* More formatting options to be evetually added */
++	if (state->align) {
++		int len = 0, buf_len = value->len;
++		struct align *align = state->align;
++
++		if (!value->buf)
++			return;
++		if (!is_utf8(value->buf)) {
++			len = value->len - utf8_strwidth(value->buf);
++			buf_len -= len;
++		}
++
++		if (align->align_value < buf_len) {
++			state->align = NULL;
++			strbuf_addbuf(format, value);
++			strbuf_release(value);
++			return;
++		}
++
++		if (align->align_type == ALIGN_LEFT)
++			strbuf_addf(format, "%-*s", len + align->align_value, value->buf);
++		else if (align->align_type == ALIGN_MIDDLE) {
++			int right = (align->align_value - buf_len)/2;
++			strbuf_addf(format, "%*s%-*s", align->align_value - right + len,
++				    value->buf, right, "");
++		} else if (align->align_type == ALIGN_RIGHT)
++			strbuf_addf(format, "%*s", align->align_value, value->buf);
++		strbuf_release(value);
++		state->align = NULL;
++		return;
++	}
+ 	strbuf_addbuf(format, value);
+ 	strbuf_release(value);
++
+ }
+ 
+ void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+@@ -1283,9 +1336,12 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 			apply_formatting_state(&state, &value, &final_buf);
+ 		}
+ 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+-		process_formatting_state(atomv, &state);
+-		print_value(atomv, &state, &value);
+-		apply_formatting_state(&state, &value, &final_buf);
++		if (atomv->align)
++			process_formatting_state(atomv, &state);
++		else {
++			print_value(atomv, &state, &value);
++			apply_formatting_state(&state, &value, &final_buf);
++		}
+ 	}
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
+@@ -1302,6 +1358,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 		print_value(&resetv, &state, &value);
+ 		apply_formatting_state(&state, &value, &final_buf);
+ 	}
++
+ 	for (i = 0; i < final_buf.len; i++)
+ 		printf("%c", final_buf.buf[i]);
+ 	putchar('\n');
+diff --git a/ref-filter.h b/ref-filter.h
+index b64677f..01f8cb3 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -16,12 +16,24 @@
+ #define FILTER_REFS_INCLUDE_BROKEN 0x1
+ #define FILTER_REFS_ALL 0x2
+ 
++#define ALIGN_LEFT 0x01
++#define ALIGN_RIGHT 0x02
++#define ALIGN_MIDDLE 0x04
++
+ struct ref_formatting_state {
+ 	int quote_style;
++	struct align *align;
++	struct strbuf *sb;
++};
++
++struct align {
++	unsigned int align_type,
++		align_value;
+ };
+ 
+ struct atom_value {
+ 	const char *s;
++	struct align *align;
+ 	unsigned long ul; /* used for sorting when not FIELD_STR */
+ };
+ 
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 505a360..87225dd 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -81,4 +81,84 @@ test_expect_success 'filtering with --contains' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'left alignment' '
++	cat >expect <<-\EOF &&
++	refs/heads/master   |refs/heads/master
++	refs/heads/side     |refs/heads/side
++	refs/odd/spot       |refs/odd/spot
++	refs/tags/double-tag|refs/tags/double-tag
++	refs/tags/four      |refs/tags/four
++	refs/tags/one       |refs/tags/one
++	refs/tags/signed-tag|refs/tags/signed-tag
++	refs/tags/three     |refs/tags/three
++	refs/tags/two       |refs/tags/two
++	EOF
++	git for-each-ref --format="%(align:left,20)%(refname)|%(refname)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'middle alignment' '
++	cat >expect <<-\EOF &&
++	|  refs/heads/master |refs/heads/master
++	|   refs/heads/side  |refs/heads/side
++	|    refs/odd/spot   |refs/odd/spot
++	|refs/tags/double-tag|refs/tags/double-tag
++	|   refs/tags/four   |refs/tags/four
++	|    refs/tags/one   |refs/tags/one
++	|refs/tags/signed-tag|refs/tags/signed-tag
++	|   refs/tags/three  |refs/tags/three
++	|    refs/tags/two   |refs/tags/two
++	EOF
++	git for-each-ref --format="|%(align:middle,20)%(refname)|%(refname)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'right alignment' '
++	cat >expect <<-\EOF &&
++	|   refs/heads/master|refs/heads/master
++	|     refs/heads/side|refs/heads/side
++	|       refs/odd/spot|refs/odd/spot
++	|refs/tags/double-tag|refs/tags/double-tag
++	|      refs/tags/four|refs/tags/four
++	|       refs/tags/one|refs/tags/one
++	|refs/tags/signed-tag|refs/tags/signed-tag
++	|     refs/tags/three|refs/tags/three
++	|       refs/tags/two|refs/tags/two
++	EOF
++	git for-each-ref --format="|%(align:right,20)%(refname)|%(refname)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'alignment value lesser than atom value' '
++	cat >expect <<-\EOF &&
++	|refs/heads/master|
++	|refs/heads/side|
++	|  refs/odd/spot|
++	|refs/tags/double-tag|
++	| refs/tags/four|
++	|  refs/tags/one|
++	|refs/tags/signed-tag|
++	|refs/tags/three|
++	|  refs/tags/two|
++	EOF
++	git for-each-ref --format="|%(align:right,15)%(refname)|" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'non atom alignment' '
++	cat >expect <<-\EOF &&
++	|    |master  |  refs/heads/master|  refs/heads/master
++	|    |side  |  refs/heads/side|  refs/heads/side
++	|    |odd/spot  |  refs/odd/spot|  refs/odd/spot
++	|    |double-tag  |  refs/tags/double-tag|  refs/tags/double-tag
++	|    |four  |  refs/tags/four|  refs/tags/four
++	|    |one  |  refs/tags/one|  refs/tags/one
++	|    |signed-tag  |  refs/tags/signed-tag|  refs/tags/signed-tag
++	|    |three  |  refs/tags/three|  refs/tags/three
++	|    |two  |  refs/tags/two|  refs/tags/two
++	EOF
++	git for-each-ref --format="|%(align:right,5)|%(refname:short)%(align:middle,5)|%(refname)%(align:left,3)|%(refname)" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.4.6
