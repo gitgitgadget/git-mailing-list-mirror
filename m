@@ -1,163 +1,209 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 11/11] tag.c: implement '--merged' and '--no-merged' options
-Date: Mon,  3 Aug 2015 22:24:21 +0530
-Message-ID: <1438620861-25219-11-git-send-email-Karthik.188@gmail.com>
-References: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] builtin/mv: Get rid of the last caller of get_pathspec
+Date: Mon,  3 Aug 2015 10:53:02 -0700
+Message-ID: <1438624382-31248-1-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 03 18:55:02 2015
+X-From: git-owner@vger.kernel.org Mon Aug 03 19:53:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMJ0w-0000Wk-2p
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 18:55:02 +0200
+	id 1ZMJvI-0006d4-2m
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Aug 2015 19:53:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754590AbbHCQyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 12:54:52 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34181 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754578AbbHCQyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 12:54:49 -0400
-Received: by pawu10 with SMTP id u10so16768990paw.1
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 09:54:49 -0700 (PDT)
+	id S1754225AbbHCRxM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2015 13:53:12 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35208 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753220AbbHCRxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 13:53:10 -0400
+Received: by pasy3 with SMTP id y3so19594341pas.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 10:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=++kewPTQE5svmLBEf5JPKpVZrxgpF+ZkLlwAxcXMCck=;
-        b=cYCdqZ4WfB4h381GGlW8C2+TwI13Xnc2A6sBaq19mF5cTrRMA89TgJpnquCcVlQ+Oi
-         f7kKgJ36zKqMLdtXv/ZZFtCMj7yo6HZ8xO4setOtqGKqvxQnPoenmuIpAO24DF7t6qQl
-         2rd6pUGynfshkMsIUa2RRZQv4124ePNQdQz4sfN4lNuYkvVH5n6UNNvNSNDB5Rsq+ah+
-         vYik0UVNe0qBHHK2VhtJP9Mg4mSFS5w2DkLs17aW+R9VUki4Hmxw18RxweFEaEe7HbNC
-         INXKhNbTMvl3ku3+KdSfedzGp4VqDyCLXh7y0dBIUvQ26vEWMyiVpE8+E6p9M3+q4c6D
-         FxfQ==
-X-Received: by 10.66.253.72 with SMTP id zy8mr38087737pac.102.1438620889085;
-        Mon, 03 Aug 2015 09:54:49 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id gk5sm18164153pac.21.2015.08.03.09.54.46
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 03 Aug 2015 09:54:48 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.4.6
-In-Reply-To: <CAOLa=ZTYWTjc-OC7N7FGWETP1svpCkqhQ2wwPmbf5nVRyPRAqg@mail.gmail.com>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=qwKk4nTR/TkhXzejnzThKNBikjz7qVX4hdMLi4l2Hnc=;
+        b=e3h9fB3q0eQk4Wh+Szfv/8WJvmEFwj0RpflOoE7yUdEtjK4N7PdOElO7ELXs1FOuvq
+         +FqCurr98yAuRonwI0jp5MAuYKJGuK1jp/frsNSeucowqV+aq8DuemljO1FMh4BsIS0M
+         GfoOTvN7Wfk7CFKtSBSTArtxckqnQW+l8+cKtsvocKRPITuteG1xebOCmb/NQjSRO0zu
+         BmXmqb7HqdLtF2k9VKJrFff1buwZ1BORaNmZy6rKa1GGPHqChQl3WGNtBtaUo8as/MOd
+         lR8fFFNBYzx9poqwQh7AgAD0ptETM9PEkYMry9wvb9U54HAL3xTsJ58tznkrPCKFSMZI
+         7jTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=qwKk4nTR/TkhXzejnzThKNBikjz7qVX4hdMLi4l2Hnc=;
+        b=OwRMeyBpod+OiFNVUDzy18dA/VojDIptP0TCqxevXQI1NoBLd/q/mkHyvJ9r/D4ez2
+         71TsllzsFLLTsetgvpX4L+3oZ+E7WkqWzD/ZmDRdsyoJ4Qdo6KdpWKXb1It2o9z/QnXQ
+         E3tf+DqYfKXcYIHhxvGCgUHUA0UWgwXFSfJMwMwuSA4EPilcDmBbVbsQLlYjIPdIvfQ0
+         5jdUrVAV8rjU6Dw0nCDO7CjdHQwUhYPel7oSYehLL22ny/nYdvENRnVSfUnfVKe5e2wD
+         QfDSO7QtB7fD35gz/bjiZL2YgHHvKwx+/4IIw+uPJGkTUFKT/Xo72EJ9UiCJt4xKyK4M
+         Ohhw==
+X-Gm-Message-State: ALoCoQlG/stdMZMvzWtyiKGq1inrtb1MlJ/g+DpGM62T4ivl+bW+yXoLL4zDBBdf41NYBRWh7hoW
+X-Received: by 10.68.168.161 with SMTP id zx1mr26228015pbb.35.1438624390105;
+        Mon, 03 Aug 2015 10:53:10 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:db:6b60:15e0:f3aa])
+        by smtp.gmail.com with ESMTPSA id ss2sm8592250pbc.45.2015.08.03.10.53.09
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 03 Aug 2015 10:53:09 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.2.g6ffee06.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275185>
 
-From: Karthik Nayak <karthik.188@gmail.com>
+`get_pathspec` is deprecated and builtin/mv is its last caller, so gett=
+ing
+rid of `get_pathspec` is rather easy. By getting rid of `get_pathspec`,
+the documentation such as 'technical/api-setup.txt' becomes easier to r=
+ead
+as the reader doesn't need to bear with the additional fact that
+`get_pathspec` is deprecated.
 
-Using 'ref-filter' APIs implement the '--merged' and '--no-merged'
-options into 'tag.c'. The '--merged' option lets the user to only
-list tags merged into the named commit. The '--no-merged' option
-lets the user to only list tags not merged into the named commit.
-If no object is provided it assumes HEAD as the object.
+The code in 'builtin/mv' still requires some work to make it less ugly.
 
-Add documentation and tests for the same.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+CC: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+CC: Junio C Hamano <gitster@pobox.com>
+CC: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-tag.txt |  7 ++++++-
- builtin/tag.c             |  6 +++++-
- t/t7004-tag.sh            | 27 +++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 2 deletions(-)
+ Documentation/technical/api-setup.txt |  2 --
+ builtin/mv.c                          | 19 ++++++++++++++++---
+ cache.h                               |  1 -
+ pathspec.c                            | 30 ---------------------------=
+---
+ 4 files changed, 16 insertions(+), 36 deletions(-)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 75703c5..c2785d9 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
- 	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
--	[--format=<format>] [<pattern>...]
-+	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
- 'git tag' -v <tagname>...
- 
- DESCRIPTION
-@@ -171,6 +171,11 @@ This option is only applicable when listing tags without annotation lines.
- 	`%0a` to `\n` (LF).  The fields are same as those in `git
- 	for-each-ref`.
- 
-+--[no-]merged [<commit>]::
-+	Only list tags whose tips are reachable, or not reachable
-+	if '--no-merged' is used, from the specified commit ('HEAD'
-+	if not specified).
+diff --git a/Documentation/technical/api-setup.txt b/Documentation/tech=
+nical/api-setup.txt
+index 540e455..eb1fa98 100644
+--- a/Documentation/technical/api-setup.txt
++++ b/Documentation/technical/api-setup.txt
+@@ -27,8 +27,6 @@ parse_pathspec(). This function takes several argumen=
+ts:
+=20
+ - prefix and args come from cmd_* functions
+=20
+-get_pathspec() is obsolete and should never be used in new code.
+-
+ parse_pathspec() helps catch unsupported features and reject them
+ politely. At a lower level, different pathspec-related functions may
+ not support the same set of features. Such pathspec-sensitive
+diff --git a/builtin/mv.c b/builtin/mv.c
+index d1d4316..b89d90a 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -10,6 +10,7 @@
+ #include "string-list.h"
+ #include "parse-options.h"
+ #include "submodule.h"
++#include "pathspec.h"
+=20
+ static const char * const builtin_mv_usage[] =3D {
+ 	N_("git mv [<options>] <source>... <destination>"),
+@@ -20,13 +21,19 @@ static const char * const builtin_mv_usage[] =3D {
+ #define KEEP_TRAILING_SLASH 2
+=20
+ static const char **internal_copy_pathspec(const char *prefix,
+-					   const char **pathspec,
++					   const char **argv,
+ 					   int count, unsigned flags)
+ {
+ 	int i;
++	struct pathspec ps;
+ 	const char **result =3D xmalloc((count + 1) * sizeof(const char *));
+-	memcpy(result, pathspec, count * sizeof(const char *));
++	memcpy(result, argv, count * sizeof(const char *));
+ 	result[count] =3D NULL;
 +
- 
- CONFIGURATION
- -------------
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 13c9579..529b29f 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -23,7 +23,7 @@ static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
- 	N_("git tag -d <tagname>..."),
- 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
--		"\n\t\t[<pattern>...]"),
-+		"\n\t\t[--[no-]merged [<commit>]] [<pattern>...]"),
- 	N_("git tag -v <tagname>..."),
- 	NULL
- };
-@@ -353,6 +353,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
- 		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
- 		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
-+		OPT_MERGED(&filter, N_("print only tags that are merged")),
-+		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
- 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		{
-@@ -413,6 +415,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("--contains option is only allowed with -l."));
- 	if (filter.points_at.nr)
- 		die(_("--points-at option is only allowed with -l."));
-+	if (filter.merge_commit)
-+		die(_("--merged and --no-merged option are only allowed with -l"));
- 	if (cmdmode == 'd')
- 		return for_each_tag_name(argv, delete_tag);
- 	if (cmdmode == 'v')
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 1809011..5b73539 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1535,4 +1535,31 @@ test_expect_success '--format should list tags as per format given' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup --merged test tags' '
-+	git tag mergetest-1 HEAD~2 &&
-+	git tag mergetest-2 HEAD~1 &&
-+	git tag mergetest-3 HEAD
-+'
++	/*
++	 * NEEDSWORK: instead of preprocessing, pass the right flags to
++	 * parse_pathspec below.
++	 */
+ 	for (i =3D 0; i < count; i++) {
+ 		int length =3D strlen(result[i]);
+ 		int to_copy =3D length;
+@@ -42,7 +49,13 @@ static const char **internal_copy_pathspec(const cha=
+r *prefix,
+ 				result[i] =3D it;
+ 		}
+ 	}
+-	return get_pathspec(prefix, result);
 +
-+test_expect_success '--merged cannot be used in non-list mode' '
-+	test_must_fail git tag --merged=mergetest-2 foo
-+'
-+
-+test_expect_success '--merged shows merged tags' '
-+	cat >expect <<-\EOF &&
-+	mergetest-1
-+	mergetest-2
-+	EOF
-+	git tag -l --merged=mergetest-2 mergetest-* >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-merged show unmerged tags' '
-+	cat >expect <<-\EOF &&
-+	mergetest-3
-+	EOF
-+	git tag -l --no-merged=mergetest-2 mergetest-* >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.4.6
++	parse_pathspec(&ps,
++		       PATHSPEC_ALL_MAGIC &
++		       ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
++		       PATHSPEC_PREFER_CWD,
++		       prefix, result);
++	return ps._raw;
+ }
+=20
+ static const char *add_slash(const char *path)
+diff --git a/cache.h b/cache.h
+index 4f55466..d4e22e2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -452,7 +452,6 @@ extern void set_git_work_tree(const char *tree);
+=20
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+=20
+-extern const char **get_pathspec(const char *prefix, const char **path=
+spec);
+ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+diff --git a/pathspec.c b/pathspec.c
+index 9304ee3..b0e14e5 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -450,36 +450,6 @@ void parse_pathspec(struct pathspec *pathspec,
+ 	}
+ }
+=20
+-/*
+- * N.B. get_pathspec() is deprecated in favor of the "struct pathspec"
+- * based interface - see pathspec.c:parse_pathspec().
+- *
+- * Arguments:
+- *  - prefix - a path relative to the root of the working tree
+- *  - pathspec - a list of paths underneath the prefix path
+- *
+- * Iterates over pathspec, prepending each path with prefix,
+- * and return the resulting list.
+- *
+- * If pathspec is empty, return a singleton list containing prefix.
+- *
+- * If pathspec and prefix are both empty, return an empty list.
+- *
+- * This is typically used by built-in commands such as add.c, in order
+- * to normalize argv arguments provided to the built-in into a list of
+- * paths to process, all relative to the root of the working tree.
+- */
+-const char **get_pathspec(const char *prefix, const char **pathspec)
+-{
+-	struct pathspec ps;
+-	parse_pathspec(&ps,
+-		       PATHSPEC_ALL_MAGIC &
+-		       ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
+-		       PATHSPEC_PREFER_CWD,
+-		       prefix, pathspec);
+-	return ps._raw;
+-}
+-
+ void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
+ {
+ 	*dst =3D *src;
+--=20
+2.5.0.2.g6ffee06.dirty
