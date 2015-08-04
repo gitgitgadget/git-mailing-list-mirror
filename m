@@ -1,148 +1,259 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v7 34/45] builtin-am: support automatic notes copying
-Date: Tue,  4 Aug 2015 21:51:55 +0800
-Message-ID: <1438696326-19590-35-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v7 39/45] builtin-am: support and auto-detect StGit patches
+Date: Tue,  4 Aug 2015 21:52:00 +0800
+Message-ID: <1438696326-19590-40-git-send-email-pyokagan@gmail.com>
 References: <1438696326-19590-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 15:54:45 2015
+X-From: git-owner@vger.kernel.org Tue Aug 04 15:54:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMcfy-0002r5-Sh
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 15:54:43 +0200
+	id 1ZMcgA-0002yt-P0
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 15:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964946AbbHDNy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 09:54:28 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35267 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964940AbbHDNyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 09:54:25 -0400
-Received: by pasy3 with SMTP id y3so9209214pas.2
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 06:54:25 -0700 (PDT)
+	id S964964AbbHDNyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 09:54:43 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:36422 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964949AbbHDNyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 09:54:41 -0400
+Received: by pdco4 with SMTP id o4so4787313pdc.3
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 06:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7B2BdEchDKelo6QwolAYfqBE1UD/JMPGuqMiUnYgHJ0=;
-        b=HbVQ2/ylEPCeaE15qrqSFd6bQsWVCxGPbRh2rsxPpmukHv4w8+wzqJwjI4J/4LI1xx
-         mW4mKMw25L3uejHzi6cX0M0N00gRh6Ibo5VKjNliFOD5pvJr9JGUVbWYZ+pnsja3SLig
-         0HehBLee/TYZwCWaF3HXr7lVbZOIsWGuwO26DvVGkyZzAoR4nMEVTBsMf+kKcD+SJAZL
-         9Y9RaKcqNGqJbZQ8Fjixi35XnoJ4HRc9eBkcI0QQpA9pqmawaoDZRuySojDj4ZdP3QKL
-         zCRd0hYpkK5Tj+4h3V+OCJc4wl0W3li85+3OJTbYSRYcVpxzuIA9rZRd07rKbLFrD0xQ
-         yS3g==
-X-Received: by 10.67.14.163 with SMTP id fh3mr8202415pad.155.1438696464991;
-        Tue, 04 Aug 2015 06:54:24 -0700 (PDT)
+        bh=anYO5E/C2DJwOpZ/zO6aFkZ/drkUqt0IwM0tUMNiOjk=;
+        b=YrcZrbgQ006APY1aACmLqR/BNR+sPqGP0wpFf73HCofUBUWXeLVdpsS/yOqen5I8C6
+         /wYnlbC5/JdIKzFZxaRNlJirxG+0tzyMYHokr1JvlduMTftuJ6Sj5TphyHE1ZoHzcW5R
+         lyyM2BTJ1RdFDIJGizh04qBbxJPcSXOhylGZcb7l/ywnhT+ydRsy+nmJMSD9+DKDdi/N
+         BmlOku50OW52G/4+d1UJyhsvJPVSt4ljT54b8LpxrfPhJx8e1iMT6BHsIoH0/uTcZ+0/
+         3kGlRIRy4zxZ8xqHqXzc2CXnH6ydxmtpbj3yqjD5R57RxtLlY/ne+QTgWRWKLeQWC+gg
+         wMZQ==
+X-Received: by 10.70.134.133 with SMTP id pk5mr8070566pdb.133.1438696481565;
+        Tue, 04 Aug 2015 06:54:41 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id ph4sm1580517pdb.43.2015.08.04.06.54.22
+        by smtp.gmail.com with ESMTPSA id ph4sm1580517pdb.43.2015.08.04.06.54.39
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Aug 2015 06:54:23 -0700 (PDT)
+        Tue, 04 Aug 2015 06:54:40 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.280.gd88bd6e
 In-Reply-To: <1438696326-19590-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275307>
 
-Since eb2151b (rebase: support automatic notes copying, 2010-03-12),
-git-am.sh supported automatic notes copying in --rebasing mode by
-invoking "git notes copy" once it has finished applying all the patches.
+Since c574e68 (git-am foreign patch support: StGIT support, 2009-05-27),
+git-am.sh supported converting StGit patches into RFC2822 mail patches
+that can be parsed with git-mailinfo.
 
-Re-implement this feature in builtin/am.c.
+Implement this by introducing two functions in builtin/am.c:
+stgit_patch_to_mail() and split_mail_conv().
 
+stgit_patch_to_mail() is a callback function for split_mail_conv(), and
+contains the logic for converting an StGit patch into an RFC2822 mail
+patch.
+
+split_mail_conv() implements the logic to go through each file in the
+`paths` list, reading from stdin where specified, and calls the callback
+function to write the converted patch to the corresponding output file
+in the state directory. This interface should be generic enough to
+support other foreign patch formats in the future.
+
+Since 15ced75 (git-am foreign patch support: autodetect some patch
+formats, 2009-05-27), git-am.sh is able to auto-detect StGit patches.
+Re-implement this in builtin/am.c.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ builtin/am.c | 132 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 131 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index dbec9fc..7d7f91d 100644
+index 33d1f24..d82d07e 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -23,6 +23,7 @@
- #include "merge-recursive.h"
- #include "revision.h"
- #include "log-tree.h"
-+#include "notes-utils.h"
+@@ -65,9 +65,22 @@ static int linelen(const char *msg)
+ 	return strchrnul(msg, '\n') - msg;
+ }
  
- /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -479,6 +480,64 @@ static int run_post_rewrite_hook(const struct am_state *state)
++/**
++ * Returns true if `str` consists of only whitespace, false otherwise.
++ */
++static int str_isspace(const char *str)
++{
++	for (; *str; str++)
++		if (!isspace(*str))
++			return 0;
++
++	return 1;
++}
++
+ enum patch_format {
+ 	PATCH_FORMAT_UNKNOWN = 0,
+-	PATCH_FORMAT_MBOX
++	PATCH_FORMAT_MBOX,
++	PATCH_FORMAT_STGIT
+ };
+ 
+ enum keep_type {
+@@ -610,6 +623,8 @@ static int detect_patch_format(const char **paths)
+ {
+ 	enum patch_format ret = PATCH_FORMAT_UNKNOWN;
+ 	struct strbuf l1 = STRBUF_INIT;
++	struct strbuf l2 = STRBUF_INIT;
++	struct strbuf l3 = STRBUF_INIT;
+ 	FILE *fp;
+ 
+ 	/*
+@@ -635,6 +650,23 @@ static int detect_patch_format(const char **paths)
+ 		goto done;
+ 	}
+ 
++	strbuf_reset(&l2);
++	strbuf_getline_crlf(&l2, fp);
++	strbuf_reset(&l3);
++	strbuf_getline_crlf(&l3, fp);
++
++	/*
++	 * If the second line is empty and the third is a From, Author or Date
++	 * entry, this is likely an StGit patch.
++	 */
++	if (l1.len && !l2.len &&
++		(starts_with(l3.buf, "From:") ||
++		 starts_with(l3.buf, "Author:") ||
++		 starts_with(l3.buf, "Date:"))) {
++		ret = PATCH_FORMAT_STGIT;
++		goto done;
++	}
++
+ 	if (l1.len && is_mail(fp)) {
+ 		ret = PATCH_FORMAT_MBOX;
+ 		goto done;
+@@ -675,6 +707,100 @@ static int split_mail_mbox(struct am_state *state, const char **paths, int keep_
  }
  
  /**
-+ * Reads the state directory's "rewritten" file, and copies notes from the old
-+ * commits listed in the file to their rewritten commits.
++ * Callback signature for split_mail_conv(). The foreign patch should be
++ * read from `in`, and the converted patch (in RFC2822 mail format) should be
++ * written to `out`. Return 0 on success, or -1 on failure.
++ */
++typedef int (*mail_conv_fn)(FILE *out, FILE *in, int keep_cr);
++
++/**
++ * Calls `fn` for each file in `paths` to convert the foreign patch to the
++ * RFC2822 mail format suitable for parsing with git-mailinfo.
 + *
 + * Returns 0 on success, -1 on failure.
 + */
-+static int copy_notes_for_rebase(const struct am_state *state)
++static int split_mail_conv(mail_conv_fn fn, struct am_state *state,
++			const char **paths, int keep_cr)
 +{
-+	struct notes_rewrite_cfg *c;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *invalid_line = _("Malformed input line: '%s'.");
-+	const char *msg = "Notes added by 'git rebase'";
-+	FILE *fp;
-+	int ret = 0;
++	static const char *stdin_only[] = {"-", NULL};
++	int i;
 +
-+	assert(state->rebasing);
++	if (!*paths)
++		paths = stdin_only;
 +
-+	c = init_copy_notes_for_rewrite("rebase");
-+	if (!c)
-+		return 0;
++	for (i = 0; *paths; paths++, i++) {
++		FILE *in, *out;
++		const char *mail;
++		int ret;
 +
-+	fp = xfopen(am_path(state, "rewritten"), "r");
++		if (!strcmp(*paths, "-"))
++			in = stdin;
++		else
++			in = fopen(*paths, "r");
 +
-+	while (!strbuf_getline(&sb, fp, '\n')) {
-+		unsigned char from_obj[GIT_SHA1_RAWSZ], to_obj[GIT_SHA1_RAWSZ];
++		if (!in)
++			return error(_("could not open '%s' for reading: %s"),
++					*paths, strerror(errno));
 +
-+		if (sb.len != GIT_SHA1_HEXSZ * 2 + 1) {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
++		mail = mkpath("%s/%0*d", state->dir, state->prec, i + 1);
 +
-+		if (get_sha1_hex(sb.buf, from_obj)) {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
++		out = fopen(mail, "w");
++		if (!out)
++			return error(_("could not open '%s' for writing: %s"),
++					mail, strerror(errno));
 +
-+		if (sb.buf[GIT_SHA1_HEXSZ] != ' ') {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
++		ret = fn(out, in, keep_cr);
 +
-+		if (get_sha1_hex(sb.buf + GIT_SHA1_HEXSZ + 1, to_obj)) {
-+			ret = error(invalid_line, sb.buf);
-+			goto finish;
-+		}
++		fclose(out);
++		fclose(in);
 +
-+		if (copy_note_for_rewrite(c, from_obj, to_obj))
-+			ret = error(_("Failed to copy notes from '%s' to '%s'"),
-+					sha1_to_hex(from_obj), sha1_to_hex(to_obj));
++		if (ret)
++			return error(_("could not parse patch '%s'"), *paths);
 +	}
 +
-+finish:
-+	finish_copy_notes_for_rewrite(c, msg);
-+	fclose(fp);
-+	strbuf_release(&sb);
-+	return ret;
++	state->cur = 1;
++	state->last = i;
++	return 0;
 +}
 +
 +/**
-  * Determines if the file looks like a piece of RFC2822 mail by grabbing all
-  * non-indented lines and checking if they look like they begin with valid
-  * header field names.
-@@ -1405,6 +1464,7 @@ next:
- 
- 	if (!is_empty_file(am_path(state, "rewritten"))) {
- 		assert(state->rebasing);
-+		copy_notes_for_rebase(state);
- 		run_post_rewrite_hook(state);
++ * A split_mail_conv() callback that converts an StGit patch to an RFC2822
++ * message suitable for parsing with git-mailinfo.
++ */
++static int stgit_patch_to_mail(FILE *out, FILE *in, int keep_cr)
++{
++	struct strbuf sb = STRBUF_INIT;
++	int subject_printed = 0;
++
++	while (!strbuf_getline(&sb, in, '\n')) {
++		const char *str;
++
++		if (str_isspace(sb.buf))
++			continue;
++		else if (skip_prefix(sb.buf, "Author:", &str))
++			fprintf(out, "From:%s\n", str);
++		else if (starts_with(sb.buf, "From") || starts_with(sb.buf, "Date"))
++			fprintf(out, "%s\n", sb.buf);
++		else if (!subject_printed) {
++			fprintf(out, "Subject: %s\n", sb.buf);
++			subject_printed = 1;
++		} else {
++			fprintf(out, "\n%s\n", sb.buf);
++			break;
++		}
++	}
++
++	strbuf_reset(&sb);
++	while (strbuf_fread(&sb, 8192, in) > 0) {
++		fwrite(sb.buf, 1, sb.len, out);
++		strbuf_reset(&sb);
++	}
++
++	strbuf_release(&sb);
++	return 0;
++}
++
++/**
+  * Splits a list of files/directories into individual email patches. Each path
+  * in `paths` must be a file/directory that is formatted according to
+  * `patch_format`.
+@@ -702,6 +828,8 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
+ 	switch (patch_format) {
+ 	case PATCH_FORMAT_MBOX:
+ 		return split_mail_mbox(state, paths, keep_cr);
++	case PATCH_FORMAT_STGIT:
++		return split_mail_conv(stgit_patch_to_mail, state, paths, keep_cr);
+ 	default:
+ 		die("BUG: invalid patch_format");
  	}
+@@ -1750,6 +1878,8 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
  
+ 	if (!strcmp(arg, "mbox"))
+ 		*opt_value = PATCH_FORMAT_MBOX;
++	else if (!strcmp(arg, "stgit"))
++		*opt_value = PATCH_FORMAT_STGIT;
+ 	else
+ 		return error(_("Invalid value for --patch-format: %s"), arg);
+ 	return 0;
 -- 
 2.5.0.280.gd88bd6e
