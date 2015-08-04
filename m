@@ -1,85 +1,71 @@
-From: Taylor Braun-Jones <taylor@braun-jones.org>
-Subject: fetching from an hg remote fails with bare git repositories
-Date: Tue, 4 Aug 2015 13:45:07 -0400
-Message-ID: <CAKfKJYuuO+eak-L2SUVUEmoOj16bgV6LL0S=g-LzFjTxZUcRzQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] Documentation/git-worktree: fix reference to 'locked' file
+Date: Tue, 4 Aug 2015 14:18:02 -0400
+Message-ID: <CAPig+cS5Mk-11S+9mSkeaw0nCmb_AS4DC5apwkeXBAROVwE0TA@mail.gmail.com>
+References: <1438691278-31609-1-git-send-email-ps@pks.im>
+	<1438691278-31609-2-git-send-email-ps@pks.im>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 19:45:35 2015
+Cc: Git List <git@vger.kernel.org>
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Tue Aug 04 20:18:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMgHO-0003BG-QW
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 19:45:35 +0200
+	id 1ZMgmw-00010V-Ec
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 20:18:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754839AbbHDRpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 13:45:30 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:35109 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753266AbbHDRp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 13:45:29 -0400
-Received: by wibxm9 with SMTP id xm9so176728915wib.0
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 10:45:28 -0700 (PDT)
+	id S1753873AbbHDSSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 14:18:05 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:36439 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751588AbbHDSSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 14:18:04 -0400
+Received: by ykeo23 with SMTP id o23so15084394yke.3
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 11:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=braun-jones.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=imUhhoM/eYIufghJ5I+3uugQscxpUVxILvwrbYu3ODI=;
-        b=NKL8UVJs/BEP06E7rMZm1f+IGGUffq/uda/sGn8uUbAz9a5JZG9mbLSFzu2WTmjiws
-         IOaZ0XmaxwhktbkCc20zKC9tC1GpktNewB/VAV2VigO1GfLK0UZAHGZY1AvCfOs+nu9x
-         EfrrVcIKjzyPuGdTlV7iK3okiZM4PDl6cIyY4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=imUhhoM/eYIufghJ5I+3uugQscxpUVxILvwrbYu3ODI=;
-        b=esdk8X+vslb+LNqA9e0VlibYhZoL7sqfRx6uFppLFaNOje4aR50jU/5yuejHBGuhRC
-         pG5t9DRBEGOiBCM7t4mKP6rlxJiaD+5L5GoMW7z0m6CAAQXnMN1aNee/Vxfz+4GjKQ5K
-         iqElPjbE7SSmhBeEhgSrh//uThAngvVCAsXqBfXGTyjX/UOf90GoVB8oSqTGY9HCkAmq
-         pakenFHKqdJ6HdVXSuOOKXQbcLlVAbReSRrVKBITvgpj5Wn2ssLqRic4a55VCAYe6XwB
-         fMMRvogC+E10uRzRSLaDFn62MIHZadBCRaw8jy6uYv8RhdIsrLz79+YIsEoeU1ivSd+h
-         7c7Q==
-X-Gm-Message-State: ALoCoQl5P3mu+iWcPyawOXEjx36xWnZvS9c+XscPEEnWfha8Jt2LXhRA6B0K/rJuUOg9Py31Qfga
-X-Received: by 10.194.100.69 with SMTP id ew5mr1174288wjb.51.1438710328560;
-        Tue, 04 Aug 2015 10:45:28 -0700 (PDT)
-Received: from mail-wi0-f174.google.com (mail-wi0-f174.google.com. [209.85.212.174])
-        by smtp.gmail.com with ESMTPSA id ed10sm3510176wic.0.2015.08.04.10.45.27
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Aug 2015 10:45:27 -0700 (PDT)
-Received: by wibud3 with SMTP id ud3so187288659wib.1
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 10:45:27 -0700 (PDT)
-X-Received: by 10.180.83.137 with SMTP id q9mr1172065wiy.68.1438710327322;
- Tue, 04 Aug 2015 10:45:27 -0700 (PDT)
-Received: by 10.27.13.11 with HTTP; Tue, 4 Aug 2015 10:45:07 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=znapFWUqOnGc9XN3Ams/be1OC724/vaTgKlBVJvXqNQ=;
+        b=MKOViEub128ic9LCKy4GBkoQMI2kH/MS4qodsM427mHibmiNeRcbYxiKY9RTxqfWYm
+         ofIsVQvbmC00eqJX0Uv2eJLGguVmYYVcqiL1MRpxEeJJ5eGerhuQVQna1ge+2LOgsAxI
+         +CZXzGvH7D/fUub4W45IVPf1p0ZjcAwGndtPvwPRrl/W7NHlFvFnNecJxcfCrzKpwRB9
+         z2ykdZFwURQ+dtSYqzZd+Ch9d8RtC1xjOcGpVXZvAZl/wd4VLftYxsTOQSUyRqH8dCwB
+         Iy27mlnSSQDKGJdBtMOXcLS1j4fK4yxvxT3j2Gh3ThL/conSCpStknYENPM1jLwCRu7/
+         SQ3Q==
+X-Received: by 10.170.138.134 with SMTP id f128mr5188827ykc.90.1438712282498;
+ Tue, 04 Aug 2015 11:18:02 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Tue, 4 Aug 2015 11:18:02 -0700 (PDT)
+In-Reply-To: <1438691278-31609-2-git-send-email-ps@pks.im>
+X-Google-Sender-Auth: 0HgipUDMb2DQaMC6B2SDln_jSvw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275330>
 
-Fetching from an hg remote fails with bare git repositories. Non-bare
-repositories work fine.
+On Tue, Aug 4, 2015 at 8:27 AM, Patrick Steinhardt <ps@pks.im> wrote:
+> The documentation of git-worktree refers to the 'locked' file as
+> 'lock'. Fix this to say 'locked' instead.
 
-Steps to reproduce:
+Thanks for the patch. This is already fixed in 'next' by 2e73ab6
+(Documentation/git-worktree: fix incorrect reference to file "locked",
+2015-07-20)
 
-mkdir /tmp/hgrepo
-cd /tmp/hgrepo
-hg init
-echo foo > foo.txt
-hg add foo.txt
-hg commit -m "add foo.txt" foo.txt
-git clone hg::/tmp/hgrepo/ /tmp/gitrepo
-cd /tmp/gitrepo/
-git fetch # WORKS
-git clone --bare hg::/tmp/hgrepo/ /tmp/gitrepo.git
-cd /tmp/gitrepo.git/
-git fetch # FAILS
-
-The error message from the last line is:
-
-fatal: bad object 0000000000000000000000000000000000000000
-error: hg::/tmp/hgrepo/ did not send all necessary objects
-
-Taylor
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index 566ca92..3fedd9e 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -39,7 +39,7 @@ repository so that they do not get automatically pruned.
+>
+>  If a linked working tree is stored on a portable device or network share
+>  which is not always mounted, you can prevent its administrative files from
+> -being pruned by creating a file named 'lock' alongside the other
+> +being pruned by creating a file named 'locked' alongside the other
+>  administrative files, optionally containing a plain text reason that
+>  pruning should be suppressed. See section "DETAILS" for more information.
