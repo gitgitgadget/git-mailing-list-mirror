@@ -1,165 +1,130 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v7 38/45] builtin-am: rerere support
-Date: Tue,  4 Aug 2015 21:51:59 +0800
-Message-ID: <1438696326-19590-39-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v7 45/45] builtin-am: remove redirection to git-am.sh
+Date: Tue,  4 Aug 2015 21:52:06 +0800
+Message-ID: <1438696326-19590-46-git-send-email-pyokagan@gmail.com>
 References: <1438696326-19590-1-git-send-email-pyokagan@gmail.com>
 Cc: Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 15:54:57 2015
+X-From: git-owner@vger.kernel.org Tue Aug 04 15:55:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMcgB-0002yt-GT
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 15:54:55 +0200
+	id 1ZMcga-0003Ak-96
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 15:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964967AbbHDNyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 09:54:44 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36103 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964958AbbHDNyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 09:54:39 -0400
-Received: by pacgq8 with SMTP id gq8so9189798pac.3
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 06:54:39 -0700 (PDT)
+	id S964998AbbHDNzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 09:55:01 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:36350 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756509AbbHDNy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 09:54:59 -0400
+Received: by pacgq8 with SMTP id gq8so9195748pac.3
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 06:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pJ2sqg54Ut2alvYCY9idyX3dHCeXqJ3fQsoNLCondWE=;
-        b=C2ka8aSXs8iGkm8VjHxu4ly9MHGsch+mY6dt55uKYCBiSwUbG9cj22NViJlDYjCINB
-         H8RlWAzH1FjlGgZ88qVwB+tKsJqWiTOVyz8pewdUvvv5J9uBHPZzb4R4qUf/2CqruTQD
-         Ldf3nhKN1/6YruP0gtZtLG7qxdMr4xqaw45pz/TVfFaFs+9FM+JVeiLV9HZkiCcOAGPG
-         4eEMj501qcMRvNaojP9UY/CbgrDNl1ryYaiYcFYhkj9K0Ck3qnLzVJdoD6W6FM0i3qPy
-         OqUvC9j18ExsBHuDTDUfyj46coQeRakfmnfxDc8tpykb8O4bBvt5pc8BNPFsIs2HZuZZ
-         PAlw==
-X-Received: by 10.68.109.97 with SMTP id hr1mr8057741pbb.110.1438696479269;
-        Tue, 04 Aug 2015 06:54:39 -0700 (PDT)
+        bh=5r2E9SdyoR0hZJgJmzz+H/w9E/k37huH4vJ/93ADtkI=;
+        b=Xd4tNbJrYbs38jJTrAgGuNrJk7g+deygDB0qAxtnbPuqw+C8Ooqb3VjqlDTz5z+OLf
+         UlpY1P7WpA0q8/wK5pRpiTEFCcjfwd52f4ztMcORzUDuIOmaGbcn/HsUeJnVl7Ulxifi
+         mTCAzoxgKtYD1Q+gHf0NFPdl7fZnnmXEFwXbBgZd8vBRh1NMAS7XWIp5/Mr7m7lwLEsX
+         m99DFiOSufyGMcvyy3n1Np3QjuDpgg33NpDOm0OoCTue4vuf2aUaGrfSQ2tTUqqGXCLG
+         Hd5a7fZOR+p9Qm9dopWMGSaUO0bcHwSCPpT6D0O8yTzDUO9+ipJo1Qvs7xLQvS143qep
+         XHXw==
+X-Received: by 10.66.65.162 with SMTP id y2mr8047319pas.101.1438696498882;
+        Tue, 04 Aug 2015 06:54:58 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id ph4sm1580517pdb.43.2015.08.04.06.54.37
+        by smtp.gmail.com with ESMTPSA id ph4sm1580517pdb.43.2015.08.04.06.54.56
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Aug 2015 06:54:38 -0700 (PDT)
+        Tue, 04 Aug 2015 06:54:58 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.280.gd88bd6e
 In-Reply-To: <1438696326-19590-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275309>
 
-git-am.sh will call git-rerere at the following events:
+At the beginning of the rewrite of git-am.sh to C, in order to not break
+existing test scripts that depended on a functional git-am, a
+redirection to git-am.sh was introduced that would activate if the
+environment variable _GIT_USE_BUILTIN_AM was not defined.
 
-* "git rerere" when a three-way merge fails to record the conflicted
-  automerge results. Since 8389b52 (git-rerere: reuse recorded resolve.,
-  2006-01-28)
-
-  * Since cb6020b (Teach --[no-]rerere-autoupdate option to merge,
-    revert and friends, 2009-12-04), git-am.sh supports the
-    --[no-]rerere-autoupdate option as well, and would pass it to
-    git-rerere.
-
-* "git rerere" when --resolved, to record the hand resolution. Since
-  f131dd4 (rerere: record (or avoid misrecording) resolved, skipped or
-  aborted rebase/am, 2006-12-08)
-
-* "git rerere clear" when --skip-ing. Since f131dd4 (rerere: record (or
-  avoid misrecording) resolved, skipped or aborted rebase/am,
-  2006-12-08)
-
-* "git rerere clear" when --abort-ing. Since 3e5057a (git am --abort,
-  2008-07-16)
-
-Re-implement the above in builtin/am.c.
+Now that all of git-am.sh's functionality has been re-implemented in
+builtin/am.c, remove this redirection, and retire git-am.sh into
+contrib/examples/.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- builtin/am.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ Makefile                                |  1 -
+ builtin/am.c                            | 15 ---------------
+ git-am.sh => contrib/examples/git-am.sh |  0
+ git.c                                   |  7 +------
+ 4 files changed, 1 insertion(+), 22 deletions(-)
+ rename git-am.sh => contrib/examples/git-am.sh (100%)
 
+diff --git a/Makefile b/Makefile
+index da451f8..e39ca6c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -467,7 +467,6 @@ TEST_PROGRAMS_NEED_X =
+ # interactive shell sessions without exporting it.
+ unexport CDPATH
+ 
+-SCRIPT_SH += git-am.sh
+ SCRIPT_SH += git-bisect.sh
+ SCRIPT_SH += git-difftool--helper.sh
+ SCRIPT_SH += git-filter-branch.sh
 diff --git a/builtin/am.c b/builtin/am.c
-index c313e58..33d1f24 100644
+index 1ff74ac..84d57d4 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -24,6 +24,7 @@
- #include "revision.h"
- #include "log-tree.h"
- #include "notes-utils.h"
-+#include "rerere.h"
+@@ -2221,21 +2221,6 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
  
- /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -114,6 +115,7 @@ struct am_state {
- 	const char *resolvemsg;
- 	int committer_date_is_author_date;
- 	int ignore_date;
-+	int allow_rerere_autoupdate;
- 	const char *sign_commit;
- 	int rebasing;
- };
-@@ -1312,6 +1314,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		o.verbosity = 0;
+-	/*
+-	 * NEEDSWORK: Once all the features of git-am.sh have been
+-	 * re-implemented in builtin/am.c, this preamble can be removed.
+-	 */
+-	if (!getenv("_GIT_USE_BUILTIN_AM")) {
+-		const char *path = mkpath("%s/git-am", git_exec_path());
+-
+-		if (sane_execvp(path, (char **)argv) < 0)
+-			die_errno("could not exec %s", path);
+-	} else {
+-		prefix = setup_git_directory();
+-		trace_repo_setup(prefix);
+-		setup_work_tree();
+-	}
+-
+ 	git_config(git_default_config, NULL);
  
- 	if (merge_recursive_generic(&o, our_tree, his_tree, 1, bases, &result)) {
-+		rerere(state->allow_rerere_autoupdate);
- 		free(his_tree_name);
- 		return error(_("Failed to merge in the changes."));
- 	}
-@@ -1531,6 +1534,8 @@ static void am_resolve(struct am_state *state)
- 		die_user_resolve(state);
- 	}
+ 	am_state_init(&state, git_path("rebase-apply"));
+diff --git a/git-am.sh b/contrib/examples/git-am.sh
+similarity index 100%
+rename from git-am.sh
+rename to contrib/examples/git-am.sh
+diff --git a/git.c b/git.c
+index 38d9ad5..5feba41 100644
+--- a/git.c
++++ b/git.c
+@@ -370,12 +370,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
  
-+	rerere(0);
-+
- 	do_commit(state);
- 
- 	am_next(state);
-@@ -1631,12 +1636,29 @@ static int clean_index(const unsigned char *head, const unsigned char *remote)
- }
- 
- /**
-+ * Resets rerere's merge resolution metadata.
-+ */
-+static void am_rerere_clear(void)
-+{
-+	struct string_list merge_rr = STRING_LIST_INIT_DUP;
-+	int fd = setup_rerere(&merge_rr, 0);
-+
-+	if (fd < 0)
-+		return;
-+
-+	rerere_clear(&merge_rr);
-+	string_list_clear(&merge_rr, 1);
-+}
-+
-+/**
-  * Resume the current am session by skipping the current patch.
-  */
- static void am_skip(struct am_state *state)
- {
- 	unsigned char head[GIT_SHA1_RAWSZ];
- 
-+	am_rerere_clear();
-+
- 	if (get_sha1("HEAD", head))
- 		hashcpy(head, EMPTY_TREE_SHA1_BIN);
- 
-@@ -1694,6 +1716,8 @@ static void am_abort(struct am_state *state)
- 		return;
- 	}
- 
-+	am_rerere_clear();
-+
- 	curr_branch = resolve_refdup("HEAD", 0, curr_head, NULL);
- 	has_curr_head = !is_null_sha1(curr_head);
- 	if (!has_curr_head)
-@@ -1823,6 +1847,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 			N_("lie about committer date")),
- 		OPT_BOOL(0, "ignore-date", &state.ignore_date,
- 			N_("use current timestamp for author date")),
-+		OPT_RERERE_AUTOUPDATE(&state.allow_rerere_autoupdate),
- 		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
- 		  N_("GPG-sign commits"),
- 		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ static struct cmd_struct commands[] = {
+ 	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+-	/*
+-	 * NEEDSWORK: Once the redirection to git-am.sh in builtin/am.c has
+-	 * been removed, this entry should be changed to
+-	 * RUN_SETUP | NEED_WORK_TREE
+-	 */
+-	{ "am", cmd_am },
++	{ "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "annotate", cmd_annotate, RUN_SETUP },
+ 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
+ 	{ "archive", cmd_archive },
 -- 
 2.5.0.280.gd88bd6e
