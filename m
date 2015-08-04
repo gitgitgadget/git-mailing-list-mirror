@@ -1,69 +1,95 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v4] clone: simplify string handling in guess_dir_name()
-Date: Tue, 4 Aug 2015 09:31:18 +0200
-Message-ID: <CAHGBnuMXkqhFUhen9tPfEsfFAHhbqMeFUxvePS_6A-TtMfZpzg@mail.gmail.com>
-References: <CAHGBnuNLoNsxPK4YQ+HnT_q8F-HrVC_y9pZwB4G88jCq0-wCPg@mail.gmail.com>
-	<0000014e740f7a8a-2c988a36-633e-4b30-8024-cb4a1de1a8a2-000000@eu-west-1.amazonses.com>
-	<20150804043401.4494.43725@typhoon>
+From: =?UTF-8?B?SsO2cmc=?= Schaible <joerg.schaible@swisspost.com>
+Subject: Re: git svn clone fails
+Date: Tue, 04 Aug 2015 10:20:46 +0200
+Organization: Swiss Post Solutions
+Message-ID: <mppsku$h97$1@ger.gmane.org>
+References: <mpa8th$m80$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Lukas Fleischer <lfleischer@lfos.de>
-X-From: git-owner@vger.kernel.org Tue Aug 04 09:31:24 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 04 10:21:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMWh1-0001tA-Ob
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 09:31:24 +0200
+	id 1ZMXTH-0004zs-KS
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 10:21:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754876AbbHDHbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 03:31:19 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34690 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754635AbbHDHbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 03:31:18 -0400
-Received: by ioea135 with SMTP id a135so8730733ioe.1
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 00:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=XjcpILX862eAfjlB92o6NEiYfiKSQxfq4bsDcsFuSoE=;
-        b=k0yEfmMFeszdIf+aP6rslUCFYyhjNBgGKrQLYWF8T9NbbO1u9ahilpWsI+7AUOH8C2
-         srvVvRgd5F8B9J2puQNVtBWtt7w2+bLf6IkQBT2GKrC8Ey9RMMk+dbZaPMIsAc03TSMw
-         Fz7ZqMluikkLMZyo/USlqHnCYXKBFRT0vCksaaLgvTjwN7KTYPXsB5rdNWS8g5DqfG8g
-         e15t2PvDcpvYeXOyDA2f6WQd1iLxfSjEMcpXUaYaf7zRQEqUszr+oWqm8m3IQWAQaAXi
-         1Id/K6V4Rj2omrhVTdq5fHs1e5MpHMvOS47td/q2n/+NmIMJHMRWpVj88aVCX6Ejk/T2
-         EYGw==
-X-Received: by 10.107.170.77 with SMTP id t74mr2227765ioe.107.1438673478278;
- Tue, 04 Aug 2015 00:31:18 -0700 (PDT)
-Received: by 10.107.4.205 with HTTP; Tue, 4 Aug 2015 00:31:18 -0700 (PDT)
-In-Reply-To: <20150804043401.4494.43725@typhoon>
+	id S1753731AbbHDIVJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Aug 2015 04:21:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:51649 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753318AbbHDIVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 04:21:05 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZMXT3-0004uc-FX
+	for git@vger.kernel.org; Tue, 04 Aug 2015 10:21:01 +0200
+Received: from 62.154.225.82 ([62.154.225.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 10:21:01 +0200
+Received: from joerg.schaible by 62.154.225.82 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 10:21:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 62.154.225.82
+User-Agent: KNode/4.14.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275241>
 
-On Tue, Aug 4, 2015 at 6:34 AM, Lukas Fleischer <lfleischer@lfos.de> wrote:
+Hmmm. Is this the proper channel to report issues or should I go somewh=
+ere=20
+else?
 
-> I am currently on vacation and cannot bisect or debug this but I am
-> pretty confident that this patch changes the behaviour of directory name
-> guessing. With Git 2.4.6, cloning http://foo.bar/foo.git/ results in a
-> directory named foo and with Git 2.5.0, the resulting directory is
-> called foo.git.
->
-> Note how the end variable is decreased when the repository name ends
-> with a slash but that isn't taken into account when simply using
-> strip_suffix() later...
->
-> Is this intended?
+J=C3=B6rg Schaible wrote:
 
-I did not intend this change in behavior, and I can confirm that
-reverting my patch restores the original behavior. Thanks for bringing
-this to my attention, I'll work on a patch.
-
--- 
-Sebastian Schuberth
+> Hello guys,
+>=20
+> we have to turn some projects managed by Subversion into a GIT-based
+> solution. However the conversion unfortunately fails with an error:
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D %< =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> [...]
+> Found branch parent: (refs/remotes/origin/tags/v_2.1.1)
+> 450fa2c84a8fc087a2a66e5fb3d6d22096671f81
+> Following parent with do_switch
+>         M       changes.xml
+>         M       pom.xml
+> couldn't truncate file at /usr/lib64/perl5/vendor_perl/5.20.2/Git.pm =
+line
+> 1325.
+> $ git --version
+> git version 2.5.0
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D %< =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+>=20
+> Apart from the line number, the same error occurs also with GIT versi=
+on
+> 2.4.6 and 2.3.6 (latest stable version in Gentoo).
+>=20
+> The command to create the GIT repository was:
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D %< =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> $ git svn clone http://websvn/svn/essvn/standard/java-commons/lang -s
+> --no- metadata --preserve-empty-dirs -A ~/tmp/authors.txt commons-lan=
+g
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D %< =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+>=20
+> Note, that the command succeeds even for 2.4.6 if we drop the --prese=
+rve-
+> empty-dirs option - at the cost of some empty directories which are u=
+sed
+> to trigger profiles for Maven; i.e. without those we cannot reproduce
+> released versions.
+>=20
+> Cheers,
+> J=C3=B6rg
