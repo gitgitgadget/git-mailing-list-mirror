@@ -1,45 +1,45 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 05/10] branch: move 'current' check down to the presentation layer
-Date: Tue,  4 Aug 2015 18:31:18 +0530
-Message-ID: <1438693282-15516-5-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH 09/10] branch: add '--points-at' option
+Date: Tue,  4 Aug 2015 18:31:22 +0530
+Message-ID: <1438693282-15516-9-git-send-email-Karthik.188@gmail.com>
 References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 15:01:50 2015
+X-From: git-owner@vger.kernel.org Tue Aug 04 15:01:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMbqo-0003P5-CB
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 15:01:50 +0200
+	id 1ZMbqq-0003P5-Ss
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 15:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933998AbbHDNBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 09:01:34 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35379 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933870AbbHDNBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 09:01:31 -0400
-Received: by pasy3 with SMTP id y3so8187622pas.2
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 06:01:30 -0700 (PDT)
+	id S934029AbbHDNBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 09:01:45 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:32818 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934006AbbHDNBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 09:01:42 -0400
+Received: by pdbnt7 with SMTP id nt7so4285726pdb.0
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 06:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3M9sRjOGsPRxHcl3EneydZLgI2uvQHLIvf0P3aXXRCg=;
-        b=Gd3cbXtBohMS6XQ9Wlqhh80tu1W10+8GetStk0zDROubdezaIk2Vkjf2jCo5jfj+B7
-         HEgxzs7UqSERrXlf/zzVlFvi8F/Wv7bd+LC0H3AVLwd57SvT1wYhgMEn59sD2UgjZ7dk
-         538+yppAFB0BeHrjtXr0p4Jm5/n926DBtdJR0i4c2t+xKzSEinYEhMqr6w34/rhM+Efg
-         mU61X1KpMzkFngRmpgAQYqZkRH3ct5q4SHHkzxkDXx59eP/S3xVKBYs4wjhvt6XttlpQ
-         8kHtHBLJVRIzfxlgAINCIVAtRbVXq3A3YRdeW/7E8AatuH/JmqCbkpNKRxBxUmdXX1gf
-         xHQA==
-X-Received: by 10.68.234.34 with SMTP id ub2mr7464438pbc.101.1438693290534;
-        Tue, 04 Aug 2015 06:01:30 -0700 (PDT)
+        bh=loQwgmS8F3H+TJzdvbLRsUE9Oyr137Rpn9h4lKp0hqA=;
+        b=Zft4pYQbLYPT9FPfI3Rll+PPYu+5XquTLSkNhUPA6utrm7pswN3Mc4FsOGxnwUVakG
+         s5e5mGnvj/+RTeZlBuoVod5/W8zhMIpPXXZS3UciHCGD1zQKt0l4fHSzpTfozyKTI6wy
+         /RYjmP8M6MIYrAHSwYhNG6LeBS5o/0ct+hgbjjppjSQ4zcrAhOHEhLfbrR2r0WwZ5LxG
+         NOiMS4igpS54usFHqKqH0he1nmO6j7WeCAENtLZcs8int+zGpP1sb1bnyY4Cb1mnnH+8
+         3z+ADvSD9drKDXLSXbk5uxxWp+aMwGLtWKDvaWo2vnigqsnj9ZI5PIyLFNaqkMW7Gy/c
+         c4zA==
+X-Received: by 10.70.135.129 with SMTP id ps1mr7591348pdb.110.1438693301489;
+        Tue, 04 Aug 2015 06:01:41 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id uy6sm1450657pbc.13.2015.08.04.06.01.28
+        by smtp.gmail.com with ESMTPSA id uy6sm1450657pbc.13.2015.08.04.06.01.39
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Aug 2015 06:01:29 -0700 (PDT)
+        Tue, 04 Aug 2015 06:01:40 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
@@ -47,82 +47,95 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275270>
 
-We check if given ref is the current branch in print_ref_list(). Move
-this check to print_ref_item() where it is checked right before
-printing.
+Add the '--points-at' option provided by 'ref-filter'. The option lets
+the user to list only branches which points at the given object.
 
-Based-on-patch-by: Jeff King <peff@peff.net>
+Add documentation and tests for the same.
+
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/branch.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ Documentation/git-branch.txt | 6 +++++-
+ builtin/branch.c             | 7 ++++++-
+ t/t3203-branch-output.sh     | 9 +++++++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 897cd81..211cfc3 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -11,7 +11,8 @@ SYNOPSIS
+ 'git branch' [--color[=<when>] | --no-color] [-r | -a]
+ 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[--column[=<options>] | --no-column]
+-	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>] [<pattern>...]
++	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
++	[--points-at <object>] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
+@@ -237,6 +238,9 @@ start-point is either a local or remote-tracking branch.
+ 	for-each-ref`. Sort order defaults to sorting based on branch
+ 	type.
+ 
++--points-at <object>::
++	Only list branches of the given object.
++
+ Examples
+ --------
+ 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 81815c9..c5f2944 100644
+index 34ccf0c..5dad1da 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -534,9 +534,10 @@ static char *get_head_description(void)
- }
+@@ -26,6 +26,7 @@ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] [-l] [-f] <branch-name> [<start-point>]"),
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+ 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
++	N_("git branch [<options>] [-r | -a] [--points-at]"),
+ 	NULL
+ };
  
- static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
--			   int abbrev, int current, const char *remote_prefix)
-+			   int abbrev, int detached, const char *remote_prefix)
- {
- 	char c;
-+	int current = 0;
- 	int color;
- 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
- 	const char *prefix = "";
-@@ -547,15 +548,18 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+@@ -654,6 +655,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
+ 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
+ 			     N_("field name to sort on"), &parse_opt_ref_sorting),
++		{
++			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
++			N_("print only branches of the object"), 0, parse_opt_object_name
++		},
+ 		OPT_END(),
+ 	};
  
- 	switch (item->kind) {
- 	case REF_LOCAL_BRANCH:
--		color = BRANCH_COLOR_LOCAL;
-+		if (!detached && !strcmp(item->name, head))
-+			current = 1;
-+		else
-+			color = BRANCH_COLOR_LOCAL;
- 		break;
- 	case REF_REMOTE_BRANCH:
- 		color = BRANCH_COLOR_REMOTE;
- 		prefix = remote_prefix;
- 		break;
- 	case REF_DETACHED_HEAD:
--		color = BRANCH_COLOR_CURRENT;
- 		desc = get_head_description();
-+		current = 1;
- 		break;
- 	default:
- 		color = BRANCH_COLOR_PLAIN;
-@@ -684,21 +688,17 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	index = ref_list.index;
+@@ -682,7 +687,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
+ 		list = 1;
  
- 	/* Print detached HEAD before sorting and printing the rest */
--	if (detached && (ref_list.list[index - 1].kind == REF_DETACHED_HEAD) &&
--	    !strcmp(ref_list.list[index - 1].name, head)) {
-+	if (detached) {
- 		print_ref_item(&ref_list.list[index - 1], maxwidth, verbose, abbrev,
--			       1, remote_prefix);
-+			       detached, remote_prefix);
- 		index -= 1;
- 	}
+-	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE)
++	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr)
+ 		list = 1;
  
- 	qsort(ref_list.list, index, sizeof(struct ref_item), ref_cmp);
+ 	if (!!delete + !!rename + !!new_upstream +
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 38c68bd..1deb7cb 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -154,4 +154,13 @@ EOF
+ 	test_i18ncmp expect actual
+ '
  
--	for (i = 0; i < index; i++) {
--		int current = !detached && (ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
--			!strcmp(ref_list.list[i].name, head);
-+	for (i = 0; i < index; i++)
- 		print_ref_item(&ref_list.list[i], maxwidth, verbose,
--			       abbrev, current, remote_prefix);
--	}
-+			       abbrev, detached, remote_prefix);
- 
- 	free_ref_list(&ref_list);
- 
++test_expect_success 'git branch --points-at option' '
++	cat >expect <<EOF &&
++  master
++  branch-one
++EOF
++	git branch --points-at=branch-one >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.5.0
