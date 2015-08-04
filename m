@@ -1,89 +1,98 @@
-From: Clemens Buchacher <clemens.buchacher@intel.com>
-Subject: [PATCH] git_open_noatime: return with errno=0 on success
-Date: Tue, 4 Aug 2015 10:24:29 +0200
-Organization: Intel Deutschland GmbH - Registered Address: Am Campeon 10-12, 85579 Neubiberg, Germany - Tel: +49 89 99 8853-0, www.intel.de - Managing Directors: Prof. Dr. Hermann Eul, Christin Eisenschmid - Chairperson of the Supervisory Board: Tiffany Doon Silva - Registered Office: Munich - Commercial Register: Amtsgericht Mnchen HRB 186928
-Message-ID: <20150804082429.GA22271@musxeris015.imu.intel.com>
-References: <20150708123820.GA25269@musxeris015.imu.intel.com> <CAPig+cSacM_JwZzagOVZpMJF=oE7m3rMnq1eKr=aNsGY0vvmfQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Martin =?iso-8859-1?Q?Schr=F6der?= <martin.h.schroeder@intel.com>
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/6] fix repo name when cloning a server's root
+Date: Tue,  4 Aug 2015 13:29:51 +0200
+Message-ID: <1438687797-14254-1-git-send-email-ps@pks.im>
+References: <1437997708-10732-1-git-send-email-ps@pks.im>
+Cc: ps@pks.im, peff@peff.net, pclouds@gmail.com, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 10:24:40 2015
+X-From: git-owner@vger.kernel.org Tue Aug 04 13:30:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMXWZ-0006Pe-5T
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 10:24:39 +0200
+	id 1ZMaQG-0006q8-Aw
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 13:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922AbbHDIYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 04:24:34 -0400
-Received: from mga03.intel.com ([134.134.136.65]:1313 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752679AbbHDIYb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 04:24:31 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga103.jf.intel.com with ESMTP; 04 Aug 2015 01:24:31 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.15,607,1432623600"; 
-   d="scan'208";a="776359508"
-Received: from musxeris015.imu.intel.com (HELO localhost) ([10.216.40.13])
-  by fmsmga002.fm.intel.com with ESMTP; 04 Aug 2015 01:24:29 -0700
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSacM_JwZzagOVZpMJF=oE7m3rMnq1eKr=aNsGY0vvmfQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.2i
+	id S933170AbbHDLaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 07:30:13 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56440 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933034AbbHDLaL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2015 07:30:11 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id F34FE20C93
+	for <git@vger.kernel.org>; Tue,  4 Aug 2015 07:30:10 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Tue, 04 Aug 2015 07:30:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:date:from:in-reply-to:message-id
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Ltgc
+	hFib61yZKSdb/yoeP5EUr2c=; b=deSRU7uruwXDr+jt+hhOXCbJE3byoHSE+4ht
+	ysPE+T+YreyktsQKO+hyfUyQFOC1p2EIOY1954wpRFSCGLAoMTyD3uKCeYqRib9f
+	baL2YMDwaWlPgQ9EVvdhAI2vw9KjHuFiDHKexNSuAK0kUyPzMLD/9iXF7D1q0LV3
+	dvTeDEY=
+X-Sasl-enc: 01H28qT1r8sYZlhqcAztA8bbw+cuddVM2KASbkK7i2VV 1438687810
+Received: from localhost (x5ce1225a.dyn.telefonica.de [92.225.34.90])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 777CA68015D;
+	Tue,  4 Aug 2015 07:30:10 -0400 (EDT)
+X-Mailer: git-send-email 2.5.0
+In-Reply-To: <1437997708-10732-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275243>
 
-In read_sha1_file_extended we die if read_object fails with a fatal
-error. We detect a fatal error if errno is non-zero and is not
-ENOENT. If the object could not be read because it does not exist,
-this is not considered a fatal error and we want to return NULL.
+This is the third version of this patch series. It aims to
+improve guessing directory names such that we do not include
+authentication data and port numbers in them.
 
-Somewhere down the line, read_object calls git_open_noatime to open
-a pack index file, for example. We first try open with O_NOATIME.
-If O_NOATIME fails with EPERM, we retry without O_NOATIME. When the
-second open succeeds, errno is however still set to EPERM from the
-first attempt. When we finally determine that the object does not
-exist, read_object returns NULL and read_sha1_file_extended dies
-with a fatal error:
+This version drops the patches exposing 'parse_connect_url()' and
+instead does the stripping of authentification data and port
+inside the URI in 'guess_dir_name()'.
 
-    fatal: failed to read object <sha1>: Operation not permitted
+Actually I'm not that happy with the patch as it currently stands
+as it requires a lot of complexity to correctly strip the URI
+such that we do not mishandle several corner cases. At least I
+didn't find any shorter way of doing what I want without breaking
+backwards compatibility. I'll try to explain why the more complex
+ways of handling the URI are required:
 
-Fix this by resetting errno to zero before we call open again.
+ - The naive way of just adding '@' as path separator would break
+   cloning repositories like '/foo/bar@baz.git' (which would
+   currently become 'bar@baz' but would become 'baz' only).
 
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
----
+ - Skipping the scheme initially is required because without it we
+   wouldn't be able to scan until the next dir separator in the
+   host part when stripping authentication information.
 
-This is a re-submission without changes except for a typo fix in the
-comments (thanks Eric). The original submission received no other
-comments, but I think it is a clear improvement and I hope it was just
-missed the first time.
+ - First checking for '/' in the current stripped URI when we
+   want to remove the port is required because we do not want to
+   strip port numbers when cloning from something like
+   '/foo/bar:2222.git' (which would currently become '2222' but
+   would then be stripped of the ':2222' part and instead become
+   'bar'). Still, this breaks on cloning a bare repository in the
+   current dir (e.g. cloning 'bar:2222.git', which should become
+   '2222' because it is not a port number but would become
+   'bar').
 
-Best regards,
-Clemens
+As you can see, there is a lot of complexity in there and I'm not
+convinced this is better than just exposing
+'parse_connect_url()', which already handles everything for us.
+Maybe I'm just being blind for the obvious solution here, though.
 
- sha1_file.c | 1 +
- 1 file changed, 1 insertion(+)
+Patrick Steinhardt (6):
+  tests: fix broken && chains in t1509-root-worktree
+  tests: fix cleanup after tests in t1509-root-worktree
+  clone: do not include authentication data in guessed dir
+  clone: do not use port number as dir name
+  clone: abort if no dir name could be guessed
+  clone: add tests for cloning with empty path
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 77cd81d..62b7ad6 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1453,6 +1453,7 @@ int git_open_noatime(const char *name)
- 	static int sha1_file_open_flag = O_NOATIME;
- 
- 	for (;;) {
-+		errno = 0;
- 		int fd = open(name, O_RDONLY | sha1_file_open_flag);
- 		if (fd >= 0)
- 			return fd;
+ builtin/clone.c          | 67 ++++++++++++++++++++++++++++++++++++++++--------
+ t/t1509-root-worktree.sh | 51 +++++++++++++++++++++++++++++++++---
+ 2 files changed, 103 insertions(+), 15 deletions(-)
+
 -- 
-1.9.4
+2.5.0
