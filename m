@@ -1,95 +1,135 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH] git-p4: fix faulty paths for case insensitive systems
-Date: Tue, 04 Aug 2015 23:06:06 +0100
-Message-ID: <55C1374E.5060808@diamand.org>
-References: <1438528517-5028-1-git-send-email-larsxschneider@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] clone: simplify string handling in guess_dir_name()
+Date: Tue, 4 Aug 2015 18:42:46 -0400
+Message-ID: <20150804224246.GA29051@sigill.intra.peff.net>
+References: <CAHGBnuNLoNsxPK4YQ+HnT_q8F-HrVC_y9pZwB4G88jCq0-wCPg@mail.gmail.com>
+ <0000014e740f7a8a-2c988a36-633e-4b30-8024-cb4a1de1a8a2-000000@eu-west-1.amazonses.com>
+ <20150804043401.4494.43725@typhoon>
+ <CAHGBnuMXkqhFUhen9tPfEsfFAHhbqMeFUxvePS_6A-TtMfZpzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: pw@padd.com, torarvid@gmail.com, ksaitoh560@gmail.com
-To: larsxschneider@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 05 00:06:11 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	Lukas Fleischer <lfleischer@lfos.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 00:42:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMkLa-00076g-QX
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 00:06:11 +0200
+	id 1ZMkvA-0004fN-O4
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 00:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754167AbbHDWGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 18:06:05 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:36931 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753867AbbHDWGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 18:06:04 -0400
-Received: by wibud3 with SMTP id ud3so41479894wib.0
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 15:06:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=5jegH+eNOMGjUtBSHEDo/o4hgIEvC1GgGDMfkOd2WXU=;
-        b=cEBsSOC5Ja/NSj8pfgRVu3uM9XKP3RoBkZw8/fmtebahA32hjRZ3oDXk5ddaAE/2GK
-         ocvFmq6fd4OsqhtNHGcsuHLDcAuI4kDGRJUa2FcHIZ7EtiF+z27/jTWvzl1IRsWG2tZD
-         qlzgIBXnqAZ/HPE6+RtbNouxBExBMQnpkvHnU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=5jegH+eNOMGjUtBSHEDo/o4hgIEvC1GgGDMfkOd2WXU=;
-        b=CfUSOgw7/uQ045uD/5G2t+WhkcqChjLiTb7HxA/Goth2CDtm/kUkZ3EzfrjrkSDZ+J
-         HiGPG65opI9XVPNjqeI7LSuAG94LdTHlNnTm+hanPufDlQ7cSnxFyM8CfdBNod3IafjX
-         C19zSN9qAISkLkf8lBBk+KehUaP6/97GK4RpYBLYLADJUzcAZhOnezFZ9ZdAm6Eq1cn0
-         lP7lnGBxEIyPRSHT7lC4rOnE3QWoAY2ok5BWlAL+oYOeAtrZiHl4UP8AZv/jA4493Xyu
-         vpyNSX/CoBRHG4NHKywpih2c7tj5e0msIlEMGbiOZrZICVsL18r978D1LqSGXUViHp5G
-         udqQ==
-X-Gm-Message-State: ALoCoQn5xHG6J4yi1wUHo6EhQ3H5If69tJEI2u8CarkGW+m5dCVyeQJnv6uOHAI45zgDKfCQoEqC
-X-Received: by 10.180.198.199 with SMTP id je7mr12537019wic.34.1438725962196;
-        Tue, 04 Aug 2015 15:06:02 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by smtp.gmail.com with ESMTPSA id y15sm1587858wib.7.2015.08.04.15.06.01
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Aug 2015 15:06:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <1438528517-5028-1-git-send-email-larsxschneider@gmail.com>
+	id S1752869AbbHDWmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 18:42:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40867 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752831AbbHDWmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 18:42:51 -0400
+Received: (qmail 2841 invoked by uid 102); 4 Aug 2015 22:42:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Aug 2015 17:42:51 -0500
+Received: (qmail 24442 invoked by uid 107); 4 Aug 2015 22:42:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Aug 2015 18:42:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Aug 2015 18:42:46 -0400
+Content-Disposition: inline
+In-Reply-To: <CAHGBnuMXkqhFUhen9tPfEsfFAHhbqMeFUxvePS_6A-TtMfZpzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275344>
 
-On 02/08/15 16:15, larsxschneider@gmail.com wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> Hi,
->
-> I want to propose this patch as it helped us to migrate a big source code base
-> successfully from P4 to Git. I am sorry that I don't provide a test case, yet.
+On Tue, Aug 04, 2015 at 09:31:18AM +0200, Sebastian Schuberth wrote:
 
-Case sensitivity is a pretty tricky area with p4 - it's very brave of 
-you to have a go at fixing it!
+> On Tue, Aug 4, 2015 at 6:34 AM, Lukas Fleischer <lfleischer@lfos.de> wrote:
+> 
+> > I am currently on vacation and cannot bisect or debug this but I am
+> > pretty confident that this patch changes the behaviour of directory name
+> > guessing. With Git 2.4.6, cloning http://foo.bar/foo.git/ results in a
+> > directory named foo and with Git 2.5.0, the resulting directory is
+> > called foo.git.
+> >
+> > Note how the end variable is decreased when the repository name ends
+> > with a slash but that isn't taken into account when simply using
+> > strip_suffix() later...
+> >
+> > Is this intended?
+> 
+> I did not intend this change in behavior, and I can confirm that
+> reverting my patch restores the original behavior. Thanks for bringing
+> this to my attention, I'll work on a patch.
 
-> I would like to get advise on the patch and on the best strategy to provide a
-> test. Do you only run git-p4 integration tests in "t/t98??-git-p4-*.sh"? If yes,
-> which version of "start_p4d" should I use?
+I think this regression is in v2.4.8, as well. We should be able to use
+a running "len" instead of the "end" pointer in the earlier part, and
+then use strip_suffix_mem later (to strip from our already-reduced
+length, rather than the full NUL-terminated string). Like this:
 
-Only the t98* tests relate to git-p4 so if you just copy one of those it 
-should do the right thing.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 303a3a7..4b61e4c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -146,20 +146,19 @@ static char *get_repo_path(const char *repo, int *is_bundle)
+ 
+ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ {
+-	const char *end = repo + strlen(repo), *start;
+-	size_t len;
++	const char *start;
++	size_t len = strlen(repo);
+ 	char *dir;
+ 
+ 	/*
+ 	 * Strip trailing spaces, slashes and /.git
+ 	 */
+-	while (repo < end && (is_dir_sep(end[-1]) || isspace(end[-1])))
+-		end--;
+-	if (end - repo > 5 && is_dir_sep(end[-5]) &&
+-	    !strncmp(end - 4, ".git", 4)) {
+-		end -= 5;
+-		while (repo < end && is_dir_sep(end[-1]))
+-			end--;
++	while (len > 0 && (is_dir_sep(repo[len-1]) || isspace(repo[len-1])))
++		len--;
++	if (len > 5 && is_dir_sep(repo[len-5]) &&
++	    strip_suffix_mem(repo, &len, ".git")) {
++		while (len > 0 && is_dir_sep(repo[len-1]))
++			len--;
+ 	}
+ 
+ 	/*
+@@ -167,14 +166,14 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ 	 * the form  "remote.example.com:foo.git", i.e. no slash
+ 	 * in the directory part.
+ 	 */
+-	start = end;
++	start = repo + len;
+ 	while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
+ 		start--;
+ 
+ 	/*
+ 	 * Strip .{bundle,git}.
+ 	 */
+-	strip_suffix(start, is_bundle ? ".bundle" : ".git" , &len);
++	strip_suffix_mem(start, &len, is_bundle ? ".bundle" : ".git");
+ 
+ 	if (is_bare)
+ 		dir = xstrfmt("%.*s.git", (int)len, start);
+@@ -187,6 +186,7 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ 	if (*dir) {
+ 		char *out = dir;
+ 		int prev_space = 1 /* strip leading whitespace */;
++		const char *end;
+ 		for (end = dir; *end; ++end) {
+ 			char ch = *end;
+ 			if ((unsigned char)ch < '\x20')
 
-t9819-git-p4-case-folding.sh already has a few failing tests for this 
-problem. I wrote it a while back just to illustrate the problem, so it 
-might be of use to you, or you might need to start again.
+Sadly we cannot just `strip_suffix_mem(repo, &len, "/.git"))` in the
+earlier code, as we have to account for multiple directory separators. I
+believe the above code does the right thing, though. I haven't looked at
+how badly it interacts with the other guess_dir_name work from Patrick
+Steinhardt that has been going on, though.
 
-Won't your change make importing much slower for people with this problem?
-
-Also, I'm not sure you can use "core.ignorecase" to trigger this: the 
-problem will arise if the *server* is ignoring case as well (which I 
-think you can detect by querying the server).
-
-I'm not trying to be negative - but this problem does have some annoying 
-pitfalls! Let me know if you think I can help though.
-
-Regards!
-Luke
+-Peff
