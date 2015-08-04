@@ -1,76 +1,87 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 5/6] clone: abort if no dir name could be guessed
-Date: Tue,  4 Aug 2015 13:29:56 +0200
-Message-ID: <1438687797-14254-6-git-send-email-ps@pks.im>
+Subject: [PATCH v3 1/6] tests: fix broken && chains in t1509-root-worktree
+Date: Tue,  4 Aug 2015 13:29:52 +0200
+Message-ID: <1438687797-14254-2-git-send-email-ps@pks.im>
 References: <1437997708-10732-1-git-send-email-ps@pks.im>
  <1438687797-14254-1-git-send-email-ps@pks.im>
 Cc: ps@pks.im, peff@peff.net, pclouds@gmail.com, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 13:30:33 2015
+X-From: git-owner@vger.kernel.org Tue Aug 04 13:30:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMaQS-0006sg-Fe
+	id 1ZMaQR-0006sg-S4
 	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 13:30:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933420AbbHDLa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 07:30:27 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:53970 "EHLO
+	id S933408AbbHDLaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 07:30:19 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:48720 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933411AbbHDLaT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2015 07:30:19 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 66FE820BBA
-	for <git@vger.kernel.org>; Tue,  4 Aug 2015 07:30:19 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S933137AbbHDLaN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2015 07:30:13 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9CEC520C39
+	for <git@vger.kernel.org>; Tue,  4 Aug 2015 07:30:12 -0400 (EDT)
 Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 04 Aug 2015 07:30:19 -0400
+  by compute4.internal (MEProxy); Tue, 04 Aug 2015 07:30:12 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=tP2A
-	oEE1wxquxqp7EzV8epRx2Vs=; b=YG5/wtkuVYSYGhr3K9SBfzKhm30ecEhrQylq
-	+qevbX+/Cc/V57DSxiThfJIpsb71NnFstDT2OnPOEfwq9XU8k22nmh0PpW/wXXM4
-	E6H9dW24AtfpmYpM9x3mOGQ4BMDooZfYL0hC8r/k0UeRAeqlL/BcMMhojWFZE85v
-	7DNtfM8=
-X-Sasl-enc: MQwn8WtuDi8GtQzC3l+gZsvkt8H7znehDT014xfZX9u7 1438687818
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+u4L
+	Ea1gib75+GSWCuToUahmz8E=; b=byy26PO+GP/usfn0rcb0kPxg9lg5YObzyUgZ
+	GX8eY3xQqtRyY3D3A1wRocIzpgug2PV25Prb6iWD3KRDzMLJGrejNJ/NPAiM06mn
+	GgzF5LHP7fnEvaaJOsYAhDaKZ++DuZFlggnBWpr+RF5uBumgzMeRMJmaf+kR4z1I
+	yCoyxMQ=
+X-Sasl-enc: pieHRVpohXSOo2LsmfovNBW06atmZkQ6jsF8EyyUb4th 1438687812
 Received: from localhost (x5ce1225a.dyn.telefonica.de [92.225.34.90])
-	by mail.messagingengine.com (Postfix) with ESMTPA id B7474C00017;
-	Tue,  4 Aug 2015 07:30:18 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1DDB4C00012;
+	Tue,  4 Aug 2015 07:30:12 -0400 (EDT)
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <1438687797-14254-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275246>
-
-Due to various components of the URI being stripped off it may
-happen that we fail to guess a directory name. We currently error
-out with a message that it is impossible to create the working
-tree '' in such cases. Instead, error out early with a sensible
-error message hinting that a directory name should be specified
-manually on the command line.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275247>
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t1509-root-worktree.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a163797..2adc712 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -217,6 +217,10 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- 	 */
- 	strip_suffix_mem(start, &len, is_bundle ? ".bundle" : ".git");
+diff --git a/t/t1509-root-worktree.sh b/t/t1509-root-worktree.sh
+index b6977d4..0c80129 100755
+--- a/t/t1509-root-worktree.sh
++++ b/t/t1509-root-worktree.sh
+@@ -125,7 +125,7 @@ fi
+ ONE_SHA1=d00491fd7e5bb6fa28c517a0bb32b8b506539d4d
  
-+	if (!len || (len == 1 && *start == '/'))
-+	    die("No directory name could be guessed.\n"
-+		"Please specify a directory on the command line");
-+
- 	if (is_bare)
- 		dir = xstrfmt("%.*s.git", (int)len, start);
- 	else
+ test_expect_success 'setup' '
+-	rm -rf /foo
++	rm -rf /foo &&
+ 	mkdir /foo &&
+ 	mkdir /foo/bar &&
+ 	echo 1 > /foo/foome &&
+@@ -218,7 +218,7 @@ unset GIT_WORK_TREE
+ 
+ test_expect_success 'go to /' 'cd /'
+ test_expect_success 'setup' '
+-	rm -rf /.git
++	rm -rf /.git &&
+ 	echo "Initialized empty Git repository in /.git/" > expected &&
+ 	git init > result &&
+ 	test_cmp expected result
+@@ -241,8 +241,8 @@ say "auto bare gitdir"
+ 
+ # DESTROYYYYY!!!!!
+ test_expect_success 'setup' '
+-	rm -rf /refs /objects /info /hooks
+-	rm /*
++	rm -rf /refs /objects /info /hooks &&
++	rm /* &&
+ 	cd / &&
+ 	echo "Initialized empty Git repository in /" > expected &&
+ 	git init --bare > result &&
 -- 
 2.5.0
