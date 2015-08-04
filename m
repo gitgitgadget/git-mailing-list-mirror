@@ -1,90 +1,73 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] remote: add get-url subcommand
-Date: Mon, 3 Aug 2015 20:45:11 -0400
-Message-ID: <CAPig+cSNNtNP93U6jy3X424FV3SRvoLr3PZaYe3m+auOM+gWcA@mail.gmail.com>
-References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
-	<1438635614-11174-1-git-send-email-mathstuf@gmail.com>
-	<1438635614-11174-2-git-send-email-mathstuf@gmail.com>
-	<CAPig+cQO_jXZmJG=EccwQ408TiAk7_BiQF1UKA31phXF7CXy6w@mail.gmail.com>
-	<20150804001631.GA10416@megas.kitware.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2015, #01; Mon, 3)
+Date: Mon, 03 Aug 2015 18:12:52 -0700
+Message-ID: <xmqqsi7z6eln.fsf@gitster.dls.corp.google.com>
+References: <xmqq38006mod.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQr6tZeYwH3W4NP9_6udD2qz7t6vFR7n4haqJLrNhM62w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ben Boeckel <mathstuf@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 02:45:20 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Paul Tan <pyokagan@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 03:13:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMQM3-0004W7-KJ
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 02:45:19 +0200
+	id 1ZMQmq-0006A2-Kn
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 03:13:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932581AbbHDApM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2015 20:45:12 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:33188 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932240AbbHDApL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2015 20:45:11 -0400
-Received: by ykoo205 with SMTP id o205so35115388yko.0
-        for <git@vger.kernel.org>; Mon, 03 Aug 2015 17:45:11 -0700 (PDT)
+	id S1754441AbbHDBM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2015 21:12:56 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34907 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754144AbbHDBMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2015 21:12:55 -0400
+Received: by pasy3 with SMTP id y3so26700946pas.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2015 18:12:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=JYaRAtRL0C4lDsfCVSroN6vBqsvD5IqSstYV1ZIIj0M=;
-        b=dLJdV+Y91PEvrmvVR7Au0OaZRQyQKyUxbG2QT8WTAy/VoMWb/nyKt6R3BGMTcY/AqA
-         buPdk/2EnCMpxTB3unIOkiVnh7n7N4dxyo/1ff6GfbmCfx/E69vy+j4qdrMT9Y6J3GK/
-         U0j8jT8e2bZvf/rtPx7VEJqh6pC2l+nKaSTdwCq5MTWeMD8k24oO4zbulTO2uCrnsF2X
-         jYTXd6tqXNub65kY+R9kRBvt6Twx3ubFvBDPDr44GXap9KRUW9Vfco5TRhDJl8GKEt+b
-         B90MMP7gZhgUKAvk9nuOI6eoYVFR1ociTRNVOfVma9m8/FKsXz9/eRQQIsQHHpSF+tn5
-         Pa5A==
-X-Received: by 10.13.192.132 with SMTP id b126mr843091ywd.163.1438649111200;
- Mon, 03 Aug 2015 17:45:11 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Mon, 3 Aug 2015 17:45:11 -0700 (PDT)
-In-Reply-To: <20150804001631.GA10416@megas.kitware.com>
-X-Google-Sender-Auth: 8H89bFsYh4nn0GbFrriCDuLLKX0
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=81IZX5GGujWe4FBdoILF/LfBI4Zi2Lq71SjZHrKUJfQ=;
+        b=05PD7dZIsuDHell0jdQjB+QA2ZmXb0w+kSJndNAq/7fpLBt4F6xeffnLtQZCKUrcfQ
+         ELKVrjUHfCi1ccWRn9OoIBjmKlY6jXuuLnB62qyLYALXFV0/XI7PB7Jlqzm/SKcPNGYk
+         0BUvz1qzkLMz9tsObC38JGVUYijBRL+HZHzNfrSiS0oFXxrG+Ja2MT6E7DnEQ2Y93dKY
+         RdHNRedAfwoecCeM+WUkVvAw+77z6Gzir8+fDFeKnoWQ6eYsZMyqNqBh2Dr73UV09Yrz
+         h4sbfrRTHZNdQRCx51sa0Mafb9M7hRQmspgQHGkujgpPdoGfBswhbwf/3/BdMBqGsTan
+         02mw==
+X-Received: by 10.66.224.140 with SMTP id rc12mr2031183pac.34.1438650775241;
+        Mon, 03 Aug 2015 18:12:55 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:38a2:7ad5:137e:6e11])
+        by smtp.gmail.com with ESMTPSA id l2sm9469955pdd.65.2015.08.03.18.12.53
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 03 Aug 2015 18:12:53 -0700 (PDT)
+In-Reply-To: <CAPig+cQr6tZeYwH3W4NP9_6udD2qz7t6vFR7n4haqJLrNhM62w@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 3 Aug 2015 18:41:02 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275234>
 
-On Mon, Aug 3, 2015 at 8:16 PM, Ben Boeckel <mathstuf@gmail.com> wrote:
-> On Mon, Aug 03, 2015 at 19:38:15 -0400, Eric Sunshine wrote:
->> On Mon, Aug 3, 2015 at 5:00 PM, Ben Boeckel <mathstuf@gmail.com> wrote:
->> > +       argc = parse_options(argc, argv, NULL, options, builtin_remote_geturl_usage,
->> > +                            PARSE_OPT_KEEP_ARGV0);
->>
->> What is the reason for PARSE_OPT_KEEP_ARGV0 in this case?
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Mon, Aug 3, 2015 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I've kicked a few topics out of 'next' back to 'pu' for now.
+>>  - I think es/worktree-add and es/worktree-add-cleanup are good
+>>    shape overall, but we probably would want to make them into a
+>>    single topic.
 >
-> Copied from get-url; I presume for more natural argv[] usage within the
-> function.
->
->> > +       if (argc < 1 || argc > 2)
->> > +               usage_with_options(builtin_remote_geturl_usage, options);
->>
->> So,  'argc' must be 1 or 2, which in 'argv' terms is argv[0] and argv[1]).
->>
->> > +       remotename = argv[1];
->>
->> But here, argv[1] is accessed unconditionally, even though 'argc' may
->> have been 1, thus out of bounds.
->
-> Yep, should be (argc < 2 || argc > 2) (or 1 if PARSE_OPT_KEEP_ARGV0 is
-> removed). Off-by-one when converting from get-url.
+> Is there anything I need to do to move this along, or is it something
+> you will be handling locally?
 
-Or, expressed more naturally:
+Unless you view this as a chance to rebuild the topic and want to
+take advantage of it, e.g. "I'd like to reorder and replace 4-7 with
+these two patches while it is outside 'next'", there is no need to
+do anything on your part (this comment also applies to Paul).  I
+just wanted to eyeball the result after I twiddled a few topics with
+"maybe squash this in?" patches we saw recently before merging them
+back into 'next'.
 
-    if (argc != 1)
-        usage_with_options(...);
-
-assuming the unnecessary PARSE_OPT_KEEP_ARGV0 is dropped.
-
-> I'll reroll tomorrow morning in case there are more comments until then
-> (particularly about PARSE_OPT_KEEP_ARGV0).
-
-This new code doesn't take advantage of it, and it's very rarely used
-in Git itself, thus its use here is a potential source of confusion,
-so it's probably best to drop it. (The same could be said for
-set_url(), but that's a separate topic.)
+Thanks.
