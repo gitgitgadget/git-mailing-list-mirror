@@ -1,7 +1,7 @@
 From: Paul Tan <pyokagan@gmail.com>
 Subject: [PATCH v2 0/3] am: let command-line options override saved options
-Date: Tue,  4 Aug 2015 22:05:13 +0800
-Message-ID: <1438697116-27799-1-git-send-email-pyokagan@gmail.com>
+Date: Tue,  4 Aug 2015 22:08:48 +0800
+Message-ID: <1438697331-29948-1-git-send-email-pyokagan@gmail.com>
 References: <20150728164311.GA1948@yoshi.chippynet.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -9,46 +9,46 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
 	Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 16:07:26 2015
+X-From: git-owner@vger.kernel.org Tue Aug 04 16:09:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMcsI-0000ZF-7M
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 16:07:26 +0200
+	id 1ZMctu-0001L9-4m
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Aug 2015 16:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934215AbbHDOHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2015 10:07:18 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:35303 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934029AbbHDOHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2015 10:07:15 -0400
-Received: by pdrg1 with SMTP id g1so5010643pdr.2
-        for <git@vger.kernel.org>; Tue, 04 Aug 2015 07:07:15 -0700 (PDT)
+	id S934280AbbHDOJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2015 10:09:00 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:34941 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934241AbbHDOI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2015 10:08:59 -0400
+Received: by pasy3 with SMTP id y3so9498696pas.2
+        for <git@vger.kernel.org>; Tue, 04 Aug 2015 07:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=PxH8rvN5zXXcdXxOvUuIOKwR0F7Wtb+sT6pwkOzRd/0=;
-        b=kCSqXWUNa2pMaakIf0uSMoPT9envSYUR6nThXS4bQZPNB4PIDGbNgZvn1Uwtt6p8EJ
-         a6OP56kpwzxCVag1nP3021yM/wiDRMv0W6IwXWo8VvO7pE3goEgQqRJTxcJk1iKJRqGh
-         d12cILi/KcPVVkyiiBjCOU5R1a9lZsT5v5ZgNQYn9waxg4sOZL+FZFv/ZgSGs4CnhSk4
-         SpHxzKXYkEnbQ+i0JxGHK9tde/MYwuUB4qqjf5mowL6oEUEdR8QlXaWHABwWm8JrKTck
-         MWEfaCAGLc8YDJ7SvSU0ggu7QzfpQLVhQ+F8173jYyK4CP01xj9fd65bJ8z5RVKMTWnR
-         zHBw==
-X-Received: by 10.70.37.77 with SMTP id w13mr8240833pdj.49.1438697235384;
-        Tue, 04 Aug 2015 07:07:15 -0700 (PDT)
+        b=JKNw83ICOqzRIAPwl8Qd2b7CGr/zWEpcIiOqcsxh4Wtx5Wqhr3des8fA2eqekYWLrP
+         ss1UHnZ6ueNsix6GKNQLs3Zj0x/5tqw3nCgt1sUy6GPxsCGysiD6ZWWEOq/ImIhhIR2i
+         E61OVWJP7lGvvolFBIptIht0bLkmyjceT7yOPqZChtkEHiXh6lfJdKpW47iKwsqKQTWl
+         /1Ajzv2YIz2O9XT1fRTdddi8P20+yHHRB5IMIt+loF38tWS5BnvLuY0f1pEM263RWfn7
+         nPY2scMRosAcKNc/Q/sTg60kXC0BlpZgajYgNP89l8MTDQTgAcZyXrstF5Lv63zz51D6
+         jP1Q==
+X-Received: by 10.68.173.97 with SMTP id bj1mr8219020pbc.122.1438697338674;
+        Tue, 04 Aug 2015 07:08:58 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by smtp.gmail.com with ESMTPSA id wc8sm1574274pab.45.2015.08.04.07.05.21
+        by smtp.gmail.com with ESMTPSA id qc9sm561141pab.18.2015.08.04.07.08.55
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Aug 2015 07:06:45 -0700 (PDT)
+        Tue, 04 Aug 2015 07:08:57 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.280.gd88bd6e
 In-Reply-To: <20150728164311.GA1948@yoshi.chippynet.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275322>
 
 Let command-line options override saved options in git-am when resuming
 
