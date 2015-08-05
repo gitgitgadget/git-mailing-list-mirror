@@ -1,85 +1,62 @@
-From: Clemens Buchacher <clemens.buchacher@intel.com>
-Subject: Re: [PATCH] git_open_noatime: return with errno=0 on success
-Date: Wed, 5 Aug 2015 16:36:00 +0200
-Organization: Intel Deutschland GmbH - Registered Address: Am Campeon 10-12, 85579 Neubiberg, Germany - Tel: +49 89 99 8853-0, www.intel.de - Managing Directors: Prof. Dr. Hermann Eul, Christin Eisenschmid - Chairperson of the Supervisory Board: Tiffany Doon Silva - Registered Office: Munich - Commercial Register: Amtsgericht Mnchen HRB 186928
-Message-ID: <20150805143600.GA3111@musxeris015.imu.intel.com>
-References: <20150708123820.GA25269@musxeris015.imu.intel.com> <CAPig+cSacM_JwZzagOVZpMJF=oE7m3rMnq1eKr=aNsGY0vvmfQ@mail.gmail.com> <20150804082429.GA22271@musxeris015.imu.intel.com> <xmqqfv3y6a24.fsf@gitster.dls.corp.google.com> <CA+55aFx-WXxCbVTWdJHFf4WA2MNXS3UMerv4cD1wtsZGaQkJLw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] am: let command-line options override saved options
+Date: Wed, 05 Aug 2015 08:41:44 -0700
+Message-ID: <xmqq37zx68uf.fsf@gitster.dls.corp.google.com>
+References: <20150728164311.GA1948@yoshi.chippynet.com>
+	<1438697331-29948-1-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Martin =?iso-8859-1?Q?Schr=F6der?= <martin.h.schroeder@intel.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 16:45:55 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+	Jeff King <peff@peff.net>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 17:41:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMzx3-0003Sw-Lf
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 16:45:54 +0200
+	id 1ZN0pE-0006DF-Iy
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 17:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637AbbHEOps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 10:45:48 -0400
-Received: from mga02.intel.com ([134.134.136.20]:45548 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752389AbbHEOps (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 10:45:48 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga101.jf.intel.com with ESMTP; 05 Aug 2015 07:36:03 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.15,617,1432623600"; 
-   d="scan'208";a="777370714"
-Received: from musxeris015.imu.intel.com (HELO localhost) ([10.216.40.13])
-  by fmsmga002.fm.intel.com with ESMTP; 05 Aug 2015 07:36:01 -0700
-Content-Disposition: inline
-In-Reply-To: <CA+55aFx-WXxCbVTWdJHFf4WA2MNXS3UMerv4cD1wtsZGaQkJLw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.2i
+	id S1752795AbbHEPls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 11:41:48 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34935 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752728AbbHEPlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 11:41:47 -0400
+Received: by pabxd6 with SMTP id xd6so21267643pab.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2015 08:41:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=m72OBpNFW8NCSGgHc7U+fwcMBQP6u6BYUVv+Rhk3E/0=;
+        b=pSnqyy2V+an9oyWDhdi3n6sivf/ZylhvNG0P5HM2qemf07tOgzeUdMkeW3nTGqVOdJ
+         9ZtMnbHb6sMZO5vLkT4WcO3YeASou2CGMx9wslM0gGIUSgk6mfj9cMuEqBWXcZPap8rA
+         TL9Dy5O4yDjYrPpYq4E5j4Fc+5/lTbCMC0IPHu1f4pab9/bEQj9q2f9AB4h3bNOnlfKS
+         4JtHkEdoTXAcoWyWWaRMg/pZlnIXTlxxdkCpZaR+4727WYsdAVghI90BZ7QaStT01vHy
+         3jJW0GfFBYqYTX6a3+UYtEwb3cbmpd0KOCLmS814A7euWoXRUrYU856wTzoC4UouakTa
+         eNag==
+X-Received: by 10.67.5.2 with SMTP id ci2mr20369341pad.97.1438789306729;
+        Wed, 05 Aug 2015 08:41:46 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:5cf0:2451:9503:37d])
+        by smtp.gmail.com with ESMTPSA id kr1sm3285656pbc.93.2015.08.05.08.41.45
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 05 Aug 2015 08:41:45 -0700 (PDT)
+In-Reply-To: <1438697331-29948-1-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Tue, 4 Aug 2015 22:08:48 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275371>
 
-On Wed, Aug 05, 2015 at 10:59:09AM +0200, Linus Torvalds wrote:
-> On Tue, Aug 4, 2015 at 11:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > I would agree it is a good idea to clear it after seeing the first
-> > open fail due to lack of O_NOATIME before trying open for the second
-> > time, iow, more like this?
+Interesting.  This seems to break test under prove.
 
-Looks good to me.
+    cd t && make T=t4153-am-resume-override-opts.sh prove
 
-> So I don't think this is _wrong_ per se, but I think the deeper issue
-> is that somebody cares about 'errno' here in the first place.
-> 
-> A stale 'errno' generally shouldn't matter, because we either
-> 
->  (a) return success (and nobody should look at errno)
-> 
-> or
-> 
->  (b) return an error later, without setting errno for that _later_ error.
-> 
-> and I think either of those two situations are the real bug, and this
-> "clear stale errno" is just a workaround.
-
-I agree. But I do not see how to get there easily.
-
-We are trying to read an object. We first try to read from a pack. We
-may encounter broken pack files, missing index files, unreadable files,
-but those errors are not necessarily fatal since we may still be able to
-read the object from the next pack file or from a sha1 file.
-
-If finally we do not find the object anywhere, in
-read_sha1_file_extended we try our best to die with an appropriate error
-message, for example by looking at errno, and otherwise we just return
-NULL. Most callers seem to die explicitly or they dereference the null
-pointer.
-
-I think we should instead output error messages closer to the source,
-like for example in map_sha1_file, but continue anyway. In particular we
-should immediately report failures due to EPERM or unexpected ENOENT. In
-the end we may return NULL without another message, but at least the
-user should have some hints about what went wrong along the way.
+does not seem to return.
