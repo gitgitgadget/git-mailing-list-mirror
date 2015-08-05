@@ -1,214 +1,93 @@
-From: Jan Viktorin <viktorin@rehivetech.com>
-Subject: Re: [PATCH v2] send-email: provide whitelist of SMTP AUTH
- mechanisms
-Date: Wed, 5 Aug 2015 09:17:47 +0200
-Organization: RehiveTech, spol. s r.o.
-Message-ID: <20150805091747.242e8fa1@jvn>
-References: <1438533769-17460-1-git-send-email-viktorin@rehivetech.com>
-	<CAPig+cQwFxVtO1C_RAumGP6_et21ggORB4jhpcUtBYNznNH1qA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] fix clone guess_dir_name regression in v2.4.8
+Date: Wed, 5 Aug 2015 04:35:26 -0400
+Message-ID: <20150805083526.GA22325@sigill.intra.peff.net>
+References: <CAHGBnuNLoNsxPK4YQ+HnT_q8F-HrVC_y9pZwB4G88jCq0-wCPg@mail.gmail.com>
+ <0000014e740f7a8a-2c988a36-633e-4b30-8024-cb4a1de1a8a2-000000@eu-west-1.amazonses.com>
+ <20150804043401.4494.43725@typhoon>
+ <CAHGBnuMXkqhFUhen9tPfEsfFAHhbqMeFUxvePS_6A-TtMfZpzg@mail.gmail.com>
+ <20150804224246.GA29051@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 09:18:11 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	Lukas Fleischer <lfleischer@lfos.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 10:35:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMsxl-0006z2-Pi
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 09:18:10 +0200
+	id 1ZMuAt-0006jx-6N
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 10:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbbHEHSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 03:18:04 -0400
-Received: from w-smtp-out-7.wedos.net ([46.28.106.5]:58170 "EHLO
-	we2-f167.wedos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750735AbbHEHSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 03:18:03 -0400
-Received: from ([109.81.211.51])
-        by we2-f167.wedos.net (WEDOS Mail Server mail2) with ASMTP id STW00157;
-        Wed, 05 Aug 2015 09:17:57 +0200
-In-Reply-To: <CAPig+cQwFxVtO1C_RAumGP6_et21ggORB4jhpcUtBYNznNH1qA@mail.gmail.com>
-X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-unknown-linux-gnu)
+	id S1751969AbbHEIfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 04:35:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40983 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751294AbbHEIfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 04:35:31 -0400
+Received: (qmail 20978 invoked by uid 102); 5 Aug 2015 08:35:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 03:35:31 -0500
+Received: (qmail 27219 invoked by uid 107); 5 Aug 2015 08:35:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 04:35:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Aug 2015 04:35:26 -0400
+Content-Disposition: inline
+In-Reply-To: <20150804224246.GA29051@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275353>
 
-Hello Eric, all,
+On Tue, Aug 04, 2015 at 06:42:46PM -0400, Jeff King wrote:
 
-thanks for comments, the coding style will be fixed
-in the next version (I cannot find a way how to set
-vim to help me with those if<SPACE>( issues. I always/often
-forget it when writing so I never do it to be consistent.).
+> > I did not intend this change in behavior, and I can confirm that
+> > reverting my patch restores the original behavior. Thanks for bringing
+> > this to my attention, I'll work on a patch.
+> 
+> I think this regression is in v2.4.8, as well. We should be able to use
+> a running "len" instead of the "end" pointer in the earlier part, and
+> then use strip_suffix_mem later (to strip from our already-reduced
+> length, rather than the full NUL-terminated string). Like this:
 
-Do I understand well that you are complaining about too
-narrow commmit message?
+Looks like "git clone --bare host:foo/.git" is broken, too. I've added
+some tests to cover the recently broken cases, as well as some obvious
+normal cases (which the patch I sent earlier break!). And as a bonus, we
+can easily cover Patrick's root-repo problems (so people will actually
+run the tests, unlike the stuff in t1509. :) ).
 
-I am trying to figure out how to write a test. It is
-not very clear to me, what the testing suite does. My
-attempt looks this way at the moment:
+> @@ -167,14 +166,14 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+>  	 * the form  "remote.example.com:foo.git", i.e. no slash
+>  	 * in the directory part.
+>  	 */
+> -	start = end;
+> +	start = repo + len;
+>  	while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
+>  		start--;
+>  
+>  	/*
+>  	 * Strip .{bundle,git}.
+>  	 */
+> -	strip_suffix(start, is_bundle ? ".bundle" : ".git" , &len);
+> +	strip_suffix_mem(start, &len, is_bundle ? ".bundle" : ".git");
 
-1657 do_smtp_auth_test() {
-1658         git send-email \
-1659                 --from="Example <nobody@example.com>" \
-1660                 --to=someone@example.com \
-1661                 --smtp-server="$(pwd)/fake.sendmail" \
-1662                 --smtp-auth="$1" \
-1663                 -v \
-1664                 0001-*.patch \
-1665                 2>errors >out
-1666 }
-1667 
-1668 test_expect_success $PREREQ 'accepts SMTP AUTH mechanisms (see RFC-4422, p. 8)' '
-1669         do_smtp_auth_test "PLAIN LOGIN CRAM-MD5 DIGEST-MD5 GSSAPI EXTERNAL ANONYMOUS" &&
-1670         do_smtp_auth_test "ABCDEFGHIKLMNOPQRSTUVWXYZ 0123456789_-"
-1671 '
-1672 
-1673 test_expect_success $PREREQ 'does not accept non-RFC-4422 strings for SMTP AUTH' '
-1674         test_must_fail do_smtp_auth_test "../ATTACK" &&
-1675         test_must_fail do_smtp_auth_test "TOO-LONG-BUT-VALID-STRING" &&
-1676         test_must_fail do_smtp_auth_test "no-lower-case-sorry"
-1677 '
+This is crap, of course. Our "len" variable is computed from the start
+of "repo", of which "start" is a subset. So we are indexing way out of
+bounds here.
 
-* I do not know yet, what to check after each do_smtp_auth_test call.
-* Perhaps, each case should have its own test_expect_success call?
-* Why send-email -v does not generate any output?
-  (I found a directory 'trash directory.t9001-send-email', however, the
-  errors file is always empty.)
-* Is there any other place where the files out, errors are placed?
-* I have no idea what the fake.sendmail does (I could see its contents
-  but still...). Is it suitable for my tests?
-* Should I check the behaviour '--smtp-auth overrides
-  sendemail.smtpAuth'?
+As it turns out, this actually makes things simpler. We can stop using
+"len" entirely in the early part, and leave it as-is with pointer math
+(the patch I sent earlier did not really make anything simpler, anyway).
+And then we can just compute the length of "start" here, minus
+everything we've stripped off the end (i.e., "len = end - start").
 
-Regards
-Jan
+Here are the patches.
 
-On Sun, 2 Aug 2015 14:57:19 -0400
-Eric Sunshine <sunshine@sunshineco.com> wrote:
+  [1/2]: clone: add tests for output directory
+  [2/2]: clone: use computed length in guess_dir_name
 
-> On Sun, Aug 2, 2015 at 12:42 PM, Jan Viktorin
-> <viktorin@rehivetech.com> wrote:
-> > When sending an e-mail, the client and server must
-> > agree on an authentication mechanism. Some servers
-> > (due to misconfiguration or a bug) deny valid
-> > credentials for certain mechanisms. In this patch,
-> > a new option --smtp-auth and configuration entry
-> > smtpauth are introduced. If smtp_auth is defined,
-> > it works as a whitelist of allowed mechanisms for
-> > authentication selected from the ones supported by
-> > the installed SASL perl library.
-> 
-> Nit: This would read a bit more nicely if wrapped to 70-72 columns.
-> 
-> > Signed-off-by: Jan Viktorin <viktorin@rehivetech.com>
-> > ---
-> > diff --git a/Documentation/git-send-email.txt
-> > b/Documentation/git-send-email.txt index 7ae467b..c237c80 100644
-> > --- a/Documentation/git-send-email.txt
-> > +++ b/Documentation/git-send-email.txt
-> > @@ -171,6 +171,14 @@ Sending
-> > +--smtp-auth=<mechs>::
-> > +       Specify allowed SMTP-AUTH mechanisms. This setting forces
-> > using only
-> > +       the listed mechanisms. Separate allowed mechanisms by a
-> > whitespace.
-> 
-> Perhaps:
-> 
->     Whitespace-separated list of allowed SMTP-AUTH mechanisms.
-> 
-> > +       Example: PLAIN LOGIN GSSAPI. If at least one of the
-> > specified mechanisms
-> > +       matchs those advertised by the SMTP server and it is
-> > supported by the SASL
-> 
-> s/matchs/matches/
-> 
-> > +       library we use, it is used for authentication. If neither
-> > of 'sendemail.smtpAuth'
-> > +       or '--smtp-auth' is specified, all mechanisms supported on
-> > client can be used.
-> 
-> s/neither of/neither/
-> s/or/nor/
-> 
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index ae9f869..ebc1e90 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -75,6 +75,9 @@ git send-email [options] <file | directory |
-> > rev-list options > Pass an empty string to disable certificate
-> >                                       verification.
-> >      --smtp-domain           <str>  * The domain name sent to
-> > HELO/EHLO handshake
-> > +    --smtp-auth             <str>  * Space separated list of
-> > allowed AUTH methods.
-> 
-> s/Space separated/Space-separated/
-> 
-> > +                                     This setting forces to use
-> > one of the listed methods.
-> > +                                     Supported: PLAIN LOGIN
-> > CRAM-MD5 DIGEST-MD5.
-> 
-> Since you're no longer checking explicitly for these mechanisms, you
-> probably want to drop the "Supported:" line.
-> 
-> >      --smtp-debug            <0|1>  * Disable, enable Net::SMTP
-> > debug.
-> >
-> >    Automating:
-> > @@ -1136,6 +1141,10 @@ sub smtp_auth_maybe {
-> >                 Authen::SASL->import(qw(Perl));
-> >         };
-> >
-> > +       if($smtp_auth !~ /^(\b[A-Z0-9-_]{1,20}\s*)*$/) {
-> > +               die "invalid smtp auth: '${smtp_auth}'";
-> > +       }
-> 
-> Style: space after 'if'
-> 
-> >         # TODO: Authentication may fail not because credentials were
-> >         # invalid but due to other reasons, in which we should not
-> >         # reject credentials.
-> > @@ -1148,6 +1157,20 @@ sub smtp_auth_maybe {
-> >                 'password' => $smtp_authpass
-> >         }, sub {
-> >                 my $cred = shift;
-> > +
-> > +               if($smtp_auth) {
-> 
-> Style: space after 'if'
-> 
-> > +                       my $sasl = Authen::SASL->new(
-> > +                               mechanism => $smtp_auth,
-> > +                               callback => {
-> > +                                       user => $cred->{'username'},
-> > +                                       pass => $cred->{'password'},
-> > +                                       authname =>
-> > $cred->{'username'},
-> > +                               }
-> > +                       );
-> > +
-> > +                       return !!$smtp->auth($sasl);
-> > +               }
-> > +
-> >                 return !!$smtp->auth($cred->{'username'},
-> > $cred->{'password'}); });
-> >
-> > --
-> > 2.5.0
-
-
-
--- 
-  Jan Viktorin                E-mail: Viktorin@RehiveTech.com
-  System Architect            Web:    www.RehiveTech.com
-  RehiveTech                  Phone: +420 606 201 868
-  Brno, Czech Republic
+-Peff
