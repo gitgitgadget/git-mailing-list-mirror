@@ -1,330 +1,248 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v9 03/11] ref-filter: implement an `align` atom
-Date: Thu,  6 Aug 2015 00:24:14 +0530
-Message-ID: <1438800854-19901-1-git-send-email-Karthik.188@gmail.com>
-References: <CAOLa=ZRnnMBKpsq1ANBVgF2=xwK=A2EsPKKrGS0R4mZ8iATKfA@mail.gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 05 20:54:29 2015
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/4] submodule: implement `module_name` as a builtin
+ helper
+Date: Wed, 5 Aug 2015 21:06:35 +0200
+Message-ID: <55C25EBB.2000304@web.de>
+References: <1438733070-15805-1-git-send-email-sbeller@google.com>
+ <1438733070-15805-2-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 05 21:06:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZN3pa-00033s-KU
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 20:54:27 +0200
+	id 1ZN41X-0000uq-Qv
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 21:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbbHESyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 14:54:15 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:34408 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670AbbHESyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 14:54:12 -0400
-Received: by pdber20 with SMTP id er20so21857597pdb.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 11:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BvumUHhyZ+xE8ygq35c+PSAhnmRoGGk+nTD+s5d0yHk=;
-        b=c2cJAbTpMJmPYVeaiAqaN/DETTKYcqe/cOYiY+jqPFKxZp0npDeyNoIG0dKMRXpTZn
-         x9kEhNeULE/aulC4ngUj3BjkwrvlYO3tEp7Drca2UQX63jGENreb/PT1bNuoOa4BZ11k
-         x+E7Pt5mwbOr70OGldI7GNMlW1LP6RojlX7gpNZWpMZ2LMRS0wzSnwKSrAhNTAADmEzX
-         nURJnxNEg0OLUyO6xqxfpVwPxC/Ite2Su6liJIG+2ubqE8GjY+XPPKmeuXIk/g+2gsrg
-         VHQ1xAGSJCNSm2CUH+sCxoEadCxm8xVuPLQecl+d/goRYXtNcyzQTn8+3WsJXGmapvrr
-         wYEw==
-X-Received: by 10.70.37.77 with SMTP id w13mr22308726pdj.49.1438800851892;
-        Wed, 05 Aug 2015 11:54:11 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id sp1sm3764412pab.4.2015.08.05.11.54.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Aug 2015 11:54:11 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <CAOLa=ZRnnMBKpsq1ANBVgF2=xwK=A2EsPKKrGS0R4mZ8iATKfA@mail.gmail.com>
+	id S1751912AbbHETGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 15:06:43 -0400
+Received: from mout.web.de ([212.227.17.11]:60590 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751536AbbHETGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 15:06:42 -0400
+Received: from [192.168.178.41] ([79.211.101.152]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LfRvZ-1Z3gcm07dh-00p7Zm; Wed, 05 Aug 2015 21:06:37
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <1438733070-15805-2-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:o6gTK6CazzKXdkI6MLVazzDZEP0zCNqthJjp68CLBIVQXy4yNsX
+ +q7NOjwOC60pR6mKZJbHOfZO2d41yYgfOjYvnfG1gvy5xnhu7VnM+pS1Ju+FZIfXxp0d+UO
+ pQ+keNUh0Xwn8EnpXCQ2RWa4OzVyOyDs5ZyT0fTxLH9Qk5rA4ya0Lr1S/yMjz9dYGaLV0HZ
+ PNIObQ4un1d4BrrSdrQfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uNki/74GXVE=:MKBy4Dz6PZO74gPw8Fuo0e
+ FuiVtKLifzD9Wg+FASqFjPqeTDz5QWe2seuOd6aDb7HSZvigdy/drZDUVO21H41EBO6dzUg4p
+ 4jW0DI5D9AQ2GkHCn0H9FoYNkzy5tacBf2V/b311VMRt+0BIGTdd7nG7MRMSx6uFg8sigfx8R
+ Eye6N1gBUwZMhYwgs+a/pKJUJCHrKsokgin0i2X4xR7IXu/7UR6OF+oohOom6Rr57CO1Q4GQ3
+ DuAScZadJHacVtyYjr/88gW1LevJsUm/aGYn4TFmPAmTSvtQVlPZg4FJnLwlSEzm8ZyOF9xba
+ oeCK8N/vv8SHLf7r9CEfZvQtbtnk4ncGVop6vl3euxOMkpv8nGhmySarJpnyawh+s6wvVx4MH
+ R82Bl/FJAAk+8B1+TW4ssOEkipkFFY5wXKyAS4V1SnmaxJz9rF9MQlqb6KbyXZMuotjo0OHwC
+ c6NOiYjZfp3kJXOMWDsfHyfAuTNSay8J5PoychfPQfGbEG7Lq5Gcchf7J/BlnYpY2Tk0zcYa0
+ QTmHwN1PWJ79qdRGrCd2iBOv8mVlLix8v+PYrpLyGlFFVNEsX/XfbMxNOQoT4Pb+VZQtCYmtj
+ Jd1EBUa5o94T7bEU0K1Ggpvd1NjqgNNea4+4wX6iyHJUU2/r3K/Q+kr9Ir9IJURSqwuDPJZcI
+ KBos/qbmf2IyKSiFN5isjMZn5XmLxjSEkn1ThohEes3qAo0MFamM+XrBHRFkU+Two3Ks=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275387>
 
-Implement an `align` atom which will act as a modifier atom and align
-any string with or without an %(atom) appearing before a %(end) atom
-to the right, left or middle.
+Am 05.08.2015 um 02:04 schrieb Stefan Beller:
+> The goal of this series being rewriting `git submodule update`,
+> we don't want to call out to the shell script for config lookups.
+>
+> So reimplement the lookup of the submodule name in C.
 
-It is followed by `:<type>,<paddinglength>`, where the `<type>` is
-either left, right or middle and `<paddinglength>` is the total length
-of the padding to be performed. If the atom length is more than the
-padding length then no padding is performed. e.g. to pad a succeeding
-atom to the middle with a total padding size of 40 we can do a
---format="%(align:middle,40).."
+Cool. This brings down the duration of the test suite from 3:13
+to 3:12 for me (best of three).
 
-Add documentation and tests for the same.
+You might wanna have a look into submodule.c: after initially
+calling gitmodules_config() one can lookup the submodule name
+in the static "config_name_for_path" string_list. If you'd add
+a public method to submodule.c which accesses that string_list
+and returns the name for the given path, you won't need your
+two new functions ... or am I missing something?
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-for-each-ref.txt |  8 ++++
- ref-filter.c                       | 84 +++++++++++++++++++++++++++++++++++---
- ref-filter.h                       | 18 +++++++-
- t/t6302-for-each-ref-filter.sh     | 48 ++++++++++++++++++++++
- 4 files changed, 151 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index e49d578..d865f98 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -127,6 +127,14 @@ color::
- 	Change output color.  Followed by `:<colorname>`, where names
- 	are described in `color.branch.*`.
- 
-+align::
-+	Align any string with or without %(atom) before the %(end)
-+	atom to the right, left or middle. Followed by
-+	`:<type>,<paddinglength>`, where the `<type>` is either left,
-+	right or middle and `<paddinglength>` is the total length of
-+	the padding to be performed. If the string length is more than
-+	the padding length then no padding is performed.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/ref-filter.c b/ref-filter.c
-index 2c074a1..d123299 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -10,6 +10,7 @@
- #include "quote.h"
- #include "ref-filter.h"
- #include "revision.h"
-+#include "utf8.h"
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-@@ -53,6 +54,8 @@ static struct {
- 	{ "flag" },
- 	{ "HEAD" },
- 	{ "color" },
-+	{ "align" },
-+	{ "end" },
- };
- 
- /*
-@@ -620,7 +623,7 @@ static void populate_value(struct ref_array_item *ref)
- 		const char *name = used_atom[i];
- 		struct atom_value *v = &ref->value[i];
- 		int deref = 0;
--		const char *refname;
-+		const char *refname = NULL;
- 		const char *formatp;
- 		struct branch *branch = NULL;
- 
-@@ -687,6 +690,29 @@ static void populate_value(struct ref_array_item *ref)
- 			else
- 				v->s = " ";
- 			continue;
-+		} else if (starts_with(name, "align:")) {
-+			const char *valp = NULL;
-+			struct align *align = xmalloc(sizeof(struct align));
-+
-+			skip_prefix(name, "align:", &valp);
-+
-+			if (skip_prefix(valp, "left,", &valp))
-+				align->align_type = ALIGN_LEFT;
-+			else if (skip_prefix(valp, "right,", &valp))
-+				align->align_type = ALIGN_RIGHT;
-+			else if (skip_prefix(valp, "middle,", &valp))
-+				align->align_type = ALIGN_MIDDLE;
-+			else
-+				die(_("align: improper format"));
-+			if (strtoul_ui(valp, 10, &align->align_value))
-+				die(_("align: positive value expected"));
-+			v->align = align;
-+			v->modifier_atom = 1;
-+			continue;
-+		} else if (starts_with(name, "end")) {
-+			v->end = 1;
-+			v->modifier_atom = 1;
-+			continue;
- 		} else
- 			continue;
- 
-@@ -1251,12 +1277,48 @@ static void emit(const char *cp, const char *ep, struct ref_formatting_state *st
- 
- static void process_formatting_state(struct atom_value *atomv, struct ref_formatting_state *state)
- {
--	/* Based on the atomv values, the formatting state is set */
-+	if (atomv->align) {
-+		state->align = atomv->align;
-+		atomv->align = NULL;
-+	}
-+	if (atomv->end)
-+		state->end = 1;
- }
- 
- static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *final)
- {
--	/* More formatting options to be evetually added */
-+	if (state->align && state->end) {
-+		struct strbuf *value = state->output;
-+		int len = 0, buf_len = value->len;
-+		struct align *align = state->align;
-+
-+		if (!value->buf)
-+			return;
-+		if (!is_utf8(value->buf)) {
-+			len = value->len - utf8_strwidth(value->buf);
-+			buf_len -= len;
-+		}
-+
-+		if (align->align_value < buf_len) {
-+			state->align = NULL;
-+			strbuf_addbuf(final, value);
-+			strbuf_release(value);
-+			return;
-+		}
-+
-+		if (align->align_type == ALIGN_LEFT)
-+			strbuf_addf(final, "%-*s", len + align->align_value, value->buf);
-+		else if (align->align_type == ALIGN_MIDDLE) {
-+			int right = (align->align_value - buf_len)/2;
-+			strbuf_addf(final, "%*s%-*s", align->align_value - right + len,
-+				    value->buf, right, "");
-+		} else if (align->align_type == ALIGN_RIGHT)
-+			strbuf_addf(final, "%*s", align->align_value, value->buf);
-+		strbuf_release(value);
-+		state->align = NULL;
-+		return;
-+	} else if (state->align)
-+		return;
- 	strbuf_addbuf(final, state->output);
- 	strbuf_release(state->output);
- }
-@@ -1282,10 +1344,19 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 			apply_formatting_state(&state, &final_buf);
- 		}
- 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
--		process_formatting_state(atomv, &state);
--		print_value(atomv, &state);
--		apply_formatting_state(&state, &final_buf);
-+		if (atomv->modifier_atom)
-+			process_formatting_state(atomv, &state);
-+		else {
-+			print_value(atomv, &state);
-+			apply_formatting_state(&state, &final_buf);
-+		}
-+		if (atomv->end) {
-+			print_value(atomv, &state);
-+			apply_formatting_state(&state, &final_buf);
-+		}
- 	}
-+	if (state.align)
-+		die(_("format: align used without an `end` atom"));
- 	if (*cp) {
- 		sp = cp + strlen(cp);
- 		emit(cp, sp, &state);
-@@ -1301,6 +1372,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 		print_value(&resetv, &state);
- 		apply_formatting_state(&state, &final_buf);
- 	}
-+
- 	for (i = 0; i < final_buf.len; i++)
- 		printf("%c", final_buf.buf[i]);
- 	putchar('\n');
-diff --git a/ref-filter.h b/ref-filter.h
-index 9e6c2d4..5575fe9 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -16,14 +16,30 @@
- #define FILTER_REFS_INCLUDE_BROKEN 0x1
- #define FILTER_REFS_ALL 0x2
- 
-+typedef enum {
-+	ALIGN_LEFT,
-+	ALIGN_MIDDLE,
-+	ALIGN_RIGHT
-+} align_type;
-+
- struct ref_formatting_state {
--	int quote_style;
- 	struct strbuf *output;
-+	struct align *align;
-+	int quote_style;
-+	unsigned int end : 1;
-+};
-+
-+struct align {
-+	align_type align_type;
-+	unsigned int align_value;
- };
- 
- struct atom_value {
- 	const char *s;
-+	struct align *align;
- 	unsigned long ul; /* used for sorting when not FIELD_STR */
-+	unsigned int modifier_atom : 1,
-+		end : 1;
- };
- 
- struct ref_sorting {
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 505a360..76041a2 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -81,4 +81,52 @@ test_expect_success 'filtering with --contains' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'left alignment' '
-+	cat >expect <<-\EOF &&
-+	refname is refs/heads/master  |refs/heads/master
-+	refname is refs/heads/side    |refs/heads/side
-+	refname is refs/odd/spot      |refs/odd/spot
-+	refname is refs/tags/double-tag|refs/tags/double-tag
-+	refname is refs/tags/four     |refs/tags/four
-+	refname is refs/tags/one      |refs/tags/one
-+	refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	refname is refs/tags/three    |refs/tags/three
-+	refname is refs/tags/two      |refs/tags/two
-+	EOF
-+	git for-each-ref --format="%(align:left,30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'middle alignment' '
-+	cat >expect <<-\EOF &&
-+	| refname is refs/heads/master |refs/heads/master
-+	|  refname is refs/heads/side  |refs/heads/side
-+	|   refname is refs/odd/spot   |refs/odd/spot
-+	|refname is refs/tags/double-tag|refs/tags/double-tag
-+	|   refname is refs/tags/four  |refs/tags/four
-+	|   refname is refs/tags/one   |refs/tags/one
-+	|refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	|  refname is refs/tags/three  |refs/tags/three
-+	|   refname is refs/tags/two   |refs/tags/two
-+	EOF
-+	git for-each-ref --format="|%(align:middle,30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'right alignment' '
-+	cat >expect <<-\EOF &&
-+	|  refname is refs/heads/master|refs/heads/master
-+	|    refname is refs/heads/side|refs/heads/side
-+	|      refname is refs/odd/spot|refs/odd/spot
-+	|refname is refs/tags/double-tag|refs/tags/double-tag
-+	|     refname is refs/tags/four|refs/tags/four
-+	|      refname is refs/tags/one|refs/tags/one
-+	|refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	|    refname is refs/tags/three|refs/tags/three
-+	|      refname is refs/tags/two|refs/tags/two
-+	EOF
-+	git for-each-ref --format="|%(align:right,30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.5.0
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+>   When I started to implement git submodule add in the helper, I realized
+>   the very first thing to be done would be module_name translated to C,
+>   so I did that separately. Maybe we need to split this up as well into two
+>   separate steps for processing and I/O, such that it can be reused better
+>   from a future "git submodule--helper update" function
+>
+>   builtin/submodule--helper.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
+>   git-submodule.sh            | 32 +++++++-----------------------
+>   2 files changed, 54 insertions(+), 25 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index cb18ddf..dd5635f 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -5,6 +5,8 @@
+>   #include "pathspec.h"
+>   #include "dir.h"
+>   #include "utf8.h"
+> +#include "run-command.h"
+> +#include "string-list.h"
+>
+>   static char *ps_matched;
+>   static const struct cache_entry **ce_entries;
+> @@ -98,6 +100,48 @@ static int module_list(int argc, const char **argv, const char *prefix)
+>   	return 0;
+>   }
+>
+> +
+> +static int collect_module_names(const char *key, const char *value, void *cb)
+> +{
+> +	size_t len;
+> +	struct string_list *sl = cb;
+> +
+> +	if (starts_with(key, "submodule.")
+> +	    && strip_suffix(key, ".path", &len)) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		strbuf_add(&sb, key + strlen("submodule."),
+> +				len - strlen("submodule."));
+> +		string_list_insert(sl, value)->util = strbuf_detach(&sb, NULL);
+> +		strbuf_release(&sb);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int module_name(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct string_list_item *item;
+> +	struct git_config_source config_source;
+> +	struct string_list values = STRING_LIST_INIT_DUP;
+> +
+> +	if (!argc)
+> +		usage("git submodule--helper module_name <path>\n");
+> +
+> +	memset(&config_source, 0, sizeof(config_source));
+> +	config_source.file = ".gitmodules";
+> +
+> +	if (git_config_with_options(collect_module_names, &values,
+> +				    &config_source, 1) < 0)
+> +		die(_("unknown error occured while reading the git modules file"));
+> +
+> +	item = string_list_lookup(&values, argv[0]);
+> +	if (item)
+> +		printf("%s\n", (char*)item->util);
+> +	else
+> +		die("No submodule mapping found in .gitmodules for path '%s'", argv[0]);
+> +	return 0;
+> +}
+> +
+>   int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>   {
+>   	if (argc < 2)
+> @@ -106,6 +150,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>   	if (!strcmp(argv[1], "module_list"))
+>   		return module_list(argc - 1, argv + 1, prefix);
+>
+> +	if (!strcmp(argv[1], "module_name"))
+> +		return module_name(argc - 2, argv + 2, prefix);
+> +
+>   usage:
+>   	usage("git submodule--helper module_list\n");
+>   }
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index af9ecef..e6ff38d 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -178,24 +178,6 @@ get_submodule_config () {
+>   	printf '%s' "${value:-$default}"
+>   }
+>
+> -
+> -#
+> -# Map submodule path to submodule name
+> -#
+> -# $1 = path
+> -#
+> -module_name()
+> -{
+> -	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
+> -	sm_path="$1"
+> -	re=$(printf '%s\n' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+> -	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
+> -		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
+> -	test -z "$name" &&
+> -	die "$(eval_gettext "No submodule mapping found in .gitmodules for path '\$sm_path'")"
+> -	printf '%s\n' "$name"
+> -}
+> -
+>   #
+>   # Clone a submodule
+>   #
+> @@ -498,7 +480,7 @@ cmd_foreach()
+>   		then
+>   			displaypath=$(relative_path "$sm_path")
+>   			say "$(eval_gettext "Entering '\$prefix\$displaypath'")"
+> -			name=$(module_name "$sm_path")
+> +			name=$(git submodule--helper module_name "$sm_path")
+>   			(
+>   				prefix="$prefix$sm_path/"
+>   				clear_local_git_env
+> @@ -554,7 +536,7 @@ cmd_init()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>
+>   		displaypath=$(relative_path "$sm_path")
+>
+> @@ -636,7 +618,7 @@ cmd_deinit()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>
+>   		displaypath=$(relative_path "$sm_path")
+>
+> @@ -758,7 +740,7 @@ cmd_update()
+>   			echo >&2 "Skipping unmerged submodule $prefix$sm_path"
+>   			continue
+>   		fi
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>   		url=$(git config submodule."$name".url)
+>   		branch=$(get_submodule_config "$name" branch master)
+>   		if ! test -z "$update"
+> @@ -1022,7 +1004,7 @@ cmd_summary() {
+>   			# Respect the ignore setting for --for-status.
+>   			if test -n "$for_status"
+>   			then
+> -				name=$(module_name "$sm_path")
+> +				name=$(git submodule--helper module_name "$sm_path")
+>   				ignore_config=$(get_submodule_config "$name" ignore none)
+>   				test $status != A && test $ignore_config = all && continue
+>   			fi
+> @@ -1184,7 +1166,7 @@ cmd_status()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>   		url=$(git config submodule."$name".url)
+>   		displaypath=$(relative_path "$prefix$sm_path")
+>   		if test "$stage" = U
+> @@ -1261,7 +1243,7 @@ cmd_sync()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path")
+> +		name=$(git submodule--helper module_name "$sm_path")
+>   		url=$(git config -f .gitmodules --get submodule."$name".url)
+>
+>   		# Possibly a url relative to parent
+>
