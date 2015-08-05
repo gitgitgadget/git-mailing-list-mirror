@@ -1,89 +1,79 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 1/2] tests: fix broken && chains in t1509-root-worktree
-Date: Wed,  5 Aug 2015 11:43:50 +0200
-Message-ID: <1438767831-1620-1-git-send-email-ps@pks.im>
-Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4 0/3] fix repo name when cloning a server's root
+Date: Wed,  5 Aug 2015 12:06:16 +0200
+Message-ID: <1438769179-5943-1-git-send-email-ps@pks.im>
+References: <1437997708-10732-1-git-send-email-ps@pks.im>
+Cc: sunshine@sunshineco.com, ps@pks.im, peff@peff.net,
+	pclouds@gmail.com, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 05 11:44:12 2015
+X-From: git-owner@vger.kernel.org Wed Aug 05 12:06:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZMvF4-0002wz-2y
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 11:44:10 +0200
+	id 1ZMvag-0003jI-5g
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 12:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbbHEJoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 05:44:03 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50531 "EHLO
+	id S1751756AbbHEKGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 06:06:25 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:52777 "EHLO
 	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750968AbbHEJoB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2015 05:44:01 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 68C1320261
-	for <git@vger.kernel.org>; Wed,  5 Aug 2015 05:44:00 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Wed, 05 Aug 2015 05:44:00 -0400
+	by vger.kernel.org with ESMTP id S1751073AbbHEKGY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2015 06:06:24 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 48CAB207D4
+	for <git@vger.kernel.org>; Wed,  5 Aug 2015 06:06:24 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 05 Aug 2015 06:06:24 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:message-id:subject:to
-	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=wm13NWTB8GdvsfS9RSewuxpx+o
-	Q=; b=r49weYkodCSQDCOS0mXXnI/zKwfCBtlTH/EQLjDaslKXO0Cs8s4U3bHs+i
-	ETcyY7UMAWiPhgl6gS6FbvGusSSXoCqRi/XTRRIKtunRQXpV0qv36If8CYvd8NM4
-	IpbtG0ss1N1XGAvHpuxchsUyNHDcuQrvdbgrWFx3uPhLPWnJE=
-X-Sasl-enc: XNOaAh/dK7v6S1BdoYTxie5aObB8DAhAXfWFtv4De7tT 1438767840
+	messagingengine.com; h=cc:date:from:in-reply-to:message-id
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Er0l
+	mjvlY90G0gzZCoJhfcki2OQ=; b=mbW15zdM06gnKzE/T10wowIXMq0D2rhX3xEo
+	jmKW9+d5Z7hyVrfNHj/iC327+8GQno0uOJZj9YGwB6f3vsJW5GqMv7fAD6B7TvHl
+	fl3OS7Ozv8yhAO6wwae4kBGMSHZRBOhXUhMWuqYkIALF4/7WEjTTK2Jf1YDwU6SB
+	hJ2Q4jk=
+X-Sasl-enc: +7yNUahTHglLI6fIEFCjDbB1ajixcsOOk9ykvirnx0LK 1438769183
 Received: from localhost (x5ce10e86.dyn.telefonica.de [92.225.14.134])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 088526801B4;
-	Wed,  5 Aug 2015 05:43:59 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id DC7E7C00012;
+	Wed,  5 Aug 2015 06:06:23 -0400 (EDT)
 X-Mailer: git-send-email 2.5.0
+In-Reply-To: <1437997708-10732-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275363>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
+This is version 4 of my patch series, which aims to improve
+guessed directory names when we clone a server's root, that is we
+have empty path components.
 
-These two patches have previously been part of my patch series
-fixing directory guessing. As Jeff King has been posting a patch
-that contains tests for cloning from a server's root without
-requiring t1509 I now post these two fixes as separate patches.
+This version is still preliminary as it is based upon the patches
+by Peff ([PATCH 0/2] fix clone guess_dir_name regression in
+v2.4.8) which have not been merged yet.
 
- t/t1509-root-worktree.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+As his patches include newly added tests that allow for cloning
+from a server's root without using chroot, the patches regarding
+t1509 have been dropped. I've posted the fixes to them as a
+separate patch series instead.
 
-diff --git a/t/t1509-root-worktree.sh b/t/t1509-root-worktree.sh
-index b6977d4..0c80129 100755
---- a/t/t1509-root-worktree.sh
-+++ b/t/t1509-root-worktree.sh
-@@ -125,7 +125,7 @@ fi
- ONE_SHA1=d00491fd7e5bb6fa28c517a0bb32b8b506539d4d
- 
- test_expect_success 'setup' '
--	rm -rf /foo
-+	rm -rf /foo &&
- 	mkdir /foo &&
- 	mkdir /foo/bar &&
- 	echo 1 > /foo/foome &&
-@@ -218,7 +218,7 @@ unset GIT_WORK_TREE
- 
- test_expect_success 'go to /' 'cd /'
- test_expect_success 'setup' '
--	rm -rf /.git
-+	rm -rf /.git &&
- 	echo "Initialized empty Git repository in /.git/" > expected &&
- 	git init > result &&
- 	test_cmp expected result
-@@ -241,8 +241,8 @@ say "auto bare gitdir"
- 
- # DESTROYYYYY!!!!!
- test_expect_success 'setup' '
--	rm -rf /refs /objects /info /hooks
--	rm /*
-+	rm -rf /refs /objects /info /hooks &&
-+	rm /* &&
- 	cd / &&
- 	echo "Initialized empty Git repository in /" > expected &&
- 	git init --bare > result &&
+Previously I've included a guard such that we only try to find
+the last component if we've got a '/' or ':' in the path. This is
+not really required, though, as in the case where we ain't got
+one of those characters we'll simply skip to the beginning again,
+causing this to be a no-op, due to the port already being
+stripped. So I've simply dropped the guard to minimize code
+churn.
+
+Patrick Steinhardt (3):
+  clone: do not include authentication data in guessed dir
+  clone: do not use port number as dir name
+  clone: abort if no dir name could be guessed
+
+ builtin/clone.c          | 61 ++++++++++++++++++++++++++++++++++++++++--------
+ t/t5603-clone-dirname.sh | 10 ++++++--
+ 2 files changed, 59 insertions(+), 12 deletions(-)
+
 -- 
 2.5.0
