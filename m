@@ -1,146 +1,78 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/4] submodule: implement `module_name` as a builtin helper
-Date: Wed, 5 Aug 2015 09:29:37 -0700
-Message-ID: <CAGZ79kb8q_OzdMTxeNQo6t0T9Ay8TJkMPPqZU-G0CkOZ9rA_hA@mail.gmail.com>
-References: <1438733070-15805-1-git-send-email-sbeller@google.com>
-	<1438733070-15805-2-git-send-email-sbeller@google.com>
-	<CAPig+cQtoWF_9Km4H7MXDf7ySQNUP9gncxkrV3NFTrULA8fbbA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] gitweb: Don't pass --full-history to git-log(1)
+Date: Wed, 05 Aug 2015 09:54:14 -0700
+Message-ID: <xmqqr3nh4qx5.fsf@gitster.dls.corp.google.com>
+References: <1438784487-9176-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 18:29:46 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 18:54:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZN1ZX-0001SH-93
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 18:29:43 +0200
+	id 1ZN1xN-0006m3-Vz
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 18:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753083AbbHEQ3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 12:29:39 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:35906 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752585AbbHEQ3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 12:29:38 -0400
-Received: by ykeo23 with SMTP id o23so39735170yke.3
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 09:29:37 -0700 (PDT)
+	id S1752637AbbHEQyS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Aug 2015 12:54:18 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:34375 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752569AbbHEQyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 12:54:17 -0400
+Received: by pdber20 with SMTP id er20so20718936pdb.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2015 09:54:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4UjsNQKETdqMpQ/EqQwZp+ct18RRv5ocz7t0c08+PRs=;
-        b=Dt8ORNyby7oid22OOzSTU7JwsKx5EhlnFPpS1jlXVzrC521PJ1AtsjszOVOaPESv/t
-         fV4Hc6D53nDBqseUZ5l/qKnOVtGOJl1xUDyhRHwvb8RlHZ9WtAGyIzaA9s3rwndlvxyv
-         Cqok5dqxIQGE3zmDOtE1pqUE1VIiDRpacnXGzhRvq5GxJ+L1FWd/ihA5odBgME4Jkuem
-         oSnAEMcJxq37UAOtzyVFm4fYpcIHTRING/Ul5rsxjTqBct0wQj4hQ0KRTJogu1CFk5te
-         J/F338+6w2AJQ8janDBTJYjaHL7X2pWM330qMSIQBVWdB0Du3k3GU/1zwG0/OBRfUmTp
-         FQ2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=4UjsNQKETdqMpQ/EqQwZp+ct18RRv5ocz7t0c08+PRs=;
-        b=LGwmAAVF0U816Ub7v9CeF4lh2NhD5YEuZUQqqNPd7MriLMrYypqk3aJ5FoLs1Aq9n+
-         vHX+38R3KY5JLDSgzLgx6Ij0fo6XwaxqYbD+4UhE5wbvKsxAbckYJKe7GYNEn/8HkB0r
-         iHhcfy5JinZUYZ/JXgmbOtEtSdbNaNxcCD6l7Y/pEAS5JMqNI+an4HeJCIfE9NNh7d8K
-         5Gr1m5CHD0gw00YOVtvq7zYdOViDSgv5joY9vmfxtdY1SnOFYpJrtS6CNEKvm5sHA2ej
-         EH/TENlXvi0JhyPE2pw7G6QCKwmbuVIhNY4SFBJJQ/1SfoSt9GDu28dvTWme1Ao3Y1ri
-         C9kg==
-X-Gm-Message-State: ALoCoQlv6rovlg6QHS969nmwX2EA6enAbR5tQ2BajtcoV8HLz09DpLniRBIJNhokzieMK2fSF8kh
-X-Received: by 10.170.212.65 with SMTP id d62mr10127429ykf.115.1438792177272;
- Wed, 05 Aug 2015 09:29:37 -0700 (PDT)
-Received: by 10.37.21.129 with HTTP; Wed, 5 Aug 2015 09:29:37 -0700 (PDT)
-In-Reply-To: <CAPig+cQtoWF_9Km4H7MXDf7ySQNUP9gncxkrV3NFTrULA8fbbA@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=tQzijgNZTsd6ZwJQRCTaSLp33x8G5L7DdVkhPPgdqkI=;
+        b=hJkHl/a8jMA0sJzepeUDjMx0NTs7QQBFqrwkeWvvBjtknLK1+z6Rd6Ev328kB7d8wt
+         P05sis5nIn5DA7pqBxfX++poEYfD1YaW9CftRjuv2/J6AwqY3yIERPGgKspwpTwLA3bS
+         8X1QTOq3dfwnN53rPhEvK5/qxCtpx9Yv5Y/3HHAITJVzgeYMcsTAiNadu5KFYvrXO4Dh
+         I1JJdtSEOPHt6VR+QlnXELYa/aVCucUugr7woyLedmBJIIxJxQo20xMLvmHvMm8K8kIS
+         X1r130DhQorXG4+DKjPdXCetUX78p5rE8x+AwXhATiwt/Ls1bE1Dtp+E/1nJ9iBgY42N
+         WoZA==
+X-Received: by 10.70.55.1 with SMTP id n1mr20886113pdp.21.1438793656709;
+        Wed, 05 Aug 2015 09:54:16 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:5cf0:2451:9503:37d])
+        by smtp.gmail.com with ESMTPSA id hb1sm3484417pbd.36.2015.08.05.09.54.15
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 05 Aug 2015 09:54:16 -0700 (PDT)
+In-Reply-To: <1438784487-9176-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 5 Aug
+ 2015 14:21:27 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275375>
 
-On Tue, Aug 4, 2015 at 5:58 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Aug 4, 2015 at 8:04 PM, Stefan Beller <sbeller@google.com> wrote:
->> The goal of this series being rewriting `git submodule update`,
->> we don't want to call out to the shell script for config lookups.
->>
->> So reimplement the lookup of the submodule name in C.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index cb18ddf..dd5635f 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -98,6 +100,48 @@ static int module_list(int argc, const char **argv, const char *prefix)
->> +static int collect_module_names(const char *key, const char *value, void *cb)
->> +{
->> +       size_t len;
->> +       struct string_list *sl = cb;
->> +
->> +       if (starts_with(key, "submodule.")
->> +           && strip_suffix(key, ".path", &len)) {
->> +               struct strbuf sb = STRBUF_INIT;
->> +               strbuf_add(&sb, key + strlen("submodule."),
->> +                               len - strlen("submodule."));
->> +               string_list_insert(sl, value)->util = strbuf_detach(&sb, NULL);
->> +               strbuf_release(&sb);
->
-> Why the complexity and overhead of a strbuf when the same could be
-> accomplished more easily and straightforwardly with xstrndup()?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-fixed.
+> When you look at the history for a file via "git log" we don't show
+> --full-history by default, but the Gitweb UI does so, which can be ve=
+ry
+> confusing for all the reasons discussed in "History Simplification" i=
+n
+> git-log(1) and in
+> http://thread.gmane.org/gmane.comp.version-control.git/89400/focus=3D=
+90659
+>
+> We've been doing history via --full-history since pretty much forever=
+,
+> but I think this is much more usable, and on a typical project with l=
+ots
+> of branches being merged it makes for a much less confusing view. We =
+do
+> this for git log by default, why wouldn't Gitweb follow suit?
 
->
->> +       }
->> +
->> +       return 0;
->> +}
->> +
->> +static int module_name(int argc, const char **argv, const char *prefix)
->> +{
->> +       struct string_list_item *item;
->> +       struct git_config_source config_source;
->> +       struct string_list values = STRING_LIST_INIT_DUP;
->> +
->> +       if (!argc)
->
-> Do you mean?
->
->     if (argc != 1)
+http://thread.gmane.org/gmane.comp.version-control.git/89400/focus=3D90=
+758=20
 
-doh! Yes I meant that.
-
->
->> +               usage("git submodule--helper module_name <path>\n");
->> +
->> +       memset(&config_source, 0, sizeof(config_source));
->> +       config_source.file = ".gitmodules";
->> +
->> +       if (git_config_with_options(collect_module_names, &values,
->> +                                   &config_source, 1) < 0)
->> +               die(_("unknown error occured while reading the git modules file"));
->> +
->> +       item = string_list_lookup(&values, argv[0]);
->> +       if (item)
->> +               printf("%s\n", (char*)item->util);
->> +       else
->> +               die("No submodule mapping found in .gitmodules for path '%s'", argv[0]);
->> +       return 0;
->> +}
->> +
->>  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
->>  {
->>         if (argc < 2)
->> @@ -106,6 +150,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
->>         if (!strcmp(argv[1], "module_list"))
->>                 return module_list(argc - 1, argv + 1, prefix);
->>
->> +       if (!strcmp(argv[1], "module_name"))
->> +               return module_name(argc - 2, argv + 2, prefix);
->> +
->>  usage:
->>         usage("git submodule--helper module_list\n");
->>  }
+seems to agree with you in principle that this would be what gitweb
+should do if it were written today.
