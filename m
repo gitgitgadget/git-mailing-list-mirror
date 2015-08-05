@@ -1,95 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/3] clone: do not include authentication data in guessed dir
-Date: Wed, 05 Aug 2015 12:41:27 -0700
-Message-ID: <xmqqmvy534m0.fsf@gitster.dls.corp.google.com>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
-	<1438769179-5943-1-git-send-email-ps@pks.im>
-	<1438769179-5943-2-git-send-email-ps@pks.im>
-	<xmqqzj253a39.fsf@gitster.dls.corp.google.com>
-	<xmqqr3nh34tv.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/4] submodule: implement `module_name` as a builtin helper
+Date: Wed, 5 Aug 2015 12:55:30 -0700
+Message-ID: <CAGZ79kY=jQSjJUxkznkwwupo527-nT05P_bKXy=GO=E4QjC8tQ@mail.gmail.com>
+References: <1438733070-15805-1-git-send-email-sbeller@google.com>
+	<1438733070-15805-2-git-send-email-sbeller@google.com>
+	<55C25EBB.2000304@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	sunshine@sunshineco.com, pclouds@gmail.com
-To: Patrick Steinhardt <ps@pks.im>
-X-From: git-owner@vger.kernel.org Wed Aug 05 21:41:34 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Aug 05 21:55:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZN4ZB-0008Se-Vf
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 21:41:34 +0200
+	id 1ZN4mo-0006hh-8I
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 21:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233AbbHETla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 15:41:30 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:36231 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752783AbbHETl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 15:41:29 -0400
-Received: by pdco4 with SMTP id o4so22326705pdc.3
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 12:41:29 -0700 (PDT)
+	id S1753185AbbHETzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 15:55:32 -0400
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:33915 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753065AbbHETzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 15:55:31 -0400
+Received: by ykax123 with SMTP id x123so44998305yka.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2015 12:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=wZjJwEN4CsFyJtxiNhLBHLVFc5XUpdQnUO0paWKAgyY=;
-        b=ot7II20IgAen0PBNyQJC+tMqBI4KW1PawDxtmbKb0uniFE/JPu79p1lE0C6lBlZ2eh
-         tVNyikdvUnXpQeeCQp9tafoZF9w96o1DTdbg6ljUxuqQZ2f21CD2Sr4tsqNyYZj+wXf2
-         atNIlq8oDNRZmPJh93fdlnRMDQOsKAnIkCA3Sit5HMBI8f3//YeHrVt3ZRCHLbtobw4H
-         e+G3qNvuWOAEo1heZybQG0NwQiIGRIuP6qIeEi/oikdddLw5F4bEj311FSKIOBnPEv3C
-         Hcl5ZRg+Dufd3uyIK2QZXClQN53nQ8lBrWdeNXJ6fyLWanBky+ZAGf9u840r5dTqYeka
-         f05g==
-X-Received: by 10.70.65.5 with SMTP id t5mr23121473pds.16.1438803689133;
-        Wed, 05 Aug 2015 12:41:29 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:5cf0:2451:9503:37d])
-        by smtp.gmail.com with ESMTPSA id nn13sm3790969pdb.93.2015.08.05.12.41.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 05 Aug 2015 12:41:28 -0700 (PDT)
-In-Reply-To: <xmqqr3nh34tv.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 05 Aug 2015 12:36:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=pnfm8b0kcnpf6IIAMPYQ84ptTzK2PLz35f2CmFssGwU=;
+        b=LVRlQIcm4zJsxym8NESBPpk4FAWKVQLwy2dcED0PBO73hdyIYd/VpPgFLmXRIJtWEL
+         ob95hO1Uso6hCBXoU2y06ZKE1beQDqNHzLPsxfXPk9eFO71SKn8w7143nHLS3IjNyvST
+         db34FKTvjwj0B0wuFskNZ4JuKGRTnj2BSHjOyARxNX6jLtSbs5PBkAr888BfgLQZ5KPJ
+         Tu4fZZvqNIAZF70G60qWjzxoYYiWRpmJiqRnhYoHalD8Wz5e1wo2lkCJ4Jy65uAIra8s
+         5euf2VAHZ+2zV5w1E+VoEZ/tmIAyANu83YBYHNasEuOccWcJyPk7Q3oDsKlxjHwQ5ZAq
+         C1gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=pnfm8b0kcnpf6IIAMPYQ84ptTzK2PLz35f2CmFssGwU=;
+        b=BMRPNRtv4XEk/dwyVUE6COGmT9FEkg2c/foDOBKIitnJ3qG8i4/5tXqU1Xcous3x1F
+         WkgF2VYp30OloEsdBZdtrTJHD/SoCuguhmNf14pZLqi0Nhm0uVX2C7Quc8l3iiwamG2+
+         1FZXSTjmEmDag3k7G5TFuLjzjRBHyUgifkpXi0mWPiQhrddEaz8rfXWfmeLqb6SGkL3O
+         rdLNA1AgGMTX8fGcNmotiHNiehsYB+ElYWdfVh3oeH+pNzTebRJa1qlyt4e6LNJJ5Bnl
+         PTZRHqcZzmM2iRBSGVcyxnDhA0oS6YCV00Wsn5uaHsERxAo2H+UU+f+/R414el/0R41I
+         JKxA==
+X-Gm-Message-State: ALoCoQkqdGw2GNpzg0DNUxHJy6H2bQitBHbJ4OyX+FJBYnL/WseWInIp3UvyvVJCEtSlE2QVrBZM
+X-Received: by 10.13.238.71 with SMTP id x68mr11430826ywe.129.1438804530499;
+ Wed, 05 Aug 2015 12:55:30 -0700 (PDT)
+Received: by 10.37.21.129 with HTTP; Wed, 5 Aug 2015 12:55:30 -0700 (PDT)
+In-Reply-To: <55C25EBB.2000304@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275390>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Aug 5, 2015 at 12:06 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Am 05.08.2015 um 02:04 schrieb Stefan Beller:
+>>
+>> The goal of this series being rewriting `git submodule update`,
+>> we don't want to call out to the shell script for config lookups.
+>>
+>> So reimplement the lookup of the submodule name in C.
+>
+>
+> Cool. This brings down the duration of the test suite from 3:13
+> to 3:12 for me (best of three).
+>
+> You might wanna have a look into submodule.c: after initially
+> calling gitmodules_config() one can lookup the submodule name
+> in the static "config_name_for_path" string_list. If you'd add
+> a public method to submodule.c which accesses that string_list
+> and returns the name for the given path, you won't need your
+> two new functions ... or am I missing something?
 
-> For completeness, here is what I think the end result (together with
-> Peff's series) of the test should look like.
-> ...
-> Note that ssh://user:passw@rd@host:1234/ and user:passw@rd@host:/
-> tests fail for the same reason (finding @ should be greedy, I think).
-
-And I think this should make it pass.  Just remember the last
-occurrence of '@' by moving the 'start' every time we see an '@'
-sign.
-
- builtin/clone.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index cae288f..5d86439 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -160,13 +160,12 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- 		start += 3;
- 
- 	/*
--	 * Skip authentication data.
-+	 * Skip authentication data, if exists.
- 	 */
--	ptr = start;
--	while (ptr < end && !is_dir_sep(*ptr) && *ptr != '@')
--		ptr++;
--	if (*ptr == '@')
--		start = ptr + 1;
-+	for (ptr = start; ptr < end && !is_dir_sep(*ptr); ptr++) {
-+		if (*ptr == '@')
-+			start = ptr + 1;
-+	}
- 
- 	/*
- 	 * Strip trailing spaces, slashes and /.git
+Yes I just realized there is already lots of submodule related code
+written in C, so I wanted to look at that as the next step and see what
+can be reused and maybe redo the patches reusing code.
