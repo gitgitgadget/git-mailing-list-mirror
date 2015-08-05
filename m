@@ -1,143 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/4] notes: add notes.merge option to select default strategy
-Date: Wed, 05 Aug 2015 13:47:35 -0700
-Message-ID: <xmqqegjh31js.fsf@gitster.dls.corp.google.com>
-References: <1438510226-1163-1-git-send-email-jacob.e.keller@intel.com>
-	<1438510226-1163-4-git-send-email-jacob.e.keller@intel.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] fix clone guess_dir_name regression in v2.4.8
+Date: Wed, 5 Aug 2015 17:04:54 -0400
+Message-ID: <20150805210454.GA21134@sigill.intra.peff.net>
+References: <CAHGBnuNLoNsxPK4YQ+HnT_q8F-HrVC_y9pZwB4G88jCq0-wCPg@mail.gmail.com>
+ <0000014e740f7a8a-2c988a36-633e-4b30-8024-cb4a1de1a8a2-000000@eu-west-1.amazonses.com>
+ <20150804043401.4494.43725@typhoon>
+ <CAHGBnuMXkqhFUhen9tPfEsfFAHhbqMeFUxvePS_6A-TtMfZpzg@mail.gmail.com>
+ <20150804224246.GA29051@sigill.intra.peff.net>
+ <20150805083526.GA22325@sigill.intra.peff.net>
+ <xmqq8u9p4pqb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 22:47:44 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Lukas Fleischer <lfleischer@lfos.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 23:05:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZN5bD-0004UF-Az
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 22:47:43 +0200
+	id 1ZN5s2-0005v1-VH
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 23:05:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753072AbbHEUri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 16:47:38 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36352 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752101AbbHEUri (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 16:47:38 -0400
-Received: by pacrr5 with SMTP id rr5so9405874pac.3
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 13:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=+MUJcfgETZ+Axxuen6I9JRfzXT3N6ob9DGdO+dl9S7k=;
-        b=HRw2b2YNqG7JQfbHs9D2+3jDcqaQlPpF6bu7ygbqxTDPsYnu6txk4cY49ib5Z9FhEy
-         OUhMg5zpP+LeLEXrgLRe1DTNsxvmlALpGDlJXGACZ8T3WOFjC96a96SdekT8GvGM1iRg
-         jZ5YASZ2WA3m34CfuNPZFcyVTDnjAnOjSiPeivVbaOQvTRfr7TIsKM3wCIArkkBT3K6n
-         sQrmirEC3qtIb+Hl1FOYmDPtGMgaAeVxf1YSYA9tpsuNbC3JeP3VMKtCcQL4fTtru1t1
-         CCZb9UXiU+kK9CcLh3uPF4XKlULoJlI0RGByrdVfWZSoizF10gzTwzsanvyNMU1JZc7b
-         8csw==
-X-Received: by 10.66.194.201 with SMTP id hy9mr23419009pac.140.1438807657654;
-        Wed, 05 Aug 2015 13:47:37 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:5cf0:2451:9503:37d])
-        by smtp.gmail.com with ESMTPSA id nu6sm3885563pbb.64.2015.08.05.13.47.36
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 05 Aug 2015 13:47:36 -0700 (PDT)
-In-Reply-To: <1438510226-1163-4-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Sun, 2 Aug 2015 03:10:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753731AbbHEVFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 17:05:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41279 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752682AbbHEVE7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 17:04:59 -0400
+Received: (qmail 18306 invoked by uid 102); 5 Aug 2015 21:04:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 16:04:59 -0500
+Received: (qmail 32081 invoked by uid 107); 5 Aug 2015 21:05:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 17:05:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Aug 2015 17:04:54 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq8u9p4pqb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275396>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Wed, Aug 05, 2015 at 10:19:56AM -0700, Junio C Hamano wrote:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> Teach git-notes about a new configuration option "notes.merge" for
-> selecting the default notes merge strategy. Document the option in
-> config.txt and git-notes.txt
->
-> Add tests for use of the configuration option. Include a test to ensure
-> that --strategy correctly overrides the configured setting.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> Cc: Johan Herland <johan@herland.net>
-> Cc: Michael Haggerty <mhagger@alum.mit.edu>
-> Cc: Eric Sunshine <sunshine@sunshineco.com>
-> ---
+> >> I think this regression is in v2.4.8, as well. We should be able to use
+> >> a running "len" instead of the "end" pointer in the earlier part, and
+> >> then use strip_suffix_mem later (to strip from our already-reduced
+> >> length, rather than the full NUL-terminated string). Like this:
+> >
+> > Looks like "git clone --bare host:foo/.git" is broken, too. I've added
+> > some tests to cover the recently broken cases, as well as some obvious
+> > normal cases (which the patch I sent earlier break!). And as a bonus, we
+> > can easily cover Patrick's root-repo problems (so people will actually
+> > run the tests, unlike the stuff in t1509. :) ).
+> 
+> Sorry, my fault; I should have been much less trusting while queuing
+> a patch like that offending one that was meant to be a no-op.
 
-Perhaps I am biased because we do not usually use Cc: around here,
-but the above looks in a somewhat strange order.  Shouldn't your
-sign-off be at the end?
+I reviewed it, too. :-/
 
-> +static enum notes_merge_strategy merge_strategy;
+I actually did give some thought to that while working on the fix. Why
+did we miss what in retrospect was a pretty obvious bug? I saw two
+interesting bits:
 
-OK.
+  1. From the diff context, it looked like a perfectly reasonable
+     change; the shrinking of the "end" pointer happened further up
+     in the function.
 
-> +static int parse_notes_strategy(const char *arg, enum notes_merge_strategy *strategy)
-> +{
-> +	if (!strcmp(arg, "manual"))
-> +		*strategy = NOTES_MERGE_RESOLVE_MANUAL;
-> +	else if (!strcmp(arg, "ours"))
-> +		*strategy = NOTES_MERGE_RESOLVE_OURS;
-> +	else if (!strcmp(arg, "theirs"))
-> +		*strategy = NOTES_MERGE_RESOLVE_THEIRS;
-> +	else if (!strcmp(arg, "union"))
-> +		*strategy = NOTES_MERGE_RESOLVE_UNION;
-> +	else if (!strcmp(arg, "cat_sort_uniq"))
-> +		*strategy = NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ;
-> +	else
-> +		return -1;
-> +
-> +	return 0;
-> +}
+     So I guess the lesson is not to trust reading just the diff, and
+     to really read the whole of the modified function. But that's easy
+     to say in retrospect; most of the time the bits outside the context
+     aren't interesting, and we can't afford to read the whole code
+     base for each patch. It's a judgement call where to stop looking at
+     the surrounding context of a given change (e.g., the function, the
+     callers, their callers, etc).
 
-OK.
+  2. We didn't have any test coverage in this area; when I wrote even
+     basic tests, it caught the problem.
 
->  static int merge(int argc, const char **argv, const char *prefix)
->  {
->  	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
-> @@ -795,23 +815,13 @@ static int merge(int argc, const char **argv, const char *prefix)
->  	expand_notes_ref(&remote_ref);
->  	o.remote_ref = remote_ref.buf;
->  
-> -	if (strategy) {
-> -		if (!strcmp(strategy, "manual"))
-> -			o.strategy = NOTES_MERGE_RESOLVE_MANUAL;
-> -		else if (!strcmp(strategy, "ours"))
-> -			o.strategy = NOTES_MERGE_RESOLVE_OURS;
-> -		else if (!strcmp(strategy, "theirs"))
-> -			o.strategy = NOTES_MERGE_RESOLVE_THEIRS;
-> -		else if (!strcmp(strategy, "union"))
-> -			o.strategy = NOTES_MERGE_RESOLVE_UNION;
-> -		else if (!strcmp(strategy, "cat_sort_uniq"))
-> -			o.strategy = NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ;
-> -		else {
-> -			error("Unknown -s/--strategy: %s", strategy);
-> -			usage_with_options(git_notes_merge_usage, options);
-> -		}
-> +	if (strategy && parse_notes_strategy(strategy, &merge_strategy)) {
-> +		error("Unknown -s/--strategy: %s", strategy);
-> +		usage_with_options(git_notes_merge_usage, options);
->  	}
->  
-> +	o.strategy = merge_strategy;
-> +
+     I hate to set a rule like "if you are cleaning something up, make
+     sure there is decent test coverage". Lots of trivial-looking
+     patches really are trivial, and it doesn't make sense to insist the
+     submitter add a new battery of tests.
 
-This may be a minor taste thing, but initializing "o.strategy" with
-merge_strategy at the same place as "o.remote_ref" is initialized,
-and then passing &o.merge_strategy to parse_notes_strategy(), may be
-easier to follow.
+So I dunno. This was definitely preventable, but that is all in
+retrospect. Bugs will happen, and we usually catch them while cooking.
+The biggest pain is that this slipped through to a release, and that may
+just be a measure of how few people were impacted (the cases it affected
+were relatively obscure).
 
-Renaming the global "merge_strategy" to "configured_merge_strategy"
-might make it even easier to follow.  If anybody uses the variable
-instead of o.strategy after this point, it would be immediately
-obvious that it is either a bug or it is deliberately using the
-value from the configuration file, not command line.
-
-Thanks.
+-Peff
