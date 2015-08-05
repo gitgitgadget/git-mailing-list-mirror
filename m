@@ -1,125 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v4 1/3] clone: do not include authentication data in guessed dir
-Date: Wed, 05 Aug 2015 12:36:44 -0700
-Message-ID: <xmqqr3nh34tv.fsf@gitster.dls.corp.google.com>
+Date: Wed, 05 Aug 2015 12:41:27 -0700
+Message-ID: <xmqqmvy534m0.fsf@gitster.dls.corp.google.com>
 References: <1437997708-10732-1-git-send-email-ps@pks.im>
 	<1438769179-5943-1-git-send-email-ps@pks.im>
 	<1438769179-5943-2-git-send-email-ps@pks.im>
 	<xmqqzj253a39.fsf@gitster.dls.corp.google.com>
+	<xmqqr3nh34tv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, pclouds@gmail.com
-To: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 05 21:36:52 2015
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	sunshine@sunshineco.com, pclouds@gmail.com
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Wed Aug 05 21:41:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZN4Ud-0006Sf-I3
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 21:36:51 +0200
+	id 1ZN4ZB-0008Se-Vf
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 21:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbbHETgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 15:36:46 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35104 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751161AbbHETgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 15:36:46 -0400
-Received: by pabxd6 with SMTP id xd6so25587759pab.2
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 12:36:45 -0700 (PDT)
+	id S1753233AbbHETla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 15:41:30 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:36231 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752783AbbHETl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 15:41:29 -0400
+Received: by pdco4 with SMTP id o4so22326705pdc.3
+        for <git@vger.kernel.org>; Wed, 05 Aug 2015 12:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=ezKTgGX1P8vRcqcgXkfVlnLy78Tn6kZUCWU1wJGkDyQ=;
-        b=WPQrcowyqLWYeXtFTEp7T9j0gd8qDGPbksxvJd67/t8GsGG0fg5W1LgXWBa7nuY6dP
-         A4YIA0P/4XW4ZgS//IoX1DhDuhPA6K0IZVYmZMn4bW+nAeyGCKBUNu/8GEFRH1I40SFy
-         DyrwoNxNvQDmktIdSPyz26kmel918kxqD4E61hk3zMmLK5nexc+qVAnKt3+66dFIqxgH
-         NU0skDyB0PRuVwuSTcoPojW7oIPyIbC6lgmXYp3BmuHkMN/xSovPun0VZWn/t25ZdynA
-         s1xs4+2ANRqbjKbj0gdlUwr78C/qwld2vj5nD/rsuWQkYCo/TNVVqv8xRi5uhdM7kj9d
-         aNyw==
-X-Received: by 10.66.119.201 with SMTP id kw9mr22869096pab.49.1438803405727;
-        Wed, 05 Aug 2015 12:36:45 -0700 (PDT)
+        bh=wZjJwEN4CsFyJtxiNhLBHLVFc5XUpdQnUO0paWKAgyY=;
+        b=ot7II20IgAen0PBNyQJC+tMqBI4KW1PawDxtmbKb0uniFE/JPu79p1lE0C6lBlZ2eh
+         tVNyikdvUnXpQeeCQp9tafoZF9w96o1DTdbg6ljUxuqQZ2f21CD2Sr4tsqNyYZj+wXf2
+         atNIlq8oDNRZmPJh93fdlnRMDQOsKAnIkCA3Sit5HMBI8f3//YeHrVt3ZRCHLbtobw4H
+         e+G3qNvuWOAEo1heZybQG0NwQiIGRIuP6qIeEi/oikdddLw5F4bEj311FSKIOBnPEv3C
+         Hcl5ZRg+Dufd3uyIK2QZXClQN53nQ8lBrWdeNXJ6fyLWanBky+ZAGf9u840r5dTqYeka
+         f05g==
+X-Received: by 10.70.65.5 with SMTP id t5mr23121473pds.16.1438803689133;
+        Wed, 05 Aug 2015 12:41:29 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:5cf0:2451:9503:37d])
-        by smtp.gmail.com with ESMTPSA id bc10sm3806181pbd.14.2015.08.05.12.36.44
+        by smtp.gmail.com with ESMTPSA id nn13sm3790969pdb.93.2015.08.05.12.41.28
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 05 Aug 2015 12:36:45 -0700 (PDT)
-In-Reply-To: <xmqqzj253a39.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 05 Aug 2015 10:43:06 -0700")
+        Wed, 05 Aug 2015 12:41:28 -0700 (PDT)
+In-Reply-To: <xmqqr3nh34tv.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 05 Aug 2015 12:36:44 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275389>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Perhaps add
->
-> "test_clone_dir ssh://user:passw@rd@host/ host"
->
-> here?  How is this expected to be parsed?
+> For completeness, here is what I think the end result (together with
+> Peff's series) of the test should look like.
+> ...
+> Note that ssh://user:passw@rd@host:1234/ and user:passw@rd@host:/
+> tests fail for the same reason (finding @ should be greedy, I think).
 
-For completeness, here is what I think the end result (together with
-Peff's series) of the test should look like.
+And I think this should make it pass.  Just remember the last
+occurrence of '@' by moving the 'start' every time we see an '@'
+sign.
 
-The first hunk is merely style.  We could drop 'in "$@"' from there
-and some people may argue that it would be more obvious, but I think
-being explict is fine.
+ builtin/clone.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-As to the second hunk:
-
- - the first batch is for "trailing slash removal" for scp-like
-   syntax;
-
- - the second batch is for "omitting path should default to host" for
-   the same;
-
- - the third batch is for "omitting authentication material" for the
-   same.
-
-Note that ssh://user:passw@rd@host:1234/ and user:passw@rd@host:/
-tests fail for the same reason (finding @ should be greedy, I think).
-
- t/t5603-clone-dirname.sh | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/t/t5603-clone-dirname.sh b/t/t5603-clone-dirname.sh
-index 27dbd6c..4897ea8 100755
---- a/t/t5603-clone-dirname.sh
-+++ b/t/t5603-clone-dirname.sh
-@@ -22,7 +22,8 @@ test_clone_dir () {
- 	expect=success
- 	bare=non-bare
- 	clone_opts=
--	for i in "$@"; do
-+	for i in "$@"
-+	do
- 		case "$i" in
- 		fail)
- 			expect=failure
-@@ -61,12 +62,23 @@ test_clone_dir ssh://host/foo/ foo
- test_clone_dir ssh://host/foo.git/ foo
- test_clone_dir ssh://host/foo/.git/ foo
+diff --git a/builtin/clone.c b/builtin/clone.c
+index cae288f..5d86439 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -160,13 +160,12 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ 		start += 3;
  
-+test_clone_dir host:foo/ foo
-+test_clone_dir host:foo.git/ foo
-+test_clone_dir host:foo/.git/ foo
-+
- # omitting the path should default to the hostname
- test_clone_dir ssh://host/ host
- test_clone_dir ssh://host:1234/ host
- test_clone_dir ssh://user@host/ host
-+test_clone_dir host:/ host
-+
-+# auth materials should be redacted
- test_clone_dir ssh://user:password@host/ host
- test_clone_dir ssh://user:password@host:1234/ host
-+test_clone_dir ssh://user:passw@rd@host:1234/ host
-+test_clone_dir user@host:/ host
-+test_clone_dir user:password@host:/ host
-+test_clone_dir user:passw@rd@host:/ host
+ 	/*
+-	 * Skip authentication data.
++	 * Skip authentication data, if exists.
+ 	 */
+-	ptr = start;
+-	while (ptr < end && !is_dir_sep(*ptr) && *ptr != '@')
+-		ptr++;
+-	if (*ptr == '@')
+-		start = ptr + 1;
++	for (ptr = start; ptr < end && !is_dir_sep(*ptr); ptr++) {
++		if (*ptr == '@')
++			start = ptr + 1;
++	}
  
- # trailing port-like numbers should not be stripped for paths
- test_clone_dir ssh://user:password@host/test:1234 1234
+ 	/*
+ 	 * Strip trailing spaces, slashes and /.git
