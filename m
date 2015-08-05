@@ -1,141 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC 4/4] notes: add per-ref configuration of merge strategy
-Date: Wed, 05 Aug 2015 14:10:11 -0700
-Message-ID: <xmqqa8u530i4.fsf@gitster.dls.corp.google.com>
-References: <1438510226-1163-1-git-send-email-jacob.e.keller@intel.com>
-	<1438510226-1163-5-git-send-email-jacob.e.keller@intel.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/6] fix repo name when cloning a server's root
+Date: Wed, 5 Aug 2015 17:19:47 -0400
+Message-ID: <20150805211947.GC21134@sigill.intra.peff.net>
+References: <1437997708-10732-1-git-send-email-ps@pks.im>
+ <1438687797-14254-1-git-send-email-ps@pks.im>
+ <xmqq4mkd4p1x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 23:10:25 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	pclouds@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 23:20:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZN5x8-0000Y3-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 23:10:22 +0200
+	id 1ZN66W-0006Ck-Vk
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Aug 2015 23:20:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbbHEVKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2015 17:10:15 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:32963 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338AbbHEVKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2015 17:10:13 -0400
-Received: by pdrh1 with SMTP id h1so5227568pdr.0
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 14:10:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=nFW1eQ+KS1bEVWU0PVP6lHmR9XN8+oH3wykncpUijRc=;
-        b=j385+EmiU3VicX/1Rid6cBrnHB3v2xyXe+kqTxzbr25MDvcdgiwwqxVnRxkVlpCMLr
-         lzPcRnHGYv8qyV760z4/GlR1dYYAxfxy7yT8jPpeg0x34UJzNIGo8X0tUUpkVA2BVKV0
-         V02zdWYnw45olQCJyNOqnxsjNhyKHqKrvWcP6/slRn3X7+fBI3TGJ3oQTQzTG4VB31ou
-         HbRWN+NH5te9UwJunyd0bfaNoxfJCn/mhkeOAanZEqF10c5nKpvD15HhRl1CPQgidd0r
-         3HNxot49+cZSRpaCNdOwMj+VWmMetf35xXAMgvsgCupzzmkKVpHhe7PahB+Y++9RBQo3
-         T/rA==
-X-Received: by 10.70.130.34 with SMTP id ob2mr23110016pdb.15.1438809013262;
-        Wed, 05 Aug 2015 14:10:13 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:5cf0:2451:9503:37d])
-        by smtp.gmail.com with ESMTPSA id fj6sm3952149pdb.21.2015.08.05.14.10.12
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 05 Aug 2015 14:10:12 -0700 (PDT)
-In-Reply-To: <1438510226-1163-5-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Sun, 2 Aug 2015 03:10:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751338AbbHEVTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2015 17:19:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41295 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750968AbbHEVTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2015 17:19:52 -0400
+Received: (qmail 19267 invoked by uid 102); 5 Aug 2015 21:19:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 16:19:51 -0500
+Received: (qmail 32229 invoked by uid 107); 5 Aug 2015 21:20:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 17:20:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Aug 2015 17:19:47 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4mkd4p1x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275399>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Wed, Aug 05, 2015 at 10:34:34AM -0700, Junio C Hamano wrote:
 
-> +notes.<localref>.merge::
-> +	Which merge strategy to choose if the local ref for a notes merge
-> +	matches <localref>. Is overridden by notes.merge and takes the same
-> +	values. <localref> may be fully qualified or just under refs/notes/.
-> +	See "NOTES MERGE STRATEGIES" section in linkgit:git-notes[1] for more
-> +	information on each strategy.
+> > As you can see, there is a lot of complexity in there and I'm not
+> > convinced this is better than just exposing
+> > 'parse_connect_url()', which already handles everything for us.
+> 
+> If the function "handles everything for us", that's fine, but the
+> primary reason I am hesitant is because parse_connect_url() was
+> designed specifically not to have to worry about some protocols
+> (e.g. I think feeding it a "http://" would fail, and more
+> importantly, its current callers want such a call to fail).  Also it
+> is meant to handle some non-protocols (e.g. scp style host:path that
+> does not follow <scheme>://...).
 
-If I have notes.refs/notes/commit.merge and notes.merge specified,
-I'd expect the former overrides the latter.  The second sentence may
-need correcting.
+True, but the transport code _is_ handling that at some point. It makes
+me wonder if it would be possible to push the call to transport_get
+further up inside cmd_clone(), and then provide some way to query the
+remote path and hostname from the transport code. Then guess_dir_name
+could just go away entirely, in favor of something like:
 
-I think it is a mistake to allow both notes.refs/notes/commit.merge
-and notes.commit.merge.  You'd end up needing to implement quite a
-complicated "the last one wins" rule if you did so.
+  dir_name = transport_get_path(transport);
+  if (!*dir_name)
+	dir_name = transport_get_host(transport);
 
-> +notes.<localref>.merge::
-> +	Which strategy to choose when merging into <localref>. Uses the same
-> +	values as notes.merge. <localref> may be either a fully qualified ref
-> +	or the shortname under "refs/notes/". See "NOTES MERGE STRATEGIES"
-> +	section above for more information about each strategy.
+That may be overly simplistic or unworkable, though. I haven't dug into
+the code.
 
-As a reviewer, I can tell that "Uses the same values" wants to say
-that the set of allowed values is the same, but a casual reader is
-bound to read it as "notes.commit.merge must be set to the same
-value as the value set to notes.merge".
+> Also does it handle the "2222" case above?  I do not think
+> parse_connect_url() even calls get_host_and_port() to be able to
+> tell what "2222" means in these examples.
 
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index de0caa00df1b..b0174d1024dc 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -92,6 +92,10 @@ static const char * const git_notes_get_ref_usage[] = {
->  static const char note_template[] =
->  	"\nWrite/edit the notes for the following object:\n";
->  
-> +static struct note_ref **note_refs;
-> +static int note_refs_alloc;
-> +static int note_refs_nr;
-> +static struct hashmap note_refs_hash;
->  static enum notes_merge_strategy merge_strategy;
->  
->  struct note_data {
-> @@ -757,12 +761,87 @@ static int parse_notes_strategy(const char *arg, enum notes_merge_strategy *stra
->  	return 0;
->  }
->  ...
-> +struct note_refs_hash_key {
-> +	const char *str;
-> +	int len;
-> +};
-> + ...
-> +static void set_strategy_for_ref(const char *ref)
-> +{
-> + ...
-> +}
+Speaking of which, has anyone tested whether the old or new code handles
+external remote helpers? Certainly:
 
-Hmmm, I do not see why you need all the complexity above.
+  foo::https://host/repo.git
 
-When you come to merge(), after calling default_notes_ref(), you
-know exactly which notes ref you are merging into, no?  Shouldn't
-then the change required for this feature just the matter of asking
-the configuration system values for notes.$remote_ref.merge and
-notes.merge?
+should still use repo.git. But technically the string handed to
+git-remote-foo does not have to look anything like a URL. In those cases
+neither guess_dir_name nor the transport code have any idea what anything
+to the right of the "::" means; we probably have to resort to blind
+guessing based on characters like colon and slash.
 
-IOW,
-
-	struct strbuf key = STRBUF_INIT;
-	char *value = NULL;
-
-        strbuf_addf(&key, "notes.%s.merge", remote_ref.buf);
-
-	git_config_get_string(key.buf, &value) ||
-	git_config_get_string_const("notes.merge", &value));
-
-	if (value)
-        	parse_notes_strategy(value, &configured_merge_strategy);
-
-	...
-
-        parse_options();
-	if (strategy)
-        	parse_notes_strategy(value, &configured_merge_strategy);
-
-or something?
+-Peff
