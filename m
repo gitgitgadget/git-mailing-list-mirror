@@ -1,75 +1,78 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Error when cloning with weird local directory
-Date: Thu, 6 Aug 2015 16:21:06 +1200
-Message-ID: <CAFOYHZByteuPZwRvw9tzFWOD6vguw4wPK1J6rLZZvHzyZRBtSA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git
+Date: Thu, 6 Aug 2015 00:55:35 -0400
+Message-ID: <20150806045535.GA7014@sigill.intra.peff.net>
+References: <xmqqoail1h2c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 06 06:21:15 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 06 06:55:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNCg6-0007Pi-F0
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 06:21:14 +0200
+	id 1ZNDDV-0002b2-2F
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 06:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480AbbHFEVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 00:21:08 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:38009 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752130AbbHFEVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 00:21:07 -0400
-Received: by iggf3 with SMTP id f3so3902991igg.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2015 21:21:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=b4CJiYBP7TO8ehm96dkliG6aaUdinVj4pi7tAJY9Mdw=;
-        b=ymeSJ1qS2ueolhzXoX6/5am9zwFLjd4II55pQPS5tDd8AiNgzDBwksLXUKyBptDKEP
-         OBOhuLy6ZjkhvarSk05GZcH4rBGU2Mcti1VEzOoH+AVj2NedYb9z5KBJlSovzxDGvAG0
-         kF0T4Z4HKhWarVCWBuS1vb4UymY4EuiZdMhcsru5o84MDsOXKYpf6bHOhQGzU9SRCKNa
-         3TgobMPjCOZYuHrEEpgtPRwY0lSKAeOhbW6puOiMJOaIlGZWuq3qVD58KBFGePXK/c4S
-         F/uRzWL0/PKn0T4r3U0CxqCdBnnaHdH/JxDRbtEEal+conf5o0y0MIGn6TD9htT2XdbH
-         n6nA==
-X-Received: by 10.50.122.40 with SMTP id lp8mr1269782igb.49.1438834866353;
- Wed, 05 Aug 2015 21:21:06 -0700 (PDT)
-Received: by 10.79.116.130 with HTTP; Wed, 5 Aug 2015 21:21:06 -0700 (PDT)
+	id S1754361AbbHFEzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 00:55:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41419 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752069AbbHFEzk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 00:55:40 -0400
+Received: (qmail 19767 invoked by uid 102); 6 Aug 2015 04:55:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Aug 2015 23:55:40 -0500
+Received: (qmail 2646 invoked by uid 107); 6 Aug 2015 04:55:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Aug 2015 00:55:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Aug 2015 00:55:35 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqoail1h2c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275411>
 
-Hi All,
+On Wed, Aug 05, 2015 at 03:55:23PM -0700, Junio C Hamano wrote:
 
-A developer at $dayjob called me over to have a look at a git error he
-was getting (names changed to protect the innocent).
+> * jk/negative-hiderefs (2015-07-28) 2 commits
+>  - refs: support negative transfer.hideRefs
+>  - docs/config.txt: reorder hideRefs config
+> 
+>  Allow negative !ref entry in multi-value transfer.hideRefs
+>  configuration to say "don't hide this one".
+> 
+>  An update to test coming?
 
-  $ git --version
-  git version 2.5.0
-  $ git clone ssh://example.com/repo.git
-  Cloning into 'repo'...
-  fatal: I don't handle protocol '/home/user/src/ssh'
+Thanks for reminding me. I think we just want to squash this in to the
+tip commit:
 
-After a bit of head scratching we found that he had a local directory
-structure called 'ssh://example.com/repo.git' it wasn't a complete
-repo but it had some of the things one expects to find in a .git
-directory (info, objects, refs, etc). It had been there for a while
-and we suspect was created by a scp gone wrong from the last time he
-was dealing with repo.git.
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index afde495..7756100 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -150,7 +150,8 @@ do
+ 		git config --add $configsection.hiderefs "!refs/tags/magic" &&
+ 		git config --add $configsection.hiderefs refs/tags/magic/one &&
+ 		git ls-remote . >actual &&
+-		verbose grep refs/tags/magic/two actual
++		verbose grep refs/tags/magic/two actual &&
++		! grep refs/tags/magic/one actual
+ 	'
+ 
+ done
 
-I'm wondering if it's worth catching this kind of weirdness and
-erroring out with a slightly more useful message. I'm also wondering
-what would have happened if this repo was actually a full and complete
-thing.
+-Peff
 
-I'm not sure that there is a problem worth solving here. I can provide
-an anonymized tarball of the directory structure in question if anyone
-is interested. But maybe this is useful for future mailing list
-searchers[1].
-
-Thanks,
-Chris
---
-[1] - https://xkcd.com/979/
+PS I don't recall the outcome of our last discussion on the "verbose"
+   test function. Here it makes debug output for the "grep" above more
+   readable when it fails. But it also looks weird not to have the
+   matching negative one for the final grep (which could be
+   test_must_fail in this case, but we do not usually apply that to
+   non-git commands). If you would prefer to strip out the "verbose"
+   (from here and the test just below) while squashing, I am OK with
+   that.
