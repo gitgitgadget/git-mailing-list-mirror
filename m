@@ -1,63 +1,66 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 1/4] submodule: implement `module_name` as a builtin
- helper
-Date: Thu, 6 Aug 2015 21:54:21 +0200
-Message-ID: <55C3BB6D.5090905@web.de>
+Subject: Re: [RFC/PATCH 0/4] parallel fetch for submodules
+Date: Thu, 6 Aug 2015 22:08:59 +0200
+Message-ID: <55C3BEDB.20809@web.de>
 References: <1438882524-21215-1-git-send-email-sbeller@google.com>
- <1438882524-21215-2-git-send-email-sbeller@google.com>
- <55C3BA48.6050600@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: gitster@pobox.com, hvoigt@hvoigt.net
 To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 06 21:54:31 2015
+X-From: git-owner@vger.kernel.org Thu Aug 06 22:09:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNRFG-00054N-33
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 21:54:30 +0200
+	id 1ZNRTd-0000PR-Tr
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 22:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755597AbbHFTyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 15:54:25 -0400
-Received: from mout.web.de ([212.227.17.12]:60900 "EHLO mout.web.de"
+	id S1752210AbbHFUJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 16:09:07 -0400
+Received: from mout.web.de ([212.227.15.3]:56151 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755347AbbHFTyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 15:54:24 -0400
-Received: from [192.168.178.41] ([79.211.102.26]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LuuNx-1Yf3uw0zar-0103cv; Thu, 06 Aug 2015 21:54:23
+	id S1751390AbbHFUJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 16:09:06 -0400
+Received: from [192.168.178.41] ([79.211.102.26]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0M1o4o-1YYDOZ15BK-00tnqE; Thu, 06 Aug 2015 22:09:01
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.1.0
-In-Reply-To: <55C3BA48.6050600@web.de>
-X-Provags-ID: V03:K0:Fe/GzvBtI1W9kzO/FEsGYIRT4FbkxHwOgWxTZmaeqS7LEL/E57+
- Vf60re/gb1w7yzz3ePD2TUFwcdSzHX34jWz6jk5iIuGgjYoW72+LGwmVm9nVjezmcVl1yLS
- EPTM9fL4jHuCPNSqFKyRAKQLT8gaovZqY86chpV/zkwhrM6RURUXKPZZcP3+zU8v9WQn40h
- HKFSNWH6jgh3HgwCzM5ZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yJ7FwuAHbTs=:Xj42tKANw0tLvTDAuhEucz
- ZllN0JsrbB61oe0A9l9W6nrLOn9sC1yJTRzIfHAe4XeEHbfZgW/gB128IFlnhBL4Dg7tPpdTa
- bPK2aQfoSbH8Sbcl++ROm48KgM0lqXZdjgFb8VyuT2fa1ITTXnuxaJKVc+ZP/fETGr87db/mf
- 3dHo3flSzyDO06LyBP9wWaMFPKB0NR2t87MWC0+Botns1/xKrGbQ7LmuNCthnKunlSUJw6fJa
- AzDNdFRVze/0dRspqOV5yRfmc4kyMsroMWjtitHAHKLYiQ+w3bEFfCOCFixxY8QWlMf5cOZ6w
- dktu2RXqPaSrA/nlL23NC/dsdnS7qedE1u4xAZiwDCI6xYZKyouDx7o5rr2ro1qLnM6gIwQtX
- 2yHjOeIn2ncUjkc4Cj7IqY99OgjRgS9eSGWhO3T5pDPcfKFofKpmMnv5pdq3OMcNCJVLGi74Q
- ymVnI0ZztZz/o7665UIsoSvzyOYLFwLmXKiggwFn1ril7FPepbaBasv1eGUQv6KPEPGdRRIzp
- ee+kY6eUXNA+I9qAyNJ1S47NTkGJFYtrNN7wc4+mMu6synRnUnp5TT4Jmv8w5uPOZjl6pEqaF
- zKaW1l3Gri9OwmI22vYsEAKhuM/AzGd4A3v0HeUM0ZWrKMTRr7WHMnoqp/+stIt3Hd75WKNA+
- sm+rL9ZqsOnzTItBRpTDzdtsvuEAWQ/1okKJG9SXe5EZ6mTtjmkS85uRBWkBrcQ2jt7o=
+In-Reply-To: <1438882524-21215-1-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:ANahj6msS4UDOaXssTiTgI8NGPJSTAEKDddgVEWnFaXKsy60vFo
+ as5BQEdLsWiY1T+4HiJKKkkuR6da9CtdfedJWtRSjmDMxpKdcaTahhbMec6zVeOT8NXx60q
+ T2KFanDPhfJo0jjz7OGeiKuoK864Y5Cd99IfQSGhk55pTIQrqJwL3LqnviMwz6XHlr8TUeI
+ UFqd23+sMk4X4P6sUIo4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GBErglBYnxc=:JeFfthy/sACHOUJoyhUpjN
+ e5ycRMTa2wWNYfo3xLTPYvRN85Mg6d4JVNIPYM0PXU8AFsqzjxIS9LdcLq4SQV5GLhBSHRZaU
+ u2w3nC9BqbN7heYdujS2Da/J0Qmo5ctjJGS/3fwI48jkgYx3in4VxuUFhQ/kaNjYMenZrr59k
+ 53WjpkMmWFxj3tCWiz578z+7ARbisQ81yPEkv0d8hcAkuXbPNWXcXw+CW+rbhKSKzQOVUh081
+ 3aAG7q5aCZlqeX/EfmWESRGFYkAQGBoNQPUwaLNazdDoZbOYgWzXftEEHJJE2reoUFRsK5EIF
+ +iDHfF2trewSbhHqMwD2blf9U+kpATp9QhPdI5sxBnYyd7wS8JaSQivWvq8HmqcwspJgqwR2F
+ G9OFa8ZR+aB/8Ucw2+qSqfEfg5yNQ2NcSxRGrK7+8d+Ejy0YaBHm+Sov9a4wK4NgelL1ICTvC
+ ZkxjII/lwxUcd9Johz3Mx24PEwUcI8WwJx9x13i+4zx36dW1AUkIWj8hmp4tBkt7Ko/Hl+akb
+ aA7NgX94B/5EbGV3RbpiO3enghnAbxfH6a7p31WhIWczzXWpx/ASZR3cHvvzLhu0xarXFn1Vg
+ XZ0gYRAibsdB1GCyW6pfo7/2VTcG3306MnaEpYZCdTzPOVKGLBnRQfD7KGfUJKKw7vJdyLZ+S
+ 1ldC5sAOHZzMhYoG6G872HOOl5lCdvfPXgD2ArN982RuvZpe7/8Kmrup0B5aIwPWj9EM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275442>
 
-Am 06.08.2015 um 21:49 schrieb Jens Lehmann:
-> And wouldn't it make more sense to keep this patch together with
-> the "submodule: implement `module_list` as a builtin helper" in
-> its own "submodule-helper" series and have the following three
-> patches in a separate "parallel fetch for submodules" series?
+Am 06.08.2015 um 19:35 schrieb Stefan Beller:
+> When I was looking at the branches of Jens for work done on submodules
+> not yet upstream I found a commit "WIP threaded submodule fetching[1],
+> and I was side tracked wanting to present a different approach to that.
 
-Please scratch that, I just now read your comment in the cover
-letter on that ...
+Cool. I didn't follow that route further than building a proof of
+concept because I ran into a nasty DNS-timeout on my router at home
+and at work we host all repos on a not-so-beefy server making parallel
+fetch rather pointless. But I suspect this approach will bring down
+fetch times for some users.
+
+Maybe we could also re-use parallel fetch for multiple upstreams in
+the superproject when doing a "git fetch --all" without too much
+extra work?
