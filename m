@@ -1,151 +1,283 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] builtin/mv: remove get_pathspec()
-Date: Thu, 6 Aug 2015 11:58:41 -0700
-Message-ID: <CAGZ79kZ7oS+AQgq91WRaFTCKGUnZj-cZB1YPkjQo9KAueqEN3w@mail.gmail.com>
-References: <CAPig+cT_YB=HY9dBo5eRNu4qvCqCXRwwXgpxCA8YjxagP+sHfA@mail.gmail.com>
-	<1438885632-26470-1-git-send-email-sbeller@google.com>
-	<1438885632-26470-2-git-send-email-sbeller@google.com>
-	<CAPig+cRREzwRJV-az-p-r1E7JyDqDZ4GPvM1cQQzXXNyLjGPUQ@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/4] submodule: implement `module_name` as a builtin
+ helper
+Date: Thu, 6 Aug 2015 21:49:28 +0200
+Message-ID: <55C3BA48.6050600@web.de>
+References: <1438882524-21215-1-git-send-email-sbeller@google.com>
+ <1438882524-21215-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 20:58:50 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 06 21:49:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNQNM-0001rp-A3
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 20:58:48 +0200
+	id 1ZNRAh-0001R3-3p
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 21:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbbHFS6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 14:58:44 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:35024 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753060AbbHFS6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 14:58:42 -0400
-Received: by ykcq64 with SMTP id q64so65571543ykc.2
-        for <git@vger.kernel.org>; Thu, 06 Aug 2015 11:58:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mHt+hx9L4teyB9BQeqyrK5Yb8AX6FzcVsbgbP/JzRSs=;
-        b=KbicQxm0kSgqbo4EYjnnFhds0DBt8OXODXF/xy0+OYM7orMYDnSOy+BRkcW7S9OxNB
-         lKXRBDqtUHk0uY1/CwWlI6fzLWwXD6aK3pEEd13kv8IrfPjBpqNiIqhqdGaWJ29RT2zP
-         RfSdTpXN2AraExqKH/hK+oV5B7ingb8yA+Y0oJZc26r11dvYtdlGYv3oaVAxv0t50W2h
-         5uWvvdKyZNq87W0Qve+AIBWzFBU62EKTeoEVHeiE2CR7WNEjSD61puPaQVkhgoDorYv0
-         xhYfcnvfk6d+ALqxZ49q8bcPq1xb5tyMpHZecSE1+S/+liwomhdQPFH2pREF2HwgytLe
-         RlgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=mHt+hx9L4teyB9BQeqyrK5Yb8AX6FzcVsbgbP/JzRSs=;
-        b=Vt6SO2OKtSNWpVr7OcAe3ezrjFgjwY6Iv3k3VixpSyhEJneDuGP+ZrBqxBeiVHS7QM
-         8vJjvd4Lh/LwVmxrmSWczT5jXpVeAu/BJYsvN9efgv7Uj6v26zw6r2uuGMlMJzqGs/Pl
-         jI7uYtSsM7KUbz0GLx8ULELDxgtainHsUxMG9zSFDWbftmcbkIAYdhE+qEoNIB8aRgUM
-         NGb8fHoE4jAkt4IemRR8adUGpbet7cbFoa4L0RqkITDD1bBmyPbt2PWALC5r1ArvtmhG
-         gLPtXY1eUHL9tEqSTGMqzAEdzLyVFIaPTrxwRw3v55xCqLwSfzQi5aO2bc0wiH3XpraI
-         j5SQ==
-X-Gm-Message-State: ALoCoQkqOxqG2lHOeO49Bh2fH9OfWB9HFR3RUusQMddB0LuhoHoFddWRkX+ROqJ6eA1dHcT//suI
-X-Received: by 10.170.212.65 with SMTP id d62mr3691131ykf.115.1438887522023;
- Thu, 06 Aug 2015 11:58:42 -0700 (PDT)
-Received: by 10.37.21.129 with HTTP; Thu, 6 Aug 2015 11:58:41 -0700 (PDT)
-In-Reply-To: <CAPig+cRREzwRJV-az-p-r1E7JyDqDZ4GPvM1cQQzXXNyLjGPUQ@mail.gmail.com>
+	id S1754263AbbHFTtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 15:49:42 -0400
+Received: from mout.web.de ([212.227.17.11]:59071 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752390AbbHFTtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 15:49:40 -0400
+Received: from [192.168.178.41] ([79.211.102.26]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Lw0ht-1Ymk1z1icX-017nWN; Thu, 06 Aug 2015 21:49:34
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <1438882524-21215-2-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:jDiEAuf6Ekto+Qzw+mz5qDJGo44rBUTgu3X5cched6lcIeQYcKL
+ 7HazXnpCJw4sjoMU7l3QAHjRRJICcNuGSIC6kXu5EIE3qbR49fin+w6vaIwwpV1sj/PIIQl
+ 4VPbmPhNHpZtD3J7ai8xlxSDdQ7Yh/NUlvM1RnB8pcQjIzujf7XrfLnYyWf6MQfNDL5OpIE
+ n/oQSZ6eUBANNC+cMkNVA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2nK+1f1cCR0=:3dFpuJwArt3G2w3svmPZhk
+ tPsh7FvsOvQtUiWEqrriHMMDaUe/whPwi6peq0T12p8OOHqWDdlDHe7EmOLSkawZhI3VhNAMx
+ PRvuZ9/46kU8KLL/qQzDtR2/nPkLUHVhr3/y7Bf7uyKOW46b/6VW07oE3Vao+tWfM6GqQbLlX
+ V4zU41/5eYLlX3i849b0M9IwLqXveRHGEDD9uAay1xTnh7jgEJD7M9oSZJU3pj7qx6WjhIbI6
+ F5SlUVQegljzdiGPpYJPL8RHjDSyJGS01skNgF4qz05yCAvTQirvyTHo9331LxxhVGziuXAWn
+ Ne3wBlPVLEh+USmsXCXQfGZSKlaLsL83fnBcMA5kYrILKv7lS2N6jBq+fBGzfvzX011jlRehh
+ K5szZudkUGLeh5NFEyZUuiCnS05Z4togG7926lVEjuaUhx2K9p8k+yYGYwLKWz3KWW4pRefmC
+ bpSsA7uXaiF5pt0Wi8xJaEQymH/YqiyEiUzfaqCMPz92YGW+JM0ETdCBCP4vTPBt99Ha2Iwyz
+ VC9+4OVj6q/0rwbnhqoRRCBV1FV453Mct6qBDUnOaCIUu+U80/Q2FmLg7q74gFBLyJ0KjkPX5
+ QxK+qF63FMTzMYYqRPyN6Ti+tnXA12w9YlrPDooTy9fWJ2LNc8QnoTVXuULEvfCiz8ymD7IqL
+ xVAqDym6FpWnlNNVQayckUAcWsLbHrevPlHX9FacUBOjUV2i/cEWNsr+NGn/XlerO8b0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275439>
 
-On Thu, Aug 6, 2015 at 11:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Aug 6, 2015 at 2:27 PM, Stefan Beller <sbeller@google.com> wrote:
->>  builtin/mv: remove get_pathspec()
+Am 06.08.2015 um 19:35 schrieb Stefan Beller:
+> This implements the helper `module_name` in C instead of shell,
+> yielding a nice performance boost.
 >
-> Misleading. Perhaps rephrase as:
+> Before this patch, I measured a time (best out of three):
 >
->     mv: drop dependency upon deprecated get_pathspec
+>    $ time ./t7400-submodule-basic.sh  >/dev/null
+>      real	0m11.066s
+>      user	0m3.348s
+>      sys	0m8.534s
 >
->> `get_pathspec` is deprecated and builtin/mv.c is its last caller, so
->> reimplement `get_pathspec` literally in builtin/mv.c
+> With this patch applied I measured (also best out of three)
 >
-> Curious. Since this is just moving code around, rather than doing the
-> actual work to complete the final step as stated by the NEEDSWORK
-> comment, isn't it just moving the "problem" from one location to
-> another? Is it worth the code churn?
+>    $ time ./t7400-submodule-basic.sh  >/dev/null
+>      real	0m10.063s
+>      user	0m3.044s
+>      sys	0m7.487s
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-Yeah it is moving around the problem a bit. And the code churn is
-unfortunate. Though when I was reading the documentation on
-pathspecs, literally the first sentence was "Do not use get_pathspec,
-it is out dated". And that was a sad taste for reading documentation.
+Please see my comments in the other thread concerning this patch.
 
-It's ok to have such warnings in the docs, but as the first sentence as if
-there was nothing more important than avoiding the out dated stuff? I
-mean I want to understand the actual code and how I can use it, right?
+And wouldn't it make more sense to keep this patch together with
+the "submodule: implement `module_list` as a builtin helper" in
+its own "submodule-helper" series and have the following three
+patches in a separate "parallel fetch for submodules" series?
 
-And there are different approaches to solving the problem.
-I could have just reworded or even just rearranged the documentation.
-
-The approach I take here includes a bit of code churn, but it moves the
-problematic pieces all in one spot.
-
+>   builtin/submodule--helper.c | 23 +++++++++++++++++++++++
+>   git-submodule.sh            | 32 +++++++-------------------------
+>   submodule.c                 | 18 +++++++++++++-----
+>   submodule.h                 |  1 +
+>   4 files changed, 44 insertions(+), 30 deletions(-)
 >
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->> diff --git a/builtin/mv.c b/builtin/mv.c
->> index d1d4316..99e9b3c 100644
->> --- a/builtin/mv.c
->> +++ b/builtin/mv.c
->> @@ -10,6 +10,7 @@
->>  #include "string-list.h"
->>  #include "parse-options.h"
->>  #include "submodule.h"
->> +#include "pathspec.h"
->>
->>  static const char * const builtin_mv_usage[] = {
->>         N_("git mv [<options>] <source>... <destination>"),
->> @@ -20,13 +21,16 @@ static const char * const builtin_mv_usage[] = {
->>  #define KEEP_TRAILING_SLASH 2
->>
->>  static const char **internal_copy_pathspec(const char *prefix,
->> -                                          const char **pathspec,
->> +                                          const char **argv,
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index cb18ddf..3713c4c 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -5,6 +5,8 @@
+>   #include "pathspec.h"
+>   #include "dir.h"
+>   #include "utf8.h"
+> +#include "submodule.h"
+> +#include "string-list.h"
 >
-> What is this change about? It doesn't seem to be related to anything
-> else in the patch or to its stated purpose, and makes the argument's
-> purpose less clear, so it's not obvious why it is a good change.
+>   static char *ps_matched;
+>   static const struct cache_entry **ce_entries;
+> @@ -98,6 +100,24 @@ static int module_list(int argc, const char **argv, const char *prefix)
+>   	return 0;
+>   }
 >
->>                                            int count, unsigned flags)
->>  {
->>         int i;
->> +       struct pathspec ps;
->>         const char **result = xmalloc((count + 1) * sizeof(const char *));
->> -       memcpy(result, pathspec, count * sizeof(const char *));
->> +       memcpy(result, argv, count * sizeof(const char *));
->>         result[count] = NULL;
->> +
->> +       /* NEEDSWORK: Move these preprocessing steps into parse_pathspec */
->>         for (i = 0; i < count; i++) {
->>                 int length = strlen(result[i]);
->>                 int to_copy = length;
->> @@ -42,7 +46,13 @@ static const char **internal_copy_pathspec(const char *prefix,
->>                                 result[i] = it;
->>                 }
->>         }
->> -       return get_pathspec(prefix, result);
->> +
->> +       parse_pathspec(&ps,
->> +                      PATHSPEC_ALL_MAGIC &
->> +                      ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
->> +                      PATHSPEC_PREFER_CWD,
->> +                      prefix, result);
->> +       return ps._raw;
->>  }
->>
->>  static const char *add_slash(const char *path)
->> --
->> 2.5.0.239.g9728e1d.dirty
+> +static int module_name(int argc, const char **argv, const char *prefix)
+> +{
+> +	const char *name;
+> +
+> +	if (argc != 1)
+> +		usage("git submodule--helper module_name <path>\n");
+> +
+> +	gitmodules_config();
+> +	name = submodule_name_for_path(argv[0]);
+> +
+> +	if (name)
+> +		printf("%s\n", name);
+> +	else
+> +		die("No submodule mapping found in .gitmodules for path '%s'", argv[0]);
+> +
+> +	return 0;
+> +}
+> +
+>   int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>   {
+>   	if (argc < 2)
+> @@ -106,6 +126,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>   	if (!strcmp(argv[1], "module_list"))
+>   		return module_list(argc - 1, argv + 1, prefix);
+>
+> +	if (!strcmp(argv[1], "module_name"))
+> +		return module_name(argc - 2, argv + 2, prefix);
+> +
+>   usage:
+>   	usage("git submodule--helper module_list\n");
+>   }
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index af9ecef..e6ff38d 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -178,24 +178,6 @@ get_submodule_config () {
+>   	printf '%s' "${value:-$default}"
+>   }
+>
+> -
+> -#
+> -# Map submodule path to submodule name
+> -#
+> -# $1 = path
+> -#
+> -module_name()
+> -{
+> -	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
+> -	sm_path="$1"
+> -	re=$(printf '%s\n' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+> -	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
+> -		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
+> -	test -z "$name" &&
+> -	die "$(eval_gettext "No submodule mapping found in .gitmodules for path '\$sm_path'")"
+> -	printf '%s\n' "$name"
+> -}
+> -
+>   #
+>   # Clone a submodule
+>   #
+> @@ -498,7 +480,7 @@ cmd_foreach()
+>   		then
+>   			displaypath=$(relative_path "$sm_path")
+>   			say "$(eval_gettext "Entering '\$prefix\$displaypath'")"
+> -			name=$(module_name "$sm_path")
+> +			name=$(git submodule--helper module_name "$sm_path")
+>   			(
+>   				prefix="$prefix$sm_path/"
+>   				clear_local_git_env
+> @@ -554,7 +536,7 @@ cmd_init()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>
+>   		displaypath=$(relative_path "$sm_path")
+>
+> @@ -636,7 +618,7 @@ cmd_deinit()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>
+>   		displaypath=$(relative_path "$sm_path")
+>
+> @@ -758,7 +740,7 @@ cmd_update()
+>   			echo >&2 "Skipping unmerged submodule $prefix$sm_path"
+>   			continue
+>   		fi
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>   		url=$(git config submodule."$name".url)
+>   		branch=$(get_submodule_config "$name" branch master)
+>   		if ! test -z "$update"
+> @@ -1022,7 +1004,7 @@ cmd_summary() {
+>   			# Respect the ignore setting for --for-status.
+>   			if test -n "$for_status"
+>   			then
+> -				name=$(module_name "$sm_path")
+> +				name=$(git submodule--helper module_name "$sm_path")
+>   				ignore_config=$(get_submodule_config "$name" ignore none)
+>   				test $status != A && test $ignore_config = all && continue
+>   			fi
+> @@ -1184,7 +1166,7 @@ cmd_status()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path") || exit
+> +		name=$(git submodule--helper module_name "$sm_path") || exit
+>   		url=$(git config submodule."$name".url)
+>   		displaypath=$(relative_path "$prefix$sm_path")
+>   		if test "$stage" = U
+> @@ -1261,7 +1243,7 @@ cmd_sync()
+>   	while read mode sha1 stage sm_path
+>   	do
+>   		die_if_unmatched "$mode"
+> -		name=$(module_name "$sm_path")
+> +		name=$(git submodule--helper module_name "$sm_path")
+>   		url=$(git config -f .gitmodules --get submodule."$name".url)
+>
+>   		# Possibly a url relative to parent
+> diff --git a/submodule.c b/submodule.c
+> index 15e90d1..872967f 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -686,6 +686,16 @@ static void calculate_changed_submodule_paths(void)
+>   	initialized_fetch_ref_tips = 0;
+>   }
+>
+> +const char* submodule_name_for_path(const char* path)
+> +{
+> +	struct string_list_item *item;
+> +	item = unsorted_string_list_lookup(&config_name_for_path, path);
+> +	if (item)
+> +		return item->util;
+> +	else
+> +		return NULL;
+> +}
+> +
+>   int fetch_populated_submodules(const struct argv_array *options,
+>   			       const char *prefix, int command_line_option,
+>   			       int quiet)
+> @@ -693,7 +703,7 @@ int fetch_populated_submodules(const struct argv_array *options,
+>   	int i, result = 0;
+>   	struct child_process cp = CHILD_PROCESS_INIT;
+>   	struct argv_array argv = ARGV_ARRAY_INIT;
+> -	struct string_list_item *name_for_path;
+> +	const char *name_for_path;
+>   	const char *work_tree = get_git_work_tree();
+>   	if (!work_tree)
+>   		goto out;
+> @@ -723,10 +733,8 @@ int fetch_populated_submodules(const struct argv_array *options,
+>   		if (!S_ISGITLINK(ce->ce_mode))
+>   			continue;
+>
+> -		name = ce->name;
+> -		name_for_path = unsorted_string_list_lookup(&config_name_for_path, ce->name);
+> -		if (name_for_path)
+> -			name = name_for_path->util;
+> +		name_for_path = submodule_name_for_path(ce->name);
+> +		name =  name_for_path ? name_for_path : ce->name;
+>
+>   		default_argv = "yes";
+>   		if (command_line_option == RECURSE_SUBMODULES_DEFAULT) {
+> diff --git a/submodule.h b/submodule.h
+> index 7beec48..e3dd854 100644
+> --- a/submodule.h
+> +++ b/submodule.h
+> @@ -41,5 +41,6 @@ int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_nam
+>   		struct string_list *needs_pushing);
+>   int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
+>   void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+> +const char* submodule_name_for_path(const char* path);
+>
+>   #endif
+>
