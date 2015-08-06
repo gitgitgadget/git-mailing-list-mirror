@@ -1,134 +1,92 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/4] argv_array: add argv_array_copy
-Date: Thu, 6 Aug 2015 14:18:26 -0400
-Message-ID: <CAPig+cQ3bAML7WMyS3Q1YQCjR2SfgB47AEkTmqbycAJcig0=tg@mail.gmail.com>
-References: <1438882524-21215-1-git-send-email-sbeller@google.com>
-	<1438882524-21215-4-git-send-email-sbeller@google.com>
+From: Taylor Braun-Jones <taylor@braun-jones.org>
+Subject: Re: fetching from an hg remote fails with bare git repositories
+Date: Thu, 6 Aug 2015 14:21:01 -0400
+Message-ID: <CAKfKJYtujyEBH4JhTyt=PzZbpB-iYhi=h5FbjAM2j9cuDGh1Hw@mail.gmail.com>
+References: <CAKfKJYuuO+eak-L2SUVUEmoOj16bgV6LL0S=g-LzFjTxZUcRzQ@mail.gmail.com>
+ <CAGZ79kawh0himmR+DuvcQB0O1rRVBhkg9ycCLvPdbp1m0sHKtQ@mail.gmail.com>
+ <CAKfKJYshy58eQMXTusUTf0dc2B7uVU+=rzdSicSG0JAuODSBug@mail.gmail.com> <20150804230359.GA27965@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 20:18:34 2015
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 20:21:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNPkO-0002rq-Qp
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 20:18:33 +0200
+	id 1ZNPnF-0005JF-B0
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 20:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754359AbbHFSS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 14:18:28 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:35180 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753988AbbHFSS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 14:18:27 -0400
-Received: by ykcq64 with SMTP id q64so64661849ykc.2
-        for <git@vger.kernel.org>; Thu, 06 Aug 2015 11:18:26 -0700 (PDT)
+	id S1755861AbbHFSVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 14:21:25 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:34864 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755692AbbHFSVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 14:21:23 -0400
+Received: by igr7 with SMTP id 7so16669305igr.0
+        for <git@vger.kernel.org>; Thu, 06 Aug 2015 11:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=OtKjjXnIeW8rGtikDGU+r0YyO+/JOZgK1NxVnGygnJ8=;
-        b=KaJ5faZUIVPzsuJLnayG5tWt0nA+JDvHrfGZXR7H44pYW/whXhCwISZGNvVepQjkow
-         qKNDqEuAMiY/nwNogdoDBd/15apeHZ206zJKWcG2wdaZ2mhBI8Osy32NNKPNip1nJ4cD
-         n/cDXSbpaFaLjrn/I3ktXHutlSFZyOOODx+I3KtXWGQqCAuLRaY8qtdgyKMn5YmwUBkv
-         ToOIIrpPfyj1HRQMU75dTFOt6KFBsgeHt877p1S0b0F8DzrY6zJqSgT13DTD6l+OFAXC
-         jkZKyIkGFocUOy+AJJfuK3kJ4l45hNaqzYFXZAqVvKICKoDZB4vO1mAxPiz6SlZqs1iP
-         RBCA==
-X-Received: by 10.13.221.213 with SMTP id g204mr3540649ywe.48.1438885106844;
- Thu, 06 Aug 2015 11:18:26 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Thu, 6 Aug 2015 11:18:26 -0700 (PDT)
-In-Reply-To: <1438882524-21215-4-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: rblYEQHDcsJpADruhoy3Cer37Qo
+        d=braun-jones.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=IlLB/o3ENprOOe5Ww/TWH2+6sKTFZy6zq/vc5ll8gv0=;
+        b=G43sse1836o1c3AK4hwBvSjXGT3X/JThn+UmDyWBM2hkihY4rhZ6fp1KZ5d7H+noaO
+         +Ad1ATC+x+ogJoVP7Y6Pbw7tbtdhIGl6uAOdV6t0iYz8DsrPBAvqLMtuuvIH1Sd7KLgV
+         7eqGTwz4/U/VbeC0hm7ny1MULbM2iLIgASRtQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=IlLB/o3ENprOOe5Ww/TWH2+6sKTFZy6zq/vc5ll8gv0=;
+        b=BIJKOoN+oY+hcYOlCMfrWIdSghO5ghI39Wf4D6zqx2cNNFCVfZ9qwK/yC/MHz2YeKS
+         HR+xcJGcyPwFx5xvt0EaFGkqS+MQ52e6+qUWUQgdy5AAQ0xbKNkwgJogBEPK6UDv2RQL
+         pdMNtLBpZXmcSflQBngLicp8YPlJ3KR41ZD68gjQZOfOSwsEH8+L0bGxOksvUIc/oHH+
+         SqkaEyMfWFmyULeu6eTk2gA12n81tsclUubvdvuu9Hs+2sfFkWvHK3SelCUM4FBayAiH
+         TDQH9qbHvYfMihrRSluDwvugrmvvHlsuO7h6beA/GWnB1O/NMLz2qAOS7QayDhliGbo0
+         XYlw==
+X-Gm-Message-State: ALoCoQmsX2izaPDbdknhuu43/x6DeO42c+3QpPO8Yr6ZrJaYO7NlUNEcwWNqTcVXeBg+/i7Kyx7q
+X-Received: by 10.50.134.226 with SMTP id pn2mr5994929igb.21.1438885282605;
+        Thu, 06 Aug 2015 11:21:22 -0700 (PDT)
+Received: from mail-io0-f180.google.com (mail-io0-f180.google.com. [209.85.223.180])
+        by smtp.gmail.com with ESMTPSA id j3sm1916776ige.0.2015.08.06.11.21.20
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Aug 2015 11:21:21 -0700 (PDT)
+Received: by ioeg141 with SMTP id g141so89593158ioe.3
+        for <git@vger.kernel.org>; Thu, 06 Aug 2015 11:21:20 -0700 (PDT)
+X-Received: by 10.107.153.206 with SMTP id b197mr4692327ioe.71.1438885280422;
+ Thu, 06 Aug 2015 11:21:20 -0700 (PDT)
+Received: by 10.107.8.37 with HTTP; Thu, 6 Aug 2015 11:21:01 -0700 (PDT)
+In-Reply-To: <20150804230359.GA27965@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275432>
 
-On Thu, Aug 6, 2015 at 1:35 PM, Stefan Beller <sbeller@google.com> wrote:
-> The copied argv array shall be an identical deep copy except for
-> the internal allocation value.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/argv-array.c b/argv-array.c
-> index 256741d..6d9c1dd 100644
-> --- a/argv-array.c
-> +++ b/argv-array.c
-> @@ -68,3 +68,16 @@ void argv_array_clear(struct argv_array *array)
-> +void argv_array_copy(struct argv_array *src, struct argv_array *dst)
+On Tue, Aug 4, 2015 at 7:03 PM, Mike Hommey <mh@glandium.org> wrote:
+> Another missing detail is what you're using for mercurial support in
+> git. I would guess https://github.com/felipec/git-remote-hg.
 
-'src' should be 'const'.
+Yes. I was going off some outdated information on the web that told me
+the felipec/git-remote-hg had moved to mainline git. I now see that
+has been undone.
 
-Typical Unix argument order has 'dst' first and 'src' second, i.e
-strcpy(dst, src). Is it worth deviating from that precedent?
+> Shameless plug, you may want to give a try to
+> https://github.com/glandium/git-cinnabar.
 
-> +{
-> +       int i;
-> +
-> +       dst->argv = xmalloc((src->argc + 1) * sizeof(*dst->argv));
+Thanks, I'll keep an eye on the project for support for pushing merge
+commits. That missing feature is a show-stopper for me right now.
+Since git-cinnabar is not doing a full hg clone under the hood, is
+there a chance that it will support shallow clones? (even before the
+native hg client has this feature...)
 
-What happens if 'dst' already has content? Isn't that being leaked
-here? At the very least, don't you want to argv_array_clear(dst)?
+> Anyways, your error looks like what I fixed in 33cae54, which git
+> describe tells me made it to git 2.3.2.
 
-> +       dst->argc = src->argc;
-> +       dst->alloc = src->argc;
+Yep, grabbing the latest version of git (2.5.0) solved the problem.
+Sorry for the bother.
 
-This is wrong, of course. The number allocated is actually argc+1, not argc.
-
-> +       for (i = 0; i < dst->argc ; i++)
-
-While it's not wrong per se to use dst->argc as the terminating
-condition, it is potentially misleading and confusing. Instead using
-src->argc as the terminating condition will better telegraph that the
-copy process is indeed predicated upon 'src'.
-
-> +               dst->argv[i] = xstrdup(src->argv[i]);
-> +       dst->argv[dst->argc] = NULL;
-
-It's not clear why you want to hand-code the low-level functionality
-again (such as array allocation and string duplication), risking (and
-indeed making) errors in the process, when you could instead re-use
-existing argv_array code. I would have expected to see
-argv_array_copy() implemented as:
-
-    argv_array_clear(dst);
-    for (i = 0; i < src->argc; i++)
-        argv_array_push(dst, src->argv[i]);
-
-which provides far fewer opportunities for errors to creep in.
-
-Moreover, this function might be too special-purpose. That is, why
-does it need to overwrite 'dst'? Can't you achieve the same
-functionality by merely appending to 'dst', and leave it up to the
-caller to decide whether 'dst' should be cleared beforehand or not? If
-so, then you can drop the argv_array_clear(dst) from the above.
-
-However, that begs the question: Why do you need argv_array_copy() at
-all? Isn't the same functionality already provided by
-argv_array_pushv()? To wit, a caller which wants to copy from 'src' to
-'dst' can already do:
-
-    struct argv_array src = ...;
-    struct argv_array dst = ARGV_ARRAY_INIT;
-    argv_array_pushv(&dst, src->argv);
-
-> +}
-> +
-> diff --git a/argv-array.h b/argv-array.h
-> index c65e6e8..247627da 100644
-> --- a/argv-array.h
-> +++ b/argv-array.h
-> @@ -19,5 +19,6 @@ LAST_ARG_MUST_BE_NULL
->  void argv_array_pushl(struct argv_array *, ...);
->  void argv_array_pop(struct argv_array *);
->  void argv_array_clear(struct argv_array *);
-> +void argv_array_copy(struct argv_array *src, struct argv_array *dst);
->
->  #endif /* ARGV_ARRAY_H */
-> --
-> 2.5.0.239.g9728e1d.dirty
+Taylor
