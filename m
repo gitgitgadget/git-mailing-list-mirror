@@ -1,92 +1,75 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] sha1_file.c: fix a declaration-after-statement
-Date: Thu, 06 Aug 2015 11:08:31 +0100
-Message-ID: <55C3321F.5080801@ramsay1.demon.co.uk>
-References: <55C32EA5.2010302@ramsay1.demon.co.uk>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: What's cooking in git.git
+Date: Thu, 06 Aug 2015 12:19:23 +0200
+Organization: gmx
+Message-ID: <26ccdd486c6749c51dea41aa31428d63@www.dscho.org>
+References: <xmqqoail1h2c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 12:08:44 2015
+X-From: git-owner@vger.kernel.org Thu Aug 06 12:19:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNI6M-0006xD-1C
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 12:08:42 +0200
+	id 1ZNIGs-0008MS-Do
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Aug 2015 12:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755376AbbHFKIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 06:08:37 -0400
-Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:41277 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753378AbbHFKIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 06:08:37 -0400
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 6BCE4AC40EA;
-	Thu,  6 Aug 2015 11:08:35 +0100 (BST)
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id CC57BAC4129;
-	Thu,  6 Aug 2015 11:08:34 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
-	Thu,  6 Aug 2015 11:08:34 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
-In-Reply-To: <55C32EA5.2010302@ramsay1.demon.co.uk>
-X-MDF-HostID: 17
+	id S1754746AbbHFKT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 06:19:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53296 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754644AbbHFKT2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 06:19:28 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LZmd6-1Z0Im848NQ-00lUsa; Thu, 06 Aug 2015 12:19:25
+ +0200
+In-Reply-To: <xmqqoail1h2c.fsf@gitster.dls.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:3H1aTyxXDGpgnNB+pfS9QL1IWHBs5ooqxHf/TE9Jsh8ulpdArSv
+ kef+X8KcWdIGRNP6r7j4xT3AXgIpY4hHTUk5DkRtPgLpzQv6Jpxhaus7THvY8Xe09pDg8mR
+ 3QoPqzvFvvPx2wgblJvUgRp40cu4u0BUDrTudGvaISDK1Akio1o0CS37qr5jll+o971UsTO
+ PYeL7tGYDYlbx8XSFwefQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8DuAqgv01VI=:vGBYIt0K0tx8t/71bj8wmH
+ tI8H/KgifHI2srwdo2Y47WDJJ5az0sBPWyL1fSlP4sDY461RhZ8HpQeIf9+fBglqZEJTHAqq/
+ X9R525QFTsoT+v/kYjy0u0Se9ZvBQhr/QOeH9kbBCmXZYF7lm3ngKwnoaWo/1ZORZSw9Jrdvw
+ tnecug1HAJlPRMb8X6/UkJFZxLwwychRszR3x+whWZ+FaqSxnVvDoHCflSVY6xTdA3DIhUDwt
+ eEUoRw3mhKrRoQFdG0/ZzSNx2UaLs4/WpPHZAgQEDIfVszvP2TMCklaseLN+M+x8VFCYSg7ts
+ G8y+hnKg7Qu5By/i6pNfnbiXSkczmfB43EDS4OQA7AaXeQlC5z3nmdHmdsHQBKuyVPhUWfOOo
+ mobtBkfkQYraaPxYHCsyCJpaYv+koPqADPwNfEN6Vx2cKyLsYwDNOGtwOVlLC8Own6ZrO0XLI
+ kYxGBFx0o9jtEfbivIXenbY6emLGTJrtQGvGH0yEPNE662QmYmyL6h1fwT7u1iKReuaweRLyf
+ ohQ33+emPmnXaEyrU2CrA5VhQIogK2g3axo95R379w/9NTwoZLaH2g3hmLVhlHkEGM+gzvsl4
+ ykjun4fKOIMaalZFU8qTSmQOLwarvAUfTIh6KLRnAA5QEskYXAcTctbygb88L5Jw9S0Eky74e
+ Hw9bovmB6DHRbHqAEfleHLWzz0KZymgeS0Bj1apAzNvbxft2wJF7mlVHnlGsM7gPFqxI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275424>
 
-On 06/08/15 10:53, Ramsay Jones wrote:
-> 
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> ---
-> 
-> Hi Junio,
-> 
-> Sorry for this hit-n-run patch, but I'm in a hurry ... :-D
-> Could you please squash this (or something like it) into
-> the relevant patch; Thanks!
+Hi Junio,
 
-Ah, I've just read your 'What's Cooking' email and I see that
-you are already aware of this.
+On 2015-08-06 00:55, Junio C Hamano wrote:
 
-Sorry for the noise!
+> * sb/submodule-helper (2015-08-05) 1 commit
+>  - submodule: implement `module_list` as a builtin helper
+> 
+>  The beginning of "git submodule" rewritten in C.
 
-ATB,
-Ramsay Jones
+I am really looking forward to that, with my Windows performance hat firmly on my head.
 
+> * tb/complete-rebase-i-edit-todo (2015-08-05) 1 commit
+>  - completion: offer '--edit-todo' during interactive rebase
 > 
-> [I noticed this simply because I have '-Wdeclaration-after-statement'
-> and '-Werror' (among others) set in CFLAGS (via config.mak).]
-> 
-> HTH
-> 
-> ATB,
-> Ramsay Jones
-> 
->  sha1_file.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 43386a8..a0af574 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1462,8 +1462,9 @@ int git_open_noatime(const char *name)
->  	static int sha1_file_open_flag = O_NOATIME;
->  
->  	for (;;) {
-> +		int fd;
->  		errno = 0;
-> -		int fd = open(name, O_RDONLY | sha1_file_open_flag);
-> +		fd = open(name, O_RDONLY | sha1_file_open_flag);
->  		if (fd >= 0)
->  			return fd;
->  
-> 
+>  Comments?
+
+The problem fixed by this one has bugged me plenty of times. I often need to edit the TODO e.g. when I managed to get the reordering wrong and want to insert a `pick <commit>` later in the `git-rebase-todo` and then call `git rebase --skip`.
+
+Read: I am very much in favor of fast-tracking this topic.
+
+Thanks,
+Dscho
