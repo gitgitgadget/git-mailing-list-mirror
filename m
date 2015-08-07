@@ -1,200 +1,105 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v9 02/11] ref-filter: introduce ref_formatting_state
-Date: Fri, 7 Aug 2015 17:07:57 +0530
-Message-ID: <CAOLa=ZSRFcfQqjphdSYkWDry8QibKL78Ev=XnfPRxc3PJ17Dog@mail.gmail.com>
-References: <CAOLa=ZSBMk9y1VGTVKSVsGMdYuPtjhPADciVUaEVwESRdSvWZg@mail.gmail.com>
- <1438692188-14367-1-git-send-email-Karthik.188@gmail.com> <1438692188-14367-2-git-send-email-Karthik.188@gmail.com>
- <CAPig+cQftyjKFi0Qkg_ZVEJ9A+zGSAmFtHwQ-8hCnf8xtU_PEA@mail.gmail.com>
- <CAOLa=ZSp3aL0Z5YP5xmzdW7H92yU3EA+MJjLYA29QyoZTD5RiA@mail.gmail.com> <CAPig+cTt__tphEqFuyeOiTadOL9cAi51RLd3z6rr3nM-8Qp6Aw@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Windows 7 - long/short and upper/lower filename
+Date: Fri, 07 Aug 2015 16:03:21 +0200
+Organization: gmx
+Message-ID: <466225b8050e58deaf5ffa4ad41d64b9@www.dscho.org>
+References: <55BFDAB0.8010306@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 13:38:34 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Jos=C3=A9Quintas?= <jmcquintas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 16:03:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNfyq-0004ub-Tp
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 13:38:33 +0200
+	id 1ZNiFA-0008UD-FZ
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 16:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbbHGLi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 07:38:29 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:32782 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752136AbbHGLi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 07:38:28 -0400
-Received: by obdeg2 with SMTP id eg2so77178130obd.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2015 04:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yLL4M9Aprfm+7SE6duakTLqL5oMrLHW1Z12WI1Gitm8=;
-        b=mLkDW9T71Rz3ZmMUcQvLWPhkitIE0NNQMPvQeaetnVC+WX11p3Kd2APapvcnpJC7Hc
-         KfJMcFQyF5BZQAuPAutcaoGf+kMfYy51WFtPSXIA7HdEVeSdkzin3hQ1kPSO5RhVvA+R
-         61KjlEDtegvW4gITbnWRgMqZijRRzxaQ2eD8vULLTM2IqAMEiX6Em9mqyed6mR+Hpe5K
-         QbcRP1JC4a7OzzLHJy2tL3y1vrRtXwMXohyX513JmiNRkD5ZPu45BEhh1cgXmAy8CJWW
-         IlK2tElbH2S2d9HX3JQ/zxG2RyXFe3uJYf6FhJ+oHEy1XmneqnZZGBvdckUCLhF243KW
-         WzHw==
-X-Received: by 10.60.62.105 with SMTP id x9mr6120147oer.1.1438947507149; Fri,
- 07 Aug 2015 04:38:27 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Fri, 7 Aug 2015 04:37:57 -0700 (PDT)
-In-Reply-To: <CAPig+cTt__tphEqFuyeOiTadOL9cAi51RLd3z6rr3nM-8Qp6Aw@mail.gmail.com>
+	id S932357AbbHGOD0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Aug 2015 10:03:26 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57029 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932136AbbHGODY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 10:03:24 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LdYxu-1YxgoV2oGA-00ioF8; Fri, 07 Aug 2015 16:03:21
+ +0200
+In-Reply-To: <55BFDAB0.8010306@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:aSpCFSq2+HjrX4O+68eSNOy9NpwPdsNEIwRFuES1gi2pGOVu1+r
+ Crxx29R+5/ycGujqVbNSpasknpqu//hv5slryiH/LFn76oMfcHThj8zeOSfxfrIPK5bFNe1
+ OHK6C2Pok/dT3wW4Y1R0gSDtsCnQo06hlel1khcApQAIoRzgOZu/NTNN5j/lrc4MaYF9C7/
+ cyRqTobZxz99NP15+lfQw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ANdRVDoUXxs=:1nt/ig4ZhVMDs5aOIJzAw3
+ HF7yFO2gpwp8dsLH3eDQH2WqEqOCJh0qHcBRcXWElawYpozqZ0eJiKqvyBCizC93GFrzw2DHd
+ mwB09hk2QQe5oqRTLHNzkgre9ZydTMz3V4SWz5IvsCwASQUgXvaui52qgLcMXjdWpdvnNTa14
+ S4nSOjgtEHQveXUM+63ZEyRXTtg9QByL9mkA2sz7RibzU4rV+Mkf237MrxkDab4gvjSWN8stM
+ GEMU200QvQhhGOp1q+9ybq/frCgsQEIzsDTE9XcsUemXgmYnRMvbhWoxgkQ8EQL04XmB4g2aB
+ U2wFc3fCMEH3CjIrL+QZgGS9l+kxKz3AY+rKbk7VxyHwdyPKnQRoH1arxU72HhPRNOtm54lUa
+ SPUCUOikY3tRV+LTuG4YgM3H1QlhTu0xXZzVF/uj3QG9c/vRccLzx7swsypvi1W4GArmAk5Hs
+ kGPl1SxADZ5uxG2PVtcVWPbd08imRjV+qnXblShnEW9bAisyEROqz/UkkVSFjF0gB24fnhgj8
+ 7+5lUb6GGfVR9TFDbUjKYLISbZ3EoIanZvqVISqd66YepafNAH7zOXDNs69QjZVZqVREpUg7x
+ 9aDoYOVsiaH6891Akkm9rjcp8gaizydcjwOM90K5W+Nog5fgIFgzmXkZpT+3osFrXn9xggvWg
+ PmxSIzg22eq0CLI+kS2mkUeck1bbj80vJsQUtzRnYcQtRhr/KsmX4H8LtolRtYL3aqBATD37Q
+ OwIg7OI84Yqyq1qQo03SVzA0S4iM1uadPTWf0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275467>
 
-On Fri, Aug 7, 2015 at 10:13 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Aug 6, 2015 at 11:53 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> On Fri, Aug 7, 2015 at 5:49 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Tue, Aug 4, 2015 at 8:42 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>>> +static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *final)
->>>> +{
->>>> +       /* More formatting options to be evetually added */
->>>> +       strbuf_addbuf(final, state->output);
->>>> +       strbuf_release(state->output);
->>>
->>> I guess the idea here is that you intend state->output to be re-used
->>> and it is convenient to "clear" it here rather than making that the
->>> responsibility of each caller. For re-use, it is more typical to use
->>> strbuf_reset() than strbuf_release() (though Junio may disagree[1]).
->>
->> it seems like a smarter way to around this without much overhead But it
->> was more of to release it as its no longer required unless another modifier atom
->> is encountered. Is it worth keeping hoping for another modifier atom eventually,
->> and release it at the end like you suggested below?
->
-> If I understand your question correctly, it sounds like you're asking
-> about a memory micro-optimization. From an architectural standpoint,
-> it's cleaner for the entity which allocates a resource to also release
-> it. In this case, show_ref_array_item() allocates the strbuf, thus it
-> should be the one to release it.
->
-> And, although we shouldn't be worrying about micro-optimizations at
-> this point, if it were to be an issue, resetting the strbuf via
-> strbuf_reset(), which doesn't involve slow memory
-> deallocation/reallocation, is likely to be a winner over repeated
-> strbuf_release().
->
+Hi,
 
-Exactly what I was asking, thanks for explaining :D
+On 2015-08-03 23:18, Jos=C3=A9Quintas wrote:
+> I am using Windows 7 64 bits.
 
->>>> +       memset(&state, 0, sizeof(state));
->>>> +       state.quote_style = quote_style;
->>>> +       state.output = &value;
->>>
->>> It feels strange to assign a local variable reference to state.output,
->>> and there's no obvious reason why you should need to do so. I would
->>> have instead expected ref_format_state to be declared as:
->>>
->>>     struct ref_formatting_state {
->>>        int quote_style;
->>>        struct strbuf output;
->>>     };
->>>
->>> and initialized as so:
->>>
->>>     memset(&state, 0, sizeof(state));
->>>     state.quote_style = quote_style;
->>>     strbuf_init(&state.output, 0);
->>
->> This looks neater, thanks. It'll go along with the previous patch.
->>
->>> (In fact, the memset() isn't even necessary here since you're
->>> initializing all fields explicitly, though perhaps you want the
->>> memset() because a future patch adds more fields which are not
->>> initialized explicitly?)
->>
->> Yea the memset is needed for bit fields evnetually added in the future.
->
-> Perhaps move the memset() to the first patch which actually requires
-> it, where it won't be (effectively) dead code, as it becomes here once
-> you make the above change.
->
+=2E.. and Git version... ?
 
-But why would I need it there, we need to only memset() the ref_formatting_state
-which is introduced here. Also here it helps in setting the strbuf
-within ref_formatting_state
-to {0, 0, 0}.
+> I have a filename called ze_xmlfun.prg
+> Last week gitgui shows 2 changed files: ZE_XML~1.PRG and ze_xmlfun.pr=
+g
+> At momment I can't update this file, because get a error.
+> Try delete file, update one name each time, but same error.
+> Seems that a unique file is considered as 2 files, and this causes er=
+ror.
 
->>>>         for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
->>>> -               struct atom_value *atomv;
->>>> +               struct atom_value *atomv = NULL;
->>>
->>> What is this change about?
->>
->> To remove the warning about atomv being unassigned before usage.
->
-> Hmm, where were you seeing that warning? The first use of 'atomv'
-> following its declaration is in the get_ref_atom_value() below, and
-> (as far as the compiler knows) that should be setting its value.
->
+This is no longer allowed in the most recent Git for Windows 1.x versio=
+ns, for exactly the reason you mentioned: the short name is actually re=
+ferring to the same file as the long name. Therefore, short names will =
+be refused.
 
-I'll check this out.
+Unfortunately, you will have to fix this issue in your repository yours=
+elf. It will most likely entail something like `git rm --cached ZE_XML~=
+1.PRG && git commit -s -m "Remove bogus file"`
 
->>>>                 ep = strchr(sp, ')');
->>>> -               if (cp < sp)
->>>> -                       emit(cp, sp, &output);
->>>> +               if (cp < sp) {
->>>> +                       emit(cp, sp, &state);
->>>> +                       apply_formatting_state(&state, &final_buf);
->>>> +               }
->>>>                 get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
->>>> -               print_value(atomv, quote_style, &output);
->>>> +               process_formatting_state(atomv, &state);
->>>> +               print_value(atomv, &state);
->>>> +               apply_formatting_state(&state, &final_buf);
->>>>         }
->>>>         if (*cp) {
->>>>                 sp = cp + strlen(cp);
->>>> -               emit(cp, sp, &output);
->>>> +               emit(cp, sp, &state);
->>>> +               apply_formatting_state(&state, &final_buf);
->>>
->>> I'm getting the feeling that these functions
->>> (process_formatting_state, print_value, emit, apply_formatting_state)
->>> are becoming misnamed (again) with the latest structural changes (but
->>> perhaps I haven't read far enough into the series yet?).
->>>
->>> process_formatting_state() is rather generic.
->>
->> perhaps set_formatting_state()?
->
-> I don't know. I don't have a proper high-level overview of the
-> functionality yet to say if that is a good name or not (which is one
-> reason I didn't suggest an alternative).
->
+> When do a search in history, upper/lower case must be the same as in =
+git
+> control.
+> If upper/lower is changed, is considered a new file.
+> How to configure git to work allways using lower case on Windows?
 
-Ah! okay.
+There is no such configuration. If you have a file with an undesired fi=
+le name, you have to rename it. You can use `git mv` for that.
 
->>> print_value() and emit() both imply outputting something, but neither
->>> does so anymore.
->>
->> I think I'll append a "to_state" to each of them.
->
-> Meh. print_value() might be better named format_value(). emit() might
-> become append_literal() or append_non_atom() or something.
->
+If the file name differs only in case, you will have to do a little dan=
+ce like `git mv MYFILE myfile.bak && git mv myfile.bak myfile`
 
-Ill think about this, thanks :)
+> Is there a plugin or a tool to make this, to new files and to update =
+in
+> git repository?
 
->>> apply_formatting_state() seems to be more about finalizing the
->>> already-formatted output.
->>
->> perform_state_formatting()? perhaps.
->
-> Dunno.
+No, not unless you write one.
 
-That's okay, I'll think about it.
+> Note: gitgui is a gui tool for git, ok, but once it uses git, may be
+> this feature/change need to be made in git.
 
+If you have an idea how to incorporate this into Git's source code, it =
+would be a splendid idea to contribute that change to this mailing list=
+=2E
 
--- 
-Regards,
-Karthik Nayak
+Ciao,
+Johannes
