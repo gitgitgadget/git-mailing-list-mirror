@@ -1,90 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Inconsistent results obtained regarding how git decides what
- commits modifies a given path
-Date: Fri, 7 Aug 2015 04:44:26 -0400
-Message-ID: <20150807084425.GA8232@sigill.intra.peff.net>
-References: <CANYPdHA6a1Jg2NUJGcg5O3KBG2AB+AK3071ckDywGL=MHghEZA@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] git-am: add am.threeWay config variable
+Date: Fri, 07 Aug 2015 11:18:27 +0200
+Organization: gmx
+Message-ID: <ee65e46e4a342e4646ae78baf12fbe3b@www.dscho.org>
+References: <1438697966-4958-1-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: JuanLeon Lahoz <juanleon.lahoz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 10:44:39 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 11:18:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNdGY-0003bM-2z
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 10:44:38 +0200
+	id 1ZNdnY-0004Ml-M4
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 11:18:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324AbbHGIoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 04:44:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41882 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750829AbbHGIob (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 04:44:31 -0400
-Received: (qmail 3828 invoked by uid 102); 7 Aug 2015 08:44:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Aug 2015 03:44:31 -0500
-Received: (qmail 11892 invoked by uid 107); 7 Aug 2015 08:44:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Aug 2015 04:44:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Aug 2015 04:44:26 -0400
-Content-Disposition: inline
-In-Reply-To: <CANYPdHA6a1Jg2NUJGcg5O3KBG2AB+AK3071ckDywGL=MHghEZA@mail.gmail.com>
+	id S1752545AbbHGJSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2015 05:18:35 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63738 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752184AbbHGJSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 05:18:33 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LbPza-1Z06LH0rik-00l1GZ; Fri, 07 Aug 2015 11:18:29
+ +0200
+In-Reply-To: <1438697966-4958-1-git-send-email-pyokagan@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:gT2a+HrGYQjvjxn/u6F9QUsM3PnteEihH/KjEEig9sYNUVHr3bm
+ KlDP81Y7AWTyzGfbANv7sBs87t2uueVDm/2/AFtPsGwHdxG1aGd2NrxRkd+q+n1c5NyHK7c
+ IgBEL/1mP+NUk/Rj0u7UxruiicYEuUdVxe+8IEoIbBNXbeJZhMbLd0mUOiNfMFF9SS8rcQY
+ mMLWcQYD8WFUDQuqxWwnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:K36Eyobrm4M=:4TCXFHH6csQLjIqecx2JaT
+ jECQE0LzTWiJyRZDETeC+hCNGSaMxOAzbu6+aUnjYDSCB7F/uj3FHFUGGHu57vzQSEULBK6GJ
+ tHWaZqrqvVRLKoaFaBmyph1nRGkitutROcu/6aZsz//hmyV7Wzjvmpn2VOy0Rwu41pzyPVon/
+ ZwQPALy7ZLEzJ9jTLDDKDRrcY/rUhn7OOeTua7nrZDekg8QvozHF+9gIsxnHB6nVN0OfF4RzU
+ AwQEXDMokGym4+vDQxE7uLeAzV37niBrfBwCqgF1d/3eKVpMI+k8ASxCKMhkx019zp09b2Cb0
+ SKbXq3hWU1bgPLTdkIwp2ussebfyFgM/gMqZpDlaonLfG27ju3XJPdsTKbbu4mCAB8kQL/ih6
+ bN+CvpQy4TVZnCKTwzN/LsTyWD8KkPSEyGFkXAji8fNHwIojYaZxSAqscMBQwYHvACYDo4YOY
+ sSlPVXVUrdJzWtKOeuS59etdIxYKBEkeJgYrbIz7Jb014Yzs+bDKCTntH3QXlg3up47ZIQThc
+ xf+zFH2b5OQrT8wE18/XEk6HiWMapp/qH1mJWp0GtqjfJhRTEUvBvT5B1NK4RkIOldji7pPV3
+ ZDRtpOBy168RyH/wuGJwb4TfzdTA+BqV1ne1MNUQcyHSa29i8mWhIGYnAuVIEam2IWe1L8qxC
+ 8363Qlro/ugjTJMP8eqP7oL8nb7TfUIyAvmJr8NRHRJWPcUjC0fqv3KCZpWbmv+9woxI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275463>
 
-On Fri, Aug 07, 2015 at 08:42:52AM +0200, JuanLeon Lahoz wrote:
+Hi,
 
-> # This prints nothing on git < 1.8.4; prints a commit that corresponds with
-> # "Merge branch 'b3' into b2_3" in git >= 1.8.4 (tested with 1.8.4 and 2.5.0)
-> echo COMMITS checkpoint..b2_3: $(git rev-list checkpoint..b2_3 -- version)
+On 2015-08-04 16:19, Paul Tan wrote:
+> From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+> 
+> Add the am.threeWay configuration variable to use the -3 or --3way
+> option of git am by default. When am.threeway is set and not desired
+> for a specific git am command, the --no-3way option can be used to
+> override it.
+> 
+> Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+> I tweaked Remi's patch so it is implemented on top of builtin/am.c. Hopefully
+> there will be no regressions this time ;)
 
-I would expect the current behavior (to show the merge). The fix bisects
-to d0af663 (revision.c: Make --full-history consider more merges,
-2013-05-16). See that commit message, or the thread at:
+The diff looks obviously correct to me (and yes, I also looked at the context... :-)).
 
-  http://thread.gmane.org/gmane.comp.version-control.git/220624
-
-for more detail. Though I'm not 100% it was intentional...
-
-> # This prints nothing on any git version I tested.
-> echo COMMITS checkpoint..b1_4: $(git rev-list checkpoint..b1_4 -- version)
-
-This looks like a bug to me. It should be the exact same simplification
-case as b2_3 (we have a merge whose outcome matches the second parent,
-but not the first). One obvious difference, if you look at:
-
-  git log --oneline --graph --decorate checkpoint b2_3 b1_4
-
-is that in the b1_4 case, the immediate parent of the merge is marked as
-UNINTERESTING|BOTTOM, because it is "checkpoint". Whereas in the b2_3
-case, it is simply UNINTERESTING, as it is the _parent_ of checkpoint,
-and we propagated the flag.
-
-This difference matters in relevant_commit(). In the b2_3 case, we
-consider the second parent irrelevant, because it is "just"
-UNINTERESTING. But in the b1_4 case, we consider it relevant, due to the
-BOTTOM flag. This code comes from 4d82660 (revision.c: discount side
-branches when computing TREESAME, 2013-05-16).
-
-And that commit claims that we exclude irrelevant parents when
-determining TREESAME. Meaning the b2_3 case has only one relevant parent
-(which is different, making the merge !TREESAME). Whereas b1_4 has two
-relevant parents, we realize we are TREESAME to the second one, and
-simplify away the merge.
-
-At this point, I'm pretty confused (and reading the comments added by
-4282660 only confused me further). I would have thought the TREESAME was
-independent of the limiting of the traversal, but clearly it is not
-intended to be. But this weird BOTTOM exception makes even less sense to
-me.
-
-So I'll give up for now. Maybe somebody else can pick it up from there,
-or perhaps it will make more sense to me in the morning.
-
--Peff
+Ciao,
+Dscho
