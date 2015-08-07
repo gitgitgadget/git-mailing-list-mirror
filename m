@@ -1,64 +1,87 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 0/10] Port branch.c to ref-filter.
-Date: Fri, 7 Aug 2015 20:52:26 +0530
-Message-ID: <CAOLa=ZTtLKNJ7zgXF7wqs9_18JAjnau=kmAutwKQMkqviH43kQ@mail.gmail.com>
-References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
- <CAOLa=ZSR=7mvOG+RPSJ_xxr3k644WOiqirTrNMo-=jcXbtM3yw@mail.gmail.com> <xmqq614t2zbe.fsf@gitster.dls.corp.google.com>
+From: Kevin Daudt <me@ikke.info>
+Subject: Re: wishlist: make it possible to amend commit messages after push
+ to remote
+Date: Fri, 7 Aug 2015 18:09:24 +0200
+Message-ID: <20150807160924.GA4185@ikke.info>
+References: <55C3FA66.90805@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 17:23:11 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jarkko Hietaniemi <jhi@iki.fi>
+X-From: git-owner@vger.kernel.org Fri Aug 07 18:09:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNjUC-0003mv-4b
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 17:23:08 +0200
+	id 1ZNkDK-0000Tp-O7
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 18:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932263AbbHGPW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 11:22:58 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:35191 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932243AbbHGPW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 11:22:56 -0400
-Received: by obbop1 with SMTP id op1so81413053obb.2
-        for <git@vger.kernel.org>; Fri, 07 Aug 2015 08:22:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=AdlanF9yD7ko2MLKafAg6UP203C+SVY6941WnVVyhwI=;
-        b=fJ1WtUgt9m0gVXpYWG8d6NSLvc0+OCAj0arl+GmAV9QxJvXsL1DbTGeX6DDUg/7S09
-         aNHOQ5kENADb1kuf150qr/+Ypq6WMYOU727EowD97yVKOg1D2UnmgrTArHu5q67BjzPQ
-         iDXQRnLpijx5AUg0p/TUaoOdNWdxw14gBKb5MxUwnQFyZYoKGDnj1zIWKC/6YTDICq9t
-         wCDc4cW3vo+cvbXZaJFvjPjeedr3nePrO/rt2O2otWrMk93jOIfxe1iaSFymJuZitiRI
-         oK/tTiBo8id9CPLEHlxtcL2P8drX9cI3lkpMkqvrA6io0nPdIwfvSm3rTJc18EdK8+Sj
-         BP7A==
-X-Received: by 10.60.177.195 with SMTP id cs3mr7076401oec.37.1438960975708;
- Fri, 07 Aug 2015 08:22:55 -0700 (PDT)
-Received: by 10.182.26.73 with HTTP; Fri, 7 Aug 2015 08:22:26 -0700 (PDT)
-In-Reply-To: <xmqq614t2zbe.fsf@gitster.dls.corp.google.com>
+	id S1945908AbbHGQJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2015 12:09:28 -0400
+Received: from ikke.info ([178.21.113.177]:36656 "EHLO vps892.directvps.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945895AbbHGQJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 12:09:26 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1001)
+	id 944A34400AE; Fri,  7 Aug 2015 18:09:24 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <55C3FA66.90805@iki.fi>
+User-Agent: Mutt/1.5.23+102 (2ca89bed6448) (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275469>
 
-On Thu, Aug 6, 2015 at 3:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> There are nine patches in the series. Have put "0/10" by mistake.
->
-> FYI, format-patch has --cover-letter option.
+On Thu, Aug 06, 2015 at 08:23:02PM -0400, Jarkko Hietaniemi wrote:
+> Not for the first time, and probably not for the last, I pushed a commit
+> upstream without adding a link for the bug report as I was meaning to.
+> 
+> Or it could have been...
+> 
+> - Simple typos.
+> 
+> - Broken URLs.
+> 
+> - The impossibility of two consecutive commits referring to each other
+> because the older one cannot know what the newer one will be called.
+> 
+> - The following morning / 5 minutes / 5 second later thinking of
+> an additional factoid that would've been great to have in the
+> commit message.
+> 
+> In general, I find the fact that once a commit has left the building,
+> it goes into your permanent record, and cannot be changed, ever, to be
+> very, very annoying. I get the cryptographic "sealing" with all the
+> preceding changes, but...
+> 
+> Not that I've thought this through... but couldn't there be a bunch of
+> "aliases" (new SHAs) for a commit?  The original one being the
+> "master", but as/if the commit message is changed, it could get new
+> SHAs.  Sort of separating the real data of the commit, and the metadata?
+> 
+> 
 
-Thanks! I need to check out a lot of options :)
+There is something that solves at least part of this problem. It's
+called git-notes[1]. This allows you to add notes to objects (ie,
+commits) afterwards.
 
+This can be used to attach additional information to a commit without
+having to change the commit.
 
+This obviously doesn't help for fixing typos in commits. There does
+exist something that works likes you described called git-replace[2].
+This allows you for example to replace any commit with any other commit.
+For this to work with others, you have to make sure refs/replace/* is
+being pushed, and is fetched by others. This can be done by setting up
+refspecs, but it has to be done by everone who uses this repo.
 
--- 
-Regards,
-Karthik Nayak
+One more thing, if you know that no one has fetched the branch you just
+pushed yet, you can amend the commit and force-push it without any
+problems (I'd sugget using --force-with-lease). 
+
+Hope this helps, Kevin
+
+[1]: http://jk.gs/git-notes.html
+[2]: http://jk.gs/git-replace.html
