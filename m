@@ -1,108 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git
-Date: Fri, 07 Aug 2015 09:40:06 -0700
-Message-ID: <xmqqh9obyrvd.fsf@gitster.dls.corp.google.com>
-References: <xmqqoail1h2c.fsf@gitster.dls.corp.google.com>
-	<1438816453.10324.0.camel@twopensource.com>
-	<xmqqk2t91e5y.fsf@gitster.dls.corp.google.com>
+Subject: Re: wishlist: make it possible to amend commit messages after push to remote
+Date: Fri, 07 Aug 2015 09:59:05 -0700
+Message-ID: <xmqqd1yzyqzq.fsf@gitster.dls.corp.google.com>
+References: <55C3FA66.90805@iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 18:40:19 2015
+To: Jarkko Hietaniemi <jhi@iki.fi>
+X-From: git-owner@vger.kernel.org Fri Aug 07 18:59:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNkgr-0000wB-Nd
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 18:40:18 +0200
+	id 1ZNkzE-0008V0-SL
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 18:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932500AbbHGQkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 12:40:11 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35074 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932419AbbHGQkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 12:40:09 -0400
-Received: by pabxd6 with SMTP id xd6so73493609pab.2
-        for <git@vger.kernel.org>; Fri, 07 Aug 2015 09:40:09 -0700 (PDT)
+	id S1945997AbbHGQ7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2015 12:59:09 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:33562 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945898AbbHGQ7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 12:59:06 -0400
+Received: by pabyb7 with SMTP id yb7so59527068pab.0
+        for <git@vger.kernel.org>; Fri, 07 Aug 2015 09:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=310lmwjS+fJ557m2Qo2+UdWKeH+ABrgOoUq0UC337M0=;
-        b=EsynHjX27kUGLTNhLUTICN1Zd0E7XH0TGzMhvT80xhMGD7qzHU7a7Gz9uAEgf5hP9j
-         5oH+XiU9Klw499Au0PjvlgWtaW68r0DOrtuEWLshY6TEbFqCEF7TwvcvP3XG7gsvV/pF
-         +1LxGY0lEQfEDKzUFB2UvP84gz3qMpLCuDuR/a1N4jyu2UlGrfSboMKbaFpFMtLJ1eeS
-         D9y2Rnm0v1PZjEGaslHmUihU3lEI6ZaKEtiElYz54ws0MIjyYh7zM1o6xnFwyNeLZwsb
-         udgxe1X8jroYQctrorZoc5/YLaDN8cJEuqPq2mcrz7zWWRYUC6KslxOh7FpiOye1ytvV
-         3UDA==
-X-Received: by 10.66.236.70 with SMTP id us6mr16499169pac.39.1438965609007;
-        Fri, 07 Aug 2015 09:40:09 -0700 (PDT)
+        bh=ug6vT71s9XnUGdZrM3BUm4YLsgVFAMcND6533oCzIAQ=;
+        b=GspX3uejT/evR6/Zyhfa7PzQ5pKVo4aspbiZveofc/anPvp1WCTVzqzptrfZBtiAEr
+         UVQq7XFWd7bUIlnYC3jW/MeUFN+DrRr9k2g84du6WCEtnWqjjwnrsQ/OgS6seABQzQw+
+         P9uMKJ54/7JLz3dRA3Y2wCCadhEyTyyxtXlTJFzwQhvp35WPKf+vATWgTAA5YyBGVpdP
+         FGhyOFIUt4M72juDg/bDGA5QoC6AWolr8rXe3JDGHIFlK4rv03C/Zm1fx6uG0rKU58h5
+         2Z2qdRnEin7E843nZ82+z3igqoWl8sxRE5YqKLor5wsTQ97aOvVwGIYioOOkdjauTk//
+         gqYw==
+X-Received: by 10.68.162.66 with SMTP id xy2mr16841761pbb.13.1438966746494;
+        Fri, 07 Aug 2015 09:59:06 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:6597:23b2:a33a:2b5b])
-        by smtp.gmail.com with ESMTPSA id u16sm10659238pdl.71.2015.08.07.09.40.07
+        by smtp.gmail.com with ESMTPSA id ob4sm10678693pbb.40.2015.08.07.09.59.05
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 07 Aug 2015 09:40:08 -0700 (PDT)
-In-Reply-To: <xmqqk2t91e5y.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 05 Aug 2015 16:58:01 -0700")
+        Fri, 07 Aug 2015 09:59:05 -0700 (PDT)
+In-Reply-To: <55C3FA66.90805@iki.fi> (Jarkko Hietaniemi's message of "Thu, 06
+	Aug 2015 20:23:02 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275472>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jarkko Hietaniemi <jhi@iki.fi> writes:
 
-> David Turner <dturner@twopensource.com> writes:
+> Not for the first time, and probably not for the last, I pushed a commit
+> upstream without adding a link for the bug report as I was meaning to.
 >
->> On Wed, 2015-08-05 at 15:55 -0700, Junio C Hamano wrote:
->>> * dt/untracked-subdir (2015-08-05) 2 commits
->>>  - DONTMERGE: Waiting for an Ack from Duy
->>>  - untracked-cache: fix subdirectory handling
->>>  (this branch uses dt/untracked-sparse.)
->>> 
->>>  This seems to break some tests.
->>
->> All tests pass for me locally.  What's broken for you?
+> Or it could have been...
 >
-> *** prove ***
-> t7063-status-untracked-cache.sh .. Dubious, test returned 1 (wstat 256, 0x100)
-> Failed 3/30 subtests
+> - Simple typos.
 >
-> Test Summary Report
-> -------------------
-> t7063-status-untracked-cache.sh (Wstat: 256 Tests: 30 Failed: 3)
->   Failed tests:  28-30
->   Non-zero exit status: 1
-> Files=1, Tests=30, 27 wallclock secs ( 0.04 usr  0.01 sys +  0.15 cusr  0.67 csys =  0.87 CPU)
-> Result: FAIL
+> - Broken URLs.
+>
+> - The following morning / 5 minutes / 5 second later thinking of
+> an additional factoid that would've been great to have in the
+> commit message.
 
-So it turns out that you run "strace -k -o /tmp/tr" and never look
-at /tmp/tr; I am guessing that this was a remnant of your debugging
-while developing the test, sign of lack of proofreading before
-sending the patch out, perhaps?
+Unfortunately (or fortunately, depending on your point of view),
+these can only be avoided by being careful before you push things
+out.  You need to learn to consider the act of publishing as casting
+your work in stone to give other people solid foundation to build
+on.
 
-I didn't carefully read the remainder of the patch, but at the
-minimum this needs to be squashed in.  They may be a reroll with
-some more tweaks from you after other people comment on it, so I'll
-keep this separate and squashable.
+> - The impossibility of two consecutive commits referring to each other
+> because the older one cannot know what the newer one will be called.
 
-Thanks.
+This is fundamental.  You shouldn't be able to "predict"; otherwise
+the cryptographic protection of the history would not work.
 
- t/t7063-status-untracked-cache.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> In general, I find the fact that once a commit has left the building,
+> it goes into your permanent record, and cannot be changed, ever, to be
+> very, very annoying. I get the cryptographic "sealing" with all the
+> preceding changes, but...
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index bb0e2a9..ca8dc3a 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -486,7 +486,7 @@ test_expect_success 'test sparse status with untracked cache and subdir' '
- 	avoid_racy &&
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
--	strace -k -o /tmp/st git status --porcelain >../status.actual &&
-+	git status --porcelain >../status.actual &&
- 	cat >../status.expect <<EOF &&
-  M done/two
- ?? .gitignore
+If you really "get" it, you wouldn't be complaining about the
+"impossibility" part ;-)
+
+> Not that I've thought this through... but couldn't there be a bunch of
+> "aliases" (new SHAs) for a commit?
+
+You could filter-branch, after warning others that you will be
+rewinding and rebuilding your history and disrupting their work
+(and object replacement with "git replace" and the graft would
+be good ways to help you during the filter-branch process, but these
+shouldn't be used as a long-term mechanism---it will slow you and
+more importantly others down unnecessarily and forever).
