@@ -1,176 +1,106 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v9 02/11] ref-filter: introduce ref_formatting_state
-Date: Fri, 7 Aug 2015 00:43:02 -0400
-Message-ID: <CAPig+cTt__tphEqFuyeOiTadOL9cAi51RLd3z6rr3nM-8Qp6Aw@mail.gmail.com>
-References: <CAOLa=ZSBMk9y1VGTVKSVsGMdYuPtjhPADciVUaEVwESRdSvWZg@mail.gmail.com>
-	<1438692188-14367-1-git-send-email-Karthik.188@gmail.com>
-	<1438692188-14367-2-git-send-email-Karthik.188@gmail.com>
-	<CAPig+cQftyjKFi0Qkg_ZVEJ9A+zGSAmFtHwQ-8hCnf8xtU_PEA@mail.gmail.com>
-	<CAOLa=ZSp3aL0Z5YP5xmzdW7H92yU3EA+MJjLYA29QyoZTD5RiA@mail.gmail.com>
+From: JuanLeon Lahoz <juanleon.lahoz@gmail.com>
+Subject: Inconsistent results obtained regarding how git decides what commits
+ modifies a given path
+Date: Fri, 7 Aug 2015 08:42:52 +0200
+Message-ID: <CANYPdHA6a1Jg2NUJGcg5O3KBG2AB+AK3071ckDywGL=MHghEZA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 06:43:10 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 07 08:42:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNZUs-0002vC-56
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 06:43:10 +0200
+	id 1ZNbMn-0001li-RR
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 08:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbbHGEnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 00:43:05 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:33742 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750949AbbHGEnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 00:43:03 -0400
-Received: by ykoo205 with SMTP id o205so80456997yko.0
-        for <git@vger.kernel.org>; Thu, 06 Aug 2015 21:43:02 -0700 (PDT)
+	id S1752796AbbHGGmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2015 02:42:53 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:36296 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752261AbbHGGmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 02:42:53 -0400
+Received: by qgeh16 with SMTP id h16so68935775qge.3
+        for <git@vger.kernel.org>; Thu, 06 Aug 2015 23:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=q5POOiq+JLJabAlpchwcXqNAVXyWN3k7H+n2sYjdix8=;
-        b=D63ENzD5zVaNRyZmbOmJA+rNCDrqHIuWcUXMF3w7UNPOR6tcOajo7aramaMr5BEAjZ
-         XWJVgsG81mBxp1CYziitm+DKSB9URVFBqvqt7EGt8ohcffguvg0YgGgUiyXuwWJhFtKK
-         t/tj6EwnAB4O/Pcvro+py3QmP14gB/i7VQhPiRacUm2E34xxQUX2XlMv4u00klkFBRWc
-         xSrJfcg5BATQLGzwtCY1m478X4W9SCZKnHWDKfdCT6T38n3ADnIWs13SkCOXRBtyzLos
-         xqxlnHwtcKeC7ahwsv8ccATadBvW1HFTBxMcqIRuBLvKLaI/SWWZ3oGYsnRL63MJUOA1
-         meXg==
-X-Received: by 10.129.76.140 with SMTP id z134mr5799945ywa.17.1438922582728;
- Thu, 06 Aug 2015 21:43:02 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Thu, 6 Aug 2015 21:43:02 -0700 (PDT)
-In-Reply-To: <CAOLa=ZSp3aL0Z5YP5xmzdW7H92yU3EA+MJjLYA29QyoZTD5RiA@mail.gmail.com>
-X-Google-Sender-Auth: Np_-sVIil0PNP6OYUGHhN_0b9m8
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=uuvOtdmyWCCJ3bhwbNBBA5ors3wjmtv5dxBLp7Lwm/s=;
+        b=ebvVCH8a9iy5GjJCKsKz5PLOhh/rxPRNtGDjWswZA3u0O8xaX6Gy321+eo9OUNlk+C
+         Svewv1pD90nVXFcLCQdC3mkmGc/eis3gpiWwSPHFmGtf5JUAjLB/AC19fyjAW+eG/vgg
+         LV5raCxz2S/hfAn6iOiNtRr6LKwAn7GlTJl9LdwBqa35UygeeeshDVDGHKMf96ySBIst
+         w+RJvGu5XVpgE/MV7UM1iuuNX9AhOSO/Yo+E7CbsdW6KPxXzFX2vGvdZ2vrdJGCY9BfX
+         2p3d7N6GaFaC3Fh34Mos9t0ZhCvQwTCU5Q1Ifhdg2ZYscbGTESKJ/NQXRz9hLmRFgQ6r
+         Dg6A==
+X-Received: by 10.140.235.18 with SMTP id g18mr10718488qhc.103.1438929772469;
+ Thu, 06 Aug 2015 23:42:52 -0700 (PDT)
+Received: by 10.140.30.35 with HTTP; Thu, 6 Aug 2015 23:42:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275461>
 
-On Thu, Aug 6, 2015 at 11:53 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Fri, Aug 7, 2015 at 5:49 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Tue, Aug 4, 2015 at 8:42 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> +static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *final)
->>> +{
->>> +       /* More formatting options to be evetually added */
->>> +       strbuf_addbuf(final, state->output);
->>> +       strbuf_release(state->output);
->>
->> I guess the idea here is that you intend state->output to be re-used
->> and it is convenient to "clear" it here rather than making that the
->> responsibility of each caller. For re-use, it is more typical to use
->> strbuf_reset() than strbuf_release() (though Junio may disagree[1]).
->
-> it seems like a smarter way to around this without much overhead But it
-> was more of to release it as its no longer required unless another modifier atom
-> is encountered. Is it worth keeping hoping for another modifier atom eventually,
-> and release it at the end like you suggested below?
+When I use git rev-list (or git log) with the -- option to restrict commits to
+those that modify a path, I am getting resuls where I fail to see the
+consistency. Worse than that, results vary with git version (pre 1.8.4, results
+were consistent; in 1.8.4 or 2.5.0 they don't seem consistent to me, and they
+are different than in older versions; I rather like more the pre 1.8.4
+behaviour).
 
-If I understand your question correctly, it sounds like you're asking
-about a memory micro-optimization. From an architectural standpoint,
-it's cleaner for the entity which allocates a resource to also release
-it. In this case, show_ref_array_item() allocates the strbuf, thus it
-should be the one to release it.
+Inconsistencies (inside same git version) or differences (across versions)
+affects only to merge commits that affect (depending on definition) to a file.
 
-And, although we shouldn't be worrying about micro-optimizations at
-this point, if it were to be an issue, resetting the strbuf via
-strbuf_reset(), which doesn't involve slow memory
-deallocation/reallocation, is likely to be a winner over repeated
-strbuf_release().
+As per manual, "Commits are included if they are not TREESAME to any parent",
+but I think I am getting false positives with git versions >= 1.8.4.
 
->>> +       memset(&state, 0, sizeof(state));
->>> +       state.quote_style = quote_style;
->>> +       state.output = &value;
->>
->> It feels strange to assign a local variable reference to state.output,
->> and there's no obvious reason why you should need to do so. I would
->> have instead expected ref_format_state to be declared as:
->>
->>     struct ref_formatting_state {
->>        int quote_style;
->>        struct strbuf output;
->>     };
->>
->> and initialized as so:
->>
->>     memset(&state, 0, sizeof(state));
->>     state.quote_style = quote_style;
->>     strbuf_init(&state.output, 0);
->
-> This looks neater, thanks. It'll go along with the previous patch.
->
->> (In fact, the memset() isn't even necessary here since you're
->> initializing all fields explicitly, though perhaps you want the
->> memset() because a future patch adds more fields which are not
->> initialized explicitly?)
->
-> Yea the memset is needed for bit fields evnetually added in the future.
+Here is an example where I find the results that confuse me:
 
-Perhaps move the memset() to the first patch which actually requires
-it, where it won't be (effectively) dead code, as it becomes here once
-you make the above change.
+-------------------------------------------
 
->>>         for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
->>> -               struct atom_value *atomv;
->>> +               struct atom_value *atomv = NULL;
->>
->> What is this change about?
->
-> To remove the warning about atomv being unassigned before usage.
+#!/bin/bash -e
+git init
+git commit --allow-empty -m initial
 
-Hmm, where were you seeing that warning? The first use of 'atomv'
-following its declaration is in the get_ref_atom_value() below, and
-(as far as the compiler knows) that should be setting its value.
+# Create four branches, each one enclosing the previous one
+echo v1 > version
+git add version
+git commit -m v1
+git branch b1
 
->>>                 ep = strchr(sp, ')');
->>> -               if (cp < sp)
->>> -                       emit(cp, sp, &output);
->>> +               if (cp < sp) {
->>> +                       emit(cp, sp, &state);
->>> +                       apply_formatting_state(&state, &final_buf);
->>> +               }
->>>                 get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
->>> -               print_value(atomv, quote_style, &output);
->>> +               process_formatting_state(atomv, &state);
->>> +               print_value(atomv, &state);
->>> +               apply_formatting_state(&state, &final_buf);
->>>         }
->>>         if (*cp) {
->>>                 sp = cp + strlen(cp);
->>> -               emit(cp, sp, &output);
->>> +               emit(cp, sp, &state);
->>> +               apply_formatting_state(&state, &final_buf);
->>
->> I'm getting the feeling that these functions
->> (process_formatting_state, print_value, emit, apply_formatting_state)
->> are becoming misnamed (again) with the latest structural changes (but
->> perhaps I haven't read far enough into the series yet?).
->>
->> process_formatting_state() is rather generic.
->
-> perhaps set_formatting_state()?
+echo v2 > version
+git add version
+git commit -m v2
+git branch b2
 
-I don't know. I don't have a proper high-level overview of the
-functionality yet to say if that is a good name or not (which is one
-reason I didn't suggest an alternative).
+echo v3 > version
+git add version
+git commit -m v3
+git branch b3
 
->> print_value() and emit() both imply outputting something, but neither
->> does so anymore.
->
-> I think I'll append a "to_state" to each of them.
+echo v4 > version
+git add version
+git commit -m v4
+git branch b4
 
-Meh. print_value() might be better named format_value(). emit() might
-become append_literal() or append_non_atom() or something.
+git tag checkpoint
+# We create a couple of merges
+git checkout -b b2_3 b2
+git merge --no-ff b3
 
->> apply_formatting_state() seems to be more about finalizing the
->> already-formatted output.
->
-> perform_state_formatting()? perhaps.
+git checkout -b b1_4 b1
+git merge --no-ff b4
 
-Dunno.
+# This prints nothing on git < 1.8.4; prints a commit that corresponds with
+# "Merge branch 'b3' into b2_3" in git >= 1.8.4 (tested with 1.8.4 and 2.5.0)
+echo COMMITS checkpoint..b2_3: $(git rev-list checkpoint..b2_3 -- version)
+# This prints nothing on any git version I tested.
+echo COMMITS checkpoint..b1_4: $(git rev-list checkpoint..b1_4 -- version)
+
+-------------------------------------------
+
+Is that a bug or I am misunderstanding something basic?
+
+Thanks
+juanleon
