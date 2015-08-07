@@ -1,78 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: implement `module_name` as a builtin helper
-Date: Fri, 07 Aug 2015 13:17:02 -0700
-Message-ID: <xmqqlhdmyhtt.fsf@gitster.dls.corp.google.com>
-References: <CAGZ79kY=jQSjJUxkznkwwupo527-nT05P_bKXy=GO=E4QjC8tQ@mail.gmail.com>
-	<1438808880-9080-1-git-send-email-sbeller@google.com>
-	<55C3BA5C.3030404@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>, hvoigt@hvoigt.net
-X-From: git-owner@vger.kernel.org Fri Aug 07 22:18:05 2015
+From: Adam Dinwoodie <adam@dinwoodie.org>
+Subject: [PATCH] config.mak.uname: Cygwin: Use renames for creation
+Date: Fri,  7 Aug 2015 21:30:28 +0100
+Message-ID: <1438979428-5888-1-git-send-email-adam@dinwoodie.org>
+Cc: Adam Dinwoodie <adam@dinwoodie.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Eric Blake <eblake@redhat.com>,
+	"Shawn O . Pearce" <spearce@spearce.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 07 22:31:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNo50-0004Vd-F2
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 22:17:26 +0200
+	id 1ZNoI7-0006yT-Pz
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 22:31:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946100AbbHGURF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 16:17:05 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:32975 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932202AbbHGURE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 16:17:04 -0400
-Received: by pdrh1 with SMTP id h1so30800206pdr.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2015 13:17:03 -0700 (PDT)
+	id S1946089AbbHGUay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2015 16:30:54 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:34177 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753805AbbHGUax (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 16:30:53 -0400
+Received: by wicne3 with SMTP id ne3so72795762wic.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2015 13:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=8K6IilW2/zaij3nEvTjHfh3RwH9kBa2lyRg3R2DRPHk=;
-        b=qOLrPxOB1yiOqUM4VCUMXF2Tf17EAmOAphg0EOQJ9JD3FAhT/CtfobqLbVxFm2+lyY
-         2b+MaEP1+9ruGZjnylOQw65PQI/JVWGVSjlwYbo4npTfyavdOJodh2k6HmtwJG1WkKcC
-         cp3ujCTTeZF4cM5Bo6BSvGMftvORe9VhVbXFchGBnTMVmr+YgWad/PGF98ohWhN+2KuH
-         xzzQC0s0JhlhW4Bfsc8Go+C/qHNLOprZDH985D7XFV7HQamVZuDh8qN5rllbH38/B/iq
-         ZFcv0j3W1NRW0D9eVLa/ba4Lf2BLgbfzNuRrP0Y28PYX1GAefvwHXxHqSy9g5w5hTqiD
-         jsNQ==
-X-Received: by 10.70.103.37 with SMTP id ft5mr18159567pdb.83.1438978623692;
-        Fri, 07 Aug 2015 13:17:03 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6597:23b2:a33a:2b5b])
-        by smtp.gmail.com with ESMTPSA id ph4sm11080787pdb.43.2015.08.07.13.17.02
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 07 Aug 2015 13:17:02 -0700 (PDT)
-In-Reply-To: <55C3BA5C.3030404@web.de> (Jens Lehmann's message of "Thu, 6 Aug
-	2015 21:49:48 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=uz4Hqt98Y9r1THkmeKoleDR7iYfUPzBGHTGFdpvR3Bk=;
+        b=tWPvxdMfaf4WZ4T1TOYtTq04EJR99fGs44jLB7dY7BFZVG5cLROHpGX9QLvm+ceKgd
+         gnN1tWW14gOnniJKx4HwXHv69S0oebe8MCmRtHcCCG0bNohsFSarZhAkkI3bTlkxis5W
+         tQYcGxeTiCacWffKSqgHyNAC7AXU7qpHFJ5B8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=uz4Hqt98Y9r1THkmeKoleDR7iYfUPzBGHTGFdpvR3Bk=;
+        b=H5IS4cAXVRmy19ph5yTVhZZi6W53OwWypN3iquJ8Fg1OVM+gsUIVs1I9Grc5SeL91v
+         Yv8CHVziQL/Ymn3ebnXbGGLqr7LL/55xa9rfVge/TFW3amQNWUbQfms/EUGKlHx+MZCA
+         /oKHOkDDw7JTzt9LZjWOaItm+XKHSL7lTBaFv9euQyQyNhEbaKn0FqQLXwxVI4ur+YvL
+         co78ukjhmPDhSZZFBtxp4hBgAjeFiqcHzuH4qOk17iJX9IB4BSQkER0ss/+U9L7LJOg6
+         GjHQO0jl2Do/sYChAfRNprPp37L48DqIZ3HAK2jk5qUr+emRhe6+6X5hpKmjmdGg8n2m
+         8aIg==
+X-Gm-Message-State: ALoCoQl4Bn9wtZCvJl7TqzJrHoRO2MbN/L98dCTrcznimdsPHIg8YlZXqhIqJXpaQ9EP1fcGoLlE
+X-Received: by 10.194.79.225 with SMTP id m1mr18776194wjx.8.1438979452185;
+        Fri, 07 Aug 2015 13:30:52 -0700 (PDT)
+Received: from localhost.localdomain ([95.147.88.49])
+        by smtp.gmail.com with ESMTPSA id s1sm511305wix.13.2015.08.07.13.30.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 07 Aug 2015 13:30:51 -0700 (PDT)
+X-Mailer: git-send-email 2.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275485>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+When generating build options for Cygwin, enable
+OBJECT_CREATION_USES_RENAMES.  This is necessary to use Git on Windows
+shared directories, and is already enabled for the MinGW and plain
+Windows builds.
 
-This change...
+This problem was reported on the Cygwin mailing list at
+https://cygwin.com/ml/cygwin/2015-08/msg00102.html (amongst others) and
+is being applied as a manual patch to the Cygwin builds until the patch
+is taken here.
 
->> @@ -723,10 +733,8 @@ int fetch_populated_submodules(const struct argv_array *options,
->>   		if (!S_ISGITLINK(ce->ce_mode))
->>   			continue;
->>
->> -		name = ce->name;
->> -		name_for_path = unsorted_string_list_lookup(&config_name_for_path, ce->name);
->> -		if (name_for_path)
->> -			name = name_for_path->util;
->> +		name_for_path = submodule_name_for_path(ce->name);
->> +		name =  name_for_path ? name_for_path : ce->name;
+Reported-by: Peter Rosin <peda@lysator.liu.se>
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-... interacts with Heiko's cached submodule config work that seems
-to have stalled.
-
-I can discard the stalled topic and queue this one instead, asking
-Heiko to reroll his on top once this has stabilized, or if Stefan is
-really into revamping submodule now (which I hope is the case),
-perhaps Heiko's work can be rerolled by Stefan (with help from
-others, of course) as a prerequisite and then these changes can be
-built on top of it?
+diff --git a/config.mak.uname b/config.mak.uname
+index 943c439..be5cbec 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -187,6 +187,7 @@ ifeq ($(uname_O),Cygwin)
+ 	X = .exe
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
++	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+ endif
+ ifeq ($(uname_S),FreeBSD)
+ 	NEEDS_LIBICONV = YesPlease
+-- 
+2.4.5
