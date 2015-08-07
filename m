@@ -1,77 +1,92 @@
-From: Jarkko Hietaniemi <jhi@iki.fi>
-Subject: wishlist: make it possible to amend commit messages after push to
- remote
-Date: Thu, 06 Aug 2015 20:23:02 -0400
-Message-ID: <55C3FA66.90805@iki.fi>
-Reply-To: jhi@iki.fi
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v9 01/11] ref-filter: print output to strbuf for formatting
+Date: Fri, 7 Aug 2015 08:54:51 +0530
+Message-ID: <CAOLa=ZT541+4say3jrqJVK7QgFFwYg3jVJ00nBtGAVzwMTU3CA@mail.gmail.com>
+References: <CAOLa=ZSBMk9y1VGTVKSVsGMdYuPtjhPADciVUaEVwESRdSvWZg@mail.gmail.com>
+ <1438692188-14367-1-git-send-email-Karthik.188@gmail.com> <CAPig+cT6uu3DqUB+5gR35JS2eigPBizo_Y48rAzFYkbyCm+=OQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 07 02:23:14 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 05:25:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNVRJ-0006JS-06
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 02:23:13 +0200
+	id 1ZNYHf-000518-4s
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 05:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752894AbbHGAXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 20:23:08 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:33131 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752524AbbHGAXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 20:23:07 -0400
-Received: by qged69 with SMTP id d69so65135721qge.0
-        for <git@vger.kernel.org>; Thu, 06 Aug 2015 17:23:05 -0700 (PDT)
+	id S1753204AbbHGDZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 23:25:22 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:35762 "EHLO
+	mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751003AbbHGDZV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 23:25:21 -0400
+Received: by oihn130 with SMTP id n130so50268977oih.2
+        for <git@vger.kernel.org>; Thu, 06 Aug 2015 20:25:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:reply-to:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=T/4cRZysvhh5ocfG2fdPp6/G0RgWi98GmplK4KZriLY=;
-        b=MZuH53U5X3asls+dp1S4z6BPnWL/TZGif6hg7XN1NQo3M+PBRYAyio4AuM83qJjnzj
-         nB+swFB7U1pCIlDFTcTox2uR/FBs2cOOJbcZCEKGXowH3uFcLAR+INxVEvx6E3Ox3wnL
-         rg7xjIo1F7d+x0tmbPJfwbK0ml76rXZrTEfQkaOhfWYwD3CPtNvuH6sXJBpDv3lx3kBB
-         ZPo0LMZLhqOvJdXkTNDaWbkRrCfB4srpQ3Cy2MF680Yp/OGBoiD3rtTD4O0J9KDZ5Xpm
-         yYQxBQlyu0j6RxKgg4f6wN3NAV9dKDkQwNzbA+XJXT1A0tZMBL1RsD7LAi6RRoiEVz41
-         ND1Q==
-X-Received: by 10.141.28.11 with SMTP id f11mr8542266qhe.78.1438906985859;
-        Thu, 06 Aug 2015 17:23:05 -0700 (PDT)
-Received: from Vredefort.local ([2601:18f:200:9bed:e851:f763:2053:775])
-        by smtp.gmail.com with ESMTPSA id 78sm4063261qhh.42.2015.08.06.17.23.05
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Aug 2015 17:23:05 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XaHNKr2kGcsM2PWudNYqTdIomaSjEuLdXYuQTPbUySg=;
+        b=LryPywTlZ8w0gqERf7MBDxFFy05J8TvLrPzy0D3QvpKIW2SGNYc7WHkwCRyG/Vb9Q7
+         Avqm2caN6OT6i9/rirv/z6vBjgG6utQwdqoMaY3wkP+lIX2z1dBd/cpf3UfYDCU5wJdL
+         OS9qjcjiznvRaUJDCOBRxscSK8FuXy6uLU55OhMEY7/hszq4gr9lPunRzMq6gd4N+0rr
+         wRhu/Amd8+/E241EDwN6BSiw8zwYCyWZJhA2viowy1uwsZv5+oC5W0YXoJWkhbNbBOoL
+         JwHp6om8BrbHoUpmZqBGCc7kkFDO2URS2KCkhVNjYhPGsZQNjtsmdU+8TPhuw1zUBApR
+         HDRQ==
+X-Received: by 10.202.200.75 with SMTP id y72mr4438103oif.111.1438917920428;
+ Thu, 06 Aug 2015 20:25:20 -0700 (PDT)
+Received: by 10.182.26.73 with HTTP; Thu, 6 Aug 2015 20:24:51 -0700 (PDT)
+In-Reply-To: <CAPig+cT6uu3DqUB+5gR35JS2eigPBizo_Y48rAzFYkbyCm+=OQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275455>
 
-Not for the first time, and probably not for the last, I pushed a commit
-upstream without adding a link for the bug report as I was meaning to.
+On Fri, Aug 7, 2015 at 3:51 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Aug 4, 2015 at 8:42 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Introduce a strbuf `output` which will act as a substitute rather than
+>> printing directly to stdout. This will be used for formatting
+>> eventually.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 46963a5..91482c9 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -1278,9 +1275,12 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+>>                 if (color_parse("reset", color) < 0)
+>>                         die("BUG: couldn't parse 'reset' as a color");
+>>                 resetv.s = color;
+>> -               print_value(&resetv, quote_style);
+>> +               print_value(&resetv, quote_style, &output);
+>>         }
+>> +       for (i = 0; i < output.len; i++)
+>> +               printf("%c", output.buf[i]);
+>
+> Everything up to this point seems straightforward, however, it's not
+> clear why you need to emit 'output' one character at a time. Is it
+> because it might contain a NUL '\0' character and therefore you can't
+> use the simpler printf("%s", output.buf)?
+>
+> If that's the case, then why not just use fwrite() to emit it all at once?
+>
+>     fwrite(output.buf, output.len, 1, stdout);
+>
 
-Or it could have been...
+It was to avoid the printing to stop at '\0' as you mentioned.
+I've never come across such a situation before, so I looked for
+similar implementations online, and found the individual character printing.
+Thanks `fwrite` seems neater.
 
-- Simple typos.
 
-- Broken URLs.
-
-- The impossibility of two consecutive commits referring to each other
-because the older one cannot know what the newer one will be called.
-
-- The following morning / 5 minutes / 5 second later thinking of
-an additional factoid that would've been great to have in the
-commit message.
-
-In general, I find the fact that once a commit has left the building,
-it goes into your permanent record, and cannot be changed, ever, to be
-very, very annoying. I get the cryptographic "sealing" with all the
-preceding changes, but...
-
-Not that I've thought this through... but couldn't there be a bunch of
-"aliases" (new SHAs) for a commit?  The original one being the
-"master", but as/if the commit message is changed, it could get new
-SHAs.  Sort of separating the real data of the commit, and the metadata?
+-- 
+Regards,
+Karthik Nayak
