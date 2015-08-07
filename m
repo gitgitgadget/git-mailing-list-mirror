@@ -1,76 +1,149 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: Draft of Git Rev News edition 6
-Date: Fri, 7 Aug 2015 02:03:01 +0200
-Message-ID: <CAEcj5uVzGe=tKns_B3+Yh_w4wn+t52SfZcb1UqmroG5xpWqCqg@mail.gmail.com>
-References: <CAEcj5uXXe19APhNaV6Kfm_3SNpRmFHToooo07T0_r6McJOrsaQ@mail.gmail.com>
-	<xmqqfv4087b8.fsf@gitster.dls.corp.google.com>
-	<CAEcj5uUmsV5xzONaahkEEp7R80_zunSAiwTE2UeSxdS6wo1xmg@mail.gmail.com>
-	<CAEcj5uXJnZ+3R+CWoUnpqixrKiiWMQMVjq2YrXYd2brbP9URQg@mail.gmail.com>
-	<CAHYJk3QkMM40_HA7MO-h9z8f69rsPLmuKt1bkR+iuz75A+uQZA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v9 02/11] ref-filter: introduce ref_formatting_state
+Date: Thu, 6 Aug 2015 20:19:00 -0400
+Message-ID: <CAPig+cQftyjKFi0Qkg_ZVEJ9A+zGSAmFtHwQ-8hCnf8xtU_PEA@mail.gmail.com>
+References: <CAOLa=ZSBMk9y1VGTVKSVsGMdYuPtjhPADciVUaEVwESRdSvWZg@mail.gmail.com>
+	<1438692188-14367-1-git-send-email-Karthik.188@gmail.com>
+	<1438692188-14367-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
+Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Nicola Paolucci <nick@durdn.com>
-To: Mikael Magnusson <mikachu@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 02:03:09 2015
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 02:19:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNV7s-0006U4-RY
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 02:03:09 +0200
+	id 1ZNVNL-0002xd-O4
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 02:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688AbbHGADE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2015 20:03:04 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:33849 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619AbbHGADC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2015 20:03:02 -0400
-Received: by wicne3 with SMTP id ne3so41352015wic.1
-        for <git@vger.kernel.org>; Thu, 06 Aug 2015 17:03:01 -0700 (PDT)
+	id S1753465AbbHGATC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2015 20:19:02 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:33817 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753033AbbHGATB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2015 20:19:01 -0400
+Received: by ykax123 with SMTP id x123so77052475yka.1
+        for <git@vger.kernel.org>; Thu, 06 Aug 2015 17:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LnpnhPd1cgpf2wzsFEMBUZGaKrcbN+SEx1dX/8gfBnQ=;
-        b=WuKqQidPFnq0XSQa2ERNQZ+KQxXI6hsSI6BQIFl6H81wTIR75oj2b1WH9Cafuio6Y0
-         brErAIP7je2ZKb35xBITrWd+bZ8pE0K4eSjo/+8+HqfFv903s2oQRnzgA+tuAT3vlGm3
-         O9rjpe1ySxGzO9y8nHD8ZbpO5xNVZaCmYMOBVhVWkw9ynEHx7AbW0xV5cjZal+NYyHaB
-         MRCRv3HSDRZKYpdnjHEcTZ1of0WgKHPbeUqE3scQxL/SdHJOGV1bUPEMAROUS6RGjYnZ
-         smIVoluut0EE5J1xlFZ0QM+88o8mEQ/pilBRtouvQ8iOEd/iQ3l+0rOEmPVayKKiYdDG
-         NsXQ==
-X-Received: by 10.194.179.37 with SMTP id dd5mr7102655wjc.129.1438905781202;
- Thu, 06 Aug 2015 17:03:01 -0700 (PDT)
-Received: by 10.27.47.137 with HTTP; Thu, 6 Aug 2015 17:03:01 -0700 (PDT)
-In-Reply-To: <CAHYJk3QkMM40_HA7MO-h9z8f69rsPLmuKt1bkR+iuz75A+uQZA@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=mp5FNbO102PEwFsbGkpMrdxNQoJT1jIt2bQ3AOoM6SE=;
+        b=TYhwaRqAoykNVnSgCrFFzdKL1hsmj4jEVn9JsxhjvwBNJZIMXoJQ141b9iKZGOfgVk
+         W85RyGc1BjKkL9B/ch14HRSrf5lM3VQyyXpQV3xaSMAFGTtSNJF+KwoxIlGbxz8cEbhU
+         TipNhT2UjP0YLt3TnBYxYaCH+EY0ucXA0IMQ4XOS2y9a3S6HTIKLV17Xvw6lwjLYCqeb
+         V3alWIKhV7o36y5hQf1NQM0+5uS7zOLzl6COqtgUdF+9iDl5z8aK0h15mOvG+filYasA
+         HfgEZ9Hsk6IkOE2GQG0P4qgjvlkZ7zVCKP75sEQJjBLLpdzODKrNdMTVejzRvxx8V201
+         Veuw==
+X-Received: by 10.13.220.132 with SMTP id f126mr4862742ywe.39.1438906740532;
+ Thu, 06 Aug 2015 17:19:00 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Thu, 6 Aug 2015 17:19:00 -0700 (PDT)
+In-Reply-To: <1438692188-14367-2-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: 75GMavEC7ZhvQoB-Swh8wBdjMQk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275453>
 
-On Fri, Aug 7, 2015 at 1:44 AM, Mikael Magnusson <mikachu@gmail.com> wrote:
-> It is surprisingly difficult to get to the actual post of edition 6
-> from this thread. The link in the original post is just a 404, and to
-> get to it from the link in this mail, which you might not have sent at
-> all, I had to click like 5 things, and a few of those turned out to be
-> dead ends. I suppose once you know where they are published, it is
-> easy to find, but I did not :).
+On Tue, Aug 4, 2015 at 8:42 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce a ref_formatting_state which will eventually hold the values
+> of modifier atoms. Implement this within ref-filter.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> +static void apply_formatting_state(struct ref_formatting_state *state, struct strbuf *final)
+> +{
+> +       /* More formatting options to be evetually added */
+> +       strbuf_addbuf(final, state->output);
+> +       strbuf_release(state->output);
 
-Sorry about this. It's because at the time of publishing, we move the
-draft into the CMS' (Jekyll) blogging directory, and as we have no
-nice and easy way of making redirects in that system, the link ends up
-dead.
+I guess the idea here is that you intend state->output to be re-used
+and it is convenient to "clear" it here rather than making that the
+responsibility of each caller. For re-use, it is more typical to use
+strbuf_reset() than strbuf_release() (though Junio may disagree[1]).
 
-The current live edition 6 is here:
-http://git.github.io/rev_news/2015/08/05/edition-6/
+[1]: http://article.gmane.org/gmane.comp.version-control.git/273094
 
-The source page is now here:
-https://github.com/git/git.github.io/blob/master/_posts/2015-08-05-edition-6.markdown
+> +}
+> +
+>  void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+>  {
+>         const char *cp, *sp, *ep;
+> -       struct strbuf output = STRBUF_INIT;
+> +       struct strbuf value = STRBUF_INIT;
+> +       struct strbuf final_buf = STRBUF_INIT;
+> +       struct ref_formatting_state state;
+>         int i;
+>
+> +       memset(&state, 0, sizeof(state));
+> +       state.quote_style = quote_style;
+> +       state.output = &value;
 
-You can always find the latest published edition, as well as an
-archive here: http://git.github.io/rev_news/
+It feels strange to assign a local variable reference to state.output,
+and there's no obvious reason why you should need to do so. I would
+have instead expected ref_format_state to be declared as:
 
-We'll make sure to include "fresh" links in our emails in the future.
+    struct ref_formatting_state {
+       int quote_style;
+       struct strbuf output;
+    };
+
+and initialized as so:
+
+    memset(&state, 0, sizeof(state));
+    state.quote_style = quote_style;
+    strbuf_init(&state.output, 0);
+
+(In fact, the memset() isn't even necessary here since you're
+initializing all fields explicitly, though perhaps you want the
+memset() because a future patch adds more fields which are not
+initialized explicitly?)
+
+This still allows re-use via strbuf_reset() mentioned above.
+
+And, of course, you'd want to strbuf_release() it at the end of this
+function where you're already releasing final_buf.
+
+>         for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+> -               struct atom_value *atomv;
+> +               struct atom_value *atomv = NULL;
+
+What is this change about?
+
+>                 ep = strchr(sp, ')');
+> -               if (cp < sp)
+> -                       emit(cp, sp, &output);
+> +               if (cp < sp) {
+> +                       emit(cp, sp, &state);
+> +                       apply_formatting_state(&state, &final_buf);
+> +               }
+>                 get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+> -               print_value(atomv, quote_style, &output);
+> +               process_formatting_state(atomv, &state);
+> +               print_value(atomv, &state);
+> +               apply_formatting_state(&state, &final_buf);
+>         }
+>         if (*cp) {
+>                 sp = cp + strlen(cp);
+> -               emit(cp, sp, &output);
+> +               emit(cp, sp, &state);
+> +               apply_formatting_state(&state, &final_buf);
+
+I'm getting the feeling that these functions
+(process_formatting_state, print_value, emit, apply_formatting_state)
+are becoming misnamed (again) with the latest structural changes (but
+perhaps I haven't read far enough into the series yet?).
+
+process_formatting_state() is rather generic.
+
+print_value() and emit() both imply outputting something, but neither
+does so anymore.
+
+apply_formatting_state() seems to be more about finalizing the
+already-formatted output.
