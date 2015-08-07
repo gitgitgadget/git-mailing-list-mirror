@@ -1,137 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: resolving a (possibly remote) branch HEAD to a hash
-Date: Fri, 07 Aug 2015 10:24:10 -0700
-Message-ID: <xmqq8u9nyptx.fsf@gitster.dls.corp.google.com>
-References: <55c47766.dDi8LaxdDqOeptUd%perryh@pluto.rain.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v9 02/11] ref-filter: introduce ref_formatting_state
+Date: Fri, 7 Aug 2015 13:30:48 -0400
+Message-ID: <CAPig+cSHfQ+Dan1Ps_C0hnCxAz0ZXRu9-gOtDWp9auLvkobEWg@mail.gmail.com>
+References: <CAOLa=ZSBMk9y1VGTVKSVsGMdYuPtjhPADciVUaEVwESRdSvWZg@mail.gmail.com>
+	<1438692188-14367-1-git-send-email-Karthik.188@gmail.com>
+	<1438692188-14367-2-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cQftyjKFi0Qkg_ZVEJ9A+zGSAmFtHwQ-8hCnf8xtU_PEA@mail.gmail.com>
+	<CAOLa=ZSp3aL0Z5YP5xmzdW7H92yU3EA+MJjLYA29QyoZTD5RiA@mail.gmail.com>
+	<CAPig+cTt__tphEqFuyeOiTadOL9cAi51RLd3z6rr3nM-8Qp6Aw@mail.gmail.com>
+	<CAOLa=ZSRFcfQqjphdSYkWDry8QibKL78Ev=XnfPRxc3PJ17Dog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: perryh@pluto.rain.com (Perry Hutchison)
-X-From: git-owner@vger.kernel.org Fri Aug 07 19:24:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 19:30:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZNlNR-0002Z2-S9
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 19:24:18 +0200
+	id 1ZNlTp-0007mx-UU
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Aug 2015 19:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932498AbbHGRYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2015 13:24:13 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:32991 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932419AbbHGRYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2015 13:24:13 -0400
-Received: by pabyb7 with SMTP id yb7so59919726pab.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2015 10:24:12 -0700 (PDT)
+	id S932528AbbHGRat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2015 13:30:49 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:34437 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932498AbbHGRat (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2015 13:30:49 -0400
+Received: by ykdt205 with SMTP id t205so13729604ykd.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2015 10:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=tpuWF0Blq9a2QwQNGZh6BQouqNwTOy3ER7wp3Uq5XNQ=;
-        b=gQP6oZF+YT4Cpzqy8v4i6m8EjqpVG2tI7NafKf7oM77nb/Zws+sCyVZww+UKP+eea7
-         dqlL2gYdDWXHR84gDj45IJdV/sI7ZQYZTYGjP1DwHpxgo7lGQA2eJJ+87ZmIMbCY7iu5
-         3vYsuF9uhr075e4ssrCV47GHgGMqcUM2qarz4GgwolJbQU6nJhZYpzdbDIg+tZTHGVRx
-         RjrBf/Fydvjzc2VmURVSdHmLGskg9bt3EIWgnacxjx5XiPaoaJQyDRO2rWdf5iKaeRvp
-         naaMe8SWZ88L+5pu71Ct6f87lppko6Jh1EF6kW5n3YJExvTmx/dGh5iHIoZBWkhV+/d0
-         TRyg==
-X-Received: by 10.66.250.226 with SMTP id zf2mr16858879pac.20.1438968252482;
-        Fri, 07 Aug 2015 10:24:12 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:6597:23b2:a33a:2b5b])
-        by smtp.gmail.com with ESMTPSA id xv1sm10740881pbb.25.2015.08.07.10.24.11
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 07 Aug 2015 10:24:11 -0700 (PDT)
-In-Reply-To: <55c47766.dDi8LaxdDqOeptUd%perryh@pluto.rain.com> (Perry
-	Hutchison's message of "Fri, 07 Aug 2015 02:16:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=2d5Tq4bYAO08ZkmJkvf22GGTMdgvd0U58jDt08gRdGA=;
+        b=VGOmQ0NsZ7Wy2n9urR6CAye6xCtOeOWyysf2DZi3cpTyzcoWcfBZCjVsws3XARTb6k
+         1veHGkZvhYQRWSzFBMZ3NW+urvRIPrcAm0AepcpSPBTq+fU4CpA56uaKwX15RLcmdeNo
+         io/st6H1v9zh7j+WxpVjew/O2A+qyo8xOtQTaXM6YvIYWHQwTEDpzSSDa/9C82HcSM/X
+         9s7PBs1XqsCO4waaw6sLKf4DCkgjAGhvT+kaZcuqTx9SElYnDZq2pSsX+juNnaysk0wC
+         d7LIRvMSmoKdeNQxTU7pKr3wTUclq/SWeJv7xa3mrNN0akLFf2TwtysGuGTflImRr48Q
+         qmuw==
+X-Received: by 10.13.207.1 with SMTP id r1mr9041730ywd.166.1438968648335; Fri,
+ 07 Aug 2015 10:30:48 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Fri, 7 Aug 2015 10:30:48 -0700 (PDT)
+In-Reply-To: <CAOLa=ZSRFcfQqjphdSYkWDry8QibKL78Ev=XnfPRxc3PJ17Dog@mail.gmail.com>
+X-Google-Sender-Auth: Sz-J5BEbKCTqvfx2MNXoxvH6gnM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275477>
 
-perryh@pluto.rain.com (Perry Hutchison) writes:
-
->   $ git rev-parse r5.0.1
->   r5.0.1
->   fatal: ambiguous argument 'r5.0.1': unknown revision or path not in the working tree.
->   Use '--' to separate paths from revisions
-
-This is not because of ambiguity among refs.  The message is telling
-you:
-
-    r5.0.1 is not interpretable as a revision, and it is not likely
-    to be interpretable as a path.  If you meant to use it as a
-    revision, put '--' after it, if you meant to use it as a path,
-    put '--' before it.
-
-When we try to see if the user meant "r5.0.1" as a revision or a
-path on a command line that does not have "--", we make sure that it
-can be interpreted only as a revision but not as a path or the other
-way around.  You see the above error when it cannot be a revision
-and it does not appear in the _current_ working tree.
-
-The "not likely to be" part comes because this is a heuristic to
-catch your typo.  "git log r5.0.1" _could_ be a request to show a
-simplified history that ends with the current commit (i.e. HEAD)
-that touched the path r5.0.1 that used to exist but was removed in
-the history, and it is way too expensive to dig the history at that
-point to see if a path r5.0.1 ever existed, so we only check the
-current working tree.
-
-Now, admittably, if you say "git rev-parse r5.0.1 --" in this
-situation, it is not likely that the corrected command line will
-succeed.  After all, the error message was issued because we already
-know that r5.0.1 is _not_ a correct way to spell any revision.  So
-the message _might_ want to be reworded to make it clear that:
-
- * 'r5.0.1' is not a valid revision name.  Perhaps you misspelt it?
-
- * 'r5.0.1' does not exist in the current working tree.  Perhaps you
-   misspelt it?
-
- * With 'r5.0.1', you may be trying to refer to a path that (might)
-   existed in the past.  If that is the case, please have "--"
-   before it to explicitly tell us that you mean a path, not a
-   revision.
-
-> It works if I explicitly specify that I want the remote instance:
+On Fri, Aug 7, 2015 at 7:37 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Fri, Aug 7, 2015 at 10:13 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Thu, Aug 6, 2015 at 11:53 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>> On Fri, Aug 7, 2015 at 5:49 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>> It feels strange to assign a local variable reference to state.output,
+>>>> and there's no obvious reason why you should need to do so. I would
+>>>> have instead expected ref_format_state to be declared as:
+>>>>
+>>>>     struct ref_formatting_state {
+>>>>        int quote_style;
+>>>>        struct strbuf output;
+>>>>     };
+>>>>
+>>>> and initialized as so:
+>>>>
+>>>>     memset(&state, 0, sizeof(state));
+>>>>     state.quote_style = quote_style;
+>>>>     strbuf_init(&state.output, 0);
+>>>>
+>>>> (In fact, the memset() isn't even necessary here since you're
+>>>> initializing all fields explicitly, though perhaps you want the
+>>>> memset() because a future patch adds more fields which are not
+>>>> initialized explicitly?)
+>>>
+>>> Yea the memset is needed for bit fields evnetually added in the future.
+>>
+>> Perhaps move the memset() to the first patch which actually requires
+>> it, where it won't be (effectively) dead code, as it becomes here once
+>> you make the above change.
 >
->   $ git rev-parse origin/r5.0.1
->   bb193a818fc984adbfd631951f3c89c16d5d3476
+> But why would I need it there, we need to only memset() the ref_formatting_state
+> which is introduced here. Also here it helps in setting the strbuf
+> within ref_formatting_state to {0, 0, 0}.
 
-This is the correct behaviour and the expected usage.  When talking
-about r5.0.1 that came from origin, origin/r5.0.1 is the shortest
-and still valid way to spell it.
+If you declare ref_formatting_state as shown above, and then
+initialize it like so:
 
-> and the reference is, in fact, not ambiguous:
->
->   $ git for-each-ref --format "%(refname)" | grep '/r5\.0\.1$'
->   refs/remotes/origin/r5.0.1
+    state.quote_style = quote_style;
+    strbuf_init(&state.output, 0);
 
-Because it is not about ambiguity among refs, this observation is
-irrelevant ;-).
+then (as of this patch) the structure is fully initialized because
+you've initialized each member individually. Adding a memset() above
+those two lines would be do-nothing -- it would be wasted code -- and
+would likely confuse someone reading the code, specifically because
+the code is do-nothing and has no value (in this patch). Making each
+patch understandable is one of your goals when organizing the patch
+series; if a patch confuses a reader (say, by doing unnecessary work),
+then it isn't satisfying that goal.
 
-> Interestingly, master -- the one that works -- _is_ ambiguous:
->
->   $ git for-each-ref --format "%(refname)" | grep '/master$'
->   refs/heads/master
->   refs/remotes/origin/master
+As for the strbuf member, it's initialized explicitly via
+strbuf_init(), so there's no value in having memset() first initialize
+it to {0, 0, 0}. Again, that's wasted code.
 
-The thing is, there is no ambiguity among
+In a later patch, when you add another ref_formatting_state member or
+two, then you will need to initialize those members too. That
+initialization may be in the form of explicit assignment to each
+member, or it may be the memset() sledgehammer approach, but the
+initialization for those members should be added in the patch which
+introduces them.
 
-    refs/heads/master
-    refs/remotes/origin/master
-    refs/remotes/another/master
-
-because we do not say "append 'refs/remotes/<anything>/' for various
-values of <anything> and see if such a ref exists" when resolving an
-abbreviated refname 'master'.
-
-Ambiguity among refs exists if you had these
-
-    refs/heads/master
-    refs/tags/master
-    refs/remotes/master/HEAD
-
-But that is not what we are seeing in your case.
+It's true that the end result is the same. By the end of the series,
+you'll have memset() above the 'state.quote' and 'state.output'
+initialization lines to ensure that your various boolean fields and
+whatnot are initialized to zero, but each patch should be
+self-contained and make sense on its own, doing just the work that it
+needs to do, and not doing unrelated work. For this patch, the
+memset() is unrelated work. For the later patch in which you add more
+fields to ref_formatting_state(), the memset() is work necessary to
+satisfy that patch's objective, thus belongs there.
