@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v10 04/13] utf8: add function to align a string into given strbuf
-Date: Sun,  9 Aug 2015 19:41:37 +0530
-Message-ID: <1439129506-9989-5-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v10 06/13] ref-filter: add option to filter only tags
+Date: Sun,  9 Aug 2015 19:41:39 +0530
+Message-ID: <1439129506-9989-7-git-send-email-Karthik.188@gmail.com>
 References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 09 16:12:32 2015
+X-From: git-owner@vger.kernel.org Sun Aug 09 16:12:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZORKt-0006u7-Rv
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Aug 2015 16:12:28 +0200
+	id 1ZORKv-0006u7-1b
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Aug 2015 16:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933023AbbHIOML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2015 10:12:11 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35564 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754541AbbHIOLz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2015 10:11:55 -0400
-Received: by pacgr6 with SMTP id gr6so8152021pac.2
-        for <git@vger.kernel.org>; Sun, 09 Aug 2015 07:11:55 -0700 (PDT)
+	id S933039AbbHIOMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2015 10:12:16 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34706 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754543AbbHIOMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2015 10:12:01 -0400
+Received: by pawu10 with SMTP id u10so121413717paw.1
+        for <git@vger.kernel.org>; Sun, 09 Aug 2015 07:12:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=c3rdEQE2HNhxg1GjOHs48+Z9Cj8zUNwC1yD4i+nkVmA=;
-        b=yu9JpyQdCrmat/vG1/j5/0gQT3GE0b3HtcRcvwkhWdPctNNK2D8dWOIjgAuMQ5MgSZ
-         O19u8WASSlAebE7jd8hLQJRHePg62dROuRvgXcHzK6VYyo1+AyJm6Ag0Ck5ASShErol6
-         d96nqLl0gTMcVCbwsZ8sBRjBNxkAuATfVKSfJk7mAo2KxUPtMkDlk62t+TEWEWiXIXQ5
-         jt8hzblVuVQqKh51pCkTsjGWzM4e05d1NYNI8l5HtYtgjfXkGXYcSA0vZXJw4AybY5nZ
-         tlLiQ1gJtF5EsiDSIoj/MIEhiyUngt5SyIXK1RKexWbLQW2z7BU/5Ipikfr10HFMh8gd
-         pQmQ==
-X-Received: by 10.66.244.230 with SMTP id xj6mr4707120pac.53.1439129515077;
-        Sun, 09 Aug 2015 07:11:55 -0700 (PDT)
+        bh=Oixd1ZSGCYFDBrNb0t6tCJF9hW8Vuz+COXMWtfl39oE=;
+        b=rizvs7a0lH1pqP7zNfOYFg4RoFa5tAHA7zf6ewHb5kkO6H3XiPCcjOmeV3VCsLS/Q7
+         9mwfJ7oMQZhrVh/Okiwa222p5Y9K5k4TjuR1AZ3WdGabodRGtS9q+34mrkJkv33xTBhC
+         yRgDC0jNZrlCrR64tsBqoS7/Uvs7lzMjh9PEn8F6zqyMXldrBGwlq3DkgvkFrxhdzGkf
+         AlXm0CEsMd2NpuryXvIyQ5IVpX+KBIvBubb7SPaJauKF0GSEd/hUwgHupC1zTSxTX19z
+         Z8yzpQiq9iF23qsTpDvcYI6nu6IpJRBGFwEyZpciSdb3CtKIkXKE9nEMscM6TKg5MNN4
+         htdg==
+X-Received: by 10.68.238.231 with SMTP id vn7mr35745041pbc.38.1439129520525;
+        Sun, 09 Aug 2015 07:12:00 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id la4sm72920pbc.76.2015.08.09.07.11.52
+        by smtp.gmail.com with ESMTPSA id la4sm72920pbc.76.2015.08.09.07.11.58
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 09 Aug 2015 07:11:54 -0700 (PDT)
+        Sun, 09 Aug 2015 07:11:59 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
@@ -47,72 +46,79 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275541>
 
-Add strbuf_utf8_align() which will align a given string into a strbuf
-as per given align_type and width. If the width is greater than the
-string length then no alignment is performed.
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Add a functions called 'for_each_tag_ref_fullpath()' to refs.{c,h}
+which iterates through each tag ref without trimming the path.
+
+Add an option in 'filter_refs()' to use 'for_each_tag_ref_fullpath()'
+and filter refs. This type checking is done by adding a
+'FILTER_REFS_TAGS' in 'ref-filter.h'
+
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- utf8.c | 22 ++++++++++++++++++++++
- utf8.h | 13 +++++++++++++
- 2 files changed, 35 insertions(+)
+ ref-filter.c | 2 ++
+ ref-filter.h | 1 +
+ refs.c       | 5 +++++
+ refs.h       | 1 +
+ 4 files changed, 9 insertions(+)
 
-diff --git a/utf8.c b/utf8.c
-index 28e6d76..65e55cc 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -644,3 +644,25 @@ int skip_utf8_bom(char **text, size_t len)
- 	*text += strlen(utf8_bom);
- 	return 1;
- }
-+
-+void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
-+		       const char *s)
-+{
-+	int display_len = utf8_strnwidth(s, strlen(s), 0);
-+	int utf8_compenstation = strlen(s) - display_len;
-+
-+	if (!strlen(s))
-+		return;
-+	if (display_len >= width) {
-+		strbuf_addstr(buf, s);
-+		return;
-+	}
-+
-+	if (position == ALIGN_LEFT)
-+		strbuf_addf(buf, "%-*s", width + utf8_compenstation, s);
-+	else if (position == ALIGN_MIDDLE) {
-+		int left = (width - display_len)/2;
-+		strbuf_addf(buf, "%*s%-*s", left, "", width - left + utf8_compenstation, s);
-+	} else if (position == ALIGN_RIGHT)
-+		strbuf_addf(buf, "%*s", width + utf8_compenstation, s);
-+}
-diff --git a/utf8.h b/utf8.h
-index 5a9e94b..db8ca63 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -55,4 +55,17 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
-  */
- int is_hfs_dotgit(const char *path);
+diff --git a/ref-filter.c b/ref-filter.c
+index 57e988c..fb5d74e 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1172,6 +1172,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ 		ret = for_each_rawref(ref_filter_handler, &ref_cbdata);
+ 	else if (type & FILTER_REFS_ALL)
+ 		ret = for_each_ref(ref_filter_handler, &ref_cbdata);
++	else if (type & FILTER_REFS_TAGS)
++		ret = for_each_tag_ref_fullpath(ref_filter_handler, &ref_cbdata);
+ 	else if (type)
+ 		die("filter_refs: invalid type");
  
-+typedef enum {
-+	ALIGN_LEFT,
-+	ALIGN_MIDDLE,
-+	ALIGN_RIGHT
-+} align_type;
+diff --git a/ref-filter.h b/ref-filter.h
+index 144a633..1886baa 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -16,6 +16,7 @@
+ 
+ #define FILTER_REFS_INCLUDE_BROKEN 0x1
+ #define FILTER_REFS_ALL 0x2
++#define FILTER_REFS_TAGS 0x4
+ 
+ struct atom_value;
+ 
+diff --git a/refs.c b/refs.c
+index 2db2975..0103a88 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2114,6 +2114,11 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ 	return for_each_ref_in("refs/tags/", fn, cb_data);
+ }
+ 
++int for_each_tag_ref_fullpath(each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(&ref_cache, "refs/tags/", fn, 0, 0, cb_data);
++}
 +
-+/*
-+ * Align the string given and store it into a strbuf as per the type
-+ * and width.
-+ */
-+void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
-+		       const char *s);
-+
- #endif
+ int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+ 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
+diff --git a/refs.h b/refs.h
+index 6a3fa6d..0956255 100644
+--- a/refs.h
++++ b/refs.h
+@@ -174,6 +174,7 @@ extern int head_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+ extern int for_each_tag_ref(each_ref_fn fn, void *cb_data);
++extern int for_each_tag_ref_fullpath(each_ref_fn fn, void *cb_data);
+ extern int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_remote_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_replace_ref(each_ref_fn fn, void *cb_data);
 -- 
 2.5.0
