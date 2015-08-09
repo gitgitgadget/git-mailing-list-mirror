@@ -1,141 +1,116 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] send-email: provide whitelist of SMTP AUTH mechanisms
-Date: Sun, 9 Aug 2015 14:13:33 -0400
-Message-ID: <CAPig+cQ0fSc+rjzgDyaw4xvCPCswJLDcQSmbxXnxG-uc6zB0qA@mail.gmail.com>
-References: <1438533769-17460-1-git-send-email-viktorin@rehivetech.com>
-	<CAPig+cQwFxVtO1C_RAumGP6_et21ggORB4jhpcUtBYNznNH1qA@mail.gmail.com>
-	<20150805091747.242e8fa1@jvn>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: git blame breaking on repository with CRLF files
+Date: Sun, 9 Aug 2015 22:19:58 +0200
+Message-ID: <55C7B5EE.7060908@web.de>
+References: <B0BFE3BB9B3E8C4A890D53FA460552D3737328B0@DEWDFEMB16B.global.corp.sap>
+ <55C59A9B.9000808@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan Viktorin <viktorin@rehivetech.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 20:13:40 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	"Benkstein, Frank" <frank.benkstein@sap.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 09 22:20:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOV6J-0002s5-LZ
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Aug 2015 20:13:40 +0200
+	id 1ZOX4m-0007P0-UX
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Aug 2015 22:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933158AbbHISNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2015 14:13:35 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:32852 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933134AbbHISNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2015 14:13:34 -0400
-Received: by ykaz130 with SMTP id z130so16597857yka.0
-        for <git@vger.kernel.org>; Sun, 09 Aug 2015 11:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=wUssSrYx7jeAQOji/y8qH2usGtoRBRjkQa4FSLX+hGI=;
-        b=TkmZN1ksgPceiKCudkCOdPZl8ey5Mnu2g3GEwZsuwHQDO5lxK9k3qfjWB9B137AaG3
-         RyQ5hYr5Is++YbidoP8FUecaidR/47iJoJYGCKUk99c8UJf9gZQKYmXE+0OHkV2VVh0i
-         9QfIPpYupGjGLJZ7IzAVOmuVRbY8En5Bf5ZOMXf8gHhGWmchiioKcBxp1fJEYenxgE3h
-         qwHPKi1ezG9mB09x5aetG2gMKkMMtX06aCl7oBxE+flcojnh0HJRLTebKeXKUyGhSSep
-         Z2xDshe2xND4sR7VVBsB33WCzYCW6ucxEID1dhZspx2kxIg+b/xA6xEk0S9de+Xccyn1
-         mq9w==
-X-Received: by 10.13.192.132 with SMTP id b126mr17608115ywd.163.1439144013938;
- Sun, 09 Aug 2015 11:13:33 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Sun, 9 Aug 2015 11:13:33 -0700 (PDT)
-In-Reply-To: <20150805091747.242e8fa1@jvn>
-X-Google-Sender-Auth: 323IiHkYVaeeULcA6hGmNCl-YuE
+	id S1754582AbbHIUUI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Aug 2015 16:20:08 -0400
+Received: from mout.web.de ([212.227.15.4]:59038 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752789AbbHIUUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2015 16:20:07 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0LsQ9o-1Yidit1r8i-0123Kj; Sun, 09 Aug 2015 22:20:03
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.1.0
+In-Reply-To: <55C59A9B.9000808@web.de>
+X-Provags-ID: V03:K0:iqLef0uCOcPAPPbrdG54ryAP6hgleSrzD12fcUwGUYdBW3WQGmF
+ gen83ZlPd+9teSj0HJEP4tks4B0kj36H9JTpVWG11PIBDE0zx2nJM/+3gEUAum8bjeCvd7p
+ gXZ2vzAYt79HntBUNLYhn0MCXpWaWNFo4mzoDtpHKVPopR3WYYCHBlQYD2nf8+oBJVxrg/R
+ ntmK2nhkT6Hh1veAkBtJQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:x3bafhzpWE4=:oQaCds1JmtFl0NRkCmpLSk
+ SXTp2S7iAGcKA9XZQrxLfbDzZekTaMy4igeH4AkkL3ojAlT98QPAUm56DcVv4gx6oa2c/ctrK
+ 0k+UoK5o1w/jdjD5u5l47OjoM9AMQq7Bv6R8wFRf8QHa8kYIlGQc0kS+IZledrf0gOjgQO5kH
+ bZVabZWifLFTTTQhP7KPDHu7luam5xftJHMzoQDGuiJGdBqXkVVdC9s6B3nwHEgUiP+W7zW1D
+ xmcp7P4lV7c528z0w/Sv1/yb47jvVnY5rU/eYCdihV7QbXy2PcJGuBs8s8T6WX15zdH55Z1B7
+ +L09ZRoTQDzp6nGVarOyzZxEywS4sNLpNtshfK02YNo3uxatJNhrQIxQFtVMfC4HnJQgOFCrl
+ 134Wz8Wh6+nt2lR92qImXjwraUFnEjDI5QsrNwK4e8XNCuCo2N9zdDS8qgXW5A9pF+9MlEdlN
+ t2FjkjzfJ0ckmWt/9KOzl9puU8Gt0LsFo5YPmf3+RMpt+fa0LyyaN6FQzv8qEmYEv3Cd8Rarv
+ jSka/OOmXUTZ+mu2Ef6QiCnwn1FZtWcNEJ7i8fEyxX3PKHp6DZbT4eE7xIUddycuSm/uoBohM
+ jdPh19zx33bg7WIxLsoLn4jdULZ9tHx4afT6LcOrtu/s8E1YSUWrQzh3Rtdo+2H4FPdnyqLEu
+ YnSdvTFd6LOPj23uGg0EmSpI8M7u02P4tie8EDw9fEZBaw/7b2E5rmUp5qLSq9ngPV3Y8glxK
+ 8eB9bkL3CRdvvw+PronIvWWJ0t1EwXW+YNY/0g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275556>
 
-On Wed, Aug 5, 2015 at 3:17 AM, Jan Viktorin <viktorin@rehivetech.com> wrote:
-> Do I understand well that you are complaining about too
-> narrow commmit message?
+On 2015-08-08 07.58, Torsten B=C3=B6gershausen wrote:
+> On 2015-08-07 18.32, Benkstein, Frank wrote:
+>> Hello,
+>>
+>> I am working working on Linux and am examining code in a git reposit=
+ory I do
+>> not know much about.  I am only looking at files, not changing anyth=
+ing.  On
+>> some files in the repository I get "00000000 (Not Committed Yet" for=
+ all lines
+>> when running "git blame".  I checked with "git status", "git reset",=
+ "git
+>> clean" that the files are indeed in the repository and unmodified.  =
+I noticed
+>> that this only happens with git v2.5.0.  With git v2.4.0 it looks co=
+rrect, i.e.
+>> the output has proper commit ids, Author names and dates..  With "gi=
+t bisect" I
+>> tracked this down to the following commit:
+>>
+>>  commit 4bf256d67a85bed1e175ecc2706322eafe4489ca (HEAD, refs/bisect/=
+bad)
+>>  Author: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>  Date:   Sun May 3 18:38:01 2015 +0200
+>>
+>>      blame: CRLF in the working tree and LF in the repo
+>>
+>> Digging further, it seems that most files in the repository are chec=
+ked in with
+>> CRLF line endings.  In my working tree these are checked out as LF
+> Do I understand it right that you have files in the repo with CRLF ?
+> And these files are checked out with LF in the working tree ?
+> Are the files marked with .gitattributes ?
+> Or does the file have mixed line endings ?
+>=20
+> (Unless I missed something: Git never strips CRLF into LF at checkout=
+,
+> so I wonder how you ended up in this situation)
+>=20
+> Is there a way to reproduce it?
+>=20
+Actually I could reproduce the following:
+CRLF in repo, CRLF in working tree, core.autocrlf=3D true.
 
-Yes, I'm a complainer. ;-) It's minor, though, not a big deal, and
-certainly not worth a re-roll if that was the only issue. In fact,
-other than the undesirable "Supported:" line in the documentation, all
-comments on v2 were minor and not demanding of a re-roll.
+This is an old limitation (or call it bug), which has been there for a =
+long
+time, (I tested with Git v1.7.0 from 2010).
 
-> I am trying to figure out how to write a test. It is
-> not very clear to me, what the testing suite does. My
-> attempt looks this way at the moment:
->
-> 1657 do_smtp_auth_test() {
-> 1658         git send-email \
-> 1659                 --from="Example <nobody@example.com>" \
-> 1660                 --to=someone@example.com \
-> 1661                 --smtp-server="$(pwd)/fake.sendmail" \
-> 1662                 --smtp-auth="$1" \
-> 1663                 -v \
-> 1664                 0001-*.patch \
-> 1665                 2>errors >out
-> 1666 }
-> 1667
-> 1668 test_expect_success $PREREQ 'accepts SMTP AUTH mechanisms (see RFC-4422, p. 8)' '
-> 1669         do_smtp_auth_test "PLAIN LOGIN CRAM-MD5 DIGEST-MD5 GSSAPI EXTERNAL ANONYMOUS" &&
-> 1670         do_smtp_auth_test "ABCDEFGHIKLMNOPQRSTUVWXYZ 0123456789_-"
+Thanks for the report, we will see if anybody is able to fix it.
+I can probably contribute some test cases.
 
-Wouldn't this one fail the regex check you added which limits the
-length to 20 characters?
-
-> 1671 '
-> 1672
-> 1673 test_expect_success $PREREQ 'does not accept non-RFC-4422 strings for SMTP AUTH' '
-> 1674         test_must_fail do_smtp_auth_test "../ATTACK" &&
-> 1675         test_must_fail do_smtp_auth_test "TOO-LONG-BUT-VALID-STRING" &&
-> 1676         test_must_fail do_smtp_auth_test "no-lower-case-sorry"
-> 1677 '
->
-> * I do not know yet, what to check after each do_smtp_auth_test call.
-
-If you were able somehow to capture the interaction with
-Auth::SASL::Perl, then you'd probably want to test if it received the
-whitelisted mechanisms specified via --smtp-auth, however... (see
-below)
-
-> * Perhaps, each case should have its own test_expect_success call?
-
-The grouping seems okay as-is.
-
-> * Why send-email -v does not generate any output?
-
-As far as I know, git-send-email doesn't accept a -v flag.
-
->   (I found a directory 'trash directory.t9001-send-email', however, the
->   errors file is always empty.)
-
-Was it empty even for the cases which should have triggered the
-validation regex to invoke die()?
-
-> * Is there any other place where the files out, errors are placed?
-
-No.
-
-> * I have no idea what the fake.sendmail does (I could see its contents
->   but still...). Is it suitable for my tests?
-
-It dumps its command-line arguments to one file ("commandline") and
-its stdin to another ("msgtxt"), but otherwise does no work. This is
-useful for tests which need to make sure that the command-line and/or
-message content gets augmented in some way, but won't help your case
-since it can't capture the script's interaction with
-Authen::SASL::Perl.
-
-> * Should I check the behaviour '--smtp-auth overrides
->   sendemail.smtpAuth'?
-
-That would be nice, but there doesn't seem to be a good way to do it
-via an existing testing mechanism since you can't check the
-git-sendemail's interaction with Auth::SASL::Perl. The same holds for
-your question above about what to check after each do_smtp_auth_test()
-call.
-
-One possibility which comes to mind is to create a fake
-Authen::SASL::Perl which merely dumps its input mechanisms to a file,
-and arrange for the Perl search path to find the fake one instead. You
-could then check the output file to see if it reflects your
-expectations. However, this may be overkill and perhaps not worth the
-effort (especially if you're not a Perl programmer).
+>> seems to be the exact opposite situation of what the commit is tryin=
+g to
+>> address.  When I set "core.autocrlf" to "false" I also get the corre=
+ct behavior
+>> of "git blame" - this is a workaround as long as I do not have to ac=
+tually
+>> modify anything.
+>>
+>> Best regards,
+>> Frank.
