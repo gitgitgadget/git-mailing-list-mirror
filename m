@@ -1,312 +1,363 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v9 03/11] ref-filter: implement an `align` atom
-Date: Sun, 9 Aug 2015 12:25:52 +0530
-Message-ID: <CAOLa=ZQW1HBACAb4V_jMky4=54=rxqS=nyYMBX1CUUvA2c0s9A@mail.gmail.com>
-References: <CAOLa=ZRnnMBKpsq1ANBVgF2=xwK=A2EsPKKrGS0R4mZ8iATKfA@mail.gmail.com>
- <1438800854-19901-1-git-send-email-Karthik.188@gmail.com> <CAPig+cSTssDihF5cBwu=2uKX1y6GqH-5EhKnb92Fpp30JA7pwA@mail.gmail.com>
- <CAOLa=ZSkmkPpiEfDrRXNQ6Tz5GT1+7vef3TOrj1t9aZ_3wm2Lw@mail.gmail.com> <CAPig+cTHKbn0oCV61n=p5o9WihsaJbvWqKt4y9eFwA0noJoPgA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] worktree: list operation
+Date: Sun, 9 Aug 2015 03:45:43 -0400
+Message-ID: <CAPig+cTTrv2C7JLu1dr4+N8xo+7YQ+deiwLDA835wBGD6fhS1g@mail.gmail.com>
+References: <1439079599-87904-1-git-send-email-rappazzo@gmail.com>
+	<1439079599-87904-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 08:56:29 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 09 09:45:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOKWy-0005tB-Cn
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Aug 2015 08:56:29 +0200
+	id 1ZOLIi-0008F0-IY
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Aug 2015 09:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449AbbHIG4Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Aug 2015 02:56:24 -0400
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:35833 "EHLO
-	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754435AbbHIG4X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2015 02:56:23 -0400
-Received: by oihn130 with SMTP id n130so74692001oih.2
-        for <git@vger.kernel.org>; Sat, 08 Aug 2015 23:56:22 -0700 (PDT)
+	id S1754514AbbHIHpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2015 03:45:44 -0400
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:33965 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754421AbbHIHpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2015 03:45:43 -0400
+Received: by ykdt205 with SMTP id t205so38025267ykd.1
+        for <git@vger.kernel.org>; Sun, 09 Aug 2015 00:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=df8jmVKYrI8ylP4aSLuHgIBctG0a4zPOr4wBnx1iO98=;
-        b=rh52rF555t2fuo3+XAYvGFWByVaNcPuOQ7Y2nhHyzY4zkWoRdRgbUhk3Pcpdv6ylRP
-         Ed9sVQZgSzS0fsOLoemSRckgMjV0G/yUUR3mRlWfmra+nobGszfi0V0kwAp5pUahoS53
-         SmTWc2iF6RlFGx5DObAt0CQB+khlxOyAIIEhlKoxtjI3LoWlx3If2MPWZnpUEqDPG/dp
-         Hb+H+8guI37im22FlaFTqRYzm2l36xCDQf/mTe1sXudqbdOzkjiFL2h9/MhvXN7hS5CF
-         hwSnry3wrJVmUnW4xIg/h/BxgfMAPfyGMM9vYKwEALGEDF+Zc4O4RX9wuCu0Nk54plke
-         Houg==
-X-Received: by 10.202.200.75 with SMTP id y72mr13762878oif.111.1439103382296;
- Sat, 08 Aug 2015 23:56:22 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Sat, 8 Aug 2015 23:55:52 -0700 (PDT)
-In-Reply-To: <CAPig+cTHKbn0oCV61n=p5o9WihsaJbvWqKt4y9eFwA0noJoPgA@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=dvELE4D7C+HAbM80ClNsKF0msuhZwJpcI7im7SdjveQ=;
+        b=RZ8vMChiJL/0f3xMd5OWVvocvsDaYf5FiYt4TPlFjAaUpHJpuFLTdqmEDnWmsGoIJ0
+         cPVqIo1ENnMRSP+D99OoTeHzzsfAziquAISMC+qSiUL/Dimqx2Vq9H03B7RZMqKGUEXR
+         gphCAaQCtB98OFTJR7XHnP4fKnZ59TycoK0RW9+nqyuKAXWDkOXPNnGe22O/mkZ5rLQi
+         z1HlizKxvQN4Bqsv4/l5fiuscCTjFMt/fNukeHHASezWWaiXaTIQZ2ojd//84GQTgcjf
+         JFa+JYWjSE9UITnNXriz8CwIyLfVxOElmoLysDGMONzgd5LwfcCI4yPz/Y4y6iaTvdap
+         yZ6g==
+X-Received: by 10.170.233.10 with SMTP id z10mr15577069ykf.71.1439106343176;
+ Sun, 09 Aug 2015 00:45:43 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Sun, 9 Aug 2015 00:45:43 -0700 (PDT)
+In-Reply-To: <1439079599-87904-2-git-send-email-rappazzo@gmail.com>
+X-Google-Sender-Auth: KLHkzHMR1Task5ck5FXF-HgRdm8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275528>
 
-On Sun, Aug 9, 2015 at 9:12 AM, Eric Sunshine <sunshine@sunshineco.com>=
- wrote:
-> On Sat, Aug 8, 2015 at 2:35 AM, Karthik Nayak <karthik.188@gmail.com>=
- wrote:
->> On Fri, Aug 7, 2015 at 8:57 AM, Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
->>> On Wed, Aug 5, 2015 at 2:54 PM, Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->>>> of the padding to be performed. If the atom length is more than th=
-e
->>>> padding length then no padding is performed. e.g. to pad a succeed=
-ing
->>>> atom to the middle with a total padding size of 40 we can do a
->>>
->>> It's odd to have alignment described in terms of "padding" and
->>> "padding length", especially in the case of "center" alignment. It
->>> might be better to rephrase the discussion in terms of field width =
-or
->>> such.
->>>
->>>> --format=3D"%(align:middle,40).."
->>
->> Ok this makes sense,
->> I'll rephrase as :
->>
->> `<width>` is the total length of the content with alignment.
->
-> This doesn't really make sense. <width> isn't the content length; it'=
-s
-> the size of the area into which the content will be placed.
->
+Thanks for the patch. Comments below...
 
-Will change this.
+On Sat, Aug 8, 2015 at 8:19 PM, Michael Rappazzo <rappazzo@gmail.com> wrote:
+> worktree: list operation
 
->> If the atom length is more than the width then no alignment is perfo=
-rmed.
->
-> What "atom"? I think you mean the content between %(align:) and %(end=
-)
-> rather than "atom". The description might be clearer if you actually
-> say "content between %(align:) and %(end)" to indicate specifically
-> what is being aligned.
+Imperative mood:
 
-Yes, that's what I meant.
+    worktree: add 'list' command
 
->
->> e.g. to align a succeeding atom to the middle with a total width of =
-40
->> we can do:
->> --format=3D"%(align:middle,40).."
->>>> @@ -687,6 +690,29 @@ static void populate_value(struct ref_array_i=
-tem *ref)
->>>>                         else
->>>>                                 v->s =3D " ";
->>>>                         continue;
->>>> +               } else if (starts_with(name, "align:")) {
->>>> +                       const char *valp =3D NULL;
->>>
->>> Unnecessary NULL assignment.
->>
->> Thats required for the second skip_prefix and so on.
->> Else we get: "warning: =E2=80=98valp=E2=80=99 may be used uninitiali=
-zed in this
->> function [-Wmaybe-uninitialized]"
->
-> Okay, so that's because skip_prefix() is inline, and it doesn't touch
-> its "out" argument unless it actually skips the prefix. Ugly, but
-> makes sense, although I think this issue would go away if you combine=
-d
-> the starts_with() and skips_prefix() as suggested earlier.
->
+> 'git worktree list' will list the main worktree followed by any linked
+> worktrees which were created using 'git worktree add'.  The option
+> '--main-only' will restrict the list to only the main worktree.
 
-Okay then I'll declare valp prehand to get rid of this and also to
-remove redundant, starts_with() and skip_prefix().
+Missing sign-off.
 
->>>> +                       struct align *align =3D xmalloc(sizeof(str=
-uct align));
->>>> +
->>>> +                       skip_prefix(name, "align:", &valp);
->>>
->>> You could simplify the code by combining this skip_prefix() with th=
-e
->>> earlier starts_with() in the conditional:
->>>
->>>     } else if (skip_prefix(name, "align:", &valp)) {
->>>         struct align *align =3D xmalloc(sizeof(struct align));
->>>         ...
->>
->> That would require valp to be previously defined. Hence the split.
->
-> Yes, it would require declaring 'valp' earlier, but that seems a
-> reasonable tradeoff for cleaner, simpler, less redundant code.
->
+> ---
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index 3387e2f..2b6b543 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -59,6 +60,10 @@ prune::
+> +list::
+> +
+> +List the main worktree followed by all of the linked worktrees.
+> +
+>  OPTIONS
+>  -------
+> @@ -86,6 +91,9 @@ OPTIONS
+> +--main-only::
+> +       With `list`, only list the main worktree.
 
-Yes. will do this.
+Considering that the main worktree is always listed first, I wonder
+how much value the --main-only option has. That is (Windows aside),
+the same can easily be achieved via:
 
->>>>  static void apply_formatting_state(struct ref_formatting_state *s=
-tate, struct strbuf *final)
->>>>  {
->>>> -       /* More formatting options to be evetually added */
->>>> +       if (state->align && state->end) {
->>>> +               struct strbuf *value =3D state->output;
->>>> +               int len =3D 0, buf_len =3D value->len;
->>>> +               struct align *align =3D state->align;
->>>> +
->>>> +               if (!value->buf)
->>>> +                       return;
->>>> +               if (!is_utf8(value->buf)) {
->>>> +                       len =3D value->len - utf8_strwidth(value->=
-buf);
->>>
->>> What is this doing, exactly? If the string is *not* utf-8, then you=
-'re
->>> asking it for its utf-8 width. Am I reading that correctly?
->>>
->>> Also, what is 'len' supposed to represent? I guess you want it to b=
-e
->>> the difference between the byte length and the display length, but =
-the
->>> name 'len' doesn't convey that at all, nor does it help the reader
->>> understand the code below where you do the actual formatting.
->>>
->>> In fact, if I'm reading this correctly, then 'len' is always zero i=
-n
->>> your tests (because the tests never trigger this conditional), so t=
-his
->>> functionality is never being exercised.
->>
->> There shouldn't be a "!" there, will change.
->> I guess 'utf8_compensation' would be a better name.
->
-> Definitely better than 'len'.
->
->>>> +               else if (align->align_type =3D=3D ALIGN_MIDDLE) {
->>>> +                       int right =3D (align->align_value - buf_le=
-n)/2;
->>>> +                       strbuf_addf(final, "%*s%-*s", align->align=
-_value - right + len,
->>>> +                                   value->buf, right, "");
->>>
->>> An aesthetic aside: When (align_value - buf_len) is an odd number,
->>> this implementation favors placing more whitespace to the left of t=
-he
->>> string, and less to the right. In practice, this often tends to loo=
-k a
->>> bit more awkward than the inverse of placing more whitespace to the
->>> right, and less to the left (but that again is subjective).
->>
->> I know that, maybe we could add an additional padding to even out th=
-e value
->> given?
->
-> I don't understand your question. I was merely suggesting (purely
-> subjectively), for the "odd length" case, putting the extra space
-> after the centered text rather than before it. For instance:
->
->     int left =3D (align->align_value - buf_len) / 2;
->     strbuf_addf(final, "%*s%-*s", left, "",
->         align->align_value - left + len, value->buf);
->
-> or any similar variation which would give the same result.
->
+    git worktree list | head -1
 
-I get this could be done, what I was asking was, Consider given a align=
-ment
-width of 25 would be better to make that 26 so that we have even paddin=
-g on
-both sides. But I don't like the adding of manipulating user given data=
-=2E
+The more options we have, the more we have to document, test, and
+support, so I'm feeling skeptical about --main-only since it can be
+easily handled externally (for instance, via "head").
 
->>> This is a tangent, but I could easily see all of the code from 'if
->>> (align->align_value < buf_len)' down to this point being placed in
->>> utf8.c as a general alignment utility function. Doing so would make
->>> this function shorter, and the patch easier to review overall (whic=
-h
->>> might be an important consideration -- especially given that I've
->>> already spent several hours reviewing this one patch).
->>
->> That's a valid suggestion, will do that, thanks, but that'd mean we =
-need to
->> send an align struct to utf8.c which is only defined in ref-filter.h=
-=2E
->> Either this
->> is fine or we need to move the definition of struct align to utf8.h.
->> I think personally move the align structure and enum over to utf8.h
->
-> No, you don't need to move the 'struct align' to utf8.h. That
-> structure is specific to ref-filter and should stay there. Instead,
-> you only need to move the enum. For instance, you'd add something lik=
-e
-> this to utf8.h:
->
->     enum utf8_alignment {
->         ALIGN_LEFT,
->         ALIGN_MIDDLE,
->         ALIGN_RIGHT
->     };
->
->     void strbuf_utf8_align(struct strbuf *buf,
->         utf8_alignment where, int width, const char *s);
->
+>  -v::
+>  --verbose::
+>         With `prune`, report all removals.
+> @@ -36,7 +37,7 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+>         fd = open(git_path("worktrees/%s/gitdir", id), O_RDONLY);
+>         if (fd < 0) {
+>                 strbuf_addf(reason, _("Removing worktrees/%s: unable to read gitdir file (%s)"),
+> -                           id, strerror(errno));
+> +                       id, strerror(errno));
 
-Okay will do this.
+Unintended whitespace change here (and 7 places below)? The
+indentation looks fine as-is, so I think you don't want to include
+these changes.
 
-> By the way, I forgot to say earlier that this should be done as a
-> separate patch (in order to make the current patch smaller).
->
+>                 return 1;
+>         }
+>         len = st.st_size;
+> @@ -316,6 +317,71 @@ static int add(int ac, const char **av, const char *prefix)
+> +static int list(int ac, const char **av, const char *prefix)
+> +{
+> +       int main_only = 0;
+> +       struct option options[] = {
+> +               OPT_BOOL(0, "main-only", &main_only, N_("only list the main worktree")),
+> +               OPT_END()
+> +       };
+> +
+> +       ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
+> +       if (ac)
+> +               usage_with_options(worktree_usage, options);
+> +
+> +       const char *work_tree;
+> +       work_tree = get_git_work_tree();
+> +       if (!work_tree)
+> +               die("This operation must be run in a work tree");
 
-Of course, that was obvious :)
+Why this restriction? Other git-worktree operations support a bare
+repository, so this one ought to also.
 
-> That raises another question. Why are 'struct ref_formatting_state',
-> 'struct align', 'struct atom_value', etc. defined in ref-filter.h at
-> all? Aren't those private implementation details of ref-filter.c, or
-> do you expect other code to be using them?
->
+(In fact, when dealing with a bare repository, the "main worktree" is
+really the bare repository, so the term "worktree" is a bit of a
+misnomer.)
 
-I guess struct ref_formatting_state and struct align could be moved to
-ref-filter.c. About struct atom_value its referenced by ref_array_item(=
-)
-so any reader reading about this, would find it easier if atom_value()
-is at the same place.
+> +       struct strbuf worktree_git_path = STRBUF_INIT;
+> +       strbuf_addf(&worktree_git_path, _("%s/.git"), work_tree);
+> +
+> +       struct strbuf main_work_tree = STRBUF_INIT;
+> +       if (is_directory(worktree_git_path.buf)) {
 
->>>>         for (i =3D 0; i < final_buf.len; i++)
->>>>                 printf("%c", final_buf.buf[i]);
->>>>         putchar('\n');
->>>> diff --git a/ref-filter.h b/ref-filter.h
->>>> index 9e6c2d4..5575fe9 100644
->>>> --- a/ref-filter.h
->>>> +++ b/ref-filter.h
->>>> @@ -16,14 +16,30 @@
->>>>  struct ref_formatting_state {
->>>> -       int quote_style;
->>>>         struct strbuf *output;
->>>> +       struct align *align;
->>>> +       int quote_style;
->>>
->>> Perhaps decide where you'd like 'quote_style' to reside from the st=
-art
->>> so that you don't have to add it at one location in its introductor=
-y
->>> patch and then move it in a later patch. Also, why move it here?
->>
->> Cause that'd save memory on a 64 bit processor, where the pointers w=
-ould
->> be 8 bytes long and int would be 4 bytes long, this would bring in p=
-adding if
->> int is placed before the pointers. Will change before hand.
->
-> As I understand it, you're not likely to have many
-> ref_fomratting_state's around at any given time, so this sounds like
-> premature memory micro-optimization.
+This is probably not a valid test. Even in the main worktree, ".git"
+may not be a directory; it could be a symref to the actual repository.
 
-Agreed, its a micro-optimization, but why leave it out when we only nee=
-d
-to re-structure code? I'll probably change it beforehand.
+> +               /* This is the main tree */
+> +               strbuf_addstr(&main_work_tree, work_tree);
+> +       } else {
+> +               const char *git_dir = get_git_dir();
+> +               strbuf_addf(&main_work_tree, "%.*s", (int)(strstr(git_dir, "/.git/") - git_dir), git_dir);
+> +       }
+> +       printf("%s\n", main_work_tree.buf);
 
---=20
-Regards,
-Karthik Nayak
+This can probably all be done more simply by taking a hint from the
+code which tests if a branch is already checked out in the main or a
+linked worktree. For the main worktree, it just uses
+get_git_common_dir() and strips the trailing ".git" and prints that.
+For instance:
+
+    strbuf_addstr(&sb, get_git_common_dir());
+    strbuf_strip_suffix(&sb, ".git");
+    printf(...);
+
+should probably suffice in place of all the above code.
+
+> +       if (!main_only) {
+> +               chdir( main_work_tree.buf );
+
+Style: Drop spaces inside parentheses.
+
+I realize that the program exits after printing the list of worktrees,
+but this chdir() makes me uncomfortable, partly because it's not
+necessary, and partly because it could negatively impact code which
+someone later adds to extend "list", if that new code expects the
+current working directory to be the top of the worktree (as most git
+code assumes).
+
+> +               if ( is_directory(git_path("worktrees")) ) {
+> +                       DIR *dir = opendir( git_path("worktrees") );
+
+Style: Drop spaces inside parentheses (both lines).
+
+The opendir() will fail if the directory doesn't exist anyhow, so the
+'if (is_directory(...))' is superfluous and can be dropped altogether.
+
+Taking a hint from the code which tests if a branch is already checked
+out elsewhere:
+
+    strbuf_addf(&sb, "%s/worktrees", get_git_common_dir());
+    dir = opendir(sb.buf);
+
+> +                       if (dir != NULL) {
+
+Style: if (dir) {
+
+> +                               struct dirent *d;
+> +                               struct stat st;
+> +                               char *path;
+> +                               int fd, len;
+> +                               while ((d = readdir(dir)) != NULL) {
+> +                                       if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+> +                                               continue;
+
+This is at least the third bit of functionality which needs to iterate
+over the linked worktrees and glean information about them. As such,
+it would make sense to factor out that logic so that it can be
+re-used, as one or more preparatory patches if you feel so inclined
+(though is not a requirement by any means).
+
+> +                                       if (stat(git_path("worktrees/%s/gitdir", d->d_name), &st))
+> +                                               continue;
+> +                                       fd = open(git_path("worktrees/%s/gitdir", d->d_name), O_RDONLY);
+> +                                       if (fd < 0)
+> +                                               continue;
+> +
+> +                                       len = st.st_size;
+> +                                       path = xmalloc(len + 1);
+> +                                       read_in_full(fd, path, len);
+> +                                       close(fd);
+
+I realize that this code was pretty much copied from elsewhere in
+worktree.c, but it could be simplified considerably by taking
+advantage of strbuf_read_file() to slurp the entire file into a
+strbuf, thus allowing you to drop the stat(), open(), xmalloc(),
+read_in_full(), and close() calls:
+
+    if (strbuf_read_file(&sb, "whatever/.../gitdir", 0) < 0)
+        continue;
+     strbuf_rtrim(&sb);
+     strbuf_strip_suffix(&sb, ".git");
+
+> +                                       printf("%.*s\n", (int)(strstr(path, "/.git") - path), path);
+
+For git-worktree commands such as "lock", "mv", "remove", it likely
+will be nice to allow people to specify the linked worktree not only
+by path, but also by tag, and possibly even by $(basename $path) if
+not ambiguous. Therefore, to support such usage, at minimum, I think
+you also want to show the worktree's tag (d->d_name) in addition to
+the path.
+
+Other information which would be nice to display for each worktree
+(possibly controlled by a --verbose flag):
+
+   * the checked out branch or detached head
+   * whether it is locked
+        - the lock reason (if available)
+        - and whether the worktree is currently accessible
+    * whether it can be pruned
+        - and the prune reason if so
+
+The prune reason could be obtained by factoring out the
+reason-determination code from worktree.c:prune_worktree() to make it
+re-usable.
+
+For scripters, a --porcelain option might be useful.
+
+None of this additional functionality is an immediate requirement, and
+wouldn't belong in this patch anyhow, but can be added via follow-up
+patches (if you or someone else is interested in the task).
+
+> +                                       free(path);
+> +                               }
+> +                       }
+> +                       closedir(dir);
+> +               }
+> +       }
+> +       strbuf_release(&main_work_tree);
+> +       strbuf_release(&worktree_git_path);
+> +       return 0;
+> +}
+> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+> new file mode 100755
+> index 0000000..998b34f
+> --- /dev/null
+> +++ b/t/t2027-worktree-list.sh
+> @@ -0,0 +1,68 @@
+> +#!/bin/sh
+> +
+> +test_description='test git worktree list'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +       test_commit init
+> +'
+> +
+> +
+
+Drop the extra blank line.
+
+> +test_expect_success '"list" all worktrees from main' '
+> +       orig_path=$PWD &&
+> +       git rev-parse --show-toplevel >expect &&
+> +       git worktree add --detach here master &&
+> +       (
+> +               cd here &&
+> +               git rev-parse --show-toplevel >>"$orig_path/expect" &&
+> +               cd "$orig_path" &&
+
+The normal and automatic way to return to the original directory is
+simply to end the subshell; that is, have the closing ')' at this
+point. No need for 'orig_path'.
+
+In fact, in this case, you don't even need a subshell at all because,
+these days, you don't need to 'cd here'. Instead, take advantage of
+-C:
+
+    git -C here rev-parse --show-toplevel >>expect &&
+
+> +               git worktree list >actual &&
+> +               test_cmp expect actual &&
+> +               rm -rf here &&
+> +               git worktree prune
+> +       )
+> +'
+> +test_expect_success '"list" all worktrees from linked' '
+> +       orig_path=$PWD &&
+> +       git rev-parse --show-toplevel >expect &&
+> +       git worktree add --detach here master &&
+> +       (
+> +               cd here &&
+> +               git rev-parse --show-toplevel >>"$orig_path/expect" &&
+> +               git worktree list >actual &&
+> +               test_cmp "$orig_path/expect" actual &&
+> +               cd "$orig_path" &&
+
+Ditto. Just end the subshell to return to the original directory. Or,
+better, ditch the subshell entirely and use -C:
+
+    git rev-parse -C here --show-toplevel >>expect &&
+    git -C here worktree list >actual &&
+
+> +               rm -rf here &&
+> +               git worktree prune
+> +       )
+> +'
+> +
+> +test_expect_success '"list" main worktree from main' '
+> +       orig_path=$PWD &&
+> +       git rev-parse --show-toplevel >expect &&
+> +       git worktree add --detach here master &&
+> +       (
+> +               cd here &&
+> +               cd "$orig_path" &&
+> +               git worktree list --main-only >actual &&
+> +               test_cmp expect actual &&
+> +               rm -rf here &&
+> +               git worktree prune
+> +       )
+> +'
+> +test_expect_success '"list" main worktree from linked' '
+> +       orig_path=$PWD &&
+> +       git rev-parse --show-toplevel >expect &&
+> +       git worktree add --detach here master &&
+> +       (
+> +               cd here &&
+> +               git worktree list --main-only >actual &&
+> +               test_cmp "$orig_path/expect" actual &&
+> +               cd "$orig_path" &&
+> +               rm -rf here &&
+> +               git worktree prune
+> +       )
+> +'
+> +
+> +test_done
+> --
+> 2.5.0
