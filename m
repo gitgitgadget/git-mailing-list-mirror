@@ -1,239 +1,142 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 08/16] tempfile: add several functions for creating temporary files
-Date: Mon, 10 Aug 2015 11:47:43 +0200
-Message-ID: <c4da9c1988388b25d2c140b4dbd9c39a212790d9.1439198011.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 12/16] diff: use tempfile module
+Date: Mon, 10 Aug 2015 11:47:47 +0200
+Message-ID: <404c8bc508639a5723420691d9daa122f10d7cd4.1439198011.git.mhagger@alum.mit.edu>
 References: <cover.1439198011.git.mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:33 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjh1-00021w-3L
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:31 +0200
+	id 1ZOjh7-00021w-Ef
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754745AbbHJJsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:48:15 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63301 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754703AbbHJJsH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:07 -0400
-X-AuditID: 1207440e-f79516d0000012b3-c7-55c87355638b
+	id S1754752AbbHJJsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:48:19 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:49330 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754724AbbHJJsK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:10 -0400
+X-AuditID: 1207440d-f79136d00000402c-bf-55c8735990c3
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 4B.1B.04787.55378C55; Mon, 10 Aug 2015 05:48:05 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 9B.F5.16428.95378C55; Mon, 10 Aug 2015 05:48:09 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97D4D.dip0.t-ipconnect.de [79.201.125.77])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lsww021057
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lsx2021057
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Aug 2015 05:48:04 -0400
+	Mon, 10 Aug 2015 05:48:09 -0400
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <cover.1439198011.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqBtafCLUoHeDvEXXlW4mi4beK8wW
-	T+beZba4vWI+swOLx9/3H5g8Hr7qYve4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujGnH9zAX
-	3NGvaJp/i7mB8bJaFyMnh4SAicTRDd8YIWwxiQv31rN1MXJxCAlcZpR4Ov8oC4Rzgkni9rrz
-	LCBVbAK6Eot6mplAbBEBNYmJbYfA4swC6RInFrSD2cICYRLX98wFs1kEVCWubrvACmLzCkRJ
-	tN0/DLSNA2ibnMSCC+kgYU4BC4ntjRvASoQEzCUezzvPPoGRdwEjwypGucSc0lzd3MTMnOLU
-	ZN3i5MS8vNQiXWO93MwSvdSU0k2MkPDh28HYvl7mEKMAB6MSD++MzcdDhVgTy4orcw8xSnIw
-	KYnyWuSfCBXiS8pPqcxILM6ILyrNSS0+xCjBwawkwhufAZTjTUmsrEotyodJSXOwKInzqi1R
-	9xMSSE8sSc1OTS1ILYLJynBwKEnwyhcBNQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaW
-	ZMSDIiO+GBgbICkeoL12IO28xQWJuUBRiNZTjLoca2bfX8skxJKXn5cqJc77pxCoSACkKKM0
-	D24FLFm8YhQH+liYtxFkFA8w0cBNegW0hAlkSSDYkpJEhJRUA+My3y6et15Gx902v5heXbW2
-	81Bnqa7p6cPeXy34WxfuzuKvt/oo5Vvx0JLj2G5WqetLQtb4bu2YHPeww9/a0dLpgJfnShdF
-	+YzERSFrYye+Fc2dPzOSh1t552uh1puCdRzvww5/PbNL+P2GKQVBH6aFuxinHVLV 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqBtZfCLU4NA/E4uuK91MFg29V5gt
+	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGQ+3PGQt
+	mCJa8ez5DZYGxtWCXYycHBICJhIvp15lgrDFJC7cW8/WxcjFISRwmVFiccc+JgjnBJPEwtvH
+	mEGq2AR0JRb1NIN1iAioSUxsO8QCYjMLpEucWNAOZHNwCAsYS/QuCQQxWQRUJbZ3KoBU8ApE
+	SVzb2csEEpYQkJNYcCEdJMwpYCGxvXEDK4gtJGAu8XjeefYJjLwLGBlWMcol5pTm6uYmZuYU
+	pybrFicn5uWlFuka6eVmluilppRuYoSEDu8Oxv/rZA4xCnAwKvHwzth8PFSINbGsuDL3EKMk
+	B5OSKK9F/olQIb6k/JTKjMTijPii0pzU4kOMEhzMSiK88RlAOd6UxMqq1KJ8mJQ0B4uSOK/a
+	EnU/IYH0xJLU7NTUgtQimKwMB4eSBK98EVCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFi
+	aUlGPCgq4ouBcQGS4gHae6QQZG9xQWIuUBSi9RSjopQ47x+QhABIIqM0D24sLCG8YhQH+lKY
+	9ydIFQ8wmcB1vwIazAQ02C4QbHBJIkJKqoHR4+W+M5/Ut3OGZywS1V/12DAvZN2XxaxGmT63
+	boq16gvrcew99bd1pq6s176p5XI3b9yaYrf1/1ndxrVz1UR8pLuXR27+/5Xz2P7kuZ42HHtr
+	It++nR7TWOGhfUzW3GZt6nQe693a3ZKvZQoPt+W71jImtOfzvtm6sn192oEv1VuP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275592>
-
-Add several functions for creating temporary files with
-automatically-generated names, analogous to mkstemps(), but also
-arranging for the files to be deleted on program exit.
-
-The functions are named according to a pattern depending how they
-operate. They will be used to replace many places in the code where
-temporary files are created and cleaned up ad-hoc.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275593>
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- tempfile.c | 53 ++++++++++++++++++++++++++++++++++
- tempfile.h | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 149 insertions(+)
+ diff.c | 29 +++++++----------------------
+ 1 file changed, 7 insertions(+), 22 deletions(-)
 
-diff --git a/tempfile.c b/tempfile.c
-index d840f04..0b5d8ce 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -137,6 +137,59 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
- 	return tempfile->fd;
+diff --git a/diff.c b/diff.c
+index 7500c55..dc95247 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2,6 +2,7 @@
+  * Copyright (C) 2005 Junio C Hamano
+  */
+ #include "cache.h"
++#include "tempfile.h"
+ #include "quote.h"
+ #include "diff.h"
+ #include "diffcore.h"
+@@ -312,7 +313,7 @@ static struct diff_tempfile {
+ 	const char *name; /* filename external diff should read from */
+ 	char hex[41];
+ 	char mode[10];
+-	char tmp_path[PATH_MAX];
++	struct tempfile tempfile;
+ } diff_temp[2];
+ 
+ typedef unsigned long (*sane_truncate_fn)(char *line, unsigned long len);
+@@ -564,25 +565,16 @@ static struct diff_tempfile *claim_diff_tempfile(void) {
+ 	die("BUG: diff is failing to clean up its tempfiles");
  }
  
-+int mks_tempfile_sm(struct tempfile *tempfile,
-+		    const char *template, int suffixlen, int mode)
-+{
-+	prepare_tempfile_object(tempfile);
-+
-+	strbuf_add_absolute_path(&tempfile->filename, template);
-+	tempfile->fd = git_mkstemps_mode(tempfile->filename.buf, suffixlen, mode);
-+	if (tempfile->fd < 0) {
-+		strbuf_reset(&tempfile->filename);
-+		return -1;
-+	}
-+	tempfile->owner = getpid();
-+	tempfile->active = 1;
-+	return tempfile->fd;
-+}
-+
-+int mks_tempfile_tsm(struct tempfile *tempfile,
-+		     const char *template, int suffixlen, int mode)
-+{
-+	const char *tmpdir;
-+
-+	prepare_tempfile_object(tempfile);
-+
-+	tmpdir = getenv("TMPDIR");
-+	if (!tmpdir)
-+		tmpdir = "/tmp";
-+
-+	strbuf_addf(&tempfile->filename, "%s/%s", tmpdir, template);
-+	tempfile->fd = git_mkstemps_mode(tempfile->filename.buf, suffixlen, mode);
-+	if (tempfile->fd < 0) {
-+		strbuf_reset(&tempfile->filename);
-+		return -1;
-+	}
-+	tempfile->owner = getpid();
-+	tempfile->active = 1;
-+	return tempfile->fd;
-+}
-+
-+int xmks_tempfile_m(struct tempfile *tempfile, const char *template, int mode)
-+{
-+	int fd;
-+	struct strbuf full_template = STRBUF_INIT;
-+
-+	strbuf_add_absolute_path(&full_template, template);
-+	fd = mks_tempfile_m(tempfile, full_template.buf, mode);
-+	if (fd < 0)
-+		die_errno("Unable to create temporary file '%s'",
-+			  full_template.buf);
-+
-+	strbuf_release(&full_template);
-+	return fd;
-+}
-+
- FILE *fdopen_tempfile(struct tempfile *tempfile, const char *mode)
+-static int remove_tempfile_installed;
+-
+ static void remove_tempfile(void)
  {
- 	if (!tempfile->active)
-diff --git a/tempfile.h b/tempfile.h
-index bcc229f..a30e12c 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -92,6 +92,102 @@ struct tempfile {
-  */
- extern int create_tempfile(struct tempfile *tempfile, const char *path);
+ 	int i;
+ 	for (i = 0; i < ARRAY_SIZE(diff_temp); i++) {
+-		if (diff_temp[i].name == diff_temp[i].tmp_path)
+-			unlink_or_warn(diff_temp[i].name);
++		if (is_tempfile_active(&diff_temp[i].tempfile))
++			delete_tempfile(&diff_temp[i].tempfile);
+ 		diff_temp[i].name = NULL;
+ 	}
+ }
  
-+
-+/*
-+ * mks_tempfile functions
-+ *
-+ * The following functions attempt to create and open temporary files
-+ * with names derived automatically from a template, in the manner of
-+ * mkstemps(), and arrange for them to be deleted if the program ends
-+ * before they are deleted explicitly. There is a whole family of such
-+ * functions, named according to the following pattern:
-+ *
-+ *     x?mks_tempfile_t?s?m?()
-+ *
-+ * The optional letters have the following meanings:
-+ *
-+ *   x - die if the temporary file cannot be created.
-+ *
-+ *   t - create the temporary file under $TMPDIR (as opposed to
-+ *       relative to the current directory). When these variants are
-+ *       used, template should be the pattern for the filename alone,
-+ *       without a path.
-+ *
-+ *   s - template includes a suffix that is suffixlen characters long.
-+ *
-+ *   m - the temporary file should be created with the specified mode
-+ *       (otherwise, the mode is set to 0600).
-+ *
-+ * None of these functions modify template. If the caller wants to
-+ * know the (absolute) path of the file that was created, it can be
-+ * read from tempfile->filename.
-+ *
-+ * On success, the functions return a file descriptor that is open for
-+ * writing the temporary file. On errors, they return -1 and set errno
-+ * appropriately (except for the "x" variants, which die() on errors).
-+ */
-+
-+/* See "mks_tempfile functions" above. */
-+extern int mks_tempfile_sm(struct tempfile *tempfile,
-+			   const char *template, int suffixlen, int mode);
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int mks_tempfile_s(struct tempfile *tempfile,
-+				 const char *template, int suffixlen)
-+{
-+	return mks_tempfile_sm(tempfile, template, suffixlen, 0600);
-+}
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int mks_tempfile_m(struct tempfile *tempfile,
-+				 const char *template, int mode)
-+{
-+	return mks_tempfile_sm(tempfile, template, 0, mode);
-+}
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int mks_tempfile(struct tempfile *tempfile,
-+			       const char *template)
-+{
-+	return mks_tempfile_sm(tempfile, template, 0, 0600);
-+}
-+
-+/* See "mks_tempfile functions" above. */
-+extern int mks_tempfile_tsm(struct tempfile *tempfile,
-+			    const char *template, int suffixlen, int mode);
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int mks_tempfile_ts(struct tempfile *tempfile,
-+				  const char *template, int suffixlen)
-+{
-+	return mks_tempfile_tsm(tempfile, template, suffixlen, 0600);
-+}
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int mks_tempfile_tm(struct tempfile *tempfile,
-+				  const char *template, int mode)
-+{
-+	return mks_tempfile_tsm(tempfile, template, 0, mode);
-+}
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int mks_tempfile_t(struct tempfile *tempfile,
-+				 const char *template)
-+{
-+	return mks_tempfile_tsm(tempfile, template, 0, 0600);
-+}
-+
-+/* See "mks_tempfile functions" above. */
-+extern int xmks_tempfile_m(struct tempfile *tempfile,
-+			   const char *template, int mode);
-+
-+/* See "mks_tempfile functions" above. */
-+static inline int xmks_tempfile(struct tempfile *tempfile,
-+				const char *template)
-+{
-+	return xmks_tempfile_m(tempfile, template, 0600);
-+}
-+
- /*
-  * Associate a stdio stream with the temporary file (which must still
-  * be open). Return `NULL` (*without* deleting the file) on error. The
+-static void remove_tempfile_on_signal(int signo)
+-{
+-	remove_tempfile();
+-	sigchain_pop(signo);
+-	raise(signo);
+-}
+-
+ static void print_line_count(FILE *file, int count)
+ {
+ 	switch (count) {
+@@ -2817,8 +2809,7 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 	strbuf_addstr(&template, "XXXXXX_");
+ 	strbuf_addstr(&template, base);
+ 
+-	fd = git_mkstemps(temp->tmp_path, PATH_MAX, template.buf,
+-			strlen(base) + 1);
++	fd = mks_tempfile_ts(&temp->tempfile, template.buf, strlen(base) + 1);
+ 	if (fd < 0)
+ 		die_errno("unable to create temp-file");
+ 	if (convert_to_working_tree(path,
+@@ -2828,8 +2819,8 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 	}
+ 	if (write_in_full(fd, blob, size) != size)
+ 		die_errno("unable to write temp-file");
+-	close(fd);
+-	temp->name = temp->tmp_path;
++	close_tempfile(&temp->tempfile);
++	temp->name = get_tempfile_path(&temp->tempfile);
+ 	strcpy(temp->hex, sha1_to_hex(sha1));
+ 	temp->hex[40] = 0;
+ 	sprintf(temp->mode, "%06o", mode);
+@@ -2854,12 +2845,6 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 		return temp;
+ 	}
+ 
+-	if (!remove_tempfile_installed) {
+-		atexit(remove_tempfile);
+-		sigchain_push_common(remove_tempfile_on_signal);
+-		remove_tempfile_installed = 1;
+-	}
+-
+ 	if (!S_ISGITLINK(one->mode) &&
+ 	    (!one->sha1_valid ||
+ 	     reuse_worktree_file(name, one->sha1, 1))) {
 -- 
 2.5.0
