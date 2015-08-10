@@ -1,144 +1,117 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 02/16] create_bundle(): duplicate file descriptor to avoid closing it twice
-Date: Mon, 10 Aug 2015 11:47:37 +0200
-Message-ID: <82dbb49a0212672ed74c928f2b97fa29b7a7c280.1439198011.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 07/16] prepare_tempfile_object(): new function, extracted from create_tempfile()
+Date: Mon, 10 Aug 2015 11:47:42 +0200
+Message-ID: <29cc87f510f6bc171c3ed76767b68f67ef403223.1439198011.git.mhagger@alum.mit.edu>
 References: <cover.1439198011.git.mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:19 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjgm-0001vA-EA
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:16 +0200
+	id 1ZOjgl-0001vA-6W
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742AbbHJJsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:48:13 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:49330 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754699AbbHJJsG (ORCPT
+	id S1754721AbbHJJsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:48:09 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:47209 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754697AbbHJJsG (ORCPT
 	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:06 -0400
-X-AuditID: 1207440d-f79136d00000402c-a7-55c8734eaec8
+X-AuditID: 12074414-f794f6d000007852-42-55c87354fc4a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id CA.F5.16428.E4378C55; Mon, 10 Aug 2015 05:47:59 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 18.33.30802.45378C55; Mon, 10 Aug 2015 05:48:04 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97D4D.dip0.t-ipconnect.de [79.201.125.77])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lswq021057
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lswv021057
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Aug 2015 05:47:58 -0400
+	Mon, 10 Aug 2015 05:48:03 -0400
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <cover.1439198011.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqOtffCLU4PVdJouuK91MFg29V5gt
-	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGf0X9Qp+
-	S1T07L7A1sD4SriLkZNDQsBE4viSt4wQtpjEhXvr2UBsIYHLjBJPbpt2MXIB2SeYJI78mcIE
-	kmAT0JVY1NMMZosIqElMbDvEAmIzC6RLnFjQDmYLC8RJzNrfDjaIRUBVovfCPrAFvAJREt+u
-	7gKq4QBaJiex4EI6SJhTwEJie+MGVoi95hKP551nn8DIu4CRYRWjXGJOaa5ubmJmTnFqsm5x
-	cmJeXmqRrpFebmaJXmpK6SZGSOjw7mD8v07mEKMAB6MSD++MzcdDhVgTy4orcw8xSnIwKYny
-	WuSfCBXiS8pPqcxILM6ILyrNSS0+xCjBwawkwhufAZTjTUmsrEotyodJSXOwKInzqi1R9xMS
-	SE8sSc1OTS1ILYLJanBwCMw4N3c6kxRLXn5eqpIEr3wR0BDBotT01Iq0zJwShFImDk6QRVxS
-	IsWpeSmpRYmlJRnxoGiJLwbGC0iKB+iGI4UgNxQXJOYCRSFaTzEqSonz/gFJCIAkMkrz4MbC
-	EsUrRnGgj4V594BU8QCTDFz3K6DBTECD7QLBBpckIqSkGhhjuiL0l1RYygq1/L4WdkWXba3d
-	g1tB6cqPM6+lVzG7Sh7NSPSSXtQeKrts04bg8/wfGcuLHSd8XSfhfY5TrV7U/ZJX3LRr783Y
-	G3dEWc1WM9wk43cj4xHnjw8cG+z6ZinOvCkUcNjr3EGdtRH/VeZ7OTDW2zNW/rrM 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEIsWRmVeSWpSXmKPExsUixO6iqBtSfCLUYOFLOYuuK91MFg29V5gt
+	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGb+Wn2Mq
+	OChYMWXPB6YGxjV8XYycHBICJhLvns9lgrDFJC7cW8/WxcjFISRwmVHi3/nZ7BDOCSaJlSdO
+	sIFUsQnoSizqaQbrEBFQk5jYdogFxGYWSJc4saAdzBYWSJZoergNrIZFQFXix682MJtXIEri
+	1vce1i5GDqBtchILLqSDhDkFLCS2N25gBbGFBMwlHs87zz6BkXcBI8MqRrnEnNJc3dzEzJzi
+	1GTd4uTEvLzUIl0LvdzMEr3UlNJNjJDwEdnBeOSk3CFGAQ5GJR7eGZuPhwqxJpYVV+YeYpTk
+	YFIS5bXIPxEqxJeUn1KZkVicEV9UmpNafIhRgoNZSYQ3PgMox5uSWFmVWpQPk5LmYFES5/22
+	WN1PSCA9sSQ1OzW1ILUIJivDwaEkwXuvEKhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSix
+	tCQjHhQZ8cXA2ABJ8QDtPQLSzltckJgLFIVoPcWoKCXOuw8kIQCSyCjNgxsLSwqvGMWBvhTm
+	3QNSxQNMKHDdr4AGMwENtgsEG1ySiJCSamCctN76U4/v3V16l+Tdlypddbr74/W2S/JbddTm
+	Tbxqb1Myt2CrisKlYs64+au35kVecjmUwH/S+uzvgs+1CZ+vfZh8o5Xh5s7UKinF7fOag82P
+	flU/W+kiofxzvdGBa6HBh7cwcXwqa4+K7ZVLeVoY4X3DUuH3vuPp1jmBN0Uc98gu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275591>
 
-write_pack_data() passes bundle_fd to start_command() to be used as
-the stdout of pack-objects. But start_command() closes its stdout if
-it is > 1. This is a problem if bundle_fd is the fd of a lock_file,
-because commit_lock_file() will also try to close the fd.
+This makes the next step easier.
 
-So the old code suppressed commit_lock_file()'s usual behavior of
-closing the file descriptor by setting the lock_file object's fd field
-to -1.
-
-But this is not really kosher. Code here shouldn't be mutating fields
-within the lock_file object.
-
-Instead, duplicate the file descriptor before passing it to
-write_pack_data(). Then that function can close its copy without
-closing the copy held in the lock_file object.
+The old code used to use "path" to set the initial length of
+tempfile->filename. This was not helpful because path was usually
+relative whereas the value stored to filename will be absolute. So
+just initialize the length to 0.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-This is new since v1. I like that it is better decoupled than the old
-code, but let me know if you think otherwise.
+ tempfile.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-Actually, it seems to me that start_command()'s special case of not
-closing fd==0 is weird. I suppose that is because fd==0 is used to
-mean "no redirections" whereas 0 also happens to be the fd for stdin.
-But I don't want to dig into that now.
-
- bundle.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
-
-diff --git a/bundle.c b/bundle.c
-index f732c92..b9dacc0 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -235,7 +235,9 @@ out:
- 	return result;
+diff --git a/tempfile.c b/tempfile.c
+index d835818..d840f04 100644
+--- a/tempfile.c
++++ b/tempfile.c
+@@ -85,11 +85,11 @@ static void remove_tempfiles_on_signal(int signo)
+ 	raise(signo);
  }
  
--static int write_pack_data(int bundle_fd, struct lock_file *lock, struct rev_info *revs)
-+
-+/* Write the pack data to bundle_fd, then close it if it is > 1. */
-+static int write_pack_data(int bundle_fd, struct rev_info *revs)
+-/* Make sure errno contains a meaningful value on error */
+-int create_tempfile(struct tempfile *tempfile, const char *path)
++/*
++ * Initialize *tempfile if necessary and add it to tempfile_list.
++ */
++static void prepare_tempfile_object(struct tempfile *tempfile)
  {
- 	struct child_process pack_objects = CHILD_PROCESS_INIT;
- 	int i;
-@@ -250,13 +252,6 @@ static int write_pack_data(int bundle_fd, struct lock_file *lock, struct rev_inf
- 	if (start_command(&pack_objects))
- 		return error(_("Could not spawn pack-objects"));
- 
--	/*
--	 * start_command closed bundle_fd if it was > 1
--	 * so set the lock fd to -1 so commit_lock_file()
--	 * won't fail trying to close it.
--	 */
--	lock->fd = -1;
+-	size_t pathlen = strlen(path);
 -
- 	for (i = 0; i < revs->pending.nr; i++) {
- 		struct object *object = revs->pending.objects[i].item;
- 		if (object->flags & UNINTERESTING)
-@@ -416,10 +411,21 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	bundle_to_stdout = !strcmp(path, "-");
- 	if (bundle_to_stdout)
- 		bundle_fd = 1;
--	else
-+	else {
- 		bundle_fd = hold_lock_file_for_update(&lock, path,
- 						      LOCK_DIE_ON_ERROR);
+ 	if (!tempfile_list) {
+ 		/* One-time initialization */
+ 		sigchain_push_common(remove_tempfiles_on_signal);
+@@ -97,21 +97,27 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
+ 	}
  
-+		/*
-+		 * write_pack_data() will close the fd passed to it,
-+		 * but commit_lock_file() will also try to close the
-+		 * lockfile's fd. So make a copy of the file
-+		 * descriptor to avoid trying to close it twice.
-+		 */
-+		bundle_fd = dup(bundle_fd);
-+		if (bundle_fd < 0)
-+			die_errno("unable to dup file descriptor");
-+	}
+ 	if (tempfile->active)
+-		die("BUG: create_tempfile called for active object");
++		die("BUG: prepare_tempfile_object called for active object");
+ 	if (!tempfile->on_list) {
+ 		/* Initialize *tempfile and add it to tempfile_list: */
+ 		tempfile->fd = -1;
+ 		tempfile->fp = NULL;
+ 		tempfile->active = 0;
+ 		tempfile->owner = 0;
+-		strbuf_init(&tempfile->filename, pathlen);
++		strbuf_init(&tempfile->filename, 0);
+ 		tempfile->next = tempfile_list;
+ 		tempfile_list = tempfile;
+ 		tempfile->on_list = 1;
+ 	} else if (tempfile->filename.len) {
+ 		/* This shouldn't happen, but better safe than sorry. */
+-		die("BUG: create_tempfile called for improperly-reset object");
++		die("BUG: prepare_tempfile_object called for improperly-reset object");
+ 	}
++}
 +
- 	/* write signature */
- 	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
++/* Make sure errno contains a meaningful value on error */
++int create_tempfile(struct tempfile *tempfile, const char *path)
++{
++	prepare_tempfile_object(tempfile);
  
-@@ -445,7 +451,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 		return -1;
- 
- 	/* write pack */
--	if (write_pack_data(bundle_fd, &lock, &revs))
-+	if (write_pack_data(bundle_fd, &revs))
- 		return -1;
- 
- 	if (!bundle_to_stdout) {
+ 	strbuf_add_absolute_path(&tempfile->filename, path);
+ 	tempfile->fd = open(tempfile->filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
 -- 
 2.5.0
