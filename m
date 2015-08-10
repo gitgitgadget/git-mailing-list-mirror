@@ -1,85 +1,83 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 1/2] worktrees: add find_shared_symref
-Date: Mon, 10 Aug 2015 18:42:06 -0400
-Organization: Twitter
-Message-ID: <1439246526.5283.3.camel@twopensource.com>
-References: <1439229165-25773-1-git-send-email-dturner@twopensource.com>
-	 <CAPig+cTBLx2Q0n2ZcA-QgwNQMHZm9G45ThHbGc+Orkz-6c5cUg@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Error pushing new branch: value too great for base (error token is...
+Date: Mon, 10 Aug 2015 18:47:50 -0400
+Message-ID: <CAPig+cTB0VU6rmLT1H7sPMNBPE0zKvWmMp_obS5VpZBAi2nYLA@mail.gmail.com>
+References: <CAGDgvc3Gxn=pKBfYC+yrUhCmL9X6bqjPVwVokF0qPsXmhx_EaQ@mail.gmail.com>
+	<CAPig+cTXO3699MdqSFVDBcnKcHAT=Mkp=c=r3C8F5nT8tfr6gw@mail.gmail.com>
+	<CAGDgvc2hc+f5CuPXc2pr5uYd9kniVpuffrb6z416CicxBgVxJQ@mail.gmail.com>
+	<CAGDgvc1FJ0K+OLQBj8iXPCnqMFyBD3mp32k0aTztQkKKuxNxtQ@mail.gmail.com>
+	<CA+P7+xpKHw8xkpMSjCftmAnMh=J_R9HxhYD48O2-P2WKUH1diw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Johan Herland <johan@herland.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 00:42:16 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Gaurav Chhabra <varuag.chhabra@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 00:47:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOvln-0006Ai-HZ
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 00:42:15 +0200
+	id 1ZOvrH-0008Ho-60
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 00:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933359AbbHJWmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 18:42:09 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:33162 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933261AbbHJWmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 18:42:08 -0400
-Received: by igbpg9 with SMTP id pg9so79580104igb.0
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 15:42:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=yWRSkc+tLeAW5gxMFSr7wI886XhyHTZDXj7FEPMWInQ=;
-        b=W3GprNaGKQan4JrAunbzb2LsCHOn7uHauYyNOuV5mQI6/BcougSnjmJoBe7i8pV5QR
-         QMZdbnn8nr1AaOMZ8lvH1dPx61LgSikzxc5mjNuwgvfLfTVO2HxcVRF2z4n/fZvbNA0T
-         nxNIFzc0OMBoQUbIiizo2uvpMQ4kZJjxkpzRDaLqdKTf+QVqSeUIoa7QBQYQxynjzkVK
-         0RpP87HWmujxxxyj8L0xTnVd2i23jXO2TJ1SR3eByMd/0j+csE34ZMOTQN9EobWivaEB
-         2Ce2cM87LsiIHnDTaSe6sQHsjD5sriSWPWQKaljs3Danos+vxfsSdPTT9bRpXYGgpqqV
-         cTwg==
-X-Gm-Message-State: ALoCoQkz5aAJY6Lf8WOnEGC7UD8yIqNKLStiDuBx18xR7Bu2TfhZ6lycdOoPm4uiB/bPkdfPlV5O
-X-Received: by 10.50.122.102 with SMTP id lr6mr6403553igb.56.1439246527902;
-        Mon, 10 Aug 2015 15:42:07 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id d3sm205646igx.5.2015.08.10.15.42.06
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Aug 2015 15:42:07 -0700 (PDT)
-In-Reply-To: <CAPig+cTBLx2Q0n2ZcA-QgwNQMHZm9G45ThHbGc+Orkz-6c5cUg@mail.gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1754803AbbHJWrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 18:47:51 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:35636 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752974AbbHJWru (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 18:47:50 -0400
+Received: by ykdz80 with SMTP id z80so41125958ykd.2
+        for <git@vger.kernel.org>; Mon, 10 Aug 2015 15:47:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Bw/lWwopxJBsy7MWgbR83lftyLD5hs9U56Tmx92DQc4=;
+        b=JD1OUijM9FPfoRF80WUCJdS4Nr9V499W+xZzhH8T81zfRzFzbLikVKdWbQ7aHFXadn
+         prVhHdUyhRSdPJJA+pEymtydzYblq2quWMD5GKrgK6LudtN5c/448HMNxKxGIWI0rclv
+         uUr50bYsc5akan77c99bbYfnUw+zxdJw7ix56WsBBwsDqGziqxkZHBr6DHAZNALuK2kE
+         Hf09KXqMkQ973EpCDZMShQrxZmI9LTvs6o7KKElyMcUX/UAuTirCII8JGSuxJ70nrGqn
+         9w9/nDqvMm2IX1mZT4E8KfOiWWhzWD2KzylxQRqHPnrb5Pe2SXQldnQSeO0h3HDnEaN/
+         UvMg==
+X-Received: by 10.170.81.133 with SMTP id x127mr24029726ykx.13.1439246870171;
+ Mon, 10 Aug 2015 15:47:50 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Mon, 10 Aug 2015 15:47:50 -0700 (PDT)
+In-Reply-To: <CA+P7+xpKHw8xkpMSjCftmAnMh=J_R9HxhYD48O2-P2WKUH1diw@mail.gmail.com>
+X-Google-Sender-Auth: be8TnLNte8Rk9FKgvpdGWYQdD5U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275660>
 
-On Mon, 2015-08-10 at 18:30 -0400, Eric Sunshine wrote:
-> On Mon, Aug 10, 2015 at 1:52 PM, David Turner <dturner@twopensource.com> wrote:
-> > worktrees: add find_shared_symref
-> 
-> s/worktrees/branch/ perhaps?
+On Mon, Aug 10, 2015 at 6:29 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Mon, Aug 10, 2015 at 2:54 AM, Gaurav Chhabra
+> <varuag.chhabra@gmail.com> wrote:
+>> Apologies for the delay in reply! I tried your suggestion and it
+>> works. Thanks! :)
+>>
+>> I'm curious why integer comparison is throwing error. Shouldn't i be
+>> comparing numbers with numeric operator?
+>
+> Yes, but shell doesn't treat hex numbers as numbers. So it will work
+> only if the string is a decimal number.
 
-Do you mean "this is in branch.c, so should be labeled with branch"?  
+This particular case deserves a bit more explanation. The expression
+in question was this:
 
-Because this change is mostly about non-branch refs, so I think saying
-"branch" is confusing.  That's why I labelled it "worktrees"; that's the
-broad topic that's being addressed.
+    if [[ "$new_sha" -eq "$NULL" ]]; then
 
-> > Add a new function, find_shared_symref, which contains the heart of
-> > die_if_checked_out, but works for any symref, not just HEAD.  Refactor
-> > die_if_checked_out to use the same infrastructure as
-> > find_shared_symref.
-> >
-> > Soon, we will use find_shared_symref to protect notes merges in
-> > worktrees.
-> >
-> > Signed-off-by: David Turner <dturner@twopensource.com>
-> > ---
-> > This version addresses Eric Sunshine's comments on v5.  It fixes an error
-> > message and cleans up the code.
-> 
-> All issues identified in previous versions seem to have been
-> addressed, and nothing else pops out at me. Thanks.
+where 'new_sha' was 9226289d2416af4cb7365d7aaa5e382bdb3d9a89.
+
+In Bash, inside the [[ .. ]], it did attempt evaluating the SHA1 as a
+*decimal* number, however, when it encountered the "d", it complained
+that it was outside the allowed range of decimal digits ("0"..."9").
+Had the SHA1 been prefixed by a "0x", the [[...]] context would have
+dealt with it just fine.
+
+Outside the [[...]] context, arguments to -eq do need to be base-10 integers.
+
+Nevertheless, a SHA1 is effective an opaque value. There's little, if
+anything, to be gained by treating it as a numeric quantity, hence
+string '=' makes more sense than numeric '-eq'.
