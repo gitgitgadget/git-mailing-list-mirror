@@ -1,116 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git pull --rebase" fails if pager.pull is true, after producing
- a colorized diff it cannot apply
-Date: Sun, 9 Aug 2015 19:42:39 -0400
-Message-ID: <20150809234238.GB25769@sigill.intra.peff.net>
-References: <CAP=KgsTp=D1cSPmudDVEe32Q8gHhfSfuL7+V9YGZ65F1ZDUFiA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 06/14] tempfile: add several functions for creating temporary
+ files
+Date: Mon, 10 Aug 2015 05:08:46 +0200
+Message-ID: <55C815BE.4070309@alum.mit.edu>
+References: <cover.1433751986.git.mhagger@alum.mit.edu>	<a922fa6cfcc948d541b638d99e2413865ff051e2.1433751986.git.mhagger@alum.mit.edu> <xmqqmw07laio.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 01:42:49 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 10 05:09:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOaEq-0000Vg-DD
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 01:42:48 +0200
+	id 1ZOdSk-0004US-73
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 05:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960AbbHIXmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2015 19:42:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42732 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750980AbbHIXmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2015 19:42:43 -0400
-Received: (qmail 24372 invoked by uid 102); 9 Aug 2015 23:42:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Aug 2015 18:42:43 -0500
-Received: (qmail 32708 invoked by uid 107); 9 Aug 2015 23:42:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Aug 2015 19:42:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Aug 2015 19:42:39 -0400
-Content-Disposition: inline
-In-Reply-To: <CAP=KgsTp=D1cSPmudDVEe32Q8gHhfSfuL7+V9YGZ65F1ZDUFiA@mail.gmail.com>
+	id S1752524AbbHJDI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2015 23:08:58 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:45266 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752305AbbHJDI5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2015 23:08:57 -0400
+X-AuditID: 12074411-f797e6d000007df3-52-55c815c02c48
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 25.22.32243.0C518C55; Sun,  9 Aug 2015 23:08:49 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97D4D.dip0.t-ipconnect.de [79.201.125.77])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A38knx005569
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 9 Aug 2015 23:08:48 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <xmqqmw07laio.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1D0oeiLU4EG1RdeVbiaLht4rzBY/
+	WnqYHZg9nvXuYfS4eEnZ4/MmuQDmKG6bpMSSsuDM9Dx9uwTujOkTu9gLGvgrXhx8xtjAOJun
+	i5GTQ0LAROLzmW2MELaYxIV769m6GLk4hAQuM0o8u76RFcI5xyRxs+kiC0gVr4C2xJMrU4A6
+	ODhYBFQlrh1VAAmzCehKLOppZgIJiwoESbx+mQtRLShxcuYTsE4RATWJiW2HWEBKmAWMJOad
+	rgcJCwtEShz/sRBq01ZGiU3fP7KBJDgFrCUaf15hBrGZBfQkdlz/xQphy0tsfzuHeQKjwCwk
+	K2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1TvdzMEr3UlNJNjJCwFdzBOOOk
+	3CFGAQ5GJR7eGZuPhwqxJpYVV+YeYpTkYFIS5bUUPBEqxJeUn1KZkVicEV9UmpNafIhRgoNZ
+	SYTX7yxQOW9KYmVValE+TEqag0VJnJdvibqfkEB6YklqdmpqQWoRTFaGg0NJgjdKBGioYFFq
+	empFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChO44uBkQqS4gHaWwPSzltckJgLFIVoPcWo
+	KCXOWwqSEABJZJTmwY2FJaNXjOJAXwrzLgWp4gEmMrjuV0CDmYAGh4cdARlckoiQkmpg5F3R
+	2252MLO/5Z5gubZy0zGuDQ5huYzPwxSU9boVlLdMs5qh6vTwX+VxRb6I7E25W37M/1Pr8Vnq
+	3rX1F0vehXJ/FPQxj1jeeDCITZUjUaeg71LLdBbveD6BhjZlU22HWs6ZGRnB2n69 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275560>
 
-On Mon, Aug 03, 2015 at 05:21:43PM +0200, Per Cederqvist wrote:
-
-> If you run:
+On 06/10/2015 07:48 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
->     git config pager.pull true
+>> Add several functions for creating temporary files with
+>> automatically-generated names, analogous to mkstemps(), but also
+>> arranging for the files to be deleted on program exit.
+>>
+>> The functions are named according to a pattern depending how they
+>> operate. They will be used to replace many places in the code where
+>> temporary files are created and cleaned up ad-hoc.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  tempfile.c | 55 ++++++++++++++++++++++++++++++++++-
+>>  tempfile.h | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 150 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/tempfile.c b/tempfile.c
+>> index f76bc07..890075f 100644
+>> --- a/tempfile.c
+>> +++ b/tempfile.c
+>> @@ -48,7 +48,7 @@ static void register_tempfile_object(struct tempfile *tempfile, const char *path
+>>  		tempfile->fp = NULL;
+>>  		tempfile->active = 0;
+>>  		tempfile->owner = 0;
+>> -		strbuf_init(&tempfile->filename, strlen(path));
+>> +		strbuf_init(&tempfile->filename, 0);
+>>  		tempfile->next = tempfile_list;
+>>  		tempfile_list = tempfile;
+>>  		tempfile->on_list = 1;
 > 
-> in the hope of getting the output of "git pull" via a pager, you are
-> in for a surpise the next time you run "git pull --rebase" and it has
-> to rebase your work.  It will fail with a nonsensical error message:
+> This probably could have been part of the previous step.  Regardless
+> of where in the patch series this change is done, I think it makes
+> sense, as this function does not even know how long the final filename
+> would be, and strlen(path) is almost always wrong as path is likely to
+> be relative.
 > 
-> > Applying: First B commit
-> > fatal: unrecognized input
-> > Repository lacks necessary blobs to fall back on 3-way merge.
-> > Cannot fall back to three-way merge.
-> > Patch failed at 0001 First B commit
-> > The copy of the patch that failed is found in:
-> >    /home/cederp/badcolor/repo-b/.git/rebase-apply/patch
-> >
-> > When you have resolved this problem, run "git rebase --continue".
-> > If you prefer to skip this patch, run "git rebase --skip" instead.
-> > To check out the original branch and stop rebasing, run "git rebase --abort".
-> 
-> Using "cat -vet" to look at the problematic patch, you can see that
-> there are embedded escape codes that tries to colorize the patch.
-> 
-> This bug is dependent on the TERM setting.  On my system (Ubuntu
-> 14.04) it reproduces if TERM=vt220 or TERM=rxvt-unicode, but not if
-> TERM=dumb.  It might depend on the color.diff setting as well, but
-> it does reproduce with the default setting.
+> I notice this change makes "path" almost unused in this function,
+> and the only remaining use is for assert(!tempfile->filename.len).
+> Perhaps it is not worth passing the "path" parameter?
 
-It looks like the use of a pager is fooling our "should we colorize the
-diff" check when generating the patches. Usually we check isatty(1) to
-see if we should use color, so "git format-patch >patches" does the
-right thing. But if a pager is in use, we have to override that check
-(since stdout goes to the pager, but the pager is going to a tty). That
-propagates to children via the GIT_PAGER_IN_USE environment variable.
+These are both good points. I will implement them in the upcoming v2.
 
-We could work around this by having pull explicitly tell rebase that it
-is not using a pager (by unsetting GIT_PAGER_IN_USE). Or by having
-rebase tell it to format-patch. But I think the best thing is probably
-to teach the low-level "are we going to a pager" check to only say "yes"
-if stdout is still a pipe, like the patch below. That lets:
+Thanks,
+Michael
 
-  git format-patch --stdout >patches
-
-do the right thing; it knows that even if a pager is in use, its output
-is not going to it, because stdout isn't a pipe.
-
-Unfortunately this does not help:
-
-  git format-patch --stdout | some_program
-
-because it cannot tell the difference between the pipe to the original
-pager. I wonder if we could do something even more clever, like putting
-the inode number in the environment. Then we could check if we have the
-_same_ pipe going to the pager.
-
-diff --git a/pager.c b/pager.c
-index 070dc11..5b3b3fd 100644
---- a/pager.c
-+++ b/pager.c
-@@ -95,9 +95,11 @@ void setup_pager(void)
- 
- int pager_in_use(void)
- {
--	const char *env;
--	env = getenv("GIT_PAGER_IN_USE");
--	return env ? git_config_bool("GIT_PAGER_IN_USE", env) : 0;
-+	struct stat st;
-+
-+	return git_env_bool("GIT_PAGER_IN_USE", 0) &&
-+	       !fstat(1, &st) &&
-+	       S_ISFIFO(st.st_mode);
- }
- 
- /*
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
