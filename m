@@ -1,126 +1,68 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 4/5] clone: do not use port number as dir name
-Date: Mon, 10 Aug 2015 17:48:24 +0200
-Message-ID: <1439221705-20336-5-git-send-email-ps@pks.im>
-References: <1437997708-10732-1-git-send-email-ps@pks.im>
- <1439221705-20336-1-git-send-email-ps@pks.im>
-Cc: sunshine@sunshineco.com, ps@pks.im, peff@peff.net,
-	pclouds@gmail.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 17:48:58 2015
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: File Hash for Windows executable
+Date: Mon, 10 Aug 2015 18:09:37 +0200
+Organization: gmx
+Message-ID: <dd11d032a6cf489cbc56a6c09c47a418@www.dscho.org>
+References: <e44d9f36ecee4fd5965444deed1877f7@bl-cci-exch01.ads.iu.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Kiser, Ryan Lee" <rlkiser@iu.edu>
+X-From: git-owner@vger.kernel.org Mon Aug 10 18:09:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOpJn-0002XR-Gw
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 17:48:55 +0200
+	id 1ZOpdw-00056v-MQ
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 18:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771AbbHJPsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 11:48:40 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:40708 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754437AbbHJPsh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 11:48:37 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id A677220F54
-	for <git@vger.kernel.org>; Mon, 10 Aug 2015 11:48:36 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 10 Aug 2015 11:48:36 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=sdFw
-	WOOn5zF62XHbT5sbnbAuPBs=; b=tP2Fu0impdARBIrGWgT8g129EyT0xg++18ce
-	rzkMpOTyKB5Wm0xraEShWjaVEt8wkD3GIDOMTRYkBMq2yFatAt6UKjdl9Rns+YVB
-	23UCHO+gB8Su7kC+yHzd3RRN1fG1gbqAQz6d4Yh/zbQM/3Ad76tFJqJ7obdIlMsF
-	RxhSxhU=
-X-Sasl-enc: 4sk9Gmnj66vCgm8sMoKOfgf9316f34sUBUAJD0Y5VBwU 1439221716
-Received: from localhost (x5ce1243b.dyn.telefonica.de [92.225.36.59])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 2DBDC68011F;
-	Mon, 10 Aug 2015 11:48:36 -0400 (EDT)
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1439221705-20336-1-git-send-email-ps@pks.im>
+	id S1754422AbbHJQJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 12:09:40 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59002 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752808AbbHJQJk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 12:09:40 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LrvWY-1Yg6MJ3z8Y-013dr2; Mon, 10 Aug 2015 18:09:38
+ +0200
+In-Reply-To: <e44d9f36ecee4fd5965444deed1877f7@bl-cci-exch01.ads.iu.edu>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:f2i04zCaAa7Fq3sq5Voyczl+yxqDoAPR3sJQVySpLIjNTy7maQT
+ nw/Y6Ffw3/ka+cR8nmMZJ1IigXp9hGhzL5vPB7dx4a9pSpQ7LXeilpq6vwV0jn6z/YJLamR
+ CgiDHTz6Xk/w8LxDiWP/nBxtSz7Dv4NhIDOCMe1S2kEi2QA4KPa+1YiroZTzQ6mbnycmG9f
+ pgIlAGgs25/1W9plbmK9A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SWkQpVrABo0=:46Jle5ddVNai+NgvDTFGWg
+ VJ1BabVqfyX/ZfVQl7oTNUM+iIuHTZ3cPrOq+l+8tmXcONO2FA5C3E/OEp6Xus0BsbhEp38fY
+ V+uA2ca3KeZAkUsY7m1P4f57ZN0+cvI3ukDdPhckopNA5f2UEoEydU6XY5EGYX8GJgvWJ4Air
+ G21Pm3r9IoQS5tS0T/jc64shAAKFgOuKIS8Vbw6CjFwcIQkVhRt1SGDRdYr4emIyHHdUw0jP7
+ o3x6XZyvUPC41VtEYU2w96uNFb5r2LAVBuyBSVFIMPqudSkAXfdX0Su9WN9Yaubi2n35x9mLS
+ 8HXyZeK7nVlmaNcF5xMa/sjCuAiPtw8rtdYwAtTBSHGSHhPXvpFNW2sqysXqIU+aq1ZScJuca
+ /R3dt0XP2ht0xnt0Zc0jA8XR5T1lyzg8xWCtwJmxeJWTIwM/TMSYOtEl3RQlao5xSC9NC6xPv
+ qqea66LeOWMxL95dDLpijdflFjnwwW0o5HkgJI4rS/KYt/LUwu1Gg5bX5K2LBxE4b+2+G3ObU
+ c3F8Z8Ri/5NmlPCaMU4l4ot1qln3d8n8ESUfAFCE+Pem577kph5/sJGw6LEAQjgdloBaFEUwR
+ TuPh3ApW5N6scFRVsB7QTdQPX3JJtO/aQaHSBMfy9nx3jVyhJXsqmMd+NeWEptznjUyf2s/3B
+ 2A0RNZi+2NuxrfrINZcI/riJg+V8smHQrZwBvWvPLVQBJ/JKOQclHyji5VZTvCi9ftwRYTAbd
+ uaI+jYtMP8hLB64xPbtDFirr+N2tkmm46L1glg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275632>
 
-If the URI contains a port number and the URI's path component is
-empty we fail to guess a sensible directory name. E.g. cloning a
-repository 'ssh://example.com:2222/' we guess a directory name
-'2222' where we would want the hostname only, e.g. 'example.com'.
+Hi Ryan,
 
-We need to take care to not drop trailing port-like numbers in
-certain cases. E.g. when cloning a repository 'foo/bar:2222.git'
-we want to guess the directory name '2222' instead of 'bar'.
-Thus, we have to first check the stripped URI for path separators
-and only strip port numbers if there are path separators present.
-This heuristic breaks when cloning a repository 'bar:2222.git',
-though.
+On 2015-08-10 15:54, Kiser, Ryan Lee wrote:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/clone.c          | 17 +++++++++++++++++
- t/t5603-clone-dirname.sh | 14 +++++++-------
- 2 files changed, 24 insertions(+), 7 deletions(-)
+> I've downloaded the Windows installer for Git,
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index da51792..e7f16ff 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -182,6 +182,23 @@ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- 	}
- 
- 	/*
-+	 * Strip trailing port number if we've got only a
-+	 * hostname (that is, there is no dir separator but a
-+	 * colon). This check is required such that we do not
-+	 * strip URI's like '/foo/bar:2222.git', which should
-+	 * result in a dir '2222' being guessed due to backwards
-+	 * compatibility.
-+	 */
-+	if (memchr(start, '/', end - start) == NULL
-+	    && memchr(start, ':', end - start) != NULL) {
-+		ptr = end;
-+		while (start < ptr && isdigit(ptr[-1]) && ptr[-1] != ':')
-+			ptr--;
-+		if (start < ptr && ptr[-1] == ':')
-+			end = ptr - 1;
-+	}
-+
-+	/*
- 	 * Find last component. To remain backwards compatible we
- 	 * also regard colons as path separators, such that
- 	 * cloning a repository 'foo:bar.git' would result in a
-diff --git a/t/t5603-clone-dirname.sh b/t/t5603-clone-dirname.sh
-index a9aba72..664d0ab 100755
---- a/t/t5603-clone-dirname.sh
-+++ b/t/t5603-clone-dirname.sh
-@@ -73,17 +73,17 @@ test_clone_dir host:foo/.git/// foo
- 
- # omitting the path should default to the hostname
- test_clone_dir ssh://host/ host
--test_clone_dir ssh://host:1234/ host fail
-+test_clone_dir ssh://host:1234/ host
- test_clone_dir ssh://user@host/ host
--test_clone_dir host:/ host fail
-+test_clone_dir host:/ host
- 
- # auth materials should be redacted
- test_clone_dir ssh://user:password@host/ host
--test_clone_dir ssh://user:password@host:1234/ host fail
--test_clone_dir ssh://user:passw@rd@host:1234/ host fail
--test_clone_dir user@host:/ host fail
--test_clone_dir user:password@host:/ host fail
--test_clone_dir user:pass@wrd@host:/ host fail
-+test_clone_dir ssh://user:password@host:1234/ host
-+test_clone_dir ssh://user:passw@rd@host:1234/ host
-+test_clone_dir user@host:/ host
-+test_clone_dir user:password@host:/ host
-+test_clone_dir user:pass@wrd@host:/ host
- 
- # auth-like material should not be dropped
- test_clone_dir ssh://host/foo@bar foo@bar
--- 
-2.5.0
+Which one.
+
+> but can't seem to find hashes published anywhere for verification. Since the downloaded file doesn't seem to be signed,
+
+The newest ones from https://git-for-windows.github.io/ are signed.
+
+Ciao,
+Johannes
