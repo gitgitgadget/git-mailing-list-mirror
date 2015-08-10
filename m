@@ -1,142 +1,106 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 12/16] diff: use tempfile module
-Date: Mon, 10 Aug 2015 11:47:47 +0200
-Message-ID: <404c8bc508639a5723420691d9daa122f10d7cd4.1439198011.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 09/16] register_tempfile(): new function to handle an existing temporary file
+Date: Mon, 10 Aug 2015 11:47:44 +0200
+Message-ID: <8f223a2e98b18137673fe5b02fdddf3d93404108.1439198011.git.mhagger@alum.mit.edu>
 References: <cover.1439198011.git.mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:42 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjh7-00021w-Ef
+	id 1ZOjh6-00021w-Rn
 	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752AbbHJJsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:48:19 -0400
+	id S1754750AbbHJJsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:48:17 -0400
 Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:49330 "EHLO
 	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754724AbbHJJsK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:10 -0400
-X-AuditID: 1207440d-f79136d00000402c-bf-55c8735990c3
+	by vger.kernel.org with ESMTP id S1754710AbbHJJsH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:07 -0400
+X-AuditID: 1207440d-f79136d00000402c-ba-55c873569ab1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 9B.F5.16428.95378C55; Mon, 10 Aug 2015 05:48:09 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 4B.F5.16428.65378C55; Mon, 10 Aug 2015 05:48:06 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97D4D.dip0.t-ipconnect.de [79.201.125.77])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lsx2021057
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lswx021057
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Aug 2015 05:48:09 -0400
+	Mon, 10 Aug 2015 05:48:05 -0400
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <cover.1439198011.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqBtZfCLU4NA/E4uuK91MFg29V5gt
-	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGQ+3PGQt
-	mCJa8ez5DZYGxtWCXYycHBICJhIvp15lgrDFJC7cW8/WxcjFISRwmVFiccc+JgjnBJPEwtvH
-	mEGq2AR0JRb1NIN1iAioSUxsO8QCYjMLpEucWNAOZHNwCAsYS/QuCQQxWQRUJbZ3KoBU8ApE
-	SVzb2csEEpYQkJNYcCEdJMwpYCGxvXEDK4gtJGAu8XjeefYJjLwLGBlWMcol5pTm6uYmZuYU
-	pybrFicn5uWlFuka6eVmluilppRuYoSEDu8Oxv/rZA4xCnAwKvHwzth8PFSINbGsuDL3EKMk
-	B5OSKK9F/olQIb6k/JTKjMTijPii0pzU4kOMEhzMSiK88RlAOd6UxMqq1KJ8mJQ0B4uSOK/a
-	EnU/IYH0xJLU7NTUgtQimKwMB4eSBK98EVCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFi
-	aUlGPCgq4ouBcQGS4gHae6QQZG9xQWIuUBSi9RSjopQ47x+QhABIIqM0D24sLCG8YhQH+lKY
-	9ydIFQ8wmcB1vwIazAQ02C4QbHBJIkJKqoHR4+W+M5/Ut3OGZywS1V/12DAvZN2XxaxGmT63
-	boq16gvrcew99bd1pq6s176p5XI3b9yaYrf1/1ndxrVz1UR8pLuXR27+/5Xz2P7kuZ42HHtr
-	It++nR7TWOGhfUzW3GZt6nQe693a3ZKvZQoPt+W71jImtOfzvtm6sn192oEv1VuP 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqBtWfCLU4OIaNYuuK91MFg29V5gt
+	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGV2/N7IW
+	7OWt2Lt+MlMD4zeuLkZODgkBE4mW96eYIWwxiQv31rN1MXJxCAlcZpS4sXgpI4Rzgkni14aD
+	YFVsAroSi3qamUBsEQE1iYlth1hAbGaBdIkTC9qBbA4OYYEEidOHwkHCLAKqEi8PnmAEsXkF
+	oiQ2vl3ABFIiISAnseBCOkiYU8BCYnvjBlYQW0jAXOLxvPPsExh5FzAyrGKUS8wpzdXNTczM
+	KU5N1i1OTszLSy3SNdLLzSzRS00p3cQICR7eHYz/18kcYhTgYFTi4Z2x+XioEGtiWXFl7iFG
+	SQ4mJVFei/wToUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeOMzgHK8KYmVValF+TApaQ4WJXFe
+	tSXqfkIC6YklqdmpqQWpRTBZGQ4OJQle+SKgRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSi
+	xNKSjHhQXMQXAyMDJMUDtPdIIcje4oLEXKAoROspRkUpcd4/IAkBkERGaR7cWFhKeMUoDvSl
+	MO9PkCoeYDqB634FNJgJaLBdINjgkkSElFQDo3md5I+CHMEZTmHaLRMef/xke2+6LPv57hmh
+	Fe1x1+O7L29WyeMrDDpnurS+9JLZ3iPVOSfPzNS7e0xfbMsGYaHCYpPTC78+TNmW7BaqwpC8
+	xH96VgvHpDtVWTHdiUdcZ0YvjckWXf/qbO8bZ+7lNS0lC1m/z/G80f6SqXfBnW87 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275594>
+
+Allow an existing file to be registered with the tempfile-handling
+infrastructure; in particular, arrange for it to be deleted on program
+exit. This can be used if the temporary file has to be created in a
+more complicated way than just open(). For example:
+
+* If the file itself needs to be created via the lockfile API
+* If it is not a regular file (e.g., a socket)
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- diff.c | 29 +++++++----------------------
- 1 file changed, 7 insertions(+), 22 deletions(-)
+ tempfile.c | 8 ++++++++
+ tempfile.h | 8 ++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/diff.c b/diff.c
-index 7500c55..dc95247 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2,6 +2,7 @@
-  * Copyright (C) 2005 Junio C Hamano
+diff --git a/tempfile.c b/tempfile.c
+index 0b5d8ce..0af7ebf 100644
+--- a/tempfile.c
++++ b/tempfile.c
+@@ -137,6 +137,14 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
+ 	return tempfile->fd;
+ }
+ 
++void register_tempfile(struct tempfile *tempfile, const char *path)
++{
++	prepare_tempfile_object(tempfile);
++	strbuf_add_absolute_path(&tempfile->filename, path);
++	tempfile->owner = getpid();
++	tempfile->active = 1;
++}
++
+ int mks_tempfile_sm(struct tempfile *tempfile,
+ 		    const char *template, int suffixlen, int mode)
+ {
+diff --git a/tempfile.h b/tempfile.h
+index a30e12c..4219fe4 100644
+--- a/tempfile.h
++++ b/tempfile.h
+@@ -92,6 +92,14 @@ struct tempfile {
   */
- #include "cache.h"
-+#include "tempfile.h"
- #include "quote.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -312,7 +313,7 @@ static struct diff_tempfile {
- 	const char *name; /* filename external diff should read from */
- 	char hex[41];
- 	char mode[10];
--	char tmp_path[PATH_MAX];
-+	struct tempfile tempfile;
- } diff_temp[2];
+ extern int create_tempfile(struct tempfile *tempfile, const char *path);
  
- typedef unsigned long (*sane_truncate_fn)(char *line, unsigned long len);
-@@ -564,25 +565,16 @@ static struct diff_tempfile *claim_diff_tempfile(void) {
- 	die("BUG: diff is failing to clean up its tempfiles");
- }
++/*
++ * Register an existing file as a tempfile, meaning that it will be
++ * deleted when the program exits. The tempfile is considered closed,
++ * but it can be worked with like any other closed tempfile (for
++ * example, it can be opened using reopen_tempfile()).
++ */
++extern void register_tempfile(struct tempfile *tempfile, const char *path);
++
  
--static int remove_tempfile_installed;
--
- static void remove_tempfile(void)
- {
- 	int i;
- 	for (i = 0; i < ARRAY_SIZE(diff_temp); i++) {
--		if (diff_temp[i].name == diff_temp[i].tmp_path)
--			unlink_or_warn(diff_temp[i].name);
-+		if (is_tempfile_active(&diff_temp[i].tempfile))
-+			delete_tempfile(&diff_temp[i].tempfile);
- 		diff_temp[i].name = NULL;
- 	}
- }
- 
--static void remove_tempfile_on_signal(int signo)
--{
--	remove_tempfile();
--	sigchain_pop(signo);
--	raise(signo);
--}
--
- static void print_line_count(FILE *file, int count)
- {
- 	switch (count) {
-@@ -2817,8 +2809,7 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
- 	strbuf_addstr(&template, "XXXXXX_");
- 	strbuf_addstr(&template, base);
- 
--	fd = git_mkstemps(temp->tmp_path, PATH_MAX, template.buf,
--			strlen(base) + 1);
-+	fd = mks_tempfile_ts(&temp->tempfile, template.buf, strlen(base) + 1);
- 	if (fd < 0)
- 		die_errno("unable to create temp-file");
- 	if (convert_to_working_tree(path,
-@@ -2828,8 +2819,8 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
- 	}
- 	if (write_in_full(fd, blob, size) != size)
- 		die_errno("unable to write temp-file");
--	close(fd);
--	temp->name = temp->tmp_path;
-+	close_tempfile(&temp->tempfile);
-+	temp->name = get_tempfile_path(&temp->tempfile);
- 	strcpy(temp->hex, sha1_to_hex(sha1));
- 	temp->hex[40] = 0;
- 	sprintf(temp->mode, "%06o", mode);
-@@ -2854,12 +2845,6 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 		return temp;
- 	}
- 
--	if (!remove_tempfile_installed) {
--		atexit(remove_tempfile);
--		sigchain_push_common(remove_tempfile_on_signal);
--		remove_tempfile_installed = 1;
--	}
--
- 	if (!S_ISGITLINK(one->mode) &&
- 	    (!one->sha1_valid ||
- 	     reuse_worktree_file(name, one->sha1, 1))) {
+ /*
+  * mks_tempfile functions
 -- 
 2.5.0
