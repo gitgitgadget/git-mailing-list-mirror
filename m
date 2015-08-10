@@ -1,133 +1,98 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 14/17] refs.c: remove_empty_directories can take a strbuf
-Date: Mon, 10 Aug 2015 05:37:27 -0400
-Message-ID: <20150810093727.GN30981@sigill.intra.peff.net>
+Subject: [PATCH 15/17] find_hook: keep our own static buffer
+Date: Mon, 10 Aug 2015 05:37:45 -0400
+Message-ID: <20150810093744.GO30981@sigill.intra.peff.net>
 References: <20150810092731.GA9027@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:37:39 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:37:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjWT-0005G8-28
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:37:37 +0200
+	id 1ZOjWk-0005NJ-7v
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:37:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599AbbHJJhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:37:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42857 "HELO cloud.peff.net"
+	id S1754617AbbHJJhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:37:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42861 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754564AbbHJJhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 05:37:32 -0400
-Received: (qmail 31061 invoked by uid 102); 10 Aug 2015 09:37:32 -0000
+	id S1754457AbbHJJhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 05:37:50 -0400
+Received: (qmail 31070 invoked by uid 102); 10 Aug 2015 09:37:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 04:37:32 -0500
-Received: (qmail 3254 invoked by uid 107); 10 Aug 2015 09:37:42 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 04:37:50 -0500
+Received: (qmail 3271 invoked by uid 107); 10 Aug 2015 09:38:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 05:37:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 05:37:27 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 05:38:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 05:37:45 -0400
 Content-Disposition: inline
 In-Reply-To: <20150810092731.GA9027@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275581>
 
-The first thing we do in this function is copy the input
-into a strbuf. Of the 4 callers, 3 of them already have a
-strbuf we could use. Let's just take the strbuf, and convert
-the remaining caller to use a strbuf, rather than a raw
-git_path. This is safer, anyway, as remove_dir_recursively
-is a non-trivial function that might use the pathname
-buffers itself (this is _probably_ OK, as the likely culprit
-would be calling resolve_gitlink_ref, but we do not pass the
-proper flags to ask it to avoid blowing away gitlinks).
+The find_hook function returns the results of git_path,
+which is a static buffer shared by other path-related calls.
+Returning such a buffer is slightly dangerous, because it
+can be overwritten by seemingly unrelated functions.
+
+Let's at least keep our _own_ static buffer, so you can
+only get in trouble by calling find_hook in quick
+succession, which is less likely to happen and more obvious
+to notice.
+
+While we're at it, let's add some documentation of the
+function's limitations.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- refs.c | 34 +++++++++++++++-------------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+ run-command.c | 10 ++++++----
+ run-command.h |  5 +++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 8566677..ec1d06c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2290,25 +2290,14 @@ static int verify_lock(struct ref_lock *lock,
- 	return 0;
- }
+diff --git a/run-command.c b/run-command.c
+index 4d73e90..28e1d55 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -797,11 +797,13 @@ int finish_async(struct async *async)
  
--static int remove_empty_directories(const char *file)
-+static int remove_empty_directories(struct strbuf *path)
+ const char *find_hook(const char *name)
  {
--	/* we want to create a file but there is a directory there;
-+	/*
-+	 * we want to create a file but there is a directory there;
- 	 * if that is an empty directory (or a directory that contains
- 	 * only empty directories), remove them.
- 	 */
--	struct strbuf path;
--	int result, save_errno;
--
--	strbuf_init(&path, 20);
--	strbuf_addstr(&path, file);
--
--	result = remove_dir_recursively(&path, REMOVE_DIR_EMPTY_ONLY);
--	save_errno = errno;
--
--	strbuf_release(&path);
--	errno = save_errno;
--
--	return result;
-+	return remove_dir_recursively(path, REMOVE_DIR_EMPTY_ONLY);
+-	const char *path = git_path("hooks/%s", name);
+-	if (access(path, X_OK) < 0)
+-		path = NULL;
++	static struct strbuf path = STRBUF_INIT;
+ 
+-	return path;
++	strbuf_reset(&path);
++	strbuf_git_path(&path, "hooks/%s", name);
++	if (access(path.buf, X_OK) < 0)
++		return NULL;
++	return path.buf;
  }
  
- /*
-@@ -2440,7 +2429,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 		 * to remain.
- 		 */
- 		strbuf_git_path(&orig_ref_file, "%s", orig_refname);
--		if (remove_empty_directories(orig_ref_file.buf)) {
-+		if (remove_empty_directories(&orig_ref_file)) {
- 			last_errno = errno;
- 			if (!verify_refname_available(orig_refname, extras, skip,
- 						      get_loose_refs(&ref_cache), err))
-@@ -2961,7 +2950,7 @@ static int rename_tmp_log(const char *newrefname)
- 			 * directory ought to result in ISDIR, but
- 			 * Solaris 5.8 gives ENOTDIR.  Sheesh.
- 			 */
--			if (remove_empty_directories(path.buf)) {
-+			if (remove_empty_directories(&path)) {
- 				error("Directory not empty: logs/%s", newrefname);
- 				goto out;
- 			}
-@@ -3046,7 +3035,14 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (!read_ref_full(newrefname, RESOLVE_REF_READING, sha1, NULL) &&
- 	    delete_ref(newrefname, sha1, REF_NODEREF)) {
- 		if (errno==EISDIR) {
--			if (remove_empty_directories(git_path("%s", newrefname))) {
-+			struct strbuf path = STRBUF_INIT;
-+			int result;
-+
-+			strbuf_git_path(&path, "%s", newrefname);
-+			result = remove_empty_directories(&path);
-+			strbuf_release(&path);
-+
-+			if (result) {
- 				error("Directory not empty: %s", newrefname);
- 				goto rollback;
- 			}
-@@ -3183,7 +3179,7 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
- 			return 0;
+ int run_hook_ve(const char *const *env, const char *name, va_list args)
+diff --git a/run-command.h b/run-command.h
+index 1103805..5b4425a 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -52,6 +52,11 @@ int start_command(struct child_process *);
+ int finish_command(struct child_process *);
+ int run_command(struct child_process *);
  
- 		if (errno == EISDIR) {
--			if (remove_empty_directories(logfile->buf)) {
-+			if (remove_empty_directories(logfile)) {
- 				strbuf_addf(err, "There are still logs under "
- 					    "'%s'", logfile->buf);
- 				return -1;
++/*
++ * Returns the path to the hook file, or NULL if the hook is missing
++ * or disabled. Note that this points to static storage that will be
++ * overwritten by further calls to find_hook and run_hook_*.
++ */
+ extern const char *find_hook(const char *name);
+ LAST_ARG_MUST_BE_NULL
+ extern int run_hook_le(const char *const *env, const char *name, ...);
 -- 
 2.5.0.414.g670f2a4
