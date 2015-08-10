@@ -1,126 +1,118 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 11/16] setup_temporary_shallow(): use tempfile module
-Date: Mon, 10 Aug 2015 11:47:46 +0200
-Message-ID: <8d770afe87ff1b667cfd7731bf1084a69b64cf94.1439198011.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 16/16] credential-cache--daemon: use tempfile module
+Date: Mon, 10 Aug 2015 11:47:51 +0200
+Message-ID: <d05a0b163a9bc88f1e948240913eda95126adfeb.1439198011.git.mhagger@alum.mit.edu>
 References: <cover.1439198011.git.mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:39 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjh8-00021w-Kc
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:38 +0200
+	id 1ZOjh9-00021w-WD
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754758AbbHJJsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:48:22 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:58786 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754720AbbHJJsJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:09 -0400
-X-AuditID: 1207440f-f79df6d000007c0f-43-55c87358b14d
+	id S1754762AbbHJJsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:48:30 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:45085 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754703AbbHJJsP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:15 -0400
+X-AuditID: 1207440c-f79e16d000002a6e-1d-55c8735eb0aa
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 3A.DD.31759.85378C55; Mon, 10 Aug 2015 05:48:08 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 4F.F3.10862.E5378C55; Mon, 10 Aug 2015 05:48:14 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97D4D.dip0.t-ipconnect.de [79.201.125.77])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lsx1021057
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lsx6021057
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Aug 2015 05:48:07 -0400
+	Mon, 10 Aug 2015 05:48:13 -0400
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <cover.1439198011.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqBtRfCLU4MQJI4uuK91MFg29V5gt
-	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGQebbzAW
-	XBWoaDxyl7GB8QdvFyMnh4SAicTOWWtYIGwxiQv31rN1MXJxCAlcZpS41POKEcI5wSTx+cFD
-	ZpAqNgFdiUU9zUwgtoiAmsTEtkNg3cwC6RInFrSD2cICHhKtH5aA2SwCqhJtj/YC9XJw8ApE
-	Sbz6JQZiSgjISSy4kA5SwSlgIbG9cQMriC0kYC7xeN559gmMvAsYGVYxyiXmlObq5iZm5hSn
-	JusWJyfm5aUW6Zro5WaW6KWmlG5ihAQP/w7GrvUyhxgFOBiVeHhnbD4eKsSaWFZcmXuIUZKD
-	SUmU1yL/RKgQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd74DKAcb0piZVVqUT5MSpqDRUmcV32J
-	up+QQHpiSWp2ampBahFMVoaDQ0mC93IRUKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJp
-	SUY8KC7ii4GRAZLiAdq7FaSdt7ggMRcoCtF6ilFRSpz3TyFQQgAkkVGaBzcWlhJeMYoDfSnM
-	uwekigeYTuC6XwENZgIabBcINrgkESEl1cBoV2JkcCbC6fcL9gM9tj3J/qLNwheXtbxvetIy
-	oYyBwemn772eSy1tBjc4VJrm399+Mf6JkcW+UpejneEph5s2BzwvqP+Wf1GoZO26q2orpJ5E
-	5b6tepkzc/qZoJzEZI7r0kIF9o2N3GcUwo3q/zVMZpPenFVTI3Lnbeg+2U1VKqXb 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqBtXfCLUYPZbfouuK91MFg29V5gt
+	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGX8aFjAX
+	tPBWPLm+namB8R1XFyMnh4SAicTz7i3sELaYxIV769m6GLk4hAQuM0rMatrMBOGcYJJ4e3QH
+	G0gVm4CuxKKeZiYQW0RATWJi2yEWEJtZIF3ixIJ2MFtYwF1i+uarzCA2i4CqxLoLF4DiHBy8
+	AlES258Lg5gSAnISCy6kg1RwClhIbG/cwApiCwmYSzyed559AiPvAkaGVYxyiTmlubq5iZk5
+	xanJusXJiXl5qUW6hnq5mSV6qSmlmxghwcOzg/HbOplDjAIcjEo8vDM2Hw8VYk0sK67MPcQo
+	ycGkJMprkX8iVIgvKT+lMiOxOCO+qDQntfgQowQHs5IIb3wGUI43JbGyKrUoHyYlzcGiJM6r
+	ukTdT0ggPbEkNTs1tSC1CCYrw8GhJMErXwTUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqU
+	WFqSEQ+Ki/hiYGSApHiA9tqBtPMWFyTmAkUhWk8xKkqJ8/4pBEoIgCQySvPgxsJSwitGcaAv
+	hXn3gFTxANMJXPcroMFMIIMDwQaXJCKkpBoY2259m3z8e1Mwm2Iu6x5eA+m3P9vvyMXunG/F
+	blN/3Hl2b3gp676UO44xEgJK8k57n//X86p5qrSy5cjBKycEl1/33X1K6t7/h6XCfHUSTlFh
+	6eWnnx+bkMcT/Hrj2YstV7jeaLDefpvbd+PCCU7+iY2VP/MD7K4Ft9YcO1mSen6l 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275596>
+
+Use the tempfile module to ensure that the socket file gets deleted on
+program exit.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- shallow.c | 35 +++++++----------------------------
- 1 file changed, 7 insertions(+), 28 deletions(-)
+ credential-cache--daemon.c | 26 ++++++--------------------
+ 1 file changed, 6 insertions(+), 20 deletions(-)
 
-diff --git a/shallow.c b/shallow.c
-index 7973e74..2ba29a5 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -1,4 +1,5 @@
+diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
+index a671b2b..eef6fce 100644
+--- a/credential-cache--daemon.c
++++ b/credential-cache--daemon.c
+@@ -1,23 +1,11 @@
  #include "cache.h"
 +#include "tempfile.h"
- #include "lockfile.h"
- #include "commit.h"
- #include "tag.h"
-@@ -208,50 +209,28 @@ int write_shallow_commits(struct strbuf *out, int use_pack_protocol,
- 	return write_shallow_commits_1(out, use_pack_protocol, extra, 0);
- }
+ #include "credential.h"
+ #include "unix-socket.h"
+ #include "sigchain.h"
+ #include "parse-options.h"
  
--static struct strbuf temporary_shallow = STRBUF_INIT;
+-static const char *socket_path;
 -
--static void remove_temporary_shallow(void)
+-static void cleanup_socket(void)
 -{
--	if (temporary_shallow.len) {
--		unlink_or_warn(temporary_shallow.buf);
--		strbuf_reset(&temporary_shallow);
--	}
+-	if (socket_path)
+-		unlink(socket_path);
 -}
 -
--static void remove_temporary_shallow_on_signal(int signo)
+-static void cleanup_socket_on_signal(int sig)
 -{
--	remove_temporary_shallow();
--	sigchain_pop(signo);
--	raise(signo);
+-	cleanup_socket();
+-	sigchain_pop(sig);
+-	raise(sig);
 -}
-+static struct tempfile temporary_shallow;
++static struct tempfile socket_file;
  
- const char *setup_temporary_shallow(const struct sha1_array *extra)
+ struct credential_cache_entry {
+ 	struct credential item;
+@@ -256,6 +244,7 @@ static void check_socket_directory(const char *path)
+ 
+ int main(int argc, const char **argv)
  {
- 	struct strbuf sb = STRBUF_INIT;
- 	int fd;
++	const char *socket_path;
+ 	static const char *usage[] = {
+ 		"git-credential-cache--daemon [opts] <socket_path>",
+ 		NULL
+@@ -272,14 +261,11 @@ int main(int argc, const char **argv)
  
--	if (temporary_shallow.len)
--		die("BUG: attempt to create two temporary shallow files");
+ 	if (!socket_path)
+ 		usage_with_options(usage, options);
+-	check_socket_directory(socket_path);
 -
- 	if (write_shallow_commits(&sb, 0, extra)) {
--		strbuf_addstr(&temporary_shallow, git_path("shallow_XXXXXX"));
--		fd = xmkstemp(temporary_shallow.buf);
--
--		atexit(remove_temporary_shallow);
--		sigchain_push_common(remove_temporary_shallow_on_signal);
-+		fd = xmks_tempfile(&temporary_shallow, git_path("shallow_XXXXXX"));
+-	atexit(cleanup_socket);
+-	sigchain_push_common(cleanup_socket_on_signal);
  
- 		if (write_in_full(fd, sb.buf, sb.len) != sb.len)
- 			die_errno("failed to write to %s",
--				  temporary_shallow.buf);
--		close(fd);
-+				  get_tempfile_path(&temporary_shallow));
-+		close_tempfile(&temporary_shallow);
- 		strbuf_release(&sb);
--		return temporary_shallow.buf;
-+		return get_tempfile_path(&temporary_shallow);
- 	}
- 	/*
- 	 * is_repository_shallow() sees empty string as "no shallow
- 	 * file".
- 	 */
--	return temporary_shallow.buf;
-+	return get_tempfile_path(&temporary_shallow);
++	check_socket_directory(socket_path);
++	register_tempfile(&socket_file, socket_path);
+ 	serve_cache(socket_path, debug);
+-
+-	unlink(socket_path);
++	delete_tempfile(&socket_file);
+ 
+ 	return 0;
  }
- 
- void setup_alternate_shallow(struct lock_file *shallow_lock,
 -- 
 2.5.0
