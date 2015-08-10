@@ -1,117 +1,239 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 07/16] prepare_tempfile_object(): new function, extracted from create_tempfile()
-Date: Mon, 10 Aug 2015 11:47:42 +0200
-Message-ID: <29cc87f510f6bc171c3ed76767b68f67ef403223.1439198011.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 08/16] tempfile: add several functions for creating temporary files
+Date: Mon, 10 Aug 2015 11:47:43 +0200
+Message-ID: <c4da9c1988388b25d2c140b4dbd9c39a212790d9.1439198011.git.mhagger@alum.mit.edu>
 References: <cover.1439198011.git.mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:20 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:48:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjgl-0001vA-6W
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:15 +0200
+	id 1ZOjh1-00021w-3L
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754721AbbHJJsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:48:09 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:47209 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754697AbbHJJsG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:06 -0400
-X-AuditID: 12074414-f794f6d000007852-42-55c87354fc4a
+	id S1754745AbbHJJsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:48:15 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63301 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754703AbbHJJsH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 05:48:07 -0400
+X-AuditID: 1207440e-f79516d0000012b3-c7-55c87355638b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 18.33.30802.45378C55; Mon, 10 Aug 2015 05:48:04 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 4B.1B.04787.55378C55; Mon, 10 Aug 2015 05:48:05 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97D4D.dip0.t-ipconnect.de [79.201.125.77])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lswv021057
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7A9lsww021057
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Aug 2015 05:48:03 -0400
+	Mon, 10 Aug 2015 05:48:04 -0400
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <cover.1439198011.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEIsWRmVeSWpSXmKPExsUixO6iqBtSfCLUYOFLOYuuK91MFg29V5gt
-	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGb+Wn2Mq
-	OChYMWXPB6YGxjV8XYycHBICJhLvns9lgrDFJC7cW8/WxcjFISRwmVHi3/nZ7BDOCSaJlSdO
-	sIFUsQnoSizqaQbrEBFQk5jYdogFxGYWSJc4saAdzBYWSJZoergNrIZFQFXix682MJtXIEri
-	1vce1i5GDqBtchILLqSDhDkFLCS2N25gBbGFBMwlHs87zz6BkXcBI8MqRrnEnNJc3dzEzJzi
-	1GTd4uTEvLzUIl0LvdzMEr3UlNJNjJDwEdnBeOSk3CFGAQ5GJR7eGZuPhwqxJpYVV+YeYpTk
-	YFIS5bXIPxEqxJeUn1KZkVicEV9UmpNafIhRgoNZSYQ3PgMox5uSWFmVWpQPk5LmYFES5/22
-	WN1PSCA9sSQ1OzW1ILUIJivDwaEkwXuvEKhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSix
-	tCQjHhQZ8cXA2ABJ8QDtPQLSzltckJgLFIVoPcWoKCXOuw8kIQCSyCjNgxsLSwqvGMWBvhTm
-	3QNSxQNMKHDdr4AGMwENtgsEG1ySiJCSamCctN76U4/v3V16l+Tdlypddbr74/W2S/JbddTm
-	Tbxqb1Myt2CrisKlYs64+au35kVecjmUwH/S+uzvgs+1CZ+vfZh8o5Xh5s7UKinF7fOag82P
-	flU/W+kiofxzvdGBa6HBh7cwcXwqa4+K7ZVLeVoY4X3DUuH3vuPp1jmBN0Uc98gu 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqBtafCLUoHeDvEXXlW4mi4beK8wW
+	T+beZba4vWI+swOLx9/3H5g8Hr7qYve4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujGnH9zAX
+	3NGvaJp/i7mB8bJaFyMnh4SAicTRDd8YIWwxiQv31rN1MXJxCAlcZpR4Ov8oC4Rzgkni9rrz
+	LCBVbAK6Eot6mplAbBEBNYmJbYfA4swC6RInFrSD2cICYRLX98wFs1kEVCWubrvACmLzCkRJ
+	tN0/DLSNA2ibnMSCC+kgYU4BC4ntjRvASoQEzCUezzvPPoGRdwEjwypGucSc0lzd3MTMnOLU
+	ZN3i5MS8vNQiXWO93MwSvdSU0k2MkPDh28HYvl7mEKMAB6MSD++MzcdDhVgTy4orcw8xSnIw
+	KYnyWuSfCBXiS8pPqcxILM6ILyrNSS0+xCjBwawkwhufAZTjTUmsrEotyodJSXOwKInzqi1R
+	9xMSSE8sSc1OTS1ILYLJynBwKEnwyhcBNQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaW
+	ZMSDIiO+GBgbICkeoL12IO28xQWJuUBRiNZTjLoca2bfX8skxJKXn5cqJc77pxCoSACkKKM0
+	D24FLFm8YhQH+liYtxFkFA8w0cBNegW0hAlkSSDYkpJEhJRUA+My3y6et15Gx902v5heXbW2
+	81Bnqa7p6cPeXy34WxfuzuKvt/oo5Vvx0JLj2G5WqetLQtb4bu2YHPeww9/a0dLpgJfnShdF
+	+YzERSFrYye+Fc2dPzOSh1t552uh1puCdRzvww5/PbNL+P2GKQVBH6aFuxinHVLV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275592>
 
-This makes the next step easier.
+Add several functions for creating temporary files with
+automatically-generated names, analogous to mkstemps(), but also
+arranging for the files to be deleted on program exit.
 
-The old code used to use "path" to set the initial length of
-tempfile->filename. This was not helpful because path was usually
-relative whereas the value stored to filename will be absolute. So
-just initialize the length to 0.
+The functions are named according to a pattern depending how they
+operate. They will be used to replace many places in the code where
+temporary files are created and cleaned up ad-hoc.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- tempfile.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ tempfile.c | 53 ++++++++++++++++++++++++++++++++++
+ tempfile.h | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 149 insertions(+)
 
 diff --git a/tempfile.c b/tempfile.c
-index d835818..d840f04 100644
+index d840f04..0b5d8ce 100644
 --- a/tempfile.c
 +++ b/tempfile.c
-@@ -85,11 +85,11 @@ static void remove_tempfiles_on_signal(int signo)
- 	raise(signo);
+@@ -137,6 +137,59 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
+ 	return tempfile->fd;
  }
  
--/* Make sure errno contains a meaningful value on error */
--int create_tempfile(struct tempfile *tempfile, const char *path)
-+/*
-+ * Initialize *tempfile if necessary and add it to tempfile_list.
-+ */
-+static void prepare_tempfile_object(struct tempfile *tempfile)
- {
--	size_t pathlen = strlen(path);
--
- 	if (!tempfile_list) {
- 		/* One-time initialization */
- 		sigchain_push_common(remove_tempfiles_on_signal);
-@@ -97,21 +97,27 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
- 	}
- 
- 	if (tempfile->active)
--		die("BUG: create_tempfile called for active object");
-+		die("BUG: prepare_tempfile_object called for active object");
- 	if (!tempfile->on_list) {
- 		/* Initialize *tempfile and add it to tempfile_list: */
- 		tempfile->fd = -1;
- 		tempfile->fp = NULL;
- 		tempfile->active = 0;
- 		tempfile->owner = 0;
--		strbuf_init(&tempfile->filename, pathlen);
-+		strbuf_init(&tempfile->filename, 0);
- 		tempfile->next = tempfile_list;
- 		tempfile_list = tempfile;
- 		tempfile->on_list = 1;
- 	} else if (tempfile->filename.len) {
- 		/* This shouldn't happen, but better safe than sorry. */
--		die("BUG: create_tempfile called for improperly-reset object");
-+		die("BUG: prepare_tempfile_object called for improperly-reset object");
- 	}
-+}
-+
-+/* Make sure errno contains a meaningful value on error */
-+int create_tempfile(struct tempfile *tempfile, const char *path)
++int mks_tempfile_sm(struct tempfile *tempfile,
++		    const char *template, int suffixlen, int mode)
 +{
 +	prepare_tempfile_object(tempfile);
++
++	strbuf_add_absolute_path(&tempfile->filename, template);
++	tempfile->fd = git_mkstemps_mode(tempfile->filename.buf, suffixlen, mode);
++	if (tempfile->fd < 0) {
++		strbuf_reset(&tempfile->filename);
++		return -1;
++	}
++	tempfile->owner = getpid();
++	tempfile->active = 1;
++	return tempfile->fd;
++}
++
++int mks_tempfile_tsm(struct tempfile *tempfile,
++		     const char *template, int suffixlen, int mode)
++{
++	const char *tmpdir;
++
++	prepare_tempfile_object(tempfile);
++
++	tmpdir = getenv("TMPDIR");
++	if (!tmpdir)
++		tmpdir = "/tmp";
++
++	strbuf_addf(&tempfile->filename, "%s/%s", tmpdir, template);
++	tempfile->fd = git_mkstemps_mode(tempfile->filename.buf, suffixlen, mode);
++	if (tempfile->fd < 0) {
++		strbuf_reset(&tempfile->filename);
++		return -1;
++	}
++	tempfile->owner = getpid();
++	tempfile->active = 1;
++	return tempfile->fd;
++}
++
++int xmks_tempfile_m(struct tempfile *tempfile, const char *template, int mode)
++{
++	int fd;
++	struct strbuf full_template = STRBUF_INIT;
++
++	strbuf_add_absolute_path(&full_template, template);
++	fd = mks_tempfile_m(tempfile, full_template.buf, mode);
++	if (fd < 0)
++		die_errno("Unable to create temporary file '%s'",
++			  full_template.buf);
++
++	strbuf_release(&full_template);
++	return fd;
++}
++
+ FILE *fdopen_tempfile(struct tempfile *tempfile, const char *mode)
+ {
+ 	if (!tempfile->active)
+diff --git a/tempfile.h b/tempfile.h
+index bcc229f..a30e12c 100644
+--- a/tempfile.h
++++ b/tempfile.h
+@@ -92,6 +92,102 @@ struct tempfile {
+  */
+ extern int create_tempfile(struct tempfile *tempfile, const char *path);
  
- 	strbuf_add_absolute_path(&tempfile->filename, path);
- 	tempfile->fd = open(tempfile->filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
++
++/*
++ * mks_tempfile functions
++ *
++ * The following functions attempt to create and open temporary files
++ * with names derived automatically from a template, in the manner of
++ * mkstemps(), and arrange for them to be deleted if the program ends
++ * before they are deleted explicitly. There is a whole family of such
++ * functions, named according to the following pattern:
++ *
++ *     x?mks_tempfile_t?s?m?()
++ *
++ * The optional letters have the following meanings:
++ *
++ *   x - die if the temporary file cannot be created.
++ *
++ *   t - create the temporary file under $TMPDIR (as opposed to
++ *       relative to the current directory). When these variants are
++ *       used, template should be the pattern for the filename alone,
++ *       without a path.
++ *
++ *   s - template includes a suffix that is suffixlen characters long.
++ *
++ *   m - the temporary file should be created with the specified mode
++ *       (otherwise, the mode is set to 0600).
++ *
++ * None of these functions modify template. If the caller wants to
++ * know the (absolute) path of the file that was created, it can be
++ * read from tempfile->filename.
++ *
++ * On success, the functions return a file descriptor that is open for
++ * writing the temporary file. On errors, they return -1 and set errno
++ * appropriately (except for the "x" variants, which die() on errors).
++ */
++
++/* See "mks_tempfile functions" above. */
++extern int mks_tempfile_sm(struct tempfile *tempfile,
++			   const char *template, int suffixlen, int mode);
++
++/* See "mks_tempfile functions" above. */
++static inline int mks_tempfile_s(struct tempfile *tempfile,
++				 const char *template, int suffixlen)
++{
++	return mks_tempfile_sm(tempfile, template, suffixlen, 0600);
++}
++
++/* See "mks_tempfile functions" above. */
++static inline int mks_tempfile_m(struct tempfile *tempfile,
++				 const char *template, int mode)
++{
++	return mks_tempfile_sm(tempfile, template, 0, mode);
++}
++
++/* See "mks_tempfile functions" above. */
++static inline int mks_tempfile(struct tempfile *tempfile,
++			       const char *template)
++{
++	return mks_tempfile_sm(tempfile, template, 0, 0600);
++}
++
++/* See "mks_tempfile functions" above. */
++extern int mks_tempfile_tsm(struct tempfile *tempfile,
++			    const char *template, int suffixlen, int mode);
++
++/* See "mks_tempfile functions" above. */
++static inline int mks_tempfile_ts(struct tempfile *tempfile,
++				  const char *template, int suffixlen)
++{
++	return mks_tempfile_tsm(tempfile, template, suffixlen, 0600);
++}
++
++/* See "mks_tempfile functions" above. */
++static inline int mks_tempfile_tm(struct tempfile *tempfile,
++				  const char *template, int mode)
++{
++	return mks_tempfile_tsm(tempfile, template, 0, mode);
++}
++
++/* See "mks_tempfile functions" above. */
++static inline int mks_tempfile_t(struct tempfile *tempfile,
++				 const char *template)
++{
++	return mks_tempfile_tsm(tempfile, template, 0, 0600);
++}
++
++/* See "mks_tempfile functions" above. */
++extern int xmks_tempfile_m(struct tempfile *tempfile,
++			   const char *template, int mode);
++
++/* See "mks_tempfile functions" above. */
++static inline int xmks_tempfile(struct tempfile *tempfile,
++				const char *template)
++{
++	return xmks_tempfile_m(tempfile, template, 0600);
++}
++
+ /*
+  * Associate a stdio stream with the temporary file (which must still
+  * be open). Return `NULL` (*without* deleting the file) on error. The
 -- 
 2.5.0
