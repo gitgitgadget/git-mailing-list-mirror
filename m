@@ -1,71 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] pager_in_use: make sure output is still going to
- pager
-Date: Mon, 10 Aug 2015 13:24:49 -0400
-Message-ID: <20150810172448.GA20168@sigill.intra.peff.net>
-References: <20150810051901.GA9262@sigill.intra.peff.net>
- <20150810052353.GB15441@sigill.intra.peff.net>
- <98d092607588cb5c98e7a2deb2163f94@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/17] removing questionable uses of git_path
+Date: Mon, 10 Aug 2015 10:31:32 -0700
+Message-ID: <xmqqr3nbuk23.fsf@gitster.dls.corp.google.com>
+References: <20150810092731.GA9027@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Per Cederqvist <cederp@opera.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 10 19:24:59 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 10 19:31:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOqol-00066b-7x
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 19:24:59 +0200
+	id 1ZOqvD-0000Q1-Fw
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 19:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753695AbbHJRYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 13:24:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43137 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753178AbbHJRYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 13:24:54 -0400
-Received: (qmail 31042 invoked by uid 102); 10 Aug 2015 17:24:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 12:24:54 -0500
-Received: (qmail 7393 invoked by uid 107); 10 Aug 2015 17:25:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 13:25:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 13:24:49 -0400
-Content-Disposition: inline
-In-Reply-To: <98d092607588cb5c98e7a2deb2163f94@www.dscho.org>
+	id S1754794AbbHJRbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 13:31:35 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:36500 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753598AbbHJRbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 13:31:34 -0400
+Received: by pdco4 with SMTP id o4so73762131pdc.3
+        for <git@vger.kernel.org>; Mon, 10 Aug 2015 10:31:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=nA8ZQmh/4ColFKMA3i46CwcvwLs1tMtvpcBIXExmyuE=;
+        b=oGTMqtspxFKHdFH1why9DBd8sI+DKXeuZueB/neDvQKh6tRs165qRyv6PAZ8S7EdYx
+         3qFsfOxyxjyl+gxzOFUB9niY0H2V3XqLmWB4dyfuSGsfzEnX2X+Py2sIzKCLZx2Wj4Yl
+         s07kK9+E6BIQWDOZuk+BUmq7H8+qAVq/mVRF0IG5qV4rAEA4rVdQgBuIbn7iXubM39gS
+         tNw1yIOYShfpCXh9OjUwdRh4K9DtACAw02c0D4giuLeB1RSWcIJ4A4D1ajwdIsysGs7l
+         Fh2ErvBYMTfQK/eQ90MRua9ALpToQRUn1gjvwmHqhPWS+MciHfzONIaMbAFoUItbz/Cf
+         FoVw==
+X-Received: by 10.70.126.193 with SMTP id na1mr47171230pdb.26.1439227894180;
+        Mon, 10 Aug 2015 10:31:34 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:7d90:bc93:a451:6e95])
+        by smtp.gmail.com with ESMTPSA id pt3sm20593488pbb.38.2015.08.10.10.31.33
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 10 Aug 2015 10:31:33 -0700 (PDT)
+In-Reply-To: <20150810092731.GA9027@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 10 Aug 2015 05:27:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275638>
 
-On Mon, Aug 10, 2015 at 06:38:10PM +0200, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> writes:
 
-> > +const char *pipe_id_get(int fd)
-> > +{
-> > +	static struct strbuf id = STRBUF_INIT;
-> > +	struct stat st;
-> > +
-> > +	if (fstat(fd, &st) < 0 || !S_ISFIFO(st.st_mode))
-> > +		return NULL;
-> 
-> Just a quick note: it seems that this check is not really working on
-> Windows. I tested this by running this test case manually (because TTY
-> is not set on Windows):
+> The problem is that git_path uses a static buffer that gets overwritten
+> by subsequent calls.
 
-Yeah, I'm not too surprised. I'm guessing your st_ino for pipes are all
-just the same or something. Or maybe S_ISFIFO doesn't pass (we don't
-technically need it, I don't think, and could just drop that check).
+As the rotating static buffer pattern used in get_pathname() was
+modeled after sha1_to_hex(), we have the same issue there.  They are
+troubles waiting to happen unless the callers are careful.
 
-Anyway, I had planned that we would need to stick a big "#ifdef WINDOWS"
-around these two functions.
+> producing a fairly tame-looking set of function calls. It's OK to pass
+> the result of git_path() to a system call, or something that is a thin
+> wrapper around one (e.g., strbuf_read_file).
 
-> I hope to find some time tomorrow to figure out some workaround that
-> makes this work on Windows.
+That is a short and good rule to follow, but the problem is that not
+everybody has good taste to interpret the above rule and apply it with
+an eye toward maintainability X-<.
 
-Cool. I can't comment on Windows-specific stuff, but I'm happy to review
-the rest of it. :)
+> Along the way, there are a few cleanups (e.g., I polished off the recent
+> hold_lock_file_for_append topic which was on the list, as it had some
+> problematic calls).
+>
+>   [01/17]: cache.h: clarify documentation for git_path, et al
+>   [02/17]: cache.h: complete set of git_path_submodule helpers
+>   [03/17]: t5700: modernize style
+>   [04/17]: add_to_alternates_file: don't add duplicate entries
+>   [05/17]: remove hold_lock_file_for_append
+>   [06/17]: prefer git_pathdup to git_path in some possibly-dangerous cases
+>   [07/17]: prefer mkpathdup to mkpath in assignments
+>   [08/17]: remote.c: drop extraneous local variable from migrate_file
+>   [09/17]: refs.c: remove extra git_path calls from read_loose refs
+>   [10/17]: path.c: drop git_path_submodule
+>   [11/17]: refs.c: simplify strbufs in reflog setup and writing
+>   [12/17]: refs.c: avoid repeated git_path calls in rename_tmp_log
+>   [13/17]: refs.c: avoid git_path assignment in lock_ref_sha1_basic
+>   [14/17]: refs.c: remove_empty_directories can take a strbuf
+>   [15/17]: find_hook: keep our own static buffer
+>   [16/17]: get_repo_path: refactor path-allocation
+>   [17/17]: memoize common git-path "constant" files
 
--Peff
+Nice.  Thanks.
