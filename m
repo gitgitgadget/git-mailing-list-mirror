@@ -1,170 +1,92 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 2/2] notes: handle multiple worktrees
-Date: Mon, 10 Aug 2015 13:52:45 -0400
-Message-ID: <1439229165-25773-2-git-send-email-dturner@twopensource.com>
-References: <1439229165-25773-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, mhagger@alum.mit.edu, johan@herland.net,
-	sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Mon Aug 10 19:53:09 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 0/5] Improve guessing of repository names
+Date: Mon, 10 Aug 2015 11:07:16 -0700
+Message-ID: <xmqqio8nuiej.fsf@gitster.dls.corp.google.com>
+References: <1437997708-10732-1-git-send-email-ps@pks.im>
+	<1439221705-20336-1-git-send-email-ps@pks.im>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
+	pclouds@gmail.com
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Mon Aug 10 20:07:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOrG0-00015Z-Em
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 19:53:08 +0200
+	id 1ZOrTo-0007K8-Lu
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 20:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932528AbbHJRxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 13:53:01 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:35053 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932452AbbHJRw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 13:52:59 -0400
-Received: by igbjg10 with SMTP id jg10so5941950igb.0
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 10:52:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=tDZUFxSWilkHXu69KNKPA0DVM+MSfDN481W/yLHDMXI=;
-        b=dTwbrpZryMJPNksf3VNNzCgcUfWCSJbsCsR4bZjM0RMCmkSxM7fUmdsTwdWiGZrL9O
-         5Y6MFmVDuH8Kmn/HPjHY/TZLSIPgopffr/6xYaAbuulELgsHTiRqVqXsd6HWoTx7k5ET
-         dPYVT8JLgC0X95vzntEcD2cCjl6R2eAVZFuZGRROcrNrD/HbWIXtMCdba95PXmoa8gpA
-         j6DtKl8B2NN685zHqGAal0hXkOJ6SWdbO6b6vphEpPb6Z84dUS0jmF1FF/Fk2vW49GkO
-         18epTRL1pYwJluXLt/4JqIcVCy04UMO4+58YkdVvXvIqjYF80nIo6+MmOlu4Qlkm6rSa
-         ZOsw==
-X-Gm-Message-State: ALoCoQkfSAVQFd/4gGUwAAiXHAG7l5Cd3Zb9nAD8WjK/GKdHxb82zrD4l09pVNYLTnW/3Z9pDgbi
-X-Received: by 10.50.147.4 with SMTP id tg4mr13314919igb.53.1439229178864;
-        Mon, 10 Aug 2015 10:52:58 -0700 (PDT)
-Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id v18sm6296551igr.3.2015.08.10.10.52.57
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Aug 2015 10:52:57 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
-In-Reply-To: <1439229165-25773-1-git-send-email-dturner@twopensource.com>
+	id S932109AbbHJSHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 14:07:20 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:34257 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754115AbbHJSHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 14:07:18 -0400
+Received: by pawu10 with SMTP id u10so145273663paw.1
+        for <git@vger.kernel.org>; Mon, 10 Aug 2015 11:07:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=gNk52NM4Qfqt6PTsbTgEHxw+qAou2EaWNBkGseav7DA=;
+        b=tpSNr3tl3FrWVo/x95ZdE8JqK5+npWQ7DYaE75f2f6CsjZS9UIbtCGm08axEAuwfyR
+         DqhcQNuhr3K1aI7h+YZvYv5KLf89JLQCbb2vawbZ8ZPwcOtDxLGE8c2919YiihnPZiju
+         Z3ZiovEkWkWGQRS6SbuIzLhxM3BpRMD7C7LerVPCx9MLVo0Yr5BMVevlGnUkjOM8B69P
+         1ZmVaTAaebFYmNz9OExhw8T4ZhEejF7dFcK6JDLetTiOyamC8q8axSvXarGRgNmpQWkS
+         1iHSLy+QCxmz/TtFoiClw2GZTxAoncfi8eo7id7lNuZeF0iEDRdaQTdWxvdy/njAP/Vx
+         eY1w==
+X-Received: by 10.66.245.142 with SMTP id xo14mr45867426pac.151.1439230038211;
+        Mon, 10 Aug 2015 11:07:18 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:7d90:bc93:a451:6e95])
+        by smtp.gmail.com with ESMTPSA id w17sm20685018pbt.17.2015.08.10.11.07.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 10 Aug 2015 11:07:17 -0700 (PDT)
+In-Reply-To: <1439221705-20336-1-git-send-email-ps@pks.im> (Patrick
+	Steinhardt's message of "Mon, 10 Aug 2015 17:48:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275645>
 
-Before creating NOTES_MERGE_REF, check NOTES_MERGE_REF using
-find_shared_symref and die if we find one.  This prevents simultaneous
-merges to the same notes branch from different worktrees.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- builtin/notes.c                  |  6 ++++
- t/t3320-notes-merge-worktrees.sh | 72 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+)
- create mode 100755 t/t3320-notes-merge-worktrees.sh
+> This is version 5 of my patch series which aims to improve
+> guessed directory names in several cases.
+>
+> This version now includes the patches from Jeff which were
+> previously a separate patch series. Besides fixing behavior when
+> cloning a repository with trailing '.git' suffix they also add a
+> new test suite that verifies guessed directory names. I've
+> amended 'clone: add tests for output directory' to add additional
+> tests (as proposed by Junio).
+>
+> Changes to my own patches include improved commit messages
+> detailing why certain changes are done the way they are done and
+> a change to authentication-data-stripping, such that we now strip
+> greedily until the last '@' sign in the host part (proposed by
+> Junio, as well).
+>
+> Jeff King (2):
+>   clone: add tests for output directory
+>   clone: use computed length in guess_dir_name
+>
+> Patrick Steinhardt (3):
+>   clone: do not include authentication data in guessed dir
+>   clone: do not use port number as dir name
+>   clone: abort if no dir name could be guessed
+>
+>  builtin/clone.c          |  65 +++++++++++++++++++++++++-----
+>  t/t5603-clone-dirname.sh | 103 +++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 157 insertions(+), 11 deletions(-)
+>  create mode 100755 t/t5603-clone-dirname.sh
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 63f95fc..0423480 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -19,6 +19,7 @@
- #include "string-list.h"
- #include "notes-merge.h"
- #include "notes-utils.h"
-+#include "branch.h"
- 
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-@@ -825,10 +826,15 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
- 			   0, UPDATE_REFS_DIE_ON_ERR);
- 	else { /* Merge has unresolved conflicts */
-+		char *existing;
- 		/* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
- 		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
- 			   0, UPDATE_REFS_DIE_ON_ERR);
- 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
-+		existing = find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
-+		if (existing)
-+			die(_("A notes merge into %s is already in-progress at %s"),
-+			    default_notes_ref(), existing);
- 		if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
- 			die("Failed to store link to current notes ref (%s)",
- 			    default_notes_ref());
-diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
-new file mode 100755
-index 0000000..a7beef2
---- /dev/null
-+++ b/t/t3320-notes-merge-worktrees.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2015 Twitter, Inc
-+#
-+
-+test_description='Test merging of notes trees in multiple worktrees'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup commit' '
-+	test_commit tantrum
-+'
-+
-+commit_tantrum=$(git rev-parse tantrum^{commit})
-+
-+test_expect_success 'setup notes ref (x)' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes add -m "x notes on tantrum" tantrum
-+'
-+
-+test_expect_success 'setup local branch (y)' '
-+	git update-ref refs/notes/y refs/notes/x &&
-+	git config core.notesRef refs/notes/y &&
-+	git notes remove tantrum
-+'
-+
-+test_expect_success 'setup remote branch (z)' '
-+	git update-ref refs/notes/z refs/notes/x &&
-+	git config core.notesRef refs/notes/z &&
-+	git notes add -f -m "conflicting notes on tantrum" tantrum
-+'
-+
-+test_expect_success 'modify notes ref ourselves (x)' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes add -f -m "more conflicting notes on tantrum" tantrum
-+'
-+
-+test_expect_success 'create some new worktrees' '
-+	git worktree add -b newbranch worktree master &&
-+	git worktree add -b newbranch2 worktree2 master
-+'
-+
-+test_expect_success 'merge z into y fails and sets NOTES_MERGE_REF' '
-+	git config core.notesRef refs/notes/y &&
-+	test_must_fail git notes merge z &&
-+	echo "ref: refs/notes/y" > expect &&
-+	test_cmp .git/NOTES_MERGE_REF expect
-+'
-+
-+test_expect_success 'merge z into y while mid-merge in another workdir fails' '
-+	(
-+		cd worktree &&
-+		git config core.notesRef refs/notes/y &&
-+		test_must_fail git notes merge z 2>err &&
-+		grep "A notes merge into refs/notes/y is already in-progress at" err
-+	) &&
-+	test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
-+'
-+
-+test_expect_success 'merge z into x while mid-merge on y succeeds' '
-+	(
-+		cd worktree2 &&
-+		git config core.notesRef refs/notes/x &&
-+		test_must_fail git notes merge z 2>&1 >out &&
-+		grep "Automatic notes merge failed" out &&
-+		grep -v "A notes merge into refs/notes/x is already in-progress in" out
-+	) &&
-+	echo "ref: refs/notes/x" > expect &&
-+	test_cmp .git/worktrees/worktree2/NOTES_MERGE_REF expect
-+'
-+
-+test_done
--- 
-2.0.4.315.gad8727a-twtrsrc
+Looks good.
+
+I'll forge your sign-off for two patches from Peff and queue the
+whole thing.
+
+Thanks.
