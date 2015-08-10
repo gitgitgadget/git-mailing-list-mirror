@@ -1,217 +1,236 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 05/17] remove hold_lock_file_for_append
-Date: Mon, 10 Aug 2015 05:35:14 -0400
-Message-ID: <20150810093514.GE30981@sigill.intra.peff.net>
+Subject: [PATCH 06/17] prefer git_pathdup to git_path in some
+ possibly-dangerous cases
+Date: Mon, 10 Aug 2015 05:35:31 -0400
+Message-ID: <20150810093531.GF30981@sigill.intra.peff.net>
 References: <20150810092731.GA9027@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jim Hill <gjthill@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:35:26 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:35:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjUL-00047X-FC
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:35:25 +0200
+	id 1ZOjUa-0004HX-UA
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbbHJJfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:35:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42818 "HELO cloud.peff.net"
+	id S1753534AbbHJJfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:35:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42824 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751523AbbHJJfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 05:35:19 -0400
-Received: (qmail 30898 invoked by uid 102); 10 Aug 2015 09:35:20 -0000
+	id S1753302AbbHJJfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 05:35:36 -0400
+Received: (qmail 30908 invoked by uid 102); 10 Aug 2015 09:35:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 04:35:20 -0500
-Received: (qmail 3099 invoked by uid 107); 10 Aug 2015 09:35:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 04:35:36 -0500
+Received: (qmail 3118 invoked by uid 107); 10 Aug 2015 09:35:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 05:35:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 05:35:14 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 05:35:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 05:35:31 -0400
 Content-Disposition: inline
 In-Reply-To: <20150810092731.GA9027@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275572>
 
-From: Jim Hill <gjthill@gmail.com>
+Because git_path uses a static buffer that is shared with
+calls to git_path, mkpath, etc, it can be dangerous to
+assign the result to a variable or pass it to a non-trivial
+function. The value may change unexpectedly due to other
+calls.
 
-No users of hold_lock_file_for_append remain, so remove it.
+None of the cases changed here has a known bug, but they're
+worth converting away from git_path because:
 
-hold_lock_file_for_append copies its target file internally.
-This makes it too heavyweight for true append-only logging
-and too limited for anything else (which probably wants to
-process the contents). It shouldn't be used.
+  1. It's easy to use git_pathdup in these cases.
 
-[jk: tweaked commit message, and dropped declaration and
-     documentation, too]
+  2. They use constructs (like assignment) that make it
+     hard to tell whether they're safe or not.
 
-Signed-off-by: Jim Hill <gjthill@gmail.com>
+The extra malloc overhead should be trivial, as an
+allocation should be an order of magnitude cheaper than a
+system call (which we are clearly about to make, since we
+are constructing a filename). The real cost is that we must
+remember to free the result.
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-And this is the obvious continuation of the last patch.
+ builtin/fsck.c |  4 +++-
+ fast-import.c  |  4 +++-
+ http-backend.c |  3 ++-
+ notes-merge.c  |  3 ++-
+ refs.c         | 14 ++++++++------
+ unpack-trees.c |  4 +++-
+ 6 files changed, 21 insertions(+), 11 deletions(-)
 
- Documentation/technical/api-lockfile.txt | 26 ++++++++--------------
- lockfile.c                               | 38 --------------------------------
- lockfile.h                               |  7 ++----
- 3 files changed, 11 insertions(+), 60 deletions(-)
-
-diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
-index 93b5f23..0f5c481 100644
---- a/Documentation/technical/api-lockfile.txt
-+++ b/Documentation/technical/api-lockfile.txt
-@@ -40,7 +40,7 @@ The caller:
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index f4b87e9..0794703 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -243,13 +243,14 @@ static void check_unreachable_object(struct object *obj)
+ 			printf("dangling %s %s\n", typename(obj->type),
+ 			       sha1_to_hex(obj->sha1));
+ 		if (write_lost_and_found) {
+-			const char *filename = git_path("lost-found/%s/%s",
++			char *filename = git_pathdup("lost-found/%s/%s",
+ 				obj->type == OBJ_COMMIT ? "commit" : "other",
+ 				sha1_to_hex(obj->sha1));
+ 			FILE *f;
  
- * Attempts to create a lockfile by passing that variable and the path
-   of the final destination (e.g. `$GIT_DIR/index`) to
--  `hold_lock_file_for_update` or `hold_lock_file_for_append`.
-+  `hold_lock_file_for_update`.
+ 			if (safe_create_leading_directories_const(filename)) {
+ 				error("Could not create lost-found");
++				free(filename);
+ 				return;
+ 			}
+ 			if (!(f = fopen(filename, "w")))
+@@ -262,6 +263,7 @@ static void check_unreachable_object(struct object *obj)
+ 			if (fclose(f))
+ 				die_errno("Could not finish '%s'",
+ 					  filename);
++			free(filename);
+ 		}
+ 		return;
+ 	}
+diff --git a/fast-import.c b/fast-import.c
+index 2ad4fee..ad8848b 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -407,7 +407,7 @@ static void dump_marks_helper(FILE *, uintmax_t, struct mark_set *);
  
- * Writes new content for the destination file by either:
- 
-@@ -64,8 +64,7 @@ When finished writing, the caller can:
- 
- Even after the lockfile is committed or rolled back, the `lock_file`
- object must not be freed or altered by the caller. However, it may be
--reused; just pass it to another call of `hold_lock_file_for_update` or
--`hold_lock_file_for_append`.
-+reused; just pass it to another call of `hold_lock_file_for_update`.
- 
- If the program exits before you have called one of `commit_lock_file`,
- `commit_lock_file_to`, `rollback_lock_file`, or `close_lock_file`, an
-@@ -111,8 +110,7 @@ appropriately, do their best to roll back the lockfile, and return -1.
- Flags
- -----
- 
--The following flags can be passed to `hold_lock_file_for_update` or
--`hold_lock_file_for_append`:
-+The following flags can be passed to `hold_lock_file_for_update`:
- 
- LOCK_NO_DEREF::
- 
-@@ -141,12 +139,6 @@ hold_lock_file_for_update::
- 	above). Attempt to create a lockfile for the destination and
- 	return the file descriptor for writing to the file.
- 
--hold_lock_file_for_append::
--
--	Like `hold_lock_file_for_update`, but before returning copy
--	the existing contents of the file (if any) to the lockfile and
--	position its write pointer at the end of the file.
--
- fdopen_lock_file::
- 
- 	Associate a stdio stream with the lockfile. Return NULL
-@@ -162,8 +154,8 @@ get_locked_file_path::
- commit_lock_file::
- 
- 	Take a pointer to the `struct lock_file` initialized with an
--	earlier call to `hold_lock_file_for_update` or
--	`hold_lock_file_for_append`, close the file descriptor, and
-+	earlier call to `hold_lock_file_for_update`,
-+	close the file descriptor, and
- 	rename the lockfile to its final destination. Return 0 upon
- 	success. On failure, roll back the lock file and return -1,
- 	with `errno` set to the value from the failing call to
-@@ -180,8 +172,8 @@ commit_lock_file_to::
- rollback_lock_file::
- 
- 	Take a pointer to the `struct lock_file` initialized with an
--	earlier call to `hold_lock_file_for_update` or
--	`hold_lock_file_for_append`, close the file descriptor and
-+	earlier call to `hold_lock_file_for_update`,
-+	close the file descriptor and
- 	remove the lockfile. It is a NOOP to call
- 	`rollback_lock_file()` for a `lock_file` object that has
- 	already been committed or rolled back.
-@@ -189,8 +181,8 @@ rollback_lock_file::
- close_lock_file::
- 
- 	Take a pointer to the `struct lock_file` initialized with an
--	earlier call to `hold_lock_file_for_update` or
--	`hold_lock_file_for_append`. Close the file descriptor (and
-+	earlier call to `hold_lock_file_for_update`.
-+	Close the file descriptor (and
- 	the file pointer if it has been opened using
- 	`fdopen_lock_file`). Return 0 upon success. On failure to
- 	`close(2)`, return a negative value and roll back the lock
-diff --git a/lockfile.c b/lockfile.c
-index 993bb82..b1ceec6 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -249,44 +249,6 @@ int hold_lock_file_for_update_timeout(struct lock_file *lk, const char *path,
- 	return fd;
- }
- 
--int hold_lock_file_for_append(struct lock_file *lk, const char *path, int flags)
--{
--	int fd, orig_fd;
--
--	fd = lock_file(lk, path, flags);
--	if (fd < 0) {
--		if (flags & LOCK_DIE_ON_ERROR)
--			unable_to_lock_die(path, errno);
--		return fd;
--	}
--
--	orig_fd = open(path, O_RDONLY);
--	if (orig_fd < 0) {
--		if (errno != ENOENT) {
--			int save_errno = errno;
--
--			if (flags & LOCK_DIE_ON_ERROR)
--				die("cannot open '%s' for copying", path);
--			rollback_lock_file(lk);
--			error("cannot open '%s' for copying", path);
--			errno = save_errno;
--			return -1;
--		}
--	} else if (copy_fd(orig_fd, fd)) {
--		int save_errno = errno;
--
--		if (flags & LOCK_DIE_ON_ERROR)
--			die("failed to prepare '%s' for appending", path);
--		close(orig_fd);
--		rollback_lock_file(lk);
--		errno = save_errno;
--		return -1;
--	} else {
--		close(orig_fd);
--	}
--	return fd;
--}
--
- FILE *fdopen_lock_file(struct lock_file *lk, const char *mode)
+ static void write_crash_report(const char *err)
  {
- 	if (!lk->active)
-diff --git a/lockfile.h b/lockfile.h
-index b4abc61..1373f5c 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -27,8 +27,8 @@
-  *   soon as the object is used in any way, it is irrevocably
-  *   registered in the lock_file_list, and on_list is set.
-  *
-- * - Locked, lockfile open (after hold_lock_file_for_update(),
-- *   hold_lock_file_for_append(), or reopen_lock_file()). In this
-+ * - Locked, lockfile open (after hold_lock_file_for_update()
-+ *   or reopen_lock_file()). In this
-  *   state:
-  *   - the lockfile exists
-  *   - active is set
-@@ -85,9 +85,6 @@ static inline int hold_lock_file_for_update(
- 	return hold_lock_file_for_update_timeout(lk, path, flags, 0);
+-	const char *loc = git_path("fast_import_crash_%"PRIuMAX, (uintmax_t) getpid());
++	char *loc = git_pathdup("fast_import_crash_%"PRIuMAX, (uintmax_t) getpid());
+ 	FILE *rpt = fopen(loc, "w");
+ 	struct branch *b;
+ 	unsigned long lu;
+@@ -415,6 +415,7 @@ static void write_crash_report(const char *err)
+ 
+ 	if (!rpt) {
+ 		error("can't write crash report %s: %s", loc, strerror(errno));
++		free(loc);
+ 		return;
+ 	}
+ 
+@@ -488,6 +489,7 @@ static void write_crash_report(const char *err)
+ 	fputs("-------------------\n", rpt);
+ 	fputs("END OF CRASH REPORT\n", rpt);
+ 	fclose(rpt);
++	free(loc);
  }
  
--extern int hold_lock_file_for_append(struct lock_file *lk, const char *path,
--				     int flags);
--
- extern FILE *fdopen_lock_file(struct lock_file *, const char *mode);
- extern char *get_locked_file_path(struct lock_file *);
- extern int commit_lock_file_to(struct lock_file *, const char *path);
+ static void end_packfile(void);
+diff --git a/http-backend.c b/http-backend.c
+index b977c00..bac40ef 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -164,7 +164,7 @@ static void send_strbuf(const char *type, struct strbuf *buf)
+ 
+ static void send_local_file(const char *the_type, const char *name)
+ {
+-	const char *p = git_path("%s", name);
++	char *p = git_pathdup("%s", name);
+ 	size_t buf_alloc = 8192;
+ 	char *buf = xmalloc(buf_alloc);
+ 	int fd;
+@@ -191,6 +191,7 @@ static void send_local_file(const char *the_type, const char *name)
+ 	}
+ 	close(fd);
+ 	free(buf);
++	free(p);
+ }
+ 
+ static void get_text_file(char *name)
+diff --git a/notes-merge.c b/notes-merge.c
+index 0b2b82c..b3d1dab 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -295,7 +295,7 @@ static void write_buf_to_worktree(const unsigned char *obj,
+ 				  const char *buf, unsigned long size)
+ {
+ 	int fd;
+-	const char *path = git_path(NOTES_MERGE_WORKTREE "/%s", sha1_to_hex(obj));
++	char *path = git_pathdup(NOTES_MERGE_WORKTREE "/%s", sha1_to_hex(obj));
+ 	if (safe_create_leading_directories_const(path))
+ 		die_errno("unable to create directory for '%s'", path);
+ 	if (file_exists(path))
+@@ -320,6 +320,7 @@ static void write_buf_to_worktree(const unsigned char *obj,
+ 	}
+ 
+ 	close(fd);
++	free(path);
+ }
+ 
+ static void write_note_to_worktree(const unsigned char *obj,
+diff --git a/refs.c b/refs.c
+index 2db2975..93b250e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1288,12 +1288,12 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+  */
+ static struct packed_ref_cache *get_packed_ref_cache(struct ref_cache *refs)
+ {
+-	const char *packed_refs_file;
++	char *packed_refs_file;
+ 
+ 	if (*refs->name)
+-		packed_refs_file = git_path_submodule(refs->name, "packed-refs");
++		packed_refs_file = git_pathdup_submodule(refs->name, "packed-refs");
+ 	else
+-		packed_refs_file = git_path("packed-refs");
++		packed_refs_file = git_pathdup("packed-refs");
+ 
+ 	if (refs->packed &&
+ 	    !stat_validity_check(&refs->packed->validity, packed_refs_file))
+@@ -1312,6 +1312,7 @@ static struct packed_ref_cache *get_packed_ref_cache(struct ref_cache *refs)
+ 			fclose(f);
+ 		}
+ 	}
++	free(packed_refs_file);
+ 	return refs->packed;
+ }
+ 
+@@ -1481,14 +1482,15 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
+ {
+ 	int fd, len;
+ 	char buffer[128], *p;
+-	const char *path;
++	char *path;
+ 
+ 	if (recursion > MAXDEPTH || strlen(refname) > MAXREFLEN)
+ 		return -1;
+ 	path = *refs->name
+-		? git_path_submodule(refs->name, "%s", refname)
+-		: git_path("%s", refname);
++		? git_pathdup_submodule(refs->name, "%s", refname)
++		: git_pathdup("%s", refname);
+ 	fd = open(path, O_RDONLY);
++	free(path);
+ 	if (fd < 0)
+ 		return resolve_gitlink_packed_ref(refs, refname, sha1);
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d6cf849..7bb446a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1029,10 +1029,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+ 	if (!o->skip_sparse_checkout) {
+-		if (add_excludes_from_file_to_list(git_path("info/sparse-checkout"), "", 0, &el, 0) < 0)
++		char *sparse = git_pathdup("info/sparse-checkout");
++		if (add_excludes_from_file_to_list(sparse, "", 0, &el, 0) < 0)
+ 			o->skip_sparse_checkout = 1;
+ 		else
+ 			o->el = &el;
++		free(sparse);
+ 	}
+ 
+ 	memset(&o->result, 0, sizeof(o->result));
 -- 
 2.5.0.414.g670f2a4
