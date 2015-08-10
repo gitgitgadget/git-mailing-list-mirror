@@ -1,66 +1,59 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 1/2] worktrees: add find_shared_symref
-Date: Mon, 10 Aug 2015 18:49:49 -0400
-Message-ID: <CAPig+cQ-Y6=A-bUEtBzHCV_roDShFcm9qnv8PC6gge2Y0anU_w@mail.gmail.com>
-References: <1439229165-25773-1-git-send-email-dturner@twopensource.com>
-	<CAPig+cTBLx2Q0n2ZcA-QgwNQMHZm9G45ThHbGc+Orkz-6c5cUg@mail.gmail.com>
-	<1439246526.5283.3.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/17] path.c: drop git_path_submodule
+Date: Mon, 10 Aug 2015 15:50:40 -0700
+Message-ID: <xmqqfv3qu5a7.fsf@gitster.dls.corp.google.com>
+References: <20150810092731.GA9027@sigill.intra.peff.net>
+	<20150810093627.GJ30981@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Johan Herland <johan@herland.net>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 00:49:56 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 11 00:50:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOvtC-0000TX-Py
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 00:49:55 +0200
+	id 1ZOvu2-0000k3-Mv
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 00:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932791AbbHJWtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 18:49:51 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:32943 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751313AbbHJWtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 18:49:50 -0400
-Received: by ykaz130 with SMTP id z130so45288187yka.0
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 15:49:50 -0700 (PDT)
+	id S933165AbbHJWun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 18:50:43 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:36147 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754806AbbHJWum (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 18:50:42 -0400
+Received: by pdco4 with SMTP id o4so76141903pdc.3
+        for <git@vger.kernel.org>; Mon, 10 Aug 2015 15:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=orpbT7cYb5LtBLmE8DUUmQT/hDlECjCvX/jdOFjGsP0=;
-        b=xtEewhi7YbSeqolfuh0rLRVnqFBfbeA8DwMZFV5ioIbMIiCP+1tOpKThI1MBQAfj37
-         hdrqwbFBaWKpb+gHmLuKD1Gq8vkxjvoQcKKNMrTmJj9894JUIDE6dyD7StU/my3UhxHP
-         5awHpyNAMlhflamUdnK4YO9jcdZPKFKaRRPNZZui/A0uIbrX24QuPJ4snFNNtbclFr1P
-         vN5J/1fHIHJb99/7aBfXVEwvWFybVNySraY8om8dcpypXfEuE3Ui8l9p63tVMLcDYvVr
-         eNsRcoozKLYZQlf2n/QNf7y0z0RzAJuyiD/lgA11rcLPG9MnoFonE7k7+NlRmAQn6F8o
-         qjYA==
-X-Received: by 10.170.97.9 with SMTP id o9mr24038843yka.84.1439246990044; Mon,
- 10 Aug 2015 15:49:50 -0700 (PDT)
-Received: by 10.37.12.129 with HTTP; Mon, 10 Aug 2015 15:49:49 -0700 (PDT)
-In-Reply-To: <1439246526.5283.3.camel@twopensource.com>
-X-Google-Sender-Auth: 31DDIAiBjHm1AiBttTDzIWZUpgE
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=x83074VjHOsnKWJhb/AILs7evBn+eBTHMSEnncw/3gQ=;
+        b=MqwQcW5u4xD9vZPPFL0hXMtTnBQLQnd11nvTB9lbJ1PkCfNlx+nglYt61CGD+SnGLv
+         LU/iBsMObLyZLWBjTQle7BDvViutwi1vbATPz3uyUGHriyR6MHck8IvmWhFnE9hw3jnq
+         7879LYaH02A78wiPi8bcSkYeHMy2Kw3pGzEWsc6hH6uu/DBLKx4gVmIf1wyk4mHPAawM
+         v26QZ4jywAwO2IxyA4IMNM/NSo+R8fFZEgplygDaArvInT74u7/MrYulxr8ZjrwaoeSa
+         yaTxGMcR0lPKUAV7AscE9nIHwOoUKhELeGHWY1mVR9j2HobhPWdA7ZRr0LfWGWj2vz2k
+         y4Sw==
+X-Received: by 10.70.65.99 with SMTP id w3mr49808318pds.132.1439247041826;
+        Mon, 10 Aug 2015 15:50:41 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:7d90:bc93:a451:6e95])
+        by smtp.gmail.com with ESMTPSA id x2sm1397pdx.63.2015.08.10.15.50.40
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 10 Aug 2015 15:50:41 -0700 (PDT)
+In-Reply-To: <20150810093627.GJ30981@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 10 Aug 2015 05:36:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275662>
 
-On Mon, Aug 10, 2015 at 6:42 PM, David Turner <dturner@twopensource.com> wrote:
-> On Mon, 2015-08-10 at 18:30 -0400, Eric Sunshine wrote:
->> On Mon, Aug 10, 2015 at 1:52 PM, David Turner <dturner@twopensource.com> wrote:
->> > worktrees: add find_shared_symref
->>
->> s/worktrees/branch/ perhaps?
->
-> Do you mean "this is in branch.c, so should be labeled with branch"?
->
-> Because this change is mostly about non-branch refs, so I think saying
-> "branch" is confusing.  That's why I labelled it "worktrees"; that's the
-> broad topic that's being addressed.
+Jeff King <peff@peff.net> writes:
 
-Okay.
+> There are no callers of the slightly-dangerous static-buffer
+> git_path_submodule left. Let's drop it.
+
+There are a few callers added on 'pu', though.
