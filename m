@@ -1,86 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 08/17] remote.c: drop extraneous local variable from
- migrate_file
-Date: Mon, 10 Aug 2015 05:35:49 -0400
-Message-ID: <20150810093549.GH30981@sigill.intra.peff.net>
+Subject: [PATCH 10/17] path.c: drop git_path_submodule
+Date: Mon, 10 Aug 2015 05:36:27 -0400
+Message-ID: <20150810093627.GJ30981@sigill.intra.peff.net>
 References: <20150810092731.GA9027@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 11:35:59 2015
+X-From: git-owner@vger.kernel.org Mon Aug 10 11:36:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOjUs-0004Qt-OE
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:35:59 +0200
+	id 1ZOjVU-0004kw-EE
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 11:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964AbbHJJfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 05:35:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42832 "HELO cloud.peff.net"
+	id S1754069AbbHJJgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 05:36:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42840 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753851AbbHJJfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 05:35:54 -0400
-Received: (qmail 30926 invoked by uid 102); 10 Aug 2015 09:35:54 -0000
+	id S1753421AbbHJJgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 05:36:32 -0400
+Received: (qmail 30978 invoked by uid 102); 10 Aug 2015 09:36:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 04:35:54 -0500
-Received: (qmail 3152 invoked by uid 107); 10 Aug 2015 09:36:05 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 04:36:32 -0500
+Received: (qmail 3186 invoked by uid 107); 10 Aug 2015 09:36:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 05:36:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 05:35:49 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Aug 2015 05:36:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Aug 2015 05:36:27 -0400
 Content-Disposition: inline
 In-Reply-To: <20150810092731.GA9027@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275575>
 
-It's an anti-pattern to assign the result of git_path to a
-variable, since other calls may reuse our buffer. In this
-case, we feed the result to unlink_or_warn immediately
-afterwards, so it's OK. However, it's nice to avoid
-assignment entirely, which makes it more obvious that
-there's no bug.
-
-We can just pass the result directly to unlink_or_warn,
-which is a known-simple function. As a bonus, the code flow
-is a little more obvious, as we eliminate an extra
-conditional (a reader does not have to wonder any more
-"under which circumstances is 'path' set?").
+There are no callers of the slightly-dangerous static-buffer
+git_path_submodule left. Let's drop it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/remote.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ cache.h |  5 ++---
+ path.c  | 10 ----------
+ 2 files changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index cc3c741..181668d 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -581,7 +581,6 @@ static int migrate_file(struct remote *remote)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int i;
--	const char *path = NULL;
+diff --git a/cache.h b/cache.h
+index 6f74f33..7a4fa90 100644
+--- a/cache.h
++++ b/cache.h
+@@ -713,12 +713,11 @@ extern int check_repository_format(void);
+  * the repository directory (git_path), or in a submodule's repository
+  * directory (git_path_submodule). In all cases, note that the result
+  * may be overwritten by another call to _any_ of the functions. Consider
+- * using the safer "dup" or "strbuf" formats below.
++ * using the safer "dup" or "strbuf" formats below (in some cases, the
++ * unsafe versions have already been removed).
+  */
+ extern const char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+ extern const char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+-extern const char *git_path_submodule(const char *path, const char *fmt, ...)
+-	__attribute__((format (printf, 2, 3)));
  
- 	strbuf_addf(&buf, "remote.%s.url", remote->name);
- 	for (i = 0; i < remote->url_nr; i++)
-@@ -601,11 +600,9 @@ static int migrate_file(struct remote *remote)
- 			return error(_("Could not append '%s' to '%s'"),
- 					remote->fetch_refspec[i], buf.buf);
- 	if (remote->origin == REMOTE_REMOTES)
--		path = git_path("remotes/%s", remote->name);
-+		unlink_or_warn(git_path("remotes/%s", remote->name));
- 	else if (remote->origin == REMOTE_BRANCHES)
--		path = git_path("branches/%s", remote->name);
--	if (path)
--		unlink_or_warn(path);
-+		unlink_or_warn(git_path("branches/%s", remote->name));
- 	return 0;
+ extern char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
+diff --git a/path.c b/path.c
+index 9aad9a1..94d7ec2 100644
+--- a/path.c
++++ b/path.c
+@@ -245,16 +245,6 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 	strbuf_cleanup_path(buf);
  }
  
+-const char *git_path_submodule(const char *path, const char *fmt, ...)
+-{
+-	va_list args;
+-	struct strbuf *buf = get_pathname();
+-	va_start(args, fmt);
+-	do_submodule_path(buf, path, fmt, args);
+-	va_end(args);
+-	return buf->buf;
+-}
+-
+ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+ {
+ 	va_list args;
 -- 
 2.5.0.414.g670f2a4
