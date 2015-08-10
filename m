@@ -1,74 +1,61 @@
-From: Ed Avis <eda@waniasset.com>
-Subject: Re: Feature: git stash pop --always-drop
-Date: Mon, 10 Aug 2015 14:01:23 +0000 (UTC)
-Message-ID: <loom.20150810T155117-978@post.gmane.org>
-References: <loom.20150810T124037-407@post.gmane.org> <20150810124125.GC32371@sigill.intra.peff.net> <loom.20150810T144849-152@post.gmane.org> <20150810133220.GA3559@sigill.intra.peff.net> <loom.20150810T153939-856@post.gmane.org> <20150810134957.GC6763@sigill.intra.peff.net>
+From: "Kiser, Ryan Lee" <rlkiser@iu.edu>
+Subject: File Hash for Windows executable
+Date: Mon, 10 Aug 2015 13:54:11 +0000
+Message-ID: <e44d9f36ecee4fd5965444deed1877f7@bl-cci-exch01.ads.iu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 16:01:43 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 10 16:03:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOne0-0006lm-K8
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 16:01:41 +0200
+	id 1ZOngB-0007ti-VU
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Aug 2015 16:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085AbbHJOBc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 10:01:32 -0400
-Received: from plane.gmane.org ([80.91.229.3]:36845 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751914AbbHJOBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 10:01:30 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZOndo-0006gQ-8a
-	for git@vger.kernel.org; Mon, 10 Aug 2015 16:01:28 +0200
-Received: from 80.169.169.174 ([80.169.169.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 16:01:28 +0200
-Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 16:01:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:39.0) Gecko/20100101 Firefox/39.0 Cyberfox/39.0)
+	id S1752388AbbHJODv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 10:03:51 -0400
+Received: from hartman.uits.indiana.edu ([129.79.1.194]:4815 "EHLO
+	hartman.uits.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752071AbbHJODu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 10:03:50 -0400
+X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Aug 2015 10:03:50 EDT
+X-IronPort-AV: E=Sophos;i="5.15,645,1432612800"; 
+   d="scan'208";a="277562102"
+Received: from mssg-relay.indiana.edu ([129.79.1.73])
+  by irpt-internal-relay.indiana.edu with ESMTP; 10 Aug 2015 09:54:12 -0400
+Received: from bl-cci-exch03.ads.iu.edu (bl-cci-exch03.ads.iu.edu [10.79.80.136])
+	by mssg-relay.indiana.edu (8.14.7/8.14.4/IU Campus Communications Team) with ESMTP id t7ADsBfQ026401
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Mon, 10 Aug 2015 09:54:12 -0400
+Received: from bl-cci-exch01.ads.iu.edu (2001:18e8:2:cc1::10a) by
+ bl-cci-exch03.ads.iu.edu (2001:18e8:2:cc1::10c) with Microsoft SMTP Server
+ (TLS) id 15.0.1104.5; Mon, 10 Aug 2015 09:54:11 -0400
+Received: from bl-cci-exch01.ads.iu.edu ([fe80::55a7:2eca:d7bd:dd6]) by
+ bl-cci-exch01.ads.iu.edu ([fe80::55a7:2eca:d7bd:dd6%22]) with mapi id
+ 15.00.1104.000; Mon, 10 Aug 2015 09:54:11 -0400
+Thread-Topic: File Hash for Windows executable
+Thread-Index: AdDTczTyRg3s1Zd+SLyt+RCDLc6Mhw==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [129.79.49.213]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275623>
 
->
-Yes, my use case is that I get confused about whether the stash has been
-dropped or not and whether I might have stashed something else in the
-meantime.  So for me plain 'git stash drop' feels a bit dangerous.
+Hello,
 
-Jeff King <peff <at> peff.net> writes:
+I've downloaded the Windows installer for Git, but can't seem to find hashes published anywhere for verification. Since the downloaded file doesn't seem to be signed, I'll need another way to verify it's integrity before running it on my system.
 
->I also wondered if the "dropped" message is
->sufficiently clear to new users. The point of it, I think, is to allow a
->final "oops, I didn't mean to do that" moment. But there are no
->instructions for how one would re-create the same stash.
+Are hashes published somewhere that I'm missing? If not, is this planned for the future?
 
-Right - myself I didn't even realize that recreating the stash was possible
-(though I was vaguely aware that old stashes float around somewhere until
-they are garbage collected many months later).
+Thank you,
 
-git stash is a relatively infrequent operation and quite exotic, so it
-wouldn't hurt to add lots of chatter to it.
-
->>Another feature I would like to see is a kind of atomic stash apply, 
-
->I think that may be a bit harder, as the merge machinery would have to
->know how to be atomic.
-
-If git merge-recursive had a --dry-run flag that might take care of it.
-
--- 
-Ed Avis <eda@waniasset.com>
+Ryan
