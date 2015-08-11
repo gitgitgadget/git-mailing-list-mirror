@@ -1,118 +1,290 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: git blame breaking on repository with CRLF files
-Date: Mon, 10 Aug 2015 23:54:03 +0000
-Message-ID: <20150810235403.GC9420@vauxhall.crustytoothpaste.net>
-References: <B0BFE3BB9B3E8C4A890D53FA460552D3737328B0@DEWDFEMB16B.global.corp.sap>
- <55C59A9B.9000808@web.de>
- <55C7B5EE.7060908@web.de>
- <B0BFE3BB9B3E8C4A890D53FA460552D373734199@DEWDFEMB16B.global.corp.sap>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 02/10] branch: refactor width computation
+Date: Mon, 10 Aug 2015 21:58:10 -0400
+Message-ID: <CAPig+cRHvkAEM1ayVc5nj6RCih52x1+Bn9YTQPV93ej=3arK2Q@mail.gmail.com>
+References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
+	<1438693282-15516-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xo44VMWPx7vlQ2+2"
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Benkstein, Frank" <frank.benkstein@sap.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 01:54:14 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 03:58:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOwtR-0002NV-Fd
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 01:54:13 +0200
+	id 1ZOypW-0003LE-2F
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 03:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933365AbbHJXyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 19:54:09 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:44581 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754847AbbHJXyH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2015 19:54:07 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A740E2808D;
-	Mon, 10 Aug 2015 23:54:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1439250846;
-	bh=ini8kKUF0fO1fnZ11TDPtu1P/Wv3E57/BONpL7UrltI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p5hGjm4Lu+syl+83ba86MvimZkqiAW9hls3q6wk0pfp8+zIwVyxtVdhrsnoHX8mfq
-	 K2CZRhJgVeeSS/9gp7sbPQ2Q2aRIWBC1oaMZAB8V2gX5Zj/DIrSvRWxc0SP1C+WaQH
-	 7Iml8KD60Iwf2BTaaFwr8TXWs5C7HY+ksm7EtlJTAGXTOOFCvpnHaEA+3OtOofe3Y4
-	 eUEv4Bh51ITPetpHMB440nZ/BpvT88iDDpkPhJ0NRexQlQbg3ylNLaclD5YwpNyc5m
-	 9d0ubOtyeuQUoQ3Ik5+E3HwNjMcSayRB7RXCa4tX+QSZlW9HsrJBTCrralH3FqcDi0
-	 +HCb8fzv4TeiGAk9dJOOn2Bq352G9Sgbok/tcJwxVciRuW+DTHHYFRv1n7pprHPnmo
-	 mwLH/923CVcD3s18q0EZt5+OGA0zeIm/QfSSw9KjuUplGboJpp/7xnBEwsRK++dTiL
-	 /faVgZloREGbONlqzozlEHMExvUl+pOSI6A2SDCdOAYugdZ7GfO
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Benkstein, Frank" <frank.benkstein@sap.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <B0BFE3BB9B3E8C4A890D53FA460552D373734199@DEWDFEMB16B.global.corp.sap>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.1.0-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S933448AbbHKB6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2015 21:58:12 -0400
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:34494 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754865AbbHKB6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2015 21:58:11 -0400
+Received: by ykdt205 with SMTP id t205so75130498ykd.1
+        for <git@vger.kernel.org>; Mon, 10 Aug 2015 18:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=zYg//uOab41TeKxPOBn8PXG0Yiz8KoyMwzwh+KsKbzM=;
+        b=xz46sy1933iC5Miodn1KBbA5e10VfA0JjegTP4Y1pgnnyFFunrv9+MOGAYHHWYFWAt
+         ONQyRziFJBkhUjb7+cIpqDjvAW7OOejLvImE+3wQmMNrJCr5F2R17zFzdvDMBlaRhNNE
+         XMWS6wLPScwVLZd+/CvLaZqJK93w0Zt6qqVqCDt7uh8UIYb7jS0oTwvAFRjAhYyRoQHA
+         qxnM4IIWqntWuJmjB1nmDny3DibBSjplI1wcYszNq+f2DdCCm8PdO3ixFmNgbYcBTn9t
+         ig96yIR7BcjXt84Tiaw++6XHLNLO2pvsfiPy+vaCYnOBULhatNpvW1tu/dy3GZxMfUCg
+         QrgA==
+X-Received: by 10.13.220.132 with SMTP id f126mr24819665ywe.39.1439258290212;
+ Mon, 10 Aug 2015 18:58:10 -0700 (PDT)
+Received: by 10.37.12.129 with HTTP; Mon, 10 Aug 2015 18:58:10 -0700 (PDT)
+In-Reply-To: <1438693282-15516-2-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: y43xm68BkUKK0dM-Gs0xmPN7XXU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275667>
+
+On Tue, Aug 4, 2015 at 9:01 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Remove unnecessary variables from ref_list and ref_item which were
+> used for width computation. This is to make ref_item similar to
+> ref-filter's ref_array_item. This will ensure a smooth port of
+> branch.c to use ref-filter APIs in further patches.
+>
+> Previously the maxwidth was computed when inserting the refs into the
+> ref_list. Now, we obtain the entire ref_list and then compute
+> maxwidth.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 4fc8beb..b058b74 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -557,16 +552,21 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+> -static int calc_maxwidth(struct ref_list *refs)
+> +static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
+>  {
+> -       int i, w = 0;
+> +       int i, max = 0;
+>         for (i = 0; i < refs->index; i++) {
+> +               struct ref_item *it = &refs->list[i];
+> +               int w = utf8_strwidth(it->name);
+> +
+>                 if (refs->list[i].ignore)
+>                         continue;
+
+Nit: Unnecessary work. You compute the width and then immediately
+throw it away when 'ignore' is true.
+
+Also, you use 'it' elsewhere rather than 'refs->list[i]' but not this
+line, which makes it seem out of place. I would have expected to see:
+
+    if (it->ignore)
+        continue;
+
+(Despite the noisier diff, the end result will be more consistent.)
+
+> -               if (refs->list[i].width > w)
+> -                       w = refs->list[i].width;
+> +               if (it->kind == REF_REMOTE_BRANCH)
+> +                       w += remote_bonus;
+> +               if (w > max)
+> +                       max = w;
+>         }
+> -       return w;
+> +       return max;
+>  }
 
 
---xo44VMWPx7vlQ2+2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Aug 10, 2015 at 08:36:35AM +0000, Benkstein, Frank wrote:
-> You are correct that it is also wrong in git v1.7.0.  However, it is corr=
-ect in
-> v2.4.0.
->=20
-> Another bisect gave me this commit which was included in v2.0.1:
->=20
->  commit 4d4813a52f3722854a54bab046f4abfec13ef6ae
->  Author: brian m. carlson <sandals@crustytoothpaste.net>
->  Date:   Sat Apr 26 23:10:40 2014 +0000
->=20
->      blame: correctly handle files regardless of autocrlf
->=20
-> So this still looks like a regression v2.5.0 to me.
-
-This commit was reverted because it was decided that it wasn't the right
-way to handle the problem and it broke other things.  The complexity of
-the CRLF handling is a bit beyond me, to be honest.  I'm sure I'd
-understand it better if I used it more, but I'm a Unix guy.
-
-I stand by my earlier statement that we should improve the documentation
-in this area, because it's a common source of confusion.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---xo44VMWPx7vlQ2+2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.6 (GNU/Linux)
-
-iQIcBAEBCgAGBQJVyTmaAAoJEL9TXYEfUvaLbjcP/RPBSu7t5LaV4tgWl1K26w8W
-9+Ygsf6Wt4iaZjo1oTvLgpt1+rZrhOJVkpuObKi0kl9TZPIbWtQRiw9zjkR4zmlA
-8X2sLsa8iMedlKbJvuzg7yjuRlqVdg3nsDi53qPMwnV933fUTgwWnPDOLBbmVKAl
-82ksSTnDiunua9WJj3P32W66Mj/yE+O7nSXobMmN79QZ63XK44HJN5YIW6CAR9g0
-eEHCAb9FJBGwH8A+18EdSaNHv6jCT4BYqZoQNOL18Uw7C3t+bA47mXhXWiH9b7NO
-UXY6UV/1BJrQdprdIOSnkY+3x2FSCvlV8TCiQe//xRhfTaGw5XEFxrOKbufydgNa
-Jhgz8mIC5Sm3O7YpWuaU61/J3asIfLXOtv8Kn65DczcVVHhpeGaUEF/X6lSzDsen
-JsSjH1on71MiWd9B4dumvu3UbyHeml2iABSWGUBqLt5LIE+Mff6/XoL2F7cb9t2n
-uAEt73Apficx+t3ALva7KD9HFrM/qxZTJbJxsigPGvK+3Oft48fW+iuWi49XEdwy
-NfaoJGL6hKz/L4hRkcnTuh4CLwJCjjsuQGBn0pLLgfYhj0maUzYgaKo5645dwims
-Do+VboLc4u9sbsspLJ7wf4YGPZ/b929QfFvjJ3FZN155z8C2zK3NNgx6EjMLQoj7
-CLXrKah/TIQi4FEuawWK
-=H0E/
------END PGP SIGNATURE-----
-
---xo44VMWPx7vlQ2+2--
+On Tue, Aug 4, 2015 at 9:01 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> From: Karthik Nayak <karthik.188@gmail.com>
+>
+> Remove unnecessary variables from ref_list and ref_item which were
+> used for width computation. This is to make ref_item similar to
+> ref-filter's ref_array_item. This will ensure a smooth port of
+> branch.c to use ref-filter APIs in further patches.
+>
+> Previously the maxwidth was computed when inserting the refs into the
+> ref_list. Now, we obtain the entire ref_list and then compute
+> maxwidth.
+>
+> Based-on-patch-by: Jeff King <peff@peff.net>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  builtin/branch.c | 61 +++++++++++++++++++++++++++++---------------------------
+>  1 file changed, 32 insertions(+), 29 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 4fc8beb..b058b74 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -282,14 +282,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>  struct ref_item {
+>         char *name;
+>         char *dest;
+> -       unsigned int kind, width;
+> +       unsigned int kind;
+>         struct commit *commit;
+>         int ignore;
+>  };
+>
+>  struct ref_list {
+>         struct rev_info revs;
+> -       int index, alloc, maxwidth, verbose, abbrev;
+> +       int index, alloc, verbose, abbrev;
+>         struct ref_item *list;
+>         struct commit_list *with_commit;
+>         int kinds;
+> @@ -386,15 +386,8 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
+>         newitem->name = xstrdup(refname);
+>         newitem->kind = kind;
+>         newitem->commit = commit;
+> -       newitem->width = utf8_strwidth(refname);
+>         newitem->dest = resolve_symref(orig_refname, prefix);
+>         newitem->ignore = 0;
+> -       /* adjust for "remotes/" */
+> -       if (newitem->kind == REF_REMOTE_BRANCH &&
+> -           ref_list->kinds != REF_REMOTE_BRANCH)
+> -               newitem->width += 8;
+> -       if (newitem->width > ref_list->maxwidth)
+> -               ref_list->maxwidth = newitem->width;
+>
+>         return 0;
+>  }
+> @@ -505,11 +498,12 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
+>  }
+>
+>  static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+> -                          int abbrev, int current, char *prefix)
+> +                          int abbrev, int current, const char *remote_prefix)
+>  {
+>         char c;
+>         int color;
+>         struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
+> +       const char *prefix = "";
+>
+>         if (item->ignore)
+>                 return;
+> @@ -520,6 +514,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+>                 break;
+>         case REF_REMOTE_BRANCH:
+>                 color = BRANCH_COLOR_REMOTE;
+> +               prefix = remote_prefix;
+>                 break;
+>         default:
+>                 color = BRANCH_COLOR_PLAIN;
+> @@ -557,16 +552,21 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+>         strbuf_release(&out);
+>  }
+>
+> -static int calc_maxwidth(struct ref_list *refs)
+> +static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
+>  {
+> -       int i, w = 0;
+> +       int i, max = 0;
+>         for (i = 0; i < refs->index; i++) {
+> +               struct ref_item *it = &refs->list[i];
+> +               int w = utf8_strwidth(it->name);
+> +
+>                 if (refs->list[i].ignore)
+>                         continue;
+> -               if (refs->list[i].width > w)
+> -                       w = refs->list[i].width;
+> +               if (it->kind == REF_REMOTE_BRANCH)
+> +                       w += remote_bonus;
+> +               if (w > max)
+> +                       max = w;
+>         }
+> -       return w;
+> +       return max;
+>  }
+>
+>  static char *get_head_description(void)
+> @@ -600,21 +600,18 @@ static char *get_head_description(void)
+>         return strbuf_detach(&desc, NULL);
+>  }
+>
+> -static void show_detached(struct ref_list *ref_list)
+> +static void show_detached(struct ref_list *ref_list, int maxwidth)
+>  {
+>         struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
+>
+>         if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
+>                 struct ref_item item;
+>                 item.name = get_head_description();
+> -               item.width = utf8_strwidth(item.name);
+>                 item.kind = REF_LOCAL_BRANCH;
+>                 item.dest = NULL;
+>                 item.commit = head_commit;
+>                 item.ignore = 0;
+> -               if (item.width > ref_list->maxwidth)
+> -                       ref_list->maxwidth = item.width;
+> -               print_ref_item(&item, ref_list->maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
+> +               print_ref_item(&item, maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
+>                 free(item.name);
+>         }
+>  }
+> @@ -624,6 +621,16 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+>         int i;
+>         struct append_ref_cb cb;
+>         struct ref_list ref_list;
+> +       int maxwidth = 0;
+> +       const char *remote_prefix = "";
+> +
+> +       /*
+> +        * If we are listing more than just remote branches,
+> +        * then remote branches will have a "remotes/" prefix.
+> +        * We need to account for this in the width.
+> +        */
+> +       if (kinds != REF_REMOTE_BRANCH)
+> +               remote_prefix = "remotes/";
+>
+>         memset(&ref_list, 0, sizeof(ref_list));
+>         ref_list.kinds = kinds;
+> @@ -667,26 +674,22 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+>                         clear_commit_marks(item->commit, ALL_REV_FLAGS);
+>                 }
+>                 clear_commit_marks(filter, ALL_REV_FLAGS);
+> -
+> -               if (verbose)
+> -                       ref_list.maxwidth = calc_maxwidth(&ref_list);
+>         }
+> +       if (verbose)
+> +               maxwidth = calc_maxwidth(&ref_list, strlen(remote_prefix));
+>
+>         qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+>
+>         detached = (detached && (kinds & REF_LOCAL_BRANCH));
+>         if (detached && match_patterns(pattern, "HEAD"))
+> -               show_detached(&ref_list);
+> +               show_detached(&ref_list, maxwidth);
+>
+>         for (i = 0; i < ref_list.index; i++) {
+>                 int current = !detached &&
+>                         (ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
+>                         !strcmp(ref_list.list[i].name, head);
+> -               char *prefix = (kinds != REF_REMOTE_BRANCH &&
+> -                               ref_list.list[i].kind == REF_REMOTE_BRANCH)
+> -                               ? "remotes/" : "";
+> -               print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
+> -                              abbrev, current, prefix);
+> +               print_ref_item(&ref_list.list[i], maxwidth, verbose,
+> +                              abbrev, current, remote_prefix);
+>         }
+>
+>         free_ref_list(&ref_list);
+> --
+> 2.5.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
