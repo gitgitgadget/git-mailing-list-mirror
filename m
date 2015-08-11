@@ -1,72 +1,61 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Question
-Date: Tue, 11 Aug 2015 15:30:32 +0200
-Organization: gmx
-Message-ID: <0c185469267ab3d1945852647aef59db@www.dscho.org>
-References: <CABqaoS17HSAuDZwZKdRiTdgH58p=2DXXoDFsTVNNDt=Vxgk11g@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v6 2/2] notes: handle multiple worktrees
+Date: Tue, 11 Aug 2015 15:56:45 +0200
+Message-ID: <CALKQrgco6wJ0CpNX5=DF+Z7G009e0G5wz=UUTOqAzv81hKh7bg@mail.gmail.com>
+References: <1439229165-25773-1-git-send-email-dturner@twopensource.com>
+	<1439229165-25773-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jet Rey Maza <jet.cpi.tmp@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 15:31:38 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 16:20:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZP9eM-0007bR-8C
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 15:31:30 +0200
+	id 1ZPAQ9-0004sM-6Z
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 16:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965055AbbHKNai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 09:30:38 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63492 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752281AbbHKNag (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 09:30:36 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LaG7C-1Yy20k20uk-00m6tc; Tue, 11 Aug 2015 15:30:32
- +0200
-In-Reply-To: <CABqaoS17HSAuDZwZKdRiTdgH58p=2DXXoDFsTVNNDt=Vxgk11g@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:fqw/G4iFpuHwFu+pqb3OAUT/0T43UZhh9t4SHuRIIMdFLQV5GWO
- aIYaZr9h8bQLPdT3ih+KBZJV0bzOiPyYkEfFKD/SZfR/XUYTHcw1U9/h1PI8XnjFiDvS6bw
- VOVwCJELQDO9Qom4MXsx6rJRcOH++2mHH2Nsd2xuTrnorVX9x0/BBrU7W7+SMgiw2a9C0jn
- 5UjPbQQ1SM8eZnJd9vqYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:K6OsZ9s89fg=:ncxe1rkz7dQQY5KLE0wOYq
- GiKjJ1so3cReow7XSb4niBbif2leduvRzhWOW6v6GE+fcEt/iSoY3wEaUZm9tgfaI3R3iH6j1
- SQrGlQp0ScLGmOawbH+4vdE0t+zyfNzXSEpXyWJn7Kk3I/MOqRwOSNq1HtJ3ODe1va9IirtHU
- Tdtlub7esb/vJ/wdXIszBPB8SH5dE2rPDs0I/TZUblku8rD1cLuR+1BMfZk34tvut4+82t5SW
- 6cu/QcVwMkVWewlCSeSKIIWy/n3UUgWpYJ6gzG054TpzvJ/qf3UuNkPFL/dJN3B8knih27x2k
- ZrPVsr28IWRKAHauh8MsD1YOlNVePk177IUPmfnx19zmQNxT3KE5F5HpJbskReudfSQ74Gtq4
- xZNsnfDjrxzqKP3aISXrEfpwblttk+mwsfP2JGO/sm+oJ9dNwQBK3leJOLmbZjkJ4JNkwk8m2
- /p5I8PW6VC9pRhhncOjRyPWFps5RTQG9GmSdBQhn4PbfTnLY9ANs5vnl0o9/6nUXJ78BWsMMr
- 3x6XQ0UekC2U2zDwf50rOIuYamswCwhGfa6lUjB4x8kbaPzzkD/KWEEt/mWO7IPO5b/DwkkRm
- PbJXId5OnJ0gDeQJW1wYYTHHK6iwKYBKWqAzTfFzkaw2YYnopqQuSlN0TgUGWdqNFYHKGVQ0F
- eh6LMHY9Wdor7QLz9xLqqR50xSOc/uxyxqlKeLZ9WRl+X/goZNbkSfcCEjVa196+j33SA2hA7
- jwPryzG3CpvYFmqj6u7+6DTRQzPWnlE/Ql1o6w==
+	id S965270AbbHKOUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 10:20:41 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:52958 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964890AbbHKOUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 10:20:39 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZPA2t-000Aet-Mu
+	for git@vger.kernel.org; Tue, 11 Aug 2015 15:56:51 +0200
+Received: by ykdz80 with SMTP id z80so55523029ykd.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2015 06:56:45 -0700 (PDT)
+X-Received: by 10.170.114.78 with SMTP id g75mr27516769ykb.94.1439301405801;
+ Tue, 11 Aug 2015 06:56:45 -0700 (PDT)
+Received: by 10.37.208.71 with HTTP; Tue, 11 Aug 2015 06:56:45 -0700 (PDT)
+In-Reply-To: <1439229165-25773-2-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275692>
 
-Hi,
+On Mon, Aug 10, 2015 at 7:52 PM, David Turner <dturner@twopensource.com> wrote:
+> Before creating NOTES_MERGE_REF, check NOTES_MERGE_REF using
+> find_shared_symref and die if we find one.  This prevents simultaneous
+> merges to the same notes branch from different worktrees.
+>
+> Signed-off-by: David Turner <dturner@twopensource.com>
 
-On 2015-08-11 10:28, Jet Rey Maza wrote:
+Still looks good to me, AFAICS. Feel free to add my Reviewed-by.
 
-> I'm wondering why gitbash dont have wget?
+...Johan
 
-Please take the time to write coherent questions in the future, giving enough context for others to understand what you are talking about. We are not dogs that you throw some bones, you know? We are highly skilled software developers and you might want to express some respect for that by crafting a pleasant email.
 
-As to your question, I have to guess here because you are so parsimonious with context: are you referring to Git for Windows' "Git Bash" entry in the start menu?
 
-Assuming that this is what you meant, the explanation is simple: Git does not require wget to work. So we do not ship it with Git for Windows.
-
-Side note: Git for Windows *does* ship with curl.exe, for historical reasons. You can probably use curl instead of wget for your use case.
-
-Second side note: you obviously seek more than just Git for Windows, so why not use MSys2 (https://msys2.github.io/) which comes with a wget package you can install via pacman?
-
-Ciao,
-Johannes
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
