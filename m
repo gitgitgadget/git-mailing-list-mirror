@@ -1,128 +1,151 @@
-From: Kosenko Roman <madkite@gmail.com>
-Subject: [bug] git-svn segmentation fault
-Date: Tue, 11 Aug 2015 12:56:16 +0100
-Message-ID: <CAB4xWX7R_FrFATqnwebRqAWsUrZd-ATU3rTGxjq6c-44XbRUgw@mail.gmail.com>
+From: Martin von Gagern <Martin.vGagern@gmx.net>
+Subject: Merging after directory got turned into submodule
+Date: Tue, 11 Aug 2015 15:02:41 +0200
+Message-ID: <55C9F271.30008@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 11 13:56:43 2015
+X-From: git-owner@vger.kernel.org Tue Aug 11 15:02:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZP8Ac-0007lt-6K
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 13:56:42 +0200
+	id 1ZP9Ce-0001tj-OJ
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 15:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964962AbbHKL4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 07:56:37 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:35896 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964863AbbHKL4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 07:56:36 -0400
-Received: by wicja10 with SMTP id ja10so72176698wic.1
-        for <git@vger.kernel.org>; Tue, 11 Aug 2015 04:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=YivQaFZBWVCLr52XBwdkKDjxGxWrywpGaQuaSxpzdo4=;
-        b=YRmcW8d/yiEl4fY8i8bvB1lKM9zqEdfNGPXwjU2VuXw1vplHVf2lg+xYOo8Vao3gk1
-         FBXQTNEQkxG/lzdvB92X4ORyl5hcj9LUBcF878NRlI/p/INZ140tWt2hUujM5AxmI+FJ
-         qXFbqCeEuDmCiEbioD3NCn6PLsxKi0fotsPeQRLkEurbaIrYOHMZT9n3Y4WUEoKSpOIT
-         KhFGyKQynaSePlBlt7eYYZE3JPmlNfXaxkGWMmNvMJNQYT2p9JSSVbdHiADZBlA1c77K
-         1AotXtFNN7RjGzH7/9ZIb8n1XldXzHKXE+zg/+7fCe9z8HNkt1Jgsqp0aH1MImyBx7m3
-         3Ipw==
-X-Received: by 10.194.86.161 with SMTP id q1mr57421441wjz.18.1439294195451;
- Tue, 11 Aug 2015 04:56:35 -0700 (PDT)
-Received: by 10.28.103.68 with HTTP; Tue, 11 Aug 2015 04:56:16 -0700 (PDT)
+	id S964822AbbHKNCr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2015 09:02:47 -0400
+Received: from mout.gmx.net ([212.227.15.15]:65307 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934075AbbHKNCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 09:02:46 -0400
+Received: from [192.168.71.20] ([188.195.143.204]) by mail.gmx.com (mrgmx002)
+ with ESMTPSA (Nemesis) id 0M6AbC-1YasrQ3Sxu-00y695 for <git@vger.kernel.org>;
+ Tue, 11 Aug 2015 15:02:42 +0200
+X-Enigmail-Draft-Status: N1010
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+X-Provags-ID: V03:K0:NxbAfAvzh4NzD39FGMHJoXbfkHqt+CzA+abDbguKh/E5H7pueYU
+ oqvdXv5LDqNejpXcceOmZZuqzZc9gSfnoD2wUDWomBvRXiDWzZ/RgbwbgOFVX7bzuuwzSmE
+ CZfWusDN1Tzg9FBJJy3g7iuxvyO0+S2Kno6tH9eA/9xE0JJXTEvN6jLWB/htZ0Ezdi0w0cC
+ SeCBwYkhYQNW7XGlwG31g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gaZkPu+qb4g=:q32TB4Eqc3NpODPxAhS19y
+ pXO27EqB1al3fxDCuq9qNBGwA3wUD4IF61bvx6/lFsQ5kUc4n0Id10mcgPWh12wY4HXsKI6jA
+ 92fJnoAbKvLUYgj7YBHLEoKU2vuR/dC7HWdrjGZEyK81c+t8iiUtUhtvnowmfKokrzVP2Q6ud
+ uL5/ZgmtHy8nV7X0+TZCPbc46zhTnaQPFbx6NpAgL8uMDTAuCe33zmixJigiEb9UwHggF5+zO
+ PBQqLaHZQDEbPmdvyaH0ZLGGpHPuqQpMLqsozwgX9FxU+UcF1VSLJEvbIpvW+4FIzUwzmpdKA
+ +Ves3QzO3k1449FKd+VUkwoiWihyTtQgEVvZkMQYj8B+gfa3v8dUWnR6gXB/3mmHxwuK3/mo8
+ QwHXmplHBn3OQvoX8fos6Z/q/QQyGRxKzB235Sd7r/MNPosdjEJQnMEMkhmmH7mW/Sf5casgG
+ T7faSrBbEFh3uadL2t9jDTgi7jEeN3mLNEODjso+Lhj1xqZakvSmSBIfn9nhSLPRNwd67v0Kq
+ fwpyGWRm3reGvc5R3fThWpDIxUef9xzTZlujrwcpaG0T3l4tG8XlU12rAi5CnKw02ygw7S07I
+ hwZKFyv/l9d2jXdJYyIJQMx6qgcAKc5X8ZQRg6sXNZKYoxKQq8zr35K/VB33YbJN1svF041yc
+ 2WnhEwVmgflv3wPIiIpKfW/KR42sPYiIvBBhclbo0gi3y6ohNsWePos2ztq/lf73p2mN/ttQv
+ ggkJHEGTIaiMqbJUsa94/aDtZrnGEJvOCbuLNQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275686>
 
-Hello,
-I use git-svn. I have used it without any problem for two month. Now
-git starts crashing after "svn rebase" (maybe also after other
-operations with a remote svn server, I'll check when will do "svn
-dcommit" next time). It successfully done the operation and only then
-it crashes:
+Hi!
 
-$ git svn rebase
-Current branch master is up to date.
-error: git-svn died of signal 11
+I've noticed that if I turn a subdirectory into a submodule, I'm having
+severe trouble merging branches from before that change, even if they
+don't modify that subdirectory at all.
 
-$ dmesg | tail -n5
-[518105.393218] git-svn[25148]: segfault at 7f81c0775c50 ip
-00007f81c0775c50 sp 00007ffca025adc8 error 14 in
-Glob.so[7f81c0979000+6000]
-[518113.627053] git-svn[25487]: segfault at 7f0547a76c50 ip
-00007f0547a76c50 sp 00007ffe31c39958 error 14 in
-Glob.so[7f0547c7a000+6000]
-[518137.038469] git-svn[25677]: segfault at 7fe124d4fc50 ip
-00007fe124d4fc50 sp 00007ffc821fc848 error 14 in
-Glob.so[7fe124f53000+6000]
-[518173.339068] git-svn[25864]: segfault at 7f0919006c50 ip
-00007f0919006c50 sp 00007ffe78e51b58 error 14 in
-Glob.so[7f091920a000+6000]
-[519070.924619] git-svn[26467]: segfault at 7f119202ec50 ip
-00007f119202ec50 sp 00007fff2af3a948 error 14 in
-Glob.so[7f1192232000+6000]
+I've posted this problem on Stack Overflow and started a bounty for it.
+See http://stackoverflow.com/q/31821219/1468366. So far I haven't
+received an answer, so I decided to ask here as well.
 
-This behaviour is persistent and I can reproduce it any time.
+Here is an example.
 
-Versions info:
+# Create one project, to be used as a subproject later on
+git init a
+cd a
+echo aaa > aa
+git add -A
+git commit -m a1
+cd ..
 
-$ uname -a
-Linux hs-arch 4.1.4-1-ARCH #1 SMP PREEMPT Mon Aug 3 21:30:37 UTC 2015
-x86_64 GNU/Linux
+# Create a second project, containing a as a normal directory initially
+git init b
+cd b
+mkdir a b
+echo aaa > a/aa
+echo bbb > b/bb
+git add -A
+git commit -m b1
 
-$ git --version
-git version 2.5.0
+# Replace directory with submodule
+git rm -r a
+git submodule add ../a a
+git commit -m b2
 
-$ svn --version
-svn, version 1.8.13 (r1667537)
-   compiled Jun  3 2015, 05:30:35 on x86_64-unknown-linux-gnu
+# Create feature brach starting at version without submodule
+git submodule deinit .  # will error if I don't do this
+git checkout -b branch HEAD^
+echo abc > b/bb
+git commit -a -m b3
 
-Copyright (C) 2014 The Apache Software Foundation.
-This software consists of contributions made by many people;
-see the NOTICE file for more information.
-Subversion is open source software, see http://subversion.apache.org/
+# Try to merge the feature branch
+git checkout master
+git merge branch
 
-The following repository access (RA) modules are available:
+This prints an error message:
 
-* ra_svn : Module for accessing a repository using the svn network protocol.
-  - with Cyrus SASL authentication
-  - handles 'svn' scheme
-* ra_local : Module for accessing a repository on local disk.
-  - handles 'file' scheme
-* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
-  - using serf 1.3.8
-  - handles 'http' scheme
-  - handles 'https' scheme
+> CONFLICT (file/directory): There is a directory with name a in branch=
+=2E
+> Adding a as a~HEAD
+> Automatic merge failed; fix conflicts and then commit the result.
 
-$ perl --version
+I get the same error if I do a git submodule update --init before the
+git merge branch. I don't see any a~HEAD anywhere, neither in my
+directory tree nor in the output from git status, which reads like this=
+:
 
-This is perl 5, version 22, subversion 0 (v5.22.0) built for
-x86_64-linux-thread-multi
+> On branch master
+> You have unmerged paths.
+>   (fix conflicts and run "git commit")
+>
+> Changes to be committed:
+>
+>     modified:   b/bb
+>
+> Unmerged paths:
+>   (use "git add <file>..." to mark resolution)
+>
+>     added by us:     a
 
-Copyright 1987-2015, Larry Wall
+If I do git add a as suggested, I get another error:
 
-Perl may be copied only under the terms of either the Artistic License or the
-GNU General Public License, which may be found in the Perl 5 source kit.
+> error: unable to index file a
+> fatal: updating files failed
 
-Complete documentation for Perl, including FAQ lists, should be found on
-this system using "man perl" or "perldoc perl".  If you have access to the
-Internet, point your browser at http://www.perl.org/, the Perl Home Page.
+If I do git submodules update --init just before the merge, then I can
+do git add a successfully. But if I forget to do so, and then try doing
+that after the merge, I receive this error message:
 
-I don't know exact version of Subversion on the remote server (web ui
-doesn't show it).
-Core dump: http://madkite.cc/git/core.git-svn.1000.e28aeb54778749879c9313b05ea040e8.26467.1439282047000000.lz4
+> Submodule 'a' (=E2=80=A6/a) registered for path 'a'
+> Skipping unmerged submodule a
 
-I have tried on another environment (cygwin x64, git 2.4.5, svn
-1.8.13, perl 5.14.4) - it works fine with the same repo.
-Also my environment works fine with other repos.
+How do I recover from this situation? Something other than git merge
+--abort, since I'd like to use it for things like git rebase as well,
+and since in some scenarios (don't know how to reproduce) I couldn't
+even abort the merge cleanly, and had to do a hard reset instead.
 
-Is there anything else you need from me?
+How can I avoid it in the first place? Is there some magic setting whic=
+h
+makes git do the right thing with submodules vs. directories during
+merges, so that I don't have to manually post-process a merge which onl=
+y
+modifies files unrelated to the submodules?
 
-Best regards, Roman.
+If there is no easy way to avoid this, do you think I should file a bug
+report for this? After all, replacing a subdirectory by a submodule
+shouldn't be that rare, and neither should be merges across such a
+change. So in my opinion, git should be able to cope with this.
+
+Greetings,
+ Martin von Gagern
