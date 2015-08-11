@@ -1,161 +1,204 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 3/5] pseudorefs: create and use pseudoref update and
- delete functions
-Date: Tue, 11 Aug 2015 14:46:29 -0400
-Organization: Twitter
-Message-ID: <1439318789.5283.23.camel@twopensource.com>
-References: <1438322781-21181-1-git-send-email-dturner@twopensource.com>
-	 <1438322781-21181-3-git-send-email-dturner@twopensource.com>
-	 <CAGZ79kZ-e-GU5FfKWDAUxQPUnyrmGjSvHGnjWn=pwpDAj37umQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10 05/13] ref-filter: implement an `align` atom
+Date: Tue, 11 Aug 2015 11:52:29 -0700
+Message-ID: <xmqqy4hhr72q.fsf@gitster.dls.corp.google.com>
+References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
+	<1439129506-9989-6-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-ntVGA3LCOCGRzcN7jsr4"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 20:46:38 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 20:52:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPEZI-0004s9-Tv
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 20:46:37 +0200
+	id 1ZPEf8-00072Y-HR
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 20:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800AbbHKSqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 14:46:32 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:35930 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751950AbbHKSqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 14:46:31 -0400
-Received: by qgdd90 with SMTP id d90so45302651qgd.3
-        for <git@vger.kernel.org>; Tue, 11 Aug 2015 11:46:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version;
-        bh=9GGSZuidAmbT0mV/GQ8k0fVon+FpzZExzmx3KLY25SE=;
-        b=QOSYIRQFHtChdsUOZnjCle/03v+gjG2mEYsokCbdnvn5mH9zPcStA2lD3y0DQFb8dV
-         QTLUya8x30fdUEs49h4MF8PMM5LOvH2tmuMXwbchRm2CrXnnUBvvn27Y/E48yWaFRxCn
-         PIss4rRsenUAITMGg4PmrkuuFWe4mXXmH9h69El0L9y54fFWV4r/bivehFsUFqrfpYaK
-         /U+C1HrDagxrQFdg/mo3ZMBqJ/6UPolLcFagnON5ySJj2MyB4FxGWbRW8JQrAOPn5gBw
-         GW74zyR3QK+rBYWlKN4eg+a81YwMTLy2d5zyHWOVVHYzmO/jYA3tjlwwJow/GOvQtIaD
-         w4JQ==
-X-Gm-Message-State: ALoCoQnHHNClBJaKB3/GPMef1adt5w9k9mOoeJPHeAfZycFAWmuG2WAKl9BQvoNUpTi6/sHANMic
-X-Received: by 10.140.232.209 with SMTP id d200mr43339129qhc.68.1439318790531;
-        Tue, 11 Aug 2015 11:46:30 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id f71sm1694989qhe.7.2015.08.11.11.46.29
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Aug 2015 11:46:29 -0700 (PDT)
-In-Reply-To: <CAGZ79kZ-e-GU5FfKWDAUxQPUnyrmGjSvHGnjWn=pwpDAj37umQ@mail.gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S932588AbbHKSwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 14:52:33 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:35290 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932312AbbHKSwc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 14:52:32 -0400
+Received: by pacgr6 with SMTP id gr6so56457918pac.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2015 11:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=GFmhDDv23gf0SjsfV2cyr5aR0oz3jRyu+xg4nk4yay8=;
+        b=PD7BfuXuPehc0ki63lru/VYAqEWYb5xtMAHox1hij5Uex9W1UlClKlaX/uzE3klXrs
+         jczHZsseMKGGnN7Kr9U9W8iG7ngAErpXLUFxrTSKyNyLfXl9XLZN1VLoA+C6z5WxnwUY
+         CvN7i5vKe1OyDnjzLWC0DKyfm7PLR+G9NVtij9vl/qqYeDxw8sXCEahGdesbFxUE+/f6
+         xFYFsNqJfob5v6i1hLoOa+C4VJh9C43AU5wNWm8zc4bHBxN28OGTEcImFSZzqUowckfG
+         sUcZZYVCRXe9YffGe1mLGEhe4jk47Uw57EeQFWXMkMAzkcEgqmM2DfSHTOxkjHUca23F
+         144g==
+X-Received: by 10.66.237.165 with SMTP id vd5mr4922115pac.45.1439319151557;
+        Tue, 11 Aug 2015 11:52:31 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:894d:5945:d51a:995b])
+        by smtp.gmail.com with ESMTPSA id nm8sm3558928pbc.20.2015.08.11.11.52.30
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 11 Aug 2015 11:52:30 -0700 (PDT)
+In-Reply-To: <1439129506-9989-6-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Sun, 9 Aug 2015 19:41:38 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275710>
 
+Karthik Nayak <karthik.188@gmail.com> writes:
 
---=-ntVGA3LCOCGRzcN7jsr4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+>  struct atom_value{
 
+Obviously not a problem with this step, but you need a SP before the
+open brace.
 
-On Fri, 2015-07-31 at 16:40 -0700, Stefan Beller wrote:
-> I am sorry for being late to the review, I looked into coverity today as Duy
-> bugged me to fix the memory allocation stuff[1]
+> @@ -692,6 +704,26 @@ static void populate_value(struct ref_array_item *ref)
+>  			else
+>  				v->s = " ";
+>  			continue;
+> +		} else if (skip_prefix(name, "align:", &valp)) {
+> +			struct align *align = xmalloc(sizeof(struct align));
+> +
+> +			if (skip_prefix(valp, "left,", &valp))
+> +				align->position = ALIGN_LEFT;
+> +			else if (skip_prefix(valp, "right,", &valp))
+> +				align->position = ALIGN_RIGHT;
+> +			else if (skip_prefix(valp, "middle,", &valp))
+> +				align->position = ALIGN_MIDDLE;
+> +			else
+> +				die(_("improper format entered align:%s"), valp);
+> +			if (strtoul_ui(valp, 10, &align->width))
+> +				die(_("positive width expected align:%s"), valp);
 
-Thanks. Junio, can you pleas substitute the attached patch instead?  It
-addresses Stefan's issues.  If you prefer, I can resend the whole
-series, but I thought this might be easier.
+Minor nits on the design.  %(align:<width>[,<position>]) would let
+us write %(align:16)...%(end) and use the "default position", which
+may be beneficial if one kind of alignment is prevalent (I guess all
+the internal users left-align?)  %(align:<position>,<width>) forces
+users to spell both out all the time.
 
---=-ntVGA3LCOCGRzcN7jsr4
-Content-Disposition: attachment;
-	filename*0=0003-pseudorefs-create-and-use-pseudoref-update-and-delet.pat;
-	filename*1=ch
-Content-Type: text/x-patch;
-	name="0003-pseudorefs-create-and-use-pseudoref-update-and-delet.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+> @@ -1198,7 +1230,9 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+>  
+>  struct ref_formatting_state {
+>  	struct strbuf output;
+> +	struct align *align;
+>  	int quote_style;
+> +	unsigned int end : 1;
+>  };
 
-RnJvbSA2Yzg2YzM4ZjUzM2M2YjM1ZGIzYTU1NzI3MGFhYjk1YjM0Mjg3NWM5IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBUdXJuZXIgPGR0dXJuZXJAdHdvcGVuc291cmNlLmNv
-bT4KRGF0ZTogV2VkLCAxNSBKdWwgMjAxNSAxODowNToyOCAtMDQwMApTdWJqZWN0OiBbUEFUQ0gg
-My81XSBwc2V1ZG9yZWZzOiBjcmVhdGUgYW5kIHVzZSBwc2V1ZG9yZWYgdXBkYXRlIGFuZCBkZWxl
-dGUKIGZ1bmN0aW9ucwoKUHNldWRvcmVmcyBzaG91bGQgbm90IGJlIHVwZGF0ZWQgdGhyb3VnaCB0
-aGUgcmVmIHRyYW5zYWN0aW9uCkFQSSwgYmVjYXVzZSBhbHRlcm5hdGUgcmVmIGJhY2tlbmRzIHN0
-aWxsIG5lZWQgdG8gc3RvcmUgcHNldWRvcmVmcwppbiBHSVRfRElSIChpbnN0ZWFkIG9mIHdoZXJl
-dmVyIHRoZXkgc3RvcmUgcmVmcykuICBJbnN0ZWFkLApjaGFuZ2UgdXBkYXRlX3JlZiBhbmQgZGVs
-ZXRlX3JlZiB0byBjYWxsIHBzZXVkb3JlZi1zcGVjaWZpYwpmdW5jdGlvbnMuCgpTaWduZWQtb2Zm
-LWJ5OiBEYXZpZCBUdXJuZXIgPGR0dXJuZXJAdHdvcGVuc291cmNlLmNvbT4KLS0tCiByZWZzLmMg
-fCAxMDMgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA5NSBpbnNlcnRpb25zKCspLCA4IGRlbGV0
-aW9ucygtKQoKZGlmZiAtLWdpdCBhL3JlZnMuYyBiL3JlZnMuYwppbmRleCAwZjg3ODg0Li5lNDRi
-ODhjIDEwMDY0NAotLS0gYS9yZWZzLmMKKysrIGIvcmVmcy5jCkBAIC0yODc0LDEyICsyODc0LDkw
-IEBAIGVudW0gcmVmX3R5cGUgcmVmX3R5cGUoY29uc3QgY2hhciAqcmVmbmFtZSkKICAgICAgICBy
-ZXR1cm4gUkVGX1RZUEVfTk9STUFMOwogfQogCitzdGF0aWMgaW50IHdyaXRlX3BzZXVkb3JlZihj
-b25zdCBjaGFyICpwc2V1ZG9yZWYsIGNvbnN0IHVuc2lnbmVkIGNoYXIgKnNoYTEsCisJCQkgICBj
-b25zdCB1bnNpZ25lZCBjaGFyICpvbGRfc2hhMSwgc3RydWN0IHN0cmJ1ZiAqZXJyKQoreworCWNv
-bnN0IGNoYXIgKmZpbGVuYW1lOworCWludCBmZDsKKwlzdGF0aWMgc3RydWN0IGxvY2tfZmlsZSBs
-b2NrOworCXN0cnVjdCBzdHJidWYgYnVmID0gU1RSQlVGX0lOSVQ7CisJaW50IHJldCA9IC0xOwor
-CisJc3RyYnVmX2FkZGYoJmJ1ZiwgIiVzXG4iLCBzaGExX3RvX2hleChzaGExKSk7CisKKwlmaWxl
-bmFtZSA9IGdpdF9wYXRoKCIlcyIsIHBzZXVkb3JlZik7CisJZmQgPSBob2xkX2xvY2tfZmlsZV9m
-b3JfdXBkYXRlKCZsb2NrLCBmaWxlbmFtZSwgTE9DS19ESUVfT05fRVJST1IpOworCWlmIChmZCA8
-IDApIHsKKwkJc3RyYnVmX2FkZGYoZXJyLCAiQ291bGQgbm90IG9wZW4gJyVzJyBmb3Igd3JpdGlu
-ZzogJXMiLAorCQkJICAgIGZpbGVuYW1lLCBzdHJlcnJvcihlcnJubykpOworCQlyZXR1cm4gLTE7
-CisJfQorCisJaWYgKG9sZF9zaGExKSB7CisJCXVuc2lnbmVkIGNoYXIgYWN0dWFsX29sZF9zaGEx
-WzIwXTsKKwkJaWYgKHJlYWRfcmVmKHBzZXVkb3JlZiwgYWN0dWFsX29sZF9zaGExKSkKKwkJCWRp
-ZSgiQ291bGQgbm90IHJlYWQgcmVmICVzIiwgcHNldWRvcmVmKTsKKwkJaWYgKGhhc2hjbXAoYWN0
-dWFsX29sZF9zaGExLCBvbGRfc2hhMSkpIHsKKwkJCXN0cmJ1Zl9hZGRmKGVyciwgIlVuZXhwZWN0
-ZWQgc2hhMSB3aGVuIHdyaXRpbmcgJXMiLCBwc2V1ZG9yZWYpOworCQkJcm9sbGJhY2tfbG9ja19m
-aWxlKCZsb2NrKTsKKwkJCWdvdG8gZG9uZTsKKwkJfQorCX0KKworCWlmICh3cml0ZV9pbl9mdWxs
-KGZkLCBidWYuYnVmLCBidWYubGVuKSAhPSBidWYubGVuKSB7CisJCXN0cmJ1Zl9hZGRmKGVyciwg
-IkNvdWxkIG5vdCB3cml0ZSB0byAnJXMnIiwgZmlsZW5hbWUpOworCQlyb2xsYmFja19sb2NrX2Zp
-bGUoJmxvY2spOworCQlnb3RvIGRvbmU7CisJfQorCisJY29tbWl0X2xvY2tfZmlsZSgmbG9jayk7
-CisJcmV0ID0gMDsKK2RvbmU6CisJc3RyYnVmX3JlbGVhc2UoJmJ1Zik7CisJcmV0dXJuIHJldDsK
-K30KKworc3RhdGljIGludCBkZWxldGVfcHNldWRvcmVmKGNvbnN0IGNoYXIgKnBzZXVkb3JlZiwg
-Y29uc3QgdW5zaWduZWQgY2hhciAqb2xkX3NoYTEpCit7CisJc3RhdGljIHN0cnVjdCBsb2NrX2Zp
-bGUgbG9jazsKKwljb25zdCBjaGFyICpmaWxlbmFtZTsKKworCWZpbGVuYW1lID0gZ2l0X3BhdGgo
-IiVzIiwgcHNldWRvcmVmKTsKKworCWlmIChvbGRfc2hhMSAmJiAhaXNfbnVsbF9zaGExKG9sZF9z
-aGExKSkgeworCQlpbnQgZmQ7CisJCXVuc2lnbmVkIGNoYXIgYWN0dWFsX29sZF9zaGExWzIwXTsK
-KworCQlmZCA9IGhvbGRfbG9ja19maWxlX2Zvcl91cGRhdGUoJmxvY2ssIGZpbGVuYW1lLAorCQkJ
-CQkgICAgICAgTE9DS19ESUVfT05fRVJST1IpOworCQlpZiAoZmQgPCAwKQorCQkJZGllX2Vycm5v
-KF8oIkNvdWxkIG5vdCBvcGVuICclcycgZm9yIHdyaXRpbmciKSwgZmlsZW5hbWUpOworCQlpZiAo
-cmVhZF9yZWYocHNldWRvcmVmLCBhY3R1YWxfb2xkX3NoYTEpKQorCQkJZGllKCJDb3VsZCBub3Qg
-cmVhZCByZWYgJXMiLCBwc2V1ZG9yZWYpOworCQlpZiAoaGFzaGNtcChhY3R1YWxfb2xkX3NoYTEs
-IG9sZF9zaGExKSkgeworCQkJd2FybmluZygiVW5leHBlY3RlZCBzaGExIHdoZW4gZGVsZXRpbmcg
-JXMiLCBwc2V1ZG9yZWYpOworCQkJcm9sbGJhY2tfbG9ja19maWxlKCZsb2NrKTsKKwkJCXJldHVy
-biAtMTsKKwkJfQorCisJCXVubGluayhmaWxlbmFtZSk7CisJCXJvbGxiYWNrX2xvY2tfZmlsZSgm
-bG9jayk7CisJfSBlbHNlIHsKKwkJdW5saW5rKGZpbGVuYW1lKTsKKwl9CisKKwlyZXR1cm4gMDsK
-K30KKwogaW50IGRlbGV0ZV9yZWYoY29uc3QgY2hhciAqcmVmbmFtZSwgY29uc3QgdW5zaWduZWQg
-Y2hhciAqb2xkX3NoYTEsCiAJICAgICAgIHVuc2lnbmVkIGludCBmbGFncykKIHsKIAlzdHJ1Y3Qg
-cmVmX3RyYW5zYWN0aW9uICp0cmFuc2FjdGlvbjsKIAlzdHJ1Y3Qgc3RyYnVmIGVyciA9IFNUUkJV
-Rl9JTklUOwogCisJaWYgKHJlZl90eXBlKHJlZm5hbWUpID09IFJFRl9UWVBFX1BTRVVET1JFRikK
-KwkJcmV0dXJuIGRlbGV0ZV9wc2V1ZG9yZWYocmVmbmFtZSwgb2xkX3NoYTEpOworCiAJdHJhbnNh
-Y3Rpb24gPSByZWZfdHJhbnNhY3Rpb25fYmVnaW4oJmVycik7CiAJaWYgKCF0cmFuc2FjdGlvbiB8
-fAogCSAgICByZWZfdHJhbnNhY3Rpb25fZGVsZXRlKHRyYW5zYWN0aW9uLCByZWZuYW1lLCBvbGRf
-c2hhMSwKQEAgLTM5NzMsMTcgKzQwNTEsMjUgQEAgaW50IHVwZGF0ZV9yZWYoY29uc3QgY2hhciAq
-bXNnLCBjb25zdCBjaGFyICpyZWZuYW1lLAogCSAgICAgICBjb25zdCB1bnNpZ25lZCBjaGFyICpu
-ZXdfc2hhMSwgY29uc3QgdW5zaWduZWQgY2hhciAqb2xkX3NoYTEsCiAJICAgICAgIHVuc2lnbmVk
-IGludCBmbGFncywgZW51bSBhY3Rpb25fb25fZXJyIG9uZXJyKQogewotCXN0cnVjdCByZWZfdHJh
-bnNhY3Rpb24gKnQ7CisJc3RydWN0IHJlZl90cmFuc2FjdGlvbiAqdCA9IE5VTEw7CiAJc3RydWN0
-IHN0cmJ1ZiBlcnIgPSBTVFJCVUZfSU5JVDsKKwlpbnQgcmV0ID0gMDsKIAotCXQgPSByZWZfdHJh
-bnNhY3Rpb25fYmVnaW4oJmVycik7Ci0JaWYgKCF0IHx8Ci0JICAgIHJlZl90cmFuc2FjdGlvbl91
-cGRhdGUodCwgcmVmbmFtZSwgbmV3X3NoYTEsIG9sZF9zaGExLAotCQkJCSAgIGZsYWdzLCBtc2cs
-ICZlcnIpIHx8Ci0JICAgIHJlZl90cmFuc2FjdGlvbl9jb21taXQodCwgJmVycikpIHsKKwlpZiAo
-cmVmX3R5cGUocmVmbmFtZSkgPT0gUkVGX1RZUEVfUFNFVURPUkVGKSB7CisJCXJldCA9IHdyaXRl
-X3BzZXVkb3JlZihyZWZuYW1lLCBuZXdfc2hhMSwgb2xkX3NoYTEsICZlcnIpOworCX0gZWxzZSB7
-CisJCXQgPSByZWZfdHJhbnNhY3Rpb25fYmVnaW4oJmVycik7CisJCWlmICghdCB8fAorCQkgICAg
-cmVmX3RyYW5zYWN0aW9uX3VwZGF0ZSh0LCByZWZuYW1lLCBuZXdfc2hhMSwgb2xkX3NoYTEsCisJ
-CQkJCSAgIGZsYWdzLCBtc2csICZlcnIpIHx8CisJCSAgICByZWZfdHJhbnNhY3Rpb25fY29tbWl0
-KHQsICZlcnIpKSB7CisJCQlyZXQgPSAxOworCQkJcmVmX3RyYW5zYWN0aW9uX2ZyZWUodCk7CisJ
-CX0KKwl9CisJaWYgKHJldCkgewogCQljb25zdCBjaGFyICpzdHIgPSAidXBkYXRlX3JlZiBmYWls
-ZWQgZm9yIHJlZiAnJXMnOiAlcyI7CiAKLQkJcmVmX3RyYW5zYWN0aW9uX2ZyZWUodCk7CiAJCXN3
-aXRjaCAob25lcnIpIHsKIAkJY2FzZSBVUERBVEVfUkVGU19NU0dfT05fRVJSOgogCQkJZXJyb3Io
-c3RyLCByZWZuYW1lLCBlcnIuYnVmKTsKQEAgLTM5OTgsNyArNDA4NCw4IEBAIGludCB1cGRhdGVf
-cmVmKGNvbnN0IGNoYXIgKm1zZywgY29uc3QgY2hhciAqcmVmbmFtZSwKIAkJcmV0dXJuIDE7CiAJ
-fQogCXN0cmJ1Zl9yZWxlYXNlKCZlcnIpOwotCXJlZl90cmFuc2FjdGlvbl9mcmVlKHQpOworCWlm
-ICh0KQorCQlyZWZfdHJhbnNhY3Rpb25fZnJlZSh0KTsKIAlyZXR1cm4gMDsKIH0KIAotLSAKMi40
-LjIuNjE3LmczZDRjY2E4LXR3dHJzcmMKCg==
+Mental note: it is not clear why you need 'end' field in the state.
+Perhaps it is an indication that the division of labor is poorly
+designed between the helper that updates the formatting state and
+the other helper that reflects the formatting state to the final
+string.
 
+> @@ -1262,12 +1296,31 @@ static void append_non_atom(const char *cp, const char *ep, struct ref_formattin
+>  
+>  static void set_formatting_state(struct atom_value *atomv, struct ref_formatting_state *state)
+>  {
+> -	/* Based on the atomv values, the formatting state is set */
+> +	if (atomv->align) {
+> +		state->align = atomv->align;
+> +		atomv->align = NULL;
+> +	}
+> +	if (atomv->end)
+> +		state->end = 1;
+> +}
+> +
+> +static int align_ref_strbuf(struct ref_formatting_state *state, struct strbuf *final)
+> +{
+> +	if (state->align && state->end) {
 
---=-ntVGA3LCOCGRzcN7jsr4--
+... and I think that is what I see.  If this function knows that we
+are processing %(end), i.e. perform-state-formatting is called for
+each atom and receives atomv, there wouldn't have to be a code like
+this.
+
+> +		struct align *align = state->align;
+> +		strbuf_utf8_align(final, align->position, align->width, state->output.buf);
+> +		strbuf_reset(&state->output);
+> +		state->align = NULL;
+> +		return 1;
+> +	} else if (state->align)
+> +		return 1;
+> +	return 0;
+>  }
+>  
+>  static void perform_state_formatting(struct ref_formatting_state *state, struct strbuf *final)
+>  {
+> -	/* More formatting options to be eventually added */
+> +	if (align_ref_strbuf(state, final))
+> +		return;
+
+At the design level, I have a strong suspicion that it is a wrong
+way to go.  It piles more "if (this state bit was left by the
+previous atom) then do this" on this function and will make an
+unmanageable mess.
+
+You have a dictionary of all possible atoms somewhere.  Why not hook
+a pointer to the "handler" function (or two) to each element in it,
+instead of duplicating "this one is special" information down to
+individual atom instantiations (i.e. atomv) as atomv.modifier_atom
+bit, an dstructure the caller more like this?
+
+	get_ref_atom_value(info, parse_ref_filter_atom, &atomv);
+        if (atomv->pre_handler)
+        	atomv->pre_handler(atomv, &state);
+	format_quote_value(atomv, &state);
+        if (atomv->post_handler)
+        	atomv->post_handler(atomv, &state);
+
+Actually, each atom could just have a single handler; an atom like
+%(refname:short) whose sole effect is to append atomv->s to the
+state buffer can point a function to do so in its handler.
+
+On the other hand, align atom's handler would push a new state on
+the stack, marking that it is the one to handle diverted output.
+
+	align_atom_handler(atomv, state)
+        {
+        	struct format_state *new = push_new_state(state);
+		strbuf_init(&new->output);
+                new->atend = align_handler;
+                new->return_to = atomv; /* or whatever that holds width,pos */
+	}
+
+Then end atom's handler would pop the state from the stack, and the
+processing to be done
+
+	end_atom_handler(atomv, state)
+	{
+                state->atend(state);
+                pop_state(state);
+	}                
+
+and the called align_handler would be something like:
+
+	align_handler(state)
+	{
+                struct strbuf aligned = STRBUF_INIT;
+		struct format_state *return_to = state->prev;
+                struct atom_value *atomv = state->return_to;
+
+                strbuf_utf8_align(&aligned,
+                        atomv->align.pos, atomv->align.width,
+                        state->output.buf);
+		strbuf_addbuf(&return_to->output, &aligned);
+                strbuf_release(&aligned);
+	}
+
+With an arrangement like that, the body of the loop in
+show_ref_array_item() could be as simple and regular as:
+
+	get_ref_atom_value(info, parse_ref_filter_atom, &atomv);
+       	atomv->handler(atomv, &state);
+
+without any new "ah, this %(end) is special so we need a new
+mechanism to pass information between set_formatting_state and
+perform_formatting" logic introduced every time you add new things.
