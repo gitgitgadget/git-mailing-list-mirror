@@ -1,88 +1,78 @@
-From: Gaurav Chhabra <varuag.chhabra@gmail.com>
-Subject: Re: Error pushing new branch: value too great for base (error token is...
-Date: Tue, 11 Aug 2015 12:00:23 +0530
-Message-ID: <CAGDgvc3kA4oC=gp7XoPZJNrQ=p6HoUiXgcECG_xdRR=uJ03+aQ@mail.gmail.com>
-References: <CAGDgvc3Gxn=pKBfYC+yrUhCmL9X6bqjPVwVokF0qPsXmhx_EaQ@mail.gmail.com>
-	<CAPig+cTXO3699MdqSFVDBcnKcHAT=Mkp=c=r3C8F5nT8tfr6gw@mail.gmail.com>
-	<CAGDgvc2hc+f5CuPXc2pr5uYd9kniVpuffrb6z416CicxBgVxJQ@mail.gmail.com>
-	<CAGDgvc1FJ0K+OLQBj8iXPCnqMFyBD3mp32k0aTztQkKKuxNxtQ@mail.gmail.com>
-	<CA+P7+xpKHw8xkpMSjCftmAnMh=J_R9HxhYD48O2-P2WKUH1diw@mail.gmail.com>
-	<CAPig+cTB0VU6rmLT1H7sPMNBPE0zKvWmMp_obS5VpZBAi2nYLA@mail.gmail.com>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [PATCH 2/2] pager_in_use: make sure output is still going to pager
+Date: Tue, 11 Aug 2015 09:48:50 +0200
+Message-ID: <CAP=KgsSnHg_007oMXdHYQZQWwL4McUTS8ty4-MYe-=3QB8+d8Q@mail.gmail.com>
+References: <20150810051901.GA9262@sigill.intra.peff.net>
+	<20150810052353.GB15441@sigill.intra.peff.net>
+	<98d092607588cb5c98e7a2deb2163f94@www.dscho.org>
+	<20150810172448.GA20168@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 11 08:30:30 2015
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 11 09:49:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZP34v-0007Nw-5V
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 08:30:29 +0200
+	id 1ZP4Ir-0002cU-Oe
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 09:48:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755047AbbHKGaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 02:30:25 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35611 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754928AbbHKGaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 02:30:24 -0400
-Received: by iodt126 with SMTP id t126so1397480iod.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 23:30:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=ipzIQeoKztpOBxxkTOPRvUQ0ial0fuS8HGUmk7yFWac=;
-        b=wP+ZvI32kOUsCko22IzmVExwGIgfHkPHmC1djzeNNGcjJG5ZP8BjeW42QI3Z7tnNTP
-         qW5cRrZHPu86F/oXxRDkjbERIvDLaFIjWQ3dcVqAdlOqMJ8/cuLzC4ytNDd/ZbtZEuYe
-         PEXXfDF6G+fX3nYkCZXEKqcDtKAfkudupPDl2Y9FCQbfUss14XZ8aFDI+j4CcFiaVzSF
-         pRH3qeU6NLDhaauCWBYf2s5ujdvMXklr8diF6URQtRrSj7uTDmOHRr45rNSwaOk7j+Kb
-         z36GrLdRvona/9Ja/wOSAzaMpeRcwXwl5o7SM6LYuHaXh52AsuNkgYIs5EgXByUUWK+q
-         HEIA==
-X-Received: by 10.107.137.96 with SMTP id l93mr26476187iod.60.1439274623698;
- Mon, 10 Aug 2015 23:30:23 -0700 (PDT)
-Received: by 10.79.105.2 with HTTP; Mon, 10 Aug 2015 23:30:23 -0700 (PDT)
-In-Reply-To: <CAPig+cTB0VU6rmLT1H7sPMNBPE0zKvWmMp_obS5VpZBAi2nYLA@mail.gmail.com>
+	id S1755220AbbHKHsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 03:48:53 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:36494 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754302AbbHKHsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 03:48:52 -0400
+Received: by lbbpu9 with SMTP id pu9so81007756lbb.3
+        for <git@vger.kernel.org>; Tue, 11 Aug 2015 00:48:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=im7+3cGk8La9oz06JXrIxJ0NiGyMZw0lRynFJnYeAtQ=;
+        b=B+dSW/WHlmRNvkqJ1ayHghBtdzYKyKyP7A8qJWBETRgJYNO0m8tvfoMjspZT7hVKJC
+         r4K2BMZ4Dvj2J0AO9+vqqLPTTyyEeyVxuAa9atC+2QfvfZAGert60hPGvkDridkXsmnM
+         l4fYoSKwLXbw43RU1oO1AvNP51F+IY2ocW2jdY7/qfjSR41U8RuRYHXdoZsNdLpeEhGy
+         eBpoL4YFQAg8ox8e7VyZCtqdMcONShlnpE9MB23FCxIPgTrWO+GZCAQJOSkzO+ASHr3v
+         WWINdMgL+CJAeoNVWl/e6sSYPKjSgM0lHTq3j0Xq96TbzNan/t8fAIQ9lIUMDwT0hGYu
+         qDUQ==
+X-Gm-Message-State: ALoCoQkMX4xKLbRke02NDhfCQhy9bQOt9AFND/wpZxdz6han55zMaYs8lsRxWk/MfHvx0L234fQS
+X-Received: by 10.152.219.3 with SMTP id pk3mr24893146lac.114.1439279330778;
+ Tue, 11 Aug 2015 00:48:50 -0700 (PDT)
+Received: by 10.25.146.14 with HTTP; Tue, 11 Aug 2015 00:48:50 -0700 (PDT)
+In-Reply-To: <20150810172448.GA20168@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275675>
 
-Thanks for the detailed explanation Eric! That really helped clear my
-doubts. Also tried with "0x" and it's working fine however, as
-suggested by you, i will use '='
-
-Thanks again! :)
-
-On Tue, Aug 11, 2015 at 4:17 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Aug 10, 2015 at 6:29 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Mon, Aug 10, 2015 at 2:54 AM, Gaurav Chhabra
->> <varuag.chhabra@gmail.com> wrote:
->>> Apologies for the delay in reply! I tried your suggestion and it
->>> works. Thanks! :)
->>>
->>> I'm curious why integer comparison is throwing error. Shouldn't i be
->>> comparing numbers with numeric operator?
+On Mon, Aug 10, 2015 at 7:24 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Aug 10, 2015 at 06:38:10PM +0200, Johannes Schindelin wrote:
+>
+>> > +const char *pipe_id_get(int fd)
+>> > +{
+>> > +   static struct strbuf id = STRBUF_INIT;
+>> > +   struct stat st;
+>> > +
+>> > +   if (fstat(fd, &st) < 0 || !S_ISFIFO(st.st_mode))
+>> > +           return NULL;
 >>
->> Yes, but shell doesn't treat hex numbers as numbers. So it will work
->> only if the string is a decimal number.
+>> Just a quick note: it seems that this check is not really working on
+>> Windows. I tested this by running this test case manually (because TTY
+>> is not set on Windows):
 >
-> This particular case deserves a bit more explanation. The expression
-> in question was this:
->
->     if [[ "$new_sha" -eq "$NULL" ]]; then
->
-> where 'new_sha' was 9226289d2416af4cb7365d7aaa5e382bdb3d9a89.
->
-> In Bash, inside the [[ .. ]], it did attempt evaluating the SHA1 as a
-> *decimal* number, however, when it encountered the "d", it complained
-> that it was outside the allowed range of decimal digits ("0"..."9").
-> Had the SHA1 been prefixed by a "0x", the [[...]] context would have
-> dealt with it just fine.
->
-> Outside the [[...]] context, arguments to -eq do need to be base-10 integers.
->
-> Nevertheless, a SHA1 is effective an opaque value. There's little, if
-> anything, to be gained by treating it as a numeric quantity, hence
-> string '=' makes more sense than numeric '-eq'.
+> Yeah, I'm not too surprised. I'm guessing your st_ino for pipes are all
+> just the same or something. Or maybe S_ISFIFO doesn't pass (we don't
+> technically need it, I don't think, and could just drop that check).
+
+If you remove the S_ISFIFO check, you probably need to include
+the st_dev field in the pipe id.  Otherwise, you could be unlucky and
+redirect the output to a file that just happens to have the same inode
+number as the pager pipe. Remember, inode numbers are only unique
+within a certain st_dev.
+
+    /ceder
