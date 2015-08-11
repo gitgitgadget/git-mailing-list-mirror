@@ -1,46 +1,63 @@
-From: Jet Rey Maza <jet.cpi.tmp@gmail.com>
-Subject: Question
-Date: Tue, 11 Aug 2015 16:28:10 +0800
-Message-ID: <CABqaoS17HSAuDZwZKdRiTdgH58p=2DXXoDFsTVNNDt=Vxgk11g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 05/17] remove hold_lock_file_for_append
+Date: Tue, 11 Aug 2015 05:38:09 -0400
+Message-ID: <20150811093809.GA10238@sigill.intra.peff.net>
+References: <20150810092731.GA9027@sigill.intra.peff.net>
+ <20150810093514.GE30981@sigill.intra.peff.net>
+ <xmqqk2t2u5y9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 11 10:28:21 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Jim Hill <gjthill@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 11:38:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZP4uv-0000zM-Fw
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 10:28:17 +0200
+	id 1ZP60k-00048b-VY
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 11:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752978AbbHKI2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 04:28:12 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:33380 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbbHKI2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 04:28:11 -0400
-Received: by ioii16 with SMTP id i16so194736451ioi.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2015 01:28:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ua/3glWt7ZxLHaWjVgV2qweM83KbtOx/IpJOTAr1uKk=;
-        b=fOiRJnKbaJOVnXzdf+pw56rlxvuCkUqeZ7SW3SYrqa2Pj7906+gnABX2PDQ3euoxJM
-         +F3ZiXosGNkVzLOUWFWHrAPDHTPrD2jws8VpGN1qAryWPzeSGDnec0na3J6WiJ0YIGRa
-         Zw4mD1H8+uiwSdjsa/1ymVkrKRcL5CUZAEIwPPq0P+zsL7AtqgHllIlWuy3VIwfWFbJL
-         HA5r+EcE2g8u1NfWT12NoZahpouhnzEBwr1e7sgp7sfo1fTJlgUkjm8iFzX1RacyF7/V
-         IkEHutuNtf6VI6tuD3PczZBiE06UeYCxLEcQxjpnbBnS4ucRdUMe4+ScVt7Bc8bKRqaE
-         fxOA==
-X-Received: by 10.107.31.134 with SMTP id f128mr24364173iof.19.1439281690143;
- Tue, 11 Aug 2015 01:28:10 -0700 (PDT)
-Received: by 10.50.131.225 with HTTP; Tue, 11 Aug 2015 01:28:10 -0700 (PDT)
+	id S934006AbbHKJiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 05:38:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43510 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933396AbbHKJiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 05:38:15 -0400
+Received: (qmail 24151 invoked by uid 102); 11 Aug 2015 09:38:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Aug 2015 04:38:15 -0500
+Received: (qmail 14019 invoked by uid 107); 11 Aug 2015 09:38:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Aug 2015 05:38:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Aug 2015 05:38:09 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqk2t2u5y9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275677>
 
-Hi,
+On Mon, Aug 10, 2015 at 03:36:14PM -0700, Junio C Hamano wrote:
 
-I'm wondering why gitbash dont have wget?
+> Jeff King <peff@peff.net> writes:
+> 
+> > No users of hold_lock_file_for_append remain, so remove it.
+> 
+> This does not seem to have anything to do with rotating static buffers
+> used in get_pathname(); the only effect it has is to conflict heavily
+> with Michael's tempfile topic X-<.
+
+Yeah, the first patch (to drop the final caller) is why I stuck it in
+this series, and I did not want to forget the rest of the topic that Jim
+worked on.
+
+> Perhaps this should be part of Michael's tempfile topic?
+
+Yes, I think that is OK. We can keep the first patch (to
+add_to_alternates_file) here, and do the other one later on top of
+Michael's topic.
+
+-Peff
