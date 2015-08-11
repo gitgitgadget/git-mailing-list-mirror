@@ -1,78 +1,161 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 2/5] refs: add ref_type function
-Date: Tue, 11 Aug 2015 14:39:18 -0400
+Subject: Re: [PATCH v5 3/5] pseudorefs: create and use pseudoref update and
+ delete functions
+Date: Tue, 11 Aug 2015 14:46:29 -0400
 Organization: Twitter
-Message-ID: <1439318358.5283.20.camel@twopensource.com>
+Message-ID: <1439318789.5283.23.camel@twopensource.com>
 References: <1438322781-21181-1-git-send-email-dturner@twopensource.com>
-	 <1438322781-21181-2-git-send-email-dturner@twopensource.com>
-	 <CACsJy8DK9k67yM_mJqbqgDxNKdGKpoLPOQQ4beqGgzUobzyFUQ@mail.gmail.com>
+	 <1438322781-21181-3-git-send-email-dturner@twopensource.com>
+	 <CAGZ79kZ-e-GU5FfKWDAUxQPUnyrmGjSvHGnjWn=pwpDAj37umQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 20:39:29 2015
+Content-Type: multipart/mixed; boundary="=-ntVGA3LCOCGRzcN7jsr4"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 20:46:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPESL-0001kn-Us
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 20:39:26 +0200
+	id 1ZPEZI-0004s9-Tv
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 20:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbbHKSjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 14:39:22 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:36669 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751724AbbHKSjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 14:39:21 -0400
-Received: by qgdd90 with SMTP id d90so45152145qgd.3
-        for <git@vger.kernel.org>; Tue, 11 Aug 2015 11:39:20 -0700 (PDT)
+	id S1752800AbbHKSqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 14:46:32 -0400
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:35930 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950AbbHKSqb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 14:46:31 -0400
+Received: by qgdd90 with SMTP id d90so45302651qgd.3
+        for <git@vger.kernel.org>; Tue, 11 Aug 2015 11:46:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=H7r5KF6td/i0a2oozhq6sD0wmHGmGt2MtWmLeEp6Mso=;
-        b=JN5lkJ3b6ZCx3o5T3xXJ59CCYUU2P8xcJqHpzjt+9vNpjv4cBEmNj7nnM5clgaqZ5I
-         H551ByxU5iv/MtqG4GLhQwZc9DnvLgwchudO6iZHMZDYEnvqvFnlUZ26M3eXVxU+to50
-         xtukM/HrRM0doAjJKERwQx3rcZZZviTi/gM3AL7mvRNRGjJfy/8qBSyqCBtfb978ov2Y
-         zaE27uiY04CK/HNTwv/6HhdIJE6JtMKjtp5hG4ZlazcsGPUSXJ+qKJgJ22IYv//kf+no
-         zbdctCJ1ypZF6kJO6w4ffP84llowdPkbGhbVlJzy5HOLQE0/KdoytbcMmahVMmpZ37dv
-         Byng==
-X-Gm-Message-State: ALoCoQnpCtuZpcFQpClCxGrDzrgEi4Q4WiiOk8BF5xx0ldXyMIRCBHR/3V+Y6HhZAIrmQ5JLQtpK
-X-Received: by 10.140.22.135 with SMTP id 7mr51136308qgn.98.1439318360406;
-        Tue, 11 Aug 2015 11:39:20 -0700 (PDT)
+         :references:organization:content-type:mime-version;
+        bh=9GGSZuidAmbT0mV/GQ8k0fVon+FpzZExzmx3KLY25SE=;
+        b=QOSYIRQFHtChdsUOZnjCle/03v+gjG2mEYsokCbdnvn5mH9zPcStA2lD3y0DQFb8dV
+         QTLUya8x30fdUEs49h4MF8PMM5LOvH2tmuMXwbchRm2CrXnnUBvvn27Y/E48yWaFRxCn
+         PIss4rRsenUAITMGg4PmrkuuFWe4mXXmH9h69El0L9y54fFWV4r/bivehFsUFqrfpYaK
+         /U+C1HrDagxrQFdg/mo3ZMBqJ/6UPolLcFagnON5ySJj2MyB4FxGWbRW8JQrAOPn5gBw
+         GW74zyR3QK+rBYWlKN4eg+a81YwMTLy2d5zyHWOVVHYzmO/jYA3tjlwwJow/GOvQtIaD
+         w4JQ==
+X-Gm-Message-State: ALoCoQnHHNClBJaKB3/GPMef1adt5w9k9mOoeJPHeAfZycFAWmuG2WAKl9BQvoNUpTi6/sHANMic
+X-Received: by 10.140.232.209 with SMTP id d200mr43339129qhc.68.1439318790531;
+        Tue, 11 Aug 2015 11:46:30 -0700 (PDT)
 Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id b90sm1670713qga.48.2015.08.11.11.39.19
+        by smtp.gmail.com with ESMTPSA id f71sm1694989qhe.7.2015.08.11.11.46.29
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Aug 2015 11:39:19 -0700 (PDT)
-In-Reply-To: <CACsJy8DK9k67yM_mJqbqgDxNKdGKpoLPOQQ4beqGgzUobzyFUQ@mail.gmail.com>
+        Tue, 11 Aug 2015 11:46:29 -0700 (PDT)
+In-Reply-To: <CAGZ79kZ-e-GU5FfKWDAUxQPUnyrmGjSvHGnjWn=pwpDAj37umQ@mail.gmail.com>
 X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275709>
 
-On Mon, 2015-08-03 at 20:55 +0700, Duy Nguyen wrote:
-> On Fri, Jul 31, 2015 at 1:06 PM, David Turner <dturner@twopensource.com> wrote:
-> > Add a function ref_type, which categorizes refs as per-worktree,
-> > pseudoref, or normal ref.
-> 
-> For per-worktree refs, you probably should follow common_list[] in
-> path.c because that's how file-based ref namespace is splitted between
-> per-repo and per-worktree, even though just as simple as "everything
-> outside refs/ is per-worktree" (with an exception of NOTES_MERGE_REF,
-> which should be on the list as well). At least the two should be
-> aligned so that the default file-based backend works the same way as
-> new backends.
 
-I've looked into this, and decided not to follow common_list.  That's
-because I've hacked the path.c code to treat refs/worktree specially;
-it's under refs (common), but it's per-worktree, so it's special-cased.
-You may have seen this in the per-worktree-refs-for-bisect thread:
-http://permalink.gmane.org/gmane.comp.version-control.git/275673
+--=-ntVGA3LCOCGRzcN7jsr4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-This will require some special-casing in the alternate backends, but
-they can use common the is_per_worktree_ref function.  
+
+On Fri, 2015-07-31 at 16:40 -0700, Stefan Beller wrote:
+> I am sorry for being late to the review, I looked into coverity today as Duy
+> bugged me to fix the memory allocation stuff[1]
+
+Thanks. Junio, can you pleas substitute the attached patch instead?  It
+addresses Stefan's issues.  If you prefer, I can resend the whole
+series, but I thought this might be easier.
+
+--=-ntVGA3LCOCGRzcN7jsr4
+Content-Disposition: attachment;
+	filename*0=0003-pseudorefs-create-and-use-pseudoref-update-and-delet.pat;
+	filename*1=ch
+Content-Type: text/x-patch;
+	name="0003-pseudorefs-create-and-use-pseudoref-update-and-delet.patch";
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+RnJvbSA2Yzg2YzM4ZjUzM2M2YjM1ZGIzYTU1NzI3MGFhYjk1YjM0Mjg3NWM5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBUdXJuZXIgPGR0dXJuZXJAdHdvcGVuc291cmNlLmNv
+bT4KRGF0ZTogV2VkLCAxNSBKdWwgMjAxNSAxODowNToyOCAtMDQwMApTdWJqZWN0OiBbUEFUQ0gg
+My81XSBwc2V1ZG9yZWZzOiBjcmVhdGUgYW5kIHVzZSBwc2V1ZG9yZWYgdXBkYXRlIGFuZCBkZWxl
+dGUKIGZ1bmN0aW9ucwoKUHNldWRvcmVmcyBzaG91bGQgbm90IGJlIHVwZGF0ZWQgdGhyb3VnaCB0
+aGUgcmVmIHRyYW5zYWN0aW9uCkFQSSwgYmVjYXVzZSBhbHRlcm5hdGUgcmVmIGJhY2tlbmRzIHN0
+aWxsIG5lZWQgdG8gc3RvcmUgcHNldWRvcmVmcwppbiBHSVRfRElSIChpbnN0ZWFkIG9mIHdoZXJl
+dmVyIHRoZXkgc3RvcmUgcmVmcykuICBJbnN0ZWFkLApjaGFuZ2UgdXBkYXRlX3JlZiBhbmQgZGVs
+ZXRlX3JlZiB0byBjYWxsIHBzZXVkb3JlZi1zcGVjaWZpYwpmdW5jdGlvbnMuCgpTaWduZWQtb2Zm
+LWJ5OiBEYXZpZCBUdXJuZXIgPGR0dXJuZXJAdHdvcGVuc291cmNlLmNvbT4KLS0tCiByZWZzLmMg
+fCAxMDMgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA5NSBpbnNlcnRpb25zKCspLCA4IGRlbGV0
+aW9ucygtKQoKZGlmZiAtLWdpdCBhL3JlZnMuYyBiL3JlZnMuYwppbmRleCAwZjg3ODg0Li5lNDRi
+ODhjIDEwMDY0NAotLS0gYS9yZWZzLmMKKysrIGIvcmVmcy5jCkBAIC0yODc0LDEyICsyODc0LDkw
+IEBAIGVudW0gcmVmX3R5cGUgcmVmX3R5cGUoY29uc3QgY2hhciAqcmVmbmFtZSkKICAgICAgICBy
+ZXR1cm4gUkVGX1RZUEVfTk9STUFMOwogfQogCitzdGF0aWMgaW50IHdyaXRlX3BzZXVkb3JlZihj
+b25zdCBjaGFyICpwc2V1ZG9yZWYsIGNvbnN0IHVuc2lnbmVkIGNoYXIgKnNoYTEsCisJCQkgICBj
+b25zdCB1bnNpZ25lZCBjaGFyICpvbGRfc2hhMSwgc3RydWN0IHN0cmJ1ZiAqZXJyKQoreworCWNv
+bnN0IGNoYXIgKmZpbGVuYW1lOworCWludCBmZDsKKwlzdGF0aWMgc3RydWN0IGxvY2tfZmlsZSBs
+b2NrOworCXN0cnVjdCBzdHJidWYgYnVmID0gU1RSQlVGX0lOSVQ7CisJaW50IHJldCA9IC0xOwor
+CisJc3RyYnVmX2FkZGYoJmJ1ZiwgIiVzXG4iLCBzaGExX3RvX2hleChzaGExKSk7CisKKwlmaWxl
+bmFtZSA9IGdpdF9wYXRoKCIlcyIsIHBzZXVkb3JlZik7CisJZmQgPSBob2xkX2xvY2tfZmlsZV9m
+b3JfdXBkYXRlKCZsb2NrLCBmaWxlbmFtZSwgTE9DS19ESUVfT05fRVJST1IpOworCWlmIChmZCA8
+IDApIHsKKwkJc3RyYnVmX2FkZGYoZXJyLCAiQ291bGQgbm90IG9wZW4gJyVzJyBmb3Igd3JpdGlu
+ZzogJXMiLAorCQkJICAgIGZpbGVuYW1lLCBzdHJlcnJvcihlcnJubykpOworCQlyZXR1cm4gLTE7
+CisJfQorCisJaWYgKG9sZF9zaGExKSB7CisJCXVuc2lnbmVkIGNoYXIgYWN0dWFsX29sZF9zaGEx
+WzIwXTsKKwkJaWYgKHJlYWRfcmVmKHBzZXVkb3JlZiwgYWN0dWFsX29sZF9zaGExKSkKKwkJCWRp
+ZSgiQ291bGQgbm90IHJlYWQgcmVmICVzIiwgcHNldWRvcmVmKTsKKwkJaWYgKGhhc2hjbXAoYWN0
+dWFsX29sZF9zaGExLCBvbGRfc2hhMSkpIHsKKwkJCXN0cmJ1Zl9hZGRmKGVyciwgIlVuZXhwZWN0
+ZWQgc2hhMSB3aGVuIHdyaXRpbmcgJXMiLCBwc2V1ZG9yZWYpOworCQkJcm9sbGJhY2tfbG9ja19m
+aWxlKCZsb2NrKTsKKwkJCWdvdG8gZG9uZTsKKwkJfQorCX0KKworCWlmICh3cml0ZV9pbl9mdWxs
+KGZkLCBidWYuYnVmLCBidWYubGVuKSAhPSBidWYubGVuKSB7CisJCXN0cmJ1Zl9hZGRmKGVyciwg
+IkNvdWxkIG5vdCB3cml0ZSB0byAnJXMnIiwgZmlsZW5hbWUpOworCQlyb2xsYmFja19sb2NrX2Zp
+bGUoJmxvY2spOworCQlnb3RvIGRvbmU7CisJfQorCisJY29tbWl0X2xvY2tfZmlsZSgmbG9jayk7
+CisJcmV0ID0gMDsKK2RvbmU6CisJc3RyYnVmX3JlbGVhc2UoJmJ1Zik7CisJcmV0dXJuIHJldDsK
+K30KKworc3RhdGljIGludCBkZWxldGVfcHNldWRvcmVmKGNvbnN0IGNoYXIgKnBzZXVkb3JlZiwg
+Y29uc3QgdW5zaWduZWQgY2hhciAqb2xkX3NoYTEpCit7CisJc3RhdGljIHN0cnVjdCBsb2NrX2Zp
+bGUgbG9jazsKKwljb25zdCBjaGFyICpmaWxlbmFtZTsKKworCWZpbGVuYW1lID0gZ2l0X3BhdGgo
+IiVzIiwgcHNldWRvcmVmKTsKKworCWlmIChvbGRfc2hhMSAmJiAhaXNfbnVsbF9zaGExKG9sZF9z
+aGExKSkgeworCQlpbnQgZmQ7CisJCXVuc2lnbmVkIGNoYXIgYWN0dWFsX29sZF9zaGExWzIwXTsK
+KworCQlmZCA9IGhvbGRfbG9ja19maWxlX2Zvcl91cGRhdGUoJmxvY2ssIGZpbGVuYW1lLAorCQkJ
+CQkgICAgICAgTE9DS19ESUVfT05fRVJST1IpOworCQlpZiAoZmQgPCAwKQorCQkJZGllX2Vycm5v
+KF8oIkNvdWxkIG5vdCBvcGVuICclcycgZm9yIHdyaXRpbmciKSwgZmlsZW5hbWUpOworCQlpZiAo
+cmVhZF9yZWYocHNldWRvcmVmLCBhY3R1YWxfb2xkX3NoYTEpKQorCQkJZGllKCJDb3VsZCBub3Qg
+cmVhZCByZWYgJXMiLCBwc2V1ZG9yZWYpOworCQlpZiAoaGFzaGNtcChhY3R1YWxfb2xkX3NoYTEs
+IG9sZF9zaGExKSkgeworCQkJd2FybmluZygiVW5leHBlY3RlZCBzaGExIHdoZW4gZGVsZXRpbmcg
+JXMiLCBwc2V1ZG9yZWYpOworCQkJcm9sbGJhY2tfbG9ja19maWxlKCZsb2NrKTsKKwkJCXJldHVy
+biAtMTsKKwkJfQorCisJCXVubGluayhmaWxlbmFtZSk7CisJCXJvbGxiYWNrX2xvY2tfZmlsZSgm
+bG9jayk7CisJfSBlbHNlIHsKKwkJdW5saW5rKGZpbGVuYW1lKTsKKwl9CisKKwlyZXR1cm4gMDsK
+K30KKwogaW50IGRlbGV0ZV9yZWYoY29uc3QgY2hhciAqcmVmbmFtZSwgY29uc3QgdW5zaWduZWQg
+Y2hhciAqb2xkX3NoYTEsCiAJICAgICAgIHVuc2lnbmVkIGludCBmbGFncykKIHsKIAlzdHJ1Y3Qg
+cmVmX3RyYW5zYWN0aW9uICp0cmFuc2FjdGlvbjsKIAlzdHJ1Y3Qgc3RyYnVmIGVyciA9IFNUUkJV
+Rl9JTklUOwogCisJaWYgKHJlZl90eXBlKHJlZm5hbWUpID09IFJFRl9UWVBFX1BTRVVET1JFRikK
+KwkJcmV0dXJuIGRlbGV0ZV9wc2V1ZG9yZWYocmVmbmFtZSwgb2xkX3NoYTEpOworCiAJdHJhbnNh
+Y3Rpb24gPSByZWZfdHJhbnNhY3Rpb25fYmVnaW4oJmVycik7CiAJaWYgKCF0cmFuc2FjdGlvbiB8
+fAogCSAgICByZWZfdHJhbnNhY3Rpb25fZGVsZXRlKHRyYW5zYWN0aW9uLCByZWZuYW1lLCBvbGRf
+c2hhMSwKQEAgLTM5NzMsMTcgKzQwNTEsMjUgQEAgaW50IHVwZGF0ZV9yZWYoY29uc3QgY2hhciAq
+bXNnLCBjb25zdCBjaGFyICpyZWZuYW1lLAogCSAgICAgICBjb25zdCB1bnNpZ25lZCBjaGFyICpu
+ZXdfc2hhMSwgY29uc3QgdW5zaWduZWQgY2hhciAqb2xkX3NoYTEsCiAJICAgICAgIHVuc2lnbmVk
+IGludCBmbGFncywgZW51bSBhY3Rpb25fb25fZXJyIG9uZXJyKQogewotCXN0cnVjdCByZWZfdHJh
+bnNhY3Rpb24gKnQ7CisJc3RydWN0IHJlZl90cmFuc2FjdGlvbiAqdCA9IE5VTEw7CiAJc3RydWN0
+IHN0cmJ1ZiBlcnIgPSBTVFJCVUZfSU5JVDsKKwlpbnQgcmV0ID0gMDsKIAotCXQgPSByZWZfdHJh
+bnNhY3Rpb25fYmVnaW4oJmVycik7Ci0JaWYgKCF0IHx8Ci0JICAgIHJlZl90cmFuc2FjdGlvbl91
+cGRhdGUodCwgcmVmbmFtZSwgbmV3X3NoYTEsIG9sZF9zaGExLAotCQkJCSAgIGZsYWdzLCBtc2cs
+ICZlcnIpIHx8Ci0JICAgIHJlZl90cmFuc2FjdGlvbl9jb21taXQodCwgJmVycikpIHsKKwlpZiAo
+cmVmX3R5cGUocmVmbmFtZSkgPT0gUkVGX1RZUEVfUFNFVURPUkVGKSB7CisJCXJldCA9IHdyaXRl
+X3BzZXVkb3JlZihyZWZuYW1lLCBuZXdfc2hhMSwgb2xkX3NoYTEsICZlcnIpOworCX0gZWxzZSB7
+CisJCXQgPSByZWZfdHJhbnNhY3Rpb25fYmVnaW4oJmVycik7CisJCWlmICghdCB8fAorCQkgICAg
+cmVmX3RyYW5zYWN0aW9uX3VwZGF0ZSh0LCByZWZuYW1lLCBuZXdfc2hhMSwgb2xkX3NoYTEsCisJ
+CQkJCSAgIGZsYWdzLCBtc2csICZlcnIpIHx8CisJCSAgICByZWZfdHJhbnNhY3Rpb25fY29tbWl0
+KHQsICZlcnIpKSB7CisJCQlyZXQgPSAxOworCQkJcmVmX3RyYW5zYWN0aW9uX2ZyZWUodCk7CisJ
+CX0KKwl9CisJaWYgKHJldCkgewogCQljb25zdCBjaGFyICpzdHIgPSAidXBkYXRlX3JlZiBmYWls
+ZWQgZm9yIHJlZiAnJXMnOiAlcyI7CiAKLQkJcmVmX3RyYW5zYWN0aW9uX2ZyZWUodCk7CiAJCXN3
+aXRjaCAob25lcnIpIHsKIAkJY2FzZSBVUERBVEVfUkVGU19NU0dfT05fRVJSOgogCQkJZXJyb3Io
+c3RyLCByZWZuYW1lLCBlcnIuYnVmKTsKQEAgLTM5OTgsNyArNDA4NCw4IEBAIGludCB1cGRhdGVf
+cmVmKGNvbnN0IGNoYXIgKm1zZywgY29uc3QgY2hhciAqcmVmbmFtZSwKIAkJcmV0dXJuIDE7CiAJ
+fQogCXN0cmJ1Zl9yZWxlYXNlKCZlcnIpOwotCXJlZl90cmFuc2FjdGlvbl9mcmVlKHQpOworCWlm
+ICh0KQorCQlyZWZfdHJhbnNhY3Rpb25fZnJlZSh0KTsKIAlyZXR1cm4gMDsKIH0KIAotLSAKMi40
+LjIuNjE3LmczZDRjY2E4LXR3dHJzcmMKCg==
+
+
+--=-ntVGA3LCOCGRzcN7jsr4--
