@@ -1,198 +1,88 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 1/2] refs: refs/worktree/* become per-worktree
-Date: Tue, 11 Aug 2015 00:56:18 -0400
-Message-ID: <1439268979-10456-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, pclouds@gmail.com, mhagger@alum.mit.edu,
-	Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Aug 11 06:56:50 2015
+From: Gaurav Chhabra <varuag.chhabra@gmail.com>
+Subject: Re: Error pushing new branch: value too great for base (error token is...
+Date: Tue, 11 Aug 2015 12:00:23 +0530
+Message-ID: <CAGDgvc3kA4oC=gp7XoPZJNrQ=p6HoUiXgcECG_xdRR=uJ03+aQ@mail.gmail.com>
+References: <CAGDgvc3Gxn=pKBfYC+yrUhCmL9X6bqjPVwVokF0qPsXmhx_EaQ@mail.gmail.com>
+	<CAPig+cTXO3699MdqSFVDBcnKcHAT=Mkp=c=r3C8F5nT8tfr6gw@mail.gmail.com>
+	<CAGDgvc2hc+f5CuPXc2pr5uYd9kniVpuffrb6z416CicxBgVxJQ@mail.gmail.com>
+	<CAGDgvc1FJ0K+OLQBj8iXPCnqMFyBD3mp32k0aTztQkKKuxNxtQ@mail.gmail.com>
+	<CA+P7+xpKHw8xkpMSjCftmAnMh=J_R9HxhYD48O2-P2WKUH1diw@mail.gmail.com>
+	<CAPig+cTB0VU6rmLT1H7sPMNBPE0zKvWmMp_obS5VpZBAi2nYLA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 11 08:30:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZP1cD-0000nS-HG
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 06:56:45 +0200
+	id 1ZP34v-0007Nw-5V
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 08:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500AbbHKE4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 00:56:40 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:34600 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbbHKE4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 00:56:39 -0400
-Received: by qgeg42 with SMTP id g42so96106744qge.1
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 21:56:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=9+AUxTvwB/lomvEhOdrJBHZva8lPJqX+GhXnpaPXx6Y=;
-        b=bK0BpEpfHKJICmnTIc3ovVdciBEdewPr3mP6cj/TgoEm/smWpvt/7CLlrNPAfpQgqF
-         dt4hw5JctGzJRrlfIkl6JnN+P5rnGKpY9Z0IibFW6aF9d7dUe2zmTjLqvFHlSFT4wfxP
-         COqb25v4tX1xXYoTwfJ/EIrjBXfxULcMeoix41CU8szmWLR+aSiqEWnYO4XGfHMcllf3
-         YA9hHflBDZRQp3dgw8bSId4v5vTCrBXZ/Mnm1YT/L5CFEPDLkcSkP995i8zbKoH7Sw/f
-         zwNTO30FZf6IJbd6Tj+u8zPNTmTcXMrdOYCXPkvAx6oPhUlnzDsy6Ld5MG6Ed899WIeM
-         Go7Q==
-X-Gm-Message-State: ALoCoQmCUHTz3jypiWRGzjxB9N3Zb+5zMVTp5VkbkWqqGa5o28HG5IUX5mSQSXeM3a1C+spTUf2p
-X-Received: by 10.140.237.204 with SMTP id i195mr7816335qhc.93.1439268998111;
-        Mon, 10 Aug 2015 21:56:38 -0700 (PDT)
-Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id z33sm495417qkg.44.2015.08.10.21.56.36
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Aug 2015 21:56:37 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
+	id S1755047AbbHKGaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 02:30:25 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:35611 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754928AbbHKGaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 02:30:24 -0400
+Received: by iodt126 with SMTP id t126so1397480iod.2
+        for <git@vger.kernel.org>; Mon, 10 Aug 2015 23:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=ipzIQeoKztpOBxxkTOPRvUQ0ial0fuS8HGUmk7yFWac=;
+        b=wP+ZvI32kOUsCko22IzmVExwGIgfHkPHmC1djzeNNGcjJG5ZP8BjeW42QI3Z7tnNTP
+         qW5cRrZHPu86F/oXxRDkjbERIvDLaFIjWQ3dcVqAdlOqMJ8/cuLzC4ytNDd/ZbtZEuYe
+         PEXXfDF6G+fX3nYkCZXEKqcDtKAfkudupPDl2Y9FCQbfUss14XZ8aFDI+j4CcFiaVzSF
+         pRH3qeU6NLDhaauCWBYf2s5ujdvMXklr8diF6URQtRrSj7uTDmOHRr45rNSwaOk7j+Kb
+         z36GrLdRvona/9Ja/wOSAzaMpeRcwXwl5o7SM6LYuHaXh52AsuNkgYIs5EgXByUUWK+q
+         HEIA==
+X-Received: by 10.107.137.96 with SMTP id l93mr26476187iod.60.1439274623698;
+ Mon, 10 Aug 2015 23:30:23 -0700 (PDT)
+Received: by 10.79.105.2 with HTTP; Mon, 10 Aug 2015 23:30:23 -0700 (PDT)
+In-Reply-To: <CAPig+cTB0VU6rmLT1H7sPMNBPE0zKvWmMp_obS5VpZBAi2nYLA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275674>
 
-We need a place to stick refs for bisects in progress that is not
-shared between worktrees.  So we use the refs/worktree/ hierarchy.
+Thanks for the detailed explanation Eric! That really helped clear my
+doubts. Also tried with "0x" and it's working fine however, as
+suggested by you, i will use '='
 
-The is_per_worktree_ref function and associated docs learn that
-refs/worktree/ is per-worktree, as does the git_path code in path.c
+Thanks again! :)
 
-The ref-packing functions learn that refs beginning with
-refs/worktree/ should not be packed (since packed-refs is common
-rather than per-worktree).
-
-Signed-off-by: David Turner <dturner@twopensource.com>
----
-
-This implements the very simple solution of making refs/worktree/
-per-worktree, as we discussed on the PATCH/RFC first version of this
-patch.
-
-Note that git for-each-ref may have inconsistent behavior (I think; I
-haven't confirmed this), sometimes showing refs/worktree/* and sometimes
-not.  In the long run, we should fix this, but right now, I don't know
-that it matters, since the only refs affected are these bisect refs.
-
----
- Documentation/glossary-content.txt |  5 +++--
- path.c                             | 15 ++++++++++++---
- refs.c                             |  7 ++++++-
- t/t1400-update-ref.sh              | 16 ++++++++++++++++
- t/t3210-pack-refs.sh               |  7 +++++++
- 5 files changed, 44 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 8c6478b..5c707e6 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -413,8 +413,9 @@ exclude;;
- 
- [[def_per_worktree_ref]]per-worktree ref::
- 	Refs that are per-<<def_working_tree,worktree>>, rather than
--	global.  This is presently only <<def_HEAD,HEAD>>, but might
--	later include other unusual refs.
-+	global.  This is presently only <<def_HEAD,HEAD>> and any refs
-+	that start with `refs/worktree/`, but might later include other
-+	unusual refs.
- 
- [[def_pseudoref]]pseudoref::
- 	Pseudorefs are a class of files under `$GIT_DIR` which behave
-diff --git a/path.c b/path.c
-index 10f4cbf..da0f767 100644
---- a/path.c
-+++ b/path.c
-@@ -92,8 +92,9 @@ static void replace_dir(struct strbuf *buf, int len, const char *newdir)
- }
- 
- static const char *common_list[] = {
-+	"/refs", /* special case, since refs/worktree/ is per-worktree */
- 	"/branches", "/hooks", "/info", "!/logs", "/lost-found",
--	"/objects", "/refs", "/remotes", "/worktrees", "/rr-cache", "/svn",
-+	"/objects", "/remotes", "/worktrees", "/rr-cache", "/svn",
- 	"config", "!gc.pid", "packed-refs", "shallow",
- 	NULL
- };
-@@ -116,8 +117,16 @@ static void update_common_dir(struct strbuf *buf, int git_dir_len)
- 			is_dir = 1;
- 		}
- 		if (is_dir && dir_prefix(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
--			return;
-+			/*
-+			 * The first entry in common_list is refs, and
-+			 * refs/worktree is *not* common.
-+			 */
-+
-+			if (p != common_list ||
-+			    !dir_prefix(base, "refs/worktree")) {
-+				replace_dir(buf, git_dir_len, get_git_common_dir());
-+				return;
-+			}
- 		}
- 		if (!is_dir && !strcmp(base, path)) {
- 			replace_dir(buf, git_dir_len, get_git_common_dir());
-diff --git a/refs.c b/refs.c
-index e6fc3fe..d43bfe1 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2656,6 +2656,10 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
- 	struct ref_entry *packed_entry;
- 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
- 
-+	/* Do not pack per-worktree refs: */
-+	if (starts_with(entry->name, "refs/worktree/"))
-+		return 0;
-+
- 	/* ALWAYS pack tags */
- 	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref)
- 		return 0;
-@@ -2850,7 +2854,8 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 
- static int is_per_worktree_ref(const char *refname)
- {
--	return !strcmp(refname, "HEAD");
-+	return !strcmp(refname, "HEAD") ||
-+		starts_with(refname, "refs/worktree/");
- }
- 
- static int is_pseudoref_syntax(const char *refname)
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 9d21c19..c9fd1ca 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -1131,4 +1131,20 @@ test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches
- )
- '
- 
-+test_expect_success 'handle per-worktree refs in refs/worktree' '
-+	git commit --allow-empty -m "initial commit" &&
-+	git worktree add -b branch worktree &&
-+	(
-+		cd worktree &&
-+		git commit --allow-empty -m "test commit"  &&
-+		git update-ref refs/worktree/something HEAD &&
-+		git rev-parse refs/worktree/something > ../worktree-head
-+	) &&
-+	! test -e .git/refs/worktree &&
-+	test_must_fail git rev-parse refs/worktree/something &&
-+	git update-ref refs/worktree/something HEAD &&
-+	git rev-parse refs/worktree/something > main-head &&
-+	! test_cmp main-head worktree-head
-+'
-+
- test_done
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 8aae98d..c54cd29 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -160,6 +160,13 @@ test_expect_success 'pack ref directly below refs/' '
- 	test_path_is_missing .git/refs/top
- '
- 
-+test_expect_success 'do not pack ref in refs/worktree' '
-+	git update-ref refs/worktree/local HEAD &&
-+	git pack-refs --all --prune &&
-+	! grep refs/worktree/local .git/packed-refs >/dev/null &&
-+	test_path_is_file .git/refs/worktree/local
-+'
-+
- test_expect_success 'disable reflogs' '
- 	git config core.logallrefupdates false &&
- 	rm -rf .git/logs
--- 
-2.0.4.315.gad8727a-twtrsrc
+On Tue, Aug 11, 2015 at 4:17 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Aug 10, 2015 at 6:29 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> On Mon, Aug 10, 2015 at 2:54 AM, Gaurav Chhabra
+>> <varuag.chhabra@gmail.com> wrote:
+>>> Apologies for the delay in reply! I tried your suggestion and it
+>>> works. Thanks! :)
+>>>
+>>> I'm curious why integer comparison is throwing error. Shouldn't i be
+>>> comparing numbers with numeric operator?
+>>
+>> Yes, but shell doesn't treat hex numbers as numbers. So it will work
+>> only if the string is a decimal number.
+>
+> This particular case deserves a bit more explanation. The expression
+> in question was this:
+>
+>     if [[ "$new_sha" -eq "$NULL" ]]; then
+>
+> where 'new_sha' was 9226289d2416af4cb7365d7aaa5e382bdb3d9a89.
+>
+> In Bash, inside the [[ .. ]], it did attempt evaluating the SHA1 as a
+> *decimal* number, however, when it encountered the "d", it complained
+> that it was outside the allowed range of decimal digits ("0"..."9").
+> Had the SHA1 been prefixed by a "0x", the [[...]] context would have
+> dealt with it just fine.
+>
+> Outside the [[...]] context, arguments to -eq do need to be base-10 integers.
+>
+> Nevertheless, a SHA1 is effective an opaque value. There's little, if
+> anything, to be gained by treating it as a numeric quantity, hence
+> string '=' makes more sense than numeric '-eq'.
