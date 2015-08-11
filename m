@@ -1,68 +1,87 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3] worktree: add 'list' command
-Date: Mon, 10 Aug 2015 22:55:25 -0400
-Organization: Twitter
-Message-ID: <1439261725.5283.9.camel@twopensource.com>
-References: <1439239982-42826-1-git-send-email-rappazzo@gmail.com>
-	 <1439239982-42826-2-git-send-email-rappazzo@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 04/17] add_to_alternates_file: don't add duplicate entries
+Date: Tue, 11 Aug 2015 06:00:20 +0200
+Message-ID: <55C97354.7080008@alum.mit.edu>
+References: <20150810092731.GA9027@sigill.intra.peff.net> <20150810093446.GD30981@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, sunshine@sunshineco.com, git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 04:55:36 2015
+Cc: Jim Hill <gjthill@gmail.com>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 11 06:01:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZOziu-0004G1-Qk
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 04:55:33 +0200
+	id 1ZP0kJ-00080s-Hg
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 06:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933630AbbHKCz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2015 22:55:28 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33694 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932991AbbHKCz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2015 22:55:27 -0400
-Received: by igbpg9 with SMTP id pg9so82481710igb.0
-        for <git@vger.kernel.org>; Mon, 10 Aug 2015 19:55:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=CzKKMaQeDG/7t3O4IzPjtxn/tkszWTUp4UGuwn/UlKo=;
-        b=HcKqmZssorIqv7O4jbjRjtOSGEV30Du3GLhl7spUPWDSPSrX+udFj954EAEOR6rpzP
-         iHhKn4IIpMg9IpaMlF99z/ENe4mtulsM59/Ax8aoNN93PvVXkAXWUAYxnDvabx6ni9EL
-         P9vpWpgBClJmji3FzgoUAORYHw+IBohlcdk1SSaouYGN6DQ/FZXkTba6PYfgmU9hM666
-         /Shj4CHE8lPxB/gfWjeD2+eNansCDzfZWKz6bXdQDhY3VVJUXhl4Q+T4LQ34D83SDkm0
-         zey7siTHrkIZoPiY0udDKTwoCFXBl3d5NBxll2rXXmDCk+7M3kyZoYGpubmF7Fqpuw3T
-         GOng==
-X-Gm-Message-State: ALoCoQlO9oxEu1Vm00jNFIc+eav1BNT3BDhuF4/sLhZeULYb/oUPsETpTbBOG6D2yYsPBxiK4aVR
-X-Received: by 10.50.108.98 with SMTP id hj2mr14505073igb.52.1439261727397;
-        Mon, 10 Aug 2015 19:55:27 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id g12sm620169ioe.28.2015.08.10.19.55.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Aug 2015 19:55:26 -0700 (PDT)
-In-Reply-To: <1439239982-42826-2-git-send-email-rappazzo@gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1751860AbbHKEAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 00:00:46 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:45843 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751359AbbHKEAi (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2015 00:00:38 -0400
+X-AuditID: 1207440e-f79516d0000012b3-09-55c9735644ab
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 3A.16.04787.65379C55; Tue, 11 Aug 2015 00:00:22 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB0155.dip0.t-ipconnect.de [93.219.1.85])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7B40Lmo009293
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 11 Aug 2015 00:00:22 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <20150810093446.GD30981@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqBtWfDLUYMkKC4uuK91MFnOXfGa2
+	+NHSw+zA7LFz1l12j2e9exg9Pm+SC2CO4rZJSiwpC85Mz9O3S+DOePT6JEvBRK6KrZ8+sDQw
+	PmXvYuTgkBAwkVi83LCLkRPIFJO4cG89WxcjF4eQwGVGiZ3vLzNCOGeZJOb96mEGqeIV0JZY
+	1dXECmKzCKhKnD3/CcxmE9CVWNTTzAQyVFQgSOL1y1yIckGJkzOfsIDYIgJGEjc+fGMDKWEW
+	UJDYdN4XJCws4Cdx7NEysOlCAhkSm5p+gE3kFLCWuP7oKzuIzSygLvFn3iVmCFteYvvbOcwT
+	GAVmIdkwC0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGuvlZpbopaaUbmKEBC7f
+	Dsb29TKHGAU4GJV4eAU8T4YKsSaWFVfmHmKU5GBSEuXlKAAK8SXlp1RmJBZnxBeV5qQWH2KU
+	4GBWEuF95QSU401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CyWpwcAjMODd3OpMU
+	S15+XqqSBO+RQqAhgkWp6akVaZk5JQilTBycIIu4pESKU/NSUosSS0sy4kHRG18MjF+QFA/Q
+	DU0g7bzFBYm5QFGI1lOMilLivOtAEgIgiYzSPLixsDT1ilEc6GNh3mMgVTzAFAfX/QpoMBPQ
+	YLvAEyCDSxIRUlINjDwRHgHXfi1+wt/q2d/BY9PGpSG6NqB0s4RMt73N2TLz2hN71ppt91m0
+	12+e3wQxzvlL255cuHXxpEfXeoOmtSdCDYrCJWM3BM/+xfNFt7fbc/fOPX3HjPyP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275671>
 
-On Mon, 2015-08-10 at 16:53 -0400, Michael Rappazzo wrote:
-> +			while ((d = readdir(dir)) != NULL) {
+On 08/10/2015 11:34 AM, Jeff King wrote:
+> The add_to_alternates_file function blindly uses
+> hold_lock_file_for_append to copy the existing contents, and
+> then adds the new line to it. This has two minor problems:
+> 
+>   1. We might add duplicate entries, which are ugly and
+>      inefficient.
+> 
+>   2. We do not check that the file ends with a newline, in
+>      which case we would bogusly append to the final line.
+>      This is quite unlikely in practice, though, as we call
+>      this function only from git-clone, so presumably we are
+>      the only writers of the file (and we always add a
+>      newline).
+> 
+> Instead of using hold_lock_file_for_append, let's copy the
+> file line by line, which ensures all records are properly
+> terminated. If we see an extra line, we can simply abort the
+> update (there is no point in even copying the rest, as we
+> know that it would be identical to the original).
 
-I think it would be useful to break this loop out into a
-for_each_worktree function.
+Do we have reason to expect that a lot of people have alternates files
+that already contain duplicate lines? You say that this function is only
+called from `git clone`, so I guess the answer is "no".
 
-While looking into per-worktree ref stuff, I have just noticed that git
-prune will delete objects that are only referenced in a different
-worktree's detached HEAD.  To fix this, git prune will need to walk over
-each worktree, looking at that worktree's HEAD (and other per-worktree
-refs).  It would be useful to be able to reuse some of this code for
-that task.
+But if I'm wrong, it might be friendly to de-dup the existing lines
+while copying them.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
