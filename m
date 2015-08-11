@@ -1,81 +1,107 @@
-From: Johannes Schauer <josch@debian.org>
-Subject: bug: git-archive does not use the zip64 extension for archives with more
- than 16k entries
-Date: Tue, 11 Aug 2015 12:40:56 +0200
-Message-ID: <20150811104056.16465.58131@localhost>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v3] worktree: add 'list' command
+Date: Tue, 11 Aug 2015 07:41:21 -0400
+Message-ID: <CANoM8SWeqxD2vWLQmEfxxxn8Dz4yPfjGOoOH=Azn1A3So+wz2Q@mail.gmail.com>
+References: <1439239982-42826-1-git-send-email-rappazzo@gmail.com>
+ <1439239982-42826-2-git-send-email-rappazzo@gmail.com> <xmqqr3nau74h.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="pgp-sha256"; boundary="===============0590333875916235476=="
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 11 12:50:56 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 13:41:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZP78w-0008HG-CL
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 12:50:54 +0200
+	id 1ZP7wF-0002Ff-GQ
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Aug 2015 13:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934032AbbHKKut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2015 06:50:49 -0400
-Received: from fulda116.server4you.de ([62.75.219.19]:36242 "EHLO
-	fulda116.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755246AbbHKKus (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2015 06:50:48 -0400
-X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Aug 2015 06:50:48 EDT
-Received: from localhost (win7217.informatik.uni-wuerzburg.de [132.187.9.217])
-	by mister-muffin.de (Postfix) with ESMTPSA id EA40280289
-	for <git@vger.kernel.org>; Tue, 11 Aug 2015 12:40:56 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: alot/0.3.6
+	id S934342AbbHKLlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2015 07:41:44 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:36639 "EHLO
+	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934048AbbHKLlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2015 07:41:42 -0400
+Received: by oiev193 with SMTP id v193so72755440oie.3
+        for <git@vger.kernel.org>; Tue, 11 Aug 2015 04:41:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HS+0LFc5x9o3SlTTUS+E6GbQAXHMYSywZLdO4OQH2Bs=;
+        b=qCVvDNCL3lgWhjbbrm6jUpyNUH9xzurz7nC8Ou7QU59d7FpLaFIliaOUggkDvfi67r
+         fFefs+voEiYAIYPEP/b9NW3pmO5JflpaJ5LZ/7J47+oLwr1Q1mbzKwDYD5bI/qkYnopd
+         0JxzQ7VAI9ZS6k1Vs3SbQsbcR4VP1IYVU51hWCoRuzJUTHI3F+OUg/+06WT9gkrC/pRE
+         1MCXjQhZZytcPwlr0TWzrJ6UK9NISGE8yltQdLP8tz2I0jI0aWkhYwiMf0fZXBILhY9x
+         wv2Q3T/pSv9ZsDECM45zbKxllE7f9q4XOUfI+BnT+ahfENFCZPl+mzbD7uU1hIfr3stK
+         zmpw==
+X-Received: by 10.202.67.67 with SMTP id q64mr23471988oia.124.1439293301311;
+ Tue, 11 Aug 2015 04:41:41 -0700 (PDT)
+Received: by 10.202.232.213 with HTTP; Tue, 11 Aug 2015 04:41:21 -0700 (PDT)
+In-Reply-To: <xmqqr3nau74h.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275683>
 
---===============0590333875916235476==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+On Mon, Aug 10, 2015 at 6:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Rappazzo <rappazzo@gmail.com> writes:
+>
+>> +static int list(int ac, const char **av, const char *prefix)
+>> +{
+>> +     int main_only = 0;
+>> +     struct option options[] = {
+>> +             OPT_BOOL(0, "main-only", &main_only, N_("only list the main worktree")),
+>> +             OPT_END()
+>> +     };
+>
+> Hmm, main-only is still there?
 
-Hi,
+Sorry, I missed that.
 
-for repositories with more than 16k files and folders, git-archive will cre=
-ate
-zip files which store the wrong number of entries. That is, it stores the
-number of entries modulo 16k. This will break unpackers that do not include
-code to support this brokenness.
+>
+>> +     int is_bare = is_bare_repository();
+>
+> Please do not introduce decl-after-stmt.
 
-Instead, git-archive should use the zip64 extension to handle more than 16k
-files and folders correctly.
+Since I reused this value below, I thought it would be acceptable.
 
-Thanks!
+>> +     if (is_bare) {
+>> +             strbuf_addstr(&main_path, absolute_path(common_dir));
+>
+> Hmm, interesting.
+>
+> Because .git/config is shared, core.bare read from that tells us if
+> the "main" one is bare, even if you start this command from one of
+> its linked worktrees.  So in that sense, this test of is_bare
+> correctly tells if "main" one is a bare repository.
+>
+> But that by itself feels wrong.  Doesn't the presense of a working
+> tree mean that you should not get "is_bare==true" in such a case
+> (i.e. your "main" one is bare, you are in a linked worktree of it
+> that has the index and the working tree)?
 
-cheers, josch
+Is is even correct for a bare repo to be included in the list?  I
+think that is part of what you are asking here.
 
---===============0590333875916235476==
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Description: signature
-Content-Type: application/pgp-signature; name="signature.asc"; charset="us-ascii"
+>
+>> +             strbuf_strip_suffix(&main_path, "/.");
+>
+> In any case, what is that stripping of "/." about?  Who is adding
+> that extra trailing string?
+>
+> What I am getting at is (1) perhaps it shouldn't be adding that in
+> the first place, and (2) if some other code is randomly adding "/."
+> at the end, what guarantees you that you would need to strip it only
+> once here---if the other code added that twice, don't you have to
+> repeatedly remove "/." from the end?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJVydE4AAoJEPLLpcePvYPhlV8QAJ5mAaqOTmJNvpb1hnlms9n8
-1gRDKDi6zT0CYz3eJfPcuL31FNQ3u7fIsiyix2O+TEz6tzkPKSI7yCOA/B0gFDjs
-Oy7srAFlpSHoTpTPfB40ANWDzCbN60YrfCjti1egnSz8qOa/VnZrHPpLQTNXE9eM
-nmdZLWTylDeUjQvmfHgd8SuL4pfi2adSfo6duEgWhV5kMuQVN1SU8jVTm8vl+kbx
-8KzY2bG5H+IXGC3wKXi/v6/e/1odRULS5j/4JDzfycD2+FHi4T4g0HZ9JKLsW7Jq
-3y2qYA3WZddcR5rwEgiv81WP8utP1b/Hw/nRfrLUfqPKwZoIHtqwTxyMgytIprLi
-HJZ7kvGjTRLMHJfXZ2N3EpE3aQBzJy5v1Pg4nSVh3GLgTvQf43vLAgoT64bpE/iz
-oqoMC5fOAPJsPir4oZStXWa8tUmlKWHWP7otMsV3yv16FSW7F/9PZSPfBf2gNWMk
-K+zInaDbaxSgPkU52JSc8MRhxjT5rL+p9cDv7kkMITquNkCMtjZ8F9x5yfW7uz4H
-UE1qPRV5tLbizbgzkXH6HLyNCYSVPM7iSow10dZ4ZYVdgr8abnORZumCTZtus+rl
-zqFvrSEal5m2UFYV/7Jw6ZA2D1MMcMjlSt57Hw8uXVhKDpEeR0QkQCVMPnRi5RBo
-/o9kMU+joF8YjNYo4u9m
-=ncn0
------END PGP SIGNATURE-----
-
---===============0590333875916235476==--
+In the case of a common dir, the value returned is just '.'.  I wanted
+to resolve that to the full path, so I called
+`absolute_path(common_dir)`.  Hence the trailing "/.".  Similarly, in
+the main repo, the common dir is just ".git", and I handled that by
+using `get_git_work_tree()`.
