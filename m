@@ -1,52 +1,53 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] revisions --stdin: accept CRLF line terminators
-Date: Tue, 11 Aug 2015 22:21:33 +0200
-Message-ID: <55CA594D.5020103@kdbg.org>
+Subject: [PATCH ee/clean-remove-dirs] t7300-clean: require POSIXPERM
+ for chmod 0 test
+Date: Tue, 11 Aug 2015 22:29:48 +0200
+Message-ID: <55CA5B3C.3010903@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 To: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCJYV6HBKQIM7MVJVYCRUBERS2AUI@googlegroups.com Tue Aug 11 22:21:39 2015
-Return-path: <msysgit+bncBCJYV6HBKQIM7MVJVYCRUBERS2AUI@googlegroups.com>
+X-From: msysgit+bncBCJYV6HBKQIL3NVJVYCRUBGHXFF3U@googlegroups.com Tue Aug 11 22:29:51 2015
+Return-path: <msysgit+bncBCJYV6HBKQIL3NVJVYCRUBGHXFF3U@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f189.google.com ([209.85.217.189])
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIM7MVJVYCRUBERS2AUI@googlegroups.com>)
-	id 1ZPG3F-0005hE-4I
-	for gcvm-msysgit@m.gmane.org; Tue, 11 Aug 2015 22:21:37 +0200
-Received: by lbck9 with SMTP id k9sf16195429lbc.1
-        for <gcvm-msysgit@m.gmane.org>; Tue, 11 Aug 2015 13:21:36 -0700 (PDT)
+	(envelope-from <msysgit+bncBCJYV6HBKQIL3NVJVYCRUBGHXFF3U@googlegroups.com>)
+	id 1ZPGBC-0000S5-9f
+	for gcvm-msysgit@m.gmane.org; Tue, 11 Aug 2015 22:29:50 +0200
+Received: by wicul11 with SMTP id ul11sf18554950wic.0
+        for <gcvm-msysgit@m.gmane.org>; Tue, 11 Aug 2015 13:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=to:from:subject:message-id:date:user-agent:mime-version
          :content-type:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:x-spam-checked-in-group:list-post
          :list-help:list-archive:sender:list-subscribe:list-unsubscribe;
-        bh=tNzzshWsXITxK95f+2v8vDRLP00XgW/hLXebWoekc20=;
-        b=nXWyxKG9IOXPf0oBoESB9ae8NuLiqVYeBn9leFsf/WMxBDd1MpUXp7fAJOAQ1KcvSM
-         O1Au94GbI/lX9Aut/7RH4yANp2JGosF55jYv3WtJWkS/yT44sGVFIwQp/8L37gjnBhM3
-         Q5ni9ohYOpkYaNYUkt+53GW9VxIps9Z4JssLZjhtexjs+VLeIV33iPWC3NIDvPQh4xy8
-         xjKMIoBY+E7JKnWLt7cuOICzAptaHU8up5qwwL8SdrnxVT1pqZYGTCWlsKkkesxuh+y+
-         wWD/PqrmeIv3Ch6eIwpBruP0lJh05+VIml1w9UcCCOUgJIyAttz6UOD4hdbeKtjd2M1s
-         CwpQ==
-X-Received: by 10.152.6.40 with SMTP id x8mr198145lax.40.1439324496776;
-        Tue, 11 Aug 2015 13:21:36 -0700 (PDT)
+        bh=qWpwdDdIOinnAQOMPLCTNiRs/pQz48YjDcu+2L7yn6s=;
+        b=Zk4bs18WX8O0yWPsZFua5hOL4Q35McjtW7p49gGtkNhFmwPna8l3RoAicNgDKhkPHJ
+         w9lyCt/7wE4pRYOdVRI/Rb6qhsh5JCpbWo1aL62UCCG7Zn8npPEcdm60SVNJPpzl5zLt
+         xz8YZ2M8bm0Eb6u+eEF2uSoHQnGzs18Iyv2AS7XV3YBNTQmTKqPuzptSt1TKDqxmSpRS
+         PmbVvXALUR+cAEMlSJIhmnavLK/idB7+cC9FpqFWiuhEtrSXn31CCVhoZW3ByLdsAGwv
+         K7P62y7AuWTz3vv9EYeeBvuld5fRYY7Ht5PqOq6gjLtZQu/5Dhz+RjbTT8epTODj6owK
+         J7Rg==
+X-Received: by 10.180.188.240 with SMTP id gd16mr76942wic.18.1439324989973;
+        Tue, 11 Aug 2015 13:29:49 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.234.108 with SMTP id ud12ls923217lac.43.gmail; Tue, 11 Aug
- 2015 13:21:35 -0700 (PDT)
-X-Received: by 10.152.115.196 with SMTP id jq4mr8491292lab.1.1439324495391;
-        Tue, 11 Aug 2015 13:21:35 -0700 (PDT)
+Received: by 10.180.218.103 with SMTP id pf7ls626347wic.10.gmail; Tue, 11 Aug
+ 2015 13:29:49 -0700 (PDT)
+X-Received: by 10.180.35.162 with SMTP id i2mr5896021wij.6.1439324989193;
+        Tue, 11 Aug 2015 13:29:49 -0700 (PDT)
 Received: from bsmtp8.bon.at (bsmtp8.bon.at. [213.33.87.20])
-        by gmr-mx.google.com with ESMTPS id ec7si126924wib.3.2015.08.11.13.21.35
+        by gmr-mx.google.com with ESMTPS id p7si136187wib.1.2015.08.11.13.29.49
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Aug 2015 13:21:35 -0700 (PDT)
+        Tue, 11 Aug 2015 13:29:49 -0700 (PDT)
 Received-SPF: neutral (google.com: 213.33.87.20 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=213.33.87.20;
 Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3mrQYB51Fcz5tlF;
-	Tue, 11 Aug 2015 22:21:34 +0200 (CEST)
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3mrQkh55dnz5tlQ;
+	Tue, 11 Aug 2015 22:29:48 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 84A8C52D0;
-	Tue, 11 Aug 2015 22:21:33 +0200 (CEST)
+	by dx.site (Postfix) with ESMTP id 5FDF052D0;
+	Tue, 11 Aug 2015 22:29:48 +0200 (CEST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.1.0
 X-Original-Sender: j6t@kdbg.org
@@ -65,79 +66,35 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275721>
 
-On Windows, 'git rebase -i' with rebase.missingCommitsCheck set to
-warn or error reports:
-
-   Dropped commits (newer to older):
-   'atal: bad revision '410dee56...
-
-The error comes from the git rev-list --stdin invocation in
-git-rebase--interactive.sh (function check_todo_list). It is caused by
-CRs that end up in the file "$todo".miss, because many tools of the MSYS
-toolset force LF to CRLF conversion when regular files are written via
-stdout.
-
-To fix the error, permit CRLF line terminators when revisions and
-pathspec are read using the --stdin option.
+A test case introduced by 91479b9c (t7300: add tests to document
+behavior of clean and nested git) uses 'chmod 0' to verify that a
+subdirectory that has an unreadable .git file is not removed. This can
+work only when the system pays attention to the permissions set with
+'chmod'. Therefore, set the POSIXPERM prerequisite on the test case.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
  This fixes a new failure in the test suite (t3404.8[67]) on Windows, but
  I got around to debug it only now.
 
- revision.c                |  4 ++++
- t/t6017-rev-list-stdin.sh | 16 ++++++++++++++++
- 2 files changed, 20 insertions(+)
+ t/t7300-clean.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/revision.c b/revision.c
-index cf60c5d..4efedeb 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1641,6 +1641,8 @@ static void read_pathspec_from_stdin(struct rev_info *revs, struct strbuf *sb,
- 		int len = sb->len;
- 		if (len && sb->buf[len - 1] == '\n')
- 			sb->buf[--len] = '\0';
-+		if (len && sb->buf[len - 1] == '\r')
-+			sb->buf[--len] = '\0';
- 		ALLOC_GROW(prune->path, prune->nr + 1, prune->alloc);
- 		prune->path[prune->nr++] = xstrdup(sb->buf);
- 	}
-@@ -1661,6 +1663,8 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 		int len = sb.len;
- 		if (len && sb.buf[len - 1] == '\n')
- 			sb.buf[--len] = '\0';
-+		if (len && sb.buf[len - 1] == '\r')
-+			sb.buf[--len] = '\0';
- 		if (!len)
- 			break;
- 		if (sb.buf[0] == '-') {
-diff --git a/t/t6017-rev-list-stdin.sh b/t/t6017-rev-list-stdin.sh
-index 667b375..34c43cf 100755
---- a/t/t6017-rev-list-stdin.sh
-+++ b/t/t6017-rev-list-stdin.sh
-@@ -75,4 +75,20 @@ test_expect_success 'not only --stdin' '
- 	test_cmp expect actual
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index 32e96da..27557d6 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -499,7 +499,7 @@ test_expect_success 'should not clean submodules' '
+ 	test_path_is_missing to_clean
  '
  
-+test_expect_success 'accept CRLF line terminators' '
-+	cat >expect <<-\EOF &&
-+	7
-+
-+	file-2
-+	EOF
-+	q_to_cr >input <<-\EOF &&
-+	masterQ
-+	^master^Q
-+	--Q
-+	file-2Q
-+	EOF
-+	git log --pretty=tformat:%s --name-only --stdin <input >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+-test_expect_success 'should avoid cleaning possible submodules' '
++test_expect_success POSIXPERM 'should avoid cleaning possible submodules' '
+ 	rm -fr to_clean possible_sub1 &&
+ 	mkdir to_clean possible_sub1 &&
+ 	test_when_finished "rm -rf possible_sub*" &&
 -- 
 2.3.2.245.gb5bf9d3
 
