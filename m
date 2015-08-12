@@ -1,99 +1,152 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4 4/4] notes: teach git-notes about notes.<ref>.merge option
-Date: Wed, 12 Aug 2015 15:51:50 -0700
-Message-ID: <CA+P7+xqa-DFHhoCvi4qRhPNGDpAmb9T3k28GOwuW6gzc4VfPbQ@mail.gmail.com>
-References: <1439326641-9447-1-git-send-email-jacob.e.keller@intel.com>
- <1439326641-9447-5-git-send-email-jacob.e.keller@intel.com>
- <CALKQrgeDuRkXm2LzDOuZDZLOBRXjLmmRvhtXfXScWfLKX+9t=g@mail.gmail.com>
- <xmqqy4hhmedb.fsf@gitster.dls.corp.google.com> <CALKQrgf2hdvNExVbvnP5sVUM4sEh7thj9HLw93LbYWSStNjeYg@mail.gmail.com>
- <CA+P7+xrQnrQdE3OOhdc2-2__V3Huzc+HfGEXKBZULy2JkQR37Q@mail.gmail.com>
- <CA+P7+xp0zhqM4CHmFpKuPyNMTx3DBxiLSOsiwz=byrfTEDj3sA@mail.gmail.com> <xmqqmvxwjfjb.fsf@gitster.dls.corp.google.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: enhanced remote ref namespaces
+Date: Thu, 13 Aug 2015 00:52:58 +0200
+Message-ID: <CALKQrgdVD6HX9_wKUwQn4VK8Rd=SDNAtCJccSZqh6r5vQ35QcA@mail.gmail.com>
+References: <CA+P7+xocd+LE2A+srH0p1qTuXKRXanTp5E+imC1GE+9-biqR6A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 00:52:16 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 00:53:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPesZ-0002s3-Dl
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 00:52:15 +0200
+	id 1ZPetW-0003Qj-9v
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 00:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbbHLWwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 18:52:11 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:35738 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbbHLWwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 18:52:10 -0400
-Received: by igbjg10 with SMTP id jg10so52930347igb.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 15:52:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=v343tMVu+dWjO8OMfFQAXjsTCFKCioodfuKIYQZbye0=;
-        b=0WFXPInAZohI07fptuAaRuGJKl8b/ENGgyRpL9dV6sHseTuNVv14JqeS/7AEfKmSdo
-         lKfDLi1iNasWpQCAyaKg3Q3alcm/nAjj/7mduossRKVAMzhadAACW7HA8ZyXRbHz3uaC
-         tNWSFb/g3pWmaCpPleayz1MoqXMlH79Lxv2CS3xOB7fm/gIqcRZnyoPDjhdpAU0hCkvw
-         4flcjtIE0sig+2Q98yrgnHmgcK1mYRPE3bF6T/tX0KUkf9MmFOc++Qczjb0BwfkV5Uy8
-         sIsuVqSHjvcreuZryk9k2X7JNWkI0NX9I9cyfbnGPfr7KqLqE1dpdydmulH7WUSGqZhd
-         GTVA==
-X-Received: by 10.50.124.97 with SMTP id mh1mr177292igb.92.1439419929515; Wed,
- 12 Aug 2015 15:52:09 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Wed, 12 Aug 2015 15:51:50 -0700 (PDT)
-In-Reply-To: <xmqqmvxwjfjb.fsf@gitster.dls.corp.google.com>
+	id S1751609AbbHLWxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 18:53:09 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:64069 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486AbbHLWxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 18:53:07 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZPetM-000NB6-Ij
+	for git@vger.kernel.org; Thu, 13 Aug 2015 00:53:04 +0200
+Received: by ykdz80 with SMTP id z80so27279449ykd.2
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 15:52:58 -0700 (PDT)
+X-Received: by 10.13.249.198 with SMTP id j189mr36130917ywf.170.1439419978707;
+ Wed, 12 Aug 2015 15:52:58 -0700 (PDT)
+Received: by 10.37.201.134 with HTTP; Wed, 12 Aug 2015 15:52:58 -0700 (PDT)
+In-Reply-To: <CA+P7+xocd+LE2A+srH0p1qTuXKRXanTp5E+imC1GE+9-biqR6A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275828>
 
-On Wed, Aug 12, 2015 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
+On Wed, Aug 12, 2015 at 8:34 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Wed, Aug 12, 2015 at 9:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Some design boundaries:
+>>
+>>  - Moving the remote-tracking branch hierarchy from refs/remotes/$O/*
+>>    to refs/remotes/$O/heads/* would not fly, because it will break
+>>    existing repositories.  Do not even waste time on pursuing
+>>    refs/remotes/$O/{heads,tags,notes...}/*
 >
->> I spoke to soon. We have an "init_notes_check" function which shows
->> that it does refuse to merge outside of refs/notes/* It prevents all
->> notes operations outside of refs/notes
+> even if we maintained new git's abililty to work with this, ie: only
+> external-to-git scripts would break and only for new clones? Maybe we
+> don't want to go this route, but it seems like the way that the
+> original proposal was headed.
+
+I don't think it's worth trying to go that route. Even though it's
+theoretically possible to solve it, the complexity added by e.g.
+multiple git versions operating on the same repository (maybe even
+simultaneously?) suggests that it's much simpler to just go with a new
+clean hierarchy that simply Works for new Git versions, and the older
+versions don't have to deal with at all. IMHO, maybe even going as far
+as incrementing core.repositoryFormatVersion, so that older Git
+versions will refuse to work with new-style repos...
+
+[...]
+>> If somebody got confused, notice that in the above description, I
+>> said refs/remotes/ and refs/remote/.  The former must stay.  The
+>> name of the latter is open to bikeshedding.  Some may prefer a name
+>> that is more distinct (refs/tracking/ or something, perhaps?).  I
+>> happen to prefer a name that is similar, but this preference is very
+>> weak and I can persuaded to go either way.
 >
-> OK.  Then it is OK to limit notes.<ref>.mergestrategy so that <ref>
-> refers to what comes after refs/notes/, because we will not allow
-> merging to happen outside the hierarchy.
+> I don't like it being so similar that we now have typos between
+> remotes and remote.. ie: remotes/<origin> works for heads, but
+> "remotes/<origin>/tags" does not... that sounds like it would get
+> confusing.
+
+I like refs/tracking. At some point I was planning to use refs/peers,
+but that's merely another color for the bikeshed...
+
+> Symlinking the old location seems reasonable to me, as it would leave
+> all the same data in the locations expected by the old tools, while
+> keeping all actual storage in the new location.
 >
-> If you are planning to break that promise, however, <ref> must be
-> always spelled fully (i.e. with refs/notes/ prefix for those inside
-> the hierarchy) to avoid ambiguity.  Otherwise it will be hard to
-> interpret a configuration that does something like this (note that
-> these could come from multiple places, e.g. $HOME/.gitconfig and
-> $GIT_DIR/config):
+> In this way, we would no longer need configuration settings. It
+> honestly doesn't matter to me which direction we symlink either.
 >
-
-Agreed. Today, we do not allow any notes operations at all that
-function outside of refs/notes/*
-
-I suggest we enforce that all configs for merge strategy must be the
-unqualified notation, and not allow the variance of refs/notes/* and
-such that DWIM does on the command line.
-
->     [notes "commits"]
->         mergestrategy = concatenate
->     [notes "notes/commits"]
->         mergestrategy = cat_sort_uniq
->     [notes "refs/notes/commits"]
->         mergestrategy = overwrite
+> As for the other complex issue is what to do about "refs/tracking/<origin>/tags
 >
-> The three entries in the above example obviously are all meant to
-> refer to the same refs/notes/commits notes tree, and the usual "last
-> one wins" rule should apply.  But with the recent git_config_get_*()
-> interface, you cannot tell which one among them was given the last,
-> overriding the previous entries.
+> The big discussion on the original thread is about how tags would
+> work. I'm personally ok with *ignoring* tags and leaving it the way it
+> is for now, and just doing this as a solid place to stick
+> notes/replace/etc.
 
-Ya, I'd like to avoid this if possible.
+That is probably the best plan for now: Solve most of the problem, and
+punt on the controversial parts.
 
-Regards,
-Jake
+> Or, we could go the route of continuing to stick tags into "refs/tags"
+> at the same time as also sticking them into
+> refs/tracking/<origin>/tags
+
+I don't like the copying approach; makes it harder to deduce which tags
+are (truly) local, and which came from a remote.
+
+> Or.. we could go the full route of fixing up lookup of tags such that
+> we put tags in refs/tracking/<origin>/tags and we have it lookup tags
+> there via something like:
+>
+> 1) local tags preferred
+>
+> 2) any remote tag as long as all remote tags point to the same commit
+> object (how we select which to use is not very relevant here... we
+> could actually go with as long as the tag object is the same so two
+> remotes with annotated tags pointing to the same object but different
+> tag id would be ambiguous as well)
+>
+> 3) warn the user must disambiguate the tag via the remote name.
+
+As was probably obvious from the old threads, this is where I'd like
+to go. Eventually.
+
+> We could also teach fetch to warn about remote tags which are
+> ambiguous (ie: two remotes with same named tag objects pointing to
+> different things)
+
+Agreed. This would actually be a good improvement Right Now, without
+changing any ref layout at all: If get fetch would otherwise copy a
+remote tag into refs/tags/*, but doesn't because there is already a
+_different_ tag in its place, then warn loudly to the user, so that
+user has a chance to discover the tag difference.
+
+> How goes this sound? I think it makes sense... I don't know how to do
+> all this without breaking some backwards compatibility though... I
+> think we can maintain expectations for the general user but I feel
+> that any change here will break *someones* scripts.
+
+As I said above: Punt on tags for now, and you might be able to not
+break anyone's scripts (and if you do, it's probably a poorly written
+script). Provided that you leave a symlink to/from refs/remotes/$O in
+place, you're AFAICS only adding functionality, not (visibly) changing
+existing behavior.
+
+
+BTW, thanks for resurrecting this topic!
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
