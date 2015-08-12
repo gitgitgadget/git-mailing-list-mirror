@@ -1,105 +1,114 @@
-From: Jacob Keller <jacob.keller@gmail.com>
+From: Johan Herland <johan@herland.net>
 Subject: Re: [PATCH v4 4/4] notes: teach git-notes about notes.<ref>.merge option
-Date: Wed, 12 Aug 2015 14:43:17 -0700
-Message-ID: <CA+P7+xpsjX=4j=7w7DJ+EnO-uBfq53_Bmwk8AZ4frAy=iTQ7ZQ@mail.gmail.com>
+Date: Wed, 12 Aug 2015 23:46:43 +0200
+Message-ID: <CALKQrgf2hdvNExVbvnP5sVUM4sEh7thj9HLw93LbYWSStNjeYg@mail.gmail.com>
 References: <1439326641-9447-1-git-send-email-jacob.e.keller@intel.com>
- <1439326641-9447-5-git-send-email-jacob.e.keller@intel.com>
- <CALKQrgeDuRkXm2LzDOuZDZLOBRXjLmmRvhtXfXScWfLKX+9t=g@mail.gmail.com>
- <xmqqy4hhmedb.fsf@gitster.dls.corp.google.com> <CA+P7+xrSAo43=-3q-7SPxerYPKU3+T75dG5dTE=H8odicRDxSg@mail.gmail.com>
- <xmqqa8twl3x9.fsf@gitster.dls.corp.google.com> <CA+P7+xournf+1Cqnr-AAO+EzUee3KfEevFQLhXkqyfQGBvPRpQ@mail.gmail.com>
+	<1439326641-9447-5-git-send-email-jacob.e.keller@intel.com>
+	<CALKQrgeDuRkXm2LzDOuZDZLOBRXjLmmRvhtXfXScWfLKX+9t=g@mail.gmail.com>
+	<xmqqy4hhmedb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
 	Git mailing list <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jacob Keller <jacob.keller@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 23:43:44 2015
+X-From: git-owner@vger.kernel.org Wed Aug 12 23:46:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPdoD-0003DM-TC
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:43:42 +0200
+	id 1ZPdrN-0005AF-3a
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbbHLVni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 17:43:38 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:36657 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751078AbbHLVnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 17:43:37 -0400
-Received: by igxp17 with SMTP id p17so9136754igx.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:43:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=VO94TKN9eb553QdI93RbhdVa5ur7kXTNSz12SJ5pBXA=;
-        b=WRLGUmo1QLsTXpinJdVSkLNu3xXXXPDVUsZlpYwJ66gO3H1RANZW4Kahy71K+YnGN1
-         LMp6mErhG3svLf11MnrHnN2ZwzPwZJibluy2uF5oe8LKSzaVY1e/hRW/UEiwtTE4WAEX
-         g61i4V6r40JBUTfRw38HBXSjgOXBF4O56EEBITFnGjxBRXe3Xj4K5xQCx2FFkmCKYxsL
-         oQx+xsqL9EvpslMAulGFkImEHKFFdKOUD/889QDxgLwAdAlNd/k6hqDJhFw4jngjB3rp
-         GZzgkCJ3NlR/cxxRjN7vkLwcNWvzacoECVe0FOnUSqVBr10SpvtC7qp3rcvJaAfrz/K4
-         +MpA==
-X-Received: by 10.50.124.97 with SMTP id mh1mr27107763igb.92.1439415817035;
- Wed, 12 Aug 2015 14:43:37 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Wed, 12 Aug 2015 14:43:17 -0700 (PDT)
-In-Reply-To: <CA+P7+xournf+1Cqnr-AAO+EzUee3KfEevFQLhXkqyfQGBvPRpQ@mail.gmail.com>
+	id S1751829AbbHLVqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 17:46:52 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:59946 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751808AbbHLVqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 17:46:52 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZPdrF-000Lgj-7g
+	for git@vger.kernel.org; Wed, 12 Aug 2015 23:46:49 +0200
+Received: by ykaz130 with SMTP id z130so26139900yka.0
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:46:43 -0700 (PDT)
+X-Received: by 10.170.114.78 with SMTP id g75mr36524135ykb.94.1439416003121;
+ Wed, 12 Aug 2015 14:46:43 -0700 (PDT)
+Received: by 10.37.201.134 with HTTP; Wed, 12 Aug 2015 14:46:43 -0700 (PDT)
+In-Reply-To: <xmqqy4hhmedb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275813>
 
-On Wed, Aug 12, 2015 at 12:16 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> Oh interesting. I did a test. If you provide a fully qualified ref not
-> inside refs/notes, then it assumes you meant refs/notes/refs/foo/y
-> rather than refs/foo/y
+On Wed, Aug 12, 2015 at 4:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
+>> I know that we don't yet have a "proper" place to put remote notes refs,
+>> but the <ref> in notes.<ref>.merge _must_ be a "local" notes ref (you even
+>> use the <localref> notation in the documentation below). Thus, I believe
+>> we can presume that the local notes ref must live under refs/notes/*,
+>> and hence drop the "refs/notes/" prefix from the config key (just like
+>> branch.<name>.* can presume that <name> lives under refs/heads/*).
 >
-> I need to do some more digging on this to determine the exact thing going on...
+> I am OK going in that direction, as long as we promise that "notes
+> merge" will forever refuse to work on --notes=$ref where $ref does
+> not begin with refs/notes/.
+
+If we don't already refuse to merge into a ref outside refs/notes, then
+I would consider that a bug to be fixed, and not some corner use case that
+we must preserve for all future.
+
+After all, we do already have a test in t3308 named 'fail to merge into
+various non-notes refs', where one of the non-notes ref being tested are:
+
+  test_must_fail git -c "core.notesRef=refs/heads/master" notes merge x
+
+>> Except that this patch in its current form will occupy the .merge config
+>> key...
+>>
+>> Can you rename to notes.<name>.mergestrategy instead?
 >
-> Regards,
-> Jake
+> This is an excellent suggestion.
+>
+>> Or even better, take inspiration from branch.<name>.mergeoptions,
+>
+> Please don't.
+>
+> That is one of the design mistakes that was copied from another
+> design mistake (remotes.*.tagopt).  I'd want to see us not to repeat
+> these design mistakes.
+>
+> These configuration variables were made to take free-form text value
+> that is split according to shell rules, primarily because it was
+> expedient to implement.  Read its value into a $variable and put it
+> at the end of the command line to let the shell split it.  "tagopt"
+> was done a bit more carefully in that it made to react only with a
+> fixed string "--no-tags", so it was hard to abuse, but "mergeoptions"
+> allowed you to override something that you wouldn't want to (e.g. it
+> even allowed you to feed '--message=foo').
+>
+> Once you start from such a broken design, it would be hard to later
+> make it saner, even if you wanted to.  You have to retroactively
+> forbid something that "worked" (with some definition of "working"),
+> or you have to split, parse and then reject something that does not
+> make sense yourself, reimplementing dequote/split rule used in the
+> shell---which is especially problematic when you no longer write in
+> shell scripts.
+>
+> So a single string value that names one of the supported strategy
+> stored in notes.<name>.mergestrategy is an excellent choice.  An
+> arbitrary string in notes.<name>.mergeoptions is to be avoided.
 
-I did some more digging. If you pass a notes ref to "--refs" option,
-that requires all notes to be bound to refs/notes/* and does not allow
-passing of arbitrary refs. However, you can set the environment
-variable GIT_NOTES_REF or core.notesRef to a fully qualified
-reference.
+Understood. And agreed.
 
-That seems very arbitrary that --ref works by expanding notes and the
-environment variable and configuration option do not... [1]
+...Johan
 
-I think this inconsistency is very weird, because *most* people will
-not use refs/notes/* etc. This makes it so that --refs forces you to
-use refs/notes/* or it will prefix it for you... ie: you can use
-notes/x, refs/notes/x, x, but if you use refs/tags/x it will DWIM into
-refs/notes/refs/tags/x
-
-I think this is very confusing that --refs doesn't behave the same as
-other sections... either we should enforce this on all refs or we
-should fix the DWIM-ery to be consistent.
-
-that is, we should fix DWIM-ery to be:
-
-(1) if it starts with refs/* leave it alone
-
-(2) if it starts with notes/*, prefix it with refs/
-
-(3) otherwise prefix it with refs/notes/
-
-But that way, refs/some-other-notes/ will work fine instead of
-becoming something else.
-
-We should also fix reads of environment variable etc such taht we
-enforce these values always are fully qualified and begin with refs.
-Otherwise, use of --refs and the environment variable don't allow the
-same formats.
-
-Regards,
-Jake
-
-[1] 8ef313e1ec3b ("builtin/notes.c: Split notes ref DWIMmery into a
-separate function")
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
