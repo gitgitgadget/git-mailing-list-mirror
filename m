@@ -1,84 +1,84 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v10 03/13] ref-filter: introduce ref_formatting_state
-Date: Wed, 12 Aug 2015 18:56:40 +0530
-Message-ID: <CAOLa=ZTKvNq0meFfHA8CjWsXOznmW4QUudQnizypzThhBQvFZg@mail.gmail.com>
-References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
- <1439129506-9989-4-git-send-email-Karthik.188@gmail.com> <xmqqd1ytsnfx.fsf@gitster.dls.corp.google.com>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] http: add support for specifying the SSL version
+Date: Wed, 12 Aug 2015 15:33:19 +0200 (CEST)
+Message-ID: <950187984.739852.1439386399510.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1439384456-16335-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 15:27:17 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 15:33:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPW3o-0000D9-0S
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 15:27:16 +0200
+	id 1ZPW9i-0003ga-T6
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 15:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbbHLN1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 09:27:12 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:34096 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751900AbbHLN1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 09:27:11 -0400
-Received: by obbfr1 with SMTP id fr1so12386762obb.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 06:27:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7RRDAidctBf4PkNxFQpqEmtZa+6vRNr7nK8NXUuAOz8=;
-        b=iMHrPVAqu3fWl5JYB7FNe9Rc9bUB74nxuXznio/b+bobYLLyvdnd4kyNub3OxKtATd
-         2Mh5RYPffZbf3uCKoxq/VPDWSJJnAYKweHaa1ABnmh7QdDISE6MVWp/6XS8HgmcitAEG
-         VNsOwpfhHtfWrVNXaZeliaZF9LEt5Em1l1+rZMucdVXSSnAHW9SlBSzb4ZOUMwbz7Cwb
-         8lRelAGYc28bzEUgm5u1kpt+cjm/4yrSjwGrG5cAWRexgbJQ43PROs0ei6pqQWgmt0Bv
-         Wh2L5I7JrmANgpRzT2yjaHXKoGCuDX/+AmK6Q5z5NtyKbWasFhFOlYSLtQ7xNTbdxiX3
-         8nLw==
-X-Received: by 10.60.42.230 with SMTP id r6mr32042291oel.9.1439386030178; Wed,
- 12 Aug 2015 06:27:10 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Wed, 12 Aug 2015 06:26:40 -0700 (PDT)
-In-Reply-To: <xmqqd1ytsnfx.fsf@gitster.dls.corp.google.com>
+	id S1752510AbbHLNdS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2015 09:33:18 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:42434 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751977AbbHLNdS convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 09:33:18 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Aug 2015 09:33:17 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id C1D402112;
+	Wed, 12 Aug 2015 15:26:56 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9kw3kFX5gkle; Wed, 12 Aug 2015 15:26:56 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id AE8D820FE;
+	Wed, 12 Aug 2015 15:26:56 +0200 (CEST)
+In-Reply-To: <1439384456-16335-1-git-send-email-gitter.spiros@gmail.com>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Win)/8.0.9_GA_6191)
+Thread-Topic: http: add support for specifying the SSL version
+Thread-Index: J4kB9z57wUVXvMgyRM9YQY+oRuZmtg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275766>
 
-On Tue, Aug 11, 2015 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>               get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
->> -             format_quote_value(atomv, quote_style, &output);
->> +             set_formatting_state(atomv, &state);
->> +             format_quote_value(atomv, &state);
->> +             perform_state_formatting(&state, &final_buf);
->>       }
->>       if (*cp) {
->>               sp = cp + strlen(cp);
->> -             append_non_atom(cp, sp, &output);
->> +             append_non_atom(cp, sp, &state);
->> +             perform_state_formatting(&state, &final_buf);
->>       }
->
-> With the two helpers being very sketchy at this stage, it is very
-> hard to judge if they make sense.  At the conceptual level, I can
-> see that set-formatting-state is to allow an atom to affect the
-> state before the value of the atom is emitted into the buffer.
-> I cannot tell what perform-state-formatting is meant to do from
-> these call sites.
+Hello, Elia
 
+Elia Pinto <gitter.spiros@gmail.com> writes:
+> +        if (ssl_version !=3D NULL && *ssl_version) {
+> +                if (!strcmp(ssl_version,"tlsv1")) {
+> +                        sslversion =3D CURL_SSLVERSION_TLSv1;
+> +                } else if (!strcmp(ssl_version,"sslv2")) {
+> +                        sslversion =3D CURL_SSLVERSION_SSLv2;
+> +                } else if (!strcmp(ssl_version,"sslv3")) {
+> +                        sslversion =3D CURL_SSLVERSION_SSLv3;
+> +#if LIBCURL_VERSION_NUM >=3D 0x072200
+> +                } else if (!strcmp(ssl_version,"tlsv1.0")) {
+> +                        sslversion =3D CURL_SSLVERSION_TLSv1_0;
+> +                } else if (!strcmp(ssl_version,"tlsv1.1")) {
+> +                        sslversion =3D CURL_SSLVERSION_TLSv1_1;
+> +                } else if (!strcmp(ssl_version,"tlsv1.2")) {
+> +                        sslversion =3D CURL_SSLVERSION_TLSv1_2;
+> +                } else {
+> +                        warning("unsupported ssl version %s : using =
+default",
+> +                        ssl_version);
+> +#endif
+> +                }
+> +        }
 
-True, set formatting state is to ensure that the state is manipulated for
-a given atom.
+I'm curious about what would happen should 'sslVersion' be set to
+'tlsv1.0' (or a value that doesn't belong to the possible values) and
+'LIBCURL_VERSION_NUM' be inferior to '0x072200'.
+Since we wouldn't go through any 'if' and would also skip the 'else'
+case, wouldn't we have a silent 'unsupported ssl version: using
+default' ?
 
-perform_state_formatting() is meant to act on the state set by the atom,
-It performs formatting based on the state values, here is just copies the
-strbuf set within the state to the final_buf.
+So I think that the 'else' case should be outside of the '#if [...]
+#endif'.
 
--- 
-Regards,
-Karthik Nayak
+Thanks,
+R=C3=A9mi
