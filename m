@@ -1,299 +1,228 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 2/4] path: optimize common dir checking
-Date: Wed, 12 Aug 2015 17:57:23 -0400
-Message-ID: <1439416645-19173-2-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 3/4] refs: make refs/worktree/* per-worktree
+Date: Wed, 12 Aug 2015 17:57:24 -0400
+Message-ID: <1439416645-19173-3-git-send-email-dturner@twopensource.com>
 References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu, chriscool@tuxfamily.org,
 	pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Aug 12 23:58:06 2015
+X-From: git-owner@vger.kernel.org Wed Aug 12 23:58:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPe29-0003d9-9H
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:58:05 +0200
+	id 1ZPe21-0003ZI-O5
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673AbbHLV5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751699AbbHLV5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 17:57:54 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:35466 "EHLO
+	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992AbbHLV5x (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 12 Aug 2015 17:57:53 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:36307 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093AbbHLV5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 17:57:52 -0400
-Received: by qgdd90 with SMTP id d90so20234224qgd.3
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:57:51 -0700 (PDT)
+Received: by qkbm65 with SMTP id m65so10050578qkb.2
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:57:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=h/g37IhaB13+869D2NdA6QC3I5PEabDPFNvOYPmsJmc=;
-        b=md+ChJVRBN1VQAiDR+xFBQSIrswLzvAy+GEiLU2X1XnSC0ik1xazuLCNNybtrw8tvq
-         igAIaFZ2+yj9s3wUs9mwaU26eINGTaLxSkOt499E11z+3g359027LICwbggmh64RO/xb
-         DM3oN9vjHHd/GLfuDxDm6h3TwSbZ//rLlf4J3GM2uLWtKiMj9PD0ifzgdglJPGxbqFI7
-         mYIpB72OpC6bvhErZca52MpLTLQaejrZFle4Vg6qPr+bFSnyemf6mq8nKkE63MB4HVxk
-         P09JqSQ3YUL1hvvrgY/X0tmUFyYhotktk7ZNRwm8/t8bxkoQr9sO18D+3lKNr07IJZpQ
-         R8eQ==
-X-Gm-Message-State: ALoCoQlWyazEBMIH6457oml1SIvKMPm0I3ir7auehss5fctXn5Q++LmKKEbkZsv/1Npngis7vlck
-X-Received: by 10.140.94.194 with SMTP id g60mr62964518qge.72.1439416671401;
-        Wed, 12 Aug 2015 14:57:51 -0700 (PDT)
+        bh=rQJv9DQvxlcvShR1DyHemiYg8UHgUgPxXWZ/DgRiXJE=;
+        b=aEBtvXcqGtK5ut6Ke12GbjGRV0sDT4omLqP8dBpvUK+/OlxVxwlqu7hhB1s5hlRBsA
+         bZfIzpIH43IKUOqB4G6o6RsBbhojAAvNP9RR+dp3E9H8z58y9hPpbZAQsV+1Ewocq3F9
+         rTCJKlvhj9tPFOgw4lyZqlfn3tAQCw9TW4gU6c5Lrp4kfXMiZpQkAYql/wFgVWVZcfFC
+         h8EYfPfTFVDCXRuPdG+4SHyNrhhtntX6DtU/JF5yv2u83rF5crZeMuIy7odB1kLV+sS9
+         4NorxhrU9AVtcgGnumDry7lgIvxGm9PwnwuhR5kbgnjr3PhlgN+E1TFUUnrJiJAdbw6c
+         iFwA==
+X-Gm-Message-State: ALoCoQnymuJErIJUZ2n04EA/qOL74eiqcRw/TM4+NhoWDsd+ByGlAKGnv6ZAoqYWee3EFj4Z6aaG
+X-Received: by 10.55.42.131 with SMTP id q3mr63043838qkq.76.1439416672124;
+        Wed, 12 Aug 2015 14:57:52 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id f71sm110289qhe.7.2015.08.12.14.57.50
+        by smtp.gmail.com with ESMTPSA id f71sm110289qhe.7.2015.08.12.14.57.51
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 12 Aug 2015 14:57:50 -0700 (PDT)
+        Wed, 12 Aug 2015 14:57:51 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275818>
 
-Instead of a linear search over common_list to check whether
-a path is common, use a trie.  The trie search operates on
-path prefixes, and handles excludes.
+We need a place to stick refs for bisects in progress that is not
+shared between worktrees.  So we use the refs/worktree/ hierarchy.
+
+The is_per_worktree_ref function and associated docs learn that
+refs/worktree/ is per-worktree, as does the git_path code in path.c
+
+The ref-packing functions learn that per-worktree refs should not be
+packed (since packed-refs is common rather than per-worktree).
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
+ Documentation/glossary-content.txt |  5 +++--
+ path.c                             |  1 +
+ refs.c                             | 32 +++++++++++++++++++++++++++++++-
+ t/t0060-path-utils.sh              |  1 +
+ t/t1400-update-ref.sh              | 18 ++++++++++++++++++
+ t/t3210-pack-refs.sh               |  7 +++++++
+ 6 files changed, 61 insertions(+), 3 deletions(-)
 
-Probably overkill, but maybe we could later use it for making exclude
-or sparse-checkout matching faster (or maybe we have to go all the way
-to McNaughton-Yamada for that to be truly worthwhile).
-
----
- path.c | 215 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 201 insertions(+), 14 deletions(-)
-
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 8c6478b..5c707e6 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -413,8 +413,9 @@ exclude;;
+ 
+ [[def_per_worktree_ref]]per-worktree ref::
+ 	Refs that are per-<<def_working_tree,worktree>>, rather than
+-	global.  This is presently only <<def_HEAD,HEAD>>, but might
+-	later include other unusual refs.
++	global.  This is presently only <<def_HEAD,HEAD>> and any refs
++	that start with `refs/worktree/`, but might later include other
++	unusual refs.
+ 
+ [[def_pseudoref]]pseudoref::
+ 	Pseudorefs are a class of files under `$GIT_DIR` which behave
 diff --git a/path.c b/path.c
-index 236f797..21a4ce7 100644
+index 21a4ce7..c53f732 100644
 --- a/path.c
 +++ b/path.c
-@@ -121,25 +121,212 @@ struct common_dir common_list[] = {
- 	{ NULL, 0, 0, 0 }
+@@ -110,6 +110,7 @@ struct common_dir common_list[] = {
+ 	{ "lost-found", 0, 1, 0 },
+ 	{ "objects", 0, 1, 0 },
+ 	{ "refs", 0, 1, 0 },
++	{ "refs/worktree", 0, 1, 1 },
+ 	{ "remotes", 0, 1, 0 },
+ 	{ "worktrees", 0, 1, 0 },
+ 	{ "rr-cache", 0, 1, 0 },
+diff --git a/refs.c b/refs.c
+index e6fc3fe..30331bc 100644
+--- a/refs.c
++++ b/refs.c
+@@ -298,6 +298,11 @@ struct ref_entry {
  };
  
--static void update_common_dir(struct strbuf *buf, int git_dir_len)
-+/*
-+ * A compressed trie.  A trie node consists of zero or more characters that
-+ * are common to all elements with this prefix, optionally followed by some
-+ * children.  If value is not NULL, the trie node is a terminal node.
-+ *
-+ * For example, consider the following set of strings:
-+ * abc
-+ * def
-+ * definite
-+ * definition
-+ *
-+ * The trie would look look like:
-+ * root: len = 0, value = (something), children a and d non-NULL.
-+ *    a: len = 2, contents = bc
-+ *    d: len = 2, contents = ef, children i non-NULL, value = (something)
-+ *       i: len = 3, contents = nit, children e and i non-NULL, value = NULL
-+ *           e: len = 0, children all NULL, value = (something)
-+ *           i: len = 2, contents = on, children all NULL, value = (something)
-+ */
-+struct trie {
-+	struct trie *children[256];
-+	int len;
-+	char *contents;
-+	void *value;
-+};
-+
-+static struct trie *make_trie_node(const char *key, void *value)
- {
--	char *base = buf->buf + git_dir_len;
--	const struct common_dir *p;
-+	struct trie *new_node = xcalloc(1, sizeof(*new_node));
-+	new_node->len = strlen(key);
-+	if (new_node->len) {
-+		new_node->contents = xmalloc(new_node->len);
-+		memcpy(new_node->contents, key, new_node->len);
-+	}
-+	new_node->value = value;
-+	return new_node;
-+}
+ static void read_loose_refs(const char *dirname, struct ref_dir *dir);
++static int search_ref_dir(struct ref_dir *dir, const char *refname, size_t len);
++static struct ref_entry *create_dir_entry(struct ref_cache *ref_cache,
++					  const char *dirname, size_t len,
++					  int incomplete);
++static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
  
--	if (is_dir_file(base, "logs", "HEAD") ||
--	    is_dir_file(base, "info", "sparse-checkout"))
--		return;	/* keep this in $GIT_DIR */
--	for (p = common_list; p->dirname; p++) {
--		const char *path = p->dirname;
--		if (p->is_dir && dir_prefix(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
--			return;
-+/*
-+ * Add a key/value pair to a trie.  The key is assumed to be \0-terminated.
-+ * If there was an existing value for this key, return it.
-+ */
-+static void *add_to_trie(struct trie *root, const char *key, void *value)
-+{
-+	struct trie *child;
-+	void *old;
-+	int i;
-+
-+	if (!*key) {
-+		/* we have reached the end of the key */
-+		old = root->value;
-+		root->value = value;
-+		return old;
-+	}
-+
-+	for (i = 0; i < root->len; ++i) {
-+		if (root->contents[i] == key[i])
-+			continue;
+ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
+ {
+@@ -306,6 +311,24 @@ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
+ 	dir = &entry->u.subdir;
+ 	if (entry->flag & REF_INCOMPLETE) {
+ 		read_loose_refs(entry->name, dir);
 +
 +		/*
-+		 * Split this node: child will contain this node's
-+		 * existing children.
++		 * Manually add refs/worktree, which, being
++		 * per-worktree, might not appear in the directory
++		 * listing for refs/ in the main repo.
 +		 */
-+		child = malloc(sizeof(*child));
-+		memcpy(child->children, root->children, sizeof(root->children));
-+
-+		child->len = root->len - i - 1;
-+		if (child->len) {
-+			child->contents = strndup(root->contents + i + 1,
-+						   child->len);
- 		}
--		if (!p->is_dir && !strcmp(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
--			return;
-+		child->value = root->value;
-+		root->value = NULL;
-+		root->len = i;
-+
-+		memset(root->children, 0, sizeof(root->children));
-+		root->children[(unsigned char)root->contents[i]] = child;
-+
-+		/* This is the newly-added child. */
-+		root->children[(unsigned char)key[i]] =
-+			make_trie_node(key + i + 1, value);
-+		return NULL;
-+	}
-+
-+	/* We have matched the entire compressed section */
-+	if (key[i]) {
-+		child = root->children[(unsigned char)key[root->len]];
-+		if (child) {
-+			return add_to_trie(child, key + root->len + 1, value);
-+		} else {
-+			child = make_trie_node(key + root->len + 1, value);
-+			root->children[(unsigned char)key[root->len]] = child;
-+			return NULL;
- 		}
++		if (!strcmp(entry->name, "refs/")) {
++			int pos = search_ref_dir(dir, "refs/worktree/", 14);
++			if (pos < 0) {
++				struct ref_entry *child_entry;
++				child_entry = create_dir_entry(dir->ref_cache,
++							       "refs/worktree/",
++							       14, 1);
++				add_entry_to_dir(dir, child_entry);
++				read_loose_refs("refs/worktree",
++						&child_entry->u.subdir);
++			}
++		}
+ 		entry->flag &= ~REF_INCOMPLETE;
  	}
+ 	return dir;
+@@ -2643,6 +2666,8 @@ struct pack_refs_cb_data {
+ 	struct ref_to_prune *ref_to_prune;
+ };
+ 
++static int is_per_worktree_ref(const char *refname);
 +
-+	old = root->value;
-+	root->value = value;
-+	return old;
-+}
-+
-+typedef int (*match_fn)(const char *unmatched, void *data, void *baton);
-+
-+/*
-+ * Search a trie for some key.  Find the longest /-or-\0-terminated
-+ * prefix of the key for which the trie contains a value.  Call fn
-+ * with the unmatched portion of the key and the found value, and
-+ * return its return value.  If there is no such prefix, return -1.
-+ *
-+ * For example, consider the trie containing only [refs,
-+ * refs/worktree] (both with values).
-+ *
-+ * | key             | unmatched  | val from node | return value |
-+ * |-----------------|------------|---------------|--------------|
-+ * | a               | not called | n/a           | -1           |
-+ * | refs            | \0         | refs          | as per fn    |
-+ * | refs/           | /          | refs          | as per fn    |
-+ * | refs/w          | /w         | refs          | as per fn    |
-+ * | refs/worktree   | \0         | refs/worktree | as per fn    |
-+ * | refs/worktree/  | /          | refs/worktree | as per fn    |
-+ * | refs/worktree/a | /a         | refs/worktree | as per fn    |
-+ * |-----------------|------------|---------------|--------------|
-+ *
-+ */
-+static int trie_find(struct trie *root, const char *key, match_fn fn,
-+		     void *baton)
-+{
-+	int i;
-+	int result;
-+	struct trie *child;
-+
-+	if (!*key) {
-+		/* we have reached the end of the key */
-+		if (root->value && !root->len)
-+			return fn(key, root->value, baton);
-+		else
-+			return -1;
-+	}
-+
-+	for (i = 0; i < root->len; ++i) {
-+		if (root->contents[i] != key[i])
-+			return -1;
-+	}
-+
-+	/* Matched the entire compressed section */
-+	key += i;
-+	if (!*key)
-+		/* End of key */
-+		return fn(key, root->value, baton);
-+
-+	child = root->children[(unsigned char)*key];
-+	if (child)
-+		result = trie_find(child, key + 1, fn, baton);
-+	else
-+		result = -1;
-+
-+	if (result >= 0 || (*key != '/' && *key != 0))
-+		return result;
-+	if (root->value)
-+		return fn(key, root->value, baton);
-+	else
-+		return -1;
-+}
-+
-+static struct trie common_trie;
-+static int common_trie_done_setup;
-+
-+static void init_common_trie(void)
-+{
-+	struct common_dir *p;
-+
-+	if (common_trie_done_setup)
-+		return;
-+
-+	for (p = common_list; p->dirname; p++)
-+		add_to_trie(&common_trie, p->dirname, p);
-+
-+	common_trie_done_setup = 1;
-+}
-+
-+/*
-+ * Helper function for update_common_dir: returns 1 if the dir
-+ * prefix is common.
-+ */
-+static int check_common(const char *unmatched, void *value, void *baton)
-+{
-+	struct common_dir *dir = value;
-+
-+	if (!dir)
+ /*
+  * An each_ref_entry_fn that is run over loose references only.  If
+  * the loose reference can be packed, add an entry in the packed ref
+@@ -2656,6 +2681,10 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+ 	struct ref_entry *packed_entry;
+ 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
+ 
++	/* Do not pack per-worktree refs: */
++	if (is_per_worktree_ref(entry->name))
 +		return 0;
 +
-+	if (dir->is_dir && (unmatched[0] == 0 || unmatched[0] == '/'))
-+		return !dir->exclude;
-+
-+	if (!dir->is_dir && unmatched[0] == 0)
-+		return !dir->exclude;
-+
-+	return 0;
-+}
-+
-+static void update_common_dir(struct strbuf *buf, int git_dir_len)
-+{
-+	char *base = buf->buf + git_dir_len;
-+	init_common_trie();
-+	if (trie_find(&common_trie, base, check_common, NULL) > 0)
-+		replace_dir(buf, git_dir_len, get_git_common_dir());
+ 	/* ALWAYS pack tags */
+ 	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref)
+ 		return 0;
+@@ -2850,7 +2879,8 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ 
+ static int is_per_worktree_ref(const char *refname)
+ {
+-	return !strcmp(refname, "HEAD");
++	return !strcmp(refname, "HEAD") ||
++		starts_with(refname, "refs/worktree/");
  }
  
- void report_linked_checkout_garbage(void)
+ static int is_pseudoref_syntax(const char *refname)
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 93605f4..28e6dff 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -275,6 +275,7 @@ test_git_path GIT_COMMON_DIR=bar remotes/bar              bar/remotes/bar
+ test_git_path GIT_COMMON_DIR=bar branches/bar             bar/branches/bar
+ test_git_path GIT_COMMON_DIR=bar logs/refs/heads/master   bar/logs/refs/heads/master
+ test_git_path GIT_COMMON_DIR=bar refs/heads/master        bar/refs/heads/master
++test_git_path GIT_COMMON_DIR=bar refs/worktree/foo        .git/refs/worktree/foo
+ test_git_path GIT_COMMON_DIR=bar hooks/me                 bar/hooks/me
+ test_git_path GIT_COMMON_DIR=bar config                   bar/config
+ test_git_path GIT_COMMON_DIR=bar packed-refs              bar/packed-refs
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 9d21c19..7ecd33b 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1131,4 +1131,22 @@ test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches
+ )
+ '
+ 
++test_expect_success 'handle per-worktree refs in refs/worktree' '
++	git commit --allow-empty -m "initial commit" &&
++	git worktree add -b branch worktree &&
++	(
++		cd worktree &&
++		git commit --allow-empty -m "test commit"  &&
++		git for-each-ref | test_must_fail grep refs/worktree &&
++		git update-ref refs/worktree/something HEAD &&
++		git rev-parse refs/worktree/something >../worktree-head &&
++		git for-each-ref | grep refs/worktree/something
++	) &&
++	test_path_is_missing .git/refs/worktree &&
++	test_must_fail git rev-parse refs/worktree/something &&
++	git update-ref refs/worktree/something HEAD &&
++	git rev-parse refs/worktree/something >main-head &&
++	! test_cmp main-head worktree-head
++'
++
+ test_done
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index 8aae98d..c54cd29 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -160,6 +160,13 @@ test_expect_success 'pack ref directly below refs/' '
+ 	test_path_is_missing .git/refs/top
+ '
+ 
++test_expect_success 'do not pack ref in refs/worktree' '
++	git update-ref refs/worktree/local HEAD &&
++	git pack-refs --all --prune &&
++	! grep refs/worktree/local .git/packed-refs >/dev/null &&
++	test_path_is_file .git/refs/worktree/local
++'
++
+ test_expect_success 'disable reflogs' '
+ 	git config core.logallrefupdates false &&
+ 	rm -rf .git/logs
 -- 
 2.0.4.315.gad8727a-twtrsrc
