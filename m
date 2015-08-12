@@ -1,152 +1,213 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: enhanced remote ref namespaces
-Date: Thu, 13 Aug 2015 00:52:58 +0200
-Message-ID: <CALKQrgdVD6HX9_wKUwQn4VK8Rd=SDNAtCJccSZqh6r5vQ35QcA@mail.gmail.com>
-References: <CA+P7+xocd+LE2A+srH0p1qTuXKRXanTp5E+imC1GE+9-biqR6A@mail.gmail.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCHv3 1/2] config: add '--names-only' option to list only
+ variable names
+Date: Thu, 13 Aug 2015 01:47:36 +0200
+Message-ID: <20150813014736.Horde.GbbN2TpIOFaNM_MPXUzZ4Q2@webmail.informatik.kit.edu>
+References: <1439199967-9655-1-git-send-email-szeder@ira.uka.de>
+ <1439199967-9655-2-git-send-email-szeder@ira.uka.de>
+ <xmqqvbcnuko6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 00:53:16 2015
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 01:47:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPetW-0003Qj-9v
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 00:53:14 +0200
+	id 1ZPfkU-0003Sg-0l
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 01:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609AbbHLWxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 18:53:09 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:64069 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbbHLWxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 18:53:07 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZPetM-000NB6-Ij
-	for git@vger.kernel.org; Thu, 13 Aug 2015 00:53:04 +0200
-Received: by ykdz80 with SMTP id z80so27279449ykd.2
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 15:52:58 -0700 (PDT)
-X-Received: by 10.13.249.198 with SMTP id j189mr36130917ywf.170.1439419978707;
- Wed, 12 Aug 2015 15:52:58 -0700 (PDT)
-Received: by 10.37.201.134 with HTTP; Wed, 12 Aug 2015 15:52:58 -0700 (PDT)
-In-Reply-To: <CA+P7+xocd+LE2A+srH0p1qTuXKRXanTp5E+imC1GE+9-biqR6A@mail.gmail.com>
+	id S1751625AbbHLXrx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2015 19:47:53 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:42654 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751495AbbHLXrw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 19:47:52 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1ZPfkD-0001fV-Oh; Thu, 13 Aug 2015 01:47:41 +0200
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1ZPfk8-0001Du-GQ; Thu, 13 Aug 2015 01:47:36 +0200
+Received: from x4db02839.dyn.telefonica.de (x4db02839.dyn.telefonica.de
+ [77.176.40.57]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Thu, 13 Aug 2015 01:47:36 +0200
+In-Reply-To: <xmqqvbcnuko6.fsf@gitster.dls.corp.google.com>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1439423261.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275829>
 
-On Wed, Aug 12, 2015 at 8:34 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Wed, Aug 12, 2015 at 9:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Some design boundaries:
+
+Quoting Junio C Hamano <gitster@pobox.com>:
+
+> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+>
+>> 'git config' can only show values or name-value pairs, so if a shell
+>> script needs the names of set config variables it has to run 'git co=
+nfig
+>> --list' or '--get-regexp' and parse the output to separate config
+>> variable names from their values.  However, such a parsing can't cop=
+e
+>> with multi-line values.  Though 'git config' can produce null-termin=
+ated
+>> output for newline-safe parsing, that's of no use in such a case, be=
+case
+>
+> s/becase/because/;
+
+OK.
+
+>> shells can't cope with null characters.
 >>
->>  - Moving the remote-tracking branch hierarchy from refs/remotes/$O/*
->>    to refs/remotes/$O/heads/* would not fly, because it will break
->>    existing repositories.  Do not even waste time on pursuing
->>    refs/remotes/$O/{heads,tags,notes...}/*
+>> Even our own bash completion script suffers from these issues.
+>>
+>> Help the completion script, and shell scripts in general, by introdu=
+cing
+>> the '--names-only' option to modify the output of '--list' and
+>> '--get-regexp' to list only the names of config variables, so they d=
+on't
+>> have to perform error-prone post processing to separate variable nam=
+es
+>> from their values anymore.
 >
-> even if we maintained new git's abililty to work with this, ie: only
-> external-to-git scripts would break and only for new clones? Maybe we
-> don't want to go this route, but it seems like the way that the
-> original proposal was headed.
+> I agree with Peff that "--names-only" has a subtle difference with
+> an existing and well known subcommand option and it would be a bit
+> irritating to remember which options is for which command.
 
-I don't think it's worth trying to go that route. Even though it's
-theoretically possible to solve it, the complexity added by e.g.
-multiple git versions operating on the same repository (maybe even
-simultaneously?) suggests that it's much simpler to just go with a new
-clean hierarchy that simply Works for new Git versions, and the older
-versions don't have to deal with at all. IMHO, maybe even going as far
-as incrementing core.repositoryFormatVersion, so that older Git
-versions will refuse to work with new-style repos...
+OK.
 
-[...]
->> If somebody got confused, notice that in the above description, I
->> said refs/remotes/ and refs/remote/.  The former must stay.  The
->> name of the latter is open to bikeshedding.  Some may prefer a name
->> that is more distinct (refs/tracking/ or something, perhaps?).  I
->> happen to prefer a name that is similar, but this preference is very
->> weak and I can persuaded to go either way.
+>> diff --git a/builtin/config.c b/builtin/config.c
+>> index 7188405f7e..307980ab50 100644
+>> --- a/builtin/config.c
+>> +++ b/builtin/config.c
+>> @@ -13,6 +13,7 @@ static char *key;
+>>  static regex_t *key_regexp;
+>>  static regex_t *regexp;
+>>  static int show_keys;
+>> +static int omit_values;
+>>  static int use_key_regexp;
+>>  static int do_all;
+>>  static int do_not_match;
+>> ...
+>> @@ -91,7 +93,7 @@ static void check_argc(int argc, int min, int max)=
+ {
+>>
+>>  static int show_all_config(const char *key_, const char *value_, vo=
+id *cb)
+>>  {
+>> -	if (value_)
+>> +	if (!omit_values && value_)
 >
-> I don't like it being so similar that we now have typos between
-> remotes and remote.. ie: remotes/<origin> works for heads, but
-> "remotes/<origin>/tags" does not... that sounds like it would get
-> confusing.
-
-I like refs/tracking. At some point I was planning to use refs/peers,
-but that's merely another color for the bikeshed...
-
-> Symlinking the old location seems reasonable to me, as it would leave
-> all the same data in the locations expected by the old tools, while
-> keeping all actual storage in the new location.
+> Hmmmm.  As we have "show_keys",
 >
-> In this way, we would no longer need configuration settings. It
-> honestly doesn't matter to me which direction we symlink either.
+> 	if (show_values && value_)
 >
-> As for the other complex issue is what to do about "refs/tracking/<origin>/tags
+> would be a lot more intuitive, no?
+
+Well, the name 'omit_values' was suggested by Peff after the first =20
+round.  I'm happy to rename it to whatever you agree upon :)
+
+
+>> @@ -117,6 +119,10 @@ static int format_config(struct strbuf *buf, =20
+>> const char *key_, const char *value
+>>  		strbuf_addstr(buf, key_);
+>>  		must_print_delim =3D 1;
+>>  	}
+>> +	if (omit_values) {
+>> +		strbuf_addch(buf, term);
+>> +		return 0;
+>> +	}
 >
-> The big discussion on the original thread is about how tags would
-> work. I'm personally ok with *ignoring* tags and leaving it the way it
-> is for now, and just doing this as a solid place to stick
-> notes/replace/etc.
+> This hunk makes me wonder what the assignment to "must_print_delim"
+> is about.  When the code is told to show only keys and not values,
+> it shouldn't even have to worry about key_delim, but that assignment
+> is done to control exactly that.  It happens that you are lucky that
+> you can "return 0" early here so that the assignment does not have
+> any effect, but still conceptually the code structure is made ugly
+> by this patch.
 
-That is probably the best plan for now: Solve most of the problem, and
-punt on the controversial parts.
+How about restructuring the function like this?  Perhaps even better =20
+than a tri-state toggle would be.
+(showing the result instead of the diff, because all the indentation =20
+changes make the diff hard to read).
 
-> Or, we could go the route of continuing to stick tags into "refs/tags"
-> at the same time as also sticking them into
-> refs/tracking/<origin>/tags
+static int format_config(struct strbuf *buf, const char *key_, const =20
+char *value_)
+{
+         strbuf_init(buf, 0);
 
-I don't like the copying approach; makes it harder to deduce which tags
-are (truly) local, and which came from a remote.
+         if (show_keys)
+                 strbuf_addstr(buf, key_);
+         if (!omit_values) {                  // or show_values
+                 int must_free_vptr =3D 0;
+                 int must_add_delim =3D show_keys;
+                 char value[256];
+                 const char *vptr =3D value;
 
-> Or.. we could go the full route of fixing up lookup of tags such that
-> we put tags in refs/tracking/<origin>/tags and we have it lookup tags
-> there via something like:
+                 if (types =3D=3D TYPE_INT)
+                         sprintf(value, "%"PRId64,
+                                 git_config_int64(key_, value_ ? value_=
+ : ""));
+                 else if (types =3D=3D TYPE_BOOL)
+                         vptr =3D git_config_bool(key_, value_) ? "true=
+" =20
+: "false";
+                 else if (types =3D=3D TYPE_BOOL_OR_INT) {
+                         int is_bool, v;
+                         v =3D git_config_bool_or_int(key_, value_, &is=
+_bool);
+                         if (is_bool)
+                                 vptr =3D v ? "true" : "false";
+                         else
+                                 sprintf(value, "%d", v);
+                 } else if (types =3D=3D TYPE_PATH) {
+                         if (git_config_pathname(&vptr, key_, value_) <=
+ 0)
+                                 return -1;
+                         must_free_vptr =3D 1;
+                 } else if (value_) {
+                         vptr =3D value_;
+                 } else {
+                         /* Just show the key name */
+                         vptr =3D "";
+                         must_add_delim =3D 0;
+                 }
+
+                 if (must_add_delim)
+                         strbuf_addch(buf, key_delim);
+                 strbuf_addstr(buf, vptr);
+
+                 if (must_free_vptr)
+                         free((char *)vptr);
+         }
+         strbuf_addch(buf, term);
+         return 0;
+}
+
+
 >
-> 1) local tags preferred
+> Isn't it more like the existing "show_keys" can be replaced/enhanced
+> with a single "show" tri-state toggle that chooses one among:
 >
-> 2) any remote tag as long as all remote tags point to the same commit
-> object (how we select which to use is not very relevant here... we
-> could actually go with as long as the tag object is the same so two
-> remotes with annotated tags pointing to the same object but different
-> tag id would be ambiguous as well)
+>     * show both keys and values (for --list)
+>     * show only keys (for your new feature)
+>     * show only value (for --get)
 >
-> 3) warn the user must disambiguate the tag via the remote name.
-
-As was probably obvious from the old threads, this is where I'd like
-to go. Eventually.
-
-> We could also teach fetch to warn about remote tags which are
-> ambiguous (ie: two remotes with same named tag objects pointing to
-> different things)
-
-Agreed. This would actually be a good improvement Right Now, without
-changing any ref layout at all: If get fetch would otherwise copy a
-remote tag into refs/tags/*, but doesn't because there is already a
-_different_ tag in its place, then warn loudly to the user, so that
-user has a chance to discover the tag difference.
-
-> How goes this sound? I think it makes sense... I don't know how to do
-> all this without breaking some backwards compatibility though... I
-> think we can maintain expectations for the general user but I feel
-> that any change here will break *someones* scripts.
-
-As I said above: Punt on tags for now, and you might be able to not
-break anyone's scripts (and if you do, it's probably a poorly written
-script). Provided that you leave a symlink to/from refs/remotes/$O in
-place, you're AFAICS only adding functionality, not (visibly) changing
-existing behavior.
-
-
-BTW, thanks for resurrecting this topic!
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+> perhaps?
+>
+> I see get_urlmatch() abuses show_keys variable in a strange way, and
+> it may not be as trivial as removing show_keys and replacing it with
+> a new tri-state toggle, though.
