@@ -1,78 +1,136 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH bc/connect-plink] t5601-clone: remove broken and pointless
- check for plink.exe
-Date: Wed, 12 Aug 2015 13:07:31 +0200
+Subject: Re: [PATCH nd/dwim-wildcards-as-pathspecs] t2019: skip test
+ requiring '*' in a file name non Windows
+Date: Wed, 12 Aug 2015 13:25:54 +0200
 Organization: gmx
-Message-ID: <866a41f50ef9b4807da72576a4bca717@www.dscho.org>
-References: <55CA6066.5070500@kdbg.org>
+Message-ID: <a9e3c007fb6b39e7339c8d2b1c50d56b@www.dscho.org>
+References: <55CA5D56.6030800@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, msysGit
+ <msysgit@googlegroups.com>
 To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 12 13:07:40 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+X-From: msysgit+bncBCZPH74Q5YNRBRG2VSXAKGQE3CMZPAI@googlegroups.com Wed Aug 12 13:26:01 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBRG2VSXAKGQE3CMZPAI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPTsh-0003X9-BH
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 13:07:39 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbbHLLHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 07:07:34 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54081 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751182AbbHLLHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 07:07:33 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LpsIh-1Yv7TA49dX-00fl7e; Wed, 12 Aug 2015 13:07:32
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBRG2VSXAKGQE3CMZPAI@googlegroups.com>)
+	id 1ZPUAP-00054q-T2
+	for gcvm-msysgit@m.gmane.org; Wed, 12 Aug 2015 13:25:57 +0200
+Received: by wicxr16 with SMTP id xr16sf3671699wic.1
+        for <gcvm-msysgit@m.gmane.org>; Wed, 12 Aug 2015 04:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:date:from:to:cc:subject:organization
+         :in-reply-to:references:message-id:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=28ZIYU8dukKlRfCz4Y1ersUp2K/zwsmGNLw0ErT7BLo=;
+        b=RGgrJz9u5RGbPS1Zi1Hr3wTQiDymKy1SpvkOfdzc6NKV+V1hcegE+ND3kLLtYK499m
+         KMm7/ET3P6732/Xzjej4ih29aBSKXn80r9bXRdXSlIdCJFbyPnhDJzvEKITqRY+6ATCK
+         6kAgOvsG5/nlFWr4ll/7IOEnOvx+nd1dodIOONFy/Q9cULqdZ8t4D8sIcPH2SonaFXCN
+         SXGsQSRWMh0f5/6P8l47GupDlDLsVQeqh8rm5MyEIeQ4C6zAvxxyw2NaJommmZSy+E4C
+         RFoQGZUngFIz3H6T+v9le5Cc0QXbKH2dwQrNsDH56QCMpVC9+rQl0Ph19WeTJ7QPSr35
+         o4hw==
+X-Received: by 10.180.100.196 with SMTP id fa4mr75988wib.3.1439378757606;
+        Wed, 12 Aug 2015 04:25:57 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.102.194 with SMTP id fq2ls117566wib.27.gmail; Wed, 12 Aug
+ 2015 04:25:56 -0700 (PDT)
+X-Received: by 10.180.83.226 with SMTP id t2mr6845023wiy.5.1439378756211;
+        Wed, 12 Aug 2015 04:25:56 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.22])
+        by gmr-mx.google.com with ESMTPS id ec7si200022wib.3.2015.08.12.04.25.56
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Aug 2015 04:25:56 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.22 as permitted sender) client-ip=212.227.17.22;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LsfrR-1YfAz53SIr-012HAq; Wed, 12 Aug 2015 13:25:54
  +0200
-In-Reply-To: <55CA6066.5070500@kdbg.org>
+In-Reply-To: <55CA5D56.6030800@kdbg.org>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:GhPLXD+Vm0ogovHiTnmeAOcRCponK6+UAj3VMkwGLhruLJ/VlA0
- 1atZCwt/nvesWt8f41R6CVPYxdgbTZKL/g39/DAeYlLzcGiqg12xVwnOGmhfdT1UcZbrNYp
- +w9ORpJkFP0bbMeEft4FUJaySU/ex+Oky5ELWbMd4E0GiZZ0A+QPeIQ356zNHHpiSGYF+PZ
- aZaMe2N9XEJ4SfL0uImqA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IKSMAVt6iG8=:hIlD3NtYaBOIXrQf6L+rKN
- j80g716ogcE3BMoWjIRm/W/2BKdvVnQ4Xtdz/6IxxVojbI5wO/TO7cbrkqauMA6NbkROp7bY7
- BaD/Zg4RZl+h9kb0Wm8hEkhUFf77F8GPcayv8W4sZPUC/1sbpXhF4dq34l+CFbdGNU9phyrwT
- EaifqibHlj4WttTnCrB7YohasqNwyq2F0XGdFijY2h6S9skHI+fLLt5xK2jD5GlBDBamC31me
- 0V+WK2mohNMNjyFFX/qeVEXZ45udzKtQPsbcEuvLpWjM98VH3MwTQUaX3qoLidkr4c41ssZNi
- i4eNlboM2vaAyKF+IVg8VmWadIComILh2WdHBORwpNH0XZFHJhU6+xDtBg9iR7R/Sm8qYJNXs
- HIyiIBDPWM7fapMq7K0OZEAN6wkBmmIr/jCca3v7GlsjX828l5Hecu9f8h5LBsl6HoEKjTWYX
- TTzAK2i6dADuPKUDunRZEK7k1xBozIX4oPbalqJyKOM+l+gUNcqeDCI8RCwn+vPnITC80Vwdn
- S6Sg5UMoYmGd+0dVZgoNsrtIomVk4QGeeRWtw7YOy2Iqo0yUul5kooNfLsa9wsItekggiMgVA
- nZNzKO4dRZGaBE63mr6ETxiJJxd+Fg8K8FUYadaMqUhSlRhqolyLWQEY7VYRthiruAjYBTda3
- uZG+kacrneYGdt8zajjjTVLq8s44aAHMN4Vdht8sFLM6dauVGHiorfLvb5dx07dkd1KHt3WmI
- 3j3NpdP+oz6Ipa915ieB+FElzxb6rjDZpSeykw==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275758>
+X-Provags-ID: V03:K0:mPZPau40nuVsesjh9uNL8zDzf4VB7oEzkAHClZU0CLdVBTG1HrN
+ t/xGcLf2KV0ICgOm+dG1x+Rngfs2RB9tb3An7N7zvS76ZAtfJ+xncCqrCEQSeU94CUCUD3M
+ unv0ZuTXxAIEupPbbXxFr3SXXM5b3bAMdM00W5FAUHaIcQfeu2CjwGdtNqt7BDzd9dR08G1
+ p9/OvHlxl/qtLEnn3TpUA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:J7GES2WpYeE=:qx0eb1f9qeqOGEPJx9b8iY
+ tV/pm+Ak8fO89iKmor5cDx4hV4qe6VhiP3kaG7FrlF4KDyB0fD0ObH0kAARU1NmhDY0MQJiwb
+ Cx3Ku/YrjXiZPimWqdQilPGwNQKELKiMiNMpwsKnjXNJnafVAUDfWC64lhRSzlV6c85txdkwP
+ lzROFF3TQUjKYBkIM8r7vPXqYw839qMIkdGs7WAL6vEKKkrhtkNOywyYq7OkI0/auiqrq72He
+ SwIr/H363MAsog9smdh98+ISM+UyO6+00G7S51xcGoJTib3+F7p97S+HijPnXyCkxETL/pT/r
+ id9MoSMVO1bGbrQL3fbtsaqVchFuEwdBfpPMK4QcVW6AXaQ+fbrMRNAKBmBcHLb2fhxtndfB6
+ CRAEisWXHpSb8+Kt9OpHigTQeZTXbIfF6Y4uqfswrTn+Euxnj9wgg9gHafmrp1xLYLOm4IQVv
+ dPBLyW7JTdJPsa12yRT4EeQ5kr8M5R6pMh421FTKHMYVpvJ4ldk3zodViIBcw+V4Nou3qMzM1
+ zKLkzFQZgTWSpsZdwVTSbmqZbBQRW6w5H6/Hjo05hFTS40dSZeogCLS6wYXZPHdVtpdajkI7O
+ MY13q/+2DiQ392+5ZayFU2rGQkkIURiXUxM+Xl1uhIOegixq5wxNKHlGtgrPUB0e5i6FQo1NT
+ YWO3K30YSuRWG3Yo9GOTDz/9biRORhux6MbNEj4hI8mx42jB1w1rFTddMHbhIWC9TEahd+kc2
+ A7wDW5Ch3X9jtcituXhG7iuxjaPQl+wT09rbvQ==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.22 as
+ permitted sender) smtp.mailfrom=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275759>
 
-Hi Johannes,
+Hi,
 
-On 2015-08-11 22:51, Johannes Sixt wrote:
-> Invoking plink requires special treatment, and we have support and even
-> test cases for the commands 'plink' and 'tortoiseplink'. We also support
-> .exe variants for these two and there is a test for 'plink.exe'.
-> 
-> On Windows, however, where support for plink.exe would be relevant, the
-> test case fails because it is not possible to execute a file with a .exe
-> extension that is actually not a binary executable---it is a shell
-> script in our test. We have to disable the test case on Windows.
+On 2015-08-11 22:38, Johannes Sixt wrote:
 
-Oh how would I wish you were working on Git for Windows even *just* a bit *with* me. At least I would wish for a more specific description of the development environment, because it sure as hell is not anything anybody can download and install as easily as Git for Windows' SDK.
+> diff --git a/t/t2019-checkout-ambiguous-ref.sh
+> b/t/t2019-checkout-ambiguous-ref.sh
+> index 8396320..199b22d 100755
+> --- a/t/t2019-checkout-ambiguous-ref.sh
+> +++ b/t/t2019-checkout-ambiguous-ref.sh
+> @@ -69,7 +69,7 @@ test_expect_success 'wildcard ambiguation, paths win' '
+>  	)
+>  '
+>  
+> -test_expect_success 'wildcard ambiguation, refs lose' '
+> +test_expect_success !MINGW 'wildcard ambiguation, refs lose' '
+>  	git init ambi2 &&
+>  	(
+>  		cd ambi2 &&
 
-FWIW Git for Windows has this patch (that I wanted to contribute in due time, what with being busy with all those tickets) to solve the problem mentioned in your patch in a different way:
+FWIW I planned to submit a patch including this fix:
 
-https://github.com/git-for-windows/git/commit/2fff4b54a0d4e5c5e2e4638c9b0739d3c1ff1e45
+https://github.com/git-for-windows/git/commit/4694320330e1b4d9178e13e215ce60a1cc8e0b1c
 
-Please read this as my vote not to remove the test cases.
+(The idea of the `fixup! ` was to make this change part of a larger change during the next merging rebase of Git for Windows.)
 
-Thanks,
+Ciao,
 Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
