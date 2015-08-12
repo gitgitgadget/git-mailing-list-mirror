@@ -1,80 +1,170 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4 4/4] notes: teach git-notes about notes.<ref>.merge option
-Date: Wed, 12 Aug 2015 14:57:01 -0700
-Message-ID: <CA+P7+xrQnrQdE3OOhdc2-2__V3Huzc+HfGEXKBZULy2JkQR37Q@mail.gmail.com>
-References: <1439326641-9447-1-git-send-email-jacob.e.keller@intel.com>
- <1439326641-9447-5-git-send-email-jacob.e.keller@intel.com>
- <CALKQrgeDuRkXm2LzDOuZDZLOBRXjLmmRvhtXfXScWfLKX+9t=g@mail.gmail.com>
- <xmqqy4hhmedb.fsf@gitster.dls.corp.google.com> <CALKQrgf2hdvNExVbvnP5sVUM4sEh7thj9HLw93LbYWSStNjeYg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Aug 12 23:57:27 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v3 1/4] refs: clean up common_list
+Date: Wed, 12 Aug 2015 17:57:22 -0400
+Message-ID: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, mhagger@alum.mit.edu, chriscool@tuxfamily.org,
+	pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Wed Aug 12 23:57:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPe1W-0003H9-Jx
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:57:26 +0200
+	id 1ZPe21-0003ZI-4e
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751050AbbHLV5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 17:57:22 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:35532 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbbHLV5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 17:57:21 -0400
-Received: by igbjg10 with SMTP id jg10so52234442igb.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:57:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=HHclVzpFdWNpXy9UVYZRHKOypHj1wDZc8BdI97b94Cg=;
-        b=DSmQzvubRB0yw5p2lWouq7esdhL8Tk/Uku/8HXUeJ6wN9mi6tNya++/scBDrbFvPl8
-         UzN/MLON7hfu3574KRkHdDI8UvrBHaERcbG4ufjHm9KEAfSRcPxl3i2kJIR0Bxi+G/kc
-         RRIY3RGR9loBskqznfe8HIgPZwjOOocqfvjKPWNP5lJdyAdnlb3FNgWw0qFbhKVbxaL0
-         uDSJFxYwc94wUD46eoXyaz22FgOX+u403dJxJ+xJmVxb2t8SSQ3k1MGo/7bjltinSXTY
-         t5EkqxQg2Ip8DZgBFRgX9bGkd0DP+xE3ciTwgOAAGDPjnkgSQ/sa5m054sVkuSzN8MZQ
-         IMCQ==
-X-Received: by 10.50.124.97 with SMTP id mh1mr27152024igb.92.1439416640848;
- Wed, 12 Aug 2015 14:57:20 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Wed, 12 Aug 2015 14:57:01 -0700 (PDT)
-In-Reply-To: <CALKQrgf2hdvNExVbvnP5sVUM4sEh7thj9HLw93LbYWSStNjeYg@mail.gmail.com>
+	id S1751490AbbHLV5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 17:57:52 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:36299 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992AbbHLV5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 17:57:51 -0400
+Received: by qgdd90 with SMTP id d90so20234049qgd.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:57:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=F9CL+Csa84PgEmUlLiXE8bnQsZe9uE9JVrcPSxBLo+M=;
+        b=PkRbPhJT8MIKpMuUdKVFlBdQRRUwUpEYyLGZBd4qEBcz8FH0eyWIOFylZk2EhjKKPE
+         zHVH+0tnIhVt2qKTBQ7DNX+Zq6v/9S2dhzCO+zq/S26eQ5Re0vAJbwf3hzQhLamC9RJz
+         pnSTWTWxzv1pcm19TJ/JW4wjCEf0QaUaJW/ePAdJ3G3Gi6M8MyzyamF0MYNvza3EP/CA
+         SK3YHyMM4n0YFPk4KZUSMD1cz98eSgQmBvaUnZJc1OeAYRwCbpo9XqgFu8EwI//3LjaQ
+         t2pZPKRPMkLdoei3gsYmRNwMMmtE8qUkvw2VkvBaWEr1Zn3yqgM+0vI2AgCm/uZ0DvxX
+         JMFQ==
+X-Gm-Message-State: ALoCoQn99osRH6IoFG6RZTZUa9FQCVkVJ1HN+d/YADj76JAJfnfWRolDtV9d/TFK5lOJpaMIQn1X
+X-Received: by 10.140.20.37 with SMTP id 34mr191652qgi.88.1439416670643;
+        Wed, 12 Aug 2015 14:57:50 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f71sm110289qhe.7.2015.08.12.14.57.49
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 12 Aug 2015 14:57:49 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275816>
 
-On Wed, Aug 12, 2015 at 2:46 PM, Johan Herland <johan@herland.net> wrote:
-> If we don't already refuse to merge into a ref outside refs/notes, then
-> I would consider that a bug to be fixed, and not some corner use case that
-> we must preserve for all future.
->
-> After all, we do already have a test in t3308 named 'fail to merge into
-> various non-notes refs', where one of the non-notes ref being tested are:
->
->   test_must_fail git -c "core.notesRef=refs/heads/master" notes merge x
->
+Instead of common_list having formatting like ! and /, use a struct to
+hold common_list data in a structured form.
 
-This test is checking if the ref pointed at by refs/heads/master *is*
-a note. But you could create a ref outside of refs/notes which is a
-note but which isn't inside refs/notes
+We don't use 'exclude' yet; instead, we keep the old codepath that
+handles info/sparse-checkout and logs/HEAD.  Later, we will use exclude.
 
-I did just find that we expand remote-ref using expand_notes_ref, and
-it does *not* currently let us reference refs outside of refs/notes..
-so we can merge IN to a ref not inside refs/notes (using the
-environment variable) but we can't merge FROM
-refs/tracking/origin/notes/y for example, which means currently all
-notes we merge from have to be located into refs/notes/*
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
 
-There are some weird issues here.
+Junio was worried about the performance of common_list and the weird
+string parsing bits of update_common_dir, so this version of the patch
+series begins by cleaning and optimizing those bits.
 
-Regards,
-Jake
+Additionally, I incorporated Junio's suggestion to use
+is_per_worktree_ref, and his formatting suggestions.
+
+There is now a hack so that git for-each-ref works on per-worktree
+refs.
+
+I also added git-bisect.sh, which I had overzealously reverted during
+my proofreading step last time.
+
+---
+ path.c | 58 +++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 37 insertions(+), 21 deletions(-)
+
+diff --git a/path.c b/path.c
+index 10f4cbf..236f797 100644
+--- a/path.c
++++ b/path.c
+@@ -91,35 +91,51 @@ static void replace_dir(struct strbuf *buf, int len, const char *newdir)
+ 		buf->buf[newlen] = '/';
+ }
+ 
+-static const char *common_list[] = {
+-	"/branches", "/hooks", "/info", "!/logs", "/lost-found",
+-	"/objects", "/refs", "/remotes", "/worktrees", "/rr-cache", "/svn",
+-	"config", "!gc.pid", "packed-refs", "shallow",
+-	NULL
++struct common_dir {
++	const char *dirname;
++	/* Not considered garbage for report_linked_checkout_garbage */
++	unsigned ignore_garbage:1;
++	unsigned is_dir:1;
++	/* Not common even though its parent is */
++	unsigned exclude:1;
++};
++
++struct common_dir common_list[] = {
++	{ "branches", 0, 1, 0 },
++	{ "hooks", 0, 1, 0 },
++	{ "info", 0, 1, 0 },
++	{ "info/sparse-checkout", 0, 0, 1 },
++	{ "logs", 1, 1, 0 },
++	{ "logs/HEAD", 1, 1, 1 },
++	{ "lost-found", 0, 1, 0 },
++	{ "objects", 0, 1, 0 },
++	{ "refs", 0, 1, 0 },
++	{ "remotes", 0, 1, 0 },
++	{ "worktrees", 0, 1, 0 },
++	{ "rr-cache", 0, 1, 0 },
++	{ "svn", 0, 1, 0 },
++	{ "config", 0, 0, 0 },
++	{ "gc.pid", 1, 0, 0 },
++	{ "packed-refs", 0, 0, 0 },
++	{ "shallow", 0, 0, 0 },
++	{ NULL, 0, 0, 0 }
+ };
+ 
+ static void update_common_dir(struct strbuf *buf, int git_dir_len)
+ {
+ 	char *base = buf->buf + git_dir_len;
+-	const char **p;
++	const struct common_dir *p;
+ 
+ 	if (is_dir_file(base, "logs", "HEAD") ||
+ 	    is_dir_file(base, "info", "sparse-checkout"))
+ 		return;	/* keep this in $GIT_DIR */
+-	for (p = common_list; *p; p++) {
+-		const char *path = *p;
+-		int is_dir = 0;
+-		if (*path == '!')
+-			path++;
+-		if (*path == '/') {
+-			path++;
+-			is_dir = 1;
+-		}
+-		if (is_dir && dir_prefix(base, path)) {
++	for (p = common_list; p->dirname; p++) {
++		const char *path = p->dirname;
++		if (p->is_dir && dir_prefix(base, path)) {
+ 			replace_dir(buf, git_dir_len, get_git_common_dir());
+ 			return;
+ 		}
+-		if (!is_dir && !strcmp(base, path)) {
++		if (!p->is_dir && !strcmp(base, path)) {
+ 			replace_dir(buf, git_dir_len, get_git_common_dir());
+ 			return;
+ 		}
+@@ -129,16 +145,16 @@ static void update_common_dir(struct strbuf *buf, int git_dir_len)
+ void report_linked_checkout_garbage(void)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char **p;
++	const struct common_dir *p;
+ 	int len;
+ 
+ 	if (!git_common_dir_env)
+ 		return;
+ 	strbuf_addf(&sb, "%s/", get_git_dir());
+ 	len = sb.len;
+-	for (p = common_list; *p; p++) {
+-		const char *path = *p;
+-		if (*path == '!')
++	for (p = common_list; p->dirname; p++) {
++		const char *path = p->dirname;
++		if (p->ignore_garbage)
+ 			continue;
+ 		strbuf_setlen(&sb, len);
+ 		strbuf_addstr(&sb, path);
+-- 
+2.0.4.315.gad8727a-twtrsrc
