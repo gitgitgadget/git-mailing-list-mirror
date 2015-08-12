@@ -1,111 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] http: add support for specifying the SSL version
-Date: Wed, 12 Aug 2015 14:20:11 -0400
-Message-ID: <20150812182011.GA3803@flurp.local>
-References: <1439389491-21669-1-git-send-email-gitter.spiros@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] revisions --stdin: accept CRLF line terminators
+Date: Wed, 12 Aug 2015 20:24:49 +0200
+Message-ID: <55CB8F71.1020402@kdbg.org>
+References: <55CA594D.5020103@kdbg.org>
+ <xmqqr3n9pkzc.fsf@gitster.dls.corp.google.com>
+ <xmqqtws5o4lp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, remi.galan-alfonso@ensimag.grenoble-inp.fr
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 20:20:28 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 20:25:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPadX-00016I-Er
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 20:20:27 +0200
+	id 1ZPaht-00040d-4X
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 20:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbbHLSUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 14:20:20 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:36420 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbbHLSUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 14:20:17 -0400
-Received: by iodv127 with SMTP id v127so12839630iod.3
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 11:20:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=JByhbkX/nPaFDux4xksHTQxSfqCEjVXmEppVGZNPlyU=;
-        b=DVP/rTpufSu5+e2FfzcQVdrGSkJp3cS3c0AJoBNlgXCwleBenB+J7NZCoBRQBC3SH4
-         y8i+QFOk9J6fQfw6YS+cJTM+AA/gn8GxlT9PzgykjmJhBG+cM2PzkzZqtAkAaOkeJdiD
-         b663saPGgMrQ0a9eQgdt99HScjMwbP2Ii7EO1UvBzPjdPDfApzl0yFKowrAAh5bQxtcE
-         NMrd4QJQElA3dUJJAL11HWT8Tz3hQRqmMgiO9kjQmVVbGEaQ8PDzZao8xRVMHJ3rIxbx
-         sdE5rqoPGFGQGxs6a3y+gGwyNNGxYhZ9U+LZ18mITG3jvR/Y8kz2+8Yzsbo2kv+9j0iU
-         7Q7w==
-X-Received: by 10.107.168.40 with SMTP id r40mr33719319ioe.20.1439403617185;
-        Wed, 12 Aug 2015 11:20:17 -0700 (PDT)
-Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id c79sm4377885iod.9.2015.08.12.11.20.16
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 12 Aug 2015 11:20:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1439389491-21669-1-git-send-email-gitter.spiros@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751046AbbHLSYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 14:24:53 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:29271 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750829AbbHLSYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 14:24:52 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3mrzw25hHwz5tl9;
+	Wed, 12 Aug 2015 20:24:50 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id ACE4252DE;
+	Wed, 12 Aug 2015 20:24:49 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <xmqqtws5o4lp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275792>
 
-On Wed, Aug 12, 2015 at 04:24:51PM +0200, Elia Pinto wrote:
-> Teach git about a new option, "http.sslVersion", which permits one to
-> specify the SSL version  to use when negotiating SSL connections.  The
-> setting can be overridden by the GIT_SSL_VERSION environment
-> variable.
-> 
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 315f271..76a4f2b 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1595,6 +1595,27 @@ http.saveCookies::
-> +http.sslVersion::
-> +	The SSL version to use when negotiating an SSL connection, if you
-> +	want to force the default.  The available and default version depend on
-> +	whether libcurl was built against NSS or OpenSSL and the particular configuration
-> +	of the crypto library in use. Internally this sets the 'CURLOPT_SSL_VERSION'
-> +	option; see the libcurl documentation for more details on the format
-> +	of this option and for the ssl version supported. Actually the possible values
-> +	of this option are:
-> +
-> +	- sslv2
-> +	- sslv3
-> +	- tlsv1
-> +	- tlsv1.0
-> +	- tlsv1.1
-> +	- tlsv1.2
-> ++
-> +Can be overridden by the 'GIT_SSL_VERSION' environment variable.
-> +To force git to use libcurl's default ssl version and ignore any
-> +explicit http.sslversion option, set 'GIT_SSL_VERSION' to the
-> +empty string.
+Am 12.08.2015 um 00:14 schrieb Junio C Hamano:
+> Now, I am wondering if it makes sense to do these two things:
+>
+>   * Teach revision.c::read_revisions_from_stdin() to use
+>     strbuf_getline() instead of strbuf_getwholeline().
+>
+>   * Teach strbuf_getline() to remove CR at the end when stripping the
+>     LF at the end, only if "term" parameter is set to LF.
+>
+> Doing so would solve 1. and 2., but we obviously need to audit all
+> the other uses of strbuf_getline() to see if they can benefit (or if
+> some of them may be broken because they _always_ need LF terminated
+> lines, i.e. CRLF terminated input is illegal to them).
 
-Unfortunately, this won't format properly in Asciidoc; the final
-paragraph will be indented as part of the itemized list supported SSL
-versions. Here's a squash-in to fix it:
+I can see what I can do with these. Don't hold your breath, though.
 
----- 8< ----
-Subject: [PATCH] fixup! http: add support for specifying the SSL version
+> As to 3., I think it is OK.  The code structure of 4. is too ugly
+> and needs to be revamped to go one line at a time first before even
+> thinking about how to proceed, I would think.
 
----
- Documentation/config.txt | 1 +
- 1 file changed, 1 insertion(+)
+Regarding update-ref --stdin (your 4.), I notice that the input format 
+is very strict, so the solution is to allow an optional CR before the 
+LF. I alread have a patch, but it skips all trailing space, which is 
+probably too lenient. (I only needed the patch once for a debug 
+sesssion, but there is no obvious breakage without the patch.)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 76a4f2b..b23b01a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1610,6 +1610,7 @@ http.sslVersion::
- 	- tlsv1.0
- 	- tlsv1.1
- 	- tlsv1.2
-+
- +
- Can be overridden by the 'GIT_SSL_VERSION' environment variable.
- To force git to use libcurl's default ssl version and ignore any
--- 
-2.5.0.276.gf5e568e
+-- Hannes
