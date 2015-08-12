@@ -1,64 +1,150 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 00/16] Introduce a tempfile module
-Date: Wed, 12 Aug 2015 17:14:57 +0200
-Message-ID: <55CB62F1.30403@alum.mit.edu>
-References: <cover.1439198011.git.mhagger@alum.mit.edu> <xmqqzj1xpodw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] http: add support for specifying the SSL version
+Date: Wed, 12 Aug 2015 08:16:11 -0700
+Message-ID: <xmqqoaicmtac.fsf@gitster.dls.corp.google.com>
+References: <1439389491-21669-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 17:15:12 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, remi.galan-alfonso@ensimag.grenoble-inp.fr
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 17:16:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPXkE-0005ky-O1
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 17:15:11 +0200
+	id 1ZPXlL-0006Yn-HP
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 17:16:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753867AbbHLPPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 11:15:03 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:64877 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753788AbbHLPPA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2015 11:15:00 -0400
-X-AuditID: 1207440d-f79136d00000402c-fc-55cb62f37edc
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.93.16428.3F26BC55; Wed, 12 Aug 2015 11:14:59 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97D5A.dip0.t-ipconnect.de [79.201.125.90])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7CFEvi4014006
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 12 Aug 2015 11:14:58 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-In-Reply-To: <xmqqzj1xpodw.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEKsWRmVeSWpSXmKPExsUixO6iqPs56XSowZpt8hZdV7qZLBp6rzBb
-	PJl7l9mB2ePhqy52j4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M64/uEWc8FexoqLS2axNTBO
-	Yuxi5OSQEDCRaF/WxAZhi0lcuLceyObiEBK4zChxuWsllHOeSeLJ/9WsIFW8ApoS5xofsIPY
-	LAKqEqcarzGB2GwCuhKLepqBbA4OUYEgidcvcyHKBSVOznzCAmKLCKhJTGw7BGYzC5hK3Ho4
-	E2yxsIClxN5Nx8BsIYE0ifWbNoKt4hSwltjx5DMzRL2exI7rv1ghbHmJ7W/nME9gFJiFZMUs
-	JGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrpJebWaKXmlK6iRESurw7GP+vkznE
-	KMDBqMTDazDxVKgQa2JZcWXuIUZJDiYlUd6bCadDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nw
-	1oUA5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErwrE4EaBYtS01Mr
-	0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kGRGl8MjFWQFA/Q3tUg7bzFBYm5QFGI1lOMxhzP
-	pl1by8Sx4MfttUxCLHn5ealS4rx7QEoFQEozSvPgFsGS1itGcaC/hXnFgSlMiAeY8ODmvQJa
-	xQS0Kl3uFMiqkkSElFQDY9KrWZ1vdjmG97udev/hQ03rxWW2//ZM3L4m+vx5zh33VzSLu09y
-	KVRKPzf1X7KC8u+t22ukRJ4Vd+xXOf6ZNcr0zHxO3Sd2HRMiJ27YyVZ94tTmWfGV 
+	id S1754698AbbHLPQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 11:16:15 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35107 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754131AbbHLPQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 11:16:14 -0400
+Received: by pacgr6 with SMTP id gr6so16513353pac.2
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 08:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=w7bNZ8Zeo/e9e79G+IhMp2jJRyxWRPwekRAigFt2kRY=;
+        b=cI/yJda4e8eMEJkzHXcIZQDM7wsI8MrTcfkeXUk7ezR/VqrP+EmXZxQIXnm+LbkE99
+         YT3J5wYM0J9WX4Yu0bOxl/oiqGl5kJGp27fzBXsbBxTrMRVINgF7HARzI+MYDfnzYPLO
+         9tDfBp50tfYDM0Q8yqG4k2hU81ux6kJg3dhvG1wyf4SYENMxY6hv0LqK5i/DmzTHGq4k
+         3Tqp0iu6gS2Br1mkDe4eobjUFnRmw7m8EYyTAYn5BHiDtRUCLd8TNHoV5L2E3uJrLmM/
+         ap/v4ttOxNBiAhk5Jg9B5WBbpQF6rRtY1gitdKSWtpvcqoeTs2DRKDid3YR55nTWh29x
+         Vg6w==
+X-Received: by 10.68.190.38 with SMTP id gn6mr68589705pbc.125.1439392573317;
+        Wed, 12 Aug 2015 08:16:13 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:755f:3d29:a826:eda6])
+        by smtp.gmail.com with ESMTPSA id sp1sm6841749pab.4.2015.08.12.08.16.12
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 12 Aug 2015 08:16:12 -0700 (PDT)
+In-Reply-To: <1439389491-21669-1-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Wed, 12 Aug 2015 16:24:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275773>
 
-On 08/11/2015 10:21 PM, Junio C Hamano wrote:
-> Thanks for a pleasant read.  All looked reasonable.
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Thanks for your review!
+> diff --git a/http.c b/http.c
+> index e9c6fdd..1504005 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -37,6 +37,8 @@ static int curl_ssl_verify = -1;
+>  static int curl_ssl_try;
+>  static const char *ssl_cert;
+>  static const char *ssl_cipherlist;
+> +static const char *ssl_version;
+> +static long sslversion = CURL_SSLVERSION_DEFAULT;
 
-Michael
+I think you shouldn't have to initialize this variable.
+See below.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+>  		init_curl_http_auth(result);
+>  
+> +
+
+An unnecessary double blank?
+
+> +	if (getenv("GIT_SSL_VERSION"))
+> +		ssl_version = getenv("GIT_SSL_VERSION");
+> +	if (ssl_version != NULL && *ssl_version) {
+> +		if (!strcmp(ssl_version,"tlsv1")) {
+> +			sslversion = CURL_SSLVERSION_TLSv1;
+> +		} else if (!strcmp(ssl_version,"sslv2")) {
+> +			sslversion = CURL_SSLVERSION_SSLv2;
+> +		} else if (!strcmp(ssl_version,"sslv3")) {
+> +			sslversion = CURL_SSLVERSION_SSLv3;
+> +#if LIBCURL_VERSION_NUM >= 0x072200
+> +		} else if (!strcmp(ssl_version,"tlsv1.0")) {
+> +			sslversion = CURL_SSLVERSION_TLSv1_0;
+> +		} else if (!strcmp(ssl_version,"tlsv1.1")) {
+> +			sslversion = CURL_SSLVERSION_TLSv1_1;
+> +		} else if (!strcmp(ssl_version,"tlsv1.2")) {
+> +			sslversion = CURL_SSLVERSION_TLSv1_2;
+> +#endif
+> +		} else {
+> +			warning("unsupported ssl version %s : using default",
+> +			ssl_version);
+> +		}
+> +        }
+> +	curl_easy_setopt(result, CURLOPT_SSLVERSION,
+> +				sslversion);
+
+A few problems:
+
+ - Why do we even have to call this when sslversion is not given by
+   the end user, either from the environment or from the config?
+   Wouldn't we use the default version if we do not make this call?
+
+ - It is true that 0x072200 is described as introducing these three
+   in [*1*] but the structure is maintenance burden waiting to
+   happen.  If you #if/#endif based on defined(CURL_SSLVERSION_$v),
+   it will be obvious to other people how to add their future
+   favourite versions in their patches.  Also it may be read better
+   if you separated the logic and the code by using a table like
+   this:
+
+   static struct {
+   	const char *name;
+        long ssl_version;
+   } sslversions[] = {
+	{ "tlsv1", CURL_SSLVERSION_TLSv1 },
+	{ "sslv2", CURL_SSLVERSION_SSLv2 },
+        ...
+   #ifdef CURL_SSLVERSION_TLSv1_0
+	{ "tlsv1.0", CURL_SSLVERSION_TLSv1_0 },
+   #endif
+   	...,
+        { NULL }
+   };
+
+
+
+>  	if (getenv("GIT_SSL_CIPHER_LIST"))
+>  		ssl_cipherlist = getenv("GIT_SSL_CIPHER_LIST");
+> -
+
+This blank removal is understandable (i.e. group related things
+together).
+
+>  	if (ssl_cipherlist != NULL && *ssl_cipherlist)
+>  		curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
+>  				ssl_cipherlist);
+> -
+
+This is not.
+
+>  	if (ssl_cert != NULL)
+>  		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+>  	if (has_cert_password())
+
+[References]
+
+*1* https://github.com/bagder/curl/blob/master/docs/libcurl/symbols-in-versions
