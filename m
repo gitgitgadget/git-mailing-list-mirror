@@ -1,112 +1,160 @@
-From: sivno.20.toranaga-san@spamgourmet.com
-Subject: Git stash behavior
-Date: Wed, 12 Aug 2015 16:57:25 +0200
-Message-ID: <55CB5ED5.5020908@gmx.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 12/16] diff: use tempfile module
+Date: Wed, 12 Aug 2015 17:13:59 +0200
+Message-ID: <55CB62B7.8060706@alum.mit.edu>
+References: <cover.1439198011.git.mhagger@alum.mit.edu>	<404c8bc508639a5723420691d9daa122f10d7cd4.1439198011.git.mhagger@alum.mit.edu> <xmqqbnedr3sp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 12 16:57:44 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 17:14:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPXTL-0003C8-J7
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 16:57:43 +0200
+	id 1ZPXjS-0005EN-Dj
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 17:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753700AbbHLO5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 10:57:37 -0400
-Received: from gourmet.spamgourmet.com ([216.75.62.102]:35623 "EHLO
-	gourmet8.spamgourmet.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932080AbbHLO5e (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2015 10:57:34 -0400
-Received: from spamgourmet by gourmet7.spamgourmet.com with local (Exim 4.80)
-	(envelope-from <sivno.20.toranaga-san@spamgourmet.com>)
-	id 1ZPXTB-00086A-Uo
-	for git@vger.kernel.org; Wed, 12 Aug 2015 14:57:33 +0000
-Received: from mout.gmx.net ([212.227.15.15])
-	by gourmet7.spamgourmet.com with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
-	(Exim 4.80)
-	(envelope-from <sivno.20.toranaga-san@spamgourmet.com>)
-	id 1ZPXTB-00085S-DW
-	for sivno.Toranaga-san.429b71dd90.git#vger.kernel.org@ob.0sg.net; Wed, 12 Aug 2015 14:57:33 +0000
-Received: from [130.149.15.205] ([130.149.15.205]) by mail.gmx.com (mrgmx001)
- with ESMTPSA (Nemesis) id 0LwaQZ-1Yk5Uy17ap-018JPL for
- <sivno.Toranaga-san.429b71dd90.git#vger.kernel.org@ob.0sg.net>; Wed, 12 Aug
- 2015 16:57:31 +0200
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-X-Provags-ID: V03:K0:wQrCu7gnBrmnrmQiGinYflK21+JXU+eXmwz6XnwX6uU8N62l9wA
- 5qZwvncfRPlFH3jltLIjYa30w1KteVM5YTxbc7s+PaO0IIQNKzxoEgGh7x0yXHnl8fTgZN0
- x0rZlC6HudvQ2kJZT2kWLrNrKPnwYi/N9bDtyxLMZmXp9kLrz/t0oaaomZcPZMxU2iq1Mfq
- lhfDhTWxpGXwpJYS+K7Vg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+4swZcfoTE8=:vi6x6TRSpGLjmmzUHFlQ8k
- ak1m5g8MOKN076CN6wRKSYY3lLwKvLFkzEZ62sOhvimXxYSlIDxQu1DrwEsQ2vOQoASMMg4W3
- QubptDn2R+IIm+x7MP/q3S37l6CcRvfTmFLf0RYMmWnTWPeoPwAnil1seJfNAH9JAKOlkxKfm
- rnE2FhH9dMsKKsGmqlvHeZzf8c5Pj4Rfe2h1Enjr+e2h70hGl8FtUSKumsLqUjfKdq0TwKuvX
- HC7QPWjXY+fb6BrobQGPU/cry3XQzlXQWpjwvmwaTfhpap1MC3H69ospKy5GrD+IymuIRbeKY
- 8Ser5HymFOSfImlSIbVdgYVqY0758A6VZlIyKaw6rEQ6SCvLIFPXnDSO/U9xO7SL7Tnh9ms0Y
- 7TGE12djAA7Qd13FJPq9mmSh3AsmL3OJ/JiwxlxlsOXKSoyb49TPJ5ohU3hJj2eXYrpsMsMZE
- Is0ifIpHMfYGfmXEJ5SWksBzCWe9G+kJ5ayTUbvW6z27zeptEjgkGTP/ZRagiFa6h7mh8qee9
- tUKlrfn9loPtMikrxiwLkwcXzRDlxrGe1qkM8jq8ijXZU49bZLK9WHRAnR7pzj0w6vKJk/Uei
- Sjp+0KbO1UJbUQcBqqw3UxLdD0prfvaqHI0JgEoK8iWCokBlwQrr995zZH7a9ZlxQB+jdml7h
- zvRTPWYyDQphi7lKE8OFNQ7uQfw0uPTXaUAqSTZpxzuyXXJ/TmWxviYJ9vGGOlZqJY6SVFkdu
- m99yPxINhKX17B6fsePesJJijj14ylLaw6Lxew==
+	id S1753485AbbHLPOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 11:14:18 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53619 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753333AbbHLPOR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2015 11:14:17 -0400
+X-AuditID: 12074412-f79a76d000007c8b-f9-55cb62baa9c0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id AF.7F.31883.AB26BC55; Wed, 12 Aug 2015 11:14:02 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97D5A.dip0.t-ipconnect.de [79.201.125.90])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7CFDxtI013969
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 12 Aug 2015 11:14:00 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+In-Reply-To: <xmqqbnedr3sp.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqLsr6XSowdVfbBZdV7qZLBp6rzBb
+	PJl7l9mB2ePhqy52j4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M7Y/PMZY0GzQsX/mRMZGxjv
+	S3YxcnJICJhI3P3Rwghhi0lcuLeerYuRi0NI4DKjxIE5x5khnPNMEh3HVgNVcXDwCmhLvHpZ
+	DtLAIqAq8XzSX3YQm01AV2JRTzMTSImoQJDE65e5IGFeAUGJkzOfsIDYIgJqEhPbDoHZzAKm
+	ErcezmQDsYUFzCUmLl/BArFqK6PEpv/dTCAJTgFriXvfNzJBNOhJ7Lj+ixXClpdo3jqbeQKj
+	wCwkO2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0zvdzMEr3UlNJNjJDQFdrB
+	uP6k3CFGAQ5GJR7em32nQoVYE8uKK3MPMUpyMCmJ8t5MOB0qxJeUn1KZkVicEV9UmpNafIhR
+	goNZSYS3LgQox5uSWFmVWpQPk5LmYFES5/25WN1PSCA9sSQ1OzW1ILUIJivDwaEkwbsyEahR
+	sCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSp8cXAWAVJ8QDtXQ3SzltckJgLFIVo
+	PcWoKCXOuwckIQCSyCjNgxsLS0ivGMWBvhTmTQWp4gEmM7juV0CDmYAGp8udAhlckoiQkmpg
+	5P8xdUWK3eeGgJMdhsuLmZ02pznFzndsuKlwbdb2SDeNbslranaKTx5Lrv9aPq8/SvvIjgLG
+	C8fO3IjjzY9yFq169yHeRevF2ezi4o4LR1cf/uL6IJHf97RmQeMU+UgvxrjjNRXW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275771>
 
-Hello all,
+On 08/11/2015 10:03 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  diff.c | 29 +++++++----------------------
+>>  1 file changed, 7 insertions(+), 22 deletions(-)
+> 
+> Nice code reduction.
+> 
+>> diff --git a/diff.c b/diff.c
+>> index 7500c55..dc95247 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -2,6 +2,7 @@
+>>   * Copyright (C) 2005 Junio C Hamano
+>>   */
+>>  #include "cache.h"
+>> +#include "tempfile.h"
+>>  #include "quote.h"
+>>  #include "diff.h"
+>>  #include "diffcore.h"
+>> @@ -312,7 +313,7 @@ static struct diff_tempfile {
+>>  	const char *name; /* filename external diff should read from */
+>>  	char hex[41];
+>>  	char mode[10];
+>> -	char tmp_path[PATH_MAX];
+>> +	struct tempfile tempfile;
+>>  } diff_temp[2];
+>>  
+>>  typedef unsigned long (*sane_truncate_fn)(char *line, unsigned long len);
+>> @@ -564,25 +565,16 @@ static struct diff_tempfile *claim_diff_tempfile(void) {
+>>  	die("BUG: diff is failing to clean up its tempfiles");
+>>  }
+>>  
+>> -static int remove_tempfile_installed;
+>> -
+>>  static void remove_tempfile(void)
+>>  {
+>>  	int i;
+>>  	for (i = 0; i < ARRAY_SIZE(diff_temp); i++) {
+>> -		if (diff_temp[i].name == diff_temp[i].tmp_path)
+>> -			unlink_or_warn(diff_temp[i].name);
+>> +		if (is_tempfile_active(&diff_temp[i].tempfile))
+>> +			delete_tempfile(&diff_temp[i].tempfile);
+> 
+> I suspect that this indicates that there is something iffy in the
+> conversion.  The original invariant, that is consistently used
+> between claim_diff_tempfile() and remove_tempfile(), is that .name
+> field points at .tmp_path for a slot in diff_temp[] that holds a
+> temporary that is in use.  Otherwise, .name is NULL and it can be
+> claimed for your own use.
 
-I am using git stashes to ensure that my source builds and tests
-correctly. My general work flow is this: Before committing I create a
-stash and clean everything:
+No, prepare_temp_file() sometimes sets diff_tempfile::name to
+"/dev/null", and sometimes to point at its argument `name`. In either of
+these cases .tmp_path can hold anything, and the file is *not* cleaned
+up even though the diff_temp entry is considered by
+claim_diff_tempfile() to be in use.
 
-    git stash save -q --keep-index --include-untracked
+If I'm not mistaken, the old invariant was:
 
-Then I perform some tests (mvn compile test), after that I restore
-everything:
+* Iff diff_tempfile::name is NULL, the entry is not in use.
+* Iff diff_tempfile::name == diff_tempfile::tmp_path, then the entry is
+in use and refers to a temporary file that needs to be cleaned up.
+* Otherwise, the entry is in use but the corresponding file should *not*
+be cleaned up.
 
-    git stash pop -q
+The new invariant is:
 
-I am using this from a pre-commit hook so I really need this to work
-reliably. The problem is that I think that it really doesn't. I created
-a small gist to show the problem here:
+* Iff diff_tempfile::name is NULL, the entry is not in use. In these
+cases, is_tempfile_active() is always false.
+* Iff is_tempfile_active(diff_tempfile::tempfile), then it refers to a
+file that needs to get cleaned up. In these cases name points at the
+tempfile object's filename.
+* If neither of the above is true, then the entry is in use but the
+corresponding file should not be cleaned up.
 
-https://gist.github.com/x2b/3cc3d8aa8979561de4b5
+> Here the updated code uses a different and new invariant: .tempfile
+> satisfies is_tempfile_active() for a slot in use.  But the check in
+> claim_diff_tempfile() still relies on the original invariant.
 
-There are actually multiple problems here:
+That is not true. The is_tempfile_active() check is only used in
+remove_tempfile() when deciding whether to clean up the file. The check
+in claim_diff_tempfile() wants to know whether the entry is in use, so
+it uses the other check.
 
-1.
+> The updated code may happen to always have an active tempfile in
+> tempfile and always set NULL when it clears .name, but that would
+> mean (1) future changes may easily violate one of invariants (we
+> used to have only one, now we have two that have to be sync) by
+> mistake, and (2) we are keeping track of two closely linked things
+> as two invariants.
+> 
+> As the value that used to be in the .name field can now be obtained
+> by calling get_tempfile_path() on the .tempfile field, perhaps we
+> should drop .name (and its associated invariant) at the same time?
 
-If an untracked file already exists then git refuses to pop the stash.
-This is certainly the desired behavior in most cases. However, I would
-appreciate a "--force" option to override it.
+This is also incorrect. See my first paragraph above.
 
-2.
+I will change this patch to document the invariants.
 
-As you can see the content of the "untracked" file in the gist is the
-same in the stash and the working directory. Is it really necessary to
-abort the operation in this case??
+Michael
 
-3.
-
-The most severe problem is that after unsuccessfully trying to pop the
-stash the "first_untracked" file is restored while the "untracked" file
-is not. The stash is *partially* applied to the working directory. It
-seems like git restores some files before giving up after encountering
-the first file which can't be restored. I think this behavior is not
-generally what is expected. Git should either fail and leave the working
-directory as-is or succeed and change the directory's content.
-Since there is no "--force" option (see 1.) it is necessary to remove
-the already restored untracked files by hand before attempting to pop
-the stash once more (this is really inconvenient to me).
-
-While these are not technically bugs I would appreciate it if you could
-address these issues all the same.
-
-x2b
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
