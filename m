@@ -1,136 +1,76 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH jk/prune-mtime] prune: close directory earlier
- during loose-object directory traversal
-Date: Wed, 12 Aug 2015 19:43:01 +0200
-Message-ID: <55CB85A5.5040802@kdbg.org>
-References: <55CA5EB0.1000308@kdbg.org>
- <b9cf9e2168c3b2476bb5bb134a1528be@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 0/4] submodule config lookup API
+Date: Wed, 12 Aug 2015 10:53:58 -0700
+Message-ID: <xmqqio8kl7ex.fsf@gitster.dls.corp.google.com>
+References: <cover.1434400625.git.hvoigt@hvoigt.net>
+	<xmqq8ubk7idb.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kakGg6Ejworq5xVr2QuzLHxh=E6tzU_PoW+0M6AWuKJfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: msysGit <msysgit@googlegroups.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: msysgit+bncBCJYV6HBKQIKPC5OVYCRUBBDONH6Q@googlegroups.com Wed Aug 12 19:43:05 2015
-Return-path: <msysgit+bncBCJYV6HBKQIKPC5OVYCRUBBDONH6Q@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f56.google.com ([209.85.215.56])
+Content-Type: text/plain
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 19:54:07 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIKPC5OVYCRUBBDONH6Q@googlegroups.com>)
-	id 1ZPa3M-0002gw-Sl
-	for gcvm-msysgit@m.gmane.org; Wed, 12 Aug 2015 19:43:05 +0200
-Received: by labqg3 with SMTP id qg3sf6101576lab.1
-        for <gcvm-msysgit@m.gmane.org>; Wed, 12 Aug 2015 10:43:04 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1ZPaE2-0001G9-R2
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 19:54:07 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750997AbbHLRyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 13:54:01 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:35898 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750710AbbHLRyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 13:54:00 -0400
+Received: by pdco4 with SMTP id o4so9791952pdc.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 10:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=Ihop5vYWqNrwSPEnGcr1qf57nRSkOtki10tTGDRz/GI=;
-        b=Gqeb+cKsPSHPuotWVLuJfTkYl0f63A/MKQyKfRJryGTI9aY/mHrgz0eDYd6TxvHMPg
-         +3Tbobo9V/xM1qTiXt90uL7JALpxE1Ejt3m6cSxQoSqaYyjKdXutyvjxvglZ8f+ycUlY
-         lT4fC+nf3tHqxoQ9ZrgxUcLz1PkZuIxAtgc8xlWhccmxHqDcD3reGasxfXFSpwTh8k6a
-         ImzEDKo5l9TKC66qoIzuFMislq8lcbd4RgX+C5loRfnyGAB5SRGdZWHwlJy5b1f2Hg9I
-         4EMq8M0/9rkrnTElf9Bs5jXUw3pEdPyZMvwYFdiKGYIVrWpJxRAkTjxSNeZkVg5baF0j
-         +u+Q==
-X-Received: by 10.152.120.103 with SMTP id lb7mr122499lab.29.1439401384667;
-        Wed, 12 Aug 2015 10:43:04 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.205.33 with SMTP id ld1ls79298lac.6.gmail; Wed, 12 Aug
- 2015 10:43:02 -0700 (PDT)
-X-Received: by 10.113.3.8 with SMTP id bs8mr10019910lbd.23.1439401382916;
-        Wed, 12 Aug 2015 10:43:02 -0700 (PDT)
-Received: from bsmtp8.bon.at (bsmtp8.bon.at. [213.33.87.20])
-        by gmr-mx.google.com with ESMTPS id c3si667028wiz.2.2015.08.12.10.43.02
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Aug 2015 10:43:02 -0700 (PDT)
-Received-SPF: neutral (google.com: 213.33.87.20 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=213.33.87.20;
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3mryzp1z89z5tlF;
-	Wed, 12 Aug 2015 19:43:02 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 8F77452DE;
-	Wed, 12 Aug 2015 19:43:01 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-In-Reply-To: <b9cf9e2168c3b2476bb5bb134a1528be@www.dscho.org>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 213.33.87.20 is neither permitted nor denied by best guess
- record for domain of j6t@kdbg.org) smtp.mailfrom=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275787>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=n86zD8NSptXlpxtSnfX+MK4O9OqyyZaiq8YXQo+r5l4=;
+        b=UdlmvLBkUlftzknVDa9nTSg+AjLthqUmzKW/5CL1UByayqDk3kbMpJUjPVTkj6EAkB
+         oGVIi3K2i06Cz+1rDLSEQejqh18AP/wCwgUsPpvWRS4dazP4Vf4xNJM79jvpIpSM2497
+         BvV1A9MXkXQxbNu2DGerv9lL+gCOE1gQCgVdsvqY5r1AQPVAGFV2ik+or9L7d4ueWjTk
+         C7uy21B3pEhZNsNmnds0GVfggwGs8zx9B1FTuk0zJgQsnlb8qrB+yzgYQiZlh4z7pg7I
+         8TV5BP6n12n/w78YDry9TUokUgLvU8P4X+plGLWt0F1fXLBYbDzKqy5ilKmdV/qiMbV2
+         53/A==
+X-Received: by 10.70.44.228 with SMTP id h4mr14785666pdm.45.1439402039862;
+        Wed, 12 Aug 2015 10:53:59 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:755f:3d29:a826:eda6])
+        by smtp.gmail.com with ESMTPSA id j17sm4187767pdl.59.2015.08.12.10.53.58
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 12 Aug 2015 10:53:58 -0700 (PDT)
+In-Reply-To: <CAGZ79kakGg6Ejworq5xVr2QuzLHxh=E6tzU_PoW+0M6AWuKJfg@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 10 Aug 2015 12:23:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275788>
 
-27e1e22d (prune: factor out loose-object directory traversal, 2014-10-16)
-introduced a new function for_each_loose_file_in_objdir() with a helper
-for_each_file_in_obj_subdir(). The latter calls callbacks for each file
-found during a directory traversal and finally also a callback for the
-directory itself.
+Stefan Beller <sbeller@google.com> writes:
 
-git-prune uses the function to clean up the object directory. In
-particular, in the directory callback it calls rmdir(). On Windows XP,
-this rmdir call fails, because the directory is still open while the
-callback is called. Close the directory before calling the callback.
+> On Mon, Jun 15, 2015 at 2:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Thanks.  Will replace and wait for comments from others.
+>
+> I have reviewed the patches carefully and they look good to me.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- My Windows 8.1 machine does not require this fix for some unkonwn
- reason. But we still cater for Windows XP users, where this change
- is a real improvement.
+OK, I recall there were a few iterations with review comments before
+this round.  Is it your impression that they have been addressed
+adequately?
 
- sha1_file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Do you prefer it to be rebased to a more recent 'master' before you
+build your work on top of it (I think the topic currently builds on
+top of v2.5.0-rc0~56)?
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 4d1b26f..5cecc68 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3473,12 +3473,12 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
- 				break;
- 		}
- 	}
-+	closedir(dir);
-+
- 	strbuf_setlen(path, baselen);
--
- 	if (!r && subdir_cb)
- 		r = subdir_cb(subdir_nr, path->buf, data);
- 
--	closedir(dir);
- 	return r;
- }
- 
--- 
-2.3.2.245.gb5bf9d3
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Thanks.
