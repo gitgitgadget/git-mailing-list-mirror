@@ -1,76 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: pack negotiation algorithm between 2 share-nothing repos
-Date: Wed, 12 Aug 2015 08:55:05 -0700
-Message-ID: <xmqqk2t0mrhi.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8AKKYux6w=6X392mJhGFfqfEvJsrX0PjcivHPt2PYVKAw@mail.gmail.com>
+Subject: Re: proper remote ref namespaces
+Date: Wed, 12 Aug 2015 09:10:06 -0700
+Message-ID: <xmqqfv3omqsh.fsf@gitster.dls.corp.google.com>
+References: <CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 17:55:38 2015
+Cc: Git List <git@vger.kernel.org>, Johan Herland <johan@herland.net>,
+	Jeff King <peff@peff.net>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 18:10:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPYNK-0007UY-LK
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 17:55:35 +0200
+	id 1ZPYbb-0000yi-1d
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 18:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932269AbbHLPz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 11:55:29 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35026 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932114AbbHLPzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 11:55:08 -0400
-Received: by pacgr6 with SMTP id gr6so17156578pac.2
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 08:55:08 -0700 (PDT)
+	id S932137AbbHLQKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 12:10:10 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36643 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753493AbbHLQKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 12:10:08 -0400
+Received: by pacrr5 with SMTP id rr5so17453210pac.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 09:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=lmiRgr/c6DLQFwaMxxpC0TvR+uLiFjWc6+bMyDx1gCo=;
-        b=AD0hf+62JlRWmnP5cjgA4agLxdb6ReTE6wtzD4vsNh9mGkOLLrMwWVhteGXD6qxyH5
-         nRUgx6mlFUM3WXXRzCAtRzW1vACm+iYnBQoD3VzjU9CRSYD4/i0ydbFZwrOuyG6xko8U
-         AOIYsuT5XD2gALtTexJLGVshdB+D94Qe0179Bv2Bqp4p1G8C49mMegX5CxtS5G5rfvPo
-         0XtsLljIDhAndT/BE9CPcsAPAr42bLz9iCdROunnFr79n9dPeEsOKXlnfMfCAgSGeI5x
-         7dvkQCPmOTv+P1IA9FX1uxY0aRxyFZoGCqiHHpvUfHR9Xi0b1e7LZCWKjh7o3gdUX086
-         +8yw==
-X-Received: by 10.68.200.72 with SMTP id jq8mr42493853pbc.91.1439394908134;
-        Wed, 12 Aug 2015 08:55:08 -0700 (PDT)
+        bh=rY00D4ZaI16F91UruJl1S1EeEAlWK/Eneuf1ZVT8Bw4=;
+        b=CKd4ywzEdFCPmmSlRhdtIwE8dUxUx88awEJmuGQAk7thuz89/YMj6s8ptG5oSpoTzP
+         yUDMASXSze8GDj8ZYYlV1BjWvlOOhElOQSrMHANuQral6GY8pMXHLogplh2XKdqypllC
+         ucHZSO9ELKsGIYxz1RwhGg85W1NzW1KMEDjhRwnftL5+kaXAqSd/44AZCPB8QI6L2t0P
+         3dPf7LhDqjPQep433jPKmuxAqb6IHlch6WN2qt+dvJYBcYtxvba17tJjI0gNtbVkTnHr
+         3Rh6XU9r5rQqXn2GmDgu7uhxlZnXT+LPaVfnrU6We49zfbbHX4wjZr5+8I/RSu74Bzr4
+         L8uA==
+X-Received: by 10.66.222.103 with SMTP id ql7mr67843687pac.144.1439395808345;
+        Wed, 12 Aug 2015 09:10:08 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:755f:3d29:a826:eda6])
-        by smtp.gmail.com with ESMTPSA id tm3sm6907357pbc.27.2015.08.12.08.55.07
+        by smtp.gmail.com with ESMTPSA id gh5sm6925114pbc.87.2015.08.12.09.10.07
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 12 Aug 2015 08:55:07 -0700 (PDT)
-In-Reply-To: <CACsJy8AKKYux6w=6X392mJhGFfqfEvJsrX0PjcivHPt2PYVKAw@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 12 Aug 2015 18:27:24 +0700")
+        Wed, 12 Aug 2015 09:10:07 -0700 (PDT)
+In-Reply-To: <CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com>
+	(Jacob Keller's message of "Tue, 11 Aug 2015 23:43:56 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275777>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> I know this is a corner case, but because it has a valid use case,
-> maybe we should do something about it. Immediate reaction is to add an
-> option to send no "have"s. But maybe you guys have better ideas.
+> Recently there was some discussion about git-notes and how we do not
+> fetch notes from remotes by default. The big problem with doing so is
+> because refs/remotes/* hierarchy is only setup for branches (heads),
+> so we don't have any clean location to put them.
 
-This and similar corner cases were discussed in very early days of
-Git.
+I wouldn't call this topic "proper" namespaces, though.  What we
+have is widely used and it shouldn't be broken.  Call it "enhanced",
+perhaps.
 
-One interesting idea floated back then but was not pursued was to
-dig and send have's sparsely and then back up.  Instead of digging
-and sending _all_ commits in a contiguous history, after sending the
-tip, you skip the commits from the history before sending the next
-one, and progressively make the skipping larger (e.g. Fibonacci, or
-exponential).  You need to remember what you sent and for each of
-what you sent its topologically-oldest descendant you sent earlier
-that you heard the other side does not have.
+Some design boundaries:
 
-Then, when you get an Ack, you know a stretch of history between a
-commit that is known to be common (i.e. the one you heard an Ack
-just now) and its descendant that is known only to you (i.e. the
-topologically-oldest one you remember that you did send and they
-didn't say is common).  At that point, you and the other end can
-bisect that range.
+ - Moving the remote-tracking branch hierarchy from refs/remotes/$O/*
+   to refs/remotes/$O/heads/* would not fly, because it will break
+   existing repositories.  Do not even waste time on pursuing
+   refs/remotes/$O/{heads,tags,notes...}/*
+
+ - Extending the current refs/remotes/$O/* (for branches) and doing
+   refs/remote-tags/$O/* (for tags) may work, would not break
+   existing repositories, and could to be extended further to cover
+   refs/remote-notes/$O and friends.  It however may not look pretty
+   (weak objection) and more importantly, it would make it harder to
+   "cull" things that came from a single remote.
+
+Just thinking aloud, perhaps we can introduce a brand new top level
+hierarchy refs/remote/$O/{heads,tags,notes,...}, and give backward
+compatibility by making a moral equivalent of a symbolic link from
+refs/remote/$O/heads to refs/remotes/$O/.  The true remote-tracknig
+refs continue to live in refs/remotes/$O/* and old tools that do not
+know the new layout would not be hurt.  New tools that want to
+ignore and look only at refs/remote/$O/* can do so through the moral
+equivalent of a symbolic link.  "remote remove" needs to be taught
+about this single exception (i.e. "the symbolic link"), but the
+places it needs to touch is limited only to two places and will not
+grow.
+
+If somebody got confused, notice that in the above description, I
+said refs/remotes/ and refs/remote/.  The former must stay.  The
+name of the latter is open to bikeshedding.  Some may prefer a name
+that is more distinct (refs/tracking/ or something, perhaps?).  I
+happen to prefer a name that is similar, but this preference is very
+weak and I can persuaded to go either way.
