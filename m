@@ -1,131 +1,78 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: proper remote ref namespaces
-Date: Tue, 11 Aug 2015 23:43:56 -0700
-Message-ID: <CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH bc/connect-plink] t5601-clone: remove broken and pointless
+ check for plink.exe
+Date: Wed, 12 Aug 2015 13:07:31 +0200
+Organization: gmx
+Message-ID: <866a41f50ef9b4807da72576a4bca717@www.dscho.org>
+References: <55CA6066.5070500@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 12 08:44:29 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 12 13:07:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPPm1-0006Ni-18
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 08:44:29 +0200
+	id 1ZPTsh-0003X9-BH
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 13:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933504AbbHLGoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 02:44:18 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34315 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933411AbbHLGoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 02:44:16 -0400
-Received: by igui7 with SMTP id i7so55749990igu.1
-        for <git@vger.kernel.org>; Tue, 11 Aug 2015 23:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=s9MYf3919fzXDBVs/bhU3Jhj6Noz+YwnhiM7I+5xD+U=;
-        b=Q9V+fkBvBfstvw0FMC9G5Dk97iSRu42hPtcshtrXD5XEQ6oBX9oqk3NT6tXbCwtzrw
-         F0m6/4xpmSPUPYSoeggs3+DjSZv9BCp9PiXb879VoDKqSrRIyEu0PrYFICpFNXU64FbM
-         ON+5Z7oW5kQjTQkSx5T5UsuqeaKQy/rC8g/sRnk2V1ISqao3X73RwsWWBUW6nO8jIQLU
-         pAE+mH//JT8+3eXn+j47C4nD6q19xQeHqdTOpiVJvzPTDyjIVYniHhETcrdAZrTAWnq/
-         OjcoQm9g5/MnmR8HqJEF0pGAIiimo3kP3JDzuRlY1P2hRtsDzULthrXYlxagb0GuiLF/
-         mkSA==
-X-Received: by 10.50.27.39 with SMTP id q7mr21039398igg.73.1439361855674; Tue,
- 11 Aug 2015 23:44:15 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Tue, 11 Aug 2015 23:43:56 -0700 (PDT)
+	id S1752156AbbHLLHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 07:07:34 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54081 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751182AbbHLLHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 07:07:33 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LpsIh-1Yv7TA49dX-00fl7e; Wed, 12 Aug 2015 13:07:32
+ +0200
+In-Reply-To: <55CA6066.5070500@kdbg.org>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:GhPLXD+Vm0ogovHiTnmeAOcRCponK6+UAj3VMkwGLhruLJ/VlA0
+ 1atZCwt/nvesWt8f41R6CVPYxdgbTZKL/g39/DAeYlLzcGiqg12xVwnOGmhfdT1UcZbrNYp
+ +w9ORpJkFP0bbMeEft4FUJaySU/ex+Oky5ELWbMd4E0GiZZ0A+QPeIQ356zNHHpiSGYF+PZ
+ aZaMe2N9XEJ4SfL0uImqA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IKSMAVt6iG8=:hIlD3NtYaBOIXrQf6L+rKN
+ j80g716ogcE3BMoWjIRm/W/2BKdvVnQ4Xtdz/6IxxVojbI5wO/TO7cbrkqauMA6NbkROp7bY7
+ BaD/Zg4RZl+h9kb0Wm8hEkhUFf77F8GPcayv8W4sZPUC/1sbpXhF4dq34l+CFbdGNU9phyrwT
+ EaifqibHlj4WttTnCrB7YohasqNwyq2F0XGdFijY2h6S9skHI+fLLt5xK2jD5GlBDBamC31me
+ 0V+WK2mohNMNjyFFX/qeVEXZ45udzKtQPsbcEuvLpWjM98VH3MwTQUaX3qoLidkr4c41ssZNi
+ i4eNlboM2vaAyKF+IVg8VmWadIComILh2WdHBORwpNH0XZFHJhU6+xDtBg9iR7R/Sm8qYJNXs
+ HIyiIBDPWM7fapMq7K0OZEAN6wkBmmIr/jCca3v7GlsjX828l5Hecu9f8h5LBsl6HoEKjTWYX
+ TTzAK2i6dADuPKUDunRZEK7k1xBozIX4oPbalqJyKOM+l+gUNcqeDCI8RCwn+vPnITC80Vwdn
+ S6Sg5UMoYmGd+0dVZgoNsrtIomVk4QGeeRWtw7YOy2Iqo0yUul5kooNfLsa9wsItekggiMgVA
+ nZNzKO4dRZGaBE63mr6ETxiJJxd+Fg8K8FUYadaMqUhSlRhqolyLWQEY7VYRthiruAjYBTda3
+ uZG+kacrneYGdt8zajjjTVLq8s44aAHMN4Vdht8sFLM6dauVGHiorfLvb5dx07dkd1KHt3WmI
+ 3j3NpdP+oz6Ipa915ieB+FElzxb6rjDZpSeykw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275758>
 
-Hello,
+Hi Johannes,
 
-Recently there was some discussion about git-notes and how we do not
-fetch notes from remotes by default. The big problem with doing so is
-because refs/remotes/* hierarchy is only setup for branches (heads),
-so we don't have any clean location to put them.
+On 2015-08-11 22:51, Johannes Sixt wrote:
+> Invoking plink requires special treatment, and we have support and even
+> test cases for the commands 'plink' and 'tortoiseplink'. We also support
+> .exe variants for these two and there is a test for 'plink.exe'.
+> 
+> On Windows, however, where support for plink.exe would be relevant, the
+> test case fails because it is not possible to execute a file with a .exe
+> extension that is actually not a binary executable---it is a shell
+> script in our test. We have to disable the test case on Windows.
 
-Around the time of git 1.8.0, Johan Herland made a proposal for
-remotes to put all their refs in refs/remtoes/*, by moving heads into
-refs/remotes/<remote>heads/* [1]
+Oh how would I wish you were working on Git for Windows even *just* a bit *with* me. At least I would wish for a more specific description of the development environment, because it sure as hell is not anything anybody can download and install as easily as Git for Windows' SDK.
 
-In addition, his proposal was to include remote tags into
-refs/remotes/<remote>/tags and also refs/remotes/<remote>/replace and
-notes similarly.
+FWIW Git for Windows has this patch (that I wanted to contribute in due time, what with being busy with all those tickets) to solve the problem mentioned in your patch in a different way:
 
-During this discussion there was many people who liked the idea, and
-others who rejected it. The main rejection reason  was two fold:
+https://github.com/git-for-windows/git/commit/2fff4b54a0d4e5c5e2e4638c9b0739d3c1ff1e45
 
-(a) tags are "global" per project, so their namespace should be
-treated global as it is now.
+Please read this as my vote not to remove the test cases.
 
-The proposal's counter to this is that tags aren't guaranteed to be
-global, because today two remotes you fetch might have tags that are
-the same name with different pointers. This is currently hidden, and
-git silently picks the tag it fetched first.
-
-(b) script compatibility, as changing the ref layout  such that new
-git can't work with old repository would be bad
-
-the counter to this, is that we make git smart enough to recognize old
-remote format, and continue to work with it. Scripts which depend on
-this layout will break, but that may not be such a huge concern.
-
-Personally, I think this proposal at least for heads, notes, replace,
-and other remote refs we'd like to pull is very useful. I don't
-rightly know the answer for tags. The linked discussion below covers
-several pages of back and forth between a few people about which
-method is best.
-
-I like the idea of simplifying tags and branches and notes and others
-to all fetch the same way. local stuff is in refs/heads or refs/notes
-and remote stuff is (by default) in refs/remotes/<remote>/tags etc
-
-But it does bring up some discussion as today we "auto follow" tags
-into refs/tags, and it can get weird for tags since now "ambiguous"
-tags must mean if there are tags of same name which point to different
-refs, and we'd need to teach a bunch of logic to the ref lookup code.
-
-I am looking at ways to help git-notes be easier to use, so that we by
-default fetch notes, and enable easier merge, since we'd have default
-locations to merge from and to. This would make the sharing of notes a
-lot easier, which is one of their primary sticking points.. you can't
-really share them without *everyone* working to do it the same way you
-do. By making a default policy, sharing becomes natural, and users can
-easily add *public* notes to commits for things such as bug ids and
-other things which are not discovered until after the commit is
-created.
-
-In addition, the easy ability to share replaces might also be helpful,
-though IMHO not as valuable as git-notes.
-
-I think that the only logical refs layout is
-"refs/remotes/<remote>/(heads|tags|notes|replace)"
-
-and adding "refs/remote-notes" and "refs/remote-replace" is not really
-a clean solution.
-
-Given that the 1.8.0 proposal mostly died, does anyone have any thoughts now?
-
-The proposal suggested by Johan makes sense to me, and I believe we
-can code up logic to make it easy for new git to keep logic of the old
-layout.
-
-Personally, I think the best solution is to only store that layout for
-a given clone, using a config option that defaults to false, where
-new-git sets it to true for all clones. Then, provide a command to
-renew remotes-layout that does this if the user wishes. Thus, clones
-for the old style will be handled, and new clones would have the new
-layout. (ie: no mixing layouts in a single repository).
-
-I'm really not sure if this is the best solution, but seems like the
-cleanest solution.
-
-Regards,
-Jake
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=165885
+Thanks,
+Johannes
