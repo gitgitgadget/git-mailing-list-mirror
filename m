@@ -1,230 +1,126 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v10 05/13] ref-filter: implement an `align` atom
-Date: Wed, 12 Aug 2015 21:54:29 +0530
-Message-ID: <CAOLa=ZTnS0kL=CK8Lx-brO0tryB5YzOFUpapsM4LMW-m2Yf9pw@mail.gmail.com>
-References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
- <1439129506-9989-6-git-send-email-Karthik.188@gmail.com> <xmqqy4hhr72q.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH nd/dwim-wildcards-as-pathspecs] t2019: skip test
+ requiring '*' in a file name non Windows
+Date: Wed, 12 Aug 2015 09:28:11 -0700
+Message-ID: <xmqqbnecmpyc.fsf@gitster.dls.corp.google.com>
+References: <55CA5D56.6030800@kdbg.org>
+	<a9e3c007fb6b39e7339c8d2b1c50d56b@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 18:25:08 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Johannes Sixt <j6t@kdbg.org>,  Git Mailing List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: msysgit+bncBCG77UMM3EJRBHXIVWXAKGQEJRVF2CQ@googlegroups.com Wed Aug 12 18:28:17 2015
+Return-path: <msysgit+bncBCG77UMM3EJRBHXIVWXAKGQEJRVF2CQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pd0-f185.google.com ([209.85.192.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPYpv-0003S5-Hz
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 18:25:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932156AbbHLQZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 12:25:00 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:33913 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752588AbbHLQY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 12:24:59 -0400
-Received: by obbfr1 with SMTP id fr1so16638762obb.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 09:24:58 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBHXIVWXAKGQEJRVF2CQ@googlegroups.com>)
+	id 1ZPYsz-0005XQ-F4
+	for gcvm-msysgit@m.gmane.org; Wed, 12 Aug 2015 18:28:17 +0200
+Received: by pdrg1 with SMTP id g1sf5496703pdr.0
+        for <gcvm-msysgit@m.gmane.org>; Wed, 12 Aug 2015 09:28:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0ugJ+7fw2nhJ8qDety8MLJBPKLwmsBXXyArXZk4Trzw=;
-        b=bSddc4MRW1pfKq7uyiNw+ye/jMYZcd/NDD1U7MOJf6blRyevt/bIw9sMTft4HHTkM0
-         iaFm7K8TPgpv+67sSS0m2KEUwhiWtFVBIoCpUYVEI9rNhnZwkil4WmhK18S5YiJUrlP0
-         t1pJ4QscZLhrAcXcA8CDM7fM//yY70zJLUuWi22a9YNp6lnZBBX9nTiBlbwI0B6O3K/w
-         S42RCo1AhsP5kXUh/tRXTHP57HyiuLaRSak8RWK2SJmam9LInhlfA9BUbZlIDC2kkJpD
-         t36tUMy7lvlQVKgVlYW/IwyAMYOvXRV37dqEHF38Dec4YjSDlE1J896OMO9jZFwpB9TW
-         +77g==
-X-Received: by 10.60.62.105 with SMTP id x9mr30572346oer.1.1439396698756; Wed,
- 12 Aug 2015 09:24:58 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Wed, 12 Aug 2015 09:24:29 -0700 (PDT)
-In-Reply-To: <xmqqy4hhr72q.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275778>
+        d=googlegroups.com; s=20120806;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe;
+        bh=hCfol0ZigNQh5UFVbhaIeOI6gDrTOmkBHwW4p3mdZDg=;
+        b=tfweDbzcBv47su3i493ZS/hWqcy3QRqCa2YtaWD6d5HNpFM6Bv1G9P6NQ1BOnB82/X
+         DpVv1byruekl7pWF4QyBi3Wr9il5O2Tew0zYVT4eicBOP5pDcjJpHepPsg4oYQ5jiTzm
+         DM3SpcBSmtCdvS654b0KYXKh2WZis1R1UoPDcNWjGKL93EZiEYAO1rGzEQKdMhSAyjPF
+         sz8hQ3S8k9WeB/r6RH0FSbq6Jo8aeMWnbwtUBSBYXh2RvGdRFC7ghydhBI+gipLJKO7M
+         fIlz1USl6MyyxJw3TXDTX1xXNoRc2LbxYiGhrw+kSGwN9zll7MTVKFFpdr92DRAGeFtn
+         C7oA==
+X-Received: by 10.140.96.138 with SMTP id k10mr361023qge.18.1439396896612;
+        Wed, 12 Aug 2015 09:28:16 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.86.100 with SMTP id o91ls240844qgd.54.gmail; Wed, 12 Aug
+ 2015 09:28:14 -0700 (PDT)
+X-Received: by 10.13.247.133 with SMTP id h127mr30971402ywf.2.1439396894115;
+        Wed, 12 Aug 2015 09:28:14 -0700 (PDT)
+Received: from mail-pd0-x229.google.com (mail-pd0-x229.google.com. [2607:f8b0:400e:c02::229])
+        by gmr-mx.google.com with ESMTPS id c1si629162pdg.0.2015.08.12.09.28.14
+        for <msysgit@googlegroups.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Aug 2015 09:28:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jch2355@gmail.com designates 2607:f8b0:400e:c02::229 as permitted sender) client-ip=2607:f8b0:400e:c02::229;
+Received: by mail-pd0-x229.google.com with SMTP id fa8so8964998pdb.1
+        for <msysgit@googlegroups.com>; Wed, 12 Aug 2015 09:28:14 -0700 (PDT)
+X-Received: by 10.70.89.109 with SMTP id bn13mr68387317pdb.163.1439396893961;
+        Wed, 12 Aug 2015 09:28:13 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:755f:3d29:a826:eda6])
+        by smtp.gmail.com with ESMTPSA id 4sm7003242pdh.51.2015.08.12.09.28.12
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 12 Aug 2015 09:28:12 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+In-Reply-To: <a9e3c007fb6b39e7339c8d2b1c50d56b@www.dscho.org> (Johannes
+	Schindelin's message of "Wed, 12 Aug 2015 13:25:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of jch2355@gmail.com designates 2607:f8b0:400e:c02::229
+ as permitted sender) smtp.mailfrom=jch2355@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275779>
 
-On Wed, Aug 12, 2015 at 12:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>  struct atom_value{
->
-> Obviously not a problem with this step, but you need a SP before the
-> open brace.
->
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Will add.
+> Hi,
+>
+> On 2015-08-11 22:38, Johannes Sixt wrote:
+>
+>> diff --git a/t/t2019-checkout-ambiguous-ref.sh
+>> b/t/t2019-checkout-ambiguous-ref.sh
+>> index 8396320..199b22d 100755
+>> --- a/t/t2019-checkout-ambiguous-ref.sh
+>> +++ b/t/t2019-checkout-ambiguous-ref.sh
+>> @@ -69,7 +69,7 @@ test_expect_success 'wildcard ambiguation, paths win' '
+>>  	)
+>>  '
+>>  
+>> -test_expect_success 'wildcard ambiguation, refs lose' '
+>> +test_expect_success !MINGW 'wildcard ambiguation, refs lose' '
+>>  	git init ambi2 &&
+>>  	(
+>>  		cd ambi2 &&
+>
+> FWIW I planned to submit a patch including this fix:
+>
+> https://github.com/git-for-windows/git/commit/4694320330e1b4d9178e13e215ce60a1cc8e0b1c
+>
+> (The idea of the `fixup! ` was to make this change part of a larger
+> change during the next merging rebase of Git for Windows.)
 
->> @@ -692,6 +704,26 @@ static void populate_value(struct ref_array_item *ref)
->>                       else
->>                               v->s = " ";
->>                       continue;
->> +             } else if (skip_prefix(name, "align:", &valp)) {
->> +                     struct align *align = xmalloc(sizeof(struct align));
->> +
->> +                     if (skip_prefix(valp, "left,", &valp))
->> +                             align->position = ALIGN_LEFT;
->> +                     else if (skip_prefix(valp, "right,", &valp))
->> +                             align->position = ALIGN_RIGHT;
->> +                     else if (skip_prefix(valp, "middle,", &valp))
->> +                             align->position = ALIGN_MIDDLE;
->> +                     else
->> +                             die(_("improper format entered align:%s"), valp);
->> +                     if (strtoul_ui(valp, 10, &align->width))
->> +                             die(_("positive width expected align:%s"), valp);
->
-> Minor nits on the design.  %(align:<width>[,<position>]) would let
-> us write %(align:16)...%(end) and use the "default position", which
-> may be beneficial if one kind of alignment is prevalent (I guess all
-> the internal users left-align?)  %(align:<position>,<width>) forces
-> users to spell both out all the time.
->
-
-Isn't that better? I mean It sets a format which the others eventually
-can follow
-%(atom:suboption,value).
-For example: %(objectname:abbrev,size)
-Changing this would cause inconsistency according to me.
-
->> @@ -1198,7 +1230,9 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
->>
->>  struct ref_formatting_state {
->>       struct strbuf output;
->> +     struct align *align;
->>       int quote_style;
->> +     unsigned int end : 1;
->>  };
->
-> Mental note: it is not clear why you need 'end' field in the state.
-> Perhaps it is an indication that the division of labor is poorly
-> designed between the helper that updates the formatting state and
-> the other helper that reflects the formatting state to the final
-> string.
->
-
-This goes with what you've said below!
-
->> @@ -1262,12 +1296,31 @@ static void append_non_atom(const char *cp, const char *ep, struct ref_formattin
->>
->>  static void set_formatting_state(struct atom_value *atomv, struct ref_formatting_state *state)
->>  {
->> -     /* Based on the atomv values, the formatting state is set */
->> +     if (atomv->align) {
->> +             state->align = atomv->align;
->> +             atomv->align = NULL;
->> +     }
->> +     if (atomv->end)
->> +             state->end = 1;
->> +}
->> +
->> +static int align_ref_strbuf(struct ref_formatting_state *state, struct strbuf *final)
->> +{
->> +     if (state->align && state->end) {
->
-> ... and I think that is what I see.  If this function knows that we
-> are processing %(end), i.e. perform-state-formatting is called for
-> each atom and receives atomv, there wouldn't have to be a code like
-> this.
->
-
-Agreed, your suggestion below eradicates this
-
->> +             struct align *align = state->align;
->> +             strbuf_utf8_align(final, align->position, align->width, state->output.buf);
->> +             strbuf_reset(&state->output);
->> +             state->align = NULL;
->> +             return 1;
->> +     } else if (state->align)
->> +             return 1;
->> +     return 0;
->>  }
->>
->>  static void perform_state_formatting(struct ref_formatting_state *state, struct strbuf *final)
->>  {
->> -     /* More formatting options to be eventually added */
->> +     if (align_ref_strbuf(state, final))
->> +             return;
->
-> At the design level, I have a strong suspicion that it is a wrong
-> way to go.  It piles more "if (this state bit was left by the
-> previous atom) then do this" on this function and will make an
-> unmanageable mess.
-
-Hmm, yeah makes sense.
-
->
-> You have a dictionary of all possible atoms somewhere.  Why not hook
-> a pointer to the "handler" function (or two) to each element in it,
-> instead of duplicating "this one is special" information down to
-> individual atom instantiations (i.e. atomv) as atomv.modifier_atom
-> bit, an dstructure the caller more like this?
->
->         get_ref_atom_value(info, parse_ref_filter_atom, &atomv);
->         if (atomv->pre_handler)
->                 atomv->pre_handler(atomv, &state);
->         format_quote_value(atomv, &state);
->         if (atomv->post_handler)
->                 atomv->post_handler(atomv, &state);
->
-> Actually, each atom could just have a single handler; an atom like
-> %(refname:short) whose sole effect is to append atomv->s to the
-> state buffer can point a function to do so in its handler.
->
-> On the other hand, align atom's handler would push a new state on
-> the stack, marking that it is the one to handle diverted output.
->
->         align_atom_handler(atomv, state)
->         {
->                 struct format_state *new = push_new_state(state);
->                 strbuf_init(&new->output);
->                 new->atend = align_handler;
->                 new->return_to = atomv; /* or whatever that holds width,pos */
->         }
->
-> Then end atom's handler would pop the state from the stack, and the
-> processing to be done
->
->         end_atom_handler(atomv, state)
->         {
->                 state->atend(state);
->                 pop_state(state);
->         }
->
-> and the called align_handler would be something like:
->
->         align_handler(state)
->         {
->                 struct strbuf aligned = STRBUF_INIT;
->                 struct format_state *return_to = state->prev;
->                 struct atom_value *atomv = state->return_to;
->
->                 strbuf_utf8_align(&aligned,
->                         atomv->align.pos, atomv->align.width,
->                         state->output.buf);
->                 strbuf_addbuf(&return_to->output, &aligned);
->                 strbuf_release(&aligned);
->         }
->
-> With an arrangement like that, the body of the loop in
-> show_ref_array_item() could be as simple and regular as:
->
->         get_ref_atom_value(info, parse_ref_filter_atom, &atomv);
->         atomv->handler(atomv, &state);
->
-> without any new "ah, this %(end) is special so we need a new
-> mechanism to pass information between set_formatting_state and
-> perform_formatting" logic introduced every time you add new things.
->
-
-This I agree is a way better scheme, This could also eventually help cleanup
-populate_value() which is a huge function at the moment.
-
-I like your suggestion, I'll work on this, Thanks a lot :)
+Thanks.  Is that an Ack?
 
 -- 
-Regards,
-Karthik Nayak
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
