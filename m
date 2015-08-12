@@ -1,80 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: proper remote ref namespaces
-Date: Wed, 12 Aug 2015 12:35:47 -0700
-Message-ID: <xmqq1tf8l2p8.fsf@gitster.dls.corp.google.com>
-References: <CA+P7+xpj+8DZ=K0pna299Mu3nsQ4+JV_JUK=WFzzAFnJN+Bkbg@mail.gmail.com>
-	<55CB63C5.8090708@xiplink.com>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: bug: git-archive does not use the zip64 extension for archives
+ with more than 16k entries
+Date: Wed, 12 Aug 2015 21:40:48 +0200
+Message-ID: <55CBA140.7050301@web.de>
+References: <20150811104056.16465.58131@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 21:35:58 2015
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Johannes Schauer <josch@debian.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 12 21:41:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPboZ-00075f-60
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 21:35:55 +0200
+	id 1ZPbta-0001wZ-7x
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 21:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653AbbHLTfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 15:35:50 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:36540 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256AbbHLTfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 15:35:50 -0400
-Received: by pacrr5 with SMTP id rr5so20708750pac.3
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 12:35:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=w8YsIfL68beOz67v3emTu6R0DgjVMQv2Ns/Q5bhOUBM=;
-        b=jFX/agTI6thKHTIdaslDhMv353x3ghW9NGkjgPggz4RWJOdCLX6W82JB2EbM58HBn7
-         x9hxzgsHLyP7xMP4K8DjyRkbBCjo8zSySdnqrgQkprf3687DTVEvurujnBxLf6mxVt31
-         /D3jVfVNLXHImNbVHXNi+jgEQL5uHTQp1Lacqv3NuPRRYc9FVkE4/abTheSqOPsuWnR5
-         o8hjkNAgaDTLw+vZNoSsHsevvP6mIYECxO/JmW+EIgxeme6OiOYb9ciT+18A+hf5yLU/
-         lFSl0swwZX9v2TgGW3FgtN2C2TDAxkxmWxKixorTQ1AOoT1MkM2GCizVJTjzBoU+CWP2
-         WHmw==
-X-Received: by 10.66.102.71 with SMTP id fm7mr69686985pab.5.1439408149610;
-        Wed, 12 Aug 2015 12:35:49 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:755f:3d29:a826:eda6])
-        by smtp.gmail.com with ESMTPSA id u10sm7382345pbs.16.2015.08.12.12.35.48
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 12 Aug 2015 12:35:49 -0700 (PDT)
-In-Reply-To: <55CB63C5.8090708@xiplink.com> (Marc Branchaud's message of "Wed,
-	12 Aug 2015 11:18:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751613AbbHLTlA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2015 15:41:00 -0400
+Received: from mout.web.de ([212.227.17.11]:52677 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751442AbbHLTk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 15:40:59 -0400
+Received: from [192.168.178.37] ([79.253.188.251]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0Lj2I6-1YodmQ3b0I-00dFo2; Wed, 12 Aug 2015 21:40:56
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <20150811104056.16465.58131@localhost>
+X-Provags-ID: V03:K0:PxsXA2n+Fl65EBUIR5mHKRC6+JIFOXaMSEvjUo1cbifjufIDoCl
+ 9eGC2pp9J9koT6tn2j/375HjpB8hWiHBdqv5RnxM2r9gJTLq4juqn7N1+Lm3r0wX1gdWrwd
+ VwI1BkTVO2R0kN6JkBC4B58bWbg4xFwe28AhizJNZFrGYR0dhhMRzZ6wgH2k/VE0kwHQwXr
+ Xi4CLVpTA+PkuAE4qWq8A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jVvOhHFrBOU=:NvACjz9G97UQxuMOhiKSGa
+ EXq4hYROEH6vRc2mh6R5YyqQYkSGAcVu4AzUlAD/gdG4o+MhQ6jaN7GUxWcIR0J9ofOkLRDcE
+ gUvzPVEmzSnYF57bIG59cjD+tsDIioHz2Z7i2Vw9j3WQNccH7vaSfNda9ZAYI5z/g+0MxGz3o
+ KKWh2RTr/IMydCzuOUwe8Edt65M0py9qXKtnlWP8QsKJqZFc8Mjh0GUOYJJQEqtVdF4ibf27q
+ pbuJksytvIZ8xJ8rg9+ycaTf/zUa1mvYZRtItdFOiyNj1r1QfQyREkJrXVz0sUSmpDpG5WfXR
+ J5thlySC+2o9ME+XSaIZeTGwHwvJ62CYXVXBknplnajZ40MLtr0AIcWgFkNemC/ydYWCldree
+ 8RlUCbbmADeTBTFfrMDrgF6x+5uQ/GADG9yO08W8iu1BnZJprvV/jjjPaNmopThyA6NiE955I
+ 5khv624uLpab6fwjpd3TsVB1pedDP1R5JeYW3yDNX3fyrdjNIZVsPK2ZYllSy1xP/sNiQ8lWH
+ s6BPLQXGJNueRgWjDfrCxcFCiSLM5WKMh58TDlV2axS/7Atk3/zRyVHmHlxoPNdRJifjTke+q
+ 5JaIZ12aqrtG7HJHeKzgA53ucb6HJ593ZypznkkCgrc4OjrzFilNgmBRA2mIr7I2wYw0syjzm
+ 8v7xGu6l0dnZONf3m+mZr2igLr/FKSuLGZ7QRc0k2bA2gpAGK4EAkiq2Y6DCx2Im+gymV9Few
+ iSX1fnKjJjxzpVrz42xARNaRn8X5ekNEXkejuw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275805>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Am 11.08.2015 um 12:40 schrieb Johannes Schauer:
+> Hi,
+>
+> for repositories with more than 16k files and folders, git-archive wi=
+ll create
+> zip files which store the wrong number of entries. That is, it stores=
+ the
+> number of entries modulo 16k. This will break unpackers that do not i=
+nclude
+> code to support this brokenness.
 
-> Not a lot.  Existing DWIMery already handles ambiguous branches, by
-> preferring a local branch name over any remote ones.  The only teaching
-> that's really needed is ...
+The limit is rather 65535 entries, isn't it?  The entries field has two=
+=20
+bytes, and they are used fully.
 
-You need to remember that there are five useful things you can do to
-mutable things.
+Which programs are affected? InfoZIP Zip 3.0 and 7-Zip 9.20 seem to=20
+handle an archive with more entries just fine.  The built-in=20
+functionality of Windows 10 doesn't.
 
- - Creation can be covered by teaching "clone" to put a new-style
-   refspec but the same change needs to also go to "remote add".
+Besides, 64K entries should be enough for anybody. ;-)
 
- - Reading is done by the DWIMery in ref_rev_parse_rules[] (your
-   point above).
+Seriously, though: What kind of repository has that many files and uses=
+=20
+the ZIP format to distribute snapshots?  Just curious.
 
- - Updating is automatic, as "fetch" does not have any funny
-   built-in intuit and blindly follows configured fetch refspec.
+> Instead, git-archive should use the zip64 extension to handle more th=
+an 16k
+> files and folders correctly.
 
- - Deletion by "branch -d -r" and "remote remove" needs to be
-   careful about designing how the case where both old and new
-   hierarchies exist should be handled (my gut feeling is "delete
-   both", but there may be funny corner cases).
+That seems to be what InfoZIP does and Windows 10 handles it just fine.=
+=20
+  If lower Windows versions and other popular extractors can unzip such=
+=20
+archives as well then this might indeed be the way to go.
 
- - Enumeration by "branch -l -r" probably shares the same issue as
-   deletion.
+Thanks,
+Ren=E9
