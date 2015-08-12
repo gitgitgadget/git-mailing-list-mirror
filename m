@@ -1,114 +1,104 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v4 4/4] notes: teach git-notes about notes.<ref>.merge option
-Date: Wed, 12 Aug 2015 23:46:43 +0200
-Message-ID: <CALKQrgf2hdvNExVbvnP5sVUM4sEh7thj9HLw93LbYWSStNjeYg@mail.gmail.com>
-References: <1439326641-9447-1-git-send-email-jacob.e.keller@intel.com>
-	<1439326641-9447-5-git-send-email-jacob.e.keller@intel.com>
-	<CALKQrgeDuRkXm2LzDOuZDZLOBRXjLmmRvhtXfXScWfLKX+9t=g@mail.gmail.com>
-	<xmqqy4hhmedb.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 23:46:57 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] run-command: Improve readability of struct child_process
+Date: Wed, 12 Aug 2015 14:50:26 -0700
+Message-ID: <1439416226-20749-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 12 23:50:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPdrN-0005AF-3a
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:46:57 +0200
+	id 1ZPdur-0007PY-Vc
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Aug 2015 23:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829AbbHLVqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 17:46:52 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:59946 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808AbbHLVqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 17:46:52 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZPdrF-000Lgj-7g
-	for git@vger.kernel.org; Wed, 12 Aug 2015 23:46:49 +0200
-Received: by ykaz130 with SMTP id z130so26139900yka.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:46:43 -0700 (PDT)
-X-Received: by 10.170.114.78 with SMTP id g75mr36524135ykb.94.1439416003121;
- Wed, 12 Aug 2015 14:46:43 -0700 (PDT)
-Received: by 10.37.201.134 with HTTP; Wed, 12 Aug 2015 14:46:43 -0700 (PDT)
-In-Reply-To: <xmqqy4hhmedb.fsf@gitster.dls.corp.google.com>
+	id S1751053AbbHLVua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2015 17:50:30 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:36377 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbbHLVu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 17:50:29 -0400
+Received: by pdco4 with SMTP id o4so11627304pdc.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 14:50:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=sPzl1XpeuluLvnL2n4TXDW9MTpEucGAHq8kUfmgvPFg=;
+        b=cmYDkx7TYo3BVTz9VznUpbGgXWCzH8PYSp5sgA78h5HasGSCP8Gd8kLwfOBeij1D11
+         5Q1fG2pQsO+gdPnGquRDF/hi8EbICsz8v73DIyEJ9w09as9SCrmKaHuaK9asZELV6Wkm
+         bnLyXHPIyc5pRtdMc7YyemB/5GKKhlyE9lOVZFiLvXrGg+nrJ8EUv1heF+OudP0QgWF0
+         asnImSAGSKufBaTchWyhO5j8sLoOA31cYYqKs+LGcfq04obeqoSVTkzaiMQAWQB+zLX5
+         kw8maWNo493t9+3URsl4Azs/YtN0aZOSLOC0XtbDQkXjh7LKadaeslTQ6WsoObpL0kWd
+         RCaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=sPzl1XpeuluLvnL2n4TXDW9MTpEucGAHq8kUfmgvPFg=;
+        b=enh5qWFIeqoTAvxA2UchoZNmYNZLxAmxL4dwjKBOVifuqrx+RErz2Xl8az24/y3eos
+         qAF4rEdpwj/QBkXpf0NNfuvBSUTbQkxxr14+4OCqlXMAunh+DXXF52Ty4w9ZoX4Oxuqj
+         X5fH2beYlnEn0Ue4eR7ZQWKP6OdCfnd0P+MoEHgV5ar+HJNEyfADk4yIdvmzN4BdIe5H
+         /h5Cyg7GZa4dImHyPcHxVO8T1rV7+rAHIs26DXy2gLuGS2xil/hp8rQQQcsB4H1NSX0d
+         sA0zJwNAC5Oh7kahTbgje7RWwWvNF2o47pEZ/vjiKlja1kAwTpwVdpYamvxEOKUwi9M5
+         8+pA==
+X-Gm-Message-State: ALoCoQnaIPmU1sG1xToSF+WiUBgH4ANmVXAqjSMUzOISDIe/fc1Q/ZWRNxXWRXAs6TEgUbtUcP7G
+X-Received: by 10.70.118.163 with SMTP id kn3mr66929750pdb.115.1439416228758;
+        Wed, 12 Aug 2015 14:50:28 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:d1d0:bd1:5138:d709])
+        by smtp.gmail.com with ESMTPSA id da6sm103126pdb.22.2015.08.12.14.50.28
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 12 Aug 2015 14:50:28 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.234.gefc8a62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275814>
 
-On Wed, Aug 12, 2015 at 4:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> I know that we don't yet have a "proper" place to put remote notes refs,
->> but the <ref> in notes.<ref>.merge _must_ be a "local" notes ref (you even
->> use the <localref> notation in the documentation below). Thus, I believe
->> we can presume that the local notes ref must live under refs/notes/*,
->> and hence drop the "refs/notes/" prefix from the config key (just like
->> branch.<name>.* can presume that <name> lives under refs/heads/*).
->
-> I am OK going in that direction, as long as we promise that "notes
-> merge" will forever refuse to work on --notes=$ref where $ref does
-> not begin with refs/notes/.
+Reordering the struct member env to be next to env_array
+helps understanding the struct better.
 
-If we don't already refuse to merge into a ref outside refs/notes, then
-I would consider that a bug to be fixed, and not some corner use case that
-we must preserve for all future.
+This also adds comments to indicate that arg{s,v} and (env, env_array)
+are used for the same purpose and only one must be used. Although
+these comments are in the Documentation, I still think they are
+a good idea in the code here as well.
 
-After all, we do already have a test in t3308 named 'fail to merge into
-various non-notes refs', where one of the non-notes ref being tested are:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ run-command.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-  test_must_fail git -c "core.notesRef=refs/heads/master" notes merge x
-
->> Except that this patch in its current form will occupy the .merge config
->> key...
->>
->> Can you rename to notes.<name>.mergestrategy instead?
->
-> This is an excellent suggestion.
->
->> Or even better, take inspiration from branch.<name>.mergeoptions,
->
-> Please don't.
->
-> That is one of the design mistakes that was copied from another
-> design mistake (remotes.*.tagopt).  I'd want to see us not to repeat
-> these design mistakes.
->
-> These configuration variables were made to take free-form text value
-> that is split according to shell rules, primarily because it was
-> expedient to implement.  Read its value into a $variable and put it
-> at the end of the command line to let the shell split it.  "tagopt"
-> was done a bit more carefully in that it made to react only with a
-> fixed string "--no-tags", so it was hard to abuse, but "mergeoptions"
-> allowed you to override something that you wouldn't want to (e.g. it
-> even allowed you to feed '--message=foo').
->
-> Once you start from such a broken design, it would be hard to later
-> make it saner, even if you wanted to.  You have to retroactively
-> forbid something that "worked" (with some definition of "working"),
-> or you have to split, parse and then reject something that does not
-> make sense yourself, reimplementing dequote/split rule used in the
-> shell---which is especially problematic when you no longer write in
-> shell scripts.
->
-> So a single string value that names one of the supported strategy
-> stored in notes.<name>.mergestrategy is an excellent choice.  An
-> arbitrary string in notes.<name>.mergeoptions is to be avoided.
-
-Understood. And agreed.
-
-...Johan
-
+diff --git a/run-command.h b/run-command.h
+index 1103805..e67395d 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -8,8 +8,9 @@
+ #include "argv-array.h"
+ 
+ struct child_process {
+-	const char **argv;
++	const char **argv; /* Use only one of arg{v,s} */
+ 	struct argv_array args;
++	const char *const *env; /* Use only one of (env, env_array) */
+ 	struct argv_array env_array;
+ 	pid_t pid;
+ 	/*
+@@ -34,7 +35,6 @@ struct child_process {
+ 	int out;
+ 	int err;
+ 	const char *dir;
+-	const char *const *env;
+ 	unsigned no_stdin:1;
+ 	unsigned no_stdout:1;
+ 	unsigned no_stderr:1;
+@@ -45,7 +45,7 @@ struct child_process {
+ 	unsigned clean_on_exit:1;
+ };
+ 
+-#define CHILD_PROCESS_INIT { NULL, ARGV_ARRAY_INIT, ARGV_ARRAY_INIT }
++#define CHILD_PROCESS_INIT { NULL, ARGV_ARRAY_INIT, NULL, ARGV_ARRAY_INIT }
+ void child_process_init(struct child_process *);
+ 
+ int start_command(struct child_process *);
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+2.5.0.234.gefc8a62
