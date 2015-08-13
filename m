@@ -1,94 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v10 04/13] utf8: add function to align a string into given strbuf
-Date: Thu, 13 Aug 2015 15:08:54 -0400
-Message-ID: <CAPig+cS+rS=xKX-LrJSTqFgaopuLzbh3hqURFWXfzMXH=XUk2w@mail.gmail.com>
-References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
-	<1439129506-9989-5-git-send-email-Karthik.188@gmail.com>
+From: Matthew Thode <mthode@mthode.org>
+Subject: Re: config options for automatic signed tags and signed pushes
+Date: Thu, 13 Aug 2015 14:16:36 -0500
+Message-ID: <55CCED14.3050200@mthode.org>
+References: <55CA4799.7@mthode.org>
+ <CAD0k6qSAw_aG_kScRgJE+6jVv6z_qc_O81Zq1s29nu=NkKp0oQ@mail.gmail.com>
+Reply-To: mthode@mthode.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 21:09:07 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="DpNOMfa79m9VI5L21RC7SLsbW3TdSsTjp"
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 21:19:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPxs4-0001oI-0k
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 21:09:00 +0200
+	id 1ZPy2G-0002wk-8P
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 21:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651AbbHMTI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 15:08:56 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:36328 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753094AbbHMTIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 15:08:55 -0400
-Received: by ykay144 with SMTP id y144so49695163yka.3
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 12:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Wmr3axRmjh2PN2qk2yve/WVWO+B+mB3LgInLvxWPo5s=;
-        b=LyKxMpTIfonh9PEsC9EHmS7FZQK/aDDg7+OqCuVuUNmTH9KDuna4hMPjcvs2DV9Nm6
-         bvskZVWxcKv7oVCjcvL/MYegz1wN+sErHd40GUnJCoqVc13RTMV1JOgQiBneeJu31gDt
-         AwQc8r+g3yuvIYZQlPARjD6HcDFSjNpcPpr55lCjZAkXHdGLAfcKuxvVnBCq5dhfweFb
-         BLsYG4y8ys4gsVyPlqaLruw/TrA+BFGorxa2gF+KNX1bEjkzX5VRo+pmtdLmD5Ux8CP/
-         oXL2ULcFju8cZraK69BZuzsE9XYnlo4sgVnXFKs0zOaXsNX1LykirbVVlEDVFfUPHy7t
-         Vqpw==
-X-Received: by 10.129.70.69 with SMTP id t66mr41159075ywa.4.1439492934820;
- Thu, 13 Aug 2015 12:08:54 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Thu, 13 Aug 2015 12:08:54 -0700 (PDT)
-In-Reply-To: <1439129506-9989-5-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: IzUgwbHn2N1uxYOran_vt7xsdKE
+	id S932178AbbHMTT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 15:19:26 -0400
+Received: from 216-82-208-22.static.grandenetworks.net ([216.82.208.22]:60489
+	"EHLO mx1.mthode.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754416AbbHMTTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 15:19:23 -0400
+Received: from [10.0.3.3] (unknown [10.0.3.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mx1.mthode.org (Postfix) with ESMTPSA id 8963E1FF0B
+	for <git@vger.kernel.org>; Thu, 13 Aug 2015 15:19:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mthode.org;
+	s=default; t=1439493588;
+	bh=MQkH4F7qW2uKVTZjkdUSfPl/MknaDdMdOwQL9OtpmEI=;
+	h=Reply-To:Subject:References:To:From:Date:In-Reply-To;
+	b=NOec7LLnDgpAgr0oglOBaH7XYMHEhGDh2l5OaJeqXIvYCmIjYrueT1AT3QL3NJBQt
+	 xStlH5BwTzaMv5CRteeqndMY4uDolP7KVnRInCKIoi8re+70VsjMnNAUOMruMVKuMg
+	 /sDrGdrfIWTmgllCEkeG0WC3ANxnIfnq6zL4Pvoo=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <CAD0k6qSAw_aG_kScRgJE+6jVv6z_qc_O81Zq1s29nu=NkKp0oQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275887>
 
-On Sun, Aug 9, 2015 at 10:11 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add strbuf_utf8_align() which will align a given string into a strbuf
-> as per given align_type and width. If the width is greater than the
-> string length then no alignment is performed.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--DpNOMfa79m9VI5L21RC7SLsbW3TdSsTjp
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-In addition to Junio's valuable comments...
+On 08/13/2015 02:01 PM, Dave Borowitz wrote:
+> On Tue, Aug 11, 2015 at 3:06 PM, Matthew Thode <mthode@mthode.org> wrot=
+e:
+>> If it doesn't already exist (not that I can find). I'd like to see
+>> config options analogous to commit.gpgsign for both tagging and pushin=
+g.
+>=20
+> I agree this would be useful, and that's why I just implemented it toda=
+y :)
+>=20
+>> Not sure where else to send this request though, let me know if there'=
+s
+>> a better place.
+>>
+>> Thanks,
+>> --
+>> Matthew Thode
+>>
 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/utf8.h b/utf8.h
-> index 5a9e94b..db8ca63 100644
-> --- a/utf8.h
-> +++ b/utf8.h
-> @@ -55,4 +55,17 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
->   */
->  int is_hfs_dotgit(const char *path);
->
-> +typedef enum {
-> +       ALIGN_LEFT,
-> +       ALIGN_MIDDLE,
-> +       ALIGN_RIGHT
-> +} align_type;
-> +
-> +/*
-> + * Align the string given and store it into a strbuf as per the type
-> + * and width.
-> + */
+Thanks,
 
-Please extend this documentation to state explicitly that this
-function preserves (does not truncate) the input string if it is wider
-than 'width'. That's quite important information for the caller to
-know.
+While, this is good, perhaps we should add the same option to rebase
+(and anything else I can't think of). :D
 
-(Aside: I could easily see this function being extended to support
-optional truncation, but that's a separate topic, and something that
-can be done by someone else when the feature is actually needed; it's
-not your responsibility.)
+--=20
+Matthew Thode
 
-> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
-> +                      const char *s);
-> +
->  #endif
+
+--DpNOMfa79m9VI5L21RC7SLsbW3TdSsTjp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJVzO0UAAoJEGSje+quGaToM14P/iyYWADOxyhd/AyRR3JZw5wQ
+s+A68Z/KqdXr3YCwxYY7a/Sm4dG6Jzp9wTW6BEE/YARmRPDsLu+7jjLSvMKeB4MO
+w+9mTXucQ1qbagzcLnwnjvS8xiJiXdgapkip764bfvnOJS3Ni3r9AJmHBYQBws9p
+8dT6r9K+qL1J8P372q2A+Ss2VeBrYz/XiVvja/D+Sv7bWSsP1+QgiHUHVEVn1qsw
+RquKsTRhWXsKsOYOxVnxJpb3saRI8rlLgt0ptlk1xF7VQtluAV5kHUxwl9uEAFck
+Ns+6aiNBjVEdIa4naro1NTPg0yzm7q6cJVaFczw2phRwpKOy8rY9wU9jQqFQY9AG
+c2qTHUH7T5F83T3mxhWfFYOPPQtv2zSh/uDqVkz3aN6KObHz7bl7iNQXViYr4jit
+caEjfvH+acpb64ZxXt12Pl0CvKn/+ams24QeR8ZNViJa5Az0ZJor8e9imPsopGwR
+ExFtkd2HFqRtDKc5entl281llOP0txD22iFIPDR4AzevbpiqebhSM6VUKySVZGsm
+ILy7hYDb4vIQq30BD+EbhpmXkBt9YX2tl9NvnRaMnlZiTgRvq+fc9BkRbz0/5uOl
+mlQ8AhKJJCuDqga56DnOkxvftrogTmQMaWRK6PtyWpF84p6lnhRxPyRKVLWwtWMm
+kaZgoN7gnniEXJ2hufkt
+=2Tq/
+-----END PGP SIGNATURE-----
+
+--DpNOMfa79m9VI5L21RC7SLsbW3TdSsTjp--
