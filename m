@@ -1,201 +1,107 @@
 From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: [PATCH 1/2] prepare_packed_git(): refactor garbage reporting in pack directory
-Date: Thu, 13 Aug 2015 13:02:52 -0500
-Message-ID: <1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
+Subject: [PATCH 2/2] gc: Remove garbage .idx files from pack dir
+Date: Thu, 13 Aug 2015 13:02:53 -0500
+Message-ID: <1439488973-11522-2-git-send-email-dougk.ff7@gmail.com>
 References: <xmqqwpx6wx74.fsf@gitster.dls.corp.google.com>
-Cc: peff@peff.net, Junio C Hamano <gitster@pobox.com>
+ <1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
+Cc: peff@peff.net, Doug Kelly <dougk.ff7@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 13 20:03:59 2015
+X-From: git-owner@vger.kernel.org Thu Aug 13 20:04:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPwr6-0001fI-0I
+	id 1ZPwr6-0001fI-Jz
 	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 20:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932122AbbHMSDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 14:03:49 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35402 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932075AbbHMSDs (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752980AbbHMSDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 14:03:53 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36121 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932119AbbHMSDs (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 13 Aug 2015 14:03:48 -0400
-Received: by iodt126 with SMTP id t126so60653789iod.2
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 11:03:47 -0700 (PDT)
+Received: by iodv127 with SMTP id v127so44629492iod.3
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 11:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JPJXFOurpNAy43cexpG9296GBaDvzn4/1BILSpi3Hr8=;
-        b=mIO+v4bR33SFW4+pT//grvLv17+VDHzpSvYwTXTyK2PNRCIeQAqAbitaWHeaauWmEm
-         3olly5jQSV0+rkIZC4co0A3RCAX/dat5Gw9JAxdXzvsIlgM6tZ9kmhf6RhTNu0XmRoNh
-         2f8ACXt9YughDGlX/CCTK124v+dyFZeWPo9d5wlWYdWFz16pYBuHCcjW8oGPcm59OPn/
-         U2TMJ7WSBugS6nNyvzk9T/58FBnf+Og4YfLEgLQzGLk8dRkTnVwo2peoPHmd8AcrFZ2D
-         4n72s+uFs6bfiTShYz8JqbbJgBODgHJ4nQ45ByGIwtSXWn6MxS0e2WmXOdP9O9pkFNz8
-         jcdQ==
-X-Received: by 10.107.135.140 with SMTP id r12mr39991301ioi.153.1439489027342;
-        Thu, 13 Aug 2015 11:03:47 -0700 (PDT)
+        bh=D8Buiqn7NLKuEC3Q3utlRMUwN8vzZtdI/kssTYgGZMs=;
+        b=03rNA9FHSiJGZzr3wULS4tqu1WduAlNm778jbf6XVtU1DzkXQmTc35VLbUre/PiOmu
+         Az8mLorBbZk2xG1vztHzLP1dV+s4VUpoh1JqxakRQrUujkNlUU0E92Cd+aGTxAJbxdLe
+         XXoYrK/ButtzgM/AeD6a+Y5dKH8c4k7uzhXIBhOIQQK1Xpbgm7AcVbDvoXW+4wd7urZV
+         h3fQOo6R8VgyDU4hpvUT0bvON8HTrecqS4Am4+nZVsv8F6UpELWGki7QXOLKCSVWQ4/v
+         JA+L55qncDDOytYdRPBcWdaXSJQXvPDvAvE5S37/XUZb7qRKFLU6dTWbNjVxN15o2EQy
+         D+fg==
+X-Received: by 10.107.161.197 with SMTP id k188mr35375427ioe.190.1439489028164;
+        Thu, 13 Aug 2015 11:03:48 -0700 (PDT)
 Received: from kenshin.dougk-ff7.net (64-151-63-23.static.everestkc.net. [64.151.63.23])
-        by smtp.gmail.com with ESMTPSA id b78sm2006376ioe.2.2015.08.13.11.03.46
+        by smtp.gmail.com with ESMTPSA id b78sm2006376ioe.2.2015.08.13.11.03.47
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 13 Aug 2015 11:03:46 -0700 (PDT)
+        Thu, 13 Aug 2015 11:03:47 -0700 (PDT)
 X-Mailer: git-send-email 2.0.5
-In-Reply-To: <xmqqwpx6wx74.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275868>
 
-From: Junio C Hamano <gitster@pobox.com>
+Add a custom report_garbage handler to collect and remove garbage
+.idx files from the pack directory.
 
-The hook to report "garbage" files in $GIT_OBJECT_DIRECTORY/pack/
-could be generic but is too specific to count-object's needs.
-
-Move the part to produce human-readable messages to count-objects,
-and refine the interface to callback with the "bits" with values
-defined in the cache.h header file, so that other callers (e.g.
-prune) can later use the same mechanism to enumerate different
-kinds of garbage files and do something intelligent about them,
-other than reporting in textual messages.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
 ---
- builtin/count-objects.c | 26 ++++++++++++++++++++++++--
- cache.h                 |  7 +++++--
- path.c                  |  2 +-
- sha1_file.c             | 23 ++++++-----------------
- 4 files changed, 36 insertions(+), 22 deletions(-)
+ builtin/gc.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index ad0c799..4c3198e 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -15,9 +15,31 @@ static int verbose;
- static unsigned long loose, packed, packed_loose;
- static off_t loose_size;
+diff --git a/builtin/gc.c b/builtin/gc.c
+index bcc75d9..8352616 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -42,8 +42,18 @@ static struct argv_array prune = ARGV_ARRAY_INIT;
+ static struct argv_array prune_worktrees = ARGV_ARRAY_INIT;
+ static struct argv_array rerere = ARGV_ARRAY_INIT;
  
--static void real_report_garbage(const char *desc, const char *path)
-+const char *bits_to_msg(unsigned seen_bits)
++static struct string_list pack_garbage = STRING_LIST_INIT_DUP;
++
+ static char *pidfile;
+ 
++static void clean_pack_garbage(void)
 +{
-+	switch (seen_bits) {
-+	case 0:
-+		return "no corresponding .idx or .pack";
-+	case PACKDIR_FILE_GARBAGE:
-+		return "garbage found";
-+	case PACKDIR_FILE_PACK:
-+		return "no corresponding .idx";
-+	case PACKDIR_FILE_IDX:
-+		return "no corresponding .pack";
-+	case PACKDIR_FILE_PACK|PACKDIR_FILE_IDX:
-+	default:
-+		return NULL;
-+	}
++	int i;
++	for (i = 0; i < pack_garbage.nr; i++)
++		unlink_or_warn(pack_garbage.items[i].string);
++	string_list_clear(&pack_garbage, 0);
 +}
 +
-+static void real_report_garbage(unsigned seen_bits, const char *path)
+ static void remove_pidfile(void)
  {
- 	struct stat st;
-+	const char *desc = bits_to_msg(seen_bits);
+ 	if (pidfile)
+@@ -57,6 +67,12 @@ static void remove_pidfile_on_signal(int signo)
+ 	raise(signo);
+ }
+ 
++static void report_pack_garbage(unsigned seen_bits, const char *path)
++{
++	if (seen_bits == PACKDIR_FILE_IDX)
++		string_list_append(&pack_garbage, path);
++}
 +
-+	if (!desc)
-+		return;
-+
- 	if (!stat(path, &st))
- 		size_garbage += st.st_size;
- 	warning("%s: %s", desc, path);
-@@ -27,7 +49,7 @@ static void real_report_garbage(const char *desc, const char *path)
- static void loose_garbage(const char *path)
+ static void git_config_date_string(const char *key, const char **output)
  {
- 	if (verbose)
--		report_garbage("garbage found", path);
-+		report_garbage(PACKDIR_FILE_GARBAGE, path);
- }
+ 	if (git_config_get_string_const(key, output))
+@@ -372,6 +388,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (run_command_v_opt(rerere.argv, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, rerere.argv[0]);
  
- static int count_loose(const unsigned char *sha1, const char *path, void *data)
-diff --git a/cache.h b/cache.h
-index 6bb7119..2d4dedc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1212,8 +1212,11 @@ struct pack_entry {
- 
- extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
- 
--/* A hook for count-objects to report invalid files in pack directory */
--extern void (*report_garbage)(const char *desc, const char *path);
-+/* A hook to report invalid files in pack directory */
-+#define PACKDIR_FILE_PACK 1
-+#define PACKDIR_FILE_IDX 2
-+#define PACKDIR_FILE_GARBAGE 4
-+extern void (*report_garbage)(unsigned seen_bits, const char *path);
- 
- extern void prepare_packed_git(void);
- extern void reprepare_packed_git(void);
-diff --git a/path.c b/path.c
-index 10f4cbf..75ec236 100644
---- a/path.c
-+++ b/path.c
-@@ -143,7 +143,7 @@ void report_linked_checkout_garbage(void)
- 		strbuf_setlen(&sb, len);
- 		strbuf_addstr(&sb, path);
- 		if (file_exists(sb.buf))
--			report_garbage("unused in linked checkout", sb.buf);
-+			report_garbage(PACKDIR_FILE_GARBAGE, sb.buf);
- 	}
- 	strbuf_release(&sb);
- }
-diff --git a/sha1_file.c b/sha1_file.c
-index 1cee438..0c0b652 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1183,27 +1183,16 @@ void install_packed_git(struct packed_git *pack)
- 	packed_git = pack;
- }
- 
--void (*report_garbage)(const char *desc, const char *path);
-+void (*report_garbage)(unsigned seen_bits, const char *path);
- 
- static void report_helper(const struct string_list *list,
- 			  int seen_bits, int first, int last)
- {
--	const char *msg;
--	switch (seen_bits) {
--	case 0:
--		msg = "no corresponding .idx or .pack";
--		break;
--	case 1:
--		msg = "no corresponding .idx";
--		break;
--	case 2:
--		msg = "no corresponding .pack";
--		break;
--	default:
-+	if (seen_bits == (PACKDIR_FILE_PACK|PACKDIR_FILE_IDX))
- 		return;
--	}
++	report_garbage = report_pack_garbage;
++	reprepare_packed_git();
++	if (pack_garbage.nr > 0)
++		clean_pack_garbage();
 +
- 	for (; first < last; first++)
--		report_garbage(msg, list->items[first].string);
-+		report_garbage(seen_bits, list->items[first].string);
- }
- 
- static void report_pack_garbage(struct string_list *list)
-@@ -1226,7 +1215,7 @@ static void report_pack_garbage(struct string_list *list)
- 		if (baselen == -1) {
- 			const char *dot = strrchr(path, '.');
- 			if (!dot) {
--				report_garbage("garbage found", path);
-+				report_garbage(PACKDIR_FILE_GARBAGE, path);
- 				continue;
- 			}
- 			baselen = dot - path + 1;
-@@ -1298,7 +1287,7 @@ static void prepare_packed_git_one(char *objdir, int local)
- 		    ends_with(de->d_name, ".keep"))
- 			string_list_append(&garbage, path.buf);
- 		else
--			report_garbage("garbage found", path.buf);
-+			report_garbage(PACKDIR_FILE_GARBAGE, path.buf);
- 	}
- 	closedir(dir);
- 	report_pack_garbage(&garbage);
+ 	if (auto_gc && too_many_loose_objects())
+ 		warning(_("There are too many unreachable loose objects; "
+ 			"run 'git prune' to remove them."));
 -- 
 2.0.5
