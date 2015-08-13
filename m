@@ -1,89 +1,72 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Re: An option to sign the push by default
-Date: Thu, 13 Aug 2015 15:02:25 -0400
-Message-ID: <CAD0k6qRh=E12kbpcwW-_GLQ9AmTNsfhnEgE4QtH7v50Zbn5_Fw@mail.gmail.com>
-References: <2404018.OElJjohJ7Q@arcadia>
+From: Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v4] gitk: Add a "Copy commit summary" command
+Date: Thu, 13 Aug 2015 21:02:33 +0200
+Message-ID: <55CCE9C9.5070209@drbeat.li>
+References: <1437218139-7031-1-git-send-email-dev+git@drbeat.li> <20150813073708.GA17652@fergus.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Agostino Sarubbo <ago@gentoo.org>
-X-From: git-owner@vger.kernel.org Thu Aug 13 21:02:51 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 21:03:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPxm6-0004hW-TU
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 21:02:51 +0200
+	id 1ZPxmY-00058N-K2
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 21:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752862AbbHMTCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 15:02:46 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:35975 "EHLO
-	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752474AbbHMTCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 15:02:45 -0400
-Received: by iodv127 with SMTP id v127so46347401iod.3
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 12:02:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=G/0yBBvxZnwehcMhHRaRGDm25o6erTjUlNeEFo718Tk=;
-        b=KRSjT/0dtWKfu5uSbEV6JHca1jDA16KiA6lcfDD3dkzawHKnOJUd44muS2HtLhbDF4
-         K4hwgRpugrmZMYpmowlPvnxZhXuKfRpCZO+0IYrhfgDqifSQWloOQPz1tehCPMMJYR6A
-         m/D/DVYivuX7jD0tz0e6mTA7+u10QVV45I/fghzh2tdK1KHVfYO6vQkKLp2NyAIRtGpb
-         h93ousnj4gr62BJ6i17zbP4/L8W9kh3tlHEA0XyWwKiSl/n4oDm3v2sxmW057fXYF/NO
-         ECTYNyMNcfj9hiHnTcn1F+oafIMQyiWcKJs1y2gnyoS1HUAnogFxxqKa6gqJo0heKD1+
-         NEXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=G/0yBBvxZnwehcMhHRaRGDm25o6erTjUlNeEFo718Tk=;
-        b=YlrQM76ejUFbBeBpJfqe0ydNBxkiI/4LDjcmHXlA71FlfNubt0xACg2cxXlIPrSVb+
-         ddQHTrx1VSN3GZuy24vQmqMfOLw8EQqUVZH0OQMs5E+QC5k6qmPrNDQ0+IPjrWWqkNqg
-         LdG/JCYH+rz9BRqrEVGR8qWR5ULn0d8eijBScwpIrupDLOj2DjABMCUnhrZ25orAynWA
-         3haLvgBG/nUmMRdOC6KRN5AnEmiGsKplg7fe/g/TNOgrAaq3o6QBe5LXMj6mIRJVnySt
-         RDNO0MyRfUxjSrQbAW2XKNueHOR+EvAizLwruv+FcrCFSYsJYMrXFSv+HGhVYyoXd8i7
-         8zTQ==
-X-Gm-Message-State: ALoCoQkW0mkd+KXAxVuCeBdGWNqSt2/QrEh9Zygt6I36U2+n4j/OhCRR8i0Qc/spEcap4VONcXGq
-X-Received: by 10.107.160.197 with SMTP id j188mr44763688ioe.194.1439492565012;
- Thu, 13 Aug 2015 12:02:45 -0700 (PDT)
-Received: by 10.107.4.201 with HTTP; Thu, 13 Aug 2015 12:02:25 -0700 (PDT)
-In-Reply-To: <2404018.OElJjohJ7Q@arcadia>
+	id S1753362AbbHMTDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 15:03:14 -0400
+Received: from mx1.2b3w.ch ([92.42.186.250]:49507 "EHLO mx1.2b3w.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753192AbbHMTDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 15:03:13 -0400
+Received: from mx1.2b3w.ch (localhost [127.0.0.1])
+	by mx1.2b3w.ch (Postfix) with ESMTP id D5EFFC3442;
+	Thu, 13 Aug 2015 21:03:10 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.2
+Received: from mcmini.bolli (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
+	by mx1.2b3w.ch (Postfix) with ESMTPSA id B3E3CC33DD;
+	Thu, 13 Aug 2015 21:03:10 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+In-Reply-To: <20150813073708.GA17652@fergus.ozlabs.ibm.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275885>
 
-On Sun, Aug 9, 2015 at 12:57 PM, Agostino Sarubbo <ago@gentoo.org> wrote:
-> Hello folks,
->
-> during the configuration of git, client side, to sign all commit I used:
->
-> git config --global commit.gpgsign "1"
->
->
-> Since at push time I use:
->
-> git push --signed
->
-> I'm wondering if there is a git config option which put something in the
-> config file and avoid to type --signed.
+On 13.08.15 09:37, Paul Mackerras wrote:
+> On Sat, Jul 18, 2015 at 01:15:39PM +0200, Beat Bolli wrote:
+>> When referring to earlier commits in commit messages or other text, one
+>> of the established formats is
+>>
+>>     <abbrev-sha> ("<summary>", <author-date>)
+>>
+>> Add a "Copy commit summary" command to the context menu that puts this
+>> text for the currently selected commit on the clipboard. This makes it
+>> easy for our users to create well-formatted commit references.
+>>
+>> The <abbrev-sha> is produced with the %h format specifier to make it
+>> unique. Its length can be controlled with the gitk preference
+>> "Auto-select SHA1 (length)", or, if this preference is set to its
+>> default value (40), with the Git config setting core.abbrev.
+>>
+>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> 
+> Thanks, applied.
+> 
+Please also apply the follow-up patch in this thread [1]. It fixes menu
+entry numbers that were changed by this patch.
 
-I agree this would be useful, and that's why I just implemented it today :)
+Thanks,
+Beat
 
-> If there isn't this feature, I'd like to know if it is a reasonable feature
-> request.
->
-> Thanks in advance.
->
->
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/275729
