@@ -1,87 +1,78 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: Alter the ordering for the "Tags and heads" view
-Date: Thu, 13 Aug 2015 10:43:02 +1000
-Message-ID: <20150813004302.GB6686@fergus.ozlabs.ibm.com>
-References: <1433243470-93392-1-git-send-email-rappazzo@gmail.com>
- <1433243470-93392-2-git-send-email-rappazzo@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 1/2] config: add '--names-only' option to list only variable names
+Date: Wed, 12 Aug 2015 18:39:07 -0700
+Message-ID: <xmqqa8twj7b8.fsf@gitster.dls.corp.google.com>
+References: <1439199967-9655-1-git-send-email-szeder@ira.uka.de>
+	<1439199967-9655-2-git-send-email-szeder@ira.uka.de>
+	<xmqqvbcnuko6.fsf@gitster.dls.corp.google.com>
+	<20150813014736.Horde.GbbN2TpIOFaNM_MPXUzZ4Q2@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 02:43:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Aug 13 03:39:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPgc0-0004EY-5R
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 02:43:16 +0200
+	id 1ZPhUK-0000Vl-BW
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 03:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693AbbHMAnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2015 20:43:11 -0400
-Received: from ozlabs.org ([103.22.144.67]:43345 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750953AbbHMAnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2015 20:43:11 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 06096140562; Thu, 13 Aug 2015 10:43:08 +1000 (AEST)
-Content-Disposition: inline
-In-Reply-To: <1433243470-93392-2-git-send-email-rappazzo@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751540AbbHMBjK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2015 21:39:10 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:36575 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750826AbbHMBjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2015 21:39:09 -0400
+Received: by pacrr5 with SMTP id rr5so26089933pac.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2015 18:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=0dPzjwT+Zw5Evqp7XXM/7ZG/+/kx+JCUgJIL2Yjn0pY=;
+        b=yflEuNKufyARJtBE/Yq3Pp8MwvLoAwuWu5NWl7oTYOpfGm5XTDkfQz1tQICYRnKvtm
+         D977Q8/CTxcPw/CG8OFPSDwVK1YNFhD+kll9xvrD8tWioXTJCVJtb6wccJO8sN3SJaR+
+         9f+rDqN6DjsAaxzqLxxjJxVDHkqsu18nzIi/q36Ql0mMVTjZ1UJTRfScQ3uKBBrrECiD
+         QdNNz6m+XidgDWEoi9amw5f3tqQVKbl0KDZ7irEkLlrpSiIjkHtN1V3fV78V6Dk68/HO
+         ja04tITX7ddosrBSLmHeW8gfDCkxjZT1eAuIcyI6ub8e37rrCZFSsv8+UUqHMQMF8aGc
+         sB/A==
+X-Received: by 10.68.134.169 with SMTP id pl9mr73481720pbb.164.1439429948889;
+        Wed, 12 Aug 2015 18:39:08 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:755f:3d29:a826:eda6])
+        by smtp.gmail.com with ESMTPSA id bd5sm441013pdb.41.2015.08.12.18.39.08
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 12 Aug 2015 18:39:08 -0700 (PDT)
+In-Reply-To: <20150813014736.Horde.GbbN2TpIOFaNM_MPXUzZ4Q2@webmail.informatik.kit.edu>
+	("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 13 Aug 2015 01:47:36
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275831>
 
-On Tue, Jun 02, 2015 at 07:11:10AM -0400, Michael Rappazzo wrote:
-> In the "Tags and heads" view, the list of refs is globally sorted.
-> The list of local refs (heads) is separated by the remote refs.  This
-> change re-orders the view toi be: local refs, remote refs tracked by
-> local refs, remote refs, tags, and then other refs
-> 
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Sorry it's taken me so long to get around to reviewing this.  I have a
-couple of comments:
+>>
+>> s/becase/because/;
+>
+> OK.
+> ...
+>> I agree with Peff that "--names-only" has a subtle difference with
+>> an existing and well known subcommand option and it would be a bit
+>> irritating to remember which options is for which command.
+>
+> OK.
+> ...
 
-> ---
->  gitk-git/gitk | 48 ++++++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 42 insertions(+), 6 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 9a2daf3..431a6a1 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -9879,35 +9879,71 @@ proc refill_reflist {} {
->      global curview
->  
->      if {![info exists showrefstop] || ![winfo exists $showrefstop]} return
-> -    set refs {}
-> +    set localrefs {}
-> +    set remoterefs {}
-> +    set locally_tracked_remote_refs {}
-> +    set tagrefs {}
-> +    set otherrefs {}
->      foreach n [array names headids] {
-> -	if {[string match $reflistfilter $n]} {
-> +	if {![string match "remotes/*" $n] && [string match $reflistfilter $n]} {
-> +	    if {[commitinview $headids($n) $curview]} {
-> +		lappend localrefs [list $n H]
-> +		catch {set remote_name [exec git config --get branch.$n.remote]}
-> +		if {$remote_name ne ""} {
+The topic is now in 'next'; I think I've locally fixed it up for
+these when I originally queued them a few days ago, so if there are
+any remaining issues, please throw incremental polishing patches.
 
-First off, if the git config command fails for any reason and returns
-an error status, the set command won't get done and $remote_name will
-either be undefined or will have whatever value it had before.  If it
-is undefined then the if statement is going to throw an error.  I
-don't think that is what you meant to happen.  This same problem will
-occur for other variables such as $remote_ref and $exists.
-
-Secondly, I'm not very happy about doing all these external git
-commands every time we run refill_reflist.  Couldn't we cache which
-remote each local branch is tracking?  We would then throw away and
-reload the cache in rereadrefs.  Most executions of refill_reflist
-would then not need to do any external git commands at all.
-
-Paul.
+Thanks.
