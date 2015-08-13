@@ -1,100 +1,119 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v10 04/13] utf8: add function to align a string into given strbuf
-Date: Fri, 14 Aug 2015 02:25:44 +0530
-Message-ID: <CAOLa=ZSZyfrHOe1Gjw457mbJCP5yW1uesDAW8zuv8DqoE+yuJQ@mail.gmail.com>
-References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
- <1439129506-9989-5-git-send-email-Karthik.188@gmail.com> <CAPig+cS+rS=xKX-LrJSTqFgaopuLzbh3hqURFWXfzMXH=XUk2w@mail.gmail.com>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH 1/2 v4] worktree: add 'for_each_worktree' function
+Date: Thu, 13 Aug 2015 19:32:09 -0400
+Message-ID: <CANoM8SUGHzH-YjB9yK-juoX0S9zyUk=QhCK5JUqiQiqwOwwqJg@mail.gmail.com>
+References: <1439490739-9361-1-git-send-email-rappazzo@gmail.com>
+ <1439490739-9361-2-git-send-email-rappazzo@gmail.com> <1439493795.8855.16.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:56:28 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 01:32:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPzY1-0000QV-Qd
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 22:56:26 +0200
+	id 1ZQ1z8-0002bo-Tq
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 01:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754121AbbHMU4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 16:56:15 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:33359 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754025AbbHMU4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 16:56:14 -0400
-Received: by oio137 with SMTP id 137so33835014oio.0
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 13:56:13 -0700 (PDT)
+	id S1754521AbbHMXca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 19:32:30 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:34073 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754405AbbHMXc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 19:32:29 -0400
+Received: by obbfr1 with SMTP id fr1so49414085obb.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 16:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=73yTHcSW36I6lC/e2WnqdI45JoC0gRGclt2hbD10njE=;
-        b=Qldilondmy4qmvAg3gT7QmoFGcfYyXn1XCM7AdPbdQcCu2WUzHHLj4IB+ibvEs/qUK
-         b8v0Yb+XzxTgd0b27CaA3M6dRIUUIOHSfCh5Wf35VihTWTcawUe1s/Ucv92RGJR3YFhL
-         UQgpV478tQzVi2juQjqxYFzlNZg4Vqb7C50hMtme9lCkGZ/sbsWrTq61VuVAhVMdawLd
-         XHYqGoZjVsyfn7UZEkn5W2FOUctzyT2vZhCqiLYJqNJQ5R4TDQZXIADUNhlfK1NnkHHQ
-         hnzj5NKbPLQEZ6l/9WHoYBq9sZ/p9GiNP/Cjs0SLLinlTEK8J7mj414nGxkiqcypkZdC
-         /0+A==
-X-Received: by 10.202.200.75 with SMTP id y72mr35296053oif.111.1439499373470;
- Thu, 13 Aug 2015 13:56:13 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Thu, 13 Aug 2015 13:55:44 -0700 (PDT)
-In-Reply-To: <CAPig+cS+rS=xKX-LrJSTqFgaopuLzbh3hqURFWXfzMXH=XUk2w@mail.gmail.com>
+        bh=6qIyt2xSHEdiYcd9m880NqmhyW3JuP4EpUQSMZaE1eg=;
+        b=xdg28JyUlhse2jAz7Sh+JObuAcqUUBUIrKY4OftVl6hnUuMbbdWlkSFZJ8tidlPZ0M
+         NgYBJ59yagrQt+Z1/TLdOAepx78RTHn81Wbynb3GWF4AWdYK44RgI8jFfAlYGDWaQ5qH
+         laieTJL8Kw3EJa9xzZ2c/gZY8/MyHFYxHXd3XlpuzrSf7mcTxBXKvWN0SXeY2y5WmXsj
+         rAWncxzdFmZUoGd5SxS2xJB2EDWgc8srrdxM12uQJS+plFi1UDS9oGa1cxMmfF9mG40j
+         r4X7V7YWuwxQvZcaH6pweek0PoOMBfbBnevCC3iLtlwIZfwKbRa2dN31dT3ftxEN2zUL
+         5Vkg==
+X-Received: by 10.182.66.14 with SMTP id b14mr32128023obt.80.1439508748922;
+ Thu, 13 Aug 2015 16:32:28 -0700 (PDT)
+Received: by 10.202.232.213 with HTTP; Thu, 13 Aug 2015 16:32:09 -0700 (PDT)
+In-Reply-To: <1439493795.8855.16.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275895>
 
-On Fri, Aug 14, 2015 at 12:38 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Aug 9, 2015 at 10:11 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Add strbuf_utf8_align() which will align a given string into a strbuf
->> as per given align_type and width. If the width is greater than the
->> string length then no alignment is performed.
+I will reroll this series with adjustments as you suggested, and I
+will add the extra tests for bare repos.
+
+On Thu, Aug 13, 2015 at 3:23 PM, David Turner <dturner@twopensource.com> wrote:
+> The scope of d can be smaller; move it down to the place I've marked
+> below
+
+I have adjusted the scoping.  I misunderstood the meaning of some
+comments from the v3 patch, but your statements have helped me
+understand.
+
+
 >
-> In addition to Junio's valuable comments...
+> strbuf_strip_suffix returns 1 if the suffix was stripped and 0
+> otherwise, so there is no need for this strcmp.
+
+Done.
+
 >
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->> diff --git a/utf8.h b/utf8.h
->> index 5a9e94b..db8ca63 100644
->> --- a/utf8.h
->> +++ b/utf8.h
->> @@ -55,4 +55,17 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
->>   */
->>  int is_hfs_dotgit(const char *path);
->>
->> +typedef enum {
->> +       ALIGN_LEFT,
->> +       ALIGN_MIDDLE,
->> +       ALIGN_RIGHT
->> +} align_type;
+> I'm a little worried about this path manipulation; it looks like the
+> config setting core.bare is the actual thing to check?  (Along with
+> maybe the GIT_WORK_TREE environment var; not sure how that interacts
+> with worktrees).
+
+As Junio pointed out in a previous version of this patch, the
+core.bare will always be 'true' since they share the config.  He also
+suggested that this could be the cause for concern.  Therefore, I can
+use core.bare to check if the main is a bare repo.  I guess that with
+the inclusion of tests using a bare repo, that will catch it if things
+change in the future.
+
+>
+>> +     }
 >> +
->> +/*
->> + * Align the string given and store it into a strbuf as per the type
->> + * and width.
->> + */
->
-> Please extend this documentation to state explicitly that this
-> function preserves (does not truncate) the input string if it is wider
-> than 'width'. That's quite important information for the caller to
-> know.
->
-> (Aside: I could easily see this function being extended to support
-> optional truncation, but that's a separate topic, and something that
-> can be done by someone else when the feature is actually needed; it's
-> not your responsibility.)
->
->> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
->> +                      const char *s);
+>> +     if (!main_is_bare) {
+>> +             strbuf_addstr(&worktree_path, main_path.buf);
 >> +
->>  #endif
+>> +             strbuf_addstr(&main_path, "/.git");
+>> +             strbuf_addstr(&worktree_git, main_path.buf);
+>> +
+>> +             ret = fn(worktree_path.buf, worktree_git.buf, cb_data);
+>> +             if (ret)
+>> +                     goto done;
+>> +     }
+>> +     strbuf_addstr(&main_path, "/worktrees");
+>
+> Earlier, you said:
+>                 strbuf_addstr(&main_path, common_dir);
+>                 strbuf_strip_suffix(&main_path, "/.git");
+>
+> Now you are adding /worktrees.  Doesn't this mean, in the non-bare case,
+> that you'll be looking in $common_dir/worktrees instead of
+> $common_dir/.git/worktrees ?
 
-Yeah will do :)
+I read the gitdir file from the common dir.
 
--- 
-Regards,
-Karthik Nayak
+>> +                     while ((d = readdir(dir)) != NULL) {
+>> +                             if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+>> +                                     continue;
+>> +
+>> +                             strbuf_reset(&worktree_git);
+>> +                             strbuf_addf(&worktree_git, "%s/%s/gitdir", main_path.buf, d->d_name);
+>
+> tioli: main_path never changes, so no need to keep chopping it off and
+> adding it back on; just truncate worktree_git to main_path.len + 1 here
+> and then add d->name.
+
+I will try to clean it up a bit.  I am not very experienced with C,
+but I will do my best.
