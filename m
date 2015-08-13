@@ -1,117 +1,76 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Subject: Re: [PATCH v3] http: add support for specifying the SSL version
-Date: Thu, 13 Aug 2015 18:15:59 +0200
-Message-ID: <CA+EOSBkOGzyOB-NRGTNm0b==OZH7eB=sZaGa0mRa4798_v-EHQ@mail.gmail.com>
+Date: Thu, 13 Aug 2015 19:24:54 +0300
+Message-ID: <20150813162454.GA18545@LK-Perkele-VII>
 References: <1439479731-16018-1-git-send-email-gitter.spiros@gmail.com>
-	<CAPig+cTug2Q3v1K5r76fhJ6OQY9V1e6MbiXQBGQJD51TCOGW=A@mail.gmail.com>
-	<CA+EOSBkSkvvBQDpxL_ygj+2haMk1U7T00-Xmxn8iyXcnV6RN5Q@mail.gmail.com>
-	<CAPig+cSC2a07RYioQ4+sw=pujFW8=sv_d5vv=XiayuSg7FBcHw@mail.gmail.com>
+ <55CCBF6F.3070808@web.de>
+ <CA+EOSBkzU=6pKkqYdGqRRcbbudTJkRwcXxswP+zMshVrZaM_mw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	=?UTF-8?Q?Galan_R=C3=A9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 18:16:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 18:25:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPvAj-0007km-OZ
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 18:16:06 +0200
+	id 1ZPvJN-0006nv-DM
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 18:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355AbbHMQQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 12:16:00 -0400
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34343 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751931AbbHMQP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 12:15:59 -0400
-Received: by vkhl6 with SMTP id l6so19293005vkh.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 09:15:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=FeZx3VJlDn8dfYSGmL7dKsp5mNdVEj/UT5TAQFcuNlY=;
-        b=iJ4m6KBVu+UekcJO+ihISyNGIXZ/Mj3JUyxhLSa3088PanKJ/QnGI/yGIRLrisqfPc
-         AzlbWmQPJo2+Ojyz+Ta8VQ9kjSFhD+SoTWc96nkBoOlISU4w2pzAIogjZ3j/dB+Y4ADK
-         zt3u7ongg7Uas9jMVx0S0CFutpXUOVXPOMq5xJtxp5J+kh78gPIy7aU2CFTWGaQ2rWpI
-         IwZho2OeaKz0qzXuI/CCoNs+nEkFSkWr/Iii4zl5cdkk6QKEEPntr8VDRLdjgLf9R4lQ
-         z0MlJ37B8/XE/1X7EXT8Jkfl1USeb+5OoYHpMMp0BX0BRzBXGswuaFSxIfA1x5EsvT8P
-         speQ==
-X-Received: by 10.53.12.229 with SMTP id et5mr47796496vdd.73.1439482559215;
- Thu, 13 Aug 2015 09:15:59 -0700 (PDT)
-Received: by 10.31.16.146 with HTTP; Thu, 13 Aug 2015 09:15:59 -0700 (PDT)
-In-Reply-To: <CAPig+cSC2a07RYioQ4+sw=pujFW8=sv_d5vv=XiayuSg7FBcHw@mail.gmail.com>
+	id S1753387AbbHMQY5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2015 12:24:57 -0400
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:54978 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752757AbbHMQY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 12:24:56 -0400
+Received: from LK-Perkele-VII (a91-155-194-207.elisa-laajakaista.fi [91.155.194.207])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id B909923407B;
+	Thu, 13 Aug 2015 19:24:54 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <CA+EOSBkzU=6pKkqYdGqRRcbbudTJkRwcXxswP+zMshVrZaM_mw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275857>
 
-2015-08-13 18:11 GMT+02:00 Eric Sunshine <sunshine@sunshineco.com>:
-> On Thu, Aug 13, 2015 at 11:58 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
->> 2015-08-13 17:47 GMT+02:00 Eric Sunshine <sunshine@sunshineco.com>:
->>> On Thu, Aug 13, 2015 at 11:28 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
->>>> Teach git about a new option, "http.sslVersion", which permits one to
->>>> specify the SSL version  to use when negotiating SSL connections.  The
->>>> setting can be overridden by the GIT_SSL_VERSION environment
->>>> variable.
->>>>
->>>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
->>>> ---
->>>> This is the third version of the patch. The changes compared to the previous version are:
->>>
->>> Looks better. A few comments below...
->>>
->>>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->>>> index c97c648..6e9359c 100644
->>>> --- a/contrib/completion/git-completion.bash
->>>> +++ b/contrib/completion/git-completion.bash
->>>> @@ -364,9 +381,22 @@ static CURL *get_curl_handle(void)
->>>>         if (http_proactive_auth)
->>>>                 init_curl_http_auth(result);
->>>>
->>>> +       if (getenv("GIT_SSL_VERSION"))
->>>> +               ssl_version = getenv("GIT_SSL_VERSION");
->>>> +       if (ssl_version != NULL && *ssl_version) {
->>>> +               int i;
->>>> +               for ( i = 0; i < ARRAY_SIZE(sslversions); i++ ) {
->>>> +                       if (sslversions[i].name != NULL && *sslversions[i].name && !strcmp(ssl_version,sslversions[i].name)) {
->>>
->>> This sort of loop is normally either handled by indexing up to a limit
->>> (ARRAY_SIZE, in this case) or by iterating until hitting a sentinel
->>> (NULL, in this case). It is redundant to use both, as this code does.
->> I do not think. sslversions[i].name can be null, see how the structure
->> is initialized. No ?
->
-> The initialization:
->
->     static struct {
->        const char *name;
->        long ssl_version;
->        } sslversions[] = {
->            { "sslv2", CURL_SSLVERSION_SSLv2 },
->            ...
->            { "tlsv1.2", CURL_SSLVERSION_TLSv1_2 },
->            { NULL }
->     };
->
-> terminates the list with a NULL sentinel entry, which does indeed set
-> sslversions[i].name to NULL. When you know the item count ahead of
-> time (as you do in this case), this sort of end-of-list sentinel is
-> redundant, and complicates the code unnecessarily. For instance, the
-> 'sslversions[i].name != NULL' expression in the 'if':
->
->     if (sslversions[i].name != NULL && *sslversions[i].name ...
->
-> is an unwanted complication. In fact, the '*sslversions[i].name'
-> expression is also unnecessary.
-I agree. But this is what  suggested me Junio: =). What do I have to do ?
-It becomes difficult to keep everyone happy: =)
+On Thu, Aug 13, 2015 at 06:10:48PM +0200, Elia Pinto wrote:
+> 2015-08-13 18:01 GMT+02:00 Torsten B=C3=B6gershausen <tboegi@web.de>:
+> >> +
+> > from
+> > https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0.2C_2=
+=2E0_and_3.0
+> > sslv2 and sslv3 are deprecated.
+> > Should there be a motivation in the commit message why we want to s=
+upport them ?
+> They are those provided by the documentation (TLS in particular). We
+> let the underlying library to say what is deprecated or not. In this
+> case the call fail.
 
-Junio ?
+The statement from the relevant SDO is much stronger than "deprecated",
+it is "not to be used under any cirmumstances".
 
-Thanks
+Option like this looks only useful for connecting to really broken
+servers, damn security.
+
+It could be useful for connecting to buggy servers after TLS 1.3
+comes out and is implemented, as there are lots of servers (IIRC, on
+order of 10%) that can't deal with TLS 1.3 properly (but very few, IIRC
+<<0.1%, that can't deal with TLS 1.2 correctly[1]).
+
+Also, is this option settable globally for all HTTP servers? One
+definitely does not want that to be possible. Configurations like
+this need to be per-server if they exist at all.
+
+
+
+[1] Where correctly includes secure downnegotiation, as TLS
+is intended to do when faced with version mismatch.
+
+
+-Ilari
