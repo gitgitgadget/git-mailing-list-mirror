@@ -1,250 +1,88 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 2/2 v4] worktree: add 'list' command
-Date: Thu, 13 Aug 2015 15:26:29 -0400
-Organization: Twitter
-Message-ID: <1439493989.8855.18.camel@twopensource.com>
-References: <1439490739-9361-1-git-send-email-rappazzo@gmail.com>
-	 <1439490739-9361-3-git-send-email-rappazzo@gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 01/10] ref-filter: add option to filter only branches
+Date: Fri, 14 Aug 2015 01:43:47 +0530
+Message-ID: <CAOLa=ZRyL4PLKQiw1ie5e4NN21BTy3KPVxCvf_eUeW-C5wSU2w@mail.gmail.com>
+References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
+ <1438693282-15516-1-git-send-email-Karthik.188@gmail.com> <xmqqpp2tspb6.fsf@gitster.dls.corp.google.com>
+ <CAOLa=ZRRU4htKgB46g0FAGVEGGFN+1N1250AOYJh7H5apv=RJQ@mail.gmail.com>
+ <CAOLa=ZQic2=z6bJ0Ykhn2x8mE86w4HwBrJP7pb_RaemGKCZzmQ@mail.gmail.com> <FC0BD660-1476-430A-9F71-E9D0E6681780@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, sunshine@sunshineco.com, git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 21:26:38 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Matthieu Moy <matthieu.moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 13 22:14:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPy97-0001DL-1X
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 21:26:37 +0200
+	id 1ZPytQ-0003q8-1u
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 22:14:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321AbbHMT0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 15:26:32 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:35312 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862AbbHMT0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 15:26:32 -0400
-Received: by qgj62 with SMTP id 62so38167965qgj.2
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 12:26:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=tLIFxxNd9I2tZ3K/xiWodfxlkDeGyj5LNYsuZm6FHv4=;
-        b=DRBeNoXlAvuVXYVUDqWiV/8Of31kSwhhanFtNdJq0kJj0egxotxkzXMyG9nFcMi9iH
-         Y6TqJr8djzSAJKe8Cbro/yR7KrFMo1jQWkW2IuQE23Vio6vGOLZFAnVjGjrX+9f+kaKm
-         3uUZmypMdQ2UbvBU4yMECLT0+6SdAu72O4AVH/plF14QVqHrc4ZWjIwqD2my5wqJiBg/
-         5+qFdNG0zlxJlmedamiwXi7W6gByrZ8O6EW01/25rPaLmiGlmiQRMtpP/C6YIpWkP50d
-         fdY1Qkva2FvypDnae4lnQrJI8EouCOMvUuiS0MhQxELTs0DLZtLqoACP3ujblFaNt1dL
-         xCVQ==
-X-Gm-Message-State: ALoCoQnibsX6tAkG1xl6tqMGPuMUhBkkF78/45EVGG6Sd02y/0jHGtXMkiUeLu55gGF02XMWuhCz
-X-Received: by 10.140.238.3 with SMTP id j3mr20668301qhc.14.1439493991331;
-        Thu, 13 Aug 2015 12:26:31 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id i35sm1642938qkh.36.2015.08.13.12.26.30
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Aug 2015 12:26:30 -0700 (PDT)
-In-Reply-To: <1439490739-9361-3-git-send-email-rappazzo@gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1753975AbbHMUOS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2015 16:14:18 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:32994 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752958AbbHMUOS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Aug 2015 16:14:18 -0400
+Received: by obbhe7 with SMTP id he7so46019182obb.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 13:14:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9KBmHBl1DsmHPgg2ejC+ancSMKXCgC5c1FYLo1PcHKw=;
+        b=lbtKQ6pYdTuxQ19hvlGGKU4aLjrluommzq3jTl5JxlRfvjZoKg7wf/l/FX+Ri1htIW
+         pmx7D7VJDSIu50kHYFZSVK7zJcvZOj1+vuu1IXUfQQB3NjLhYM1kH1aC3gW9DG1FtD7B
+         vFgknatkwQqpXr//HUDSEGurKz87gsFJWgroQzClrKfn9E8gsZkWSx1Td7fcFZpAKfo8
+         kpBQlBgWrkelwnp5B9SWEpsoOePmhX9kccMXrPGsvodCt0ZtO9giferzQwpDWmvrqTaY
+         vhS5vnjPPWXgpR0/pIpE3Vvmf48IuLMZqewHOUjY+bQ/G27KIy2scjkkT0T9je48Y1Mq
+         lLRQ==
+X-Received: by 10.182.29.68 with SMTP id i4mr35752913obh.57.1439496857265;
+ Thu, 13 Aug 2015 13:14:17 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Thu, 13 Aug 2015 13:13:47 -0700 (PDT)
+In-Reply-To: <FC0BD660-1476-430A-9F71-E9D0E6681780@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275890>
 
-On Thu, 2015-08-13 at 14:32 -0400, Michael Rappazzo wrote:
-> 'git worktree list' uses the for_each_worktree function to iterate,
-> and outputs in the format: '<worktree>  (<short-ref>)'
+On Thu, Aug 13, 2015 at 10:22 PM, Matthieu Moy <matthieu.moy@imag.fr> w=
+rote:
+>
+>
+> Le 13 ao=C3=BBt 2015 13:35:21 GMT+02:00, Karthik Nayak <karthik.188@g=
+mail.com> a =C3=A9crit :
+>>On Thu, Aug 13, 2015 at 4:21 PM, Karthik Nayak <karthik.188@gmail.com=
+>
+>>wrote:
+>>>
+>>> This was taken from branch.c, I thought of using an enum instead bu=
+t
+>>that
+>>> would again require most of branch.c, hence it's been carried over
+>>> without changing
+>>> I'm thinking of changing it, any suggestions?
+>>>
+>>
+>>What I was thinking was of having:
+>>
+>>#define FILTER_REFS_INCLUDE_BROKEN 0x1
+>>#define FILTER_REFS_TAGS 0x2
+>>#define FILTER_REFS_BRANCHES 0x4
+>>#define FILTER_REFS_REMOTES 0x8
+>>#define FILTER_REFS_DETACHED_HEAD 0x16
+>
+> You meant 0x10, not 0x16 I guess.
+>
 
-I'm not sure I'm going to have time to review the whole thing, but I
-think we ought to have tests with both bare and non-bare main repos.
+Yea! Of course, was randomly typing out an example :)
 
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
-> ---
->  Documentation/git-worktree.txt | 11 ++++++++-
->  builtin/worktree.c             | 55 ++++++++++++++++++++++++++++++++++++++++++
->  t/t2027-worktree-list.sh       | 51 +++++++++++++++++++++++++++++++++++++++
->  3 files changed, 116 insertions(+), 1 deletion(-)
->  create mode 100755 t/t2027-worktree-list.sh
-> 
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> index fb68156..e953b4e 100644
-> --- a/Documentation/git-worktree.txt
-> +++ b/Documentation/git-worktree.txt
-> @@ -11,6 +11,7 @@ SYNOPSIS
->  [verse]
->  'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
->  'git worktree prune' [-n] [-v] [--expire <expire>]
-> +'git worktree list' [--path-only]
->  
->  DESCRIPTION
->  -----------
-> @@ -59,6 +60,12 @@ prune::
->  
->  Prune working tree information in $GIT_DIR/worktrees.
->  
-> +list::
-> +
-> +List the main worktree followed by all of the linked worktrees.  The default
-> +format of the list includes the full path to the worktree and the branch or
-> +revision that the head of that worktree is currently pointing to.
-> +
->  OPTIONS
->  -------
->  
-> @@ -93,6 +100,9 @@ OPTIONS
->  --expire <time>::
->  	With `prune`, only expire unused working trees older than <time>.
->  
-> +--path-only
-> +	With `list`, only show the worktree path
-> +
->  DETAILS
->  -------
->  Each linked working tree has a private sub-directory in the repository's
-> @@ -167,7 +177,6 @@ performed manually, such as:
->  - `remove` to remove a linked working tree and its administrative files (and
->    warn if the working tree is dirty)
->  - `mv` to move or rename a working tree and update its administrative files
-> -- `list` to list linked working trees
->  - `lock` to prevent automatic pruning of administrative files (for instance,
->    for a working tree on a portable device)
->  
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index a43e360..b39ecbd 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -12,6 +12,7 @@
->  static const char * const worktree_usage[] = {
->  	N_("git worktree add [<options>] <path> <branch>"),
->  	N_("git worktree prune [<options>]"),
-> +	N_("git worktree list [<options>]"),
->  	NULL
->  };
->  
-> @@ -443,6 +444,58 @@ done:
->  	return ret;
->  }
->  
-> +/* list callback data */
-> +struct list_opts {
-> +	int path_only;
-> +};
-> +
-> +static int print_worktree_details(const char *path, const char *git_dir, void *cb_data)
-> +{
-> +	struct strbuf head_file = STRBUF_INIT;
-> +	struct strbuf head_ref = STRBUF_INIT;
-> +	struct stat st;
-> +	struct list_opts *opts = cb_data;
-> +	const char *ref_prefix = "ref: refs/heads/";
-> +
-> +	strbuf_addf(&head_file, "%s/HEAD", git_dir);
-> +	if (!opts->path_only && !stat(head_file.buf, &st)) {
-> +		strbuf_read_file(&head_ref, head_file.buf, st.st_size);
-> +		strbuf_strip_suffix(&head_ref, "\n");
-> +
-> +		if (starts_with(head_ref.buf, ref_prefix)) {
-> +			/* branch checked out */
-> +			strbuf_remove(&head_ref, 0, strlen(ref_prefix));
-> +		/* } else {
-> +		 *  headless -- no-op
-> +		 */
-> +		}
-> +		printf("%s  (%s)\n", path, head_ref.buf);
-> +	} else {
-> +		printf("%s\n", path);
-> +	}
-> +
-> +	strbuf_release(&head_ref);
-> +	strbuf_release(&head_file);
-> +	return 0;
-> +}
-> +
-> +static int list(int ac, const char **av, const char *prefix)
-> +{
-> +	struct list_opts opts;
-> +	struct option options[] = {
-> +		OPT_BOOL(0, "path-only", &opts.path_only, N_("only show the path of the worktree")),
-> +		OPT_END()
-> +	};
-> +
-> +	opts.path_only = 0;
-> +
-> +	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
-> +	if (ac)
-> +		usage_with_options(worktree_usage, options);
-> +
-> +	return for_each_worktree(&print_worktree_details, &opts);
-> +}
-> +
->  int cmd_worktree(int ac, const char **av, const char *prefix)
->  {
->  	struct option options[] = {
-> @@ -455,5 +508,7 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
->  		return add(ac - 1, av + 1, prefix);
->  	if (!strcmp(av[1], "prune"))
->  		return prune(ac - 1, av + 1, prefix);
-> +	if (!strcmp(av[1], "list"))
-> +		return list(ac - 1, av + 1, prefix);
->  	usage_with_options(worktree_usage, options);
->  }
-> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-> new file mode 100755
-> index 0000000..220f98e
-> --- /dev/null
-> +++ b/t/t2027-worktree-list.sh
-> @@ -0,0 +1,51 @@
-> +#!/bin/sh
-> +
-> +test_description='test git worktree list'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +	test_commit init
-> +'
-> +
-> +test_expect_success '"list" all worktrees from main' '
-> +	echo "$(git rev-parse --show-toplevel)  ($(git symbolic-ref --short HEAD))" >expect &&
-> +	git worktree add --detach here master &&
-> +	echo "$(git -C here rev-parse --show-toplevel)  ($(git -C here rev-parse HEAD))" >>expect &&
-> +	git worktree list >actual &&
-> +	test_cmp expect actual &&
-> +	rm -rf here &&
-> +	git worktree prune
-> +'
-> +
-> +test_expect_success '"list" all worktrees from linked' '
-> +	echo "$(git rev-parse --show-toplevel)  ($(git symbolic-ref --short HEAD))" >expect &&
-> +	git worktree add --detach here master &&
-> +	echo "$(git -C here rev-parse --show-toplevel)  ($(git -C here rev-parse HEAD))" >>expect &&
-> +	git -C here worktree list >actual &&
-> +	test_cmp expect actual &&
-> +	rm -rf here &&
-> +	git worktree prune
-> +'
-> +
-> +test_expect_success '"list" all worktrees from main --path-only' '
-> +	git rev-parse --show-toplevel >expect &&
-> +	git worktree add --detach here master &&
-> +	git -C here rev-parse --show-toplevel >>expect &&
-> +	git worktree list --path-only >actual &&
-> +	test_cmp expect actual &&
-> +	rm -rf here &&
-> +	git worktree prune
-> +'
-> +
-> +test_expect_success '"list" all worktrees from linked --path-only' '
-> +	git rev-parse --show-toplevel >expect &&
-> +	git worktree add --detach here master &&
-> +	git -C here rev-parse --show-toplevel >>expect &&
-> +	git -C here worktree list --path-only >actual &&
-> +	test_cmp expect actual &&
-> +	rm -rf here &&
-> +	git worktree prune
-> +'
-> +
-> +test_done
+
+--=20
+Regards,
+Karthik Nayak
