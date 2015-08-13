@@ -1,99 +1,86 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 3/4] refs: make refs/worktree/* per-worktree
-Date: Thu, 13 Aug 2015 22:16:50 +0200
-Message-ID: <55CCFB32.30608@alum.mit.edu>
-References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>	 <1439416645-19173-3-git-send-email-dturner@twopensource.com>	 <CAPig+cRM-J-5SHJ9JVsHPR+B2Y05nwFrRQWsd0M56pm9jS-mTQ@mail.gmail.com> <1439487708.8855.2.camel@twopensource.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v10 05/13] ref-filter: implement an `align` atom
+Date: Fri, 14 Aug 2015 01:59:27 +0530
+Message-ID: <CAOLa=ZSQ-YiBdtTByxJZFk8_Tj2RAAzzuZqbdk28httMM+rW-g@mail.gmail.com>
+References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
+ <1439129506-9989-6-git-send-email-Karthik.188@gmail.com> <CAPig+cRhgfOozy42UiDs24JFQTw5k8CYS0c+3DTOFB+XkPrLRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:17:16 2015
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 22:30:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPyw4-0006PZ-OS
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 22:17:13 +0200
+	id 1ZPz8V-0001SX-4k
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 22:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753869AbbHMURI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 16:17:08 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:49037 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753284AbbHMURH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Aug 2015 16:17:07 -0400
-X-AuditID: 1207440d-f79136d00000402c-40-55ccfb34d088
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 66.11.16428.43BFCC55; Thu, 13 Aug 2015 16:16:52 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB03E0.dip0.t-ipconnect.de [93.219.3.224])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7DKGoSw001835
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 13 Aug 2015 16:16:51 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1439487708.8855.2.camel@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqGvy+0yoQcdRU4tNzycyW8zfdILR
-	outKN5NF95S3jBZn3jQyOrB67Jx1l91j8QMvj+UPXrF7LHh+n93j8ya5ANYobpukxJKy4Mz0
-	PH27BO6M+y07WQv+cVWcP/aDuYFxHUcXIyeHhICJRO/ZaYwQtpjEhXvr2boYuTiEBC4zSlw6
-	8YIZwjnHJLFk/jP2LkYODl4BTYm2i9ogDSwCqhI7Gu+zgthsAroSi3qamUBsUYEgiRXLX4AN
-	5RUQlDg58wkLiC0iECsx7+okRpCZzAJzGSW6vz4CKxIWcJY4Pmk+E8Sy74wS51dtB+vgFDCX
-	2H11BTOIzSygLvFn3iUoW15i+9s5zBMYBWYhWTILSdksJGULGJlXMcol5pTm6uYmZuYUpybr
-	Ficn5uWlFuka6eVmluilppRuYoSEOe8Oxv/rZA4xCnAwKvHwbnh0OlSINbGsuDL3EKMkB5OS
-	KO+Kz2dChfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nw7voJlONNSaysSi3Kh0lJc7AoifOqLVH3
-	ExJITyxJzU5NLUgtgsnKcHAoSfDy/QJqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3J
-	iAdFa3wxMF5BUjxAe5eDtPMWFyTmAkUhWk8xKkqJ83KDJARAEhmleXBjYcnrFaM40JfCvIwg
-	VTzAxAfX/QpoMBPQ4HS5UyCDSxIRUlINjMYXjqx9H6moeILD12RpdfsErgfcvxlzVGTD43ev
-	fM/SsW7GlGajfwZuLnfOSbNuEbns2vf/XlyXddTk0sMXj0xQLX55q0SpaOGFbQfs 
+	id S1753174AbbHMU35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 16:29:57 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:33945 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752884AbbHMU35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 16:29:57 -0400
+Received: by oip136 with SMTP id 136so33235401oip.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 13:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mAEmK1xpSVfblHc+WUbsAMwKyok5q01NFPlclUJ9Mu8=;
+        b=Gg4pwzR6idFIiGXUlY6BGRyP9UvkGpHVDSgJwPl4avmxwh5+QgyCd6P3U8TZsjONX6
+         MOAi8ERle33CCBs0JhC4SgKN9HEJJXNzeA2NNH4MBxyBtAeti3YXnDY1bQV+1X6a2LWy
+         PuvcX6iFLVhW+lziKejVpm78KPGN9H+zVjSTJ0HGYN1cwB4c7JA+NZvKH+bov29BJl5A
+         /71tZx72kgIYm9ebvZJplwvPNzzhvxJQCL8SuqhvrAAIrlVmeU6hVwk+GNqe7bZH8Ia/
+         TgBOxRtRTGuOMZdLGAzErLEYx0V/azjIxhdwyxMX7ZBwDSg12Xila/o9sfnYjvS5yJsd
+         TWwA==
+X-Received: by 10.202.200.75 with SMTP id y72mr35201182oif.111.1439497796416;
+ Thu, 13 Aug 2015 13:29:56 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Thu, 13 Aug 2015 13:29:27 -0700 (PDT)
+In-Reply-To: <CAPig+cRhgfOozy42UiDs24JFQTw5k8CYS0c+3DTOFB+XkPrLRQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275892>
 
-On 08/13/2015 07:41 PM, David Turner wrote:
-> On Thu, 2015-08-13 at 13:15 -0400, Eric Sunshine wrote:
->> On Wed, Aug 12, 2015 at 5:57 PM, David Turner <dturner@twopensource.com> wrote:
->>> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
->>> index 93605f4..28e6dff 100755
->>> --- a/t/t0060-path-utils.sh
->>> +++ b/t/t0060-path-utils.sh
->>> +test_expect_success 'handle per-worktree refs in refs/worktree' '
->>> +       git commit --allow-empty -m "initial commit" &&
->>> +       git worktree add -b branch worktree &&
->>> +       (
->>> +               cd worktree &&
->>> +               git commit --allow-empty -m "test commit"  &&
->>> +               git for-each-ref | test_must_fail grep refs/worktree &&
+On Thu, Aug 13, 2015 at 11:56 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Aug 9, 2015 at 10:11 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Implement an `align` atom which left-, middle-, or right-aligns the
+>> content between %(align:..) and %(end).
 >>
->> s/test_must_fail/!/
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+>> index e49d578..d949812 100644
+>> --- a/Documentation/git-for-each-ref.txt
+>> +++ b/Documentation/git-for-each-ref.txt
+>> @@ -127,6 +127,15 @@ color::
+>>         Change output color.  Followed by `:<colorname>`, where names
+>>         are described in `color.branch.*`.
 >>
->> From t/README:
->>
->>    On the other hand, don't use test_must_fail for running regular
->>    platform commands; just use '! cmd'.  We are not in the business
->>    of verifying that the world given to us sanely works.
-> 
-> When I make that change, my test fails with:
-> 
-> FATAL: Unexpected exit with code 2
-> 
-> Apparently, you can't use ! in pipelines like that.  So that's why I
-> used test_must_fail.
+>> +align::
+>> +       Implement an `align` atom which left-, middle-, or
+>> +       right-aligns the content between %(align:..)  and
+>
+> This documentation seems to be copied a bit too literally from the
+> commit message. Saying "Implement an `align` atom" makes sense for the
+> commit message, but not for the documentation of the 'align' atom.
+> Instead,
+>
+>     Left-, middle-, or right-align the content between
+>     %(align:...) and %(end).
+>
+> would sound better.
+>
 
-You would have to negate the whole pipeline, like
-
-    ! git for-each-ref | grep refs/worktree
-
-The result of a pipeline is taken from the last command.
-
-Michael
+Okay! Will do thanks!
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Regards,
+Karthik Nayak
